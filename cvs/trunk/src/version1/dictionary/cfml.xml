@@ -24,7 +24,7 @@
 			cfabort 
 				showError = "error_message"
 		-->
-		<tag creator="3" name="abort" single="true" xmlstyle="false">
+		<tag name="abort" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Stops the processing of a CFML page at the tag location. 
 				CFML returns everything that was processed before the 
@@ -54,7 +54,7 @@
 				param_2 = "applet_parameter_name"   
 				param_n = "applet_parameter_name"
 		-->
-		<tag creator="1" name="applet" single="true" xmlstyle="false">
+		<tag name="applet" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				This tag references a registered custom Java applet. To 
 				register a Java applet, in the CFML Administrator, click 
@@ -147,7 +147,7 @@
 				applicationTimeout = #CreateTimeSpan(days, hours, minutes, seconds)#   
 				setDomainCookies = "Yes" or "No"
 		-->
-		<tag creator="3" name="application" single="true" xmlstyle="false">
+		<tag name="application" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines the scope of a CFML application; enables and 
 				disables storage of Client variables; specifies the Client 
@@ -251,7 +251,7 @@
 				displayname="descriptive name"   
 				hint="extended description"
 		-->
-		<tag creator="3" name="argument" single="true" xmlstyle="false">
+		<tag name="argument" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Creates a parameter definition within a component definition. 
 				Defines a function argument. Used within a cffunction tag. 
@@ -324,7 +324,7 @@
 				baseTag = "base_tag_name"   
 				dataCollection = "collection_name"
 		-->
-		<tag creator="3" name="associate" single="true" xmlstyle="false">
+		<tag name="associate" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Allows subtag data to be saved with a base tag. Applies only 
 				to custom tags.
@@ -346,7 +346,7 @@
 		<!-- 
 			cfbreak
 		-->
-		<tag creator="3" name="break" single="true" xmlstyle="false">
+		<tag name="break" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used within a cfloop tag. Breaks out of a loop.
 			]]></help>
@@ -363,7 +363,7 @@
 				port = "port_number"   
 				protocol = "protocol"
 		-->
-		<tag creator="3" name="cache" single="true" xmlstyle="false">
+		<tag name="cache" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Stores a copy of a page on the server and/or client computer, 
 				to improve page rendering performance. To do this, the tag 
@@ -441,7 +441,7 @@
 				value = "value or delimited set of values"   
 				delimiters = "delimiter characters"
 		-->
-		<tag creator="3" name="case" single="false" xmlstyle="false">
+		<tag name="case" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used only inside the cfswitch tag body. Contains code to 
 				execute when the expression specified in the cfswitch tag has 
@@ -475,7 +475,7 @@
 			/cfcatch
 		
 		-->
-		<tag creator="3" name="catch" single="false" xmlstyle="false">
+		<tag name="catch" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used inside a cftry tag. Together, they catch and process 
 				exceptions in CFML pages. Exceptions are events that 
@@ -540,7 +540,7 @@
 				name = "String"   
 			/cfchart
 		-->
-		<tag creator="1" name="chart" single="false" xmlstyle="false">
+		<tag name="chart" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Generates and displays a chart.
 			]]></help>
@@ -867,7 +867,7 @@
 				item = "text"    
 				value = "number"
 		-->
-		<tag creator="1" name="chartdata" single="true" xmlstyle="false">
+		<tag name="chartdata" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used with the cfchart and cfchartseries tags. This tag defines 
 				chart data points. Its data is submitted to the cfchartseries 
@@ -900,7 +900,7 @@
 				colorlist = "list"
 			/cfchartseries
 		-->
-		<tag creator="1" name="chartseries" single="false" xmlstyle="false">
+		<tag name="chartseries" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used with the cfchart tag. This tag defines the style in which 
 				chart data displays: bar, line, pie, and so on.
@@ -1011,7 +1011,7 @@
 				align = "Left" or "Right" or "Center"   
 				text = "column_text"
 		-->
-		<tag creator="3" name="col" single="true" xmlstyle="false">
+		<tag name="col" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines table column header, width, alignment, and text. Used 
 				within a cftable tag.
@@ -1059,7 +1059,7 @@
 				language = "language"   
 				name = "queryname"
 		-->
-		<tag creator="3" name="collection" single="true" xmlstyle="false">
+		<tag name="collection" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Creates, registers, and administers Verity search engine 
 				collections. 
@@ -1138,7 +1138,7 @@
 			    [variable declarations cffunction ...]
 			/cfcomponent
 		-->
-		<tag creator="3" name="component" single="false" xmlstyle="false">
+		<tag name="component" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Creates and defines a component object; encloses functionality 
 				that you build in CFML and enclose within cffunction tags. 
@@ -1193,7 +1193,7 @@
 			[starting with a drive letter and a colon, or a forward 
 			or backward slash]
 		-->
-		<tag creator="3" name="content" single="true" xmlstyle="false">
+		<tag name="content" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Does either or both of the following:
 				* Sets the MIME content encoding header for the current page 
@@ -1258,7 +1258,7 @@
 				path = "url"   
 				domain = ".domain"
 		-->
-		<tag creator="3" name="cookie" single="true" xmlstyle="false">
+		<tag name="cookie" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines web browser cookie variables, including expiration and
 				security options.
@@ -1338,7 +1338,7 @@
 			...
 			/cfdefaultcase
 		-->
-		<tag creator="3" name="defaultcase" single="false" xmlstyle="false">
+		<tag name="defaultcase" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used only inside the cfswitch tag body. Contains code to 
 				execute when the expression specified in the cfswitch tag does 
@@ -1356,7 +1356,7 @@
 				sort = "sort specification"   
 				newDirectory = "new directory name"
 		-->
-		<tag creator="3" name="directory" single="true" xmlstyle="false">
+		<tag name="directory" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Manages interactions with directories.
 				Different combos cause different attributes to be 
@@ -1424,7 +1424,7 @@
 				expand = "Yes or No"    
 				label = "text"
 		-->
-		<tag creator="3" name="dump" single="true" xmlstyle="false">
+		<tag name="dump" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Outputs the elements, variables and values of most kinds of 
 				CFML objects. Useful for debugging. You can display the 
@@ -1458,7 +1458,7 @@
 		<!-- 
 			<cfelse>
 		-->
-		<tag creator="3" name="else" single="true" xmlstyle="false">
+		<tag name="else" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used as the last control block in a cfif tag block to handle 
 				any case not identified by the cfif tag or a cfelseif tag.
@@ -1469,7 +1469,7 @@
 			cfelseif 
 				expression
 		-->
-		<tag creator="3" name="elseif" single="true" xmlstyle="false">
+		<tag name="elseif" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used as a control block in a cfif tag block to handle any case 
 				not identified by the cfif tag or a cfelseif tag.
@@ -1483,7 +1483,7 @@
 				mailTo = "email_address"   
 				exception = "exception_type"
 		-->
-		<tag creator="3" name="error" single="true" xmlstyle="false">
+		<tag name="error" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Displays a custom HTML page when an error occurs. This lets 
 				you maintain a consistent look and feel among an application's 
@@ -1564,7 +1564,7 @@
 			   	...
 			/cfexecute
 		-->
-		<tag creator="3" name="execute" single="false" xmlstyle="false">
+		<tag name="execute" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Executes a CFML developer-specified process on a server 
 				computer.
@@ -1629,7 +1629,7 @@
 			cfexit    
 				method = "method"
 		-->
-		<tag creator="3" name="exit" single="true" xmlstyle="false">
+		<tag name="exit" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				This tag aborts processing of the currently executing CFML 
 				custom tag, exits the page within the currently executing CFML 
@@ -1666,7 +1666,7 @@
     		 output = "content"
     		 addNewLine = "Yes" or "No"
 		-->
-		<tag creator="3" name="file" single="true" xmlstyle="false">
+		<tag name="file" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Manages interactions with server files. 
 				Different combonations cause different attributes to be 
@@ -1806,7 +1806,7 @@
 			cfflush   
 				interval = "integer number of bytes"
 		-->
-		<tag creator="3" name="flush" single="false" xmlstyle="false">
+		<tag name="flush" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Flushes currently available data to the client.
 			]]></help>
@@ -1837,7 +1837,7 @@
 				...
 			/cfform
 		-->
-		<tag creator="3" name="form" single="false" xmlstyle="false">
+		<tag name="form" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Builds a form with CFML custom control tags; these provide 
 				more functionality than standard HTML form input elements.
@@ -1999,7 +1999,7 @@
 				retryCount = "number"   
 				stopOnError = "Yes" or "No"
 		-->
-		<tag creator="3" name="ftp" single="false" xmlstyle="false">
+		<tag name="ftp" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Lets users implement File Transfer Protocol (FTP) operations.
 			]]></help>
@@ -2175,7 +2175,7 @@
 				displayName = "name"   
 				Hint = "hint text"
 		-->
-		<tag creator="3" name="function" single="false" xmlstyle="false">
+		<tag name="function" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a function that you can call in CFML. Required to 
 				defined CFML component methods.
@@ -2324,7 +2324,7 @@
 				sortDescendingButton = "text"
 			/cfgrid
 		-->
-		<tag creator="1" name="grid" single="false" xmlstyle="false">
+		<tag name="grid" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used within the cfform tag. Puts a grid control (a table of 
 				data) in a CFML form. To specify grid columns and row 
@@ -2857,7 +2857,7 @@
 				valuesDisplay = "Comma separated strings and/or numeric range"   
 				valuesDelimiter = "delimiter character"
 		-->
-		<tag creator="1" name="gridcolumn" single="true" xmlstyle="false">
+		<tag name="gridcolumn" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used with the cfgrid tag in a cfform. Use this tag to specify 
 				column data in a cfgrid control. The font and alignment 
@@ -3118,7 +3118,7 @@
 			cfgridrow
 				data = "col1, col2, ..."
 		-->
-		<tag creator="1" name="gridrow" single="true" xmlstyle="false">
+		<tag name="gridrow" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Lets you define a cfgrid that does not use a query as source 
 				for row data. If a query attribute is specified in cfgrid, the 
@@ -3144,7 +3144,7 @@
 				tableQualifier = "qualifier"   
 				keyOnly = "Yes" or "No"
 		-->
-		<tag creator="1" name="gridupdate" single="true" xmlstyle="false">
+		<tag name="gridupdate" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used within a cfgrid tag. Updates data sources directly from 
 				edited grid data. This tag provides a direct interface with 
@@ -3230,7 +3230,7 @@
 				statusCode = "status_code"   
 				statusText = "status_text"
 		-->
-		<tag creator="3" name="header" single="true" xmlstyle="false">
+		<tag name="header" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Generates custom HTTP response headers to return to the client.
 			]]></help>
@@ -3287,7 +3287,7 @@
 			cfhtmlhead    
 				text = "text"
 		-->
-		<tag creator="3" name="htmlhead" single="true" xmlstyle="false">
+		<tag name="htmlhead" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Writes text to the head section of a generated HTML page. It is
 				useful for embedding JavaScript code, or putting other HTML 
@@ -3331,7 +3331,7 @@
 			   [cfhttpparam tags - optional for some methods]
 		   /cfhttp
 		-->
-		<tag creator="3" name="http" single="false" xmlstyle="false">
+		<tag name="http" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Generates an HTTP request and handles the response from the 
 				server. 
@@ -3543,7 +3543,7 @@
 				encoded = "Yes or No"   
 				mimeType = "MIME type designator"
 		-->
-		<tag creator="3" name="httpparam" single="true" xmlstyle="false">
+		<tag name="httpparam" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Allowed inside cfhttp tag bodies only. Required for cfhttp POST 
 				operations. Optional for all others. Specifies parameters to 
@@ -3641,7 +3641,7 @@
 			   [HTML and CFML tags]
 			/cfif
 		-->
-		<tag creator="3" name="if" single="false" xmlstyle="false">
+		<tag name="if" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Creates simple and compound conditional statements in CFML. 
 				Tests an expression, variable, function return value, or 
@@ -3654,7 +3654,7 @@
 				taglib = "taglib-location"   
 				prefix = "custom"
 		-->
-		<tag creator="3" name="import" single="true" xmlstyle="false">
+		<tag name="import" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				You can use the cfimport tag to import either of the following:
 				
@@ -3702,7 +3702,7 @@
 			cfinclude    
 				template = "template_name"
 		-->
-		<tag creator="3" name="include" single="true" xmlstyle="false">
+		<tag name="include" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Embeds references to CFML pages in CFML. You can embed 
 				cfinclude tags recursively. For another way to encapsulate 
@@ -3733,7 +3733,7 @@
 				recurse = "Yes" or "No"   
 				language = "language"
 		-->
-		<tag creator="3" name="index" single="true" xmlstyle="false">
+		<tag name="index" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Populates a Verity search engine collection with an index of 
 				documents on a file system or of CFML query result sets. 
@@ -3892,7 +3892,7 @@
 				checked    
 				passThrough = "HTML_attributes"
 		-->
-		<tag creator="3" name="input" single="true" xmlstyle="false">
+		<tag name="input" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used within the cfform tag, to place radio buttons, check boxes,
 				or text boxes on a form. Provides input validation for the 
@@ -4055,7 +4055,7 @@
 				password = "password"   
 				formFields = "formfield1, formfield2, ..."
 		-->
-		<tag creator="3" name="insert" single="true" xmlstyle="false">
+		<tag name="insert" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Inserts records in data sources from data in a CFML form 
 				or form Scope.
@@ -4177,7 +4177,7 @@
 				component = "component name or reference"     
 				argumentCollection = "argument collection"
 		-->
-		<tag creator="3" name="invoke" single="true" xmlstyle="false">
+		<tag name="invoke" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Does either of the following:
 
@@ -4269,7 +4269,7 @@
 				name="argument name"   
 				value="argument value"
 		-->
-		<tag creator="3" name="invokeargument" single="true" xmlstyle="false">
+		<tag name="invokeargument" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Passes the name and value of a parameter to a component method 
 				or a web service. This tag is used within the cfinvoke tag. 			
@@ -4293,7 +4293,7 @@
 				url = "url"   
 				addToken = "Yes" or "No"
 		-->
-		<tag creator="3" name="location" single="true" xmlstyle="false">
+		<tag name="location" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Stops execution of the current page and opens a CFML page or HTML file. 
 			]]></help>
@@ -4324,7 +4324,7 @@
 				[...CFML to be synchronized...]
 			/cflock
 		-->
-		<tag creator="3" name="lock" single="false" xmlstyle="false">
+		<tag name="lock" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Ensures the integrity of shared data. Instantiates the 
 				following kinds of locks:
@@ -4391,7 +4391,7 @@
 				type = "message type"   
 				application = "application name yes or no"
 		-->
-		<tag creator="3" name="log" single="false" xmlstyle="false">
+		<tag name="log" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Writes a message to a log file. 
 			]]></help>
@@ -4459,7 +4459,7 @@
 				...
 			/cflogin
 		-->
-		<tag creator="1" name="login" single="false" xmlstyle="false">
+		<tag name="login" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
 				A container for user login and authentication code. CFML 
 				runs the code in this tag if a user is not already logged in. 
@@ -4497,7 +4497,7 @@
 				password = "password-string"   
 				roles = "roles"
 		-->
-		<tag creator="1" name="loginuser" single="true" xmlstyle="false">
+		<tag name="loginuser" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Identifies an authenticated user to CFML. Specifies the 
 				user ID and roles. Used within a cflogin tag.
@@ -4528,7 +4528,7 @@
 		<!-- 
 			cflogout
 		-->
-		<tag creator="1" name="logout" single="true" xmlstyle="false">
+		<tag name="logout" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Logs the current user out. Removes knowledge of the user ID, 
 				password, and roles from the server. If you do not use this 
@@ -4581,7 +4581,7 @@
 				... HTML or CFML code ...
 			/cfloop
 		-->
-		<tag creator="3" name="loop" single="false" xmlstyle="false">
+		<tag name="loop" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Different items are required based on loop type. Items listed
 				at required can be required but may not be depending on your
@@ -4696,7 +4696,7 @@
 			[(Optional) Mail message body and/or cfhttpparam tags]
 			/cfmail
 		-->
-		<tag creator="3" name="mail" single="false" xmlstyle="false">
+		<tag name="mail" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Sends an e-mail message that optionally contains query output,
 				using an SMTP server. 
@@ -4800,8 +4800,8 @@
 					media type
 				]]></help>
 				<values>
-					<value option="text/plain" />
-					<value option="text/html" />
+					<value option="plain" />
+					<value option="html" />
 				</values>
 			</parameter>
 			<parameter name="mimeattach" type="String" required="false">
@@ -4909,7 +4909,7 @@
 		   		name = "header-name"       
 		   		value = "header-value"
 		-->
-		<tag creator="3" name="xml" single="true" xmlstyle="false">
+		<tag name="mailparam" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Attaches a file or adds a header to an e-mail message. Can only
 				be used in the cfmail tag. You can use more than one 
@@ -4930,14 +4930,83 @@
 				<values>
 					<value option="text/plain" />
 					<value option="text/html" />
+					<value option="html" />
+					<value option="plain" />
+					<value option="text" />
 				</values>
 			</parameter>
 			<parameter name="name" type="String" required="true">
 				<help><![CDATA[
 					Name of header. Case-insensitive. Mutually exclusive with 
-					file attribute.
+					file attribute. 
+					The values listed are from rfc2822
 				]]></help>
-				<values/>
+				<values>
+					<value option="Message-Context"/>
+					<value option="Apparently-To"/>
+					<value option="Approved-By"/>
+					<value option="Fax"/>
+					<value option="Telefax"/>
+					<value option="For-Approval"/>
+					<value option="For-Comment"/>
+					<value option="For-Handling"/>
+					<value option="Mail-System-Version"/>
+					<value option="Mailer"/>
+					<value option="Originating-Client"/>
+					<value option="X-Mailer "/>
+					<value option="X-Newsreader"/>
+					<value option="X-MimeOLE"/>
+					<value option="User-Agent"/>
+					<value option="Originator-Info"/>
+					<value option="Phone"/>
+					<value option="X-Envelope-From"/>
+					<value option="Envelope-To"/>
+					<value option="X-Envelope-To"/>
+					<value option="X-Face"/>
+					<value option="X-RCPT-TO"/>
+					<value option="X-Sender"/>
+					<value option="X-X-Sender"/>
+					<value option="Posted-To"/>
+					<value option="X-Admin"/>
+					<value option="Errors-To"/>
+					<value option="Return-Receipt-To"/>
+					<value option="Read-Receipt-To"/>
+					<value option="X-Confirm-reading-to"/>
+					<value option="Return-Receipt-Requested"/>
+					<value option="Register-Mail-Reply-Requested-By"/>
+					<value option="Abuse-Reports-To"/>
+					<value option="X-Complaints-To"/>
+					<value option="X-Report-Abuse-To"/>
+					<value option="Content-Alias"/>
+					<value option="Delivered-To"/>
+					<value option="X-Loop"/>
+					<value option="Translated-By"/>
+					<value option="Translation-Of"/>
+					<value option="X-UIDL"/>
+					<value option="X-URI"/>
+					<value option="X-URL"/>
+					<value option="X-IMAP"/>
+					<value option="X-OriginalArrivalTime"/>
+					<value option="Precedence"/>
+					<value option="X-MSMail-Priority"/>
+					<value option="X-Priority"/>
+					<value option="Content-Length"/>
+					<value option="Content-Conversion"/>
+					<value option="Content-Class"/>
+					<value option="Content-SGML-Entity"/>
+					<value option="X-MIME-Autoconverted"/>
+					<value option="List-Digest"/>
+					<value option="Mailing-List"/>
+					<value option="X-Mailing-List"/>
+					<value option="List-Software"/>
+					<value option="List-URL"/>
+					<value option="X-Listserver"/>
+					<value option="X-List-Host"/>
+					<value option="Fcc"/>
+					<value option="Speech-Act"/>
+					<value option="Status"/>
+					<value option="X-No-Archive"/>
+				</values>
 			</parameter>
 			<parameter name="value" type="String" required="false">
 				<help><![CDATA[
@@ -4955,7 +5024,7 @@
 	           [Mail part contents]
 	        /cfmailpart
 		-->
-		<tag creator="1" name="mailpart" single="false" xmlstyle="false">
+		<tag name="mailpart" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Specifies one part of a multipart e-mail message. Can only be 
 				used in the cfmail tag. You can use more than one cfmailpart 
@@ -5014,7 +5083,7 @@
 				attribute_name1 = "valuea"   
 				attribute_name2 = "valueb" ...
 		-->
-		<tag creator="3" name="module" single="true" xmlstyle="false">
+		<tag name="module" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Invokes a custom tag for use in CFML application pages. 
 				This tag processes custom tag name conflicts.			
@@ -5113,7 +5182,7 @@
 				locale = "type-value arguments"
 				webservice= "http://....?wsdl" or "name set in Administrator"
 		-->
-		<tag creator="3" name="object" single="true" xmlstyle="false">
+		<tag name="object" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Creates a CFML object, of a specified type.
 				
@@ -5193,7 +5262,7 @@
 			cfobjectcache    
 				action = "clear"
 		-->
-		<tag creator="3" name="objectcache" single="false" xmlstyle="false">
+		<tag name="objectcache" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Flushes the query cache.
 			]]></help>
@@ -5217,7 +5286,7 @@
 				maxRows = "max_rows_output"
 			/cfoutput
 		-->
-		<tag creator="3" name="output" single="false" xmlstyle="false">
+		<tag name="output" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Displays output that can contain the results of processing 
 				CFML variables and functions. Can loop over the results 
@@ -5269,7 +5338,7 @@
 				type = "data_type"   
 				default = "value"
 		-->
-		<tag creator="3" name="param" single="true" xmlstyle="false">
+		<tag name="param" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Tests for a parameter's existence, tests its data type, and, if
 				a default value is not assigned, optionally provides one. 
@@ -5325,7 +5394,7 @@
 				startRow = "number"   
 				generateUniqueFilenames = "boolean"
 		-->
-		<tag creator="3" name="pop" single="true" xmlstyle="false">
+		<tag name="pop" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Retrieves or deletes e-mail messages from a POP mail server.
 			]]></help>
@@ -5448,7 +5517,7 @@
 		    [CFML tags]
 		    /cfprocessingdirective
 		-->
-		<tag creator="3" name="processingdirective" single="false" xmlstyle="true">
+		<tag name="processingdirective" creator="3" single="false" xmlstyle="true">
 			<help><![CDATA[
 				Provides the following insformation to CFML on how to 
 				process the current page: 
@@ -5507,7 +5576,7 @@
 				scale = "decimal places"    
 				null = "Yes" or "No"
 		-->
-		<tag creator="3" name="procparam" single="true" xmlstyle="false">
+		<tag name="procparam" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines stored procedure parameters. This tag is nested within 
 				a cfstoredproc tag.
@@ -5609,7 +5678,7 @@
 				resultSet = "1-n"    
 				maxRows = "maxrows"
 		-->
-		<tag creator="3" name="procresult" single="true" xmlstyle="false">
+		<tag name="procresult" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Associates a query object with a result set returned by a 
 				stored procedure. Other CFML tags, such as cfoutput and 
@@ -5646,7 +5715,7 @@
 				displayname="descriptive name"
 				hint="extended description"
 		-->
-		<tag creator="3" name="property" single="true" xmlstyle="false">
+		<tag name="property" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines properties of a CFML component (CFC). Used to 
 				create complex data types for web services. The attributes of 
@@ -5736,7 +5805,7 @@
 				[SQL statement(s)]
 			/cfquery
 		-->
-		<tag creator="3" name="query" single="false" xmlstyle="false">
+		<tag name="query" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Passes queries or SQL statements to a data source.
 				It is recommended that you use the cfqueryparam tag within 
@@ -5854,7 +5923,7 @@
 				list = "Yes" or "No"
 				separator = "separator character"
 		-->
-		<tag creator="3" name="queryparam" single="true" xmlstyle="false">
+		<tag name="queryparam" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Verifies the data type of a query parameter and, for DBMSs that 
 				support bind variables, enables CFML to use bind variables
@@ -5964,7 +6033,7 @@
 				formula = "formula"
 			/cfreport
 		-->
-		<tag creator="1" name="report" single="false" xmlstyle="false">
+		<tag name="report" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Runs a predefined Crystal Reports report. Applies only to 
 				Windows systems. Uses the CFCRYSTAL.exe file to generate 
@@ -6044,7 +6113,7 @@
 		<!-- 
 			cfrethrow
 		-->
-		<tag creator="3" name="rethrow" single="true" xmlstyle="false">
+		<tag name="rethrow" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Rethrows the currently active exception. Preserves the 
 				exception's cfcatch.type and cfcatch.tagContext variable 
@@ -6056,7 +6125,7 @@
 			cfreturn
 				expr
 		-->
-		<tag creator="3" name="return" single="true" xmlstyle="false">
+		<tag name="return" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Returns result values from a component method. Contains an 
 				expression returned as result of the function.
@@ -6071,7 +6140,7 @@
 				[the content]
 			/cfsavecontent
 		-->
-		<tag creator="3" name="savecontent" single="false" xmlstyle="false">
+		<tag name="savecontent" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Saves the generated content of the cfsavecontent tag, including
 				the results of evaluating expressions and executing custom tags,
@@ -6110,7 +6179,7 @@
 				proxyPassword = "password"   
 				resolveURL = "Yes" or "No"
 		-->
-		<tag creator="3" name="schedule" single="true" xmlstyle="false">
+		<tag name="schedule" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Provides a programmatic interface to the CFML scheduling
 				engine. Can run a CFML page at scheduled intervals, with the 
@@ -6284,7 +6353,7 @@
 				[cfscript code here]
 			/cfscript
 		-->
-		<tag creator="3" name="script" single="false" xmlstyle="false">
+		<tag name="script" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Encloses a code block that contains cfscript statements.
 				
@@ -6305,7 +6374,7 @@
 				startRow = "row_number"   
 				language = "language"
 		-->
-		<tag creator="3" name="search" single="true" xmlstyle="false">
+		<tag name="search" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Searches Verity collections using CFML or K2Server, 
 				whichever search engine a collection is registered by. 
@@ -6399,7 +6468,7 @@
 				passThrough = "HTML_attributes"	
 			/cfselect
 		-->
-		<tag creator="3" name="select" single="false" xmlstyle="false">
+		<tag name="select" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Constructs a drop-down list box form control. Used within a 
 				cfform tag. 
@@ -6510,7 +6579,7 @@
 			cfset 
 				var variable_name = expression
 		-->
-		<tag creator="3" name="set" single="true" xmlstyle="false">
+		<tag name="set" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Sets a value in CFML. Used to create a variable, if it 
 				does not exist, and assign it a value. Also used to call 
@@ -6524,7 +6593,7 @@
 				showDebugOutput = "Yes" or "No"    
 				requestTimeOut = "value in seconds"
 		-->
-		<tag creator="3" name="setting" single="true" xmlstyle="false">
+		<tag name="setting" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Controls aspects of page processing, such as the output of 
 				HTML code in pages. 
@@ -6566,7 +6635,7 @@
 			...
 			/cfsilent
 		-->
-		<tag creator="3" name="silent" single="false" xmlstyle="false">
+		<tag name="silent" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Suppresses output produced by CFML within a tag's scope.
 			]]></help>
@@ -6582,7 +6651,7 @@
 				debug = "Yes" or "No"   
 				returnCode = "Yes" or "No"
 		-->
-		<tag creator="3" name="storedproc" single="true" xmlstyle="false">
+		<tag name="storedproc" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Executes a stored procedure in a server database. It 
 				specifies database connection information and identifies 
@@ -6650,7 +6719,7 @@
 				zero or one cfdefaultcase tags]
 			/cfswitch
 		-->
-		<tag creator="3" name="switch" single="false" xmlstyle="false">
+		<tag name="switch" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Evaluates a passed expression and passes control to the cfcase 
 				tag that matches the expression result. You can, optionally, 
@@ -6681,7 +6750,7 @@
 			/cftable
 		
 		-->
-		<tag creator="3" name="table" single="false" xmlstyle="false">
+		<tag name="table" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Builds a table in a CFML page. This tag renders data as 
 				preformatted text, or, with the HTMLTable attribute, in an 
@@ -6786,7 +6855,7 @@
 				maxLength = "integer"   
 				notSupported = "text"
 		-->
-		<tag creator="3" name="textinput" single="true" xmlstyle="false">
+		<tag name="textinput" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Puts a single-line text entry box in a cfform tag and controls 
 				its display characteristics. 
@@ -7040,7 +7109,7 @@
 				extendedInfo = "additional_information"
 			 	object = "java_except_object"
 		-->
-		<tag creator="3" name="throw" single="true" xmlstyle="false">
+		<tag name="throw" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Throws a developer-specified exception, which can be caught 
 				with a cfcatch tag that has any of the following type attribute
@@ -7109,7 +7178,7 @@
 				var = "variable_name"
 			/cftrace
 		-->
-		<tag creator="1" name="trace" single="false" xmlstyle="false">
+		<tag name="trace" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Displays and logs debugging data about the state of an 
 				application at the time the cftrace tag executes. Tracks 
@@ -7194,7 +7263,7 @@
 				isolation = "read_uncommitted" or "read_committed" or "repeatable_read"
 			/cftransaction
 		-->
-		<tag creator="3" name="transaction" single="false" xmlstyle="false">
+		<tag name="transaction" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Instructs the database management system to treat multiple 
 				database operations as a single transaction. Provides database 
@@ -7253,7 +7322,7 @@
 				notSupported = "text"
 			/cftree
 		-->
-		<tag creator="3" name="tree" single="false" xmlstyle="false">
+		<tag name="tree" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Inserts a tree control in a form. Validates user selections. 
 				Used within a cftree tag block. You can use a CFML query 
@@ -7501,7 +7570,7 @@
 				queryAsRoot = "Yes" or "No"
 				expand = "Yes" or "No"
 		-->
-		<tag creator="3" name="treeitem" single="true" xmlstyle="false">
+		<tag name="treeitem" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Populates a form tree control, created with the cftree tag, 
 				with elements. To display icons, you can use the img values 
@@ -7625,7 +7694,7 @@
 			   One or more cfcatch blocks
 			/cftry
 		-->
-		<tag creator="3" name="try" single="false" xmlstyle="false">
+		<tag name="try" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used with one or more cfcatch tags. Together, they catch and 
 				process exceptions in CFML pages. Exceptions are events 
@@ -7645,7 +7714,7 @@
 				password = "password"
 				formFields = "field_names"
 		-->
-		<tag creator="3" name="update" single="true" xmlstyle="false">
+		<tag name="update" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Updates records in a data source from data in a CFML form
 				or form Scope.
@@ -7718,7 +7787,7 @@
 				useTimeZoneInfo = "Yes" or "No"
 				validate = "Yes" or "No"
 		-->
-		<tag creator="3" name="wddx" single="true" xmlstyle="false">
+		<tag name="wddx" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Serializes and deserializes CFML data structures to the 
 				XML-based WDDX format. The WDDX is an XML vocabulary for 
@@ -7802,7 +7871,7 @@
 				caseSensitive="yes" or "no"
 			/cfxml
 		-->
-		<tag creator="3" name="xml" single="false" xmlstyle="false">
+		<tag name="xml" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Creates a CFML XML document object that contains the 
 				markup in the tag body. This tag can include XML and CFML tags. 
