@@ -6,6 +6,7 @@
  */
 package com.rohanclan.cfml.views.snips;
 
+
 import java.util.Properties;
 import java.util.Enumeration;
 import java.io.FileInputStream;
