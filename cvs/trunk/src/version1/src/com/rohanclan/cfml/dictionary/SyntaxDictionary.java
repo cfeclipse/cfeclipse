@@ -167,6 +167,28 @@ public abstract class SyntaxDictionary {
 		
 		return null;
 	}
+	/**
+	 * gets the attributes(params) for a tag(or function... I think)
+	 * @param tag
+	 * @param attribute
+	 * @param start
+	 * @return
+	 */
+	public Set getFilteredAttributeValues(String tag, String attribute, String start)
+	{
+		Set attribs = getElementAttributes(tag);
+		if(attribs.size() == 0)
+			return null;
+		Object [] tempArray = attribs.toArray(); 
+		for(int i = 0; i < tempArray.length; i++)
+		{
+			Parameter currParam = (Parameter)tempArray[i];
+			String currName = currParam.getName();
+			if(currParam.getName().compareTo(attribute) == 0)
+				return limitSet(currParam.getValues(), start);
+		}
+		return null;
+	}
 	
 	/**
 	 * get the attribtues for tag tag, limited to start
@@ -273,6 +295,10 @@ public abstract class SyntaxDictionary {
 				else if(item instanceof Parameter)
 				{
 					possible = ((Parameter)item).getName();
+				}
+				else if(item instanceof Value)
+				{
+					possible = ((Value)item).getValue();
 				}
 				else
 				{

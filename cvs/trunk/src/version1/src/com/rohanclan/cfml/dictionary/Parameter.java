@@ -26,7 +26,6 @@ package com.rohanclan.cfml.dictionary;
 
 import java.util.Set;
 import java.util.HashSet;
-
 /**
  * @author Rob
  *
@@ -83,6 +82,16 @@ public class Parameter implements Comparable {
 			values = new HashSet();
 		
 		values.add(value);
+	}
+	
+	public Set getValues()
+	{
+		if(values == null)
+			return new HashSet();
+
+		
+		System.err.println("Parameter::getValues() - I have " + values.size() + " elements");
+		return values;
 	}
 	
 	public String getName()

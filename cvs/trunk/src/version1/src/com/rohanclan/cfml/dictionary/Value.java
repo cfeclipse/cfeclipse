@@ -31,7 +31,7 @@ package com.rohanclan.cfml.dictionary;
  * its only here to abstract it a bit and to give some room to play for future 
  * additions
  */
-public class Value {
+public class Value implements Comparable {
 	protected String value;
 	
 	public Value(String val)
@@ -48,8 +48,42 @@ public class Value {
 		return value;
 	}
 	
+	public void setValue(String newValue)
+	{
+		value = newValue;
+	}
+	
 	public String toString()
 	{
 		return value;
 	}
+
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof Parameter)
+		{
+			//if the name is the same and the type is the same
+			//assume its the same
+			if( ((Value)obj).getValue().equals(this.value))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public int compareTo(Object o)
+	{
+		if(o == null)
+			throw new NullPointerException("Null!");
+		
+		if(o instanceof Parameter)
+		{
+			return value.compareTo( ((Value)o).getValue() );
+		}
+		
+		return 0;
+	}
+	
 }

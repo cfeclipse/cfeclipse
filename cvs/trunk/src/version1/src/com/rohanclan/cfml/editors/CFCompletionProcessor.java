@@ -62,6 +62,56 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 */
 	public CFCompletionProcessor(){;}
 
+	
+	/*
+	 * getAttributeValueProposals
+	 * 
+	 * @param syntax The SyntaxDictionary to lookup from
+	 * @param inputText The input string that we're analysing. Should start at the start of the relevant tag
+	 * @param indexOfFirstSpace The index of the first space in the string (really should work this out)
+	 * @param docOffset Offset in the document that the activation occurred at.
+	 *  
+	 * @author Oliver Tupman
+	 */
+	protected ICompletionProposal[] getAttributeValueProposals(SyntaxDictionary syntax, 
+											String inputText, int indexOfFirstSpace, int docOffset)
+	{
+		int lastSpace = inputText.lastIndexOf(" ");
+		int quotes = inputText.lastIndexOf("\"");
+		String valueSoFar = "";
+		if(quotes != -1)
+		{
+			// Attribute entered, user is typing.
+			valueSoFar = inputText.substring(quotes+1, inputText.length());
+		}
+		else
+			quotes = inputText.length() - 2;
+		
+		String attribute = inputText.substring(lastSpace+1, quotes-1);
+		String tag = inputText.substring(0, indexOfFirstSpace);
+		
+		
+		System.err.println("I think I need to be looking up: " + attribute);
+		System.err.println("Tag I think I have is \'" + tag + "\'");
+
+		Set attrProps = ((SyntaxDictionaryInterface)syntax).getFilteredAttributeValues(tag, attribute, valueSoFar);
+		if(attrProps != null/* && attrProps.size() > 0*/)
+		{
+
+			if(attrProps.size() > 0 && ((Value)attrProps.toArray()[0]).getValue().compareTo(valueSoFar) == 0)
+				return null;
+			
+			System.err.println("CFCompletionProcessor::computeCompletionProposals() - I have " + attrProps.size() + " elements available to me");
+			return makeSetToProposal(
+					attrProps,
+					docOffset,
+					TAGTYPE,
+					valueSoFar.length()
+				);
+			
+		}	
+		return null;
+	}
 	/**
 	 * for tag and attribute insight
 	 * this whole thing is a bit of a hack, but basically it looks at the current
@@ -80,7 +130,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			String tagnamespace = "";
 			//where we are going to lookup in sight stuff
 			SyntaxDictionary syntax = null;
-			
+			System.err.println("in CFML completion processor");
 			//assume its not a cftag
 			boolean cftag = false;
 			boolean httag = false;
@@ -128,13 +178,14 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//first token should be the tag name (with <cf attached)
 				tagname = st.nextToken();	
 			}
-
+			System.err.println("Finished tokens");
 			//System.err.println("tag1>>"+tagname+"<<");
 			
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)
 			{
 				//clean it up for our lookup
+				System.err.println("Looking for <cf");
 				if(prefix.trim().substring(0,3).equalsIgnoreCase("<cf"))
 				{
 					cftag = true;
@@ -150,6 +201,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			if(tagname.trim().startsWith("<"))
 			{
 				//do the html dictionary
+				System.err.println("Got an HTML tag");
 				httag = true;
 				tagname = tagname.trim().substring(1);
 				syntax = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
@@ -167,7 +219,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//in the end should have the thing to limit with
 				limiting = st.nextToken();
 			}
-			
+			System.err.println("Done more token crap");
 			//if it looks like they have started typing the contents of an
 			//attribtue (or they are done) set limiting to nothing
 			if(limiting.indexOf("\"") > 0 || limiting.indexOf("'") > 0)
@@ -184,19 +236,45 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//can filter out non matches
 				String taglimiting = prefix.trim().substring(3);
 				//System.err.println(limiting);
+				System.err.println("In cf tag name lookup");
+				System.err.println("taglimiting is: \'" + taglimiting + "\'");
+				System.err.println("doc offset: " + documentOffset);
+				System.err.println("invoker: \'" + invoker + "\'"); 
+				System.err.println("prefix: \'" + prefix + "\'");
+					
+				if(invoker.charAt(0) == '\"')
+				{
+					if(document.getChar(documentOffset) == '\"' &&
+					   document.getChar(documentOffset-2) != '=')
+					{	// " entered and there already is one in the document.
+						document.replace(documentOffset, 1, "");
+						return null;	 	
+					}
+				}				
 				
-				return makeSetToProposal(
-					((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
-					//CFSyntaxDictionary.getFilteredElements(taglimiting),
-					documentOffset,
-					TAGTYPE,
-					taglimiting.length()
-				);
+				// If the taglimiting has a space in we're assuming that the user
+				// is intending to input or has inputted some attributes.
+				int indexOfFirstSpace = taglimiting.indexOf(" "); 
+				if(indexOfFirstSpace != -1)
+				{
+					return getAttributeValueProposals(syntax, taglimiting, indexOfFirstSpace, 
+														documentOffset);
+				}
+				else
+				{
+					return makeSetToProposal(
+						((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
+						documentOffset,
+						TAGTYPE,
+						taglimiting.length()
+					);
+				}
 			}
 			else if(httag && limiting.length() <= 0 && (!invoker.equals(" ") && !invoker.equals("\t") && !invoker.equals(">")) )
 			{
 				String taglimiting = prefix.trim().substring(1);
 				//System.out.println("tl:" + taglimiting);
+				System.err.println("Doing tag limiting");
 				return makeSetToProposal(
 					((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
 					//CFSyntaxDictionary.getFilteredElements(taglimiting),
@@ -213,6 +291,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//&& !current_partition.equals(CFPartitionScanner.CSS_TAG)
 			)
 			{
+				System.err.println("Close tag crap");
 				//System.err.println("i go");
 				if(syntax != null && syntax.tagExists(tagname))
 				{	
@@ -257,12 +336,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			{	
 				//we are probably in need of attribtue in sight
 				//clean up the text typed so far
+				System.err.println("Something else");
+				
 				limiting = limiting.trim();
 				//System.err.println("tag2>>"+tagname+"<<");
 				System.err.println("lim2::"+limiting+"::");
 				System.err.println("prefix::"+prefix+"::"+prefix.indexOf('>'));
-				
-				
 				
 				//and return our best guess (tagname should have been defined
 				//up there ^
@@ -298,15 +377,21 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		if(st != null)
 		{
 			Object obj[] = new Object[st.size()];
+			System.err.println("st is " + st.size() + " elements in size");
 			TreeSet ts = new TreeSet();
 			ts.addAll(st);
-			//obj = new TreeSet(st).toArray();
-			obj = ts.toArray();
-			//obj = st.toArray();
+			// TODO: This needs to be changed. Probably something to do with the Value class.
+			if(ts.size() != st.size())
+			{
+				System.err.println("CFCompletionProcessor::makeSetToPropsal() - Proposal tree set is different size from input set! Copying manually...");
+				obj = st.toArray();
+			}
+			else 
+				obj = ts.toArray();
 			
 			//build a Completion dodad with the right amount of records
 			ICompletionProposal[] result = new ICompletionProposal[obj.length];
-	
+			
 			for(int i=0; i<obj.length; i++)
 			{
 				String name = "";
@@ -343,6 +428,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					//	display += "*";
 					help = ((Parameter)obj[i]).getHelp();
 				}
+				else if(obj[i] instanceof Value) 
+				{
+					name = ((Value)obj[i]).getValue();
+					display = ((Value)obj[i]).toString();
+					help = "";
+				}
 				else if(obj[i] instanceof String)
 				{
 					name = obj[i].toString();
@@ -353,7 +444,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//now remove chars so when they hit enter it wont write the whole
 				//word just the part they havent typed
 				name = name.substring(currentlen, name.length());
-				//System.err.println("in::" + name);
 				
 				//the tag len and icon
 				int insertlen = 0;
@@ -394,7 +484,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * What characters cause us to wake up (for tags and attributes)
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
-		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>' };
+		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>', '\"' };
 	}
 
 	/**

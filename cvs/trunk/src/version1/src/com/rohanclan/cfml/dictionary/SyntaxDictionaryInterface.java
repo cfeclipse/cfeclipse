@@ -78,6 +78,8 @@ public interface SyntaxDictionaryInterface {
 	 */
 	public Set getFilteredAttributes(String tag, String start);
 	
+	public Set getFilteredAttributeValues(String tag, String attribute, String start);
+	
 	/**
 	 * Gets the functions usage by passing the function name
 	 * @param functionname function name

@@ -49,7 +49,7 @@ public class DictionaryManager {
 	/** all the dictionaries */
 	private static Map dictionaries = new HashMap();
 	
-	private DictionaryManager();
+	private DictionaryManager(){;}
 	
 	/**
 	 * Tell the dictionaries to load themselves
