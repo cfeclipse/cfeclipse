@@ -31,7 +31,7 @@
 				tag. The tag is often used with conditional logic to stop 
 				processing a page when a condition occurs.			
 			]]></help>
-			<parameter name="showerror" type="String" required="true">
+			<parameter name="showerror" type="String" required="false">
 				<help><![CDATA[
 					Error to display, in a standard CFML error page, 
 					when tag executes
@@ -262,7 +262,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="type" type="String" required="true">
+			<parameter name="type" type="String" required="false">
 				<help><![CDATA[
 					a type name; data type of the argument.
 				]]></help>
@@ -375,7 +375,7 @@
 				You can use this tag for simple URLs and for URLs that contain 
 				URL parameters.
 			]]></help>
-			<parameter name="action" type="String" required="true">
+			<parameter name="action" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
 				<values>
@@ -4220,7 +4220,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="passowrd" type="String" required="false">
+			<parameter name="password" type="String" required="false">
 				<help><![CDATA[
 					Overrides passowrd specified in Administrator > Web Services
 				]]></help>
