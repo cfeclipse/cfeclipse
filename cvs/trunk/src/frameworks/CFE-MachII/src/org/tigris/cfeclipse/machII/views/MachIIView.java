@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
+import com.rohanclan.cfml.editors.actions.OpenCFCAtMethodAction;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 import org.tigris.cfeclipse.machII.views.forms.PropertyForm;
@@ -310,7 +311,7 @@ public class MachIIView extends ViewPart {
 		openAct.run();		
 	}
 	
-	private void openCFCForUser(String cfcName, String appRoot)
+	private IFile getCFCFile(String cfcName, String appRoot)
 	{
 		//
 		// The assumption is that the entire CFE project is the Mach-II project.
@@ -322,16 +323,23 @@ public class MachIIView extends ViewPart {
 		IProject appRootFolder = this.sourceFile.getProject();
 		if(!appRootFolder.exists())
 		{
-			showMessage("Application root does not exist.");
-			return;
+			return null;
 		}
 		String typeLocation = cfcName;
 		typeLocation = typeLocation.replace('.', '/');
 
 		IFile targetFile = appRootFolder.getFile(typeLocation + ".cfc");
-		if(!targetFile.exists())
+		
+		return targetFile;
+	}
+	
+	private void openCFCForUser(String cfcName, String appRoot)
+	{
+		IFile targetFile = getCFCFile(cfcName, appRoot);
+		if(targetFile == null || !targetFile.exists())
 		{
 			showMessage("Cannot find component \'" + cfcName + "\'");
+			return;
 		}
 		GenericOpenFileAction openAct = new GenericOpenFileAction(targetFile);
 		openAct.run();
@@ -394,6 +402,17 @@ public class MachIIView extends ViewPart {
 		}
 		if(!found)
 			showMessage("Could not find listener \'" + targetNode.getListener() + "\'");
+		
+		//openCFCForUser(searchNode.getType(), getAppRootFromSecondLevelNode(node));
+		IFile targetFile = getCFCFile(searchNode.getType(), getAppRootFromSecondLevelNode(targetNode.getParent()));
+		String method = targetNode.getMethod();
+		if(method == null)
+			return;
+		
+		OpenCFCAtMethodAction openAct = new OpenCFCAtMethodAction();
+		openAct.setFile(targetFile);
+		openAct.setMethodName(method);
+		openAct.run();
 	}
 	
 	private void handleDoubleClick()
