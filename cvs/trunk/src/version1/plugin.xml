@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.4"
+   version="1.1.5"
    provider-name="RohanClan"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -213,33 +213,36 @@
       </editorContribution>
    </extension>
    
-   <!-- /////
-	<extension 
-		point="org.eclipse.ui.actionDefinitions">
-		<actionDefinition
-			id="org.eclipse.ui.edit.text.contentAssist.proposals" />
-	</extension>
-	
-	<extension 
-		point="org.eclipse.ui.acceleratorSets">
-		<acceleratorSet
-			scopeId="org.eclipse.ui.globalScope"
+	<!-- I have no idea why this doesnt work. (or why it would) -->
+	<!-- <extension point="org.eclipse.ui.acceleratorSets">
+		<acceleratorSet 
+			scopeId="org.eclipse.ui.textEditorScope" 
+			configurationId="org.eclipse.ui.emacsAcceleratorConfiguration"> -->
+			
+			<!-- id="org.eclipse.ui.edit.text.contentAssist.proposals" -->
+		<!--	<accelerator key="Ctrl+1"
+				id="org.eclipse.ui.edit.text.contentAssist.contextInformation"
+			/> 
+		</acceleratorSet>
+		
+		<acceleratorSet 
+			scopeId="org.eclipse.ui.textEditorScope" 
 			configurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-			<accelerator
-				key="CTRL+q"
-				id="org.eclipse.ui.edit.text.contentAssist.proposals"/>
+			
+			<accelerator key="Ctrl+Space" 
+				id="org.eclipse.ui.edit.text.contentAssist.contextInformation"
+			/>
 		</acceleratorSet>
-
-		<acceleratorSet
-			scopeId="org.eclipse.ui.globalScope"
-			configurationId="org.eclipse.ui.emacsAcceleratorConfiguration">
-			<accelerator
-				key="CTRL+q"
-				id="org.eclipse.ui.edit.text.contentAssist.proposals"/>
+		
+		<acceleratorSet 
+			scopeId="org.eclipse.ui.textEditorScope" 
+			configurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			
+			<accelerator platform="carbon" key="Command+1" 
+				id="org.eclipse.ui.edit.text.contentAssist.contextInformation"
+			/>
 		</acceleratorSet>
-	</extension> 
-	-->
-   
+	</extension> -->
    
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- popup menu -->
@@ -479,6 +482,12 @@
 		    icon="icons/obj16/snip.gif"
 			category="com.rohanclan.cfml"
 			class="com.rohanclan.cfml.views.snips.SnipTreeView"
+		/>
+		<view id="com.rohanclan.cfml.views.browser"
+			name="Browser View" 
+			icon="icons/obj16/snip.gif" 
+			category="com.rohanclan.cfml" 
+			class="com.rohanclan.cfml.views.browser.BrowserView"
 		/>
 	</extension>
 	
