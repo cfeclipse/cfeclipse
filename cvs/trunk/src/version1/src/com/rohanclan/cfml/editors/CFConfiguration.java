@@ -74,11 +74,6 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	private CFMLPreferenceManager preferenceManager;
 	private int tabWidth;
 	
-	
-	/**
-	 * Need a color manager to get partition colors
-	 * @param colorManager that would be the color manager
-	 */
 	private void configTagIndentStrat() {
 		indentTagStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
 		indentTagStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
@@ -91,6 +86,10 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		//indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
 	}
 	
+	/**
+	 * Need a color manager to get partition colors
+	 * @param colorManager that would be the color manager
+	 */
 	public CFConfiguration(ColorManager colorManager, CFMLEditor editor) 
 	{
 		this.colorManager = colorManager;
@@ -351,7 +350,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	/**
 	 * get all the damager and repairers for the source type
 	 */
-	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
+	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) 
+	{
 		PresentationReconciler reconciler = new PresentationReconciler();
 
 		//setup the partiton scanner to break and fix each part of the
@@ -528,7 +528,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	{
 		//keep the hover only in the parts where it should be
 		//i.e. not in comments ... (we could add a javascript
-		//css specific thing in the future...
+		//css specific thing in the future...)
 		if(contentType == CFPartitionScanner.ALL_TAG)
 		{
 			return new CFTextHover(

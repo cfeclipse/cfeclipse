@@ -58,6 +58,9 @@ import org.eclipse.ui.editors.text.TextEditor;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import org.eclipse.jface.action.Action;
 
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+
 import com.rohanclan.cfml.util.CFPluginImages;
 //import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
@@ -90,10 +93,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	{
 		//TODO: Once we get the document outline going, we can update it from here.
 		//On save parsing should apparently go into a builder.	
-
 		super.doSave(monitor);
-		
-		
 	}
 	
 	public CFMLEditor() 
@@ -122,7 +122,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	{
 		//this.parent = parent;
 		super.createPartControl(parent);
-		
+		this.setBackgroundColor();
 	}
 	
 	/**
@@ -162,18 +162,19 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 		
 		CfmlTagItem cti = cfd.getTagAt(startpos,startpos);
 		
-		
-		if(cti != null)
-		    
+		if(cti != null)   
 		{
-		    
-
 			if(cti.matchingItem != null) {
 				jumpAction.setDocPos(cti.matchingItem.getEndPosition());
 				jumpAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
-				Action jumpNow = new Action("Jump to end tag", 
-											CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_FORWARD)
-											) { public void run() { jumpAction.run(null); } };
+				Action jumpNow = new Action(
+					"Jump to end tag", 
+					CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_FORWARD)
+				) { 
+					public void run() { 
+						jumpAction.run(null);
+					} 
+				};
 				menu.add(jumpNow);			
 			}
 			
@@ -281,9 +282,31 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 				//"Tab preferences have changed. Resetting the editor."
 			//);
 			ISourceViewer sourceViewer = getSourceViewer();
-			sourceViewer.getTextWidget().setTabs(
-				configuration.getTabWidth(sourceViewer)
-			);
-        }
+			if(sourceViewer != null)
+			{
+				sourceViewer.getTextWidget().setTabs(
+					configuration.getTabWidth(sourceViewer)
+				);
+			}
+		}
+		setBackgroundColor();
     }
+	
+	/**
+	 * Set the background color of the editor window based on the user's preferences
+	 */
+	private void setBackgroundColor()
+	{
+		// Only try to set the background color when the source viewer is available
+		if(this.getSourceViewer() != null)
+		{
+			CFMLPreferenceManager manager = new CFMLPreferenceManager(); 
+			// Set the background color of the editor
+			this.getSourceViewer().getTextWidget().setBackground(
+				new org.eclipse.swt.graphics.Color(this.getSourceViewer().getTextWidget().getDisplay(),
+					manager.getColor(ICFMLPreferenceConstants.P_COLOR_BACKGROUND)
+				)
+			);
+		}
+	}
 }

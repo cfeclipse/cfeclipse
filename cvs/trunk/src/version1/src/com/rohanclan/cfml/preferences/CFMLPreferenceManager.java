@@ -64,6 +64,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final RGB DEFAULT_COLOR_UNKTAG 			= ICFColorConstants.UNK_TAG;
 	private static final RGB DEFAULT_COLOR_FORMTAG			= ICFColorConstants.FORM;
 	private static final RGB DEFAULT_COLOR_TABLETAG		= ICFColorConstants.TABLE;
+	private static final RGB DEFAULT_COLOR_BACKGROUND		= ICFColorConstants.BACKGROUND_COLOR;
 	
 	// Scribble pad defaults
 	private static final String DEFAULT_SCRIBBLE_PAD_FILE = "scribble.cfm";
@@ -107,6 +108,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		store.setDefault(P_COLOR_JSCRIPT_FUNCTION, getColorString(DEFAULT_COLOR_JSCRIPTFUNCTION));
 		store.setDefault(P_COLOR_STRING, getColorString(DEFAULT_COLOR_STRING));
 		store.setDefault(P_COLOR_HTM_TAG, getColorString(DEFAULT_COLOR_TAG));
+		store.setDefault(P_COLOR_BACKGROUND, getColorString(DEFAULT_COLOR_BACKGROUND));
 		store.setDefault(P_COLOR_UNK_TAG, getColorString(DEFAULT_COLOR_UNKTAG));
 		store.setDefault(P_COLOR_HTM_FORM_TAG, getColorString(DEFAULT_COLOR_FORMTAG));
 		store.setDefault(P_COLOR_HTM_TABLE_TAG, getColorString(DEFAULT_COLOR_TABLETAG));

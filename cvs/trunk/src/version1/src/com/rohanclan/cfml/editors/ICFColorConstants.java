@@ -76,5 +76,7 @@ public interface ICFColorConstants {
 	RGB CSS_TAG     		= new RGB(153, 0, 153);
 	
 	/** all xml type tags (i.e. not cf and not html */
-	RGB UNK_TAG				= new RGB(0, 0, 128);
+	RGB UNK_TAG			= new RGB(0, 0, 128);
+	/** editor background color */
+	RGB BACKGROUND_COLOR = new RGB(255, 255, 255);
 }

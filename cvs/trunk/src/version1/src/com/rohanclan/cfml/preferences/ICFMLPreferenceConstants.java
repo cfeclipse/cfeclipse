@@ -71,6 +71,9 @@ public interface ICFMLPreferenceConstants {
 	/** all xml type tags (i.e. not cf and not html */
 	String P_COLOR_UNK_TAG			= "unknowTagColors";
 	
+	/** background color of the text editor */
+	String P_COLOR_BACKGROUND			= "backgroundColor";
+	
 	//////////////////////////////////////
 	// Parser preferences
 	String P_PARSE_DOCFSCRIPT			= "__parseCFScript";

@@ -70,7 +70,7 @@ public class HTMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 		addField(new ColorFieldEditor(P_COLOR_JSCRIPT_FUNCTION,"Ja&vascript Function:",getFieldEditorParent()));
 				
 		addField(new ColorFieldEditor(P_COLOR_CSS,"CSS Te&xt:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CSS_TAG,"CSS Val&ue:",getFieldEditorParent()));
+		//addField(new ColorFieldEditor(P_COLOR_CSS_TAG,"CSS Val&ue:",getFieldEditorParent()));
 		
 		addField(new ColorFieldEditor(P_COLOR_UNK_TAG,"&Other Tags:",getFieldEditorParent()));
 	}

@@ -73,7 +73,8 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_KEYWORD,"CFScript Key&word:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_FUNCTION,"CFScript Funct&ion:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_STRING,"CFScript Strin&g:",getFieldEditorParent()));
-
+		
+		addField(new ColorFieldEditor(P_COLOR_BACKGROUND,"Back&ground:",getFieldEditorParent()));
 	}
 	 
 	public void init(IWorkbench workbench){;}
