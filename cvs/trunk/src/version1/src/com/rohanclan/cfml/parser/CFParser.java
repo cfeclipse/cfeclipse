@@ -187,7 +187,7 @@ public class CFParser {
 	 * @param inDoc - the document to run the tag matcher over.
 	 * @return an Array of TagMatches
 	 */
-	protected ArrayList getTagMatches(IDocument inDoc)
+	public ArrayList getTagMatches(IDocument inDoc)
 	{
 		ArrayList matches = new ArrayList();
 		String inText = inDoc.get();
@@ -203,7 +203,10 @@ public class CFParser {
 			int lineNumber = 0;
 			try {
 				lineNumber = inDoc.getLineOfOffset(matcher.start());
-			System.err.println("Line " + inDoc.getLineOfOffset(matcher.start()) + ": Got the text \'" + matcher.group() + "\'");
+				System.err.println(
+					"Line " + inDoc.getLineOfOffset(matcher.start()) 
+					+ ": Got the text \'" + matcher.group() + "\'"
+				);
 			}catch(BadLocationException excep) {
 				//System.err.println("Apparently the match was out of the document!");
 				userMessage(0, "getTagMatches", "Apparently the match was out of the document!");
@@ -585,14 +588,16 @@ public class CFParser {
 	 * 
 	 * TODO: break open CFSET's and grab variable assignments.
 	 * TODO: somehow implement tag variable grabbing (i.e. from <cfquery>'s 'name' attribute) Should the tag object do it, or the parser?
+	 * 
 	 */
 	public CFDocument createDocTree(ArrayList matches)
 	{
-		
 		CFDocument newDoc = new CFDocument();
+		
 		Stack matchStack = new Stack();
 		ArrayList rootElements = new ArrayList();
 		TagItem rootItem = new TagItem(0, 0, 0, "Doc Root");
+		
 		matchStack.push(rootItem);
 		
 		int matchPos = 0;
@@ -604,7 +609,6 @@ public class CFParser {
 				
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
-					//
 					// Is a tag
 					if(matchStr.charAt(1) == '/')
 					{
@@ -615,7 +619,6 @@ public class CFParser {
 						int tagEnd = matchStr.indexOf(" ");	// Look for the first space
 						if(tagEnd == -1)
 						{
-							//
 							// No spaces, therefore it has no attributes (i.e. <cfscript>)
 							tagEnd = matchStr.indexOf(">");
 						}
@@ -630,14 +633,12 @@ public class CFParser {
 								tagName = tagName.substring(0, tagName.length()-1); // Is a self-closer (i.e. <br/>)
 							isACloser = true;
 						}
-						//
 						// Get the attributes from the tag.
 						String attributes = match.match.substring(tagEnd, match.match.length()-1); // minus one to strip the closing '>'
 						attrMap = stripAttributes(attributes);
 
 						if(IsCFTag(tagName))
 						{
-							//
 							// Anything within a CFScript block should really be placed at the current level of the
 							// doc tree. So send it off to the CFScript block hanlder
 							// TODO: CFScript blocks are ignored at present! Sort it! Should there be a specialised cfscript tag that does it?
@@ -655,10 +656,21 @@ public class CFParser {
 					}
 				}
 			}
+			
+			newDoc.docTree = matchStack;
+			
 		}catch(Exception anyException) {
-			parserState.addMessage(new ParseMessage(getLineNumber(matchPos), matchPos, matchPos, "", "Doc tree creation: caught an unhandled exception: " + anyException.getMessage()));
-			System.err.println(Util.GetTabs(matchStack) + "Parser: Caught an exception!" + anyException.getMessage());
+			parserState.addMessage(new ParseMessage(
+				getLineNumber(matchPos), matchPos, matchPos, "", 
+				"Doc tree creation: caught an unhandled exception: " 
+				+ anyException.getMessage()
+			));
+			System.err.println(
+				Util.GetTabs(matchStack) + "Parser: Caught an exception!" 
+				+ anyException.getMessage()
+			);
 		}
+		
 		return newDoc;
 	}
 	
@@ -976,4 +988,16 @@ public class CFParser {
 	{
 		return parseDoc(doc2Parse.get());
 	}
+	
+	/**
+	 * Parses the document and saves the result into the parseResult variable
+	 * so it maintains it's tree.
+	 * @author rob
+	 */
+	public void parseSaveDoc()
+	{
+		System.out.println(parseDoc.get());
+		parseResult = parseDoc();
+	}
+	
 }

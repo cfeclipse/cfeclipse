@@ -40,4 +40,9 @@ public class TagMatch {
 		endPos = end;
 		lineNumber = lineNum;
 	}
+	
+	public String toString()
+	{
+		return this.match;
+	}
 }
