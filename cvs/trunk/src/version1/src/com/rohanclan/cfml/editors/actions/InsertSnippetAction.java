@@ -75,12 +75,12 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
 			
-			int cursorOffset = ((ITextSelection)sel).getOffset()-1;
+			int cursorOffset = ((ITextSelection)sel).getOffset();
 			int lastSpaceOffset = -1;
 			int nextSpaceOffset = -1;
 			FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
 			try {
-			    IRegion lastSpace = finder.find(cursorOffset,"\\s",false,false,false,true);
+			    IRegion lastSpace = finder.find(cursorOffset-1,"[^0-9a-zA-Z_-]",false,false,false,true);
 			    
 			    if (lastSpace == null) {
 			        lastSpaceOffset = 0;
@@ -89,25 +89,29 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			        lastSpaceOffset = lastSpace.getOffset()+1;
 			    }
 			    
+			    //System.out.println("Last Space at" + lastSpaceOffset);
+			    //System.out.println("Cursot at" + cursorOffset);
+			    
 			    if (cursorOffset > lastSpaceOffset) {
 			        // ok, it could be valid, but we need to check what comes after the cursor.
-			        if (cursorOffset != doc.getLength()-1) {
-			            IRegion nextSpace = finder.find(cursorOffset,"\\s",true,false,false,true);
+			        if (cursorOffset != doc.getLength()) {
+			            //System.out.println("yep");
+			            IRegion nextSpace = finder.find(cursorOffset-1,"[^0-9a-zA-Z_-]",true,false,false,true);
 			            if (nextSpace != null
-			                    && nextSpace.getOffset() == cursorOffset+1) {
-			                sequence = doc.get().substring(lastSpaceOffset,cursorOffset+1);
+			                    && nextSpace.getOffset() == cursorOffset) {
+			                //System.out.println("Next space bit");
+			                sequence = doc.get().substring(lastSpaceOffset,cursorOffset);
 			            }
 			            
 			        }
 			        else {
-			            sequence = doc.get().substring(lastSpaceOffset,cursorOffset+1);
+			            sequence = doc.get().substring(lastSpaceOffset,cursorOffset);
 			        }
 			    }
 			}
 			catch (Exception e) {
 			    e.printStackTrace();
 			}
-			
 			
 			if (sequence.length() > 0) {
 			    

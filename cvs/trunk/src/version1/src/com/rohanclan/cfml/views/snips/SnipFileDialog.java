@@ -345,8 +345,8 @@ public class SnipFileDialog extends Dialog {
 		if (!snippetNameText.getText().matches("[0-9a-zA-Z _-]+")) {
 		    errorMessage = "The snippet name can only contain numbers, alphabetic characters, space underscore and dash.";
 		}
-		else if (snippetKeyComboText.getText().length() > 0 && !snippetKeyComboText.getText().matches("[0-9a-zA-Z _-]+")) {
-		    errorMessage = "The trigger text can only contain numbers, alphabetic characters, space underscore and dash.";
+		else if (snippetKeyComboText.getText().length() > 0 && !snippetKeyComboText.getText().matches("[0-9a-zA-Z_-]+")) {
+		    errorMessage = "The trigger text can only contain numbers, alphabetic characters, underscore and dash.";
 		}
 		errorMessageLabel.setText(errorMessage == null ? "" : errorMessage); //$NON-NLS-1$
 	    
