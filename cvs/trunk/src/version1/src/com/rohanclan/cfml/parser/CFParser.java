@@ -370,7 +370,7 @@ public class CFParser {
 	 * If the item does not match the most recent item we've a problem. At the moment
 	 * it reports an error and throws away the closer.
 	*/
-		//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
+		System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
 		// Closing tag, so we attempt to match it to the current top of the stack.
 		String closerName = match.match;
 		if(closerName.indexOf("</cf") != -1)
@@ -380,7 +380,17 @@ public class CFParser {
 			
 			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
 //System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
-		
+
+			if(topItem instanceof TagItem)
+			{
+				try {
+				TagItem tempItem = new TagItem(match.lineNumber, match.startPos, match.endPos+1, match.match);
+				((TagItem)topItem).setMatchingItem(tempItem);
+				} catch(Exception e){
+					System.err.println("Caught exception: " + e.getMessage());
+					e.printStackTrace();
+				}
+			}
 			if(topItem.itemName.compareTo(closerName) == 0)
 			{
 				DocItem parentItem = (DocItem)matchStack.pop();
@@ -401,10 +411,11 @@ public class CFParser {
 			else
 			{
 				//
-				// We just report that a parse error has occured and we will continue trying to parse the document.
-				// TODO: Record errors somehow and ensure we don't overload the user with parse errors caused by one
-				// error that occured earlier.
-				TagMatch tempMatch = new TagMatch(match.match, match.startPos, match.endPos, getLineNumber(match.startPos));
+				// If we're here that means that the top item of the match stack isn't the
+				// opener of the current closer. Therefore we report this as an error
+				// and finish parsing as we can't easily make sense of the rest of the document.
+				TagMatch tempMatch = new TagMatch(match.match, match.startPos, match.endPos, 
+													getLineNumber(match.startPos));
 				userMessage(matchStack.size(), 
 							"handleClosingTag", "Closing tag \'" + match.match + 
 							"\' does not match the current parent item: \'" + topItem.itemName + "\'", 
@@ -413,7 +424,9 @@ public class CFParser {
 				{
 					TagMatch currMatch = (TagMatch)matchStack.pop();
 					userMessage(matchStack.size(),
-								"handleClosingTag", "Tag trace: \'" + currMatch.match + "\' at line " + getLineNumber(currMatch.startPos), USRMSG_ERROR, currMatch); 
+								"handleClosingTag", "Tag trace: \'" + 
+								currMatch.match + "\' at line " + 
+								getLineNumber(currMatch.startPos), USRMSG_ERROR, currMatch); 
 				}
 				return false;
 				// 

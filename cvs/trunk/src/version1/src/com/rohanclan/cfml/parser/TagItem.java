@@ -102,6 +102,10 @@ public class TagItem extends DocItem {
 		return matchingItem;
 	}
 	
+	public void setMatchingItem(DocItem closer) {
+		matchingItem = closer;
+	}
+	
 	public TagItem(int line, int startDocPos, int endDocPos, String name)
 	{
 		super(line, startDocPos, endDocPos, name);
