@@ -274,7 +274,15 @@ public class CFParser implements IEditorActionDelegate {
 		if( targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor )
 		{
 			editor = (ITextEditor)targetEditor;
+			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+			this.parseDoc = doc;
 		}
+		
+		//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+		
+		//IDocument testdoc = ((ITextEditor)targetEditor).getDocumentProvider().getDocument(targetEditor);
+		//this.parseDoc = testdoc;
+		//System.err.println(">>>" + testdoc + "<<<");
 	}
 
 	public void run() {

@@ -33,6 +33,11 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
 import com.rohanclan.cfml.editors.CFPartitionScanner;
 import org.eclipse.jface.text.BadLocationException;
+//import org.eclipse.ui.IFileEditorInput;
+//import org.eclipse.jface.text.source.ISourceViewer;
+//import org.eclipse.jface.text.ITextViewer;
+//import org.eclipse.jface.text.source.SourceViewer;
+//import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
 /**
  * @author Rob
@@ -51,11 +56,11 @@ public class AutoCommentAction extends Encloser implements IEditorActionDelegate
 		if( targetEditor instanceof ITextEditor )
 		{
 			editor = (ITextEditor)targetEditor;
-		}
+		}	
 	}
 
 	public void run(IAction action) 
-	{
+	{ 
 		try
 		{
 			if(editor != null)
