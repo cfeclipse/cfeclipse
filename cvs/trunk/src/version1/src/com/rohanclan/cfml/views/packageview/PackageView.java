@@ -3,6 +3,8 @@ package com.rohanclan.cfml.views.packageview;
 import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.ide.IDEActionFactory;
+import org.eclipse.ui.ide.IIDEActionConstants;
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
@@ -15,10 +17,14 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.QualifiedName;
 
 import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
+import com.rohanclan.cfml.parser.DocItem;
 
 
 /**
@@ -45,6 +51,11 @@ public class PackageView extends ViewPart {
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
+	
+	private Action makeFolderWWWRoot;
+	private Action makeFolderCFCRoot;
+	private Action makeFolderCF_Root;
+	private Action makeFolderDefault;
 
 	/*
 	 * The content provider class is responsible for
@@ -56,159 +67,18 @@ public class PackageView extends ViewPart {
 	 * (like Task List, for example).
 	 */
 	 
-	class TreeObject implements IAdaptable {
-		private String name;
-		private TreeParent parent;
-		
-		public TreeObject(String name) {
-			this.name = name;
-		}
-		public String getName() {
-			return name;
-		}
-		public void setParent(TreeParent parent) {
-			this.parent = parent;
-		}
-		public TreeParent getParent() {
-			return parent;
-		}
-		public String toString() {
-			return getName();
-		}
-		public Object getAdapter(Class key) {
-			return null;
-		}
-	}
-	
-	class TreeParent extends TreeObject {
-		private ArrayList children;
-		public TreeParent(String name) {
-			super(name);
-			children = new ArrayList();
-		}
-		public void addChild(TreeObject child) {
-			children.add(child);
-			child.setParent(this);
-		}
-		public void removeChild(TreeObject child) {
-			children.remove(child);
-			child.setParent(null);
-		}
-		public TreeObject [] getChildren() {
-			return (TreeObject [])children.toArray(new TreeObject[children.size()]);
-		}
-		public boolean hasChildren() {
-			return children.size()>0;
-		}
-	}
-
-	class ViewContentProvider implements IStructuredContentProvider, 
-										   ITreeContentProvider {
-		private TreeParent invisibleRoot;
-
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
-		public void dispose() {
-		}
-		public Object[] getElements(Object parent) {
-			if (parent.equals(getViewSite())) {
-				if (invisibleRoot==null) initialize();
-				return getChildren(invisibleRoot);
-			}
-			return getChildren(parent);
-		}
-		public Object getParent(Object child) {
-			if (child instanceof TreeObject) {
-				return ((TreeObject)child).getParent();
-			}
-			return null;
-		}
-		public Object [] getChildren(Object parent) {
-			if (parent instanceof TreeParent) {
-				return ((TreeParent)parent).getChildren();
-			}
-			return new Object[0];
-		}
-		public boolean hasChildren(Object parent) {
-			if (parent instanceof TreeParent)
-				return ((TreeParent)parent).hasChildren();
-			return false;
-		}
-/*
- * We will set up a dummy model to initialize tree heararchy.
- * In a real code, you will connect to a real model and
- * expose its hierarchy.
- */
-		private TreeObject addFile(IFile currFile) {
-			TreeObject file = new TreeObject(currFile.getName());
-			
-			return file;
-		}
-		
-		private TreeObject addFolder(IFolder currFolder) {
-			TreeParent folder = new TreeParent(currFolder.getName());
-			try {
-				IResource children[] = currFolder.members();
-				for(int i = 0; i < children.length; i++) {
-					folder.addChild(addResource(children[i]));
-				}
-			} catch(CoreException ex) {
-				ex.printStackTrace();
-			}
-			
-			return folder;
-		}
-		
-		private TreeObject addResource(IResource currRes) {
-			if(currRes instanceof IFile)
-				return addFile((IFile)currRes);
-			else if(currRes instanceof IFolder)
-				return addFolder((IFolder)currRes);
-			
-			return new TreeObject(currRes.getName());
-		}
-		
-		private TreeObject addProject(IProject currProject) {
-			TreeParent projNode = new TreeParent(currProject.getName());
-			
-			if(!currProject.isOpen())
-				return projNode;
-			
-			try {
-				IResource children[] = currProject.members();
-				for(int i = 0; i < children.length; i++) {
-					projNode.addChild(addResource(children[i]));
-				}
-			
-			} catch(CoreException ex) {
-				ex.printStackTrace();
-			}
-			return projNode;
-		}
-		
-		private void initialize() {
-			invisibleRoot = new TreeParent("");
-			
-			IProject[] projects =  CFMLPlugin.getWorkspace().getRoot().getProjects();
-			for(int i = 0; i < projects.length; i++) {
-				invisibleRoot.addChild(addProject(projects[i]));
-			}
-		}
-	}
-	class ViewLabelProvider extends LabelProvider {
-
-		public String getText(Object obj) {
-			return obj.toString();
-		}
-		public Image getImage(Object obj) {
-			String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-			if (obj instanceof TreeParent)
-			   imageKey = ISharedImages.IMG_OBJ_FOLDER;
-			return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
-		}
-	}
 	class NameSorter extends ViewerSorter {
-	}
+		
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			if(e1 instanceof FolderNode && !(e2 instanceof FolderNode)) {
+				return -1;
+			}
+			else if(e2 instanceof FolderNode && !(e1 instanceof FolderNode)) {
+				return 1;
+			}
+			return super.compare(viewer, e1, e2);
+		}
+}
 
 	/**
 	 * The constructor.
@@ -227,10 +97,11 @@ public class PackageView extends ViewPart {
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
-		makeActions();
+		initActions();
 		hookContextMenu();
 		hookDoubleClickAction();
 		contributeToActionBars();
+		
 	}
 
 	private void hookContextMenu() {
@@ -262,6 +133,11 @@ public class PackageView extends ViewPart {
 		manager.add(action1);
 		manager.add(action2);
 		manager.add(new Separator());
+		manager.add(this.makeFolderCF_Root);
+		manager.add(this.makeFolderCFCRoot);
+		manager.add(this.makeFolderDefault);
+		manager.add(this.makeFolderWWWRoot);
+		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -274,7 +150,79 @@ public class PackageView extends ViewPart {
 		drillDownAdapter.addNavigationActions(manager);
 	}
 
-	private void makeActions() {
+	private void initMakeActions() {
+		this.makeFolderCF_Root = new Action() {
+			public void run() {
+				setFolderType(FolderTypes.CF_ROOT);
+			}
+		};
+		this.makeFolderCF_Root.setText("Add to custom tag path");
+		this.makeFolderCF_Root.setToolTipText("Add to custom tag path");
+	
+		this.makeFolderCFCRoot = new Action() {
+			public void run() {
+				setFolderType(FolderTypes.CFCROOT);
+			}
+		};
+		this.makeFolderCFCRoot.setText("Add to CFC path");
+		this.makeFolderCFCRoot.setToolTipText("Add to CFC path");
+		
+		this.makeFolderDefault = new Action() {
+			public void run() {
+				setFolderType(FolderTypes.DEFAULT);
+			}
+		};
+		this.makeFolderDefault.setText("Make a normal folder");
+		this.makeFolderDefault.setToolTipText("Make a normal folder");
+		
+		this.makeFolderWWWRoot = new Action() {
+			public void run() {
+				setFolderType(FolderTypes.WWWROOT);
+			}
+		};		
+		this.makeFolderWWWRoot.setText("Make webserver root folder");
+		this.makeFolderWWWRoot.setToolTipText("Make webserver root folder");
+	}
+	
+	/**
+	 * gets the currently selected item in docitem form or <code>null</code>
+	 * if there is none
+	 * @return
+	 */
+	private TreeObject getSelectedDocItem()
+	{
+		TreeObject selecteditem = null;
+		
+		//can't do much if nothing is selected
+		if(this.viewer.getSelection().isEmpty()) 
+		{
+			return null;
+		}
+		else 
+		{
+			IStructuredSelection selection = (IStructuredSelection)this.viewer.getSelection();
+			selecteditem = (TreeObject)selection.getFirstElement();
+		}
+		
+		return selecteditem;
+	}	
+	
+	protected void setFolderType(String folderType) {
+		TreeObject selectedItem = getSelectedDocItem();
+		
+		if(selectedItem == null) return;
+		if(!(selectedItem instanceof FolderNode)) {
+			return;
+		}
+		
+		((FolderNode)selectedItem).setFolderType(folderType);
+		
+		viewer.update(selectedItem, null);
+		
+	}
+	
+	private void initActions() {
+		initMakeActions();
 		action1 = new Action() {
 			public void run() {
 				showMessage("Action 1 executed");
@@ -282,6 +230,7 @@ public class PackageView extends ViewPart {
 		};
 		action1.setText("Action 1");
 		action1.setToolTipText("Action 1 tooltip");
+		
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		
@@ -294,11 +243,18 @@ public class PackageView extends ViewPart {
 		action2.setToolTipText("Action 2 tooltip");
 		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+			//	showMessage("Double-click detected on "+obj.toString());
+				if(obj instanceof FileNode) {
+					FileNode selectedFile = (FileNode)obj;
+					GenericOpenFileAction openAction = new GenericOpenFileAction(selectedFile.getFile());
+					openAction.run();
+					
+				}
 			}
 		};
 	}
