@@ -320,7 +320,7 @@
             description="CFML Editor key bindings"
             id="com.rohanclan.cfml.commandCategory">
       </category>
-      
+   
       <!-- this will always make a cf type comment -->
       <command name="Insert Comment"
             description="Insert a CFML comment."

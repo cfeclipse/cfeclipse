@@ -407,7 +407,7 @@ public class CFConfiguration extends SourceViewerConfiguration {
 			);
 		}
 		else if(!(contentType == CFPartitionScanner.HTM_COMMENT))
-		{	
+		{
 			//load the text hover with the cf dictionary
 			return new CFTextHover(
 				DictionaryManager.getDictionary(DictionaryManager.CFDIC)

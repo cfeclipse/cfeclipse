@@ -74,7 +74,9 @@ public class CFTextHover implements ITextHover {
 			{
 				if (hoverRegion.getLength() > 0)
 				{
-					return textViewer.getDocument().get(hoverRegion.getOffset(), hoverRegion.getLength());
+					return textViewer.getDocument().get(
+						hoverRegion.getOffset(), hoverRegion.getLength()
+					);
 				}
 				else if(hoverRegion.getLength() == 0)
 				{
@@ -84,7 +86,8 @@ public class CFTextHover implements ITextHover {
 					String wordFound 	= "";
 					char currentChar 	= 'a';
 					//
-					// Cop out without a string if the user is already hovering over a non-ascii character
+					// Cop out without a string if the user is already hovering 
+					//over a non-ascii character
 					if(IsNonAlpha(doc.getChar(hoverRegion.getOffset())))
 						return "";
 					
@@ -135,6 +138,8 @@ public class CFTextHover implements ITextHover {
 						
 						if(wordFound.startsWith("cf"))
 							tglookup = wordFound.substring(2, wordFound.length());
+						
+						//System.err.println("]" + tglookup + "[");
 						
 						if(dictionary.tagExists(tglookup))
 						{	

@@ -249,7 +249,17 @@ public class DictionaryContentHandler implements ContentHandler {
 			//current item
 			if(currentitem != null && paramitem == null)
 			{
-				currentitem.setHelp(resvalue.toString().trim().replace('\t',' '));
+				//for some reason M8 calls this a bunch of times, but only with
+				//the cfml dictionary. So this is kind of a hack to get it to
+				//load the help right... this slows it down a bit
+				//TODO figure out whats up
+				if(resvalue.toString().trim().length() > 0)
+				{
+					currentitem.setHelp(
+						currentitem.getHelp() + " " +
+						resvalue.toString().trim().replace('\t',' ') + "\n"
+					);
+				}
 			}
 			//if the param is not null its help for the param
 			else if(currentitem != null && paramitem != null)

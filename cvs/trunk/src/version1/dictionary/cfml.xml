@@ -20,29 +20,6 @@
  -->
 <dictionary>
 	<tags>
-		
-		<!-- tag template -->
-		<!-- 
-		<tag creator="3" name="xml" single="false" xmlstyle="false">
-			<help><![CDATA[
-				
-			]]></help>
-			<parameter name="variable" type="String" required="true">
-				<help><![CDATA[
-					
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="casesensitive" type="boolean" required="false">
-				<help><![CDATA[
-				]]></help>
-				<values>
-					<value option="true" />
-					<value option="false" />
-				</values>
-			</parameter>
-		</tag> -->
-		
 		<!-- 
 			cfabort 
 				showError = "error_message"
@@ -12631,10 +12608,6 @@
 				]]></help>
 			</parameter>
 		</function>
-		
-		
-		
-		
 		
 	</functions>
 </dictionary>

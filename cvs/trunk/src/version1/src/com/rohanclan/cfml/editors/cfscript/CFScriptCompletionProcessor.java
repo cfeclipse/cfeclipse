@@ -93,7 +93,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	
 	// 1) The standard completion chars. These are some activation characters 
 	//that non-opener/closer characters
-	protected static final String completionChars = ".(;~\"#[\'";
+	protected static final String completionChars = ".(;~\"#[\'>";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -682,6 +682,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 
 	/**
 	 * for functions insight
+	 * TODO check out cfcompletion this has changed a bit... maybe we should
+	 * workout some way to make these call the same place?
 	 */
 	public IContextInformation[] computeContextInformation(ITextViewer viewer,
 		int documentOffset) {

@@ -6,6 +6,7 @@
 		do not report the bug.
 		-->
 <dictionary>
+<tags>
 <tag xmlstyle="false" single="false" name="abbr" creator="4">
 <help><![CDATA[
 				Indicates an abbreviated form, like "Inc.", "etc."
@@ -10468,4 +10469,5 @@
 		<values/>
 	</parameter>
 </tag>
+</tags>
 </dictionary>
