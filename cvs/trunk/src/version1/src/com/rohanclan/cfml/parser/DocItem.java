@@ -298,12 +298,12 @@ public abstract class DocItem implements Comparable {
 			
 			if(search.attrSearch.containsKey(XPathSearch.ATTR_STARTPOS)) {
 				ComparisonType comp = (ComparisonType)search.attrSearch.get(XPathSearch.ATTR_STARTPOS);
-				if(comp.performComparison(Integer.parseInt(comp.getValue())))
+				if(comp.performComparison(currItem.startPosition))
 					matches++;
 			}
 			if(search.attrSearch.containsKey(XPathSearch.ATTR_ENDPOS)) {
 				ComparisonType comp = (ComparisonType)search.attrSearch.get(XPathSearch.ATTR_ENDPOS);
-				if(comp.performComparison(Integer.parseInt(comp.getValue())))
+				if(comp.performComparison(currItem.endPosition))
 					matches++;
 			}
 			

@@ -49,7 +49,7 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 		try {
 			DocItem rootItem = document.getCFDocument().getDocumentRoot();
 
-			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 100]");
+			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
 			nodes = rootItem.selectNodes("//function");
 
 			Iterator i = nodes.iterator();
