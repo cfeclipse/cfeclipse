@@ -27,6 +27,7 @@ package com.rohanclan.cfml.parser;
 import java.util.ArrayList;
 import com.rohanclan.cfml.dictionary.*;
 import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
+import com.rohanclan.cfml.parser.exception.NodeNotFound;
 
 /** 
  * The DocItem class is intended to be the abstract base class for parsing and representing 
@@ -44,40 +45,32 @@ import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
  * Hence the addChild() method. Haven't added anything else for retrieving children... because I'm lazy :)
  */
 public abstract class DocItem {
-	/**
-	 * The name of the item (i.e. <cfscript>)
-	 */
-	protected String itemName;
-	/**
-	 * The complete start-to-finish data for the item (i.e. <cffunction name="asdf" ... >)
-	 */
+	/** The name of the item (i.e. &lt;cfscript&gt;) */
+	protected String itemName; 
+	/** The complete start-to-finish data for the item (i.e. &lt;cffunction name="asdf" ... &gt;)	 */
 	protected String itemData; 
 	
-	/**
-	 * The line number for the start of the match
-	 */
+	/** The line number for the start of the match */
 	protected int lineNumber;
-	/**
-	 * The start position in the document
-	 */
+	/** The start position in the document  */
 	protected int startPosition;
-	/**
-	 * The end position in the document
-	 */
+	/** The end position in the document	 */
 	protected int endPosition;
-	/**
-	 * The list of variables for the document
-	 */
+	/** The list of variables for the document	 */
 	public ArrayList  docVariables;
-	/**
-	 * The children for this node.
-	 */
-	public ArrayList docNodes;
-	
-	/*
-	 * Syntax dictionary for working out important things for the parser.
-	 */
+	/** The children for this node.	 */
+	protected CFNodeList docNodes;
+	/** The parent of this node. */
+	protected DocItem parentNode;
+	/** The previous sibling node. Null if there isn't one.*/
+	protected DocItem prevSiblingNode = null;
+	/** The next sibling node. Null if there isn't one.*/
+	protected DocItem nextSiblingNode = null;
+	/** Syntax dictionary for working out important things for the parser. */
 	protected SyntaxDictionary syntax = null;
+	/** */
+	protected State parseMessages = null;
+	
 	
 	/**
 	 * Initialises the dictionary
@@ -118,9 +111,23 @@ public abstract class DocItem {
 		endPosition = endDocPos;
 		itemName = name;
 		
-		docNodes = new ArrayList();
+		docNodes = new CFNodeList();
 		docVariables = new ArrayList();
+		parseMessages = new State("");
 	}
+	
+	
+	protected State getParseState()
+	{
+		return parseMessages;
+	}
+	
+	protected void addParseMessage(ParseMessage newMsg)
+	{
+		System.out.println("DocItem::addParseMessage() - Adding message " + newMsg.getMessage());
+		parseMessages.addMessage(newMsg);
+	}
+	
 	public String getName() 
 	{
 		return itemName;
@@ -140,6 +147,40 @@ public abstract class DocItem {
 		return docNodes.size() > 0;
 	}
 	
+	public DocItem getFirstChild()
+	{
+		return (DocItem)docNodes.get(0);
+	}
+	
+	public DocItem getLastChild()
+	{
+		return (DocItem)docNodes.get(docNodes.size());
+	}
+	
+	public void setParent(DocItem newParent)
+	{
+		parentNode = newParent;
+	}
+	
+	public void setPrevSibling(DocItem newPrevSibling)
+	{
+		prevSiblingNode = newPrevSibling;
+	}
+	
+	public void setNextSibling(DocItem newNextSibling)
+	{
+		nextSiblingNode = newNextSibling;
+	}
+	
+	public CFNodeList getChildNodes()
+	{
+		return docNodes;
+	}
+	/**
+	 * 
+	 * @deprecated Please use getChildNodes() instead
+	 * @see com.rohanclan.cfml.parser.DocItem::getChildNodes()
+	 */
 	public ArrayList getChildren()
 	{
 		return docNodes;
@@ -148,15 +189,72 @@ public abstract class DocItem {
 	public int getLineNumber() { return lineNumber; }
 	
 	/**
-	 * Adds a child to the child node list. 
-	 * Before it does so it calls 
-	 * @param newItem
+	 * Adds a child to this item's child node list. 
+	 * It first asks the new item whether it's allowed to belong to this
+	 * item, for example &lt;cfelse&gt; tags must only be a child of an &lt;cfif&gt; tag.
+	 * @param newItem The new document item to add.
+	 * @return true - child added, false - error with child.
 	 */
-	public void addChild(DocItem newItem) throws InvalidChildItemException 
+	public boolean addChild(DocItem newItem) 
 	{
+		boolean addOkay = true;
+		
 		if(!newItem.validChildAddition(this))
-			throw new InvalidChildItemException("Child item of type \'" + newItem.getName() + "\' says it is not allowed to belong to this (\'" + itemName + "\') doc item");
+		{
+			parseMessages.addMessage(new ParseError(newItem.getLineNumber(), newItem.getStartPosition(), newItem.getEndPosition(), newItem.getItemData(),
+										"Invalid child \'" + newItem.getName() + "\' for parent \'" + getName() + "\'"));
+			addOkay = false;
+		}
+		//
+		// Set the item's parent & sibling
+		newItem.setParent(newItem);
+		if(docNodes.size() == 0)
+			newItem.setPrevSibling(null);
+		else 
+			newItem.setPrevSibling((DocItem)docNodes.get(docNodes.size()-1));
+		
 		docNodes.add(newItem);
+		
+		return addOkay;
+	}
+	
+	/**
+	 * Inserts the node newChild before existing node refChild. If refChild is null, insert newChild at end of the list of children.
+	 * @param newChild The new child node to insert
+	 * @param refChild The reference node, i.e. the node before which the new node must be inserted.
+	 * @throws InvalidChildItemException Raised if <code>newChild</code> being added is not valid for this node type.
+	 * @throws NodeNotFound Raised if the <code>refChild</code> node is not found in the node's children. 
+	 */
+	public void insertBefore(DocItem newChild, DocItem refChild) 
+				throws InvalidChildItemException, NodeNotFound
+	{
+		if(!newChild.validChildAddition(this))
+			throw new InvalidChildItemException("Child item of type \'" + newChild.getName() + "\' says it is not allowed to belong to this (\'" + itemName + "\') doc item");
+		
+		int insertPos = docNodes.size();
+		
+		//
+		// Does the refChild exist and exists in this node's children?
+		if(refChild != null && docNodes.contains(refChild))
+			insertPos = docNodes.indexOf(refChild);
+		else if(refChild != null)	// Isn't null & doesn't belong to this node. Argh!
+			throw new NodeNotFound("Cannot find node \'" + refChild.getName() +"\'");
+		
+		docNodes.add(insertPos, newChild);
+	}
+	
+	/**
+	 * Removes the specified child from the list of nodes.
+	 * @param oldChild The node to remove
+	 * @return The node removed.
+	 * @throws NodeNotFound Raised if the <code>refChild</code> node is not found in the node's children.
+	 */
+	public DocItem removeChild(DocItem oldChild) throws NodeNotFound
+	{
+		if(!docNodes.remove(oldChild))
+			throw new NodeNotFound("Cannot find node \'" + oldChild.getName() +"\'");
+		
+		return oldChild;
 	}
 	
 	/**
@@ -169,5 +267,53 @@ public abstract class DocItem {
 	public boolean validChildAddition(DocItem parentItem)
 	{
 		return false;
+	}
+	
+	/**
+	 * Supply a <strong>basic</strong> search string (i.e. a single node name).
+	 * 
+	 * Currently supported are the following syntaxes:
+	 * "aTagName", "//aTagName"
+	 *
+	 * @param searchString
+	 * @return
+	 */
+	public CFNodeList selectNodes(String searchString)
+	{
+		CFNodeList result = new CFNodeList();
+		boolean doChildNodes = false;
+		String tagName = searchString; 
+		
+		if(searchString.length() > 2 &&
+		   searchString.charAt(0) == '/' && searchString.charAt(1) == '/')
+		{
+			doChildNodes = true;
+			tagName = searchString.substring(2);
+		}
+		
+		for(int i = 0; i < docNodes.size(); i++)
+		{
+			DocItem currItem = (DocItem)docNodes.get(i);
+			
+			if(doChildNodes)
+				result.addAll(currItem.selectNodes(searchString));
+			
+			if(currItem.getName().compareToIgnoreCase(tagName) == 0)
+				result.add(currItem);
+		}		
+		
+		return result; 
+	}
+	
+	/**
+	 * The final parse check. This is to be run just before the object's
+	 * parse messages are retrieved. Each document object will run a sanity
+	 * test to ensure that it is valid. For example a CfmlTagFunction will check
+	 * to make sure that it has the 'name' attribute.
+	 * @return true - item is sane, false - item is not sane.
+	 */
+	public boolean IsSane()
+	{
+		return true;
 	}
 }

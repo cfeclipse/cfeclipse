@@ -28,6 +28,8 @@ package com.rohanclan.cfml.parser;
 import java.util.ArrayList;
 import java.util.Stack;
 import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
+
 import org.eclipse.jface.text.IDocument;
 /** 
  * CFDocument basically is the main element for getting information about the 
@@ -40,11 +42,28 @@ import org.eclipse.jface.text.IDocument;
  * (or files).
  */
 public class CFDocument {
-	protected String docFilename;
-	public ArrayList docRoot;		// Root elements of the document tree
-	public ArrayList docVariables;	// Array of variables
+	/**
+	 * Filename that this CFDocument is associated with. Don't think it's needed.
+	 */
+	protected String docFilename; 
+	/**
+	 * The root elements of the document. A CF document does NOT have to have a root element and
+	 * so one is not inserted by default.
+	 * @deprecated Use getDocumentRoot() to get the DocItem representing the root of the document
+	 */
+	public ArrayList docRoot;
+	/**
+	 * List of variables in the document. Not used at the moment.
+	 */
+	public ArrayList docVariables;	
 
-	public Stack docTree;
+	/**
+	 * Not sure what this is for!
+	 * @deprecated Do not use. Use getDocumentRoot()
+	 */
+	public Stack docTree = null;
+	
+	protected DocItem treeRoot = null;
 	
 	public void addRootElement(DocItem newItem)
 	{
@@ -53,6 +72,20 @@ public class CFDocument {
 			docRoot = new ArrayList();
 		}
 		docRoot.add(newItem);
+	}
+
+	public void setDocumentRoot(DocItem newRootItem)
+	{
+		treeRoot = newRootItem;
+	}
+	
+	public DocItem getDocumentRoot()
+	{
+		if(treeRoot == null)
+		{
+			System.err.println("CFDocument::getDocumentRoot() - WARNING: treeRoot is null, have you run the parser yet?");
+		}
+		return treeRoot;
 	}
 	
 	public void addVariable(Variable newVar)

@@ -26,6 +26,7 @@ package com.rohanclan.cfml.editors;
 
 //import org.eclipse.jface.text.AbstractDocument;
 
+import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFParser;
 
 import org.eclipse.core.resources.IMarker;
@@ -43,12 +44,14 @@ import org.eclipse.jface.text.Document;
 public class ICFDocument extends Document {
 
 	private /* static */ CFParser docParser = null;
-	private static IResource lastRes = null;
+	private /* static */ IResource lastRes = null;
 	private static Thread t;
+	private CFDocument docStructure = null;
 	
 	public ICFDocument()
 	{
 		super();
+	
 	}
 	
 	public CFParser getParser()
@@ -69,7 +72,10 @@ public class ICFDocument extends Document {
 							if(docParser != null)
 							{
 								//System.out.println("Runnin");
-								docParser.parseSaveDoc(); // parseDoc();
+								//docParser.parseSaveDoc(); // parseDoc();
+								docStructure = docParser.parseDoc();
+								if(docStructure == null)
+									System.err.println("ICFDocument::parseDocument() - Parse result is null!");
 							}
 							/* Thread.sleep(3000);
 						}

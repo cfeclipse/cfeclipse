@@ -62,28 +62,35 @@ public class TagItem extends DocItem {
 	 * @throws DuplicateAttributeException - attribute already exists
 	 * @throws InvalidAttributeException - attribute doesn't belong to this tag
 	 */
-	public void addAttribute(String attrName, String attrValue) 
-				throws DuplicateAttributeException, InvalidAttributeException
+	public boolean addAttribute(String attrName, String attrValue) 
 	{
+		boolean addOkay = true;
+		/*
+		 * Is the attribute already present in the tag's attribute list? 
+		 */
 		if(attributes.containsKey(attrName))
 		{
-			DuplicateAttributeException excep = new DuplicateAttributeException(attrName, attrValue, lineNumber);
-			throw(excep);
+			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
+									"Attribute \'" + attrName + "\' has already been defined."));
+			addOkay = false;
 		}
 		
 		attributes.put(attrName, attrValue);
+		
+		return addOkay;
 	}
 
-	public void addAttributes(HashMap attributes) 
-				throws DuplicateAttributeException, InvalidAttributeException
+	public boolean addAttributes(HashMap attributes) 
 	{
+		boolean addOkay = true;
 		Set keySet = attributes.keySet();
 		Object [] keys = keySet.toArray();
 		for(int i = 0; i < keys.length; i++)
 		{
 			String key = (String)keys[i];
-			addAttribute(key, (String)attributes.get(key));
+			addOkay = addOkay && addAttribute(key, (String)attributes.get(key));
 		}
+		return addOkay;
 	}
 	
 	public String getAttribute(String attrName)

@@ -53,18 +53,20 @@ public class CfmlTagItem extends TagItem {
 	 * @throws DuplicateAttributeException - The attribute already exists in the attr list
 	 * @throws InvalidAttributeException - The attribute does not belong to this tag.
 	 */
-	public void addAttribute(String attrName, String attrValue) 
-				throws DuplicateAttributeException, 
-						InvalidAttributeException
+	public boolean addAttribute(String attrName, String attrValue) 
 	{
+		boolean addOkay = true;
 		Set attributes = syntax.getFilteredAttributes(itemName, attrName);
 		if(attributes.size() == 0)
 		{
-			InvalidAttributeException excep = new InvalidAttributeException(attrName, attrValue, lineNumber);
-			throw excep;
+			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+										 "Attribute \'" + attrName + "\' is not valid."));
+			addOkay = false;
 		}
-			
-		super.addAttribute(attrName, attrValue);
+		
+		addOkay = super.addAttribute(attrName, attrValue) && addOkay;
+		
+		return addOkay;
 	}
 	/**
 	 * @param line

@@ -2,6 +2,7 @@ package com.rohanclan.cfml.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * 
@@ -92,5 +93,23 @@ public class State
 		}
 		
 		messages.add(newMsg);
+	}
+	
+	public void addMessages(ArrayList newMessages)
+	{
+		Iterator msgIter = newMessages.iterator();
+		ParseMessage currMsg = null;
+		while(msgIter.hasNext())
+		{
+			currMsg = (ParseMessage)msgIter.next();
+			if(currMsg instanceof ParseError)
+			{
+				if(((ParseError)currMsg).isFatal())
+					hadFatal = true;
+					
+				errCount++;
+			}
+			messages.add(currMsg);
+		}
 	}
 }

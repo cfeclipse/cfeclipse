@@ -8,6 +8,7 @@ package com.rohanclan.cfml.parser.cfmltagitems;
 
 import com.rohanclan.cfml.parser.CfmlTagItem;
 import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.ParseMessage;
 import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 
 /**
@@ -23,7 +24,10 @@ public class CfmlTagIf extends CfmlTagItem {
 	 * 
 	 * @see com.rohanclan.cfml.parser.DocItem#addChild(com.rohanclan.cfml.parser.DocItem)
 	 */
-	public void addChild(DocItem newItem) throws InvalidChildItemException {
+	public boolean addChild(DocItem newItem) 
+	{
+		boolean addOkay = true;
+		
 		if(docNodes.size() != 0)
 		{
 			DocItem mostRecentItem = (DocItem)docNodes.get(docNodes.size()-1);
@@ -33,17 +37,29 @@ public class CfmlTagIf extends CfmlTagItem {
 			boolean itemIsElseIf = 	newItem.getName().compareToIgnoreCase("elseif") == 0; 
 			//
 			// Tests to make sure that the user isn't trying to do something stupid.
-			if(newItem.getName().compareToIgnoreCase("else") == 0 && lastIsElse)
-				throw new InvalidChildItemException("<cfif> already has a <cfelse>", newItem.getLineNumber(), newItem.getStartPosition());
-			else if(newItem.getName().compareToIgnoreCase("elseif") == 0 && lastIsElse)
-				throw new InvalidChildItemException("<cfelseif> after <cfelse>", newItem.getLineNumber(), newItem.getStartPosition());
+			//if(newItem.getName().compareToIgnoreCase("else") == 0 && lastIsElse)
+			if(itemIsElse && lastIsElse)
+			{
+				parseMessages.addMessage(new ParseMessage(newItem.getLineNumber(), newItem.getStartPosition(), newItem.getEndPosition(), newItem.getItemData(),
+										 "<cfif> already has a <cfelse>"));
+				addOkay = false;
+			}				
+			//else if(newItem.getName().compareToIgnoreCase("elseif") == 0 && lastIsElse)
+			else if(itemIsElseIf && lastIsElse)
+			{
+			 	parseMessages.addMessage(new ParseMessage(newItem.getLineNumber(), newItem.getStartPosition(), newItem.getEndPosition(), newItem.getItemData(),
+				 "<cfelseif> after <cfelse>"));
+				addOkay = false;
+			}
 			else if((lastIsElseIf || lastIsElse) && !(itemIsElse || itemIsElseIf) )	// Is the previous item an else/elseif and the current item isn't one?		 
 				mostRecentItem.addChild(newItem); 	
 			else 
-				super.addChild(newItem);	// No elses if elseifs, so we add it to the if's children.
+				addOkay = addOkay && super.addChild(newItem);	// No elses if elseifs, so we add it to the if's children.
 		}
 		else
-			super.addChild(newItem);
+			addOkay = addOkay && super.addChild(newItem);
+		
+		return addOkay;
 	}
 	/**
 	 * @param line

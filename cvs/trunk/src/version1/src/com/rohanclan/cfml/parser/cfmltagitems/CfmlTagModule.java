@@ -26,11 +26,18 @@ public class CfmlTagModule extends CfmlTagItem {
 	public CfmlTagModule(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
 	}
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see com.rohanclan.cfml.parser.TagItem#addAttribute(java.lang.String, java.lang.String)
+	 * @return true apart from duplicate attributes.
 	 */
-	public void addAttribute(String attrName, String attrValue)
-			throws DuplicateAttributeException, InvalidAttributeException {
+	public boolean addAttribute(String attrName, String attrValue) {
+		boolean addOkay = true;
 		
+		if(attributes.containsKey(attrName))
+		{
+			addOkay = false;
+		}
+		attributes.put(attrName, attrValue);
+		return addOkay;
 	}
 }

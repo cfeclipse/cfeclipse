@@ -452,14 +452,13 @@ public class Util {
 			}
 			else
 			{
-				System.err.println("CFParser::calcLineNumbers() - Didn't find any lines!");
+				System.err.println("Util::calcLineNumbers() - Didn't find any lines!");
 				lineOffsets = new int[1];
 				lineOffsets[0] = 0;
 			}
 		} catch(Exception anException) {
-			System.err.println("CFParser::calcLineNumbers() - Error, could not calculate line numbers because: " + anException.getMessage());
+			System.err.println("Util::calcLineNumbers() - Error, could not calculate line numbers because: " + anException.getMessage());
 		}
-		System.err.println("CFParser::calcLineNumbers() - Got " + lineOffsets.length + " lines. Is this correct?");
 		return lineOffsets;
 	}	
 	
