@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -90,7 +91,8 @@ public class SnipTreeView extends ViewPart
 	
 	/** the treeviewer control */
 	protected TreeViewer treeViewer;
-	protected Text text;
+	protected Text text, preview;
+	protected Label previewLabel;
 	protected LabelProvider labelProvider;
 		
 	/** the path to the icons. i.e. file://C/blah/plugin/icons/ */
@@ -190,6 +192,22 @@ public class SnipTreeView extends ViewPart
 		layoutData.verticalAlignment = GridData.FILL;
 		treeViewer.getControl().setLayoutData(layoutData);
 		
+		previewLabel = new Label(parent, SWT.WRAP);
+        GridData gridData = new GridData();
+        gridData.horizontalSpan = 2;
+        previewLabel.setLayoutData(gridData);
+        previewLabel.setText("Preview"); //$NON-NLS-1$
+		
+		
+		preview = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		// layout the text field above the treeviewer
+		layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		layoutData.heightHint = 100;
+		layoutData.horizontalAlignment = GridData.FILL;
+		preview.setLayoutData(layoutData);
+		
+		
 		//Create menu, toolbars, filters
 		createActions();
 		createMenus();
@@ -230,6 +248,7 @@ public class SnipTreeView extends ViewPart
 				if(event.getSelection().isEmpty()) 
 				{
 					text.setText("");
+					preview.setText("");
 					return;
 				}
 				
@@ -237,6 +256,7 @@ public class SnipTreeView extends ViewPart
 				{
 					IStructuredSelection selection = (IStructuredSelection)event.getSelection();
 					StringBuffer toShow = new StringBuffer("");
+					StringBuffer toPreview = new StringBuffer("");
 					
 					//IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 					File selectedfile = (File)selection.getFirstElement();
@@ -251,6 +271,7 @@ public class SnipTreeView extends ViewPart
 						
 						snipReader.read(f);
 						toShow.append(snipReader.getSnipDescription());
+						toPreview.append(snipReader.getSnipStartBlock());
 						
 					}
 					catch(Exception e)
@@ -258,6 +279,7 @@ public class SnipTreeView extends ViewPart
 						e.printStackTrace(System.err);
 					}
 					text.setText(toShow.toString());
+					preview.setText(toPreview.toString());
 				}
 			}
 		});
