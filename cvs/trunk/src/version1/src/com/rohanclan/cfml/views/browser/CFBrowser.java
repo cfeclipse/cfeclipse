@@ -35,7 +35,7 @@ import org.eclipse.swt.browser.TitleEvent;
 import org.eclipse.swt.browser.TitleListener;
 import org.eclipse.swt.browser.VisibilityWindowListener;
 import org.eclipse.swt.browser.WindowEvent;
-import org.eclipse.swt.graphics.Image;
+//import org.eclipse.swt.graphics.Image;
 //import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 //import org.eclipse.swt.graphics.Rectangle;
@@ -69,7 +69,7 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 public class CFBrowser {
 	protected int index;
 	protected boolean busy;
-	protected Image images[];
+	//protected Image images[];
 	protected Text location;
 	protected Browser browser;
 	private ViewPart viewer;
@@ -414,7 +414,10 @@ public class CFBrowser {
 	 * Disposes of all resources associated with a particular instance of the
 	 * BrowserExample.
 	 */
-	public void dispose(){;}
+	public void dispose()
+	{
+		browser.dispose();	
+	}
 	
 	/**
 	 * Grabs input focus.
