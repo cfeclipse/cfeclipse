@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.Control;
 
 import org.eclipse.jface.viewers.*; 
 
-
 /**
  * @author Rob
  *
@@ -36,7 +35,7 @@ import org.eclipse.jface.viewers.*;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class CFContentOutlineView extends ViewPart { //Page { //
-	public static final String ID_SNIPVIEWTREE = "com.rohanclan.cfml.views.contentoutline.cfcontentoutlineview";
+	public static final String ID_CONTENTOUTLINE = "com.rohanclan.cfml.views.contentoutline.cfcontentoutlineview";
 	
 	/** the treeviewer control */
 	protected TreeViewer treeViewer;
@@ -126,12 +125,14 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 	}
 	
 	protected void hookListeners(){;}
-	protected void createMenus(){
+	protected void createMenus()
+	{
 		//IMenuManager rootMenuManager = getViewSite().getActionBars().getMenuManager();
 		//rootMenuManager.add(refreshSnippetsAction);
 	}
 	
-	private void createContextMenu(){
+	private void createContextMenu()
+	{
 		//Create menu manager.
 		menuMgr = new MenuManager();
 		menuMgr.setRemoveAllWhenShown(true);
@@ -150,12 +151,14 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 		//getSite().registerContextMenu("cfml", menuMgr, this.getSite().getSelectionProvider());
 	}
 	
-	private void fillContextMenu(IMenuManager mgr) {
+	private void fillContextMenu(IMenuManager mgr) 
+	{
 		mgr.add(jumpAction);
 	}
 	
 	
-	protected void createToolbar(){
+	protected void createToolbar()
+	{
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
 		toolbarManager.add(jumpAction);
 		toolbarManager.add(expandAction);
