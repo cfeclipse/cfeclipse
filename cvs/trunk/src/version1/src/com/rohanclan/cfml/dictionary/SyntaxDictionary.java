@@ -72,7 +72,7 @@ public abstract class SyntaxDictionary {
 			try 
 			{
 				dictionaryBaseURL = new URL(
-					CFMLPlugin.getDefault().getDescriptor().getInstallURL(),
+					CFMLPlugin.getDefault().getBundle().getEntry("/"),
 					"dictionary/"
 				);
 				

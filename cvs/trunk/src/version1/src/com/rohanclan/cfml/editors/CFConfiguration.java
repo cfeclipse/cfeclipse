@@ -42,8 +42,8 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.IAutoIndentStrategy;
+//import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
@@ -97,14 +97,13 @@ public class CFConfiguration extends SourceViewerConfiguration
 		this.colorManager = colorManager;
 		
 		preferenceManager = new CFMLPreferenceManager();
-	     indentStrategy = new CFAutoIndentStrategy(editor);
-	     tabWidth = preferenceManager.tabWidth();
-	     boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
-	     indentStrategy.setIndentString(tabWidth,insertSpacesForTabs);
-	     indentStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
-	     indentStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
-	      
-		
+		indentStrategy = new CFAutoIndentStrategy(editor);
+		tabWidth = preferenceManager.tabWidth();
+		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
+		indentStrategy.setIndentString(tabWidth,insertSpacesForTabs);
+		indentStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
+		indentStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
+
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 		
@@ -467,11 +466,10 @@ public class CFConfiguration extends SourceViewerConfiguration
 		return null;
 	}
 	
-	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0,
-            String arg1) {
+	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0, String arg1) 
+	{
         return indentStrategy;
-    } 	
-	
+    }
 
 	// This method gets called when the preference page is saved.
 	public void propertyChange(PropertyChangeEvent event)

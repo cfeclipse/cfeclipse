@@ -24,23 +24,14 @@
  */
 package com.rohanclan.cfml;
 
-//import org.eclipse.ui.plugin.*;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-//import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.IPluginDescriptor;
-//import org.eclipse.core.resources.*;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 
-
-//import java.util.*;
 import java.util.ResourceBundle;
 import java.util.MissingResourceException;
 
-//import com.rohanclan.coldfusionmx.editors.CFSyntaxDictionary;
-//import com.rohanclan.coldfusionmx.editors.actions.SnippetActionLoader;
-//import com.rohanclan.coldfusionmx.editors.script.JSSyntaxDictionary;
-//import com.rohanclan.cfml.util.*;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import org.eclipse.jface.preference.PreferenceStore;
@@ -65,15 +56,29 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	
 	//private CFMLPreferenceManager preferenceManager;
 	/**
-	 * The constructor.
+	 * The constructor. This is supposedly replaced with
+	 * public CFMLPlugin()
+	 * {
+	 *	 super();
+	 * ...
+	 * but if I try to do it that way I get errors and the editor
+	 * wont work
 	 */
-	public CFMLPlugin(IPluginDescriptor descriptor) {
+	public CFMLPlugin(IPluginDescriptor descriptor)
+	{
 		super(descriptor);
+	
 		plugin = this;
 		
-		System.out.println("Property store file set to "+ CFMLPlugin.getDefault().getStateLocation().toString()+"/properties.ini");
-		
-		propertyStore = new PreferenceStore(CFMLPlugin.getDefault().getStateLocation().toString()+"/properties.ini");
+		System.out.println(
+			"Property store file set to " + 
+			CFMLPlugin.getDefault().getStateLocation().toString()
+			+ "/properties.ini"
+		);
+		propertyStore = new PreferenceStore(
+			CFMLPlugin.getDefault().getStateLocation().toString()
+			+ "/properties.ini"
+		);
 		
 		
 		try 
@@ -81,8 +86,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			resourceBundle = ResourceBundle.getBundle(
 				//"com.rohanclan.cfml.CFMLPluginResources"
 				"plugin"
-			);
-			
+			);	
 		} 
 		catch (MissingResourceException x) 
 		{
@@ -95,7 +99,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			//load all the syntax dictionaries (they dont really load right now)
 			DictionaryManager.initDictionaries();
 			
-	        
 			//startup the image registry
 			CFPluginImages.initCFPluginImages();
 		}
@@ -105,13 +108,15 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			e.printStackTrace(System.err);
 		}
 	}
-	protected void initializeDefaultPluginPreferences() {
-        super.initializeDefaultPluginPreferences();
+	protected void initializeDefaultPluginPreferences() 
+	{
+        //super.initializeDefaultPluginPreferences();
         CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
         CFMLPropertyManager propertyManager = new CFMLPropertyManager();
         propertyManager.initializeDefaultValues();
     }
+	
 	/**
 	 * Returns the shared instance.
 	 */
@@ -157,8 +162,4 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	{
 		return resourceBundle;
 	}
-	
-	
-
-	
 }

@@ -42,7 +42,7 @@ import org.eclipse.text.edits.UndoEdit;
 
 import org.eclipse.jface.text.*;
 import java.util.StringTokenizer;
-import com.rohanclan.cfml.util.*;
+import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.*;
 
 import java.util.TreeSet;
@@ -292,8 +292,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			prefix = prefix.replace('\t',' ');	// one long string
 			
 			
-			Debug.println(mName, this, "Partition start: " + start);
-			Debug.println(mName, this, "Prefix is: '" + prefix + "'");
+			//Debug.println(mName, this, "Partition start: " + start);
+			//Debug.println(mName, this, "Prefix is: '" + prefix + "'");
 			int tokenCount = 0;
 			String output = "";
 			while(tokeniser.hasMoreTokens())
@@ -301,11 +301,11 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				output+= "[" + tokenCount + "] Got this token: '" + tokeniser.nextToken() + "'\n";
 				tokenCount++;
 			}
-			Debug.println(mName, this, "Tokeniser output:\n" + output);
+			//Debug.println(mName, this, "Tokeniser output:\n" + output);
 		} catch(BadLocationException e) {
-			Debug.println(mName, this, "Caught a BadLocationException");
+			//Debug.println(mName, this, "Caught a BadLocationException");
 		} catch(Exception anyE)	{
-			Debug.println(mName, this, "Caught a random exception. Message is: " + anyE.getMessage());
+			//Debug.println(mName, this, "Caught a random exception. Message is: " + anyE.getMessage());
 			
 		}
 		
@@ -360,11 +360,11 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						return DeleteText(document, documentOffset, 1);
 					}
 				}
-				else
-					Debug.println("Not a closing bracket. Is this not one?: '" + currentChar + "'");
+				//else
+					//Debug.println("Not a closing bracket. Is this not one?: '" + currentChar + "'");
 			}
 		} catch(BadLocationException excep) {
-			Debug.println("HandleCloser", this, "Caught BadLocationException when getting a char");
+			//Debug.println("HandleCloser", this, "Caught BadLocationException when getting a char");
 		}
 		return null;
 	}
@@ -379,7 +379,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			for(; strPos > 0 && document.getChar(strPos) == '\t'; strPos--)
 			{ tabCount++; }
 		} catch(BadLocationException excep) {
-			Debug.println("findAndCountTabs", this, "Caught a BadLocationException whilst counting tabs.");
+			//Debug.println("findAndCountTabs", this, "Caught a BadLocationException whilst counting tabs.");
 		}
 		return tabCount;
 	}
@@ -671,16 +671,16 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					);				
 					//break;	
 			}
-			Debug.println(mName, this, messages);
+			//Debug.println(mName, this, messages);
 			
 		}
 		catch (BadLocationException e)
 		{
-			Debug.println(mName, this, "Caught a bad location exception!");
+			//Debug.println(mName, this, "Caught a bad location exception!");
 		}
 		catch (Exception e)
 		{
-			Debug.println(mName, this, "Caught exception: " + e.getMessage());
+			//Debug.println(mName, this, "Caught exception: " + e.getMessage());
 		}
 		//Debug.println("");
 		if(proposals.isEmpty())

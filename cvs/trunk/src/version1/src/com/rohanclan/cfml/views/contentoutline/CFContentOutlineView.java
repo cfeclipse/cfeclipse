@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import com.rohanclan.cfml.editors.CFMLEditor;
 
-import org.eclipse.jface.dialogs.InputDialog;
+
 
 //import com.rohanclan.cfml.parser.*;
 

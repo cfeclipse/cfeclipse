@@ -36,15 +36,16 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 		try {
 			switch (event.getType()) {
 				case IResourceChangeEvent.PRE_CLOSE:
-//					System.out.println(" is about to close.");
+					//System.out.println(" is about to close.");
 					break;
 				case IResourceChangeEvent.PRE_DELETE:
-//					System.out.println(" is about to be deleted.");
+					//System.out.println(" is about to be deleted.");
 					break;
 				case IResourceChangeEvent.POST_CHANGE:
 					System.out.println("Resources have changed.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
+				/* these two seem to be deprecated... 
 				case IResourceChangeEvent.PRE_AUTO_BUILD:
 					System.out.println("Auto build about to run.");
 					event.getDelta().accept(new DeltaPrinter());
@@ -53,6 +54,7 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 					System.out.println("Auto build complete.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
+				*/
 			}
 		}catch(CoreException temp) {
 			System.out.println("Caught a CoreException");

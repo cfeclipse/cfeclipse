@@ -38,15 +38,8 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-//import java.util.ResourceBundle;
-//import org.eclipse.swt.SWT;
-//import org.eclipse.ui.texteditor.StatusTextEditor;
 import org.eclipse.ui.editors.text.TextEditor;
-//import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
-//import com.rohanclan.cfml.views.cfcmethods.CFCMethodsView;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
-//import org.eclipse.jface.util.IPropertyChangeListener;
-//import org.eclipse.jface.util.PropertyChangeEvent;
 
 /**
  * @author Rob
@@ -54,24 +47,21 @@ import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
  * This is the start of the Editor. It loads up the configuration and starts up
  * the image manager and syntax dictionaries.
  */
-public class CFMLEditor extends TextEditor  
-implements IPropertyChangeListener {
+public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 
 	private ColorManager colorManager;
 	
 	private CFConfiguration configuration;
 	
-	//private Composite parent;
-	
 	protected GenericEncloserAction testAction;
 	
-	/* (non-Javadoc)
+	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void doSave(IProgressMonitor monitor) 
 	{
-		// TODO: Once we get the document outline going, we can update it from here.
-		// On save parsing should apparently go into a builder.	
+		//TODO: Once we get the document outline going, we can update it from here.
+		//On save parsing should apparently go into a builder.	
 		super.doSave(monitor);
 	}
 	
@@ -109,7 +99,7 @@ implements IPropertyChangeListener {
 	 */
 	public Object getAdapter(Class adapter) 
 	{
-		//System.out.println("Give me adapter: " + adapter.getName());
+		//if they ask for the outline page send our implementation
 		if(adapter.getName().trim().equals(
 			"org.eclipse.ui.views.contentoutline.IContentOutlinePage"
 		))
@@ -125,6 +115,7 @@ implements IPropertyChangeListener {
 			return super.getAdapter(adapter);
 			//return super.getAdapter(adapter);
 		}
+		//otherwise just send our supers
 		else
 		{
 			return super.getAdapter(adapter);
@@ -185,6 +176,5 @@ implements IPropertyChangeListener {
 				configuration.getTabWidth(sourceViewer)
 			);
         }
-		
     }
 }
