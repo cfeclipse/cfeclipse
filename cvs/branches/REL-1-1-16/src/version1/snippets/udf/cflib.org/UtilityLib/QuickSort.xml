@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>Author: James Sleeman</name>
+<help>Sort an array using the Quicksort algorithm - you supply your own comparison function.</help>
+<starttext><![CDATA[
+/**
+ * Implementation of Hoare's Quicksort algorithm for sorting arrays of arbitrary items.
+ * Slight mods by RCamden (added var for comparison)
+ * 
+ * @param arrayToCompare 	 The array to be sorted. 
+ * @param sorter 	 The comparison UDF. 
+ * @return Returns a sorted array. 
+ * @author James Sleeman (james@innovativemedia.co.nz) 
+ * @version 1, March 12, 2002 
+ */
+function quickSort(arrayToCompare, sorter){
+	var lesserArray  = ArrayNew(1);
+	var greaterArray = ArrayNew(1);
+	var pivotArray   = ArrayNew(1);
+	var examine      = 2;
+	var comparison = 0;
+
+	pivotArray[1]    = arrayToCompare[1];
+
+	if (arrayLen(arrayToCompare) LT 2) {
+		return arrayToCompare;
+	}
+				
+	while(examine LTE arrayLen(arrayToCompare)){
+		comparison = sorter(arrayToCompare[examine], pivotArray[1]);
+		switch(comparison) {
+			case "-1": {
+				arrayAppend(lesserArray, arrayToCompare[examine]);
+				break;
+			}
+			case "0": {
+				arrayAppend(pivotArray, arrayToCompare[examine]);
+				break;
+			}
+			case "1": {
+				arrayAppend(greaterArray, arrayToCompare[examine]);
+				break;
+			}
+		}
+		examine = examine + 1;
+	}				
+				
+	if (arrayLen(lesserArray)) {
+		lesserArray  = quickSort(lesserArray, sorter);
+	} else {
+		lesserArray = arrayNew(1);
+	}	
+		
+	if (arrayLen(greaterArray)) {
+		greaterArray = quickSort(greaterArray, sorter);
+	} else {
+		greaterArray = arrayNew(1);
+	}
+				
+	examine = 1;
+	while(examine LTE arrayLen(pivotArray)){
+		arrayAppend(lesserArray, pivotArray[examine]); 
+		examine = examine + 1;
+	};
+				
+	examine = 1;
+	while(examine LTE arrayLen(greaterArray)){
+		arrayAppend(lesserArray, greaterArray[examine]); 
+		examine = examine + 1;
+	};
+				
+	return lesserArray;				
+}]]></starttext>
+<endtext><![CDATA[ ]]></endtext>
+</snippet>
