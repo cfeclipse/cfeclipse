@@ -8572,7 +8572,90 @@
 			</parameter>
 		</tag>
 		
-		
+		<!-- rpc -->
+		<tag name="rpc" creator="3" single="false" xmlstyle="true">
+			<help>Remote procedure calls.
+				JavaScript: rpc Extends Node 
+				The rpc tag is the abstract base class for RPC classes. Subclasses 
+				must implement the load() method, which is responsible for creating 
+				the proxy object. The proxy object contains a set of function stubs 
+				that invoke a remote function (or procedure) over the network. It's 
+				up to the caller of the stub function to know what parameters need 
+				to be passed in by looking at what the backend remote function 
+				expects. If calling a JavaRemoting (javarpc) function, looking at 
+				the associated Java API will be necessary. If calling a SOAP (soap) 
+				function, the developer will need to look at the corresponding 
+				operation in a WSDL file.</help>
+			<parameter name="autoload" type="boolean" required="false">
+				<help>Load remote object during init. If false, create remote object 
+					by calling load(). Default is true.</help>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
+			</parameter>
+			
+			<parameter name="text" type="String" required="false">
+				<help>The text to display in this text field.</help>
+				<values/>
+			</parameter>
+			<!-- NODE -->
+			<parameter name="datapath" type="String" required="false">
+				<help>A pointer to the LzDatapath attached to this node, if  there 
+					is one.</help>
+				<values/>
+			</parameter>
+			<parameter name="defaultplacement" type="String" required="false">
+				<help>An attribute used in container classes. If  set to a non-null 
+					value, this forces this node to run its determinePlacement 
+					method for any node whose parent is this node. If the subnode 
+					has its own  placement attribute, determinePlacement will be 
+					called with that value,  otherwise it will be called with this 
+					value. Note that a class's  defaultplacement attribute only 
+					applies to children in subclasses or in  instances, not to the 
+					children of the class itself. This means that if a  class and 
+					its subclass both define a defaultplacement attribute, the  
+					attribute will be set to one value before the subclass children 
+					are created  and to a different one after they are created. See 
+					the determinePlacement method.</help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="false">
+				<help>A global identifer for this node. If given, a pointer  to this
+					 node with the given value will be placed in the global 
+					 namespace</help>
+				<values/>
+			</parameter>
+			<parameter name="initstage" type="String" required="false">
+				<help>The execution of a node's init method and sending of the oninit 
+					event is under the control of its initstage attribute</help>
+				<values>
+					<value option="early" />
+					<value option="normal" />
+					<value option="late" />
+					<value option="immediate" />
+					<value option="defer" />
+				</values>
+			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help>The name for this subview. If given, then this node's parent
+					 and immediate parent will use store a pointer to this node as 
+					 the  given name value</help>
+				<values />
+			</parameter>
+			<parameter name="oninit" type="Function" required="false">
+				<help>The oninit script is executed once, after the element's 
+					children, if any, have been initialized.</help>
+				<values />
+			</parameter>
+			<parameter name="placement" type="Function" required="false">
+				<help>Instructions to this element's container about where it should 
+					go within the its container's internal hierarchy. See the 
+					LzNode.determinePlacement method. Defaults to the container 
+					itself.</help>
+				<values />
+			</parameter>
+		</tag>
 		
 		
       <tag name="text" creator="3" single="false" xmlstyle="true">

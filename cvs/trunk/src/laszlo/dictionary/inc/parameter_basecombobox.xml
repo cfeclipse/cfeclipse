@@ -1,0 +1,81 @@
+<parameter name="attachoffset" type="Numeric" required="false">
+	<help>The vertical offset of the floatinglist attached to this 
+		combobox.</help>
+	<values />
+</parameter>
+<parameter name="autoscrollbar" type="boolean" required="false">
+	<help>Whether a scrollbar should automatically show up when there 
+		are more items than shownitems.</help>
+	<values>
+		<value option="false"/>
+		<value option="true"/>
+	</values>
+</parameter>
+<parameter name="bordersize" type="Numeric" required="false">
+	<help>The border size ( in pixels ) of the popup list.</help>
+	<values />
+</parameter>
+<parameter name="dataoption" type="String" required="false">
+	<help>One of "lazy", "resize", "pooling", "none".</help>
+	<values>
+		<value option="lazy"/>
+		<value option="resize"/>
+		<value option="pooling"/>
+		<value option="none"/>
+	</values>
+</parameter>
+<parameter name="defaultselection" type="Numeric" required="false">
+	<help>The number of the item that is initially selected. This 
+		overrides the value defined in the defaulttext attribute</help>
+	<values />
+</parameter>
+<parameter name="defaulttext" type="String" required="false">
+	<help>The text that appears in the text field when no item is 
+		selected.</help>
+	<values />
+</parameter>
+<parameter name="editable" type="boolean" required="false">
+	<help>Make the text field of this combobox editable.</help>
+	<values>
+		<value option="false"/>
+		<value option="true"/>
+	</values>
+</parameter>
+<parameter name="isopen" type="boolean" required="false">
+	<help>Indicates whether or not the popup list is showing.</help>
+	<values>
+		<value option="false"/>
+		<value option="true"/>
+	</values>
+</parameter>
+<parameter name="itemclassname" type="String" required="false">
+	<help>The class that is used to create an item in the list when 
+		itemdatapath is assigned.</help>
+	<values />
+</parameter>
+<parameter name="ondefaultselection" type="Any" required="false">
+	<help>This event is sent when the default selection is set.</help>
+	<values />
+</parameter>
+<parameter name="shownitems" type="Numeric" required="false">
+	<help>Sets the height of the combobox to show 'n' items.</help>
+	<values />
+</parameter>
+<parameter name="spacing" type="Numeric" required="false">
+	<help>The spacing size ( in pixels ) between items in the pop-up 
+		list.</help>
+	<values />
+</parameter>
+<parameter name="text_width" type="Numeric" required="false">
+	<help>the width the text. default: combowidth - 19</help>
+	<values />
+</parameter>
+<parameter name="text_x" type="Numeric" required="false">
+	<help>the x position of the text. default: 2</help>
+	<values />
+</parameter>
+<parameter name="text_y" type="Numeric" required="false">
+	<help>the y position of the text. default: 2</help>
+	<values />
+</parameter>
+&baseformitem;

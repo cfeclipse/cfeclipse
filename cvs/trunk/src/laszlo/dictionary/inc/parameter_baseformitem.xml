@@ -1,0 +1,8 @@
+<parameter name="value" type="Any" required="false">
+	<help>the value that this item represents. When selected, the 
+		parent selection group's value will be set to this value. Most 
+		subclasses require you to call getValue() to get the value of 
+		the attribute.</help>
+	<values />
+</parameter>
+&basecomponent;

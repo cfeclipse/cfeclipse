@@ -1,0 +1,38 @@
+<parameter name="dataoption" type="String" required="false">
+	<help>One of "lazy", "resize", "pooling", "none".</help>
+	<values>
+		<value option="lazy"/>
+		<value option="resize"/>
+		<value option="pooling"/>
+		<value option="none"/>
+	</values>
+</parameter>
+<parameter name="defaultSelection" type="Any" required="false">
+	<help>The index of the default selected item, if none is provided 
+		via the selected="true" attribute on an item.</help>
+	<values />
+</parameter>
+<parameter name="itemclassname" type="String" required="false">
+	<help>The name of the class for new items that will be created with 
+		addItem().</help>
+	<values />
+</parameter>
+<parameter name="multiselect" type="boolean" required="false">
+	<help>If multiselect is true, multiple items may be selected. When 
+		the shift key is down, a range of items is selected. When the 
+		control key is down, any item may be added to the selection.
+		</help>
+	<values>
+		<value option="true"/>
+		<value option="false"/>
+	</values>
+</parameter>
+<parameter name="toggleselected" type="boolean" required="false">
+	<help>When true, the first click on a list item selects it and the 
+		second click deselects it.</help>
+	<values>
+		<value option="true"/>
+		<value option="false"/>
+	</values>
+</parameter>
+&baseformitem;

@@ -1,0 +1,78 @@
+<parameter name="disabledResourceNumber" type="Numeric" required="false">
+	<help>The resource for the disabled state, default: 4. Use 0 if 
+		there are the resource has at least 4 frames, but there is no 
+		disabled state.</help>
+	<values>
+		<value option="0" />
+		<value option="1" />
+		<value option="2" />
+		<value option="3" />
+		<value option="4" />
+	</values>
+</parameter>
+<parameter name="downResourceNumber" type="Numeric" required="false">
+	<help>The resource for the mouse down state, default: 3. Use 0 if 
+		the resources has at least 3 frames, but there is no down state.
+	</help>
+	<values>
+		<value option="0" />
+		<value option="1" />
+		<value option="2" />
+		<value option="3" />
+		<value option="4" />
+	</values>
+</parameter>
+<parameter name="maxframes" type="Numeric" required="false">
+	<help>The maximum number of frames to use, defaults to the number of 
+		frames for the resoruce associated with this view. This is 
+		useful for a subclass has no resource for this view. Default is 
+		the total frames of basebutton.
+	</help>
+	<values />
+</parameter>
+<parameter name="normalResourceNumber" type="Numeric" required="false">
+	<help>The resource for the mouse up state, and initial state of the 
+		button.</help>
+	<values>
+		<value option="0" />
+		<value option="1" />
+		<value option="2" />
+		<value option="3" />
+		<value option="4" />
+	</values>
+</parameter>
+<parameter name="onresourceviewcount" type="Any" required="false">
+	<help>This event is sent when the resourceviewcount changes.</help>
+	<values />
+</parameter>
+<parameter name="overResourceNumber" type="Numeric" required="false">
+	<help>The resource for the mouse over state, default: 2. Use 0 if 
+		the resource has at least 2 frames, but there is no over state.
+	</help>
+	<values>
+		<value option="0" />
+		<value option="1" />
+		<value option="2" />
+		<value option="3" />
+		<value option="4" />
+	</values>
+</parameter>
+<parameter name="reference" type="Function" required="false">
+	<help>Where to send mouse events (the view that will be "clickable"), 
+		default: this.</help>
+	<values />
+</parameter>
+<parameter name="resourceviewcount" type="Numeric" required="false">
+	<help>The first 'n' subviews that will respond to mouseevents by 
+		changing the frame number of their resource.</help>
+	<values />
+</parameter>
+<parameter name="respondtomouseout" type="boolean" required="false">
+	<help>If this button does not respond to onmouseout or onmousedragout 
+		events, set this flag to false. Default: true.</help>
+	<values>
+		<value option="true"/>
+		<value option="false"/>
+	</values>
+</parameter>
+&basecomponent;

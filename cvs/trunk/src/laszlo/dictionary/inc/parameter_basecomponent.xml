@@ -1,0 +1,52 @@
+<parameter name="doesenter" type="boolean" required="false">
+	<help>If set to true, the component manager will call this component 
+		with doEnterDown and doEnterUp when the enter key goes up or 
+		down if it is focussed.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="enabled" type="boolean" required="false">
+	<help>when false the component should appear as its disabled state 
+		and not respond to user events (default: true) The component is 
+		automatically set to clickable when enabled, and not clickable 
+		when disabled.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="hasdefault" type="boolean" required="false">
+	<help>set to true when this component will receive enter key events</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="isdefault" type="boolean" required="false">
+	<help>If set to true, this component will be the default (and will 
+		therefore receive the enter key) if it is nearest to the 
+		focussed view, and if that focussed view does not have doesenter 
+		set to true. "Nearness" is defined to mean the closest common 
+		parent with the focussed view that is not excluded from the 
+		mode, and which is visible onscreen.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="style" type="Any" required="false">
+	<help>If null, the style is set to the inherited style from the 
+		parent component, if no parent component the style will be the 
+		canvas 'defaultstyle' attribute</help>
+	<values/>
+</parameter>
+<parameter name="styleable" type="boolean" required="false">
+	<help>whether style should be applied to this component</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="text" type="String" required="false">
+	<help>the label or title of the component: instead of using this 
+		attribute text may instead be placed withing the tag</help>
+	<values/>
+</parameter>
+&view;
