@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<!DOCTYPE dictionary [	
+	<!ELEMENT dictionary ( tags?, functions? )>
+	<!ELEMENT tags ( tag* )>
+	
+	<!-- //////////// tags ////////////////// -->	
+	<!ELEMENT tag ( help, parameter* )>
+	<!ATTLIST tag 
+		creator CDATA #REQUIRED
+		name CDATA #REQUIRED
+		single ( true | false ) #REQUIRED
+		xmlstyle ( true | false ) #REQUIRED
+	>
+	<!-- //////////// functions ///////////// -->
+	<!ELEMENT functions ( function* )>
+	<!ELEMENT function ( help, parameter* )>
+	<!ATTLIST function
+		creator CDATA #REQUIRED
+		name CDATA #REQUIRED
+		returns ( String | Numeric | Object | Query | Array | boolean ) #REQUIRED
+	>
+	<!-- //////////// all /////////////////// -->
+	<!ELEMENT parameter ( help, values?)>
+	<!ATTLIST parameter
+		name CDATA #REQUIRED
+		type ( String | Numeric | Object | Query | Array | boolean ) #REQUIRED
+		required ( true | false ) #REQUIRED
+	>
+	<!ELEMENT values (value*)>
+	<!ELEMENT value (#PCDATA)>
+	<!ATTLIST value
+		option CDATA #REQUIRED
+	>
+	<!ELEMENT help (#PCDATA)>
+]>

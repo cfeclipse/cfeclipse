@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="dictionary">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" ref="tags"/>
+				<xs:element minOccurs="0" ref="functions"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="tags">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="tag"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="tag">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="help"/>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="parameter"/>
+			</xs:sequence>
+			<xs:attribute name="creator" type="xs:string" use="required"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="single" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="true"/>
+						<xs:enumeration value="false"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="xmlstyle" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="true"/>
+						<xs:enumeration value="false"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="functions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="function"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="function">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="help"/>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="parameter"/>
+			</xs:sequence>
+			<xs:attribute name="creator" type="xs:string" use="required"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="returns" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="String"/>
+						<xs:enumeration value="Numeric"/>
+						<xs:enumeration value="Object"/>
+						<xs:enumeration value="Query"/>
+						<xs:enumeration value="Array"/>
+						<xs:enumeration value="boolean"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="parameter">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="help"/>
+				<xs:element minOccurs="0" ref="values"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="String"/>
+						<xs:enumeration value="Numeric"/>
+						<xs:enumeration value="Object"/>
+						<xs:enumeration value="Query"/>
+						<xs:enumeration value="Array"/>
+						<xs:enumeration value="boolean"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="required" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="true"/>
+						<xs:enumeration value="false"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="values">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="value"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="value">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="option" type="xs:string" use="required"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="help" type="xs:string"/>
+	
+</xs:schema>
