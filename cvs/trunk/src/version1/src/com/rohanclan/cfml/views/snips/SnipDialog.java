@@ -33,8 +33,6 @@ import org.eclipse.swt.graphics.FontData;
  */
 public class SnipDialog extends Dialog{
     protected String title;
-    protected String properties;
-    protected String selectedValue;
     
     private ArrayList itemList;
 
@@ -142,10 +140,10 @@ public class SnipDialog extends Dialog{
    protected void buttonPressed(int buttonId) {
        if (buttonId == IDialogConstants.OK_ID) {
            Iterator i = itemList.iterator();
+          
            while (i.hasNext()) {
                ((SnipVarItem)i.next()).setReplacement();
            }
-           selectedValue = combo.getText().trim();
         }
        super.buttonPressed(buttonId);
        
@@ -155,18 +153,6 @@ public class SnipDialog extends Dialog{
     
     
     
-    /**
-     * @return Returns the properties.
-     */
-    public String getProperties() {
-        return properties;
-    }
-    /**
-     * @param properties The properties to set.
-     */
-    public void setProperties(String properties) {
-        this.properties = properties;
-    }
     
     public void setItemList(ArrayList itemList) {
         this.itemList = itemList;

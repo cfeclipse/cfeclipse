@@ -60,7 +60,6 @@ public class SnipSmartDialog {
 			position = expressionEnd;
         }
         
-        
         if (list.iterator().hasNext()) {
 	        
 	        SnipDialog dia = new SnipDialog(shell);
@@ -90,7 +89,7 @@ public class SnipSmartDialog {
 		    }
 	    
         }
-        
+
         
         
         return newStr;
