@@ -1,8 +1,6 @@
 /*
  * Created on Jul 12, 2004
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package com.rohanclan.cfml.views.snips;
 

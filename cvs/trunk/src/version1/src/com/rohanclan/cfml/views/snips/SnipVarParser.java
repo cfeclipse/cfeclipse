@@ -147,7 +147,7 @@ public class SnipVarParser {
 			int expressionStart = newStr.indexOf("$${")+3;
 			int expressionEnd = newStr.indexOf("}",expressionStart);
 			String expression = newStr.substring(expressionStart,expressionEnd);
-			InputDialog replacementDialog = new InputDialog(shell,"Replace variable","Replace variable "+ expression +" in start block with:","",null);
+			InputDialog replacementDialog = new InputDialog(shell,"Replace variable",expression,"",null);
 			
 			if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
 				String replacement = replacementDialog.getValue(); 
@@ -155,7 +155,7 @@ public class SnipVarParser {
 				newStr = newStr.replaceAll(pattern,replacement);
 			}
 			else {
-				break;
+			    return null;
 			}
 
 		}

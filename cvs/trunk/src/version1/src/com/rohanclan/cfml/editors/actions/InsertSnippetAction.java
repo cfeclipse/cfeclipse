@@ -122,7 +122,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    start = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.editor.getSite().getShell());
 			    end = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.editor.getSite().getShell());
 			    
-			    if (start.length() > 0 || end.length() > 0) {
+			    if (start != null && end != null && (start.length() > 0 || end.length() > 0)) {
 			    
 					this.enclose(doc,(ITextSelection)sel,start,end);
 					

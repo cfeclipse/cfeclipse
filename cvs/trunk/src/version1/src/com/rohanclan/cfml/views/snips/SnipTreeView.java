@@ -479,12 +479,10 @@ public class SnipTreeView extends ViewPart
 			String startBlock = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.getViewSite().getShell());
 			String endBlock = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.getViewSite().getShell());
 
-			
-			tmpAction.setEnclosingStrings(startBlock,endBlock);
-			
-			
-			tmpAction.run(null);
-			
+			if (startBlock != null && endBlock != null) {
+			    tmpAction.setEnclosingStrings(startBlock,endBlock);
+			    tmpAction.run(null);
+			}
 		}catch(Exception e)
 		{
 			e.printStackTrace(System.err);
