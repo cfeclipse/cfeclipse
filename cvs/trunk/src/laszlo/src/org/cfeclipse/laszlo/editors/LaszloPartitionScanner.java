@@ -42,7 +42,7 @@ public class LaszloPartitionScanner extends RuleBasedPartitionScanner {
 		IPredicateRule[] rules = new IPredicateRule[3];
 
 		rules[0] = new MultiLineRule("<!--", "-->", xmlComment);
-		rules[1] = new MultiLineRule("<![CDATA[","]]>",script);
+		rules[1] = new MultiLineRule("<script>","</script>",script);
 		rules[2] = new TagRule(tag);
 		
 		setPredicateRules(rules);
