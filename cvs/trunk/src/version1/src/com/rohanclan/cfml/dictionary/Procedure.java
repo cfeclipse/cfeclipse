@@ -24,8 +24,12 @@
  */
 package com.rohanclan.cfml.dictionary;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
+
+import com.rohanclan.cfml.dictionary.Parameter;
 
 /**
  * @author Rob
@@ -41,6 +45,66 @@ import java.util.HashSet;
  *  
  */
 public class Procedure implements Comparable {
+	/*
+	 * String def's of the PARAM_* stuff are required due to the HashMap return used by getAvailParams().
+	 * Could this be done better? I.e. By having a string param trigger value to ArrayList of params in that category?
+	 */
+	/** The Parameter is required (<strong>and</strong> triggered) */
+	static final String PARAM_REQUIRED = "__required";
+	/** The Parameter is triggered (and therefore available to the user at code assist, but not marked as mandatory/required) */
+	static final String PARAM_TRIGGERED = "__triggeredonly";
+	/** The Parameter is not triggered (and therefore not available to the user at code assist) */
+	static final String PARAM_NOTTRIGGERED = "_nopemyfriend";
+	
+
+	/**
+	 * Returns the currently available parameters based upon the currently
+	 * 'active' parameters (i.e. the ones that are currently entered by the user).
+	 * Essentially a filtering takes place where each parameter decides whether
+	 * it is triggered or not (or required and triggered. Oh the joys of tri-states).
+	 * 
+	 * @param activeParams - the parameters currently entered by the user
+	 * @return A HashMap between triggered Parameter & it's status (see Procedure.PARAM_*)
+	 */
+	public HashMap getAvailParams(HashMap activeParams)
+	{
+		/*
+		 * Simply cycles through the parameters available to the tag, testing each
+		 * parameter against the active parameters. For every Parameter the Procedure has
+		 * it asks it whether it would be triggered by any of the passed in active parameters.
+		 * 
+		 * If so it allocates whether it is required & triggered or just triggered.
+		 */
+		HashMap params2Return = new HashMap();
+		Iterator paramIter = this.parameters.iterator();
+		while(paramIter.hasNext())
+		{
+			Parameter currParam = (Parameter)paramIter.next();
+			//System.out.print("Testing \"" + currParam.getName() + "\"");
+			
+			if(activeParams.containsKey(currParam.getName()))	// Parameter already used
+			{
+				//System.out.println("Param already used");
+				continue;
+			}
+			
+			int trigVal = currParam.isTriggered(activeParams);
+				
+			//System.out.print(" Trigger val is " + trigVal);
+			if((trigVal & Parameter.PARAM_REQUIRED) == Parameter.PARAM_REQUIRED)
+			{
+				params2Return.put(currParam, PARAM_REQUIRED);
+			}
+			else if((trigVal & Parameter.PARAM_TRIGGERED) == Parameter.PARAM_TRIGGERED)
+			{
+				//System.out.println(" adding param");
+				params2Return.put(currParam, PARAM_TRIGGERED);
+			}
+		}
+		return params2Return;
+	}
+	
+	
 	/* cfml "types" */
 	/** cf string type */
 	public static final String STRING  = "string";

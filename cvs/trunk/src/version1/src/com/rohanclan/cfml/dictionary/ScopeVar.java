@@ -37,6 +37,7 @@ public class ScopeVar implements Comparable {
 	public ScopeVar(String val)
 	{
 		value = val;
+		this.help = "";	// Must set this to something even if there is no help
 	}
 	
 	/**

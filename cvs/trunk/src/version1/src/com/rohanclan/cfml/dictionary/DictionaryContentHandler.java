@@ -24,6 +24,7 @@
  */
 package com.rohanclan.cfml.dictionary;
 
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
@@ -49,7 +50,7 @@ public class DictionaryContentHandler implements ContentHandler {
 	private String currenttag = "";
 	/** current tag/function being built */
 	private Procedure currentitem = null;
-	private Parameter paramitem = null;
+	private Parameter paramItem = null;
 	private Function methoditem = null;
 	
 	public DictionaryContentHandler(Map tags, Map functions, Map scopeVars)
@@ -83,41 +84,81 @@ public class DictionaryContentHandler implements ContentHandler {
 		return false;
 	}
 	
+	private boolean inTriggerBlock = false;
+	
+	/**
+	 * Handles the start of a triggers tag.
+	 * At present it just records the fact that we are in a triggers block
+	 * so that any trigger set exists only in triggers blocks.
+	 * 
+	 * @param attribs XML tag attributes
+	 */
+	private void handleTriggersStart(Attributes attribs)  {
+		if(this.paramItem == null) {
+			System.err.println("Got a <triggers> block outside of a parameter!");
+		}
+		else
+			this.inTriggerBlock = true;
+	}
+	
+	/**
+	 * Handles a closing triggers tag.
+	 * 
+	 * Simply records the fact that the triggers block has ended.
+	 *
+	 */
+	private void handleTriggersEnd() {
+		this.inTriggerBlock = false;
+	}
+	
+	/**
+	 * Handles a selectedValue tag. 
+	 * Adds the trigger details to the currently open parameter (if no parameter open
+	 * or the selectedValue tag is not in a parameter then an error will be reported)
+	 * 
+	 * @param attributes Attributes for the xml 
+	 */
+	private void handleSelectedValue(org.xml.sax.Attributes attributes) {
+		if(!this.inTriggerBlock) {
+			System.err.println("Got a <selectedValue> outside of a valid triggers block!");
+			return;
+		}
+		
+		String attrName = attributes.getValue("attributeName");
+		String value = attributes.getValue("value");
+		boolean required = attributes.getValue("required").compareToIgnoreCase("true") == 0;
+		this.paramItem.addTrigger(Trigger.CreateSimpleTrigger(attrName, value, required));
+		
+// System.out.println("DictionaryContentHandler::handleSelectedVaule - Attr: \'" + this.paramItem.getName() + "\' + Added trigger for \'" + attrName + "\'=\'" + value + "\'");
+	}
+	
 	/** process a start element */
 	public void startElement(String namespace, String localName, String str2, org.xml.sax.Attributes attributes) 
 		throws SAXException 
 	{
 		//save the current tag so we can see where we were
-		currenttag = str2;
+		this.currenttag = str2;
 				
-		if(str2.equals("tag"))
-		{
+		if(str2.equals("tag")) {
 			handleTagStart(attributes);
-		}
-		else if(str2.equals("function"))
-		{
+		} else if(str2.equals("function")) {
 			handleFunctionStart(attributes);
-		}
-		else if(str2.equals("parameter"))
-		{
+		} else if(str2.equals("parameter")) {
 			handleParameterStart(attributes);
-		}
-		else if(str2.equals("value"))
-		{
+		} else if(str2.equals("value")) {
 			handleValueStart(attributes);
-		}
-		else if (str2.equals("help"))
-		{
+		} else if (str2.equals("help"))	{
 			//adds help
-		}
-		else if(str2.equals("component"))
-		{
+		} else if(str2.equals("component"))	{
 		    handleComponentStart(attributes);
-		}
-		else if(str2.equals("scope"))
-		{
+		} else if(str2.equals("scope"))	{
 		    handleScopeStart(attributes);
+		} else if(str2.equals("triggers")) {
+			handleTriggersStart(attributes);
+		} else if(str2.equals("selectedValue")) {
+			handleSelectedValue(attributes);
 		}
+		
 	}
 	
 	
@@ -192,7 +233,12 @@ public class DictionaryContentHandler implements ContentHandler {
 		}
 	}
 	
-	
+	/**
+	 * Handles a new parameter.
+	 * Not added until the closing tag is found.
+	 * 
+	 * @param attributes The attributes associated with the parameter
+	 */
 	private void handleParameterStart(org.xml.sax.Attributes attributes) {
 	    //get the name and type
 		String name = "";
@@ -202,34 +248,63 @@ public class DictionaryContentHandler implements ContentHandler {
 		for(int x=0; x< attributes.getLength(); x++)
 		{
 			String attrname = attributes.getQName(x);
-			if(attrname.equals("type"))
-			{
+			if(attrname.equals("type"))	{
 				type = attributes.getValue(x);
 			}
-			else if(attrname.equals("name"))
-			{
+			else if(attrname.equals("name")) {
 				name = attributes.getValue(x);
 			}
-			else if(attrname.equals("required"))
-			{
+			else if(attrname.equals("required")) {
 				required = parseBoolean(attributes.getValue(x));
 			}
 		}
 		
 		//System.out.println("Param: " + name + " " + type + " " + required);
-		//create a new parameter
-		this.paramitem = new Parameter(name,type,required);
+		//
+		// Create a new parameter and store it as the current parameter
+		this.paramItem = new Parameter(name,type,required);
 	}
 	
+	/**
+	 * Handles a closing parameter tag. 
+	 * Performs whatever finishing up is required and stores the
+	 * parameter for it's associated method/tag. 
+	 */
+	private void handleParameterEnd() {
+		//
+		// Attach the finished parameter to the current item
+		if((currentitem instanceof Function || currentitem instanceof Tag )
+			&& paramItem != null)
+		{
+			currentitem.addParameter(paramItem);
+		}	// TODO: Isn't the below in the wrong place, should it be a child of the above if?
+		else if (methoditem != null && paramItem != null) {
+		    methoditem.addParameter(paramItem);
+		}
+		
+		//
+		// Reset the paramitem
+		paramItem = null;
+	}	
 	
+	/**
+	 * Handles the open tag for a value.
+	 * 
+	 * 
+	 * @param attributes The attributes for the tag.
+	 */
 	private void handleValueStart(org.xml.sax.Attributes attributes) {
-	    //create a new value and assign it to the current parameter
+		//
+	    // Create a new value and assign it to the current parameter
 		String option = attributes.getValue(0);
-		//System.out.println("Value: " + option);
-		if(option != null && paramitem != null)
-			paramitem.addValue(new Value(option));
+
+		if(option != null && paramItem != null)
+			paramItem.addValue(new Value(option));
 	}
 	
+	private void handleValueEnd() {
+		
+	}
 	
 	private void handleComponentStart(org.xml.sax.Attributes attributes) {
 //	  all the attribtues we are going to need to make a tag
@@ -305,22 +380,11 @@ public class DictionaryContentHandler implements ContentHandler {
 		}
 		else if(str2.equals("parameter"))
 		{
-			//attact the finished parameter to the
-			//current item
-			if((currentitem instanceof Function || currentitem instanceof Tag )&& paramitem != null)
-			{
-				currentitem.addParameter(paramitem);
-			}
-			else if (methoditem != null && paramitem != null) {
-			    methoditem.addParameter(paramitem);
-			}
-			
-			//reset the paramitem
-			paramitem = null;
+			handleParameterEnd();
 		}
 		else if(str2.equals("value"))
 		{
-			//nothing?
+			handleValueEnd();
 		}
 		else if(str2.equals("help"))
 		{
@@ -333,15 +397,14 @@ public class DictionaryContentHandler implements ContentHandler {
 		        this.currentitem = null;
 		    }
 		   
-		}
-		else if(str2.equals("scope"))
-		{
+		} else if(str2.equals("scope"))	{
 		    // Do nothing.
+		} else if(str2.equals("triggers")) {
+			handleTriggersEnd();
 		}
 		currenttag = "";
 	}
-	
-	
+
 	/** process the start prefix */	
 	public void startPrefixMapping(String str, String str1) throws SAXException {
 		//save the mappings for later use
@@ -365,7 +428,7 @@ public class DictionaryContentHandler implements ContentHandler {
 			
 			//if the current item is not null and the prams are its help for the
 			//current item
-			if(currentitem != null && paramitem == null)
+			if(currentitem != null && paramItem == null)
 			{
 				//for some reason M8 calls this a bunch of times, but only with
 				//the cfml dictionary. So this is kind of a hack to get it to
@@ -380,14 +443,14 @@ public class DictionaryContentHandler implements ContentHandler {
 				}
 			}
 			//if the param is not null its help for the param
-			else if(currentitem != null && paramitem != null)
+			else if(currentitem != null && paramItem != null)
 			{
 				//TODO here too
 				//paramitem.setHelp(resvalue.toString().trim().replace('\t',' '));
 				if(resvalue.toString().trim().length() > 0)
 				{
-					paramitem.setHelp(
-						paramitem.getHelp() + " " +
+					paramItem.setHelp(
+						paramItem.getHelp() + " " +
 						resvalue.toString().trim().replace('\t',' ') + "\n"
 					);
 				}

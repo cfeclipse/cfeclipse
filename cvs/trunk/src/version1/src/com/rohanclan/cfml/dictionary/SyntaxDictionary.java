@@ -34,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import com.rohanclan.cfml.CFMLPlugin;
 
+import org.eclipse.core.internal.utils.Assert;
 import org.xml.sax.SAXException;
 //import java.util.Enumeration;
 import java.io.IOException;
@@ -187,7 +188,7 @@ public abstract class SyntaxDictionary {
 		while(it.hasNext())
 		{
 		    name = (String)it.next();
-		    //System.out.println("Added " + name);
+		    //System.out.println("Added " + name);		    
 			total.add(scopeVars.get(name));
 		}
 		
@@ -202,6 +203,13 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getFilteredElements(String start)
 	{
+	    
+	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
+		 	       && !start.toLowerCase().startsWith("cf"))
+	 	    {
+	 	        System.err.println("SyntaxDictionarY::getFilteredElements() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + start + "\'");
+	 	    }
+	    
 		return limitSet(getAllTags(),start);
 		//return limitSet(getAllElements(),start);
 	}
@@ -225,6 +233,12 @@ public abstract class SyntaxDictionary {
 	 */
 	public Tag getTag(String name)
 	{
+	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
+	       && !name.startsWith("cf"))
+	    {
+	        System.err.println("SyntaxDictionarY::getTag() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + name + "\'");
+	    }
+	        
 		Object obj = syntaxelements.get(name.toLowerCase());
 		if(obj != null)
 			return (Tag)obj;
@@ -248,9 +262,24 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getFilteredAttributeValues(String tag, String attribute, String start)
 	{
+		Assert.isNotNull(tag, "Tag supplied is null!");
+		Assert.isNotNull(attribute, "Attribute supplied is null!");
+		Assert.isNotNull(start, "Start supplied is null!");
+
+	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
+		 	       && !tag.toLowerCase().startsWith("cf"))
+ 	    {
+ 	        System.err.println("SyntaxDictionarY::getFilteredAttributeValues() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + tag + "\'");
+ 	    }
+		
+		
 		Set attribs = getElementAttributes(tag);
-		if(attribs.size() == 0)
+		
+		if(attribs == null)
 			return null;
+		else if(attribs.size() == 0)
+			return null;
+		
 		Object [] tempArray = attribs.toArray(); 
 		for(int i = 0; i < tempArray.length; i++)
 		{
@@ -267,10 +296,20 @@ public abstract class SyntaxDictionary {
 	 * 
 	 * @param tag - tag to search for
 	 * @param start - attribute text that we wish to filter by
-	 * @return the filtered set of attributes
+	 * @return The filtered set of Parameters or null if the tag is not found.
 	 */
 	public Set getFilteredAttributes(String tag, String start)
 	{
+		Assert.isNotNull(tag, "Tag supplied is null!");
+		Assert.isNotNull(tag, "Supplied start variable is null!");
+		
+	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
+		 	       && !tag.toLowerCase().startsWith("cf"))
+	    {
+	        System.err.println("SyntaxDictionarY::getFilteredAttributes() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + tag + "\'");
+ 	    }
+		
+		
 		return limitSet(getElementAttributes(tag),start.toLowerCase());
 	}
 	
@@ -283,6 +322,8 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getFunctions()
 	{
+		Assert.isNotNull(functions, "Private member functions is null");
+		
 		return functions.keySet();
 	}
 	
@@ -293,6 +334,9 @@ public abstract class SyntaxDictionary {
 	 */
 	public String getFunctionUsage(String functionname)
 	{
+		Assert.isNotNull(functions, "Private member functions is null");
+		Assert.isNotNull(functionname, "Functionname parameter is null");
+		
 		return (String)functions.get(functionname.toLowerCase());
 	}
 	
@@ -317,6 +361,13 @@ public abstract class SyntaxDictionary {
 	 */
 	public boolean tagExists(String name)
 	{
+	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
+	 	       && !name.toLowerCase().startsWith("cf"))
+ 	    {
+ 	        System.err.println("SyntaxDictionarY::tagExists() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + name + "\'");
+ 	    }
+	    
+	    
 		if(syntaxelements == null)
 			return false;
 		
@@ -427,16 +478,33 @@ public abstract class SyntaxDictionary {
 	
 	/**
 	 * Gets the Parameter objects for the passed element name  
-	 * @param elementname
-	 * @return a set of Parameters
+	 * @param elementname The tag or function whose attributes we're after. 
+	 * @return The set of parameters/attributes for the element, otherwise null.
 	 */
 	public Set getElementAttributes(String elementname)
 	{
-		Procedure p = (Procedure)syntaxelements.get(elementname.toLowerCase());
-		if(p != null)
-		{	
-			Set st = p.getParameters();
-			return st;
+		Assert.isNotNull(this.syntaxelements, "Private member syntaxelements is null. Has this dictionary been loaded?");
+		Assert.isNotNull(elementname, "Parameter elementname supplied is null");
+
+	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
+		 	       && !elementname.toLowerCase().startsWith("cf"))
+ 	    {
+ 	        System.err.println("SyntaxDictionarY::getElementAttributes() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + elementname + "\'");
+ 	    }
+
+		
+		try {
+			Procedure p = null;
+			if(syntaxelements.containsKey(elementname.toLowerCase())) {
+				p = (Procedure)syntaxelements.get(elementname.toLowerCase());
+			}
+			if(p != null)
+			{	
+				Set st = p.getParameters();
+				return st;
+			}
+		} catch(Throwable ex) {
+			ex.printStackTrace();
 		}
 		
 		return null;

@@ -24,19 +24,101 @@
  */
 package com.rohanclan.cfml.dictionary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
+
+import com.rohanclan.cfml.dictionary.Trigger;
+
 /**
  * @author Rob
  *
  * This is a function's (and tag's) parameter (aka attribute).
  */
 public class Parameter implements Comparable {
+	/** The Parameter is not triggered (and therefore not available to the user at code assist) */
+	public static final int PARAM_NOTTRIGGERED	= 0x0;
+	/** The Parameter is triggered (and therefore available to the user at code assist, but not marked as mandatory/required) */
+	public static final int	PARAM_TRIGGERED		= 0x1;
+	/** The Parameter is required (generally and'ed with PARAM_TRIGGERED to indicate that it is triggered & required */ 
+	public static final int PARAM_REQUIRED 		= 0x2;
+	
+	/** Is this parameter required by default (ignoring any 
+	protected boolean paramRequired = false;
+	*/
+	
+	/** The list of things that triggers this parameter (if not required by default) */
+	ArrayList triggers = new ArrayList();
+	
+	/**
+	 * Adds a trigger object that will cause this parameter to be required / presented
+	 * as optional.
+	 * 
+	 * @param newTriggerSet The new trigger to set
+	 * @see #com.rohanclan.cfml.dictionary.Trigger
+	 */
+	public void addTrigger(Trigger newTriggerSet) {
+		//System.out.println("Parameter::addTriger() - Param \' " + this.name + "\' now has " + this.triggers.size() + "\' triggers");
+		this.triggers.add(newTriggerSet);
+	}
+	
+	/**
+	 * Checks the set of parameters to see whether any of the trigger lists are matched.
+	 * 
+	 * @param availParams name/value string pairs of parameters currently entered
+	 * @return Whether the parameter is triggered or not (and whether it's required). Values will be one of:
+	 * <ul>
+	 * 	<li><code>PARAM_REQUIRED</code> - Parameter required & triggered (will be <code>PARAM_REQUIRED | PARAM_TRIGGERED</code>)</li>
+	 *  <li><code>PARAM_TRIGGERED</code> - Parameter triggered</li>
+	 *  <li><code>PARAM_NOTTRIGGERED</code> - Parameter not triggered</li>
+	 * </ul>
+	 */
+	public int isTriggered(HashMap availParams)
+	{
+		
+		/*
+		 * isTriggered flies through the Parameter's trigger list asking each trigger
+		 * whether they are activated by the available parameters (i.e. in the case of
+		 * code assist, the one's that are currently entered).
+		 * 
+		 * TODO: The code assistor will have to forward-scan from the caret pos to get and succeeding attributes. Doh! 
+		 */
+		//System.out.print("Parameter::isTriggered() [" + paramName + "] - ");
+		if(this.triggers.size() == 0 && this.required)
+		{
+			//System.out.println(" no params, triggered & required");
+			return PARAM_REQUIRED | PARAM_TRIGGERED;
+		}
+		else if(this.triggers.size() == 0)
+		{
+			//System.out.println(" no params, triggered.");
+			return PARAM_TRIGGERED;
+		}
+		
+		Iterator trigIter = triggers.iterator();
+		
+		while(trigIter.hasNext())
+		{
+			Trigger currTrigger =(Trigger)trigIter.next(); 
+			int trigVal = currTrigger.WillTrigger(availParams);
+			if((trigVal & PARAM_TRIGGERED) == PARAM_TRIGGERED)
+			{
+				//System.out.println("Param required");
+				return trigVal;
+			}
+		}
+		//System.out.println("Param not triggered");
+		return PARAM_NOTTRIGGERED;	// Fell through to here, available parameters didn't match any triggers.
+	}
+	
+	
 	protected String name = "";
 	protected String type = Procedure.VOID;
 	protected String help = "";
 	protected Set values;
-	protected boolean required;
+	protected boolean required = false;
 		
 	public Parameter(String name)
 	{
@@ -48,7 +130,7 @@ public class Parameter implements Comparable {
 		this(name);
 		this.type = type;
 	}
-	
+		
 	public Parameter(String name, String type, boolean required)
 	{
 		this(name,type);
@@ -82,7 +164,7 @@ public class Parameter implements Comparable {
 	 */
 	public void addValue(Value value)
 	{
-		if(values == null)
+		if(this.values == null)
 			values = new HashSet();
 		
 		values.add(value);
@@ -90,7 +172,7 @@ public class Parameter implements Comparable {
 	
 	public Set getValues()
 	{
-		if(values == null)
+		if(this.values == null)
 			return new HashSet();
 
 		

@@ -91,7 +91,7 @@ public class Value implements Comparable {
 	public int compareTo(Object o)
 	{
 		if(o == null)
-			throw new NullPointerException("Null!");
+			throw new NullPointerException("Object o that I am comparing with is null!");
 		
 		if(o instanceof Value)
 		{
