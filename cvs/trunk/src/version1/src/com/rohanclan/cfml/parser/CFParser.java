@@ -46,7 +46,7 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.parser.cfmltagitems.*;
 
-
+import com.rohanclan.cfml.util.Debug;
 
 import com.rohanclan.cfml.parser.ParseError;
 import com.rohanclan.cfml.parser.ParseMessage;
@@ -106,7 +106,9 @@ public class CFParser {
 	 * <code>REG_ATTRIBUTES</code> - regular expression for getting the attributes out of a tag match.
 	 * \s*(\w*)="(\w*)"
 	 */
-	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"(\\w*)\"";
+	//static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"(\\w*)\"";
+	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"([#|\\.|\\w]*)\"";
+	
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
@@ -382,9 +384,10 @@ public class CFParser {
 			
 			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
 			//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
-
+			
 			if(topItem instanceof TagItem)
-			{
+			{	
+				
 				try {
 				TagItem tempItem = new TagItem(match.lineNumber, match.startPos, match.endPos+1, match.match);
 				((TagItem)topItem).setMatchingItem(tempItem);
@@ -422,6 +425,7 @@ public class CFParser {
 							"handleClosingTag", "Closing tag \'" + match.match + 
 							"\' does not match the current parent item: \'" + topItem.itemName + "\'", 
 							USRMSG_ERROR, tempMatch);
+/*				
 				while(matchStack.size() > 0)
 				{
 					TagMatch currMatch = (TagMatch)matchStack.pop();
@@ -430,6 +434,7 @@ public class CFParser {
 								currMatch.match + "\' at line " + 
 								getLineNumber(currMatch.startPos), USRMSG_ERROR, currMatch); 
 				}
+*/
 				return false;
 				// 
 				// So we just push the top item back onto the stack, ready to be matched again.
@@ -593,6 +598,31 @@ public class CFParser {
 	}
 	
 	/**
+	 * 
+	 * @param tagName
+	 * @param matches
+	 * @param matchPos
+	 * @param isACloser
+	 * @return
+	 */
+	boolean isTagACloser(String tagName, ArrayList matches, int matchPos, boolean isACloser)
+	{
+		if(tagName.compareToIgnoreCase("<cfinvoke") == 0)
+		{
+			if(((TagMatch)matches.get(matchPos+1)).match.indexOf("invokeargument") == -1)
+			{
+				isACloser = true;
+			}
+			else
+			{
+				isACloser = false;
+			}
+			
+		}
+		return isACloser;
+	}
+	
+	/**
 	 * <code>createDocTree</code> - Creates the document tree from the TagMatches made
 	 * 
 	 * @param matches - the matches found previously
@@ -659,15 +689,19 @@ public class CFParser {
 						boolean isACloser = false;
 
 						int forwardSlashPos = match.match.lastIndexOf("/");
-						
+						String attributes = "";
 						if(forwardSlashPos != -1 && match.match.charAt(forwardSlashPos+1) == '>')	// Handle a self-closer (i.e. <cfproperty ... />
 						{
 							if(tagName.indexOf("/") != -1)
 								tagName = tagName.substring(0, tagName.length()-1); // Is a self-closer (i.e. <br/>)
 							isACloser = true;
+							attributes = match.match.substring(tagEnd, match.match.length()-2); // minus one to strip the closing '/>'
 						}
+						else
+							attributes = match.match.substring(tagEnd, match.match.length()-1); // minus one to strip the closing '>'
+
 						// Get the attributes from the tag.
-						String attributes = match.match.substring(tagEnd, match.match.length()-1); // minus one to strip the closing '>'
+						
 
 						if(IsCFTag(tagName))
 						{
@@ -680,7 +714,7 @@ public class CFParser {
 							}
 							else
 							{
-								//System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "\'");
+
 								handleCFTag(tagName, match, matchStack, stripAttributes(attributes), isACloser);
 							}
 						}
@@ -1063,7 +1097,7 @@ public class CFParser {
 	 */
 	public void parseSaveDoc()
 	{
-		//System.out.println(parseDoc.get());
+		////System.out.println(parseDoc.get());
 		parseResult = parseDoc();
 	}
 	
