@@ -6,6 +6,8 @@
  */
 package com.rohanclan.cfml.preferences;
 
+import java.net.URL;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import com.rohanclan.cfml.CFMLPlugin;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
@@ -46,14 +48,33 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		store = CFMLPlugin.getDefault().getPreferenceStore();
 	}
 	
-	public void initializeDefaultValues() {
+	public void initializeDefaultValues() 
+	{
+		//this should set the default path for snippets to the plugin directory
+		//in a sub directory called snippets... I think that makes more sense :)
+		String snippath = "";
+		try
+		{
+			//TODO figure out how to get to the snippets absolute path
+			/* snippath = new URL(
+				CFMLPlugin.getDefault().getBundle().getEntry("/"),
+				"/snippets"
+			).toString();
+			*/
+			snippath = CFMLPlugin.getDefault().getStateLocation().toString();
+		}
+		catch(Exception e)
+		{
+			//this should never happen.
+		}
 		
         store.setDefault(P_INSIGHT_DELAY, DEFAULT_INSIGHT_DELAY); 
         store.setDefault(P_TAB_WIDTH, DEFAULT_TAB_WIDTH);
         store.setDefault(P_INSERT_SPACES_FOR_TABS, DEFAULT_INSERT_SPACES_FOR_TABS);
         store.setDefault(P_ENABLE_HS_COMPATIBILITY, DEFAULT_ENABLE_HS_COMPATIBILITY);
         store.setDefault(P_ENABLE_DW_COMPATIBILITY, DEFAULT_ENABLE_DW_COMPATIBILITY);
-        store.setDefault(P_SNIPPETS_PATH, CFMLPlugin.getDefault().getStateLocation().toString());
+        store.setDefault(P_SNIPPETS_PATH, snippath);
+        //store.setDefault(P_SNIPPETS_PATH, CFMLPlugin.getDefault().getStateLocation().toString());
         
         // Parser prefs.
         store.setDefault(P_PARSE_DOCFSCRIPT, DEFAULT_PARSE_DOCFSCRIPT);
