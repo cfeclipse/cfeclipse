@@ -511,7 +511,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 			}
 
 			String n = cti.getName();
-			if (n.equalsIgnoreCase("include") || n.equalsIgnoreCase("module")) {
+			if (n.equalsIgnoreCase("cfinclude") || n.equalsIgnoreCase("cfmodule")) {
 				//this is a bit hokey - there has to be a way to load the
 				// action
 				//in the xml file then just call it here...
