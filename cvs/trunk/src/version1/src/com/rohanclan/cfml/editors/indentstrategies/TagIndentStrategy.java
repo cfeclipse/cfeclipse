@@ -265,8 +265,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		
 		// If the user hasn't got auto-insertion of closing chevrons on, then 
 		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
-		if(!autoCloseTag
-		        || nextChar != '>')	
+//		if(!autoCloseTag
+	//	        || nextChar != '>')	
+		if(!autoCloseTag)
 			closingTag+= ">";	
 		
 		closingTag = "</" + closingTag;
