@@ -570,10 +570,16 @@
             id="com.rohanclan.cfml.preferences.CFMLPreferencePage">
       </page>
       <page
-            class="com.rohanclan.cfml.preferences.ColorsPreferencePage"
+            class="com.rohanclan.cfml.preferences.CFMLColorsPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="Colors"
-            id="com.rohanclan.cfml.preferences.ColorsPreferencePage">
+            name="CFML Colors"
+            id="com.rohanclan.cfml.preferences.CFMLColorsPreferencePage">
+      </page>
+       <page
+            class="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="HTML Colors"
+            id="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage">
       </page>
       <page
             class="com.rohanclan.cfml.preferences.AutoIndentPrefPage"
