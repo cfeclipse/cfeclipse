@@ -97,7 +97,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @param message The message to output to the console
 	 */
 	private void UserMsg(String method, String message) {
-	    System.out.println("CFContentAssist::" + method + "() - " + message);
+	    //System.out.println("CFContentAssist::" + method + "() - " + message);
 	}
 	/**
 	 * Provides a standarised user error console message for debugging.
@@ -557,7 +557,7 @@ public class CFContentAssist extends CFEContentAssist{
 		String prefix = state.getDataSoFar();
 		String attrText = state.getAttributeText().trim();
 		
-		System.out.println("Prefix is now  " + prefix);
+		//System.out.println("Prefix is now  " + prefix);
 		// hacks hacks everywhere :) this looks to see if there are an
 		// odd number of " in the string prior to this invoke before 
 		// showing attribute insight. (to keep it from showing attributes
