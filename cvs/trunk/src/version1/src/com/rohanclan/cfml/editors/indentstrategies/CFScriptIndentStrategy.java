@@ -9,7 +9,7 @@ Contributors:
     IBM Corporation - Initial implementation
     Klaus Hartlage - www.eclipseproject.de
 **********************************************************************/
-package com.rohanclan.cfml.editors;
+package com.rohanclan.cfml.editors.indentstrategies;
 
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.DefaultAutoIndentStrategy;
@@ -18,20 +18,17 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.text.ITextSelection;
 
-public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
-	
-	private String indentString = "\t";
-	private boolean dreamweaverCompatibility = false;
-	private boolean homesiteCompatibility = false;
+import com.rohanclan.cfml.editors.CFMLEditor;
+
+public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	
 	
-	private CFMLEditor editor;
-	private CFConfiguration configuration;
-	
-	public CFAutoIndentStrategy(CFMLEditor editor) {
-		this.editor = editor;
+	/**
+	 * @param editor
+	 */
+	public CFScriptIndentStrategy(CFMLEditor editor) {
+		super(editor);
 	}
-	
 	/* (non-Javadoc)
 	 * Method declared on IAutoIndentStrategy
 	 */
@@ -45,79 +42,7 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 			singleLineIndent(d,c);
 		}
 	}
-	
 
-	private String getSelectedText(){
-        ISelection selection = editor.getSelectionProvider().getSelection();
-        String text = null;       
-        if(selection != null && selection instanceof ITextSelection){
-            ITextSelection textSelection = (ITextSelection) selection;
-            text = textSelection.getText();
-        }
-        return text;
-    }
-	
-	public void setIndentString(int tabWidth, boolean tabsAsSpaces) {
-		if(tabsAsSpaces) {
-			System.err.println("Indent string set to "+tabWidth+" spaces.");
-			String s = new String();
-			for (int i=0;i<tabWidth;i++) {
-				s+= " ";
-			}
-			indentString = s;
-		}
-		else {
-			System.err.println("Indent string set to 1 tab.");
-			indentString = "\t";
-		}
-	}
-
-	
-	public void setDreamweaverCompatibility(boolean compatibility) {
-		dreamweaverCompatibility = compatibility;
-	//System.out.println("Dreamweaver compatibility set to: "+compatibility);
-	}
-	
-	public void setHomesiteCompatibility(boolean compatibility) {
-		homesiteCompatibility = compatibility;
-	//System.out.println("Homesite compatibility set to: "+compatibility);
-	}
-	
-	private void singleLineIndent(IDocument d, DocumentCommand c) {
-		/*
-		 * TODO: Need to fix the stuff in comments below 
-		 * Plugin currently broken because of missing files
-		 * and broken stuff in CFParser, so can't go any further :-(
-		 */
-			ITextSelection textSelection = (ITextSelection)editor.getSelectionProvider().getSelection();
-			String selectedText = textSelection.getText();
-			//System.out.println("Command offset: |"+c.offset+"|");
-			//System.out.println("Command caret offset: |"+c.caretOffset+"|");
-		 	if (selectedText.length() > 0 && (dreamweaverCompatibility || homesiteCompatibility)) {
-
-				try {
-					// Find the start of the line
-					int lineOffset = d.getLineInformationOfOffset(c.offset).getOffset();
-					// Get the string that we are about to overwrite with the indentstring
-					String lineStartString = d.get(lineOffset,indentString.length());
-					// Replace the start of the line with the indent string and what ever was there before
-					d.replace(lineOffset,indentString.length(),indentString+lineStartString);
-					// Update the offset of the command to reflect the changed line 
-					c.offset += indentString.length();
-					// Set the command text to what is currently selected so we don't change the document
-					c.text = selectedText;
-				}
-				catch (BadLocationException e) {
-					// do nothing
-					System.err.println("BadLocationException caught in singleLineIndent method");
-				}
-		 	}
-		 	else {
-		 		c.text = indentString;
-		 	}
-			
-				
-	}
 	
 	/**
 	 * Returns whether or not the text ends with one of the given search strings.

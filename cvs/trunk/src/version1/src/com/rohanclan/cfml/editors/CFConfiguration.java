@@ -55,6 +55,8 @@ import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.editors.CFTextHover;
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
+import com.rohanclan.cfml.editors.indentstrategies.CFScriptIndentStrategy;
+import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
@@ -81,7 +83,8 @@ public class CFConfiguration extends SourceViewerConfiguration
 	
 	private ContentAssistant assistant;
 	
-	private CFAutoIndentStrategy indentStrategy;
+	private TagIndentStrategy indentTagStrategy;
+	private CFScriptIndentStrategy indentCFScriptStrategy;
 	
 	private CFMLPreferenceManager preferenceManager;
 	
@@ -97,12 +100,14 @@ public class CFConfiguration extends SourceViewerConfiguration
 		this.colorManager = colorManager;
 		
 		preferenceManager = new CFMLPreferenceManager();
-		indentStrategy = new CFAutoIndentStrategy(editor);
+		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
+		this.indentTagStrategy = new TagIndentStrategy(editor);
+		
 		tabWidth = preferenceManager.tabWidth();
 		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
-		indentStrategy.setIndentString(tabWidth,insertSpacesForTabs);
-		indentStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
-		indentStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
+		indentCFScriptStrategy.setIndentString(tabWidth,insertSpacesForTabs);
+		indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
+		indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
 
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
@@ -502,9 +507,18 @@ public class CFConfiguration extends SourceViewerConfiguration
 		return null;
 	}
 	
-	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0, String arg1) 
+	/**
+	 * Returns the autoindent strategy for a give partition type. Currently there are
+	 * two separate indent strategies: CFScript & everything else. This is because
+	 * the auto-completion & character step-through are now implemented within the
+	 * auto-indentors. The auto-indentors differ for the two languages.
+	 */
+	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0, String partitionType) 
 	{
-        return indentStrategy;
+		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) {
+			return indentCFScriptStrategy;
+		}
+        return indentTagStrategy;
     }
 
 	// This method gets called when the preference page is saved.
@@ -522,14 +536,14 @@ public class CFConfiguration extends SourceViewerConfiguration
         else if(event.getProperty().equals("tabsAsSpaces") || event.getProperty().equals("tabWidth")) {
     		tabWidth = preferenceManager.tabWidth();
     		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
-        	indentStrategy.setIndentString(tabWidth,tabsAsSpaces);
+        	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
         	
         }
         else if(event.getProperty().equals("dreamweaverCompatibility")) {
-        	indentStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
+        	indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
         }
         else if(event.getProperty().equals("homesiteCompatibility")) {
-        	indentStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
+        	indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
         }
 		
         
