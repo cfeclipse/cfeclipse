@@ -949,7 +949,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="name" type="boolean" required="false">
+			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
 					Defines a unique name for the input element.
 				]]></help>
