@@ -12,7 +12,7 @@ package com.keygeotech.utils;
  * refrences to it when you do a build
  */
 public class Debug {
-	private static boolean debug = true;
+	private static boolean debug = false;
 	private static int debugLevel = 1;
 	
 	public static String getClassName(Object inClass)
