@@ -22,6 +22,16 @@
       <import plugin="org.eclipse.ui.editors"/>
    </requires>
 
+	<extension point="org.eclipse.ui.perspectives">
+	   <perspective
+	         name="CFML"
+	         class="com.rohanclan.cfml.perspective.CFPerspective"
+	         id="com.rohanclan.cfml.perspective.CF"
+	         icon="icons/obj16/default.gif"
+	   >
+	   </perspective>
+	</extension>
+
 	<!-- ////////////////////////////////////////////////////////////// -->
    <!-- Editor -->
    <extension
