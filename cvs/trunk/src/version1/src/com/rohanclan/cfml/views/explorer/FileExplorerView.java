@@ -38,6 +38,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import com.rohanclan.cfml.ftp.FtpConnection;
 import com.rohanclan.cfml.ftp.FtpConnectionProperties;
 import com.rohanclan.cfml.views.explorer.ftp.FtpConnectionDialog;
+import com.sun.rsasign.s;
 
 
 import org.eclipse.jface.action.IStatusLineManager;
@@ -96,6 +97,7 @@ public class FileExplorerView extends ViewPart {
         }
 
         public void mouseUp(MouseEvent e) {
+            
         	menu.setVisible(true);
         }
 
