@@ -29,7 +29,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="CFML"
+            name="CFEclipse"
             icon="icons/obj16/default.gif"
             class="com.rohanclan.cfml.perspective.CFPerspective"
             id="com.rohanclan.cfml.perspective.CFML">
@@ -554,7 +554,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            name="CFML Wizard"
+            name="CFEclipse"
             id="com.rohanclan.cfml.category1">
       </category>
       <wizard name="CFML Project"
