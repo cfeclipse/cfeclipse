@@ -211,9 +211,19 @@
                label="InsertSnippet"
                class="com.rohanclan.cfml.editors.actions.InsertSnippetAction"
                tooltip="Insert a snippet"
-               icon="icons/ctool16/snippet.gif"
+               icon="icons/obj16/snip.gif"
                definitionId="com.rohanclan.cfml.editors.actions.InsertSnippet"
                id="com.rohanclan.cfml.editors.actions.InsertSnippetAction">
+         </action>
+          <!-- Get Online Help by Mark Drew aged 30 -->
+         <action
+         	   toolbarPath="BasicCFEditorCommand"
+               definitionId="com.rohanclan.cfml.editors.actions.GetHelp"
+               label="Get Tag Help"
+               icon="icons/ctool16/refresh.gif"
+               tooltip="Get tag and function help"
+               class="com.rohanclan.cfml.editors.actions.GetHelpAction"
+               id="com.rohanclan.cfml.editors.actions.GetHelpAction">
          </action>
       </editorContribution>
    </extension>
@@ -489,6 +499,19 @@
             string="Ctrl+i"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.InsertSnippet"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- Go and Get Help -->
+      <command
+            name="Get Help"
+            description="Goes to http://www.cfdocs.org to get the tag or function reference"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.GetHelp">
+      </command>
+      <keyBinding
+            string="F1"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.GetHelp"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
    </extension>
