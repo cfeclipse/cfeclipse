@@ -118,4 +118,9 @@ public class ICFDocument extends Document {
 			ce.printStackTrace(System.err);
 		}
 	}
+	
+	public CFDocument getCFDocument()
+	{
+		return docStructure;
+	}
 }
