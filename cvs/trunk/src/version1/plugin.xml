@@ -194,7 +194,7 @@
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertColor"
                label="Insert Color"
-     		  icon="icons/ctool16/time.gif"
+     		  icon="icons/ctool16/palette.gif"
                tooltip="Insert a color"
                class="com.rohanclan.cfml.editors.actions.InsertColorAction"
                toolbarPath="BasicCFEditorCommand"
@@ -300,7 +300,7 @@
          <action
                toolbarPath="BasicCFEditorCommand"
                label="Reload Dictionaries"
-               icon="icons/ctool16/refresh.gif"
+               icon="icons/ctool16/dictsearch.gif"
                class="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction"
                tooltip="Reload syntax dictionaries"
                definitionId="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
@@ -848,7 +848,7 @@
             id="com.rohanclan.cfml.views.packageview.PackageView"/>
       <view
             class="com.rohanclan.cfml.views.dictionary.DictionaryView"
-            icon="icons/obj16/dictionary.gif"
+            icon="icons/ctool16/dictionaries.gif"
             category="com.rohanclan.cfml"
             name="Dictionary View"
             id="com.rohanclan.cfml.views.dictionary.DictionaryView"/>
