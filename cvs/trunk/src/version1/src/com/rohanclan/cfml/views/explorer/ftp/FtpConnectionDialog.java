@@ -169,7 +169,9 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		
 		Composite editArea = new Composite(container,SWT.NONE);
 		editArea.setLayoutData(gridData);
-		editArea.setLayout(layout);
+		GridLayout editLayout = new GridLayout();
+		editLayout.numColumns = 2;
+		editArea.setLayout(editLayout);
 
 		Label editLabel = new Label(editArea,SWT.RIGHT);
 		editLabel.setText("Edit connection:");
@@ -230,7 +232,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		
 		
 		selectItem();
-		container.pack();
+		
 		return container;
 	}
 	

@@ -119,6 +119,7 @@ public class FileExplorerView extends ViewPart {
         manageItem.setText("Manage FTP Connections");
         manageItem.addListener(SWT.Selection, new Listener() {
 	        public void handleEvent(Event e) {
+	        	try {
 	            String connectionID = null;
 	            StructuredSelection sel = (StructuredSelection)comboViewer.getSelection();
 	            if (sel.getFirstElement() instanceof FtpConnectionProperties) {
@@ -129,6 +130,10 @@ public class FileExplorerView extends ViewPart {
             		comboViewer.setInput(dialog.connectionProperties);
             		
             	}
+	        	}
+	        	catch (Exception ex) {
+	        		ex.printStackTrace();
+	        	}
             }
         });
         
@@ -233,9 +238,17 @@ public class FileExplorerView extends ViewPart {
     }
     
     public void dispose() {
-    	comboViewer.getContentProvider().dispose();
-    	directoryTreeViewer.getContentProvider().dispose();
-    	fileViewer.getContentProvider().dispose();
+
+		if (comboViewer.getContentProvider() != null) {
+			comboViewer.getContentProvider().dispose();
+		}
+		if (directoryTreeViewer.getContentProvider() != null) {
+			directoryTreeViewer.getContentProvider().dispose();
+		}
+		if (fileViewer.getContentProvider() != null) {
+			fileViewer.getContentProvider().dispose();
+		}
+
     	super.dispose();
     }
     
