@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>table</name>
+<help>A simple table with one row and one cell</help>
+<starttext><![CDATA[<table border="$${Border}">
+<tr>
+	<td>]]></starttext>
+<endtext><![CDATA[</td>
+</tr>
+</table>]]></endtext>
+</snippet>

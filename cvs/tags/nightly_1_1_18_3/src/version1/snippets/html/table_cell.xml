@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>table_cell</name>
+<help>td tags</help>
+<starttext><![CDATA[<td>]]></starttext>
+<endtext><![CDATA[</td>]]></endtext>
+</snippet>

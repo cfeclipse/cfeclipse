@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>input</name>
+<help>Creates a simple text input</help>
+<starttext><![CDATA[<input type="text" name="$${Name}" value="$${Value}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>select</name>
+<help>A basic select element with one option</help>
+<starttext><![CDATA[<select name="$${Name}">
+	]]></starttext>
+<endtext><![CDATA[
+</select>]]></endtext>
+</snippet>
