@@ -408,13 +408,15 @@ public class CFConfiguration extends SourceViewerConfiguration
 			CFPartitionScanner.CSS_TAG
 		);
 		
-		//in javascript tags 
-		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
-		cfscp.changeDictionary(DictionaryManager.JSDIC);
-		assistant.setContentAssistProcessor(
-			cfscp,
-			CFPartitionScanner.J_SCRIPT
-		);
+		//in javascript tags
+		//this doesnt quite work right...
+		
+		//CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
+		//cfscp.changeDictionary(DictionaryManager.JSDIC);
+		//assistant.setContentAssistProcessor(
+		//	cfscp,
+		//	CFPartitionScanner.J_SCRIPT
+		//);
 		
 		//TODO this stuff should be user setable 
 		//assistant.enableAutoActivation(true);
