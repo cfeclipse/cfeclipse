@@ -65,7 +65,7 @@ public class OutlineLabelProvider extends LabelProvider {
 	{
 		if(element instanceof CfmlTagItem)
 		{
-			String tname = ((CfmlTagItem)element).getName();
+			String tname = ((CfmlTagItem)element).getName().toLowerCase();
 			
 			if(tname.equals("component"))
 			{
