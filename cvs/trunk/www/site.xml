@@ -18,6 +18,9 @@
    <feature url="features/com.rohanclan.cfml.release_1.0.10.jar" id="com.rohanclan.cfml.release" version="1.0.10">
       <category name="Stable CFEclipse"/>
    </feature>
+   <feature url="features/com.rohanclan.cfml.release_1.1.16.jar" id="com.rohanclan.cfml.release" version="1.1.16">
+      <category name="Stable CFEclipse"/>
+   </feature>
    <category-def name="Stable CFEclipse" label="com.rohanclan.cfml.release.stable">
       <description>
          This is the (in theory) stable release of CFEclipse. If you wish to test the latest, newest features then you can opt to use the CFEclipse Bleeding Edge version.
