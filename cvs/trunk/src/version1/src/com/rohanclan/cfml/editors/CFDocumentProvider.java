@@ -100,20 +100,30 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			partitioner.connect(document);
 			
 			//returns an IFile which is a subclass of IResource
-			document.setParserResource(((FileEditorInput)element).getFile());
+			try
+			{
+				if(element instanceof FileEditorInput)
+				{
+					document.setParserResource( ((FileEditorInput)element).getFile() );
+					
+					// Now begins the fun of obtaining the resource that represents the file that has
+					// been opened and that this createDocument() method has been called upon.
+					//
+					// Delete all of the problem markers for the resource
+					document.clearAllMarkers();
+					
+					//Run the parser. Nothing is done with the resultant data at present.
+					//docParser.parseDoc();
+					document.parseDocument();
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace(System.err);
+			}
 			
-			// Now begins the fun of obtaining the resource that represents the file that has
-			// been opened and that this createDocument() method has been called upon.
-			//
-			// Delete all of the problem markers for the resource
-			document.clearAllMarkers();
-			
-			//Run the parser. Nothing is done with the resultant data at present.
-			//docParser.parseDoc();
-			document.parseDocument();
-			document.setDocumentPartitioner(partitioner);
+			document.setDocumentPartitioner(partitioner);	
 		}
-		
 		return document;
 	}
 	

@@ -55,6 +55,10 @@ public class Parameter implements Comparable {
 		this.required = required;
 	}
 	
+	/**
+	 * Checks to see if this parameter (attribute) is required
+	 * @return
+	 */
 	public boolean isRequired()
 	{
 		return required;

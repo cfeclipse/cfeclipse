@@ -133,7 +133,7 @@ public class CFParser {
 	 */
 	protected CFDocument parseResult = null;	// The end result of the parse.
 	
-	protected String data2Parse = null;
+	protected String data2Parse = "";
 	
 	/**
 	 * <code>getParseResult</code> - Get's the document tree from a parse 

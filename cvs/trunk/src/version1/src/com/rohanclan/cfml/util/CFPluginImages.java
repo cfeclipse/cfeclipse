@@ -46,31 +46,66 @@ public class CFPluginImages {
 	protected static URL iconBaseURL;
 	
 	protected static final ImageRegistry IMAGE_REGISTRY = new ImageRegistry();
+	/** the default icon (the cf or bluedragon shield */
 	public static final String ICON_DEFAULT = "default.gif";
+	/** little tools that make an X */
 	public static final String ICON_TOOLS   = "tools.gif";
+	/** generic element icon (the E) */
 	public static final String ICON_TAG     = "element.gif";
+	/** generic attribute icon (the A) */
 	public static final String ICON_ATTR    = "attribute.gif";
+	/** the little blue square thing (denotes a function) */
 	public static final String ICON_FUNC    = "function.gif";
+	/** the package icon (the little gift wrapped thing */
 	public static final String ICON_PACKAGE = "package.gif";
+	/** generic value icon the three bars with the arrow */
 	public static final String ICON_VALUE	= "value.gif";
+	/** generic class icon the rounded C */
 	public static final String ICON_CLASS	= "class.gif";
-	
+	/** generic snip icon the plugin looking thing */
 	public static final String ICON_SNIP    = "snip.gif";
+	/** the D dreamweaver icon */
 	public static final String ICON_DW      = "dw.gif";
 	
 	//toolbar dir
+	/** the + sign */
 	public static final String ICON_ADD		= "add.gif";
+	/** a pen */
 	public static final String ICON_EDIT	= "edit.gif";
+	/** a minus sign */
 	public static final String ICON_REMOVE	= "remove.gif";
+	/** a big red X */
 	public static final String ICON_DELETE	= "delete.gif";
+	/** the two arrows icon */
 	public static final String ICON_REFRESH	= "refresh.gif";
+	/** arrow pointing left */
 	public static final String ICON_BACK	= "back.gif";
+	/** arrow pointing right */
 	public static final String ICON_FORWARD	= "forward.gif";
+	/** little gears */
 	public static final String ICON_PROCESS	= "process.gif";
+	/** red american stop sign looking thing */
 	public static final String ICON_STOP	= "stop.gif";
+	/** little house */
 	public static final String ICON_HOME	= "home.gif";
+	/** arrow with a white block (used in the Jump menus) */
 	public static final String ICON_SHOW	= "show.gif";
+	/** arrow with a blue block (used in the Jump and select menus) */
 	public static final String ICON_SHOW_AND_SELECT	= "showandselect.gif";
+	/** the red cfdump looking thing */
+	public static final String ICON_DUMP = "dump.gif";
+	/** a little pen writting on paper */
+	public static final String ICON_SCRIPT = "script.gif";
+	/** a database table */
+	public static final String ICON_TABLE = "table.gif";
+	/** a server */
+	public static final String ICON_SERVER = "server.gif";
+	/** a generic file */
+	public static final String ICON_FILE = "file.gif";
+	/** a closed folder (directory) */
+	public static final String ICON_FOLDER = "dir.gif";
+	/** a closed folder with a little arrow */
+	public static final String ICON_IMPORT = "import.gif";
 	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
@@ -86,7 +121,8 @@ public class CFPluginImages {
 			try 
 			{
 				iconBaseURL = new URL(
-					CFMLPlugin.getDefault().getDescriptor().getInstallURL(),
+					//CFMLPlugin.getDefault().getDescriptor().getInstallURL(),
+					CFMLPlugin.getDefault().getBundle().getEntry("/"),
 					pathSuffix
 				);
 				
@@ -107,6 +143,10 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_VALUE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_CLASS);
+			addImageToRegistry(MODEL_OBJECTS,ICON_TABLE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_SERVER);
+			addImageToRegistry(MODEL_OBJECTS,ICON_FILE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER);
 			
 			addImageToRegistry(TOOLBAR,ICON_ADD);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);
@@ -121,6 +161,9 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_HOME);
 			addImageToRegistry(TOOLBAR,ICON_SHOW);
 			addImageToRegistry(TOOLBAR,ICON_SHOW_AND_SELECT);
+			addImageToRegistry(TOOLBAR,ICON_DUMP);
+			addImageToRegistry(TOOLBAR,ICON_SCRIPT);
+			addImageToRegistry(TOOLBAR,ICON_IMPORT);
 		}
 	}
 	
