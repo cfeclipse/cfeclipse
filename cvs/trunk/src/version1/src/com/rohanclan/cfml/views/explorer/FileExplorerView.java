@@ -52,6 +52,42 @@ public class FileExplorerView extends ViewPart {
 
     private MenuItem disconnectItem,connectItem,manageItem;
     
+    private final class ComboSelectionListener implements ISelectionChangedListener {
+        ViewPart viewpart = null;
+        public ComboSelectionListener(ViewPart viewpart) {
+            this.viewpart = viewpart;
+        }
+        
+        public void selectionChanged(SelectionChangedEvent e) {
+        	try {
+        	    StructuredSelection sel = (StructuredSelection)e.getSelection();
+        		directoryTreeViewer.setInput(sel.getFirstElement());
+        		fileViewer.setInput(sel.getFirstElement());
+        		if (sel.getFirstElement() instanceof FtpConnectionProperties) {
+        		    connectItem.setEnabled(true);
+        		    disconnectItem.setEnabled(true);
+        		}
+        		else {
+        		    connectItem.setEnabled(false);
+        		    disconnectItem.setEnabled(false);
+        		}
+        	}
+        	catch (Exception ex) {
+        		ex.printStackTrace();
+        	}
+        }
+    }
+
+    private final class DirectorySelectionListener implements ISelectionChangedListener {
+        ViewPart viewpart = null;
+        public DirectorySelectionListener(ViewPart viewpart) {
+            this.viewpart = viewpart;
+        }
+        public void selectionChanged(SelectionChangedEvent e) {
+            fileViewer.setInput(e.getSelection());
+        }
+    }
+
     private final class MenuMouseListener implements MouseListener {
         Menu menu = null;
 
@@ -88,26 +124,7 @@ public class FileExplorerView extends ViewPart {
         
         // Combo viewer
         comboViewer = new ComboViewer(container, SWT.READ_ONLY);
-        comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            public void selectionChanged(SelectionChangedEvent e) {
-            	try {
-            	    StructuredSelection sel = (StructuredSelection)e.getSelection();
-            		directoryTreeViewer.setInput(sel.getFirstElement());
-            		fileViewer.setInput(sel.getFirstElement());
-            		if (sel.getFirstElement() instanceof FtpConnectionProperties) {
-            		    connectItem.setEnabled(true);
-            		    disconnectItem.setEnabled(true);
-            		}
-            		else {
-            		    connectItem.setEnabled(false);
-            		    disconnectItem.setEnabled(false);
-            		}
-            	}
-            	catch (Exception ex) {
-            		ex.printStackTrace();
-            	}
-            }
-        });
+        comboViewer.addSelectionChangedListener(new ComboSelectionListener(this));
         comboViewer.setLabelProvider(new ComboLabelProvider());
         comboViewer.setContentProvider(new ComboContentProvider());
         final Combo combo = comboViewer.getCombo();
@@ -132,14 +149,10 @@ public class FileExplorerView extends ViewPart {
         
         // Directory tree
         directoryTreeViewer = new TreeViewer(sash, SWT.BORDER);
-        directoryTreeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            public void selectionChanged(SelectionChangedEvent e) {
-                fileViewer.setInput(e.getSelection());
-            }
-        });
+        directoryTreeViewer.addSelectionChangedListener(new DirectorySelectionListener(this));
         directoryTreeViewer.setSorter(new DirectorySorter());
         directoryTreeViewer.setLabelProvider(new DirectoryLabelProvider());
-        directoryTreeViewer.setContentProvider(new DirectoryContentProvider());
+        directoryTreeViewer.setContentProvider(new DirectoryContentProvider(this));
         final Tree tree = directoryTreeViewer.getTree();
         directoryTreeViewer.setComparer(new FileComparer());
         tree.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -148,7 +161,7 @@ public class FileExplorerView extends ViewPart {
         directoryTreeViewer.setInput(new LocalFileSystem());
         
 
-        FileContentProvider fileProvider = new FileContentProvider();
+        FileContentProvider fileProvider = new FileContentProvider(this);
         fileViewer = new TableViewer(sash, SWT.BORDER);
         final Table fileTable = fileViewer.getTable();
         

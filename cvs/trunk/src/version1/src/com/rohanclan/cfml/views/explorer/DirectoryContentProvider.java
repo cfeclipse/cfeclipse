@@ -11,8 +11,10 @@ import java.io.File;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.ui.part.ViewPart;
 
 import com.rohanclan.cfml.ftp.*;
+import com.rohanclan.cfml.util.AlertUtils;
 
 
 
@@ -22,9 +24,11 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     private FileNameFilter directoryFilter = new FileNameFilter();
     private IFileProvider fileProvider = null;
     private Viewer viewer = null;
+    private ViewPart viewpart = null;
     
-    public DirectoryContentProvider() {
+    public DirectoryContentProvider(ViewPart viewpart) {
         directoryFilter.allowFiles(false);
+        this.viewpart = viewpart;
     }
     
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
@@ -34,12 +38,14 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	    		fileProvider.dispose();
 	    	}
 	        if (newInput instanceof IFileProvider) {
+
+		        AlertUtils.showStatusErrorMessage(null,viewpart);
+		        AlertUtils.showStatusMessage("Connected to: Local Filesystem",viewpart);
 	            fileProvider = (IFileProvider)newInput;
 	        }
 	        else if (newInput instanceof FtpConnectionProperties) {
 	        	fileProvider = FtpConnection.getInstance();
 	        	((FtpConnection)fileProvider).connect((FtpConnectionProperties)newInput);
-	        	
 	        }
 	        else {
 	        	
@@ -101,6 +107,10 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     		}
     		else if (element instanceof File) {
     		    return ((File)element).isDirectory();
+    		}
+    		else if (element instanceof String
+    		        	&& element.toString().equals(FtpConnection.CONNECT_FAILED)) {
+    		        return false;
     		}
     		return true;
     	}

@@ -34,8 +34,12 @@ public class AlertUtils {
     
     public static void alertUser(Exception e) {
         MessageBox msg = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_ERROR);
+        String message = e.getMessage();
+        if (e.getMessage() == null) {
+            message = e.toString();
+        }
         msg.setText("Error!");
-        msg.setMessage(e.getMessage());
+        msg.setMessage(message);
         msg.open();
     }
     
@@ -43,6 +47,16 @@ public class AlertUtils {
         try {
          IStatusLineManager statusManager = editorPart.getEditorSite().getActionBars().getStatusLineManager();
          statusManager.setMessage(message);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void showStatusErrorMessage(String message,IViewPart viewPart) {
+        try {
+         IStatusLineManager statusManager = viewPart.getViewSite().getActionBars().getStatusLineManager();
+         statusManager.setErrorMessage(message);
         }
         catch (Exception e) {
             e.printStackTrace();

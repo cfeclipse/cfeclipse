@@ -10,6 +10,9 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IEditorInput;
 
+import org.eclipse.ui.part.ViewPart;
+
+import com.rohanclan.cfml.util.AlertUtils;
 
 
 import com.rohanclan.cfml.ftp.FtpConnection;
@@ -23,8 +26,10 @@ class FileContentProvider implements IStructuredContentProvider {
     IFileProvider fileProvider;
 
     private FileNameFilter fileFilter = new FileNameFilter();
+    private ViewPart viewpart = null;
     
-    public FileContentProvider() {
+    public FileContentProvider(ViewPart viewpart) {
+        this.viewpart = viewpart;
         fileFilter.allowDirectories(false);
     }
     
@@ -47,7 +52,6 @@ class FileContentProvider implements IStructuredContentProvider {
 	            }
 	            //System.out.println("File provider is " + fileProvider.getClass().getName());
 	            Object[] files = fileProvider.getChildren(directoryName,fileFilter);
-	            
 	            return files;
 	            
 	        }
@@ -75,7 +79,11 @@ class FileContentProvider implements IStructuredContentProvider {
 	        }
 	        else if (newInput instanceof FtpConnectionProperties) {
 	        	fileProvider = FtpConnection.getInstance();
-	        	((FtpConnection)fileProvider).connect((FtpConnectionProperties)newInput);
+	        	FtpConnection ftpClient = (FtpConnection)fileProvider;
+	        	// The file view should only get content if the directory view has already connected.
+	        	if (!ftpClient.connectFailed()) {
+	        	    ftpClient.connect();
+	        	}
 	        }
         }
         catch (Exception e) {
