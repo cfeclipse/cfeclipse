@@ -396,7 +396,7 @@ public class CFParser {
 		if(closerName.toLowerCase().indexOf("</cf") != -1)
 		{
 			// CF tag
-			closerName = closerName.substring(4, closerName.length()-1);
+		    closerName = closerName.substring(2, closerName.length()-1);
 			
 			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
 			//System.out..println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
@@ -614,7 +614,7 @@ public class CFParser {
 		// If not then it's a child element and so we add it to the child list of the top element
 		// of the stack.
 	    
-		tagName = tagName.substring(3, tagName.length());
+	    tagName = tagName.substring(1, tagName.length());
 		TagItem newItem;
 
 		//
