@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Shell;
 
 
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+import com.rohanclan.cfml.editors.SQLSyntaxDictionary;
 import com.rohanclan.cfml.editors.HTMLSyntaxDictionary;
 import com.rohanclan.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
 
@@ -47,6 +48,8 @@ public class DictionaryManager {
 	public static final String CFDIC = "CF_DICTIONARY";
 	/** the javascript dictionary */
 	public static final String JSDIC = "JS_DICTIONARY";
+	/** the SQL dictionary */
+	public static final String SQLDIC = "SQL_DICTIONARY";
 	/** the (yet to be made) html dictionary */
 	public static final String HTDIC = "HT_DICTIONARY";
 	
@@ -74,6 +77,12 @@ public class DictionaryManager {
 		dic = new JSSyntaxDictionary();
 		dic.loadDictionary("js.xml");
 		addDictionary(JSDIC,dic);
+
+		SQLSyntaxDictionary dict = new SQLSyntaxDictionary();
+		dict.loadDictionary("cfml.xml");
+		dict.loadDictionary("user.xml");
+		dict.loadKeywords("sqlkeywords.txt");
+		addDictionary(SQLDIC,dict);
 		//System.out.println("Dictionaries initialized");
 	}
 	

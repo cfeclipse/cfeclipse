@@ -38,7 +38,6 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictionaryInterface {
 	protected static Set operators;
 	protected static Set scriptkeywords;
-	protected static Set sqlkeywords;
 	
 	public CFSyntaxDictionary()
 	{
@@ -47,9 +46,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		buildOperatorSyntax();
 
 		scriptkeywords = new HashSet();
-		sqlkeywords = new HashSet();
 		buildScriptKeywordSyntax();
-		buildSQLKeywordSyntax();
 	}
 	
 	/**
@@ -69,15 +66,6 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 	public Set getScriptKeywords()
 	{
 		return scriptkeywords;
-	}
-	
-	/**
-	 * gets SQL specific keywords (SELECT, FROM etc.);
-	 * @return
-	 */
-	public Set getSQLKeywords()
-	{
-		return sqlkeywords;
 	}
 	
 	/** 
@@ -104,63 +92,6 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		scriptkeywords.add("false");
 		scriptkeywords.add("to");
 		scriptkeywords.addAll(operators);
-	}
-	
-	/** 
-	 * build all the SQL keywords 
-	 */
-	protected static void buildSQLKeywordSyntax()
-	{
-	    //This should really be read in from a file
-		sqlkeywords.add("add");
-		sqlkeywords.add("alter");
-		sqlkeywords.add("and");
-		sqlkeywords.add("asc");
-		sqlkeywords.add("avg");
-		sqlkeywords.add("between");
-		sqlkeywords.add("by");
-		sqlkeywords.add("cascade");
-		sqlkeywords.add("constraint");
-		sqlkeywords.add("count");
-		sqlkeywords.add("create");
-		sqlkeywords.add("database");
-		sqlkeywords.add("delete");
-		sqlkeywords.add("desc");
-		sqlkeywords.add("drop");
-		sqlkeywords.add("exists");
-		sqlkeywords.add("foreign");
-		sqlkeywords.add("from");
-		sqlkeywords.add("group");
-		sqlkeywords.add("having");
-		sqlkeywords.add("in");
-		sqlkeywords.add("inner");
-		sqlkeywords.add("insert");
-		sqlkeywords.add("into");
-		sqlkeywords.add("join");
-		sqlkeywords.add("key");
-		sqlkeywords.add("left");
-		sqlkeywords.add("like");
-		sqlkeywords.add("max");
-		sqlkeywords.add("min");
-		sqlkeywords.add("modify");
-		sqlkeywords.add("not");
-		sqlkeywords.add("null");
-		sqlkeywords.add("on");
-		sqlkeywords.add("or");
-		sqlkeywords.add("order");
-		sqlkeywords.add("outer");
-		sqlkeywords.add("primary");
-		sqlkeywords.add("right");
-		sqlkeywords.add("select");
-		sqlkeywords.add("set");
-		sqlkeywords.add("sum");
-		sqlkeywords.add("table");
-		sqlkeywords.add("trigger");
-		sqlkeywords.add("truncate");
-		sqlkeywords.add("union");
-		sqlkeywords.add("update");
-		sqlkeywords.add("view");
-		sqlkeywords.add("where");
 	}
 	
 	/** 

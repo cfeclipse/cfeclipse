@@ -34,7 +34,7 @@ import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.swt.SWT;
 
-import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+import com.rohanclan.cfml.editors.SQLSyntaxDictionary;
 import com.rohanclan.cfml.editors.ColorManager;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
@@ -65,9 +65,9 @@ public class SQLScanner extends RuleBasedScanner {
 			)
 		));
 		
-		IToken cfcomment = new Token(new TextAttribute(
+		IToken sqlcomment = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_SQL_COMMENT)
 			)
 		));
 		
@@ -111,9 +111,9 @@ public class SQLScanner extends RuleBasedScanner {
 		//I think the reason this doesnt work as well as the <!-- type of comment
 		//is that the <! type is defined on the partition scanner where this is
 		//only here... javascript has the same problem
-		rules.add(new MultiLineRule("/*", "*/", cfcomment));
+		rules.add(new MultiLineRule("/*", "*/", sqlcomment));
 		
-		CFSyntaxDictionary dic = (CFSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.CFDIC);
+		SQLSyntaxDictionary dic = (SQLSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.SQLDIC);
 			
 
 		//get any SQL specific keywords (select, from, where, et cetra)		
