@@ -48,7 +48,11 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	public CFMLPreferenceManager() {
 		store = CFMLPlugin.getDefault().getPreferenceStore();
 	}
-	
+
+	public boolean getBooleanPref(String prefKey) {
+		return store.getBoolean(prefKey);
+	}
+
 	public void initializeDefaultValues() {
 		
 		//this should set the default path for snippets to the plugin directory

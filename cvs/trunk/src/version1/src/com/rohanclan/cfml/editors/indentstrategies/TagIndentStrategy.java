@@ -122,11 +122,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 	/**
 	 * Returns the closing tag based upon the previous tag entered.
-	 * So enter <cf_fred> and the closing tag returned is </cf_fred>
+	 * So enter <cf_fred> and the closing tag returned is "cf_fred".
+	 * The calling function can sort out the chevrons.
 	 * 
 	 * @param currDoc - Current document that we're in
 	 * @param documentOffset - the offset in the document
-	 * @return - the string name of the tag sans chevrons, otherwise a blank string
+	 * @return the string name of the tag sans chevrons, otherwise a blank string
 	 */
 	private String getClosingTag(ICFDocument currDoc, int documentOffset)
 	{
@@ -215,20 +216,21 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			lastChar = doc.getChar(docCommand.offset - 1);
 		
 		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1);
+		
 		// If the user hasn't got auto-insertion of closing chevrons on, then 
 		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
-		
 		if(!this.autoClose_Tags)	
 			closingTag+= ">";	
 		
 		closingTag = "</" + closingTag;
 		
 		if(this.autoIndent_OnTagClose == INDENT_ONTAGCLOSE)
-			doInBetweenTagIndent(doc, docCommand, lastChar);
+			doInBetweenTagIndent(doc, docCommand, lastChar);	// User wants us to insert a CR and indent.
 		else {
 			try {
-				if(doc.getChar(docCommand.offset) == '>')
+				if(docCommand.offset != doc.getLength() && doc.getChar(docCommand.offset) == '>') {
 					stepThrough(docCommand);
+				}
 				else {
 					docCommand.caretOffset = docCommand.offset + 1;
 					docCommand.shiftsCaret = false;
@@ -339,7 +341,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	public void customizeDocumentCommand(IDocument doc, DocumentCommand docCommand)
     {
 		try {
-			char lastChar = doc.getChar(docCommand.offset);
+			//
+			// We're only interested in the insertion of single characters, so catch the user pasting
+			// something (making sure that it's not going to be a carriage return)
+			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
+				System.out.println("customizeDocumentCommand() - longer than 1. Length is \'"+ docCommand.text.length() + "\'");
+			}
 			int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';
 			char firstCommandChar = (docCommand.text.length() > 0) ? docCommand.text.charAt(0) : ' ';
@@ -456,6 +463,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		return;
 	}
 	/**
+	 * Handles the user typing in a closing chevron.
+	 * s
 	 * @param doc
 	 * @param docCommand
 	 * @param beforeLastChar
@@ -474,7 +483,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				doCloser(doc, docCommand);
 				break;
 			case AFTEROPENTAG_CLOSER:
-				stepThrough(docCommand);
+				char currChar = doc.getChar(docCommand.offset);
+				if(currChar == '>')
+					stepThrough(docCommand);
 				break;
 			case AFTEROPENTAG_NOTAFTER:
 			default:

@@ -96,6 +96,18 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 * @param colorManager that would be the color manager
 	 */
 	
+	private void configTagIndentStrat() {
+		indentTagStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
+		indentTagStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
+		indentTagStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
+		indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
+		indentTagStrategy.setAutoClose_SingleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES));
+		indentTagStrategy.setAutoClose_Hashes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_HASHES));
+		indentTagStrategy.setAutoClose_Tags(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_TAGS));
+		indentTagStrategy.setAutoInsert_CloseTags(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS));
+		//indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
+	}
+	
 	public CFConfiguration(ColorManager colorManager, CFMLEditor editor) 
 	{
 		this.colorManager = colorManager;
@@ -109,11 +121,9 @@ public class CFConfiguration extends SourceViewerConfiguration
 		indentCFScriptStrategy.setIndentString(tabWidth,insertSpacesForTabs);
 		indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
 		indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
-
+		configTagIndentStrat();
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
-		
-		
 	}
 	
 	public int getTabWidth(ISourceViewer sourceViewer) {
