@@ -8,6 +8,8 @@ package com.rohanclan.cfml.views.explorer;
 
 import java.io.File;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -75,30 +77,41 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     
     public Object[] getChildren(Object parentElement) {
        
+    	ArrayList children = new ArrayList();
+    	Object[] results = null;
     	try {
     		
 	        if (fileProvider == null){
-	            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
+	            results = new Object[] {IFileProvider.INVALID_FILESYSTEM};
 	        }
 	        if (parentElement instanceof IFileProvider) {
 	        	
-	        	return fileProvider.getRoots();
+	        	results =  fileProvider.getRoots();
 	        	
 	        } else if (parentElement instanceof RemoteFile) {
 	            RemoteFile file = (RemoteFile)parentElement;
-	            
-	            return fileProvider.getChildren(((RemoteFile)parentElement).getAbsolutePath(),directoryFilter);
+	            results = fileProvider.getChildren(((RemoteFile)parentElement).getAbsolutePath(),directoryFilter);
 	            
 	        } else if (parentElement instanceof FileSystemRoot) {
 	            FileSystemRoot file = (FileSystemRoot)parentElement;
-	           
-	            return fileProvider.getChildren(file.getPath(),directoryFilter);
-	            
+	            results =  fileProvider.getChildren(file.getPath(),directoryFilter);
 	        } 
 	        
 	        else {
-                return fileProvider.getChildren(parentElement.toString(),directoryFilter);
+                results =  fileProvider.getChildren(parentElement.toString(),directoryFilter);
 	        }
+	        
+	        for (int i=0;i<results.length;i++) {
+            	if (!results[i].toString().endsWith("/.")          		
+            			&& !results[i].toString().endsWith("/..")
+            			&& !results[i].toString().endsWith("\\.")  
+            			&& !results[i].toString().endsWith("\\..")
+					) {
+            		children.add(results[i]);
+            	}
+            }
+            return children.toArray();
+	        
     	}
         catch (Exception e) {
         	e.printStackTrace();
