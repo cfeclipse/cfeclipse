@@ -32,26 +32,32 @@ public class SnipVarParser {
 		String currentFile = "";
 		String currentFolder = "";
 		String currentPath = "";
+		String currentProjectPath = "";
+		
 		
 		if (activeFile != null) {
 		 currentFile = activeFile.getName();
 		 currentPath = activeFile.getRawLocation().toFile().getAbsolutePath();
 		 File fullPath = new File(currentPath);
 		 currentFolder = fullPath.getParent();
+		 currentProjectPath = activeFile.getProjectRelativePath().toOSString();
+		 currentProjectPath = currentProjectPath.substring(0, currentProjectPath.lastIndexOf('\\'));
+
 		 
-		 // Get your lauging gear round this little lot :)
+		 // Get your laughing gear round this little lot :)
 		 currentFile = currentFile.replaceAll("\\\\","\\\\\\\\");
 		 currentPath = currentPath.replaceAll("\\\\","\\\\\\\\");
 		 currentFolder = currentFolder.replaceAll("\\\\","\\\\\\\\");
+		 currentProjectPath = currentProjectPath.replaceAll("\\\\","\\\\\\\\");
+  		
+
 		}
 
 		
 		
 		/*
-		 * TODO: Need to write the implementation for each of these vars
 		 * 
-		 * 
-		 * Snipet var strings from Homseite
+		 *
 		 * 
 		 *     
 		 * $${DATE}
@@ -60,8 +66,9 @@ public class SnipVarParser {
 		 * $${DATETIME}
 		 * $${DAYOFWEEK}
 		 * $${CURRENTFILE} - Current file name (just the file)
-		 * $${CURRENTFOLDER} - Current folder (just the folder)
+		 * $${CURRENTFOLDER} - Current folder (The path to the containing folder)
 		 * $${CURRENTPATH} - Current path (full file name)
+		 * $${CURRENTPRJPATH} - Just the folder
 		 * $${USERNAME} - Current user
 		 * $${MONTHNUMBER} - Month as a number
 		 * $${DAYOFMONTH} - Day of month as a number
@@ -104,6 +111,9 @@ public class SnipVarParser {
 		newStr = newStr.replaceAll("\\$\\$\\{CURRENTFOLDER\\}",currentFolder);
 		
 		newStr = newStr.replaceAll("\\$\\$\\{CURRENTPATH\\}",currentPath);
+		
+		newStr = newStr.replaceAll("\\$\\$\\{CURRENTPRJPATH\\}",currentProjectPath);
+
 		
 		newStr = newStr.replaceAll("\\$\\$\\{USERNAME\\}",System.getProperty("user.name"));
 		
