@@ -55,6 +55,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.swt.widgets.Menu;
 //import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 
 /**
  * @author Rob
@@ -79,7 +80,7 @@ public class CFContentOutlineView extends ViewPart {
 	 */
 	//private static XMLConfigFile xmlconfile;
 	
-	protected Action jumpAction; //addItemAction; //, deleteItemAction, selectAllAction;
+	protected Action jumpAction, refreshAction, expandAction; //addItemAction; //, deleteItemAction, selectAllAction;
 	
 	protected MenuManager menuMgr;
 	
@@ -164,7 +165,12 @@ public class CFContentOutlineView extends ViewPart {
 	}
 	
 	
-	protected void createToolbar(){;}
+	protected void createToolbar(){
+		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
+		toolbarManager.add(jumpAction);
+		toolbarManager.add(expandAction);
+		toolbarManager.add(refreshAction);
+	}
 	
 	/**
 	 * Gets the root element of the document
@@ -267,6 +273,14 @@ public class CFContentOutlineView extends ViewPart {
 		}
 	}
 	
+	protected void reload() {
+		treeViewer.setInput(getRootInput());		
+	}
+	
+	protected void expand(){
+		treeViewer.expandAll();
+	}
+	
 	/**
 	 * creates all the default actions
 	 */
@@ -278,6 +292,22 @@ public class CFContentOutlineView extends ViewPart {
 		){
 			public void run() { 
 				jumpToItem();
+			}
+		};
+		refreshAction = new Action(
+			"Refresh",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH)		
+		) {
+			public void run() {
+				reload();
+			}
+		};
+		expandAction = new Action(
+			"Expand All",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_ADD)
+		){
+			public void run() { 
+				expand();
 			}
 		};
 	}
