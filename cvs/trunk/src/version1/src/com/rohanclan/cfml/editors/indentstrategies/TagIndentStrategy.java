@@ -345,7 +345,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// We're only interested in the insertion of single characters, so catch the user pasting
 			// something (making sure that it's not going to be a carriage return)
 			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
-				System.out.println("customizeDocumentCommand() - longer than 1. Length is \'"+ docCommand.text.length() + "\'");
+				return;
 			}
 			int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';
