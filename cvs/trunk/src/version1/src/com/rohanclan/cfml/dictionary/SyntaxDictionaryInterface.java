@@ -68,6 +68,15 @@ public interface SyntaxDictionaryInterface {
 	 * @return the limited set
 	 */
 	public Set getFilteredElements(String start);
+
+	
+	/**
+	 * Gets the dictionaries scope vars set filtered on
+	 * the passed string (scope vars meaning things like application.factory.)
+	 * @param start
+	 * @return the limited set
+	 */
+	public Set getFilteredScopeVars(String start);
 	
 	/**
 	 * Gets the attribtues set for the tag tag and limits the

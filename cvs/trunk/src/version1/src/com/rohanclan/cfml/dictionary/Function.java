@@ -106,4 +106,35 @@ public class Function extends Procedure {
 		
 		return sb.toString();
 	}
+	
+	/**
+	 * override toString to auto format the function
+	 */
+	public String getInsertion()
+	{
+		StringBuffer sb = new StringBuffer();
+		if(this.name != null)
+		{	
+			//sb.append(this.returns + " ");
+			//to lowercase for the createobject hack
+			sb.append(this.name + "(");
+			
+			if(parameters != null)
+			{
+				Iterator it = parameters.iterator();
+				while(it.hasNext())
+				{
+					Parameter pm = (Parameter)it.next();
+					if(!pm.isRequired()) sb.append("[");
+					sb.append(pm.getType() + " " + pm.getName());
+					if(!pm.isRequired()) sb.append("]");
+					sb.append(", ");
+				}
+				sb.delete(sb.length()-2,sb.length());
+			}
+			sb.append(")");
+		}
+		
+		return sb.toString();
+	}
 }

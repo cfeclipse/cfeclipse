@@ -31,10 +31,10 @@ package com.rohanclan.cfml.dictionary;
  * its only here to abstract it a bit and to give some room to play for future 
  * additions
  */
-public class Value implements Comparable {
+public class ScopeVar implements Comparable {
 	protected String value;
 	protected String help;
-	public Value(String val)
+	public ScopeVar(String val)
 	{
 		value = val;
 	}
@@ -72,11 +72,11 @@ public class Value implements Comparable {
 	 */
 	public boolean equals(Object obj)
 	{
-		if(obj instanceof Value)
+		if(obj instanceof ScopeVar)
 		{
 			//if the name is the same and the type is the same
 			//assume its the same
-			if( ((Value)obj).getValue().equals(this.value))
+			if( ((ScopeVar)obj).getValue().equals(this.value))
 			{
 				return true;
 			}
@@ -93,9 +93,9 @@ public class Value implements Comparable {
 		if(o == null)
 			throw new NullPointerException("Null!");
 		
-		if(o instanceof Value)
+		if(o instanceof ScopeVar)
 		{
-			return value.compareTo( ((Value)o).getValue() );
+			return value.compareTo( ((ScopeVar)o).getValue() );
 		}
 		
 		return 0;

@@ -69,6 +69,7 @@ public class DictionaryManager {
 		dic = new JSSyntaxDictionary();
 		dic.loadDictionary("js.xml");
 		addDictionary(JSDIC,dic);
+		System.out.println("Dictionaries initialized");
 	}
 	
 	/**

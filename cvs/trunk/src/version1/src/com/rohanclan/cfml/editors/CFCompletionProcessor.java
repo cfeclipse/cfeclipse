@@ -25,6 +25,8 @@
 package com.rohanclan.cfml.editors;
 
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.FindReplaceDocumentAdapter;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContextInformation;
@@ -41,6 +43,7 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.regex.*;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
@@ -67,6 +70,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	private static final short ATTRTYPE = 1;
 	/** value type */
 	private static final short VALUETYPE = 2;
+	/** scope type */
+	private static final short SCOPETYPE = 3;
+	
+	private Pattern pattern = Pattern.compile("[^a-z.]$",Pattern.CASE_INSENSITIVE);
+	
 	
 	private ContentAssistant assistant;
 	
@@ -161,6 +169,29 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			//another partiton type - so get the last partition
 			if(invoker.equals(">"))
 				start = document.getPartition(documentOffset - 1).getOffset();
+			else if (invoker.equals(".")) {
+			    /*
+			    String text = document.get(0,documentOffset);
+			    Matcher matcher = pattern.matcher(text);
+			    
+			    System.out.println("Searching for start of scope vars from " + documentOffset);
+			    
+			    if (matcher.find()) {
+			        System.out.println("Matcher found " + matcher.group());
+			    }
+			    */
+
+			    FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(document);
+				IRegion region = finder.find(documentOffset-2,"[^a-z.]",false,false,false,true);
+				if (region != null) {
+				    start = region.getOffset()+1;
+				    
+				    //System.out.println("Start set to " + start);
+				}
+				
+			    
+				//System.out.println("Start is " + start);
+			}
 			else {
 				start = document.getPartition(documentOffset).getOffset();
 				if(currPartitionType.compareToIgnoreCase(CFPartitionScanner.J_SCRIPT) == 0) {
@@ -169,6 +200,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			}
 						
 			String prefix =	eliminateUnwantedChars(document.get(start, documentOffset - start));
+			
+
 			
 			///////////////////////////////////////////////////////////////////
 			
@@ -201,7 +234,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			    }
 			}
 			
-			
+
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)
 			{
@@ -248,14 +281,28 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			boolean invokerIsSpace = invoker.equals(" ");
 			boolean invokerIsTab = invoker.equals("\t");
 			boolean invokerIsCloseChevron = invoker.equals(">");
-			SyntaxDictionary syntax = DictionaryManager.getDictionary((cftag) ? DictionaryManager.CFDIC : DictionaryManager.HTDIC); 
- 
+			boolean invokerIsPeriod = invoker.equals(".");
+			
+			SyntaxDictionary syntax = null;
+			
+			if (cftag || invokerIsPeriod) {
+			    syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC); 
+			}
+			else {
+			    syntax = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
+			}
+			
+
+			
 			if(limiting.length() <= 0 && !invokerIsSpace && !invokerIsTab && !invokerIsCloseChevron)
 			{
 				if(cftag) {
 					return lookUpCFTagNames(documentOffset, syntax, invoker, document, prefix);
 				} else if(httag) {
 					return lookUpTagNames(documentOffset, syntax, invoker, document, prefix);
+				}
+				else if (invokerIsPeriod) {
+				    return lookUpScopeVars(documentOffset, syntax, invoker, document, prefix);
 				}
 			}
 			else
@@ -387,6 +434,38 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 		}
 	}
+
+	
+
+	private ICompletionProposal[] lookUpScopeVars(int documentOffset, SyntaxDictionary syntax, String invoker, IDocument document, String prefix) throws BadLocationException {
+		
+	    System.out.println("Looking for scope vars with prefix " + prefix);
+		int length = prefix.length();
+		// If the taglimiting has a space in we're assuming that the user
+		// is intending to input or has inputted some attributes.
+		Set proposals = ((SyntaxDictionaryInterface)syntax).getFilteredScopeVars(prefix);
+		
+		Iterator i = proposals.iterator();
+		
+		while (i.hasNext()) {
+		    if (i.next() instanceof Function) {
+		        length = prefix.length() - prefix.lastIndexOf(".");
+		        System.out.println("Function found in scope lookup. Length reset to " + length);
+		        break;
+		    }
+		}
+		
+		
+		// Do we have methods in the returned set?
+			return makeSetToProposal(
+				proposals,
+				documentOffset,
+				SCOPETYPE,
+				length
+			);
+			
+	}
+
 
 
 	/**
@@ -535,13 +614,32 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
                      */
 					name = ((Value)obj[i]).getValue() + "\"";
 					display = ((Value)obj[i]).toString();
-					help = "";
+					help = ((Value)obj[i]).getHelp();
+				}
+				else if(obj[i] instanceof ScopeVar) 
+				{
+					name = ((ScopeVar)obj[i]).getValue();
+					display = ((ScopeVar)obj[i]).toString();
+					help = ((ScopeVar)obj[i]).getHelp();
+					System.out.println("Scope var found with name " + name);
+				}
+				else if(obj[i] instanceof Function) 
+				{
+					name = ((Function)obj[i]).getInsertion();
+					display = ((Function)obj[i]).getInsertion();
+					help = ((Function)obj[i]).getHelp();
+					System.out.println("Function found with name " + name);
+					// Dirty hack
+					currentlen=0;
 				}
 				else if(obj[i] instanceof String)
 				{
 					name = obj[i].toString();
 					display = new String(name);
 					help = "";
+				}
+				else {
+				    System.out.println("Proposal of type " + obj[i].getClass().getName());
 				}
 				
 				//System.err.println(name);
@@ -592,6 +690,10 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				insertlen = name.length();
 				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
 				break;
+			case SCOPETYPE:
+				insertlen = name.length();
+				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
+				break;
 		}
 		CompletionProposal prop = new CompletionProposal(
 				name,
@@ -611,7 +713,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * What characters cause us to wake up (for tags and attributes)
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
-		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>', '\"' };
+		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>', '\"', '.' };
 	}
 
 	/**

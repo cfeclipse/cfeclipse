@@ -64,6 +64,8 @@ public abstract class SyntaxDictionary {
 	protected Map syntaxelements;
 	/** any function based elements */
 	protected Map functions;
+	/** any scope variables including user defined components */
+	protected Map scopeVars;
 	
 	/** the file name for this dictionary */
 	protected String filename = null;
@@ -96,6 +98,7 @@ public abstract class SyntaxDictionary {
 	{
 		syntaxelements = new HashMap();
 		functions = new HashMap();
+		scopeVars = new HashMap();
 	}
 	
 	/**
@@ -168,6 +171,26 @@ public abstract class SyntaxDictionary {
 		return total;
 	}
 	
+	/**
+	 * gets a set that is a copy of all the scope vars
+	 * @return a set of all the scope var objects
+	 */
+	public Set getAllScopeVars()
+	{
+		Set total = new HashSet();
+		Set keys = scopeVars.keySet();
+		Iterator it = keys.iterator();
+		String name = null;
+		while(it.hasNext())
+		{
+		    name = (String)it.next();
+		    System.out.println("Added " + name);
+			total.add(scopeVars.get(name));
+		}
+		
+		return total;
+	}
+	
 	
 	/**
 	 * get a set of filtered tags limited by start
@@ -177,6 +200,18 @@ public abstract class SyntaxDictionary {
 	public Set getFilteredElements(String start)
 	{
 		return limitSet(getAllTags(),start);
+		//return limitSet(getAllElements(),start);
+	}
+	
+	
+	/**
+	 * get a set of filtered tags limited by start
+	 * @param start the string to filter by (i.e. "cfou" will return all tags beginning with "cfou"
+	 * @return set of matching elements.
+	 */
+	public Set getFilteredScopeVars(String start)
+	{
+		return limitSet(getAllScopeVars(),start);
 		//return limitSet(getAllElements(),start);
 	}
 	
@@ -339,6 +374,33 @@ public abstract class SyntaxDictionary {
 				{
 					possible = ((Value)item).getValue();
 				}
+				else if(item instanceof ScopeVar)
+				{
+					possible = ((ScopeVar)item).getValue();
+				}
+				else if(item instanceof Component)
+				{
+				    Iterator i =((Component)item).getScopes().iterator(); 
+				    ScopeVar val;
+				    Component c;
+				    while (i.hasNext()) {
+				        
+				        possible = (String)i.next();
+				        System.out.println("Checking " + possible + ":" + start);
+				        if (possible.toUpperCase().startsWith(start.toUpperCase())) {
+				            val = new ScopeVar(possible);
+				            val.setHelp(((Component)item).getHelp());
+				            filterset.add(new ScopeVar(possible));
+				        }
+				        else if((possible+".").toUpperCase().equals(start.toUpperCase())) {
+				            Iterator j = ((Component)item).getMethods().iterator();
+				            while(j.hasNext()) {
+				                filterset.add(j.next());
+				            }
+				        }
+				    }
+				    possible = "";
+				}
 				else
 				{
 					throw new IllegalArgumentException(
@@ -400,7 +462,7 @@ public abstract class SyntaxDictionary {
 		
 		//setup the content handler and give it the maps for tags and functions
 		xmlReader.setContentHandler(
-			new DictionaryContentHandler(syntaxelements,functions)
+			new DictionaryContentHandler(syntaxelements,functions,scopeVars)
 		);
 		
 		InputSource input = new InputSource(xml);

@@ -170,4 +170,35 @@ public class CFCMethodViewItem  {
 		}
 	}
 	
+	
+	
+	public String getInsightXML() {
+	    String insightXML = "";
+	    
+	    insightXML += "\t\t\t<function creator=\"8\" name=\""+functionTag.getAttribute("name")+"\" returns=\""+functionTag.getAttribute("returnType")+"\">\n";
+		insightXML += "\t\t\\tt<help><![CDATA[\n";
+		insightXML += "\t\t\t\t\t \n";
+		insightXML += "\t\t\t\t]]></help>\n";
+		CFNodeList args = functionTag.selectNodes("//argument");
+		Iterator j = args.iterator();
+		while(j.hasNext()) {
+			try {
+				TagItem thisArg = (TagItem)j.next();
+				insightXML += "\t\t\t\t<parameter name=\""+thisArg.getAttribute("name") + "\" type=\"" + thisArg.getAttribute("type") + "\" required=\"" + thisArg.getAttribute("required") +"\">\n";
+				insightXML += "\t\t\t\t\t<help><![CDATA[\n";
+				insightXML += "\t\t\t\t\t\t" + thisArg.getAttribute("hint")+ "\n";
+				insightXML += "\t\t\t\t\t]]></help>\n";
+				insightXML += "\t\t\t\t</parameter>\n\n";
+			}
+			catch (Exception e) {
+				//System.err.println(e.getMessage());
+			}
+		}
+
+		insightXML += "\t\t\t</function>\n\n";
+
+	    
+	    return insightXML;
+	}
+	
 }

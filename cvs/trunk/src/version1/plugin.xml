@@ -203,6 +203,14 @@
                class="com.rohanclan.cfml.editors.actions.InsertNBSPAction"
                id="com.rohanclan.cfml.editors.actions.InsertNBSPAction">
          </action>
+         <!-- Reload the syntax dictionaries -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
+               label="Reload Dictionaries"
+               tooltip="Reload syntax dictionaries"
+               class="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction"
+               id="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction">
+         </action>
          <!-- refresh the browser view action -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.RefreshBrowser"
@@ -473,6 +481,19 @@
             string="Ctrl+Shift+Space"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.InsertNBSP"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- Reload the syntax dictionaries -->
+      <command
+            name="Reload Dictionaries"
+            description="Reload syntax dictionaries"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.ReloadDictionaries">
+      </command>
+      <keyBinding
+            string="ctrl+F5"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- refresh the browser -->

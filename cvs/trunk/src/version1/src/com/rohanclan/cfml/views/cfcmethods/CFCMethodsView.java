@@ -55,12 +55,13 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	private Action doubleClickAction;
 	private Action pinAction;
 	private Action insertAction;
+	private Action createInsightAction;
 	private boolean autoRefresh = true;
 	private boolean visible = false;
 	private boolean sortItems = false;
 	private IFile CFCMethodsFile = null;
 	private Text fileLabel;
-
+	private CFCMethodsContentProvider methodProvider;
 	/*
 	 * The content provider class is responsible for
 	 * providing objects to the view. It can wrap
@@ -165,6 +166,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
+	    manager.add(createInsightAction);
 	    manager.add(insertAction);
 		manager.add(pinAction);
 		manager.add(refreshAction);
@@ -250,6 +252,20 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		insertAction.setText("Insert");
 		insertAction.setToolTipText("Insert at current cursor position.");
 		insertAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_INSERT_SNIP));
+
+
+
+		
+
+
+		createInsightAction = new Action() {
+			public void run() {
+				createInsightXML();
+			}
+		};
+		createInsightAction.setText("Create Insight");
+		createInsightAction.setToolTipText("Create Insight XML and insert at current cursor position.");
+		createInsightAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_ALERT));
 		
 
 
@@ -392,6 +408,65 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		}
 	}
 	
+	private void createInsightXML() {
+	    CFCMethodViewItem selectedMethod;
+	    int i = 0;
+		try {
+	    String insight = "";
+	    
+	    String path = CFCMethodsFile.getFullPath().toString().replace('/','.');
+	    String[] pathArray = path.split("\\.");
+	    path = "";
+	    for (i=0 ; i<pathArray.length -1; i++ ) {
+	        if (path.length() > 0) {
+	            path += ".";    
+	        }
+	         path += pathArray[i];
+	    }
+	    
+	    
+	    insight += "\t\t<!-- The path and framework attributes are not currently used.\n";
+	    insight += "\t\tThe idea is that we should be able to use the path when a component is passed as an argument to a function.\n";
+	    insight += "\t\tThe framework attribute is there so that you can specify the framework type used for a project and only get insight for that framework -->\n";
+	    insight += "\t\t<component creator=\"8\" path=\"" + path + "\" framework=\"\">\n";
+		insight += "\t\t\t<!--\n";
+		insight += "\t\t\tThe fully scoped path to this component instance.\n";
+		insight += "\t\t\te.g. session.user\n";
+	    insight += "\t\t\t<scope value=\"\" />-->\n";
+		insight += "\t\t\t<help><![CDATA[\n";
+		insight += "\t\t\t\t \n";
+		insight += "\t\t\t]]></help>\n";
+		insight += "\n";
+		Object[] elements = methodProvider.getElements(new Object());
+		
+		
+		
+			for (i=0; i< elements.length; i++) {
+			    if (elements[i] instanceof CFCMethodViewItem) {
+			        insight += ((CFCMethodViewItem)elements[i]).getInsightXML();
+			    }
+			}
+		
+		
+			insight += "\t</component>\n";
+		    
+		    
+		    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+			selectedMethod = (CFCMethodViewItem)selection.getFirstElement();
+			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			IDocument doc =  ((ITextEditor)iep).getDocumentProvider().getDocument(iep.getEditorInput());
+			ITextEditor ite = (ITextEditor)iep;
+			ISelection sel = ite.getSelectionProvider().getSelection();
+			int cursorOffset = ((ITextSelection)sel).getOffset();
+			int selectionLength = ((ITextSelection)sel).getLength();
+			Encloser encloser = new Encloser();
+			encloser.enclose(doc,(ITextSelection)sel,insight,"");
+		}
+		catch (Exception e) {
+		    e.printStackTrace();
+		}
+	}
+	
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
@@ -428,7 +503,8 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			try {
 				IWorkbenchPartSite site = getSite();
 				IWorkbenchWindow window =  site.getWorkbenchWindow();
-				viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(),sortItems));
+				methodProvider = new CFCMethodsContentProvider(getRootInput(),sortItems);
+				viewer.setContentProvider(methodProvider);
 				viewer.setInput(getRootInput());
 				
 				IWorkbenchPage page = window.getActivePage();

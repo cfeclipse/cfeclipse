@@ -43,17 +43,20 @@ public class DictionaryContentHandler implements ContentHandler {
 	
 	private Map dtags;
 	private Map dfunctions;	
+	private Map dscopeVars;
 	
 	/** used to mark which part of the xml doc we are in */
 	private String currenttag = "";
 	/** current tag/function being built */
 	private Procedure currentitem = null;
 	private Parameter paramitem = null;
+	private Function methoditem = null;
 	
-	public DictionaryContentHandler(Map tags, Map functions)
+	public DictionaryContentHandler(Map tags, Map functions, Map scopeVars)
 	{
 		dtags = tags;
 		dfunctions = functions;
+		dscopeVars = scopeVars;
 		//namespaceMappings = new java.util.HashMap();
 	}
 	
@@ -89,107 +92,195 @@ public class DictionaryContentHandler implements ContentHandler {
 				
 		if(str2.equals("tag"))
 		{
-			//all the attribtues we are going to need to make a tag
-			byte creator = 0;
-			String name = "";
-			boolean single = false;
-			boolean xmlstyle = false;
-			
-			//get all the attributes needed for the tag
-			for(int x=0; x< attributes.getLength(); x++)
-			{
-				String attrname = attributes.getQName(x);
-				if(attrname.equals("creator"))
-				{
-					creator = Byte.parseByte(attributes.getValue(x));
-				}
-				else if(attrname.equals("name"))
-				{
-					name = attributes.getValue(x);
-				}
-				else if(attrname.equals("single"))
-				{
-					single = parseBoolean(attributes.getValue(x));
-				}
-				else if(attrname.equals("xmlstyle"))
-				{
-					xmlstyle = parseBoolean(attributes.getValue(x));
-				}
-			}
-			
-			//System.out.println("Tag: " + creator + " " + name + " " + single + " " + xmlstyle);
-			//create a new tag
-			this.currentitem = new Tag(name,single,xmlstyle,creator);
+			handleTagStart(attributes);
 		}
 		else if(str2.equals("function"))
 		{
-			//create a new function
-			byte creator = 0;
-			String name = "";
-			String returns = "";
-			
-			//get all the attributes needed for the tag
-			for(int x=0; x< attributes.getLength(); x++)
-			{
-				String attrname = attributes.getQName(x);
-				if(attrname.equals("creator"))
-				{
-					creator = Byte.parseByte(attributes.getValue(x));
-				}
-				else if(attrname.equals("name"))
-				{
-					name = attributes.getValue(x);
-				}
-				else if(attrname.equals("returns"))
-				{
-					returns = attributes.getValue(x);
-				}
-			}
-			//System.out.println("Fun: " + creator + " " + name + " " + returns);
-			//create a new function
-			this.currentitem = new Function(name, returns, creator);
+			handleFunctionStart(attributes);
 		}
 		else if(str2.equals("parameter"))
 		{
-			//get the name and type
-			String name = "";
-			String type = "";
-			boolean required = false;
-			
-			for(int x=0; x< attributes.getLength(); x++)
-			{
-				String attrname = attributes.getQName(x);
-				if(attrname.equals("type"))
-				{
-					type = attributes.getValue(x);
-				}
-				else if(attrname.equals("name"))
-				{
-					name = attributes.getValue(x);
-				}
-				else if(attrname.equals("required"))
-				{
-					required = parseBoolean(attributes.getValue(x));
-				}
-			}
-			
-			//System.out.println("Param: " + name + " " + type + " " + required);
-			//create a new parameter
-			this.paramitem = new Parameter(name,type,required);
+			handleParameterStart(attributes);
 		}
 		else if(str2.equals("value"))
 		{
-			//create a new value and assign it to the current parameter
-			String option = attributes.getValue(0);
-			//System.out.println("Value: " + option);
-			if(option != null && paramitem != null)
-				paramitem.addValue(new Value(option));
+			handleValueStart(attributes);
 		}
 		else if (str2.equals("help"))
 		{
 			//adds help
 		}
+		else if(str2.equals("component"))
+		{
+		    handleComponentStart(attributes);
+		}
+		else if(str2.equals("scope"))
+		{
+		    handleScopeStart(attributes);
+		}
 	}
+	
+	
+	private void handleTagStart(org.xml.sax.Attributes attributes) {
+	    //all the attribtues we are going to need to make a tag
+		byte creator = 0;
+		String name = "";
+		boolean single = false;
+		boolean xmlstyle = false;
+		
+		//get all the attributes needed for the tag
+		for(int x=0; x< attributes.getLength(); x++)
+		{
+			String attrname = attributes.getQName(x);
+			if(attrname.equals("creator"))
+			{
+				creator = Byte.parseByte(attributes.getValue(x));
+			}
+			else if(attrname.equals("name"))
+			{
+				name = attributes.getValue(x);
+			}
+			else if(attrname.equals("single"))
+			{
+				single = parseBoolean(attributes.getValue(x));
+			}
+			else if(attrname.equals("xmlstyle"))
+			{
+				xmlstyle = parseBoolean(attributes.getValue(x));
+			}
+		}
+		
+		//System.out.println("Tag: " + creator + " " + name + " " + single + " " + xmlstyle);
+		//create a new tag
+		this.currentitem = new Tag(name,single,xmlstyle,creator);
+	}
+	
+	
+	
+	private void handleFunctionStart(org.xml.sax.Attributes attributes) {
+	    //create a new function
+		byte creator = 0;
+		String name = "";
+		String returns = "";
+		
+		//get all the attributes needed for the tag
+		for(int x=0; x< attributes.getLength(); x++)
+		{
+			String attrname = attributes.getQName(x);
+			if(attrname.equals("creator"))
+			{
+				creator = Byte.parseByte(attributes.getValue(x));
+			}
+			else if(attrname.equals("name"))
+			{
+				name = attributes.getValue(x);
+			}
+			else if(attrname.equals("returns"))
+			{
+				returns = attributes.getValue(x);
+			}
+		}
+		//System.out.println("Fun: " + creator + " " + name + " " + returns);
+		//create a new function
+		if (this.currentitem instanceof Component) 
+		{
+		    this.methoditem = new Function(name, returns, creator);
+		}
+		else
+		{
+		    this.currentitem = new Function(name, returns, creator);
+		}
+	}
+	
+	
+	private void handleParameterStart(org.xml.sax.Attributes attributes) {
+	    //get the name and type
+		String name = "";
+		String type = "";
+		boolean required = false;
+		
+		for(int x=0; x< attributes.getLength(); x++)
+		{
+			String attrname = attributes.getQName(x);
+			if(attrname.equals("type"))
+			{
+				type = attributes.getValue(x);
+			}
+			else if(attrname.equals("name"))
+			{
+				name = attributes.getValue(x);
+			}
+			else if(attrname.equals("required"))
+			{
+				required = parseBoolean(attributes.getValue(x));
+			}
+		}
+		
+		//System.out.println("Param: " + name + " " + type + " " + required);
+		//create a new parameter
+		this.paramitem = new Parameter(name,type,required);
+	}
+	
+	
+	private void handleValueStart(org.xml.sax.Attributes attributes) {
+	    //create a new value and assign it to the current parameter
+		String option = attributes.getValue(0);
+		//System.out.println("Value: " + option);
+		if(option != null && paramitem != null)
+			paramitem.addValue(new Value(option));
+	}
+	
+	
+	private void handleComponentStart(org.xml.sax.Attributes attributes) {
+//	  all the attribtues we are going to need to make a tag
+		byte creator = 0;
+		String path = "";
+		String name = "";
+		String framework = "";;
+		
+		//get all the attributes needed for the tag
+		for(int x=0; x< attributes.getLength(); x++)
+		{
+			String attrname = attributes.getQName(x);
+			if(attrname.equals("creator"))
+			{
+				creator = Byte.parseByte(attributes.getValue(x));
+			}
+			else if(attrname.equals("path"))
+			{
+				path = attributes.getValue(x);
+				String[] tmp = path.split("\\.");
+				name = tmp[tmp.length-1];
+			}
+			else if(attrname.equals("framework"))
+			{
+				framework = attributes.getValue(x);
+			}
+		}
+		
+		//System.out.println("Tag: " + creator + " " + name + " " + single + " " + xmlstyle);
+		//create a new tag
+		this.currentitem = new Component(name,path,framework,creator);
+	}
+	
+
+	
+	
+	private void handleScopeStart(org.xml.sax.Attributes attributes) {
+	    //create a new value and assign it to the current parameter
+		String scope = attributes.getValue(0);
+		//System.out.println("Value: " + option);
+		if(currentitem instanceof Component) {
+			((Component)currentitem).addScope(scope);
+			dscopeVars.put(scope,currentitem);
+		}
+		else {
+		    dscopeVars.put(scope,new ScopeVar(scope));
+		}
+	}
+	
+	
+	
 	
 	/** process an end element */
 	public void endElement(String str, String str1, String str2) throws SAXException {
@@ -203,15 +294,26 @@ public class DictionaryContentHandler implements ContentHandler {
 		else if(str2.equals("function"))
 		{
 			//add the current item to the function map
-			if(this.currentitem != null)
-				dfunctions.put(currentitem.getName(),(Function)currentitem);
+			if(this.currentitem instanceof Component)
+			{
+				((Component)currentitem).addMethod(methoditem);
+				methoditem = null;
+			}
+			else if (this.currentitem instanceof Function) {
+			    dfunctions.put(currentitem.getName(),(Function)currentitem);
+			}
 		}
 		else if(str2.equals("parameter"))
 		{
 			//attact the finished parameter to the
 			//current item
-			if(currentitem != null && paramitem != null)
+			if(currentitem instanceof Function && paramitem != null)
+			{
 				currentitem.addParameter(paramitem);
+			}
+			else if (methoditem != null && paramitem != null) {
+			    methoditem.addParameter(paramitem);
+			}
 			
 			//reset the paramitem
 			paramitem = null;
@@ -224,13 +326,29 @@ public class DictionaryContentHandler implements ContentHandler {
 		{
 			//nothing?
 		}
+		else if(str2.equals("component"))
+		{
+		    if (this.currentitem instanceof Component) 
+		    {
+		        this.currentitem = null;
+		    }
+		   
+		}
+		else if(str2.equals("scope"))
+		{
+		    // Do nothing.
+		}
 		currenttag = "";
 	}
+	
+	
 	/** process the start prefix */	
 	public void startPrefixMapping(String str, String str1) throws SAXException {
 		//save the mappings for later use
 		//namespaceMappings.put(str1,str);
 	}
+	
+	
 	/** process the end prefix */
 	public void endPrefixMapping(String str) throws SAXException {;}
 		

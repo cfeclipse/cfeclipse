@@ -24,81 +24,63 @@
  */
 package com.rohanclan.cfml.dictionary;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+
 /**
- * @author Rob
+ * @author Spike
  *
- * This is really just a string wrapper. Its a possible value for an attribute
- * its only here to abstract it a bit and to give some room to play for future 
- * additions
  */
-public class Value implements Comparable {
-	protected String value;
-	protected String help;
-	public Value(String val)
+public class Component extends Procedure {
+	protected String path = "";
+	protected String framework = "";
+	protected Set methods = null;
+	protected Set scopes = null;
+
+	public Component(String name, String path, String framework, byte creator)
+	{	
+	    super(name);
+	    this.path = path;
+	    this.framework = framework;
+		this.creator = creator;
+	}
+	
+
+	public void addMethod(Function method)
 	{
-		value = val;
+		if(methods == null)
+			methods = new LinkedHashSet();
+		
+		methods.add(method);
 	}
+
 	
-	/**
-	 * gets this values value
-	 * @return the value
-	 */
-	public String getValue()
+
+	public void addScope(String scope)
 	{
-		return value;
-	}
-	
-	public void setValue(String newValue)
-	{
-		value = newValue;
-	}
-	
-	public String getHelp() {
-	    return help;
-	}
-	
-	public void setHelp(String help) {
-	    this.help = help;
+		if(scopes == null)
+			scopes = new LinkedHashSet();
+		
+		scopes.add(scope);
 	}
 	
 	public String toString()
 	{
-		return value;
+		return name;
 	}
 
-	/**
-	 * Checks to see if the passed object is equal to this
-	 * value
-	 */
-	public boolean equals(Object obj)
+	
+	public Set getScopes()
 	{
-		if(obj instanceof Value)
-		{
-			//if the name is the same and the type is the same
-			//assume its the same
-			if( ((Value)obj).getValue().equals(this.value))
-			{
-				return true;
-			}
-		}
-		
-		return false;
+		return this.scopes;
 	}
 	
-	/**
-	 * Compares the passed object to this value
-	 */
-	public int compareTo(Object o)
+	public Set getMethods() 
 	{
-		if(o == null)
-			throw new NullPointerException("Null!");
-		
-		if(o instanceof Value)
-		{
-			return value.compareTo( ((Value)o).getValue() );
-		}
-		
-		return 0;
+	    return this.methods;
 	}
+	
+
 	
 }

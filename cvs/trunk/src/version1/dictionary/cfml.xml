@@ -13105,4 +13105,117 @@
 		</function>
 
 	</functions>
+	
+	<scopes>
+		<!-- Client scope variables -->
+		<scope value="Client.CFID"/>
+		<scope value="Client.CFToken"/>
+		<scope value="Client.HitCount"/>
+		<scope value="Client.LastVisit"/>
+		<scope value="Client.TimeCreated"/>
+		<scope value="Client.URLToken" />
+		
+		<!-- Server scope variables -->
+		<scope value="Server.ColdFusion.ProductName"/>
+		<scope value="Server.ColdFusion.ProductVersion"/>
+		<scope value="Server.ColdFusion.ProductLevel"/>
+		<scope value="Server.ColdFusion.SerialNumber"/>
+		<scope value="Server.ColdFusion.SupportedLocales"/>
+		<scope value="Server.OS.Name"/>
+		<scope value="Server.OS.AdditionalInformation"/>
+		<scope value="Server.OS.Version"/>
+		<scope value="Server.OS.BuildNumber"/>
+		
+		<!-- Application Scope variables -->
+		<scope value="Application.ApplicationName"/>
+		
+		<!-- Session Scope variables -->
+		<scope value="Session.CFID"/>
+		<scope value="Session.CFToken"/>
+		<scope value="Session.URLToken"/>
+
+		<!-- Custom tag variables -->
+		<scope value="ThisTag.ExecutionMode"/>
+		<scope value="ThisTag.HasEndTag"/>
+		<scope value="ThisTag.GeneratedContent"/>
+		<scope value="ThisTag.AssocAttribs"/>
+		
+		<!-- CFCatch variables -->
+		<scope value="CFCATCH.Type"/>
+		<scope value="CFCATCH.Message"/>
+		<scope value="CFCATCH.Detail"/>
+		<scope value="CFCATCH.ErrNumber"/>
+		<scope value="CFCATCH.NativeErrorCode"/>
+		<scope value="CFCATCH.SQLState"/>
+		<scope value="CFCATCH.LockName"/>
+		<scope value="CFCATCH.LockOperation"/>
+		<scope value="CFCATCH.MissingFileName"/>
+		<scope value="CFCATCH.TagContext"/>
+		<scope value="CFCATCH.ErrorCode"/>
+		<scope value="CFCATCH.ExtendedInfo" />
+		
+		<!-- cffile variables -->
+		<scope value="CFFILE.AttemptedServerFile"/>
+		<scope value="CFFILE.ClientDirectory"/>
+		<scope value="CFFILE.ClientFile"/>
+		<scope value="CFFILE.ClientFileExt"/>
+		<scope value="CFFILE.ClientFileName"/>
+		<scope value="CFFILE.ContentSubType"/>
+		<scope value="CFFILE.ContentType"/>
+		<scope value="CFFILE.DateLastAccessed"/>
+		<scope value="CFFILE.FileExisted"/>
+		<scope value="CFFILE.FileSize"/>
+		<scope value="CFFILE.FileWasAppended"/>
+		<scope value="CFFILE.FileWasOverwritten"/>
+		<scope value="CFFILE.FileWasRenamed"/>
+		<scope value="CFFILE.FileWasSaved"/>
+		<scope value="CFFILE.OldFileSize"/>
+		<scope value="CFFILE.ServerDirectory"/>
+		<scope value="CFFILE.ServerFile"/>
+		<scope value="CFFILE.ServerFileExt"/>
+		<scope value="CFFILE.ServerFileName"/>
+		<scope value="CFFILE.TimeCreated"/>
+		<scope value="CFFILE.TimeLastModified"/>
+		
+		<!-- cfftp variables -->
+		<scope value="CFFTP.Succeeded"/>
+		<scope value="CFFTP.ErrorCode"/>
+		<scope value="CFFTP.ErrorText"/>
+		
+		<!-- cfhttp variables -->
+		<scope value="CFHTTP.FileContent"/>
+		<scope value="CFHTTP.MimeType"/>
+		<scope value="CFHTTP.Header"/>
+		<scope value="CFHTTP.ResponseHeader"/>
+		<scope value="CFHTTP.StatusCode"/>
+		
+		<!-- CGI scope variables -->"/>
+		<scope value="CGI.AUTH_TYPE"/>
+		<scope value="CGI.CONTENT_LENGTH"/>
+		<scope value="CGI.CONTENT_TYPE"/>
+		<scope value="CGI.PATH_INFO"/>
+		<scope value="CGI.PATH_TRANSLATED"/>
+		<scope value="CGI.QUERY_STRING"/>
+		<scope value="CGI.REMOTE_ADDR"/>
+		<scope value="CGI.REMOTE_HOST"/>
+		<scope value="CGI.REMOTE_USER"/>
+		<scope value="CGI.REQUEST_METHOD"/>
+		<scope value="CGI.SCRIPT_NAME"/>
+		<scope value="CGI.GATEWAY_INTERFACE"/>
+		<scope value="CGI.SERVER_NAME"/>
+		<scope value="CGI.SERVER_PORT"/>
+		<scope value="CGI.SERVER_PROTOCOL"/>
+		<scope value="CGI.SERVER_SOFTWARE"/>
+		<scope value="CGI.CERT_ISSUER"/>
+		<scope value="CGI.CERT_SUBJECT"/>
+		<scope value="CGI.CLIENT_CERT_ENCODED"/>
+		<scope value="CGI.HTTP_ACCEPT"/>
+		<scope value="CGI.HTTP_IF_MODIFIED_SINCE"/>
+		<scope value="CGI.HTTP_USER_AGENT"/>
+
+		
+		
+	</scopes>
+	
+	
 </dictionary>
