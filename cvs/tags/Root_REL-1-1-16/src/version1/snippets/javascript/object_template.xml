@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>object_template</name>
+<help>Object template to create your own javascript objects</help>
+<starttext><![CDATA[function $${object_name}(){
+	/**
+	 * $${object_name}::$${method_name}
+	 */
+	this.$${method_name} = function()
+	{
+		]]></starttext>
+<endtext><![CDATA[
+	}
+}]]></endtext>
+</snippet>

@@ -1,0 +1,2045 @@
+<?xml version="1.0" ?>
+<!--
+	User Defined Custom tags. You can add your cfx and cf_ tags here. 
+	Note:
+	this file will be over written when you upgrade the plugin, but the file 
+	spec shouldn't change so you can just over write this file if you wish
+	
+	Creator who made / supports the tag. Values are:
+    	MX          = 0x1;
+    	BlueDragon  = 0x2;
+    	W3C         = 0x4;
+    	UserDefined = 0x8;
+   	If support exists between two you can add them together. For example 3 means
+   	MX and BlueDragon. This file should only have 8s.
+	
+    Single is if the tag lacks a closing tag
+    XMLStyle is: if a single tag, does it close thusly /&gt;
+    
+    You can put cfx or cf_ tags in here - leave off the cf portion. so for
+   	example cfx_RohanCrypt becomes x_rohancrypt (needs to be lowercase too). You
+   	can also put functions in here, but that is only a hack - cfeclipse will be
+   	able to find your functions at a later date
+ -->
+<dictionary>
+	<tags>
+		<!--
+		<tag creator="8" name="x_rohancrypt" single="true" xmlstyle="false">
+			<help><![CDATA[
+				cfx_RohanCrypt is an encryption tag that supports 3des, des and
+				others. It will return the variable rohancrypt.response when 
+				encrypting or decrypting a string, and operates directly on a 
+				query's column if passed a query. The encrypted text is by default
+				base64 encoded using utf-8. 
+			]]></help>
+			<parameter name="mode" type="String" required="true">
+				<help><![CDATA[
+					Sets the tags mode
+				]]></help>
+				<values>
+					<value option="genkey" />
+					<value option="encrypt" />
+					<value option="decrypt" />
+				</values>
+			</parameter>
+			<parameter name="keyfile" type="String" required="true">
+				<help><![CDATA[
+					Sets the key file to use (should be a generated rkey file)
+				]]></help>
+				<values />
+			</parameter>
+			<parameter name="string" type="String" required="false">
+				<help><![CDATA[
+					A string value to encrypt or decrypt
+				]]></help>
+				<values />
+			</parameter>
+			<parameter name="query" type="String" required="false">
+				<help><![CDATA[
+					The query to perform the action on. If you use this, you'll
+					need to use the column attribute too.
+				]]></help>
+				<values />
+			</parameter>
+			<parameter name="column" type="String" required="false">
+				<help><![CDATA[
+					The column that the action should be applied to.
+				]]></help>
+				<values />
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					The encoding type the data should be save to or is comming
+					in as
+				]]></help>
+				<values>
+					<value option="hex" />
+					<value option="base64" />
+				</values>
+			</parameter>
+			<parameter name="iv" type="String" required="false">
+				<help><![CDATA[
+					The IV for this encryption session
+				]]></help>
+				<values />
+			</parameter>
+		</tag> 
+		-->
+	</tags>
+	
+	<functions>
+		<!--
+			<function creator="8" name="dostuff" returns="Object">
+			<help><![CDATA[
+				Does nothing this is an example
+			]]></help>
+			<parameter name="blarg" type="boolean" required="false">
+				<help><![CDATA[
+					Is it true?
+				]]></help>
+			</parameter>
+		</function>
+		-->
+	</functions>
+	
+	<components>
+	<component creator="8" path="farcry.farcry_core.packages.farcry.versioning" framework="">
+		<scope value="application.factory.versioning" />
+		<help><![CDATA[
+			 
+		]]></help>
+
+		<function creator="8" name="archiveobject" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="sendobjectlive" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="stdraftobject" type="struct" required="true">
+				<help><![CDATA[
+					the draft stuct to be updated
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="rollbackarchive" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="archiveid" type="uuid" required="true">
+				<help><![CDATA[
+					the archived object to be sent back live
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getversioningrules" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getarchives" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getarchivedetail" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="checkedit" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="strules" type="struct" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="stobj" type="struct" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="approveemail_approved" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					the objectid of object that has had status changed
+				]]></help>
+			</parameter>
+
+			<parameter name="comment" type="string" required="true">
+				<help><![CDATA[
+					comments that were entered when status was changed
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="approveemail_pending" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					the objectid of object that has had status changed
+				]]></help>
+			</parameter>
+
+			<parameter name="comment" type="string" required="true">
+				<help><![CDATA[
+					comments that were entered when status was changed
+				]]></help>
+			</parameter>
+
+			<parameter name="lapprovers" type="string" required="true">
+				<help><![CDATA[
+					list of approvers to send email to
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="approveemail_draft" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					the objectid of object that has had status changed
+				]]></help>
+			</parameter>
+
+			<parameter name="comment" type="string" required="true">
+				<help><![CDATA[
+					comments that were entered when status was changed
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="approveemail_approved_dd" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					the objectid of object that has had status changed
+				]]></help>
+			</parameter>
+
+			<parameter name="comment" type="string" required="true">
+				<help><![CDATA[
+					comments that were entered when status was changed
+				]]></help>
+			</parameter>
+
+			<parameter name="lapprovers" type="string" required="true">
+				<help><![CDATA[
+					list of approvers to send email to
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="approveemail_pending_dd" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					the objectid of object that has had status changed
+				]]></help>
+			</parameter>
+
+			<parameter name="comment" type="string" required="true">
+				<help><![CDATA[
+					comments that were entered when status was changed
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="approveemail_draft_dd" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					the objectid of object that has had status changed
+				]]></help>
+			</parameter>
+
+			<parameter name="comment" type="string" required="true">
+				<help><![CDATA[
+					comments that were entered when status was changed
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="checkisdraft" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					the objectid of object to be checked
+				]]></help>
+			</parameter>
+
+			<parameter name="type" type="string" required="true">
+				<help><![CDATA[
+					object type to be checked
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="true">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+	</component>
+
+	<component creator="8" path="farcry.farcry_core.packages.farcry.stats" framework="">
+		<scope value="application.factory.stats" />
+		<help><![CDATA[
+			 
+		]]></help>
+
+		<function creator="8" name="deploy" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="bdroptable" type="boolean" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="logentry" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="pageid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="navid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="remoteip" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="userid" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="sessionid" type="string" required="true">
+				<help><![CDATA[
+					sessionid for visitor
+				]]></help>
+			</parameter>
+
+			<parameter name="browser" type="string" required="true">
+				<help><![CDATA[
+					browser used by visitor
+				]]></help>
+			</parameter>
+
+			<parameter name="referer" type="string" required="false">
+				<help><![CDATA[
+					the referer that pointed the user to this page
+				]]></help>
+			</parameter>
+
+			<parameter name="locale" type="string" required="false">
+				<help><![CDATA[
+					the locale of user
+				]]></help>
+			</parameter>
+
+			<parameter name="os" type="string" required="false">
+				<help><![CDATA[
+					the operating system of user
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="logsearch" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="searchstring" type="string" required="true">
+				<help><![CDATA[
+					search string inputted by user
+				]]></help>
+			</parameter>
+
+			<parameter name="results" type="numeric" required="true">
+				<help><![CDATA[
+					number of results returned by search
+				]]></help>
+			</parameter>
+
+			<parameter name="lcollections" type="string" required="true">
+				<help><![CDATA[
+					list of collections search against
+				]]></help>
+			</parameter>
+
+			<parameter name="referer" type="string" required="true">
+				<help><![CDATA[
+					the referer that pointed the user to this page
+				]]></help>
+			</parameter>
+
+			<parameter name="remoteip" type="string" required="true">
+				<help><![CDATA[
+					remote address of user performing search
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getsearchstats" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getsearchstatsnoresults" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getsearchstatsmostpopular" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getpagestats" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="before" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="after" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getpagestatsbydate" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="pageid" type="uuid" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="before" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="after" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getpagestatsbyday" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="pageid" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="day" type="date" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="showall" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getpagestatsbyweek" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="pageid" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="day" type="date" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="showall" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getbranchstatsbydate" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="navid" type="uuid" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="before" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="after" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getbranchstatsbyday" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="navid" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="day" type="date" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="showall" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getbranchstatsbyweek" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="navid" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="day" type="date" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="showall" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getdownloadstats" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getmostviewed" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="false">
+				<help><![CDATA[
+					filter by typename
+				]]></help>
+			</parameter>
+
+			<parameter name="maxrows" type="string" required="true">
+				<help><![CDATA[
+					maximum number of results returned
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getsessions" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getbrowsers" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="maxrows" type="string" required="true">
+				<help><![CDATA[
+					maximum number of results returned
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getvisitors" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="maxrows" type="string" required="true">
+				<help><![CDATA[
+					maximum number of results returned
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="remoteip" type="string" required="false">
+				<help><![CDATA[
+					filter by ip address
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getvisitorpath" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="sessionid" type="string" required="true">
+				<help><![CDATA[
+					id of visitor session
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getvisitorstatsbydate" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="before" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="after" type="date" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getvisitorstatsbyday" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="day" type="date" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="showall" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getvisitorstatsbyweek" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="day" type="date" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="showall" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getreferers" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="maxrows" type="string" required="true">
+				<help><![CDATA[
+					maximum number of results returned
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="filter" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getlocales" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="maxrows" type="string" required="true">
+				<help><![CDATA[
+					maximum number of results returned
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getos" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="maxrows" type="string" required="true">
+				<help><![CDATA[
+					maximum number of results returned
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getbrowser" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="user_agent" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getgooglestats" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="maxrows" type="string" required="true">
+				<help><![CDATA[
+					maximum number of results returned
+				]]></help>
+			</parameter>
+
+			<parameter name="daterange" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getactivevisitors" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="order" type="string" required="true">
+				<help><![CDATA[
+					field to order by
+				]]></help>
+			</parameter>
+
+			<parameter name="orderdirection" type="string" required="true">
+				<help><![CDATA[
+					order by ascending or descending
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getuseros" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="user_agent" type="null" required="null">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+	</component>
+		
+		
+		
+		<component creator="8" path="farcry.farcry_core.packages.farcry.tree" framework="">
+		<scope value="application.factory.oTree" />
+		<help><![CDATA[
+			 
+		]]></help>
+
+		<function creator="8" name="deletebranch" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="deletetree" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="typename" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="deploytree" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getancestors" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="bincludeself" type="boolean" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="nlevel" type="numeric" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getchildren" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getdescendants" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="depth" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="lcolumns" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="afilter" type="array" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="bincludeself" type="boolean" required="no">
+				<help><![CDATA[
+					set this to 1 if you want to include the objectid you are passing
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getsiblings" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="lcolumns" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="afilter" type="array" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="bincludeself" type="boolean" required="no">
+				<help><![CDATA[
+					set this to 1 if you want to include the objectid you are passing
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getnode" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getsecondarynav" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getparentid" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="null" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getrootnode" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="movebranch" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					the object that is at the head of the branch to be moved.
+				]]></help>
+			</parameter>
+
+			<parameter name="parentid" type="uuid" required="yes">
+				<help><![CDATA[
+					the node to which it will be attached as a child. note this function attaches the node as an only child or as the first child to the left of a group of siblings.
+				]]></help>
+			</parameter>
+
+			<parameter name="pos" type="numeric" required="false">
+				<help><![CDATA[
+					the position in the tree
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="numberofnodesatobjectlevel" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="rootnodeexists" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="typename" type="null" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="setrootnode" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectname" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="setchild" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="parentid" type="uuid" required="yes">
+				<help><![CDATA[
+					the tree node that is the parent.
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					the child node to be inserted.
+				]]></help>
+			</parameter>
+
+			<parameter name="objectname" type="string" required="yes">
+				<help><![CDATA[
+					the child node object label.
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="yes">
+				<help><![CDATA[
+					the child node object type.
+				]]></help>
+			</parameter>
+
+			<parameter name="pos" type="numeric" required="yes">
+				<help><![CDATA[
+					the position the new child node will take amongst the siblings. 1 = extreme left, 2 = second from left etc.
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="setoldest" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="parentid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectname" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="setyoungest" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="parentid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="uuid" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectname" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getbloodline" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="jointable" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="objectid" type="string" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="levelsabove" type="numeric" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="levelsbelow" type="numeric" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="status" type="string" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+	</component>
+		
+		<component creator="8" path="farcry.farcry_core.packages.farcry.category" framework="farcry">
+		<scope value="application.factory.oCategory" />
+		<help><![CDATA[
+			 Category service for Farcry
+		]]></help>
+
+		<function creator="8" name="getcataliases" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getdata" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="lcategoryids" type="string" required="true">
+				<help><![CDATA[
+					the list of categoryids you wish to match
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="string" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="bmatchall" type="boolean" required="false">
+				<help><![CDATA[
+					does the object need to match all categories
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="false">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+			<parameter name="orderby" type="string" required="false">
+				<help><![CDATA[
+					field to order by
+				]]></help>
+			</parameter>
+
+			<parameter name="orderdirection" type="string" required="false">
+				<help><![CDATA[
+					order in which direction? descending or ascending
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="deploycategories" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="bdroptables" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="true">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="gethierarchies" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+		</function>
+
+		<function creator="8" name="gethierarchyroot" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectname" type="null" required="yes">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getcategorybranch" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="lcategoryids" type="null" required="true">
+				<help><![CDATA[
+					list of category ids
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="displaytree" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="rootobjectid" type="uuid" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="bshowcheckbox" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="bisform" type="boolean" required="false">
+				<help><![CDATA[
+					if true - then the tree will function as a self contained form, if false, then form submit elements will not be rendered
+				]]></help>
+			</parameter>
+
+			<parameter name="lselectedcategories" type="string" required="false">
+				<help><![CDATA[
+					a list of category objectids that are to be selected as default
+				]]></help>
+			</parameter>
+
+			<parameter name="lexcludecategories" type="string" required="false">
+				<help><![CDATA[
+					a list of category objectids that are to be exlcuded
+				]]></help>
+			</parameter>
+
+			<parameter name="bexpand" type="boolean" required="false">
+				<help><![CDATA[
+					defaul action for root node expansion
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="typename" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="addcategory" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="categoryid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="categorylabel" type="string" required="true">
+				<help><![CDATA[
+					label of category
+				]]></help>
+			</parameter>
+
+			<parameter name="parentid" type="uuid" required="true">
+				<help><![CDATA[
+					uuid of parent
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="true">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="deletecategory" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="categoryid" type="uuid" required="true">
+				<help><![CDATA[
+					category id
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="true">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+			<parameter name="bdeletebranch" type="boolean" required="false">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="movecategory" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="categoryid" type="uuid" required="true">
+				<help><![CDATA[
+					category id
+				]]></help>
+			</parameter>
+
+			<parameter name="parentid" type="uuid" required="null">
+				<help><![CDATA[
+					new parent id that branch will sit under
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="copycategories" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="srcobjectid" type="uuid" required="yes">
+				<help><![CDATA[
+					source object whose category data is to be copied
+				]]></help>
+			</parameter>
+
+			<parameter name="destobjectid" type="uuid" required="yes">
+				<help><![CDATA[
+					destination object for copied category data
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dbowner" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getcategories" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="breturncategoryids" type="boolean" required="false">
+				<help><![CDATA[
+					set flag to true if you want category objectids instead of category labels.
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="deleteassignedcategories" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dbowner" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="getcategorybyname" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="name" type="string" required="true">
+				<help><![CDATA[
+					name of the category you want returned
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dbowner" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="assigncategories" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="uuid" required="true">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="lcategoryids" type="string" required="null">
+				<help><![CDATA[
+					list of category objectids
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="no">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="gettreedata" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="objectid" type="null" required="null">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="toplevelvariable" type="null" required="no">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="no">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+		<function creator="8" name="updatetree" returns="null">
+			<help><![CDATA[
+				 
+			]]></help>
+			<parameter name="lobjectids" type="null" required="null">
+				<help><![CDATA[
+					null
+				]]></help>
+			</parameter>
+
+			<parameter name="dsn" type="string" required="no">
+				<help><![CDATA[
+					database dsn
+				]]></help>
+			</parameter>
+
+		</function>
+
+	</component>
+
+	</components>
+	
+	
+</dictionary>

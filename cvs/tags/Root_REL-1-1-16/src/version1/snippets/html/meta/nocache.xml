@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>No Cache</name>
+<help><![CDATA[Keeps the client from caching the page (mostly) ]]></help>
+<starttext><![CDATA[<meta http-equiv="pragma" content="no-cache">]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>commentHeader</name>
+<help>Mark Mandel's comment type</help>
+<starttext><![CDATA[<!--- Document Information -----------------------------------------------------
+
+Title:      $${CURRENTFILE}
+
+Author:     $${name}
+Email:      $${email}
+
+company:    $${company}
+Website:    $${website}
+
+Purpose:    $${purpose}
+
+Usage:      $${usage}
+
+Modification Log:
+
+Name			Date			Description
+================================================================================
+$${name}		$${DAYOFMONTH}/$${MONTHNUMBER}/$${YEAR}		Created
+
+------------------------------------------------------------------------------->]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>
