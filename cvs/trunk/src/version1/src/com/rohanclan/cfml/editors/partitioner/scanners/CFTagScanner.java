@@ -112,6 +112,7 @@ public class CFTagScanner extends RuleBasedScanner {
 		
 		CFKeywordDetector cfkd = new CFKeywordDetector();
 		PredicateWordRule words = new PredicateWordRule(cfkd,cftag,	allkeys,	cfkeyword);
+		words.setCaseSensitive(false);
 		
 		rules[3] = words;
 		

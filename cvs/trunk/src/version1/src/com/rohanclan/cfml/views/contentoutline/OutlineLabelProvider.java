@@ -286,6 +286,7 @@ public class OutlineLabelProvider extends LabelProvider {
 	 */
 	private boolean hasSpecialNeeds(String item)
 	{
+	    item = item.toLowerCase();
 		if(item.equals("cfif") || item.equals("cfset") || item.equals("cfloop")
 			|| item.equals("cfelse") || item.equals("cfelseif") || item.equals("cfbreak")
 			|| item.equals("cfreturn") || item.equals("cfdefaultcase") || item.equals("cftry")

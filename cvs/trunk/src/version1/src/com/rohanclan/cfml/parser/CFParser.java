@@ -704,7 +704,7 @@ public class CFParser {
 		//
 		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
 		// Also tests to make sure it catches CFX tags.
-		if(tagName.charAt(2) == '_' || (tagName.charAt(2) == 'x' && tagName.charAt(3) == '_'))
+		if(tagName.charAt(2) == '_' || ((tagName.charAt(2) == 'x' || (tagName.charAt(2) == 'X')) && tagName.charAt(3) == '_'))
 		{
 			newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);
 			newItem.setItemData(match.match);
@@ -1004,7 +1004,7 @@ public class CFParser {
 			if(inData.length() - currPos > 3)	// For CF closer tags </cf...
 				next3Chars = inData.substring(currPos + 1, currPos + 4);
 			
-			if(currChar == '<' && (next2Chars.compareTo("cf") == 0 || next3Chars.compareTo("/cf") == 0))
+			if(currChar == '<' && (next2Chars.compareToIgnoreCase("cf") == 0 || next3Chars.compareToIgnoreCase("/cf") == 0))
 			{	// CFML tag embedded in HTML
 				////System.out..println("CFParser::matchingHTML() - FOUND!: an embedded CFML tag within HTML! : " + inData.substring(0, currPos));
 				currPos = matchingCFML(parseState, inData, currPos);
@@ -1047,7 +1047,7 @@ public class CFParser {
 			else 
 				break;	// Not enough space left for it to be a closing cfscript tag.
 			
-			if(nextChars.compareTo(closingText) == 0)
+			if(nextChars.compareToIgnoreCase(closingText) == 0)
 			{
 				finalOffset = currPos;
 				break;
@@ -1112,7 +1112,7 @@ public class CFParser {
 			else 
 				break;	// Not enough space left for it to be a closing cfscript tag.
 			
-			if(nextChars.compareTo(closingText) == 0)
+			if(nextChars.compareToIgnoreCase(closingText) == 0)
 			{
 				finalOffset = currPos;
 				break;
@@ -1233,13 +1233,13 @@ public class CFParser {
 							lastMatch = currPos;
 						}
 					}
-					else if(next2Chars.compareTo("cf") == 0)
+					else if(next2Chars.compareToIgnoreCase("cf") == 0)
 					{
 						//
 						// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 						// container *only* for things to go in the document tree.
 						if(data.length() - currPos > "<cfscript>".length() && 
-						   data.substring(currPos, currPos + "<cfscript>".length()).compareTo("<cfscript>") == 0)
+						   data.substring(currPos, currPos + "<cfscript>".length()).compareToIgnoreCase("<cfscript>") == 0)
 						{
 							currPos = matchingCFScript(parserState, inData, currPos);
 						}

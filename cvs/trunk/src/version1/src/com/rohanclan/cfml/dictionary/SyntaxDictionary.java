@@ -222,7 +222,7 @@ public abstract class SyntaxDictionary {
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 		 	       && !start.toLowerCase().startsWith("cf"))
 	 	    {
-	 	        System.err.println("SyntaxDictionarY::getFilteredElements() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + start + "\'");
+	 	        System.err.println("SyntaxDictionary::getFilteredElements() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + start + "\'");
 	 	    }
 	    
 		return limitSet(getAllTags(),start);
@@ -281,7 +281,7 @@ public abstract class SyntaxDictionary {
 	public Tag getTag(String name)
 	{
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
-	       && !name.startsWith("cf"))
+	       && !name.toLowerCase().startsWith("cf"))
 	    {
 	        System.err.println("SyntaxDictionarY::getTag() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + name + "\'");
 	    }

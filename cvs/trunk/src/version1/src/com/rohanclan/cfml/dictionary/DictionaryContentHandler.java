@@ -142,7 +142,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		throws SAXException 
 	{
 		//save the current tag so we can see where we were
-		this.currenttag = str2;
+		this.currenttag = str2.toLowerCase();
 				
 		if(str2.equals("tag")) {
 			handleTagStart(attributes);
@@ -179,7 +179,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		//get all the attributes needed for the tag
 		for(int x=0; x< attributes.getLength(); x++)
 		{
-			String attrname = attributes.getQName(x);
+			String attrname = attributes.getQName(x).toLowerCase();
 			if(attrname.equals("creator"))
 			{
 				creator = Byte.parseByte(attributes.getValue(x));
@@ -222,7 +222,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		//get all the attributes needed for the tag
 		for(int x=0; x< attributes.getLength(); x++)
 		{
-			String attrname = attributes.getQName(x);
+			String attrname = attributes.getQName(x).toLowerCase();
 			if(attrname.equals("creator"))
 			{
 				creator = Byte.parseByte(attributes.getValue(x));
@@ -263,7 +263,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		
 		for(int x=0; x< attributes.getLength(); x++)
 		{
-			String attrname = attributes.getQName(x);
+			String attrname = attributes.getQName(x).toLowerCase();
 			if(attrname.equals("type"))	{
 				type = attributes.getValue(x);
 			}
@@ -335,7 +335,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		//get all the attributes needed for the tag
 		for(int x=0; x< attributes.getLength(); x++)
 		{
-			String attrname = attributes.getQName(x);
+			String attrname = attributes.getQName(x).toLowerCase();
 			if(attrname.equals("creator"))
 			{
 				creator = Byte.parseByte(attributes.getValue(x));
@@ -378,6 +378,7 @@ public class DictionaryContentHandler implements ContentHandler {
 	
 	/** process an end element */
 	public void endElement(String str, String str1, String str2) throws SAXException {
+	    str2 = str2.toLowerCase();
 		if(str2.equals("tag"))
 		{
 			//add the current item to the tag map
@@ -437,7 +438,7 @@ public class DictionaryContentHandler implements ContentHandler {
 	/** process characters */
 	public void characters(char[] values, int start, int length) throws SAXException {
 			
-		if(currenttag.equals("help"))
+		if(currenttag.equalsIgnoreCase("help"))
 		{
 			StringBuffer resvalue = new StringBuffer();
 			

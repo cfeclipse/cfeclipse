@@ -150,6 +150,7 @@ public class CFScriptScanner extends RuleBasedScanner {
 			allkeys, 
 			cfkeyword
 		);
+		words.setCaseSensitive(false);
 		
 		//now do the cffuntions so they look pretty too :)
 		set = dic.getFunctions();

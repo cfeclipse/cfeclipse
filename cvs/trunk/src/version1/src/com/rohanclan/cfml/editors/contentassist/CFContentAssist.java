@@ -97,7 +97,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @param message The message to output to the console
 	 */
 	private void UserMsg(String method, String message) {
-	    //System.out.println("CFContentAssist::" + method + "() - " + message);
+	    // System.out.println("CFContentAssist::" + method + "() - " + message);
 	}
 	/**
 	 * Provides a standarised user error console message for debugging.

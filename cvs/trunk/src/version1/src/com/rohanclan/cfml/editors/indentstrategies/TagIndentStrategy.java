@@ -222,7 +222,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private boolean tagIsSingle(IDocument doc, DocumentCommand docCommand, String tagName) {
 		boolean retval = true;
 
-		boolean cftag = tagName.startsWith("cf");
+		boolean cftag = tagName.toLowerCase().startsWith("cf");
 		//
 		// End of block to comment out
 		//
