@@ -285,4 +285,9 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		return DEFAULT_PROJECT_URL;
 	}
 	
+	public boolean useFunkyContentAssist() {
+		return false;
+		//return true;
+	}
+	
 }
