@@ -159,7 +159,9 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 							    e.printStackTrace();
 							}
 					    }
-
+					    else {
+					        sel = new TextSelection(doc,offset,0);
+					    }
 						editor.setHighlightRange(offset,0,true);
 				    }
 			    }
