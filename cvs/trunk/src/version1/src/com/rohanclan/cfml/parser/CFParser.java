@@ -315,7 +315,7 @@ public class CFParser {
 	/**
 	 * <code>stripAttributes</code> - Strips the attributes from some data and puts them into a hash map
 	 * @param inData - the string data to get the attributes out of
-	 * @return a HashMap with the attributes in.
+	 * @return array list of the attributes found. May contain duplicates
 	 */
 	protected ArrayList stripAttributes(String inData, int lineNum, int offset)
 	{
@@ -637,18 +637,7 @@ public class CFParser {
 			else
 			{ 	// It's a closing item, so we get the parent item and add this item to it's children.
 				DocItem top = (DocItem)matchStack.pop();
-				//
-				// the cfif,cfelseif,...,cfelse tags are exceptions to the XML-like compliance of
-				// CFML. Therefore here is a fudge to cope with it. Bad Macromedia! Bad!
-/*				
-				if(newItem instanceof CfmlTagElse)
-				{
-					//
-					// Pop the next item off (should be the if)
-					DocItem ifTag = (CfmlTagIf)matchStack.pop();
-					ifTag.addChild()
-				}
-*/
+
 				top.addChild(newItem);
 				matchStack.push(top);
 				//System.out.println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
@@ -719,14 +708,13 @@ public class CFParser {
 	public CFDocument createDocTree(ArrayList matches)
 	{
 		CFDocument newDoc = new CFDocument();
-		
 		Stack matchStack = new Stack();
 		ArrayList rootElements = new ArrayList();
 		TagItem rootItem = new TagItem(0, 0, 0, "Doc Root");
-		
-		matchStack.push(rootItem);
-		
 		int matchPos = 0;
+
+		matchStack.push(rootItem);
+	
 		try {
 			
 			for(; matchPos < matches.size(); matchPos++)
@@ -738,39 +726,47 @@ public class CFParser {
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					// Is a tag
-					if(matchStr.charAt(1) == '/')
-					{
+					if(matchStr.charAt(1) == '/') {
 						if(!handleClosingTag(match, matchStack))
 							return null;
 					}
-					else
-					{
+					else {
 						int tagEnd = matchStr.indexOf(" ");	// Look for the first space
-						if(tagEnd == -1)
-						{
+						if(tagEnd == -1) {
 							// No spaces, therefore it has no attributes (i.e. <cfscript>)
 							tagEnd = matchStr.indexOf(">");
 						}
 						String tagName = match.match.substring(0, tagEnd);
-						
 						boolean isACloser = false;
+						//
+						// Find the end of the tag
+						int currPos = 0;
+						for(int quoteCount = 0; currPos < match.match.length(); currPos++) {
+							char currChar = match.match.charAt(currPos);
+							boolean inQuotes = (1 == quoteCount % 2);
+							if(!inQuotes && currChar == '>') {
+								break;
+							}
+							else if(currChar == '\"')
+								quoteCount++;
+						}
 
-						int forwardSlashPos = match.match.lastIndexOf("/");
-						String attributes = "";
-						if(forwardSlashPos != -1 && match.match.charAt(forwardSlashPos+1) == '>')	// Handle a self-closer (i.e. <cfproperty ... />
-						{
+						//
+						// Handle a self-closer (i.e. <cfproperty ... />
+						String attributes = "";						
+						if(match.match.charAt(currPos-1) == '/') {
 							if(tagName.indexOf("/") != -1)
 								tagName = tagName.substring(0, tagName.length()-1); // Is a self-closer (i.e. <br/>)
 							isACloser = true;
 							if(match.match.length() - tagEnd >= 2)
 								attributes = match.match.substring(tagEnd, match.match.length()-2); // minus one to strip the closing '/>'
-
 						}
 						else
 							attributes = match.match.substring(tagEnd, match.match.length()-1); // minus one to strip the closing '>'
 
+						
+						
 						// Get the attributes from the tag.
-
 						//System.out.println("CFParser::createDocTree() - Handling cftag \'" + tagName + "\'");
 						if(Util.IsCFTag(tagName))
 						{  
@@ -779,18 +775,14 @@ public class CFParser {
 							// TODO: CFScript blocks are ignored at present! Sort it! Should there be a specialised cfscript tag that does it?
 							
 //							if(tagName.startsWith("<cfscript>"))
-							if(tagName.compareTo("script") == 0)
-							{
+							if(tagName.compareTo("script") == 0) {
 								handleCFScriptBlock(match, matchStack);
-							}
-							else
-							{
-
+							} else {
 								handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
 							}
 						}
-						else	// Anything else is an HTML tag
-						{
+						else {	// Anything else is an HTML tag
+						
 							handleHTMLTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
 						}
 					}
@@ -985,7 +977,7 @@ public class CFParser {
 			if(!inQuotes && currChar == '>')
 			{
 				finalOffset = currPos;
-				//System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
+				
 				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
 												getLineNumber(currDocOffset)));
 				break;
