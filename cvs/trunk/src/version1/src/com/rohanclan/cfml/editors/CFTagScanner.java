@@ -66,9 +66,9 @@ public class CFTagScanner extends RuleBasedScanner {
 		IRule[] rules = new IRule[4];
 		
 		// Add rule for double quotes
-		rules[0] = new SingleLineRule("\"", "\"", string, '\\');
+		rules[0] = new SingleLineRule("\"", "\"", string);
 		// Add a rule for single quotes
-		rules[1] = new SingleLineRule("'", "'", string, '\\');
+		rules[1] = new SingleLineRule("'", "'", string);
 		
 		rules[2] = new NumberRule(cfnumber);
 		

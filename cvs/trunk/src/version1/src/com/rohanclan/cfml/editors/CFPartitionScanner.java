@@ -124,12 +124,14 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			e.printStackTrace(System.err);
 		}
 		
-		//catch all custom tags
-		rules.add(new MultiLineRule("<cfx",">", cftag));
+		//catch all custom tags - these should be handeled in the dictionary
+		/* rules.add(new MultiLineRule("<cfx",">", cftag));
 		rules.add(new MultiLineRule("</cfx",">", cfendtag));
 		rules.add(new MultiLineRule("<CFX",">", cftag));
 		rules.add(new MultiLineRule("</CFX",">", cfendtag));
+		*/
 		
+		//these not so much because you can call normal pages as cf_'s
 		rules.add(new MultiLineRule("<cf_",">", cftag));
 		rules.add(new MultiLineRule("</cf_",">", cfendtag));
 		rules.add(new MultiLineRule("<CF_",">", cftag));

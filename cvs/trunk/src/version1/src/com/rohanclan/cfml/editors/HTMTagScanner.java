@@ -50,9 +50,9 @@ public class HTMTagScanner extends RuleBasedScanner {
 		// attributes.
 		//rules[0] = new SingleLineRule("#", "#", cfvar);
 		// Add rule for double quotes
-		rules[0] = new SingleLineRule("\"", "\"", string, '\\');
+		rules[0] = new SingleLineRule("\"", "\"", string);
 		// Add a rule for single quotes
-		rules[1] = new SingleLineRule("'", "'", string, '\\');
+		rules[1] = new SingleLineRule("'", "'", string);
 		// Add generic whitespace rule.
 		rules[2] = new WhitespaceRule(new CFWhitespaceDetector());
 		
