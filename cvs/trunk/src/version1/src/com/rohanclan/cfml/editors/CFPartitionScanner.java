@@ -115,12 +115,12 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 				if(!ename.equals("script"))
 				{	
 					tg = sd.getTag(ename);
-					rules.add(new MultiLineRule("<cf" + ename,">", cftag));
-					rules.add(new MultiLineRule("<CF" + ename.toUpperCase(),">", cftag));
+					rules.add(new MultiLineRule("<" + ename,">", cftag));
+					rules.add(new MultiLineRule("<" + ename.toUpperCase(),">", cftag));
 					if(!tg.isSingle())
 					{	
-						rules.add(new MultiLineRule("</cf" + ename,">", cfendtag));
-						rules.add(new MultiLineRule("</CF" + ename.toUpperCase(),">", cfendtag));
+						rules.add(new MultiLineRule("</" + ename,">", cfendtag));
+						rules.add(new MultiLineRule("</" + ename.toUpperCase(),">", cfendtag));
 					}
 				}
 			}
@@ -132,10 +132,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		//these are not really handled in the dictionary because you can call 
 		//normal pages as cf_'s
-		rules.add(new MultiLineRule("<cf_",">", cftag));
-		rules.add(new MultiLineRule("</cf_",">", cfendtag));
-		rules.add(new MultiLineRule("<CF_",">", cftag));
-		rules.add(new MultiLineRule("</CF_",">", cfendtag));
+		rules.add(new MultiLineRule("<_",">", cftag));
+		rules.add(new MultiLineRule("</_",">", cfendtag));
+		rules.add(new MultiLineRule("<_",">", cftag));
+		rules.add(new MultiLineRule("</_",">", cfendtag));
 		
 		//do the html tags now
 		sd = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
