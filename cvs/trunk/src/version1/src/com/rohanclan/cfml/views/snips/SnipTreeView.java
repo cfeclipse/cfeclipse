@@ -261,8 +261,9 @@ public class SnipTreeView extends ViewPart
 				}
 			}
 		});
-		/*
+		
 		treeViewer.addDoubleClickListener(new SnipDoubleClickListener(this));
+		/*
 		try {
 			this.getViewSite().getShell().addMouseTrackListener(this);
 		}
