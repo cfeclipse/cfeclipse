@@ -35,6 +35,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final boolean DEFAULT_INSERT_SPACES_FOR_TABS 	= false;
 	private static final boolean DEFAULT_ENABLE_HS_COMPATIBILITY 	= false;
 	private static final boolean DEFAULT_ENABLE_DW_COMPATIBILITY 	= false;
+	private static final boolean DEFAULT_TABBED_BROWSER = false;
 
 	// Parser prefs
 	private static final boolean	DEFAULT_PARSE_DOCFSCRIPT 			= false;
@@ -201,6 +202,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_ENABLE_HS_COMPATIBILITY, DEFAULT_ENABLE_HS_COMPATIBILITY);
         store.setDefault(P_ENABLE_DW_COMPATIBILITY, DEFAULT_ENABLE_DW_COMPATIBILITY);
         store.setDefault(P_SNIPPETS_PATH, snippath);
+        store.setDefault(P_TABBED_BROWSER, DEFAULT_TABBED_BROWSER);
         //store.setDefault(P_SNIPPETS_PATH, CFMLPlugin.getDefault().getStateLocation().toString());
         
         // Parser prefs.
@@ -386,6 +388,13 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		return DEFAULT_PROJECT_URL;
 	}
 	
+	public boolean defaultTabbedBrowser() {
+	    return DEFAULT_TABBED_BROWSER;
+	}
+	
+	public boolean tabbedBrowser() {
+	    return store.getBoolean(ICFMLPreferenceConstants.P_TABBED_BROWSER);
+	}
 
 	
 	public boolean enableFolding() {

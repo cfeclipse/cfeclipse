@@ -51,15 +51,10 @@ public class CFMLPreferencePage
 	extends PreferencePage
 	implements IWorkbenchPreferencePage, SelectionListener  {
 
-	/*
-	private static final String DEFAULT_INSIGHT_DELAY = "500";
-	private static final String DEFAULT_TAB_WIDTH = "4";
-	private static final String DEFAULT_TABS_AS_SPACES = "false";
-	*/
-	Text insightDelayField;
 	
 	Button dreamweaverCompatibilityCheckBox;
 	Button homesiteCompatibilityCheckBox;
+	Button tabbedBrowserCheckBox;
 	CFMLPreferenceManager preferenceManager;
 	DirectoryFieldEditor snippetsPathField;
 	
@@ -107,6 +102,9 @@ public class CFMLPreferencePage
             new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL);
         defPanel.setLayoutData(gridData);
                 
+
+        // Browser options
+        createBrowserGroup(defPanel);
         
         // Dreamweaver and Homesite options
         createDWAndHSGroup(defPanel);
@@ -124,7 +122,33 @@ public class CFMLPreferencePage
     
     
     public void widgetSelected(SelectionEvent selectionEvent) {}
+
     
+
+
+    
+    private void createBrowserGroup(Composite parent) {
+    	Group BrowserComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
+        GridLayout layout = new GridLayout();        
+        layout.numColumns = 3;              
+        BrowserComposite.setLayout(layout);
+        GridData gridData =
+            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData.horizontalSpan = 3;
+        BrowserComposite.setLayoutData(gridData);        
+        
+        
+        BrowserComposite.setText("Web Browser"); //$NON-NLS-1$
+        
+        // Tabbed browsing
+        tabbedBrowserCheckBox = createLabeledCheck(
+                "Used tabbed browsing", //$NON-NLS-1$
+                preferenceManager.tabbedBrowser(), 
+				BrowserComposite);
+                   
+
+    }
+
     
 
 
@@ -256,6 +280,7 @@ public class CFMLPreferencePage
  */
     protected void performDefaults() {
         super.performDefaults();
+        tabbedBrowserCheckBox.setSelection(preferenceManager.defaultTabbedBrowser());
         dreamweaverCompatibilityCheckBox.setSelection(preferenceManager.defaultDreamweaverCompatibility());
         homesiteCompatibilityCheckBox.setSelection(preferenceManager.defaultHomesiteCompatibility());
         snippetsPathField.setStringValue(preferenceManager.defaultSnippetsPath());
@@ -264,6 +289,7 @@ public class CFMLPreferencePage
 
     public boolean performOk() {
         IPreferenceStore store = getPreferenceStore();
+        store.setValue(ICFMLPreferenceConstants.P_TABBED_BROWSER, String.valueOf(tabbedBrowserCheckBox.getSelection()));
         store.setValue(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY, String.valueOf(dreamweaverCompatibilityCheckBox.getSelection()));
         store.setValue(ICFMLPreferenceConstants.P_ENABLE_HS_COMPATIBILITY, String.valueOf(homesiteCompatibilityCheckBox.getSelection()));
         store.setValue(ICFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());

@@ -54,7 +54,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.ui.part.ViewPart; 
+import org.eclipse.ui.part.WorkbenchPart; 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.util.CFPluginImages;
 //import org.eclipse.ui.part.ViewPart;
@@ -66,13 +66,13 @@ import org.eclipse.core.runtime.QualifiedName;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
-public class CFBrowser {
+public class CFBrowser{
 	protected int index;
 	protected boolean busy;
 	//protected Image images[];
 	protected Text location;
 	protected Browser browser;
-	private ViewPart viewer;
+	private WorkbenchPart container;
 	
 	/**
 	 * Creates an instance of a ControlExample embedded inside the supplied
@@ -80,9 +80,9 @@ public class CFBrowser {
 	 * @param parent
 	 * the container of the example
 	 */
-	public CFBrowser(Composite parent,ViewPart viewer) 
+	public CFBrowser(Composite parent,WorkbenchPart container) 
 	{
-		this.viewer = viewer;
+		this.container = container;
 		//initResources();
 		final Display display = parent.getDisplay();
 		FormLayout layout = new FormLayout();
@@ -318,7 +318,7 @@ public class CFBrowser {
 		
 		try 
 		{
-			IEditorPart editorPart = viewer.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			IEditorPart editorPart = container.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 
 			if(editorPart  != null)
 			{

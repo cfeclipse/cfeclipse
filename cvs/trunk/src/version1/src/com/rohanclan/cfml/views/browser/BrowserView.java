@@ -17,9 +17,11 @@
 
 package com.rohanclan.cfml.views.browser;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
-
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.part.*;
+import org.eclipse.jface.preference.IPreferenceStore;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 /**
  * <code>BrowserView</code> is a simple demonstration of the SWT Browser
@@ -38,9 +40,27 @@ public class BrowserView extends ViewPart {
 	 */
 	public void createPartControl(Composite frame)
 	{
+	    CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		try
 		{
-			instance = new CFBrowser(frame,this);
+		    if (preferenceManager.tabbedBrowser()) {
+			    TabFolder folder = new TabFolder(frame,SWT.TOP);
+			    TabItem item = new TabItem(folder,SWT.NONE);
+			    item.setText("Project browser");
+			    Composite container = new Composite(folder,SWT.NONE);
+			    item.setControl(container);
+				instance = new CFBrowser(container,this);
+				
+				item = new TabItem(folder,SWT.NONE);
+				item.setText("General Browser");
+				container = new Composite(folder,SWT.NONE);
+			    item.setControl(container);
+			    CFBrowser test = new CFBrowser(container,this);
+		    }
+		    else {
+		        instance = new CFBrowser(frame,this);
+		    }
+		    
 		}
 		catch(Exception e)
 		{
@@ -93,4 +113,9 @@ public class BrowserView extends ViewPart {
 		if(instance != null)
 			instance.browser.refresh();
 	}
+	
+	
+	
+    
+	
 }

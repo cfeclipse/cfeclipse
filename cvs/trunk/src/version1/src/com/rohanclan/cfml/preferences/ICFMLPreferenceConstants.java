@@ -20,6 +20,7 @@ public interface ICFMLPreferenceConstants {
 	String P_ENABLE_HS_COMPATIBILITY 	= "homesiteCompatibility";
 	String P_SNIPPETS_PATH 			= "snippetPath";
 	String P_PROJECT_URL 				= "projectURL";
+	String P_TABBED_BROWSER			= "tabbedBrowsing";
 	
 	// Scribble pad stuff
 	String P_SCRIBBLE_PROJECT_NAME = "scribbleProjectID";
