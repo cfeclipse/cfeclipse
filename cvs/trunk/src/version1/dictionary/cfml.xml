@@ -2226,7 +2226,7 @@
 					<value option="string" />
 					<value option="struct" />
 					<value option="uuid" />
-					<value option="variable_name" />
+					<value option="void" />
 				</values>
 			</parameter>
 			<parameter name="roles" type="String" required="false">
@@ -5142,22 +5142,6 @@
 					attribute names and values. You can specify multiple 
 					key-value pairs. You can specify this attribute only 
 					once. 
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="attribute_name1" type="String" required="false">
-				<help><![CDATA[
-					Attribute for a custom tag. You can include multiple 
-					instances of this attribute to specify the parameters of 
-					a custom tag.					
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="attribute_nameN" type="String" required="false">
-				<help><![CDATA[
-					Attribute for a custom tag. You can include multiple 
-					instances of this attribute to specify the parameters of 
-					a custom tag.					
 				]]></help>
 				<values/>
 			</parameter>
