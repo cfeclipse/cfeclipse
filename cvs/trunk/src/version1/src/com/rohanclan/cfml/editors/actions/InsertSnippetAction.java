@@ -130,11 +130,16 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    
 			    String snippet = "";
 			    
-			    
 			    for (int i=0; i < loopcount; i++) {
-			    
-				    snippet += SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.editor.getSite().getShell());
-				    snippet += SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.editor.getSite().getShell());
+			        start = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.editor.getSite().getShell());
+			        end = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.editor.getSite().getShell());
+			        if (start == null || end == null) {
+			            snippet = null;
+			            break;
+			        }
+			        else {
+			            snippet += start+end;
+			        }
 			    }
 			    
 			    if (snippet != null && snippet.length() > 0 ) {
