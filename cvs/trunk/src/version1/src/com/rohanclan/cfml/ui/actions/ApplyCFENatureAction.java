@@ -46,10 +46,12 @@ public class ApplyCFENatureAction implements IObjectActionDelegate {
 	        while(prjIter.hasNext())
 	        {
 	            IProject currPrj = (IProject)prjIter.next();
+	           
 	            if(!CFENature.hasCFENature(currPrj))
 	                CFENature.applyNature(currPrj);
 	            else
 	                CFENature.removeNature(currPrj);
+	           
 	        }
 	    }
 	    catch(CoreException ex) 

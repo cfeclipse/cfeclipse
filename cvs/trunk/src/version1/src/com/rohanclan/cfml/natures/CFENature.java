@@ -102,4 +102,16 @@ public class CFENature implements IContentAssistContributorNature {
         System.out.println("CFENature::CFENature() - Project set");
        this.project = value;
     }
+    
+    public static void removeNature(IProject proj) {
+        // placeholder 
+    }
+    
+    public static void applyNature(IProject proj) throws CoreException {
+        // placeholder 
+    }
+    
+    public static boolean hasCFENature(IProject proj) throws CoreException { 
+        return false;
+    }
  }

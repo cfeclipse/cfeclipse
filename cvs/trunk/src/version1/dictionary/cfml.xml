@@ -13640,7 +13640,41 @@
 		<scope value="CGI.HTTP_IF_MODIFIED_SINCE"/>
 		<scope value="CGI.HTTP_USER_AGENT"/>
 
-
+		<!-- CFERROR variables -->
+		<scope value="CFERROR.validationHeader"/>
+		<scope value="CFERROR.invalidFields"/>
+		<scope value="CFERROR.validationFooter"/>
+		<scope value="CFERROR.diagnostics"/>
+		<scope value="CFERROR.mailTo"/>
+		<scope value="CFERROR.dateTime"/>
+		<scope value="CFERROR..browser"/>
+		<scope value="CFERROR.remoteAddress"/>
+		<scope value="CFERROR.HTTPReferer"/>
+		<scope value="CFERROR.template"/>
+		<scope value="CFERROR.generatedContent"/>
+		<scope value="CFERROR.queryString"/>
+		<scope value="CFERROR.message"/>
+		<scope value="CFERROR.rootCause"/>
+		<scope value="CFERROR.tagContext"/>
+		<scope value="CFERROR.type"/>
+		
+		<!-- error variables -->
+		<scope value="ERROR.validationHeader"/>
+		<scope value="ERROR.invalidFields"/>
+		<scope value="ERROR.validationFooter"/>
+		<scope value="ERROR.diagnostics"/>
+		<scope value="ERROR.mailTo"/>
+		<scope value="ERROR.dateTime"/>
+		<scope value="ERROR..browser"/>
+		<scope value="ERROR.remoteAddress"/>
+		<scope value="ERROR.HTTPReferer"/>
+		<scope value="ERROR.template"/>
+		<scope value="ERROR.generatedContent"/>
+		<scope value="ERROR.queryString"/>
+		<scope value="ERROR.message"/>
+		<scope value="ERROR.rootCause"/>
+		<scope value="ERROR.tagContext"/>
+		<scope value="ERROR.type"/>
 
 	</scopes>
 

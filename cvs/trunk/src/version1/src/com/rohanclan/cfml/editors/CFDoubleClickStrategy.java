@@ -44,7 +44,7 @@ public class CFDoubleClickStrategy implements ITextDoubleClickStrategy {
 
 		//if(!selectComment(pos)) 
 		//{
-			//selectWord(pos);
+			selectWord(pos);
 		//}
 	}
 	

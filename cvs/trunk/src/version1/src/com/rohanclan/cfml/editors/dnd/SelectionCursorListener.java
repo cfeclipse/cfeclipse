@@ -278,6 +278,8 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      * @see org.eclipse.swt.widgets.Display#getDoubleClickTime()
      */
     public void mouseDoubleClick(MouseEvent e) {
+        
+
         TextSelection sel = (TextSelection)viewer.getSelection();
         
         int startpos = sel.getOffset() + sel.getLength();
@@ -285,7 +287,6 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
         if ((e.stateMask & SWT.CONTROL) != 0) {
             ICFDocument cfd = (ICFDocument) viewer.getDocument();
     		CfmlTagItem cti = cfd.getTagAt(startpos, startpos);
-    		
     		
     		
             int start = 0;
@@ -309,8 +310,11 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
     		}
         }
         else {
+
+            startpos = viewer.getSelectedRange().x;
             selectWord(startpos);
         }
+        
 
     }
 
@@ -348,8 +352,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			}
 
 			endPos = pos;
-			TextSelection newSel = new TextSelection(doc,startPos,endPos-startPos);
-	        viewer.setSelection(newSel);
+			selectRange(startPos, endPos);
 			return true;
 
 		} 
@@ -359,6 +362,13 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		}
 
 		return false;
+	}
+
+	private void selectRange(int startPos, int stopPos) 
+	{
+		int offset = startPos + 1;
+		int length = stopPos - offset;
+		viewer.setSelectedRange(offset, length);
 	}
 
     
