@@ -244,7 +244,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			
 			//
 			// Handle a closing chevron.
-			if(docCommand.length == 1 && docCommand.text.length() == 0) {
+			if(docCommand.length > 0 && docCommand.text.length() == 0) {
 				firstCommandChar = '\b';
 			}
 			

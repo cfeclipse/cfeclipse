@@ -29,10 +29,166 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	public CFScriptIndentStrategy(CFMLEditor editor) {
 		super(editor);
 	}
+	
+	/**
+	 * Handles the insertion of quotes by the user. If the user has opened quotes then
+	 * it inserts a closing quote after the opened quote and does not move the caret.
+	 * If the user is closing some quotes it steps through the existing quote.
+	 * 
+	 * @param doc - The document that the command is being performed in
+	 * @param docCommand - the command to modify
+	 * @param quoteChar - the quote character that triggered this. This allows us to handle " and ' quotes.
+	 * @throws BadLocationException - ack.
+	 */
+	private void handleQuotes(IDocument doc, DocumentCommand docCommand, char quoteChar) throws BadLocationException {
+		char nextChar = doc.getChar(docCommand.offset);
+		if(nextChar == quoteChar)
+		{
+			stepThrough(docCommand);
+			return;
+		}
+
+		insertSingleChar(docCommand, '"');
+		return;
+	}
+
+	/**
+	 * Steps through one character. Essentially a alias to stepThrough(command, 1)
+	 * 
+	 * @param docCommand
+	 */
+	private void stepThrough(DocumentCommand docCommand) {
+		stepThrough(docCommand, 1);
+	}
+	
+	/**
+	 * Steps through a number of characters
+	 * 
+	 * @param docCommand - the doc command to work upon
+	 * @param chars2StepThru - number of characters to step through
+	 */
+	private void stepThrough(DocumentCommand docCommand, int chars2StepThru) {
+		docCommand.text = "";
+		docCommand.shiftsCaret = false;
+		docCommand.caretOffset = docCommand.offset += chars2StepThru;
+	}
+	
+	/**
+	 * Inserts one character and steps over the character (make sense?)
+	 * @param docCommand - the doc command to work upon
+	 * @param newChar - the character to insert
+	 */
+	private void insertSingleChar(DocumentCommand docCommand, char newChar) {
+		docCommand.text += newChar;
+		docCommand.caretOffset = docCommand.offset + 1;
+		docCommand.shiftsCaret = false;
+	}
+	
+	private void handleOpeningParen(char nextChar,char prevChar, char trigChar, 
+									IDocument doc, DocumentCommand docCommand)
+	{
+		
+	}
+	
+	private void handleClosingBracket(char nextChar,char prevChar, char trigChar, 
+										IDocument doc, DocumentCommand docCommand)
+	{
+		if(nextChar == ')')
+			stepThrough(docCommand);
+	}
+	
+	/**
+	 * Handles the insertion & step-through of code.
+	 * 
+	 * @param doc - the document to work upon
+	 * @param docCommand - command to modify
+	 */
+	private void codeInsertion(IDocument doc, DocumentCommand docCommand) {
+		char nextChar = ' ';
+		char prevChar = ' ';
+		char currChar = ' ';
+		char trigChar = ' ';
+		
+		//
+		// We don't do anything if there isn't any text that's been entered.
+		// Basicall we're not interested in anything but the user inserting text.
+		
+		//
+		// Handle a closing chevron.
+		if(docCommand.length > 0 && docCommand.text.length() == 0) {
+			trigChar = '\b';
+		}
+		else
+			trigChar = docCommand.text.charAt(0);
+		
+		try {
+			if(docCommand.offset < doc.getLength()) {
+				nextChar = doc.getChar(docCommand.offset);
+			}
+			currChar = doc.getChar(docCommand.offset-1);
+			if(docCommand.offset > 0) {
+				prevChar = doc.getChar(docCommand.offset-2);
+			}
+			
+		
+		}catch(BadLocationException ex) {
+			ex.printStackTrace();
+			return;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		System.out.println("CFScriptIndentStrategy::codeInsertion() - ");
+		System.out.println("nextChar = \'" + nextChar + "\'");
+		System.out.println("prevChar = \'" + prevChar + "\'");
+		System.out.println("trigChar = \'" + trigChar + "\'");
+		try {
+			switch(trigChar) {
+			case '\b':
+				switch(nextChar) {
+					case '\"':
+					case '#':
+						if(nextChar == prevChar) {
+							docCommand.text = "";
+							docCommand.caretOffset = docCommand.offset + 2;
+						}
+						break;
+					default:
+						break;
+				}
+				return;			
+			case '[':
+				insertSingleChar(docCommand, ']');
+				break;
+			case '\"':
+				handleQuotes(doc, docCommand, '"');
+				break;
+			case '(':
+				insertSingleChar(docCommand, ')');
+				break;
+			case ')':
+				handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
+				break;
+			case ']':
+				if(nextChar == ']')
+					stepThrough(docCommand);
+				break;
+			case '{':
+				break;
+			}
+		} catch(BadLocationException ex) {
+			ex.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * Method declared on IAutoIndentStrategy
 	 */
 	public void customizeDocumentCommand(IDocument d, DocumentCommand c) {
+		codeInsertion(d, c);
 		if (c.length == 0 && c.text != null && endsWithDelimiter(d, c.text))
 			smartIndentAfterNewLine(d, c);
 		else if ("}".equals(c.text)) {  

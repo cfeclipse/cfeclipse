@@ -210,8 +210,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//first token should be the tag name (with <cf attached)
 				tagname = st.nextToken();	
 			}
-			//System.err.println("Finished tokens");
-			//System.err.println("tag1>>"+tagname+"<<");
 			
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)
@@ -267,26 +265,20 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//if they have typed more then the cf part get the rest so we
 				//can filter out non matches
 				String taglimiting = prefix.trim().substring(3);
-				//System.err.println(limiting);
-				//System.err.println("In cf tag name lookup");
-				//System.err.println("taglimiting is: \'" + taglimiting + "\'");
-				//System.err.println("doc offset: " + documentOffset);
-				//System.err.println("invoker: \'" + invoker + "\'"); 
-				//System.err.println("prefix: \'" + prefix + "\'");
 					
 				if(invoker.charAt(0) == '\"')
 				{
-					/* spike@spike.org.uk :: Added code
-                     * Make sure we aren't at the end of the document 
-                     * before doing the check to see if we have two sets of double quotes. 
-                     */
+					// spike@spike.org.uk :: Added code
+                    // Make sure we aren't at the end of the document 
+                    // before doing the check to see if we have two sets of double quotes. 
+                    //
                     if (document.getLength() > documentOffset) 
                     {
-                    	/* spike@spike.org.uk :: Added comment
-                         * This checks if the invoking charcter is the second of a pair of qoutes
-                         * and if the first is preceded by an '='. If so we don't want to show
-                         * insight, so it returns null. 
-                         */
+                    	// spike@spike.org.uk :: Added comment
+                        // This checks if the invoking charcter is the second of a pair of qoutes
+                        // and if the first is preceded by an '='. If so we don't want to show
+                        // insight, so it returns null. 
+                        //
 						if(document.getChar(documentOffset) == '\"' &&
 						   document.getChar(documentOffset-2) != '=')
 						{	// " entered and there already is one in the document.
@@ -321,8 +313,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			else if(httag && limiting.length() <= 0 && (!invoker.equals(" ") && !invoker.equals("\t") && !invoker.equals(">")) )
 			{
 				String taglimiting = prefix.trim().substring(1);
-				//System.out.println("tl:" + taglimiting);
-				//System.err.println("Doing tag limiting");
 				
 				/*////////////////////////// copy from above dup code! //////*/
 				if(invoker.charAt(0) == '\"')
@@ -353,67 +343,13 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					
 					return makeSetToProposal(
 						((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
-						//CFSyntaxDictionary.getFilteredElements(taglimiting),
 						documentOffset,
 						TAGTYPE,
 						taglimiting.length()
 					);
 					
 				}
-			}
-			//this is (hopefully) a close tag try to finish it out if needed
-			//careful though that (for now) javascript and css sections will run
-			//in here and doing > can mess stuff up
-			else if(invoker.equals(">")
-				//&& !current_partition.equals(CFPartitionScanner.J_SCRIPT)
-				//&& !current_partition.equals(CFPartitionScanner.CSS_TAG)
-			)
-			{
-				//System.err.println("Close tag crap");
-				//System.err.println("i go");
-				if(syntax != null && syntax.tagExists(tagname))
-				{	
-					Tag tag = syntax.getTag(tagname);
-					//get the char right before the >, if its a / then they
-					//did an xhtml style <br/> kind of thing. If so then
-					//don't auto close it
-					String xmlclose = viewer.getDocument().get(documentOffset-2,1);
-					
-					if(tag != null && !tag.isSingle())
-					{
-						//if they didnt xml close it
-						if(!xmlclose.equals("/"))
-						{
-							
-							StringBuffer sb = new StringBuffer();
-							sb.append("</" + tagnamespace + tagname + ">");
-							//String addtag = "</";
-							//addtag += tagnamespace;
-							//addtag += tagname + ">";
-							String addtag = sb.toString();
-							
-							IDocument doc = viewer.getDocument();
-							
-							//the fully qualified tag name
-							String fqt = tagnamespace + tagname;
-							
-							//get the word before this one and see if it is a closing
-							//tag for this tag, if it is dont auto close
-							String wordb4 = doc.get(
-								(documentOffset - fqt.length()-2),(fqt.length()+1)
-							);
-							//System.err.println(wordb4);
-							//if it doesnt look like they closed the tag already
-							//go ahead and close it
-							if( !wordb4.equalsIgnoreCase("/" + fqt) )
-							{
-								doc.replace(documentOffset, 0, addtag);
-							}
-						}
-					}
-				}
-			}
-			
+			}		
 			//little bit-o-debug. Hit ~ to see what partiton you are in 
 			//(shows in the debug window
 			else if(invoker.equals("~"))
@@ -424,12 +360,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			{	
 				//we are probably in need of attribtue in sight
 				//clean up the text typed so far
-				//System.err.println("Something else");
 				
 				limiting = limiting.trim();
-				//System.err.println("tag2>>"+tagname+"<<");
-				//System.err.println("lim2::"+limiting+"::");
-				//System.err.println("prefix::"+prefix+"::"+prefix.indexOf('>'));
 				
 				//hacks hacks everywhere :) this looks to see if there are an
 				//odd number of " in the string prior to this invoke before 
@@ -534,49 +466,68 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					help = "";
 				}
 				
-				//now remove chars so when they hit enter it wont write the whole
-				//word just the part they havent typed
-				name = name.substring(currentlen, name.length());
-				
-				//the tag len and icon
-				int insertlen = 0;
-				org.eclipse.swt.graphics.Image img = null;
-				
-				switch(type)
-				{
-					case ATTRTYPE:
-						name += "=\"\"";
-						insertlen = name.length() - 1;
-						img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
-						break;
-					case TAGTYPE:
-						//name += " ";
-						//default to the tag len and icon
-						insertlen = name.length();
-						img = CFPluginImages.get(CFPluginImages.ICON_TAG);
-						break;
-					case VALUETYPE:
-						insertlen = name.length();
-						img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
-						break;
-				}
-								
 				//System.err.println(name);
-				result[i] = new CompletionProposal(
-					name,
-					offset, 
-					0, 
-					insertlen,
-					img,
-					display,
-					null,
-					help
-				);
+				result[i] = finaliseProposal(offset, type, currentlen, name, display, help);
 			}	
 			return result;
 		}
 		return null;
 	}
+
+	/**
+	 * Gets the proposal ready. Sets up the image, the text to insert into the text,
+	 * and finally returns the completed proposal.
+	 * 
+	 * @param offset - offset in the document
+	 * @param type - type of thing we're making a proposal for
+	 * @param currentlen - length that we'd need to insert if the user selected the proposal
+	 * @param name - name of the proposal
+	 * @param display - string to display
+	 * @param help - the help associated with this proposal
+	 * @return - the completed, indented, image'd proposal
+	 */
+	private CompletionProposal finaliseProposal(int offset, short type, int currentlen, String name, 
+												String display, String help) 
+	{
+		//now remove chars so when they hit enter it wont write the whole
+		//word just the part they havent typed
+		name = name.substring(currentlen, name.length());
+		
+		//the tag len and icon
+		int insertlen = 0;
+		org.eclipse.swt.graphics.Image img = null;
+		
+		switch(type)
+		{
+			case ATTRTYPE:
+				name += "=\"\"";
+				insertlen = name.length() - 1;
+				img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
+				break;
+			case TAGTYPE:
+				//name += " ";
+				//default to the tag len and icon
+				insertlen = name.length();
+				img = CFPluginImages.get(CFPluginImages.ICON_TAG);
+				break;
+			case VALUETYPE:
+				insertlen = name.length();
+				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
+				break;
+		}
+		CompletionProposal prop = new CompletionProposal(
+				name,
+				offset, 
+				0, 
+				insertlen,
+				img,
+				display,
+				null,
+				help
+			);
+		return prop;
+	}
+
 
 	/**
 	 * What characters cause us to wake up (for tags and attributes)

@@ -563,7 +563,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				return null;
 			}
 			
-			
+/*			
 			if((lastChar == '\"' && document.getChar(documentOffset) == '\"') ||
 				(lastChar == '#' && document.getChar(documentOffset) == '#'))
 			{
@@ -577,7 +577,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				return null;
 			}
 			// Is the char just typed a proper trigger char? See decl of completionChars for info
-			else if(completionChars.indexOf(lastChar) == -1 && lastChar != '{')
+			else*/ if(completionChars.indexOf(lastChar) == -1 && lastChar != '{')
 			{
 				//System.out.println("hit this other part");
 				
@@ -596,7 +596,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			else
 			{
 				//System.out.println("hit opener");
-				handleOpener(document, lastChar, documentOffset);
+				//handleOpener(document, lastChar, documentOffset);
 				
 				if(lastChar != '(' && lastChar != ',')
 					return null;
@@ -660,7 +660,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					}
 					break;
 				case ';':
-					DeleteText(document, triggerPos-1, 1);
+					//DeleteText(document, triggerPos-1, 1);
 					break;
 				case '\"':
 					break;
