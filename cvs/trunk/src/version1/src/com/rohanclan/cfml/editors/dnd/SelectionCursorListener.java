@@ -173,7 +173,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
         // If the selection is draggable we want to ignore this event.
         
         if (!mouseDown) {
-         
+        	
 	        Point pt = new Point(e.x,e.y);
 	        
 	        if (pointOnSelection(pt)) {

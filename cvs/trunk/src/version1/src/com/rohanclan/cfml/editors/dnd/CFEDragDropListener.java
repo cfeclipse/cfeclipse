@@ -121,9 +121,9 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 			if (textTransfer.isSupportedType(event.currentDataType)) {
 				//NOTE: on unsupported platforms this will return null
 			    
-				String t = (String)(textTransfer.nativeToJava(event.currentDataType));
-	
-				if(t != null) {
+				//String t = (String)(textTransfer.nativeToJava(event.currentDataType));
+				
+				//if(t != null) {
 				    // Convert the display co-ordinates to text widget co-ordinates
 				    
 			        Point mousePosition = textWidget.toControl(event.x,event.y);
@@ -133,6 +133,7 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 				   
 				    widgetPositionTracker.doScroll(mousePosition);
 				    
+				    
 				    // Make sure we don't allow text to be dropped onto itself
 				    if (viewerOffset > cursorListener.selectionStart 
 				            && viewerOffset < cursorListener.selectionStart + cursorListener.selection.length()) {
@@ -140,10 +141,11 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 				    }
 				    else if (viewerOffset != lastOffset) {
 				        viewer.setSelectedRange(viewerOffset,0);
-					    editor.setFocus();
+				        editor.setHighlightRange(viewerOffset,0,true);
+					    //editor.setFocus();
 				        lastOffset = viewerOffset;
 				    }
-				}
+				//}
 			}
 	    }
 		catch (Exception e ) {

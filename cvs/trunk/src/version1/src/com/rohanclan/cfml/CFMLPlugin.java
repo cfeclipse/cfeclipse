@@ -179,8 +179,13 @@ public class CFMLPlugin extends AbstractUIPlugin {
         //super.initializeDefaultPluginPreferences();
         CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
-        CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-        propertyManager.initializeDefaultValues();
+		try {
+			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+        	propertyManager.initializeDefaultValues();
+		}
+		catch (Exception e) {
+			
+		}
     }
 	
 	/**

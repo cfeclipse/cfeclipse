@@ -243,18 +243,18 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
         // line tracking.
         //projectionViewer.getTextWidget().setWordWrap(true);
         
-        SelectionCursorListener cursorListener = new SelectionCursorListener(this,projectionViewer);
-        projectionViewer.getTextWidget().addMouseMoveListener(cursorListener);
-        //projectionViewer.getTextWidget().addMouseTrackListener(cursorListener);
-        projectionViewer.addSelectionChangedListener(cursorListener);
-        projectionViewer.getTextWidget().addMouseListener(cursorListener);
-        createDragAndDrop(cursorListener);
+        createDragAndDrop(projectionViewer);
 
 	}
 	
 	
-	private void createDragAndDrop(SelectionCursorListener cursorListener) {
-	    
+	private void createDragAndDrop(ProjectionViewer projectionViewer) {
+
+        SelectionCursorListener cursorListener = new SelectionCursorListener(this,projectionViewer);	    
+        projectionViewer.getTextWidget().addMouseMoveListener(cursorListener);
+        //projectionViewer.getTextWidget().addMouseTrackListener(cursorListener);
+        projectionViewer.addSelectionChangedListener(cursorListener);
+        projectionViewer.getTextWidget().addMouseListener(cursorListener);
 		
 		//Allow data to be copied or moved from the drag source
 		int operations = DND.DROP_MOVE | DND.DROP_COPY;
