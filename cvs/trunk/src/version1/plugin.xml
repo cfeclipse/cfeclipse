@@ -894,22 +894,22 @@
             name="CFML Page"
             icon="icons/obj16/default.gif"
             category="com.rohanclan.cfml.category1"
-            class="com.rohanclan.cfml.wizards.NewCfmlWizard"
+            class="com.rohanclan.cfml.wizards.cfmlwizard.NewCFMLWizard"
             preferredPerspectives="CFML"
             finalPerspective="CFML"
             project="true"
-            id="com.rohanclan.cfml.wizards.NewCfmlWizard">
+            id="com.rohanclan.cfml.wizards.cfmlwizard.NewCFMLWizard">
             <description>Create a new blank CFML file</description>
       </wizard>
       <wizard
             name="CFC"
             icon="icons/obj16/class.gif"
             category="com.rohanclan.cfml.category1"
-            class="com.rohanclan.cfml.wizards.NewCfcWizard"
+            class="com.rohanclan.cfml.wizards.cfcwizard.NewCFCWizard"
             preferredPerspectives="CFML"
             finalPerspective="CFML"
             project="true"
-            id="com.rohanclan.cfml.wizards.NewCfcWizard">
+            id="com.rohanclan.cfml.wizards.cfcwizard.NewCFCWizard">
             <description>Create a new CFC</description>
       </wizard>
    </extension>
