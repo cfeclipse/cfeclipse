@@ -50,7 +50,7 @@ public class CfmlTagItem extends TagItem {
 			Parameter currParam = (Parameter)params[i];
 			if(currParam.isRequired() && !itemAttributes.containsKey(currParam.getName()))
 			{
-				parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <cf" + itemName + "> tag."));
 			}
 		}
@@ -68,24 +68,23 @@ public class CfmlTagItem extends TagItem {
 	}
 	/**
 	 * Adds a string-based name/value attribute pair to the tag
-	 * 
-	 * @param attrName - the name of the attribute
-	 * @param attrValue - the value for the attribute
-	 * @throws DuplicateAttributeException - The attribute already exists in the attr list
-	 * @throws InvalidAttributeException - The attribute does not belong to this tag.
+	 *
+	 * @param newAttr The new attribute to add to this CFML tag item 
+	 * @throws DuplicateAttributeException The attribute already exists in the attr list
+	 * @throws InvalidAttributeException The attribute does not belong to this tag.
 	 */
-	public boolean addAttribute(String attrName, String attrValue) 
+	public boolean addAttribute(AttributeItem newAttr) 
 	{
 		boolean addOkay = true;
-		Set attributes = syntax.getFilteredAttributes(itemName.toLowerCase(), attrName.toLowerCase());
+		Set attributes = syntax.getFilteredAttributes(this.itemName.toLowerCase(), newAttr.getName());
 		if(attributes.size() == 0)
 		{
-			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-										 "Attribute \'" + attrName + "\' is not valid."));
-			addOkay = false;
+			this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+										 "Attribute \'" + newAttr.getName() + "\' is not valid."));
+			addOkay = false;	// While it's incorrect we still wish to add it to the item
 		}
 		
-		addOkay = super.addAttribute(attrName, attrValue) && addOkay;
+		addOkay = super.addAttribute(newAttr) && addOkay;
 		
 		return addOkay;
 	}

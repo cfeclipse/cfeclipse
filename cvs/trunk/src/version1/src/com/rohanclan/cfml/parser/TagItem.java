@@ -28,7 +28,9 @@ import com.rohanclan.cfml.parser.DocItem;
 import com.rohanclan.cfml.parser.exception.*;
 import com.rohanclan.cfml.dictionary.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -40,6 +42,10 @@ import java.util.Set;
  */
 public class TagItem extends DocItem {
 	
+	/**
+	 * Name / value attributes
+	 * Name is always lower case.
+	 */
 	protected HashMap itemAttributes;
 	/** Optional. 
 	   *  
@@ -56,46 +62,71 @@ public class TagItem extends DocItem {
 
 	/**
 	 * Adds an attribute to the document
-	 * 
-	 * @param attrName - name
-	 * @param attrValue - value
-	 * @throws DuplicateAttributeException - attribute already exists
-	 * @throws InvalidAttributeException - attribute doesn't belong to this tag
+	 * If the attribute already exists for this tag item then it will cause a non-fatal
+	 * parse error. Only the first attribute will be stored, identical attributes thereafter
+	 * will not be added.
+	 *
+	 * @param newAttr The new attribute to add to this tag item. 
 	 */
-	public boolean addAttribute(String attrName, String attrValue) 
+	public boolean addAttribute(AttributeItem newAttr) 
 	{
 		boolean addOkay = true;
+		String attrName = newAttr.getName();
 		/*
 		 * Is the attribute already present in the tag's attribute list? 
 		 */
-		if(itemAttributes.containsKey(attrName))
+		if(itemAttributes.containsKey(attrName.toLowerCase()))
 		{
 			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
 									"Attribute \'" + attrName + "\' has already been defined."));
-			addOkay = false;
 		}
 		
-		itemAttributes.put(attrName, attrValue);
+		itemAttributes.put(attrName.toLowerCase(), newAttr);
 		
 		return addOkay;
 	}
 
-	public boolean addAttributes(HashMap newAttributes) 
+	public boolean addAttributes(ArrayList newAttributes) 
 	{
 		boolean addOkay = true;
-		Set keySet = newAttributes.keySet();
-		Object [] keys = keySet.toArray();
-		for(int i = 0; i < keys.length; i++)
-		{
-			String key = (String)keys[i];
-			addOkay = addAttribute(key, (String)newAttributes.get(key)) & addOkay;
+		Iterator attrIter = newAttributes.iterator();
+		while(attrIter.hasNext()) {
+			addOkay = this.addAttribute((AttributeItem)attrIter.next()) & addOkay;
 		}
+
 		return addOkay;
 	}
 	
+	public boolean hasAttribute(String attrName) {
+		return this.itemAttributes.containsKey(attrName.toLowerCase());
+	}
+	
+	/**
+	 * Gets the string-based value of an attribute
+	 * @param attrName
+	 * @return the string value of the attribute if it exists; if not, null. 
+	 * @deprecated
+	 */
 	public String getAttribute(String attrName)
 	{
-		return (String)itemAttributes.get(attrName);
+		return this.getAttributeValue(attrName);
+	}
+	
+	/**
+	 * Gets the string-based value of an attribute
+	 * @param attrName
+	 * @return the string value of the attribute if it exists; if not, null. 
+	 */
+	public String getAttributeValue(String attrName) {
+		AttributeItem attr = this.getAttributeObj(attrName);
+		if(attr == null) {
+			return null;
+		}
+		return attr.getValue();		
+	}
+	
+	public AttributeItem getAttributeObj(String attrName) {
+		return (AttributeItem)this.itemAttributes.get(attrName.toLowerCase());
 	}
 	
 	public DocItem getMatchingItem() {

@@ -34,6 +34,7 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.xpath.compiler.Compiler;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -186,6 +187,14 @@ public class CFParser {
 		data2Parse = null;
 	}
 	
+	private void setData2Parse(String data) {
+	    //SPIKE: Added the toLowerCase() as a quick hack to sort out the case sensitivity issues.
+		//OLLIE: Stuck a generic call to set the data to parse to put the toLowerCase() in the same
+		//       place. This enables better debugging of the actual cause of the problem.
+	//	this.data2Parse = data.toLowerCase();
+		this.data2Parse = data;
+	}
+	
 	/**
 	 * <code>CFParser</code> - Constructor.
 	 *  
@@ -195,62 +204,14 @@ public class CFParser {
 	public CFParser(IDocument doc2Parse, IResource newRes)
 	{
 		parseDoc = doc2Parse;
-		// SPIKE: Added the toLowerCase() as a quick hack to sort out the case sensitivity issues.
-		data2Parse = parseDoc.get().toLowerCase();
+		this.setData2Parse(this.parseDoc.get());
 		res = newRes;
 	}
 
 	public CFParser(String inData, IResource dataRes)
 	{
-	    //SPIKE: Added the toLowerCase() as a quick hack to sort out the case sensitivity issues.
-		data2Parse = inData.toLowerCase();
+		this.setData2Parse(inData);
 		res = dataRes;
-	}
-	
-	/**
-	 * <code>GetTagMatches</code> - Scans the document's data for tags.
-	 * 
-	 * Uses the regulary expression library to scan through the document building the 
-	 * tag list. 
-	 * 
-	 * NB: The doc tree construction could occur here, but just doing the tag matching
-	 * here allows us to separate the two processes. 
-	 * 
-	 * TODO: Investigate whether DIY'ing it would be better. Oh, and get it to properly ignore comments.
-	 * 
-	 * @param inDoc - the document to run the tag matcher over.
-	 * @return an Array of TagMatches
-	 */
-	public ArrayList getTagMatches(IDocument inDoc)
-	{
-		ArrayList matches = new ArrayList();
-		//SPIKE: added the toLowerCase() bit
-		String inText = inDoc.get().toLowerCase();
-		
-		Matcher matcher;
-		Pattern pattern;
-		
-		// SPIKE: Making this case insensitive
-		pattern = Pattern.compile(REG_TAG,Pattern.CASE_INSENSITIVE);
-		matcher = pattern.matcher(inText);
-		
-		while(matcher.find())
-		{
-			int lineNumber = 0;
-			try {
-				lineNumber = inDoc.getLineOfOffset(matcher.start());
-				//System.err.println(
-				//	"Line " + inDoc.getLineOfOffset(matcher.start()) 
-				//	+ ": Got the text \'" + matcher.group() + "\'"
-				//);
-			}catch(BadLocationException excep) {
-				//System.err.println("Apparently the match was out of the document!");
-				userMessage(0, "getTagMatches", "Apparently the match was out of the document!");
-			}
-			matches.add(new TagMatch(matcher.group(), matcher.start(), matcher.end(), lineNumber));
-		}
-		
-		return matches;
 	}
 	
 	/**
@@ -290,17 +251,6 @@ public class CFParser {
 		//throw new BadLocationException("Doc offset " + docOffset + " is out of range. Max value is " + lineOffsets[lineOffsets.length]);
 		return 0;
 	}	
-	
-	/**
-	 * <code>IsCFTag</code> - Simple helper function to determine whether some text is a CF tag or not.
-	 * @param inString - String to test
-	 * @return <code>true</code> - is a CF tag, <code>false</code> - isn't a CF tag
-	 */
-	protected boolean IsCFTag(String inString)
-	{
-	    // SPIKE: Added the toLowerCase() to sort out some of the case sensitivity issues. 
-		return inString.toLowerCase().indexOf("<cf") != -1;
-	}
 	
 	/**
 	 * <code>userMessage</code> - Outputs a message at a certain tree depth to the console
@@ -367,31 +317,36 @@ public class CFParser {
 	 * @param inData - the string data to get the attributes out of
 	 * @return a HashMap with the attributes in.
 	 */
-	protected HashMap stripAttributes(String inData)
+	protected ArrayList stripAttributes(String inData, int lineNum, int offset)
 	{
-		HashMap attributes = new HashMap();
+		ArrayList attributes = new ArrayList();
 		Matcher matcher;
 		Pattern pattern;
 		String attributeName,attributeValue;
-		// SPIKE: Added the case insensitive bit
+		//SPIKE: Added the case insensitive bit
 		pattern = Pattern.compile(REG_ATTRIBUTES,Pattern.CASE_INSENSITIVE);
 		
 		//SPIKE: Added the toLowerCase() bit.
-		matcher = pattern.matcher(inData.toLowerCase());
+		//matcher = pattern.matcher(inData.toLowerCase());
+		matcher = pattern.matcher(inData);
 		while(matcher.find())
 		{
+			
 		    if (matcher.group(1) != null && matcher.group(2) != null) {
+		    	AttributeItem newAttr;
+		    	
 			    attributeName = matcher.group(1).trim();
 			    attributeValue = matcher.group(2).trim();
 			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
-				attributes.put(attributeName, attributeValue);
-				//System.out.println("CFParser::stripAttributes() - Got \'" + attributeName + "\'=\"" + attributeValue + "\" with " + matcher.groupCount() + " matches");
+			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),
+			    								attributeName, attributeValue);
+			    attributes.add(newAttr);
 		    }
 		    else {
 		        //System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
 		        //for (int i = 0; i<=matcher.groupCount(); i++) {
-		        //    System.out.println("Match " + i + " : " + matcher.group(i));
-		       // }
+		        //	System.out.println("Match " + i + " : " + matcher.group(i));
+		        //}
 		    }
 		}
 		
@@ -421,7 +376,7 @@ public class CFParser {
 		//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
 		// Closing tag, so we attempt to match it to the current top of the stack.
 		String closerName = match.match;
-		// SPIKE: Added the toLowerCase()
+		//SPIKE: Added the toLowerCase()
 		if(closerName.toLowerCase().indexOf("</cf") != -1)
 		{
 			// CF tag
@@ -441,7 +396,7 @@ public class CFParser {
 					e.printStackTrace();
 				}
 			}
-			// SPIKE: Made this case insensitive
+			//SPIKE: Made this case insensitive
 			if(topItem.itemName.compareToIgnoreCase(closerName) == 0)
 			{
 				DocItem parentItem = (DocItem)matchStack.pop();
@@ -501,10 +456,13 @@ public class CFParser {
 	 */
 	protected void handleCFScriptBlock(TagMatch match, Stack matchStack)
 	{
+		//
+		// CFScript parsing is broken completely at the moment, so the following line
+		// just nicely quits out for us without any "unreachable code" errors or warnings.
 		if(true) return;
 		//System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");
 		String mainData = match.match;
-		// SPIKE: Added the toLowerCase() bit.
+		//SPIKE: Added the toLowerCase() bit.
 		mainData = mainData.toLowerCase().substring("<cfscript>".length());
 		StringReader tempRdr =new StringReader(mainData);
 		SimpleNode rootElement = null;
@@ -571,7 +529,7 @@ public class CFParser {
 	 * @param attrMap - map of attributes for this item
 	 * @param isACloser - whether the tag is a closer or not (or has been closed by the user)
 	 */
-	protected void handleHTMLTag(String tagName, TagMatch match, Stack matchStack, HashMap attrMap, boolean isACloser)
+	protected void handleHTMLTag(String tagName, TagMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
 	{
 		//System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
 	}
@@ -623,10 +581,10 @@ public class CFParser {
 	 * @param tagName - name of the tag
 	 * @param match - the TagMatch made
 	 * @param matchStack - match stack
-	 * @param attrMap - map of attributes that are for this tag
+	 * @param attrList - map of attributes that are for this tag
 	 * @param isACloser - whether it's a self-closer
 	 */
-	protected void handleCFTag(String tagName, TagMatch match, Stack matchStack, HashMap attrMap, boolean isACloser)
+	protected void handleCFTag(String tagName, TagMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
 	{
 		//
 		// If a CF tag then we get it's CF tag name (i.e. <cffunction, CF tag name is 'function')
@@ -653,7 +611,7 @@ public class CFParser {
 			newItem.setItemData(match.match);
 		}
 		
-		if(!newItem.addAttributes(attrMap))
+		if(!newItem.addAttributes(attrList))
 		{
 			//System.out.println("CFParser::handleCFTag() - Item \'" + newItem.getName() + "\' failed on map attr add!");
 		}
@@ -814,8 +772,8 @@ public class CFParser {
 						// Get the attributes from the tag.
 
 						//System.out.println("CFParser::createDocTree() - Handling cftag \'" + tagName + "\'");
-						if(IsCFTag(tagName))
-						{
+						if(Util.IsCFTag(tagName))
+						{  
 							// Anything within a CFScript block should really be placed at the current level of the
 							// doc tree. So send it off to the CFScript block hanlder
 							// TODO: CFScript blocks are ignored at present! Sort it! Should there be a specialised cfscript tag that does it?
@@ -828,12 +786,12 @@ public class CFParser {
 							else
 							{
 
-								handleCFTag(tagName, match, matchStack, stripAttributes(attributes), isACloser);
+								handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
 							}
 						}
 						else	// Anything else is an HTML tag
 						{
-							handleHTMLTag(tagName, match, matchStack, stripAttributes(attributes), isACloser);
+							handleHTMLTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
 						}
 					}
 				}
@@ -1051,7 +1009,8 @@ public class CFParser {
 	
 	protected ArrayList tagMatchingAttempts(String inData)
 	{
-		String data = inData;
+		//String data = inData;
+		String data = this.data2Parse;
 		int lastMatch = 0;
 		int currPos = 0;
 		int currState = 0;
@@ -1204,12 +1163,12 @@ public class CFParser {
 		//
 		// Perform sanity check. Method adds to the object's message list which we shall gather next.
 		startNode.IsSane();
-				
 		messages.addAll(startNode.getParseState().getMessages());
 		if(startNode.hasChildren())
 		{
 			CFNodeList children = startNode.getChildNodes();
 			Iterator nodeIter = children.iterator();
+			
 			while(nodeIter.hasNext())
 			{
 				messages.addAll(finalDocTreeTraversal((DocItem)nodeIter.next()));
@@ -1224,7 +1183,8 @@ public class CFParser {
 		try {
 			parserState = new State("doesn\'t matter!");
 			lineOffsets = Util.calcLineNumbers(inData);
-			ArrayList matches = tagMatchingAttempts(inData.toLowerCase());
+			this.setData2Parse(inData);
+			ArrayList matches = tagMatchingAttempts(inData);
 			docTree = createDocTree(parserState.getMatches());
 			parserState.addMessages(finalDocTreeTraversal(docTree. getDocumentRoot()));
 			processParseResultMessages();

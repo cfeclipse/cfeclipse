@@ -587,5 +587,14 @@ public class Util {
 		//System.out.println("Parser: Stack at "+ i+ " is \', " + tempItem.itemName + "\' + match data was : " + tempItem.getItemData());
 		}
 		
+	}
+	/**
+	 * <code>IsCFTag</code> - Simple helper function to determine whether some text is a CF tag or not.
+	 * @param inString - String to test
+	 * @return <code>true</code> - is a CF tag, <code>false</code> - isn't a CF tag
+	 */
+	static public boolean IsCFTag(String inString)
+	{
+		return inString.toLowerCase().indexOf("<cf") != -1; //SPIKE: Added the toLowerCase() to sort out some of the case sensitivity issues.
 	}	
 }
