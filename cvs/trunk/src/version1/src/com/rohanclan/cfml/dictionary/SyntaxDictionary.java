@@ -149,6 +149,9 @@ public abstract class SyntaxDictionary {
 	{
 		Set total = new HashSet();
 		Set keys = getAllElements();
+		if(keys == null){
+		    return total;
+		}
 		Iterator it = keys.iterator();
 		while(it.hasNext())
 		{

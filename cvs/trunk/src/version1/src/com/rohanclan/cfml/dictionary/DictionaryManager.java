@@ -106,4 +106,10 @@ public class DictionaryManager {
 	{
 		return (SyntaxDictionary)dictionaries.get(key);
 	}
+    /**
+     * @return Returns the dictionaries.
+     */
+    public static Map getDictionaries() {
+        return DictionaryManager.dictionaries;
+    }
 }
