@@ -160,6 +160,13 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			//       editor. Content assist should only trigger/untrigger based upon each
 			//       call of the content assist. A content assist call should ideally
 			//       never affect the next call.
+			/*
+			 * Spike - I'm in agreement. This does more harm than good at the minute
+			 * so I'm commenting it out for now. Leaving it in the comments to remind
+			 * us to try to do something about the original problem.
+			 * 
+			 * TODO: Find a better way to fix this problem.
+			 * 
 			try {
 				if (document.get(documentOffset-2,2).matches("\\s+")){
 					assistant.enableAutoActivation(false);
@@ -168,6 +175,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				}
 			}
 			catch (Exception e) {}
+			*/
 			
 			//this is because when they hit > it often moves them into
 			//another partiton type - so get the last partition
