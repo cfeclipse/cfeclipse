@@ -36,6 +36,7 @@ import java.util.MissingResourceException;
 
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.editors.actions.LastActionManager;
 import com.rohanclan.cfml.editors.contentassist.*;
 import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 
@@ -68,6 +69,9 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	/** Content Assist Manager */
 	private CFEContentAssistManager camInstance;
 	
+	/** Last Encloser Manager */
+	private LastActionManager lastEncMgrInstance;
+	
 	/** Unique ID of the CFENature */
 	public static final String NATURE_ID = "com.rohanclan.cfml.CFENature";
 	
@@ -82,6 +86,19 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	{
 	    Assert.isNotNull(this.camInstance,"CFMLPlugin::getGlobalCAM()");
 	    return this.camInstance;
+	}
+	
+	/**
+	 * Returns the Last Encloser Manager.
+	 * 
+	 * @see com.rohanclan.cfml.editors.actions.LastActionManager
+	 * @return The LastActionManager instance
+	 * 
+	 */
+	public LastActionManager getLastActionManager()
+	{
+	    Assert.isNotNull(this.lastEncMgrInstance,"CFMLPlugin::getLastEncloserManager()");
+	    return this.lastEncMgrInstance;
 	}
 	
 	/**
@@ -129,6 +146,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			CFPluginImages.initCFPluginImages();
 			
 			setupCAM();
+			setupLastEncMgr();
 		}
 		catch(Exception e)
 		{
@@ -167,6 +185,14 @@ public class CFMLPlugin extends AbstractUIPlugin {
         
         this.camInstance.registerTagAssist(new CFMLScopeAssist());
     }
+
+	/**
+     * Sets up the Last Encloser Manager
+     * 
+     */
+    private void setupLastEncMgr() {
+        this.lastEncMgrInstance = new LastActionManager();
+	}
 
     /**
 	 * This method is called when the plug-in is stopped

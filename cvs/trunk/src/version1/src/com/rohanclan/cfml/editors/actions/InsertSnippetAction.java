@@ -37,6 +37,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.views.snips.SnipKeyCombos;
 import com.rohanclan.cfml.views.snips.SnipReader;
@@ -194,6 +195,8 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			        editor.setHighlightRange(finalCursorOffset,0,true);
 			    }
 			    
+				// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
+				CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);
 			}
 		}
 	}

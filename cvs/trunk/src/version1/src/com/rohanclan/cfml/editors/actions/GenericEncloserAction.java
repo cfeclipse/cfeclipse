@@ -32,6 +32,7 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.CFMLEditor;
 
 /**
@@ -90,6 +91,10 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 			offset += ((ITextSelection)sel).getLength();
 			offset += start.length();
 			editor.setHighlightRange(offset,0,true);
+
+			// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
+			CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);
+			
 		}
 	}
 
