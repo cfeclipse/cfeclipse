@@ -32,7 +32,7 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
 
-import com.rohanclan.cfml.editors.CFPartitionScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 import org.eclipse.jface.text.BadLocationException;
 //import org.eclipse.ui.IFileEditorInput;

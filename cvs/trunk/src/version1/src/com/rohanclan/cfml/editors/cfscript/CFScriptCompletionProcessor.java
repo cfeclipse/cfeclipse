@@ -44,8 +44,8 @@ import org.eclipse.jface.text.*;
 import java.util.StringTokenizer;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.*;
-import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.contentassist.AssistUtils;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 import java.util.TreeSet;
 import java.util.Set;

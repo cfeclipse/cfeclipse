@@ -22,9 +22,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors;
+package com.rohanclan.cfml.editors.partitioner.scanners;
 
 import org.eclipse.jface.text.rules.RuleBasedScanner;
+
+import com.rohanclan.cfml.editors.ColorManager;
 
 //import org.eclipse.jface.text.rules.IRule;
 

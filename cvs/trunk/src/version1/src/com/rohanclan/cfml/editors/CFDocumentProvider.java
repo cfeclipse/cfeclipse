@@ -38,7 +38,8 @@ import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
-import com.rohanclan.cfml.editors.partition.*;
+import com.rohanclan.cfml.editors.partitioner.*;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**
  * 

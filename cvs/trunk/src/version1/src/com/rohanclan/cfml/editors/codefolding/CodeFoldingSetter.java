@@ -23,8 +23,8 @@ import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
-import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 
@@ -231,7 +231,7 @@ public class CodeFoldingSetter {
                 int endLine = doc.getLineOfOffset(start+length);
                 // Make sure our position starts at the start of the line
                 start = doc.getLineOffset(startLine);
-                
+                length = length + element.getOffset()-doc.getLineOffset(startLine);
                 if (endLine - startLine > minLines) {
 	                try {
 	                    CommentProjectionAnnotation annotation = new CommentProjectionAnnotation(regionType);

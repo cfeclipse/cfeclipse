@@ -56,6 +56,7 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 
 import com.rohanclan.cfml.dictionary.*;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 //import org.eclipse.jface.text.ITextSelection;
 
 import org.eclipse.jface.text.contentassist.IContextInformationPresenter;

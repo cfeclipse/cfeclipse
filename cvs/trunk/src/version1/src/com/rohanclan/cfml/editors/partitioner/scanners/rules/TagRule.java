@@ -1,5 +1,5 @@
 /*
- * Created on Jan 30, 2004
+ * Created on Feb 2, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Rob Rohan
@@ -22,38 +22,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors;
+package com.rohanclan.cfml.editors.partitioner.scanners.rules;
 
-import org.eclipse.jface.text.rules.IWordDetector;
+import org.eclipse.jface.text.rules.MultiLineRule;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.ICharacterScanner;
+import java.util.regex.*;
 
 /**
+ * 
  * @author Rob
- *
- * I am not sure I really understand what this file is supposed to do. I made it
- * because WordRule needs it to find keywords, but something is not right or
- * I am not doing this right. It just basically returns true if the char is a
- * letter to start and a letter after that - which seems stupid.
+ * Rule to handle "other" tags. Not cfml not html. Also breaks out if it looks like
+ * the tag is '< ' or '<=' so cfqueries are colored correctly
  */
-public class CFKeywordDetector implements IWordDetector {
-	
-	/**
-	 * Sees if this could be the start of a keyword
-	 */
-	public boolean isWordStart(char character) 
+public class TagRule extends MultiLineRule {
+
+    private static Pattern p = Pattern.compile("[a-zA-Z]");
+    
+	public TagRule(IToken token) 
 	{
-		//make sure its a valid char (keywords should start with
-		//a letter or underscore ... ) TODO this needs work :-/
-		return Character.isLetter(character) || (character == '_');
+		super("<", ">", token);
 	}
 	
-	/**
-	 * Sees if this could be part of a keyword
-	 */
-	public boolean isWordPart(char character) 
+	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) 
 	{
-		//make sure any following char is a valid one
-		return Character.isLetterOrDigit(character) || (character == '-') 
-			|| (character == '_');
-	} 
+	    try {
+		//System.out.println(sequence);
+		if(sequence[0] == '<') 
+		{
+			int c = scanner.read();
+			//< or <=
+			Matcher m = p.matcher(String.valueOf(c));
+			
+			if(!m.find())
+			{
+				scanner.unread();
+				return false;
+			}
+		}
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
+		return super.sequenceDetected(scanner, sequence, eofAllowed);
+	}
 }
-

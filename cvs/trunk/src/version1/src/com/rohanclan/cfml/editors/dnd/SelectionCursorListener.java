@@ -284,7 +284,10 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
         
         int startpos = sel.getOffset() + sel.getLength();
         
-        if ((e.stateMask & SWT.CONTROL) != 0) {
+        if ((e.stateMask & SWT.CONTROL) != 0 
+                || (e.stateMask & SWT.COMMAND) != 0) {
+                
+        //if ((e.stateMask & SWT.CONTROL) != 0 ) {
             ICFDocument cfd = (ICFDocument) viewer.getDocument();
     		CfmlTagItem cti = cfd.getTagAt(startpos, startpos);
     		

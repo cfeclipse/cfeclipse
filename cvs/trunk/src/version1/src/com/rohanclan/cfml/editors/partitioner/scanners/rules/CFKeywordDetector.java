@@ -1,5 +1,5 @@
 /*
- * Created on Feb 2, 2004
+ * Created on Jan 30, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Rob Rohan
@@ -22,39 +22,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors;
+package com.rohanclan.cfml.editors.partitioner.scanners.rules;
 
-import org.eclipse.jface.text.rules.MultiLineRule;
-import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.ICharacterScanner;
+import org.eclipse.jface.text.rules.IWordDetector;
 
 /**
- * 
  * @author Rob
- * Rule to handle "other" tags. Not cfml not html. Also breaks out if it looks like
- * the tag is '< ' or '<=' so cfqueries are colored correctly
+ *
+ * I am not sure I really understand what this file is supposed to do. I made it
+ * because WordRule needs it to find keywords, but something is not right or
+ * I am not doing this right. It just basically returns true if the char is a
+ * letter to start and a letter after that - which seems stupid.
  */
-public class TagRule extends MultiLineRule {
-
-	public TagRule(IToken token) 
+public class CFKeywordDetector implements IWordDetector {
+	
+	/**
+	 * Sees if this could be the start of a keyword
+	 */
+	public boolean isWordStart(char character) 
 	{
-		super("<", ">", token);
+		//make sure its a valid char (keywords should start with
+		//a letter or underscore ... ) TODO this needs work :-/
+		return Character.isLetter(character) || (character == '_');
 	}
 	
-	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) 
+	/**
+	 * Sees if this could be part of a keyword
+	 */
+	public boolean isWordPart(char character) 
 	{
-		//System.out.println(sequence);
-		if(sequence[0] == '<') 
-		{
-			int c = scanner.read();
-			//< or <=
-			if(c == ' ' || c == '=')
-			{
-				scanner.unread();
-				return false;
-			}
-		}
-		
-		return super.sequenceDetected(scanner, sequence, eofAllowed);
-	}
+		//make sure any following char is a valid one
+		return Character.isLetterOrDigit(character) || (character == '-') 
+			|| (character == '_');
+	} 
 }
+

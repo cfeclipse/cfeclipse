@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-package com.rohanclan.cfml.editors.partition;
+package com.rohanclan.cfml.editors.partitioner;
 
 import java.util.ArrayList;
 import java.util.List;

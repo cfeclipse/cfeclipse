@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors;
+package com.rohanclan.cfml.editors.partitioner.scanners;
 
 /**
  * @author Rob
@@ -40,6 +40,7 @@ import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import com.rohanclan.cfml.dictionary.Tag;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,9 +86,9 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		//general as the rules are applied in order
 		
 		// Partitions in the document will get marked in this order
-		rules.add(new MultiLineRule("<!---", "--->", cfComment));
+		rules.add(new NestableMultiLineRule("<!---","--->",cfComment));
 		//rules.add(new TagRule(htmComment));
-		rules.add(new MultiLineRule("<!--", "-->", htmComment));
+		rules.add(new NestableMultiLineRule("<!--", "-->", htmComment));
 		//doctype rule
 		rules.add(new MultiLineRule("<!", ">", doctype));
 		

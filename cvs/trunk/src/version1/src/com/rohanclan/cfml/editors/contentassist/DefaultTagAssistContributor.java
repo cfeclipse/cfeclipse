@@ -37,7 +37,7 @@ import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import com.rohanclan.cfml.dictionary.Value;
-import com.rohanclan.cfml.editors.CFPartitionScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**
  * The default tag assstor

@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors;
+package com.rohanclan.cfml.editors.partitioner.scanners;
 
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
@@ -34,6 +34,11 @@ import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+import com.rohanclan.cfml.editors.CFWhitespaceDetector;
+import com.rohanclan.cfml.editors.ColorManager;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.CFKeywordDetector;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 import java.util.Iterator;

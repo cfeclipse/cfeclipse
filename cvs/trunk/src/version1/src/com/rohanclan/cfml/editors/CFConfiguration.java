@@ -54,6 +54,10 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFTagScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.HTMTagScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.TextScanner;
 import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.editors.CFTextHover;

@@ -29,7 +29,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 
-import com.rohanclan.cfml.editors.CFPartitionScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**
  *
