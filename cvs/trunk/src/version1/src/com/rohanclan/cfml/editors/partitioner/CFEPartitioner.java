@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.2 2005-02-25 23:28:59 chrisbradford Exp $
- * $Revision: 1.2 $
- * $Date: 2005-02-25 23:28:59 $
+ * $Id: CFEPartitioner.java,v 1.3 2005-03-01 23:32:47 smilligan Exp $
+ * $Revision: 1.3 $
+ * $Date: 2005-03-01 23:32:47 $
  * 
  * Created on Oct 17, 2004
  *
@@ -54,7 +54,7 @@ import org.eclipse.jface.text.TypedRegion;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-
+import org.eclipse.jface.text.rules.DefaultPartitioner;
 /**
  * @author Stephen Milligan
  * 
@@ -860,9 +860,13 @@ public class CFEPartitioner implements IDocumentPartitioner,
          */  
         
         if (fDeletedText.indexOf('>') >= 0
-            || fDeletedText.indexOf('<') >= 0
             || fInsertedText.indexOf('>') >= 0
-            || fInsertedText.indexOf('<') >= 0) {
+            || fDeletedText.indexOf('<') >= 0
+            || fInsertedText.indexOf('<') >= 0
+            || fDeletedText.indexOf('"') >= 0
+            || fInsertedText.indexOf('"') >= 0
+            || fDeletedText.indexOf('\'') >= 0
+            || fInsertedText.indexOf('\'') >= 0) {
             return true;
         }
         
@@ -1580,20 +1584,123 @@ public class CFEPartitioner implements IDocumentPartitioner,
         return region;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+	/*
+	 * @see org.eclipse.jface.text.IDocumentPartitionerExtension2#computePartitioning(int, int, boolean)
+	 * @since 3.0
+	 */
+	public ITypedRegion[] computePartitioning(int offset, int length, boolean includeZeroLengthPartitions) {
+		List list= new ArrayList();
+		
+		try {
+			
+			int endOffset= offset + length;
+			
+			Position[] category= fDocument.getPositions(fPositionCategory);
+			
+			TypedPosition previous= null, current= null;
+			int start, end, gapOffset;
+			Position gap= new Position(0);
+			
+			int startIndex= getFirstIndexEndingAfterOffset(category, offset);
+			int endIndex= getFirstIndexStartingAfterOffset(category, endOffset);
+			for (int i= startIndex; i < endIndex; i++) {
+				
+				current= (TypedPosition) category[i];
+				
+				gapOffset= (previous != null) ? previous.getOffset() + previous.getLength() : 0;
+				gap.setOffset(gapOffset);
+				gap.setLength(current.getOffset() - gapOffset);
+				if ((includeZeroLengthPartitions && overlapsOrTouches(gap, offset, length)) || 
+						(gap.getLength() > 0 && gap.overlapsWith(offset, length))) {
+					start= Math.max(offset, gapOffset);
+					end= Math.min(endOffset, gap.getOffset() + gap.getLength());
+					list.add(new TypedRegion(start, end - start, IDocument.DEFAULT_CONTENT_TYPE));
+				}
+				
+				if (current.overlapsWith(offset, length)) {
+					start= Math.max(offset, current.getOffset());
+					end= Math.min(endOffset, current.getOffset() + current.getLength());
+					list.add(new TypedRegion(start, end - start, current.getType()));
+				}
+				
+				previous= current;
+			}
+			
+			if (previous != null) {
+				gapOffset= previous.getOffset() + previous.getLength();
+				gap.setOffset(gapOffset);
+				gap.setLength(fDocument.getLength() - gapOffset);
+				if ((includeZeroLengthPartitions && overlapsOrTouches(gap, offset, length)) ||
+						(gap.getLength() > 0 && gap.overlapsWith(offset, length))) {
+					start= Math.max(offset, gapOffset);
+					end= Math.min(endOffset, fDocument.getLength());
+					list.add(new TypedRegion(start, end - start, IDocument.DEFAULT_CONTENT_TYPE));
+				}
+			}
+			
+			if (list.isEmpty())
+				list.add(new TypedRegion(offset, length, IDocument.DEFAULT_CONTENT_TYPE));
+				
+		} catch (BadPositionCategoryException x) {
+		} catch (Exception e) {
+		    //System.out.println("Got an exception calculating partitioning. Resetting partitioner.");
+		    CFEPartitioner partitioner = new CFEPartitioner(
+					new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
+			partitioner.connect(fDocument);
+		    fDocument.setDocumentPartitioner(partitioner);
+		}
+		
+		TypedRegion[] result= new TypedRegion[list.size()];
+		list.toArray(result);
+		return result;
+	}
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /*
      * @see org.eclipse.jface.text.IDocumentPartitionerExtension2#computePartitioning(int,
      *      int, boolean)
      * @since 3.0
-     */
+
     public ITypedRegion[] computePartitioning(int offset, int length, boolean includeZeroLengthPartitions) {
 		List list= new ArrayList();
 		//System.out.println("Computing partitioning from " + offset + " to "+ Integer.toString(offset +length));
 		
 		try {
 			int endOffset= offset + length;
+			
 			if (offset > 0) {
 			    offset--;
 			}
+			
 			Position[] category= fDocument.getPositions(fPositionCategory);
 			CFEPartition previous= null, current= null;
 			int start, end, gapOffset;
@@ -1602,11 +1709,13 @@ public class CFEPartitioner implements IDocumentPartitioner,
 			int startIndex= getFirstIndexEndingAfterOffset(category, offset);
 			int endIndex= getFirstIndexStartingAfterOffset(category, endOffset);
 			//System.out.println("Start index is " + startIndex + " end index is " + endIndex);
+			
 			if (startIndex < category.length) {
 				CFEPartition first  = (CFEPartition) category[startIndex];
 				length = offset + length - first.getOffset()+1;
 				offset = first.getOffset();
 			}
+			
 			for (int i= startIndex; i < endIndex; i++) {
 				
 				current= (CFEPartition) category[i];
@@ -1672,14 +1781,9 @@ public class CFEPartitioner implements IDocumentPartitioner,
 		
 		TypedRegion[] result= new TypedRegion[list.size()];
 		list.toArray(result);
-		/*
-		for (int i =0;i<result.length;i++) {
-		    System.out.println("Got region - " + result[i].getType() + " " + result[i].getOffset() + ":" + Integer.toString(result[i].getOffset()+result[i].getLength()));
-		}
-		*/
 		return result;
-	}
-
+	}*/
+    
     /**
      * Returns <code>true</code> if the given ranges overlap with or touch
      * each other.

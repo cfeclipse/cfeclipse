@@ -108,6 +108,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 	
 	protected void singleLineIndent(IDocument d, DocumentCommand c) 
 	{
+	    
 		/*
 		 * TODO: Need to fix the stuff in comments below 
 		 * Plugin currently broken because of missing files

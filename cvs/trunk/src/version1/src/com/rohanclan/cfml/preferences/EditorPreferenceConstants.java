@@ -121,7 +121,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_LINE_NUMBER_COLOR - "0,0,0"</li>
 	 * <li>P_CURRENT_LINE_COLOR - "232,242,254"</li>
 	 * <li>P_PRINT_MARGIN_COLOR - "176,180,185"</li>
-	 * <li>P_PRINT_MARGIN_SIZE - 3</li>
+	 * <li>P_PRINT_MARGIN_SIZE - 80</li>
 	 * <li>P_SHOW_PRINT_MARGIN - false</li>
 	 * <li>P_SELECTION_FOREGROUND_COLOR - "212,208,200"</li>
 	 * <li>P_SELECTION_BACKGROUND_COLOR - "128,128,128"</li>
@@ -149,7 +149,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_LINE_NUMBER_COLOR,"0,0,0");
 		store.setDefault(P_CURRENT_LINE_COLOR,"232,242,254");
 		store.setDefault(P_SHOW_PRINT_MARGIN,false);
-		store.setDefault(P_PRINT_MARGIN_SIZE,3);
+		store.setDefault(P_PRINT_MARGIN_SIZE,80);
 		store.setDefault(P_PRINT_MARGIN_COLOR,"176,180,185");
 		store.setDefault(P_SELECTION_FOREGROUND_COLOR,"255,255,255");
 		store.setDefault(P_SELECTION_BACKGROUND_COLOR,"10,36,106");

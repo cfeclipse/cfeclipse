@@ -19,13 +19,17 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.SWT;
+import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IPaintPositionManager;
 import org.eclipse.jface.text.IPainter;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextViewerExtension2;
 import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;
@@ -35,6 +39,7 @@ import org.eclipse.jface.text.source.*;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
 
 /**
  * Highlights the peer character matching the character near the caret position.
@@ -206,6 +211,23 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
 				}
 				case EditorPreferenceConstants.BRACKET_MATCHING_BOLD: 
 				{
+				    int caret= fTextWidget.getCaretOffset();
+				    int lineIndex = fTextWidget.getLineAtOffset(caret);
+				    int lineStart = fTextWidget.getOffsetAtLine(lineIndex);
+				    int lineEnd = -1;
+				    if (lineIndex == fTextWidget.getLineCount()) {
+				        lineEnd = fTextWidget.getText().length()-1;
+				    } else {
+				        lineEnd = fTextWidget.getText().indexOf(fTextWidget.getLineDelimiter(),lineStart);
+				    }
+				    if (offset >= lineStart && offset <= lineEnd) {
+				        RGB rgb= PreferenceConverter.getColor(store, EditorPreferenceConstants.P_CURRENT_LINE_COLOR);
+				        Color c = EditorsPlugin.getDefault().getSharedTextColors().getColor(rgb);
+				        gc.setBackground(c);    
+				    } else {
+				        gc.setBackground(fTextWidget.getBackground());
+				    }
+				    
 					gc.setForeground(fColor);
 					Font oldFont = gc.getFont();
 					FontData[] data = gc.getFont().getFontData();

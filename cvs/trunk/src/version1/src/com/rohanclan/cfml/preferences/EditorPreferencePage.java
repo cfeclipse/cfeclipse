@@ -38,8 +38,7 @@ public class EditorPreferencePage extends PreferencePage
 	private final String fAppearanceColorListModel[][] = {
 		{
 			"Editor Background", EditorPreferenceConstants.P_COLOR_BACKGROUND, null
-		},
-		{
+		}, {
 			"Line numbers",  EditorPreferenceConstants.P_LINE_NUMBER_COLOR, null
 		}, {
 			"Current line highlight",  EditorPreferenceConstants.P_CURRENT_LINE_COLOR, null
@@ -137,6 +136,7 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_HIGHLIGHT_CURRENT_LINE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_TAB_INDENTS_CURRENT_LINE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_RTRIM_ON_SAVE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_TAB_WIDTH));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_INSIGHT_DELAY));
@@ -225,6 +225,8 @@ public class EditorPreferencePage extends PreferencePage
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS, 0);
 		label = "Hi&ghlight current line";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_HIGHLIGHT_CURRENT_LINE, 0);
+		label = "Tab indents current line";
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_TAB_INDENTS_CURRENT_LINE, 0);
 		label = "Sho&w print margin";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN, 0);
 		label = "Warn when opening read only files";

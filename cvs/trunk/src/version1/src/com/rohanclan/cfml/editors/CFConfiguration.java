@@ -50,7 +50,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
-
+import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.contentassist.CFEPrimaryAssist;
@@ -96,8 +96,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	private CFEUndoManager undoManager;
 	
 	/**
-	 * Need a color manager to get partition colors
-	 * @param colorManager that would be the color manager
+	 * Configure the indent strategy
 	 */
 	private void configTagIndentStrat() {
 		indentTagStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
@@ -162,33 +161,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 */
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) 
 	{	
-		return new String[] {
-			IDocument.DEFAULT_CONTENT_TYPE,
-			CFPartitionScanner.HTM_END_TAG,
-			CFPartitionScanner.HTM_TAG_ATTRIBS,
-			CFPartitionScanner.HTM_START_TAG_BEGIN,
-			CFPartitionScanner.HTM_START_TAG_END,
-			CFPartitionScanner.CF_COMMENT,
-			CFPartitionScanner.HTM_COMMENT,
-			CFPartitionScanner.DOCTYPE,
-			CFPartitionScanner.CF_START_TAG_BEGIN,
-			CFPartitionScanner.CF_START_TAG_END,
-			CFPartitionScanner.CF_TAG_ATTRIBS,
-			CFPartitionScanner.CF_END_TAG,
-			CFPartitionScanner.CF_SCRIPT,
-			CFPartitionScanner.J_SCRIPT,
-			CFPartitionScanner.CSS,
-			CFPartitionScanner.SQL,
-			CFPartitionScanner.UNK_TAG,
-			CFPartitionScanner.FORM_END_TAG,
-			CFPartitionScanner.FORM_START_TAG_BEGIN,
-			CFPartitionScanner.FORM_TAG_ATTRIBS,
-			CFPartitionScanner.FORM_START_TAG_END,
-			CFPartitionScanner.TABLE_END_TAG,
-			CFPartitionScanner.TABLE_START_TAG_BEGIN,
-			CFPartitionScanner.TABLE_TAG_ATTRIBS,
-			CFPartitionScanner.TABLE_START_TAG_END
-		};
+		return PartitionTypes.ALL_PARTITION_TYPES;
 	}
 	
 	/**
@@ -735,6 +708,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 */
 	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0, String partitionType) 
 	{
+	    
 		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) {
 			return indentCFScriptStrategy;
 		} else if(partitionType.compareTo(CFPartitionScanner.J_SCRIPT) == 0) {
@@ -779,6 +753,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
         	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
         	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
+        }
+        else if(prop.equals(EditorPreferenceConstants.P_TAB_INDENTS_CURRENT_LINE)) {
+        	boolean state = ((Boolean)event.getNewValue()).booleanValue();
+        	indentTagStrategy.setTabIndentSingleLine(state);
+        	indentCFScriptStrategy.setTabIndentSingleLine(state);
         }
         else if(prop.equals(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
 	        	boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();

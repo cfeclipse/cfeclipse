@@ -387,7 +387,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void customizeDocumentCommand(IDocument doc, DocumentCommand docCommand)
     {
-
+	    
 		try {
 			//
 			// We're only interested in the insertion of single characters, so catch the user pasting
@@ -446,7 +446,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				handleOpenChevron(docCommand);
 				return;
 			case '\"':
-				if(!this.autoClose_DoubleQuotes) return; // User doesn't want us to do this
+				if(!this.autoClose_DoubleQuotes) {
+				    return; // User doesn't want us to do this
+				}
 				handleQuotes(doc, docCommand, firstCommandChar);
 				return;
 			case '\'':	// Handle opening/closing quotes
@@ -454,7 +456,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				handleQuotes(doc, docCommand, firstCommandChar);
 				return;
 			case '\t': // handle tabs
-			    docCommand.text = this.indentString;
+			    singleLineIndent(doc,docCommand);
 			    return;
 			default:
 				//

@@ -48,7 +48,7 @@ import com.rohanclan.cfml.external.ExternalMarkerAnnotationModel;
 import com.rohanclan.cfml.net.RemoteFileEditorInput;
 import com.rohanclan.cfml.net.ftp.*;
 import com.rohanclan.cfml.CFMLPlugin;
-
+import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
 /**
  * 
  * This document handles the opening and closing of CF documents.
@@ -74,32 +74,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		
 		if (document != null) {
 			IDocumentPartitioner partitioner = new CFEPartitioner(
-					new CFPartitionScanner(), new String[] {
-							CFPartitionScanner.HTM_END_TAG,
-							CFPartitionScanner.HTM_TAG_ATTRIBS,
-							CFPartitionScanner.HTM_START_TAG_BEGIN,
-							CFPartitionScanner.HTM_START_TAG_END,
-							CFPartitionScanner.CF_COMMENT,
-							CFPartitionScanner.HTM_COMMENT,
-							CFPartitionScanner.DOCTYPE,
-							CFPartitionScanner.CF_START_TAG_BEGIN,
-							CFPartitionScanner.CF_START_TAG_END,
-							CFPartitionScanner.CF_TAG_ATTRIBS,
-							CFPartitionScanner.CF_END_TAG,
-							CFPartitionScanner.CF_SCRIPT,
-							CFPartitionScanner.J_SCRIPT,
-							CFPartitionScanner.CSS,
-							CFPartitionScanner.SQL,
-							CFPartitionScanner.UNK_TAG,
-							CFPartitionScanner.FORM_END_TAG,
-							CFPartitionScanner.FORM_START_TAG_BEGIN,
-							CFPartitionScanner.FORM_TAG_ATTRIBS,
-							CFPartitionScanner.FORM_START_TAG_END,
-							CFPartitionScanner.TABLE_END_TAG,
-							CFPartitionScanner.TABLE_START_TAG_BEGIN,
-							CFPartitionScanner.TABLE_TAG_ATTRIBS,
-							CFPartitionScanner.TABLE_START_TAG_END
-							});
+					new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
 
 			partitioner.connect(document);
 

@@ -25,12 +25,21 @@
 package com.rohanclan.cfml.editors;
 
 //import java.util.Iterator;
+import java.text.MessageFormat;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.window.Window;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -60,10 +69,15 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 //import org.eclipse.ui.internal.editors.text.EditorsPlugin;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
@@ -85,12 +99,17 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
+
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.dialogs.MessageDialog;
 import java.util.Iterator;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+
 
 /**
  * @author Rob
@@ -157,6 +176,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 	}
 
+	public boolean isSaveAsAllowed() {
+	    return true;
+	}
+	
 	public CFMLEditor() {
 		super();
 
@@ -374,16 +397,20 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 			Action act = new Action("Refresh syntax highlighting", null) {
 				public void run() {
-				    
+				   try {
 				  IEditorPart iep = getSite().getPage().getActiveEditor();
 					ITextEditor editor = (ITextEditor) iep;
+					
 					ISelection sel = editor.getSelectionProvider().getSelection();
 					IDocument doc = editor.getDocumentProvider().getDocument(
 							editor.getEditorInput());
-					String docText = doc.get();
-					doc.set("");
-					doc.set(docText);
-					editor.getSelectionProvider().setSelection(sel);
+					CFEPartitioner partitioner = new CFEPartitioner(
+							new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
+					partitioner.connect(doc);
+					doc.setDocumentPartitioner(partitioner);
+				   } catch (Exception e) {
+				       e.printStackTrace();
+				   }
 				}
 			};
 			menu.add(act);
@@ -559,6 +586,94 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		}
 	}
 
+	/**
+	 *  Implementation copied from org.eclipse.ui.editors.text.TextEditor.
+	 */
+	protected void performSaveAs(IProgressMonitor progressMonitor) {
+		Shell shell= getSite().getShell();
+		IEditorInput input= getEditorInput();
+		String RESOURCE_BUNDLE= "org.eclipse.ui.editors.text.TextEditorMessages";//$NON-NLS-1$
+
+		ResourceBundle fgResourceBundle= ResourceBundle.getBundle(RESOURCE_BUNDLE);
+
+		SaveAsDialog dialog= new SaveAsDialog(shell);
+		
+		IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
+		if (original != null)
+			dialog.setOriginalFile(original);
+		
+		dialog.create();
+			
+		IDocumentProvider provider= getDocumentProvider();
+		if (provider == null) {
+			// editor has programmatically been  closed while the dialog was open
+			return;
+		}
+		
+		if (provider.isDeleted(input) && original != null) {
+			String message= MessageFormat.format(fgResourceBundle.getString("Editor.warning.save.delete"), new Object[] { original.getName() }); //$NON-NLS-1$
+			dialog.setErrorMessage(null);
+			dialog.setMessage(message, IMessageProvider.WARNING);
+		}
+		
+		if (dialog.open() == Window.CANCEL) {
+			if (progressMonitor != null)
+				progressMonitor.setCanceled(true);
+			return;
+		}
+			
+		IPath filePath= dialog.getResult();
+		if (filePath == null) {
+			if (progressMonitor != null)
+				progressMonitor.setCanceled(true);
+			return;
+		}
+			
+		IWorkspace workspace= ResourcesPlugin.getWorkspace();
+		IFile file= workspace.getRoot().getFile(filePath);
+		final IEditorInput newInput= new FileEditorInput(file);
+				
+		boolean success= false;
+		try {
+			
+			provider.aboutToChange(newInput);
+			provider.saveDocument(progressMonitor, newInput, provider.getDocument(input), true);			
+			success= true;
+			
+		} catch (CoreException x) {
+			IStatus status= x.getStatus();
+			if (status == null || status.getSeverity() != IStatus.CANCEL) {
+				String title= fgResourceBundle.getString("Editor.error.save.title"); //$NON-NLS-1$
+				String msg= MessageFormat.format(fgResourceBundle.getString("Editor.error.save.message"), new Object[] { x.getMessage() }); //$NON-NLS-1$
+				
+				if (status != null) {
+					switch (status.getSeverity()) {
+						case IStatus.INFO:
+							MessageDialog.openInformation(shell, title, msg);
+						break;
+						case IStatus.WARNING:
+							MessageDialog.openWarning(shell, title, msg);
+						break;
+						default:
+							MessageDialog.openError(shell, title, msg);
+					}
+				} else {
+					MessageDialog.openError(shell, title, msg);
+				}
+			}
+		} finally {
+			provider.changed(newInput);
+			if (success)
+				setInput(newInput);
+		}
+		
+		if (progressMonitor != null)
+			progressMonitor.setCanceled(!success);
+	}
+	
+	
+	
+	
 	public void dispose() {
 		colorManager.dispose();
 		if (this.cfmlBracketMatcher != null) {

@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.18.8"
+   version="1.1.18.9"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -27,7 +27,6 @@
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
-
 
    <extension
          point="org.eclipse.ui.perspectives">
@@ -607,6 +606,9 @@
 	<!-- Commands -->
    <extension
          point="org.eclipse.ui.commands">
+      <activeKeyConfiguration
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </activeKeyConfiguration>
       <category
             name="CFML Editor"
             description="CFML Editor key bindings"
@@ -936,14 +938,13 @@
       <command
             name="Open scribble pad"
             description="Opens up the scribble pad file."
-            category="com.rohanclan.cfml.commandCategory"
+            categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.LoadScribblePad">
       </command>
       <keyBinding
-            string="F8"
-            scope="org.eclipse.ui.globalScope"
-            command="com.rohanclan.cfml.editors.actions.LoadScribblePad"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            keySequence="F8"
+            commandId="com.rohanclan.cfml.editors.actions.LoadScribblePad"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
 	<!-- this will toggle the expand/collapse state of  the selected block -->
       <command
