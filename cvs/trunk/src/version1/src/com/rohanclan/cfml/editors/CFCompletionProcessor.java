@@ -390,13 +390,13 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			System.err.println("st is " + st.size() + " elements in size");
 			TreeSet ts = new TreeSet();
 			ts.addAll(st);
-			// TODO: This needs to be changed. Probably something to do with the Value class.
-			if(ts.size() != st.size())
-			{
-				System.err.println("CFCompletionProcessor::makeSetToPropsal() - Proposal tree set is different size from input set! Copying manually...");
-				obj = st.toArray();
-			}
-			else 
+			//This needs to be changed. Probably something to do with the Value class.
+			//if(ts.size() != st.size())
+			//{
+			//	System.err.println("CFCompletionProcessor::makeSetToPropsal() - Proposal tree set is different size from input set! Copying manually...");
+			//	obj = st.toArray();
+			//}
+			//else 
 				obj = ts.toArray();
 			
 			//build a Completion dodad with the right amount of records

@@ -58,9 +58,13 @@ public class Value implements Comparable {
 		return value;
 	}
 
+	/**
+	 * Checks to see if the passed object is equal to this
+	 * value
+	 */
 	public boolean equals(Object obj)
 	{
-		if(obj instanceof Parameter)
+		if(obj instanceof Value)
 		{
 			//if the name is the same and the type is the same
 			//assume its the same
@@ -73,12 +77,15 @@ public class Value implements Comparable {
 		return false;
 	}
 	
+	/**
+	 * Compares the passed object to this value
+	 */
 	public int compareTo(Object o)
 	{
 		if(o == null)
 			throw new NullPointerException("Null!");
 		
-		if(o instanceof Parameter)
+		if(o instanceof Value)
 		{
 			return value.compareTo( ((Value)o).getValue() );
 		}
