@@ -20,7 +20,10 @@
 	::NOTES::
     Missing: cfslider, cfregistry, cfinput
  -->
-<dictionary>
+<dictionary xmlns="http://www.cfeclipse.org/version1/dictionary"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://www.cfeclipse.org/version1/dictionary/dictionary.xsd"
+>
 	<tags>
 		<!--
 			cfabort
@@ -391,7 +394,7 @@
 				<help><![CDATA[
 					Absolute path of cache directory.
 				]]></help>
-				<values/>
+				<values/> 
 			</parameter>
 			<parameter name="timespan" type="Timespan" required="false">
 				<help><![CDATA[
@@ -1682,8 +1685,7 @@
 			<parameter name="action" type="String" required="true">
 				<help><![CDATA[Type of file manipulation that the tag performs.]]></help>
 				<values>
-					<value option="append">
-					</value>
+					<value option="append" />
 					<value option="copy"/>
 					<value option="delete" />
 					<value option="move" />
@@ -1742,7 +1744,7 @@
 				<triggers>
 					<selectedValue attributeName="action" value="append" required="true"/>
 					<selectedValue attributeName="action" value="write" required="false"/>
-					<selectedValue attributeName="action" value="" required="false"/>
+					<!-- <selectedValue attributeName="action" value="" required="false"/> -->
 				</triggers>
 			</parameter>
 			<parameter name="attributes" type="String" required="false">
@@ -1802,7 +1804,7 @@
 				<triggers>
 					<selectedValue attributeName="action" value="copy" required="true"/>
 					<selectedValue attributeName="action" value="move" required="true"/>
-					<selectedValue attributeName="action" value="rename" required="move"/>
+					<selectedValue attributeName="action" value="rename" required="true"/>
 				</triggers>
 			</parameter>
 			<parameter name="destination" type="String" required="true">
@@ -4259,7 +4261,7 @@
 				component = "component name or reference"
 				argumentCollection = "argument collection"
 		-->
-		<tag name="cfinvoke" creator="3" single="false" hybrid="true" allowanyattribute="true" xmlstyle="false">
+		<tag name="cfinvoke" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Does either of the following:
 
@@ -5428,12 +5430,12 @@
 				attribute_name1 = "valuea"
 				attribute_name2 = "valueb" ...
 		-->
-		<tag name="cfmodule" creator="3" single="false" hybrid="true" allowanyattribute="true" xmlstyle="false">
+		<tag name="cfmodule" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Invokes a custom tag for use in CFML application pages.
 				This tag processes custom tag name conflicts.
 			]]></help>
-			<parameter name="template" type="String" required="false">">
+			<parameter name="template" type="String" required="false">
 				<help><![CDATA[
 					Mutually exclusive with the name attribute. A path to the
 					page that implements the tag.
@@ -5444,7 +5446,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="name" type="String" required="false">">
+			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
 					Mutually exclusive with the template attribute. A custom
 					tag name, in the form "Name.Name.Name..." Identifies
@@ -5524,8 +5526,8 @@
 				]]></help>
 				<values>
 					<value option="com" />
-					<value option="corba" />
 					<value option="java" />
+					<value option="corba" />
 				</values>
 			</parameter>
 			<parameter name="action" type="String" required="true">
@@ -6141,7 +6143,7 @@
 				every cfquery tag, to help secure your databases from
 				unauthorized users
 			]]></help>
-			<parameter name="name" type="String" required="false">
+			<parameter name="name" type="String" required="true">
 				<help><![CDATA[
 					Name of query. Used in page to reference query record set.
 					Must begin with a letter. Can include letters, numbers,
@@ -6149,7 +6151,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="datasource" type="String" required="false">
+			<parameter name="datasource" type="String" required="true">
 				<help><![CDATA[
 					Name of data source from which query gets data.
 				]]></help>
@@ -6198,7 +6200,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="cachedafter" type="Date" required="false">
+			<parameter name="cachedafter" type="DateTime" required="false">
 				<help><![CDATA[
 					Date value (for example, April 16, 1999, 4-16-99). If date
 					of original query is after this date, CFML uses
@@ -7598,7 +7600,7 @@
 				database operations as a single transaction. Provides database
 				commit and rollback processing.
 			]]></help>
-			<parameter name="action" type="string" required="false">
+			<parameter name="action" type="String" required="false">
 				<help><![CDATA[
 					<ul>
 					<li>begin: the start of the block of code to execute</li>
@@ -7612,7 +7614,7 @@
 					<value option="rollback" />
 				</values>
 			</parameter>
-			<parameter name="isolation" type="string" required="false">
+			<parameter name="isolation" type="String" required="false">
 				<help><![CDATA[
 					ODBC lock type.
 				]]></help>
@@ -8207,7 +8209,7 @@
 				CFML processes the CFML code in the tag body, then assigns
 				the resulting text to an XML document object variable.
 			]]></help>
-			<parameter name="variable" type="string" required="true">
+			<parameter name="variable" type="String" required="true">
 				<help><![CDATA[
 					Name of an xml variable
 				]]></help>
@@ -8518,12 +8520,12 @@
 			<help><![CDATA[
 				Sorts array elements numerically or alphanumerically.
 			]]></help>
-			<parameter name="array" type="array" required="true">
+			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
 					Name of an array
 				]]></help>
 			</parameter>
-			<parameter name="sort_type" type="string" required="true">
+			<parameter name="sort_type" type="String" required="true">
 				<help><![CDATA[
 					numeric: sorts numbers
 					text: sorts text alphabetically, taking case into account
@@ -8546,7 +8548,7 @@
 					<value option="textnocase" />
 				</values>
 			</parameter>
-			<parameter name="sort_order" type="string" required="false">
+			<parameter name="sort_order" type="String" required="false">
 				<help><![CDATA[
 					asc: ascending sort order. Default.
  						- aabzABZ or aAaBbBzzZ, depending on value of sort_type,
@@ -8615,7 +8617,11 @@
 			<parameter name="delimiter" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="','" />
+					<value option="'|'" />
+					<value option="'_'" />
+				</values>
 			</parameter>
 		</function>
 
@@ -8844,7 +8850,7 @@
 		<!--
 			Character Chr(number)
 		-->
-		<function creator="3" name="chr" returns="Character">
+		<function creator="3" name="chr" returns="char">
 			<help><![CDATA[
 				Converts a numeric value to a UCS-2 character.
 			]]></help>
@@ -8937,17 +8943,23 @@
 			<parameter name="year" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="year(Now())" />
+				</values>
 			</parameter>
 			<parameter name="month" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="month(Now())" />
+				</values>
 			</parameter>
 			<parameter name="day" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="day(Now())" />
+				</values>
 			</parameter>
 		</function>
 
@@ -8968,27 +8980,37 @@
 			<parameter name="month" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="month(Now())" />
+				</values>
 			</parameter>
 			<parameter name="day" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="day(Now())" />
+				</values>
 			</parameter>
 			<parameter name="hour" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="hour(Now())" />
+				</values>
 			</parameter>
 			<parameter name="minute" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="minute(Now())" />
+				</values>
 			</parameter>
 			<parameter name="second" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
 					<value option="second(Now())" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9000,17 +9022,75 @@
 			CreateObject(type, class)
 			CreateObject(type, urltowsdl)
 		-->
-		<function creator="3" name="createobject" returns="CORBAObject">
+		<function creator="3" name="createobject" returns="Object">
 		<help><![CDATA[
 				The CreateObject function takes different arguments depending on the value of the first argument:
-
+				
 				CreateObject('com', class, context, serverName)
 				CreateObject('component', component-name)
 				CreateObject('corba', context, class, locale)
 				CreateObject('java', class)
 				CreateObject('webservice', urltowsdl)
-        ]]></help>
+				******************************************
+			
+				The CreateObject function can call a method on a CORBA object.
+				The object must be defined and registered for use.
 
+				type : "corba"
+				context :
+				    * IOR to access CORBA server
+				    * NameService: naming service to access server.
+						Valid only with the InitialContext of a VisiBroker ORB.
+				class :
+				    If context = "ior": absolute path of file that contains
+				        string version of the Interoperable Object Reference
+				        (IOR). CFML must be able to read file; it should
+						be local to CFML server or accessible on network
+				    If context = "nameservice:" forward slash-delimited naming
+				        context for naming service.
+                        For example Allaire//Doc/empobject
+				locale :
+                    The name of the Java config that holds the properties file.
+                ********************************************
+                
+                Create a COM object (not available on Unix)
+
+				To create a COM object, you must provide this information:
+				 * The object's program ID or filename
+				 * The methods and properties available to the object through
+					the IDispatch interface
+				 * The arguments and return types of the object's methods
+				 * For most objects, you can get this information from the
+					OLEView utility.    
+					
+				********************************************
+
+
+				The CreateObject function can create a Java object, and, by
+				extension, an EJB object.
+				type : "java"
+				class : A Java class name
+
+				Any Java class available in the class path that is specified in
+				the Administrator can be loaded and used with the CreateObject
+				function.
+
+				Calling a public method on the object without first calling the
+				"init" method invokes a static method. Arguments and return
+				values can be any Java type (simple, array, object). If strings
+				are passed as arguments, CFML does the conversions; if
+				strings are received as return values, CFML does no conversion.
+
+				********************************************************
+
+				This function can create a web service object.
+
+				type : "webservice"
+				urltowsdl : WSDL file URL; location of web service. Note: this
+					URL almost always ends with "?WSDL"
+                    
+			]]></help>
+			
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
@@ -9862,7 +9942,7 @@
 				<help><![CDATA[
 				]]></help>
 			</parameter>
-			<parameter name="instancenumber" type="Number" required="false">
+			<parameter name="instancenumber" type="Numeric" required="false">
 				<help><![CDATA[
 				]]></help>
 			</parameter>
@@ -10978,7 +11058,7 @@
 				<help><![CDATA[
 				]]></help>
 			</parameter>
-			<parameter name="delimiters" type="String" required="false" default=",">
+			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
 				<values>
@@ -11404,7 +11484,7 @@
 					<value option="Now()" />
 				</values>
 			</parameter>
-
+			
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
@@ -11439,8 +11519,8 @@
 					<value option="local" />
 					<value option="international" />
 					<value option="none" />
-
-
+					
+					
 				</values>
 			</parameter>
 		</function>
@@ -11924,7 +12004,7 @@
 				Gets the values of each record returned from an executed query.
 				CFML does not evaluate the arguments
 			]]></help>
-			<parameter name="column" type="Query.Column" required="true">
+			<parameter name="column" type="QueryColumn" required="true">
 				<help><![CDATA[
 				]]></help>
 			</parameter>
@@ -12446,7 +12526,7 @@
 				<help><![CDATA[
 					The name of a locale; for example, "English (US)"
 				]]></help>
-				<values>
+				<values>	
 					<value option="Chinese (China)" />
 					<value option="Chinese (Hong Kong)" />
 					<value option="Chinese (Taiwan)" />
@@ -12985,7 +13065,7 @@
 			<help><![CDATA[
 				Updates a key with a value.
 			]]></help>
-			<parameter name="structure" type="Strict" required="true">
+			<parameter name="structure" type="Struct" required="true">
 				<help><![CDATA[
 					Structure to update
 				]]></help>
@@ -13278,7 +13358,7 @@
 				A delimited list of the values of each record returned from an
 				executed query
 			]]></help>
-			<parameter name="column" type="Query.Column" required="true">
+			<parameter name="column" type="QueryColumn" required="true">
 				<help><![CDATA[
 					Name of an executed query and column. Separate query name
 					and column name with a period.
@@ -13524,7 +13604,7 @@
 			<help><![CDATA[
 				Yes, for a non-zero value; No, otherwise.
 			]]></help>
-			<parameter name="value" type="Boolean" required="true">
+			<parameter name="value" type="boolean" required="true">
 				<help><![CDATA[
 					A number or Boolean value
 				]]></help>
@@ -13533,7 +13613,7 @@
 
 	</functions>
 
-	<scopes>
+	<scopes>	
 		<!-- Client scope variables -->
 		<scope value="Client.CFID"/>
 		<scope value="Client.CFToken"/>
@@ -13616,7 +13696,7 @@
 		<scope value="CFHTTP.ResponseHeader"/>
 		<scope value="CFHTTP.StatusCode"/>
 
-		<!-- CGI scope variables -->"/>
+		<!-- CGI scope variables -->
 		<scope value="CGI.AUTH_TYPE"/>
 		<scope value="CGI.CONTENT_LENGTH"/>
 		<scope value="CGI.CONTENT_TYPE"/>
@@ -13675,8 +13755,5 @@
 		<scope value="ERROR.rootCause"/>
 		<scope value="ERROR.tagContext"/>
 		<scope value="ERROR.type"/>
-
 	</scopes>
-
-
 </dictionary>

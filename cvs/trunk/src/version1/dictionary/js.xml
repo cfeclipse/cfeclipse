@@ -11,10 +11,10 @@
     	W3C         = 0x4;
     	UserDefined = 0x8;
 -->
-
-<dictionary>
-	<tags />
-	
+<dictionary xmlns="http://www.cfeclipse.org/version1/dictionary"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://www.cfeclipse.org/version1/dictionary/dictionary.xsd"
+>
 	<functions>
 		<function creator="4" name="eval" returns="Object">
 			<help><![CDATA[
@@ -24,20 +24,16 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
 
-	<functions>
 		<function creator="4" name="isFinite" returns="boolean">
 			<help><![CDATA[
 			]]></help>
-			<parameter name="testnumber" type="Number" required="true">
+			<parameter name="testnumber" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
 
-	<functions>
 		<function creator="4" name="isNaN" returns="boolean">
 			<help><![CDATA[
 			]]></help>
@@ -46,10 +42,8 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
-		
-	<functions>
-		<function creator="4" name="Number" returns="number">
+	
+		<function creator="4" name="Number" returns="Numeric">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="obj" type="Object" required="true">
@@ -57,10 +51,8 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
 	
-	<functions>
-		<function creator="4" name="parseFloat" returns="float">
+		<function creator="4" name="parseFloat" returns="Numeric">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="str" type="String" required="true">
@@ -68,10 +60,8 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
 	
-	<functions>
-		<function creator="4" name="parseInt" returns="int">
+		<function creator="4" name="parseInt" returns="Numeric">
 			<help><![CDATA[
 				parses a string and returns a javascript integer
 			]]></help>
@@ -80,15 +70,13 @@
 					String to parse
 				]]></help>
 			</parameter>
-			<parameter name="radix" type="int" required="false">
+			<parameter name="radix" type="Numeric" required="false">
 				<help><![CDATA[
 					The base to use. I.e. 16, 8, 10 default 10
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
-		
-	<functions>
+	
 		<function creator="4" name="String" returns="boolean">
 			<help><![CDATA[
 			]]></help>
@@ -97,9 +85,7 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
 
-	<functions>
 		<function creator="4" name="alert" returns="void">
 			<help><![CDATA[
 				Alert box
@@ -110,9 +96,7 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
 	
-	<functions>
 		<function creator="4" name="confirm" returns="boolean">
 			<help><![CDATA[
 				Confirm dialog box
@@ -123,9 +107,7 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
 
-	<functions>
 		<function creator="4" name="unescape" returns="String">
 			<help><![CDATA[
 				Unescapes the passed string so that is can be passed in a url
@@ -136,9 +118,7 @@
 				]]></help>
 			</parameter>
 		</function>
-	</functions>
-	
-	<functions>
+
 		<function creator="4" name="escape" returns="String">
 			<help><![CDATA[
 				Escapes the passed string so that is can be passed in a url
@@ -150,4 +130,5 @@
 			</parameter>
 		</function>
 	</functions>
+	
 </dictionary>

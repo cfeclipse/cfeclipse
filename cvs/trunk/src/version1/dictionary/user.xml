@@ -21,7 +21,10 @@
    	can also put functions in here, but that is only a hack - cfeclipse will be
    	able to find your functions at a later date
  -->
-<dictionary>
+<dictionary xmlns="http://www.cfeclipse.org/version1/dictionary"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://www.cfeclipse.org/version1/dictionary/dictionary.xsd"
+>
 	<tags>
 		<!--
 		<tag creator="8" name="x_rohancrypt" single="true" xmlstyle="false">
@@ -102,6 +105,8 @@
 		-->
 	</functions>
 
-
+	<scopes>
+		<!-- <scope value="my.thing"></scope> -->
+	</scopes>
 
 </dictionary>
