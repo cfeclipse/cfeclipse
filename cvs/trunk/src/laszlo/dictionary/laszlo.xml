@@ -38,6 +38,7 @@
 	<!ENTITY list                  SYSTEM "inc/parameter_list.xml">
 	<!ENTITY gridcolumn            SYSTEM "inc/parameter_gridcolumn.xml">
 	<!ENTITY rpc                   SYSTEM "inc/parameter_rpc.xml">
+	<!ENTITY textlistitem          SYSTEM "inc/parameter_textlistitem.xml">
 	
 	<!-- you can use these to mark colors if you wish -->
 	<!ENTITY color_norm   '4' >
@@ -1249,45 +1250,270 @@
 			&rpc;
 		</tag>
 		
+		<!-- javarpc -->
+		<tag name="javarpc" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Call remote server java methods.
+				JavaScript: javarpc Extends RPC
+				JavaRPC is a feature that allows server-side Java objects and 
+				methods to be accessed from a client application. JavaRPC is part 
+				of the Laszlo RPC family and shares similar APIs with SOAP and 
+				XML-RPC. See the RPC chapter and JavaRPC for in the Developer's 
+				Guide for details.</help>
+			<parameter name="attributename" type="String" required="false">
+				<help>Attribute name of server remote object. Name or attributename 
+					must be set when scope is 'session' and 'webapp'. Default is 
+					the name of this object.</help>
+				<values/>
+			</parameter>	
+			<parameter name="classname" type="String" required="false">
+				<help>The remote class name associated with the remote object. This 
+					must be set if creating the remote object. If loading the 
+					object, the classname will be set during onload.</help>
+				<values/>
+			</parameter>
+			<parameter name="createargs" type="Any" required="false">
+				<help>Used if loadoption='loadcreate' or loadoption='create'. 
+					Arguments to construct remote object with. The value passed in 
+					must be an array, e.g., [1, 'mystring', 1.45]. Default is null.
+				</help>
+				<values/>
+			</parameter>
+			<parameter name="loadoption" type="String" required="false">
+				<help>One of 'loadcreate', 'loadonly', or 'create'. 'Loadcreate' 
+					tries to load javarpc object if it exists in the server, else 
+					it creates it before loading. 'Loadonly' will only load object 
+					if it exists, else an error is returned. 'Create' will always 
+					create the object in the server. Default is 'loadcreate'.
+				</help>
+				<values>
+					<value option="loadcreate"/>
+					<value option="loadonly"/>
+					<value option="create"/>
+				</values>
+			</parameter>
+			<parameter name="scope" type="Any" required="false">
+				<help>One of 'session', 'webapp', or 'none' to set the scope of the 
+					remote object. This attribute must be set before creating or 
+					loading the object. If scope is 'session' or 'webapp', name or 
+					attributename must be set.
+				</help>
+				<values>
+					<value option="session"/>
+					<value option="webapp"/>
+					<value option="none"/>
+				</values>
+			</parameter>
+			&rpc;
+		</tag>
 		
-      <tag name="text" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="text" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      <tag name="inputtext" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="resizable" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="password" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="text" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      <tag name="pre" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
-	  
+		<!-- library -->
+		<tag name="library" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>This tag marks the root element of a library file.
+				The library tag defines the root element of a library file. An 
+				application can use the include tag to include the code in a 
+				library file.</help>
+		</tag>
+		
+		<!-- list item -->
+		<tag name="listitem" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>a listitem is an element of a list
+				JavaScript: listitem Extends Baselistitem
+				A listitem is an element with a value that is contained within a 
+				list. As with baselistitem, the selected attribute will be true when 
+				selected.</help>
+			&baselistitem;
+		</tag>
+		
+		<!-- menu -->		
+		<tag name="menu" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A pull-down menu that can be used within a menubar, a menuitem or 
+				any other view.
+				JavaScript: menu Extends Basecomponent
+				The menu tag creates a menu that floats above all other views when 
+				activated. If a menu is a subview of a menubar, then it will create 
+				a "menubutton" in the menubar with the its text attribute equal to 
+				that of the menu's. This "menubutton" inherits its properties from 
+				button.</help>
+			<parameter name="attach" type="String" required="false">
+				<help>a string to indicate how the floating part of the menu 
+					attaches to the menubutton or menuitem. 
+					Possible values are: 'top', 'bottom', 'left', and 'right'</help>
+				<values>
+					<value option="top"/>
+					<value option="bottom"/>
+					<value option="left"/>
+					<value option="right"/>
+				</values>
+			</parameter>
+			<parameter name="opened" type="boolean" required="false">
+				<help>a boolean indicating whether or not the menu is in opened</help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			&basecomponent;
+		</tag>
+		
+		<!-- menu bar -->		
+		<tag name="menubar" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A menubar that contains menus.
+				JavaScript: menubar Extends Basecomponent
+				The menubar tag creates a menubar that can be placed within any 
+				view, but is most commonly found within a window. By default, a 
+				menubar adjusts to the width of its parent unless otherwise directed. 
+				Within a window a menubar has its own placement="menubar" so that 
+				it lives above the contents of the window.</help>
+			&basecomponent;
+		</tag>
+		
+		<!-- textlistitem -->
+		<tag name="textlistitem" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>a textlistitem extends listitem and provides text display
+				JavaScript: textlistitem Extends Listitem
+				A textlistitem is a listitem which displays text. This is the most 
+				common form of a listitem, and is the default listitem for 
+				comboboxs, menus, lists, and floatinglists.</help>
+			&textlistitem;
+		</tag>
+		
+		<!-- menuitem -->
+		<tag name="menuitem" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>An item in a pull-down menu.
+				JavaScript: menuitem Extends Textlistitem
+				The menuitem tag provides a menu item within the menu tag. To 
+				associate a set of key commands with a menuitem, create a LzCommand 
+				object with an execution script (onselect="expression"), and then 
+				set the command attribute of the menuitem equal to the reference of 
+				that LzCommand object.</help>
+			<parameter name="command" type="Function" required="false">
+				<help>the command object assigned to be executed when this menuitem 
+					is selected</help>
+				<values/>
+			</parameter>
+			&textlistitem;
+		</tag>
+		
+		<!-- menuseparator -->
+		<tag name="menuseparator" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A horizontal separator for pull-down menus.
+				JavaScript: menuseparator Extends Basecomponent
+				The menuseparator tag provides a horizontal separator for pull-down 
+				menus. This tag must reside within a menu tag.
+			</help>
+			<parameter name="xinset" type="Numeric" required="false">
+				<help>the number of pixels to inset the menuseparartor from the 
+					sides of the menu</help>
+				<values/>
+			</parameter>
+			&basecomponent;
+		</tag>
+		
+		<!-- method -->
+		<tag name="method" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Attaches a function or event handler to an object or class.
+				Attaches a method to the object that contains this element. The 
+				method must have either a name or event attribute.
+				If the method has a name attribute, it defines a method that can be 
+				invoked from JavaScript with this name.</help>
+			<parameter name="args" type="String" required="false">
+				<help>The parameter names of this method. The value of this 
+					attribute is a comma-separated list of JavaScript identifiers.</help>
+				<values/>
+			</parameter>
+			<parameter name="event" type="String" required="false">
+				<help>The name of the event that this method is invoked in response 
+					to.</help>
+				<values/>
+			</parameter>
+			<parameter name="name" type="String" required="true">
+				<help>The name of a variable that will be set to this object when 
+					the application is started. If this element is directly within 
+					a canvas or library element, the global variable and the canvas 
+					property with this name will be set to this object. If this 
+					element is within another object, that object's property with 
+					this name will be set to this object.</help>
+				<values/>
+			</parameter>
+			<parameter name="reference" type="String" required="false">
+				<help>If this attribute is present, it is a JavaScript expression 
+					that evaluates to an object. The code in this method executes 
+					when this object sends the event named by the event attribute. 
+					This attribute may be present only if the event attribute is 
+					present too.</help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!-- multistatebutton -->
+		<tag name="multistatebutton" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>a button with multiple states, such as a toggle button
+				JavaScript: multistatebutton Extends Basebutton
+				A multistatebutton is an extension of the basebutton class to 
+				address the more general class of buttons that can have multiple 
+				states, and where each state has it own mouseup, mouseover, and 
+				mousedown images. Like the basebutton class, the construction of a 
+				multistatebutton starts with a multiframe resource.</help>
+			<parameter name="maxstate" type="Numeric" required="false">
+				<help>the largest number allowed for the value of statenum, 
+					default: 0</help>
+				<values/>
+			</parameter>
+			<parameter name="statelength" type="Numeric" required="false">
+				<help>the number of frames in a state, default: 3</help>
+				<values/>
+			</parameter>
+			<parameter name="statenum" type="Numeric" required="false">
+				<help>the current state, default: 0</help>
+				<values/>
+			</parameter>
+			&basebutton;
+		</tag>
+		
+		<!-- p -->
+		<tag name="p" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Paragraph.
+				An HTML paragraph. This tag only occur inside XHTML text such as text.
+			</help>
+		</tag>
+		
+		<!-- param -->
+		<tag name="param" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Param tag for remotecall.
+				JavaScript: param Extends Node
+				Tag to declaratively set parameter values for remotecall. If a 
+				getValue method is declared in the body of remotecall, use its 
+				return as value for paramter. If both getValue method and value 
+				attribute are set in param, getValue wins.</help>
+			<parameter name="value" type="String" required="false">
+				<help>Value to use for paramter. A getValue() method can be declared 
+					inside param to use its return as the parameter value. If both 
+					value attribute and getValue method are declared, param will 
+					use getValue().</help>
+				<values/>
+			</parameter>
+			&node;
+		</tag>
+		
+		<!-- pre -->
+		<tag name="pre" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Preformatted text.
+				An HTML preformatted text region. Whitespace and line breaks within 
+				this element are preserved.
+			</help>
+		</tag>
+		
+		
+		<tag name="text" creator="&color_norm;" single="false" xmlstyle="true">
+			<help></help>
+			<parameter name="text" type="String" required="false">
+				<help></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		
       
-	  
-
-	  
-	
-	  
-      <tag name="i" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
-      <tag name="p" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
       
       <tag name="u" creator="&color_norm;" single="false" xmlstyle="true">
          <help/>
@@ -1371,58 +1597,7 @@
             <values/>
          </parameter>
       </tag>
-      <tag name="dataset" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
       
-	  
-      
-      <tag name="method" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="name" type="String" required="true">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="event" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="reference" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="args" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      <tag name="state" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="apply" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="pooling" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="onapply" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="onremove" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      
-      <tag name="layout" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="locked" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
       <tag name="splash" creator="&color_norm;" single="false" xmlstyle="true">
          <help/>
          <parameter name="name" type="String" required="false">
@@ -1525,55 +1700,6 @@
          <help/>
       </tag>
 	  
-      
-      <tag name="library" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="href" type="URL" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      <tag name="debug" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="width" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="height" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="x" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="y" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="font" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="fontsize" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      <tag name="include" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="href" type="URL" required="true">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="type" type="String" required="false">
-            <help/>
-            <values>
-               <value option="text"/>
-               <value option="xml"/>
-            </values>
-         </parameter>
-      </tag>
      
 	</tags>
 	
