@@ -131,7 +131,7 @@ public class Util {
 		try {
 			bundle = ResourceBundle.getBundle(bundleName, Locale.getDefault());
 		} catch(MissingResourceException e) {
-			System.out.println("Missing resource : " + bundleName.replace('.', '/') + ".properties for locale " + Locale.getDefault()); //$NON-NLS-1$//$NON-NLS-2$
+		//System.out.println("Missing resource : " + bundleName.replace('.', '/') + ".properties for locale " + Locale.getDefault()); //$NON-NLS-1$//$NON-NLS-2$
 			throw e;
 		}
 	}
@@ -491,10 +491,10 @@ public class Util {
 	
 	static protected void dumpMatches(ArrayList matches)
 	{
-		System.out.println("Dumping the matches:");
+	//System.out.println("Dumping the matches:");
 		for(int i = 0; i < matches.size(); i++)
 		{
-			System.out.println("Match: \'" + ((TagMatch)matches.get(i)).match + "\'");
+		//System.out.println("Match: \'" + ((TagMatch)matches.get(i)).match + "\'");
 		}
 	}
 	
@@ -532,7 +532,7 @@ public class Util {
 	 */
 	static protected void walkTreeMain(DocItem rootItem, int count)
 	{
-		System.out.println(GetIndent(count) + "Tree: " + rootItem.itemName  + "\' + match data was : " + rootItem.getItemData());
+	//System.out.println(GetIndent(count) + "Tree: " + rootItem.itemName  + "\' + match data was : " + rootItem.getItemData());
 		if(rootItem.hasChildren())
 		{
 			//ArrayList children = rootItem.getChildren();
@@ -551,7 +551,7 @@ public class Util {
 	 */
 	static protected void walkTreeNamesOnly(DocItem rootItem, int count)
 	{
-		System.out.println(GetIndent(count) + rootItem.itemName);
+	//System.out.println(GetIndent(count) + rootItem.itemName);
 		if(rootItem.hasChildren())
 		{
 			//ArrayList children = rootItem.getChildren();
@@ -569,9 +569,9 @@ public class Util {
 	 */
 	static protected void walkTree(DocItem rootItem)
 	{
-		System.out.println("########### Tree walk 1, full info:");
+	//System.out.println("########### Tree walk 1, full info:");
 		walkTreeMain(rootItem, 1);
-		System.out.println("########### Tree walk 2, names only:");
+	//System.out.println("########### Tree walk 2, names only:");
 		walkTreeNamesOnly(rootItem, 1);
 	}
 	
@@ -584,7 +584,7 @@ public class Util {
 		for(int i = 0; i < inStack.size(); i++)
 		{
 			DocItem tempItem = (DocItem)inStack.get(i);
-			System.out.println("Parser: Stack at "+ i+ " is \', " + tempItem.itemName + "\' + match data was : " + tempItem.getItemData());
+		//System.out.println("Parser: Stack at "+ i+ " is \', " + tempItem.itemName + "\' + match data was : " + tempItem.getItemData());
 		}
 		
 	}	

@@ -192,30 +192,30 @@ public class CFBrowser {
 			Listener listener = new Listener(){
 				public void handleEvent(Event event) 
 				{
-					System.out.println("Event fired");
+				//System.out.println("Event fired");
 					ToolItem item = (ToolItem) event.widget;
 					if (item == itemBack) {
-						System.out.println("Back pressed");
+					//System.out.println("Back pressed");
 						browser.back();
 					}
 					else if (item == itemForward) {
-						System.out.println("Forward pressed");
+					//System.out.println("Forward pressed");
 						browser.forward();
 					}
 					else if (item == itemStop){
-						System.out.println("Stop pressed");
+					//System.out.println("Stop pressed");
 						browser.stop();
 					}
 					else if (item == itemRefresh) {
-						System.out.println("Refresh pressed");
+					//System.out.println("Refresh pressed");
 						browser.refresh();
 					}
 					else if (item == itemGo) {
-						System.out.println("Go pressed");
+					//System.out.println("Go pressed");
 						browser.setUrl(location.getText());
 					}
 					else if (item == itemHome) {
-						System.out.println("Home pressed");
+					//System.out.println("Home pressed");
 						browser.setUrl(getProjectURL());
 					}
 				}

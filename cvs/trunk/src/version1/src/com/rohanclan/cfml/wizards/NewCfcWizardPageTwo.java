@@ -468,12 +468,12 @@ public class NewCfcWizardPageTwo extends WizardPage {
 	
 	private void resortBeans(int i)
 	{
-		System.out.println(i);
+	//System.out.println(i);
 		int loopLen = this.propertyBeans.size();
-		System.out.println(loopLen);
+	//System.out.println(loopLen);
 		for(int j = i; j < loopLen; j++)
 		{
-			System.out.println(j);
+		//System.out.println(j);
 			if(j+1 != loopLen)
 				this.propertyBeans.put(new Integer(j), this.propertyBeans.get(new Integer(j + 1)));
 		}

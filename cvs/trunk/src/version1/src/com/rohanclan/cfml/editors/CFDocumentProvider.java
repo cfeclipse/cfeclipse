@@ -58,7 +58,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 	/* public static void setLastFilename(IPath newFilename)
 	{
 		lastFilename = newFilename;
-		System.out.println(
+	//System.out.println(
 			"CFDocumentProvider::setLastFilename() - <b>Last</b> filename is set to " 
 			+ newFilename.toString()
 		);

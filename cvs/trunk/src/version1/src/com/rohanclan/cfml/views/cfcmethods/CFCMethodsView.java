@@ -170,15 +170,15 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	/*
 	 
 	public void mouseEnter(MouseEvent e) {
-		System.out.println("Mouse entered viewer");
+	//System.out.println("Mouse entered viewer");
 	}
 	
 	public void mouseHover(MouseEvent e) {
-		System.out.println("Mouse hovered over viewer");
+	//System.out.println("Mouse hovered over viewer");
 	}
 	
 	public void mouseExit(MouseEvent e) {
-		System.out.println("Mouse exited viewer");
+	//System.out.println("Mouse exited viewer");
 	}
 	
 	*/
@@ -278,26 +278,26 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	
 	
 	public void partActivated(IWorkbenchPart part) {
-		System.out.println("Part activated: "+part.getClass().getName());
+	//System.out.println("Part activated: "+part.getClass().getName());
 		reload();
 	}
 	
 	public void partBroughtToTop(IWorkbenchPart part) {
-		System.out.println("Part brought to top: "+part.getClass().getName());
+	//System.out.println("Part brought to top: "+part.getClass().getName());
 		//if (!part.equals(this)) {
 			reload();
 		//}
 	}
 	
 	public void partClosed(IWorkbenchPart part) {
-		System.out.println("Part closed: " + part.getClass().getName());
+	//System.out.println("Part closed: " + part.getClass().getName());
 		
 		if (part.equals(this) || part.equals(this.getViewSite())) {
 			try {
 				getSite().getWorkbenchWindow().getActivePage().removePartListener(this);
-				System.out.println("CFCMethodView listener removed from page");
+			//System.out.println("CFCMethodView listener removed from page");
 				getSite().getWorkbenchWindow().getActivePage().getActiveEditor().removePropertyListener(this);
-				System.out.println("CFCMethodView listener removed from editor");
+			//System.out.println("CFCMethodView listener removed from editor");
 				}
 				catch (Exception e) {
 					e.printStackTrace(System.err);
@@ -310,7 +310,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	public void partDeactivated(IWorkbenchPart part) {
-		System.out.println("Part deactivated: "+part.getClass().getName());
+	//System.out.println("Part deactivated: "+part.getClass().getName());
 		if (!part.equals(this)) {
 			reload();
 		}
@@ -329,7 +329,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	public void partOpened(IWorkbenchPart part) {
-		System.out.println("Part opened: "+part.getClass().getName());
+	//System.out.println("Part opened: "+part.getClass().getName());
 		//if (!part.equals(this)) {
 			reload();
 		//}

@@ -214,9 +214,9 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 		if(event.getProperty().equals("tabsAsSpaces") 
 			|| event.getProperty().equals("tabWidth"))
 		{
-			System.out.println(
-				"Tab preferences have changed. Resetting the editor."
-			);
+		//System.out.println(
+				//"Tab preferences have changed. Resetting the editor."
+			//);
 			ISourceViewer sourceViewer = getSourceViewer();
 			sourceViewer.getTextWidget().setTabs(
 				configuration.getTabWidth(sourceViewer)

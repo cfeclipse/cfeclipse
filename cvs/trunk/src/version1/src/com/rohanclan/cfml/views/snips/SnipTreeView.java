@@ -206,15 +206,15 @@ public class SnipTreeView extends ViewPart
 
 	/*
 	public void mouseEnter(MouseEvent e) {
-		System.out.println("Mouse entered viewer");
+	//System.out.println("Mouse entered viewer");
 	}
 	
 	public void mouseHover(MouseEvent e) {
-		System.out.println("Mouse hovered over viewer");
+	//System.out.println("Mouse hovered over viewer");
 	}
 	
 	public void mouseExit(MouseEvent e) {
-		System.out.println("Mouse exited viewer");
+	//System.out.println("Mouse exited viewer");
 	}
 	*/
 	

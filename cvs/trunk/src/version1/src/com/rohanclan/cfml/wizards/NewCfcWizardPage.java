@@ -285,7 +285,7 @@ public class NewCfcWizardPage extends WizardPage {
 		IContainer container = (IContainer)resource;
 		IFile file = container.getFile(new Path(fileName + ".cfc"));
 		
-		System.out.println(file.getName());
+	//System.out.println(file.getName());
 
 		if(file.exists())
 		{

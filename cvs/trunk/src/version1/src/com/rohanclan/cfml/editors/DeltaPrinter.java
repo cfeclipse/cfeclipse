@@ -54,18 +54,18 @@ class DeltaPrinter implements IResourceDeltaVisitor
  				//
  				// This probably shouldn't all go here, but it's a good reference
  				// on how to get the data from a resource. 
-				System.out.println("Resource has been changed.");
+			//System.out.println("Resource has been changed.");
 				if(res.getType() == IResource.FILE)
 				{
-					System.out.println("Resource is a file");
+				//System.out.println("Resource is a file");
 					//
 					// Need to somehow get the data from the file!
 					IFile tempFile = (IFile)res;
 					IPath location = res.getLocation();
 					try {
-						System.out.println("Getting resource contents...");
+					//System.out.println("Getting resource contents...");
 						BufferedInputStream inStr = new BufferedInputStream(tempFile.getContents(true));
-						System.out.println("Got contents");
+					//System.out.println("Got contents");
 						try {
 							char [] inData;
 							inData = Util.getInputStreamAsCharArray(inStr, -1, null);
@@ -75,7 +75,7 @@ class DeltaPrinter implements IResourceDeltaVisitor
 							parser.parseDoc();
 						} catch(IOException ioExcep) {
 							System.err.println("Caught IO Exception: \'" + ioExcep.getMessage() + "\'");
-							System.out.println("Caught IO Exception: \'" + ioExcep.getMessage() + "\'");
+						//System.out.println("Caught IO Exception: \'" + ioExcep.getMessage() + "\'");
 						}
 					} catch(CoreException excep) {
 						System.err.println("Caught core exception \'" + excep.getMessage() + "\'");

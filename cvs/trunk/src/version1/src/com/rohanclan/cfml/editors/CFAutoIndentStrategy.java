@@ -75,12 +75,12 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 	
 	public void setDreamweaverCompatibility(boolean compatibility) {
 		dreamweaverCompatibility = compatibility;
-		System.out.println("Dreamweaver compatibility set to: "+compatibility);
+	//System.out.println("Dreamweaver compatibility set to: "+compatibility);
 	}
 	
 	public void setHomesiteCompatibility(boolean compatibility) {
 		homesiteCompatibility = compatibility;
-		System.out.println("Homesite compatibility set to: "+compatibility);
+	//System.out.println("Homesite compatibility set to: "+compatibility);
 	}
 	
 	private void singleLineIndent(IDocument d, DocumentCommand c) {
@@ -349,8 +349,8 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 				}
 			}
 		} catch (BadLocationException excp) {
-		//	System.out.println(PHPEditorMessages.getString("AutoIndent.error.bad_location_2")); //$NON-NLS-1$
-			System.out.println("BadLocationException");
+		////System.out.println(PHPEditorMessages.getString("AutoIndent.error.bad_location_2")); //$NON-NLS-1$
+		//System.out.println("BadLocationException");
 		}
 	}
 

@@ -84,7 +84,7 @@ public class NewCfcWizardPageThree extends WizardPage {
 	 */
 	public void createControl(Composite parent) {
 		
-		System.out.println("Creating Function Controls! ");
+	//System.out.println("Creating Function Controls! ");
 		
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();

@@ -116,7 +116,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		for(int i=0; i<oblen; i++)
 		{
 			lastExpandedElements.clear();
-			System.out.println(ob[i]);
+		//System.out.println(ob[i]);
 			lastExpandedElements.add(ob[i]);
 		}
 	}
@@ -498,7 +498,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				currentpath += newfile;
 			}
 			
-			System.out.println(currentpath);
+		//System.out.println(currentpath);
 			
 			openFileAction.setFilename(currentpath);
 			openFileAction.run();
@@ -543,7 +543,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	public void partOpened(IWorkbenchPart part) 
 	{
-		System.out.println("Part opened: " + part.getClass().getName());
+	//System.out.println("Part opened: " + part.getClass().getName());
 		if(part instanceof CFMLEditor)
 		{
 			//reload();

@@ -161,11 +161,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			try {
 				if (viewer.getDocument().get(documentOffset-2,2).matches("\\s+")){
 					assistant.enableAutoActivation(false);
-					System.out.println("Auto activation disabled");
+				//System.out.println("Auto activation disabled");
 					
 				} else {
 					assistant.enableAutoActivation(true);
-					System.out.println("Auto activation enabled");
+				//System.out.println("Auto activation enabled");
 				}
 			}
 			catch (Exception e) {}

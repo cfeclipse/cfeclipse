@@ -80,7 +80,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		
-		/* System.out.println(
+		/*//System.out.println(
 			"Property store file set to " + 
 			CFMLPlugin.getDefault().getStateLocation().toString()
 			+ "/properties.ini"
@@ -132,7 +132,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	
 		plugin = this;
 		
-		System.out.println(
+	//System.out.println(
 			"Property store file set to " + 
 			CFMLPlugin.getDefault().getStateLocation().toString()
 			+ "/properties.ini"

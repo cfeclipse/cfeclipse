@@ -47,11 +47,11 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 					break;
 				/* these two seem to be deprecated... 
 				case IResourceChangeEvent.PRE_AUTO_BUILD:
-					System.out.println("Auto build about to run.");
+				//System.out.println("Auto build about to run.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 			 	case IResourceChangeEvent.POST_AUTO_BUILD:
-					System.out.println("Auto build complete.");
+				//System.out.println("Auto build complete.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 				*/

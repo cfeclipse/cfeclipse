@@ -351,7 +351,7 @@ public class NewCfcWizardPageFour extends WizardPage {
 		functBean.addArgumentBean(argBean);
 		
 		
-		System.out.println(functBean.getDisplayName());
-		System.out.println(functBean.getName());
+	//System.out.println(functBean.getDisplayName());
+	//System.out.println(functBean.getName());
 	}
 }
