@@ -49,6 +49,8 @@ public class Parameter implements Comparable {
 	protected boolean paramRequired = false;
 	*/
 	
+	private Trigger activeTrigger = null;
+	
 	/** The list of things that triggers this parameter (if not required by default) */
 	ArrayList triggers = new ArrayList();
 	
@@ -85,14 +87,16 @@ public class Parameter implements Comparable {
 		 * 
 		 * TODO: The code assistor will have to forward-scan from the caret pos to get and succeeding attributes. Doh! 
 		 */
-		//System.out.print("Parameter::isTriggered() [" + paramName + "] - ");
+		//System.out.print("Parameter::isTriggered() [" + this.name + "] - ");
 		if(this.triggers.size() == 0 && this.required)
 		{
+			activeTrigger = null;
 			//System.out.println(" no params, triggered & required");
 			return PARAM_REQUIRED | PARAM_TRIGGERED;
 		}
 		else if(this.triggers.size() == 0)
 		{
+			activeTrigger = null;
 			//System.out.println(" no params, triggered.");
 			return PARAM_TRIGGERED;
 		}
@@ -105,10 +109,13 @@ public class Parameter implements Comparable {
 			int trigVal = currTrigger.WillTrigger(availParams);
 			if((trigVal & PARAM_TRIGGERED) == PARAM_TRIGGERED)
 			{
+				activeTrigger = currTrigger;
 				//System.out.println("Param required");
 				return trigVal;
 			}
 		}
+		
+		activeTrigger = null;
 		//System.out.println("Param not triggered");
 		return PARAM_NOTTRIGGERED;	// Fell through to here, available parameters didn't match any triggers.
 	}
@@ -154,6 +161,14 @@ public class Parameter implements Comparable {
 		return required;
 	}
 	
+	
+	/**
+	 * Returns the currently active trigger or null.
+	 * @return
+	 */
+	public Trigger activeTrigger() {
+		return activeTrigger;
+	}
 	/**
 	 * this sets the name and type of this parameter - generally this should not
 	 * be used as types dont often change.

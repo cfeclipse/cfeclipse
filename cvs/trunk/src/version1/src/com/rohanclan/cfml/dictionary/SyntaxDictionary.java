@@ -383,6 +383,7 @@ public abstract class SyntaxDictionary {
 		Assert.isNotNull(functionname, "Functionname parameter is null");
 		String helpText = "";
 		Object o = functions.get(functionname.toLowerCase());
+		
 		if (o instanceof Function) {
 		    Function f = (Function)o;
 		    helpText = f.getHelp().trim();

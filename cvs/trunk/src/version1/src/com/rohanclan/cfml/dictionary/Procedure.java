@@ -232,6 +232,7 @@ public class Procedure implements Comparable {
 		this.help = help;
 	}
 	
+	
 	/**
 	 * Gets the help associated with this procedure.
 	 * @return

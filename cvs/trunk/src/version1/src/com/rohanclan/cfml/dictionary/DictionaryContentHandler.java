@@ -127,7 +127,12 @@ public class DictionaryContentHandler implements ContentHandler {
 		String attrName = attributes.getValue("attributeName");
 		String value = attributes.getValue("value");
 		boolean required = attributes.getValue("required").compareToIgnoreCase("true") == 0;
-		this.paramItem.addTrigger(Trigger.CreateSimpleTrigger(attrName, value, required));
+		String indexVal = attributes.getValue("index");
+		int index = -1;
+		if (indexVal != null) {
+			index = Integer.parseInt(indexVal);
+		}
+		this.paramItem.addTrigger(Trigger.CreateSimpleTrigger(attrName, value, required,index));
 		
 // System.out.println("DictionaryContentHandler::handleSelectedVaule - Attr: \'" + this.paramItem.getName() + "\' + Added trigger for \'" + attrName + "\'=\'" + value + "\'");
 	}
