@@ -268,7 +268,7 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getFilteredAttributes(String tag, String start)
 	{
-		return limitSet(getElementAttributes(tag),start);
+		return limitSet(getElementAttributes(tag),start.toLowerCase());
 	}
 	
 	/**
