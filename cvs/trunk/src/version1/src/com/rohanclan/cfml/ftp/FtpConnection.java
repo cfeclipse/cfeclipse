@@ -17,6 +17,7 @@ import com.enterprisedt.net.ftp.*;
 import com.rohanclan.cfml.views.explorer.IFileProvider;
 import com.rohanclan.cfml.views.explorer.FileNameFilter;
 
+
 /**
  * @author spike
  *
@@ -29,7 +30,7 @@ public class FtpConnection implements IFileProvider {
     FTPClient ftpClient = null;
 	FtpConnectionProperties connectionProperties;
 	private static FtpConnection instance = null;
-	
+	private LogListener listener = null;
 	
 	private int fConnectionTimeout = 30000;
 	
@@ -87,16 +88,15 @@ public class FtpConnection implements IFileProvider {
 		connect();
 	}
 	
-	private void connect() {
+	public void connect() {
 	    if (isConnected()) {
 		    return;
 		}
 		try {
-			ftpClient = new FTPClient(connectionProperties.getHost(),21,fConnectionTimeout);
-			FTPMessageCollector listener = new FTPMessageCollector();
+			ftpClient = new FTPClient(connectionProperties.getHost(),-1,fConnectionTimeout);
+			listener = new LogListener();
 	        ftpClient.setMessageListener(listener);
 	        
-	
 	        // login
 	       ftpClient.login(connectionProperties.getUsername(), connectionProperties.getPassword());
 	
@@ -161,8 +161,10 @@ public class FtpConnection implements IFileProvider {
 		try {
 			if (ftpClient != null) {			
 				//System.out.println("Disconnecting FTP client.");
-				ftpClient.quit();
-				ftpClient = null;
+			    if (this.isConnected()) {
+			        ftpClient.quit();
+			    }
+				
 			}
 		}
 		catch (Exception e) {
@@ -178,7 +180,7 @@ public class FtpConnection implements IFileProvider {
 	        ftpClient.quote("NOOP",new String[] {"200"});
 	    }
 	    catch (Exception e) {
-	        e.printStackTrace();
+	        //e.printStackTrace();
 	        return false;
 	    }
 	    return true;
@@ -197,6 +199,15 @@ public class FtpConnection implements IFileProvider {
 	        e.printStackTrace();
 	        return null;
 	    }
+	}
+	
+	
+	
+	public String getLog() {
+	    if (listener == null) {
+	        return null;
+	    }
+	    return listener.getLog();
 	}
 
 }

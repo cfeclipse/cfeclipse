@@ -229,7 +229,6 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	        ITextSelection sel = (ITextSelection)viewer.getSelection();
 	        selectionStart = sel.getOffset();
 	        selection = sel.getText();
-	        System.out.println(((CFMLEditor)editor).verticalRuler().getModel());
         }
     }
 

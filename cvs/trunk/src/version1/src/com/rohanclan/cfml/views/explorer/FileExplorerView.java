@@ -6,16 +6,13 @@
  */
 package com.rohanclan.cfml.views.explorer;
 
-import java.io.File;
+
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Tree;
@@ -24,19 +21,23 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.TreeListener;
-import org.eclipse.swt.events.TreeEvent;
-
 import org.eclipse.jface.viewers.StructuredSelection;
+
+
+import com.rohanclan.cfml.ftp.FtpConnection;
+import com.rohanclan.cfml.ftp.FtpConnectionProperties;
+import com.rohanclan.cfml.views.explorer.ftp.FtpConnectionDialog;
 
 
 /**
@@ -46,6 +47,28 @@ import org.eclipse.jface.viewers.StructuredSelection;
  * of the file explorer tab in Homesite/CFStudio.
  */
 public class FileExplorerView extends ViewPart {
+
+    private MenuItem disconnectItem,connectItem,manageItem;
+    
+    private final class MenuMouseListener implements MouseListener {
+        Menu menu = null;
+
+        public MenuMouseListener (Menu menu) {
+            this.menu = menu;
+        }
+
+        public void mouseUp(MouseEvent e) {
+        	menu.setVisible(true);
+        }
+
+        public void mouseDown(MouseEvent e) {
+        	
+        }
+
+        public void mouseDoubleClick(MouseEvent e) {
+        	
+        }
+    }
 
     ComboViewer comboViewer = null;
     TreeViewer directoryTreeViewer = null;
@@ -59,14 +82,22 @@ public class FileExplorerView extends ViewPart {
         containerLayout.numColumns = 2;
         container.setLayout(containerLayout);
         
-        
         // Combo viewer
         comboViewer = new ComboViewer(container, SWT.READ_ONLY);
         comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
             public void selectionChanged(SelectionChangedEvent e) {
             	try {
-            		directoryTreeViewer.setInput(((StructuredSelection)e.getSelection()).getFirstElement());
-            		fileViewer.setInput(((StructuredSelection)e.getSelection()).getFirstElement());
+            	    StructuredSelection sel = (StructuredSelection)e.getSelection();
+            		directoryTreeViewer.setInput(sel.getFirstElement());
+            		fileViewer.setInput(sel.getFirstElement());
+            		if (sel.getFirstElement() instanceof FtpConnectionProperties) {
+            		    connectItem.setEnabled(true);
+            		    disconnectItem.setEnabled(true);
+            		}
+            		else {
+            		    connectItem.setEnabled(false);
+            		    disconnectItem.setEnabled(false);
+            		}
             	}
             	catch (Exception ex) {
             		ex.printStackTrace();
@@ -81,31 +112,52 @@ public class FileExplorerView extends ViewPart {
         
         combo.setLayoutData(gridData);
         comboViewer.setInput(new LocalFileSystem());
-
-        Button addButton = new Button(container,SWT.PUSH);
-        addButton.addMouseListener(new MouseListener() {
-            public void mouseUp(MouseEvent e) {
-            	try {
-	            	FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),null);
-	            	if (dialog.open() == IDialogConstants.OK_ID) {
-	            		comboViewer.setInput(dialog.connectionProperties);
-	            		
-	            	}
+        
+        Menu menu = new Menu(container.getShell(), SWT.POP_UP);
+       
+        manageItem = new MenuItem(menu,SWT.CASCADE);
+        manageItem.setText("Manage FTP Connections");
+        manageItem.addListener(SWT.Selection, new Listener() {
+	        public void handleEvent(Event e) {
+                FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),null);
+            	if (dialog.open() == IDialogConstants.OK_ID) {
+            		comboViewer.setInput(dialog.connectionProperties);
+            		
             	}
-            	catch (Exception ex) {
-            		ex.printStackTrace();
-            	}
-            }
-            
-            public void mouseDown(MouseEvent e) {
-            	
-            }
-            
-            public void mouseDoubleClick(MouseEvent e) {
-            	
             }
         });
-        addButton.setText("New...");
+        
+        disconnectItem = new MenuItem(menu,SWT.CASCADE);
+        disconnectItem.setText("Disconnect");
+        disconnectItem.setEnabled(false);
+        disconnectItem.addListener(SWT.Selection, new Listener() {
+	        public void handleEvent(Event e) {
+	            try {
+		            FtpConnection.getInstance().disconnect();
+		            
+	            }
+	            catch (Exception ex) {
+	                ex.printStackTrace();
+	            }
+            }
+        });
+        
+        connectItem = new MenuItem(menu,SWT.CASCADE);
+        connectItem.setText("Re-Connect");
+        connectItem.setEnabled(false);
+        connectItem.addListener(SWT.Selection, new Listener() {
+	        public void handleEvent(Event e) {
+	            try {
+		            FtpConnection.getInstance().connect();
+	            }
+	            catch (Exception ex) {
+	                ex.printStackTrace();
+	            }
+            }
+        });
+        
+        Button menuButton = new Button(container,SWT.ARROW | SWT.RIGHT);
+        menuButton.addMouseListener(new MenuMouseListener(menu));
         
         
         
@@ -152,7 +204,14 @@ public class FileExplorerView extends ViewPart {
         initializeMenu();
     	
     }
+    
+    
+    private void createMenuItems(Menu menu) {
+        
+    }
 
+    
+    
     private void createActions() {
     }
 

@@ -58,7 +58,7 @@ public class FtpConnectionProperties {
 
     public static void deleteConnection(String connectionid) {
     	File storageFile = new File(CFMLPlugin.getDefault().getStateLocation().toString() + "/ftpconnections/" + connectionid);
-    	
+
     	if (storageFile.exists()) {
     		storageFile.delete();
     	}
@@ -85,6 +85,7 @@ public class FtpConnectionProperties {
 					try {
 						FileInputStream input = new FileInputStream(connectionFile);
 						connectionProperties.load(input);
+						input.close();
 					}
 					catch (Exception e) {
 						e.printStackTrace();
@@ -127,7 +128,7 @@ public class FtpConnectionProperties {
     
 
     public String getPath() {
-    	return connectionProperties.getProperty(fPath,"");
+    	return connectionProperties.getProperty(fPath,"/");
     }
 
     public void setPath(String path) {
