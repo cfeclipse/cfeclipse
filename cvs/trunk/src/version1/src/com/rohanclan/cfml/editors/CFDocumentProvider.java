@@ -118,6 +118,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			((ICFDocument) document).parseDocument();
 			
 		}
+		
 		super.doSaveDocument(monitor, element, document, overwrite);
 	}
 }

@@ -25,7 +25,7 @@
 package com.rohanclan.cfml.editors.partitioner.scanners.rules;
 
 import org.eclipse.jface.text.rules.*;
-
+import com.rohanclan.cfml.editors.partitioner.scanners.*;
 
 
 /**
@@ -37,38 +37,42 @@ import org.eclipse.jface.text.rules.*;
  */
 public class NestableMultiLineRule extends MultiLineRule {
 
-    
-    int nestedLevel = 0;
+
     
 	public NestableMultiLineRule(String start, String end, IToken token) 
 	{
 	    super(start, end, token);
+	    fBreaksOnEOF = true;
 	}
 	
 
 	protected boolean endSequenceDetected(ICharacterScanner scanner) {
+	    try {
+	    //CFPartitionScanner cfscanner = (CFPartitionScanner)scanner;
+	    
 		int c;
 		char[][] delimiters= scanner.getLegalLineDelimiters();
 		boolean previousWasEscapeCharacter = false;	
+		int nestedLevel = 1;
 		while ((c= scanner.read()) != ICharacterScanner.EOF) {
 			if (c == fEscapeCharacter) {
 				// Skip the escaped character.
 				scanner.read();
+			} else if (sequenceDetected(scanner, fStartSequence, true)) {
+			    // Check for a start sequence so the nesting gets updated correctly
+			    nestedLevel++;
+			    
 			} else if (fEndSequence.length > 0 && c == fEndSequence[0]) {
 				// Check if the specified end sequence has been found.
 				if (sequenceDetected(scanner, fEndSequence, true)) {
-				    
-					if (nestedLevel == 0) {
+				    if (nestedLevel > 0) {
+				        nestedLevel--;
+				    }
+				    if (nestedLevel == 0) {
 					    return true;
 					}
-					else {
-					    this.nestedLevel--;
-					}
+					
 				}
-			} else if (sequenceDetected(scanner, fStartSequence, true)) {
-			    //System.out.println("Nested starter found.");
-			    this.nestedLevel++;
-			    
 			} else if (fBreaksOnEOL) {
 				// Check for end of line since it can be used to terminate the pattern.
 				for (int i= 0; i < delimiters.length; i++) {
@@ -81,8 +85,36 @@ public class NestableMultiLineRule extends MultiLineRule {
 			previousWasEscapeCharacter = (c == fEscapeCharacter);
 		}
 		if (fBreaksOnEOF) return true;
-		scanner.unread();
+			scanner.unread();
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
 		return false;
 	}
 
+	protected IToken doEvaluate(ICharacterScanner scanner, boolean resume) {
+		
+		if (resume) {
+			
+			if (endSequenceDetected(scanner))
+				return fToken;
+		
+		} else {
+			
+			int c= scanner.read();
+			if (c == fStartSequence[0]) {
+				if (sequenceDetected(scanner, fStartSequence, false)) {
+				    scanner.read();
+					if (endSequenceDetected(scanner)) {
+					    return fToken;
+					}
+				}
+			}
+		}
+		
+		scanner.unread();
+		return Token.UNDEFINED;
+	}
+	
 }
