@@ -787,7 +787,7 @@
             id="com.rohanclan.cfml.views.browser">
       </view>
       <view
-            name="CFC Methods View"
+            name="Methods View"
             icon="icons/obj16/bean.gif"
             category="com.rohanclan.cfml"
             class="com.rohanclan.cfml.views.cfcmethods.CFCMethodsView"
