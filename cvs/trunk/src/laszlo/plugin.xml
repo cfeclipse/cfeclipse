@@ -23,7 +23,7 @@
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.ui.ide"/>
       
-      <import plugin="com.rohanclan.cfml" version="1.1.17" match="greaterOrEqual" export="true"/>
+      <import plugin="com.rohanclan.cfml" version="1.1.18" match="greaterOrEqual" export="true"/>
    </requires>
 	
    <extension
@@ -31,11 +31,460 @@
       <editor
             name="Laszlo Editor"
             extensions="lzx"
-            icon="icons/sample.gif"
+            icon="icons/obj16/laszlo.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="org.cfeclipse.laszlo.editors.LaszloEditor"
             id="org.cfeclipse.laszlo.editors.LaszloEditor">
       </editor>
    </extension>
+	
+	<!-- Actions -->
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+      		targetID="org.cfeclipse.laszlo.editors.LaszloEditor"
+            id="org.cfeclipse.laszlo.editors.LaszloEditorActions">
+         <menu
+               label="&amp;Laszlo"
+               path="window"
+               id="org.cfeclipse.laszlo.laszlomenu">
+            <separator name="maingroup" />
+            <separator name="output" />
+         </menu>
 
+		<!-- smart comment -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.AutoComment"
+               label="&amp;Auto Comment"
+               icon="icons/ctool16/smartcomment.gif"
+               tooltip="Insert comment based on section"
+               class="com.rohanclan.cfml.editors.actions.AutoCommentAction"      
+               menubarPath="org.cfeclipse.laszlo.laszlomenu/maingroup"
+               toolbarPath="LaszloEditorText"
+               id="com.rohanclan.cfml.editors.actions.AutoCommentAction">
+         </action>
+		<!-- Surround with single quotes -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.CFSingleQuote"
+               label="&amp;Single Quotes"
+               icon="icons/ctool16/squote.gif"
+               tooltip="Surround with single quotes"
+               class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
+               menubarPath="org.cfeclipse.laszlo.laszlomenu/output"
+               toolbarPath="LaszloEditorText"
+               id="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction">
+         </action>
+		<!-- Surround with double quotes -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
+               label="&amp;Double Quotes"
+               icon="icons/ctool16/dquote.gif"
+               tooltip="Surround with double quotes"
+               class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
+               menubarPath="org.cfeclipse.laszlo.laszlomenu/output"
+               toolbarPath="LaszloEditorText"
+               id="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction">
+         </action>
+		<!-- to lower case -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.ToLowerCase"
+               label="To L&amp;ower"
+               icon="icons/ctool16/tolower.gif"
+               tooltip="Lower case selected text"
+               class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
+               menubarPath="org.cfeclipse.laszlo.laszlomenu/maingroup"
+               toolbarPath="LaszloEditorText"
+               id="com.rohanclan.cfml.editors.actions.ToLowerCaseAction">
+         </action>
+		<!-- to upper case -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.ToUpperCase"
+               label="To U&amp;pper"
+               icon="icons/ctool16/toupper.gif"
+               tooltip="Upper case selected text"
+               class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
+               menubarPath="org.cfeclipse.laszlo.laszlomenu/maingroup"
+               toolbarPath="LaszloEditorText"
+               id="com.rohanclan.cfml.editors.actions.ToUpperCaseAction">
+         </action>
+		<!-- insert date -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.InsertDate"
+               label="Insert Date"
+               icon="icons/ctool16/time.gif"
+               tooltip="Insert the current date"
+               class="com.rohanclan.cfml.editors.actions.InsertDateAction"
+               toolbarPath="LaszloEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.InsertDateAction">
+         </action>
+         <!-- insert color -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.InsertColor"
+               label="Insert Color"
+     		  icon="icons/ctool16/palette.gif"
+               tooltip="Insert a color"
+               class="com.rohanclan.cfml.editors.actions.InsertColorAction"
+               toolbarPath="LaszloEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.InsertColorAction">
+         </action>
+         <!-- insert an html br action -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.InsertBR"
+               label="Insert BR"
+               tooltip="Insert a BR tag"
+               class="com.rohanclan.cfml.editors.actions.InsertBRAction"
+               id="com.rohanclan.cfml.editors.actions.InsertBRAction">
+         </action>
+         <!-- Trim trailing spaces from lines -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.RTrim"
+               label="Tirm trailing spaces"
+               tooltip="Trim trailing spaces from lines."
+               class="com.rohanclan.cfml.editors.actions.RTrimAction"
+               id="com.rohanclan.cfml.editors.actions.RTrimAction">
+         </action>
+         <!-- Fold the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection"
+               label="Add folding markers"
+               tooltip="Add folding markers and collapse the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
+         </action>
+         <!-- Remove folding markers from the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection"
+               label="Clear folding markers."
+               tooltip="Clear folding markers from the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection">
+         </action>
+         <!-- Collapse the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
+               label="Collapse the selected text."
+               tooltip="Collapse any folding markers in and around the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection">
+         </action>
+         <!-- Expand the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection"
+               label="Expand the selected text."
+               tooltip="Expand any folding markers in and around the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
+         </action>
+         <!-- Expand all markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers"
+               label="Expand all"
+               tooltip="Expand all folding markers"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers">
+         </action>
+         <!-- Collapse all markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers"
+               label="Collapse all"
+               tooltip="Collapse all"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers">
+         </action>
+         <!-- Expand matching markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
+               label="Expand matching"
+               tooltip="Expand any folding markers of a particular type"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
+         </action>
+         <!-- Collapse matching markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
+               label="Collapse matching"
+               tooltip="Collapse any folding markers of a particular type"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
+         </action>
+         <!-- Toggle the expand/collapse state of the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
+               label="Expand/collapse the selected text"
+               tooltip="Expand or collapse any folding markers in and around the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection">
+         </action>
+         <!-- Reload the syntax dictionaries -->
+         <action
+               label="Reload Dictionaries"
+               icon="icons/ctool16/dictsearch.gif"
+               class="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction"
+               tooltip="Reload syntax dictionaries"
+               definitionId="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
+               menubarPath="org.cfeclipse.laszlo.laszlomenu/maingroup"
+               toolbarPath="LaszloEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction">
+         </action>
+         <!-- refresh the browser view action -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.RefreshBrowser"
+               label="Refresh"
+               icon="icons/ctool16/refresh.gif"
+               tooltip="Refresh Browser View"
+               class="com.rohanclan.cfml.editors.actions.RefreshBrowserAction"
+               toolbarPath="LaszloEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.RefreshBrowserAction">
+         </action>
+         <!-- insert snippet action 
+         icon="icons/ctool16/insertsnip.gif"
+         toolbarPath="BasicCFEditorCommand"
+         -->
+         <action
+               label="InsertSnippet"
+               class="com.rohanclan.cfml.editors.actions.InsertSnippetAction"
+               tooltip="Insert a snippet"
+               definitionId="com.rohanclan.cfml.editors.actions.InsertSnippet"
+               id="com.rohanclan.cfml.editors.actions.InsertSnippetAction">
+         </action>
+         <!-- Get Online Help by Mark Drew aged 30
+         <action
+         	   toolbarPath="BasicCFEditorCommand"
+               definitionId="com.rohanclan.cfml.editors.actions.GetHelp"
+               label="Get Tag Help"
+               icon="icons/ctool16/help.gif"
+               tooltip="Get tag and function help"
+               class="com.rohanclan.cfml.editors.actions.GetHelpAction"
+               id="com.rohanclan.cfml.editors.actions.GetHelpAction">
+         </action> -->
+      </editorContribution>
+   </extension>
+
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- popup menu -->
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            targetID="#CFMLEditorContext"
+            id="org.eclipse.ui.articles.action.contribution.popup.editor">
+         <action label="Comment"
+               class="com.rohanclan.cfml.editors.actions.AutoCommentAction"
+               menubarPath="additions"
+               id="com.rohanclan.cfml.editors.actions.AutoCommentAction">
+         </action>
+      </viewerContribution>
+   </extension>
+
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Commands -->
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Laszlo Editor"
+            description="Laszlo Editor key bindings"
+            id="org.cfeclipse.laszlo.commandCategory">
+      </category>
+	<!-- comment based on section (i.e. js comments in js blocks, etc) -->
+      <command
+            name="Insert Auto Comment"
+            description="Insert a comment based on section."
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.AutoComment">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+C"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.AutoComment"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- enclose in single quotes -->
+      <command
+            name="Single Quotes"
+            description="Surround with Single Quotes"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.CFSingleQuote">
+      </command>
+      <keyBinding
+            string="Ctrl+&apos;"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.CFSingleQuote"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- enclose in double quotes -->
+      <command
+            name="Double Quotes"
+            description="Surround with double quotes"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+&apos;"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- to lower case -->
+      <command
+            name="To Lower"
+            description="Lower case selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.ToLowerCase">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+L"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.ToLowerCase"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- to upper case -->
+      <command
+            name="To Upper"
+            description="Upper case selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.ToUpperCase">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+U"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.ToUpperCase"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- Insert Color -->
+      <command
+            name="Insert Color"
+            description="Insert a color"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertColor">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+Z"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.InsertColor"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- insert date -->
+      <command
+            name="Insert Date"
+            description="Insert the current date"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertDate">
+      </command>
+      <!-- insert an html br action (for Brian Sadler) -->
+      <command
+            name="Insert br Tag"
+            description="Insert a br tag"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertBR">
+      </command>
+      <keyBinding
+            string="Ctrl+Enter"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.InsertBR"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- insert an html nbsp action 
+      <command
+            name="Insert nbsp Entity Reference"
+            description="Insert an nbsp Entity Reference"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertNBSP">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+Space"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.InsertNBSP"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding> -->
+      <!-- Reload the syntax dictionaries -->
+      <command
+            name="Reload Dictionaries"
+            description="Reload syntax dictionaries"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.ReloadDictionaries">
+      </command>
+      <keyBinding
+            string="ctrl+F5"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- refresh the browser -->
+      <command
+            name="Refresh Browser"
+            description="Refresh Browser View"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.RefreshBrowser">
+      </command>
+      <keyBinding
+            string="F5"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.RefreshBrowser"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- insert a snippet -->
+      <command
+            name="Insert Snippet"
+            description="Insert Snippet"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertSnippet">
+      </command>
+      <keyBinding
+            string="Ctrl+i"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.InsertSnippet"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- Go and Get Help 
+      <command
+            name="Get Help"
+            description="Goes to http://www.cfdocs.org to get the tag or function reference"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.GetHelp">
+      </command>
+      <keyBinding
+            string="F1"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.GetHelp"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding> -->
+	<!-- this will toggle the expand/collapse state of  the selected block -->
+      <command
+            name="Toggle selection"
+            description="Toggle the collapse/expand state of the selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection">
+      </command>
+      <keyBinding
+            string="Ctrl+\"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- This will expand selected block -->
+      <command
+            name="Expand selection"
+            description="Expand the selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
+      </command>
+      <keyBinding
+            keySequence="Ctrl++"
+            contextId="org.eclipse.ui.textEditorScope"
+            commandId="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- This will collapse selected block -->
+      <command
+            name="Collapse selection"
+            description="Collapse the selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection">
+      </command>
+      <keyBinding
+            keySequence="Ctrl+-"
+            contextId="org.eclipse.ui.textEditorScope"
+            commandId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+   </extension>
 </plugin>

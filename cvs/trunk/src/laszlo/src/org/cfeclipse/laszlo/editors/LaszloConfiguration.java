@@ -64,14 +64,16 @@ public class LaszloConfiguration extends CFConfiguration {
 	{
 		Token textToken = new Token(
 			new TextAttribute(
-				colorManager.getColor(
-					preferenceManager.getColor(
+				super.colorManager.getColor(
+					super.preferenceManager.getColor(
 							CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT
 					)
 				)
 			)
 		);
-		LaszloScriptScanner scriptscanner = new LaszloScriptScanner(colorManager, preferenceManager);
+		LaszloScriptScanner scriptscanner = new LaszloScriptScanner(
+			super.colorManager, super.preferenceManager
+		);
 		scriptscanner.setDefaultReturnToken(textToken);
 		return scriptscanner;
 	}

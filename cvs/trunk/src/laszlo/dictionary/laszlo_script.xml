@@ -7,7 +7,7 @@
 	<tags />
 	
 	<functions>
-		
+		<!-- 
 		<function creator="4" name="Test.assertEquals" returns="void">
 			<help>Assert that an actual value equals (==) an expected value.</help>
 			<parameter name="expected" type="Object" required="true">
@@ -20,7 +20,7 @@
 				<help>(optional) the failure message</help>
 			</parameter>
 		</function>
-		
+		-->
 	</functions>
 	
 	<scopes />
