@@ -24,23 +24,19 @@
  */
 package com.rohanclan.coldfusionmx.dictionary;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
 /**
  * @author Rob
  *
- * This is a function. Functions are like attribtues except they have a return
- * type (and the values have return types but thats not our problem hehe)
+ * This is a function. Functions are like tags except they have a return
+ * type
  */
-public class Function extends Attribute {
-	/** functions need the void type */
-	public static final String VOID = "void";
-	/** return type */
-	protected String returns = VOID;
+public class Function extends Procedure {
 	
-	/** what platform this function is avaiable on 
-	 * this is kind of lame, but it uses the same values
-	 * as Tag - so use those Tag.MX Tag.BD etc
-	 */
-	protected byte creator = Tag.MX;
+	/** return type */
+	protected String returns = Procedure.VOID;
 	
 	/**
 	 * creates a function with only a name
@@ -58,15 +54,52 @@ public class Function extends Attribute {
 	}
 	
 	/**
+	 * Function needs to override because param order is
+	 * important (makes parameters a LinkedHashSet)
+	 */
+	public void addParameter(Parameter param)
+	{
+		if(parameters == null)
+			parameters = new LinkedHashSet();
+		
+		parameters.add(param);
+	}
+	
+	/**
 	 * creates a function with a name and a type
 	 * @param name the name
 	 * @param type the type typically string numeric or object
 	 */
 	public Function(String name, String returntype, byte creator)
 	{
-		//super(name,type);
-		super(name);
-		this.creator = creator;
+		this(name,creator);
 		this.returns = returntype;
+	}
+	
+	/**
+	 * override toString to auto format the function
+	 */
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+		Iterator it = parameters.iterator();
+		
+		sb.append(this.returns + " ");
+		sb.append(this.name + "(");
+		if(parameters != null)
+		{
+			while(it.hasNext())
+			{
+				Parameter pm = (Parameter)it.next();
+				if(!pm.isRequired()) sb.append("[");
+				sb.append(pm.getType() + " " + pm.getName());
+				if(!pm.isRequired()) sb.append("]");
+				sb.append(", ");
+			}
+			sb.delete(sb.length()-2,sb.length());
+		}
+		sb.append(")");
+		
+		return sb.toString();
 	}
 }

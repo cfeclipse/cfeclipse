@@ -39,6 +39,10 @@ public class Value {
 		value = val;
 	}
 	
+	/**
+	 * gets this values value
+	 * @return the value
+	 */
 	public String getValue()
 	{
 		return value;

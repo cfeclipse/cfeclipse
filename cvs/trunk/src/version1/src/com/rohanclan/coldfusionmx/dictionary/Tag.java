@@ -24,8 +24,8 @@
  */
 package com.rohanclan.coldfusionmx.dictionary;
 
-import java.util.Set;
-import java.util.HashSet;
+//import java.util.Set;
+//import java.util.HashSet;
 
 /**
  * @author Rob
@@ -33,88 +33,45 @@ import java.util.HashSet;
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class Tag {
-	/** tag for MX */
-	public static final byte MX  = 0x1;
-	/** tag for BlueDragon */
-	public static final byte BD  = 0x2;
-	/** w3c tag (normal html etc) */
-	public static final byte W3C = 0x4;
-	/** user defined tag */
-	public static final byte USR = 0x8;
-	
+public class Tag extends Procedure {
 	protected boolean single = false;
 	protected boolean xmlstyle = false;
-	protected String name = "";
-	protected byte creator = MX;
-	protected String help = "";
-	
-	protected Set attributes = null;
-	
-	public Tag(String name)
-	{
-		this.name = name;
-	}
 	
 	public Tag(String name, boolean single)
 	{
-		this(name);
+		super(name);
 		this.single = single;
 	}
 	
-	public Tag(String name, boolean single, byte creator)
+	public Tag(String name, boolean single, boolean style, byte creator)
 	{
-		this(name,single);
+		this(name, single);
 		this.creator = creator;
+		xmlstyle = style;
 	}
 	
 	/**
-	 * Gets the defined users of this tag. For example
-	 * 3 is both MX and BD
-	 * @return who can use this tag
+	 * Is this tag a sinlge tag or does it have a closing
+	 * counter part?
+	 * @return if single or not
 	 */
-	public byte getCreatorFlags()
+	public boolean isSingle()
 	{
-		return creator;
+		return single;
 	}
-	
+
 	/**
-	 * Adds an attribute to this tag
-	 * @param attr the attribute
+	 * Is this tag in xml style (mostly used with is single to tell
+	 * if the tag shoule be &lt;tag&gt; or &lt;tag/&gt;
+	 * @return if xml style or not
 	 */
-	public void addAttribute(Attribute attr)
+	public boolean isXMLStyle()
 	{
-		if(attributes == null)
-			attributes = new HashSet();
-		
-		attributes.add(attr);
-	}
-	
-	/**
-	 * get all the values for this attribute
-	 */
-	public Set getAttributes()
-	{
-		return attributes;
-	}
-	
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	public void setHelp(String help)
-	{
-		this.help = help;
-	}
-	
-	public String getHelp()
-	{
-		return help;
+		return xmlstyle;
 	}
 	
 	public String toString()
 	{
-		return "[" + name + ":" + attributes.toString() + "]";
+		return name;
 	}
 }
