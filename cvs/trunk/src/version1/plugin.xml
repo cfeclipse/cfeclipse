@@ -567,6 +567,12 @@
             class="com.rohanclan.cfml.views.cfcmethods.CFCMethodsView"
             id="com.rohanclan.cfml.views.cfcmethods.CFCMethodsView">
       </view>
+      <view
+            class="com.rohanclan.cfml.views.packageview.PackageView"
+            icon="icons/sample.gif"
+            category="com.rohanclan.cfml"
+            name="Package View"
+            id="com.rohanclan.cfml.views.packageview.PackageView"/>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- help -->
