@@ -27,7 +27,7 @@ package com.rohanclan.cfml.perspective;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
-import com.rohanclan.cfml.views.SnipView;
+//import com.rohanclan.cfml.views.SnipView;
 import com.rohanclan.cfml.views.snips.SnipTreeView;
 
 /**
@@ -59,9 +59,9 @@ public class CFPerspective implements IPerspectiveFactory {
 		);
 	
 		bottom.addView(IPageLayout.ID_TASK_LIST);
-		bottom.addView(IPageLayout.ID_BOOKMARKS);
 		bottom.addView(IPageLayout.ID_PROBLEM_VIEW);
-		
+		bottom.addView(IPageLayout.ID_BOOKMARKS);
+				
 		//views to the right
 		IFolderLayout right = layout.createFolder(
 			"right", IPageLayout.RIGHT, (float)0.75, editorid
@@ -76,7 +76,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
 		layout.addShowViewShortcut(IPageLayout.ID_TASK_LIST);
 		layout.addShowViewShortcut(IPageLayout.ID_BOOKMARKS);
-		layout.addShowViewShortcut(SnipView.ID_SNIPVIEW);
+		//layout.addShowViewShortcut(SnipView.ID_SNIPVIEW);
 		layout.addShowViewShortcut(SnipTreeView.ID_SNIPVIEWTREE);
 		
 		//add wizards here
