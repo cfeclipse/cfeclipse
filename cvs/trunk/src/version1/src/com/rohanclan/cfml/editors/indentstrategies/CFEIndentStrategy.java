@@ -40,8 +40,7 @@ import com.rohanclan.cfml.editors.CFMLEditor;
  */
 public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 
-	private boolean dreamweaverCompatibility = false;
-	private boolean homesiteCompatibility = false;
+	private boolean tabIndentSingleLine = false;
 	protected String indentString = "\t";
 	
 	protected CFMLEditor editor;
@@ -99,18 +98,13 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
         return text;
     }	
 	
-	public void setDreamweaverCompatibility(boolean compatibility) {
-		dreamweaverCompatibility = compatibility;
-	//System.out.println("Dreamweaver compatibility set to: "+compatibility);
+	public void setTabIndentSingleLine(boolean state) {
+		tabIndentSingleLine = state;
 	}
 	
-	public void setHomesiteCompatibility(boolean compatibility) {
-		homesiteCompatibility = compatibility;
-	//System.out.println("Homesite compatibility set to: "+compatibility);
-	}
 
-	public boolean getHomesiteCompatibility() { return this.homesiteCompatibility; }
-	public boolean getDreamweaverCompatibility() { return this.dreamweaverCompatibility; }
+	public boolean getTabIndentSingleLine() { return this.tabIndentSingleLine; }
+	
 	
 	protected void singleLineIndent(IDocument d, DocumentCommand c) 
 	{
@@ -123,7 +117,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 			String selectedText = textSelection.getText();
 			//System.out.println("Command offset: |"+c.offset+"|");
 			//System.out.println("Command caret offset: |"+c.caretOffset+"|");
-		 	if (selectedText.length() > 0 && (getDreamweaverCompatibility() || getHomesiteCompatibility())) {
+		 	if (selectedText.length() > 0 && (getTabIndentSingleLine())) {
 
 				try {
 					// Find the start of the line

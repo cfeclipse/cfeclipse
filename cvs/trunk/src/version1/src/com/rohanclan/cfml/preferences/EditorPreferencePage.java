@@ -25,13 +25,9 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.help.WorkbenchHelp;
+import org.eclipse.swt.SWT;
 
 import com.rohanclan.cfml.CFMLPlugin;
-
-// Referenced classes of package org.eclipse.ui.internal.editors.text:
-//			TextEditorMessages, EditorsPlugin, OverlayPreferenceStore, ColorEditor, 
-//			StatusInfo
 
 public class EditorPreferencePage extends PreferencePage
 	implements IWorkbenchPreferencePage
@@ -39,17 +35,20 @@ public class EditorPreferencePage extends PreferencePage
 
 	private final String fAppearanceColorListModel[][] = {
 		{
-			"Line numbers", "lineNumberColor" , "AbstractTextEditor.Color.SelectionForeground.SystemDefault"
+			"Editor Background", EditorPreferenceConstants.P_COLOR_BACKGROUND, null
+		},
+		{
+			"Line numbers",  EditorPreferenceConstants.P_LINE_NUMBER_COLOR, null
 		}, {
-			"Current line highlight", "currentLineColor", "AbstractTextEditor.Color.SelectionForeground.SystemDefault"
+			"Current line highlight",  EditorPreferenceConstants.P_CURRENT_LINE_COLOR, null
 		}, {
-			"Bracket highlighting", ICFMLPreferenceConstants.P_BRACKET_MATCHING_COLOR, "AbstractTextEditor.Color.SelectionForeground.SystemDefault"
+			"Bracket highlighting",  EditorPreferenceConstants.P_BRACKET_MATCHING_COLOR, null
 		}, {
-			"Print margin", "printMarginColor", "AbstractTextEditor.Color.SelectionBackground.SystemDefault"
+			"Print margin",  EditorPreferenceConstants.P_PRINT_MARGIN_COLOR, null
 		}, {
-			"Selection foreground color", "AbstractTextEditor.Color.SelectionForeground", "AbstractTextEditor.Color.SelectionForeground.SystemDefault"
+			"Selection foreground color",  EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR, EditorPreferenceConstants.P_SELECTION_FOREGROUND_SYSTEM_DEFAULT
 		}, {
-			"Selection background color", "AbstractTextEditor.Color.SelectionBackground", "AbstractTextEditor.Color.SelectionBackground.SystemDefault"
+			"Selection background color",  EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR, EditorPreferenceConstants.P_SELECTION_BACKGROUND_SYSTEM_DEFAULT
 		}
 	};
 	private OverlayPreferenceStore fOverlayStore = null;
@@ -111,27 +110,28 @@ public class EditorPreferencePage extends PreferencePage
 	private OverlayPreferenceStore createOverlayStore()
 	{
 		ArrayList overlayKeys = new ArrayList();
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "currentLineColor"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_MAX_UNDO_STEPS));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "currentLine"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "bracketMatchingEnabled"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "rTrimOnSave"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, "tabWidth"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, "insightDelay"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "tabsAsSpaces"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "printMarginColor"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, "printMarginColumn"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "printMargin"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "overviewRuler"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "lineNumberColor"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "lineNumberRuler"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "AbstractTextEditor.Accessibility.UseCustomCarets"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "AbstractTextEditor.Accessibility.WideCaret"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "AbstractTextEditor.Color.SelectionForeground"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "bracketMatchingColor"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "AbstractTextEditor.Color.SelectionForeground.SystemDefault"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "AbstractTextEditor.Color.SelectionBackground"));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "AbstractTextEditor.Color.SelectionBackground.SystemDefault"));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_COLOR_BACKGROUND));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_CURRENT_LINE_COLOR));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_MAX_UNDO_STEPS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_CURRENT_LINE_COLOR));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_RTRIM_ON_SAVE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_TAB_WIDTH));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_INSIGHT_DELAY));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_PRINT_MARGIN_COLOR));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_PRINT_MARGIN_SIZE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_LINE_NUMBER_COLOR));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_USE_WIDE_CARET));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_BRACKET_MATCHING_COLOR));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SELECTION_FOREGROUND_SYSTEM_DEFAULT));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SELECTION_BACKGROUND_SYSTEM_DEFAULT));
 		OverlayPreferenceStore.OverlayKey keys[] = new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
 		overlayKeys.toArray(keys);
 		return new OverlayPreferenceStore(getPreferenceStore(), keys);
@@ -146,7 +146,7 @@ public class EditorPreferencePage extends PreferencePage
 	{
 	   
 		super.createControl(parent);
-		WorkbenchHelp.setHelp(getControl(), "org.eclipse.ui.text_editor_preference_page_context");
+		
 	   
 	}
 
@@ -155,6 +155,7 @@ public class EditorPreferencePage extends PreferencePage
 		int i = fAppearanceColorList.getSelectionIndex();
 		String key = fAppearanceColorListModel[i][1];
 		org.eclipse.swt.graphics.RGB rgb = PreferenceConverter.getColor(fOverlayStore, key);
+	
 		fAppearanceColorEditor.setColorValue(rgb);
 		updateAppearanceColorWidgets(fAppearanceColorListModel[i][2]);
 	}
@@ -182,32 +183,32 @@ public class EditorPreferencePage extends PreferencePage
 		layout.numColumns = 2;
 		appearanceComposite.setLayout(layout);
 		String label = "&Print margin column:";
-		addTextField(appearanceComposite, label, "printMarginColumn", 3, 0, true);
+		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_PRINT_MARGIN_SIZE, 3, 0, true);
 		label = "Displayed &tab width:";
-		addTextField(appearanceComposite, label, "tabWidth", 3, 0, true);
+		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_TAB_WIDTH, 3, 0, true);
 		label = "Insight Delay:";
-		addTextField(appearanceComposite, label, "insightDelay", 4, 0, true);
+		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_INSIGHT_DELAY, 4, 0, true);
 		label = "Undo steps:";
-		addTextField(appearanceComposite, label, ICFMLPreferenceConstants.P_MAX_UNDO_STEPS, 4, 0, true);
+		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_MAX_UNDO_STEPS, 4, 0, true);
 		label = "Use spaces for tabs";
-		addCheckBox(appearanceComposite, label, "tabsAsSpaces", 0);
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS, 0);
 		label = "Trim trailing spaces before saving";
-		addCheckBox(appearanceComposite, label, "rTrimOnSave", 0);
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_RTRIM_ON_SAVE, 0);
 		label = "Enable bracket highlighting";
-		addCheckBox(appearanceComposite, label, "bracketMatchingEnabled", 0);
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED, 0);
 		label = "Show overview &ruler";
-		addCheckBox(appearanceComposite, label, "overviewRuler", 0);
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER, 0);
 		label = "Show lin&e numbers";
-		addCheckBox(appearanceComposite, label, "lineNumberRuler", 0);
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS, 0);
 		label = "Hi&ghlight current line";
-		addCheckBox(appearanceComposite, label, "currentLine", 0);
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_HIGHLIGHT_CURRENT_LINE, 0);
 		label = "Sho&w print margin";
-		addCheckBox(appearanceComposite, label, "printMargin", 0);
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN, 0);
 		label = "Use c&ustom caret";
-		Button master = addCheckBox(appearanceComposite, label, "AbstractTextEditor.Accessibility.UseCustomCarets", 0);
+		Button master = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, 0);
 		label = "Ena&ble thick caret";
-		Button slave = addCheckBox(appearanceComposite, label, "AbstractTextEditor.Accessibility.WideCaret", 0);
-		createDependency(master, "AbstractTextEditor.Accessibility.UseCustomCarets", slave);
+		Button slave = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_USE_WIDE_CARET, 0);
+		createDependency(master, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, slave);
 		Label l = new Label(appearanceComposite, 16384);
 		GridData gd = new GridData(256);
 		gd.horizontalSpan = 2;
@@ -256,8 +257,9 @@ public class EditorPreferencePage extends PreferencePage
 				fAppearanceColorEditor.getButton().setEnabled(!systemDefault);
 				int i = fAppearanceColorList.getSelectionIndex();
 				String key = fAppearanceColorListModel[i][2];
-				if(key != null)
+				if(key != null) 
 					fOverlayStore.setValue(key, systemDefault);
+					
 			}
 
 			public void widgetDefaultSelected(SelectionEvent selectionevent)
@@ -320,9 +322,9 @@ public class EditorPreferencePage extends PreferencePage
 	private void initialize()
 	{
 		initializeFields();
-		for(int i = 0; i < fAppearanceColorListModel.length; i++)
+		for(int i = 0; i < fAppearanceColorListModel.length; i++) {
 			fAppearanceColorList.add(fAppearanceColorListModel[i][0]);
-
+		}
 		fAppearanceColorList.getDisplay().asyncExec(new Runnable() {
 
 			public void run()
@@ -366,17 +368,17 @@ public class EditorPreferencePage extends PreferencePage
 
 	private void initializeDefaultColors()
 	{
-		if(!getPreferenceStore().contains("AbstractTextEditor.Color.SelectionBackground"))
+		if(!getPreferenceStore().contains(EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR))
 		{
-			org.eclipse.swt.graphics.RGB rgb = getControl().getDisplay().getSystemColor(26).getRGB();
-			PreferenceConverter.setDefault(fOverlayStore, "AbstractTextEditor.Color.SelectionBackground", rgb);
-			PreferenceConverter.setDefault(getPreferenceStore(), "AbstractTextEditor.Color.SelectionBackground", rgb);
+			org.eclipse.swt.graphics.RGB rgb = getControl().getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION).getRGB();
+			PreferenceConverter.setDefault(fOverlayStore, EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR, rgb);
+			PreferenceConverter.setDefault(getPreferenceStore(), EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR, rgb);
 		}
-		if(!getPreferenceStore().contains("AbstractTextEditor.Color.SelectionForeground"))
+		if(!getPreferenceStore().contains(EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR))
 		{
-			org.eclipse.swt.graphics.RGB rgb = getControl().getDisplay().getSystemColor(27).getRGB();
-			PreferenceConverter.setDefault(fOverlayStore, "AbstractTextEditor.Color.SelectionForeground", rgb);
-			PreferenceConverter.setDefault(getPreferenceStore(), "AbstractTextEditor.Color.SelectionForeground", rgb);
+			org.eclipse.swt.graphics.RGB rgb = getControl().getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION_TEXT).getRGB();
+			PreferenceConverter.setDefault(fOverlayStore, EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR, rgb);
+			PreferenceConverter.setDefault(getPreferenceStore(), EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR, rgb);
 		}
 	}
 

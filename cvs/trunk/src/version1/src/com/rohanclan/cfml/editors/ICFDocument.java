@@ -49,7 +49,8 @@ import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.parser.CommentParser;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.ParserPreferenceConstants;
 import com.rohanclan.cfml.util.ResourceUtils;
 import com.rohanclan.cfml.external.ExternalFile;
 
@@ -124,8 +125,8 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		{
 			
 		    IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
-			docParser.setCFScriptParsing(prefStore.getBoolean(ICFMLPreferenceConstants.P_PARSE_DOCFSCRIPT));
-			docParser.setReportErrors(prefStore.getBoolean(ICFMLPreferenceConstants.P_PARSE_REPORT_ERRORS));
+			docParser.setCFScriptParsing(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_DOCFSCRIPT));
+			docParser.setReportErrors(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS));
 			docStructure = docParser.parseDoc();
 			
 			commentParser.ParseDocument(this,lastRes);
@@ -216,7 +217,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		{
 			docParser = new CFParser(this, lastRes);
 			IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
-			docParser.setCFScriptParsing(prefStore.getBoolean(ICFMLPreferenceConstants.P_PARSE_DOCFSCRIPT));
+			docParser.setCFScriptParsing(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_DOCFSCRIPT));
 		}
 		else
 		{

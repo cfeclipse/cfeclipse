@@ -30,7 +30,7 @@ import org.eclipse.jface.text.rules.*;
 import com.rohanclan.cfml.editors.CFWhitespaceDetector;
 import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-
+import com.rohanclan.cfml.preferences.HTMLColorsPreferenceConstants;
 /**
  * @author Rob
  *
@@ -49,7 +49,7 @@ public class HTMTagScanner extends RuleBasedScanner {
 			new TextAttribute(
 				manager.getColor(
 					prefs.getColor(
-						CFMLPreferenceManager.P_COLOR_STRING
+							HTMLColorsPreferenceConstants.P_COLOR_STRING
 					)
 				)
 			)

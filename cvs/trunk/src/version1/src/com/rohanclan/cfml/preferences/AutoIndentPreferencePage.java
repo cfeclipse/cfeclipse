@@ -27,14 +27,14 @@ import com.rohanclan.cfml.CFMLPlugin;
  * @author Oliver Tupman
  *
  */
-public class ParsePrefPage	
+public class AutoIndentPreferencePage	
 		extends FieldEditorPreferencePage 
-		implements IWorkbenchPreferencePage, ICFMLPreferenceConstants 
+		implements IWorkbenchPreferencePage 
 {
 
 	CFMLPreferenceManager cfmlpm;
 	
-	public ParsePrefPage() 
+	public AutoIndentPreferencePage() 
 	{
 		super(GRID);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
@@ -44,13 +44,17 @@ public class ParsePrefPage
 	
 	public void createFieldEditors()
 	{
-		addField(new BooleanFieldEditor(P_AUTOCLOSE_DOUBLE_QUOTES, "Auto close \"s", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(P_AUTOCLOSE_SINGLE_QUOTES, "Auto close \'s", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(P_AUTOCLOSE_HASHES, "Auto close #s", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(P_AUTOCLOSE_TAGS, "Auto close tags (i.e. insert a closing \'>\')", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(P_AUTOINSERT_CLOSE_TAGS, "Auto insert a closing tag", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(P_AUTOINDENT_ONTAGCLOSE, "Auto-indent on tag close", getFieldEditorParent()));
-		
+		try {
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES, "Auto close \"s", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES, "Auto close \'s", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES, "Auto close #s", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS, "Auto close tags (i.e. insert a closing \'>\')", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS, "Auto insert a closing tag", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE, "Auto-indent on tag close", getFieldEditorParent()));
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	 protected void performDefaults() 

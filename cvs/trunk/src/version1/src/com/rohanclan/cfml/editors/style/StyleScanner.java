@@ -34,6 +34,8 @@ import org.eclipse.jface.text.rules.Token;
 import com.rohanclan.cfml.editors.ColorManager;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.rohanclan.cfml.preferences.HTMLColorsPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 //import com.rohanclan.coldfusionmx.editors.CFKeywordDetector;
 //import com.rohanclan.coldfusionmx.editors.SyntaxDictionary;
 
@@ -56,25 +58,25 @@ public class StyleScanner extends RuleBasedScanner {
 				
 		IToken styletag = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CSS)
+				prefs.getColor(HTMLColorsPreferenceConstants.P_COLOR_CSS)
 			)
 		));
 		
 		IToken cfcomment = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_HTM_COMMENT)
+				prefs.getColor(HTMLColorsPreferenceConstants.P_COLOR_HTM_COMMENT)
 			)
 		));
 		
 		IToken string = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_STRING)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_STRING)
 			)
 		));
 			
 		IToken cfkeyword = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_KEYWORD)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_KEYWORD)
 			)
 		));
 		

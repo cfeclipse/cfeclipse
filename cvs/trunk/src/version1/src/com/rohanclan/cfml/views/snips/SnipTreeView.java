@@ -50,7 +50,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.core.runtime.IPath;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.properties.CFMLPropertyManager;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import java.io.File;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -658,7 +658,7 @@ public class SnipTreeView extends ViewPart
 	public void propertyChange(PropertyChangeEvent event)
     {
 
-    	if (event.getProperty().equals(ICFMLPreferenceConstants.P_SNIPPETS_PATH)) {
+    	if (event.getProperty().equals(CFMLPreferenceConstants.P_SNIPPETS_PATH)) {
     		snipBase = new Path(propertyManager.snippetsPath());
     		treeViewer.setInput(getRootInput());
     	}

@@ -40,7 +40,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.ScribblePadPreferenceConstants;
 import com.rohanclan.cfml.views.browser.BrowserView;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
@@ -63,11 +64,11 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
 	{
 
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-        scribbleFileName = store.getString(ICFMLPreferenceConstants.P_SCRIBBLE_PAD_FILE);
-        scribbleProjectName = store.getString(ICFMLPreferenceConstants.P_SCRIBBLE_PROJECT_NAME);
-        clearOnLoad = store.getBoolean(ICFMLPreferenceConstants.P_SCRIBBLE_CLEAR_ON_LOAD);
-        loadBrowser = store.getBoolean(ICFMLPreferenceConstants.P_SCRIBBLE_LOAD_BROWSER);
-        scribbleURL = store.getString(ICFMLPreferenceConstants.P_SCRIBBLE_URL);
+        scribbleFileName = store.getString(ScribblePadPreferenceConstants.P_SCRIBBLE_PAD_FILE);
+        scribbleProjectName = store.getString(ScribblePadPreferenceConstants.P_SCRIBBLE_PROJECT_NAME);
+        clearOnLoad = store.getBoolean(ScribblePadPreferenceConstants.P_SCRIBBLE_CLEAR_ON_LOAD);
+        loadBrowser = store.getBoolean(ScribblePadPreferenceConstants.P_SCRIBBLE_LOAD_BROWSER);
+        scribbleURL = store.getString(ScribblePadPreferenceConstants.P_SCRIBBLE_URL);
         
         try {
         

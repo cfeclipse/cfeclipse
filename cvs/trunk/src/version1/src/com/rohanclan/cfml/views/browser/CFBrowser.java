@@ -63,7 +63,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.QualifiedName;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 public class CFBrowser{
@@ -73,6 +73,7 @@ public class CFBrowser{
 	protected Text location;
 	protected Browser browser;
 	private WorkbenchPart container;
+	private CFMLPreferenceManager preferenceManager;
 	
 	/**
 	 * Creates an instance of a ControlExample embedded inside the supplied
@@ -82,6 +83,7 @@ public class CFBrowser{
 	 */
 	public CFBrowser(Composite parent,WorkbenchPart container) 
 	{
+		preferenceManager = new CFMLPreferenceManager();
 		this.container = container;
 		//initResources();
 		final Display display = parent.getDisplay();
@@ -304,7 +306,7 @@ public class CFBrowser{
 			String url = getProjectURL();
 			if(url == null || url.equals(""))
 			{
-				browser.setUrl(CFMLPreferenceManager.DEFAULT_PROJECT_URL);
+				browser.setUrl(preferenceManager.defaultProjectURL());
 			}
 			else
 			{
@@ -314,7 +316,7 @@ public class CFBrowser{
 	}
 	
 	private String getProjectURL() {
-		String projectURL = CFMLPreferenceManager.DEFAULT_PROJECT_URL;
+		String projectURL = preferenceManager.defaultProjectURL();
 		
 		try 
 		{
@@ -325,7 +327,7 @@ public class CFBrowser{
 				IFileEditorInput input = (IFileEditorInput)editorPart.getEditorInput() ;
 				IFile file = input.getFile();
 				IProject activeProject = file.getProject();
-				QualifiedName propertyName = new QualifiedName("", ICFMLPreferenceConstants.P_PROJECT_URL);
+				QualifiedName propertyName = new QualifiedName("", CFMLPreferenceConstants.P_PROJECT_URL);
 				projectURL = activeProject.getPersistentProperty(propertyName);
 			}
 		}

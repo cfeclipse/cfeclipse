@@ -90,36 +90,36 @@ public class FoldingPreferencePage extends PreferencePage
 	private OverlayPreferenceStore createOverlayStore()
 	{
 		ArrayList overlayKeys = new ArrayList();
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_ENABLE_CODE_FOLDING));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, ICFMLPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_CFMLCOMMENTS_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_CFMLCOMMENTS_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_HTMLCOMMENTS_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_HTMLCOMMENTS_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG1_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG1_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG1_NAME));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG2_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG2_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG2_NAME));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG3_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG3_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG3_NAME));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG4_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG4_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG4_NAME));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG5_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG5_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG5_NAME));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG6_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG6_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG6_NAME));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG7_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG7_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG7_NAME));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG8_COLLAPSE));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, ICFMLPreferenceConstants.P_FOLDING_TAG8_FOLD));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_FOLDING_TAG8_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_ENABLE_CODE_FOLDING));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, FoldingPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_CFMLCOMMENTS_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_CFMLCOMMENTS_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_HTMLCOMMENTS_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_HTMLCOMMENTS_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG1_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG1_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG1_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG2_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG2_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG2_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG3_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG3_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG3_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG4_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG4_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG4_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG5_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG5_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG5_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG6_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG6_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG6_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG7_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG7_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG7_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG8_COLLAPSE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG8_FOLD));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG8_NAME));
 		OverlayPreferenceStore.OverlayKey keys[] = new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
 		overlayKeys.toArray(keys);
 		return new OverlayPreferenceStore(getPreferenceStore(), keys);
@@ -151,13 +151,13 @@ public class FoldingPreferencePage extends PreferencePage
 		
 		// Enable/Disable Code Folding
 		String label = "Enable code folding:";
-		addCheckBox(appearanceComposite, label, ICFMLPreferenceConstants.P_ENABLE_CODE_FOLDING, 4);
+		addCheckBox(appearanceComposite, label, FoldingPreferenceConstants.P_ENABLE_CODE_FOLDING, 4);
 
 		createTable(appearanceComposite);
 		
 
 		label = "Minimum number of lines for folding:";
-		addTextField(appearanceComposite, label, ICFMLPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES, 2, 4, true);
+		addTextField(appearanceComposite, label, FoldingPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES, 2, 4, true);
 		
 		return appearanceComposite;
 	}

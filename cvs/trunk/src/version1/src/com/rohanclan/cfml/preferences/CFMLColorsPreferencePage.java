@@ -35,7 +35,7 @@ import com.rohanclan.cfml.CFMLPlugin;
  * @author Rob
  */
 public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implements 
-	IWorkbenchPreferencePage, ICFMLPreferenceConstants {
+	IWorkbenchPreferencePage {
 	
 	public CFMLColorsPreferencePage() 
 	{
@@ -53,20 +53,20 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 	public void createFieldEditors()
 	{
 
-		addField(new ColorFieldEditor(P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFCOMMENT,"CFML &Comment:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFTAG,"CFML &Tag:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFSTRING,"CFML St&ring:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFKEYWORD,"CFML &Keyword:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFNUMBER,"CFML &Number:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT,"CFML &Comment:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFTAG,"CFML &Tag:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSTRING,"CFML St&ring:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFKEYWORD,"CFML &Keyword:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFNUMBER,"CFML &Number:",getFieldEditorParent()));
 		
 		
-		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_TEXT,"CFScript Te&xt:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_KEYWORD,"CFScript Key&word:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_FUNCTION,"CFScript Funct&ion:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_STRING,"CFScript Strin&g:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_TEXT,"CFScript Te&xt:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_KEYWORD,"CFScript Key&word:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_FUNCTION,"CFScript Funct&ion:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_STRING,"CFScript Strin&g:",getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_COLOR_BACKGROUND,"Back&ground:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(EditorPreferenceConstants.P_COLOR_BACKGROUND,"Back&ground:",getFieldEditorParent()));
 	}
 	 
 	public void init(IWorkbench workbench){;}

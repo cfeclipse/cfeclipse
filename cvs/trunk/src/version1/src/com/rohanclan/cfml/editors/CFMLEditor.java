@@ -78,7 +78,8 @@ import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.widgets.MessageBox;
@@ -125,7 +126,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	 */
 	public void doSave(IProgressMonitor monitor) {
 		//On save parsing should apparently go into a builder.
-	    if (getPreferenceStore().getBoolean("rTrimOnSave")) {
+	    if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED)) {
 	        
 	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(false);
 	        RTrimAction trimAction = new RTrimAction();
@@ -207,6 +208,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		setPreferenceStore(EditorsPlugin.getDefault().getPreferenceStore());
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);
+
 	}
 	
 	public void createPartControl(Composite parent) 
@@ -323,40 +325,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		//addAction(menu,ITextEditorActionConstants.LOWER_CASE);
 	}
 
-	
-	/*
-	public void createFolding() {
-	    ICFDocument doc = (ICFDocument)this.getDocumentProvider().getDocument(this.getEditorInput());
-		
-	    CFParser parser = doc.getParser();
-	    IDocumentPartitioner partitioner = doc.getDocumentPartitioner();
-		ITypedRegion[] regionArray  = partitioner.computePartitioning(0,doc.getLength());
-
-        ProjectionAnnotationModel model= (ProjectionAnnotationModel) getAdapter(ProjectionAnnotationModel.class);
-		
-		
-		for (int i = 0;i<regionArray.length;i++) {
-		    ITypedRegion region = regionArray[i];
-		    System.out.println(region.getType());
-		    if (region.getType() == CFPartitionScanner.CF_COMMENT) {
-		        Position position= new Position(region.getOffset(), region.getLength());
-				model.addAnnotation(new ProjectionAnnotation(true), position);
-		        
-		    }
-		}
-		
-        
-
-	}
-	*/
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Add menu items based on the tag that was right clicked on... doesnt work
@@ -579,7 +547,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 									this.getSourceViewer().getTextWidget()
 											.getDisplay(),
 									manager
-											.getColor(ICFMLPreferenceConstants.P_COLOR_BACKGROUND)));
+											.getColor(EditorPreferenceConstants.P_COLOR_BACKGROUND)));
 		}
 	}	
 	
@@ -595,8 +563,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		support.setCharacterPairMatcher(cfmlBracketMatcher);
 		
 		//register the brackets and colors
-		support.setMatchingCharacterPainterPreferenceKeys(ICFMLPreferenceConstants.P_BRACKET_MATCHING_ENABLED,
-				ICFMLPreferenceConstants.P_BRACKET_MATCHING_COLOR );
+		support.setMatchingCharacterPainterPreferenceKeys(EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED,
+				EditorPreferenceConstants.P_BRACKET_MATCHING_COLOR );
 		support.install(this.getPreferenceStore());
 		
 		super.configureSourceViewerDecorationSupport(support);

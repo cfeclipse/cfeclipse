@@ -214,6 +214,7 @@ class OverlayPreferenceStore
 		} else
 		if(STRING == d)
 		{
+
 			if(forceInitialization)
 				target.setValue(key.fKey, "1");
 			target.setValue(key.fKey, orgin.getString(key.fKey));
@@ -223,7 +224,7 @@ class OverlayPreferenceStore
 
 	public void load()
 	{
-		for(int i = 0; i < fOverlayKeys.length; i++)
+		for(int i = 0; i < fOverlayKeys.length; i++) 
 			loadProperty(fParent, fOverlayKeys[i], fStore, true);
 
 		fLoaded = true;

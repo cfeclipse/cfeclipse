@@ -856,20 +856,20 @@
             id="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage">
       </page>
       <page
-            class="com.rohanclan.cfml.preferences.AutoIndentPrefPage"
+            class="com.rohanclan.cfml.preferences.ParserPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             name="File parser"
-            id="com.rohanclan.cfml.preferences.AutoIndentPrefPage"/>
+            id="com.rohanclan.cfml.preferences.ParserPreferencePage"/>
       <page
-            class="com.rohanclan.cfml.preferences.ParsePrefPage"
+            class="com.rohanclan.cfml.preferences.AutoIndentPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             name="Auto-insertion and closing"
-            id="com.rohanclan.cfml.preferences.ParsePrefPage"/>
+            id="com.rohanclan.cfml.preferences.AutoIndentPreferencePage"/>
       <page
-            class="com.rohanclan.cfml.preferences.ScribblePadPrefPage"
+            class="com.rohanclan.cfml.preferences.ScribblePadPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             name="Scribble pad"
-            id="com.rohanclan.cfml.preferences.ScribblePrefPage"/>
+            id="com.rohanclan.cfml.preferences.ScribblePreferencePage"/>
       <page
             class="com.rohanclan.cfml.preferences.EditorPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"

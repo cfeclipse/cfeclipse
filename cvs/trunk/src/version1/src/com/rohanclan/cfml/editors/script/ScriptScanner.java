@@ -48,6 +48,8 @@ import java.util.List;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.rohanclan.cfml.preferences.HTMLColorsPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 
 /**
  * @author Rob
@@ -62,19 +64,19 @@ public class ScriptScanner extends RuleBasedScanner {
 		
 		IToken defaulttoken = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT)
 			)
 		));
 		
 		IToken cfnumber = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFNUMBER)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFNUMBER)
 			)
 		));
 		
 		IToken scripttag = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_JSCRIPT_TEXT)
+				prefs.getColor(HTMLColorsPreferenceConstants.P_COLOR_JSCRIPT_TEXT)
 			)
 		));
 		/*
@@ -85,25 +87,25 @@ public class ScriptScanner extends RuleBasedScanner {
 		
 		IToken comment = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_HTM_COMMENT)
+				prefs.getColor(HTMLColorsPreferenceConstants.P_COLOR_HTM_COMMENT)
 			)
 		));
 		
 		IToken string = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_STRING)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_STRING)
 			)
 		));
 		
 		IToken keyword = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_KEYWORD)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_KEYWORD)
 			)
 		));
 		
 		IToken function = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_JSCRIPT_FUNCTION)
+				prefs.getColor(HTMLColorsPreferenceConstants.P_COLOR_JSCRIPT_FUNCTION)
 			)
 		));
 						

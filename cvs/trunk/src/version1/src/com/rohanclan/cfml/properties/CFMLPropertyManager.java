@@ -28,7 +28,7 @@ package com.rohanclan.cfml.properties;
 import org.eclipse.jface.preference.PreferenceStore;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import java.io.IOException;
 
 /**
@@ -36,7 +36,7 @@ import java.io.IOException;
  *
  * This controls the properies for the per project settings
  */
-public class CFMLPropertyManager implements ICFMLPreferenceConstants {
+public class CFMLPropertyManager {
 	/**
 	 * 
 	 */
@@ -59,13 +59,13 @@ public class CFMLPropertyManager implements ICFMLPreferenceConstants {
 	
 	
 	public void initializeDefaultValues() {
-        store.setDefault(P_SNIPPETS_PATH, preferenceManager.snippetsPath());
-        store.setDefault(P_PROJECT_URL, preferenceManager.projectURL());
+        store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
+        store.setDefault(CFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.defaultProjectURL());
 	}
 	
 	
 	public String snippetsPath() {
-		return store.getString(ICFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
+		return store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
 	}
 	
 	public String defaultSnippetsPath() {
@@ -73,7 +73,7 @@ public class CFMLPropertyManager implements ICFMLPreferenceConstants {
 	}
 	
 	public void setSnippetsPath(String path) {
-		store.setValue(ICFMLPreferenceConstants.P_SNIPPETS_PATH,path);
+		store.setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH,path);
 		try {
 			store.save();
 		}
@@ -85,15 +85,15 @@ public class CFMLPropertyManager implements ICFMLPreferenceConstants {
 	
 	
 	public String projectURL() {
-		return store.getString(ICFMLPreferenceConstants.P_PROJECT_URL).trim();
+		return store.getString(CFMLPreferenceConstants.P_PROJECT_URL).trim();
 	}
 	
 	public String defaultProjectURL() {
-		return preferenceManager.projectURL();
+		return preferenceManager.defaultProjectURL();
 	}
 	
 	public void setProjectURL(String path) {
-		store.setValue(ICFMLPreferenceConstants.P_PROJECT_URL,path);
+		store.setValue(CFMLPreferenceConstants.P_PROJECT_URL,path);
 		try {
 			store.save();
 		}

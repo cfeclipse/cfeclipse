@@ -65,7 +65,11 @@ import com.rohanclan.cfml.editors.partitioner.scanners.TextScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.AutoIndentPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
+import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
+import com.rohanclan.cfml.preferences.HTMLColorsPreferenceConstants;
+import com.rohanclan.cfml.preferences.ParserPreferenceConstants;
 
 /**
  * <p>
@@ -97,13 +101,12 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 */
 	private void configTagIndentStrat() {
 		indentTagStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
-		indentTagStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
-		indentTagStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
-		indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
-		indentTagStrategy.setAutoClose_SingleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES));
-		indentTagStrategy.setAutoClose_Hashes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_HASHES));
-		indentTagStrategy.setAutoClose_Tags(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_TAGS));
-		indentTagStrategy.setAutoInsert_CloseTags(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS));
+		indentTagStrategy.setTabIndentSingleLine(preferenceManager.tabIndentSingleLine());
+		indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
+		indentTagStrategy.setAutoClose_SingleQuotes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES));
+		indentTagStrategy.setAutoClose_Hashes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES));
+		indentTagStrategy.setAutoClose_Tags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS));
+		indentTagStrategy.setAutoInsert_CloseTags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS));
 		//indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
 	}
 	
@@ -123,8 +126,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		tabWidth = preferenceManager.tabWidth();
 		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
 		indentCFScriptStrategy.setIndentString(tabWidth,insertSpacesForTabs);
-		indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
-		indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
+		indentCFScriptStrategy.setTabIndentSingleLine(preferenceManager.tabIndentSingleLine());
 		configTagIndentStrat();
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
@@ -207,7 +209,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT
+							CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT
 					)
 				) 
 			)
@@ -230,7 +232,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_HTM_TAG
+						HTMLColorsPreferenceConstants.P_COLOR_HTM_TAG
 					)
 				)
 			)
@@ -253,7 +255,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_UNK_TAG
+						HTMLColorsPreferenceConstants.P_COLOR_UNK_TAG
 					)
 				)
 			)
@@ -275,7 +277,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_CFTAG
+							CFMLColorsPreferenceConstants.P_COLOR_CFTAG
 					)
 				)
 			)
@@ -297,7 +299,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_CFSCRIPT_TEXT
+							CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_TEXT
 					)
 				)
 			)
@@ -318,7 +320,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_CSS
+						HTMLColorsPreferenceConstants.P_COLOR_CSS
 					)
 				)
 			)
@@ -339,7 +341,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT
+							CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT
 					)
 				)
 			)
@@ -360,7 +362,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_HTM_FORM_TAG
+						HTMLColorsPreferenceConstants.P_COLOR_HTM_FORM_TAG
 					)
 				)
 			)
@@ -381,7 +383,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_HTM_TABLE_TAG
+						HTMLColorsPreferenceConstants.P_COLOR_HTM_TABLE_TAG
 					)
 				)
 			)
@@ -461,7 +463,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_CFCOMMENT
+							CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT
 					)
 				)
 			)
@@ -474,7 +476,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_HTM_COMMENT
+						HTMLColorsPreferenceConstants.P_COLOR_HTM_COMMENT
 					)
 				)
 			)
@@ -487,7 +489,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			new TextAttribute(
 				colorManager.getColor(
 					preferenceManager.getColor(
-						CFMLPreferenceManager.P_COLOR_HTM_COMMENT
+						HTMLColorsPreferenceConstants.P_COLOR_HTM_COMMENT
 					)
 				)
 			)
@@ -649,44 +651,38 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 // System.out.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
     	
-		if(prop.equals("insightDelay")) {
+		if(prop.equals(EditorPreferenceConstants.P_INSIGHT_DELAY)) {
 			int delay = preferenceManager.insightDelay();
 			assistant.enableAutoActivation(true);			
 			assistant.setAutoActivationDelay(delay);
     			//System.err.println("Insight delay set to " + delay);
         }
-        else if(prop.equals("tabsAsSpaces") || prop.equals("tabWidth")) {
+        else if(prop.equals(EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS) || prop.equals(EditorPreferenceConstants.P_TAB_WIDTH)) {
 	    		tabWidth = preferenceManager.tabWidth();
 	    		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
 	        	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
 	        	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
         }
-        else if(prop.equals("dreamweaverCompatibility")) {
-        		indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
-        }
-        else if(prop.equals("homesiteCompatibility")) {
-        		indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
-        }
-        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES)) {
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES)) {
         		indentTagStrategy.setAutoClose_DoubleQuotes(((Boolean)event.getNewValue()).booleanValue());
         }
-        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES)) {
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES)) {
         		indentTagStrategy.setAutoClose_SingleQuotes(((Boolean)event.getNewValue()).booleanValue());
         }
-        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_HASHES)) {
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES)) {
         		indentTagStrategy.setAutoClose_Hashes(((Boolean)event.getNewValue()).booleanValue());
         }
-        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_TAGS)) {
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS)) {
         		indentTagStrategy.setAutoClose_Tags(((Boolean)event.getNewValue()).booleanValue());
         }
-        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
         		indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
         }
-        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
         	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
         	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
         }
-        else if(prop.equals(ICFMLPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
+        else if(prop.equals(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
 	        	boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
 	        	try {
 	        		CFMLPlugin.getWorkspace().getRoot().deleteMarkers(null, true, IResource.DEPTH_INFINITE);

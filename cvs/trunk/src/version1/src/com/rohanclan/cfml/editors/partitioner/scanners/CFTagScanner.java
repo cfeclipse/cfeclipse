@@ -40,6 +40,7 @@ import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.CFKeywordDetector;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -58,31 +59,31 @@ public class CFTagScanner extends RuleBasedScanner {
 		
 		IToken cftag = new Token(new TextAttribute(
 			manager.getColor(
-				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFTAG)
+				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFTAG)
 			)
 		));
 		
 		IToken string =	new Token(new TextAttribute(
 			manager.getColor(
-				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFSTRING)
+				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSTRING)
 			)
 		));
 		
 		IToken cfnumber = new Token(new TextAttribute(
 			manager.getColor(
-				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFNUMBER)
+				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFNUMBER)
 			)
 		));
 		
 		IToken cfkeyword = new Token(new TextAttribute(
 			manager.getColor(
-				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFKEYWORD)
+				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFKEYWORD)
 			)
 		));
 		
 		IToken cfdefault = new Token(new TextAttribute(
 			manager.getColor(
-				prefManager.getColor(CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT)
+				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT)
 			)
 		));
 		

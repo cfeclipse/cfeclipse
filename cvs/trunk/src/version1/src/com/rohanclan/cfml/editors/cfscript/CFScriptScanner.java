@@ -40,6 +40,7 @@ import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.CFKeywordDetector;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 
 import java.util.Iterator;
@@ -60,43 +61,43 @@ public class CFScriptScanner extends RuleBasedScanner {
 		
 		IToken cfnumber = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFNUMBER)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFNUMBER)
 			)
 		));
 		
 		IToken cftag = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFTAG)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFTAG)
 			)
 		));
 	
 		IToken cfcomment = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFCOMMENT)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT)
 			)
 		));
 		
 		IToken string = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSTRING)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSTRING)
 			)
 		));
 		
 		IToken cfkeyword = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFKEYWORD)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFKEYWORD)
 			)
 		));
 		
 		IToken cffunction = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_FUNCTION)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_FUNCTION)
 			)
 		));
 		
 		IToken cfdefault = new Token(new TextAttribute(
 			manager.getColor(
-				prefs.getColor(CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT)
+				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT)
 			)
 		));
 				

@@ -35,7 +35,7 @@ import com.rohanclan.cfml.CFMLPlugin;
  * @author Rob
  */
 public class HTMLColorsPreferencePage extends FieldEditorPreferencePage implements 
-	IWorkbenchPreferencePage, ICFMLPreferenceConstants {
+	IWorkbenchPreferencePage {
 		
 	public HTMLColorsPreferencePage() 
 	{
@@ -52,20 +52,20 @@ public class HTMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 	 */
 	public void createFieldEditors()
 	{
-		addField(new ColorFieldEditor(P_COLOR_HTM_COMMENT,"HTML &Comment:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_STRING,"HTML &String:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_HTM_TAG,"HTML &Tags:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_HTM_COMMENT,"HTML &Comment:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_STRING,"HTML &String:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_HTM_TAG,"HTML &Tags:",getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_COLOR_HTM_FORM_TAG,"&Form Tags:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_HTM_TABLE_TAG,"T&able Tags:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_HTM_FORM_TAG,"&Form Tags:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_HTM_TABLE_TAG,"T&able Tags:",getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_COLOR_JSCRIPT_TEXT,"&Javascript Tag:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_COLOR_JSCRIPT_FUNCTION,"Ja&vascript Function:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_JSCRIPT_TEXT,"&Javascript Tag:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_JSCRIPT_FUNCTION,"Ja&vascript Function:",getFieldEditorParent()));
 				
-		addField(new ColorFieldEditor(P_COLOR_CSS,"CSS Te&xt:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_CSS,"CSS Te&xt:",getFieldEditorParent()));
 		//addField(new ColorFieldEditor(P_COLOR_CSS_TAG,"CSS Val&ue:",getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_COLOR_UNK_TAG,"&Other Tags:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(HTMLColorsPreferenceConstants.P_COLOR_UNK_TAG,"&Other Tags:",getFieldEditorParent()));
 	}
 	
 	

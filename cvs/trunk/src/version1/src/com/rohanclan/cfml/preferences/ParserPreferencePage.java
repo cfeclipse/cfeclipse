@@ -15,13 +15,13 @@ import com.rohanclan.cfml.CFMLPlugin;
  * @author Oliver Tupman
  *
  */
-public class AutoIndentPrefPage
+public class ParserPreferencePage
 	extends FieldEditorPreferencePage
-	implements IWorkbenchPreferencePage, ICFMLPreferenceConstants {
+	implements IWorkbenchPreferencePage {
 
 	CFMLPreferenceManager cfmlpm;
 	
-	public AutoIndentPrefPage() 
+	public ParserPreferencePage() 
 	{
 		super(GRID);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
@@ -35,8 +35,8 @@ public class AutoIndentPrefPage
 	
 	public void createFieldEditors()
 	{
-		addField(new BooleanFieldEditor(P_PARSE_DOCFSCRIPT, "Parse CFScript (WARNING: HIGHLY EXPERIMENTAL.It WILL report incorrect ERRORS.)", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(P_PARSE_REPORT_ERRORS, "Report parse errors", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_PARSE_DOCFSCRIPT, "Parse CFScript (WARNING: HIGHLY EXPERIMENTAL.It WILL report incorrect ERRORS.)", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS, "Report parse errors", getFieldEditorParent()));
 
 	}
 	

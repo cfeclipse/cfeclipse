@@ -65,9 +65,7 @@ public class CFMLPreferencePage
 	extends PreferencePage
 	implements IWorkbenchPreferencePage, SelectionListener  {
 
-	
-	Button dreamweaverCompatibilityCheckBox;
-	Button homesiteCompatibilityCheckBox;
+
 	Button tabbedBrowserCheckBox;
 	CFMLPreferenceManager preferenceManager;
 	DirectoryFieldEditor snippetsPathField;
@@ -120,8 +118,6 @@ public class CFMLPreferencePage
         // Browser options
         createBrowserGroup(defPanel);
         
-        // Dreamweaver and Homesite options
-        createDWAndHSGroup(defPanel);
         
         // File paths
         createFilePathGroup(defPanel);
@@ -166,37 +162,6 @@ public class CFMLPreferencePage
     
 
 
-    
-    private void createDWAndHSGroup(Composite parent) {
-    	Group DWHSComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
-        GridLayout layout = new GridLayout();        
-        layout.numColumns = 3;              
-        DWHSComposite.setLayout(layout);
-        GridData gridData =
-            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
-        gridData.horizontalSpan = 3;
-        DWHSComposite.setLayoutData(gridData);        
-        
-        
-        DWHSComposite.setText("Dreamweaver and Homesite"); //$NON-NLS-1$
-        
-        // Dreamweaver
-        dreamweaverCompatibilityCheckBox = createLabeledCheck(
-                "Enable Dreamweaver compatibility", //$NON-NLS-1$
-                preferenceManager.dreamweaverCompatibility(), 
-				DWHSComposite);
-                   
-
-        
-        // Homesite
-
-        homesiteCompatibilityCheckBox = createLabeledCheck(
-            "Enable Homesite compatibility", //$NON-NLS-1$
-            preferenceManager.homesiteCompatibility(), 
-			DWHSComposite);
-    }
-    
-    
 
     
     private void createFilePathGroup(Composite parent) {
@@ -295,18 +260,14 @@ public class CFMLPreferencePage
     protected void performDefaults() {
         super.performDefaults();
         tabbedBrowserCheckBox.setSelection(preferenceManager.defaultTabbedBrowser());
-        dreamweaverCompatibilityCheckBox.setSelection(preferenceManager.defaultDreamweaverCompatibility());
-        homesiteCompatibilityCheckBox.setSelection(preferenceManager.defaultHomesiteCompatibility());
         snippetsPathField.setStringValue(preferenceManager.defaultSnippetsPath());
     }
 
 
     public boolean performOk() {
         IPreferenceStore store = getPreferenceStore();
-        store.setValue(ICFMLPreferenceConstants.P_TABBED_BROWSER, String.valueOf(tabbedBrowserCheckBox.getSelection()));
-        store.setValue(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY, String.valueOf(dreamweaverCompatibilityCheckBox.getSelection()));
-        store.setValue(ICFMLPreferenceConstants.P_ENABLE_HS_COMPATIBILITY, String.valueOf(homesiteCompatibilityCheckBox.getSelection()));
-        store.setValue(ICFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());
+        store.setValue(CFMLPreferenceConstants.P_TABBED_BROWSER, String.valueOf(tabbedBrowserCheckBox.getSelection()));
+        store.setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());
         return true;
     }
 
