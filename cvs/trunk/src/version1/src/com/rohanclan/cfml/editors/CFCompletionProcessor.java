@@ -156,27 +156,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			if(documentOffset > 0)	// Get the text that invoked content assist
 				invoker = document.get(documentOffset-1,1);
 			
-			// Stop the content assist from popping up if there are multiple spaces or tabs
-			// OBT - This is bad as it activates/deactivates content assist for the entire
-			//       editor. Content assist should only trigger/untrigger based upon each
-			//       call of the content assist. A content assist call should ideally
-			//       never affect the next call.
-			/*
-			 * Spike - I'm in agreement. This does more harm than good at the minute
-			 * so I'm commenting it out for now. Leaving it in the comments to remind
-			 * us to try to do something about the original problem.
-			 * 
-			 * TODO: Find a better way to fix this problem.
-			 * 
-			try {
-				if (document.get(documentOffset-2,2).matches("\\s+")){
-					assistant.enableAutoActivation(false);
-				} else {
-					assistant.enableAutoActivation(true);
-				}
-			}
-			catch (Exception e) {}
-			*/
 			
 			//this is because when they hit > it often moves them into
 			//another partiton type - so get the last partition
@@ -212,10 +191,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			String attribName = "";
 			while(st2.hasMoreTokens()) {
 			    fullAttrib = st2.nextToken().split("=");
-			    attribName = fullAttrib[0];
-			    attribs.add(attribName.trim());
+			    if (fullAttrib.length > 1 && fullAttrib[1].length() > 1) {
+				    attribName = fullAttrib[0];
+				    attribs.add(attribName.trim());
+			    }
 			}
-			
 			
 			
 			//if the tagname has the possibility of being a cf tag
@@ -300,21 +280,24 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		//we are probably in need of attribtue in sight
 		//clean up the text typed so far
 		
-		limiting = limiting.trim();
+	    String searchText = limiting.trim();
+		if (limiting.endsWith("=")) {
+		    searchText = limiting.substring(0,limiting.length()-1);
+		}
 		
 		//hacks hacks everywhere :) this looks to see if there are an
 		//odd number of " in the string prior to this invoke before 
 		//showing attribute insight. (to keep it from showing attributes
 		//inside of attributes)
 		String quote_parts[] = prefix.split("\"");
-		if(quote_parts.length % 2 != 0)				
+		if(quote_parts.length % 2 != 0)
 		{
 			//and return our best guess (tagname should have been defined
 			//up there ^
 			if(syntax != null && prefix.indexOf('>') < 0)
 			{
 			    //This is a nasty hack to filter out the attributes that have already been typed.
-			    Set proposalSet = syntax.getFilteredAttributes(tagname.trim(),limiting); 
+			    Set proposalSet = syntax.getFilteredAttributes(tagname.trim(),searchText); 
 			    Set toRemove = new HashSet();
 			    Iterator proposals = proposalSet.iterator();
 			    Iterator attributes;
@@ -324,7 +307,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			        attributes = attribs.iterator();
 			        while(attributes.hasNext()) {
 			            if (attributes.next().toString().equalsIgnoreCase(p.getName())) {
-			                System.out.println("Going to remove "+ p.getName());
 			                toRemove.add(p);
 			            }
 			        }
@@ -334,6 +316,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			    while (removals.hasNext()) {
 			        proposalSet.remove(removals.next());
 			    }
+			    
+			    
 			    
 				return makeSetToProposal(
 					proposalSet,
@@ -533,7 +517,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				}
 				else if(obj[i] instanceof Parameter)
 				{					
-					name = ((Parameter)obj[i]).getName();
+					name = ((Parameter)obj[i]).getName() + "=";
 					display = ((Parameter)obj[i]).toString();
 					//if(((Parameter)obj[i]).isRequired())
 					//	display += "*";
@@ -590,7 +574,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		switch(type)
 		{
 			case ATTRTYPE:
-				name += "=\"\"";
+				name += "\"\"";
 				insertlen = name.length() - 1;
 				img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
 				break;
