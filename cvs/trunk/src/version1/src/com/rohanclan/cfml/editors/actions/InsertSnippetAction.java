@@ -131,6 +131,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    
 			    String snippet = "";
 			    
+			    int finalCursorOffset = -1;
 			    
 			    for (int i=0; i < loopcount; i++) {
 			        start = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.editor.getSite().getShell());
@@ -153,6 +154,10 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 							try {
 							    doc.replace(lastSpaceOffset,sequence.length(),"");
 							    sel = new TextSelection(doc,offset-sequence.length(),0);
+							    // We only want the cursor coming back if there is something in the end block
+							    if (end.length() > 0) {
+							        finalCursorOffset = lastSpaceOffset + start.length();
+							    }
 							}	
 							catch (Exception e) {
 							    e.printStackTrace();
@@ -161,9 +166,14 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 					    else {
 					        sel = new TextSelection(doc,offset,0);
 					    }
+					    
 						editor.setHighlightRange(offset,0,true);
 				    }
 			    }
+			    if (finalCursorOffset > 0) {
+			        editor.setHighlightRange(finalCursorOffset,0,true);
+			    }
+			    
 			}
 		}
 	}
