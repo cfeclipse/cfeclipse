@@ -248,13 +248,15 @@ public class CodeFoldingSetter {
                 int length  = element.getLength();
                 int startLine = doc.getLineOfOffset(start);
                 int endLine = doc.getLineOfOffset(start+length);
+                int end = doc.getLineLength(endLine);
+                int stop = doc.getLineOffset(endLine) + end;
                 // Make sure our position starts at the start of the line
                 start = doc.getLineOffset(startLine);
                 length = length + element.getOffset()-doc.getLineOffset(startLine);
                 if (endLine - startLine > minLines) {
 	                try {
 	                    CommentProjectionAnnotation annotation = new CommentProjectionAnnotation(regionType);
-	                    addFoldingMark(markerMap, start, length, annotation, autoCollapse);
+	                    addFoldingMark(markerMap, start, stop-start, annotation, autoCollapse);
 	                } catch (BadLocationException e) {
 	                    e.printStackTrace();
 	                }

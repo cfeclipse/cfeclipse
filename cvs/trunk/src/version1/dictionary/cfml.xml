@@ -6857,7 +6857,7 @@
 				Controls aspects of page processing, such as the output of
 				HTML code in pages.
 			]]></help>
-			<parameter name="enablecfoutputonly" type="boolean" required="true">
+			<parameter name="enablecfoutputonly" type="boolean" required="false">
 				<help><![CDATA[
 					Yes: blocks output of HTML that is outside cfoutput tags
 					No: displays HTML that is outside cfoutput tags.
@@ -7430,7 +7430,7 @@
 				var = "variable_name"
 			/cftrace
 		-->
-		<tag name="cftrace" creator="1" single="false" xmlstyle="false">
+		<tag name="cftrace" creator="1" single="false" hybrid="true" xmlstyle="false">
 			<help><![CDATA[
 				Displays and logs debugging data about the state of an
 				application at the time the cftrace tag executes. Tracks

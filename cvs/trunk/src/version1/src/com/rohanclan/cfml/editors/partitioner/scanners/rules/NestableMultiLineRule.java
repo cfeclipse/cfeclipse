@@ -50,19 +50,21 @@ public class NestableMultiLineRule extends MultiLineRule {
 
 	protected boolean endSequenceDetected(ICharacterScanner scanner) {
 	    try {
-	    //CFPartitionScanner cfscanner = (CFPartitionScanner)scanner;
-	    
+	   
 		int c;
 		char[][] delimiters= scanner.getLegalLineDelimiters();
-		boolean previousWasEscapeCharacter = false;	
+		boolean previousWasEscapeCharacter = false;
+		int nextChar = scanner.read();
+		scanner.unread();
 		int nestedLevel = 1;
 		while ((c = scanner.read()) != ICharacterScanner.EOF) {
 			if (c == fEscapeCharacter) {
-				//System.out.println("Skipping an escape character.");
+				//System.out.println("Skipping an escape character." + fEscapeCharacter);
 				// Skip the escaped character.
 				scanner.read();
-			} else if (sequenceDetected(scanner, fStartSequence, true)) {
-				//System.out.println("Found a nested start sequence.");
+			} else if (nextChar == fStartSequence[0] 
+						&& sequenceDetected(scanner, fStartSequence, true)) {
+				// System.out.println("Found a nested start sequence." + new String(fStartSequence));
 			    // Check for a start sequence so the nesting gets updated correctly
 			    nestedLevel++;
 			    
@@ -108,10 +110,10 @@ public class NestableMultiLineRule extends MultiLineRule {
 		
 		} else {
 			
-			int c= scanner.read();
+			int c = scanner.read();
 			if (c == fStartSequence[0]) {
 				if (sequenceDetected(scanner, fStartSequence, false)) {
-					//System.out.println("Start sequence detected.");
+					//System.out.println("Start sequence detected." + new String(fStartSequence));
 				    scanner.read();
 					if (endSequenceDetected(scanner)) {
 					    return fToken;
@@ -122,6 +124,44 @@ public class NestableMultiLineRule extends MultiLineRule {
 		
 		scanner.unread();
 		return Token.UNDEFINED;
+	}
+	
+	
+	
+	
+
+	
+	/**
+	 * Returns whether the next characters to be read by the character scanner
+	 * are an exact match with the given sequence. No escape characters are allowed 
+	 * within the sequence. If specified the sequence is considered to be found
+	 * when reading the EOF character.
+	 *
+	 * @param scanner the character scanner to be used
+	 * @param sequence the sequence to be detected
+	 * @param eofAllowed indicated whether EOF terminates the pattern
+	 * @return <code>true</code> if the given sequence has been detected
+	 */
+	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
+		// Something has already detected that the first char matched. So we start at char 1 rather than 0
+		for (int i= 1; i < sequence.length; i++) {
+			int c= scanner.read();
+			//System.out.println("Checking " +  c + ", " + sequence[i]);
+			
+			if (c == ICharacterScanner.EOF && eofAllowed) {
+				return true;
+			} else if (c != sequence[i]) {
+				// Non-matching character detected, rewind the scanner back to the start.
+				// Do not unread the first character.
+				scanner.unread();
+				for (int j= i-1; j > 0; j--) {
+					scanner.unread();
+				}
+				return false;
+			}
+		}
+
+		return true;
 	}
 	
 }

@@ -213,6 +213,7 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
 					Font font = new Font(fTextWidget.getDisplay(),data);
 					gc.setFont(font);
 					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
+					font.dispose();
 					break;
 				}
 			}

@@ -122,8 +122,7 @@ public class SnipTreeView extends ViewPart
 	 */
 	public SnipTreeView() {
 		super();
-		
-		
+	
 		
 		propertyManager = new CFMLPropertyManager();
 		// By default we want to use cfeclipse style snippets
@@ -470,7 +469,6 @@ public class SnipTreeView extends ViewPart
 		IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 		tmpAction.setActiveEditor(null,iep);
 		File selectedfile = null;
-		
 		
 		if(treeViewer.getSelection().isEmpty()) 
 		{
