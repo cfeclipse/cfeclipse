@@ -34,14 +34,18 @@ public class ParsePrefPage
 	{
 		super(GRID);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
-		setDescription("CFML & CFScript parsing options. ");
+		setDescription("Here you can manage the behaviour of the auto-insertion of characters such as double quotes, as well as the auto-closing of tags");
 		cfmlpm = new CFMLPreferenceManager();
 	}
 	
 	public void createFieldEditors()
 	{
-		addField(new BooleanFieldEditor(P_PARSE_DOCFSCRIPT, "Parse CFScript", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(P_PARSE_REPORT_ERRORS, "Report parse errors", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_AUTOCLOSE_DOUBLE_QUOTES, "Auto close \"s", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_AUTOCLOSE_SINGLE_QUOTES, "Auto close \'s", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_AUTOCLOSE_HASHES, "Auto close #s", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_AUTOCLOSE_TAGS, "Auto close tags (i.e. insert a closing \'>\')", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_AUTOINSERT_CLOSE_TAGS, "Auto insert a closing tag", getFieldEditorParent()));
+		
 	}
 	
 	 protected void performDefaults() 

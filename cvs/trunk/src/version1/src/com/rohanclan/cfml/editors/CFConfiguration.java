@@ -59,6 +59,7 @@ import com.rohanclan.cfml.editors.indentstrategies.CFScriptIndentStrategy;
 import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 
 public class CFConfiguration extends SourceViewerConfiguration 
@@ -524,29 +525,43 @@ public class CFConfiguration extends SourceViewerConfiguration
 	// This method gets called when the preference page is saved.
 	public void propertyChange(PropertyChangeEvent event)
     {
-
-    	//System.err.println("CFConfiguration property change listener notified." + event.getProperty());
+		System.err.println("CFConfiguration property change listener notified." + event.getProperty());
+		String prop = event.getProperty(); 
     	
-        if(event.getProperty().equals("insightDelay")) {
+        if(prop.equals("insightDelay")) {
     		int delay = preferenceManager.insightDelay();
     		assistant.enableAutoActivation(true);
     		assistant.setAutoActivationDelay(delay);
     		//System.err.println("Insight delay set to " + delay);
         }
-        else if(event.getProperty().equals("tabsAsSpaces") || event.getProperty().equals("tabWidth")) {
+        else if(prop.equals("tabsAsSpaces") || prop.equals("tabWidth")) {
     		tabWidth = preferenceManager.tabWidth();
     		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
         	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
-        	
+        	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
         }
-        else if(event.getProperty().equals("dreamweaverCompatibility")) {
+        else if(prop.equals("dreamweaverCompatibility")) {
         	indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
         }
-        else if(event.getProperty().equals("homesiteCompatibility")) {
+        else if(prop.equals("homesiteCompatibility")) {
         	indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
         }
-		
-        
+        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES)) {
+        	indentTagStrategy.setAutoClose_DoubleQuotes(((Boolean)event.getNewValue()).booleanValue());
+        }
+        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES)) {
+        	indentTagStrategy.setAutoClose_SingleQuotes(((Boolean)event.getNewValue()).booleanValue());
+        }
+        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_HASHES)) {
+        	indentTagStrategy.setAutoClose_Hashes(((Boolean)event.getNewValue()).booleanValue());
+        }
+        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_TAGS)) {
+        	indentTagStrategy.setAutoClose_Tags(((Boolean)event.getNewValue()).booleanValue());
+        }
+        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
+        	indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
+        }
+
     }
 
 	

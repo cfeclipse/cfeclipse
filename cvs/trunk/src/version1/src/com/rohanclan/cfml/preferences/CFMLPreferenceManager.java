@@ -31,6 +31,14 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final boolean	DEFAULT_PARSE_DOCFML	 	= true;
 	private static final boolean	DEFAULT_PARSE_REPORT_ERRORS = true; 
 	
+	// Tag indent prefs
+	private static final boolean	DEFAULT_AUTOCLOSE_DOUBLEQUOTES	= true;
+	private static final boolean	DEFAULT_AUTOCLOSE_SINGLEQUOTES	= true;
+	private static final boolean	DEFAULT_AUTOCLOSE_TAGS			= true;
+	private static final boolean	DEFAULT_AUTOCLOSE_HASHES		= true;
+	private static final boolean	DEFAULT_AUTOINSERT_TAGS			= true;
+	
+	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
@@ -51,7 +59,14 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_PARSE_DOCFSCRIPT, DEFAULT_PARSE_DOCFSCRIPT);
         store.setDefault(P_PARSE_DOCFML, DEFAULT_PARSE_DOCFML);
         store.setDefault(P_PARSE_REPORT_ERRORS, DEFAULT_PARSE_REPORT_ERRORS);
-                
+        
+        // Tag indent prefs
+        store.setDefault(P_AUTOCLOSE_DOUBLE_QUOTES, DEFAULT_AUTOCLOSE_DOUBLEQUOTES);
+        store.setDefault(P_AUTOCLOSE_SINGLE_QUOTES, DEFAULT_AUTOCLOSE_SINGLEQUOTES);
+        store.setDefault(P_AUTOCLOSE_TAGS, DEFAULT_AUTOCLOSE_TAGS);
+        store.setDefault(P_AUTOCLOSE_HASHES, DEFAULT_AUTOCLOSE_HASHES);
+        store.setDefault(P_AUTOINSERT_CLOSE_TAGS, DEFAULT_AUTOINSERT_TAGS);
+        
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
 	}
 	

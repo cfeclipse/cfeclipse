@@ -65,4 +65,12 @@ public interface ICFMLPreferenceConstants {
 	String P_PARSE_DOCFML			= "__parseCFML";
 	String P_PARSE_REPORT_ERRORS	= "__parseReportErrors";
 	
+	//////////////////////////////////////
+	// Auto-insertion prefs
+	String	P_AUTOCLOSE_DOUBLE_QUOTES	= "__autoCloseDoubleQuotes";
+	String	P_AUTOCLOSE_SINGLE_QUOTES 	= "__autoCloseSingleQuotes";
+	String	P_AUTOCLOSE_TAGS			= "__autoCloseTags";
+	String 	P_AUTOCLOSE_HASHES			= "__autoCloseHashes"; 
+	String 	P_AUTOINSERT_CLOSE_TAGS		= "__autoInsertCloseTags";
+	String	P_AUTOINDENT_ONTAGCLOSE		= "__autoIndentOnTagClose";
 }

@@ -33,10 +33,33 @@ import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 
 /**
+ * This represents a tag-based auto-indent strategy. It not only
+ * does the auto-indenting, but it also does the auto-closing & 
+ * step-through of various characters.
+ * 
  * @author Oliver Tupman
  */
 public class TagIndentStrategy extends CFEIndentStrategy {
 
+	/** Indent when the tag is closed and a end tag is inserted */
+	public static final int INDENT_ONTAGCLOSE = 0;
+	/** Indent only when the user presses enter at this point &lt;cfif&gt;&lt;/cfif&gt; */
+	public static final int INDENT_ONCLOSEDTAGENTER = 1;
+
+	/** Auto-close double quotes */
+	private boolean autoClose_DoubleQuotes = true;
+	/** Auto-close single quotes */
+	private boolean autoClose_SingleQuotes = true;
+	/** Auto-close tags */
+	private boolean autoClose_Tags = true;
+	/** Auto-close hashes (#) */
+	private boolean autoClose_Hashes = true;
+	/** Auto-insert a closing tag */
+	private boolean autoInsert_CloseTags = true;
+	/** When to trigger the auto-indent strategy when the user is in a tag */
+	private int autoIndent_OnTagClose = INDENT_ONTAGCLOSE;
+	
+	
 	/**
 	 * @param editor
 	 */
@@ -189,7 +212,10 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		if(docCommand.offset >= 0)
 			lastChar = doc.getChar(docCommand.offset - 1);
 		
-		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1)/* + ">"*/;	// Don't close because that character is there as the user just entered it!
+		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1);
+		if(!this.autoClose_Tags)	// If the user hasn't got auto-insertion of closing chevrons on, then 
+			closingTag+= ">";		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
+
 		closingTag = "</" + closingTag;
 
 		// Testing find start tag code
@@ -287,32 +313,14 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			}
 			
 			//
-			// Handle a closing chevron.
+			// Handle a backspace or delete
 			if(docCommand.length > 0 && docCommand.text.length() == 0) {
 				firstCommandChar = '\b';
 			}
 			
 			switch(firstCommandChar) {
-			case '\b':
-				char prevChar = doc.getChar(docCommand.offset);
-				char nextChar = doc.getChar(docCommand.offset + 1);
-				switch(prevChar) {
-					case '\"':
-					case '#':
-						if(nextChar == prevChar) {
-							docCommand.text = "";
-							docCommand.caretOffset = docCommand.offset + 2;
-						}
-						break;
-					case '<':
-						if(nextChar == '>') {
-							docCommand.text = "";
-							docCommand.caretOffset = docCommand.offset + 2;
-						}
-						break;
-					default:
-						break;
-				}
+			case '\b':	// User wishes to delete something
+				handleDelete(doc, docCommand);
 				return;
 			case '!':
 				if(doc.getChar(docCommand.offset) == '<'
@@ -322,13 +330,20 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				}
 				return;
 			case '>':
+				if(!this.autoInsert_CloseTags) return;
 				handleClosingChevron(doc, docCommand, beforeLastChar);
 				return;
 			case '<':
+				if(!this.autoClose_Tags) return;
+				
 				handleOpenChevron(docCommand);
 				return;
 			case '\"':
+				if(!this.autoClose_DoubleQuotes) return; // User doesn't want us to do this
+				handleQuotes(doc, docCommand, firstCommandChar);
+				return;
 			case '\'':	// Handle opening/closing quotes
+				if(!this.autoClose_SingleQuotes) return;
 				handleQuotes(doc, docCommand, firstCommandChar);
 				return;
 			default:
@@ -364,6 +379,43 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
     }
 	
+	/**
+	 * Handles the event when a user presses 'delete'.
+	 * Basically it's here to try and remove any auto-inserted characters.
+	 * Say the user entered an open chevron. It's quite probable that on
+	 * opening a closer was inserted. So here we try and work out whether the user
+	 * entered an opener, we auto-inserted a closer and the user now wishes to 
+	 * get rid of both.
+	 * 
+	 * Doesn't work at the moment :(
+	 * 
+	 * @param doc document to work upon
+	 * @param docCommand command to change
+	 * @throws BadLocationException doh
+	 */
+	private void handleDelete(IDocument doc, DocumentCommand docCommand) throws BadLocationException {
+		char prevChar = doc.getChar(docCommand.offset);
+		char nextChar = doc.getChar(docCommand.offset + 1);
+		
+		switch(prevChar) {
+			case '\"':
+			case '#':
+				if(nextChar == prevChar) {
+					docCommand.text = "";
+					docCommand.caretOffset = docCommand.offset + 2;
+				}
+				break;
+			case '<':
+				if(nextChar == '>') {
+					docCommand.text = "";
+					docCommand.caretOffset = docCommand.offset + 2;
+				}
+				break;
+			default:
+				break;
+		}
+		return;
+	}
 	/**
 	 * @param doc
 	 * @param docCommand
@@ -572,5 +624,77 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		int prevLineOffset = doc.getLineOffset(lineNumber);
 		String prevLineData = doc.get(prevLineOffset, offset - prevLineOffset);
 		return getWhiteSpace(prevLineData, '<');
+	}
+	/**
+	 * @return Returns the autoClose_DoubleQuotes.
+	 */
+	public boolean isAutoClose_DoubleQuotes() {
+		return autoClose_DoubleQuotes;
+	}
+	/**
+	 * @param autoClose_DoubleQuotes The autoClose_DoubleQuotes to set.
+	 */
+	public void setAutoClose_DoubleQuotes(boolean autoClose_DoubleQuotes) {
+		this.autoClose_DoubleQuotes = autoClose_DoubleQuotes;
+	}
+	/**
+	 * @return Returns the autoClose_Hashes.
+	 */
+	public boolean isAutoClose_Hashes() {
+		return autoClose_Hashes;
+	}
+	/**
+	 * @param autoClose_Hashes The autoClose_Hashes to set.
+	 */
+	public void setAutoClose_Hashes(boolean autoClose_Hashes) {
+		this.autoClose_Hashes = autoClose_Hashes;
+	}
+	/**
+	 * @return Returns the autoClose_SingleQuotes.
+	 */
+	public boolean isAutoClose_SingleQuotes() {
+		return autoClose_SingleQuotes;
+	}
+	/**
+	 * @param autoClose_SingleQuotes The autoClose_SingleQuotes to set.
+	 */
+	public void setAutoClose_SingleQuotes(boolean autoClose_SingleQuotes) {
+		this.autoClose_SingleQuotes = autoClose_SingleQuotes;
+	}
+	/**
+	 * @return Returns the autoClose_Tags.
+	 */
+	public boolean isAutoClose_Tags() {
+		return autoClose_Tags;
+	}
+	/**
+	 * @param autoClose_Tags The autoClose_Tags to set.
+	 */
+	public void setAutoClose_Tags(boolean autoClose_Tags) {
+		this.autoClose_Tags = autoClose_Tags;
+	}
+	/**
+	 * @return Returns the autoIndent_OnTagClose.
+	 */
+	public int getAutoIndent_OnTagClose() {
+		return autoIndent_OnTagClose;
+	}
+	/**
+	 * @param autoIndent_OnTagClose The autoIndent_OnTagClose to set.
+	 */
+	public void setAutoIndent_OnTagClose(int autoIndent_OnTagClose) {
+		this.autoIndent_OnTagClose = autoIndent_OnTagClose;
+	}
+	/**
+	 * @return Returns the autoInsert_CloseTags.
+	 */
+	public boolean isAutoInsert_CloseTags() {
+		return autoInsert_CloseTags;
+	}
+	/**
+	 * @param autoInsert_CloseTags The autoInsert_CloseTags to set.
+	 */
+	public void setAutoInsert_CloseTags(boolean autoInsert_CloseTags) {
+		this.autoInsert_CloseTags = autoInsert_CloseTags;
 	}
 }
