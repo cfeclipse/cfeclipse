@@ -90,8 +90,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	
 	protected static final String completionChars = ".(;~\"#";
 
-	protected static final String closerChars = ")\"#";
-	protected static final String openerChars = "({\"#";
+	protected static final String closerChars = ")#";
+	protected static final String openerChars = "({#";
 
 	protected static final String close2openMatchChars = ")(}{##\"\""; 
 	
@@ -472,13 +472,13 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 
 			int triggerPos = scanData.length()-1;
 			int closerCharMatch = closerChars.indexOf(lastChar);
-			boolean treatAsOpener = true;
 			
 			if((lastChar == '\"' && document.getChar(documentOffset) == '\"') ||
 				(lastChar == '#' && document.getChar(documentOffset) == '#'))
-				treatAsOpener = false;
-			
-			if(closerCharMatch != -1 && !treatAsOpener)
+			{
+				DeleteText(document, documentOffset, 1);
+			}
+			else if(closerCharMatch != -1)
 			{
 				HandleCloser(document, scanData, lastChar, closerCharMatch, triggerPos, documentOffset);
 				return null;
