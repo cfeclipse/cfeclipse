@@ -29,16 +29,78 @@ on top of a J2EE server. Two companies that make engines that can process
 CFML scripts are Macromedia and New Atlanta.</p>
 
 
+<h3>Installation/Update</h3>
+<h4>Which Eclipse:</h4>
+<p>
+	To start with, you must download a copy of Eclipse. You want the 3.0 version of Eclipse. 
+	There are two sub-types of Eclipse that you could use, all of which CFEclipse will run upon:
+</p>
+<ul>
+	<li><strong>Eclipse Platform Runtime Binary</strong>:
+		This is the minimum build we recommend. If you do not wish to do any Java development, download this build
+	</li>
+	<li><strong>Eclipse SDK</strong>: 
+		This includes not only the Eclipse base IDE, but also the java development tools and the Eclipse plug-in development
+		environment. If you wish to do plugin development, or help out with the development of CFEclipse then you could
+		download this build.
+	</li>
+</ul>
+<p>
+	To download Eclipse, <a href="http://www.eclipse.org/downloads/">go to the Eclipse downloads page</a>, select 
+	a mirror, then the 3.0 latest release and make your selection of Eclipse sub-type.
+</p>
+<p>
+	Once your download has completed, unzip the file to wherever you want and start Eclipse.
+</p>
+<h3>Getting CFEclipse</h3>
+	
+<p>
+	We recommend that you use the built-in Eclipse update facility, like so:
+</p>
+<ol>
+	<li>Select the "Help-&gt;Software Updates-&gt;Find and install" menu option</li>
+	<li>On the screen that is displayed, select 'Search for new features to install' and click the 'Next' button.</li>
+	<li>Now click the 'New Remote Site' button.</li>
+	<li>Enter a name for the update site, for example "CFEclipse". 
+		In the URL box, enter <code>http://cfeclipse.tigris.org</code> and click the OK button</li>
+	<li>You should now have a 'CFEclipse' node in the 'Sites to include in search' box. 
+		Expand the CFEclipse node and you will see two child nodes: 'com.rohanclan.cfml.release.stable' and 'com.rohanclan.cfml.release.bleedingedge'</li>
+	<li>Tick the 'Stable CFEclipse' box and click 'Next'</li>
+	<li>Eclipse will contact the CFEclipse site and retrieve the list of available plugins. Tick the plugin with the highest version number and click 'Next'</li>
+	<li>The next instructions are self-explanatory</li>
+	<li>Once Eclipse has restarted CFEclipse should have been successfully installed</li>
+	<li>If you have an editor already linked to cfm, cfc, cfml, htm, or html files you'll need to change
+		the editor setting in Window/Preferences then in the tree select Workbench/File Associations,
+		and set cfm, cfc, cfml, htm and html to the CFML Editor.
+	</li>
+	<li>For more verbose instructions see <a href="http://www.dopefly.com/pages/cfeclipse.html">Nathan Strutz's Resource Page</a></li>
+	
+</ol>
+
+
+<p>
+To activate code completion type &lt; for HTML insight and <i>&lt;cf</i> for CFML tag insight
+ - pressing the space bar after a tag name will show the attributes. When
+you type a function name and type the <i>(</i> char, it will tell you the syntax 
+for the function - cooler still it will actually tell you the return type.
+</p>
+
+<p>
+	If the CFML perspective isn't displayed, select "Window-&gt;Open Perspective->Other..." and then select the CFML perspective.
+</p>
+
 <h3>Releases</h3>
 <a name="pluginlist"/>
 <h5>Stable</h5>
 <p>
-<a href="releases/com.rohanclan.cfml_1.1.8.zip" style="text-decoration:line-through;">Latest Release (1.1.8)</a> <span style="font-size:7pt;">(try the beta!)</span> ||
-<a href="releases/snips_1.1.8.zip">Snips (1.1.8)</a>
+<a href="releases/com.rohanclan.cfml_1.1.13.zip" >Latest Release (1.1.13)</a> <span style="font-size:7pt;">(try the beta!)</span> ||
+<a href="releases/snips_1.1.8.zip">Snips (1.1.8)</a><br/>
+<a href="releases/notes_1.1.13.html">1.1.3 release notes</a>
 </p>
 <h5>Preview</h5>
 <p>
-<a href="releases/com.rohanclan.cfml_1.1.9.zip">Beta (1.1.9) released 6/13/2004</a><br>
+<!--- <a href="releases/com.rohanclan.cfml_1.1.9.zip">Beta (1.1.9) released 6/13/2004</a><br>--->
+None at present<br/>
 Also, Eclipse 3.0 FINAL was released 6/25/2004. Make sure to <a href="http://www.eclipse.org/" target="_blank">upgrade</a>!
 </p>
 <p>New in this release of CFEclipse:
@@ -79,28 +141,6 @@ Also, Eclipse 3.0 FINAL was released 6/25/2004. Make sure to <a href="http://www
 requests to the &quot;Issue tracker&quot; (link on the top left).</p>
 -->
 
-<h3>Installation</h3>
-<p>
-	To install the plug-in, follow these instructions:
-	<ol>
-		<li>Download the <a href="http://www.eclipse.org/">Eclipse IDE</a> version 3.0 or higher</li>
-		<li>Download a <a href="#pluginlist">plug-in zip file</a></li>
-		<li>Unzip the file into your eclipse/plugins directory</li>
-		<li>Restart Eclipse</li>
-		<li>If you have an editor already linked to cfm, cfc, cfml, htm, or html files you'll need to change
-			the editor setting in Window/Preferences then in the tree select Workbench/File Associations,
-			and set cfm, cfc, cfml, htm and html to the CFML Editor.
-		</li>
-		<li>For more verbose instructions see <a href="http://www.dopefly.com/pages/cfeclipse.html">Nathan Strutz's Resource Page</a></li>
-	</ol>
-</p>
-
-<p>
-To activate code completion type &lt; for HTML insight and <i>&lt;cf</i> for CFML tag insight
- - pressing the space bar after a tag name will show the attributes. When
-you type a function name and type the <i>(</i> char, it will tell you the syntax 
-for the function - cooler still it will actually tell you the return type.
-</p>
 
 <h3>Related resources</h3>
 <p>
