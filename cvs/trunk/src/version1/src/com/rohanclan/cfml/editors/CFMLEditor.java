@@ -67,13 +67,13 @@ implements IPropertyChangeListener {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public void doSave(IProgressMonitor monitor) {
-		// 
+	public void doSave(IProgressMonitor monitor) 
+	{
 		// TODO: Once we get the document outline going, we can update it from here.
-		// On save parsing should apparently go into a builder.
-		
+		// On save parsing should apparently go into a builder.	
 		super.doSave(monitor);
 	}
+	
 	public CFMLEditor() 
 	{
 		super();
@@ -108,14 +108,6 @@ implements IPropertyChangeListener {
 	 */
 	public Object getAdapter(Class adapter) 
 	{
-		//if(adapter.equals(IContentOutlinePage.class)) 
-		//{
-			/* 
-			return new GroovyContentOutline(
-				(IFile)getEditorInput().getAdapter(IFile.class)
-			);
-			*/
-		//}
 		//System.out.println("Give me adapter: " + adapter.getName());
 		/* if(adapter.getName().trim().equals(
 			"org.eclipse.ui.views.contentoutline.IContentOutlinePage"
@@ -174,12 +166,17 @@ implements IPropertyChangeListener {
 		 * tabs for the whole document. If not then at least try to find a way
 		 * to have the cursor stay at the position it was when the person went 
 		 * to the preferences page.
-		 * 
 		 */
-		if(event.getProperty().equals("tabsAsSpaces") || event.getProperty().equals("tabWidth")) {
-			System.out.println("Tab preferences have changed. Resetting the editor.");
+		if(event.getProperty().equals("tabsAsSpaces") 
+			|| event.getProperty().equals("tabWidth"))
+		{
+			System.out.println(
+				"Tab preferences have changed. Resetting the editor."
+			);
 			ISourceViewer sourceViewer = getSourceViewer();
-			sourceViewer.getTextWidget().setTabs(configuration.getTabWidth(sourceViewer));
+			sourceViewer.getTextWidget().setTabs(
+				configuration.getTabWidth(sourceViewer)
+			);
         }
 		
     }
