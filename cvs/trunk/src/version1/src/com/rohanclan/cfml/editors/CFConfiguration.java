@@ -112,7 +112,6 @@ public class CFConfiguration extends SourceViewerConfiguration
 	}
 	
 	public int getTabWidth(ISourceViewer sourceViewer) {
-		System.out.println("GetTabWidth called");
 		return tabWidth;
 	}
 	
