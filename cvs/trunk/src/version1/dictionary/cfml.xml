@@ -1182,6 +1182,12 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help><![CDATA[
+					Name for the component
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
 		
 		<!-- 
@@ -8102,6 +8108,9 @@
 		-->
 		<function creator="3" name="arraynew" returns="Array">
 			<help><![CDATA[
+				Creates an array of 1-3 dimensions. Index array elements 
+				with square brackets: [ ].
+				CFML arrays expand dynamically as data is added.
 			]]></help>
 			<parameter name="dimension" type="Numeric" required="true">
 				<help><![CDATA[
@@ -8364,6 +8373,9 @@
 		-->
 		<function creator="3" name="bitmaskread" returns="Numeric">
 			<help><![CDATA[
+				Performs a bitwise mask read operation. 
+				Returns an integer, created from length bits of number, 
+				beginning at start.
 			]]></help>
 			<parameter name="number" type="Numeric" required="true">
 				<help><![CDATA[
@@ -8575,6 +8587,9 @@
 		-->
 		<function creator="3" name="cos" returns="Numeric">
 			<help><![CDATA[
+				Calculates the cosine of an angle that is entered 
+				in radians.
+				A number; the cosine of the angle.
 			]]></help>
 			<parameter name="number" type="Numeric" required="true">
 				<help><![CDATA[
@@ -8643,21 +8658,168 @@
 			CreateObject(type, class)
 			CreateObject(type, urltowsdl)
 		-->
-		<function creator="3" name="createobject" returns="Object">
+		<function creator="3" name="createobjecT" returns="COMObject">
 			<help><![CDATA[
-				Creates a CFML object, of a specified type.
-				=========================================================
+				Create a COM object (not available on Unix)
+				
+				To create a COM object, you must provide this information: 
+				 * The object's program ID or filename 
+				 * The methods and properties available to the object through 
+					the IDispatch interface 
+				 * The arguments and return types of the object's methods 
+				 * For most objects, you can get this information from the 
+					OLEView utility. 
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="class" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="context" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="servername" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			CreateObject(type, class, context, serverName) 
+			CreateObject(type, component-name) 
+			CreateObject(type, context, class, locale)
+			CreateObject(type, class)
+			CreateObject(type, urltowsdl)
+			Creates a CFML object, of a specified type.
+				================================================
 				COMobject   CreateObject(type, class, context, serverName) 
     			CFCobject   CreateObject(type, component-name) 
     			CORBAobject CreateObject(type, context, class, locale)
     			JAVAobject  CreateObject(type, class)
     			WEBSERVICE  CreateObject(type, urltowsdl)
+		-->
+		<function creator="3" name="createoBject" returns="CFCObject">
+			<help><![CDATA[
+				The CreateObject function can create a CFML component 
+				(CFC) object. 
+				
+				type : "component"
+				component_name : name of the cfc to create
 			]]></help>
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
 			</parameter>
 			<parameter name="component_name" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			CreateObject(type, class, context, serverName) 
+			CreateObject(type, component-name) 
+			CreateObject(type, context, class, locale)
+			CreateObject(type, class)
+			CreateObject(type, urltowsdl)
+		-->
+		<function creator="3" name="createobJect" returns="CORBAObject">
+			<help><![CDATA[
+				The CreateObject function can call a method on a CORBA object. 
+				The object must be defined and registered for use. 
+
+				type : "corba"
+				context : 
+				    * IOR to access CORBA server 
+				    * NameService: naming service to access server. 
+						Valid only with the InitialContext of a VisiBroker ORB. 
+				class :
+				    If context = "ior": absolute path of file that contains 
+				        string version of the Interoperable Object Reference 
+				        (IOR). CFML must be able to read file; it should 
+						be local to CFML server or accessible on network 
+				    If context = "nameservice:" forward slash-delimited naming 
+				        context for naming service. 
+                        For example Allaire//Doc/empobject 
+				locale :
+                    The name of the Java config that holds the properties file. 
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="context" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="class" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="locale" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			CreateObject(type, class, context, serverName) 
+			CreateObject(type, component-name) 
+			CreateObject(type, context, class, locale)
+			CreateObject(type, class)
+			CreateObject(type, urltowsdl)
+		-->
+		<function creator="3" name="createobjEct" returns="JAVAObject">
+			<help><![CDATA[
+				The CreateObject function can create a Java object, and, by 
+				extension, an EJB object. 
+				type : "java"
+				class : A Java class name
+				 
+				Any Java class available in the class path that is specified in 
+				the Administrator can be loaded and used with the CreateObject 
+				function. 
+				 
+				Calling a public method on the object without first calling the
+				"init" method invokes a static method. Arguments and return 
+				values can be any Java type (simple, array, object). If strings 
+				are passed as arguments, CFML does the conversions; if 
+				strings are received as return values, CFML does no conversion. 
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="class" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			CreateObject(type, class, context, serverName) 
+			CreateObject(type, component-name) 
+			CreateObject(type, context, class, locale)
+			CreateObject(type, class)
+			CreateObject(type, urltowsdl)
+		-->
+		<function creator="3" name="createobjeCt" returns="WEBObject">
+			<help><![CDATA[
+				This function can create a web service object. 
+				
+				type : "webservice"
+				urltowsdl : WSDL file URL; location of web service. Note: this
+					URL almost always ends with "?WSDL"
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="urltowsdl" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
 			</parameter>

@@ -85,7 +85,8 @@ public class Function extends Procedure {
 		if(this.name != null)
 		{	
 			sb.append(this.returns + " ");
-			sb.append(this.name + "(");
+			//to lowercase for the createobject hack
+			sb.append(this.name.toLowerCase() + "(");
 			
 			if(parameters != null)
 			{

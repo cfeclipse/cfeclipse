@@ -2,7 +2,7 @@
  * Created on Feb 26, 2004
  *
  */
-package com.keygeotech.utils;
+package com.rohanclan.cfml.util;
 
 /**
  * @author OLIVER
@@ -10,6 +10,9 @@ package com.keygeotech.utils;
  * Debuging class - remove for final builds
  * deprecated -r2- this is here to remind you to remove the class and any 
  * refrences to it when you do a build
+ * 
+ * I think I want to either move this to the util directory or just remove it
+ * all together. I like the idea (we could make a log file or something)
  */
 public class Debug {
 	private static boolean debug = false;

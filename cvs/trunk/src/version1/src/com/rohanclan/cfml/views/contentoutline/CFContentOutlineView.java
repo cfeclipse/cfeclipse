@@ -6,56 +6,28 @@
  */
 package com.rohanclan.cfml.views.contentoutline;
 
-//import org.eclipse.jface.viewers.TreeViewer;
-//import org.eclipse.swt.widgets.Control;
-
-/* import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent; */
 import org.eclipse.jface.viewers.TreeViewer;
-//import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-//import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.viewers.LabelProvider;
-/* import org.eclipse.jface.action.GroupMarker;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IEditorPart;
-import com.rohanclan.cfml.util.XMLConfigFile;
-import org.eclipse.core.runtime.IPath;
-import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
-import java.io.File;
-*/
-
-import org.eclipse.ui.IEditorPart;
-//import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.*;
-import java.util.*;
-
 import org.eclipse.jface.viewers.IStructuredSelection;
-//import org.eclipse.ui.IFileEditorInput;
-//import org.eclipse.jface.text.IDocument;
-//import org.eclipse.ui.texteditor.ITextEditor;
-
 import com.rohanclan.cfml.util.CFPluginImages;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.swt.widgets.Menu;
-//import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.swt.widgets.Control;
+
+import org.eclipse.jface.viewers.*; 
+
 
 /**
  * @author Rob
@@ -63,7 +35,7 @@ import org.eclipse.jface.action.IToolBarManager;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class CFContentOutlineView extends ViewPart {
+public class CFContentOutlineView extends ViewPart { //Page { //
 	public static final String ID_SNIPVIEWTREE = "com.rohanclan.cfml.views.contentoutline.cfcontentoutlineview";
 	
 	/** the treeviewer control */
@@ -86,6 +58,23 @@ public class CFContentOutlineView extends ViewPart {
 	
 	/** the root directory */
 	//protected File root;
+	
+	public Control getControl()
+	{
+		return treeViewer.getControl();
+	}
+	
+	public TreeViewer getTreeViewer()
+	{
+		return treeViewer;
+	}
+	
+	public void setSelection(ISelection selection){;}  
+	public void selectionChanged(SelectionChangedEvent event) {;}
+	public void removeSelectionChangedListener(ISelectionChangedListener listener){;}
+	public ISelection getSelection(){ return null; } 
+	protected void fireSelectionChanged(ISelection selection){;} 
+	public void addSelectionChangedListener(ISelectionChangedListener listener){;}
 	
 	public void createPartControl(Composite parent) 
 	{
@@ -158,6 +147,7 @@ public class CFContentOutlineView extends ViewPart {
 		
 		// Register menu for extension.
 		getSite().registerContextMenu(menuMgr, treeViewer);
+		//getSite().registerContextMenu("cfml", menuMgr, this.getSite().getSelectionProvider());
 	}
 	
 	private void fillContextMenu(IMenuManager mgr) {
@@ -180,62 +170,18 @@ public class CFContentOutlineView extends ViewPart {
 	{
 		try
 		{
-			//get a handle to the current editor and assign it to our temp action
-			//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			//ITextEditor ite = (ITextEditor)iep; //.getEditorInput();
-			//ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
+			//this seems to be the right way, but I can't get it to work.
 			
-			//icfd.parseDocument();
-			//DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot();
-			//DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot();
-			
-			//System.out.println("Root element is: " + docRoot.getName());
-//			get a handle to the current editor and assign it to our temp action
 			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			//((FileEditorInput)iep.getEditorInput()).getFile();
 			ITextEditor ite = (ITextEditor)iep; //.getEditorInput();
 			ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
 			
-			//IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+			icfd.getParser().parseSaveDoc();
+			DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot().getFirstChild();
 			
-			//icfd.parseDocument();
-			//CFDocument cfd = icfd.getParser().getParseResult();
-			//CFDocument cfd = icfd.getParser().parseDoc();
-			//icfd.getParser().parseSaveDoc();
-			//CFDocument cfd = icfd.getParser().getParseResult();
+			//System.out.println("Root element is: " + docRoot.getName());
 			
-			//cfd.docVariables
-			
-			ArrayList tmitems = icfd.getParser().getTagMatches(icfd);
-			CFDocument cfd = icfd.getParser().createDocTree(tmitems);
-			
-			//CFDocument cfd = icfd.getParser().parseDoc(icfd);
-			System.out.println("**********" + cfd.getFilename() + "********");
-			
-			Stack items = cfd.docTree;
-			
-			if(items == null || items.size() < 1){
-				System.err.println("No items?!");
-			}
-			else
-			{
-				//DocItem docroot = (DocItem)items.get(0);
-				//TagMatch tm = (TagMatch)items.get(0);
-				
-				//System.out.println(
-				//	"got " + tm.match
-				//);
-				
-				java.util.Iterator i = items.iterator();
-				while(i.hasNext())
-				{
-					System.err.println("Item::::" + (DocItem)i.next());
-				}
-				
-				//return tm;
-				return (DocItem)items.get(0);
-			}
-
+			return docRoot;
 		}
 		catch(Exception e)
 		{
@@ -252,8 +198,10 @@ public class CFContentOutlineView extends ViewPart {
 	 */
 	protected void jumpToItem() 
 	{
+		
 		//get a handle to the current editor and assign it to our temp action
 		IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+		//IEditorPart iep = this.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 		//tmpAction.setActiveEditor(null,iep);
 		//File selectedfile = null;
 		DocItem selecteditem = null;

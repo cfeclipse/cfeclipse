@@ -101,8 +101,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		String attribute = inputText.substring(lastSpace+1, quotes-1);
 		String tag = inputText.substring(0, indexOfFirstSpace);
 		
-		System.err.println("I think I need to be looking up: " + attribute);
-		System.err.println("Tag I think I have is \'" + tag + "\'");
+		//System.err.println("I think I need to be looking up: " + attribute);
+		//System.err.println("Tag I think I have is \'" + tag + "\'");
 
 		Set attrProps = ((SyntaxDictionaryInterface)syntax).getFilteredAttributeValues(tag, attribute, valueSoFar);
 		if(attrProps != null/* && attrProps.size() > 0*/)
@@ -111,7 +111,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			if(attrProps.size() > 0 && ((Value)attrProps.toArray()[0]).getValue().compareTo(valueSoFar) == 0)
 				return null;
 			
-			System.err.println("CFCompletionProcessor::computeCompletionProposals() - I have " + attrProps.size() + " elements available to me");
+			//System.err.println("CFCompletionProcessor::computeCompletionProposals() - I have " + attrProps.size() + " elements available to me");
 			return makeSetToProposal(
 				attrProps,
 				docOffset,
@@ -141,7 +141,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			String tagnamespace = "";
 			//where we are going to lookup in sight stuff
 			SyntaxDictionary syntax = null;
-			System.err.println("in CFML completion processor");
+			//System.err.println("in CFML completion processor");
 			//assume its not a cftag
 			boolean cftag = false;
 			boolean httag = false;
@@ -192,14 +192,14 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//first token should be the tag name (with <cf attached)
 				tagname = st.nextToken();	
 			}
-			System.err.println("Finished tokens");
+			//System.err.println("Finished tokens");
 			//System.err.println("tag1>>"+tagname+"<<");
 			
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)
 			{
 				//clean it up for our lookup
-				System.err.println("Looking for <cf");
+				//System.err.println("Looking for <cf");
 				if(prefix.trim().substring(0,3).equalsIgnoreCase("<cf"))
 				{
 					cftag = true;
@@ -215,7 +215,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			if(tagname.trim().startsWith("<"))
 			{
 				//do the html dictionary
-				System.err.println("Got an HTML tag");
+				//System.err.println("Got an HTML tag");
 				httag = true;
 				tagname = tagname.trim().substring(1);
 				syntax = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
@@ -233,7 +233,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//in the end should have the thing to limit with
 				limiting = st.nextToken();
 			}
-			System.err.println("Done more token crap");
+			//System.err.println("Done more token crap");
 			//if it looks like they have started typing the contents of an
 			//attribtue (or they are done) set limiting to nothing
 			if(limiting.indexOf("\"") > 0 || limiting.indexOf("'") > 0)
@@ -250,11 +250,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//can filter out non matches
 				String taglimiting = prefix.trim().substring(3);
 				//System.err.println(limiting);
-				System.err.println("In cf tag name lookup");
-				System.err.println("taglimiting is: \'" + taglimiting + "\'");
-				System.err.println("doc offset: " + documentOffset);
-				System.err.println("invoker: \'" + invoker + "\'"); 
-				System.err.println("prefix: \'" + prefix + "\'");
+				//System.err.println("In cf tag name lookup");
+				//System.err.println("taglimiting is: \'" + taglimiting + "\'");
+				//System.err.println("doc offset: " + documentOffset);
+				//System.err.println("invoker: \'" + invoker + "\'"); 
+				//System.err.println("prefix: \'" + prefix + "\'");
 					
 				if(invoker.charAt(0) == '\"')
 				{
@@ -304,7 +304,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			{
 				String taglimiting = prefix.trim().substring(1);
 				//System.out.println("tl:" + taglimiting);
-				System.err.println("Doing tag limiting");
+				//System.err.println("Doing tag limiting");
 				
 				/*////////////////////////// copy from above dup code! //////*/
 				if(invoker.charAt(0) == '\"')
@@ -351,7 +351,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//&& !current_partition.equals(CFPartitionScanner.CSS_TAG)
 			)
 			{
-				System.err.println("Close tag crap");
+				//System.err.println("Close tag crap");
 				//System.err.println("i go");
 				if(syntax != null && syntax.tagExists(tagname))
 				{	
@@ -406,12 +406,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			{	
 				//we are probably in need of attribtue in sight
 				//clean up the text typed so far
-				System.err.println("Something else");
+				//System.err.println("Something else");
 				
 				limiting = limiting.trim();
 				//System.err.println("tag2>>"+tagname+"<<");
-				System.err.println("lim2::"+limiting+"::");
-				System.err.println("prefix::"+prefix+"::"+prefix.indexOf('>'));
+				//System.err.println("lim2::"+limiting+"::");
+				//System.err.println("prefix::"+prefix+"::"+prefix.indexOf('>'));
 				
 				//hacks hacks everywhere :) this looks to see if there are an
 				//odd number of " in the string prior to this invoke before 
@@ -455,7 +455,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		if(st != null)
 		{
 			Object obj[] = new Object[st.size()];
-			System.err.println("st is " + st.size() + " elements in size");
+			//System.err.println("st is " + st.size() + " elements in size");
 			TreeSet ts = new TreeSet();
 			ts.addAll(st);
 			obj = ts.toArray();
@@ -590,7 +590,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	public IContextInformation[] computeContextInformation(ITextViewer viewer,
 		int documentOffset) {
 		
-		System.out.println("context do dad running");
+		//System.out.println("context do dad running");
 		
 		try
 		{
@@ -619,7 +619,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			//if(functionname.length() > 1)
 			//	functionname = functionname.substring(0,functionname.length() - 1);
 			
-			System.out.println("f>>" + functionname.trim() + "<<f");
+			//System.out.println("f>>" + functionname.trim() + "<<f");
 			
 			//System.err.println(functionname.trim());
 			SyntaxDictionary syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
@@ -633,7 +633,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			//String usage = ((SyntaxDictionaryInterface)syntax).getFunctionUsage(functionname.trim());
 						
 			//if(usage != null)
-			System.out.println(fst.size());
+			//System.out.println(fst.size());
 			if(fst.size() > 0)
 			{
 				//bit of a hack - there are only a copule functions that have
@@ -651,12 +651,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				int x = 0;
 				while(i.hasNext())
 				{
-					System.out.println(x);
+					//System.out.println(x);
 					Function fun = syntax.getFunction((String)i.next()); 
 						//(Function)i.next();
 					
 					String usage = fun.toString();
-					System.err.println(usage);
+					//System.err.println(usage);
 					
 					result[x] = new ContextInformation(
 						CFPluginImages.get(CFPluginImages.ICON_FUNC),
@@ -668,7 +668,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					this.validator.install(result[x], viewer, documentOffset);
 					x++;
 				}
-				System.out.println(x);
+				//System.out.println(x);
 				result[x] = new ContextInformation(
 					"",
 					""
@@ -731,7 +731,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					offset-1,
 					1
 				);
-				System.out.println(paren);
+				//System.out.println(paren);
 				if(paren.equals(")"))
 				{
 					return false;

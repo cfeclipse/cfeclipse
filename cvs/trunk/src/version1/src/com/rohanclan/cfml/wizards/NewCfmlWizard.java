@@ -153,14 +153,16 @@ public class NewCfmlWizard extends Wizard implements INewWizard {
 	/**
 	 * We will initialize file contents with a sample text.
 	 */
-
-	private InputStream openContentStream() {
-		String contents =
-			"This is the initial file contents for *.cfm file that should be word-sorted in the Preview page of the multi-page editor";
+	private InputStream openContentStream()
+	{
+		//This is the initial file contents for *.cfm file that should be 
+		//word-sorted in the Preview page of the multi-page editor
+		String contents = "";
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
-	private void throwCoreException(String message) throws CoreException {
+	private void throwCoreException(String message) throws CoreException 
+	{
 		IStatus status =
 			new Status(IStatus.ERROR, "com.rohanclan.cfml", IStatus.OK, message, null);
 		throw new CoreException(status);

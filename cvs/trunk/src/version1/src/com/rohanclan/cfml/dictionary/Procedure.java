@@ -151,7 +151,8 @@ public class Procedure implements Comparable {
 		{
 			//if it has the same name and number of parameters assume its
 			//the same (this may need to be adjusted in the future)
-			if( ((Procedure)obj).getName().equals(this.name) && ((Procedure)obj).getParameters().size() == parameters.size() )
+			if(((Procedure)obj).getName().equals(this.name) 
+				&& ((Procedure)obj).getParameters().size() == parameters.size())
 			{
 				return true;
 			}
@@ -170,6 +171,7 @@ public class Procedure implements Comparable {
 		
 		if(o instanceof Procedure)
 		{
+			//lowercase for the createobject hack
 			return name.compareTo( ((Procedure)o).getName() );
 		}
 		

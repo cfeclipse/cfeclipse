@@ -71,8 +71,8 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	 * @param newInput the new input element, or <code>null</code> if the viewer
 	 *   does not have an input
 	 */
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		//System.err.println("Doing input changed " + oldInput + " " + newInput);
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) 
+	{
 		this.viewer = (TreeViewer)viewer;
 		
 		if(newInput instanceof DocItem)
@@ -94,32 +94,19 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 		
 		if(parentElement instanceof DocItem)
 		{
-			return ((DocItem)parentElement).getChildren().toArray();
+			//return ((DocItem)parentElement).getChildren().toArray();
+			return ((DocItem)parentElement).getChildNodes().toArray();
 		}
 		
 		return EMPTY_ARRAY;
 	}
 	
-	/* protected Object[] concat(Object[] object, Object[] more, Object[] more2) {
-		Object[] both = new Object[object.length + more.length + more2.length];
-		System.arraycopy(object, 0, both, 0, object.length);
-		System.arraycopy(more, 0, both, object.length, more.length);
-		System.arraycopy(more2, 0, both, object.length + more.length, more2.length);		
-		return both;
-	} */
-
 	/**
 	 * Get the parent of element
 	 * @see ITreeContentProvider#getParent(Object)
 	 */
 	public Object getParent(Object element) 
-	{		
-		/* if(element instanceof File && !element.equals(rootdir))
-		{
-			return ((File)element).getParentFile();
-		}
-		*/
-		
+	{
 		if(element instanceof DocItem)
 		{
 			return ((DocItem)element).getName();
@@ -144,7 +131,6 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	public Object[] getElements(Object inputElement)
 	{
 		return getChildren(inputElement);
-		//return EMPTY_ARRAY;
 	}
 	
 	/**

@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import org.eclipse.core.resources.IFile;
-import java.io.File;
+//import java.io.File;
 
 /**
  * @author Stephen Milligan
@@ -35,31 +35,25 @@ public class SnipVarParser {
 		String currentProjectPath = "";
 		
 		
-		if (activeFile != null) {
+		/* not sure why this next block is needed, but it causes the snippet 
+		 * insert to fail on QA. Hope I am not misunderstanding something...
+		 if (activeFile != null) {
 		 currentFile = activeFile.getName();
 		 currentPath = activeFile.getRawLocation().toFile().getAbsolutePath();
 		 File fullPath = new File(currentPath);
 		 currentFolder = fullPath.getParent();
 		 currentProjectPath = activeFile.getProjectRelativePath().toOSString();
+		 
 		 currentProjectPath = currentProjectPath.substring(0, currentProjectPath.lastIndexOf('\\'));
-
 		 
 		 // Get your laughing gear round this little lot :)
 		 currentFile = currentFile.replaceAll("\\\\","\\\\\\\\");
 		 currentPath = currentPath.replaceAll("\\\\","\\\\\\\\");
 		 currentFolder = currentFolder.replaceAll("\\\\","\\\\\\\\");
 		 currentProjectPath = currentProjectPath.replaceAll("\\\\","\\\\\\\\");
-  		
-
-		}
-
+		}*/
 		
-		
-		/*
-		 * 
-		 *
-		 * 
-		 *     
+		/*     
 		 * $${DATE}
 		 * $${MONTH}
 		 * $${TIME}
@@ -75,8 +69,7 @@ public class SnipVarParser {
 		 * $${DAYOFWEEKNUMBER} - Day of week (the week starts on Sunday)
 		 * $${DATETIME24} - DateTime24 - a 24 hour clock version of datetime.
 		 * $${YEAR} - Current year.
-		 * $${YEAR2DIGIT} - Current two digit year.
-		 * 
+		 * $${YEAR2DIGIT} - Current two digit year. 
 		 */
 		
 		Calendar calendar = new GregorianCalendar();
@@ -139,8 +132,6 @@ public class SnipVarParser {
 		String formattedYear2Digit = formatter.format(currentTime);
 		newStr = newStr.replaceAll("\\$\\$\\{YEAR2DIGIT\\}",formattedYear2Digit);
 		
-		
 		return newStr;
-		
 	}
 }

@@ -28,12 +28,12 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
-import org.eclipse.jface.text.contentassist.ContextInformation;
+//import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
+//import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 
-//
 // Need the following for inserting & deleting text (duh).
 // Not sure where to pass the resulting UndoEdits though.
 import org.eclipse.text.edits.InsertEdit;
@@ -49,7 +49,8 @@ import java.util.TreeSet;
 import java.util.Set;
 import java.util.HashSet;
 import java.lang.Character;
-import com.keygeotech.utils.Debug;
+import java.util.Iterator;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * @author OLIVER
@@ -80,8 +81,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	private static final short TAGTYPE = 0;
 	private static final short ATTRTYPE = 1;
 	private String className = "CFScriptCompletionProcessor";
-
-	//
+	
 	// Define the characters that make up the activation set.
 	// There are three parts to the activation set:
 	
@@ -513,6 +513,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		int length = 40;
 		// TODO: Use the tokeniser!
 
+		//System.err.println("runnin!!!!");
+		
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
 			IDocument document = viewer.getDocument();
@@ -523,12 +525,12 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			scanData = scanData.replace('\n',' ');	// Eliminate any non-character characters
 			scanData = scanData.replace('\r',' ');	// as this allows us to treat the buffer as
 			scanData = scanData.replace('\t',' ');	// one long string
-
+			
 			char lastChar = scanData.charAt(scanData.length()-1);
+			
 			
 			// Gonna allow debug by entering the tilde character. Entering this will cause
 			// my debug function to run...
-
 			if(lastChar == '~')
 			{
 				DebugFunction(viewer, documentOffset);
@@ -537,12 +539,12 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			int triggerPos = scanData.length()-1;
 			int closerCharMatch = closerChars.indexOf(lastChar);
 
-			//
 			// First test to see whether the last two characters are "it"...  if so then we'll
 			// quit out of this
 			if(lastChar == '\'' && document.getChar(documentOffset-1) == 't' && 
 			   document.getChar(documentOffset-2) == 'i')
 			{
+				//System.out.println("hit IT");
 				return null;
 			}
 			
@@ -550,17 +552,20 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			if((lastChar == '\"' && document.getChar(documentOffset) == '\"') ||
 				(lastChar == '#' && document.getChar(documentOffset) == '#'))
 			{
+				//System.out.println("hit delete text");
 				DeleteText(document, documentOffset, 1);
 			}
 			else if(closerCharMatch != -1)
 			{
+				//System.out.println("hit handlecloser");
 				HandleCloser(document, scanData, lastChar, closerCharMatch, triggerPos, documentOffset);
 				return null;
 			}
-			//
 			// Is the char just typed a proper trigger char? See decl of completionChars for info
 			else if(completionChars.indexOf(lastChar) == -1 && lastChar != '{')
 			{
+				//System.out.println("hit this other part");
+				
 				int searchPos = triggerPos;
 				int bracketCount = 1;
 				searchPos = BracketScan(scanData, triggerPos);
@@ -568,12 +573,14 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				// Cut off the part that is nothing to do with the function
 				// search. Later on we'll use something else to cut from so
 				// we can work out which parameter we're in.
-				scanData = scanData.substring(0, searchPos+1);		
+				scanData = scanData.substring(0, searchPos+1);
+				//System.out.println(originalData);
 				lastChar = scanData.charAt(scanData.length()-1);
 				triggerPos = searchPos;
 			}
 			else
 			{
+				//System.out.println("hit opener");
 				handleOpener(document, lastChar, documentOffset);
 				
 				if(lastChar != '(' && lastChar != ',')
@@ -612,20 +619,29 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					}
 					else
 					{
+						//System.err.println("getting here");
 						//
 						// TODO: Work out which argument we are currently in and highlight it
 						// TODO: Possibly mark when the parameter being passed to the argument is incorrect?
 						String toBeMatched = scanData.substring(strPos+1, triggerPos);
 						
-						Function fun = DictionaryManager.getDictionary(DictionaryManager.CFDIC).getFunction(toBeMatched);
-						String usage = fun.toString(); 
+						//Function fun = DictionaryManager.getDictionary(DictionaryManager.CFDIC).getFunction(toBeMatched);
+						//String usage = fun.toString(); 
 							
-						if(usage == null)
-						{
-							Debug.println(mName, this, "Cannot found a match for '" + toBeMatched + "'");
-							return null;
-						}
-						proposals.add(usage);
+						//if(usage == null)
+						//{
+							//Debug.println(mName, this, "Cannot found a match for '" + toBeMatched + "'");
+						//	System.err.println("Cannot found a match for '" + toBeMatched + "'");
+						//	return null;
+						//}
+						
+						Set poss = SyntaxDictionary.limitSet(
+							DictionaryManager.getDictionary(DictionaryManager.CFDIC).getAllFunctions(),
+							toBeMatched
+						);
+						
+						return makeSetToProposal(poss, documentOffset, TAGTYPE, toBeMatched.length());
+						//proposals.add(fun);
 					}
 					break;
 				case ';':
@@ -639,7 +655,19 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					// the originating bracket.
 					//	Good demo is this one:
 					// Len(asdfasdf, ArrayAppend(fred, ArrayNew(asdf), fred))
-					break;	
+						
+					//r2 QA 2004-05-15 
+					//quick an dirty way to see all functions (hitting ctrl+space
+					//but this doesn't limit the selections and only works when
+					//not in a function :-/
+					Set mst = DictionaryManager.getDictionary(DictionaryManager.CFDIC).getAllFunctions();
+					return makeSetToProposal(
+						mst,
+						documentOffset, 
+						TAGTYPE, 
+						0
+					);				
+					//break;	
 			}
 			Debug.println(mName, this, messages);
 			
@@ -652,13 +680,13 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		{
 			Debug.println(mName, this, "Caught exception: " + e.getMessage());
 		}
-		Debug.println("");
+		//Debug.println("");
 		if(proposals.isEmpty())
 			return null;
 		
-		length = 10;
+		//length = 10;
 		
-		return makeSetToProposal(proposals, documentOffset, TAGTYPE, length);
+		return makeSetToProposal(proposals, documentOffset, TAGTYPE, 0); //length);
 	}
 
 	/** 
@@ -670,59 +698,56 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	 */
 	private ICompletionProposal[] makeSetToProposal(Set st, int offset, short type, int currentlen)
 	{
+		//r2 QA 2004-05-15
+		//Moved to the new function object way from the original string way
+		//like I first had the dictionary...
+		//System.out.println("got " + offset + " " + type + " " + currentlen + " " + st.size());
 		if(st != null)
 		{
-			
-			Object obj[] = new Object[st.size()];
-			obj = new TreeSet(st).toArray();
+			st = new TreeSet(st);
 			
 			//build a Completion dodad with the right amount of records
-			ICompletionProposal[] result = new ICompletionProposal[obj.length];
-	
-			for(int i=0; i<obj.length; i++)
+			CompletionProposal[] result = new CompletionProposal[st.size()];
+			
+			int z=0;
+			Iterator i = st.iterator();
+			while(i.hasNext())
 			{
-				//if(currentlen == 0) currentlen = 1;
-				//get the full on name
-				String name = obj[i].toString();
-				//make a displayable name
-				String display = new String(name);
+				Function fun = (Function)i.next();
 				
+				//the toLowerCase is because of the createobject hack, we need
+				//to either make a setting in prefs for upper/lower or find a
+				//better way to handle the createobject case
+				String name = fun.getName().toLowerCase();
 				//now remove chars so when they hit enter it wont write the whole
 				//word just the part they havent typed
-				name = name.substring(currentlen, name.length());
-				Debug.println("makeSetToProposal", this, "in::" + name);
+				if(name.length() > 0)
+				{
+					name = name.substring(currentlen, name.length());
+					//System.out.println("makeSetToProposal" + "in::" + name);
+				}
 				
 				//the tag len and icon
 				int insertlen = 0;
-				org.eclipse.swt.graphics.Image img = null;
+				Image img = null;
+				//if there is anyof the function name left add a closing(
+				if(name.length() > 0) name += "(";
+				//default to the tag len and icon
+				insertlen = name.length();
+				img = CFPluginImages.get(CFPluginImages.ICON_FUNC);
 				
-				if(type == ATTRTYPE)
-				{
-					name += "=\"\"";
-					insertlen = name.length() - 1;
-					img = CFPluginImages.get(CFPluginImages.ICON_FUNC);
-				}
-				else if(type == TAGTYPE)
-				{
-					name += " ";
-					//default to the tag len and icon
-					insertlen = name.length();
-					img = CFPluginImages.get(CFPluginImages.ICON_FUNC);
-				}
-				
-				//System.err.println(name);
-				result[i] = new CompletionProposal(
+				result[z] = new CompletionProposal(
 					name,
 					offset, 
 					0, 
 					insertlen,
 					img,
-					display,
+					fun.toString(),
 					null,
-					"test" 
+					fun.getHelp()
 				);
+				z++;
 			}
-			
 			return result;
 		}
 		
@@ -737,14 +762,14 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		return null;
 	}
 
-	/**
+	/** 
 	 * for functions insight
 	 * TODO check out cfcompletion this has changed a bit... maybe we should
 	 * workout some way to make these call the same place?
 	 */
 	public IContextInformation[] computeContextInformation(ITextViewer viewer,
 		int documentOffset) {
-		String mName = "computeContextInformation";
+		/* String mName = "computeContextInformation";
 		try
 		{
 			//find out the line number and get the begining of the line
@@ -826,7 +851,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		{
 			//?
 		}
-		
+		*/
 		return null;
 	}
 
@@ -836,5 +861,4 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	public String getErrorMessage() {
 		return null;
 	}
-	
 }

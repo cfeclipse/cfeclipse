@@ -535,7 +535,8 @@ public class Util {
 		System.out.println(GetIndent(count) + "Tree: " + rootItem.itemName  + "\' + match data was : " + rootItem.getItemData());
 		if(rootItem.hasChildren())
 		{
-			ArrayList children = rootItem.getChildren();
+			//ArrayList children = rootItem.getChildren();
+			ArrayList children = rootItem.getChildNodes();
 			for(int i = 0; i < children.size(); i++)
 			{
 				walkTreeMain((DocItem)children.get(i), count + 1);
@@ -553,7 +554,8 @@ public class Util {
 		System.out.println(GetIndent(count) + rootItem.itemName);
 		if(rootItem.hasChildren())
 		{
-			ArrayList children = rootItem.getChildren();
+			//ArrayList children = rootItem.getChildren();
+			ArrayList children = rootItem.getChildNodes();
 			for(int i = 0; i < children.size(); i++)
 			{
 				walkTreeNamesOnly((DocItem)children.get(i), count + 1);

@@ -290,7 +290,8 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	public void partClosed(IWorkbenchPart part) {
-		System.out.println("Part closed: "+part.getClass().getName());
+		System.out.println("Part closed: " + part.getClass().getName());
+		
 		if (part.equals(this) || part.equals(this.getViewSite())) {
 			try {
 				getSite().getWorkbenchWindow().getActivePage().removePartListener(this);

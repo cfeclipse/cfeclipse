@@ -35,10 +35,9 @@ package com.rohanclan.cfml.views.contentoutline;
  * May 5, 2002
  */
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.swt.graphics.Image;
-import com.rohanclan.cfml.util.CFPluginImages;
+//import org.eclipse.swt.graphics.Image;
+//import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.parser.*;
-//import java.io.File;
 
 public class OutlineLabelProvider extends LabelProvider {
 	
@@ -80,25 +79,8 @@ public class OutlineLabelProvider extends LabelProvider {
 	 */
 	public String getText(Object element) 
 	{	
-		//if this is a file
-		/* if(element instanceof File)
-		{
-			String fname = ((File)element).getName();
-			//and its not a directory trim off the extension
-			if( !((File)element).isDirectory() )
-			{
-				return fname.substring(0,fname.length() - 4);
-			}
-			//if a directory just show the name
-			else
-			{	
-				return fname;
-			}
-		} */
-		
 		if(element instanceof DocItem)
 		{
-			//return ((DocItem)element).toString();
 			StringBuffer sb = new StringBuffer();
 			
 			sb.append( ((DocItem)element).getName() );

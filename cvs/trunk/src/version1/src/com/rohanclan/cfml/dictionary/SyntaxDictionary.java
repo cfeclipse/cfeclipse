@@ -144,6 +144,24 @@ public abstract class SyntaxDictionary {
 	}
 	
 	/**
+	 * gets a set of all the function objects in this dictionary
+	 * @return a set of all the tag objects
+	 */
+	public Set getAllFunctions()
+	{
+		Set total = new HashSet();
+		Set keys = getFunctions();
+		Iterator it = keys.iterator();
+		while(it.hasNext())
+		{
+			total.add(functions.get((String)it.next()));
+		}
+		
+		return total;
+	}
+	
+	
+	/**
 	 * get a set of filtered tags limited by start
 	 * @param start
 	 * @return
@@ -202,7 +220,8 @@ public abstract class SyntaxDictionary {
 	}
 	
 	/**
-	 * gets all the functions (lowercase only)
+	 * gets all the functions in a string Format (lowercase only). In other words
+	 * the keyset of the function map not the function objects
 	 * @param elementname
 	 * @return
 	 */
@@ -341,8 +360,7 @@ public abstract class SyntaxDictionary {
 	 */
 	private void loadDictionary() throws IOException, SAXException, ParserConfigurationException
 	{
-		//System.setProperty("javax.xml.parsers.SAXParserFactory", SAXFactory);
-		System.err.println("loading dictionary: " + filename);
+		//System.err.println("loading dictionary: " + filename);
 		if(filename == null) throw new IOException("Filename can not be null!");
 		
 		URLConnection urlcon = new URL(dictionaryBaseURL + "/" + filename).openConnection();

@@ -28,7 +28,7 @@ package com.rohanclan.cfml.parser;
 import java.util.ArrayList;
 import java.util.Stack;
 import com.rohanclan.cfml.parser.DocItem;
-import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
+//import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 
 import org.eclipse.jface.text.IDocument;
 /** 
@@ -83,7 +83,9 @@ public class CFDocument {
 	{
 		if(treeRoot == null)
 		{
-			System.err.println("CFDocument::getDocumentRoot() - WARNING: treeRoot is null, have you run the parser yet?");
+			System.err.println(
+				"CFDocument::getDocumentRoot() - WARNING: treeRoot is null, have you run the parser yet?"
+			);
 		}
 		return treeRoot;
 	}

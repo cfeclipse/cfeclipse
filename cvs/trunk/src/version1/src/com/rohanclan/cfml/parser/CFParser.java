@@ -140,9 +140,11 @@ public class CFParser {
 	 */
 	public CFDocument getParseResult()	{
 		if(parseResult == null)
-			System.err.println("CFParser::getParseResult() - WARNING: parseResult is null!");
+			//System.err.println("CFParser::getParseResult() - WARNING: parseResult is null!");
+			;
 		if(parserState == null)
-			System.err.println("CFParser::getParseResult() - WARNING: parserState is null. This probably means that the parser has not been run.");
+			//System.err.println("CFParser::getParseResult() - WARNING: parserState is null. This probably means that the parser has not been run.");
+			;
 		return parseResult; 
 	}
 	
@@ -207,12 +209,12 @@ public class CFParser {
 			int lineNumber = 0;
 			try {
 				lineNumber = inDoc.getLineOfOffset(matcher.start());
-				System.err.println(
-					"Line " + inDoc.getLineOfOffset(matcher.start()) 
-					+ ": Got the text \'" + matcher.group() + "\'"
-				);
+				//System.err.println(
+				//	"Line " + inDoc.getLineOfOffset(matcher.start()) 
+				//	+ ": Got the text \'" + matcher.group() + "\'"
+				//);
 			}catch(BadLocationException excep) {
-				System.err.println("Apparently the match was out of the document!");
+				//System.err.println("Apparently the match was out of the document!");
 				userMessage(0, "getTagMatches", "Apparently the match was out of the document!");
 			}
 			matches.add(new TagMatch(matcher.group(), matcher.start(), matcher.end(), lineNumber));
@@ -302,7 +304,7 @@ public class CFParser {
 				userMessage(indent, method, "WARNING: " + message);
 				break;
 			case USRMSG_ERROR:
-				System.err.println("ERROR: CFParser::" + method + "() - " + message + ".");
+				//System.err.println("ERROR: CFParser::" + method + "() - " + message + ".");
 
 				IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
 			
@@ -370,7 +372,7 @@ public class CFParser {
 	 * If the item does not match the most recent item we've a problem. At the moment
 	 * it reports an error and throws away the closer.
 	*/
-		System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
+		//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
 		// Closing tag, so we attempt to match it to the current top of the stack.
 		String closerName = match.match;
 		if(closerName.indexOf("</cf") != -1)
@@ -379,7 +381,7 @@ public class CFParser {
 			closerName = closerName.substring(4, closerName.length()-1);
 			
 			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
-//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
+			//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
 
 			if(topItem instanceof TagItem)
 			{
@@ -387,7 +389,7 @@ public class CFParser {
 				TagItem tempItem = new TagItem(match.lineNumber, match.startPos, match.endPos+1, match.match);
 				((TagItem)topItem).setMatchingItem(tempItem);
 				} catch(Exception e){
-					System.err.println("Caught exception: " + e.getMessage());
+					//System.err.println("Caught exception: " + e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -459,7 +461,7 @@ public class CFParser {
 	 */
 	protected void handleHTMLTag(String tagName, TagMatch match, Stack matchStack, HashMap attrMap, boolean isACloser)
 	{
-		System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
+		//System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
 	}
 	
 	/**
@@ -551,7 +553,7 @@ public class CFParser {
 	
 		if(newItem instanceof CfmlTagFunction)
 		{
-//System.out.println("CFParser::handleCFTag() - Function has name of" + ((CfmlTagFunction)newItem).getAttribute("name"));
+			//System.out.println("CFParser::handleCFTag() - Function has name of" + ((CfmlTagFunction)newItem).getAttribute("name"));
 			parserState.addFunction(newItem);
 		}
 		
@@ -579,11 +581,11 @@ public class CFParser {
 */
 				top.addChild(newItem);
 				matchStack.push(top);
-//System.out.println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
+				//System.out.println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
 			}	
 		} catch(Exception anExcep) {
 			parserState.addMessage(new ParseError(getLineNumber(match.startPos), match.startPos, match.endPos, match.match, "An unknown error occurred during parsing."));
-			System.err.println("CFParser::handleCFTag() - Caught an exception during item popping. Exception was " + anExcep.getLocalizedMessage());
+			//System.err.println("CFParser::handleCFTag() - Caught an exception during item popping. Exception was " + anExcep.getLocalizedMessage());
 			anExcep.printStackTrace();
 			//System.out.println(anExcep.hashCode());
 			throw (RuntimeException)anExcep.fillInStackTrace();
@@ -635,7 +637,7 @@ public class CFParser {
 			{
 				TagMatch match = (TagMatch)matches.get(matchPos);
 				String matchStr = match.match;
-//System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
+				//System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					// Is a tag
@@ -678,7 +680,7 @@ public class CFParser {
 							}
 							else
 							{
-//System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "\'");
+								//System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "\'");
 								handleCFTag(tagName, match, matchStack, stripAttributes(attributes), isACloser);
 							}
 						}
@@ -690,7 +692,7 @@ public class CFParser {
 				}
 			}
 			
-			newDoc.docTree = matchStack;
+			//newDoc.docTree = matchStack;
 			
 		}catch(Exception anyException) {
 			parserState.addMessage(new ParseMessage(
@@ -698,10 +700,10 @@ public class CFParser {
 				"Doc tree creation: caught an unhandled exception: " 
 				+ anyException.getMessage()
 			));
-			System.err.println(
-				Util.GetTabs(matchStack) + "Parser: Caught an exception!" 
-				+ anyException.getMessage()
-			);
+			//System.err.println(
+			//	Util.GetTabs(matchStack) + "Parser: Caught an exception!" 
+			//	+ anyException.getMessage()
+			//);
 			anyException.printStackTrace();
 			//System.out.println(anyException.hashCode());
 		}
@@ -760,7 +762,7 @@ public class CFParser {
 		}
 		if(finalOffset != currPos)
 		{
-			System.err.println("CFParser::matchingHTML() - FATAL ERROR: Failed to find the end of an HTML tag!: " + inData.substring(currDocOffset, currPos));
+			//System.err.println("CFParser::matchingHTML() - FATAL ERROR: Failed to find the end of an HTML tag!: " + inData.substring(currDocOffset, currPos));
 			
 			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
 												inData.substring(currDocOffset, currPos), 
@@ -794,7 +796,7 @@ public class CFParser {
 		
 		if(finalOffset != currPos)
 		{
-			System.err.println("FATAL ERROR: Searching for a closing <cfscript> tag but could not find one: " + inData.substring(currDocOffset, currPos));
+			//System.err.println("FATAL ERROR: Searching for a closing <cfscript> tag but could not find one: " + inData.substring(currDocOffset, currPos));
 			
 			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
 												inData.substring(currDocOffset, currPos), 
@@ -822,7 +824,7 @@ public class CFParser {
 			if(!inQuotes && currChar == '>')
 			{
 				finalOffset = currPos;
-//System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
+				//System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
 				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
 												getLineNumber(currDocOffset)));
 				break;
@@ -833,7 +835,7 @@ public class CFParser {
 		}
 		if(finalOffset != currPos)
 		{
-			System.err.println("FATAL ERROR: Failed to find the end of a CFML tag!: " + inData.substring(currDocOffset, currPos));
+			//System.err.println("FATAL ERROR: Failed to find the end of a CFML tag!: " + inData.substring(currDocOffset, currPos));
 			
 			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
 												inData.substring(currDocOffset, currPos), 
@@ -862,7 +864,7 @@ public class CFParser {
 				// Make sure we haven't had any fatal errors during parsing.
 				if(parserState.hadFatal())
 				{
-					System.err.println("Parser encountered a fatal parse error");
+					//System.err.println("Parser encountered a fatal parse error");
 					break;
 				}
 				
@@ -1034,7 +1036,7 @@ public class CFParser {
 			processParseResultMessages();
 		} catch(Exception excep) 
 		{
-			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
+			//System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
 		}
 		return docTree;		
 	}
