@@ -410,38 +410,18 @@ public class CFConfiguration extends SourceViewerConfiguration
 		//assign to the needed partitions
 		
 		//for normal text
-		assistant.setContentAssistProcessor(
-			cfcp,
-			IDocument.DEFAULT_CONTENT_TYPE
-		); 
+		assistant.setContentAssistProcessor(cfcp,IDocument.DEFAULT_CONTENT_TYPE); 
 		//inside cftags
-		assistant.setContentAssistProcessor(
-			cfcp,
-			CFPartitionScanner.CF_TAG
-		);
+		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.CF_TAG);
+		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.J_SCRIPT);
 		//inside any other tags
-		assistant.setContentAssistProcessor(
-			cfcp,
-			CFPartitionScanner.ALL_TAG
-		);
-		
+		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.ALL_TAG);
 		//unknown tags
-		assistant.setContentAssistProcessor(
-			cfcp,
-			CFPartitionScanner.UNK_TAG
-		);
-		
+		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.UNK_TAG);
 		//inside cfscript tags
-		//new processor by oliver :)
-		assistant.setContentAssistProcessor(
-			new CFScriptCompletionProcessor(),
-			CFPartitionScanner.CF_SCRIPT
-		);
+		assistant.setContentAssistProcessor(new CFScriptCompletionProcessor(),CFPartitionScanner.CF_SCRIPT);
 		//in style tags 
-		assistant.setContentAssistProcessor(
-			cfcp,
-			CFPartitionScanner.CSS_TAG
-		);
+		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.CSS_TAG);
 		
 		//in javascript tags
 		//this doesnt quite work right...
@@ -452,10 +432,6 @@ public class CFConfiguration extends SourceViewerConfiguration
 		//	cfscp,
 		//	CFPartitionScanner.J_SCRIPT
 		//);
-		
-		//TODO this stuff should be user setable 
-		//assistant.enableAutoActivation(true);
-		//assistant.setAutoActivationDelay(0);
 
 		IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
 		
@@ -464,9 +440,6 @@ public class CFConfiguration extends SourceViewerConfiguration
 		
 		assistant.enableAutoActivation(true);
 		assistant.setAutoActivationDelay(delay);
-		
-
-		//System.out.println("Insight Delay set to: "+ delay + "ms");
 		
 		assistant.setProposalPopupOrientation(
 				IContentAssistant.PROPOSAL_OVERLAY
@@ -518,6 +491,8 @@ public class CFConfiguration extends SourceViewerConfiguration
 	{
 		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) {
 			return indentCFScriptStrategy;
+		} else if(partitionType.compareTo(CFPartitionScanner.J_SCRIPT) == 0) {
+			return indentCFScriptStrategy;
 		}
         return indentTagStrategy;
     }
@@ -560,6 +535,10 @@ public class CFConfiguration extends SourceViewerConfiguration
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
         	indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
+        }
+        else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
+        	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
+        	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
         }
 
     }

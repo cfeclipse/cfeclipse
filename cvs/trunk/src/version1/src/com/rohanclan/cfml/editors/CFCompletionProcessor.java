@@ -24,6 +24,7 @@
  */
 package com.rohanclan.cfml.editors;
 
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContextInformation;
@@ -140,101 +141,77 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		
 		try
 		{
-			//attributes typed text (if it exists)
-			String limiting = "";
-			//often 'cf' for cf tags
-			String tagnamespace = "";
-			//where we are going to lookup in sight stuff
-			SyntaxDictionary syntax = null;
-			//System.err.println("in CFML completion processor");
-			//assume its not a cftag
-			boolean cftag = false;
-			boolean httag = false;
-			
-			//what invoked us a space or a f? (make sure we are not at the start
-			//of a file
+			String limiting = "";			// attributes typed text (if it exists)
+			String tagnamespace = ""; 		// often 'cf' for cf tags
+			boolean cftag = false;			// assume its not a cftag
+			boolean httag = false;			// assume it's not an HTML tag
 			String invoker = "";
-			if(documentOffset > 0)
-				invoker = viewer.getDocument().get(documentOffset-1,1);
+			IDocument document = viewer.getDocument();
+			String currPartitionType = document.getPartition(documentOffset).getType();
+			String prevPartitionType = document.getPartition(documentOffset -1).getType();
+			String tagname = "";
+			int start = 0;
+			
+			if(documentOffset > 0)	// Get the text that invoked content assist
+				invoker = document.get(documentOffset-1,1);
 			
 			// Stop the content assist from popping up if there are multiple spaces or tabs
+			// OBT - This is bad as it activates/deactivates content assist for the entire
+			//       editor. Content assist should only trigger/untrigger based upon each
+			//       call of the content assist. A content assist call should ideally
+			//       never affect the next call.
 			try {
-				if (viewer.getDocument().get(documentOffset-2,2).matches("\\s+")){
+				if (document.get(documentOffset-2,2).matches("\\s+")){
 					assistant.enableAutoActivation(false);
-				//System.out.println("Auto activation disabled");
-					
 				} else {
 					assistant.enableAutoActivation(true);
-				//System.out.println("Auto activation enabled");
 				}
 			}
 			catch (Exception e) {}
-			
-			IDocument document = viewer.getDocument();
-			String current_partition = viewer.getDocument().getPartition(documentOffset).getType();
-			
-			int start = 0;
 			
 			//this is because when they hit > it often moves them into
 			//another partiton type - so get the last partition
 			if(invoker.equals(">"))
 				start = document.getPartition(documentOffset - 1).getOffset();
-			else
+			else {
 				start = document.getPartition(documentOffset).getOffset();
-			
-			String prefix =	document.get(start, documentOffset - start);
-			
-			//System.err.println("Going in" + prefix + " type " + document.getPartition(documentOffset).getType());
-			
-			//change any newlines or returns to a space so we can 
-			//tokenize correctly
-			prefix = prefix.replace('\n',' ');
-			prefix = prefix.replace('\r',' ');
-			prefix = prefix.replace('\t',' ');
+				if(currPartitionType.compareToIgnoreCase(CFPartitionScanner.J_SCRIPT) == 0) {
+					start+= 8;
+				}
+			}
+						
+			String prefix =	eliminateUnwantedChars(document.get(start, documentOffset - start));
 			
 			///////////////////////////////////////////////////////////////////
 			
 			//now go over the whole tag using spaces as the delimiter
 			StringTokenizer st = new StringTokenizer(prefix," ");
-			String tagname = "";
+			
 			
 			//if st has nothing then we got called by mistake or something just
 			//bail out
-			if(!st.hasMoreTokens())
-			{
-				//return null;
-				tagname = prefix;
-			}
-			else
-			{
-				//first token should be the tag name (with <cf attached)
-				tagname = st.nextToken();	
-			}
+			System.out.println("Prefix: \'" + prefix + "\'");
+			tagname = (!st.hasMoreTokens()) ? prefix : st.nextToken();
+			System.out.println("tagname: \'" + tagname + "\'");
 			
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)
 			{
 				//clean it up for our lookup
-				//System.err.println("Looking for <cf");
 				if(prefix.trim().substring(0,3).equalsIgnoreCase("<cf"))
 				{
 					cftag = true;
 					tagnamespace = "cf";
 					//should now have just the lookup key : "abort" for example
 					tagname = tagname.trim().substring(3);
-					//System.err.println("tag2>>"+tagname+"<<");
-					syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
 				}
 			}
 			
-			//if it was a cftag it should no longer start with a <
 			if(tagname.trim().startsWith("<"))
-			{
-				//do the html dictionary
-				//System.err.println("Got an HTML tag");
+			{	// Gets the HTML syntax dictionary (CF tags will have been handled above,
+				// therefore they won't have an open chevron)).
 				httag = true;
 				tagname = tagname.trim().substring(1);
-				syntax = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
 			}
 			
 			//if this was a <booga> type tag remove the last >
@@ -249,7 +226,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//in the end should have the thing to limit with
 				limiting = st.nextToken();
 			}
-			//System.err.println("Done more token crap");
+
 			//if it looks like they have started typing the contents of an
 			//attribtue (or they are done) set limiting to nothing
 			if(limiting.indexOf("\"") > 0 || limiting.indexOf("'") > 0)
@@ -260,129 +237,23 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			//if we are in a cftag, and there are no attribtues (and we did not
 			//start this mess by getting called with a space or tab) then we
 			//should lookup cf tag names to suggest
-			if(cftag && limiting.length() <= 0 && (!invoker.equals(" ") && !invoker.equals("\t") && !invoker.equals(">")) )
+			boolean invokerIsSpace = invoker.equals(" ");
+			boolean invokerIsTab = invoker.equals("\t");
+			boolean invokerIsCloseChevron = invoker.equals(">");
+			SyntaxDictionary syntax = DictionaryManager.getDictionary((cftag) ? DictionaryManager.CFDIC : DictionaryManager.HTDIC); 
+ 
+			if(limiting.length() <= 0 && !invokerIsSpace && !invokerIsTab && !invokerIsCloseChevron)
 			{
-				//if they have typed more then the cf part get the rest so we
-				//can filter out non matches
-				String taglimiting = prefix.trim().substring(3);
-					
-				if(invoker.charAt(0) == '\"')
-				{
-					// spike@spike.org.uk :: Added code
-                    // Make sure we aren't at the end of the document 
-                    // before doing the check to see if we have two sets of double quotes. 
-                    //
-                    if (document.getLength() > documentOffset) 
-                    {
-                    	// spike@spike.org.uk :: Added comment
-                        // This checks if the invoking charcter is the second of a pair of qoutes
-                        // and if the first is preceded by an '='. If so we don't want to show
-                        // insight, so it returns null. 
-                        //
-						if(document.getChar(documentOffset) == '\"' &&
-						   document.getChar(documentOffset-2) != '=')
-						{	// " entered and there already is one in the document.
-							document.replace(documentOffset, 1, "");
-							return null;
-						}
-                    }
-				}				
-				
-				// If the taglimiting has a space in we're assuming that the user
-				// is intending to input or has inputted some attributes.
-				int indexOfFirstSpace = taglimiting.indexOf(" "); 
-				if(indexOfFirstSpace != -1)
-				{
-					return getAttributeValueProposals(
-						syntax, 
-						taglimiting, 
-						indexOfFirstSpace, 
-						documentOffset
-					);
+				if(cftag) {
+					return lookUpCFTagNames(documentOffset, syntax, invoker, document, prefix);
+				} else if(httag) {
+					return lookUpTagNames(documentOffset, syntax, invoker, document, prefix);
 				}
-				else
-				{
-					return makeSetToProposal(
-						((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
-						documentOffset,
-						TAGTYPE,
-						taglimiting.length()
-					);
-				}
-			}
-			else if(httag && limiting.length() <= 0 && (!invoker.equals(" ") && !invoker.equals("\t") && !invoker.equals(">")) )
-			{
-				String taglimiting = prefix.trim().substring(1);
-				
-				/*////////////////////////// copy from above dup code! //////*/
-				if(invoker.charAt(0) == '\"')
-				{
-					if(document.getChar(documentOffset) == '\"' &&
-							document.getChar(documentOffset-2) != '=')
-					{	// " entered and there already is one in the document.
-						document.replace(documentOffset, 1, "");
-						return null;
-					}
-				}				
-				
-				// If the taglimiting has a space in we're assuming that the user
-				// is intending to input or has inputted some attributes.
-				int indexOfFirstSpace = taglimiting.indexOf(" "); 
-				if(indexOfFirstSpace != -1)
-				{
-					return getAttributeValueProposals(
-							syntax, 
-							taglimiting, 
-							indexOfFirstSpace, 
-							documentOffset
-					);
-				}
-				else
-				{
-				/*////////////////////////// copy from above dup code! //////*/	
-					
-					return makeSetToProposal(
-						((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
-						documentOffset,
-						TAGTYPE,
-						taglimiting.length()
-					);
-					
-				}
-			}		
-			//little bit-o-debug. Hit ~ to see what partiton you are in 
-			//(shows in the debug window
-			else if(invoker.equals("~"))
-			{
-				System.err.println("Partition: " + current_partition);
 			}
 			else
 			{	
-				//we are probably in need of attribtue in sight
-				//clean up the text typed so far
-				
-				limiting = limiting.trim();
-				
-				//hacks hacks everywhere :) this looks to see if there are an
-				//odd number of " in the string prior to this invoke before 
-				//showing attribute insight. (to keep it from showing attributes
-				//inside of attributes)
-				String quote_parts[] = prefix.split("\"");
-				if(quote_parts.length % 2 != 0)				
-				{
-					//and return our best guess (tagname should have been defined
-					//up there ^
-					if(syntax != null && prefix.indexOf('>') < 0)
-					{
-						return makeSetToProposal(
-							syntax.getFilteredAttributes(tagname.trim(),limiting),
-							documentOffset,
-							ATTRTYPE,
-							limiting.length()
-						);
-					}
-				}
-			}
+				return getAttributeProposals(documentOffset, limiting, syntax, prefix, tagname);
+			}	
 		}
 		catch(Exception e)
 		{
@@ -392,6 +263,179 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		
 		return null;
 	}
+	
+	/**
+	 * @param documentOffset
+	 * @param limiting
+	 * @param syntax
+	 * @param prefix
+	 * @param tagname
+	 * @return
+	 */
+	private ICompletionProposal[] getAttributeProposals(int documentOffset, String limiting, SyntaxDictionary syntax, String prefix, String tagname) {
+		//we are probably in need of attribtue in sight
+		//clean up the text typed so far
+		
+		limiting = limiting.trim();
+		
+		//hacks hacks everywhere :) this looks to see if there are an
+		//odd number of " in the string prior to this invoke before 
+		//showing attribute insight. (to keep it from showing attributes
+		//inside of attributes)
+		String quote_parts[] = prefix.split("\"");
+		if(quote_parts.length % 2 != 0)				
+		{
+			//and return our best guess (tagname should have been defined
+			//up there ^
+			if(syntax != null && prefix.indexOf('>') < 0)
+			{
+				return makeSetToProposal(
+					syntax.getFilteredAttributes(tagname.trim(),limiting),
+					documentOffset,
+					ATTRTYPE,
+					limiting.length()
+				);
+			}
+		}
+		return null;
+	}
+
+
+	/**
+	 * Content assist comes here if the user is typing out a tag or if the
+	 * user is now in an attribute. If in an attribute we give out the possible
+	 * attribute values.
+	 * 
+	 * @param documentOffset Offset within the document
+	 * @param syntax Syntax dictionary to use
+	 * @param invoker The string that invoked the content assist
+	 * @param document Document that we're working in
+	 * @param prefix Data that the user has typed
+	 * @return array of completion proposals, null if no proposals found
+	 * @throws BadLocationException
+	 */
+	private ICompletionProposal[] lookUpTagNames(int documentOffset, SyntaxDictionary syntax, String invoker, IDocument document, String prefix) throws BadLocationException {
+		String taglimiting = prefix.trim().substring(1);
+		
+		/*////////////////////////// copy from above dup code! //////*/
+		if(invoker.charAt(0) == '\"')
+		{
+			if(document.getChar(documentOffset) == '\"' &&
+					document.getChar(documentOffset-2) != '=')
+			{	// " entered and there already is one in the document.
+				document.replace(documentOffset, 1, "");
+				return null;
+			}
+		}				
+		
+		// If the taglimiting has a space in we're assuming that the user
+		// is intending to input or has inputted some attributes.
+		int indexOfFirstSpace = taglimiting.indexOf(" "); 
+		if(indexOfFirstSpace != -1)
+		{
+			return getAttributeValueProposals(
+					syntax, 
+					taglimiting, 
+					indexOfFirstSpace, 
+					documentOffset
+			);
+		}
+		else
+		{
+		/*////////////////////////// copy from above dup code! //////*/	
+			
+			return makeSetToProposal(
+				((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
+				documentOffset,
+				TAGTYPE,
+				taglimiting.length()
+			);
+			
+		}
+	}
+
+
+	/**
+	 * Change any newlines or returns to a space so we can tokenize correctly
+	 * 
+	 * @param prefix text to work upon
+	 * @return the cleaned string
+	 */
+	private String eliminateUnwantedChars(String prefix) {
+		prefix = prefix.replace('\n',' ');
+		prefix = prefix.replace('\r',' ');
+		prefix = prefix.replace('\t',' ');
+		return prefix;
+	}
+
+
+	/**
+	 * Content assist comes here if the user is typing out a tag or if the
+	 * user is now in an attribute. If in an attribute we give out the possible
+	 * attribute values.
+	 * 
+	 * @param documentOffset Offset within the document
+	 * @param syntax Syntax dictionary to use
+	 * @param invoker The string that invoked the content assist
+	 * @param document Document that we're working in
+	 * @param prefix Data that the user has typed
+	 * @return array of completion proposals, null if no proposals found
+	 * @throws BadLocationException
+	 */
+	private ICompletionProposal[] lookUpCFTagNames(int documentOffset, 
+												 SyntaxDictionary syntax, 
+												 String invoker, IDocument document, 
+												 String prefix) throws BadLocationException
+	{
+		//if they have typed more then the cf part get the rest so we
+		//can filter out non matches
+		String taglimiting = prefix.trim().substring(3);
+			
+		if(invoker.charAt(0) == '\"')
+		{
+			// spike@spike.org.uk :: Added code
+		    // Make sure we aren't at the end of the document 
+		    // before doing the check to see if we have two sets of double quotes. 
+		    //
+		    if (document.getLength() > documentOffset) 
+		    {
+		    	// spike@spike.org.uk :: Added comment
+		        // This checks if the invoking charcter is the second of a pair of qoutes
+		        // and if the first is preceded by an '='. If so we don't want to show
+		        // insight, so it returns null. 
+		        //
+				if(document.getChar(documentOffset) == '\"' &&
+				   document.getChar(documentOffset-2) != '=')
+				{	// " entered and there already is one in the document.
+					document.replace(documentOffset, 1, "");
+					return null;
+				}
+		    }
+		}				
+		
+		// If the taglimiting has a space in we're assuming that the user
+		// is intending to input or has inputted some attributes.
+		int indexOfFirstSpace = taglimiting.indexOf(" "); 
+		if(indexOfFirstSpace != -1)
+		{
+			return getAttributeValueProposals(
+				syntax, 
+				taglimiting, 
+				indexOfFirstSpace, 
+				documentOffset
+			);
+		}
+		else
+		{
+			return makeSetToProposal(
+				((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
+				documentOffset,
+				TAGTYPE,
+				taglimiting.length()
+			);
+		}
+	}
+
 
 	/** 
 	 * helper function

@@ -120,10 +120,10 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			return;
 		}
 		
-		System.out.println("CFScriptIndentStrategy::codeInsertion() - ");
-		System.out.println("nextChar = \'" + nextChar + "\'");
-		System.out.println("prevChar = \'" + prevChar + "\'");
-		System.out.println("trigChar = \'" + trigChar + "\'");
+	//System.out.println("CFScriptIndentStrategy::codeInsertion() - ");
+	//System.out.println("nextChar = \'" + nextChar + "\'");
+	//System.out.println("prevChar = \'" + prevChar + "\'");
+	//System.out.println("trigChar = \'" + trigChar + "\'");
 		try {
 			switch(trigChar) {
 			case '\b':

@@ -10,6 +10,7 @@ import java.net.URL;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.jface.resource.StringConverter;
@@ -39,7 +40,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final boolean	DEFAULT_AUTOCLOSE_TAGS			= true;
 	private static final boolean	DEFAULT_AUTOCLOSE_HASHES		= true;
 	private static final boolean	DEFAULT_AUTOINSERT_TAGS			= true;
-	
+	private static final boolean	DEFAULT_AUTOINDENT_ONTAGCLOSE	= false;
 	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
@@ -48,8 +49,8 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		store = CFMLPlugin.getDefault().getPreferenceStore();
 	}
 	
-	public void initializeDefaultValues() 
-	{
+	public void initializeDefaultValues() {
+		
 		//this should set the default path for snippets to the plugin directory
 		//in a sub directory called snippets... I think that makes more sense :)
 		String snippath = "";
@@ -66,7 +67,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		catch(Exception e)
 		{
 			//this should never happen.
-		}
+		}		
 		
         store.setDefault(P_INSIGHT_DELAY, DEFAULT_INSIGHT_DELAY); 
         store.setDefault(P_TAB_WIDTH, DEFAULT_TAB_WIDTH);
@@ -87,6 +88,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_AUTOCLOSE_TAGS, DEFAULT_AUTOCLOSE_TAGS);
         store.setDefault(P_AUTOCLOSE_HASHES, DEFAULT_AUTOCLOSE_HASHES);
         store.setDefault(P_AUTOINSERT_CLOSE_TAGS, DEFAULT_AUTOINSERT_TAGS);
+        store.setDefault(P_AUTOINDENT_ONTAGCLOSE, DEFAULT_AUTOINDENT_ONTAGCLOSE);
         
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
 	}

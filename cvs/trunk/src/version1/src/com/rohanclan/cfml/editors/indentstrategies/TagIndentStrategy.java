@@ -45,7 +45,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	public static final int INDENT_ONTAGCLOSE = 0;
 	/** Indent only when the user presses enter at this point &lt;cfif&gt;&lt;/cfif&gt; */
 	public static final int INDENT_ONCLOSEDTAGENTER = 1;
-
+	/** Don't indent */
+	public static final int INDENT_DONTDOIT = 2;
+	
 	/** Auto-close double quotes */
 	private boolean autoClose_DoubleQuotes = true;
 	/** Auto-close single quotes */
@@ -57,7 +59,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	/** Auto-insert a closing tag */
 	private boolean autoInsert_CloseTags = true;
 	/** When to trigger the auto-indent strategy when the user is in a tag */
-	private int autoIndent_OnTagClose = INDENT_ONTAGCLOSE;
+	private int autoIndent_OnTagClose = INDENT_ONCLOSEDTAGENTER;
 	
 	
 	/**
@@ -213,11 +215,46 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			lastChar = doc.getChar(docCommand.offset - 1);
 		
 		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1);
-		if(!this.autoClose_Tags)	// If the user hasn't got auto-insertion of closing chevrons on, then 
-			closingTag+= ">";		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
-
+		// If the user hasn't got auto-insertion of closing chevrons on, then 
+		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
+		
+		if(!this.autoClose_Tags)	
+			closingTag+= ">";	
+		
 		closingTag = "</" + closingTag;
-
+		
+		if(this.autoIndent_OnTagClose == INDENT_ONTAGCLOSE)
+			doInBetweenTagIndent(doc, docCommand, lastChar);
+		else {
+			try {
+				if(doc.getChar(docCommand.offset) == '>')
+					stepThrough(docCommand);
+				else {
+					docCommand.caretOffset = docCommand.offset + 1;
+					docCommand.shiftsCaret = false;
+				}
+				if(this.autoClose_Tags)	// If we're auto-closing tags then we need a closing chevron.
+					closingTag+= ">"; 
+				
+				//docCommand.caretOffset = docCommand.offset;
+				//docCommand.shiftsCaret = true;
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+			
+		
+		docCommand.text += closingTag;		// Use the first line's whitespace and insert the closing tag.
+		return docCommand;
+	}
+	
+	/**
+	 * @param doc
+	 * @param docCommand
+	 * @param lastChar
+	 * @throws BadLocationException
+	 */
+	private void doInBetweenTagIndent(IDocument doc, DocumentCommand docCommand, char lastChar) throws BadLocationException {
 		// Testing find start tag code
 		int startOfTag = findStartofTag(doc, docCommand.offset-1);
 		if(startOfTag == -1) {
@@ -228,8 +265,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		// end of test
 
 		int openChevron = doc.get(0, docCommand.offset).lastIndexOf('<');
-		if(openChevron == -1) 
-			return docCommand;
+		if(openChevron == -1)
+			return;
 		
 		String whiteSpace = getPrevLineWhiteSpace(doc,openChevron);		
 		docCommand.caretOffset = docCommand.offset + 3 + whiteSpace.length();
@@ -249,10 +286,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		docCommand.text += "\n";	// End the current line the user is on.
 		if(lastChar == '>') docCommand.text+="\t";
 		docCommand.text += whiteSpace + "\t" + "\n";	// Create the whitespace for the next line (the user will end up on this one)
-		docCommand.text += whiteSpace + closingTag;		// Use the first line's whitespace and insert the closing tag.
-		return docCommand;
+		docCommand.text += whiteSpace;
 	}
-	
+
 	/*
 	 * <cffunction name="fred>				: true
 	 * <cffunction name="fred"
@@ -330,7 +366,13 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				}
 				return;
 			case '>':
-				if(!this.autoInsert_CloseTags) return;
+				if(!this.autoInsert_CloseTags)
+				{
+					if(doc.getChar(docCommand.offset) == '>')
+						stepThrough(docCommand);
+					return;
+				}
+					
 				handleClosingChevron(doc, docCommand, beforeLastChar);
 				return;
 			case '<':
@@ -365,11 +407,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// 2) They've pressed enter WITHIN a tag (i.e. <cffred name="blah" [ENTER]>
 			
 			if(isEnterInTag(doc, docCommand)) {
-			//System.out..println("TagIndentStrategy::customizeDocumentCommand() - User is in a tag...");
 				handleEnterInTag(doc, docCommand);
 			}
-			//else
-			//System.out..println("TagIndentStrategy::customizeDocumentCommand() - User is NOT IN a tag...");
 	
 			String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
 			docCommand.text+= prevLineWhitespace;

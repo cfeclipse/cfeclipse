@@ -45,6 +45,7 @@ public class ParsePrefPage
 		addField(new BooleanFieldEditor(P_AUTOCLOSE_HASHES, "Auto close #s", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(P_AUTOCLOSE_TAGS, "Auto close tags (i.e. insert a closing \'>\')", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(P_AUTOINSERT_CLOSE_TAGS, "Auto insert a closing tag", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_AUTOINDENT_ONTAGCLOSE, "Auto-indent on tag close", getFieldEditorParent()));
 		
 	}
 	

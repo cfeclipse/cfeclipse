@@ -39,6 +39,7 @@ public class AutoIndentPrefPage
 	{
 		addField(new BooleanFieldEditor(P_PARSE_DOCFSCRIPT, "Parse CFScript", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(P_PARSE_REPORT_ERRORS, "Report parse errors", getFieldEditorParent()));
+
 	}
 	
 	 protected void performDefaults() 
