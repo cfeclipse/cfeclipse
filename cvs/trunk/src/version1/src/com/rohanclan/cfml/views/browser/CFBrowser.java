@@ -65,13 +65,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.QualifiedName;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
-
 public class CFBrowser {
-
-	//static ResourceBundle resourceBundle = ResourceBundle.getBundle(
-		//"com.rohanclan.cfml.views.browser.browser"
-	//	"com.rohanclan.coldfusionmx.ColdfusionMXPluginResources"
-	//);
+	public static final String DEFAULURL = "http://livedocs.macromedia.com";
 	
 	protected int index;
 	protected boolean busy;
@@ -79,19 +74,6 @@ public class CFBrowser {
 	protected Text location;
 	protected Browser browser;
 	private ViewPart viewer;
-	
-	/* static final String[] imageLocations = 
-	{
-		"eclipse01.bmp", "eclipse02.bmp", "eclipse03.bmp", "eclipse04.bmp", 
-		"eclipse05.bmp", "eclipse06.bmp", "eclipse07.bmp", "eclipse08.bmp", 
-		"eclipse09.bmp", "eclipse10.bmp", "eclipse11.bmp", "eclipse12.bmp",
-	};
-	*/
-	
-	//static final String iconLocation = "document.gif";
-	
-
-	
 	
 	/**
 	* Creates an instance of a ControlExample embedded inside the supplied
@@ -140,48 +122,20 @@ public class CFBrowser {
 		
 		location = new Text(parent, SWT.BORDER);
 		final Canvas canvas = new Canvas(parent, SWT.ICON_INFORMATION);
-		/*
-		final Rectangle rect = images[0].getBounds();
-		 canvas.addListener(SWT.Paint, new Listener() {
-			public void handleEvent(Event e) 
-			{
-				Point pt = canvas.getSize();
-				e.gc.drawImage(
-					images[index], 0, 0, rect.width, rect.height, 0, 0,
-					pt.x, pt.y
-				);
-			}
-		});
-		canvas.setToolTipText("Go to project homepage");
-		
-		canvas.addListener(SWT.MouseDown, new Listener() {
-			public void handleEvent(Event e) 
-			{
-				//browser.setUrl(getResourceString("Startup"));
-				//for now...
-				browser.setUrl(getProjectURL());
-			}
-		}); 
-		
-		
-		*/
-		
-		
-		
-		
-		
 		
 		display.asyncExec(new Runnable() {
+			//this is supposed to be the working icon but...
 			public void run() 
 			{
 				if(canvas.isDisposed())
 					return;
 				if(busy) 
 				{
-					index++;
+					/* index++;
 					if(index == images.length)
 					index = 0;
 					canvas.redraw();
+					*/
 				}
 				
 				display.timerExec(150, this);
@@ -343,31 +297,39 @@ public class CFBrowser {
 			initialize(display, browser);
 			//browser.setUrl(getResourceString("Startup"));
 			//for now...
-			
-			
-			browser.setUrl(getProjectURL());
+			String url = getProjectURL();
+			if(url == null || url.equals(""))
+			{
+				browser.setUrl(DEFAULURL);
+			}
+			else
+			{
+				browser.setUrl(url);
+			}
 		}
 	}
 	
-	
 	private String getProjectURL() {
-		String projectURL = "http://livedocs.macromedia.com";
-		try {
-			IEditorPart  editorPart =
-				viewer.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+		String projectURL = DEFAULURL;
+		
+		try 
+		{
+			IEditorPart editorPart = viewer.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 
-				if(editorPart  != null)
-				{
-				    IFileEditorInput input = (IFileEditorInput)editorPart.getEditorInput() ;
-				    IFile file = input.getFile();
-				     IProject activeProject = file.getProject();
-				     QualifiedName propertyName = new QualifiedName("", ICFMLPreferenceConstants.P_PROJECT_URL);
-						projectURL = activeProject.getPersistentProperty(propertyName);
-				}
+			if(editorPart  != null)
+			{
+				IFileEditorInput input = (IFileEditorInput)editorPart.getEditorInput() ;
+				IFile file = input.getFile();
+				IProject activeProject = file.getProject();
+				QualifiedName propertyName = new QualifiedName("", ICFMLPreferenceConstants.P_PROJECT_URL);
+				projectURL = activeProject.getPersistentProperty(propertyName);
+			}
 		}
-		catch (Exception e) {
+		catch (Exception e) 
+		{
 			e.printStackTrace(System.err);
 		}
+		
 		return projectURL;
 	}
 	
@@ -381,18 +343,6 @@ public class CFBrowser {
 	static String getResourceString(String key)
 	{
 		return CFMLPlugin.getResourceString(key);
-		/* try
-		{
-			return resourceBundle.getString(key);
-		}
-		catch(MissingResourceException e)
-		{
-			return key;
-		}
-		catch(NullPointerException e)
-		{
-			return "!" + key + "!";
-		} */
 	}
 	
 	/**
@@ -475,7 +425,7 @@ public class CFBrowser {
 	 */
 	void freeResources()
 	{
-		if(images != null)
+		/* if(images != null)
 		{
 			for(int i = 0; i < images.length; ++i) 
 			{
@@ -484,7 +434,7 @@ public class CFBrowser {
 					image.dispose();
 			}
 			images = null;
-		}
+		} */
 	}
 	
 	/**
@@ -495,69 +445,4 @@ public class CFBrowser {
 		if(location != null)
 			location.setFocus();
 	}
-	
-	/**
-	 * Loads the resources
-	 */
-	/* void initResources()
-	{
-		final Class clazz = this.getClass();
-		
-		//if(resourceBundle != null)
-		//{
-			try
-			{
-				if(images == null)
-				{
-					images = new Image[1];
-					images[0] = CFPluginImages.get(CFPluginImages.ICON_DEFAULT);
-					// images = new Image[imageLocations.length];
-					//for(int i = 0; i < imageLocations.length; ++i) 
-					//{
-					//	ImageData source = new ImageData(
-					//		clazz.getResourceAsStream(imageLocations[i])
-					//	);
-					//	ImageData mask = source.getTransparencyMask();
-					//	images[i] = new Image(null, source, mask);
-					//}
-				}
-				return;
-			} 
-			catch(Throwable t)
-			{
-				t.printStackTrace(System.err);
-			}
-		//}
-		
-		//String error = (resourceBundle != null)
-		//	? getResourceString("error.CouldNotLoadResources")
-		//	: "Unable to load resources";
-		
-		freeResources();
-		//throw new RuntimeException(error);
-	} */
-
-	/* public static void main(String[] args) 
-	{
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setLayout(new FillLayout());
-		shell.setText(getResourceString("window.title"));
-		CFBrowser instance = new CFBrowser(shell);
-		Image icon = new Image(
-			display, CFBrowser.class.getResourceAsStream(iconLocation)
-		);
-		
-		shell.setImage(icon);
-		shell.open();
-		
-		while(!shell.isDisposed()) 
-		{
-			if(!display.readAndDispatch())
-				display.sleep();
-		}
-		icon.dispose();
-		instance.dispose();
-		display.dispose();
-	} */
 }
