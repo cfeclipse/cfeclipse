@@ -51,7 +51,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+//import org.eclipse.jface.viewers.IStructuredSelection;
 //import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.editors.text.TextEditor;
 //import org.eclipse.jface.text.ITextSelection;
@@ -59,11 +59,11 @@ import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import org.eclipse.jface.action.Action;
 
 import com.rohanclan.cfml.util.CFPluginImages;
-import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
+//import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
 
-import java.util.Iterator;
+//import java.util.Iterator;
 
 import com.rohanclan.cfml.parser.CfmlTagItem;
 
@@ -262,6 +262,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	public void dispose() 
 	{
 		colorManager.dispose();
+		CFMLPlugin.getDefault().getPreferenceStore().removePropertyChangeListener(this);
 		super.dispose();
 	}
 	
