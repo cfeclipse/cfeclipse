@@ -287,6 +287,7 @@ public class SnipTreeView extends ViewPart
 				insertItem();
 			}
 		};
+		insertAction.setToolTipText("Insert the selected snip into the document");
 		
 		createFolderAction = new Action(
 			"Create Folder",
@@ -296,6 +297,8 @@ public class SnipTreeView extends ViewPart
 				createSnipFolder();
 			}
 		};
+		createFolderAction.setToolTipText("Create a new snip package");
+		
 		createSnippetAction = new Action(
 			"Create Snippet",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_ADD)
@@ -304,6 +307,8 @@ public class SnipTreeView extends ViewPart
 				createSnippet();
 			}
 		};
+		createSnippetAction.setToolTipText("Create a new snip");
+		
 		editSnippetAction = new Action(
 			"Edit Snippet",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_EDIT)
@@ -312,6 +317,8 @@ public class SnipTreeView extends ViewPart
 				editSnippet();
 			}
 		};
+		editSnippetAction.setToolTipText("Edit the selected snip");
+		
 		refreshSnippetsAction = new Action(
 			"Refresh Snippets",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH)		
@@ -320,6 +327,8 @@ public class SnipTreeView extends ViewPart
 				reloadSnippets();
 			}
 		};
+		refreshSnippetsAction.setToolTipText("Refresh snip view");
+		
 		deleteSnippetAction = new Action(
 			"Delete Snippet",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REMOVE)
@@ -328,6 +337,8 @@ public class SnipTreeView extends ViewPart
 				deleteSnippet();
 			}
 		};
+		deleteSnippetAction.setToolTipText("Delete selected snip");
+		
 		deleteFolderAction = new Action(
 			"Delete Folder",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_DELETE)
@@ -336,6 +347,7 @@ public class SnipTreeView extends ViewPart
 				deleteSnipFolder();
 			}
 		};
+		deleteFolderAction.setToolTipText("Delete selected snip package (must be empty)");
 	}
 	
 	/**

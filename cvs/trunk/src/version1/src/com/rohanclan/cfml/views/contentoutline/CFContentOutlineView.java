@@ -325,6 +325,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				jumpToItem();
 			}
 		};
+		jumpAction.setToolTipText("Jump to selected tag in the editor");
 		
 		filterOnAction = new Action(
 			"Filter On This",
@@ -334,6 +335,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				filterOnSelected();
 			}
 		};
+		filterOnAction.setToolTipText("Filter on selected tag type");
 		
 		expandAction = new Action(
 			"Expand All",
@@ -344,6 +346,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				getTreeViewer().expandAll();
 			}
 		};
+		expandAction.setToolTipText("Expand all");
 		
 		openAction = new Action(
 			"Open File",
