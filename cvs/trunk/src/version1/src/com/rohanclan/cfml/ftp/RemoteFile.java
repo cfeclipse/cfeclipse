@@ -37,6 +37,9 @@ public class RemoteFile {
     }
     
     public RemoteFile(FTPFile ftpFile, String path) {
+        if (path.startsWith("//")) {
+            path = path.substring(1);
+        }
         this.fPath = path;
         this.fDirectory = ftpFile.isDir();
         this.fPermissions = ftpFile.getPermissions();
@@ -49,8 +52,18 @@ public class RemoteFile {
     
     public boolean canWrite() {
         
-        if (fPermissions.length() >= 3 
-                && fPermissions.charAt(2) == 'w') {
+        if (fPermissions.length() >= 6 
+                && fPermissions.charAt(5) == 'w') {
+            return true;
+        }
+        return false;
+        
+    }
+    
+    public boolean canRead() {
+        
+        if (fPermissions.length() >= 5 
+                && fPermissions.charAt(4) == 'r') {
             return true;
         }
         return false;

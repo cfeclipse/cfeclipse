@@ -307,6 +307,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		    //returnManager = nature.getNatureCAM();
 		    returnManager = getCAM();
 		} catch(CoreException ex) {
+		    
 		    ex.printStackTrace();
 		}
 		return returnManager;

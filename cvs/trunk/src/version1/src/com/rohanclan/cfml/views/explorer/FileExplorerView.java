@@ -40,6 +40,8 @@ import com.rohanclan.cfml.ftp.FtpConnectionProperties;
 import com.rohanclan.cfml.views.explorer.ftp.FtpConnectionDialog;
 
 
+import org.eclipse.jface.action.IStatusLineManager;
+
 /**
  * @author Stephen Milligan
  *
@@ -76,7 +78,9 @@ public class FileExplorerView extends ViewPart {
     
     
     public void createPartControl(Composite parent) {
-    	
+
+	    FtpConnection.getInstance().setViewPart(this);
+    	this.initializeStatusBar();
         Composite container = new Composite(parent, SWT.NONE);
         GridLayout containerLayout = new GridLayout();
         containerLayout.numColumns = 2;
@@ -114,7 +118,59 @@ public class FileExplorerView extends ViewPart {
         comboViewer.setInput(new LocalFileSystem());
         
         Menu menu = new Menu(container.getShell(), SWT.POP_UP);
-       
+        createMenuItems(menu);
+        Button menuButton = new Button(container,SWT.ARROW | SWT.RIGHT);
+        menuButton.addMouseListener(new MenuMouseListener(menu));
+        
+        
+        
+        // This is what makes the controls resizable
+        SashForm sash = new SashForm(container,SWT.VERTICAL);
+        GridData sashData = new GridData(GridData.FILL_BOTH);
+        sashData.horizontalSpan = 2;
+        sash.setLayoutData(sashData);
+        
+        // Directory tree
+        directoryTreeViewer = new TreeViewer(sash, SWT.BORDER);
+        directoryTreeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            public void selectionChanged(SelectionChangedEvent e) {
+                fileViewer.setInput(e.getSelection());
+            }
+        });
+        directoryTreeViewer.setSorter(new DirectorySorter());
+        directoryTreeViewer.setLabelProvider(new DirectoryLabelProvider());
+        directoryTreeViewer.setContentProvider(new DirectoryContentProvider());
+        final Tree tree = directoryTreeViewer.getTree();
+        directoryTreeViewer.setComparer(new FileComparer());
+        tree.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        
+        directoryTreeViewer.setInput(new LocalFileSystem());
+        
+
+        FileContentProvider fileProvider = new FileContentProvider();
+        fileViewer = new TableViewer(sash, SWT.BORDER);
+        final Table fileTable = fileViewer.getTable();
+        
+        fileViewer.addDoubleClickListener(new FileDoubleClickListener(fileProvider)); 
+
+        fileViewer.setSorter(new Sorter());
+        fileViewer.setLabelProvider(new FileLabelProvider());
+        fileViewer.setContentProvider(fileProvider);
+        fileViewer.setComparer(new FileComparer());
+        final Table table = fileViewer.getTable();
+        table.setLayoutData(new GridData(GridData.FILL_BOTH));
+        fileViewer.setInput(new LocalFileSystem());
+        
+        createActions();
+        initializeToolBar();
+        initializeMenu();
+    	
+    }
+    
+    
+    private void createMenuItems(Menu menu) {
+
         manageItem = new MenuItem(menu,SWT.CASCADE);
         manageItem.setText("Manage FTP Connections");
         manageItem.addListener(SWT.Selection, new Listener() {
@@ -166,58 +222,6 @@ public class FileExplorerView extends ViewPart {
             }
         });
         
-        Button menuButton = new Button(container,SWT.ARROW | SWT.RIGHT);
-        menuButton.addMouseListener(new MenuMouseListener(menu));
-        
-        
-        
-        // This is what makes the controls resizable
-        SashForm sash = new SashForm(container,SWT.VERTICAL);
-        GridData sashData = new GridData(GridData.FILL_BOTH);
-        sashData.horizontalSpan = 2;
-        sash.setLayoutData(sashData);
-        
-        // Directory tree
-        directoryTreeViewer = new TreeViewer(sash, SWT.BORDER);
-        directoryTreeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            public void selectionChanged(SelectionChangedEvent e) {
-                fileViewer.setInput(e.getSelection());
-            }
-        });
-        directoryTreeViewer.setSorter(new DirectorySorter());
-        directoryTreeViewer.setLabelProvider(new DirectoryLabelProvider());
-        directoryTreeViewer.setContentProvider(new DirectoryContentProvider());
-        final Tree tree = directoryTreeViewer.getTree();
-        directoryTreeViewer.setComparer(new FileComparer());
-        tree.setLayoutData(new GridData(GridData.FILL_BOTH));
-        
-        
-        directoryTreeViewer.setInput(new LocalFileSystem());
-        
-
-        FileContentProvider fileProvider = new FileContentProvider();
-        fileViewer = new TableViewer(sash, SWT.BORDER);
-        
-        
-        fileViewer.addDoubleClickListener(new FileDoubleClickListener(fileProvider)); 
-
-        fileViewer.setSorter(new Sorter());
-        fileViewer.setLabelProvider(new FileLabelProvider());
-        fileViewer.setContentProvider(fileProvider);
-        fileViewer.setComparer(new FileComparer());
-        final Table table = fileViewer.getTable();
-        table.setLayoutData(new GridData(GridData.FILL_BOTH));
-        fileViewer.setInput(new LocalFileSystem());
-        
-        createActions();
-        initializeToolBar();
-        initializeMenu();
-    	
-    }
-    
-    
-    private void createMenuItems(Menu menu) {
-        
     }
 
     
@@ -231,6 +235,11 @@ public class FileExplorerView extends ViewPart {
 
     private void initializeMenu() {
         IMenuManager manager = getViewSite().getActionBars().getMenuManager();
+    }
+    
+    private void initializeStatusBar() {
+        IStatusLineManager manager = getViewSite().getActionBars().getStatusLineManager();
+        //manager.setMessage("TEST");
     }
 
     public void setFocus() {

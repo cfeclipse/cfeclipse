@@ -11,11 +11,14 @@ import java.io.ByteArrayInputStream;
 import java.io.BufferedInputStream;
 
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IViewPart;
 
 import com.enterprisedt.net.ftp.*;
 
 import com.rohanclan.cfml.views.explorer.IFileProvider;
 import com.rohanclan.cfml.views.explorer.FileNameFilter;
+import com.rohanclan.cfml.util.AlertUtils;
+
 
 
 /**
@@ -31,7 +34,7 @@ public class FtpConnection implements IFileProvider {
 	FtpConnectionProperties connectionProperties;
 	private static FtpConnection instance = null;
 	private LogListener listener = null;
-	
+	private IViewPart viewPart = null;
 	private int fConnectionTimeout = 1000;
 	
 	public static FtpConnection getInstance() {
@@ -48,6 +51,10 @@ public class FtpConnection implements IFileProvider {
 		ftpClient = null;
 	}
 	
+	public void setViewPart(IViewPart viewPart) {
+	    this.viewPart = viewPart;
+	}
+	
 	public BufferedInputStream getInputStream(String filepath) {
 	    connect();
 	    try {
@@ -58,7 +65,7 @@ public class FtpConnection implements IFileProvider {
 		    return bis;
 	    }
 	    catch (Exception e) {
-	        e.printStackTrace();
+	        AlertUtils.alertUser(e);
 	        return null;
 	    }
 	}
@@ -69,17 +76,17 @@ public class FtpConnection implements IFileProvider {
 	        ftpClient.put(content,remotefile);
 	    }
 	    catch (Exception e) {
-	        e.printStackTrace();
+	        AlertUtils.alertUser(e);
 	    }
 	}
-	
+
 	
 	public void disconnect() {
 	    try {
 	        ftpClient.quit();
 	    }
 	    catch (Exception e) {
-	        e.printStackTrace();
+	        AlertUtils.alertUser(e);
 	    }
 	}
 	
@@ -114,10 +121,10 @@ public class FtpConnection implements IFileProvider {
 	       */
            
 	       ftpClient.setType(FTPTransferType.ASCII);
+	       
 		}
 		catch (Exception e) {
-		    
-		    e.printStackTrace();
+	        AlertUtils.alertUser(e);
 		}
 	}
 
@@ -137,12 +144,23 @@ public class FtpConnection implements IFileProvider {
 		
 		try {
 		    connect();
-
+		    
 		    FTPFile[] files = ftpClient.dirDetails(parent);
 
 		    if (files == null) {
 				files = new FTPFile[0];
 			}
+		    
+		    // Check if we've got back the directory itself.
+		    if (files.length == 1 
+		            && parent.endsWith("/"+files[0].getName())) {
+		       
+		        FTPFile[] test = ftpClient.dirDetails(parent+"/"+files[0].getName());
+		        if (test == null 
+		                || test.length == 0) {
+		            files = new FTPFile[0];
+		        }
+		    }
 		    
 		    ArrayList filteredFileList = new ArrayList();
 		    for (int i=0;i<files.length;i++) {
@@ -158,7 +176,7 @@ public class FtpConnection implements IFileProvider {
 		}
 
 		catch (Exception e) {
-		    e.printStackTrace();
+	        AlertUtils.alertUser(e);
 		}
 		return new String[0];
 	}
@@ -179,7 +197,7 @@ public class FtpConnection implements IFileProvider {
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+	        AlertUtils.alertUser(e);
 		}
 	}
 	
@@ -207,7 +225,7 @@ public class FtpConnection implements IFileProvider {
 	        return input;
 	    }
 	    catch (Exception e) {
-	        e.printStackTrace();
+	        AlertUtils.alertUser(e);
 	        return null;
 	    }
 	}

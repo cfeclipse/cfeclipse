@@ -58,6 +58,10 @@ public class CFPluginImages {
 	public static final String ICON_ATTR    = "attribute.gif";
 	/** the little blue square thing (denotes a function) */
 	public static final String ICON_FUNC    = "function.gif";
+	/** Indicator for unreadable items */
+	public static final String ICON_PERM_DENIED    = "perm_denied.gif";
+	/** Indicator for read only items */
+	public static final String ICON_READ_ONLY    = "perm_read_only.gif";
 	/** A public method in a CFC */
 	public static final String ICON_METHOD_PUBLIC    = "method_public.gif";
 	/** A package method in a CFC */
@@ -184,6 +188,8 @@ public class CFPluginImages {
 			//load up images on our first go round
 			addImageToRegistry(MODEL_OBJECTS,ICON_DEFAULT);
 			addImageToRegistry(MODEL_OBJECTS,ICON_DOCUMENT);
+			addImageToRegistry(MODEL_OBJECTS,ICON_READ_ONLY);
+			addImageToRegistry(MODEL_OBJECTS,ICON_PERM_DENIED);
 			addImageToRegistry(MODEL_OBJECTS,ICON_TOOLS);
 			addImageToRegistry(MODEL_OBJECTS,ICON_TAG);
 			addImageToRegistry(MODEL_OBJECTS,ICON_ATTR);
@@ -269,7 +275,7 @@ public class CFPluginImages {
 					name
 				)
 			);
-						
+			
 			//System.err.println("adding: " + name + " " + result.toString());
 			IMAGE_REGISTRY.put(name, result);
 			

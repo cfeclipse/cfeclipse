@@ -25,6 +25,16 @@
  *  Change Log:
  *
  *        $Log: not supported by cvs2svn $
+ *        Revision 1.1  2004/11/09 04:44:29  smilligan
+ *        Uber monster FTP stuff commit.
+ *
+ *        This is mostly working now, but there are a few known issues:
+ *
+ *        External files and remote FTP files don't get a LHS ruler. That means no line numbers, no folding etc.
+ *        FTP files don't correctly report when they are read only, so they appear editable, appear to save, but the changes aren't stored on the server.
+ *        You can currently only create new ftp connections. There isn't an interface for managing them.
+ *        The FTP stuff probably needs to be done in it's own thread with a progress monitor. Othewise it can kill your workspace if it dies.
+ *
  *        Revision 1.17  2004/10/18 15:56:46  bruceb
  *        set encoding for sock, remove sendCommandOld etc
  *
@@ -91,7 +101,7 @@ import com.enterprisedt.util.debug.Logger;
  *  Supports client-side FTP operations
  *
  *  @author             Bruce Blackshaw
- *      @version        $Revision: 1.1 $
+ *      @version        $Revision: 1.2 $
  *
  */
  public class FTPControlSocket {
@@ -99,7 +109,7 @@ import com.enterprisedt.util.debug.Logger;
      /**
       *  Revision control id
       */
-     public static String cvsId = "@(#)$Id: FTPControlSocket.java,v 1.1 2004-11-09 04:44:29 smilligan Exp $";
+     public static String cvsId = "@(#)$Id: FTPControlSocket.java,v 1.2 2004-11-10 22:43:36 smilligan Exp $";
 
      /**
       *   Standard FTP end of line sequence
@@ -521,7 +531,7 @@ import com.enterprisedt.util.debug.Logger;
          throws IOException {
          
          writeCommand(command);
-         
+
          // and read the result
          return readReply();
      }
@@ -558,7 +568,6 @@ import com.enterprisedt.util.debug.Logger;
          String line = reader.readLine();
          if (line == null || line.length() == 0)
              throw new IOException("Unexpected null reply received");
-         
          log(line, false);
          
          String replyCode = line.substring(0, 3);

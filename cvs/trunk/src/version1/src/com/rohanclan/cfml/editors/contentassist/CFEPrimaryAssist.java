@@ -81,7 +81,12 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
         */
         if(viewer.getDocument() instanceof ICFEFileDocument)
         {
-            proposers = ((ICFEFileDocument)viewer.getDocument()).getContentAssistManager().getRootAssistors();
+            try {
+                proposers = ((ICFEFileDocument)viewer.getDocument()).getContentAssistManager().getRootAssistors();
+            }
+            catch (Exception e) {
+                // NPE is thrown if the doc is read only.
+            }
         }
         DefaultAssistState state = AssistUtils.initialiseDefaultAssistState(viewer, offset);
         Iterator proposerIter = proposers.iterator();

@@ -21,12 +21,14 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 
     private FileNameFilter directoryFilter = new FileNameFilter();
     private IFileProvider fileProvider = null;
+    private Viewer viewer = null;
     
     public DirectoryContentProvider() {
         directoryFilter.allowFiles(false);
     }
     
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+        this.viewer = viewer;
         try {
 	    	if (fileProvider != null) {
 	    		fileProvider.dispose();
@@ -37,6 +39,7 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	        else if (newInput instanceof FtpConnectionProperties) {
 	        	fileProvider = FtpConnection.getInstance();
 	        	((FtpConnection)fileProvider).connect((FtpConnectionProperties)newInput);
+	        	
 	        }
 	        else {
 	        	
@@ -53,6 +56,7 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     	}
     }
     
+   
     
     public Object[] getElements(Object inputElement) {
         
@@ -60,7 +64,6 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     }
     
     public Object[] getChildren(Object parentElement) {
-        //System.out.println("Parent element is: " + parentElement.getClass().getName());
        
     	try {
     		
@@ -94,7 +97,7 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     public boolean hasChildren(Object element) {
     	try {
     		if (element instanceof RemoteFile) {
-    		   return ((RemoteFile)element).isDirectory();
+    		   return ((RemoteFile)element).isDirectory() & ((RemoteFile)element).canRead();
     		}
     		else if (element instanceof File) {
     		    return ((File)element).isDirectory();
