@@ -120,6 +120,14 @@ public abstract class DocItem implements Comparable {
 		parseMessages = new State("");
 	}
 	
+	/**
+	 * Constructor for a DocItem.
+	 * <strong>WARNING:</warning> This is only intended to be used by the CFScript parser.
+	 *
+	 */
+	public DocItem() {
+		
+	}
 	
 	protected State getParseState()
 	{
