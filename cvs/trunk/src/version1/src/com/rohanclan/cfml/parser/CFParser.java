@@ -480,6 +480,7 @@ public class CFParser {
 	 */
 	protected void handleCFScriptBlock(TagMatch match, Stack matchStack)
 	{
+		if(true) return;
 		//System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");
 		String mainData = match.match;
 		mainData = mainData.substring("<cfscript>".length());
@@ -797,7 +798,8 @@ public class CFParser {
 							// doc tree. So send it off to the CFScript block hanlder
 							// TODO: CFScript blocks are ignored at present! Sort it! Should there be a specialised cfscript tag that does it?
 							
-							if(tagName.startsWith("<cfscript>"))
+//							if(tagName.startsWith("<cfscript>"))
+							if(tagName.compareTo("script") == 0)
 							{
 								handleCFScriptBlock(match, matchStack);
 							}
@@ -894,7 +896,7 @@ public class CFParser {
 		}
 		return currPos;
 	}
-	
+	/*
 	protected int matchingCFScript(State parseState, String inData, int currDocOffset)
 	{
  		int finalOffset = currDocOffset;
@@ -926,7 +928,7 @@ public class CFParser {
 												"Reached end of document before finding a closing cfscript tag.",
 												true )); // Fatal error
 		
-		} else {
+		} else if(this.parseCFScript) {
 			int scriptStart = currDocOffset + "<cfscript>".length();
 			String cfScriptData = inData.substring(currDocOffset, finalOffset);
 			cfScriptData = cfScriptData.trim();
@@ -945,7 +947,48 @@ public class CFParser {
 		
 		return finalOffset;
 	}
-	
+	*/
+	protected int matchingCFScript(State parseState, String inData, int currDocOffset)
+	{
+		int finalOffset = currDocOffset;
+		int currPos = currDocOffset;
+		String nextChars = ""; // </cfscript>
+		String closingText = "</cfscript>";
+		System.out.println("CFParser::matchingCFScript() - Matching CFScript");
+		for(; currPos < inData.length(); currPos++)
+		{
+			if(inData.length() - currPos + 1 > closingText.length())
+				nextChars = inData.substring(currPos, currPos + closingText.length());
+			else 
+				break;	// Not enough space left for it to be a closing cfscript tag.
+			
+			if(nextChars.compareTo(closingText) == 0)
+			{
+				finalOffset = currPos;
+				break;
+			}
+			
+		}
+		/*
+		int scriptStart = currDocOffset + "<cfscript>".length();
+		String cfScriptData = inData.substring(currDocOffset, finalOffset);
+		
+		TagMatch scriptMatch = new TagMatch(cfScriptData, scriptStart, finalOffset, getLineNumber(scriptStart));
+		parseState.addMatch(scriptMatch);
+		*/
+		if(finalOffset != currPos)
+		{
+			//System.err.println("FATAL ERROR: Searching for a closing <cfscript> tag but could not find one: " + inData.substring(currDocOffset, currPos));
+			
+			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
+												inData.substring(currDocOffset, currPos), 
+												"Reached end of document before finding a closing cfscript tag.",
+												true )); // Fatal error
+		
+		}
+		
+		return finalOffset;
+	}
 	protected int matchingCFML(State parseState, String inData, int currDocOffset)
 	{
 		int finalOffset = currDocOffset;
