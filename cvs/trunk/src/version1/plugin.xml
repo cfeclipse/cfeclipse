@@ -205,10 +205,13 @@
          </action>
          <!-- Reload the syntax dictionaries -->
          <action
-               definitionId="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
+               toolbarPath="BasicCFEditorCommand"
                label="Reload Dictionaries"
-               tooltip="Reload syntax dictionaries"
+               icon="icons/ctool16/refresh.gif"
                class="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction"
+               tooltip="Reload syntax dictionaries"
+               definitionId="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                id="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction">
          </action>
          <!-- refresh the browser view action -->

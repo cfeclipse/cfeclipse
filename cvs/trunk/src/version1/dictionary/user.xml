@@ -2041,9 +2041,5 @@
 
 	</components>
 	
-	<scopes>
-		
-		<scope value="server.product" />
-	</scopes>
 	
 </dictionary>

@@ -27,6 +27,10 @@ package com.rohanclan.cfml.dictionary;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+
+
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
 import com.rohanclan.cfml.editors.HTMLSyntaxDictionary;
 import com.rohanclan.cfml.editors.script.JSSyntaxDictionary;
@@ -70,6 +74,16 @@ public class DictionaryManager {
 		dic.loadDictionary("js.xml");
 		addDictionary(JSDIC,dic);
 		System.out.println("Dictionaries initialized");
+	}
+	
+	public static void initDictionaries(Shell shell) {
+	    initDictionaries();
+	    
+        MessageBox msg = new MessageBox(shell);
+        msg.setText("Done!");
+        msg.setMessage("Dictionaries reloaded.");
+        msg.open();
+	    
 	}
 	
 	/**

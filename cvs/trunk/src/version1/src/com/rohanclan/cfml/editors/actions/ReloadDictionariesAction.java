@@ -58,7 +58,7 @@ public class ReloadDictionariesAction  implements IEditorActionDelegate {
 	}
 	
 	public void run() {
-	    DictionaryManager.initDictionaries();
+	    DictionaryManager.initDictionaries(editor.getEditorSite().getShell());
 	}
 	
 	public void run(IAction action) 
