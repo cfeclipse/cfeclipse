@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.16 2005-01-27 01:37:25 smilligan Exp $
- * $Revision: 1.16 $
- * $Date: 2005-01-27 01:37:25 $
+ * $Id: CFEDefaultPartitioner.java,v 1.17 2005-01-30 18:54:57 smilligan Exp $
+ * $Revision: 1.17 $
+ * $Date: 2005-01-30 18:54:57 $
  * 
  * Created on Oct 17, 2004
  *
@@ -428,6 +428,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 	                fDocument.addPosition(fPositionCategory, p);
 	                //System.out.println("Filled gap from " + Integer.toString(prevPartition.offset +prevPartition.length) + " to " + firstPartition.offset);
 	            } else if (prevPartition.offset + prevPartition.length > firstPartition.offset) {
+	                //System.out.println("Resized partition " + prevPartition.offset + " to " + Integer.toString(prevPartition.offset + firstPartition.offset - prevPartition.offset));
 	                prevPartition.length = firstPartition.offset - prevPartition.offset;
 	            }
 	            
@@ -492,6 +493,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                     while (i<category.length) {
                         nextPartition = (CFEPartition)category[i];
                         if (isPseudoPartition(nextPartition.getType())) {
+                            //System.out.println("Removing partition " + nextPartition.getType() + " from " + nextPartition.offset + " to " + Integer.toString(nextPartition.offset + nextPartition.length));
                             rememberRegion(nextPartition.offset, nextPartition.length);
 	                        fDocument.removePosition(fPositionCategory, nextPartition);
                         } else if (nextPartition.getOpensPartitionType() != null) {
@@ -622,6 +624,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             // this offset would be inserted
             
             //System.out.println("Got document event at " + e.getOffset() + " of length " + e.getLength());
+            //System.out.println("Text is " + e.getText());
             
             /*
              * This should be the index of the next partition that starts
@@ -686,14 +689,18 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                 
 
                 if (isPseudoPartition(activePartition.getType())) {
-                    String pseudoPartitionType = activePartition.getType();
-                    while (first > 0) {
-                        --first;
-                        activePartition = (CFEPartition) category[first];
-                        if (pseudoPartitionType.equals(activePartition.getOpensPartitionType())) {
-                            reparseStart = activePartition.getOffset() + activePartition.getLength();
-                            break;
-                        }
+                    if (e.getOffset() >=activePartition.offset+activePartition.length) {
+
+                        
+	                    String pseudoPartitionType = activePartition.getType();
+	                    while (first > 0) {
+	                        --first;
+	                        activePartition = (CFEPartition) category[first];
+	                        if (pseudoPartitionType.equals(activePartition.getOpensPartitionType())) {
+	                            reparseStart = activePartition.getOffset() + activePartition.getLength();
+	                            break;
+	                        }
+	                    }
                     }
                 }
                 
@@ -707,9 +714,9 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                  * If the change occurred in the end tag we might need to 
                  * reparse up to the end of the next tag
                  */
-                if (activePartition.getType().endsWith("_end_tag")
-                        || activePartition.getType().endsWith("comment")) {
+                if (activePartition.getType().endsWith("_end_tag")) {
                     int index = first;
+                    reparseStart = activePartition.offset;
                     reparseEnd = d.getLength();
                     d.removePosition(fPositionCategory, activePartition);
                     while (index < category.length) {
@@ -723,6 +730,10 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                     }
                 }
                 
+                if (activePartition.getType().endsWith("comment")) {
+                    d.removePosition(fPositionCategory, activePartition);
+                    reparseEnd = d.getLength();
+                }
                 
                 
                 // Set the start position to the start of the partition.
@@ -748,7 +759,16 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                      * first.
                      */
                     contentType = CFPartitionScanner.CF_COMMENT;
-                    //fDocument.removePosition(fPositionCategory,new Position(partition.offset,partition.length));
+
+                    if (category.length > first) {
+        	            for (int i=category.length-1; i >= first;i--) {
+        	                Position p = category[i];
+        	                if (p.offset + p.length < reparseEnd) {
+        	                    d.removePosition(fPositionCategory, p);
+        	                }
+        	            }
+                    }
+                    
                 }
 
             } else if (category != null 
@@ -763,16 +783,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
              */
             fPositionUpdater.update(e);
            
-            if (category.length > first) {
-	            for (int i=first; i > 0;i--) {
-	                Position p = category[i];
-	                if (p.offset + p.length > reparseStart) {
-	                    d.removePosition(fPositionCategory, p);
-	                } else {
-	                    break;
-	                }
-	            }
-            }
             /*
              * loop from the start position to the end of the partition array
              * If we find a partition that should be deleted mark it as such
@@ -784,9 +794,38 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                 //System.out.println("Checking partition " + p.offset + ":" + Integer.toString(p.offset+p.length));
                 CFEPartition cfp = (CFEPartition)p;
                 if (p.isDeleted) {
-                    //System.out.println("Found a deleted position");
+                    //System.out.println("Found a deleted partition at " + p.offset + " of length " + p.length);
                     rememberDeletedOffset(e.getOffset());
-                    break;
+                    
+                    // Check if we need to delete any other affected partitions
+                    if (i <= category.length-1) {
+	                    if (cfp.getClosesPartitionType() != null) {
+	                        String pType = cfp.getClosesPartitionType();
+	                        for (int j=i;j>0;j--) {
+	                            CFEPartition tmp = (CFEPartition)category[j];
+	                            
+	                            if (tmp.getType().equals(pType)) {
+	                                
+	                                tmp.delete();
+	                                fDocument.removePosition(fPositionCategory,tmp);
+	                            } else if(pType.equals(tmp.getOpensPartitionType())) {
+	                                break;
+	                            }
+	                        }
+	                    } else if (cfp.getOpensPartitionType() != null) {
+	                        String pType = cfp.getOpensPartitionType();
+	                        for (int j=i;j<category.length;j++) {
+	                            CFEPartition tmp = (CFEPartition)category[j];
+	                            if (tmp.getType().equals(pType)) {
+	                                tmp.delete();
+	                                fDocument.removePosition(fPositionCategory,tmp);
+	                            } else if(pType.equals(tmp.getClosesPartitionType())) {
+	                                break;
+	                            }
+	                        }
+	                    }
+                    }
+                    //break;
                 }
             }
             /*
@@ -794,23 +833,32 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
              * document again.
              */
             category = d.getPositions(fPositionCategory);
+           
             
             //System.out.println(category.length + " positions found.");
             //System.out.println("Reparsing from " + reparseStart + " [" + d.get(reparseStart,10) + "] to " + reparseEnd);
             fScanner.setPartialRange(d, reparseStart, d.getLength()
-                    - reparseStart, contentType, partitionStart);
+                    - reparseStart, contentType, reparseStart);
 
             int lastScannedPosition = reparseStart;
             IToken token = fScanner.nextToken();
             
             int lastOffset = -1;
-            
 
+            long timerStart = System.currentTimeMillis();
+            /*
+            for (int i=0;i<category.length;i++) {
+    		    System.out.println("Got partition - " + ((CFEPartition)category[i]).getType() + " " + category[i].getOffset() + ":" + Integer.toString(category[i].getOffset()+category[i].getLength()));
+    		}
+    		*/
             while (!token.isEOF()) {
                 lastOffset = fScanner.getTokenOffset();
                 contentType = getTokenContentType(token);
 
 
+                if (lastOffset > reparseEnd) {
+                    return createRegion();
+                }
                 if (!isSupportedContentType(contentType)) {
                     token = fScanner.nextToken();
                     continue;
@@ -855,6 +903,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                          */
                         if (!p.getType().equals(p.getNextPartitionType())) {
                             rememberRegion(p.offset, p.length);
+                            //System.out.println("Deleted position " + p.offset + ":" + Integer.toString(p.offset+p.length));
 	                        d.removePosition(fPositionCategory, p);
 	                        
                         } else {
@@ -918,6 +967,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             ex.printStackTrace();
         }
 
+        
         return createRegion();
     }
 
@@ -1142,7 +1192,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 	        Position[] positions = fDocument.getPositions(fPositionCategory);
 	        int index = getFirstIndexEndingAfterOffset(positions,offset);
 	        //System.out.println("Index is " + index + " of " + positions.length);
-	        for (int i=index-1;i<positions.length;i++) {
+	        for (int i=Math.max(0,index-1);i<positions.length;i++) {
 	            //System.out.println("Looking for end in index " + i);
 	            CFEPartition p = (CFEPartition)positions[i];
 	            if (p.getType().equals(lastPartition)) {
@@ -1252,9 +1302,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 			for (int i= startIndex; i < endIndex; i++) {
 				
 				current= (CFEPartition) category[i];
-				/*
-				
-				*/
+				//System.out.println("Checking partition " + current.getType() + " " + current.offset + ":" + Integer.toString(current.offset+current.length));
 			    if (previous != null) {
 			        gapOffset= previous.getOffset() + previous.getLength();
 			    } else {
@@ -1309,6 +1357,11 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 		
 		TypedRegion[] result= new TypedRegion[list.size()];
 		list.toArray(result);
+		/*
+		for (int i =0;i<result.length;i++) {
+		    System.out.println("Got region - " + result[i].getType() + " " + result[i].getOffset() + ":" + Integer.toString(result[i].getOffset()+result[i].getLength()));
+		}
+		*/
 		return result;
 	}
 

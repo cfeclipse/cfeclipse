@@ -158,7 +158,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	
 	public void addPosition(String category, Position position) throws BadLocationException, BadPositionCategoryException  {
 	    if (category.startsWith("__content_types_category")) {
-	        //System.out.println("Adding position " + position.offset + ":" + Integer.toString(position.offset + position.length));
+	        //System.out.println("Adding position " + position.offset + ":" + Integer.toString(position.offset + position.length) + " " + ((CFEPartition)position).getType());
 	    }
 	    super.addPosition(category,position);
 	}

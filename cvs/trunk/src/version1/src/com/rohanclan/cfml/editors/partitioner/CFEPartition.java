@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.4 2005-01-27 01:37:25 smilligan Exp $
- * $Revision: 1.4 $
- * $Date: 2005-01-27 01:37:25 $
+ * $Id: CFEPartition.java,v 1.5 2005-01-30 18:54:57 smilligan Exp $
+ * $Revision: 1.5 $
+ * $Date: 2005-01-30 18:54:57 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -29,14 +29,13 @@
  */
 package com.rohanclan.cfml.editors.partitioner;
 
-import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.TypedPosition;
 import org.eclipse.jface.text.Assert;
 /**
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public final class CFEPartition extends TypedPosition {
 
@@ -101,6 +100,10 @@ public final class CFEPartition extends TypedPosition {
         fClosesPseudoPartition = type;
     }
     
+    /**
+     * 
+     * @return The type of partition that is closed by this partition or null
+     */
     public final String getClosesPartitionType() {
         return fClosesPseudoPartition;
     }
@@ -136,6 +139,11 @@ public final class CFEPartition extends TypedPosition {
     public String getTagName() {
         return fTagName;
     }
+    
+    public void delete() {
+        //System.out.println("CFEPartition from " + offset + " to " + Integer.toString(offset + length));
+        super.delete();
+    }
 
 }
 
@@ -145,6 +153,9 @@ public final class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/01/27 01:37:25  smilligan
+ * put a band aid on the content assist for attributes and tags. It will need to be properly sorted out another time, but it basically works for now.
+ *
  * Revision 1.3  2005/01/24 23:36:35  smilligan
  * Hopefully the last major change to the partitioner.
  *

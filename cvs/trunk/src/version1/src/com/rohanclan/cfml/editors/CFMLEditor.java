@@ -367,22 +367,43 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
 					.getSelection();
 
-			//ok got our tag (or null)
-			int startpos = sel.getOffset();
-			ITypedRegion[] partitioning = cfd.getDocumentPartitioner().computePartitioning(startpos, 1); 
 
-			Action act = new Action("Partition type: "
-					+ partitioning[0].getType()
-					, null) {
+			Action act = new Action("Show partition info", null) {
 				public void run() {
-						// Do Nothing
-				}
-			};
-			menu.add(act);
-			act = new Action("Next character offset: "
-					+ sel.getOffset(), null) {
-				public void run() {
-						// Do Nothing
+				    
+				    IEditorPart iep = getSite().getPage().getActiveEditor();
+					ITextEditor editor = (ITextEditor) iep;
+					IDocument doc = editor.getDocumentProvider().getDocument(
+							editor.getEditorInput());
+
+					ICFDocument cfd = (ICFDocument) doc;
+					ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
+							.getSelection();
+
+					int startpos = sel.getOffset();
+					int len = Math.max(sel.getLength(),1);
+					ITypedRegion[] partitioning = cfd.getDocumentPartitioner().computePartitioning(startpos, len);
+				    String info = "Partitioning info from offset " + startpos + " to " + Integer.toString(startpos + len) + "\n\n";
+					for (int i=0;i<partitioning.length;i++) {
+					    info += partitioning[i].getType(); 
+					    info += " starting at ";
+					    info += partitioning[i].getOffset();
+					    info += " ending at "; 
+					    info += Integer.toString(partitioning[i].getOffset() + partitioning[i].getLength());
+					    info += "\n";
+					}
+				    
+				    String[] labels = new String[1];
+					labels[0] = "OK";
+				    MessageDialog msg = new MessageDialog(
+							Display.getCurrent().getActiveShell(),
+							"Partition info",
+							null,
+							info,
+							MessageDialog.WARNING, 
+							labels, 
+							0);
+				    msg.open();
 				}
 			};
 			menu.add(act);
