@@ -328,15 +328,15 @@ public class CFConfiguration extends SourceViewerConfiguration {
 			CFPartitionScanner.CF_SCRIPT
 		);
 		//in style tags 
-		assistant.setContentAssistProcessor(
+		/* assistant.setContentAssistProcessor(
 			cfcp,
 			CFPartitionScanner.CSS_TAG
-		);
+		); */
 		//in javascript tags 
-		assistant.setContentAssistProcessor(
+		/* assistant.setContentAssistProcessor(
 			cfcp,
 			CFPartitionScanner.J_SCRIPT
-		);
+		); */
 		
 		//TODO this stuff should be user setable 
 		assistant.enableAutoActivation(true);
