@@ -47,6 +47,8 @@ import org.eclipse.ui.IEditorPart;
  * and it has no fancy stuff. If they like snips but have limited resources
  * this is a pretty good view
  * 
+ * @deprecated - good call spike
+ * 
  * This class was influenced by the aricle:
  * Creating an Eclipse View
  * By Dave Springgay, OTI 
@@ -120,9 +122,6 @@ public class SnipView extends ViewPart {
 			
 			for(int q=0; q<f.length; q++)
 			{
-				//PictureLabel pl = new PictureLabel(parent,0);
-				//pl.setText(f[q]);
-				//pl.setImage(CFPluginImages.get(CFPluginImages.ICON_TOOLS));
 				if(f[q].endsWith(".xml") || f[q].endsWith(".XML") 
 					|| f[q].endsWith(".csn") || f[q].endsWith(".CSN"))
 				viewer.add(f[q]);
