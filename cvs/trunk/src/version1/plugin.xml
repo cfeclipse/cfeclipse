@@ -49,13 +49,6 @@
             class="com.rohanclan.cfml.editors.CFMLEditor"
             id="com.rohanclan.cfml.editors.CFMLEditor">
       </editor>
-      <editor
-            filenames="mach-ii.xml"
-            class="com.rohanclan.cfml.frameworks.machii.ConfigEditor"
-            icon="icons/obj16/default.gif"
-            contributorClass="com.rohanclan.cfml.frameworks.machii.MultiPageEditorContributor"
-            name="Mach-ii config file editor"
-            id="com.rohanclan.cfml.extensions.frameworks.machii.ConfigEditor"/>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Actions -->
