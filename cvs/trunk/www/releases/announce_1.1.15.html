@@ -1,0 +1,84 @@
+<html>
+<head>
+	<style type="text/css">
+	/* <![CDATA[ */ 
+	@import "http://www.tigris.org/branding/css/tigris.css"; 
+	@import "http://www.tigris.org/branding/css/inst.css"; 
+	/*  ]]> */
+	</style>
+  
+  	<link rel="stylesheet" type="text/css" 
+  		href="http://www.tigris.org/branding/css/print.css" media="print" 
+  	/>
+	<script src="http://www.tigris.org/branding/scripts/tigris.js" type="text/javascript"></script>
+	<title>CFEclipse 1.1.15 released</title>
+</head>
+
+<body>
+	<div style="background:#663 url('../images/cfeclipse-logo-brown.gif') no-repeat top right;height:92px; margin:-7px 2px 0 2px;"></div>
+	<h3>Announcement: CFEclipse version 1.1.15 "Sonic" released.</h3>
+	<h4>22nd July, 2004 : 22:08</h4>
+<p>
+Installation & update procedures are listed at the bottom of this mail.
+All current non-CVS users of CFEclipse should hopefully be notified by 
+Eclipse that there is a new release available. If not, follow the update
+procedures and mention it to us on the CFE lists.
+</p>
+
+<h3>The Scribble Pad:</h3>
+<p>
+As of 1.1.15 CFE comes with a major new feature: the 'scribble pad'. The Scribble Pad 
+is intended to allow you to test those random small ideas. 
+</p>
+<p>
+To use the Scribble Pad you must first setup a project named 'Scribble' and create 
+a file called 'scribble.cfm'. scribble.cfm must be a file that is on your web server
+root. Now find the CFEclipse preference pages and change the 'URL to scribble file' 
+in the Scribble Pad node to wherever the scribble.cfm file resides on your web server.
+</p>
+<p>
+Now from any project you can hit F8 and your scribble file will be opened. Stick some
+code in, hit F8 again and the browser will display the result of that file.
+</p>
+<p>
+The Scribble Pad is very much a work-in-progress, so any and all ideas on it are welcome.
+Best place is the CFE mailing lists at http://cfeclipse.tigris.org
+As a hint, current ideas are indexing of saved scribbles, keyword association and
+saved-scribble-searches to find that piece of test code that you've lost.
+</p>
+
+<h3>Other features you may enjoy:</h3>
+<ul>
+	<li>Snippet triggers: You can now assign trigger text to each snippet. Type it in, hit Ctrl+I and your snippet is inserted.</li>
+	<li>Loopy snippets: Enter your snippet trigger text plus a "*2" and get double the snippet fun.</li>
+	<li>CFC Method view now has the method hints shown</li>
+	<li>CFC Method view has an alphabetic sorting button</li>
+	<li>Double clicking a CFC method name now sends focus to the editor.</li>
+	<li>Context sensitive CFML F1 help: takes your browser to the appropriate livedocs page, otherwise to Google you go.</li>
+	<li>No more duplicate attribute suggestions: type '<cffunction name="fred" ', now the name attribute has been removed from the list of available suggestions.</li>
+	<li>'Jump to end tag' context menu implemented.</li>
+	<li>Syntax colouring is now working. Window->Preferences->CFEclipse and then either CFML Colors or HTML Colors.</li>
+	<li>'=' no longer causes content/code assist to disappear</li>
+</ul>
+
+<h3>Bugs fixed:</h3>
+<ul>
+	<li>#124 "code hints suddenly stop working"</li>
+	<li>#101 "Need to check something in the content tree before usage"</li>
+	<li>#156 "Paste attribute causes problem at end of tag"</li>
+	<li>#148 "keyword coloring a bit off on tags"</li>
+</ul>
+
+<h3>Known issues:</h3>
+<ul>
+	<li>'Jump to end tag' is only reliable after post-edit saving.</li>
+	<li>Changes to syntax colours are not reflected in currently open editor windows. They must be closed and re-opened.</li>
+</ul>
+
+<p>
+A zip version is available on the CFEclipse website if you wish to perform the installation/update manually.
+</p>
+	
+</body>
+	
+</html>
