@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <snippet>
-<name>Simple Table</name>
+<name>table</name>
 <help>A simple table with one row and one cell</help>
 <starttext><![CDATA[<table border="0">
 <tr>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>scriptif</name>
+<help>the script version of an if block</help>
+<starttext><![CDATA[if(]]></starttext>
+<endtext><![CDATA[){	}]]></endtext>
+</snippet>
