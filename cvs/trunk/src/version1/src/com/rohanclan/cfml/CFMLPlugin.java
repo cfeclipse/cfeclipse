@@ -24,27 +24,30 @@
  */
 package com.rohanclan.cfml;
 
-import org.eclipse.ui.editors.text.TextEditorPreferenceConstants;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-//import org.eclipse.core.runtime.IPluginDescriptor;
+import java.io.File;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
-
-import java.util.ResourceBundle;
-import java.util.MissingResourceException;
-
-import com.rohanclan.cfml.util.CFPluginImages;
-import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.actions.LastActionManager;
-import com.rohanclan.cfml.editors.contentassist.*;
-import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
-
 import org.eclipse.jface.preference.PreferenceStore;
+import org.eclipse.ui.editors.text.TextEditorPreferenceConstants;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.rohanclan.cfml.preferences.*;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.editors.actions.LastActionManager;
+import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
+import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
+import com.rohanclan.cfml.editors.contentassist.CFMLFunctionAssist;
+import com.rohanclan.cfml.editors.contentassist.CFMLScopeAssist;
+import com.rohanclan.cfml.editors.contentassist.CFMLTagAssist;
+import com.rohanclan.cfml.editors.contentassist.HTMLTagAssistContributor;
+import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.properties.CFMLPropertyManager;
+import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
  * 
@@ -136,6 +139,13 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			CFMLPlugin.getDefault().getStateLocation().toString()
 			+ "/properties.ini"
 		);
+		
+		String defaultSnippetPath = CFMLPlugin.getDefault().getStateLocation().toString()+"/snippets";
+		
+		File f = new File(defaultSnippetPath);
+		if (!f.exists()) {
+		    f.mkdir();
+		}
 		
 		try
 		{

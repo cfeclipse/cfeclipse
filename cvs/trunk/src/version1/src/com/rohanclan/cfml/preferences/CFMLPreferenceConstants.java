@@ -49,7 +49,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	 */
 	
 	public static void setDefaults(IPreferenceStore store) { 
-		store.setDefault(P_SNIPPETS_PATH,CFMLPlugin.getDefault().getStateLocation().toString());
+		store.setDefault(P_SNIPPETS_PATH,CFMLPlugin.getDefault().getStateLocation().toString()+"/snippets");
 		store.setDefault(P_PROJECT_URL,DEFAULT_PROJECT_URL);
 		store.setDefault(P_TABBED_BROWSER,false);
 		store.setDefault(P_CFML_DICTIONARY,"cfml.xml");
