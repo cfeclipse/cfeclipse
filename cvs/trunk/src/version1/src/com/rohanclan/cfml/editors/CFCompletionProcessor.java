@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.Set;
+import java.util.HashSet;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
@@ -194,6 +195,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 			//now go over the whole tag using spaces as the delimiter
 			StringTokenizer st = new StringTokenizer(prefix," ");
+			StringTokenizer st2 = new StringTokenizer(prefix," ");
 			
 			
 			//if st has nothing then we got called by mistake or something just
@@ -201,6 +203,20 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		// System.out.println("Prefix: \'" + prefix + "\'");
 			tagname = (!st.hasMoreTokens()) ? prefix : st.nextToken();
 		// System.out.println("tagname: \'" + tagname + "\'");
+			
+			st2.nextToken();
+
+			Set attribs = new HashSet();
+
+			String[] fullAttrib;
+			String attribName = "";
+			while(st2.hasMoreTokens()) {
+			    fullAttrib = st2.nextToken().split("=");
+			    attribName = fullAttrib[0];
+			    attribs.add(attribName.trim());
+			}
+			
+			
 			
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)
@@ -260,7 +276,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			}
 			else
 			{	
-				return getAttributeProposals(documentOffset, limiting, syntax, prefix, tagname);
+				return getAttributeProposals(documentOffset, limiting, syntax, prefix, tagname, attribs);
 			}	
 		}
 		catch(Exception e)
@@ -280,7 +296,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * @param tagname
 	 * @return
 	 */
-	private ICompletionProposal[] getAttributeProposals(int documentOffset, String limiting, SyntaxDictionary syntax, String prefix, String tagname) {
+	private ICompletionProposal[] getAttributeProposals(int documentOffset, String limiting, SyntaxDictionary syntax, String prefix, String tagname, Set attribs) {
 		//we are probably in need of attribtue in sight
 		//clean up the text typed so far
 		
@@ -297,8 +313,30 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			//up there ^
 			if(syntax != null && prefix.indexOf('>') < 0)
 			{
+			    //This is a nasty hack to filter out the attributes that have already been typed.
+			    Set proposalSet = syntax.getFilteredAttributes(tagname.trim(),limiting); 
+			    Set toRemove = new HashSet();
+			    Iterator proposals = proposalSet.iterator();
+			    Iterator attributes;
+			    Parameter p;
+			    while(proposals.hasNext()) {
+			        p = (Parameter)proposals.next();
+			        attributes = attribs.iterator();
+			        while(attributes.hasNext()) {
+			            if (attributes.next().toString().equalsIgnoreCase(p.getName())) {
+			                System.out.println("Going to remove "+ p.getName());
+			                toRemove.add(p);
+			            }
+			        }
+			    }
+			    
+			    Iterator removals = toRemove.iterator();
+			    while (removals.hasNext()) {
+			        proposalSet.remove(removals.next());
+			    }
+			    
 				return makeSetToProposal(
-					syntax.getFilteredAttributes(tagname.trim(),limiting),
+					proposalSet,
 					documentOffset,
 					ATTRTYPE,
 					limiting.length()
