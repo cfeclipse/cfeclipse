@@ -94,6 +94,8 @@
       </editor>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
+	
+	
 	<!-- Actions -->
    <extension
          point="org.eclipse.ui.editorActions">
@@ -111,7 +113,6 @@
                   name="output">
             </separator>
          </menu>
-
 		<!-- cfcomment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFComment"
@@ -473,6 +474,17 @@
                tooltip="Locate file in File Explorer View"
                class="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
                id="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction">
+         </action>
+
+          <!-- Launch new file dialog -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.NewFileActionID"
+               label="Create &amp;new file"
+               icon="icons/obj16/new.gif"
+               tooltip="Create new file"
+               toolbarPath="CFEditorResourceCommand"
+               class="com.rohanclan.cfml.editors.actions.NewFileAction"
+               id="com.rohanclan.cfml.editors.actions.NewFileAction">
          </action>
           <!-- Highlight bracket pair 
          <action
@@ -1016,6 +1028,18 @@
             keySequence="Ctrl+-"
             contextId="org.eclipse.ui.textEditorScope"
             commandId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <command
+            name="New file"
+            description="Launch the new file dialog."
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.NewFileActionID">
+      </command>
+      <keyBinding
+            keySequence="Ctrl+Shift+N"
+            contextId="org.eclipse.ui.textEditorScope"
+            commandId="com.rohanclan.cfml.editors.actions.NewFileActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       

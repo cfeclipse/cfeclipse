@@ -77,6 +77,8 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.contexts.EnabledSubmission;
+import org.eclipse.ui.contexts.IWorkbenchContextSupport;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.part.FileEditorInput;
@@ -328,6 +330,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 			e.printStackTrace();
 		}
+		
 	}
 
 	public IVerticalRuler verticalRuler() {

@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.4 2005-03-03 03:12:59 smilligan Exp $
- * $Revision: 1.4 $
- * $Date: 2005-03-03 03:12:59 $
+ * $Id: CFEPartitioner.java,v 1.5 2005-03-05 21:11:11 smilligan Exp $
+ * $Revision: 1.5 $
+ * $Date: 2005-03-05 21:11:11 $
  * 
  * Created on Oct 17, 2004
  *
@@ -1670,10 +1670,12 @@ public class CFEPartitioner implements IDocumentPartitioner,
 		} catch (BadPositionCategoryException x) {
 		} catch (Exception e) {
 		    //System.out.println("Got an exception calculating partitioning. Resetting partitioner.");
+		    /*
 		    CFEPartitioner partitioner = new CFEPartitioner(
 					new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
 			partitioner.connect(fDocument);
 		    fDocument.setDocumentPartitioner(partitioner);
+		    */
 		}
 		
 		TypedRegion[] result= new TypedRegion[list.size()];

@@ -27,19 +27,36 @@ package com.rohanclan.cfml.editors.actions;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
+import com.rohanclan.cfml.wizards.cfmlwizard.NewCFMLWizard;
 
 /**
  * @author Mark Drew
  *
  * This class is invoked to create a new file
  */
-public class NewFileAction implements IEditorActionDelegate {
+public class NewFileAction implements IEditorActionDelegate, IWorkbenchWindowActionDelegate{
     	
+    /* (non-Javadoc)
+     * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#dispose()
+     */
+    public void dispose() {
+       
+
+    }
+    /* (non-Javadoc)
+     * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#init(org.eclipse.ui.IWorkbenchWindow)
+     */
+    public void init(IWorkbenchWindow window) {
+
+    }
     	protected ITextEditor editor = null;
     	protected String filename = "untitled.cfm";
     	protected IFile file;
@@ -59,7 +76,10 @@ public class NewFileAction implements IEditorActionDelegate {
     	
     	public void run(IAction action) 
     	{
-// System.out.println("I am running!");
+    	    NewCFMLWizard wizard = new NewCFMLWizard();
+    	    wizard.setEditor(this.editor);
+    	    WizardDialog dialog = new WizardDialog(editor.getSite().getShell(),wizard);
+            dialog.open();
     	}
     	
     	public void selectionChanged(IAction action, ISelection selection){}

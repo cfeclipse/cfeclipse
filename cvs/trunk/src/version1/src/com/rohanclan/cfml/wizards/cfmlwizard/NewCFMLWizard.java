@@ -44,6 +44,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -67,7 +68,7 @@ public class NewCFMLWizard extends Wizard implements INewWizard {
 	private NewCFMLWizardPage page;
 	private NewCFMLWizardPageTwo pageTwo;
 	private ISelection selection;
-
+	private IEditorPart editor;
 	/**
 	 * Constructor for NewCfmlWizard.
 	 */
@@ -82,20 +83,17 @@ public class NewCFMLWizard extends Wizard implements INewWizard {
 	 */
 
 	public void addPages() {
-		if(selection != null)
-		{
-			page = new NewCFMLWizardPage(selection);
-			//pageTwo = new NewCfmlWizardPageTwo(selection);
-			System.out.println("running from the wizard");
-			addPage(page);
-			
-			//addPage(pageTwo);
-			System.out.println(selection);
-		}
-		else
-		{
-			System.err.println("selection is null?");
-		}
+	    if (editor == null) {
+	        page = new NewCFMLWizardPage(selection);
+	    } else {
+	        page = new NewCFMLWizardPage(editor);
+	    }
+		addPage(page);
+	}
+	
+
+	public void setEditor(IEditorPart editorPart) {
+	    this.editor = editorPart;
 	}
 
 	/**

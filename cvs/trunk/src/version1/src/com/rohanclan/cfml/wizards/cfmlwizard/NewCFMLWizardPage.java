@@ -44,7 +44,9 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
+import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * The "New" wizard page allows setting the container for
@@ -58,6 +60,7 @@ public class NewCFMLWizardPage extends WizardPage {
 	private Text fileText;
 	private ISelection selection;
 	private Combo fileType;
+	private IEditorPart editor = null;
 
 	/**
 	 * Constructor for SampleNewWizardPage.
@@ -68,6 +71,14 @@ public class NewCFMLWizardPage extends WizardPage {
 		setTitle("New CFML Template");
 		setDescription("New CFML Template wizard.");
 		this.selection = selection;
+		
+	}
+	
+	public NewCFMLWizardPage(IEditorPart editorPart) {
+		super("wizardPage");
+		setTitle("New CFML Template");
+		setDescription("New CFML Template wizard.");
+		this.editor = editorPart;
 		
 	}
 
@@ -150,6 +161,11 @@ public class NewCFMLWizardPage extends WizardPage {
 					container = ((IResource)obj).getParent();
 				containerText.setText(container.getFullPath().toString());
 			}
+		} else if (this.editor != null){
+		    if (editor.getEditorInput() instanceof FileEditorInput) {
+		        FileEditorInput input = (FileEditorInput)editor.getEditorInput();
+		        containerText.setText(input.getFile().getParent().getFullPath().toString());
+		    }
 		}
 		
 		//TODO: this works if you do a right click but not if you come here from a select your page type page
