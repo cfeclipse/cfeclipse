@@ -42,40 +42,85 @@ import org.eclipse.ui.IWorkbenchPart;
 import com.rohanclan.cfml.util.ResourceUtils;
 
 /**
- * TODO Provide class description 
+ * An abstract class for applying natures to a project.
+ * 
+ * Client classes should derive from this class an simply
+ * implement a constructor that calls AbstractApplyNatureAction()
+ * with the appropriate parameters. That will customise this
+ * action for display within CFE.
  *
  * @author Oliver Tupman
  */
 public abstract class AbstractApplyNatureAction   implements IObjectActionDelegate {
 
-    //private IProject lastSelection = null;
+	/** The selections the user has made */
     private ArrayList selections;
     
+    /** ID of the nature to apply to the project */
     private String natureID = null;
     
+    /** The text to be displayed to the user when a project 
+     * is not associated with the nature.
+     */
     private String associateText = null;
+    
+    /** The text to be displayed to the user when a project 
+     * is associated with the nature.
+     */
     private String disassociateText = null;
 
+    /**
+     * Gets the text that will be displayed if the nature is not associated
+     * with the selected project(s).
+     * 
+     * @return The association description.
+     */
     public String getAssociateText() {
         return associateText;
     }
+    /**
+     * Sets the association text
+     * 
+     * @param associateText The text to display to the user if the project is not associated with the nature
+     */
     public void setAssociateText(String associateText) {
         Assert.isNotNull(associateText,"AbstractApplyNatureAction::setAssociateText()");
         this.associateText = associateText;
     }
+    
+    /**
+     * Gets the text to display to the user if the nature is not associated with the project
+     * @return
+     */
     public String getDisassociateText() {
         return disassociateText;
     }
+    
+    /**
+     * Sets the text to display to the user if the nature is not associated with the project.
+     *  
+     * @param disassociateText Text to display if no association is present
+     */
     public void setDisassociateText(String disassociateText) {
         Assert.isNotNull(disassociateText,"AbstractApplyNatureAction::setDisassociateText()");
         this.disassociateText = disassociateText;
     }
     
+    /**
+     * Gets the ID of the nature that will be applied by this action
+     * 
+     * @return The string-ID of the nature.
+     */
     public String getNatureID()
     {
         return this.natureID;
     }
     
+    /**
+     * Sets the ID of the nature that this action will apply.
+     * 
+     * @param natureID The string-based ID of the nature to apply
+     */
     public void setNatureID(String natureID)
     {
         Assert.isNotNull(natureID, "Nature ID supplied to setNatureID() is null");
@@ -83,7 +128,12 @@ public abstract class AbstractApplyNatureAction   implements IObjectActionDelega
     }
     
 	/**
-	 * Constructor for Action1.
+	 * Constructs the nature action that will be presented to the user when they right-click
+	 * upon a proejct.  
+	 * 
+	 * @param natureID The ID of the nature to apply
+	 * @param associationText The text to display to the user if the project is not associated with this nature
+	 * @param disassociationText The text to display to the user if the project is associated with this nature 
 	 */
 	public AbstractApplyNatureAction(String natureID, String associationText, String disassociationText) {
 		super();
@@ -124,6 +174,12 @@ public abstract class AbstractApplyNatureAction   implements IObjectActionDelega
 	    }
 	}
 
+	/**
+	 * Message to display to the user.
+	 * 
+	 * @param caption Caption for the message box
+	 * @param message Message to display
+	 */
 	private void showMessage(String caption, String message)
 	{
     	MessageDialog.openInformation(
