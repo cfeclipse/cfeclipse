@@ -10,6 +10,7 @@ import java.net.URL;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.editors.ICFColorConstants;
 import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 import org.eclipse.swt.graphics.RGB;
@@ -42,6 +43,26 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final boolean	DEFAULT_AUTOINSERT_TAGS			= true;
 	private static final boolean	DEFAULT_AUTOINDENT_ONTAGCLOSE	= false;
 	
+	// Colour defaults
+	private static final RGB DEFAULT_COLOR_DOCTYPE 			= ICFColorConstants.DOCTYPE;
+	private static final RGB DEFAULT_COLOR_CFCOMMENT 		= ICFColorConstants.CF_COMMENT;
+	private static final RGB DEFAULT_COLOR_CFKEYWORD 		= ICFColorConstants.CFKEYWORD;
+	private static final RGB DEFAULT_COLOR_CFNUMBER 		= ICFColorConstants.CFNUMBER;
+	private static final RGB DEFAULT_COLOR_CFSCRIPT 		= ICFColorConstants.CFSCRIPT;
+	private static final RGB DEFAULT_COLOR_CFSCRIPTFUNCTION = ICFColorConstants.CFSCRIPT_FUNCTION;
+	private static final RGB DEFAULT_COLOR_CFSCRIPT_KEYWORD = ICFColorConstants.CFSCRIPT_KEYWORD;
+	private static final RGB DEFAULT_COLOR_CFSCRIPT_STRING 	= ICFColorConstants.CFSCRIPT_STRING;
+	private static final RGB DEFAULT_COLOR_CFSTRING 		= ICFColorConstants.CFSTRING;
+	private static final RGB DEFAULT_COLOR_CFTAG 			= ICFColorConstants.CFTAG;
+	private static final RGB DEFAULT_COLOR_CSS 				= ICFColorConstants.CSS;
+	private static final RGB DEFAULT_COLOR_DEFAULT 			= ICFColorConstants.DEFAULT;
+	private static final RGB DEFAULT_COLOR_HTMCOMMENT	 	= ICFColorConstants.HTM_COMMENT;
+	private static final RGB DEFAULT_COLOR_JSCRIPT 			= ICFColorConstants.JSCRIPT;
+	private static final RGB DEFAULT_COLOR_JSCRIPTFUNCTION 	= ICFColorConstants.JSCRIPT_FUNCTION;
+	private static final RGB DEFAULT_COLOR_STRING 			= ICFColorConstants.STRING;
+	private static final RGB DEFAULT_COLOR_TAG 				= ICFColorConstants.TAG;
+	private static final RGB DEFAULT_COLOR_UNKTAG 			= ICFColorConstants.UNK_TAG;
+	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
@@ -53,6 +74,33 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		return store.getBoolean(prefKey);
 	}
 
+	/**
+	 * Sets up all of the colours... Note proper spelling of 'colour' :D
+	 *
+	 */
+	public void initialiseDefaultColours() {
+		store.setDefault(P_COLOR_CFKEYWORD, DEFAULT_COLOR_CFKEYWORD.toString());
+		//store.setDefault(P_COLOR_, DEFAULT_COLOR_DOCTYPE.toString());
+		//store.setDefault(P_COLOR_, DEFAULT_COLOR_CFCOMMENT.toString());
+		
+		store.setDefault(P_COLOR_CFNUMBER, DEFAULT_COLOR_CFNUMBER.toString());
+		store.setDefault(P_COLOR_CFSCRIPT_TEXT, DEFAULT_COLOR_CFSCRIPT.toString());
+		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION, DEFAULT_COLOR_CFSCRIPTFUNCTION.toString());
+		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD, DEFAULT_COLOR_CFSCRIPT_KEYWORD.toString());
+		store.setDefault(P_COLOR_CFSCRIPT_STRING, DEFAULT_COLOR_CFSCRIPT_STRING.toString());
+		store.setDefault(P_COLOR_CFSTRING, DEFAULT_COLOR_CFSTRING.toString());
+		store.setDefault(P_COLOR_CFTAG, DEFAULT_COLOR_CFTAG.toString());
+		store.setDefault(P_COLOR_CSS, DEFAULT_COLOR_CSS.toString());
+		store.setDefault(P_COLOR_DEFAULT_TEXT, DEFAULT_COLOR_DEFAULT.toString());
+		store.setDefault(P_COLOR_HTM_COMMENT, DEFAULT_COLOR_HTMCOMMENT.toString());
+		store.setDefault(P_COLOR_JSCRIPT_TEXT, DEFAULT_COLOR_JSCRIPT.toString());
+		store.setDefault(P_COLOR_JSCRIPT_FUNCTION, DEFAULT_COLOR_JSCRIPTFUNCTION.toString());
+		store.setDefault(P_COLOR_STRING, DEFAULT_COLOR_STRING.toString());
+		store.setDefault(P_COLOR_HTM_TAG, DEFAULT_COLOR_TAG.toString());
+		store.setDefault(P_COLOR_UNK_TAG, DEFAULT_COLOR_UNKTAG.toString());
+		
+	}
+	
 	public void initializeDefaultValues() {
 		
 		//this should set the default path for snippets to the plugin directory
@@ -93,7 +141,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_AUTOCLOSE_HASHES, DEFAULT_AUTOCLOSE_HASHES);
         store.setDefault(P_AUTOINSERT_CLOSE_TAGS, DEFAULT_AUTOINSERT_TAGS);
         store.setDefault(P_AUTOINDENT_ONTAGCLOSE, DEFAULT_AUTOINDENT_ONTAGCLOSE);
-        
+        initialiseDefaultColours();
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
 	}
 	

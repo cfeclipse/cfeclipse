@@ -64,32 +64,32 @@ public class ColorsPreferencePage extends FieldEditorPreferencePage implements
 	{
 		//addField(new BooleanFieldEditor(P_AUTO_OUTLINE, "&Automatic Outlining", getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_HTM_COMMENT_COLOR,"HTML &Comment:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_STRING_COLOR,"HTML &String:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_DEFAULT_TEXT_COLOR,"Default &Text:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_HTM_TAG_COLOR,"HTML &Tag:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_HTM_COMMENT,"HTML &Comment:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_STRING,"HTML &String:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_HTM_TAG,"HTML &Tag:",getFieldEditorParent()));
 		
 		//addField(new ColorFieldEditor(P_HTM_FORM_TAG_COLOR,"&CFML Tag:",getFieldEditorParent()));
 		//addField(new ColorFieldEditor(P_HTM_TABLE_TAG_COLOR,"&CFML Tag:",getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_CFTAG_COLOR,"CFML Tag:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_CFSTRING_COLOR,"CFML St&ring:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_CFKEYWORD_COLOR,"CFML &Keyword:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_CFNUMBER_COLOR,"CFML &Number:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFTAG,"CFML Tag:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFSTRING,"CFML St&ring:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFKEYWORD,"CFML &Keyword:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFNUMBER,"CFML &Number:",getFieldEditorParent()));
 		
 		
-		addField(new ColorFieldEditor(P_CFSCRIPT_TEXT_COLOR,"CFScript Te&xt:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_CFSCRIPT_KEYWORD_COLOR,"CFScript Key&word:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_CFSCRIPT_FUNCTION_COLOR,"CFScript Funct&ion:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_CFSCRIPT_STRING_COLOR,"CFScript Strin&g:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_TEXT,"CFScript Te&xt:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_KEYWORD,"CFScript Key&word:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_FUNCTION,"CFScript Funct&ion:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_STRING,"CFScript Strin&g:",getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_JSCRIPT_TEXT_COLOR,"Javascript Text:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_JSCRIPT_FUNCTION_COLOR,"Javascript Function::",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_JSCRIPT_TEXT,"Javascript Text:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_JSCRIPT_FUNCTION,"Javascript Function::",getFieldEditorParent()));
 				
-		addField(new ColorFieldEditor(P_CSS_COLOR,"CSS Text:",getFieldEditorParent()));
-		addField(new ColorFieldEditor(P_CSS_TAG_COLOR,"CSS Tag:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CSS,"CSS Text:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_CSS_TAG,"CSS Tag:",getFieldEditorParent()));
 		
-		addField(new ColorFieldEditor(P_UNK_TAG_COLOR,"Other Tag:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(P_COLOR_UNK_TAG,"Other Tag:",getFieldEditorParent()));
 		
 		//addField(new ColorFieldEditor(P_STRING_COLOR, "&String Color:", getFieldEditorParent()));
 		//addField(new ColorFieldEditor(P_KEYWORD_COLOR, "&Keyword Color:", getFieldEditorParent()));
