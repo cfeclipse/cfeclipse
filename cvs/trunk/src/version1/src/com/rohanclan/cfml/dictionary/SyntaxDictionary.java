@@ -268,7 +268,7 @@ public abstract class SyntaxDictionary {
 	 * @param start the string to use as a limiter
 	 * @return everything in the set that starts with start in the format passed in
 	 */
-	protected static Set limitSet(Set st, String start)
+	public static Set limitSet(Set st, String start)
 	{
 		Set filterset = new HashSet();
 		Set fullset = st;
@@ -309,6 +309,7 @@ public abstract class SyntaxDictionary {
 				
 				if(possible.startsWith(start) || possible.toUpperCase().startsWith(start))
 				{
+					System.out.println(possible);
 					filterset.add(item);
 				}
 			}
