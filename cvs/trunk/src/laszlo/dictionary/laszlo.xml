@@ -39,6 +39,7 @@
 	<!ENTITY gridcolumn            SYSTEM "inc/parameter_gridcolumn.xml">
 	<!ENTITY rpc                   SYSTEM "inc/parameter_rpc.xml">
 	<!ENTITY textlistitem          SYSTEM "inc/parameter_textlistitem.xml">
+	<!ENTITY text                  SYSTEM "inc/parameter_text.xml">
 	
 	<!-- you can use these to mark colors if you wish -->
 	<!ENTITY color_norm   '4' >
@@ -1502,205 +1503,889 @@
 			</help>
 		</tag>
 		
+		<!-- radio button -->
+		<tag name="radiobutton" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The radio tag provides a simple radio button.
+				JavaScript: radiobutton Extends Baselistitem
+				The radiobutton class provides a simple two-state button with a 
+				text label, for use in radiogroup.
+				See radiogroup for details on use.
+			</help>
+			&baselistitem;
+		</tag>
 		
-		<tag name="text" creator="&color_norm;" single="false" xmlstyle="true">
-			<help></help>
+		<!-- radiogroup -->
+		<tag name="radiogroup" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>radio group enables a one-of-many selection
+				JavaScript: radiogroup Extends Baselist
+				The radiogroup component encloses a list of radiobuttons. It ensures 
+				that a single item is selected at a time. Initially it will select 
+				the first item in a group if none is set to be selected. By default 
+				the radio buttons are spaced vertically.</help>
 			<parameter name="text" type="String" required="false">
 				<help></help>
 				<values/>
 			</parameter>
 		</tag>
 		
+		<!--remotecall-->
+		<tag name="remotecall" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A class to use rpc methods declaratively.
+				JavaScript: remotecall Extends Node
+				The remotecall element allows for a more declarative style approach 
+				to using RPC functions. Calling function stubs will generally result 
+				in your code looking very scripty.
+				Remotecall requires the funcname attribute to be set. Funcname 
+				refers to the remote function name. By default, the name of the 
+				remotecall is the same as funcname unless explicitly set to 
+				something else. Multiple remotecalls can refer to the same funcname
+				, but remotecall names must be unique within the same element 
+				context.</help>
+			<parameter name="dataobject" type="String" required="false">
+				<help>If an LzDataset or an LzDataElement is set, return values will 
+					be mapped into the dataobject.</help>
+				<values/>
+			</parameter>
+			<parameter name="funcname" type="String" required="false">
+				<help>Name of remote function this remotecall refers.</help>
+				<values/>
+			</parameter>
+			<parameter name="ondata" type="Function" required="false">
+				<help>This event is triggered when data is returned from a remote 
+					method.</help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" type="Function" required="false">
+				<help>This event is triggered when an error occurs.</help>
+				<values/>
+			</parameter>
+			<parameter name="remotecontext" type="Any" required="false">
+				<help>If set, this is the remote object context in which funcname 
+					is run from.</help>
+				<values/>
+			</parameter>
+			&node;
+		</tag>
 		
+		<!-- resizelayout -->
+		<tag name="resizelayout" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A layout with fixed and stretchable views.
+				JavaScript: resizelayout Extends Layout
+				resizelayout extends LzLayout, and therefore is responsible for 
+				arranging a set of views. Like simplelayout, resizelayout positions 
+				a set of views vertically or horizontally depending on the axis 
+				specified. The difference is that resizelayout can also stretch 
+				views.</help>
+			<parameter name="axis" type="String" required="false">
+				<help>The axis in which this layout operates either 'x' or 'y'.</help>
+				<values>
+					<value option="x" />
+					<value option="y" />
+				</values>
+			</parameter>
+			<parameter name="spacing" type="Numeric" required="false">
+				<help>A pixel amount to use between each view in the layout</help>
+				<values/>
+			</parameter>
+			&layout;
+		</tag>
 		
-      
-      
-      <tag name="u" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
-      
-
+		<!-- resizestate -->
+		<tag name="resizestate" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A standard resize behavior.
+				JavaScript: resizestate Extends State
+				resizestate can be used to change the width and height of a view in 
+				response to the movement of the mouse.</help>
+			<parameter name="xroffset" type="Numeric" required="false">
+				<help>the x offset from the mouse</help>
+				<values/>
+			</parameter>
+			<parameter name="yroffset" type="Numeric" required="false">
+				<help>the y offset from the mouse</help>
+				<values/>
+			</parameter>
+			&state;
+		</tag>
+		
+		<!-- resource -->
+		<tag name="resource" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A tag that defines a media object that can be associated with 
+				a view.
+				This tag defines a media object, that can be presented within a view. 
+				A media object is an image, movie, animation, or sound clip. This 
+				tag imports the object into the application, and binds it to a 
+				string which can be used within a view.</help>
+			<parameter name="name" type="String" required="false">
+				<help>The name of a variable that will be set to this object when 
+					the application is started. If this element is directly within a 
+					canvas or library element, the global variable and the canvas 
+					property with this name will be set to this object. If this 
+					element is within another object, that object's property with 
+					this name will be set to this object.</help>
+				<values/>
+			</parameter>
+			<parameter name="src" type="URL" required="false">
+				<help>The path of a file that contains the source for this object.</help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!-- reverselayout -->
+		<tag name="reverselayout" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A layout for arranging siblings vertically or horizontally in 
+				reverse order.
+				JavaScript: reverselayout Extends Layout
+				reverselayout is just like simplelayout, except that the order of 
+				the views it keeps is reversed (bottom to top, or right to left).</help>
+			<parameter name="axis" type="String" required="false">
+				<help>The axis in which this layout operates. One of 'x' or 'y'.</help>
+				<values>
+					<value option="x" />
+					<value option="y" />
+				</values>
+			</parameter>
+			<parameter name="end" type="boolean" required="false">
+				<help>When true (the default), then the layout will push the 
+					subviews to the right (or bottom) of the containing view</help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>  
+			<parameter name="inset" type="Numeric" required="false">
+				<help>A pixel amount to inset the last view controlled by the layout</help>
+				<values/>
+			</parameter>
+			<parameter name="spacing" type="Numeric" required="false">
+				<help>A pixel amount to use between each view in the layout</help>
+				<values/>
+			</parameter>
+			&layout;
+		</tag>
+		
+		<!-- script -->
+		<tag name="script" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A block of JavaScript.
+				The script element contains JavaScript code that is executed when 
+				the application is loaded. This element must be at the canvas level; 
+				that is, it cannot be contained within any subordinate tag. If the 
+				src attribute is present, it names a JavaScript file whose contents 
+				are compiled into the application.</help>
+			<parameter name="src" type="URL" required="false">
+				<help>The pathname of a JavaScript file. This pathname is resolved 
+					relative to the file that contains the script element.
+				</help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!-- scrollbar -->
+		<tag name="scrollbar" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Provides a standard scrollbar.
+				JavaScript: scrollbar Extends Basescrollbar
+				By default, the scrollbar tag creates a vertical scrollbar. Setting 
+				axis="x" produces a horizontal scrollbar. If you do not specify a 
+				scrolltarget, the scrollbars will also control their own layout: 
+				the vertical scrollbar will be aligned the the right of the parent 
+				view and horizontal scrollbar will be aligned to the bottom.</help>
+			<parameter name="disabledbgcolor" type="String" required="false">
+				<help>If this is defined, it will be used as the scrollbar's 
+					background color when it is disabled. If not provided, the 
+					scrollbar will use the bgcolor of its closest parent that has a 
+					bgcolor defined.</help>
+				<values/>
+			</parameter>
+			&basescrollbar;
+		</tag>
+		
+		<!-- security -->
+		<tag name="security" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Secures Java classes for JavaRPC.
+				Java classes used in JavaRPC application must be declared in a 
+				security element. Classes not defined in a security element are not 
+				allowed to be accessed or instantiated.</help>
+		</tag>
+		
+		<!-- sessionrpc -->
+		<tag name="sessionrpc" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>SessionRPC object.
+				JavaScript: sessionrpc Extends RPC
+				A class to get an http session object and invoke its methods.</help>
+			&rpc;
+		</tag>
+		
+		<!-- simpleboundslayout -->
+		<tag name="simpleboundslayout" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Arranges a set of views along an 'x' or 'y' axis with respect to 
+				the bounding rect of the views
+				JavaScript: simpleboundslayout Extends Layout
+				Views have a bounding rectangle that can be different than the 
+				rectangle that is defined by their position, width and height. 
+				simpleboundslayout uses that bounding rectangle to lay out a set 
+				of views along an x or y axis, similar to simplelayout that uses a 
+				views position and its width or height. The example below shows the 
+				difference when using simpleboundslayout vs. a simplelayout for a 
+				set of three views.</help>
+			<parameter name="axis" type="String" required="false">
+				<help>The axis in which this layout operates, 'x' or 'y'. Default 
+					value is 'y'</help>
+				<values>
+					<value option="x" />
+					<value option="y" />
+				</values>
+			</parameter>
+			<parameter name="spacing" type="Numeric" required="false">
+				<help>A pixel amount to use between each view in the layout. 
+					Default value is 0</help>
+				<values />
+			</parameter>
+  			&layout;
+		</tag>
+		
+		<!-- simpleinputtext -->
+		<tag name="simpleinputtext" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A simple input text field with basic borders.
+				JavaScript: simpleinputtext Extends View
+				A simpleinputtext is a single-line only input text field with a 
+				simple black border on the top and left side of the view.</help>
+			<parameter name="bgOpacity" type="Numeric" required="false">
+				<help>The opacity for the input background. Default is 1.</help>
+				<values/>
+			</parameter>
+			<parameter name="blurborderOpacity" type="Numeric" required="false">
+				<help>The opacity for the border on blur. Default is 1.</help>
+				<values/>
+			</parameter>
+			<parameter name="focusborderOpacity" type="Numeric" required="false">
+				<help>The opacity for the border on focus. Default is 1.</help>
+				<values/>
+			</parameter>
+			<parameter name="text" type="String" required="false">
+				<help>The text for input. Defaults to empty string. (HTML ok)</help>
+				<values/>
+			</parameter>
+			<parameter name="textOpacity" type="Numeric" required="false">
+				<help>The text opacity. Default is 1.</help>
+				<values/>
+			</parameter>
+			&view;
+		</tag>
+		
+		<!-- simplelayout -->
+		<tag name="simplelayout" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A quick layout for arranging siblings vertically or horizontally.
+				JavaScript: simplelayout Extends Layout
+				simplelayout extends LzLayout, and therefore it is responsible for 
+				arranging all of the subviews for the view that it is attached to. 
+				The attributes of a view that simplelayout effects are the x and y 
+				values. simplelayout places the first subview at (0, 0) and then 
+				places each subsequent subview based on the width (or height) of 
+				the previous subview, depending on which axis was specified.</help>
+			<parameter name="axis" type="String" required="false">
+				<help>The axis in which this layout operates. One of 'x' or 'y'.</help>
+				<values>
+					<value option="x" />
+					<value option="y" />
+				</values>
+			</parameter>
+			<parameter name="inset" type="Numeric" required="false">
+				<help>A pixel amount to inset the first view controlled by the 
+					layout</help>
+				<values />
+			</parameter>
+			<parameter name="spacing" type="Numeric" required="false">
+				<help>A pixel amount to use between each view in the layout</help>
+				<values />
+			</parameter>
+			&layout;
+		</tag>
+		
+		<!-- slider -->
+		<tag name="slider" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A slider.
+				JavaScript: slider Extends Baseslider
+				The slider tag creates a slider which allows for easy selection of 
+				a single value between a provided range. Options exist for setting 
+				the range, showing the range values, showing the selected value 
+				while dragged, and showing a fill bar.</help>
+			&baseslider;
+		</tag>
+		
+		<!-- soap -->
+		<tag name="soap" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>SOAP.
+				JavaScript: soap Extends RPC
+				SOAP (Simple Object Access Prototcol) is used to exchange 
+				information in a distributed environment. A typical scenarion 
+				involves a SOAP client invoking a client-side function stub to 
+				invoke a SOAP web service operation. The SOAP web service then 
+				returns data to the client, like stock information or the result to 
+				a math function. The SOAP protocol is a work in progress being 
+				drafted by the W3C. For the latest SOAP information.</help>
+			<parameter name="port" type="String" required="false">
+				<help>The SOAP port to use. If not specified, the first SOAP port 
+					encountered in the WSDL is used.</help>
+				<values/>
+			</parameter>
+			<parameter name="proto" type="String" required="false">
+				<help>The prototypes that can be used to create objects.</help>
+				<values/>
+			</parameter>
+			<parameter name="service" type="String" required="false">
+				<help>The SOAP service to fetch. If not specified, the first service 
+					encountered in the WSDL is used.</help>
+				<values/>
+			</parameter>
+			<parameter name="wsdl" type="String" required="true">
+				<help>Required attribute that specifies WSDL to read for the SOAP 
+					object. The value for wsdl should be an href.</help>
+				<values/>
+			</parameter>
+			&rpc;
+		</tag>
+		
+		<!-- splash -->
+		<tag name="splash" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Controls the presentation while the application is loading.
+				The splash tag controls the presentation while the application is 
+				loading.
+				If the splash element is present but is empty, a progress bar is 
+				displayed while the application is loading. </help>
+			<parameter name="persistent" type="boolean" required="false">
+				<help>If true, the splash views remain on the canvas after the 
+					preload is complete.</help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+		</tag>
+		
+		<!-- stableborderlayout -->
+		<tag name="stableborderlayout" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Keeps the width of two outer sibling views constant, while 
+				stretching the innermost one.
+				JavaScript: stableborderlayout Extends Layout
+				stableborderlayout extends LzLayout, and is therefore responsible 
+				for arranging a set of views. Unlike like most layouts, 
+				stableborderlayout only manipulates the first three subviews. All 
+				of the other subviews are ignored. stableborderlayout is very 
+				similar to simplelayout in that it arranges views vertically or 
+				horizontally depending on the axis specified. The difference is 
+				that stableborderlayout stretches the second view so that the total 
+				combined width (or height) of these three subviews matches the width 
+				(or height) of their parent.</help>
+			<parameter name="axis" type="String" required="false">
+				<help>The axis in which this layout operates. One of 'x' or 'y'.</help>
+				<values>
+					<value option="x" />
+					<value option="y" />
+				</values>
+			</parameter>
+			&layout;
+		</tag>
+		
+		<!-- text -->
+		<tag name="text" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The basic text display element.
+				JavaScript: LzText Extends LzAbstractText
+				This class is used for non-editable text fields (as opposed to 
+				tagname inputtext. A text field can be initalized with text content 
+				at compile time.</help>
+			&text;
+		</tag>
+		
+		<!-- statictext -->
+		<tag name="statictext" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>text component that uses the default component font and fontsize
+				JavaScript: statictext Extends Text
+				The statictext tag provides a text field which has a look and feel 
+				to match the lz component set, even when the canvas font has been 
+				changed. It can accept any text attribute.</help>
+			&text;
+		</tag>
+		
+		<!-- style -->
+		<tag name="style" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>specifies colors used by components
+				JavaScript: style Extends Node
+				Styles may be defined to establish a consistent "look" for a group 
+				of components. There are a number of pre-defined styles. If you 
+				don't declare a default style, the Laszlo components will use 
+				whitestyle. To specify a different default style, define a style 
+				with isdefault="true".</help>
+			<parameter name="basecolor" type="String" required="false">
+				<help>used for colorizing a component, components will typically 
+					use varying shades of this color. Default: offwhite</help>
+				<values/>
+			</parameter>
+			<parameter name="bgcolor" type="String" required="false">
+				<help>used for colorizing the backgrounds of content areas, such as 
+					the background in tabslider's content, and window's content 
+					default: white</help>
+				<values/>
+			</parameter>
+			<parameter name="bordercolor" type="String" required="false">
+				<help>used to color the frame of a component for those that have a 
+					visual border. Default: gray40 (a medium dark gray)</help>
+				<values/>
+			</parameter>
+			<parameter name="bordersize" type="Numeric" required="false">
+				<help>the line width used in those components that have a visual 
+					border, default: 1</help>
+				<values/>
+			</parameter>
+			<parameter name="canvascolor" type="String" required="false">
+				<help>canvas color, default: null (will use whatever is specified 
+					as the canvas bgcolor, default: white)</help>
+				<values/>
+			</parameter>
+			<parameter name="disabledcolor" type="String" required="false">
+				<help>used when an item is disabled default: gray30</help>
+				<values/>
+			</parameter>
+			<parameter name="hilitecolor" type="String" required="false">
+				<help>used when the background color changes to highlight an item, 
+					such as when mouse is over a menu item default: iceblue3</help>
+				<values/>
+			</parameter>
+			<parameter name="isdefault" type="boolean" required="false">
+				<help>if true, this style is the default style for components</help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="isstyle" type="boolean" required="false">
+				<help>this is a style object</help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="menuitembgcolor" type="String" required="false">
+				<help>background color for menu items, defaults to the 
+					'textfieldcolor'</help>
+				<values/>
+			</parameter>
+			<parameter name="selectedcolor" type="String" required="false">
+				<help>used when an item is selected, such as in a list default: 
+					iceblue4</help>
+				<values/>
+			</parameter>
+			<parameter name="textcolor" type="String" required="false">
+				<help>color for text, default: black</help>
+				<values/>
+			</parameter>
+			<parameter name="textdisabledcolor" type="String" required="false">
+				<help>used as the text color when a component is disabled default: 
+					gray60</help>
+				<values/>
+			</parameter>
+			<parameter name="textfieldcolor" type="String" required="false">
+				<help>background color for text areas, default: white</help>
+				<values/>
+			</parameter>
+			<parameter name="texthilitecolor" type="String" required="false">
+				<help>used as the text color with 'hilitecolor' to highlight an 
+					item, such as when mouse is over a menu item default: iceblue1
+				</help>
+				<values/>
+			</parameter>
+			<parameter name="textselectedcolor" type="String" required="false">
+				<help>used as the text color with 'selectedcolor' to color the 
+					selected item default: iceblue1</help>
+				<values/>
+			</parameter>
+			&node;
+		</tag>
+		
+		<!-- submit -->
+		<tag name="submit" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>associates a form with a dataset
+				JavaScript: submit Extends Node
+				Used with form or baseform, the submit tag associates the form with 
+				its dataset. See form tag for example code. </help>
+			<parameter name="data" type="String" required="false">
+				<help>The dataset that specifies the request url, which will also 
+					hold the result of the query.</help>
+				<values/>
+			</parameter>
+			<parameter name="error" type="String" required="false">
+				<help>Error from most recent response or empty string; cleared to 
+					empty string each time a request on the dataset is made. 
+					Default: ''</help>
+				<values/>
+			</parameter>
+			<parameter name="status" type="String" required="false">
+				<help>Read-only status of data request. Possible values are 'ok', 
+					'requesting', and 'error'. Default: 'ok'.</help>
+				<values>
+					<value option="ok" />
+					<value option="requesting" />
+					<value option="error" />
+				</values>
+			</parameter>
+			&node;
+		</tag>
+		
+		<!-- swatchview -->
+		<tag name="swatchview" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A simple space-filling colored view.
+				JavaScript: swatchview Extends View
+				A simple view that is filled with a single color. Either 'fgcolor' 
+				and 'bgcolor' may be used to set the color of the view. By default 
+				it fills the space of the parent with white.</help>
+			<parameter name="color" type="String" required="false">
+				<help>this is the color that was set (by setting 'bgcolor' or 
+					'fgcolor' ), bgcolor may be different if setColorTransform has 
+					been called
+				</help>
+				<values/>
+			</parameter>		
+			&view;
+		</tag>
+		
+		<!-- VIEW -->
+		<tag name="view" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The most basic viewable element. JavaScript: LzView
+				Extends Node 
+				The "view" is the most basic viewable element in a Laszlo 
+				application. Anything that is displayed on the canvas is a view or 
+				extends the view class. A view is a rectangle, which can be visible 
+				or invisible, and which can contain other views or display 
+				"resources" such as images, .swf files, or other supported media. 
+				One view controls one displayable resource. The view system is 
+				strictly hierarchical; that is, each view  has  a single parent but 
+				can have multiple children.</help>
+			&view;
+		</tag>
+		
+		<!-- Extends Animatorgroup -->
+		<tag name="animator" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Changes the value of another object's attribute over time.
+				JavaScript: LzAnimator Extends Animatorgroup 
+				Animators change the value of an object's attribute over a specified 
+				duration in milliseconds.</help>
+			&animatorgroup;
+		</tag>
+		
+		<!-- Extends Node - this kind of sucks because there is a *lot* of
+			duplicated items :( -->      
+		<tag name="animatorgroup" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Coordinates the behavior of several animators. 
+				JavaScript: LzAnimatorGroup Extends Node 
+				An LzAnimatorGroup wraps several LzAnimators, and runs them in 
+				sequence or simultaneously.</help>
+			&animatorgroup;
+		</tag>
 	  
-      <tag name="resource" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="src" type="URL" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      
-     
-     
-      <tag name="agent" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="url" type="String" required="true">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      <tag name="connection" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="heartbeat" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="timeout" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="secure" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="secureport" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="receiveuserdisconnect" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="group" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="authenticator" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="authparam" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="onconnect" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="ondata" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="onerror" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="ontimeout" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="ondisconnect" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="onuserdisconnect" type="Function" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      
-      <tag name="splash" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="name" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="resource" type="URL" required="true">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="ratio" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="x" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="y" type="Numeric" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="center" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="hideafterinit" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="persistent" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-	  
-	<tag name="script" creator="&color_norm;" single="false" xmlstyle="true">
-		<help>A block of JavaScript. The script element contains JavaScript code 
-			that is executed when the application is loaded. This element must be 
-			at the canvas level; that is, it cannot be contained within any 
-			subordinate tag. If the src attribute is present, it names a JavaScript 
-			file whose contents are compiled into the application.
-		</help>
-		<parameter name="src" type="URL" required="false">
-			<help>The pathname of a JavaScript file. This pathname is resolved 
-				relative to the file that contains the "script" element.</help>
-			<values/>
-		</parameter>
-	</tag>
-      
-	<tag name="preloadresource" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-         <parameter name="name" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="ratio" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="synctoload" type="boolean" required="true">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="hideafterinit" type="boolean" required="true">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="center" type="boolean" required="true">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="synchronized" type="boolean" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="lastframe" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="resource" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-         <parameter name="resourcename" type="String" required="false">
-            <help/>
-            <values/>
-         </parameter>
-      </tag>
-      <tag name="pattern" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
-      <tag name="allow" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
-      <tag name="deny" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
-      <tag name="security" creator="&color_norm;" single="false" xmlstyle="true">
-         <help/>
-      </tag>
-	  
-     
+		<!-- one of the base elements -->
+		<tag name="node" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The base class for all Laszlo classes. JavaScript: LzNode
+				The LzNode class provides the basic interface for Laszlo objects: 
+				parent/child hierarchy, setters, interaction with the instantiator, 
+				and reference resolution. New nodes (and subclasses thereof) can be 
+				created by new-ing the class, like this:  var mynode= new LzNode( 
+				parent , args ); where parent is the parent for the new node, and 
+				args is an Object whose name/value pairs are attributes to be set 
+				on the new node.</help>
+			&node;
+		</tag>
+		
+		<!-- tab -->
+		<tag name="tab" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The lz tab used by tabs.
+				JavaScript: tab Extends Basetab
+				A tab is an LZ tab within basetabsbar or any object that extends 
+				this (such as tabsbar).</help>
+			<parameter name="padding" type="Numeric" required="false">
+				<help>Text padding. Default is 20.</help>
+				<values/>
+			</parameter>
+			&basetab;
+		</tag>
+		
+		<!-- tabelement -->
+		<tag name="tabelement" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A tab element view that is opened and closed in conjunction with 
+				a tabslider.
+				JavaScript: tabelement Extends Basetabelement
+				tabelement is a non-visual view contained within a tabslider that 
+				opens and closes when directed by a tabslider. In practice, the 
+				tabelement class can be extended to create whatever look and feel 
+				is desired.</help>
+			<parameter name="headerpadding" type="Numeric" required="false">
+				<help>Insets the header art on the x-axis. Default is 0.</help>
+				<values/>
+			</parameter>
+			<parameter name="inset_bottom" type="Numeric" required="false">
+				<help>The bottom inset for content appearing within a tabelement. 
+					Default is the containing tabslider's inset_bottom value.</help>
+				<values/>
+			</parameter>
+			<parameter name="inset_left" type="Numeric" required="false">
+				<help>The left inset for content appearing within a tabelement. 
+					Default is the containing tabslider's inset_left value.</help>
+				<values/>
+			</parameter>
+			<parameter name="inset_right" type="Numeric" required="false">
+				<help>The right inset for content appearing within a tabelement. 
+					Default is the containing tabslider's inset_right value.</help>
+				<values/>
+			</parameter>
+			<parameter name="inset_top" type="Numeric" required="false">
+				<help>The top inset for content appearing within a tabelement. 
+					Default is the containing tabslider's inset_top value.</help>
+				<values/>
+			</parameter>
+			<parameter name="shadowheight" type="Numeric" required="false">
+				<help>The height of the shadow. Default is 4.</help>
+				<values/>
+			</parameter>
+			<parameter name="shadowvisible" type="boolean" required="false">
+				<help>Boolean to set the shadow of this tabelement. Default is true.</help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="text_x" type="Numeric" required="false">
+				<help>The x position of the text field in the header area. Default 
+					is 4.</help>
+				<values/>
+			</parameter>
+			<parameter name="text_y" type="Numeric" required="false">
+				<help>The y position of the text field in the header area. Default 
+					is 4.</help>
+				<values/>
+			</parameter>
+			&basetabelement;
+		</tag>
+		
+		<!-- tabpane -->
+		<tag name="tabpane" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A tabpane houses content to be shown within a tabs component when 
+				its correlated tab is selected.
+				JavaScript: tabpane Extends Basetabpane
+				tabpane is the visual container for content in basetabs. The 
+				difference between this class and basetabpane is that tabpane has a 
+				background swatchview that is set by whatever the default style is.</help>
+			<parameter name="tabwidth" type="Numeric" required="false">
+				<help>Width of the tab associated with this tabpane. If not set, 
+					the tab will resize itself to fit.</help>
+				<values/>
+			</parameter>
+			&basetabpane;
+		</tag>
+		
+		<!-- tabs -->
+		<tag name="tabs" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The tabs class takes tabpanes, and provides a tab for each one.
+				JavaScript: tabs Extends Basetabs
+				The tabs component contains a row of tabs that control the 
+				visibility of a stack of tabpanes. When a tabpane is added to a 
+				tabs component, a corresponding tab is created for that tabpane. The 
+				text which shows up in the tab is derived from the text attribute of 
+				the tabpane.</help>
+			<parameter name="tabalign" type="String" required="false">
+				<help>Align the set of tabs within the dimensions of the "tabs" 
+					container ("left", "center", "right"). Defaults to "left".</help>
+				<values>
+					<value option="left"/>
+					<value option="center"/>
+					<value option="right"/>
+				</values>
+			</parameter>
+			<parameter name="tabspacing" type="Numeric" required="false">
+				<help>Spacing between the tabs. Defaults to -15 so tabs overlap.</help>
+				<values/>
+			</parameter>
+			&basetabs;
+		</tag>
+		
+		<!-- tabsbar -->
+		<tag name="tabsbar" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The lz tabsbar class for laying out tab items.
+				JavaScript: tabsbar Extends Basetabsbar
+				A tabsbar is a container that uses a default x-axis simplelayout 
+				with a spacing of -15 to lay out its tab children (which have extra 
+				spacing on each side) so they overlap.</help>
+			<parameter name="spacing" type="Numeric" required="false">
+				<help>Spacing between tab items. Default is 0.</help>
+				<values/>
+			</parameter>
+			&baselist;
+		</tag>
+		
+		<!-- tabscontent -->
+		<tag name="tabscontent" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>The tabs content container for tabpanes.
+				JavaScript: tabscontent Extends Basetabscontent
+				tabscontent houses a stack of tabpanes for tabs, which has a visual 
+				border and uses the default style's background color. When a tabpane 
+				is added to a tabs, its contents are actually placed in tabscontent.</help>
+			&basecomponent;
+		</tag>
+		
+		<!-- tabslider -->
+		<tag name="tabslider" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A Container that animates and coordinates the sliding of 
+				Tabelements.
+				JavaScript: tabslider Extends Basetabslider
+				A tabslider coordinates the opening and closing of its tabelement 
+				contained within its scope. Only one tabelement can be opened at 
+				one time. The height of the opened tabelement is determined by the 
+				height of the tabslider minus the total height of all the tabelements 
+				when they are closed. </help>
+			<parameter name="bordercolor" type="String" required="false">
+				<help>The border color. Default is constrained to the style value 
+					of bordercolor.</help>
+				<values/>
+			</parameter>
+			<parameter name="bordersize" type="Numeric" required="false">
+				<help>The size of the border. Default is 1 pixel.</help>
+				<values/>
+			</parameter>
+			&basetabslider;
+		</tag>
+		
+		<!-- tree -->
+		<tag name="tree" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A tree control.
+				JavaScript: tree Extends Basetree
+				A tree provides a hierarchical view of data. Each node is 
+				represented by an expander resource, an icon resource, and a label. 
+				A tree can be specified lexically or through data replication .</help>
+			<parameter name="expander" type="String" required="false">
+				<help>The resource for the expanding icon: frame 1 (closed), 
+					frame 2 (opened), frame 3 (leaf). Default is lztree_arrow_rsc 
+					defined in lz/tree.lzx.</help>
+				<values/>
+			</parameter>
+			<parameter name="icon" type="String" required="false">
+				<help>The resource for the item icon: frame 1 (closed), frame 2 
+					(opened), frame 3 (leaf) Default is lztree_folder_rsc defined 
+					in lz/tree.lzx.</help>
+				<values/>
+			</parameter>
+			<parameter name="onactivate" type="Function" required="false">
+				<help>Double-clicking on the icon or text triggers this event.</help>
+				<values/>
+			</parameter>
+			&basetree;
+		</tag>
+		
+		<!-- u -->
+		<tag name="u" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Underlined text.
+				HTML underlined character markup. This tag can only occur inside 
+				XHTML text containers such as text and button.</help>
+		</tag>
+		
+		<!-- vscrollbar -->
+		<tag name="vscrollbar" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>Provides a vertical scrollbar.
+				JavaScript: vscrollbar Extends Basescrollbar
+				This tag creates a vertical scrollbar. If you do not specify a 
+				scrolltarget the scrollbar will automatically be aligned to the 
+				right and size its height to its parent's height. It is expected 
+				that the parent view be smaller than the scrolltarget and set 
+				clip=true. The scrolling effect is produced by moving the 
+				scrolltarget while its visible region is clipped by the parent view.</help>
+			<parameter name="disabledbgcolor" type="String" required="false">
+				<help>If this is defined, it will be used as the scrollbar's 
+					background color when it is disabled. If not provided, the 
+					scrollbar will use the bgcolor of its closest parent that has a 
+					bgcolor defined.</help>
+				<values/>
+			</parameter>
+			&basescrollbar;
+		</tag>
+		
+		<!-- webapprpc -->
+		<tag name="webapprpc" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>WebappRPC object.
+				JavaScript: webapprpc Extends RPC
+				A class to get an http web application object and invoke its methods.
+			</help>
+			&rpc;
+		</tag>
+		
+		<!-- window -->
+		<tag name="window" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A window.
+				JavaScript: window Extends Windowpanel
+				The window tag creates a floating view that may be moved and 
+				optionally resized by the user. Set the closeable attribute to 
+				true in order to show a window close button.</help>
+			<parameter name="resizable" type="boolean" required="false">
+				<help>If true, a resize control will appear in the lower-right 
+					corner, allowing the user to resize the window. Default: false.
+				</help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			&windowpanel;
+		</tag>
+		
+		<!-- wrappinglayout -->
+		<tag name="wrappinglayout" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>A layout for arranging siblings in multiple lines.
+				JavaScript: wrappinglayout Extends Layout
+				wrappinglayout extends LzLayout, and is therefore responsible for 
+				arranging all of the subviews for the view that it is attached to. 
+				wrappinglayout affects the position of its sibling views, in rows or 
+				columns depending on the axis specified.</help>
+			<parameter name="axis" type="String" required="false">
+				<help>The primary axis for wrapping.</help>
+				<values/>
+			</parameter>
+			<parameter name="duration" type="Numeric" required="false">
+				<help>If given, a number of miliseconds to use to animate the views 
+					in to place.</help>
+				<values/>
+			</parameter>
+			<parameter name="spacing" type="Numeric" required="false">
+				<help>A pixel amount to use between the views controlled by the 
+					layout in both axes. By default, both xspacing and yspacing are 
+					set to this value.</help>
+				<values/>
+			</parameter>
+			<parameter name="xinset" type="Numeric" required="false">
+				<help>A pixel amount to offset the first view controlled by the 
+					layout in x axis</help>
+				<values/>
+			</parameter>
+			<parameter name="xspacing" type="Numeric" required="false">
+				<help>A pixel amount to use between the views controlled by the 
+					layout in the x axis.</help>
+				<values/>
+			</parameter>
+			<parameter name="yinset" type="Numeric" required="false">
+				<help>A pixel amount to offset the first view controlled by the 
+					layout in y axis</help>
+				<values/>
+			</parameter>
+			<parameter name="yspacing" type="Numeric" required="false">
+				<help>A pixel amount to use between the views controlled by the 
+					layout in the y axis.</help>
+				<values/>
+			</parameter>
+			&layout;
+		</tag>
+		
+		<!-- xmlrpc -->
+		<tag name="xmlrpc" creator="&color_norm;" single="false" xmlstyle="true">
+			<help>XML-RPC implementation.
+				JavaScript: xmlrpc Extends RPC
+				XML-RPC is simple spec that describes how to invoke a remote 
+				operation using XML over HTTP. Laszlo XML-RPC is part of Laszlo RPC 
+				and shares many of the same APIs and concept. Laszlo RPC includes 
+				SOAP and JavaRPC. For more information on XML-RPC, go to XML-RPC.com 
+			</help>
+			<parameter name="service" type="String" required="true">
+				<help>(Required) XML-RPC service URL. The URL must be http.	</help>
+				<values/>
+			</parameter>
+			&rpc;
+		</tag>
 	</tags>
 	
 	<functions />

@@ -1,0 +1,32 @@
+<parameter name="label" type="String" required="false">
+	<help></help>
+	<values/>
+</parameter>
+<parameter name="multiline" type="boolean" required="false">
+	<help>If true, the lines of text are wrapped to fit within the text 
+		width. (The name multiline is a misnomer. Unwrapped text can be 
+		multiple lines if it contains a br or p element, or a line break 
+		within a pre element.					
+	</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="resize" type="boolean" required="false">
+	<help>text width automatically resizes when text is set. default: 
+		false</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="selectable" type="boolean" required="false">
+	<help>true if text may be selected by the user</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="text" type="String" required="false">
+	<help></help>
+	<values/>
+</parameter>
+&view;
