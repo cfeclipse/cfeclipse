@@ -28,8 +28,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -106,4 +110,31 @@ public class ResourceUtils {
 		}
 		return suggestions;
 	}
+
+    /**
+     * Gets an array of the project natures associated with the supplied project.
+     * 
+     * @param srcProject The project to get the natures from
+     * @return An array of natures
+     * @throws CoreException Thrown by methods called
+     */
+    public static IProjectNature[] getProjectNatures(IProject srcProject) throws CoreException
+    {
+        Assert.isNotNull(srcProject);
+        IProjectDescription prjDesc = srcProject.getDescription();
+        String [] natures = prjDesc.getNatureIds();
+        IProjectNature [] natureArray = new IProjectNature[natures.length];
+        for(int i = 0; i < natures.length; i++)
+        {
+            try {
+                natureArray[i] = srcProject.getNature(natures[i]);
+            }
+            catch(CoreException ex) 
+            {
+                //System.err.println("ResourceUtils::getProjectNatures() - Exception getting project nature. Will get the rest though.");
+                //ex.printStackTrace();
+            }
+        }
+        return natureArray;
+    }
 }
