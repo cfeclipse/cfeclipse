@@ -458,7 +458,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		if(selecteditem == null) return;
 		
 		String si = selecteditem.getName();
-		if(si.equalsIgnoreCase("include") || si.equalsIgnoreCase("module"))
+		if(si.equalsIgnoreCase("cfinclude") || si.equalsIgnoreCase("cfmodule"))
 		{	
 			gfa.setActiveEditor(null,iep);
 			gfa.run(null);
@@ -563,7 +563,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		if(di != null)
 		{
 			String sname = di.getName();
-			if(sname.equals("include") || sname.equals("module"))
+			if(sname.equals("cfinclude") || sname.equals("cfmodule"))
 				mgr.add(openAction);
 		}
 	}

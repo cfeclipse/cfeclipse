@@ -46,7 +46,7 @@ import java.util.Set;
 
 import java.util.Iterator;
 
-import com.rohanclan.cfml.parser.*;
+//import com.rohanclan.cfml.parser.*;
 import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
@@ -69,68 +69,68 @@ public class OutlineLabelProvider extends LabelProvider {
 		{
 			String tname = ((CfmlTagItem)element).getName().toLowerCase();
 			
-			if(tname.equals("component"))
+			if(tname.equals("cfcomponent"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_CLASS);
 			}
-			if(tname.equals("object"))
+			if(tname.equals("cfobject"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_BEAN);
 			}
-			else if(tname.equals("function"))
+			else if(tname.equals("cffunction"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_FUNC);
 			}
-			else if(tname.equals("dump"))
+			else if(tname.equals("cfdump"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_DUMP);
 			}
-			else if(tname.equals("script"))
+			else if(tname.equals("cfscript"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_SCRIPT);
 			}
-			else if(tname.equals("loop"))
+			else if(tname.equals("cfloop"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_REFRESH);
 			}
-			else if(tname.equals("break"))
+			else if(tname.equals("cfbreak"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_DELETE);
 			}
-			else if(tname.equals("return"))
+			else if(tname.equals("cfreturn"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_BACK);
 			}
-			else if(tname.equals("query"))
+			else if(tname.equals("cfquery"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_TABLE);
 			}
-			else if(tname.equals("set"))
+			else if(tname.equals("cfset"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_ADD);
 			}
-			else if(tname.equals("directory"))
+			else if(tname.equals("cfdirectory"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_FOLDER);
 			}
-			else if(tname.equals("file"))
+			else if(tname.equals("cffile"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_FILE);
 			}
-			else if(tname.equals("invoke"))
+			else if(tname.equals("cfinvoke"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_PROCESS);
 			}
-			else if(tname.equals("abort"))
+			else if(tname.equals("cfabort"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_STOP);
 			}
-			else if(tname.equals("ftp") || tname.equals("http") 
-				|| tname.equals("ldap"))
+			else if(tname.equals("cfftp") || tname.equals("cfhttp") 
+				|| tname.equals("cfldap"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_SERVER);
 			}
-			else if(tname.equals("include") || tname.equals("module"))
+			else if(tname.equals("cfinclude") || tname.equals("cfmodule"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_IMPORT);
 			}
@@ -184,7 +184,7 @@ public class OutlineLabelProvider extends LabelProvider {
 							p = (Parameter)i.next();
 							if(p.isRequired())
 							{
-								String aval = ((CfmlTagItem)element).getAttribute(p.getName());
+								String aval = ((CfmlTagItem)element).getAttributeValue(p.getName());
 								if(aval != null && aval.length() > 0)
 								{
 									sb.append(" " + p.getName() + ": " + aval);
