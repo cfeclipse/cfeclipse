@@ -29,6 +29,8 @@ package com.rohanclan.cfml.editors;
  *
  * You got me. This was a wizard generated file seems to do partition stuff too
  */
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
@@ -41,11 +43,16 @@ import com.rohanclan.cfml.parser.CFParser;
 public class CFDocumentProvider extends FileDocumentProvider {
 
 	private static IPath lastFilename;
-	
+	private static IResource lastRes = null;
 	public static void setLastFilename(IPath newFilename)
 	{
 		lastFilename = newFilename;
 		System.out.println("CFDocumentProvider::setLastFilename() - <b>Last</b> filename is set to " + newFilename.toString());
+	}
+	
+	public static void setLastResource(IResource newRes)
+	{
+		lastRes = newRes;
 	}
 	
 	protected IDocument createDocument(Object element) throws CoreException {
@@ -72,8 +79,16 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			// Save the document to trigger an event for the change listener. The change listener
 			// will then call our Delta Visitor which will call out setLastFilename() method.
 			// TODO: Work out how to properly obtain a filename from the IDocument! (this is soooo a bodge job!)
+			
 			saveDocument(null, element, document, true);
 			CFParser docParser = new CFParser(document, lastFilename);
+			//
+			// Actually needs the IResource handle from the document. So as a temporary fix we'll
+			// pass it in here. Should really replace the IPath.
+			docParser.setResource(lastRes);
+			//
+			// Delete all of the problem markers for the resource 
+			lastRes.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_ONE);
 			
 			docParser.parseDoc();	// Run the parser. Nothing is done with the resultant data at present.
 

@@ -27,11 +27,13 @@ package com.rohanclan.cfml.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -42,12 +44,16 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.MarkerUtilities;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.parser.exception.DuplicateAttributeException;
 import com.rohanclan.cfml.parser.exception.InvalidAttributeException;
+
+import com.rohanclan.cfml.parser.ParseError;
+import com.rohanclan.cfml.parser.ParseMessage;
 
 /**
  * @author Oliver Tupman
@@ -70,6 +76,52 @@ public class CFParser implements IEditorActionDelegate{
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
 	static protected final int USRMSG_ERROR		= 0x02;
+	
+	/**
+	 * 
+	 * @author Oliver Tupman
+	 *
+	 * Represents the current state of the parser.
+	 */
+	public class State {
+		protected ArrayList messages;
+		protected String filename;
+		protected int errCount = 0;
+		protected boolean hadFatal = false;
+		protected MatchList matches = null;
+		
+		public State(String docFilename)
+		{
+			filename = docFilename;
+		}
+		
+		public ArrayList getMessages()
+		{
+			return messages;
+		}
+		
+		public boolean hadFatal() { return hadFatal; }
+		
+		/**
+		 * Adds a message to the parser state.
+		 * @param newMsg
+		 */
+		public void addMessage(ParseMessage newMsg)
+		{
+			if(newMsg instanceof ParseError)
+			{
+				if(((ParseError)newMsg).isFatal())
+					hadFatal = true;
+				
+				errCount++;				
+			}
+			
+			messages.add(newMsg);
+		}
+	}
+	
+	protected IResource res = null;
+	public void setResource(IResource newRes) { res = newRes; }
 	
 	/**
 	 * <code>parseDoc</code> - the document to parse. Could just use a string, but IDocument provides line number capabilities.
@@ -328,7 +380,7 @@ public class CFParser implements IEditorActionDelegate{
 	 * @param message - the message
 	 * @param msgType - the type of message. CFParser.USERMSG_* (i.e. CFParser.USERMSG_ERROR is an error to the user)
 	 */
-	protected void userMessage(int indent, String method, String message, int msgType)
+	protected void userMessage(int indent, String method, String message, int msgType, TagMatch match)
 	{
 		switch(msgType)
 		{
@@ -340,14 +392,15 @@ public class CFParser implements IEditorActionDelegate{
 
 				IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
 				try {
-					
-					IMarker newMarker = myWorkspaceRoot.createMarker(IMarker.PROBLEM);
-					newMarker.setAttribute(IMarker.MESSAGE, message);
-					newMarker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
-					newMarker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR); 
-					newMarker.setAttribute(IMarker.LOCATION, docFilename.toOSString());
-					newMarker.setAttribute(IMarker.TRANSIENT, true);
-					
+
+					Map attrs = new HashMap();
+					MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
+					MarkerUtilities.setMessage(attrs, message);
+					//
+					// Not sure what the start & end positions are good for!
+					//MarkerUtilities.setCharStart(attrs, match.startPos);
+					//MarkerUtilities.setCharEnd(attrs, match.endPos);
+					MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
 				}catch(CoreException excep) {
 					userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker");
 				}
@@ -452,7 +505,7 @@ public class CFParser implements IEditorActionDelegate{
 				userMessage(matchStack.size(), 
 							"handleClosingTag", "Found a closing tag with the name \'" + match.match + 
 							"\' that does not match the current parent item: \'" + topItem.itemName + "\'", 
-							USRMSG_ERROR);
+							USRMSG_ERROR, match);
 				
 				// 
 				// So we just push the top item back onto the stack, ready to be matched again.
@@ -515,9 +568,9 @@ public class CFParser implements IEditorActionDelegate{
 		try {
 			newItem.addAttributes(attrMap);
 		} catch(DuplicateAttributeException excep) {
-			userMessage(matchStack.size(), "handleCFTag", "The tag " + tagName + " already has the attribute " + excep.getName(), USRMSG_ERROR);
+			userMessage(matchStack.size(), "handleCFTag", "The tag " + tagName + " already has the attribute " + excep.getName(), USRMSG_ERROR, match);
 		} catch(InvalidAttributeException excep) {
-			userMessage(matchStack.size(), "handleCFTag", "The tag " + tagName + " is not allowed the attribute \'" + excep.getName() + "\'", USRMSG_ERROR);
+			userMessage(matchStack.size(), "handleCFTag", "The tag " + tagName + " is not allowed the attribute \'" + excep.getName() + "\'", USRMSG_ERROR, match);
 		}
 		//
 		//	Either the syntax dictionary says it closes itself or the user has specified it will
