@@ -1,0 +1,3704 @@
+<?xml version="1.0" ?>
+<!--
+	Creator is who made / supports the tag. Values are:
+    	MX          = 0x1;
+    	BlueDragon  = 0x2;
+    	W3C         = 0x4;
+    	UserDefined = 0x8;
+    	If support exists between two you can add them together.
+    	for example 3 means MX and BlueDragon.
+    Single is if the tag lacks a closing tag
+    XMLStyle is if a single tag does it close thusly /&gt;
+    
+	::NOTES::
+    Missing: cfslider, cfregistry
+ -->
+<dictionary>
+	<tags>
+		<!-- 
+		-->
+		<tag creator="3" name="xml" single="false" xmlstyle="false">
+			<help><![CDATA[
+				
+			]]></help>
+			<parameter name="variable" type="String" required="true">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="casesensitive" type="boolean" required="false">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cflock    
+				timeout = "timeout in seconds "   
+				scope = "Application" or "Server" or "Session"   
+				name = "lockname"    
+				throwOnTimeout = "Yes" or "No"   
+				type = "readOnly" or "exclusive "
+				[...CFML to be synchronized...]
+			/cflock
+		-->
+		<tag creator="3" name="lock" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Ensures the integrity of shared data. Instantiates the 
+				following kinds of locks:
+
+				* Exclusive allows single-thread access to the CFML constructs 
+				* Read-only allows multiple requests to access CFML constructs
+			]]></help>
+			<parameter name="timeout" type="Numeric" required="true">
+				<help><![CDATA[
+					Maximum length of time, in seconds, to wait to obtain a 
+					lock. If lock is obtained, tag execution continues. 
+					Otherwise, behavior depends on throwOnTimeout attribute 
+					value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="scope" type="String" required="false">
+				<help><![CDATA[
+					Lock scope. Mutually exclusive with the name attribute. 
+					Lock name. Only one request in the specified scope can 
+					execute the code within this tag (or within any other 
+					cflock tag with the same lock scope scope) at a time.
+				]]></help>
+				<values>
+					<value option="Application" />
+					<value option="Server" />
+					<value option="Session" />
+				</values>
+			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help><![CDATA[
+					Lock name. Mutually exclusive with the scope attribute. 
+					Only one request can execute the code within a cflock tag 
+					with a given name at a time. Cannot be an empty string.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="throwontimeout" type="boolean" required="false">
+				<help><![CDATA[
+					How timeout conditions are handled.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					readOnly: lets more than one request read shared data. 
+					exclusive: lets one request read or write shared data.
+				]]></help>
+				<values>
+					<value option="readonly" />
+					<value option="exclusive" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cflog    
+				text = "text"   
+				log = "log type"   
+				file = "filename"   
+				type = "message type"   
+				application = "application name yes or no"
+		-->
+		<tag creator="3" name="log" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Writes a message to a log file. 
+			]]></help>
+			<parameter name="text" type="String" required="true">
+				<help><![CDATA[
+					Message text to log.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="log" type="String" required="false">
+				<help><![CDATA[
+					If you omit the file attribute, writes messages to standard
+					log file. Ignored, if you specify file attribute. 
+
+					Application: writes to Application.log, normally used for 
+						application-specific messages. 
+					Scheduler: writes to Scheduler.log, normally used to log 
+						the execution of scheduled tasks. 
+				]]></help>
+				<values>
+					<value option="Application" />
+					<value option="Scheduler" />
+				</values>
+			</parameter>
+			<parameter name="file" type="String" required="false">
+				<help><![CDATA[
+					Message file. Specify only the main part of the filename. 
+					For example, to log to the Testing.log file, specify 
+					"Testing". 
+
+					The file must be located in the default log directory. You 
+					cannot specify a directory path. If the file does not 
+					exist, it is created automatically, with the suffix .log.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					Type (severity) of the message
+				]]></help>
+				<values>
+					<value option="information" />
+					<value option="warning" />
+					<value option="error" />
+					<value option="fatal information" />
+				</values>
+			</parameter>
+			<parameter name="application" type="boolean" required="false">
+				<help><![CDATA[
+					log application name, if it is specified in a cfapplication
+					tag.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cflogin   
+				idletimeout = "value"   
+				applicationToken = "token"   
+				cookieDomain = "domain"   
+				...
+			/cflogin
+		-->
+		<tag creator="3" name="login" single="false" xmlstyle="false">
+			<help><![CDATA[
+				A container for user login and authentication code. ColdFusion 
+				runs the code in this tag if a user is not already logged in. 
+				You put code in the tag that authenticates the user and 
+				identifies the user with a set of roles. Used with cfloginuser 
+				tag.
+			]]></help>
+			<parameter name="idletimeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Time interval with no keyboard activity after which 
+					ColdFusion logs the user off. Seconds.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="applicationtoken" type="String" required="false">
+				<help><![CDATA[
+					Unique application identifier. Limits the login validity to 
+					one application, as specified by the cfapplication tag.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="cookiedomain" type="String" required="false">
+				<help><![CDATA[
+					Domain of the cookie that is used to mark a user as logged 
+					in. Use this attribute to enable a user login cookie to
+					work with multiple clustered servers in the same domain.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfloginuser   
+				name = "name"   
+				password = "password-string"   
+				roles = "roles"
+		-->
+		<tag creator="3" name="loginuser" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Identifies an authenticated user to ColdFusion. Specifies the 
+				user ID and roles. Used within a cflogin tag.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					A username.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="true">
+				<help><![CDATA[
+					A user password.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="roles" type="String" required="true">
+				<help><![CDATA[
+					A comma-delimited list of role identifiers.
+
+					ColdFusion processes spaces in a list element as part of 
+					the element. 
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cflogout
+		-->
+		<tag creator="3" name="logout" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Logs the current user out. Removes knowledge of the user ID, 
+				password, and roles from the server. If you do not use this 
+				tag, the user is automatically logged out when the session 
+				ends.
+			]]></help>
+		</tag>
+		
+		<!-- 
+			cfloop
+				index = "parameter_name"   
+				from = "beginning_value"   
+				to = "ending_value"   
+				step = "increment"
+				... HTML or CFML code ...
+			/cfloop
+			
+			cfloop    
+				condition = "expression"
+				...
+			/cfloop
+			
+			cfloop    
+				query = "query_name"   
+				startRow = "row_num"   
+				endRow = "row_num"
+				...
+			/cfloop
+			
+			cfloop    
+				index = "index_name"   
+				list = "list_items"   
+				delimiters = "item_delimiter"
+				...
+			/cfloop
+			===============================================
+			cfloop
+				index = "parameter_name"   
+				from = "beginning_value"   
+				to = "ending_value"   
+				step = "increment"
+				condition = "expression"
+				query = "query_name"   
+				startRow = "row_num"   
+				endRow = "row_num"
+				list = "list_items"   
+				delimiters = "item_delimiter"
+				collection = "object"
+				item = "string"
+				... HTML or CFML code ...
+			/cfloop
+		-->
+		<tag creator="3" name="loop" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Different items are required based on loop type. Items listed
+				at required can be required but may not be depending on your
+				loop type.
+				[query] [condition] [index + from + to ] [index + list]
+				[collection + item ]
+			]]></help>
+			<parameter name="index" type="String" required="true">
+				<help><![CDATA[
+					Index value. ColdFusion sets it to from value and 
+					increments or decrements by step value, until it equals to 
+					value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="to" type="Numeric" required="true">
+				<help><![CDATA[
+					Beginning value of index.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="from" type="Numeric" required="true">
+				<help><![CDATA[
+					Ending value of index.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="step" type="Numeric" required="false">
+				<help><![CDATA[
+					Ending value of index.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="condition" type="boolean" required="true">
+				<help><![CDATA[
+					Condition that controls the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="query" type="String" required="true">
+				<help><![CDATA[
+					Query that controls the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startrow" type="Numeric" required="false">
+				<help><![CDATA[
+					First row of query that is included in the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="endrow" type="Numeric" required="false">
+				<help><![CDATA[
+					Last row of query that is included in the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+					A list, variable, or filename; contains a list
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+					Character(s) that separates items in list
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="collection" type="Object" required="true">
+				<help><![CDATA[
+					The collection attribute is used with the item attribute.
+					often to loop over a structure
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="item" type="String" required="true">
+				<help><![CDATA[
+					The item attribute is used with the collection attribute.
+					often to loop over a structure
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+				
+		<!-- 
+			cfmail    
+				to = "recipient"   
+				from = "sender"   
+				cc = "copy_to"   
+				bcc = "blind_copy_to"   
+				subject = "msg_subject"   
+				replyto = "reply_to_addr"
+			 	failto = "fail_message_addr"   
+			 	username = "user name"   
+			 	password = "password"   
+			 	wraptext = "column number"   
+			 	charset = "character encoding"   
+			 	type = "msg_type"   
+			 	mimeattach = "path"   
+			 	query = "query_name"   
+			 	group = "query_column"   
+			 	groupcasesensitive = "yes" or "no"   
+			 	startrow = "query_row"   
+			 	maxrows = "max_msgs"   
+			 	server = "serverspecs"   
+			 	port = "port_id"   
+			 	mailerid = "headerid"   
+			 	timeout = "seconds"   
+			 	spoolenable = "yes" or "no"
+			
+			[(Optional) Mail message body and/or cfhttpparam tags]
+			/cfmail
+		-->
+		<tag creator="3" name="mail" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Sends an e-mail message that optionally contains query output,
+				using an SMTP server. 
+			]]></help>
+			<parameter name="to" type="String" required="true">
+				<help><![CDATA[
+					Message recipient e-mail addresses.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="from" type="String" required="true">
+				<help><![CDATA[
+					E-mail message sender:
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="cc" type="String" required="false">
+				<help><![CDATA[
+					Address(es) to which to copy the message
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="bcc" type="String" required="false">
+				<help><![CDATA[
+					Address(es) to which to copy the message, without listing 
+					them in the message header.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="subject" type="String" required="true">
+				<help><![CDATA[
+					Message subject. Can be dynamically generated.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="replyto" type="String" required="false">
+				<help><![CDATA[
+					Address(es) to which the recipient is directed to send 
+					replies.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="failto" type="String" required="false">
+				<help><![CDATA[
+					Address to which mailing systems should send delivery 
+					failure notifications. Sets the mail envelope reverse-path 
+					value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					A user name to send to SMTP servers that require 
+					authentication. Requires a password attribute
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					A password to send to SMTP servers that require 
+					authentication. Requires a username attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="wraptext" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the maximum line length, in characters of the 
+					mail text. If a line has more than the specified number of
+					characters, replaces the last white space character, such 
+					as a tab or space, preceding the specified position with 
+					a line break. If there are no white space characters, 
+					inserts a line break at the specified position. A common 
+					value for this attribute is 72.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="charset" type="String" required="false">
+				<help><![CDATA[
+					The character encoding in which the part text is encoded.
+					
+					For more information on character encodings, see:
+					www.w3.org/International/O-charset.html.
+				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					The MIME media type of the part. Can be a can be valid MIME 
+					media type
+				]]></help>
+				<values>
+					<value option="text/plain" />
+					<value option="text/html" />
+				</values>
+			</parameter>
+			<parameter name="mimeattach" type="String" required="false">
+				<help><![CDATA[
+					Path of file to attach to message. Attached file is 
+					MIME-encoded. ColdFusion attempts to determine the MIME 
+					type of the file; use the cfmailparam tag to send an 
+					attachement and specify the MIME type.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="query" type="String" required="false">
+				<help><![CDATA[
+					Name of cfquery from which to draw data for message(s). 
+					Use this attribute to send more than one message, or to 
+					send query results within a message.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="group" type="String" required="false">
+				<help><![CDATA[
+					Query column to use when you group sets of records to send 
+					as a message. For example, to send a set of billing 
+					statements to a customer, group on "Customer_ID." 
+					Case-sensitive. Eliminates adjacent duplicates when data is
+					sorted by the specified field.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="groupcasesensitive" type="boolean" required="false">
+				<help><![CDATA[
+					Whether to consider case when using the group attribute. To
+					group on case-sensitive records, set this attribute to Yes.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="startrow" type="Numeric" required="false">
+				<help><![CDATA[
+					Row in a query to start from.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of messages to send when looping over a 
+					query.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="server" type="String" required="false">
+				<help><![CDATA[
+					SMTP server address, or (Enterprise edition only) a 
+					comma-delimited list of server addresses, to use for 
+					sending messages. At least one server must be specified 
+					here or in the ColdFusion MX Administrator. A value here 
+					overrides the Administrator. A value that includes a port 
+					specification overrides the port attribute. See the Usage 
+					section for details.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="port" type="Numeric" required="false">
+				<help><![CDATA[
+					TCP/IP port on which SMTP server listens for requests 
+					(normally 25). A value here overrides the Administrator.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="mailerid" type="String" required="false">
+				<help><![CDATA[
+					Mailer ID to be passed in X-Mailer SMTP header, which 
+					identifies the mailer application.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="timeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of seconds to wait before timing out connection to 
+					SMTP server. A value here overrides the Administrator.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="spoolenable" type="boolean" required="false">
+				<help><![CDATA[
+					Specifies whether to spool mail or always send it 
+					Immediately. Overrides the ColdFusion MX Administrator 
+					Spool mail messages to disk for delivery setting.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfmailparam       
+				file = "file-name"       
+				type ="media type"
+		   	or   
+		   	cfmailparam       
+		   		name = "header-name"       
+		   		value = "header-value"
+		-->
+		<tag creator="3" name="xml" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Attaches a file or adds a header to an e-mail message. Can only
+				be used in the cfmail tag. You can use more than one 
+				cfmailparam tag within a cfmail tag.
+			]]></help>
+			<parameter name="file" type="String" required="true">
+				<help><![CDATA[
+					Attaches file to a message. Mutually exclusive with name 
+					attribute. The file is MIME encoded before sending.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					The MIME media type of the part. Can be a can be valid MIME 
+					media type
+				]]></help>
+				<values>
+					<value option="text/plain" />
+					<value option="text/html" />
+				</values>
+			</parameter>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name of header. Case-insensitive. Mutually exclusive with 
+					file attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="value" type="String" required="false">
+				<help><![CDATA[
+					Value of the header.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfmailpart       
+				type="mime type"
+	            charset="character encoding"
+              	wraptext="number"
+	           [Mail part contents]
+	        /cfmailpart
+		-->
+		<tag creator="3" name="mailpart" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Specifies one part of a multipart e-mail message. Can only be 
+				used in the cfmail tag. You can use more than one cfmailpart 
+				tag within a cfmail tag.
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+					The MIME media type of the part. Can be a can be valid MIME 
+					media type
+				]]></help>
+				<values>
+					<value option="text/plain" />
+					<value option="text/html" />
+				</values>
+			</parameter>
+			<parameter name="wraptext" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the maximum line length, in characters of the 
+					mail text. If a line has more than the specified number of 
+					characters, replaces the last white space character, such 
+					as a tab or space, preceding the specified position with a
+					line break. If there are no white space characters, 
+					inserts a line break at the specified position. A common 
+					value for this attribute is 72.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="charset" type="String" required="false">
+				<help><![CDATA[
+					The character encoding in which the part text is encoded.
+					
+					For more information on character encodings, see:
+					www.w3.org/International/O-charset.html.
+				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cfmodule    
+				template = "path"   
+				name = "tag_name"   
+				attributeCollection = "collection_structure"   
+				attribute_name1 = "valuea"   
+				attribute_name2 = "valueb" ...
+		-->
+		<tag creator="3" name="module" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Invokes a custom tag for use in ColdFusion application pages. 
+				This tag processes custom tag name conflicts.			
+			]]></help>
+			<parameter name="template" type="String" required="true">
+				<help><![CDATA[
+					Mutually exclusive with the name attribute. A path to the 
+					page that implements the tag. 
+                    
+                    Relative path: expanded from the current page 
+                    Absolute path: expanded using ColdFusion mapping 
+                    A physical path is not valid.					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Mutually exclusive with the template attribute. A custom 
+					tag name, in the form "Name.Name.Name..." Identifies 
+					subdirectory, under the ColdFusion tag root directory, 
+					that contains custom tag page. For example (Windows format):
+					
+					<cfmodule name = "superduper.Forums40.GetUserOptions"> 
+
+					This identifies the page GetUserOptions.cfm in the 
+					directory CustomTags\superduper\Forums40 under the 
+					ColdFusion root directory.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="attributecollection" type="Struct" required="false">
+				<help><![CDATA[
+					A collection of key-value pairs that represent 
+					attribute names and values. You can specify multiple 
+					key-value pairs. You can specify this attribute only 
+					once. 
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="attribute_name1" type="String" required="false">
+				<help><![CDATA[
+					Attribute for a custom tag. You can include multiple 
+					instances of this attribute to specify the parameters of 
+					a custom tag.					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="attribute_nameN" type="String" required="false">
+				<help><![CDATA[
+					Attribute for a custom tag. You can include multiple 
+					instances of this attribute to specify the parameters of 
+					a custom tag.					
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfobject
+				type = "com"   
+				action = "action"   
+				class = "program_ID"   
+				name = "text"   
+				context = "context"   
+				server = "server_name"
+				
+			cfobject    
+				name = "variable name"   
+				component = "component name"
+				
+			cfobject    
+				type = "corba"   
+				context = "context"   
+				class = "file or naming service"   
+				name = "text"   
+				locale = "type-value arguments"
+			
+			cfobject    
+				type = "Java"   
+				action = "Create"   
+				class = "Java class"   
+				name = "object name"
+				
+			cfobject    
+				webservice= "http://....?wsdl" or "name set in Administrator"
+				name = "myobjectname"
+			=============================================================
+			cfobject
+				type = "com" "Java" "corba"
+				action = "action"
+				class = "program_ID"
+				name = "text"   
+				context = "context"   
+				server = "server_name"
+				component = "component name"
+				locale = "type-value arguments"
+				webservice= "http://....?wsdl" or "name set in Administrator"
+		-->
+		<tag creator="3" name="object" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Creates a ColdFusion object, of a specified type.
+				
+				The tag syntax depends on the object type. Some types use the 
+				type attribute; others do not.
+			]]></help>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					
+				]]></help>
+				<values>
+					<value option="com" />
+					<value option="java" />
+					<value option="corba" />
+				</values>
+			</parameter>
+			<parameter name="action" type="String" required="true">
+				<help><![CDATA[
+					
+				]]></help>
+				<values>
+					<value option="create" />
+					<value option="connect" />
+				</values>
+			</parameter>
+			<parameter name="class" type="String" required="true">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="context" type="String" required="true">
+				<help><![CDATA[
+					
+				]]></help>
+				<values>
+					<value option="inproc" />
+					<value option="local" />
+					<value option="remote" />
+					<value option="ior" />
+					<value option="nameservice" />
+				</values>
+			</parameter>
+			<parameter name="server" type="String" required="false">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="component" type="String" required="true">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="locale" type="String" required="false">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="webservice" type="URL" required="true">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cfobjectcache    
+				action = "clear"
+		-->
+		<tag creator="3" name="objectcache" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Flushes the query cache.
+			]]></help>
+			<parameter name="action" type="String" required="true">
+				<help><![CDATA[
+					clear: Clears queries from the cache in the Application 
+					scope
+				]]></help>
+				<values>
+					<value option="clear" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cfoutput    
+				query = "query_name"   
+				group = "query_column"   
+				groupCaseSensitive = "Yes" or "No"   
+				startRow = "start_row"   
+				maxRows = "max_rows_output"
+			/cfoutput
+		-->
+		<tag creator="3" name="output" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Displays output that can contain the results of processing 
+				ColdFusion variables and functions. Can loop over the results 
+				of a database query.
+			]]></help>
+			<parameter name="query" type="String" required="false">
+				<help><![CDATA[
+					Name of cfquery from which to draw data for output section.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="group" type="String" required="false">
+				<help><![CDATA[
+					Query column to use to group sets of records. Eliminates 
+					adjacent duplicate rows when data is sorted. Use if you 
+					retrieved a record set ordered on one or more a query 
+					columns. For example, if a record set is ordered on 
+					"Customer_ID" in the cfquery tag, you can group the output 
+					on "Customer_ID." 
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="groupcasesensitive" type="boolean" required="false">
+				<help><![CDATA[
+					Whether to consider the case in grouping rows.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="startrow" type="Numeric" required="false">
+				<help><![CDATA[
+					Row from which to start output.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of rows to display.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag> 
+		
+		
+		
+		<!-- 
+			cfparam    
+				name = "param_name"   
+				type = "data_type"   
+				default = "value"
+		-->
+		<tag creator="3" name="param" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Tests for a parameter's existence, tests its data type, and, if
+				a default value is not assigned, optionally provides one. 
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name of parameter to test (such as "Client.Email " or 
+					"Cookie.BackgroundColor "). If omitted, and if the 
+					parameter does not exist, an error is thrown.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					The parameter data type 
+				]]></help>
+				<values>
+					<value option="any" />
+					<value option="array" />
+					<value option="binary" />
+					<value option="boolean" />
+					<value option="date" />
+					<value option="guid" />
+					<value option="numeric" />
+					<value option="query" />
+					<value option="string" />
+					<value option="struct" />
+					<value option="uuid" />
+					<value option="variable_name" />
+				</values>
+			</parameter>
+			<parameter name="default" type="Object" required="false">
+				<help><![CDATA[
+					Value to set parameter to if it does not exist.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag> 
+		
+		
+		<!-- 
+			cfpop    
+				server = "servername"   
+				port = "port_number"   
+				username = "username"   
+				password = "password"   
+				action = "action"   
+				name = "queryname"   
+				messageNumber = "number"   
+				uid = "number"    
+				attachmentPath = "path"   
+				timeout = "seconds"   
+				maxRows = "number"   
+				startRow = "number"   
+				generateUniqueFilenames = "boolean"
+		-->
+		<tag creator="3" name="pop" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Retrieves or deletes e-mail messages from a POP mail server.
+			]]></help>
+			<parameter name="server" type="String" required="true">
+				<help><![CDATA[
+					POP server identifier:
+						A host name; for example, "biff.upperlip.com" 
+						An IP address; for example, "192.1.2.225"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="port" type="Numeric" required="false">
+				<help><![CDATA[
+					POP port
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					Overrides username.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					Overrides password
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="action" type="String" required="false">
+				<help><![CDATA[
+					getHeaderOnly: returns message header information only 
+    	            getAll: returns message header information, message text, 
+    	            	and attachments if attachmentPath is specified 
+        	        delete: deletes messages on POP server
+				]]></help>
+				<values>
+					<value option="getHeaderOnly" />
+					<value option="getAll" />
+					<value option="delete" />
+				</values>
+			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help><![CDATA[
+					Name for query object that contains the retrieved message 
+					information.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="messagenumber" type="Numeric" required="false">
+				<help><![CDATA[
+					Message number or comma-delimited list of message numbers 
+					to get or delete. Invalid message numbers are ignored.
+					Ignored if uid is specified.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="uid" type="String" required="false">
+				<help><![CDATA[
+					UID or a comma-delimited list of UIDs to get or delete. 
+					Invalid UIDs are ignored.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="attachmentpath" type="String" required="false">
+				<help><![CDATA[
+					If action="getAll", specifies a directory in which to save 
+					any attachments. If the directory does not exist, 
+					ColdFusion creates it.
+
+					If you omit this attribute, ColdFusion does not save any 
+					attachments. If you specify a relative path, the path root 
+					is the ColdFusion temporary directory, which is returned by 
+					the GetTempDirectory function.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="timeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum time, in seconds, to wait for mail processing
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of messages to return or delete, starting with the 
+					number in startRow. Ignored if messageNumber or uid is 
+					specified.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startrow" type="Numeric" required="false">
+				<help><![CDATA[
+					First row number to get or delete. Ignored if messageNumber
+					or uid is specified.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="generateuniquefilenames" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: Generate unique filenames for files attached to an 
+					e-mail message, to avoid naming conflicts when files are 
+					saved 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag> 
+		
+		
+		
+		<!-- 
+			cfprocessingdirective
+				pageencoding = "page-encoding literal string" 
+			/
+			or
+			cfprocessingdirective   
+				suppressWhiteSpace = "Yes" or "No"   
+				pageEncoding = "page-encoding literal string"
+		    [CFML tags]
+		    /cfprocessingdirective
+		-->
+		<tag creator="3" name="processingdirective" single="false" xmlstyle="true">
+			<help><![CDATA[
+				Provides the following insformation to ColdFusion on how to 
+				process the current page: 
+
+				* Specifies whether to remove excess whitespace character from 
+				ColdFusion generated content in the tag body. 
+				* Identifies the character encoding (character set) of the page 
+				contents. 
+			]]></help>
+			<parameter name="suppresswhitespace" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean; whether to suppress white space characters within 
+					the cfprocessingdirective block that are generated by CFML 
+					tags and often do not affect HTML appearance. Does not 
+					affect any white space in HTML code.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="pageencoding" type="String" required="false">
+				<help><![CDATA[
+					A string literal; cannot be a variable. Identifies the 
+					character encoding of the current CFML page. This attribute 
+					affects the entire page, not just the cfprocessing tag body.
+					The value may be enclosed in single or double quotation 
+					marks, or none.
+					
+					For more information on character encodings, see:
+					www.w3.org/International/O-charset.html.
+				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
+			</parameter>
+		</tag> 
+				
+		
+		
+		<!-- 
+			cfprocparam    
+				type = "in" or "out" or "inout"   
+				variable = "variable name"   
+				value = "parameter value"   
+				CFSQLType = "parameter datatype"   
+				maxLength = "length"   
+				scale = "decimal places"    
+				null = "Yes" or "No"
+		-->
+		<tag creator="3" name="procparam" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Defines stored procedure parameters. This tag is nested within 
+				a cfstoredproc tag.
+			]]></help>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					in: The parameter is used to send data to the database 
+						system only. Passes the parameter by value. 
+					out: The parameter is used to receive data from the 
+						database system only. Passes the parameter as a bound 
+						variable. 
+					inout: The parameter is used to send and receive data. 
+						Passes the parameter as a bound variable. 
+				]]></help>
+				<values>
+					<value option="in" />
+					<value option="out" />
+					<value option="inout" />
+				</values>
+			</parameter>
+			<parameter name="variable" type="String" required="false">
+				<help><![CDATA[
+					ColdFusion variable name; references the value that the 
+					output parameter has after the stored procedure is called.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="value" type="String" required="false">
+				<help><![CDATA[
+					Value that ColdFusion passes to the stored procedure.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="cfsqltype" type="String" required="true">
+				<help><![CDATA[
+					SQL type to which the parameter (any type) is bound. 
+					ColdFusion supports the following values, where the last 
+					element of the name corresponds to the SQL data type. 
+					Different database systems might support different subsets 
+					of this list. See your DBMS documentation for information 
+					on supported parameter types.
+				]]></help>
+				<values>
+					<value option="CF_SQL_BIGINT" />
+					<value option="CF_SQL_BIT" />
+					<value option="CF_SQL_CHAR" />
+					<value option="CF_SQL_BLOB" />
+					<value option="CF_SQL_CLOB" />
+					<value option="CF_SQL_DATE" />
+					<value option="CF_SQL_DECIMAL" />
+					<value option="CF_SQL_DOUBLE" />
+					<value option="CF_SQL_FLOAT" />
+					<value option="CF_SQL_IDSTAMP" />
+					<value option="CF_SQL_INTEGER" />
+					<value option="CF_SQL_LONGVARCHAR" />
+					<value option="CF_SQL_MONEY" />
+					<value option="CF_SQL_MONEY4" />
+					<value option="CF_SQL_NUMERIC" />
+					<value option="CF_SQL_REAL" />
+					<value option="CF_SQL_REFCURSOR" />
+					<value option="CF_SQL_SMALLINT" />
+					<value option="CF_SQL_TIME" />
+					<value option="CF_SQL_TIMESTAMP" />
+					<value option="CF_SQL_TINYINT" />
+					<value option="CF_SQL_VARCHAR" />
+				</values>
+			</parameter>
+			<parameter name="maxlength" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum length of a string or character IN or INOUT value 
+					attribute. A maxLength of 0 allows any length. The 
+					maxLength attribute is not required when specifying 
+					type=out.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="scale" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of decimal places in numeric parameter. A scale of 0 
+					allows any number of decimal places.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="null" type="boolean" required="false">
+				<help><![CDATA[
+					Whether the parameter is passed in as a null value. Not 
+					used with OUT type parameters.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag> 
+		
+		
+		
+		<!-- 
+			cfprocresult    
+				name = "query_name"   
+				resultSet = "1-n"    
+				maxRows = "maxrows"
+		-->
+		<tag creator="3" name="procresult" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Associates a query object with a result set returned by a 
+				stored procedure. Other ColdFusion tags, such as cfoutput and 
+				cftable, use this query object to access the result set. This 
+				tag is nested within a cfstoredproc tag. 
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name for the query result set.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="resultset" type="Numeric" required="false">
+				<help><![CDATA[
+					Names one result set, if stored procedure returns more than
+					one.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of rows returned in result set.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag> 
+		
+		
+		
+		<!-- 
+			cfproperty    
+				name="name"    
+				type="type"
+				required="boolean"
+				default="default value"
+				displayname="descriptive name"
+				hint="extended description"
+		-->
+		<tag creator="3" name="xml" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Defines properties of a ColdFusion component (CFC). Used to 
+				create complex data types for web services. The attributes of 
+				this tag are exposed as component metadata and are subject to 
+				inheritance rules.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					A string; a property name. Must be a static value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					A string; identifies the property data type
+				]]></help>
+				<values>
+					<value option="any" />
+					<value option="array" />
+					<value option="binary" />
+					<value option="boolean" />
+					<value option="date" />
+					<value option="guid" />
+					<value option="numeric" />
+					<value option="query" />
+					<value option="string" />
+					<value option="struct" />
+					<value option="uuid" />
+					<value option="variable_name" />
+					<value option="component_name" />
+				</values>
+			</parameter>
+			<parameter name="required" type="boolean" required="false">
+				<help><![CDATA[
+					Whether the parameter is required 				
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="default" type="Object" required="false">
+				<help><![CDATA[
+					If no property value is set when the component is used for 
+					a web service, specifies a default value. 
+
+					If this attribute is present, the required attribute must 
+					be set to "no" or not specified.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="displayname" type="String" required="false">
+				<help><![CDATA[
+					A value to be displayed when using introspection to show 
+					information about the CFC. The value appears in parentheses 
+					following the property name.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="hint" type="String" required="false">
+				<help><![CDATA[
+					Text to be displayed when using introspection to show 
+					information about the CFC. This attribute can be useful 
+					for describing the purpose of the parameter.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag> 
+		
+		
+		
+		
+		<!-- 
+			cfquery    
+				name = "query_name"   
+				dataSource = "ds_name"   
+				dbtype = "query"   
+				username = "username"   
+				password = "password"   
+				maxRows = "number"   
+				blockFactor = "blocksize"   
+				timeout = "seconds"   
+				cachedAfter = "date"    
+				cachedWithin = "timespan"    
+				Either of the following:      
+				debug = "Yes" or "No"  
+				[SQL statement(s)]
+			/cfquery
+		-->
+		<tag creator="3" name="query" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Passes queries or SQL statements to a data source.
+				It is recommended that you use the cfqueryparam tag within 
+				every cfquery tag, to help secure your databases from 
+				unauthorized users
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name of query. Used in page to reference query record set. 
+					Must begin with a letter. Can include letters, numbers, 
+					and underscores.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="datasource" type="String" required="true">
+				<help><![CDATA[
+					Name of data source from which query gets data.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="dbtype" type="String" required="false">
+				<help><![CDATA[
+					query. Use this value to specify the results of a query as 
+					input.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					Overrides username in data source setup.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					Overrides password in data source setup.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of rows to return in record set.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="blockfactor" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum rows to get at a time from server. Range: 1 - 100.
+					Might not be supported by some database systems.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="timeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of seconds that each action of a query is 
+					permitted to execute before returning an error. The 
+					cumulative time may exceed this value.
+
+					For JDBC statements, ColdFusion sets this attribute. For 
+					other drivers, check driver documentation.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="cachedafter" type="Date" required="false">
+				<help><![CDATA[
+					Date value (for example, April 16, 1999, 4-16-99). If date 
+					of original query is after this date, ColdFusion uses 
+					cached query data. To use cached data, current query must 
+					use same SQL statement, data source, query name, user name,
+					password. 
+
+					A date/time object is in the range 100 AD-9999 AD.
+
+					When specifying a date value as a string, you must enclose 
+					it in quotation marks.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="cachedwithin" type="Timespan" required="false">
+				<help><![CDATA[
+					Timespan, using the CreateTimeSpan function. If original 
+					query date falls within the time span, cached query data is 
+					used. CreateTimeSpan defines a period from the present, 
+					back. Takes effect only if query caching is enabled in the 
+					Administrator. 
+
+					To use cached data, the current query must use the same SQL 
+					statement, data source, query name, user name, and password.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="debug" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: If debugging is enabled, but the Administrator 
+						Database Activity option is not enabled, displays SQL 
+						submitted to datasource and number of records returned 
+						by query. 
+					No: If the Administrator Database Activity option is 
+						enabled, suppresses display.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag> 
+		
+		
+		<!-- 
+			cfqueryparam 
+				value = "parameter value"
+				CFSQLType = "parameter type"
+				maxLength = "maximum parameter length"
+				scale = "number of decimal places"
+				null = "Yes" or "No"
+				list = "Yes" or "No"
+				separator = "separator character"
+		-->
+		<tag creator="3" name="queryparam" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Verifies the data type of a query parameter and, for DBMSs that 
+				support bind variables, enables ColdFusion to use bind variables
+				in the SQL statement. Bind variable usage enhances performance 
+				when executing a cfquery statement multiple times.
+
+				This tag is nested within a cfquery tag, embedded in a query SQL
+				statement. If you specify optional parameters, this tag performs
+				data validation.
+			]]></help>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+					Value that ColdFusion passes to the right of the comparison 
+					operator in a where clause. 
+
+					If CFSQLType is a date or time option, ensure that the date
+					value uses your DBMS-specific date format. Use the 
+					CreateODBCDateTime or DateFormat and TimeFormat functions 
+					to format the date value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="cfsqltype" type="String" required="false">
+				<help><![CDATA[
+					SQL type that parameter (any type) is bound to.
+				]]></help>
+				<values>
+					<value option="CF_SQL_BIGINT" />
+					<value option="CF_SQL_BIT" />
+					<value option="CF_SQL_CHAR" />
+					<value option="CF_SQL_BLOB" />
+					<value option="CF_SQL_CLOB" />
+					<value option="CF_SQL_DATE" />
+					<value option="CF_SQL_DECIMAL" />
+					<value option="CF_SQL_DOUBLE" />
+					<value option="CF_SQL_FLOAT" />
+					<value option="CF_SQL_IDSTAMP" />
+					<value option="CF_SQL_INTEGER" />
+					<value option="CF_SQL_LONGVARCHAR" />
+					<value option="CF_SQL_MONEY" />
+					<value option="CF_SQL_MONEY4" />
+					<value option="CF_SQL_NUMERIC" />
+					<value option="CF_SQL_REAL" />
+					<value option="CF_SQL_REFCURSOR" />
+					<value option="CF_SQL_SMALLINT" />
+					<value option="CF_SQL_TIME" />
+					<value option="CF_SQL_TIMESTAMP" />
+					<value option="CF_SQL_TINYINT" />
+					<value option="CF_SQL_VARCHAR" />
+				</values>
+			</parameter>
+			<parameter name="maxlength" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum length of parameter.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="scale" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of decimal places in parameter. Applies to 
+					CF_SQL_NUMERIC and CF_SQL_DECIMAL.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="null" type="boolean" required="false">
+				<help><![CDATA[
+					Whether parameter is passed as a null value.
+                    
+                    Yes: tag ignores the value attribute 
+                    No: does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="list" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: The value attribute value is a delimited list 
+					No: it is not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="separator" type="char" required="false">
+				<help><![CDATA[
+					Character that separates values in list, in value attribute.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag> 
+		
+		
+		<!-- 
+			cfreport    
+				report = "report_path"   
+				dataSource = "ds_name"    
+				type = "type"    
+				timeout = "number of seconds"    
+				orderBy = "result_order"   
+				username = "username"   
+				password = "password"   
+				formula = "formula"
+			/cfreport
+		-->
+		<tag creator="3" name="report" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Runs a predefined Crystal Reports report. Applies only to 
+				Windows systems. Uses the CFCRYSTAL.exe file to generate 
+				reports. Sets parameters in the Crystal Reports engine 
+				according to its attribute values.
+			]]></help>
+			<parameter name="datasource" type="String" required="false">
+				<help><![CDATA[
+					Name of registered or native data source.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					* standard (not valid for Crystal Reports 8.0) 
+                    * netscape 
+                    * microsoft
+				]]></help>
+				<values>
+					<value option="standard" />
+					<value option="netscape" />
+					<value option="microsoft" />
+				</values>
+			</parameter>
+			<parameter name="timeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum time, in seconds, in which a connection must be 
+					made to a Crystal Report. 
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="report" type="String" required="true">
+				<help><![CDATA[
+					Report path. Store Crystal Reports files in the same 
+					directories as ColdFusion page files.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="orderby" type="String" required="false">
+				<help><![CDATA[
+					Orders results according to your specifications.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					Username required for entry into database from which report
+					is created. Overrides default settings for data source in 
+					ColdFusion Administrator.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					Password that corresponds to username required for database
+					access. Overrides default settings for data source in 
+					ColdFusion Administrator.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="formula" type="String" required="false">
+				<help><![CDATA[
+					One or more named formulas. Terminate each formula with a 
+					semicolon. Use the format:
+
+					formula = "formulaname1='formula1';formulaname2='formula2';"
+					
+					If you use a semicolon in a formula, you must escape it by 
+					typing it twice (;;). For example:
+
+					formula = "Name1 = 'Val_1a;;Val_1b';Name2 = 'Val2';"
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>	
+		
+		<!-- 
+			cfrethrow
+		-->
+		<tag creator="3" name="rethrow" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Rethrows the currently active exception. Preserves the 
+				exception's cfcatch.type and cfcatch.tagContext variable 
+				values. 
+			]]></help>
+		</tag>
+		
+		<!-- 
+			cfreturn
+				expr
+		-->
+		<tag creator="3" name="return" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Returns result values from a component method. Contains an 
+				expression returned as result of the function.
+				An expression; the result of the function from which this tag 
+				is called.
+			]]></help>
+		</tag>
+		
+		<!-- 
+			cfsavecontent    
+				variable = "variable name"
+				[the content]
+			/cfsavecontent
+		-->
+		<tag creator="3" name="savecontent" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Saves the generated content of the cfsavecontent tag, including
+				the results of evaluating expressions and executing custom tags,
+				in the specified variable.
+			]]></help>
+			<parameter name="variable" type="String" required="true">
+				<help><![CDATA[
+					Name ofthe variable in which to save the generated content 
+					of the tag.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag> 
+		
+		<!-- 
+			cfschedule    
+				action = "update"   
+				task = "taskname"   
+				operation = "HTTPRequest"   
+				file = "filename"   
+				path = "path_to_file"   
+				startDate = "date"   
+				startTime = "time"   
+				url = "URL"   
+				port = "port_number"   
+				publish = "Yes" or "No"   
+				endDate = "date"   
+				endTime = "time"   
+				interval = "seconds"   
+				requestTimeOut = "seconds"   
+				username = "username"   
+				password = "password"   
+				proxyServer = "hostname"   
+				proxyPort = "port_number"
+				proxyUser = "username"   
+				proxyPassword = "password"   
+				resolveURL = "Yes" or "No"
+		-->
+		<tag creator="3" name="schedule" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Provides a programmatic interface to the ColdFusion scheduling
+				engine. Can run a CFML page at scheduled intervals, with the 
+				option to write the page output to a static HTML page. This 
+				feature enables you to schedule pages that publish data, such 
+				as reports, without waiting while a database transaction is 
+				performed to populate the page.
+			]]></help>
+			<parameter name="action" type="String" required="true">
+				<help><![CDATA[
+					delete: deletes the specified task 
+					update: updates an existing task or creates a new task, 
+						if one with the name specified by the task attribute 
+						does not exist 
+					run: executes the specified task 
+				]]></help>
+				<values>
+					<value option="delete" />
+					<value option="update" />
+					<value option="run" />
+				</values>
+			</parameter>
+			<parameter name="task" type="String" required="true">
+				<help><![CDATA[
+					Name of the task.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="operation" type="String" required="false">
+				<help><![CDATA[
+					Operation that the scheduler performs. Must be HTTPRequest.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="file" type="String" required="false">
+				<help><![CDATA[
+					Name of the file in which to store the published output of 
+					the scheuled task
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="path" type="String" required="false">
+				<help><![CDATA[
+					Path to the directory in which to put the published file.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startdate" type="String" required="false">
+				<help><![CDATA[
+					Date on which to first run the scheuled task.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="starttime" type="String" required="false">
+				<help><![CDATA[
+					Time at which to run the scheduled of task starts.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="url" type="URL" required="false">
+				<help><![CDATA[
+					URL of the page to execute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="port" type="Numeric" required="false">
+				<help><![CDATA[
+					Port to use on the server that is specified by the url 
+					parameter. If resolveURL = "yes", retrieved document URLs 
+					that specify a port number are automatically resolved, to
+					preserve links in the retrieved document. A port value in 
+					the url attribute overrides this value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="publish" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: save the result to a file 
+					No: does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="enddate" type="String" required="false">
+				<help><![CDATA[
+					Date when scheduled task ends.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="endtime" type="Numeric" required="false">
+				<help><![CDATA[
+					Time when scheduled task ends (seconds).
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="interval" type="String" required="false">
+				<help><![CDATA[
+				Interval at which task is scheduled.
+                    * number of seconds (minimum is 60) 
+                    * once 
+                    * daily 
+                    * weekly 
+                    * monthly 
+				]]></help>
+				<values>
+					<value option="once" />
+					<value option="daily" />
+					<value option="weekly" />
+					<value option="monthly" />
+				</values>
+			</parameter>
+			<parameter name="requesttimeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Can be used to extend the default timeout period.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					Username, if URL is protected.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					Password, if URL is protected.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="proxyserver" type="String" required="false">
+				<help><![CDATA[
+					Host name or IP address of a proxy server.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="proxyport" type="Numeric" required="false">
+				<help><![CDATA[
+					Port number to use on the proxy server.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="proxyuser" type="String" required="false">
+				<help><![CDATA[
+					User name to provide to the proxy server.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="proxypassword" type="String" required="false">
+				<help><![CDATA[
+					Password to provide to the proxy server.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="resolveurl" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: resolve links in the output page to absolute 
+						references 
+					No: does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag> 
+		
+		
+		<!-- 
+			cfscript
+				[cfscript code here]
+			/cfscript
+		-->
+		<tag creator="3" name="script" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Encloses a code block that contains cfscript statements.
+				
+				You cannot use some ColdFusion reserved words in this tag. You 
+				cannot put a user-defined function whose name begins with any 
+				of these strings within this tag: 
+				cf,cf_,_cf,coldfusion,coldfusion_,_coldfusion
+				
+				You cannot use the elseif construct within a cfscript tag. You 
+				can use code such as the following:
+                else if ( condition )
+                {
+                ...
+                }
+			]]></help>
+		</tag> 
+		
+		
+		<!-- 
+			cfsearch    
+				name = "search_name"   
+				collection = "collection_name"   
+				type = "criteria"   
+				criteria = "search_expression"   
+				maxRows = "number"   
+				startRow = "row_number"   
+				language = "language"
+		-->
+		<tag creator="3" name="search" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Searches Verity collections using ColdFusion or K2Server, 
+				whichever search engine a collection is registered by. 
+				(ColdFusion can also search collections that have not been 
+				registered, with the cfcollection tag.)
+
+				A collection must be created and indexed before this tag can 
+				return search results.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name of the search query.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="collection" type="String" required="true">
+				<help><![CDATA[
+					One or more path(s) and/or registered collection name(s).
+					For a registered collection, specify the collection name.
+					For an unregistered collection, specify an absolute path.
+					Registered names are listed in the ColdFusion Administrator,
+					Verity Collections and Verity Server pages.
+
+					To specify multiple collections, use a comma delimiter. For 
+					example: "CFUSER, e:\collections\personnel"
+
+					If you specify multiple collections, you cannot include a 
+					combination of collections that are registered by K2Server 
+					and registered by Verity.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					simple: STEM and MANY operators are implicitly used. See 
+						Using Verity Search Expressions in Developing 
+						ColdFusion MX Applications. 
+					explicit: operators must be invoked explicitly
+				]]></help>
+				<values>
+					<value option="simple" />
+					<value option="explicit" />
+				</values>
+			</parameter>
+			<parameter name="criteria" type="String" required="false">
+				<help><![CDATA[
+					Search criteria. Follows the syntax rules of the type 
+					attribute. If you pass a mixed-case entry in this attribute,
+					the search is case-sensitive. If you pass all uppercase or
+					all lowercase, the search is case-insensitive. Follow 
+					Verity syntax and delimiter character rules; see Using 
+					Verity Search Expressions in Developing ColdFusion MX 
+					Applications.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of rows to return in query results. Use 
+					double or single quotation marks.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startrow" type="Numeric" required="false">
+				<help><![CDATA[
+					First row number to get.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="language" type="String" required="false">
+				<help><![CDATA[
+					For options, see cfcollection. Requires the ColdFusion 
+					International Search Pack. 
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfselect    
+				name = "name"   
+				required = "Yes" or "No"   
+				message = "text"   
+				onError = "text"   
+				size = "integer"   
+				multiple = "Yes" or "No"   
+				query = "queryname"   
+				selected = "column_value"   
+				value = "text"  
+				display = "text"   
+				passThrough = "HTML_attributes"	
+			/cfselect
+		-->
+		<tag creator="3" name="select" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Constructs a drop-down list box form control. Used within a 
+				cfform tag. 
+
+				You can populate the list from a query, or by using the HTML 
+				option tag.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name of the select form element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="size" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of entries to display at one time. The default, 1, 
+					displays a drop-down list. Any other value displays a list 
+					box with size number of entries visible at one time.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="required" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: a list element must be selected when form is submitted.
+					No:
+					
+					Note: This attribute has no effect if you omit the size 
+						attribute or set it to 1 because the browser always 
+						submits the displayed item.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="message" type="String" required="false">
+				<help><![CDATA[
+					Message to display if required = "Yes" and no selection is 
+					made.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" type="String" required="false">
+				<help><![CDATA[
+					Custom JavaScript function to execute if validation fails
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="multiple" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: allow selecting multiple elements in drop-down list 
+					No: does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="query" type="String" required="false">
+				<help><![CDATA[
+					Name of query to populate drop-down list.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="selected" type="String" required="false">
+				<help><![CDATA[
+					A list of option values to preselect in the selection list.
+					This attribute applies only if list items are generated 
+					from a query. The cfform preservedata attribute value can 
+					override this value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="value" type="String" required="false">
+				<help><![CDATA[
+					Query column to use for the value of each list element. 
+					Used with query attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="display" type="String" required="false">
+				<help><![CDATA[
+					Query column to use for the display label of each list 
+					element. Used with query attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="passthrough" type="String" required="false">
+				<help><![CDATA[
+					Passes one or more arbitrary attribute-value pairs to the 
+					HTML code that is generated for the tag. You can use either 
+					of the following formats to include the quotation marks 
+					around the attribute value:
+
+					passthrough="ID=""myID"""
+					passthrough='ID="myID"'
+
+					The second format, which surrounds all the attribute-value 
+					pairs to be passed through in single quotation marks is 
+					clearer, particularly when you pass multiple HTML 
+					attributes.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfset 
+				var variable_name = expression
+		-->
+		<tag creator="3" name="set" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Sets a value in ColdFusion. Used to create a variable, if it 
+				does not exist, and assign it a value. Also used to call 
+				functions.
+			]]></help>
+		</tag>
+		
+		
+		<!-- 
+			cfsetting    
+				enableCFoutputOnly = "Yes" or "No"    
+				showDebugOutput = "Yes" or "No"    
+				requestTimeOut = "value in seconds"
+		-->
+		<tag creator="3" name="setting" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Controls aspects of page processing, such as the output of 
+				HTML code in pages. 
+			]]></help>
+			<parameter name="enablecfoutputonly" type="boolean" required="true">
+				<help><![CDATA[
+					Yes: blocks output of HTML that is outside cfoutput tags 
+					No: displays HTML that is outside cfoutput tags. 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="showdebugoutput" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: If debugging is enabled in the Administrator, displays
+						debugging information 
+					No: suppresses debugging information that would otherwise 
+						display at end of generated page.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="requesttimeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Integer; number of seconds. Time limit, after which 
+					ColdFusion processes the page as an unresponsive thread. 
+					Overrides the timeout set in the ColdFusion Administrator. 
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfsilent
+			...
+			/cfsilent
+		-->
+		<tag creator="3" name="silent" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Suppresses output produced by CFML within a tag's scope.
+			]]></help>
+		</tag>
+		
+		<!-- 
+			cfstoredproc    
+				procedure = "procedure name"   
+				dataSource = "ds_name"   
+				username = "username"   
+				password = "password"   
+				blockFactor = "blocksize"   
+				debug = "Yes" or "No"   
+				returnCode = "Yes" or "No"
+		-->
+		<tag creator="3" name="storedproc" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Executes a stored procedure in a server database. It 
+				specifies database connection information and identifies 
+				the stored procedure.
+			]]></help>
+			<parameter name="procedure" type="String" required="true">
+				<help><![CDATA[
+					Name of stored procedure on database server.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="datasource" type="String" required="true">
+				<help><![CDATA[
+					Name of data source that points to database that contains 
+					stored procedure.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					Overrides username in data source setup.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					Overrides password in data source setup.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="blockfactor" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of rows to get at a time from server. 
+					Range is 1 to 100.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="debug" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: Lists debug information on each statement 
+					No: does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="returncode" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: Tag populates cfstoredproc.statusCode with status 
+						code returned by stored procedure. 
+					No: does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag>
+		
+		
+		
+		<!-- 
+			cfswitch    
+				expression = "expression"
+				[one or more cfcase tags
+				zero or one cfdefaultcase tags]
+			/cfswitch
+		-->
+		<tag creator="3" name="switch" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Evaluates a passed expression and passes control to the cfcase 
+				tag that matches the expression result. You can, optionally, 
+				code a cfdefaultcase tag, which receives control if there is no
+				matching cfcase tag value.
+			]]></help>
+			<parameter name="expression" type="String" required="true">
+				<help><![CDATA[
+					ColdFusion expression that yields a scalar value. 
+					ColdFusion converts integers, real numbers, Booleans, and 
+					dates to numeric values. For example, True, 1, and 1.0 are 
+					all equal.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+				
+		<!-- 
+			cftable
+				query = "query_name"
+				maxRows = "maxrows_table"   
+				colSpacing = "number_of_spaces"   
+				headerLines = "number_of_lines"   
+				HTMLTable
+				border
+				colHeaders   
+				startRow = "row_number">   
+			/cftable
+		
+		-->
+		<tag creator="3" name="table" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Builds a table in a ColdFusion page. This tag renders data as 
+				preformatted text, or, with the HTMLTable attribute, in an 
+				HTML table. If you do not want to write HTML table tag code, or 
+				if your data can be presented as preformatted text, use this 
+				tag. 
+
+				Preformatted text (defined in HTML with the <pre> and </pre> 
+				tags) displays text in a fixed-width font. It displays white 
+				space and line breaks exactly as they are written within the 
+				pre tags. For more information, see an HTML reference guide.
+
+				To define table column and row characteristics, use the cfcol 
+				tag within this tag.
+			]]></help>
+			<parameter name="query" type="String" required="true">
+				<help><![CDATA[
+					Name of cfquery from which to draw data.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum number of rows to display in the table.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="colspacing" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of spaces between columns
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="headerlines" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of lines to use for table header (the default leaves
+					one line between header and first row of table).
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="htmltable" type="Any" required="false">
+				<help><![CDATA[
+					Renders data in an HTML 3.0 table.
+
+					If you use this attribute (regardless of its value), 
+					ColdFusion renders data in an HTML table.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="border" type="Any" required="false">
+				<help><![CDATA[
+					Displays border around table. 
+
+					If you use this attribute (regardless of its value), 
+					ColdFusion displays a border around the table.
+
+					Use this only if you use the HTMLTable attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="colheaders" type="Any" required="false">
+				<help><![CDATA[
+					Displays column heads. If you use this attribute, you must 
+					also use the cfcol tag header attribute to define them. 
+
+					If you use this attribute (regardless of its value), 
+					ColdFusion displays column heads.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startrow" type="Numeric" required="false">
+				<help><![CDATA[
+					The query result row to put in the first table row.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cftextinput
+				name = "name"   
+				value = "text"   
+				required = "Yes" or "No"   
+				range = "min_value, max_value"   
+				validate = "data_type"   
+				pattern = "Java regular expression"   
+				onValidate = "script_name"   
+				message = "text"   
+				onError = "text"   
+				size = "integer"   
+				font = "font_name"   
+				fontSize = "integer"   
+				italic = "Yes" or "No"   
+				bold = "Yes" or "No"   
+				height = "integer"   
+				width = "integer"   
+				vSpace = "integer"   
+				hSpace = "integer"   
+				align = "alignment"   
+				bgColor = "color"   
+				textColor = "color"   
+				maxLength = "integer"   
+				notSupported = "text"
+		-->
+		<tag creator="3" name="textinput" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Puts a single-line text entry box in a cfform tag and controls 
+				its display characteristics. 
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name for the cftextinput control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="value" type="String" required="false">
+				<help><![CDATA[
+					Initial value to display in text control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="required" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: the user must enter or change text 
+					No
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="range" type="String" required="false">
+				<help><![CDATA[
+					Minimum-maximum value range, delimited by a comma. 
+					Valid only for numeric data.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="validate" type="String" required="false">
+				<help><![CDATA[
+					date: verifies format mm/dd/yy. 
+					eurodate: verifies date format dd/mm/yyyy. 
+					time: verifies time format hh:mm:ss. 
+					float: verifies floating point format. 
+					integer: verifies integer format. 
+					telephone: verifies telephone format ###-###-####. The 
+						separator can be a blank. Area code and exchange must 
+						begin with digit 1 - 9. 
+					zipcode: verifies, in U.S. formats only, 5- or 9-digit 
+						format #####-####. The separator can be a blank. 
+					creditcard: strips blanks and dashes; verifies number using
+						mod10 algorithm. Number must have 13-16 digits. 
+					social_security_number: verifies format ###-##-####. The 
+						separator can be a blank. 
+					regular_expression: matches input against pattern 
+						attribute. 
+				]]></help>
+				<values>
+					<value option="date" />
+					<value option="eurodate" />
+					<value option="time" />
+					<value option="float" />
+					<value option="integer" />
+					<value option="telephone" />
+					<value option="zipcode" />
+					<value option="creditcard" />
+					<value option="social_security_number" />
+					<value option="regular_expression" />
+				</values>
+			</parameter>
+			<parameter name="onvalidate" type="String" required="false">
+				<help><![CDATA[
+					Custom JavaScript function to validate user input. The form 
+					object, input object, and input object value are passed to 
+					routine, which should return True if validation succeeds, 
+					False otherwise. The validate attribute is ignored.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pattern" type="Regex" required="false">
+				<help><![CDATA[
+					JavaScript regular expression pattern to validate input.
+					Omit leading and trailing slashes
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="message" type="String" required="false">
+				<help><![CDATA[
+					Message text to display if validation fails
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" type="String" required="false">
+				<help><![CDATA[
+					Custom JavaScript function to execute if validation fails.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="size" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of characters displayed before horizontal scroll 
+					bar displays.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="font" type="String" required="false">
+				<help><![CDATA[
+					Font name for data in tree control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="fontsize" type="Numeric" required="false">
+				<help><![CDATA[
+					Font size for text in tree control, in points.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="italic" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: displays tree control text in italics 
+					No: it does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="bold" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: displays tree control text in bold 
+					No: it does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="height" type="Numeric" required="false">
+				<help><![CDATA[
+					Tree control height, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					Tree control width, in pixels.
+				]]></help>
+				<values/>
+			</parameter>			
+			<parameter name="vspace" type="Numeric" required="false">
+				<help><![CDATA[
+					Vertical margin above and below tree control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="hspace" type="Numeric" required="false">
+				<help><![CDATA[
+					Horizontal spacing to left and right of tree control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="align" type="String" required="false">
+				<help><![CDATA[
+					* top 
+                    * left 
+                    * bottom 
+                    * baseline 
+                    * texttop 
+                    * absbottom 
+                    * middle 
+                    * absmiddle 
+                    * right 
+				]]></help>
+				<values>
+					<value option="top" />
+					<value option="left" />
+					<value option="bottom" />
+					<value option="baseline" />
+					<value option="texttop" />
+					<value option="absbottom" />
+					<value option="middle" />
+					<value option="absmiddle" />
+					<value option="right" />
+				</values>
+			</parameter>
+			<parameter name="bgcolor" type="String" required="false">
+				<help><![CDATA[
+					Background color of control. For a hex value, use the form:
+					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+					signs or none.
+
+                        * any color, in hex format 
+                        * black 
+                        * red 
+                        * blue 
+                        * magenta 
+                        * cyan 
+                        * orange 
+                        * darkgray 
+                        * pink 
+                        * gray 
+                        * white 
+                        * lightgray 
+                        * yellow 
+				]]></help>
+				<values>
+					<value option="black" />
+					<value option="red" />
+					<value option="blue" />
+					<value option="magenta" />
+					<value option="cyan" />
+					<value option="orange" />
+					<value option="darkgray" />
+					<value option="pink" />
+					<value option="white" />
+					<value option="lightgray" />
+					<value option="yellow" />
+				</values>
+			</parameter>
+			<parameter name="textcolor" type="String" required="false">
+				<help><![CDATA[
+					Text color for control. For a hex value, use the form:
+					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+					signs or none.
+
+                        * any color, in hex format 
+                        * black 
+                        * red 
+                        * blue 
+                        * magenta 
+                        * cyan 
+                        * orange 
+                        * darkgray 
+                        * pink 
+                        * gray 
+                        * white 
+                        * lightgray 
+                        * yellow 
+				]]></help>
+				<values>
+					<value option="black" />
+					<value option="red" />
+					<value option="blue" />
+					<value option="magenta" />
+					<value option="cyan" />
+					<value option="orange" />
+					<value option="darkgray" />
+					<value option="pink" />
+					<value option="white" />
+					<value option="lightgray" />
+					<value option="yellow" />
+				</values>
+			</parameter>
+			<parameter name="maxlength" type="Numeric" required="false">
+				<help><![CDATA[
+					The maximum length of text entered.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="notsupported" type="String" required="false">
+				<help><![CDATA[
+					Message to display if page that contains Java applet-based 
+					form control is opened by browser that does not support 
+					Java, or has Java support disabled. For example:
+
+					notSupported = "<b> Browser must support Java to view 
+					ColdFusion Java Applets</b>"
+
+					If no message is specified, this message displays:
+
+					<b>Browser must support Java to <br> view ColdFusion Java 
+					Applets!</b>
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		<!-- 
+			cfthrow
+				type = "exception_type "
+				message = "message"
+				detail = "detail_description "
+				errorCode = "error_code "
+				extendedInfo = "additional_information"
+			 	object = "java_except_object"
+		-->
+		<tag creator="3" name="throw" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Throws a developer-specified exception, which can be caught 
+				with a cfcatch tag that has any of the following type attribute
+				options:
+
+                type = "custom_type" 
+                type = "Application" 
+                type = "Any"
+			]]></help>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					* A custom type 
+					* Application 
+					Do not enter another predefined type; types are not 
+					generated by ColdFusion applications. If you specify 
+					Application, you need not specify a type for cfcatch.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="message" type="String" required="false">
+				<help><![CDATA[
+					Message that describes exception event.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="detail" type="String" required="false">
+				<help><![CDATA[
+					Description of the event. ColdFusion appends error position
+					to description; server uses this parameter if an error is 
+					not caught by your code.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="errorcode" type="String" required="false">
+				<help><![CDATA[
+					A custom error code that you supply.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="extendedinfo" type="String" required="false">
+				<help><![CDATA[
+					A custom error code that you supply. 
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="object" type="Object" required="false">
+				<help><![CDATA[
+					Requires the value of the cfobject tag name attribute.
+
+					Throws a Java exception from a CFML tag.
+
+					This attribute is mutually exclusive with all other 
+					attributes of this tag.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		
+		
+		
+		<!-- 
+			cftrace
+				abort = "Yes or No"
+				category = "string"
+				inline = "Yes or No"
+				text = "string"
+				type = "format"
+				var = "variable_name"
+			/cftrace
+		-->
+		<tag creator="3" name="trace" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Displays and logs debugging data about the state of an 
+				application at the time the cftrace tag executes. Tracks 
+				runtime logic flow, variable values, and execution time. 
+				Displays output at the end of the request or in the debugging 
+				section at the end of the request;
+
+				ColdFusion logs cftrace output to the file logs\cftrace.log, in
+				the ColdFusion installation directory.
+
+				Note: To permit this tag to execute, you must enable debugging 
+				in the ColdFusion Administrator. Optionally, to report trace 
+				summaries, enable the Trace section.
+			]]></help>
+			<parameter name="abort" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: calls cfabort tag when the tag is executed 
+					No 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="category" type="String" required="false">
+				<help><![CDATA[
+					User-defined string for identifying trace groups
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="inline" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: displays trace code in line on the page in the 
+					location of the cftrace tag, addition to the debugging 
+					information output. 
+					No: does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="text" type="String" required="false">
+				<help><![CDATA[
+					User-defined string, which can include simple variable, 
+					but not complex variables such as arrays. Outputs to cflog 
+					text attribute
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					Corresponds to the cflog type attribute; displays an 
+					appropriate icon.
+
+					* Information
+					* Warning
+					* Error
+					* Fatal Information
+				]]></help>
+				<values>
+					<value option="information" />
+					<value option="warning" />
+					<value option="error" />
+					<value option="fatal information" />
+				</values>
+			</parameter>
+			<parameter name="var" type="String" required="false">
+				<help><![CDATA[
+					The name of a simple or complex variable to display. 
+
+					Useful for displaying a temporary value, or a value that 
+					does not display on any CFM page.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!--
+		cftransaction
+			action = "begin" or "commit" or "rollback"
+			isolation = "read_uncommitted" or "read_committed" or "repeatable_read"
+		/cftransaction
+		-->
+		<tag creator="3" name="transaction" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Instructs the database management system to treat multiple 
+				database operations as a single transaction. Provides database 
+				commit and rollback processing.
+			]]></help>
+			<parameter name="action" type="string" required="false">
+				<help><![CDATA[
+					<ul>
+					<li>begin: the start of the block of code to execute</li>
+					<li>commit: commits a pending transaction</li>
+					<li>rollback: rolls back a pending transaction</li>
+					</ul>
+				]]></help>
+				<values>
+					<value option="begin" />
+					<value option="commit" />
+					<value option="rollback" />
+				</values>
+			</parameter>
+			<parameter name="isolation" type="string" required="false">
+				<help><![CDATA[
+					ODBC lock type.
+				]]></help>
+				<values>
+					<value option="read_uncommitted" />
+					<value option="read_committed" />
+					<value option="repeatable_read" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cftree 
+				name = "name"   
+				required = "Yes" or "No"   
+				delimiter = "delimiter"   
+				completePath = "Yes" or "No"   
+				appendKey = "Yes" or "No"   
+				highlightHref = "Yes" or "No"   
+				onValidate = "script_name"  
+				message = "text"   
+				onError = "text"   
+				lookAndFeel = "motif" or "windows" or "metal"  
+				font = "font"   
+				fontSize = "size"   
+				italic = "Yes" or "No"   
+				bold = "Yes" or "No"   
+				height = "integer"   
+				width = "integer"   
+				vSpace = "integer"   
+				hSpace = "integer"  
+				align = "alignment"
+				border = "Yes" or "No"  
+				hScroll = "Yes" or "No"
+				vScroll = "Yes" or "No"
+				notSupported = "text"
+			/cftree
+		-->
+		<tag creator="3" name="tree" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Inserts a tree control in a form. Validates user selections. 
+				Used within a cftree tag block. You can use a ColdFusion query 
+				to supply data to the tree. 
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name for tree control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="required" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: user must select an item in tree control 
+					No: they do not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="delimiter" type="String" required="false">
+				<help><![CDATA[
+					Character to separate elements in form variable path.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="completepath" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: passes the root part of treename.path form variable 
+						when cftree is submitted 
+					No, or omitted: root level of form variable is not passed; 
+						path value starts with the first node 
+					
+					For the preserveData attribute of cfform to work with the 
+					tree, you must set this attribute to Yes. 
+
+					If you specify a root name for a tree item with cftreeitem 
+					queryasroot, that value is returned. If you do not specify 
+					a root name, ColdFusion returns the query name as the root.
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="appendkey" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: when used with href, passes CFTREEITEMKEY variable 
+						with the value of the selected tree item in URL to the 
+						application page specified in the cfform action 
+						attribute 
+					No
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="highlighthref" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: highlights links that are associated with a cftreeitem 
+						with a URL attribute value 
+					No: disables highlight
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="onvalidate" type="String" required="false">
+				<help><![CDATA[
+					JavaScript function to validate user input. The form object,
+					input object, and input object value are passed to the 
+					specified routine, which should return True if validation 
+					succeeds; False, otherwise.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="message" type="String" required="false">
+				<help><![CDATA[
+					Message to display if validation fails.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" type="String" required="false">
+				<help><![CDATA[
+					JavaScript function to execute if validation fails.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="lookandfeel" type="String" required="false">
+				<help><![CDATA[
+					motif: renders slider in Motif style 
+					windows: renders slider in Windows style 
+					metal: renders slider in Java Swing style 
+					
+					If platform does not support style option, tag defaults to 
+					platform default style.
+				]]></help>
+				<values>
+					<value option="motif" />
+					<value option="windows" />
+					<value option="metal" />
+				</values>
+			</parameter>
+			<parameter name="font" type="String" required="false">
+				<help><![CDATA[
+					Font name for data in tree control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="fontsize" type="Numeric" required="false">
+				<help><![CDATA[
+					Font size for text in tree control, in points.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="italic" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: displays tree control text in italics 
+					No: it does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="bold" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: displays tree control text in bold 
+					No: it does not
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="height" type="Numeric" required="false">
+				<help><![CDATA[
+					Tree control height, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					Tree control width, in pixels.
+				]]></help>
+				<values/>
+			</parameter>			
+			<parameter name="vspace" type="Numeric" required="false">
+				<help><![CDATA[
+					Vertical margin above and below tree control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="hspace" type="Numeric" required="false">
+				<help><![CDATA[
+					Horizontal spacing to left and right of tree control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="align" type="String" required="false">
+				<help><![CDATA[
+					* top 
+                    * left 
+                    * bottom 
+                    * baseline 
+                    * texttop 
+                    * absbottom 
+                    * middle 
+                    * absmiddle 
+                    * right 
+				]]></help>
+				<values>
+					<value option="top" />
+					<value option="left" />
+					<value option="bottom" />
+					<value option="baseline" />
+					<value option="texttop" />
+					<value option="absbottom" />
+					<value option="middle" />
+					<value option="absmiddle" />
+					<value option="right" />
+				</values>
+			</parameter>
+			<parameter name="border" type="boolean" required="false">
+				<help><![CDATA[
+					* Yes 
+					* No 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="hscroll" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: permits horizontal scrolling 
+					No 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="vscroll" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: permits vertical scrolling 
+					No 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="notsupported" type="String" required="false">
+				<help><![CDATA[
+					Message to display if page that contains Java applet-based 
+					form control is opened by browser that does not support 
+					Java, or has Java support disabled. For example:
+
+					notSupported = "<b> Browser must support Java to view 
+					ColdFusion Java Applets</b>"
+
+					If no message is specified, this message displays:
+
+					<b>Browser must support Java to <br> view ColdFusion Java 
+					Applets!</b>
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cftreeitem
+				value = "text"
+				display = "text"
+				parent = "parent_name"
+				img = "filename"
+				imgopen = "filename"
+				href = "URL"
+				target = "URL_target"
+				query = "queryname"
+				queryAsRoot = "Yes" or "No"
+				expand = "Yes" or "No"
+		-->
+		<tag creator="3" name="treeitem" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Populates a form tree control, created with the cftree tag, 
+				with elements. To display icons, you can use the img values 
+				that ColdFusion provides, or reference your own icons. 
+			]]></help>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+					Value passed when cfform is submitted. When populating a 
+					tree with data from a cfquery, specify columns in a 
+					delimited list. Example: value = "dept_id,emp_id"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="display" type="String" required="false">
+				<help><![CDATA[
+					Tree item label. When populating a tree with data from a 
+					query, specify names in a delimited list. Example: 
+					display = "dept_name,emp_name"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="parent" type="String" required="false">
+				<help><![CDATA[
+					Value for tree item parent.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="img" type="String" required="false">
+				<help><![CDATA[
+					Image name, filename, or file URL for tree item icon.
+
+					The following values are provided:
+						* cd 
+						* computer 
+						* document 
+						* element 
+						* folder 
+						* floppy 
+						* fixed 
+						* remote 
+					You can specify a custom image. To do so, include path and 
+					file extension; for example: 
+
+					img = "../images/page1.gif"
+
+					To specify more than one image in a tree, or an image at 
+					the second or subsequent level, use commas to separate 
+					names, corresponding to level; for example:
+					
+					img = "folder,document"
+					img = ",document" (example of second level)
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="imgopen" type="String" required="false">
+				<help><![CDATA[
+					Icon displayed with open tree item. You can specify icon 
+					filename with a relative path. You can use a ColdFusion 
+					image.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="href" type="String" required="false">
+				<help><![CDATA[
+					URL to associate with tree item or query column for a tree 
+					that is populated from a query. If href is a query column, 
+					its value is the value populated by query. If href is not 
+					recognized as a query column, it is assumed that its text 
+					is an HTML href. 
+
+					When populating a tree with data from a query, HREFs can be
+					specified in delimited list; for example:
+
+					href = "http://dept_svr,http://emp_svr"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="target" type="String" required="false">
+				<help><![CDATA[
+					Target attribute of href URL. When populating a tree with 
+					data from a query, specify target in delimited list:
+
+					target = "FRAME_BODY,_blank"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="query" type="String" required="false">
+				<help><![CDATA[
+					Query name to generate data for the treeitem.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="queryAsRoot" type="String" required="false">
+				<help><![CDATA[
+					Defines query as the root level. This avoids having to 
+					create another parent cftreeitem. 
+
+						* Yes 
+						* No 
+						* String to use as the root name 
+					If you do not specify a root name, ColdFusion returns the 
+					query name as the root.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="expand" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: expands tree to show tree item children 
+					No: keeps tree item collapsed 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag>
+		
+		
+		
+		<!-- 
+			cftry
+			   Code that might throw an exception
+			   One or more cfcatch blocks
+			/cftry
+		-->
+		<tag creator="3" name="try" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Used with one or more cfcatch tags. Together, they catch and 
+				process exceptions in ColdFusion pages. Exceptions are events 
+				that disrupt the normal flow of instructions in a ColdFusion 
+				page, such as failed database operations, missing include 
+				files, and developer-specified events.
+			]]></help>
+		</tag>
+		
+		<!-- 
+			cfupdate
+				dataSource = "ds_name"
+				tableName = "table_name"
+				tableOwner = "name"
+				tableQualifier = "qualifier"
+				username = "username"
+				password = "password"
+				formFields = "field_names"
+		-->
+		<tag creator="3" name="update" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Updates records in a data source from data in a ColdFusion form
+				or form Scope.
+			]]></help>
+			<parameter name="datasource" type="String" required="true">
+				<help><![CDATA[
+					Name of the data source that contains the table
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="tablename" type="String" required="true">
+				<help><![CDATA[
+					Name of table to update. 
+						For ORACLE drivers, must be uppercase. 
+						For Sybase driver: case-sensitive; must be in same case
+						as used when the table was created 
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="tableowner" type="String" required="false">
+				<help><![CDATA[
+					For data sources that support table ownership (for example,
+					SQL Server, Oracle, Sybase SQL Anywhere), the table owner.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="tablequalifier" type="String" required="false">
+				<help><![CDATA[
+					For data sources that support table qualifiers. The purpose 
+					of table qualifiers is as follows:
+						SQL Server and Oracle: name of database that contains 
+						table 
+						Intersolv dBASE driver: directory of DBF files 
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					Overrides username value specified in ODBC setup.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					Overrides password value specified in ODBC setup.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="formfields" type="String" required="false">
+				<help><![CDATA[
+					Comma-delimited list of form fields to update.
+					
+					If a form field is not matched by a column name in the 
+					database, ColdFusion throws an error. 
+
+					The formFields lies must include the database table primary
+					key field, which must be present in the form. It can be 
+					hidden. 
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!-- 
+			cfwddx
+				action = "action" 
+				input = "inputdata" 
+				output = "resultvariablename"
+				topLevelVariable = "toplevelvariablenameforjavascript" 
+				useTimeZoneInfo = "Yes" or "No"
+				validate = "Yes" or "No"
+		-->
+		<tag creator="3" name="wddx" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Serializes and deserializes CFML data structures to the 
+				XML-based WDDX format. The WDDX is an XML vocabulary for 
+				describing complex data structures in a standard, generic way. 
+				Implementing it lets you use the HTTP protocol to such 
+				information among application server platforms, application 
+				servers, and browsers. 
+
+				This tag generates JavaScript statements to instantiate 
+				JavaScript objects equivalent to the contents of a WDDX packet 
+				or CFML data structure. Interoperates with Unicode.
+			]]></help>
+			<parameter name="action" type="String" required="true">
+				<help><![CDATA[
+					cfml2wddx: serialize CFML to WDDX 
+					wddx2cfml: deserialize WDDX to CFML 
+					cfml2js: serialize CFML to JavaScript 
+					wddx2js: deserialize WDDX to JavaScript 
+				]]></help>
+				<values>
+					<value option="cfml2wddx" />
+					<value option="wddx2cfml" />
+					<value option="cfml2js" />
+					<value option="wddx2js" />
+				</values>
+			</parameter>
+			<parameter name="input" type="String" required="true">
+				<help><![CDATA[
+					A value to process
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="output" type="String" required="false">
+				<help><![CDATA[
+					Name of variable for output. If action = "WDDX2JS" or 
+					"CFML2JS", and this attribute is omitted, result is output 
+					in HTML stream. 
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="toplevelvariable" type="String" required="false">
+				<help><![CDATA[
+					Name of top-level JavaScript object created by 
+					deserialization. The object is an instance of the 
+					WddxRecordset object.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="usetimezoneinfo" type="boolean" required="false">
+				<help><![CDATA[
+					Whether to output time-zone information when serializing 
+					CFML to WDDX. 
+						- Yes: the hour-minute offset, represented in ISO8601 
+							format, is output. 
+						- No: the local time is output. 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			<parameter name="validate" type="boolean" required="false">
+				<help><![CDATA[
+					Applies if action = "wddx2cfml" or "wddx2js". 
+						- Yes: validates WDDX input with an XML parser using 
+							WDDX DTD. If parser processes input without error, 
+							packet is deserialized. Otherwise, an error is 
+							thrown. 
+						- No: no input validation 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag>
+		
+		
+		
+		
+		
+		<!-- 
+		cfxml
+			variable="xmlVarName"
+			caseSensitive="yes" or "no"
+		/cfxml
+		-->
+		<tag creator="3" name="xml" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Creates a ColdFusion XML document object that contains the 
+				markup in the tag body. This tag can include XML and CFML tags. 
+				ColdFusion processes the CFML code in the tag body, then assigns 
+				the resulting text to an XML document object variable. 
+			]]></help>
+			<parameter name="variable" type="string" required="true">
+				<help><![CDATA[
+					Name of an xml variable
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="casesensitive" type="boolean" required="false">
+				<help><![CDATA[
+					yes: maintains the case of document elements and attributes
+					no 
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+		</tag>
+		
+	</tags>
+
+	<!-- /////////////////////////////////////////////////////////////// -->
+
+	<functions>
+		<!-- 
+			string WriteOutput(string)
+		-->
+		<function creator="3" name="writeoutput" returns="string">
+			<help><![CDATA[
+				Appends text to the page-output stream.
+				This function writes to the page-output stream regardless of 
+				conditions established by the cfsetting tag.
+			]]></help>
+			<parameter name="text" type="string" required="true">
+				<help><![CDATA[
+					A string, or a variable that contains one
+				]]></help>
+			</parameter>
+		</function>
+		<!--
+			boolean ArraySort(array, sort_type [, sort_order ])
+		-->
+		<function creator="3" name="arraysort" returns="boolean">
+			<help><![CDATA[
+				Sorts array elements numerically or alphanumerically.
+			]]></help>
+			<parameter name="array" type="array" required="true">
+				<help><![CDATA[
+					Name of an array
+				]]></help>
+			</parameter>
+			<parameter name="sort_type" type="string" required="true">
+				<help><![CDATA[
+					numeric: sorts numbers 
+					text: sorts text alphabetically, taking case into account 
+					(also known as case sensitive). All letters of one case 
+					precede the first letter of the other case: 
+						- aabzABZ, if sort_order = "asc" (ascending sort)
+						- ZBAzbaa, if sort_order = "desc" (descending sort)
+
+					textnocase: sorts text alphabetically, without regard to 
+					case (also known as case-insensitive). A letter in varying 
+					cases precedes the next letter: 
+ 						- aAaBbBzzZ, in an ascending sort; preserves original 
+ 							intra-letter order 
+						- ZzzBbBaAa, in a descending sort; reverses original 
+							intra-letter order
+				]]></help>
+				<values>
+					<value option="numeric" />
+					<value option="text" />
+					<value option="textnocase" />
+				</values>
+			</parameter>
+			<parameter name="sort_order" type="string" required="false">
+				<help><![CDATA[
+					asc: ascending sort order. Default. 
+ 						- aabzABZ or aAaBbBzzZ, depending on value of sort_type, 
+ 							for letters
+						- from smaller to larger, for numbers 
+
+					desc: descending sort order. 
+						- ZBAzbaa or ZzzBbBaAa, depending on value of sort_type, 
+							for letters
+						- from larger to smaller, for numbers
+				]]></help>
+				<values>
+					<value option="asc" />
+					<value option="desc" />
+				</values>
+			</parameter>
+		</function>
+		
+	</functions>
+</dictionary>
