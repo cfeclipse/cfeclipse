@@ -30,7 +30,20 @@ package com.rohanclan.coldfusionmx.editors;
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-import org.eclipse.jface.text.rules.*;
+//import org.eclipse.jface.text.rules.*;
+import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.rules.MultiLineRule;
+//import org.eclipse.jface.text.rules.SingleLineRule;
+import org.eclipse.jface.text.rules.IPredicateRule;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Iterator;
+import com.rohanclan.coldfusionmx.dictionary.DictionaryManager;
+import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionary;
+import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionaryInterface;
 
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
@@ -54,38 +67,65 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken jscript 		= new Token(J_SCRIPT);
 		IToken css 			= new Token(CSS_TAG);
 		
-		IPredicateRule[] rules = new IPredicateRule[13];
-
+		//IPredicateRule[] rules = new IPredicateRule[13];
+		List rules = new ArrayList();
+		
 		//the order here is important. It should go from specific to
 		//general as the rules are applied in order
 		//
 		// Partitions in the document will get marked in this order
-		// so order is very importatnt
+		rules.add(new MultiLineRule("<!--", "-->", htmComment));
 		
-		rules[0] = new MultiLineRule("<!--", "-->", htmComment);
 		//doctype rule
-		rules[1] = new MultiLineRule("<!", ">", htmComment);
+		rules.add(new MultiLineRule("<!", ">", htmComment));
 		
 		//script block as its own highlighting
-		rules[2] = new MultiLineRule("<cfscript>", "</cfscript>", cfscript);
-		rules[3] = new MultiLineRule("<CFSCRIPT>", "</CFSCRIPT>", cfscript);
-		rules[4] = new MultiLineRule("<style", "</style>", css);
-		rules[5] = new MultiLineRule("<STYLE", "</STYLE>", css);
-		rules[6] = new MultiLineRule("<script", "</script>", jscript);
-		rules[7] = new MultiLineRule("<SCRIPT", "</SCRIPT>", jscript);
+		rules.add(new MultiLineRule("<cfscript>", "</cfscript>", cfscript));
+		rules.add(new MultiLineRule("<CFSCRIPT>", "</CFSCRIPT>", cfscript));
+		rules.add(new MultiLineRule("<style", "</style>", css));
+		rules.add(new MultiLineRule("<STYLE", "</STYLE>", css));
+		rules.add(new MultiLineRule("<script", "</script>", jscript));
+		rules.add(new MultiLineRule("<SCRIPT", "</SCRIPT>", jscript));
 		
-		//catch all cf tags
-		rules[8] = new MultiLineRule("<cf",">", cftag);
-		rules[9] = new MultiLineRule("<CF",">", cftag);
-		rules[10] = new SingleLineRule("</cf",">", cfendtag);
-		rules[11] = new SingleLineRule("</CF",">", cfendtag);
+		SyntaxDictionary sd = DictionaryManager.getDictionary(
+			DictionaryManager.CFDIC
+		);
+		Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
+		
+		Iterator it = elements.iterator();
+		while(it.hasNext())
+		{
+			String ename = (String)it.next();
+			if(!ename.equals("script"))
+			{	
+				rules.add(new MultiLineRule("<cf" + ename,">", cftag));
+				rules.add(new MultiLineRule("</cf" + ename,">", cfendtag));
+				rules.add(new MultiLineRule("<CF" + ename.toUpperCase(),">", cftag));
+				rules.add(new MultiLineRule("</CF" + ename.toUpperCase(),">", cfendtag));
+			}
+		}
+		
+		//catch all custom tags
+		rules.add(new MultiLineRule("<cfx",">", cftag));
+		rules.add(new MultiLineRule("</cfx",">", cfendtag));
+		rules.add(new MultiLineRule("<CFX",">", cftag));
+		rules.add(new MultiLineRule("</CFX",">", cfendtag));
+		
+		rules.add(new MultiLineRule("<cf_",">", cftag));
+		rules.add(new MultiLineRule("</cf_",">", cfendtag));
+		rules.add(new MultiLineRule("<CF_",">", cftag));
+		rules.add(new MultiLineRule("</CF_",">", cfendtag));
 		
 		//if there is a special tag rule, don't forget to check this class
 		//this will try to paint everything in the html blue. Any additions
 		//should be *before* this rule. Reorder if needed.
 		//rules[12] = new TagRule(tag);
-		rules[12] = new MultiLineRule("<", ">", tag);
+		//rules[12] = new MultiLineRule("<", ">", tag);
+		rules.add(new MultiLineRule("<", ">", tag));
 		
-		setPredicateRules(rules);
+		IPredicateRule[] rulearry = new IPredicateRule[rules.size()];
+		rules.toArray(rulearry);
+		
+		setPredicateRules(rulearry);
 	}
 }
