@@ -295,23 +295,39 @@ public abstract class DocItem implements Comparable {
 			
 			if(search.searchForTag && currItem.getName().compareToIgnoreCase(search.tagName) == 0)
 				matches++;
-			
+			System.out.print("DocItem::selectNodes() - Testing \'" + currItem.getName() + "\'");
 			if(search.attrSearch.containsKey(XPathSearch.ATTR_STARTPOS)) {
 				ComparisonType comp = (ComparisonType)search.attrSearch.get(XPathSearch.ATTR_STARTPOS);
+				System.out.println(XPathSearch.ATTR_STARTPOS + ": ");
 				if(comp.performComparison(currItem.startPosition))
+				{
 					matches++;
+					System.out.print(" success ");
+				}
+				else
+					System.out.println(" failed ");
+					
 			}
 			if(search.attrSearch.containsKey(XPathSearch.ATTR_ENDPOS)) {
+				System.out.print(XPathSearch.ATTR_ENDPOS + ":");
 				ComparisonType comp = (ComparisonType)search.attrSearch.get(XPathSearch.ATTR_ENDPOS);
-				if(comp.performComparison(currItem.endPosition))
+				if(comp.performComparison(currItem.endPosition)) {
 					matches++;
+					System.out.print(" success ");
+				}
+				else
+					System.out.println(" failed ");				
 			}
 			
 			if(matches == search.getMatchesRequired())
 			{
 			//System.out.println("DocItem::selectNodes(XPathSearch) - Got match for " + currItem.itemName);
 				result.add(currItem);
+				System.out.print(" name match success");
 			}
+			else
+				System.out.print(" name match failed with ");
+			System.out.println("");
 		}				
 		
 		return result;

@@ -48,13 +48,13 @@ public class ComparisonType {
 	
 	public boolean performComparison(int value) {
 		int thisValue = Integer.parseInt(this.value);
-	//System.out.println("ComparisonType::performComparison() - Is " + value + "(" + this.name + ") " + this.compType + " " + thisValue);
+	System.out.println("ComparisonType::performComparison() - Is " + value + "(" + this.name + ") " + this.compType + " " + thisValue);
 		if(this.compType.compareTo(ComparisonType.COMP_EQ) == 0) {
 			return thisValue == value;
 		} else if(this.compType.compareTo(ComparisonType.COMP_NEQ) == 0) {
 			return thisValue != value;
 		} else if(this.compType.compareTo(ComparisonType.COMP_GT) == 0) {
-			return value < thisValue;
+			return value > thisValue;
 		} else if(this.compType.compareTo(ComparisonType.COMP_GTE) == 0) {
 			return value >= thisValue;
 		} else if(this.compType.compareTo(ComparisonType.COMP_LT) == 0) {
