@@ -422,7 +422,7 @@ public class DictionaryView extends ViewPart {
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
-	    
+	    try {
 //	  Create a grid layout object so the text and treeviewer
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 1;
@@ -483,6 +483,10 @@ public class DictionaryView extends ViewPart {
 		//hookDoubleClickAction();
 		//contributeToActionBars();
 		hookListeners();
+	    }
+	    catch (Exception e) {
+	    	e.printStackTrace();
+	    }
 	}
 
 	private void hookContextMenu() {
