@@ -41,7 +41,7 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.*;
-import com.sun.rsasign.r;
+
 
 import java.util.ArrayList;
 import java.util.List;

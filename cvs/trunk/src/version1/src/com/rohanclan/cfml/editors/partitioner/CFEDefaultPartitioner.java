@@ -26,6 +26,7 @@ import org.eclipse.jface.text.TypedPosition;
 import org.eclipse.jface.text.TypedRegion;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**
  * @author Stephen Milligan
@@ -232,11 +233,16 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 			int first= d.computeIndexInCategory(fPositionCategory, reparseStart);
 			if (first > 0)	{
 				TypedPosition partition= (TypedPosition) category[first - 1];
+				
 				if (partition.includes(reparseStart)) {
 					partitionStart= partition.getOffset();
 					contentType= partition.getType();
 					if (e.getOffset() == partition.getOffset() + partition.getLength())
 						reparseStart= partitionStart;
+					if (contentType.equals(CFPartitionScanner.CF_COMMENT) 
+					        || contentType.equals(CFPartitionScanner.HTM_COMMENT)) {
+					    reparseStart= partitionStart;
+					}
 					-- first;
 				} else if (reparseStart == e.getOffset() && reparseStart == partition.getOffset() + partition.getLength()) {
 					partitionStart= partition.getOffset();
@@ -258,7 +264,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 				}
 			}
 			category= d.getPositions(fPositionCategory);
-						
+			
+			
 			fScanner.setPartialRange(d, reparseStart, d.getLength() - reparseStart, contentType, partitionStart);
 			
 			int lastScannedPosition= reparseStart;
