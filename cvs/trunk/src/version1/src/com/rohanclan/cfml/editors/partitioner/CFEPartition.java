@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.5 2005-01-30 18:54:57 smilligan Exp $
- * $Revision: 1.5 $
- * $Date: 2005-01-30 18:54:57 $
+ * $Id: CFEPartition.java,v 1.6 2005-01-31 08:01:13 smilligan Exp $
+ * $Revision: 1.6 $
+ * $Date: 2005-01-31 08:01:13 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -35,7 +35,7 @@ import org.eclipse.jface.text.Assert;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public final class CFEPartition extends TypedPosition {
 
@@ -51,6 +51,7 @@ public final class CFEPartition extends TypedPosition {
     private boolean fMidPartition = false;
     private boolean fEndPartition = false;
     private String fTagName = null;
+    private boolean fIsPseudoPartition = false;
     
     /**
      * @param offset
@@ -144,6 +145,14 @@ public final class CFEPartition extends TypedPosition {
         //System.out.println("CFEPartition from " + offset + " to " + Integer.toString(offset + length));
         super.delete();
     }
+    
+    public void setPseudoPartition(boolean value) {
+        fIsPseudoPartition = value;
+    }
+    
+    public boolean isPseudoPartition() {
+        return fIsPseudoPartition;
+    }
 
 }
 
@@ -153,6 +162,9 @@ public final class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/01/30 18:54:57  smilligan
+ * Committing a few more minor patches for the partitioner.
+ *
  * Revision 1.4  2005/01/27 01:37:25  smilligan
  * put a band aid on the content assist for attributes and tags. It will need to be properly sorted out another time, but it basically works for now.
  *

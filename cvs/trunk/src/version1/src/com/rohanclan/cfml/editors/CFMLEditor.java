@@ -87,6 +87,8 @@ import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.dialogs.MessageDialog;
 import java.util.Iterator;
 import org.eclipse.ui.texteditor.AnnotationPreference;
+import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 
 /**
  * @author Rob
@@ -382,7 +384,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 					int startpos = sel.getOffset();
 					int len = Math.max(sel.getLength(),1);
-					ITypedRegion[] partitioning = cfd.getDocumentPartitioner().computePartitioning(startpos, len);
+					CFEDefaultPartitioner partitioner = (CFEDefaultPartitioner)cfd.getDocumentPartitioner();
+					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
 				    String info = "Partitioning info from offset " + startpos + " to " + Integer.toString(startpos + len) + "\n\n";
 					for (int i=0;i<partitioning.length;i++) {
 					    info += partitioning[i].getType(); 
@@ -390,6 +393,11 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					    info += partitioning[i].getOffset();
 					    info += " ending at "; 
 					    info += Integer.toString(partitioning[i].getOffset() + partitioning[i].getLength());
+					    if (partitioning[i].getTagName() != null) {
+					        info += " (";
+					        info += partitioning[i].getTagName();
+					        info += ") ";
+					    }
 					    info += "\n";
 					}
 				    
