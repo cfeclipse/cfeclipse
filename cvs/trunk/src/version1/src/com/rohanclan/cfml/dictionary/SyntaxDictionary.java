@@ -218,7 +218,7 @@ public abstract class SyntaxDictionary {
 		{
 			Parameter currParam = (Parameter)tempArray[i];
 			String currName = currParam.getName();
-			if(currParam.getName().compareTo(attribute) == 0)
+			if(currParam.getName().compareToIgnoreCase(attribute) == 0)
 				return limitSet(currParam.getValues(), start);
 		}
 		return null;
