@@ -78,10 +78,12 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String FORM_END_TAG		= "__form_end_tag";
 	public final static String FORM_START_TAG		= "__form_start_tag";
 	public final static String FORM_START_TAG_BEGIN		= "__form_start_tag_begin";
+	public final static String FORM_TAG_ATTRIBS		= "__form_tag_attribs";
 	public final static String FORM_START_TAG_END		= "__form_start_tag_end";
 	public final static String TABLE_END_TAG		= "__table_end_tag";
 	public final static String TABLE_START_TAG		= "__table_start_tag";
 	public final static String TABLE_START_TAG_BEGIN		= "__table_start_tag_begin";
+	public final static String TABLE_TAG_ATTRIBS		= "__table_tag_attribs";
 	public final static String TABLE_START_TAG_END		= "__table_start_tag_end";
 	
 	
@@ -184,6 +186,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			//or normal tag for the html tags
 			String startTokenType = HTM_START_TAG;
 			String endTokenType = HTM_END_TAG;
+			String midTokenType = HTM_TAG_ATTRIBS;
 			
 			//loop over all the tags in the html dictionary and try to set the 
 			//partition to the correct type
@@ -198,23 +201,23 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					//colour form and table tags differently...
 					if(tg.isTableTag()) {	
 					    startTokenType = TABLE_START_TAG;
+					    midTokenType = TABLE_TAG_ATTRIBS;
 					    endTokenType = TABLE_END_TAG; 
 					}
 					else if(tg.isFormTag()) { 
 					    startTokenType = FORM_START_TAG;
+					    midTokenType = FORM_TAG_ATTRIBS;
 					    endTokenType = FORM_END_TAG; 
 					}
 					else { 
 					    startTokenType = HTM_START_TAG; 
+					    midTokenType = HTM_TAG_ATTRIBS;
 					    endTokenType = HTM_END_TAG;
 					}
 					
-					rules.add(new NamedTagRule("<" + ename,">", startTokenType, HTM_TAG_ATTRIBS));
-					//if this is supposed to have an end tag add it too
-					//if(!tg.isSingle())
-					//{	
-						rules.add(new NamedTagRule("</" + ename,">", endTokenType, endTokenType));
-					//}
+					rules.add(new NamedTagRule("<" + ename,">", startTokenType, midTokenType));
+					rules.add(new NamedTagRule("</" + ename,">", endTokenType, endTokenType));
+
 				
 			}
 		}
@@ -250,12 +253,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			 * there are some rules defined we run through
 			 * the rules and look for a token.
 			 */
-			if (fContentType == null 
-			        || fContentType == CF_SCRIPT
-			        || fContentType == J_SCRIPT
-			        || fContentType == CSS
-			        || fContentType == SQL
-					|| fRules == null) {
+			if (fContentType == null || fRules == null) {
 				IToken token;
 				// Keep running until we find something.
 				while (true) {

@@ -183,9 +183,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			CFPartitionScanner.UNK_TAG,
 			CFPartitionScanner.FORM_END_TAG,
 			CFPartitionScanner.FORM_START_TAG_BEGIN,
+			CFPartitionScanner.FORM_TAG_ATTRIBS,
 			CFPartitionScanner.FORM_START_TAG_END,
 			CFPartitionScanner.TABLE_END_TAG,
 			CFPartitionScanner.TABLE_START_TAG_BEGIN,
+			CFPartitionScanner.TABLE_TAG_ATTRIBS,
 			CFPartitionScanner.TABLE_START_TAG_END
 		};
 	}
@@ -515,6 +517,9 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		reconciler.setDamager(dr, CFPartitionScanner.FORM_START_TAG_END);
 		reconciler.setRepairer(dr, CFPartitionScanner.FORM_START_TAG_END);
 		
+		reconciler.setDamager(dr, CFPartitionScanner.FORM_TAG_ATTRIBS);
+		reconciler.setRepairer(dr, CFPartitionScanner.FORM_TAG_ATTRIBS);
+		
 		dr = new DefaultDamagerRepairer(getTableScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.TABLE_END_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_END_TAG);
@@ -524,6 +529,9 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		
 		reconciler.setDamager(dr, CFPartitionScanner.TABLE_START_TAG_END);
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_START_TAG_END);
+		
+		reconciler.setDamager(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
+		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
 		
 		//.... the default text in the document
 		dr = new DefaultDamagerRepairer(getTextScanner());

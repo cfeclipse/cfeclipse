@@ -429,9 +429,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				}
 				return;
 			case '>':
+			    
 				if(!this.autoInsert_CloseTags)
 				{
-					if(doc.getChar(docCommand.offset-1) == '>')
+					if(doc.getLength() > docCommand.offset 
+					        && doc.getChar(docCommand.offset+1) == '>')
 						stepThrough(docCommand);
 					return;
 				}

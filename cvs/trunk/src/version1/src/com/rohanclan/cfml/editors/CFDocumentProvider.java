@@ -93,9 +93,11 @@ public class CFDocumentProvider extends FileDocumentProvider {
 							CFPartitionScanner.UNK_TAG,
 							CFPartitionScanner.FORM_END_TAG,
 							CFPartitionScanner.FORM_START_TAG_BEGIN,
+							CFPartitionScanner.FORM_TAG_ATTRIBS,
 							CFPartitionScanner.FORM_START_TAG_END,
 							CFPartitionScanner.TABLE_END_TAG,
 							CFPartitionScanner.TABLE_START_TAG_BEGIN,
+							CFPartitionScanner.TABLE_TAG_ATTRIBS,
 							CFPartitionScanner.TABLE_START_TAG_END
 							});
 
