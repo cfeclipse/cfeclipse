@@ -110,4 +110,6 @@ public class CFMLEditor extends TextEditor {
 		colorManager.dispose();
 		super.dispose();
 	}
+	
+	
 }

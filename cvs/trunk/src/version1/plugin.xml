@@ -22,205 +22,180 @@
       <import plugin="org.eclipse.ui.editors"/>
    </requires>
 
-	<extension point="org.eclipse.ui.perspectives">
-	   <perspective
-	         name="CFML"
-	         class="com.rohanclan.cfml.perspective.CFPerspective"
-	         id="com.rohanclan.cfml.perspective.CF"
-	         icon="icons/obj16/default.gif"
-	   >
-	   </perspective>
-	</extension>
 
-	<!-- ////////////////////////////////////////////////////////////// -->
-   <!-- Editor -->
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="CFML"
+            icon="icons/obj16/default.gif"
+            class="com.rohanclan.cfml.perspective.CFPerspective"
+            id="com.rohanclan.cfml.perspective.CF">
+      </perspective>
+   </extension>
+<!-- ////////////////////////////////////////////////////////////// -->
+<!-- Editor -->
    <extension
          point="org.eclipse.ui.editors">
       <editor
             name="CFML Editor"
-            extensions="cfm,cfml,cfc,html,htm"
             icon="icons/obj16/default.gif"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="cfm,cfml,cfc,html,htm"
             class="com.rohanclan.cfml.editors.CFMLEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             id="com.rohanclan.cfml.editors.CFMLEditor">
       </editor>
    </extension>
-   
-	<!-- ////////////////////////////////////////////////////////////// -->
-   <!-- Actions -->
+<!-- ////////////////////////////////////////////////////////////// -->
+<!-- Actions -->
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
             targetID="com.rohanclan.cfml.editors.CFMLEditor"
-            id="com.rohanclan.cfml.editors.CFMLEditorActions"
-      >
-            
-         <menu label="&amp;CFML"
+            id="com.rohanclan.cfml.editors.CFMLEditorActions">
+         <menu
+               label="&amp;CFML"
                path="window"
                id="com.rohanclan.cfml.cfmxmenu">
-            <separator name="maingroup"></separator>
-            <separator name="output"></separator>
+            <separator
+                  name="maingroup">
+            </separator>
+            <separator
+                  name="output">
+            </separator>
          </menu>
-         
-         <!-- <menu label="&amp;Output"
+<!-- <menu label="&amp;Output"
                path="com.rohanclan.cfml.cfmxmenu/maingroup"
                id="com.rohanclan.cfml.cfmxmenu.suboutput">
 	     	<separator name="output"></separator>
 	     </menu> -->
-         
-         <!-- cfcomment -->
+<!-- cfcomment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFComment"
                label="&amp;Comment"
-               tooltip="Insert a CFML comment"
-               class="com.rohanclan.cfml.editors.actions.CFCommentAction"  
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
-               id="com.rohanclan.cfml.editors.actions.CFCommentAction"
                icon="icons/ctool16/comment.gif"
+               class="com.rohanclan.cfml.editors.actions.CFCommentAction"
+               tooltip="Insert a CFML comment"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
-               >
+               id="com.rohanclan.cfml.editors.actions.CFCommentAction">
          </action>
-         <!-- smart comment -->
+<!-- smart comment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.AutoComment"
                label="&amp;Auto Comment"
-               tooltip="Insert comment based on section"
-               class="com.rohanclan.cfml.editors.actions.AutoCommentAction"  
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
-               id="com.rohanclan.cfml.editors.actions.AutoCommentAction"
                icon="icons/ctool16/smartcomment.gif"
+               class="com.rohanclan.cfml.editors.actions.AutoCommentAction"
+               tooltip="Insert comment based on section"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
-               >
+               id="com.rohanclan.cfml.editors.actions.AutoCommentAction">
          </action>
-         <!-- Surround with #s -->
+<!-- Surround with #s -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFVariable"
                label="&amp;Variable"
-               tooltip="Surround with pound/number signs"
-               class="com.rohanclan.cfml.editors.actions.CFVariableAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
-               id="com.rohanclan.cfml.editors.actions.CFVariableAction"
                icon="icons/ctool16/hash.gif"
+               class="com.rohanclan.cfml.editors.actions.CFVariableAction"
+               tooltip="Surround with pound/number signs"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorText"
-               >
+               id="com.rohanclan.cfml.editors.actions.CFVariableAction">
          </action>
-         <!-- Surround with single quotes -->
+<!-- Surround with single quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFSingleQuote"
                label="&amp;Single Quotes"
-               tooltip="Surround with single quotes"
-               class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
-               id="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
                icon="icons/ctool16/squote.gif"
+               class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
+               tooltip="Surround with single quotes"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorText"
-               >
+               id="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction">
          </action>
-         <!-- Surround with double quotes -->
+<!-- Surround with double quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
                label="&amp;Double Quotes"
-               tooltip="Surround with double quotes"
-               class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
-               id="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                icon="icons/ctool16/dquote.gif"
+               class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
+               tooltip="Surround with double quotes"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorText"
-               >
+               id="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction">
          </action>
-         <!-- Surround with simple cfoutputs -->
+<!-- Surround with simple cfoutputs -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFOutput"
                label="CF &amp;Output"
-               tooltip="Surround with cfoutput"
-               class="com.rohanclan.cfml.editors.actions.CFOutputAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
-               id="com.rohanclan.cfml.editors.actions.CFOutputAction"
                icon="icons/ctool16/output.gif"
+               class="com.rohanclan.cfml.editors.actions.CFOutputAction"
+               tooltip="Surround with cfoutput"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorCommand"
-               >
+               id="com.rohanclan.cfml.editors.actions.CFOutputAction">
          </action>
-         <!-- Surround with a simple cfdump -->
+<!-- Surround with a simple cfdump -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDump"
                label="CF D&amp;ump"
-               tooltip="Surround with simple cfdump"
-               class="com.rohanclan.cfml.editors.actions.CFDumpAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
-               id="com.rohanclan.cfml.editors.actions.CFDumpAction"
                icon="icons/ctool16/dump.gif"
+               class="com.rohanclan.cfml.editors.actions.CFDumpAction"
+               tooltip="Surround with simple cfdump"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorCommand"
-               >
+               id="com.rohanclan.cfml.editors.actions.CFDumpAction">
          </action>
-         <!-- Surround with a cfscript -->
+<!-- Surround with a cfscript -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFScript"
                label="CF S&amp;cript"
-               tooltip="Surround with cfscript"
-               class="com.rohanclan.cfml.editors.actions.CFScriptAction"
-               id="com.rohanclan.cfml.editors.actions.CFScriptAction"
                icon="icons/ctool16/script.gif"
+               class="com.rohanclan.cfml.editors.actions.CFScriptAction"
+               tooltip="Surround with cfscript"
                toolbarPath="BasicCFEditorCommand"
-               >
-               <!-- menubarPath="com.rohanclan.cfml.cfmxmenu/output" -->
+               id="com.rohanclan.cfml.editors.actions.CFScriptAction">
          </action>
-         <!-- to lower case -->
+<!-- to lower case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToLowerCase"
                label="To L&amp;ower"
-               tooltip="Lower case selected text"
-               class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
-               id="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
                icon="icons/ctool16/tolower.gif"
+               class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
+               tooltip="Lower case selected text"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
-               >
+               id="com.rohanclan.cfml.editors.actions.ToLowerCaseAction">
          </action>
-         <!-- to upper case -->
+<!-- to upper case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToUpperCase"
                label="To U&amp;pper"
-               tooltip="Upper case selected text"
-               class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
-               id="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
                icon="icons/ctool16/toupper.gif"
+               class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
+               tooltip="Upper case selected text"
+               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
-               >
+               id="com.rohanclan.cfml.editors.actions.ToUpperCaseAction">
          </action>
-         <!-- insert date -->
+<!-- insert date -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertDate"
                label="Insert Date"
-               tooltip="Insert the current date"
-               class="com.rohanclan.cfml.editors.actions.InsertDateAction"
-               id="com.rohanclan.cfml.editors.actions.InsertDateAction"
                icon="icons/ctool16/time.gif"
-               toolbarPath="BasicCFEditorCommand"
-               >
-               <!-- menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup" -->
-         </action>
-         
-         <!-- <action
-               definitionId="com.rohanclan.cfml.parser.CFParse"
-               label="Insert Date"
+               class="com.rohanclan.cfml.editors.actions.InsertDateAction"
                tooltip="Insert the current date"
-               class="com.rohanclan.cfml.parser.CFParser"
-               id="com.rohanclan.cfml.parser.CFParser"
-               >
-         </action> -->
-         
+               toolbarPath="BasicCFEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.InsertDateAction">
+         </action>
       </editorContribution>
    </extension>
-   
-	<!-- I have no idea why this doesnt work. (or why it would) -->
-	<!-- <extension point="org.eclipse.ui.acceleratorSets">
+<!-- I have no idea why this doesnt work. (or why it would) -->
+<!-- <extension point="org.eclipse.ui.acceleratorSets">
 		<acceleratorSet 
 			scopeId="org.eclipse.ui.textEditorScope" 
 			configurationId="org.eclipse.ui.emacsAcceleratorConfiguration"> -->
-			
-			<!-- id="org.eclipse.ui.edit.text.contentAssist.proposals" -->
-		<!--	<accelerator key="Ctrl+1"
+<!-- id="org.eclipse.ui.edit.text.contentAssist.proposals" -->
+<!--	<accelerator key="Ctrl+1"
 				id="org.eclipse.ui.edit.text.contentAssist.contextInformation"
 			/> 
 		</acceleratorSet>
@@ -243,261 +218,269 @@
 			/>
 		</acceleratorSet>
 	</extension> -->
-   
-	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- popup menu -->
-	<extension point="org.eclipse.ui.popupMenus"> 
-		<viewerContribution 
-			id="org.eclipse.ui.articles.action.contribution.popup.editor"
-			targetID="#TextEditorContext"> 
-			<!-- <action
+<!-- ////////////////////////////////////////////////////////////// -->
+<!-- popup menu -->
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            targetID="#TextEditorContext"
+            id="org.eclipse.ui.articles.action.contribution.popup.editor">
+<!-- <action
 				id="org.eclipse.ui.articles.action.contribution.editor.action1" 
 				label="Editor Action 1"
 				menubarPath="additions" 
 				class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"> 
 			</action> -->
-			<action
-				id="com.rohanclan.cfml.editors.actions.CFComment" 
-				label="CF Comment"
-				menubarPath="additions" 
-				class="com.rohanclan.cfml.editors.actions.CFCommentAction"
-				>
-			</action>
-			
-			<menu
-				id="com.rohanclan.cfml.editors.contribution.subMenu"
-				label="Text"
-				path="additions">
-				<separator name="text"/>
-				<separator name="text1"/>
-			</menu>
-			<action
-				id="com.rohanclan.cfml.editors.actions.ToLowerCase" 
-				label="To Lower Case"
-				menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text" 
-				class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
-				>
-				<!-- icon="icons/red_dot.gif" enablesFor="1" -->
-			</action> 
-			<action
-				id="com.rohanclan.cfml.editors.actions.ToUpperCase" 
-				label="To Upper Case"
-				menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text" 
-				class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
-				>
-				<!-- icon="icons/red_dot.gif" enablesFor="2+" -->
-			</action>
-			<!-- ////// -->
-			<action
-				id="com.rohanclan.cfml.editors.actions.CFVariable" 
-				label="Wrap In #s"
-				menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1" 
-				class="com.rohanclan.cfml.editors.actions.CFVariableAction"
-				>
-			</action>
-			<action
-				id="com.rohanclan.cfml.editors.actions.CFSingleQuote" 
-				label="Wrap In 's"
-				menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1" 
-				class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
-				>
-			</action>
-			<action
-				id="com.rohanclan.cfml.editors.actions.CFDoubleQuote" 
-				label="Wrap In &quot;s"
-				menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1" 
-				class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
-				>
-			</action>
-			
-			
-		</viewerContribution>
-		<!-- icon="icons/red_dot.gif" -->
-	</extension>
-
-	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- Commands -->
-   <extension point="org.eclipse.ui.commands">
+         <action
+               label="CF Comment"
+               class="com.rohanclan.cfml.editors.actions.CFCommentAction"
+               menubarPath="additions"
+               id="com.rohanclan.cfml.editors.actions.CFComment">
+         </action>
+         <menu
+               label="Text"
+               path="additions"
+               id="com.rohanclan.cfml.editors.contribution.subMenu">
+            <separator
+                  name="text">
+            </separator>
+            <separator
+                  name="text1">
+            </separator>
+         </menu>
+         <action
+               label="To Lower Case"
+               class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text"
+               id="com.rohanclan.cfml.editors.actions.ToLowerCase">
+         </action>
+         <action
+               label="To Upper Case"
+               class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text"
+               id="com.rohanclan.cfml.editors.actions.ToUpperCase">
+         </action>
+<!-- ////// -->
+         <action
+               label="Wrap In #s"
+               class="com.rohanclan.cfml.editors.actions.CFVariableAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
+               id="com.rohanclan.cfml.editors.actions.CFVariable">
+         </action>
+         <action
+               label="Wrap In &apos;s"
+               class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
+               id="com.rohanclan.cfml.editors.actions.CFSingleQuote">
+         </action>
+         <action
+               label="Wrap In &quot;s"
+               class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
+               id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
+         </action>
+      </viewerContribution>
+   </extension>
+<!-- ////////////////////////////////////////////////////////////// -->
+<!-- Commands -->
+   <extension
+         point="org.eclipse.ui.commands">
       <category
             name="CFML Editor"
             description="CFML Editor key bindings"
             id="com.rohanclan.cfml.commandCategory">
       </category>
-   
-      <!-- this will always make a cf type comment -->
-      <command name="Insert Comment"
-            description="Insert a CFML comment."
+<!-- this will always make a cf type comment -->
+      <command
+            name="Insert Comment"
             category="com.rohanclan.cfml.commandCategory"
+            description="Insert a CFML comment."
             id="com.rohanclan.cfml.editors.actions.CFComment">
       </command>
-      <keyBinding string="Ctrl+Shift+M"
+      <keyBinding
+            string="Ctrl+Shift+M"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFComment"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- comment based on section (i.e. js comments in js blocks, etc) -->
-      <command name="Insert Auto Comment"
-            description="Insert a comment based on section."
+<!-- comment based on section (i.e. js comments in js blocks, etc) -->
+      <command
+            name="Insert Auto Comment"
             category="com.rohanclan.cfml.commandCategory"
+            description="Insert a comment based on section."
             id="com.rohanclan.cfml.editors.actions.AutoComment">
       </command>
-      <keyBinding string="Ctrl+Shift+C"
+      <keyBinding
+            string="Ctrl+Shift+C"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.AutoComment"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- enclose in pound signs -->
-      <command name="CF Variable"
-            description="Surround with pound/number signs"
+<!-- enclose in pound signs -->
+      <command
+            name="CF Variable"
             category="com.rohanclan.cfml.commandCategory"
+            description="Surround with pound/number signs"
             id="com.rohanclan.cfml.editors.actions.CFVariable">
       </command>
-      <keyBinding string="Ctrl+3"
+      <keyBinding
+            string="Ctrl+3"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFVariable"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- enclose in single quotes -->
-      <command name="Single Quotes"
-            description="Surround with Single Quotes"
+<!-- enclose in single quotes -->
+      <command
+            name="Single Quotes"
             category="com.rohanclan.cfml.commandCategory"
+            description="Surround with Single Quotes"
             id="com.rohanclan.cfml.editors.actions.CFSingleQuote">
       </command>
-      <keyBinding string="Ctrl+'"
+      <keyBinding
+            string="Ctrl+&apos;"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFSingleQuote"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- enclose in double quotes -->
-      <command name="Double Quotes"
-            description="Surround with pound/number signs"
+<!-- enclose in double quotes -->
+      <command
+            name="Double Quotes"
             category="com.rohanclan.cfml.commandCategory"
+            description="Surround with pound/number signs"
             id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
       </command>
-      <keyBinding string="Ctrl+Shift+'"
+      <keyBinding
+            string="Ctrl+Shift+&apos;"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- enclose in cfoutputs -->
-      <command name="CF Outputs"
-            description="Surround with cfoutputs"
+<!-- enclose in cfoutputs -->
+      <command
+            name="CF Outputs"
             category="com.rohanclan.cfml.commandCategory"
+            description="Surround with cfoutputs"
             id="com.rohanclan.cfml.editors.actions.CFOutput">
       </command>
-      <keyBinding string="Ctrl+Shift+O"
+      <keyBinding
+            string="Ctrl+Shift+O"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFOutput"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- enclose in cfdump -->
-      <command name="CF Dump"
-            description="Surround with a simple cfdump"
+<!-- enclose in cfdump -->
+      <command
+            name="CF Dump"
             category="com.rohanclan.cfml.commandCategory"
+            description="Surround with a simple cfdump"
             id="com.rohanclan.cfml.editors.actions.CFDump">
       </command>
-      <keyBinding string="Ctrl+Shift+D"
+      <keyBinding
+            string="Ctrl+Shift+D"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFDump"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- enclose in cfscript -->
-      <command name="CF Script"
-            description="Surround with a cfscript"
+<!-- enclose in cfscript -->
+      <command
+            name="CF Script"
             category="com.rohanclan.cfml.commandCategory"
+            description="Surround with a cfscript"
             id="com.rohanclan.cfml.editors.actions.CFScript">
       </command>
-      <keyBinding string="Ctrl+Shift+R"
+      <keyBinding
+            string="Ctrl+Shift+R"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFScript"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- to lower case -->
-      <command name="To Lower"
-            description="Lower case selected text"
+<!-- to lower case -->
+      <command
+            name="To Lower"
             category="com.rohanclan.cfml.commandCategory"
+            description="Lower case selected text"
             id="com.rohanclan.cfml.editors.actions.ToLowerCase">
       </command>
-      <keyBinding string="Ctrl+Shift+L"
+      <keyBinding
+            string="Ctrl+Shift+L"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.ToLowerCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- to upper case -->
-      <command name="To Upper"
-            description="Upper case selected text"
+<!-- to upper case -->
+      <command
+            name="To Upper"
             category="com.rohanclan.cfml.commandCategory"
+            description="Upper case selected text"
             id="com.rohanclan.cfml.editors.actions.ToUpperCase">
       </command>
-      <keyBinding string="Ctrl+Shift+U"
+      <keyBinding
+            string="Ctrl+Shift+U"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.ToUpperCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-      
-      <!-- to upper case -->
-      <command name="Insert Date"
-            description="Insert the current date"
+<!-- to upper case -->
+      <command
+            name="Insert Date"
             category="com.rohanclan.cfml.commandCategory"
+            description="Insert the current date"
             id="com.rohanclan.cfml.editors.actions.InsertDate">
       </command>
-      <!-- <keyBinding string="Ctrl+Shift+T"
-            scope="org.eclipse.ui.textEditorScope"
-            command="com.rohanclan.cfml.editors.actions.InsertDate"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding> -->
-      
-      <!-- <command name="Parse"
-            description="Parse The document"
-            category="com.rohanclan.cfml.commandCategory"
-            id="com.rohanclan.cfml.parser.CFParse">
-      </command> -->
-      
+   </extension>
+<!-- ////////////////////////////////////////////////////////////// -->
+<!-- the snip viewers -->
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="CFML"
+            id="com.rohanclan.cfml">
+      </category>
+      <view
+            name="Snip View"
+            icon="icons/obj16/snip.gif"
+            category="com.rohanclan.cfml"
+            class="com.rohanclan.cfml.views.SnipView"
+            id="com.rohanclan.cfml.views.snipview">
+      </view>
+      <view
+            name="Snip Tree View"
+            icon="icons/obj16/snip.gif"
+            category="com.rohanclan.cfml"
+            class="com.rohanclan.cfml.views.snips.SnipTreeView"
+            id="com.rohanclan.cfml.views.snips.sniptreeview">
+      </view>
+      <view
+            name="Browser View"
+            icon="icons/obj16/snip.gif"
+            category="com.rohanclan.cfml"
+            class="com.rohanclan.cfml.views.browser.BrowserView"
+            id="com.rohanclan.cfml.views.browser">
+      </view>
+   </extension>
+<!-- ////////////////////////////////////////////////////////////// -->
+<!-- help -->
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="doc/toc_main.xml"
+            primary="true">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="doc/toc_general.xml">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="CFEclipse"
+            category="org.eclipse.ui.preferencePages.Editors"
+            class="com.rohanclan.cfml.preferences.CFEclipsePreferencePage"
+            id="com.rohanclan.cfml.preferences.CFEclipsePreferencePage">
+      </page>
    </extension>
 
-	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- the snip viewers -->
-	<extension point="org.eclipse.ui.views">
-		<category 
-		   id="com.rohanclan.cfml"
-		   name="CFML">
-		</category>
-		<view id="com.rohanclan.cfml.views.snipview"
-		    name="Snip View"
-		    icon="icons/obj16/snip.gif"
-			category="com.rohanclan.cfml"
-			class="com.rohanclan.cfml.views.SnipView"
-		/>
-		<view id="com.rohanclan.cfml.views.snips.sniptreeview"
-		    name="Snip Tree View"
-		    icon="icons/obj16/snip.gif"
-			category="com.rohanclan.cfml"
-			class="com.rohanclan.cfml.views.snips.SnipTreeView"
-		/>
-		<view id="com.rohanclan.cfml.views.browser"
-			name="Browser View" 
-			icon="icons/obj16/snip.gif" 
-			category="com.rohanclan.cfml" 
-			class="com.rohanclan.cfml.views.browser.BrowserView"
-		/>
-	</extension>
-	
-	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- help -->
-	<extension point="org.eclipse.help.toc">
-      <toc file="doc/toc_main.xml" primary="true" />
-   	</extension>
-   	<extension point="org.eclipse.help.toc">
-       <toc file="doc/toc_general.xml" />
-   	</extension>
-   	
 </plugin>

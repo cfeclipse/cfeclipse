@@ -31,6 +31,9 @@ import org.eclipse.core.runtime.IPluginDescriptor;
 //import org.eclipse.core.resources.*;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+
+import org.eclipse.jface.preference.IPreferenceStore;
+
 //import java.util.*;
 import java.util.ResourceBundle;
 import java.util.MissingResourceException;
@@ -91,7 +94,11 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			e.printStackTrace(System.err);
 		}
 	}
-
+	protected void initializeDefaultPluginPreferences() {
+        super.initializeDefaultPluginPreferences();
+        IPreferenceStore store = getPreferenceStore();
+        store.setDefault(ICFMLPluginConstants.P_INSIGHT_DELAY, "500");   //$NON-NLS-1$
+    }
 	/**
 	 * Returns the shared instance.
 	 */
@@ -99,6 +106,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	{
 		return plugin;
 	}
+	
 
 	/**
 	 * Returns the workspace instance.
@@ -132,4 +140,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	{
 		return resourceBundle;
 	}
+	
+	
+
+	
 }

@@ -42,18 +42,25 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.IAutoIndentStrategy;
+import org.eclipse.jface.preference.IPreferenceStore;
 
+
+import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.ICFMLPluginConstants;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
 import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.editors.CFTextHover;
 import org.eclipse.jface.text.ITextHover;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.editors.script.JSCompletionProcessor;
 
-public class CFConfiguration extends SourceViewerConfiguration {
+public class CFConfiguration extends SourceViewerConfiguration 
+	implements IPropertyChangeListener {
 	private CFDoubleClickStrategy doubleClickStrategy;
 	/** the default html tag scanner */
 	private HTMTagScanner htmtagScanner;
@@ -71,6 +78,8 @@ public class CFConfiguration extends SourceViewerConfiguration {
 	private ScriptScanner scriptscanner;
 	
 	private ColorManager colorManager;
+	
+	private ContentAssistant assistant;
 
 	/**
 	 * Need a color manager to get partition colors
@@ -79,7 +88,14 @@ public class CFConfiguration extends SourceViewerConfiguration {
 	public CFConfiguration(ColorManager colorManager) 
 	{
 		this.colorManager = colorManager;
+		
+		
+		// This ensures that we are notified when the preferences are saved
+		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
+		
 	}
+	
+
 	
 	/**
 	 * This defines what sections (partitions) are valid for the document
@@ -336,7 +352,10 @@ public class CFConfiguration extends SourceViewerConfiguration {
 	 */
 	public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
 		//make our assistant and processor
-		ContentAssistant assistant = new ContentAssistant();
+		assistant = new ContentAssistant();
+		
+		
+		
 		CFCompletionProcessor cfcp = new CFCompletionProcessor();
 	
 		//assign to the needed partitions
@@ -382,9 +401,19 @@ public class CFConfiguration extends SourceViewerConfiguration {
 		);
 		
 		//TODO this stuff should be user setable 
-		assistant.enableAutoActivation(true);
-		assistant.setAutoActivationDelay(0);
+		//assistant.enableAutoActivation(true);
+		//assistant.setAutoActivationDelay(0);
 
+		IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
+		
+		String delay = store.getString(ICFMLPluginConstants.P_INSIGHT_DELAY);
+		
+		
+		assistant.enableAutoActivation(true);
+		assistant.setAutoActivationDelay(Integer.parseInt(delay.trim()));
+
+		System.err.println("Insight Delay set to:"+ delay);
+		
 		assistant.setProposalPopupOrientation(
 			IContentAssistant.PROPOSAL_OVERLAY
 		);
@@ -425,5 +454,21 @@ public class CFConfiguration extends SourceViewerConfiguration {
         CFAutoIndentStrategy newStrategy = new CFAutoIndentStrategy();
         return newStrategy;
     } 	
+	
+	// This method gets called when the preference page is saved.
+	public void propertyChange(PropertyChangeEvent event)
+    {
+
+    	System.err.println("Property change listener notified." + event.getProperty());
+    	
+        if(event.getProperty().equals("insightDelay")) {
+        	IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
+    		int delay = Integer.parseInt(store.getString(ICFMLPluginConstants.P_INSIGHT_DELAY).trim());
+    		assistant.enableAutoActivation(true);
+    		assistant.setAutoActivationDelay(delay);
+    		//System.err.println("Insight delay set to " + delay);
+        }
+        
+    }
 	
 }
