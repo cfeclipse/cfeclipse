@@ -146,8 +146,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			boolean cftag = false;
 			boolean httag = false;
 			
-			//what invoked us a space or a f?
-			String invoker = viewer.getDocument().get(documentOffset-1,1);
+			//what invoked us a space or a f? (make sure we are not at the start
+			//of a file
+			String invoker = "";
+			if(documentOffset > 0)
+				invoker = viewer.getDocument().get(documentOffset-1,1);
 			
 			IDocument document = viewer.getDocument();
 			String current_partition = viewer.getDocument().getPartition(documentOffset).getType();
@@ -568,12 +571,13 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * What characters cause us to wake up (for functions / methods)
 	 */
 	public char[] getContextInformationAutoActivationCharacters() {
-		return new char[] { '(' };
+		return new char[] { '(', '.' };
+		//return null;
 	}
  
 	/**  
-	 * TODO this is breaking the rules. This needs to be implemented
-	 * not sure what it does though :-/
+	 * Shows a little popup that stays active until the class at the bottom of
+	 * the file says its not
 	 */
 	public IContextInformationValidator getContextInformationValidator() {
 		//return null;
@@ -586,7 +590,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	public IContextInformation[] computeContextInformation(ITextViewer viewer,
 		int documentOffset) {
 		
-		//System.out.println("hi");
+		System.out.println("context do dad running");
 		
 		try
 		{
@@ -703,11 +707,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	}
 
 	/**
-	 * yeah...
+	 * yeah... not sure what to do here
 	 */
 	public String getErrorMessage() {
 		return null;
 	}
+	
 	///////////////////////////////////////////////////////////////////////////
 	protected static class Validator implements IContextInformationValidator, 
 		IContextInformationPresenter {

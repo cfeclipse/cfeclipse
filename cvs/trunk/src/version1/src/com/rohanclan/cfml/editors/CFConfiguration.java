@@ -388,7 +388,10 @@ public class CFConfiguration extends SourceViewerConfiguration {
 		assistant.setProposalPopupOrientation(
 			IContentAssistant.PROPOSAL_OVERLAY
 		);
-
+		
+		assistant.setInformationControlCreator(
+			getInformationControlCreator(sourceViewer)
+		);
 		return assistant;
 	}
 	/**

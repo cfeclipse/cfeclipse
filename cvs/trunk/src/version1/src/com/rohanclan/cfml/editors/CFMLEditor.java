@@ -31,11 +31,13 @@ import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 
 import org.eclipse.core.resources.IResourceChangeListener;
 
-//import org.eclipse.jface.action.IAction;
-//import org.eclipse.ui.texteditor.TextOperationAction;
-//import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
-//import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.ui.texteditor.TextOperationAction;
+import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+import org.eclipse.jface.text.source.ISourceViewer;
 //import java.util.ResourceBundle;
+//import org.eclipse.swt.SWT;
+
 
 /**
  * @author Rob
@@ -78,26 +80,29 @@ public class CFMLEditor extends TextEditor {
 	{
 		super.createActions();
 		
-		/*
-		final ResourceBundle bundle = CFMLPlugin.getDefault().getResourceBundle();
-		IAction a = new TextOperationAction(
-			bundle, 
-			"ContentAssistProposal.", 
-			this, 
-			ISourceViewer.CONTENTASSIST_PROPOSALS
-		);
-		a.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
-		setAction("ContentAssistProposal", a); 
-		
-		a = new TextOperationAction(
-			bundle, 
-			"ContentAssistTip.", 
-			this, 
-			ISourceViewer.CONTENTASSIST_CONTEXT_INFORMATION
-		);
-		a.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION);
-		setAction("ContentAssistTip", a);
-		*/
+		//this sets up the ctrl+space code insight stuff
+		try
+		{
+			IAction action = new TextOperationAction(
+				CFMLPlugin.getDefault().getResourceBundle(), 
+				"ContentAssistProposal.",
+				//"ContentAssistTip.",
+				this, 
+				ISourceViewer.CONTENTASSIST_PROPOSALS
+				//ISourceViewer.CONTENTASSIST_CONTEXT_INFORMATION
+			);
+	
+			action.setActionDefinitionId(
+				ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS
+				//ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION
+			);
+			
+			setAction("ContentAssistAction",action);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
 	}
 	
 	public void dispose() 
