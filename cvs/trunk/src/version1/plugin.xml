@@ -473,10 +473,15 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            name="CFEclipse"
-            category="org.eclipse.ui.preferencePages.Editors"
             class="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="CFEclipse"
             id="com.rohanclan.cfml.preferences.CFMLPreferencePage">
+      </page>
+      <page
+            class="com.rohanclan.cfml.preferences.ColorsPreferencePage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="Colors"
+            id="com.rohanclan.cfml.preferences.ColorsPreferencePage">
       </page>
    </extension>
    <extension
