@@ -307,7 +307,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		{
 			//attact the finished parameter to the
 			//current item
-			if(currentitem instanceof Function && paramitem != null)
+			if((currentitem instanceof Function || currentitem instanceof Tag )&& paramitem != null)
 			{
 				currentitem.addParameter(paramitem);
 			}
