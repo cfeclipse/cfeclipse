@@ -7862,9 +7862,8 @@
 	<!-- /////////////////////////////////////////////////////////////// -->
 
 	<functions>
+		<!-- function template -->
 		<!-- 
-			
-		
 		<function creator="3" name="writeoutput" returns="String">
 			<help><![CDATA[
 			]]></help>
@@ -7873,6 +7872,3044 @@
 				]]></help>
 			</parameter>
 		</function> -->
+		
+		<!-- 
+			Numeric Abs(number)
+		-->
+		<function creator="3" name="abs" returns="Numeric">
+			<help><![CDATA[
+				Absolute-value function. The absolute value of a number is 
+				the number without its sign.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ACos(number)
+		-->
+		<function creator="3" name="acos" returns="Numeric">
+			<help><![CDATA[
+				Arccosine function. The arccosine is the angle whose cosine 
+				is number
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArrayAppend(array, value)
+		-->
+		<function creator="3" name="arrayappend" returns="boolean">
+			<help><![CDATA[
+				Appends an array element to an array.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ArrayAvg(array)
+		-->
+		<function creator="3" name="arrayavg" returns="Numeric">
+			<help><![CDATA[
+				Calculates the average of the values in an array. 
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArrayClear(array)
+		-->
+		<function creator="3" name="arrayclear" returns="boolean">
+			<help><![CDATA[
+				Deletes the data in an array.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArrayDeleteAt(array, position)
+		-->
+		<function creator="3" name="arraydeleteat" returns="boolean">
+			<help><![CDATA[
+				Deletes an element from an array. 
+				When an element is deleted, ColdFusion recalculates index 
+				positions.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArrayInsertAt(array, position, value)
+		-->
+		<function creator="3" name="arrayinsertat" returns="boolean">
+			<help><![CDATA[
+				Inserts a value into an array. Array elements whose indexes 
+				are greater than the new position are incremented by one. The 
+				array length increases by one.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArrayIsEmpty(array)
+		-->
+		<function creator="3" name="arrayisempty" returns="boolean">
+			<help><![CDATA[
+				Determines whether an array is empty of data elements
+				ColdFusion MX: this function can be used on XML objects.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ArrayLen(array)
+		-->
+		<function creator="3" name="arraylen" returns="Numeric">
+			<help><![CDATA[
+				Determines the number of elements in an array.
+				ColdFusion MX: this function can be used on child XML objects.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ArrayMax(array)
+		-->
+		<function creator="3" name="arraymax" returns="Numeric">
+			<help><![CDATA[
+				Returns the largest numeric value in an array. If the array 
+				parameter value is an empty array, returns zero. 
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ArrayMin(array)
+		-->
+		<function creator="3" name="arraymin" returns="Numeric">
+			<help><![CDATA[
+				Returns the smallest numeric value in an array. If the array 
+				parameter value is an empty array, returns zero. 
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Array ArrayNew(dimension)
+		-->
+		<function creator="3" name="arraynew" returns="Array">
+			<help><![CDATA[
+			]]></help>
+			<parameter name="dimension" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArrayPrepend(array, value)
+		-->
+		<function creator="3" name="arrayprepend" returns="boolean">
+			<help><![CDATA[
+				Inserts an array element at the beginning of an array.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArrayResize(array, minimum_size)
+		-->
+		<function creator="3" name="arrayresize" returns="boolean">
+			<help><![CDATA[
+				Resets an array to a specified minimum number of elements. 
+				This can improve performance, if used to size an array to its 
+				expected maximum. For more than 500 elements, use ArrayResize 
+				immediately after using the ArrayNew tag.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="size" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArraySet(array, start_pos, end_pos, value)
+		-->
+		<function creator="3" name="arrayset" returns="boolean">
+			<help><![CDATA[
+				In a one-dimensional array, sets the elements in a specified 
+				index range to a value. Useful for initializing an array after 
+				a call to ArrayNew. 
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="start_pos" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="end_pos" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!--
+			boolean ArraySort(array, sort_type [, sort_order ])
+		-->
+		<function creator="3" name="arraysort" returns="boolean">
+			<help><![CDATA[
+				Sorts array elements numerically or alphanumerically.
+			]]></help>
+			<parameter name="array" type="array" required="true">
+				<help><![CDATA[
+					Name of an array
+				]]></help>
+			</parameter>
+			<parameter name="sort_type" type="string" required="true">
+				<help><![CDATA[
+					numeric: sorts numbers 
+					text: sorts text alphabetically, taking case into account 
+					(also known as case sensitive). All letters of one case 
+					precede the first letter of the other case: 
+						- aabzABZ, if sort_order = "asc" (ascending sort)
+						- ZBAzbaa, if sort_order = "desc" (descending sort)
+
+					textnocase: sorts text alphabetically, without regard to 
+					case (also known as case-insensitive). A letter in varying 
+					cases precedes the next letter: 
+ 						- aAaBbBzzZ, in an ascending sort; preserves original 
+ 							intra-letter order 
+						- ZzzBbBaAa, in a descending sort; reverses original 
+							intra-letter order
+				]]></help>
+				<values>
+					<value option="numeric" />
+					<value option="text" />
+					<value option="textnocase" />
+				</values>
+			</parameter>
+			<parameter name="sort_order" type="string" required="false">
+				<help><![CDATA[
+					asc: ascending sort order. Default. 
+ 						- aabzABZ or aAaBbBzzZ, depending on value of sort_type, 
+ 							for letters
+						- from smaller to larger, for numbers 
+
+					desc: descending sort order. 
+						- ZBAzbaa or ZzzBbBaAa, depending on value of sort_type, 
+							for letters
+						- from larger to smaller, for numbers
+				]]></help>
+				<values>
+					<value option="asc" />
+					<value option="desc" />
+				</values>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ArraySum(array)
+		-->
+		<function creator="3" name="arraysum" returns="Numeric">
+			<help><![CDATA[
+				The sum of values in an array. If the array parameter value is 
+				an empty array, returns zero. 
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean ArraySwap(array, position1, position2)
+		-->
+		<function creator="3" name="arrayswap" returns="boolean">
+			<help><![CDATA[
+				Swaps array values of an array at specified positions. This 
+				function is more efficient than multiple cfset tags
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position1" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position2" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String ArrayToList(array [, delimiter ])
+		-->
+		<function creator="3" name="arraytolist" returns="String">
+			<help><![CDATA[
+				Converts a one-dimensional array to a list.
+			]]></help>
+			<parameter name="array" type="Array" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiter" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Asc(string)
+		-->
+		<function creator="3" name="asc" returns="Numeric">
+			<help><![CDATA[
+				Determines the value of a character.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ASin(number)
+		-->
+		<function creator="3" name="asin" returns="Numeric">
+			<help><![CDATA[
+				Determines the arcsine of a number. The arcsine is the angle 
+				whose sine is number.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Atn(number)
+		-->
+		<function creator="3" name="atn" returns="Numeric">
+			<help><![CDATA[
+				Arctangent function. The arctangent is the angle whose tangent 
+				is number.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitAnd(number1, number2)
+		-->
+		<function creator="3" name="bitand" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise logical AND operation.
+			]]></help>
+			<parameter name="number1" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="number2" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitMaskClear(number, start, length)			
+		-->
+		<function creator="3" name="bitmaskclear" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise mask clear operation. 
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="start" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="length" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitMaskRead(number, start, length)
+		-->
+		<function creator="3" name="bitmaskread" returns="Numeric">
+			<help><![CDATA[
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="start" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="length" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitMaskSet(number, mask, start, length)
+		-->
+		<function creator="3" name="bitmaskset" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise mask set operation.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="mask" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="start" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="length" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitNot(number)
+		-->
+		<function creator="3" name="bitnot" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise logical NOT operation.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Bitor(number1, number2)
+		-->
+		<function creator="3" name="bitor" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise logical OR operation.
+			]]></help>
+			<parameter name="number1" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="number2" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitSHLN(number, count)
+		-->
+		<function creator="3" name="bitshln" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise shift-left, no-rotation operation.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="count" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitSHRN(number, count)
+		-->
+		<function creator="3" name="bitshrn" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise shift-right, no-rotation operation.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="count" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric BitXor(number1, number2)
+		-->
+		<function creator="3" name="bitxor" returns="Numeric">
+			<help><![CDATA[
+				Performs a bitwise logical XOR operation.
+			]]></help>
+			<parameter name="number1" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="number2" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Ceiling(number)
+		-->
+		<function creator="3" name="ceiling" returns="Numeric">
+			<help><![CDATA[
+				Determines the closest integer that is greater than a 
+				specified number.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Character Chr(number)
+		-->
+		<function creator="3" name="chr" returns="Character">
+			<help><![CDATA[
+				Converts a numeric value to a UCS-2 character.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String Cjustify(string, length)
+		-->
+		<function creator="3" name="cjustify" returns="String">
+			<help><![CDATA[
+				Centers a string in a field length.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="length" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Compare(string1, string2)
+		-->
+		<function creator="3" name="compare" returns="Numeric">
+			<help><![CDATA[
+				Performs a case-sensitive comparison of two strings. 
+					-1, if string1 is less than string2 
+					0, if string1 is equal to string2 
+					1, if string1 is greater than string2 
+			]]></help>
+			<parameter name="string1" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="string2" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric CompareNoCase(string1, string2)
+		-->
+		<function creator="3" name="comparenocase" returns="Numeric">
+			<help><![CDATA[
+				Performs a case-insensitive comparison of two strings. 
+		        An indicator of the difference:
+        	        A negative number, if string1 is less than string2 
+			        0, if string1 is equal to string2 
+			        A positive number, if string1 is greater than string2 	
+			]]></help>
+			<parameter name="string1" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="string2" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Cos(number)
+		-->
+		<function creator="3" name="cos" returns="Numeric">
+			<help><![CDATA[
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			DateTime CreateDate(year, month, day)
+		-->
+		<function creator="3" name="createdate" returns="DateTime">
+			<help><![CDATA[
+				Creates a date/time object
+			]]></help>
+			<parameter name="year" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="month" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="day" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			DateTime CreateDateTime(year, month, day, hour, minute, second)
+		-->
+		<function creator="3" name="createdatetime" returns="DateTime">
+			<help><![CDATA[
+				Creates a date-time object.
+			]]></help>
+			<parameter name="year" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="month" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="day" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="hour" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="minute" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="second" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			CreateObject(type, class, context, serverName) 
+			CreateObject(type, component-name) 
+			CreateObject(type, context, class, locale)
+			CreateObject(type, class)
+			CreateObject(type, urltowsdl)
+		-->
+		<function creator="3" name="createobject" returns="Object">
+			<help><![CDATA[
+				Creates a ColdFusion object, of a specified type.
+				=========================================================
+				COMobject   CreateObject(type, class, context, serverName) 
+    			CFCobject   CreateObject(type, component-name) 
+    			CORBAobject CreateObject(type, context, class, locale)
+    			JAVAobject  CreateObject(type, class)
+    			WEBSERVICE  CreateObject(type, urltowsdl)
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="component_name" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			ODBCDate CreateODBCDate(date)
+		-->
+		<function creator="3" name="createodbcdate" returns="ODBCDate">
+			<help><![CDATA[
+				Creates an ODBC date object.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			ODBCDateTime CreateODBCDateTime(date)
+		-->
+		<function creator="3" name="createodbcdatetime" returns="ODBCDateTime">
+			<help><![CDATA[
+				Creates an ODBC date-time object.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			ODBCTime CreateODBCTime(date)
+		-->
+		<function creator="3" name="createodbctime" returns="ODBCTime">
+			<help><![CDATA[
+				Creates an ODBC time object.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			DateTime CreateTime(hour, minute, second)
+		-->
+		<function creator="3" name="createtime" returns="DateTime">
+			<help><![CDATA[
+				Creates a time variable.
+			]]></help>
+			<parameter name="hour" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="minute" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="second" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			DateTime CreateTimeSpan(days, hours, minutes, seconds)
+		-->
+		<function creator="3" name="createtimespan" returns="DateTime">
+			<help><![CDATA[
+				Creates a date/time object that defines a time period. You 
+				can add or subtract it from other date/time objects and use 
+				it with the cachedWithin attribute of cfquery.
+			]]></help>
+			<parameter name="days" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="hours" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="minutes" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="seconds" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			UUID CreateUUID()
+		-->
+		<function creator="3" name="createuuid" returns="UUID">
+			<help><![CDATA[
+				Creates a Universally Unique Identifier (UUID). A UUID is a 
+				35-character string representation of a unique 128-bit integer
+				xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx : x is a hexadecimal digit
+			]]></help>
+		</function>
+		
+		<!-- 
+			DateTime DateAdd("datepart", number, "date") 
+		-->
+		<function creator="3" name="dateadd" returns="DateTime">
+			<help><![CDATA[
+				Adds units of time to a date.
+				[datepart - quicky]
+				yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day 
+				w: Weekday; ww: Week; h: Hour; n: Minute; s: Second; 
+				l: Millisecond
+			]]></help>
+			<parameter name="datepart" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DateCompare("date1", "date2" [, "datePart"])
+		-->
+		<function creator="3" name="datecompare" returns="Numeric">
+			<help><![CDATA[
+				Performs a full date/time comparison of two dates.
+					-1, if date1 is less than date2 
+					0, if date1 is equal to date2 
+					1, if date1 is greater than date2
+				[datepart - quicky]
+				yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day 
+				w: Weekday; ww: Week; h: Hour; n: Minute; s: Second; 
+				l: Millisecond
+			]]></help>
+			<parameter name="date1" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="date2" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="datePart" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			DateTime DateConvert("conversion-type", "date")
+		-->
+		<function creator="3" name="dateconvert" returns="DateTime">
+			<help><![CDATA[
+				Converts local time to Coordinated Universal Time (UTC), or UTC
+				to local time. The function uses the daylight savings settings 
+				in the executing computer to compute daylight savings time, if 
+				required.
+				[type - quicky]
+					local2Utc: Converts local time to UTC time. 
+					utc2Local: Converts UTC time to local time
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DateDiff("datepart", "date1", "date2")
+		-->
+		<function creator="3" name="datediff" returns="Numeric">
+			<help><![CDATA[
+				Determines the integer number of units by which date1 is less 
+				than date2.
+				[datepart - quicky]
+				yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day 
+				w: Weekday; ww: Week; h: Hour; n: Minute; s: Second; 
+				l: Millisecond
+			]]></help>
+			<parameter name="datepart" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="date1" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="date2" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String DateFormat("date" [, "mask" ])
+		-->
+		<function creator="3" name="dateformat" returns="String">
+			<help><![CDATA[
+				Formats a date value using U.S. date formats. For 
+				international date support, use LSDateFormat.
+				[mask - quicky]
+				d,dd,ddd,dddd: Day of month / week
+				m,mm,mmm,mmmm: Month; y,yy,yyyy: Year; gg: Period/era string
+				short / medium / long / full
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="mask" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DatePart("datepart", "date")
+		-->
+		<function creator="3" name="datepart" returns="Numeric">
+			<help><![CDATA[
+				Extracts a part from a date value as a numeric.
+				[datepart - quicky]
+				yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day 
+				w: Weekday; ww: Week; h: Hour; n: Minute; s: Second; 
+				l: Millisecond 
+			]]></help>
+			<parameter name="datepart" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Day("date")
+		-->
+		<function creator="3" name="day" returns="Numeric">
+			<help><![CDATA[
+				Determines the day of the month, in a date.
+				The ordinal for the day of the month, ranging from 1 to 31.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DayOfWeek("date")
+		-->
+		<function creator="3" name="dayofweek" returns="Numeric">
+			<help><![CDATA[
+				Determines the day of the week, in a date.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String DayOfWeekAsString(day_of_week)
+		-->
+		<function creator="3" name="dayofweekasstring" returns="String">
+			<help><![CDATA[
+				Determines the day of the week as a string from 1-7
+			]]></help>
+			<parameter name="day_of_week" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DayOfYear("date") 
+		-->
+		<function creator="3" name="dayofyear" returns="Numeric">
+			<help><![CDATA[
+				Determines the day of the year, in a date.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DaysInMonth("date")
+		-->
+		<function creator="3" name="daysinmonth" returns="Numeric">
+			<help><![CDATA[
+				Determines the number of days in a month.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DaysInYear("date")
+		-->
+		<function creator="3" name="daysinyear" returns="Numeric">
+			<help><![CDATA[
+				Determines the number of days in a year.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Object DE(string)
+		-->
+		<function creator="3" name="de" returns="Object">
+			<help><![CDATA[
+				Postpones evaluation of a string as an expression, when it is 
+				passed as a parameter to the IIf or Evaluate functions. Escapes
+				any double quotation marks in the parameter and wraps the 
+				result in double quotation marks. 
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String DecimalFormat(number)
+		-->
+		<function creator="3" name="decimalformat" returns="String">
+			<help><![CDATA[
+				Converts a number to a decimal-formatted string.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric DecrementValue(number)
+		-->
+		<function creator="3" name="decrementvalue" returns="Numeric">
+			<help><![CDATA[
+				Decrements the integer part of a number.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String Decrypt(encrypted_string, seed)
+		-->
+		<function creator="3" name="decrypt" returns="String">
+			<help><![CDATA[
+				Decrypts a string that is encrypted with the Encrypt function.
+			]]></help>
+			<parameter name="encrypted_string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="seed" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean DeleteClientVariable("name")
+		-->
+		<function creator="3" name="deleteclientvariable" returns="boolean">
+			<help><![CDATA[
+				Deletes a client variable. (To test for the existence of a 
+				variable, use IsDefined.)
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean DirectoryExists(absolute_path)
+		-->
+		<function creator="3" name="directoryexists" returns="boolean">
+			<help><![CDATA[
+				Determines whether a directory exists.
+			]]></help>
+			<parameter name="absolute_path" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String DollarFormat(number)
+		-->
+		<function creator="3" name="dollarformat" returns="String">
+			<help><![CDATA[
+				Formats a string in U.S. format. (For other currencies, use 
+				LSCurrencyFormat or LSEuroCurrencyFormat.)
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Object Duplicate(variable_name)
+		-->
+		<function creator="3" name="duplicate" returns="Object">
+			<help><![CDATA[
+				Returns a clone, also known as a deep copy, of a variable. 
+				There is no reference to the original variable
+				ColdFusion MX: this function can be used on XML objects.
+			]]></help>
+			<parameter name="variable" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String Encrypt(string, seed)
+		-->
+		<function creator="3" name="encrypt" returns="String">
+			<help><![CDATA[
+				Encrypts a string. Uses a symmetric key-based algorithm, in 
+				which the same key is used to encrypt and decrypt a string. 
+				The security of the encrypted string depends on maintaining 
+				the secrecy of the key. Uses an XOR-based algorithm that uses 
+				a pseudo-random 32-bit key, based on a seed passed by the user 
+				as a function parameter.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="seed" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Object Evaluate(string_expression1 [, string_expression2 [, ... ] ] )
+		-->
+		<function creator="3" name="evaluate" returns="Object">
+			<help><![CDATA[
+				Evaluates one or more string expressions, dynamically, from 
+				left to right. (The results of an evaluation on the left can 
+				have meaning in an expression to the right.) Returns the 
+				result of evaluating the rightmost expression.
+			]]></help>
+			<parameter name="expression1" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="expression2" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="expressionN" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Exp(number)
+		-->
+		<function creator="3" name="exp" returns="Numeric">
+			<help><![CDATA[
+				Calculates the exponent whose base is e that represents number.
+				The constant e equals 2.71828182845904, the base of the natural
+				logarithm. This function is the inverse of Log, the natural 
+				logarithm of number.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String ExpandPath(relative_path)
+		-->
+		<function creator="3" name="expandpath" returns="String">
+			<help><![CDATA[
+				Creates an absolute, platform-appropriate path that is 
+				equivalent to the value of relative_path, appended to the base 
+				path. This function (despite its name) can accept an absolute 
+				or relative path in the relative_path attribute
+			]]></help>
+			<parameter name="relative_path" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean FileExists(absolute_path)
+		-->
+		<function creator="3" name="fileexists" returns="boolean">
+			<help><![CDATA[
+				Determines whether a file exists
+			]]></help>
+			<parameter name="path" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Find(substring, string [, start ])
+		-->
+		<function creator="3" name="find" returns="Numeric">
+			<help><![CDATA[
+				Finds the first occurrence of a substring in a string, from a 
+				specified start position. The search is case-sensitive. 
+			]]></help>
+			<parameter name="substring" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="start" type="Numeric" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric FindNoCase(substring, string [, start ])
+		-->
+		<function creator="3" name="findnocase" returns="Numeric">
+			<help><![CDATA[
+				Finds the first occurrence of a substring in a string, from a 
+				specified start position. If substring is not in string, 
+				returns zero. The search is case-insensitive.
+			]]></help>
+			<parameter name="substring" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="start" type="Numeric" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric FindOneOf(set, string [, start ])
+		-->
+		<function creator="3" name="findoneof" returns="Numeric">
+			<help><![CDATA[
+				Finds the first occurrence of any one of a set of characters 
+				in a string, from a specified start position. The search is 
+				case-sensitive.
+			]]></help>
+			<parameter name="set" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="start" type="Numeric" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric FirstDayOfMonth(date)
+		-->
+		<function creator="3" name="firstdayofmonth" returns="Numeric">
+			<help><![CDATA[
+				Determines the ordinal (day number, in the year) of the first
+				day of the month in which a given date falls.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Fix(number)
+		-->
+		<function creator="3" name="fix" returns="Numeric">
+			<help><![CDATA[
+				Converts a real number to an integer.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String FormatBaseN(number, radix)
+		-->
+		<function creator="3" name="formatbasen" returns="String">
+			<help><![CDATA[
+				String Converts number to a string, in the base specified by 
+				radix. For example: #FormatBaseN(1024,16)#
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="radix" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String GetAuthUser()
+		-->
+		<function creator="3" name="getauthuser" returns="String">
+			<help><![CDATA[
+				Gets the name of an authenticated user.
+			]]></help>
+		</function>
+		
+		<!-- 
+			Object GetBaseTagData(tagname [, instancenumber ] )
+		-->
+		<function creator="3" name="getbasetagdata" returns="Object">
+			<help><![CDATA[
+				Used within a custom tag. Finds calling (ancestor) tag by 
+				name and accesses its data.
+			]]></help>
+			<parameter name="tagname" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="instancenumber" type="Number" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String GetBaseTagList()
+		-->
+		<function creator="3" name="getbasetaglist" returns="String">
+			<help><![CDATA[
+				Gets ancestor tag names, starting with the parent tag.
+			]]></help>
+		</function>
+		
+		<!-- 
+			String GetBaseTemplatePath()		
+		-->
+		<function creator="3" name="getbasetemplatepath" returns="String">
+			<help><![CDATA[
+				Gets the absolute path of an application's base page.
+			]]></help>
+		</function>
+		
+		<!-- 
+			String GetClientVariablesList()
+		-->
+		<function creator="3" name="getclientvariableslist" returns="String">
+			<help><![CDATA[
+				Finds the client variables to which a page has write access.
+				Comma-delimited list of non-read-only client variables
+			]]></help>
+		</function>
+		
+		<!-- 
+			String GetCurrentTemplatePath()
+		-->
+		<function creator="3" name="getcurrenttemplatepath" returns="String">
+			<help><![CDATA[
+				Gets the absolute path of the page that calls this function. 
+			]]></help>
+		</function>
+		
+		<!-- 
+			String GetDirectoryFromPath(path)
+		-->
+		<function creator="3" name="getdirectoryfrompath" returns="String">
+			<help><![CDATA[
+				Extracts a directory from an absolute path.
+				Returns the absolute path, without the filename. 			
+			]]></help>
+			<parameter name="path" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String GetEncoding(scope_name)
+		-->
+		<function creator="3" name="getencoding" returns="String">
+			<help><![CDATA[
+				Returns the encoding (character set) of the Form or URL scope.
+			]]></help>
+			<parameter name="scope_name" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Object getException(object)
+		-->
+		<function creator="3" name="getexception" returns="Object">
+			<help><![CDATA[
+				Used with the cftry and cfcatch tags. Retrieves a Java 
+				exception object from a Java object.
+			]]></help>
+			<parameter name="javaobject" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String GetFileFromPath(path)
+		-->
+		<function creator="3" name="getfilefrompath" returns="String">
+			<help><![CDATA[
+				Extracts a filename from an absolute path.
+			]]></help>
+			<parameter name="path" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Struct GetFunctionList()
+		-->
+		<function creator="3" name="getfunctionlist" returns="Struct">
+			<help><![CDATA[
+				Displays a list of the functions that are available in 
+				ColdFusion.
+			]]></help>
+		</function>
+		
+		<!-- 
+			Struct GetHttpRequestData()
+		-->
+		<function creator="3" name="gethttprequestdata" returns="Struct">
+			<help><![CDATA[
+				Makes HTTP request headers and body available to CFML pages. 
+				Useful for capturing SOAP request data, which can be delivered 
+				in an HTTP header.
+			]]></help>
+		</function>
+		
+		<!-- 
+			String GetHttpTimeString(date_time_object)
+		-->
+		<function creator="3" name="gethttptimestring" returns="String">
+			<help><![CDATA[
+				Gets the current time, in the Universal Time code (UTC). 
+			]]></help>
+			<parameter name="datetime" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric GetK2ServerDocCount()
+		-->
+		<function creator="3" name="getk2serverdoccount" returns="Numeric">
+			<help><![CDATA[
+				** ColdFusion MX 6.1: This function is deprecated. **
+				Determines the number of documents that can be searched by the 
+				ColdFusion registered K2 Server. This function is used 
+				primarily by the ColdFusion Verity and K2Server Administrator 
+				pages, and requires significant processing time. Avoid using 
+				it in production applications. This function uses Verity 
+				K2Server Release K2.2.0.
+			]]></help>
+		</function>
+		
+		<!-- 
+			Numeric GetK2ServerDocCountLimit()
+		-->
+		<function creator="3" name="getk2serverdoccountlimit" returns="Numeric">
+			<help><![CDATA[
+				** ColdFusion MX 6.1: This function is deprecated. **
+				Gets the maximum number of documents that the ColdFusion 
+				registered K2 Server is permitted to return from a search. 
+				This function is used primarily by the ColdFusion Verity and 
+				K2Server Administrator pages. This function uses Verity 
+				K2Server Release K2.2.0.
+			]]></help>
+		</function>
+		
+		<!-- 
+			String GetLocale()
+		-->
+		<function creator="3" name="getlocale" returns="String">
+			<help><![CDATA[
+				Gets the current geographic/language locale value. 
+				To set the default display format of date, time, number, and 
+				currency values in a ColdFusion application session, you use 
+				the SetLocale function.
+			]]></help>
+		</function>
+		
+		<!-- 
+			Object GetMetaData(object)
+		-->
+		<function creator="3" name="getmetadata" returns="Object">
+			<help><![CDATA[
+				Gets metadata (the methods, properties, and parameters of a 
+				component) associated with an object that is deployed on the 
+				ColdFusion server.
+			]]></help>
+			<parameter name="object" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Object GetMetricData(mode)
+		-->
+		<function creator="3" name="getmetricdata" returns="Object">
+			<help><![CDATA[
+				Gets server performance metrics
+				[mode - quicky]
+					perf_monitor - Returns internal data, in a structure.
+					simple_load - Returns an integer value that is computed 
+								  	from the state of the server's internal
+								  	queues. Indicates the overall server load. 
+					prev_req_time - Returns the time, in milliseconds, that it 
+									took the server to process the previous 
+									request.
+ 					avg_req_time - Returns the average time, in milliseconds, 
+ 									that it takes the server to process a 
+ 									request.
+			]]></help>
+			<parameter name="mode" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Object GetPageContext()
+		-->
+		<function creator="3" name="getpagecontext" returns="Object">
+			<help><![CDATA[
+				Gets the current ColdFusion MX PageContext object that 
+				provides access to page attributes and configuration, request 
+				and response objects.
+			]]></help>
+		</function>
+		
+		<!-- 
+			Struct GetProfileSections(iniFile)
+		-->
+		<function creator="3" name="getprofilesections" returns="Struct">
+			<help><![CDATA[
+				Gets all the sections of an initialization file.
+				An initialization file, as a struct whose format is as follows:
+					- Each initialization file section name is a key in the 
+					  struct 
+					- Each list of entries in a section of an initialization 
+					  file is a value in the struct 
+			]]></help>
+			<parameter name="inifile" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String GetProfileString(iniPath, section, entry)
+		-->
+		<function creator="3" name="getprofilestring" returns="String">
+			<help><![CDATA[
+				Gets an initialization file entry. 
+				An initialization file assigns values to configuration 
+				variables, also known as entries, that are set when the system 
+				boots, the operating system comes up, or an application starts.
+				Returns the entry - if no value, returns an empty string.
+			]]></help>
+			<parameter name="inipath" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="section" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="entry" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String GetTempDirectory()
+		-->
+		<function creator="3" name="gettempdirectory" returns="String">
+			<help><![CDATA[
+				Gets the path of the directory that ColdFusion uses for 
+				temporary files. Before using this function in an application,
+				test to determine the directory it returns under your account.
+				Returns the absolute pathname of a directory, including a 
+				trailing slash.
+			]]></help>
+		</function>
+		
+		<!-- 
+			String GetTempFile(dir, prefix)
+		-->
+		<function creator="3" name="gettempfile" returns="String">
+			<help><![CDATA[
+				Creates a temporary file in a directory whose name starts with 
+				(at most) the first three characters of prefix.
+			]]></help>
+			<parameter name="dir" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="prefix" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			GetTemplatePath
+		-->
+		<function creator="3" name="gettemplatepath" returns="String">
+			<help><![CDATA[
+				** ColdFusion MX: This function is deprecated. **
+				Use the GetBaseTemplatePath function instead.			
+			]]></help>
+		</function>
+		
+		<!-- 
+			Numeric GetTickCount()
+		-->
+		<function creator="3" name="gettickcount" returns="Numeric">
+			<help><![CDATA[
+				Returns the current value of an internal millisecond timer.		
+			]]></help>
+		</function>
+		
+		<!-- 
+			Object GetTimeZoneInfo()
+		-->
+		<function creator="3" name="gettimezoneinfo" returns="Object">
+			<help><![CDATA[
+				Gets local time zone information for the computer on which it 
+				is called, relative to Universal Time Coordinated (UTC). UTC is
+				the mean solar time of the meridian of Greenwich, England.
+			]]></help>
+			<parameter name="text" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String GetToken(string, index [, delimiters ])
+		-->
+		<function creator="3" name="gettoken" returns="String">
+			<help><![CDATA[
+				Determines whether a token of the list in the delimiters 
+				parameter is present in a string.
+				Returns the token found at position index of the string, as a 
+				string. If index is greater than the number of tokens in the 
+				string, returns an empty string.				
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="index" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String Hash(string)
+		-->
+		<function creator="3" name="hash" returns="String">
+			<help><![CDATA[
+				Converts a variable-length string to a 32-byte, hexadecimal 
+				string, using the MD5 algorithm. (It is not possible to convert
+				the hash result back to the source string.) 
+				32-byte, hexadecimal string
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Hour(date)
+		-->
+		<function creator="3" name="hour" returns="Numeric">
+			<help><![CDATA[
+				Gets the current hour of the day. 
+				Ordinal value of the hour, in the range 0 - 23.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String HTMLCodeFormat(string [, version ])
+		-->
+		<function creator="3" name="htmlcodeformat" returns="String">
+			<help><![CDATA[
+				Replaces special characters in a string with their HTML-escaped
+				equivalents and inserts <pre> and </pre> tags at the beginning 
+				and end of the string.
+				[version]
+					HTML version to use. currently ignored.
+					-1: The latest implementation of HTML 
+					2.0: HTML 2.0 (Default) 
+					3.2: HTML 3.2
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="version" type="Numeric" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String HTMLEditFormat(string [, version ])
+		-->
+		<function creator="3" name="htmleditformat" returns="String">
+			<help><![CDATA[
+				Replaces special characters in a string with their 
+				HTML-escaped equivalents.
+				[version]
+					HTML version to use. currently ignored.
+					-1: The latest implementation of HTML 
+					2.0: HTML 2.0 (Default) 
+					3.2: HTML 3.2
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="version" type="Numeric" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String IIf(condition, string_expression1, string_expression2)
+		-->
+		<function creator="3" name="iif" returns="String">
+			<help><![CDATA[
+				Evaluates a Boolean conditional dynamic expression. Depending 
+				on whether the expression is true or false, dynamically 
+				evaluates one of two string expressions and returns the result.
+			]]></help>
+			<parameter name="condition" type="boolean" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="expression1" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="expression2" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Numeric IncrementValue(number)
+		-->
+		<function creator="3" name="incrementvalue" returns="Numeric">
+			<help><![CDATA[
+				Adds one to an integer. same as x=x+1 
+				Why bother?
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric InputBaseN(string, radix)
+		-->
+		<function creator="3" name="inputbasen" returns="Numeric">
+			<help><![CDATA[
+				Converts string, using the base specified by radix, to an 
+				integer. For example: #InputBaseN("3ff",16)#
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="radix" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String Insert(substring, string, position)
+		-->
+		<function creator="3" name="insert" returns="String">
+			<help><![CDATA[
+				Inserts a substring in a string after a specified character 
+				position. If position = 0, prefixes the substring to the 
+				string.
+			]]></help>
+			<parameter name="substring" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Int(number)
+		-->
+		<function creator="3" name="int" returns="Numeric">
+			<help><![CDATA[
+				Calculates the closest integer that is smaller than number.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsArray(value [, number ])
+		-->
+		<function creator="3" name="isarray" returns="boolean">
+			<help><![CDATA[
+				Determines whether a value is an array.
+				True, if value is an array, a query column object, or xml.
+				also number = Dimension; function tests whether the array has 
+				exactly this dimension
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="number" type="Numeric" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsBinary(value)
+		-->
+		<function creator="3" name="isbinary" returns="boolean">
+			<help><![CDATA[
+				Determines whether a value is stored as binary data.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean IsBoolean(value)
+		-->
+		<function creator="3" name="isboolean" returns="boolean">
+			<help><![CDATA[
+				Determines whether a value can be converted to Boolean
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean IsCustomFunction(name)
+		-->
+		<function creator="3" name="iscustomfunction" returns="boolean">
+			<help><![CDATA[
+				Determines whether a name represents a custom function
+			]]></help>
+			<parameter name="object" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsDate(string)
+		-->
+		<function creator="3" name="isdate" returns="boolean">
+			<help><![CDATA[
+				Determines whether a string or Java object can be converted 
+				to a date/time value.
+			]]></help>
+			<parameter name="object" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsDebugMode()
+		-->
+		<function creator="3" name="isdebugmode" returns="boolean">
+			<help><![CDATA[
+				Determines whether debugging output is enabled.			
+			]]></help>
+		</function> 
+		
+		<!-- 
+			boolean IsDefined("variable_name")
+		-->
+		<function creator="3" name="isdefined" returns="boolean">
+			<help><![CDATA[
+				Evaluates a string value to determine whether the variable 
+				named in it exists. 
+				This function is an alternative to the ParameterExists function,
+				which is deprecated.
+			]]></help>
+			<parameter name="variable_name" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsK2ServerABroker()
+		-->
+		<function creator="3" name="isk2serverabroker" returns="boolean">
+			<help><![CDATA[
+				** ColdFusion MX 6.1: This function is deprecated. **
+				Determines whether the K2Server version is K2 Broker. For more 
+				information, see GetK2ServerDocCountLimit. This function is 
+				used primarily by the ColdFusion Verity and K2Server 
+				Administrator pages. This function uses Verity K2Server 
+				Release K2.2.0.
+			]]></help>
+		</function>
+		
+		<!-- 
+			boolean IsK2ServerDocCountExceeded()
+		-->
+		<function creator="3" name="isk2serverdoccountexceeded" returns="boolean">
+			<help><![CDATA[
+				** ColdFusion MX 6.1: This function is deprecated. **
+				Determines whether the number of documents that can be searched 
+				by the ColdFusion registered K2 Server exceed the limit. 
+				Depends on the K2Server platform limit; see 
+				GetK2ServerDocCountLimit.
+			]]></help>
+		</function> 
+		
+		<!-- 
+			boolean IsK2ServerOnline()
+		-->
+		<function creator="3" name="isk2serveronline" returns="boolean">
+			<help><![CDATA[
+				** ColdFusion MX 6.1: This function is deprecated. **
+				Determines whether the K2Server is running and available to 
+				perform a search. This function is used primarily by the 
+				ColdFusion Verity and K2Server Administrator pages. This 
+				function uses Verity K2Server Release K2.2.0.
+			]]></help>
+		</function>
+		
+		<!-- 
+			boolean IsLeapYear(year)
+		-->
+		<function creator="3" name="isleapyear" returns="boolean">
+			<help><![CDATA[
+				Determines whether a year is a leap year.
+			]]></help>
+			<parameter name="year" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsNumeric(string)
+		-->
+		<function creator="3" name="isnumeric" returns="boolean">
+			<help><![CDATA[
+				Determines whether a string can be converted to a numeric value.
+				Supports numbers in U.S. number format. For other number support
+				use LSIsNumeric.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		
+		<!-- 
+			boolean IsNumericDate(number)
+		-->
+		<function creator="3" name="isnumericdate" returns="boolean">
+			<help><![CDATA[
+				Evaluates whether a real number is a valid representation of a 
+				date (date/time object). 
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean IsObject(value)
+		-->
+		<function creator="3" name="isobject" returns="boolean">
+			<help><![CDATA[
+				Determines whether a value is an object.
+				True, if the value represents a ColdFusion object. False if 
+				the value is any other type of data, such as an integer, string,
+				date, or struct.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsQuery(value)
+		-->
+		<function creator="3" name="isquery" returns="boolean">
+			<help><![CDATA[
+				Determines whether value is a query.
+			]]></help>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsSimpleValue(value)
+		-->
+		<function creator="3" name="issimplevalue" returns="boolean">
+			<help><![CDATA[
+				Determines the type of a value.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsStruct(variable)
+		-->
+		<function creator="3" name="isstruct" returns="boolean">
+			<help><![CDATA[
+			Determines whether a variable is a structure.
+			True, if variable is a ColdFusion structure or is a Java object 
+			that implements the java.lang.Map interface. Returns False if the 
+			object in variable is a user-defined function (UDF).
+			]]></help>
+			<parameter name="variable" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsUserInRole("role_name")
+		-->
+		<function creator="3" name="isuserinrole" returns="String">
+			<help><![CDATA[
+				Determines whether an authenticated user belongs to the 
+				specified Role.
+			]]></help>
+			<parameter name="role_name" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			boolean IsWDDX(value)
+		-->
+		<function creator="3" name="iswddx" returns="boolean">
+			<help><![CDATA[
+				Determines whether a value is a well-formed WDDX packet.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsXmlDoc(value)
+		-->
+		<function creator="3" name="isxmldoc" returns="boolean">
+			<help><![CDATA[
+				Determines whether a function parameter is an Extended Markup 
+				language (XML) document object.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsXmlElem(value)
+		-->
+		<function creator="3" name="isxmlelem" returns="boolean">
+			<help><![CDATA[
+				Determines whether a function parameter is an Extended Markup 
+				language (XML) document object element.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean IsXmlRoot(value)
+		-->
+		<function creator="3" name="isxmlroot" returns="boolean">
+			<help><![CDATA[
+				Determines whether a function parameter is the root element of 
+				an Extended Markup language (XML) document object.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Object JavaCast(type, variable)
+		-->
+		<function creator="3" name="javacast" returns="Object">
+			<help><![CDATA[
+				Converts the data type of a ColdFusion variable to pass as an 
+				argument to an overloaded method of a Java object. Use only 
+				for scalar and string arguments.
+				[type - quicky]
+				boolean,int,long,float,double,string
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="variable" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String JSStringFormat(string)
+		-->
+		<function creator="3" name="jsstringformat" returns="String">
+			<help><![CDATA[
+				Escapes special JavaScript characters, such as single quotation
+				mark, double quotation mark, and newline
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		
+		<!-- 
+			String LCase(string)
+		-->
+		<function creator="3" name="lcase" returns="String">
+			<help><![CDATA[
+				Converts the alphabetic characters in a string to lowercase.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String Left(string, count)
+		-->
+		<function creator="3" name="left" returns="String">
+			<help><![CDATA[
+				Returns the leftmost count characters in a string.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="count" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Len(string or binary object)
+		-->
+		<function creator="3" name="len" returns="Numeric">
+			<help><![CDATA[
+				Determines the length of a string or binary object
+			]]></help>
+			<parameter name="object" type="Object" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String ListAppend(list, value [, delimiters ])
+		-->
+		<function creator="3" name="listappend" returns="String">
+			<help><![CDATA[
+				Concatenates a list or element to a list.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+					An element or a list of elements.
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String ListChangeDelims(list, new_delimiter [, delimiters ])
+		-->
+		<function creator="3" name="listchangedelims" returns="String">
+			<help><![CDATA[
+				Changes a list delimiter. 
+				Returns a copy of the list, with each delimiter character 
+				replaced by new_delimiter.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="new_delimiter" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Numeric ListContains(list, substring [, delimiters ])
+		-->
+		<function creator="3" name="listcontains" returns="Numeric">
+			<help><![CDATA[
+				Determines the index of the first list element that contains a
+				specified substring.
+				Returns the index of the first list element that contains 
+				substring. If not found, returns zero.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="substring" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ListContainsNoCase(list, substring [, delimiters ])
+		-->
+		<function creator="3" name="listcontainsnocase" returns="Numeric">
+			<help><![CDATA[
+				Determines the index of the first list element that contains a 
+				specified substring.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="substring" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String ListDeleteAt(list, position [, delimiters ])		
+		-->
+		<function creator="3" name="listdeleteat" returns="String">
+			<help><![CDATA[
+				Deletes an element from a list.
+				Returns a copy of the list, without the specified element.				
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Numeric ListFind(list, value [, delimiters ])
+		-->
+		<function creator="3" name="listfind" returns="Numeric">
+			<help><![CDATA[
+				Determines the index of the first list element in which a 
+				specified value occurs. Case-sensitive
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Numeric ListFindNoCase(list, value [, delimiters ])
+		-->
+		<function creator="3" name="listfindnocase" returns="Numeric">
+			<help><![CDATA[
+				Determines the index of the first list element in which a 
+				specified value occurs
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		
+		<!-- 
+			String ListFirst(list [, delimiters ])
+		-->
+		<function creator="3" name="listfirst" returns="String">
+			<help><![CDATA[
+				Gets the first element of a list. 
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		
+		<!-- 
+			String ListGetAt(list, position [, delimiters ])
+		-->
+		<function creator="3" name="listgetat" returns="String">
+			<help><![CDATA[
+				Gets a list element at a specified position.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String ListInsertAt(list, position, value [, delimiters ])
+		-->
+		<function creator="3" name="listinsertat" returns="String">
+			<help><![CDATA[
+				Inserts an element in a list.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String ListLast(list [, delimiters ])
+		-->
+		<function creator="3" name="listlast" returns="String">
+			<help><![CDATA[
+				Gets the last element of a list.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Numeric ListLen(list [, delimiters ])
+		-->
+		<function creator="3" name="listlen" returns="Numeric">
+			<help><![CDATA[
+				Determines the number of elements in a list.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String ListPrepend(list, value [, delimiters ])
+		-->
+		<function creator="3" name="listprepend" returns="String">
+			<help><![CDATA[
+				Inserts an element at the beginning of a list.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String ListQualify(list, qualifier [, delimiters ] [, elements ])
+		-->
+		<function creator="3" name="listqualify" returns="String">
+			<help><![CDATA[
+				Inserts a string at the beginning and end of list elements.			
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="qualifier" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="elements" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String ListRest(list [, delimiters ])
+		-->
+		<function creator="3" name="listrest" returns="String">
+			<help><![CDATA[
+				Gets a list, without its first element. 
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String ListSetAt(list, position, value [, delimiters ])
+		-->
+		<function creator="3" name="listsetat" returns="String">
+			<help><![CDATA[
+				Replaces the contents of a list element.			
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			String ListSort(list, sort_type [, sort_order] [, delimiters ])
+		-->
+		<function creator="3" name="listsort" returns="String">
+			<help><![CDATA[
+				Sorts list elements according to a sort type and sort order. 
+				Returns a sorted copy of the list.
+				[sort_type - quicky]
+				numeric: sorts numbers 
+				text: sorts text alphabetically, taking case into account
+					- aabzABZ, if sort_order = "asc" 
+					- ZBAzbaa, if sort_order = "desc"
+				textnocase: sorts text alphabetically, without regard to case
+					- aAaBbBzzZ, in an asc sort;
+					- ZzzBbBaAa, in a desc sort;
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="sort_type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="sort_order" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Array ListToArray(list [, delimiters ])
+		-->
+		<function creator="3" name="listtoarray" returns="Array">
+			<help><![CDATA[
+				Copies the elements of a list to an array.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric ListValueCount(list, value [, delimiters ])
+		-->
+		<function creator="3" name="listvaluecount" returns="Numeric">
+			<help><![CDATA[
+				Counts instances of a specified value in a list. The search is 
+				case-sensitive. 
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Numeric ListValueCountNoCase(list, value [, delimiters ])
+		-->
+		<function creator="3" name="listvaluecountnocase" returns="Numeric">
+			<help><![CDATA[
+				Counts instances of a specified value in a list. The search is 
+				case-insensitive.
+			]]></help>
+			<parameter name="list" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LJustify(string, length)
+		-->
+		<function creator="3" name="ljustify" returns="String">
+			<help><![CDATA[
+				Left justifies characters in a string of a specified length. 
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="length" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Log(number)
+		-->
+		<function creator="3" name="log" returns="Numeric">
+			<help><![CDATA[
+				Calculates the natural logarithm of a number. Natural 
+				logarithms are based on the constant e (2.71828182845904).
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Log10(number)
+		-->
+		<function creator="3" name="log10" returns="Numeric">
+			<help><![CDATA[
+				Calculates the logarithm of number, to base 10.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LSCurrencyFormat(number [, type ])
+		-->
+		<function creator="3" name="lscurrencyformat" returns="String">
+			<help><![CDATA[
+				Formats a number in a locale-specific currency format. For 
+				countries that use the euro, the result depends on the JVM.
+				[type - quicky]
+				local: the currency format and currency symbol used locally. 
+					- With JDK 1.3, the default for Euro Zone: local currency.
+					- With JDK 1.4, the default for Euro Zone: euro.
+				international: the international standard currency format 
+				none: the local currency format; no currency symbol
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LSDateFormat(date [, mask ])
+		-->
+		<function creator="3" name="lsdateformat" returns="String">
+			<help><![CDATA[
+				Formats the date part of a date/time value in a locale-specific
+				format.
+				[mask - quicky]
+				d,dd,ddd,dddd: Day of month / week
+				m,mm,mmm,mmmm: Month; y,yy,yyyy: Year; gg: Period/era string
+				short / medium / long / full
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="mask" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LSEuroCurrencyFormat(currency-number [, type ])
+		-->
+		<function creator="3" name="lseurocurrencyformat" returns="String">
+			<help><![CDATA[
+				Formats a number in a locale-specific currency format.
+				[type - quicky]
+				local: the currency format used in the locale. (Default.) 
+				international: the international standard currency format
+				none: the currency format used; no currency symbol	
+			]]></help>
+			<parameter name="currency" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean LSIsCurrency(string)
+		-->
+		<function creator="3" name="lsiscurrency" returns="boolean">
+			<help><![CDATA[
+				Determines whether a string is a valid representation of a 
+				currency amount in the current locale.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			boolean LSIsDate(string)
+		-->
+		<function creator="3" name="lsisdate" returns="boolean">
+			<help><![CDATA[
+				Determines whether a string is a valid representation of a 
+				date/time value in the current locale. 
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		
+		<!-- 
+			boolean LSIsNumeric(string)
+		-->
+		<function creator="3" name="lsisnumeric" returns="boolean">
+			<help><![CDATA[
+				Determines whether a string is a valid representation of a 
+				number in the current locale.			
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LSNumberFormat(number [, mask ])
+		-->
+		<function creator="3" name="lsnumberformat" returns="String">
+			<help><![CDATA[
+				Formats a number in a locale-specific format.
+				[mask - quicky]
+				_,9 Digit placeholder; . decimal point; 0 Pads with zeros;
+ 				( ) less than zero, puts parentheses around the mask
+ 				+ plus sign before positive number minus before negative
+ 				- a space before positive minus sign before negative
+ 				, Separates every third decimal place with a comma. 
+ 				L,C Left-justifies or center-justifies number
+ 				$ dollar sign before formatted number.
+ 				^ Separates left and right formatting.
+			]]></help>
+			<parameter name="number" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="mask" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LSParseCurrency(string)
+		-->
+		<function creator="3" name="lsparsecurrency" returns="String">
+			<help><![CDATA[
+				Converts a locale-specific currency string into a formatted 
+				number. Attempts conversion by comparing the string with each 
+				the three supported currency formats (none, local, 
+				international) and using the first that matches.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			DateTime LSParseDateTime(date/time-string)
+		-->
+		<function creator="3" name="lsparsedatetime" returns="DateTime">
+			<help><![CDATA[
+				Converts a string that is a valid date/time representation in 
+				the current locale into a date/time object.
+			]]></help>
+			<parameter name="dt_string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			Numeric LSParseEuroCurrency(currency-string)
+		-->
+		<function creator="3" name="lsparseeurocurrency" returns="Numeric">
+			<help><![CDATA[
+				Formats a locale-specific currency string as a number. 
+				Attempts conversion through each of the default currency 
+				formats (none, local, international). Ensures correct 
+				handling of euro currency for Euro zone countries.
+			]]></help>
+			<parameter name="currency_string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric LSParseNumber(string)
+		-->
+		<function creator="3" name="lsparsenumber" returns="Numeric">
+			<help><![CDATA[
+				Converts a string that is a valid numeric representation in 
+				the current locale into a formatted number.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LSTimeFormat(time [, mask ])
+		-->
+		<function creator="3" name="lstimeformat" returns="String">
+			<help><![CDATA[
+				Formats the time part of a date/time string into a string in a 
+				locale-specific format.
+				[mask - quicky]
+				h,hh,H,HH: Hours; m,mm: Minutes; s,ss: Seconds;
+				l: Milliseconds; t: A or P; tt: AM or PM 
+				"short" = h:mm tt; "medium" = h:mm:ss tt
+			]]></help>
+			<parameter name="time" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="mask" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+		
+		<!-- 
+			String LTrim(string)
+		-->
+		<function creator="3" name="ltrim" returns="String">
+			<help><![CDATA[
+				Removes leading spaces from a string. 
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+		
+		<!-- 
+			Numeric Max(number1, number2)
+		-->
+		<function creator="3" name="max" returns="Numeric">
+			<help><![CDATA[
+				Determines the greater of two numbers.			
+			]]></help>
+			<parameter name="number1" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="number2" type="Numeric" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
 		
 		<!-- 
 			String Mid(string, start, count)
@@ -7967,6 +11004,7 @@
 			<help><![CDATA[
 				Creates a custom-formatted number value. For international 
 				number formatting use LSNumberFormat.
+				[mask - quicky]
 				_,9 Digit placeholder; . decimal point; 0 Pads with zeros;
  				( ) less than zero, puts parentheses around the mask
  				+ plus sign before positive number minus before negative
@@ -9603,59 +12641,7 @@
 		
 		
 		
-		<!--
-			boolean ArraySort(array, sort_type [, sort_order ])
-		-->
-		<function creator="3" name="arraysort" returns="boolean">
-			<help><![CDATA[
-				Sorts array elements numerically or alphanumerically.
-			]]></help>
-			<parameter name="array" type="array" required="true">
-				<help><![CDATA[
-					Name of an array
-				]]></help>
-			</parameter>
-			<parameter name="sort_type" type="string" required="true">
-				<help><![CDATA[
-					numeric: sorts numbers 
-					text: sorts text alphabetically, taking case into account 
-					(also known as case sensitive). All letters of one case 
-					precede the first letter of the other case: 
-						- aabzABZ, if sort_order = "asc" (ascending sort)
-						- ZBAzbaa, if sort_order = "desc" (descending sort)
-
-					textnocase: sorts text alphabetically, without regard to 
-					case (also known as case-insensitive). A letter in varying 
-					cases precedes the next letter: 
- 						- aAaBbBzzZ, in an ascending sort; preserves original 
- 							intra-letter order 
-						- ZzzBbBaAa, in a descending sort; reverses original 
-							intra-letter order
-				]]></help>
-				<values>
-					<value option="numeric" />
-					<value option="text" />
-					<value option="textnocase" />
-				</values>
-			</parameter>
-			<parameter name="sort_order" type="string" required="false">
-				<help><![CDATA[
-					asc: ascending sort order. Default. 
- 						- aabzABZ or aAaBbBzzZ, depending on value of sort_type, 
- 							for letters
-						- from smaller to larger, for numbers 
-
-					desc: descending sort order. 
-						- ZBAzbaa or ZzzBbBaAa, depending on value of sort_type, 
-							for letters
-						- from larger to smaller, for numbers
-				]]></help>
-				<values>
-					<value option="asc" />
-					<value option="desc" />
-				</values>
-			</parameter>
-		</function>
+		
 		
 	</functions>
 </dictionary>
