@@ -25,9 +25,7 @@
 package com.rohanclan.cfml.editors;
 
 import java.util.LinkedList;
-import java.util.Iterator;
 
-import java.util.regex.*;
 import org.eclipse.swt.widgets.Composite;
 
 import com.rohanclan.cfml.CFMLPlugin;
@@ -35,20 +33,17 @@ import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.JumpToDocPos;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
+
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
-import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.eclipse.ui.texteditor.IDocumentProviderExtension;
-import org.eclipse.ui.texteditor.IStatusField;
+
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
@@ -58,16 +53,18 @@ import org.eclipse.jface.text.source.*;
 import org.eclipse.jface.text.source.projection.*;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 
 import org.eclipse.ui.internal.editors.text.EditorsPlugin;
+import org.eclipse.swt.dnd.*;
+
 
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import com.rohanclan.cfml.editors.actions.RTrimAction;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
-import com.rohanclan.cfml.parser.CFNodeList;
+import com.rohanclan.cfml.editors.decoration.DecorationSupport;
+import com.rohanclan.cfml.editors.dnd.*;
 
 
 import org.eclipse.jface.action.Action;
@@ -85,7 +82,6 @@ import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
-import org.eclipse.swt.dnd.*;
 
 /**
  * @author Rob
@@ -119,7 +115,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	boolean fIsChangeInformationShown;
 	
 	private ProjectionSupport fProjectionSupport; 
+
+	private DragSource dragsource;
 	
+	private SourceViewer viewer;
 	
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
@@ -148,7 +147,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		
 	}
 
-	private DragSource dragsource;
 
 	public CFMLEditor() {
 		super();
@@ -216,9 +214,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		super.createPartControl(parent);
 		this.setBackgroundColor();
 		
+		fSourceViewerDecorationSupport.install(getPreferenceStore());
 		
         ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
-
+        
         fProjectionSupport = new ProjectionSupport(projectionViewer,
                 getAnnotationAccess(), getSharedColors());
         fProjectionSupport
@@ -238,15 +237,30 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 
 		foldingSetter = new CodeFoldingSetter(this);
         foldingSetter.docChanged(true);
+        
+        // TODO: If we set this directly the projection viewer loses track of the line numbers.
+        // Need to create a class that extends projectionViewer so we can implement wrapped
+        // line tracking.
+        //projectionViewer.getTextWidget().setWordWrap(true);
+        
+        SelectionCursorListener cursorListener = new SelectionCursorListener(this,projectionViewer);
+        projectionViewer.getTextWidget().addMouseMoveListener(cursorListener);
+        //projectionViewer.getTextWidget().addMouseTrackListener(cursorListener);
+        projectionViewer.addSelectionChangedListener(cursorListener);
+        projectionViewer.getTextWidget().addMouseListener(cursorListener);
+        createDragAndDrop(cursorListener);
 
+	}
+	
+	
+	private void createDragAndDrop(SelectionCursorListener cursorListener) {
+	    
 		
-		/*
-		 * 
-		 * DRAG AND DROP stuff below here.
-		 */
 		//Allow data to be copied or moved from the drag source
 		int operations = DND.DROP_MOVE | DND.DROP_COPY;
 		dragsource = new DragSource(this.getSourceViewer().getTextWidget(), operations);
+		
+		
 		//Allow data to be copied or moved to the drop target
 		operations  = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
 		DropTarget  target = new DropTarget(this.getSourceViewer().getTextWidget(), operations);
@@ -261,153 +275,21 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		
 		types = new Transfer[] {fileTransfer, textTransfer};
 		target.setTransfer(types);
-				
-		dragsource.addDragListener(new DragSourceListener(){
-			public void dragStart(DragSourceEvent event) {
-			  	//Only start the drag if there is actually text in the
-				//label - this text will be what is dropped on the target.
-				
-				//get the selected text
-				ITextEditor editor = (ITextEditor)thistxt;
-				IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
-				ISelection sel = editor.getSelectionProvider().getSelection();
-				ITextSelection its = (ITextSelection)sel;
-				
-				if(its.getText().length() == 0) {
-					event.doit = false;
-				}
-				//System.err.println("Drag Start");
-			}
-
-			public void dragSetData(DragSourceEvent event) {
-				// Provide the data of the requested type.
-				if(TextTransfer.getInstance().isSupportedType(event.dataType)) {
-					//event.data = dragLabel.getText();
-					
-					//get the selected text
-					ITextEditor editor = (ITextEditor)thistxt;
-					IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
-					ISelection sel = editor.getSelectionProvider().getSelection();
-					ITextSelection its = (ITextSelection)sel;
-					event.data = its.getText();
-					
-					//System.err.println(event.data);
-				}
-				//System.err.println("Drag Set Data for " + event.dataType);
-			}
-
-			public void dragFinished(DragSourceEvent event) {
-				//If a move operation has been performed, remove the data
-				//from the source
-				if(event.detail == DND.DROP_MOVE){
-					//dragLabel.setText("");
-				}
-				//System.err.println("Drag Finished");
-			}
-		});
 		
-		target.addDropListener(new DropTargetListener() {
-			
-			public void dragEnter(DropTargetEvent event) {
-				if(event.detail == DND.DROP_DEFAULT) {
-					if ((event.operations & DND.DROP_COPY) != 0) {
-						event.detail = DND.DROP_COPY;
-					} else {
-						event.detail = DND.DROP_NONE;
-					}
-				}
-				
-				//we'll accept text but prefer to have files dropped
-				for (int i = 0; i < event.dataTypes.length; i++) {
-					if(fileTransfer.isSupportedType(event.dataTypes[i])){
-						event.currentDataType = event.dataTypes[i];
-						// files should only be copied
-						if (event.detail != DND.DROP_COPY) {
-							event.detail = DND.DROP_NONE;
-						}
-						break;
-					}
-				}
-			}
-			
-			public void dragOver(DropTargetEvent event) {
-				event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
-				if (textTransfer.isSupportedType(event.currentDataType)) {
-					//NOTE: on unsupported platforms this will return null
-					String t = (String)(textTransfer.nativeToJava(event.currentDataType));
-					if(t != null) {
-// System.out.println(t);
-					}
-				}
-			}
-			
-			public void dragOperationChanged(DropTargetEvent event){ 
-				if(event.detail == DND.DROP_DEFAULT) { 
-					/* event.detail = (event.operations & DND.DROP_COPY) != 0 ) {
-						event.detail = DND.DROP_COPY;
-					} else {	
-						event.detail = DND.DROP_NONE;
-					} */
-				}
-			
-				//allow text to be moved but files should only be copied
-				if(fileTransfer.isSupportedType(event.currentDataType)){
-					if(event.detail != DND.DROP_COPY) {
-						event.detail = DND.DROP_NONE;
-					}
-				}
-			}
-			
-			public void dragLeave(DropTargetEvent event){;}
-			public void dropAccept(DropTargetEvent event){;}
-			
-			public void drop(DropTargetEvent event) {
-				//if we get a text drop
-				if(textTransfer.isSupportedType(event.currentDataType)) {
-					String text =  (String)event.data;
-					//System.out.println(text);
-					
-					//TODO: this just drops stuff where the cursor was last - so
-					//it works kind of oddly
-					ITextEditor editor = (ITextEditor)thistxt;
-					IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
-					ISelection sel = editor.getSelectionProvider().getSelection();
-					ITextSelection its = (ITextSelection)sel;
-					
-					int offset = its.getOffset();
-					int len  = its.getLength();
-					
-					try
-					{
-						doc.replace(offset, len, text);
-					}
-					catch(BadLocationException ble)
-					{
-						ble.printStackTrace(System.err);
-					}
-				}
-				
-				//file drop 
-				if(fileTransfer.isSupportedType(event.currentDataType)){
-					String[] files = (String[]) event.data;
-					
-					com.rohanclan.cfml.editors.actions.GenericOpenFileAction
-					gofa = new com.rohanclan.cfml.editors.actions.GenericOpenFileAction();
-					
-					for(int i = 0; i < files.length; i++) {
-// System.out.println("File: " + files[i]);
-						gofa.setFilename(files[i]);
-						gofa.run();
-					}
-				}
-			}
-		});
+		CFEDragDropListener ddListener = new CFEDragDropListener(this,(ProjectionViewer)this.getSourceViewer(),cursorListener);
 		
+		dragsource.addDragListener(ddListener);
 		
+		target.addDropListener(ddListener);
 		
-		
-		
-	}	/**
+	}	
+	
+	    
+	    
+	
+	
+	
+	/**
 		  * {@inheritDoc}
 		  */
 	protected void editorContextMenuAboutToShow(IMenuManager menu) {
@@ -596,7 +478,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	    handlePreferenceStoreChanged(event);
 	}
 	
-	
+
 	
 	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {
 	    if (event.getProperty().equals("tabsAsSpaces")
@@ -696,7 +578,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	protected void configureSourceViewerDecorationSupport(
 			SourceViewerDecorationSupport support)
 	{
-		//register the pair matcher
+
+	    //register the pair matcher
 		support.setCharacterPairMatcher(cfmlBracketMatcher);
 		
 		//register the brackets and colors
@@ -718,6 +601,24 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(viewer);
 		return viewer;
+
+		
 	}
 	
+	
+	/**
+	 * Returns the source viewer decoration support.
+	 * 
+	 * @param viewer the viewer for which to return a decoration support
+	 * @return the source viewer decoration support
+	 */
+	protected SourceViewerDecorationSupport getSourceViewerDecorationSupport(ISourceViewer viewer) {
+		
+	    if (fSourceViewerDecorationSupport == null) {
+			fSourceViewerDecorationSupport= new DecorationSupport(viewer, getOverviewRuler(), getAnnotationAccess(), getSharedColors());
+			configureSourceViewerDecorationSupport(fSourceViewerDecorationSupport);
+		}
+		return fSourceViewerDecorationSupport;
+	}
+
 }
