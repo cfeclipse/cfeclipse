@@ -64,23 +64,23 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 
-public class CFConfiguration extends SourceViewerConfiguration 
-	implements IPropertyChangeListener {
+public class CFConfiguration extends SourceViewerConfiguration implements IPropertyChangeListener {
+	
 	private CFDoubleClickStrategy doubleClickStrategy;
 	/** the default html tag scanner */
-	private HTMTagScanner htmtagScanner;
+	//private HTMTagScanner htmtagScanner;
 	/** the default html tag scanner */
-	private HTMTagScanner unktagScanner;
+	//private HTMTagScanner unktagScanner;
 	/** the cold fusion tag scanner */
-	private CFTagScanner cftagScanner;
+	//private CFTagScanner cftagScanner;
 	/** plain text scanner (nodes values)*/
-	private TextScanner scanner;
+	//private TextScanner scanner;
 	/** cfscript block scanner */
-	private CFScriptScanner cfscriptscanner;
+	//private CFScriptScanner cfscriptscanner;
 	/** style block scanner */
-	private StyleScanner stylescanner;
+	//private StyleScanner stylescanner;
 	/** script (as in javascript) block scanner */
-	private ScriptScanner scriptscanner;
+	//private ScriptScanner scriptscanner;
 	
 	private ColorManager colorManager;
 	
@@ -93,11 +93,14 @@ public class CFConfiguration extends SourceViewerConfiguration
 	
 	private int tabWidth;
 
+	/** the default color token for text */
+	//private Token TextToken;
+	
+	
 	/**
 	 * Need a color manager to get partition colors
 	 * @param colorManager that would be the color manager
 	 */
-	
 	private void configTagIndentStrat() {
 		indentTagStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
 		indentTagStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
@@ -134,7 +137,6 @@ public class CFConfiguration extends SourceViewerConfiguration
 	
 	/**
 	 * This defines what sections (partitions) are valid for the document
-	 * (I think)
 	 */
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) 
 	{	
@@ -154,7 +156,8 @@ public class CFConfiguration extends SourceViewerConfiguration
 	}
 	
 	/**
-	 * get the double click strat-m-gee for the view & content type = (section, partition)
+	 * get the double click strat-m-gee for the view & content type = (section, 
+	 * partition)
 	 */
 	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer,
 		String contentType) 
@@ -165,6 +168,7 @@ public class CFConfiguration extends SourceViewerConfiguration
 		return doubleClickStrategy;
 	}
 
+	///////////////////////// SCANNERS /////////////////////////////////////////////
 	/**
 	 * get the scanner for the document and set the default return color
 	 * type i.e. the plain text on the document (not a tag)
@@ -173,16 +177,18 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 */
 	protected TextScanner getTextScanner() 
 	{
-		if (scanner == null) {
-			scanner = new TextScanner(colorManager);
-			scanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						colorManager.getColor(ICFColorConstants.DEFAULT)
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT
 					)
-				)
-			);
-		}
+				) 
+			)
+		);
+	
+		TextScanner scanner = new TextScanner(colorManager);
+		scanner.setDefaultReturnToken(textToken);
 		return scanner;
 	}
 	
@@ -194,17 +200,18 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 */
 	protected HTMTagScanner getHTMTagScanner() 
 	{
-		if (htmtagScanner == null) 
-		{
-			htmtagScanner = new HTMTagScanner(colorManager);
-			htmtagScanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						colorManager.getColor(ICFColorConstants.TAG)
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_HTM_TAG
 					)
 				)
-			);
-		}
+			)
+		);
+	
+		HTMTagScanner htmtagScanner = new HTMTagScanner(colorManager,preferenceManager);
+		htmtagScanner.setDefaultReturnToken(textToken);
 		return htmtagScanner;
 	}
 	
@@ -216,17 +223,18 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 */
 	protected HTMTagScanner getUNKTagScanner() 
 	{
-		if (unktagScanner == null) 
-		{
-			unktagScanner = new HTMTagScanner(colorManager);
-			unktagScanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						colorManager.getColor(ICFColorConstants.UNK_TAG)
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_UNK_TAG
 					)
 				)
-			);
-		}
+			)
+		);
+	
+		HTMTagScanner unktagScanner = new HTMTagScanner(colorManager,preferenceManager);
+		unktagScanner.setDefaultReturnToken(textToken);
 		return unktagScanner;
 	}
 	
@@ -237,17 +245,18 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 */
 	protected CFTagScanner getCFTagScanner() 
 	{
-		if (cftagScanner == null) 
-		{
-			cftagScanner = new CFTagScanner(colorManager);
-			cftagScanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						colorManager.getColor(ICFColorConstants.CFTAG)
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_CFTAG
 					)
 				)
-			);
-		}
+			)
+		);
+	
+		CFTagScanner cftagScanner = new CFTagScanner(colorManager, preferenceManager);
+		cftagScanner.setDefaultReturnToken(textToken);
 		return cftagScanner;
 	}
 	
@@ -258,17 +267,17 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 */
 	protected CFScriptScanner getCFScriptScanner() 
 	{
-		if(cfscriptscanner == null) 
-		{
-			cfscriptscanner = new CFScriptScanner(colorManager);
-			cfscriptscanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						colorManager.getColor(ICFColorConstants.CFSCRIPT)
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_CFSCRIPT_TEXT
 					)
 				)
-			);
-		}
+			)
+		);
+		CFScriptScanner cfscriptscanner = new CFScriptScanner(colorManager, preferenceManager);
+		cfscriptscanner.setDefaultReturnToken(textToken);		
 		return cfscriptscanner;
 	}
 	
@@ -279,17 +288,17 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 */
 	protected StyleScanner getStyleScanner() 
 	{
-		if(stylescanner == null) 
-		{
-			stylescanner = new StyleScanner(colorManager);
-			stylescanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						colorManager.getColor(ICFColorConstants.CSS)
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_CSS
 					)
 				)
-			);
-		}
+			)
+		);
+		StyleScanner stylescanner = new StyleScanner(colorManager, preferenceManager);
+		stylescanner.setDefaultReturnToken(textToken);
 		return stylescanner;
 	}
 	
@@ -300,20 +309,20 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 */
 	protected ScriptScanner getScriptScanner() 
 	{
-		if(scriptscanner == null) 
-		{
-			scriptscanner = new ScriptScanner(colorManager);
-			scriptscanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						colorManager.getColor(ICFColorConstants.DEFAULT)
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT
 					)
 				)
-			);
-		}
-		
+			)
+		);
+		ScriptScanner scriptscanner = new ScriptScanner(colorManager, preferenceManager);
+		scriptscanner.setDefaultReturnToken(textToken);
 		return scriptscanner;
 	}
+	///////////////////////// SCANNERS /////////////////////////////////////////////
 	
 	/**
 	 * get all the damager and repairers for the source type
@@ -332,8 +341,6 @@ public class CFConfiguration extends SourceViewerConfiguration
 		reconciler.setDamager(dr, CFPartitionScanner.ALL_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.ALL_TAG);
 		
-		
-		
 		//javascript tag
 		dr = new DefaultDamagerRepairer(getScriptScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.J_SCRIPT);
@@ -343,7 +350,6 @@ public class CFConfiguration extends SourceViewerConfiguration
 		dr = new DefaultDamagerRepairer(getStyleScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CSS_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.CSS_TAG);
-		
 		
 		//CF script (if this is put before the cfscript stuff
 		//you'll get jacked up keyword highlighting
@@ -375,7 +381,11 @@ public class CFConfiguration extends SourceViewerConfiguration
 		//set up the cf comment section
 		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(
 			new TextAttribute(
-				colorManager.getColor(ICFColorConstants.CF_COMMENT)
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_CFCOMMENT
+					)
+				)
 			)
 		);
 		reconciler.setDamager(ndr, CFPartitionScanner.CF_COMMENT);
@@ -384,7 +394,11 @@ public class CFConfiguration extends SourceViewerConfiguration
 		//set up the html comment section
 		NonRuleBasedDamagerRepairer ndr2 = new NonRuleBasedDamagerRepairer(
 			new TextAttribute(
-				colorManager.getColor(ICFColorConstants.HTM_COMMENT)
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_HTM_COMMENT
+					)
+				)
 			)
 		);
 		reconciler.setDamager(ndr2, CFPartitionScanner.HTM_COMMENT);
@@ -393,7 +407,11 @@ public class CFConfiguration extends SourceViewerConfiguration
 		//set up the doctype section
 		NonRuleBasedDamagerRepairer ndr3 = new NonRuleBasedDamagerRepairer(
 			new TextAttribute(
-				colorManager.getColor(ICFColorConstants.DOCTYPE)
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_HTM_COMMENT
+					)
+				)
 			)
 		);
 		reconciler.setDamager(ndr3, CFPartitionScanner.DOCTYPE);
@@ -416,6 +434,11 @@ public class CFConfiguration extends SourceViewerConfiguration
 		assistant.setContextSelectorForeground(
 			colorManager.getColor(new RGB(0,0,0))
 		);
+		
+		assistant.setContextInformationPopupBackground(
+			colorManager.getColor(new RGB(0,0,0))
+		);
+		
 		
 		CFCompletionProcessor cfcp = new CFCompletionProcessor(assistant);
 	
@@ -454,7 +477,7 @@ public class CFConfiguration extends SourceViewerConfiguration
 		assistant.setAutoActivationDelay(delay);
 		
 		assistant.setProposalPopupOrientation(
-				IContentAssistant.PROPOSAL_OVERLAY
+			IContentAssistant.PROPOSAL_OVERLAY
 		);		
 		
 
@@ -515,53 +538,50 @@ public class CFConfiguration extends SourceViewerConfiguration
 		System.err.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
     	
-        if(prop.equals("insightDelay")) {
-    		int delay = preferenceManager.insightDelay();
-    		assistant.enableAutoActivation(true);
-    		assistant.setAutoActivationDelay(delay);
-    		//System.err.println("Insight delay set to " + delay);
+		if(prop.equals("insightDelay")) {
+			int delay = preferenceManager.insightDelay();
+			assistant.enableAutoActivation(true);			
+			assistant.setAutoActivationDelay(delay);
+    			//System.err.println("Insight delay set to " + delay);
         }
         else if(prop.equals("tabsAsSpaces") || prop.equals("tabWidth")) {
-    		tabWidth = preferenceManager.tabWidth();
-    		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
-        	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
-        	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
+	    		tabWidth = preferenceManager.tabWidth();
+	    		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
+	        	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
+	        	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
         }
         else if(prop.equals("dreamweaverCompatibility")) {
-        	indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
+        		indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
         }
         else if(prop.equals("homesiteCompatibility")) {
-        	indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
+        		indentCFScriptStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES)) {
-        	indentTagStrategy.setAutoClose_DoubleQuotes(((Boolean)event.getNewValue()).booleanValue());
+        		indentTagStrategy.setAutoClose_DoubleQuotes(((Boolean)event.getNewValue()).booleanValue());
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES)) {
-        	indentTagStrategy.setAutoClose_SingleQuotes(((Boolean)event.getNewValue()).booleanValue());
+        		indentTagStrategy.setAutoClose_SingleQuotes(((Boolean)event.getNewValue()).booleanValue());
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_HASHES)) {
-        	indentTagStrategy.setAutoClose_Hashes(((Boolean)event.getNewValue()).booleanValue());
+        		indentTagStrategy.setAutoClose_Hashes(((Boolean)event.getNewValue()).booleanValue());
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOCLOSE_TAGS)) {
-        	indentTagStrategy.setAutoClose_Tags(((Boolean)event.getNewValue()).booleanValue());
+        		indentTagStrategy.setAutoClose_Tags(((Boolean)event.getNewValue()).booleanValue());
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
-        	indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
+        		indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
-        	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
-        	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
+	        	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
+	        	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
-        	boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
-        	try {
-        		CFMLPlugin.getWorkspace().getRoot().deleteMarkers(null, true, IResource.DEPTH_INFINITE);
-        	}catch(CoreException ex) {
-        		ex.printStackTrace();
-        	}
+	        	boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
+	        	try {
+	        		CFMLPlugin.getWorkspace().getRoot().deleteMarkers(null, true, IResource.DEPTH_INFINITE);
+	        	}catch(CoreException ex) {
+	        		ex.printStackTrace();
+	        	}
         }
-
     }
-
-	
 }

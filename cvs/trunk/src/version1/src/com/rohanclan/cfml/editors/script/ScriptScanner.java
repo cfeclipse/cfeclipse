@@ -35,7 +35,7 @@ import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.TextAttribute;
 import com.rohanclan.cfml.editors.ColorManager;
-import com.rohanclan.cfml.editors.ICFColorConstants;
+//import com.rohanclan.cfml.editors.ICFColorConstants;
 import com.rohanclan.cfml.editors.CFKeywordDetector;
 import com.rohanclan.cfml.editors.PredicateWordRule;
 
@@ -46,6 +46,7 @@ import java.util.List;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.CFPartitionScanner;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 /**
  * @author Rob
@@ -54,38 +55,57 @@ import com.rohanclan.cfml.editors.CFPartitionScanner;
  */
 public class ScriptScanner extends RuleBasedScanner {
 	
-	public ScriptScanner(ColorManager manager)
+	public ScriptScanner(ColorManager manager, CFMLPreferenceManager prefs)
 	{
 		super();
 		
 		IToken defaulttoken = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.DEFAULT))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT)
+			)
+		));
 		
 		IToken cfnumber = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFNUMBER))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFNUMBER)
+			)
+		));
 		
+		IToken scripttag = new Token(new TextAttribute(
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_JSCRIPT_TEXT)
+			)
+		));
+		/*
 		IToken scripttag = new Token(new TextAttribute(
 			manager.getColor(ICFColorConstants.JSCRIPT))
 		);
+		*/
 		
-		IToken cfcomment = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.HTM_COMMENT))
-		);
+		IToken comment = new Token(new TextAttribute(
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_HTM_COMMENT)
+			)
+		));
 		
 		IToken string = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFSCRIPT_STRING))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_STRING)
+			)
+		));
 		
 		IToken keyword = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFSCRIPT_KEYWORD))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_KEYWORD)
+			)
+		));
 		
 		IToken function = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.JSCRIPT_FUNCTION))
-		);
-				
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_JSCRIPT_FUNCTION)
+			)
+		));
+						
 		List rules = new ArrayList();
 		
 		//style the whole block with some default colors
@@ -155,8 +175,8 @@ public class ScriptScanner extends RuleBasedScanner {
 		rules.add(wr);
 		
 		///////////////////////////////////////////////////////////////////////
-		rules.add(new MultiLineRule("/*", "*/", cfcomment));
-		rules.add(new EndOfLineRule("//", cfcomment));
+		rules.add(new MultiLineRule("/*", "*/", comment));
+		rules.add(new EndOfLineRule("//", comment));
 		
 		rules.add(new SingleLineRule("\"", "\"", string, '\\'));
 		rules.add(new SingleLineRule("'", "'", string, '\\'));

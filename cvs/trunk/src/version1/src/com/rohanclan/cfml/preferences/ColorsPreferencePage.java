@@ -44,14 +44,14 @@ import com.rohanclan.cfml.CFMLPlugin;
 public class ColorsPreferencePage extends FieldEditorPreferencePage implements 
 	IWorkbenchPreferencePage, ICFMLPreferenceConstants {
 	
-	CFMLPreferenceManager cfmlpm;
+	//CFMLPreferenceManager cfmlpm;
 	
 	public ColorsPreferencePage() 
 	{
 		super(GRID);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		setDescription("Color Preferences for CFML editor.");
-		cfmlpm = new CFMLPreferenceManager();
+		//cfmlpm = new CFMLPreferenceManager();
 	}
 	
 	/**

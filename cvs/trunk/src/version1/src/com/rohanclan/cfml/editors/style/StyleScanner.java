@@ -26,10 +26,14 @@ package com.rohanclan.cfml.editors.style;
 
 import org.eclipse.jface.text.rules.*;
 import org.eclipse.jface.text.*;
+import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.rules.Token;
+
 import com.rohanclan.cfml.editors.ColorManager;
-import com.rohanclan.cfml.editors.ICFColorConstants;
+//import com.rohanclan.cfml.editors.ICFColorConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 //import com.rohanclan.coldfusionmx.editors.CFKeywordDetector;
 //import com.rohanclan.coldfusionmx.editors.SyntaxDictionary;
 
@@ -46,33 +50,33 @@ import java.util.List;
  */
 public class StyleScanner extends RuleBasedScanner {
 	
-	public StyleScanner(ColorManager manager)
+	public StyleScanner(ColorManager manager,CFMLPreferenceManager prefs)
 	{
 		super();
-		
-		//IToken cfnumber = new Token(new TextAttribute(
-		//	manager.getColor(ICFColorConstants.CFNUMBER))
-		//);
-		
+				
 		IToken styletag = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CSS_TAG))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CSS)
+			)
+		));
 		
 		IToken cfcomment = new Token(new TextAttribute(
-				manager.getColor(ICFColorConstants.HTM_COMMENT))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_HTM_COMMENT)
+			)
+		));
 		
 		IToken string = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFSCRIPT_STRING))
-		);
-		
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_STRING)
+			)
+		));
+			
 		IToken cfkeyword = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFSCRIPT_KEYWORD))
-		);
-		
-		/* IToken cffunction = new Token(new TextAttribute(
-				manager.getColor(ICFColorConstants.CFSCRIPT_FUNCTION))
-		); */
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_KEYWORD)
+			)
+		));
 		
 		List rules = new ArrayList();
 		

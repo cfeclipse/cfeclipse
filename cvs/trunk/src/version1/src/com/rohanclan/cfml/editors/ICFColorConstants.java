@@ -34,7 +34,7 @@ import org.eclipse.swt.graphics.RGB;
 
 public interface ICFColorConstants {
 	/** doctype */
-	RGB DOCTYPE		 		= new RGB(128, 128, 128);
+	//RGB DOCTYPE		 		= new RGB(128, 128, 128);
 	/** cf comments */
 	RGB CF_COMMENT 			= new RGB(128, 128, 128);
 	/** html comments */

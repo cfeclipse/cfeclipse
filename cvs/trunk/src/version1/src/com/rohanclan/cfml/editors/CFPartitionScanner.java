@@ -50,12 +50,12 @@ import java.util.Iterator;
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
 	public final static String DOCTYPE	 	= "__doctype";
-	public final static String CF_COMMENT 	= "__cf_comment";
+	public final static String CF_COMMENT		= "__cf_comment";
 	public final static String HTM_COMMENT 	= "__htm_comment";
 	public final static String CF_TAG 		= "__cf_tag";
-	public final static String CF_END_TAG 	= "__cf_end_tag";
+	public final static String CF_END_TAG		= "__cf_end_tag";
 	public final static String ALL_TAG 		= "__all_tag";
-	public final static String CF_SCRIPT	= "__cf_script";
+	public final static String CF_SCRIPT		= "__cf_script";
 	public final static String J_SCRIPT		= "__script_tag";
 	public final static String CSS_TAG		= "__css_tag";
 	public final static String UNK_TAG		= "__unk_tag";
@@ -66,9 +66,9 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken htmComment 	= new Token(HTM_COMMENT);
 		IToken tag 			= new Token(ALL_TAG);
 		IToken cftag 		= new Token(CF_TAG);
-		IToken cfendtag 	= new Token(CF_END_TAG);
+		IToken cfendtag 		= new Token(CF_END_TAG);
 		//IToken cfdefault 	= new Token(CF_DEFAULT);
-		IToken cfscript 	= new Token(CF_SCRIPT);
+		IToken cfscript		= new Token(CF_SCRIPT);
 		IToken jscript 		= new Token(J_SCRIPT);
 		IToken css 			= new Token(CSS_TAG);
 		IToken unktag		= new Token(UNK_TAG);

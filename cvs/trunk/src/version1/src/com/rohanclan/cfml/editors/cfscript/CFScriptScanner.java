@@ -36,9 +36,10 @@ import org.eclipse.jface.text.TextAttribute;
 
 import com.rohanclan.cfml.editors.CFKeywordDetector;
 import com.rohanclan.cfml.editors.ColorManager;
-import com.rohanclan.cfml.editors.ICFColorConstants;
+//import com.rohanclan.cfml.editors.ICFColorConstants;
 import com.rohanclan.cfml.editors.PredicateWordRule;
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 
 import java.util.Iterator;
@@ -53,38 +54,52 @@ import java.util.List;
  */
 public class CFScriptScanner extends RuleBasedScanner {
 
-	public CFScriptScanner(ColorManager manager)
+	public CFScriptScanner(ColorManager manager, CFMLPreferenceManager prefs)
 	{
 		super();
 		
 		IToken cfnumber = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFNUMBER))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFNUMBER)
+			)
+		));
 		
 		IToken cftag = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFTAG))
-		);
-		
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFTAG)
+			)
+		));
+	
 		IToken cfcomment = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CF_COMMENT))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFCOMMENT)
+			)
+		));
 		
 		IToken string = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFSCRIPT_STRING))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSTRING)
+			)
+		));
 		
 		IToken cfkeyword = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFSCRIPT_KEYWORD))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFKEYWORD)
+			)
+		));
 		
 		IToken cffunction = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFSCRIPT_FUNCTION))
-		);
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_CFSCRIPT_FUNCTION)
+			)
+		));
 		
 		IToken cfdefault = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.DEFAULT))
-		);
-		
+			manager.getColor(
+				prefs.getColor(CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT)
+			)
+		));
+				
 		List rules = new ArrayList();
 		
 		//so the script tags look correct

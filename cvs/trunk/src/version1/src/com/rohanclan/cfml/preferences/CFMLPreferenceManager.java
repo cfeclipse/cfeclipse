@@ -6,12 +6,11 @@
  */
 package com.rohanclan.cfml.preferences;
 
-import java.net.URL;
-
+//import java.net.URL;
 import org.eclipse.jface.preference.IPreferenceStore;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.ICFColorConstants;
-import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
+//import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.jface.resource.StringConverter;
@@ -26,25 +25,26 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	
 	private static final int DEFAULT_TAB_WIDTH = 4;
 	private static final int DEFAULT_INSIGHT_DELAY = 500;
-	private static final boolean DEFAULT_INSERT_SPACES_FOR_TABS = false;
-	private static final boolean DEFAULT_ENABLE_HS_COMPATIBILITY = false;
-	private static final boolean DEFAULT_ENABLE_DW_COMPATIBILITY = false;
+	
+	private static final boolean DEFAULT_INSERT_SPACES_FOR_TABS 	= false;
+	private static final boolean DEFAULT_ENABLE_HS_COMPATIBILITY 	= false;
+	private static final boolean DEFAULT_ENABLE_DW_COMPATIBILITY 	= false;
 
 	// Parser prefs
-	private static final boolean	DEFAULT_PARSE_DOCFSCRIPT 	= false;
-	private static final boolean	DEFAULT_PARSE_DOCFML	 	= true;
-	private static final boolean	DEFAULT_PARSE_REPORT_ERRORS = true; 
+	private static final boolean	DEFAULT_PARSE_DOCFSCRIPT 			= false;
+	private static final boolean	DEFAULT_PARSE_DOCFML	 			= true;
+	private static final boolean	DEFAULT_PARSE_REPORT_ERRORS 		= true; 
 	
 	// Tag indent prefs
 	private static final boolean	DEFAULT_AUTOCLOSE_DOUBLEQUOTES	= true;
-	private static final boolean	DEFAULT_AUTOCLOSE_SINGLEQUOTES	= true;
+	private static final boolean	DEFAULT_AUTOCLOSE_SINGLEQUOTES 	= true;
 	private static final boolean	DEFAULT_AUTOCLOSE_TAGS			= true;
-	private static final boolean	DEFAULT_AUTOCLOSE_HASHES		= true;
+	private static final boolean	DEFAULT_AUTOCLOSE_HASHES			= true;
 	private static final boolean	DEFAULT_AUTOINSERT_TAGS			= true;
-	private static final boolean	DEFAULT_AUTOINDENT_ONTAGCLOSE	= false;
+	private static final boolean	DEFAULT_AUTOINDENT_ONTAGCLOSE		= false;
 	
 	// Colour defaults
-	private static final RGB DEFAULT_COLOR_DOCTYPE 			= ICFColorConstants.DOCTYPE;
+	//private static final RGB DEFAULT_COLOR_DOCTYPE 		= ICFColorConstants.DOCTYPE;
 	private static final RGB DEFAULT_COLOR_CFCOMMENT 		= ICFColorConstants.CF_COMMENT;
 	private static final RGB DEFAULT_COLOR_CFKEYWORD 		= ICFColorConstants.CFKEYWORD;
 	private static final RGB DEFAULT_COLOR_CFNUMBER 		= ICFColorConstants.CFNUMBER;
@@ -54,13 +54,13 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final RGB DEFAULT_COLOR_CFSCRIPT_STRING 	= ICFColorConstants.CFSCRIPT_STRING;
 	private static final RGB DEFAULT_COLOR_CFSTRING 		= ICFColorConstants.CFSTRING;
 	private static final RGB DEFAULT_COLOR_CFTAG 			= ICFColorConstants.CFTAG;
-	private static final RGB DEFAULT_COLOR_CSS 				= ICFColorConstants.CSS;
-	private static final RGB DEFAULT_COLOR_DEFAULT 			= ICFColorConstants.DEFAULT;
+	private static final RGB DEFAULT_COLOR_CSS 			= ICFColorConstants.CSS;
+	private static final RGB DEFAULT_COLOR_DEFAULT 		= ICFColorConstants.DEFAULT;
 	private static final RGB DEFAULT_COLOR_HTMCOMMENT	 	= ICFColorConstants.HTM_COMMENT;
-	private static final RGB DEFAULT_COLOR_JSCRIPT 			= ICFColorConstants.JSCRIPT;
+	private static final RGB DEFAULT_COLOR_JSCRIPT 		= ICFColorConstants.JSCRIPT;
 	private static final RGB DEFAULT_COLOR_JSCRIPTFUNCTION 	= ICFColorConstants.JSCRIPT_FUNCTION;
 	private static final RGB DEFAULT_COLOR_STRING 			= ICFColorConstants.STRING;
-	private static final RGB DEFAULT_COLOR_TAG 				= ICFColorConstants.TAG;
+	private static final RGB DEFAULT_COLOR_TAG 			= ICFColorConstants.TAG;
 	private static final RGB DEFAULT_COLOR_UNKTAG 			= ICFColorConstants.UNK_TAG;
 	
 	/** this is public because the browser uses it on errors */
@@ -68,6 +68,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	
 	public CFMLPreferenceManager() {
 		store = CFMLPlugin.getDefault().getPreferenceStore();
+		//initialiseDefaultColours();
 	}
 
 	public boolean getBooleanPref(String prefKey) {
@@ -76,7 +77,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 
 	/**
 	 * Sets up all of the colours... Note proper spelling of 'colour' :D
-	 *
+	 * (and initialise not initialize)
 	 */
 	public void initialiseDefaultColours() {
 		store.setDefault(P_COLOR_CFKEYWORD, DEFAULT_COLOR_CFKEYWORD.toString());
@@ -84,6 +85,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		//store.setDefault(P_COLOR_, DEFAULT_COLOR_CFCOMMENT.toString());
 		
 		store.setDefault(P_COLOR_CFNUMBER, DEFAULT_COLOR_CFNUMBER.toString());
+		store.setDefault(P_COLOR_CFCOMMENT, DEFAULT_COLOR_CFCOMMENT.toString());
 		store.setDefault(P_COLOR_CFSCRIPT_TEXT, DEFAULT_COLOR_CFSCRIPT.toString());
 		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION, DEFAULT_COLOR_CFSCRIPTFUNCTION.toString());
 		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD, DEFAULT_COLOR_CFSCRIPT_KEYWORD.toString());
@@ -98,7 +100,6 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		store.setDefault(P_COLOR_STRING, DEFAULT_COLOR_STRING.toString());
 		store.setDefault(P_COLOR_HTM_TAG, DEFAULT_COLOR_TAG.toString());
 		store.setDefault(P_COLOR_UNK_TAG, DEFAULT_COLOR_UNKTAG.toString());
-		
 	}
 	
 	public void initializeDefaultValues() {
@@ -145,21 +146,61 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
 	}
 	
+	/**
+	 * Gets an RGB from the preference store using key as the key. If the key
+	 * does not exist, it returns 0,0,0
+	 * @param key
+	 * @return
+	 */
 	public RGB getColor(String key)
 	{
+		//try to get the color as a string from the store
 		String rgbString = store.getString(key);
-
-		if (rgbString.length() <= 0)
+		System.err.println(key + " :: " + rgbString);
+		
+		//if we didnt get anything back...
+		if(rgbString.length() <= 0)
 		{
+			//try to get it from the default settings
 			rgbString = store.getDefaultString(key);
-			if(rgbString.length() <= 0) 
+			
+			//if we still didnt get anything use black
+			if(rgbString.length() <= 0)
 			{
+				System.err.println("Color key: " + key + " is a no show using black");
 				rgbString = "0,0,0";
 			}
 		}
-		return StringConverter.asRGB(rgbString);
+		
+		//make sure we get an ok string
+		rgbString = deParen(rgbString);
+		
+		RGB newcolor = null;
+		try
+		{
+			newcolor = StringConverter.asRGB(deParen(rgbString));
+		}
+		catch(Exception e)
+		{
+			System.err.println("Woah... got an odd color passed: " + key);
+			e.printStackTrace(System.err);
+		}
+		
+		return newcolor;
 	}
 	
+	/**
+	 * for some reason the color can get stored as  {RGB 12, 1, 1} and the rbg maker
+	 * thingy expects them in 12,1,1, format so this cleans up the string a bit
+	 * @param item
+	 * @return
+	 */
+	private String deParen(String item)
+	{
+		String d = item.replace('{',' ').replace('}',' '); 
+		d = d.replaceAll("[RGB ]","").trim();
+		return d;
+	}
 	
 	public int tabWidth() {
 		return Integer.parseInt(store.getString(ICFMLPreferenceConstants.P_TAB_WIDTH).trim());
@@ -198,8 +239,6 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	public boolean defaultHomesiteCompatibility() {
 		return DEFAULT_ENABLE_HS_COMPATIBILITY;
 	}
-	
-	
 	
 	public boolean dreamweaverCompatibility() {
 		return store.getString(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY).trim().equalsIgnoreCase("true");

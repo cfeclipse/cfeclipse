@@ -118,64 +118,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		super.stop(context);
 	}
 	
-	
-	
-	
-	//private CFMLPreferenceManager preferenceManager;
-	/**
-	 * The constructor. This is supposedly replaced with
-	 * public CFMLPlugin()
-	 * {
-	 *	 super();
-	 * ...
-	 * but if I try to do it that way I get errors and the editor
-	 * wont work
-	 */
-	/* public CFMLPlugin(IPluginDescriptor descriptor)
-	{
-		super(descriptor);
-	
-		plugin = this;
-		
-	//System.out.println(
-			"Property store file set to " + 
-			CFMLPlugin.getDefault().getStateLocation().toString()
-			+ "/properties.ini"
-		);
-		propertyStore = new PreferenceStore(
-			CFMLPlugin.getDefault().getStateLocation().toString()
-			+ "/properties.ini"
-		);
-		
-		
-		try 
-		{
-			resourceBundle = ResourceBundle.getBundle(
-				//"com.rohanclan.cfml.CFMLPluginResources"
-				"plugin"
-			);	
-		} 
-		catch (MissingResourceException x) 
-		{
-			x.printStackTrace(System.err);
-			resourceBundle = null;
-		}
-		
-		try
-		{
-			//load all the syntax dictionaries (they dont really load right now)
-			DictionaryManager.initDictionaries();
-			
-			//startup the image registry
-			CFPluginImages.initCFPluginImages();
-		}
-		catch(Exception e)
-		{
-			//lots of bad things can happen...
-			e.printStackTrace(System.err);
-		}
-	} */
-	
 	protected void initializeDefaultPluginPreferences() 
 	{
         //super.initializeDefaultPluginPreferences();

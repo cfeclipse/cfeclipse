@@ -27,6 +27,8 @@ package com.rohanclan.cfml.editors;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.rules.*;
 
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+
 /**
  * @author Rob
  *
@@ -34,11 +36,23 @@ import org.eclipse.jface.text.rules.*;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class HTMTagScanner extends RuleBasedScanner {
-
-	public HTMTagScanner(ColorManager manager) {
-		IToken string =	new Token(
+		
+	public HTMTagScanner(ColorManager manager, CFMLPreferenceManager prefs)
+	{
+		/* IToken string =	new Token(
 			new TextAttribute(manager.getColor(ICFColorConstants.STRING))
+		); */
+		
+		Token string = new Token(
+			new TextAttribute(
+				manager.getColor(
+					prefs.getColor(
+						CFMLPreferenceManager.P_COLOR_STRING
+					)
+				)
+			)
 		);
+		
 		
 		//IToken cfvar = new Token(new TextAttribute(
 		//	manager.getColor(IXMLColorConstants.CFVARIABLE))

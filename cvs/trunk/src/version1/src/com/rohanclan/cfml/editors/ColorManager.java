@@ -32,10 +32,19 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * allocates and controls the color resources for  cfe
+ * @author robrohan
+ *
+ */
 public class ColorManager {
 
 	protected Map fColorTable = new HashMap(10);
 
+	/**
+	 * cleans everything up releases resources
+	 *
+	 */
 	public void dispose()
 	{
 		Iterator e = fColorTable.values().iterator();
@@ -46,6 +55,11 @@ public class ColorManager {
 		}
 	}
 	
+	/**
+	 * allocates a color
+	 * @param rgb
+	 * @return
+	 */
 	public Color getColor(RGB rgb)
 	{
 		Color color = (Color) fColorTable.get(rgb);

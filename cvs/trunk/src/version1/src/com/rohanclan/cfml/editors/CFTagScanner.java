@@ -35,6 +35,7 @@ import org.eclipse.jface.text.rules.WhitespaceRule;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -46,30 +47,40 @@ import java.util.Set;
  * it can
  */
 public class CFTagScanner extends RuleBasedScanner {
-
-	public CFTagScanner(ColorManager manager) 
+	
+	public CFTagScanner(ColorManager manager,CFMLPreferenceManager prefManager)
 	{
 		super();
 		
-		IToken cftag =	new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFTAG))
-		);
+		IToken cftag = new Token(new TextAttribute(
+			manager.getColor(
+				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFTAG)
+			)
+		));
 		
 		IToken string =	new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.STRING))
-		);
+			manager.getColor(
+				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFSTRING)
+			)
+		));
 		
 		IToken cfnumber = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFNUMBER))
-		);
+			manager.getColor(
+				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFNUMBER)
+			)
+		));
 		
 		IToken cfkeyword = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.CFKEYWORD))
-		);
+			manager.getColor(
+				prefManager.getColor(CFMLPreferenceManager.P_COLOR_CFKEYWORD)
+			)
+		));
 		
 		IToken cfdefault = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.DEFAULT))
-		);
+			manager.getColor(
+				prefManager.getColor(CFMLPreferenceManager.P_COLOR_DEFAULT_TEXT)
+			)
+		));
 		
 		///////////////////////////////////////////////////////////////////////
 		
@@ -84,6 +95,7 @@ public class CFTagScanner extends RuleBasedScanner {
 		
 		Set set = cfd.getOperators();
 		String allkeys[] = new String[set.size()<<1];
+		
 		int i=0;
 		Iterator it = set.iterator();
 		while(it.hasNext())
