@@ -59,12 +59,12 @@ public class DictionaryManager {
 		SyntaxDictionary dic = new CFSyntaxDictionary();
 		//when all is done this will actually load a dictionary
 		dic.loadDictionary("cfml.xml");
+		dic.loadDictionary("user.xml");
 		addDictionary(CFDIC,dic);
 		
 		dic = new HTMLSyntaxDictionary();
 		dic.loadDictionary("html.xml");
 		addDictionary(HTDIC,dic);
-		
 		
 		dic = new JSSyntaxDictionary();
 		addDictionary(JSDIC,dic);
