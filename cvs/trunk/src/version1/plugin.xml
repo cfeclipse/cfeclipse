@@ -314,6 +314,25 @@
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
          </action>
       </viewerContribution>
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="com.rohanclan.cfml.contribution1">
+		 <action
+         enablesFor="1"
+         label="Apply CFE Nature"
+         class="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"
+         tooltip="Associated the project with CFEclipse"
+         menubarPath="com.rohanclan.cfml.menu1"
+         id="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"/>
+         <menu
+               label="New Submenu"
+               path="additions"
+               id="com.rohanclan.cfml.menu1">
+            <separator name="group1"/>
+         </menu>
+        
+      </objectContribution>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Commands -->
@@ -692,5 +711,36 @@
             <description>Create a new CFC</description>
       </wizard>
    </extension>
-
+   <extension
+         id="CFENature"
+         name="CFE Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="com.rohanclan.cfml.natures.CFENature"/>
+      </runtime>
+      <one-of-nature id="CFEclipse-2.one-of-nature1"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.resourceFilters">
+      <filter pattern="*.cfml">
+         <description>
+            CFML Filter
+         </description>
+      </filter>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerImageProviders">
+      <imageprovider
+            markertype="org.eclipse.core.resources.problemmarker"
+            icon="taskicon.gif"
+            id="com.rohanclan.cfml.ui.ide.ProblemMarker"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            natureId="com.rohanclan.cfml.CFENature"
+            icon="icons/obj16/project-overlay.png"
+            id="com.rohanclan.cfml.CFENature_Image"/>
+   </extension>
+  
 </plugin>
