@@ -7448,7 +7448,7 @@
 				var = "variable_name"
 			/cftrace
 		-->
-		<tag name="trace" creator="1" single="false" xmlstyle="false">
+		<tag name="trace" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Displays and logs debugging data about the state of an 
 				application at the time the cftrace tag executes. Tracks 
