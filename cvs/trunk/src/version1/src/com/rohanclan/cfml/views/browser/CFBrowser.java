@@ -295,7 +295,9 @@ public class CFBrowser{
 			{
 				public void changed(StatusTextEvent event)
 				{
-					status.setText(event.text);
+				    if (!status.isDisposed()) {
+				        status.setText(event.text);
+				    }
 				}
 			});
 			

@@ -682,10 +682,10 @@
             id="com.rohanclan.cfml.editors.actions.CFComment">
       </command>
       <keyBinding
-            string="Ctrl+Shift+M"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFComment"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+M">
       </keyBinding>
 	<!-- comment based on section (i.e. js comments in js blocks, etc) -->
       <command
@@ -695,10 +695,10 @@
             id="com.rohanclan.cfml.editors.actions.AutoComment">
       </command>
       <keyBinding
-            string="Ctrl+Shift+C"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.AutoComment"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+C">
       </keyBinding>
 	<!-- enclose in pound ... er ... hash signs -->
       <command
@@ -708,10 +708,10 @@
             id="com.rohanclan.cfml.editors.actions.CFVariable">
       </command>
       <keyBinding
-            string="Ctrl+3"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFVariable"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+3">
       </keyBinding>
 	<!-- enclose in single quotes -->
       <command
@@ -721,10 +721,10 @@
             id="com.rohanclan.cfml.editors.actions.CFSingleQuote">
       </command>
       <keyBinding
-            string="Ctrl+&apos;"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFSingleQuote"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+&apos;">
       </keyBinding>
 	<!-- enclose in double quotes -->
       <command
@@ -734,10 +734,10 @@
             id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
       </command>
       <keyBinding
-            string="Ctrl+Shift+&apos;"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+&apos;">
       </keyBinding>
 	<!-- enclose in cfoutputs -->
       <command
@@ -747,10 +747,10 @@
             id="com.rohanclan.cfml.editors.actions.CFOutput">
       </command>
       <keyBinding
-            string="Ctrl+Shift+O"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFOutput"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+O">
       </keyBinding>
 	<!-- enclose in cfdump -->
       <command
@@ -760,10 +760,10 @@
             id="com.rohanclan.cfml.editors.actions.CFDump">
       </command>
       <keyBinding
-            string="Ctrl+Shift+D"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFDump"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+D">
       </keyBinding>
 	<!-- enclose in cfscript -->
       <command
@@ -773,10 +773,10 @@
             id="com.rohanclan.cfml.editors.actions.CFScript">
       </command>
       <keyBinding
-            string="Ctrl+Shift+R"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.CFScript"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+R">
       </keyBinding>
 	<!-- to lower case -->
       <command
@@ -786,10 +786,10 @@
             id="com.rohanclan.cfml.editors.actions.ToLowerCase">
       </command>
       <keyBinding
-            string="Ctrl+Shift+L"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.ToLowerCase"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+L">
       </keyBinding>
 	<!-- to upper case -->
       <command
@@ -799,10 +799,10 @@
             id="com.rohanclan.cfml.editors.actions.ToUpperCase">
       </command>
       <keyBinding
-            string="Ctrl+Shift+U"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.ToUpperCase"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+U">
       </keyBinding>
       <!-- Insert Color -->
       <command
@@ -812,10 +812,10 @@
             id="com.rohanclan.cfml.editors.actions.InsertColor">
       </command>
       <keyBinding
-            string="Ctrl+Shift+Z"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.InsertColor"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+Z">
       </keyBinding>
       
 	<!-- insert date -->
@@ -833,10 +833,10 @@
             id="com.rohanclan.cfml.editors.actions.InsertBR">
       </command>
       <keyBinding
-            string="Ctrl+Enter"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.InsertBR"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Enter">
       </keyBinding>
       <!-- insert an html nbsp action (for Michael Wolfe) -->
       <command
@@ -846,10 +846,10 @@
             id="com.rohanclan.cfml.editors.actions.InsertNBSP">
       </command>
       <keyBinding
-            string="Ctrl+Shift+Space"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.InsertNBSP"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+Space">
       </keyBinding>
       <!-- insert an html p action (for Michael Wolfe) -->
       <command
@@ -859,10 +859,10 @@
             id="com.rohanclan.cfml.editors.actions.PTag">
       </command>
       <keyBinding
-            string="Ctrl+Shift+P"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.PTag"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+P">
       </keyBinding>
       <!-- insert an html strong action (for Brian Sadler) -->
       <command
@@ -872,10 +872,10 @@
             id="com.rohanclan.cfml.editors.actions.StrongTag">
       </command>
       <keyBinding
-            string="Ctrl+B"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.StrongTag"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+B">
       </keyBinding>
       <!-- insert an html em action (for Brian Sadler) -->
       <command
@@ -885,10 +885,10 @@
             id="com.rohanclan.cfml.editors.actions.EmTag">
       </command>
       <keyBinding
-            string="Ctrl+I"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.EmTag"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+I">
       </keyBinding>
       <!-- Reload the syntax dictionaries -->
       <command
@@ -898,10 +898,10 @@
             id="com.rohanclan.cfml.editors.actions.ReloadDictionaries">
       </command>
       <keyBinding
-            string="ctrl+F5"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+F5">
       </keyBinding>
       <!-- refresh the browser -->
       <command
@@ -911,10 +911,10 @@
             id="com.rohanclan.cfml.editors.actions.RefreshBrowser">
       </command>
       <keyBinding
-            string="F5"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.RefreshBrowser"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="F5">
       </keyBinding>
       <!-- browse to project root URL -->
       <command
@@ -924,10 +924,10 @@
             id="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot">
       </command>
       <keyBinding
-            string="Ctrl+F5"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+F5">
       </keyBinding>
       <!-- browse to current page -->
       <command
@@ -937,10 +937,10 @@
             id="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage">
       </command>
       <keyBinding
-            string="Shift+F5"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Shift+F5">
       </keyBinding>
       <!-- insert a snippet -->
       <command
@@ -950,10 +950,10 @@
             id="com.rohanclan.cfml.editors.actions.InsertSnippet">
       </command>
       <keyBinding
-            string="Ctrl+Shift+I"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.InsertSnippet"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Shift+.">
       </keyBinding>
       <!-- repeat last tag -->
       <command
@@ -963,10 +963,10 @@
             id="com.rohanclan.cfml.editors.actions.LastAction">
       </command>
       <keyBinding
-            string="Ctrl+Q"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.LastAction"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+Q">
       </keyBinding>
       <!-- jump to matching tag -->
       <command
@@ -976,10 +976,10 @@
             id="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction">
       </command>
       <keyBinding
-            string="Ctrl+M"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+M">
       </keyBinding>
       <!-- Go and Get Help -->
       <command
@@ -989,10 +989,10 @@
             id="com.rohanclan.cfml.editors.actions.GetHelp">
       </command>
       <keyBinding
-            string="F1"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.GetHelp"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="F1">
       </keyBinding>
       <!-- Fire up the scribble pad -->
       <command
@@ -1014,10 +1014,10 @@
             id="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection">
       </command>
       <keyBinding
-            string="Ctrl+\"
-            scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
-            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+            scope="org.eclipse.ui.textEditorScope"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="Ctrl+\">
       </keyBinding>
 	<!-- This will expand selected block -->
       <command
@@ -1327,6 +1327,11 @@
       <filter pattern="*.js">
          <description>
             HTML filter
+         </description>
+      </filter>
+      <filter pattern="*.lck">
+         <description>
+            Dreamweaver lock file filter
          </description>
       </filter>
       <filter pattern="*.log">
