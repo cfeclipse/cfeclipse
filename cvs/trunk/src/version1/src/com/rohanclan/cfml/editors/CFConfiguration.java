@@ -46,7 +46,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 
 import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.ICFMLPluginConstants;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
 import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
@@ -58,6 +57,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.editors.script.JSCompletionProcessor;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 public class CFConfiguration extends SourceViewerConfiguration 
 	implements IPropertyChangeListener {
@@ -83,7 +83,7 @@ public class CFConfiguration extends SourceViewerConfiguration
 	
 	private CFAutoIndentStrategy indentStrategy;
 	
-	private IPreferenceStore store;
+	private CFMLPreferenceManager preferenceManager;
 	
 	private int tabWidth;
 
@@ -91,14 +91,19 @@ public class CFConfiguration extends SourceViewerConfiguration
 	 * Need a color manager to get partition colors
 	 * @param colorManager that would be the color manager
 	 */
-	public CFConfiguration(ColorManager colorManager) 
+	
+	public CFConfiguration(ColorManager colorManager, CFMLEditor editor) 
 	{
 		this.colorManager = colorManager;
-		 store = CFMLPlugin.getDefault().getPreferenceStore();
-	     indentStrategy = new CFAutoIndentStrategy();
-	     tabWidth = Integer.parseInt(store.getString(ICFMLPluginConstants.P_TAB_WIDTH).trim());
-	     indentStrategy.setIndentString(tabWidth,store.getString(ICFMLPluginConstants.P_TABS_AS_SPACES).trim().equalsIgnoreCase("true"));
-	        
+		
+		preferenceManager = new CFMLPreferenceManager();
+	     indentStrategy = new CFAutoIndentStrategy(editor);
+	     tabWidth = preferenceManager.tabWidth();
+	     boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
+	     indentStrategy.setIndentString(tabWidth,insertSpacesForTabs);
+	     indentStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
+	     indentStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
+	      
 		
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
@@ -420,11 +425,11 @@ public class CFConfiguration extends SourceViewerConfiguration
 
 		IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
 		
-		String delay = store.getString(ICFMLPluginConstants.P_INSIGHT_DELAY);
+		int delay = preferenceManager.insightDelay();
 		
 		
 		assistant.enableAutoActivation(true);
-		assistant.setAutoActivationDelay(Integer.parseInt(delay.trim()));
+		assistant.setAutoActivationDelay(delay);
 
 		System.err.println("Insight Delay set to:"+ delay);
 		
@@ -476,17 +481,22 @@ public class CFConfiguration extends SourceViewerConfiguration
     	System.err.println("CFConfiguration property change listener notified." + event.getProperty());
     	
         if(event.getProperty().equals("insightDelay")) {
-    		int delay = Integer.parseInt(store.getString(ICFMLPluginConstants.P_INSIGHT_DELAY).trim());
+    		int delay = preferenceManager.insightDelay();
     		assistant.enableAutoActivation(true);
     		assistant.setAutoActivationDelay(delay);
     		//System.err.println("Insight delay set to " + delay);
         }
         else if(event.getProperty().equals("tabsAsSpaces") || event.getProperty().equals("tabWidth")) {
-        	IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
-    		tabWidth = Integer.parseInt(store.getString(ICFMLPluginConstants.P_TAB_WIDTH).trim());
-    		boolean tabsAsSpaces = store.getString(ICFMLPluginConstants.P_TABS_AS_SPACES).trim().equalsIgnoreCase("true");    		
+    		tabWidth = preferenceManager.tabWidth();
+    		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
         	indentStrategy.setIndentString(tabWidth,tabsAsSpaces);
         	
+        }
+        else if(event.getProperty().equals("dreamweaverCompatibility")) {
+        	indentStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
+        }
+        else if(event.getProperty().equals("homesiteCompatibility")) {
+        	indentStrategy.setHomesiteCompatibility(preferenceManager.homesiteCompatibility());
         }
 		
         

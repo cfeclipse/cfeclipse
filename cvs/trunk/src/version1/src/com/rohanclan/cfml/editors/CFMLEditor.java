@@ -56,6 +56,7 @@ implements IPropertyChangeListener {
 	private ColorManager colorManager;
 	
 	private CFConfiguration configuration;
+	
 	//private Composite parent;
 	
 	protected GenericEncloserAction testAction;
@@ -66,7 +67,7 @@ implements IPropertyChangeListener {
 		colorManager = new ColorManager();
 		//setup color coding and the damage repair stuff
 		
-		configuration = new CFConfiguration(colorManager);
+		configuration = new CFConfiguration(colorManager, this);
 		setSourceViewerConfiguration(configuration);
 		//assign the cfml document provider which does the partitioning
 		//and connects it to this Edtior

@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.IPluginDescriptor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 
-import org.eclipse.jface.preference.IPreferenceStore;
 
 //import java.util.*;
 import java.util.ResourceBundle;
@@ -46,6 +45,7 @@ import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 
 import com.rohanclan.cfml.parser.CFParser;
+import com.rohanclan.cfml.preferences.*;
 
 /**
  * @author Rob
@@ -60,6 +60,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	
 	private static CFParser cfparserAction = null;
 	
+	//private CFMLPreferenceManager preferenceManager;
 	/**
 	 * The constructor.
 	 */
@@ -85,6 +86,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			//load all the syntax dictionaries (they dont really load right now)
 			DictionaryManager.initDictionaries();
 			
+	        
+			
+	        System.out.println("Preference manager initialized:");
+	        
 			//startup the image registry
 			CFPluginImages.initCFPluginImages();
 		}
@@ -96,10 +101,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	}
 	protected void initializeDefaultPluginPreferences() {
         super.initializeDefaultPluginPreferences();
-        IPreferenceStore store = getPreferenceStore();
-        store.setDefault(ICFMLPluginConstants.P_INSIGHT_DELAY, "500");   //$NON-NLS-1$
-        store.setDefault(ICFMLPluginConstants.P_TAB_WIDTH, "1");
-        store.setDefault(ICFMLPluginConstants.P_TABS_AS_SPACES, "true");
+        CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
+		preferenceManager.initializeDefaultValues();
     }
 	/**
 	 * Returns the shared instance.

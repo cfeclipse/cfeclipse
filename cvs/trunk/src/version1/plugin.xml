@@ -38,10 +38,10 @@
          point="org.eclipse.ui.editors">
       <editor
             name="CFML Editor"
-            icon="icons/obj16/default.gif"
             extensions="cfm,cfml,cfc,html,htm"
-            class="com.rohanclan.cfml.editors.CFMLEditor"
+            icon="icons/obj16/default.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="com.rohanclan.cfml.editors.CFMLEditor"
             id="com.rohanclan.cfml.editors.CFMLEditor">
       </editor>
    </extension>
@@ -73,8 +73,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFComment"
                label="&amp;Comment"
                icon="icons/ctool16/comment.gif"
-               class="com.rohanclan.cfml.editors.actions.CFCommentAction"
                tooltip="Insert a CFML comment"
+               class="com.rohanclan.cfml.editors.actions.CFCommentAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFCommentAction">
@@ -84,8 +84,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.AutoComment"
                label="&amp;Auto Comment"
                icon="icons/ctool16/smartcomment.gif"
-               class="com.rohanclan.cfml.editors.actions.AutoCommentAction"
                tooltip="Insert comment based on section"
+               class="com.rohanclan.cfml.editors.actions.AutoCommentAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.AutoCommentAction">
@@ -95,8 +95,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFVariable"
                label="&amp;Variable"
                icon="icons/ctool16/hash.gif"
-               class="com.rohanclan.cfml.editors.actions.CFVariableAction"
                tooltip="Surround with pound/number signs"
+               class="com.rohanclan.cfml.editors.actions.CFVariableAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFVariableAction">
@@ -106,8 +106,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFSingleQuote"
                label="&amp;Single Quotes"
                icon="icons/ctool16/squote.gif"
-               class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
                tooltip="Surround with single quotes"
+               class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction">
@@ -117,8 +117,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
                label="&amp;Double Quotes"
                icon="icons/ctool16/dquote.gif"
-               class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                tooltip="Surround with double quotes"
+               class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction">
@@ -128,8 +128,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFOutput"
                label="CF &amp;Output"
                icon="icons/ctool16/output.gif"
-               class="com.rohanclan.cfml.editors.actions.CFOutputAction"
                tooltip="Surround with cfoutput"
+               class="com.rohanclan.cfml.editors.actions.CFOutputAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFOutputAction">
@@ -139,8 +139,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFDump"
                label="CF D&amp;ump"
                icon="icons/ctool16/dump.gif"
-               class="com.rohanclan.cfml.editors.actions.CFDumpAction"
                tooltip="Surround with simple cfdump"
+               class="com.rohanclan.cfml.editors.actions.CFDumpAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/output"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFDumpAction">
@@ -150,8 +150,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFScript"
                label="CF S&amp;cript"
                icon="icons/ctool16/script.gif"
-               class="com.rohanclan.cfml.editors.actions.CFScriptAction"
                tooltip="Surround with cfscript"
+               class="com.rohanclan.cfml.editors.actions.CFScriptAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFScriptAction">
          </action>
@@ -160,8 +160,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.ToLowerCase"
                label="To L&amp;ower"
                icon="icons/ctool16/tolower.gif"
-               class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
                tooltip="Lower case selected text"
+               class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.ToLowerCaseAction">
@@ -171,8 +171,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.ToUpperCase"
                label="To U&amp;pper"
                icon="icons/ctool16/toupper.gif"
-               class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
                tooltip="Upper case selected text"
+               class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
                menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.ToUpperCaseAction">
@@ -182,8 +182,8 @@
                definitionId="com.rohanclan.cfml.editors.actions.InsertDate"
                label="Insert Date"
                icon="icons/ctool16/time.gif"
-               class="com.rohanclan.cfml.editors.actions.InsertDateAction"
                tooltip="Insert the current date"
+               class="com.rohanclan.cfml.editors.actions.InsertDateAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.InsertDateAction">
          </action>
@@ -293,8 +293,8 @@
 <!-- this will always make a cf type comment -->
       <command
             name="Insert Comment"
-            category="com.rohanclan.cfml.commandCategory"
             description="Insert a CFML comment."
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFComment">
       </command>
       <keyBinding
@@ -306,8 +306,8 @@
 <!-- comment based on section (i.e. js comments in js blocks, etc) -->
       <command
             name="Insert Auto Comment"
-            category="com.rohanclan.cfml.commandCategory"
             description="Insert a comment based on section."
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.AutoComment">
       </command>
       <keyBinding
@@ -319,8 +319,8 @@
 <!-- enclose in pound signs -->
       <command
             name="CF Variable"
-            category="com.rohanclan.cfml.commandCategory"
             description="Surround with pound/number signs"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFVariable">
       </command>
       <keyBinding
@@ -332,8 +332,8 @@
 <!-- enclose in single quotes -->
       <command
             name="Single Quotes"
-            category="com.rohanclan.cfml.commandCategory"
             description="Surround with Single Quotes"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFSingleQuote">
       </command>
       <keyBinding
@@ -345,8 +345,8 @@
 <!-- enclose in double quotes -->
       <command
             name="Double Quotes"
-            category="com.rohanclan.cfml.commandCategory"
             description="Surround with pound/number signs"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
       </command>
       <keyBinding
@@ -358,8 +358,8 @@
 <!-- enclose in cfoutputs -->
       <command
             name="CF Outputs"
-            category="com.rohanclan.cfml.commandCategory"
             description="Surround with cfoutputs"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFOutput">
       </command>
       <keyBinding
@@ -371,8 +371,8 @@
 <!-- enclose in cfdump -->
       <command
             name="CF Dump"
-            category="com.rohanclan.cfml.commandCategory"
             description="Surround with a simple cfdump"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFDump">
       </command>
       <keyBinding
@@ -384,8 +384,8 @@
 <!-- enclose in cfscript -->
       <command
             name="CF Script"
-            category="com.rohanclan.cfml.commandCategory"
             description="Surround with a cfscript"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFScript">
       </command>
       <keyBinding
@@ -397,8 +397,8 @@
 <!-- to lower case -->
       <command
             name="To Lower"
-            category="com.rohanclan.cfml.commandCategory"
             description="Lower case selected text"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.ToLowerCase">
       </command>
       <keyBinding
@@ -410,8 +410,8 @@
 <!-- to upper case -->
       <command
             name="To Upper"
-            category="com.rohanclan.cfml.commandCategory"
             description="Upper case selected text"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.ToUpperCase">
       </command>
       <keyBinding
@@ -423,8 +423,8 @@
 <!-- to upper case -->
       <command
             name="Insert Date"
-            category="com.rohanclan.cfml.commandCategory"
             description="Insert the current date"
+            category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.InsertDate">
       </command>
    </extension>
@@ -478,8 +478,8 @@
       <page
             name="CFEclipse"
             category="org.eclipse.ui.preferencePages.Editors"
-            class="com.rohanclan.cfml.preferences.CFEclipsePreferencePage"
-            id="com.rohanclan.cfml.preferences.CFEclipsePreferencePage">
+            class="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            id="com.rohanclan.cfml.preferences.CFMLPreferencePage">
       </page>
    </extension>
 

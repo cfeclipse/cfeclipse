@@ -32,8 +32,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 //import org.eclipse.jface.dialogs.Dialog;
 
 import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.ICFMLPluginConstants;
-
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 /**
  * This class represents a preference page that
  * is contributed to the Preferences dialog. By 
@@ -49,24 +48,28 @@ import com.rohanclan.cfml.ICFMLPluginConstants;
  */
 
 
-public class CFEclipsePreferencePage
+public class CFMLPreferencePage
 	extends PreferencePage
 	implements IWorkbenchPreferencePage, SelectionListener  {
 
+	/*
 	private static final String DEFAULT_INSIGHT_DELAY = "500";
 	private static final String DEFAULT_TAB_WIDTH = "4";
 	private static final String DEFAULT_TABS_AS_SPACES = "false";
+	*/
+	Text insightDelayField;
+	Text tabWidthField;
+	Button tabsAsSpacesCheckBox;
+	Button dreamweaverCompatibilityCheckBox;
+	Button homesiteCompatibilityCheckBox;
+	CFMLPreferenceManager preferenceManager;
 	
-	Text insightDelay;
-	Text tabWidth;
-	Button tabsAsSpaces;
-
 	
-	
-	public CFEclipsePreferencePage() {
+	public CFMLPreferencePage() {
 		super();
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		setDescription("CFEclipse preferences");
+		preferenceManager = new CFMLPreferenceManager();
 	}
 	
 
@@ -88,13 +91,16 @@ public class CFEclipsePreferencePage
 	
 	
     protected Control createContents(Composite parent) {
+    	// The container for the preference page
         Composite composite = createContainer(parent);       
         
+        // The layout info for the preference page
         GridLayout gridLayout = new GridLayout();
         gridLayout.marginHeight = 0;
         gridLayout.marginWidth = 0;
         composite.setLayout(gridLayout);
-
+        
+        // A panel for the preference page
         Composite defPanel = new Composite(composite, SWT.NONE);
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;
@@ -102,37 +108,59 @@ public class CFEclipsePreferencePage
         GridData gridData =
             new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL);
         defPanel.setLayoutData(gridData);
-
+        
+        // The label for this panel
         Label label = new Label(defPanel, SWT.WRAP);
         gridData = new GridData();
         gridData.horizontalSpan = 2;
         label.setLayoutData(gridData);
         label.setText("Editor"); //$NON-NLS-1$
+
+        // Tabs and spaces options
+        createTabsAndSpacesGroup(defPanel);
         
         // Tag and function insight options
+        createInsightGroup(defPanel);
+        
+        // Dreamweaver and Homesite options
+        createDWAndHSGroup(defPanel);
+        
+        
+        return composite;
+    }
 
-        Group defaultComposite = new Group(defPanel, SWT.SHADOW_ETCHED_IN); 
-        layout = new GridLayout();        
+    public void widgetDefaultSelected(SelectionEvent selectionEvent) {
+        widgetSelected(selectionEvent);
+    }
+    
+    
+    public void widgetSelected(SelectionEvent selectionEvent) {}
+    
+    
+    
+    
+    private void createInsightGroup(Composite parent) {
+    	Group insightGroup = new Group(parent, SWT.SHADOW_ETCHED_IN); 
+        GridLayout layout = new GridLayout();        
         layout.numColumns = 3;     
-        defaultComposite.setLayout(layout);
-        gridData =
+        insightGroup.setLayout(layout);
+        GridData gridData =
             new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
         gridData.horizontalSpan = 3;
-        defaultComposite.setLayoutData(gridData);        
+        insightGroup.setLayoutData(gridData);        
         
         
-        defaultComposite.setText("Tag and function insight"); //$NON-NLS-1$
+        insightGroup.setText("Tag and function insight"); //$NON-NLS-1$
 
-        insightDelay = createLabeledText(
+        insightDelayField = createLabeledInt(
             "Insight Delay (ms)", //$NON-NLS-1$
-            getPreferenceStore().getString(ICFMLPluginConstants.P_INSIGHT_DELAY), 
-            defaultComposite);
-        insightDelay.setTextLimit(5);
-        insightDelay.setBounds(insightDelay.getSize().x,insightDelay.getSize().y,20,10);
+            preferenceManager.insightDelay(), 
+			insightGroup);
+        insightDelayField.setTextLimit(5);
                    
 
         
-        insightDelay.addModifyListener(new ModifyListener() {
+        insightDelayField.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 String number = ((Text) e.widget).getText();
                 number = number == null? number : number.trim();
@@ -152,16 +180,17 @@ public class CFEclipsePreferencePage
                 }
             }
         });
-        
-        
-        
-        // Tabs and spaces options
+    	
+    }
+    
 
-        Group tabsComposite = new Group(defPanel, SWT.SHADOW_ETCHED_IN); 
-        layout = new GridLayout();        
+    
+    private void createTabsAndSpacesGroup(Composite parent) {
+    	Group tabsComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
+        GridLayout layout = new GridLayout();        
         layout.numColumns = 3;              
         tabsComposite.setLayout(layout);
-        gridData =
+        GridData gridData =
             new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
         gridData.horizontalSpan = 3;
         tabsComposite.setLayoutData(gridData);        
@@ -170,15 +199,15 @@ public class CFEclipsePreferencePage
         tabsComposite.setText("Tabs and spaces"); //$NON-NLS-1$
         
         // Tab width
-        tabWidth = createLabeledText(
+        tabWidthField = createLabeledInt(
             "Tab width (characters)", //$NON-NLS-1$
-            getPreferenceStore().getString(ICFMLPluginConstants.P_TAB_WIDTH), 
+            preferenceManager.tabWidth(), 
 			tabsComposite);
-        tabWidth.setTextLimit(3);
+        tabWidthField.setTextLimit(3);
                    
 
         
-        tabWidth.addModifyListener(new ModifyListener() {
+        tabWidthField.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 String number = ((Text) e.widget).getText();
                 number = number == null? number : number.trim();
@@ -201,29 +230,49 @@ public class CFEclipsePreferencePage
         
         // Tabs as spaces
         
-        boolean checkBoxValue = getPreferenceStore().getString(ICFMLPluginConstants.P_TABS_AS_SPACES).trim().equalsIgnoreCase("true");
-        tabsAsSpaces = createLabeledCheck(
-            "Insert spaces instead of tabs", //$NON-NLS-1$
-            checkBoxValue, 
-			tabsComposite);
         
-        return composite;
-    }
-
-    public void widgetDefaultSelected(SelectionEvent selectionEvent) {
-        widgetSelected(selectionEvent);
+        tabsAsSpacesCheckBox = createLabeledCheck(
+            "Insert spaces instead of tabs", //$NON-NLS-1$
+            preferenceManager.insertSpacesForTabs(), 
+			tabsComposite);
     }
     
     
-    public void widgetSelected(SelectionEvent selectionEvent) {}
 
-    public boolean performOk() {
-        IPreferenceStore store = getPreferenceStore();
-        store.setValue(ICFMLPluginConstants.P_INSIGHT_DELAY, insightDelay.getText());
-        store.setValue(ICFMLPluginConstants.P_TAB_WIDTH, tabWidth.getText());
-        store.setValue(ICFMLPluginConstants.P_TABS_AS_SPACES, String.valueOf(tabsAsSpaces.getSelection()));
-        return true;
+    
+    private void createDWAndHSGroup(Composite parent) {
+    	Group DWHSComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
+        GridLayout layout = new GridLayout();        
+        layout.numColumns = 3;              
+        DWHSComposite.setLayout(layout);
+        GridData gridData =
+            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData.horizontalSpan = 3;
+        DWHSComposite.setLayoutData(gridData);        
+        
+        
+        DWHSComposite.setText("Dreamweaver and Homesite"); //$NON-NLS-1$
+        
+        // Dreamweaver
+        dreamweaverCompatibilityCheckBox = createLabeledCheck(
+                "Enable Dreamweaver compatibility", //$NON-NLS-1$
+                preferenceManager.dreamweaverCompatibility(), 
+				DWHSComposite);
+                   
+
+        
+        // Homesite
+        
+        
+        homesiteCompatibilityCheckBox = createLabeledCheck(
+            "Enable Homesite compatibility", //$NON-NLS-1$
+            preferenceManager.homesiteCompatibility(), 
+			DWHSComposite);
     }
+    
+    
+    
+    
     
     
     private Text createLabeledText(String labelText, String value, Composite defPanel) {
@@ -238,6 +287,23 @@ public class CFEclipsePreferencePage
         gridData.horizontalSpan = 2;
         fText.setLayoutData(gridData);
         fText.setText(value);
+        fText.setToolTipText(labelText);
+        return fText;
+    }
+    
+    
+    private Text createLabeledInt(String labelText, int value, Composite defPanel) {
+        GridData gridData;
+        Label label = new Label(defPanel, SWT.WRAP);
+        gridData = new GridData();
+        label.setLayoutData(gridData);
+        label.setText(labelText);
+
+        Text fText = new Text(defPanel, SWT.SHADOW_IN | SWT.BORDER);
+        gridData = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData.horizontalSpan = 2;
+        fText.setLayoutData(gridData);
+        fText.setText(Integer.toString(value));
         fText.setToolTipText(labelText);
         return fText;
     }
@@ -262,11 +328,23 @@ public class CFEclipsePreferencePage
  */
     protected void performDefaults() {
         super.performDefaults();
-        insightDelay.setText(DEFAULT_INSIGHT_DELAY);
-        tabWidth.setText(DEFAULT_TAB_WIDTH);
-        tabsAsSpaces.setSelection(DEFAULT_TABS_AS_SPACES.trim().equalsIgnoreCase("true"));
+        insightDelayField.setText(Integer.toString(preferenceManager.defaultInsightDelay()));
+        tabWidthField.setText(Integer.toString(preferenceManager.defaultTabWidth()));
+        tabsAsSpacesCheckBox.setSelection(preferenceManager.defaultSpacesForTabs());
+        dreamweaverCompatibilityCheckBox.setSelection(preferenceManager.defaultDreamweaverCompatibility());
+        homesiteCompatibilityCheckBox.setSelection(preferenceManager.defaultHomesiteCompatibility());
     }
-	
+
+
+    public boolean performOk() {
+        IPreferenceStore store = getPreferenceStore();
+        store.setValue(ICFMLPreferenceConstants.P_INSIGHT_DELAY, insightDelayField.getText());
+        store.setValue(ICFMLPreferenceConstants.P_TAB_WIDTH, tabWidthField.getText());
+        store.setValue(ICFMLPreferenceConstants.P_INSERT_SPACES_FOR_TABS, String.valueOf(tabsAsSpacesCheckBox.getSelection()));
+        store.setValue(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY, String.valueOf(dreamweaverCompatibilityCheckBox.getSelection()));
+        store.setValue(ICFMLPreferenceConstants.P_ENABLE_HS_COMPATIBILITY, String.valueOf(homesiteCompatibilityCheckBox.getSelection()));
+        return true;
+    }
 
 	public void init(IWorkbench workbench) {
 	}

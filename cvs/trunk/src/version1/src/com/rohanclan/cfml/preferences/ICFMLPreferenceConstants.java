@@ -2,7 +2,7 @@
  * Created on Apr 20, 2004
  *
  */
-package com.rohanclan.cfml;
+package com.rohanclan.cfml.preferences;
 
 
 
@@ -13,10 +13,14 @@ package com.rohanclan.cfml;
  * 
  * Just getting started here, so insight delay is looking a bit lonely :-/ 
  */
-public interface ICFMLPluginConstants {
+public interface ICFMLPreferenceConstants {
 	String P_INSIGHT_DELAY = "insightDelay";
 	
-	String P_TABS_AS_SPACES = "tabsAsSpaces";
+	String P_INSERT_SPACES_FOR_TABS = "tabsAsSpaces";
 	
 	String P_TAB_WIDTH = "tabWidth";
+	
+	String P_ENABLE_DW_COMPATIBILITY = "dreamweaverCompatibility";
+	
+	String P_ENABLE_HS_COMPATIBILITY = "homesiteCompatibility";
 }
