@@ -24,16 +24,25 @@
  */
 package com.rohanclan.cfml;
 
-import org.eclipse.ui.plugin.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.core.resources.*;
-import java.util.*;
+//import org.eclipse.ui.plugin.*;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
+//import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.IPluginDescriptor;
+//import org.eclipse.core.resources.*;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+//import java.util.*;
+import java.util.ResourceBundle;
+import java.util.MissingResourceException;
 
 //import com.rohanclan.coldfusionmx.editors.CFSyntaxDictionary;
 //import com.rohanclan.coldfusionmx.editors.actions.SnippetActionLoader;
 //import com.rohanclan.coldfusionmx.editors.script.JSSyntaxDictionary;
-import com.rohanclan.cfml.util.*;
+//import com.rohanclan.cfml.util.*;
+import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
+
+import com.rohanclan.cfml.parser.CFParser;
 
 /**
  * @author Rob
@@ -45,6 +54,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	private static CFMLPlugin plugin;
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
+	
+	private static CFParser cfparserAction = null;
 	
 	/**
 	 * The constructor.
@@ -77,7 +88,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			//lots of bad things can happen...
 			e.printStackTrace(System.err);
 		}
-		
 	}
 
 	/**
@@ -102,7 +112,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public static String getResourceString(String key) 
 	{
-		ResourceBundle bundle= CFMLPlugin.getDefault().getResourceBundle();
+		ResourceBundle bundle = CFMLPlugin.getDefault().getResourceBundle();
 		try 
 		{
 			return (bundle!=null ? bundle.getString(key) : key);
