@@ -24,6 +24,7 @@
  */
 package com.rohanclan.cfml.util;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -68,9 +69,6 @@ public class ResourceUtils {
 		// the pre-path stuff. From that we can get the children and then
 		// whip through them all testing to see if our postPath filters them
 		// at all.
-		TreeSet suggestions = new TreeSet();
-		IPath folder;
-		IFolder folderRes;
 		String postPath = "";
 		
 		if(!pathSoFar.endsWith("\\") && !pathSoFar.endsWith("/")) {
@@ -84,9 +82,11 @@ public class ResourceUtils {
 				pathSoFar = pathSoFar.substring(pathSoFar.length());
 			}
 		}
-		folder = res.getFullPath().removeLastSegments(1).append(pathSoFar);
-		folderRes = res.getWorkspace().getRoot().getFolder(folder);
-	
+
+		IPath folder = res.getFullPath().removeLastSegments(1).append(pathSoFar);
+		IFolder folderRes = res.getWorkspace().getRoot().getFolder(folder);
+		
+		HashSet suggestions = new HashSet();		
 		if(folderRes == null) {
 		} else {
 			try {
@@ -95,10 +95,8 @@ public class ResourceUtils {
 					if(!children[i].getName().toLowerCase().startsWith(postPath.toLowerCase()))
 						continue;
 					
-					if(children[i] instanceof IFolder) {
-						suggestions.add(new Value(children[i].getName() + "/"));
-					} else if(children[i] instanceof IFile) {
-						suggestions.add(new Value(children[i].getName()));
+					if(children[i] instanceof IFolder || children[i] instanceof IFile) {
+						suggestions.add(children[i]);
 					}
 				}
 			}catch(CoreException ex) {

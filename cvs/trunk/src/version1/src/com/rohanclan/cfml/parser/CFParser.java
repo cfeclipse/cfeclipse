@@ -36,11 +36,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.xpath.compiler.Compiler;
+import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 //import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -1239,7 +1242,8 @@ public class CFParser {
 	
 	public CFDocument parseDoc(String inData)
 	{
-		CFDocument docTree = null; 
+		CFDocument docTree = null;
+		
 		try {
 			parserState = new State("doesn\'t matter!");
 			lineOffsets = Util.calcLineNumbers(inData);
@@ -1252,6 +1256,7 @@ public class CFParser {
 			docTree = createDocTree(parserState.getMatches());
 			parserState.addMessages(finalDocTreeTraversal(docTree. getDocumentRoot()));
 			processParseResultMessages();
+			
 		} catch(Exception excep) 
 		{
 			//System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());

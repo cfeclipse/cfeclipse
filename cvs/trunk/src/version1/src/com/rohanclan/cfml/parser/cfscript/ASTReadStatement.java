@@ -63,7 +63,7 @@ public class ASTReadStatement extends SimpleNode {
            i = System.in.read(b);
            symtab.put(name, new Integer((new String(b, 0, 0, i - 1)).trim()));
         } catch(Exception e) {
-           System.out.println("Exceptio : " + e.getClass().getName());
+// System.out.println("Exceptio : " + e.getClass().getName());
            System.exit(1);
         }
      }

@@ -35,7 +35,7 @@ public class CallSPL {
 	 */
 	public CallSPL() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 	/*
 	 * This isn't currently called from anywhere and it's raising warnings when building, commenting out for now.
@@ -45,7 +45,7 @@ public class CallSPL {
 		  try {
 	        parser = new SPLParser(new java.io.FileInputStream(argument));
 	      } catch (java.io.FileNotFoundException e) {
-	        System.out.println("Stupid Programming Language Interpreter Version 0.1:  File " + argument + " not found.");
+// System.out.println("Stupid Programming Language Interpreter Version 0.1:  File " + argument + " not found.");
 	        return;
 	      }
 	      
@@ -56,10 +56,10 @@ public class CallSPL {
 	        SimpleNode tempNode = (SimpleNode)parser.jjtree.rootNode();
 	        tempNode.dump("");
 	      } catch (ParseException e) {
-	        System.out.println("Stupid Programming Language Interpreter Version 0.1:  Encountered errors during parse.");
+// System.out.println("Stupid Programming Language Interpreter Version 0.1:  Encountered errors during parse.");
 	        e.printStackTrace();
 	      } catch (Exception e1) {
-	        System.out.println("Stupid Programming Language Interpreter Version 0.1:  Encountered errors during interpretation/tree building.");
+// System.out.println("Stupid Programming Language Interpreter Version 0.1:  Encountered errors during interpretation/tree building.");
 	        e1.printStackTrace();
 	      }	      
 	}

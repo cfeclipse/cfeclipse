@@ -41,7 +41,6 @@ public class CfmlComment extends DocItem {
 	 */
 	public CfmlComment(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -49,7 +48,6 @@ public class CfmlComment extends DocItem {
 	 */
 	public CfmlComment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }

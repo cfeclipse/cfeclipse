@@ -89,7 +89,7 @@ public class WorkspaceUtils {
 			
 			return getProject(wrkPage.getActiveEditor());
 		} catch(Exception ex) {
-			System.out.println("WorkspaceUtils::getProject(IViewSite) - Caught exception.");
+// System.out.println("WorkspaceUtils::getProject(IViewSite) - Caught exception.");
 			ex.printStackTrace();
 		}
 		return null;

@@ -2170,9 +2170,9 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
 
   public SPLParser(java.io.InputStream stream) {
     if (jj_initialized_once) {
-      System.out.println("ERROR: Second call to constructor of static parser.  You must");
-      System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
-      System.out.println("       during parser generation.");
+// System.out.println("ERROR: Second call to constructor of static parser.  You must");
+// System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
+// System.out.println("       during parser generation.");
       throw new Error();
     }
     jj_initialized_once = true;
@@ -2198,9 +2198,9 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
 
   public SPLParser(java.io.Reader stream) {
     if (jj_initialized_once) {
-      System.out.println("ERROR: Second call to constructor of static parser.  You must");
-      System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
-      System.out.println("       during parser generation.");
+// System.out.println("ERROR: Second call to constructor of static parser.  You must");
+// System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
+// System.out.println("       during parser generation.");
       throw new Error();
     }
     jj_initialized_once = true;
@@ -2226,9 +2226,9 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
 
   public SPLParser(SPLParserTokenManager tm) {
     if (jj_initialized_once) {
-      System.out.println("ERROR: Second call to constructor of static parser.  You must");
-      System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
-      System.out.println("       during parser generation.");
+// System.out.println("ERROR: Second call to constructor of static parser.  You must");
+// System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
+// System.out.println("       during parser generation.");
       throw new Error();
     }
     jj_initialized_once = true;

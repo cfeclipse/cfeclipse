@@ -43,7 +43,7 @@ public class ASTWriteStatement extends SimpleNode {
 		if ((o = symtab.get(name)) == null)
 		System.err.println("Undefined variable : " + name);
 
-		System.out.println("Value of " + name + " : " + symtab.get(name));
+// System.out.println("Value of " + name + " : " + symtab.get(name));
 	}
 
 }
