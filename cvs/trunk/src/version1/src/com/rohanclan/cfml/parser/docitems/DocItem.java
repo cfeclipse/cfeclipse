@@ -297,19 +297,37 @@ public abstract class DocItem implements Comparable {
 	private CFNodeList selectNodes(XPathSearch search) {
 		CFNodeList result = new CFNodeList();		
 		
+		
 		for(int i = 0; i < docNodes.size(); i++)
 		{
 			DocItem currItem = (DocItem)docNodes.get(i);
+			DocItem endItem = null;
+			if (search.searchForEndTag 
+			        && currItem.getMatchingItem() != null) {
+			    endItem = currItem.getMatchingItem();
+			}
+
 			int matches = 0;
+			int endMatches = 0;
 			
 			if(search.doChildNodes)
 				result.addAll(currItem.selectNodes(search));
 			
 			//r2 added simple * node selection
 			if(search.searchForTag 
-				&& (currItem.getName().compareToIgnoreCase(search.tagName) == 0 || search.tagName.equals("*"))
-			)
+				&& (currItem.getName().compareToIgnoreCase(search.tagName) == 0 
+				        || search.tagName.equals("*"))
+			) {
 				matches++;
+			}
+			if (endItem != null 
+			        && search.searchForTag 
+					&& (endItem.getName().compareToIgnoreCase(search.tagName) == 0 
+					        || search.tagName.equals("*"))
+				) {
+					endMatches++;
+			}
+			
 	//System.out.print("DocItem::selectNodes() - Testing \'" + currItem.getName() + "\'");
 			if(search.attrSearch.containsKey(XPathSearch.ATTR_STARTPOS)) {
 				ComparisonType comp = (ComparisonType)search.attrSearch.get(XPathSearch.ATTR_STARTPOS);
@@ -317,10 +335,11 @@ public abstract class DocItem implements Comparable {
 				if(comp.performComparison(currItem.startPosition))
 				{
 					matches++;
-			//System.out.print(" success ");
+					//System.out.print(" success ");
 				}
-				else {
-			//System.out.println(" failed ");
+				if (endItem != null 
+				        && comp.performComparison(endItem.startPosition)) {
+				    endMatches++;
 				}
 					
 			}
@@ -331,7 +350,9 @@ public abstract class DocItem implements Comparable {
 					matches++;
 			//System.out.print(" success ");
 				}
-				else {
+				if (endItem != null 
+				        && comp.performComparison(endItem.endPosition)) {
+				    endMatches++;
 			//System.out.println(" failed ");
 				}
 			}
@@ -340,11 +361,15 @@ public abstract class DocItem implements Comparable {
 			{
 			//System.out.println("DocItem::selectNodes(XPathSearch) - Got match for " + currItem.itemName);
 				result.add(currItem);
-		//System.out.print(" name match success");
+				//System.out.print(" name match success");
 			}
-			else {
+			else if(endItem != null 
+			        && endMatches == search.getMatchesRequired()){
+			    result.add(currItem);
+			    //System.out.println(" End matched " + endItem.getMatchingItem());
 		//System.out.print(" name match failed with ");
 			}
+			
 	//System.out.println("");
 		}				
 		
@@ -353,8 +378,16 @@ public abstract class DocItem implements Comparable {
 	
 	public CFNodeList selectNodes(String searchString)// throws Exception 
 	{
+		
+		return selectNodes(searchString, false); 
+	}
+	
+	
+	public CFNodeList selectNodes(String searchString, boolean includeEndTags)// throws Exception 
+	{
 		CFNodeList result = new CFNodeList();
 		XPathSearch search = new XPathSearch();
+		search.searchForEndTag = includeEndTags;
 		if(!search.parseXPath(searchString)) {
 			//throw new Exception("XPath string \'" + searchString + "\' was invalid");
 		}

@@ -56,6 +56,14 @@ public class CFPluginImages {
 	public static final String ICON_ATTR    = "attribute.gif";
 	/** the little blue square thing (denotes a function) */
 	public static final String ICON_FUNC    = "function.gif";
+	/** A public method in a CFC */
+	public static final String ICON_METHOD_PUBLIC    = "method_public.gif";
+	/** A package method in a CFC */
+	public static final String ICON_METHOD_PACKAGE    = "method_package.gif";
+	/** A private method in a CFC */
+	public static final String ICON_METHOD_PRIVATE    = "method_private.gif";
+	/** A remote method in a CFC */
+	public static final String ICON_METHOD_REMOTE    = "method_remote.gif";
 	/** the little green circle with a 'p' inside it (denotes a function parameter) */
 	public static final String ICON_PARAM    = "param.gif";
 	/** the little dark green circle with a 'p' inside it (denotes a highlighted function parameter) */
@@ -173,6 +181,10 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_TAG);
 			addImageToRegistry(MODEL_OBJECTS,ICON_ATTR);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FUNC);
+			addImageToRegistry(MODEL_OBJECTS,ICON_METHOD_REMOTE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_METHOD_PUBLIC);
+			addImageToRegistry(MODEL_OBJECTS,ICON_METHOD_PACKAGE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_METHOD_PRIVATE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PARAM);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PARAM_DARK);
 			addImageToRegistry(MODEL_OBJECTS,ICON_SNIP);

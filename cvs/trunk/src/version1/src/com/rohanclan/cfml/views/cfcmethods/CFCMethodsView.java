@@ -56,12 +56,21 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	private Action pinAction;
 	private Action insertAction;
 	private Action createInsightAction;
+	private Action togglePublicAction;
+	private Action togglePrivateAction;
+	private Action togglePackageAction;
+	private Action toggleRemoteAction;
 	private boolean autoRefresh = true;
 	private boolean visible = false;
 	private boolean sortItems = false;
+	private boolean showRemote = true;
+	private boolean showPublic = true;
+	private boolean showPackage = true;
+	private boolean showPrivate = true;
 	private IFile CFCMethodsFile = null;
 	private Text fileLabel;
 	private CFCMethodsContentProvider methodProvider;
+	private ICFDocument lastInput = null;
 	/*
 	 * The content provider class is responsible for
 	 * providing objects to the view. It can wrap
@@ -104,9 +113,10 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		Font labelFont = new Font(parent.getDisplay(),labelFontData);
 		fileLabel.setFont(labelFont);
 		fileLabel.setLayoutData(layoutData);
-		
+
+		lastInput = getRootInput();
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(), sortItems));
+		viewer.setContentProvider(new CFCMethodsContentProvider(lastInput, sortItems, showRemote, showPublic, showPackage, showPrivate));
 		viewer.setLabelProvider(new CFCMethodsLabelProvider());
 		
 		layoutData = new GridData();
@@ -118,7 +128,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		
 		
 		//viewer.setSorter(new CFCMethodsNameSorter());
-		viewer.setInput(getRootInput());
+		viewer.setInput(lastInput);
 		try {
 			IWorkbenchPartSite site = getSite();
 			
@@ -188,6 +198,12 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
+	    manager.add(toggleRemoteAction);
+	    manager.add(togglePublicAction);
+	    manager.add(togglePackageAction);
+	    manager.add(togglePrivateAction);
+	    manager.add(new Separator());
+
 	    manager.add(insertAction);
 		manager.add(pinAction);
 		manager.add(refreshAction);
@@ -277,6 +293,52 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		sortMethodsAction.setText("Toggle method sorting");
 		sortMethodsAction.setToolTipText("Toggle the sort order of the methods from natural to alphabetic.");
 		sortMethodsAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SORTAZ));
+
+
+
+		toggleRemoteAction = new Action(null, IAction.AS_CHECK_BOX) {
+			public void run() {
+				toggleRemote();
+			}
+		};
+		toggleRemoteAction.setText("Show/Hide remote methods");
+		toggleRemoteAction.setToolTipText("Show/Hide all remote methods.");
+		toggleRemoteAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_METHOD_REMOTE));
+
+
+
+		togglePublicAction = new Action(null, IAction.AS_CHECK_BOX) {
+			public void run() {
+				togglePublic();
+			}
+		};
+		togglePublicAction.setText("Show/Hide public methods");
+		togglePublicAction.setToolTipText("Show/Hide all public methods.");
+		togglePublicAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_METHOD_PUBLIC));
+
+
+
+
+		togglePackageAction = new Action(null, IAction.AS_CHECK_BOX) {
+			public void run() {
+				togglePackage();
+			}
+		};
+		togglePackageAction.setText("Show/Hide package methods");
+		togglePackageAction.setToolTipText("Show/Hide all package methods.");
+		togglePackageAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_METHOD_PACKAGE));
+
+
+
+
+		togglePrivateAction = new Action(null, IAction.AS_CHECK_BOX) {
+			public void run() {
+				togglePrivate();
+			}
+		};
+		togglePrivateAction.setText("Show/Hide private methods");
+		togglePrivateAction.setToolTipText("Show/Hide all private methods.");
+		togglePrivateAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_METHOD_PRIVATE));
 		
 
 		doubleClickAction = jumpToMethod;
@@ -375,14 +437,62 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		reload(false);
 	}
 	
+	
+	
+	private void toggleRemote() {
+		if (this.showRemote) {
+		    this.showRemote = false;
+		}
+		else {
+		    this.showRemote = true;
+		}
+		reload(false);
+	}
+	
+	
+	
+	private void togglePublic() {
+		if (this.showPublic) {
+		    this.showPublic = false;
+		}
+		else {
+		    this.showPublic = true;
+		}
+		reload(false);
+	}
+	
+	
+	
+	private void togglePackage() {
+		if (this.showPackage) {
+		    this.showPackage = false;
+		}
+		else {
+		    this.showPackage = true;
+		}
+		reload(false);
+	}
+	
+	
+	
+	private void togglePrivate() {
+		if (this.showPrivate) {
+		    this.showPrivate = false;
+		}
+		else {
+		    this.showPrivate = true;
+		}
+		reload(false);
+	}
+	
+	
+	
 	private void pin() {
 	    if (autoRefresh) {
 	        autoRefresh = false;
-	        sortMethodsAction.setEnabled(false);
 	    }
 	    else {
 	        autoRefresh = true;
-	        sortMethodsAction.setEnabled(true);
 	    }
 	}
 	
@@ -498,18 +608,15 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	
 	
 	public void reload(boolean forced) {
-	    
-		if (autoRefresh || forced) {
-			try {
-				IWorkbenchPartSite site = getSite();
+
+		try {
+			if (autoRefresh || forced) {
+			    lastInput = getRootInput();
+			    IWorkbenchPartSite site = getSite();
 				IWorkbenchWindow window =  site.getWorkbenchWindow();
-				methodProvider = new CFCMethodsContentProvider(getRootInput(),sortItems);
-				viewer.setContentProvider(methodProvider);
-				viewer.setInput(getRootInput());
-				
 				IWorkbenchPage page = window.getActivePage();
 				IEditorPart iep = page.getActiveEditor();
-				if (iep != null) {
+			    if (iep != null) {
 				    CFCMethodsFile = ((FileEditorInput)iep.getEditorInput()).getFile();
 				    fileLabel.setText(CFCMethodsFile.getFullPath().toString());
 				}
@@ -517,31 +624,22 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 				    CFCMethodsFile = null;
 				    fileLabel.setText("No methods are available.");
 				}
-				
-				
-				//
-				//
-				/*
-				if (iep != null) {
-					iep.addPropertyListener(this);
-					CFCMethodsFile = ((FileEditorInput)iep.getEditorInput()).getFile();
-					
-					//System.out.println("CFCMethods View updated");
-					viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(),sortItems));
-					viewer.setInput(getRootInput());
-					fileLabel.setText(CFCMethodsFile.getFullPath().toString());
-				}
-				else {
-					viewer.setContentProvider(new CFCMethodsContentProvider(null,sortItems));
-					viewer.setInput(null);
-				}
-				*/
-				
 			}
-			catch (Exception e) {
-				//System.err.println("Couldn't add property listener to editor.");
-			}
+		
+
+			methodProvider = new CFCMethodsContentProvider(lastInput,sortItems,showRemote,showPublic,showPackage,showPrivate);
+			viewer.setContentProvider(methodProvider);
+			viewer.setInput(lastInput);
+			
+			
+			
+			
 		}
+		catch (Exception e) {
+		    //e.printStackTrace();
+			//System.err.println("Couldn't add property listener to editor.");
+		}
+	//}
 		
 	}
 	

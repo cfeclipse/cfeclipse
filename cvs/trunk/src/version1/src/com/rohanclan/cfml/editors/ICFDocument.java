@@ -46,7 +46,7 @@ import com.rohanclan.cfml.parser.CommentParser;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.util.ResourceUtils;
-//import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.docitems.TagItem;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -59,6 +59,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
+import com.rohanclan.cfml.parser.docitems.TagItem;
 
 //import org.eclipse.ui.IEditorPart;
 
@@ -155,6 +156,20 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 */
 	public CfmlTagItem getTagAt(int startpos, int endpos)
 	{
+
+	    return getTagAt(startpos,endpos,false);
+	}
+
+	
+	/**
+	 * Gets a tag object given a starting and ending position
+	 * @param startpos
+	 * @param endpos
+	 * @param includeClosingTags
+	 * @return
+	 */
+	public CfmlTagItem getTagAt(int startpos, int endpos, boolean includeClosingTags)
+	{
 		//build the xpath
 		String attrString = "[#startpos<" + startpos + " and #endpos>" + endpos + "]";
 		//System.out.println(attrString);
@@ -162,6 +177,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		try {
 			CFNodeList matchingNodes = docRoot.getDocumentRoot().selectNodes(
 				"//*" + attrString
+				,includeClosingTags
 			);
 			
 			//there should only be 0 or 1 nodes in any one position (unless it spans
@@ -172,7 +188,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 			}
 		}
 		catch (Exception e) {
-		    //e.printStackTrace();
+		    e.printStackTrace();
 		}
 		
 		return null;

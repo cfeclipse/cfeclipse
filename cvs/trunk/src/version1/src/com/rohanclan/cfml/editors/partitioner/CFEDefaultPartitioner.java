@@ -239,10 +239,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 					contentType= partition.getType();
 					if (e.getOffset() == partition.getOffset() + partition.getLength())
 						reparseStart= partitionStart;
-					if (contentType.equals(CFPartitionScanner.CF_COMMENT) 
-					        || contentType.equals(CFPartitionScanner.HTM_COMMENT)) {
-					    reparseStart= partitionStart;
-					}
 					-- first;
 				} else if (reparseStart == e.getOffset() && reparseStart == partition.getOffset() + partition.getLength()) {
 					partitionStart= partition.getOffset();
@@ -252,6 +248,12 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 				} else {
 					partitionStart= partition.getOffset() + partition.getLength();
 					contentType= IDocument.DEFAULT_CONTENT_TYPE;
+				}
+				// If we're inside a partition that can have nested items we want to reparse
+				// from the start of the partition rather than from the offset where the change occured.
+				if (partition.getType().equals(CFPartitionScanner.CF_COMMENT) 
+				        || partition.getType().equals(CFPartitionScanner.HTM_COMMENT)) {
+				    reparseStart= partition.getOffset();
 				}
 			}
 								

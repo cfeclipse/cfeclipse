@@ -29,12 +29,20 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 	CFDocumentProvider provider;
 	CFNodeList nodes;
 	TableViewer viewer;
-	boolean sortItems = false;
+	private boolean sortItems = false;
+	private boolean showRemote = true;
+	private boolean showPublic = true;
+	private boolean showPackage = true;
+	private boolean showPrivate = true;
 	
-	public CFCMethodsContentProvider (ICFDocument icfd, boolean sortItems) {
+	public CFCMethodsContentProvider (ICFDocument icfd, boolean sortItems, boolean showRemote, boolean showPublic, boolean showPackage, boolean showPrivate) {
 		// By default we create an empty tag
 		document = icfd;
 		this.sortItems = sortItems;
+		this.showRemote = showRemote;
+		this.showPublic = showPublic;
+		this.showPackage = showPackage;
+		this.showPrivate = showPrivate;
 	}
 	
 	
@@ -77,14 +85,45 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 					TagItem thisTag = (TagItem)i.next();
 					
 					CFCMethodViewItem item = new CFCMethodViewItem(thisTag);
-					methods[index] = item;
-					index++;
+					
+					boolean addItem = true;
+					
+					if (item.getAccess().toLowerCase().equals("remote")
+					        && !this.showRemote) {
+					    addItem = false;
+					}
+
+					if (item.getAccess().toLowerCase().equals("public")
+					        && !this.showPublic) {
+					    addItem = false;
+					}
+
+					if (item.getAccess().toLowerCase().equals("package")
+					        && !this.showPackage) {
+					    addItem = false;
+					}
+
+					if (item.getAccess().toLowerCase().equals("private")
+					        && !this.showPrivate) {
+					    addItem = false;
+					}
+					
+					if (addItem) {
+						methods[index] = item;
+						index++;
+					}
 				}
 				catch (Exception e) {
 					System.err.println(e.getMessage());
 				}
 			}
-		return methods;
+			
+			CFCMethodViewItem[] finalMethods = new CFCMethodViewItem[index];
+			
+			for (int x=0;x<finalMethods.length;x++) {
+			 finalMethods[x] = methods[x];   
+			}
+		return finalMethods;
 		}
 		catch (Exception e){
 			System.err.println("CFCMethodsContentProvider has no elements");

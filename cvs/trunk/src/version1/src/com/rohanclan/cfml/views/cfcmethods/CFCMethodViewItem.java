@@ -30,15 +30,14 @@ public class CFCMethodViewItem  {
 	public String toString() {
 		try {
 			StringBuffer method = new StringBuffer(" ");
-			
-			method.append(functionTag.getAttribute("name"));
+			method.append(functionTag.getAttributeValue("name"));
 			method.append(" ( ");
 			CFNodeList args = functionTag.selectNodes("//cfargument");
 			Iterator j = args.iterator();
 			while(j.hasNext()) {
 				try {
 					TagItem thisArg = (TagItem)j.next();
-					method.append(thisArg.getAttribute("type") + " " + thisArg.getAttribute("name"));
+					method.append(thisArg.getAttributeValue("type") + " " + thisArg.getAttributeValue("name"));
 					if (j.hasNext()) {
 						method.append(", ");
 					}
@@ -49,13 +48,13 @@ public class CFCMethodViewItem  {
 			}
 			method.append(" )");
 			
-			String returntype = functionTag.getAttribute("returntype");
+			String returntype = functionTag.getAttributeValue("returntype");
 			if(returntype != null)
 			{
 				method.append(" - " + returntype); 
 			}
 			
-			String hint = functionTag.getAttribute("hint");
+			String hint = functionTag.getAttributeValue("hint");
 			if (hint != null) 
 			{
 			    method.append("  '"+hint+"'");
@@ -74,14 +73,14 @@ public class CFCMethodViewItem  {
 		try {
 			StringBuffer method = new StringBuffer("");
 			
-			method.append(functionTag.getAttribute("name"));
+			method.append(functionTag.getAttributeValue("name"));
 			method.append("(");
 			CFNodeList args = functionTag.selectNodes("//argument");
 			Iterator j = args.iterator();
 			while(j.hasNext()) {
 				try {
 					TagItem thisArg = (TagItem)j.next();
-					method.append(thisArg.getAttribute("type") + " " + thisArg.getAttribute("name"));
+					method.append(thisArg.getAttributeValue("type") + " " + thisArg.getAttributeValue("name"));
 					if (j.hasNext()) {
 						method.append(", ");
 					}
@@ -116,7 +115,7 @@ public class CFCMethodViewItem  {
 		String returnType;
 
 		try {
-			return functionTag.getAttribute("returntype");
+			return functionTag.getAttributeValue("returntype");
 		}
 		catch (Exception e) {
 			return "void";
@@ -125,7 +124,7 @@ public class CFCMethodViewItem  {
 	
 	public String getAccess() {
 		try {
-			return functionTag.getAttribute("access");
+			return functionTag.getAttributeValue("access");
 		}
 		catch (Exception e) {
 			return "public";
@@ -177,7 +176,7 @@ public class CFCMethodViewItem  {
 	public String getInsightXML() {
 	    String insightXML = "";
 	    
-	    insightXML += "\t\t\t<function creator=\"8\" name=\""+functionTag.getAttribute("name")+"\" returns=\""+functionTag.getAttribute("returnType")+"\">\n";
+	    insightXML += "\t\t\t<function creator=\"8\" name=\""+functionTag.getAttributeValue("name")+"\" returns=\""+functionTag.getAttributeValue("returnType")+"\">\n";
 		insightXML += "\t\t\\t\t<help><![CDATA[\n";
 		insightXML += "\t\t\t\t\t \n";
 		insightXML += "\t\t\t\t]]></help>\n";
@@ -186,9 +185,9 @@ public class CFCMethodViewItem  {
 		while(j.hasNext()) {
 			try {
 				TagItem thisArg = (TagItem)j.next();
-				insightXML += "\t\t\t\t<parameter name=\""+thisArg.getAttribute("name") + "\" type=\"" + thisArg.getAttribute("type") + "\" required=\"" + thisArg.getAttribute("required") +"\">\n";
+				insightXML += "\t\t\t\t<parameter name=\""+thisArg.getAttributeValue("name") + "\" type=\"" + thisArg.getAttributeValue("type") + "\" required=\"" + thisArg.getAttributeValue("required") +"\">\n";
 				insightXML += "\t\t\t\t\t<help><![CDATA[\n";
-				insightXML += "\t\t\t\t\t\t" + thisArg.getAttribute("hint")+ "\n";
+				insightXML += "\t\t\t\t\t\t" + thisArg.getAttributeValue("hint")+ "\n";
 				insightXML += "\t\t\t\t\t]]></help>\n";
 				insightXML += "\t\t\t\t</parameter>\n\n";
 			}

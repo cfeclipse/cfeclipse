@@ -15,14 +15,31 @@ import com.rohanclan.cfml.util.CFPluginImages;
  */
 public class CFCMethodsLabelProvider  extends LabelProvider implements ITableLabelProvider {
 	public String getColumnText(Object obj, int index) {
-		return getText(obj);
+	    CFCMethodViewItem item = (CFCMethodViewItem)obj;
+		return item.toString();
 	}
 	public Image getColumnImage(Object obj, int index) {
 		return getImage(obj);
 	}
 	public Image getImage(Object obj) {
-
-		return CFPluginImages.get(CFPluginImages.ICON_FUNC);
+	    try {
+		    CFCMethodViewItem item = (CFCMethodViewItem)obj;
+		    
+		    if (item.getAccess().toLowerCase().equals("remote")) {
+		        return CFPluginImages.get(CFPluginImages.ICON_METHOD_REMOTE);
+		    } else if (item.getAccess().toLowerCase().equals("public")) {
+		        return CFPluginImages.get(CFPluginImages.ICON_METHOD_PUBLIC);
+		    } else if (item.getAccess().toLowerCase().equals("package")) {
+		        return CFPluginImages.get(CFPluginImages.ICON_METHOD_PACKAGE);
+		    } else if (item.getAccess().toLowerCase().equals("private")) {
+		        return CFPluginImages.get(CFPluginImages.ICON_METHOD_PRIVATE);
+		    }
+		    return null;
+	    }
+	    catch (Exception e) {
+	        //e.printStackTrace();
+	        return CFPluginImages.get(CFPluginImages.ICON_METHOD_PUBLIC);
+	    }
 
 	}
 }

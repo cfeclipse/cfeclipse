@@ -56,6 +56,7 @@ public class XPathSearch {
 	}
 	
 	public boolean searchForTag = false;
+	public boolean searchForEndTag = false;
 	public String tagName = "";
 	
 	public boolean posSearch = false;

@@ -30,6 +30,7 @@ import org.eclipse.jface.text.TextSelection;
 
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
+import com.sun.rsasign.c;
 
 /**
  * @author Stephen Milligan
@@ -284,12 +285,13 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
         
         int startpos = sel.getOffset() + sel.getLength();
         
-        if ((e.stateMask & SWT.CONTROL) != 0 
-                || (e.stateMask & SWT.COMMAND) != 0) {
+        if ((e.stateMask & SWT.MOD1) != 0) { 
+                //|| (e.stateMask & SWT.COMMAND) != 0
+                //|| (e.stateMask & SWT.CONTROL) != 0) {
                 
         //if ((e.stateMask & SWT.CONTROL) != 0 ) {
             ICFDocument cfd = (ICFDocument) viewer.getDocument();
-    		CfmlTagItem cti = cfd.getTagAt(startpos, startpos);
+    		CfmlTagItem cti = cfd.getTagAt(startpos, startpos, true);
     		
     		
             int start = 0;
@@ -298,13 +300,28 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 
 	            if ((e.stateMask & SWT.SHIFT) != 0 
 	                    && cti.matchingItem != null) {
-	                start = cti.getStartPosition();
-	                length = cti.matchingItem.getEndPosition()-cti.getStartPosition()+1;
+	                
+	                if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
+	                    start = cti.matchingItem.getStartPosition();
+	                    length = cti.getEndPosition()-cti.matchingItem.getStartPosition()+1;
+	                }
+	                else {
+	                    start = cti.getStartPosition();
+	                    length = cti.matchingItem.getEndPosition()-cti.getStartPosition()+1;
+	                }
 
 	            }
 	            else {
-	                start = cti.getStartPosition();
-	                length = cti.getEndPosition()-cti.getStartPosition()+1;
+	               if (cti.matchingItem != null 
+	                       && cti.matchingItem.getStartPosition() <= startpos
+	                       && cti.matchingItem.getEndPosition() >= startpos) {
+	                   start = cti.matchingItem.getStartPosition();
+	                   length = cti.matchingItem.getEndPosition()-cti.matchingItem.getStartPosition()+1;
+	               }
+	               else {
+	                   start = cti.getStartPosition();
+	                   length = cti.getEndPosition()-cti.getStartPosition()+1;
+	               }
 	            }
 
 	            TextSelection newSel = new TextSelection(cfd,start,length);
