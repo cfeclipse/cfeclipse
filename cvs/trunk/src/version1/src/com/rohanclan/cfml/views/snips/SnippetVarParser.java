@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import org.eclipse.core.resources.IFile;
 import java.io.File;
 
 /**
@@ -28,8 +29,24 @@ public class SnippetVarParser {
 		super();
 	}
 	
-	public static String parse(String str) {
+	public static String parse(String str, IFile activeFile) {
 		
+		String currentFile = "";
+		String currentFolder = "";
+		String currentPath = "";
+		
+		if (activeFile != null) {
+		 currentFile = activeFile.getName();
+		 currentPath = activeFile.getRawLocation().toFile().getAbsolutePath();
+		 File fullPath = new File(currentPath);
+		 currentFolder = fullPath.getParent();
+		 
+		 // Get your lauging gear round this little lot :)
+		 currentFile = currentFile.replaceAll("\\\\","\\\\\\\\");
+		 currentPath = currentPath.replaceAll("\\\\","\\\\\\\\");
+		 currentFolder = currentFolder.replaceAll("\\\\","\\\\\\\\");
+		}
+
 		
 		
 		/*
@@ -60,16 +77,59 @@ public class SnippetVarParser {
 		Calendar calendar = new GregorianCalendar();
 		Date currentTime = new Date();
 		calendar.setTime(currentTime);
-		String newStr = str.replaceAll("\\$\\$\\{DATE\\}",currentTime.toLocaleString());
+		String newStr = str;
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("MMMM");
+		newStr = newStr.replaceAll("\\$\\$\\{FULLDATE\\}",currentTime.toString());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
+		String formattedDate = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{DATE\\}",formattedDate);
+		
+		formatter = new SimpleDateFormat("MMMM");
 		String formattedMonth = formatter.format(currentTime);
 		newStr = newStr.replaceAll("\\$\\$\\{MONTH\\}",formattedMonth);
 		
-		formatter = new SimpleDateFormat("kk:mm:ss");
+		formatter = new SimpleDateFormat("k:mm:ss a");
 		String formattedTime = formatter.format(currentTime);
 		newStr = newStr.replaceAll("\\$\\$\\{TIME\\}",formattedTime);
 		
+		formatter = new SimpleDateFormat("M/d/yyyy K:mm:ss a");
+		String formattedDateTime = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{DATETIME\\}",formattedDateTime);
+		
+		formatter = new SimpleDateFormat("EEEE");
+		String formattedDayOfWeek = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{DAYOFWEEK\\}",formattedDayOfWeek);
+		
+		newStr = newStr.replaceAll("\\$\\$\\{CURRENTFILE\\}",currentFile);
+		
+		newStr = newStr.replaceAll("\\$\\$\\{CURRENTFOLDER\\}",currentFolder);
+		
+		newStr = newStr.replaceAll("\\$\\$\\{CURRENTPATH\\}",currentPath);
+		
+		newStr = newStr.replaceAll("\\$\\$\\{USERNAME\\}",System.getProperty("user.name"));
+		
+		formatter = new SimpleDateFormat("MM");
+		String formattedMonthNumber = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{MONTHNUMBER\\}",formattedMonthNumber);
+		
+		formatter = new SimpleDateFormat("dd");
+		String formattedDayOfMonth = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{DAYOFMONTH\\}",formattedDayOfMonth);
+		
+		newStr = newStr.replaceAll("\\$\\$\\{DAYOFWEEKNUMBER\\}",Integer.toString(calendar.get(Calendar.DAY_OF_WEEK)));
+		
+		formatter = new SimpleDateFormat("M/d/yyyy kk:mm:ss");
+		String formattedDateTime24 = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{DATETIME24\\}",formattedDateTime24);
+		
+		formatter = new SimpleDateFormat("yyyy");
+		String formattedYear = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{YEAR\\}",formattedYear);
+		
+		formatter = new SimpleDateFormat("yy");
+		String formattedYear2Digit = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{YEAR2DIGIT\\}",formattedYear2Digit);
 		
 		
 		return newStr;

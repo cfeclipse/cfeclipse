@@ -68,8 +68,11 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		lastRes = newRes;
 	}
 	
+
+	
 	protected IDocument createDocument(Object element) throws CoreException 
 	{
+		
 		//IDocument document = super.createDocument(element);
 		//ICFDocument document = (ICFDocument)super.createDocument(element);
 		ICFDocument document = null; 

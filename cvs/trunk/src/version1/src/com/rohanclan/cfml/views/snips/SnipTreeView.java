@@ -54,7 +54,9 @@ import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import java.io.File;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.core.resources.IFile;
 
+import org.eclipse.ui.IFileEditorInput;
 
 import org.eclipse.core.runtime.Path;
 
@@ -117,7 +119,6 @@ public class SnipTreeView extends ViewPart
 
 		// This ensures that we are notified when the properties are saved
 		CFMLPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
-		
 		try 
 		{
 			//snipBase = CFMLPlugin.getDefault().getStateLocation();
@@ -394,9 +395,14 @@ public class SnipTreeView extends ViewPart
 			//xmlconfile.setFileName(f);
 			//xmlconfile.openFile();
 			
+			IFile activeFile = null;
+			if (iep.getEditorInput() instanceof IFileEditorInput) {
+				activeFile = ((IFileEditorInput) iep.getEditorInput()).getFile();
+			}
+			
 			tmpAction.setEnclosingStrings(
-					SnippetVarParser.parse(snipReader.getSnipStartBlock()),
-					SnippetVarParser.parse(snipReader.getSnipEndBlock())	
+					SnippetVarParser.parse(snipReader.getSnipStartBlock(),activeFile),
+					SnippetVarParser.parse(snipReader.getSnipEndBlock(),activeFile)	
 			);
 			
 			
