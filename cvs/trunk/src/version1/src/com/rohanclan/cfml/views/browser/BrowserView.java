@@ -40,7 +40,6 @@ public class BrowserView extends ViewPart {
 	{
 		try
 		{
-			
 			instance = new CFBrowser(frame,this);
 		}
 		catch(Exception e)
@@ -72,9 +71,26 @@ public class BrowserView extends ViewPart {
 		super.dispose();
 	}
 	
+	/**
+	 * sets the browsers url externally. This checks to see if the 
+	 * browser exists first so you can assume the browser is there and
+	 * just call it
+	 * @param url
+	 */
 	public void setUrl(String url) 
 	{
 		if(instance != null)
 			instance.browser.setUrl(url);
+	}
+	
+	/**
+	 * does a page refresh externally. This checks to see if the 
+	 * browser exists first so you can assume the browser is there and
+	 * just call it
+	 */
+	public void refresh() 
+	{
+		if(instance != null)
+			instance.browser.refresh();
 	}
 }

@@ -76,11 +76,11 @@ public class CFBrowser {
 	private ViewPart viewer;
 	
 	/**
-	* Creates an instance of a ControlExample embedded inside the supplied
-	* parent Composite.
-	* @param parent
-	* the container of the example
-	*/
+	 * Creates an instance of a ControlExample embedded inside the supplied
+	 * parent Composite.
+	 * @param parent
+	 * the container of the example
+	 */
 	public CFBrowser(Composite parent,ViewPart viewer) 
 	{
 		this.viewer = viewer;
@@ -123,8 +123,8 @@ public class CFBrowser {
 		location = new Text(parent, SWT.BORDER);
 		final Canvas canvas = new Canvas(parent, SWT.ICON_INFORMATION);
 		
+		//this is supposed to be the working icon but...
 		display.asyncExec(new Runnable() {
-			//this is supposed to be the working icon but...
 			public void run() 
 			{
 				if(canvas.isDisposed())
@@ -161,7 +161,7 @@ public class CFBrowser {
 		{
 			// Browser widget could not be instantiated
 			Label label = new Label(parent, SWT.CENTER | SWT.WRAP);
-			label.setText(getResourceString("BrowserNotCreated"));
+			label.setText(getResourceString("Browser Not Created"));
 			label.setLayoutData(data);
 		}
 		
@@ -415,27 +415,7 @@ public class CFBrowser {
 	 * Disposes of all resources associated with a particular instance of the
 	 * BrowserExample.
 	 */
-	public void dispose()
-	{
-		freeResources();
-	}
-	
-	/**
-	 * Frees the resources
-	 */
-	void freeResources()
-	{
-		/* if(images != null)
-		{
-			for(int i = 0; i < images.length; ++i) 
-			{
-				final Image image = images[i];
-				if(image != null)
-					image.dispose();
-			}
-			images = null;
-		} */
-	}
+	public void dispose(){;}
 	
 	/**
 	 * Grabs input focus.
