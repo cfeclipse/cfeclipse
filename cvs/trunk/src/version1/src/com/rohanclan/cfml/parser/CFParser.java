@@ -123,6 +123,9 @@ public class CFParser implements IEditorActionDelegate{
 		protected boolean hadFatal = false;
 		protected MatchList matches = new MatchList();
 		
+		static public final int ADD_BEFORE = 0x01;
+		static public final int ADD_AFTER =  0x02;
+		
 		public MatchList getMatches()
 		{
 			return matches;
@@ -136,6 +139,22 @@ public class CFParser implements IEditorActionDelegate{
 		public ArrayList getMessages()
 		{
 			return messages;
+		}
+		
+		public void addMatch(TagMatch newMatch, int position, int numIndicies)
+		{
+			switch(position)
+			{
+				case ADD_BEFORE:
+					matches.add(matches.size() - numIndicies, newMatch);
+					break;
+				case ADD_AFTER:
+					addMatch(newMatch);
+					break;
+				default:
+					// Should this raise an exception?
+					break;
+			}
 		}
 		
 		public void addMatch(TagMatch newMatch)
@@ -326,8 +345,11 @@ public class CFParser implements IEditorActionDelegate{
 	 * @param inString - String to test
 	 * @return <code>true</code> - is a CF tag, <code>false</code> - isn't a CF tag
 	 */
+	static int count = 0;
 	protected boolean IsCFTag(String inString)
 	{
+		System.out.println("At " + count + " test ");
+		count++;
 		return inString.indexOf("<cf") != -1;
 	}
 	
@@ -607,7 +629,7 @@ public class CFParser implements IEditorActionDelegate{
 		CfmlTagItem newItem = new CfmlTagItem(-1, match.startPos, match.endPos, tagName);
 		newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
 		newItem.setItemData(match.match);
-		
+		/*
 		try {
 			newItem.addAttributes(attrMap);
 		} catch(DuplicateAttributeException excep) {
@@ -615,6 +637,7 @@ public class CFParser implements IEditorActionDelegate{
 		} catch(InvalidAttributeException excep) {
 			userMessage(matchStack.size(), "handleCFTag", "The tag " + tagName + " is not allowed the attribute \'" + excep.getName() + "\'", USRMSG_ERROR, match);
 		}
+		*/
 		//
 		//	Either the syntax dictionary says it closes itself or the user has specified it will
 		if(newItem.hasClosingTag() && !isACloser) 
@@ -738,7 +761,7 @@ public class CFParser implements IEditorActionDelegate{
 				}
 			}
 		}catch(java.lang.Exception excep) {
-			System.err.println(GetTabs(matchStack) + "Parser: Caught an exception!" + excep.getMessage());
+			System.out.println(GetTabs(matchStack) + "Parser: Caught an exception!" + excep.getMessage());
 		}
 		System.err.println("#################### TREE DUMP ##################");
 		walkTree(rootItem);
@@ -765,8 +788,9 @@ public class CFParser implements IEditorActionDelegate{
 	protected int matchingHTML(CFParser.State parseState, String inData, int currDocOffset)
 	{
 		int finalOffset = currDocOffset;
-		int currPos = currDocOffset;
-		
+		int currPos = currDocOffset + 1;
+		TagMatch embeddedMatch = null;
+		int cfTagCount = 0;
 		int quoteCount = 0;
 		
 		for(; currPos < inData.length(); currPos++)
@@ -775,6 +799,7 @@ public class CFParser implements IEditorActionDelegate{
 			boolean inQuotes = (1 == quoteCount % 2);
 			String next2Chars = "";
 			String next3Chars = "";
+			
 			if(inData.length() - currPos > 2)	// For CF stuff we get the next two chars as well.
 				next2Chars = inData.substring(currPos + 1, currPos + 3);
 			if(inData.length() - currPos > 3)	// For CF closer tags </cf...
@@ -782,13 +807,15 @@ public class CFParser implements IEditorActionDelegate{
 			
 			if(currChar == '<' && (next2Chars.compareTo("cf") == 0 || next3Chars.compareTo("/cf") == 0))
 			{	// CFML tag embedded in HTML
-				System.out.println("FOUND!: an embedded CFML tag within HTML!");
+				System.out.println("FOUND!: an embedded CFML tag within HTML! : " + inData.substring(0, currPos));
 				currPos = matchingCFML(parseState, inData, currPos);
+				cfTagCount++;
 			}
 			else if(!inQuotes && currChar == '>')
 			{
 				System.out.println("FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos+1));				
-				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 0));
+				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 0), 
+									State.ADD_BEFORE, cfTagCount);
 				finalOffset = currPos;
 				break;
 			}
@@ -894,9 +921,13 @@ public class CFParser implements IEditorActionDelegate{
 								{
 									System.out.println("\t it's a CFML comment");
 									currState = MATCHER_CFMLCOMMENT;
+									lastMatch = currPos;
 								}
 								else
+								{
 									currState = MATCHER_COMMENT;
+									lastMatch = currPos;
+								}
 							}
 							else if(next2Chars.compareTo("cf") == 0)
 							{
@@ -920,6 +951,7 @@ public class CFParser implements IEditorActionDelegate{
 						inData.charAt(currPos+3) == '>')
 				{
 					System.out.println("Found the end of a CFML comment");
+					System.err.println("Comment matched text: \'" + inData.substring(lastMatch, currPos) + "\'");
 					currState = MATCHER_NOTHING;
 				}
 				else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
@@ -939,16 +971,22 @@ public class CFParser implements IEditorActionDelegate{
 	{
 		CFDocument docTree = null;
 		try {
-			//docTree = createDocTree(getTagMatches(parseDoc));
+
 			CFParser.State pState = new CFParser.State("fred");
 			MatchList matches = tagMatchingAttempts(pState, parseDoc.get());
 			MatchList pMatches = pState.getMatches();
+/*
 			System.err.println("############ DUMPING MATCHES ###########");
 			for(int i = 0; i < pMatches.size(); i++)
 			{
 				System.out.println("Match: \'" + ((TagMatch)pMatches.get(i)).match + "\'");
 			}
-				
+			//getTagMatches(parseDoc);
+			docTree = createDocTree(getTagMatches(parseDoc));			
+			docTree = createDocTree(pState.getMatches());
+*/
+			
+			docTree = createDocTree(getTagMatches(parseDoc));
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());

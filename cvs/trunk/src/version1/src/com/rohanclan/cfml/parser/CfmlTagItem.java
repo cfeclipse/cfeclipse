@@ -14,10 +14,13 @@ import java.util.Set;
  *
  */
 public class CfmlTagItem extends TagItem {
-
-
-	/* (non-Javadoc)
-	 * @see com.rohanclan.cfml.parser.TagItem#addAttribute(java.lang.String, java.lang.String)
+	/**
+	 * Adds a string-based name/value attribute pair to the tag
+	 * 
+	 * @param attrName - the name of the attribute
+	 * @param attrValue - the value for the attribute
+	 * @throws DuplicateAttributeException - The attribute already exists in the attr list
+	 * @throws InvalidAttributeException - The attribute does not belong to this tag.
 	 */
 	public void addAttribute(String attrName, String attrValue) 
 				throws DuplicateAttributeException, 

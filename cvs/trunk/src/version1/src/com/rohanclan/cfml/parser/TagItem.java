@@ -7,6 +7,13 @@ import com.rohanclan.cfml.dictionary.*;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * 
+ * @author Oliver Tupman
+ *
+ * A tag-based item in the document.
+ *
+ */
 public class TagItem extends DocItem {
 	
 	protected HashMap attributes;
@@ -23,6 +30,14 @@ public class TagItem extends DocItem {
 
 	public DocItem matchingItem;
 
+	/**
+	 * Adds an attribute to the document
+	 * 
+	 * @param attrName - name
+	 * @param attrValue - value
+	 * @throws DuplicateAttributeException - attribute already exists
+	 * @throws InvalidAttributeException - attribute doesn't belong to this tag
+	 */
 	public void addAttribute(String attrName, String attrValue) 
 				throws DuplicateAttributeException, InvalidAttributeException
 	{

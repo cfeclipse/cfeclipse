@@ -7,15 +7,12 @@
 package com.rohanclan.cfml.parser;
 
 /**
- * @author ollie
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * @author Oliver Tupman
+ * 
+ * Represents a HTML item in a CF document.
+ *  
  */
 public class HtmlTagItem extends TagItem {
-	
-	
-	
 	/**
 	 * @param line
 	 * @param startDocPos
