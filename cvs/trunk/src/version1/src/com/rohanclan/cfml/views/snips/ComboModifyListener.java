@@ -45,7 +45,8 @@ public class ComboModifyListener implements ModifyListener, KeyListener {
     public void modifyText(ModifyEvent event) {
         try {
         
-        if (this.lastKey == SWT.DEL || this.lastKey == SWT.BS) {
+        //if (this.lastKey == SWT.DEL || this.lastKey == SWT.BS) {
+        if (this.lastKey == SWT.DEL || this.lastKey == SWT.BS || this.lastKey == -1) {
             return;
         }
             
@@ -59,6 +60,7 @@ public class ComboModifyListener implements ModifyListener, KeyListener {
         
         for (int i=0;i<items.length;i++) {
             if (items[i].startsWith(combo.getText())) {
+            	   this.lastKey = -1;
                 combo.select(i);
                 combo.setSelection(new Point(x,y));
                 
