@@ -93,8 +93,12 @@ public class BrowserView extends ViewPart {
 	public void setFocus()
 	{
 		if(projectInstance != null)
-	        folder.setSelection(BrowserView.PROJECT_TAB);
+		{	
+			if(folder != null &&	folder.getTabList().length >= BrowserView.PROJECT_TAB)
+				folder.setSelection(BrowserView.PROJECT_TAB);
+			
 			projectInstance.setFocus();
+		}
 	}
 	
 	/**
@@ -104,7 +108,7 @@ public class BrowserView extends ViewPart {
 	 */
 	public void setFocus(int whichTab)
 	{
-	    if (BrowserView.HELP_TAB == whichTab && helpInstance != null) {
+		if (BrowserView.HELP_TAB == whichTab && helpInstance != null) {
 	        folder.setSelection(BrowserView.HELP_TAB);
 			helpInstance.setFocus();
 	    }
@@ -151,7 +155,7 @@ public class BrowserView extends ViewPart {
 	 */
 	public void setUrl(String url, int whichTab) 
 	{
-	    if (BrowserView.HELP_TAB == whichTab && helpInstance != null) {
+		if (BrowserView.HELP_TAB == whichTab && helpInstance != null) {
 	        helpInstance.browser.setUrl(url);
 	    } else  {
 	        setUrl(url);
@@ -185,9 +189,4 @@ public class BrowserView extends ViewPart {
 	        refresh();
 	    }
 	}
-	
-	
-	
-    
-	
 }
