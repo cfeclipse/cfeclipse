@@ -62,13 +62,14 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final RGB DEFAULT_COLOR_STRING 			= ICFColorConstants.STRING;
 	private static final RGB DEFAULT_COLOR_TAG 			= ICFColorConstants.TAG;
 	private static final RGB DEFAULT_COLOR_UNKTAG 			= ICFColorConstants.UNK_TAG;
+	private static final RGB DEFAULT_COLOR_FORMTAG			= ICFColorConstants.FORM;
+	private static final RGB DEFAULT_COLOR_TABLETAG		= ICFColorConstants.TABLE;
 	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
 	public CFMLPreferenceManager() {
 		store = CFMLPlugin.getDefault().getPreferenceStore();
-		//initialiseDefaultColours();
 	}
 
 	public boolean getBooleanPref(String prefKey) {
@@ -100,6 +101,8 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		store.setDefault(P_COLOR_STRING, DEFAULT_COLOR_STRING.toString());
 		store.setDefault(P_COLOR_HTM_TAG, DEFAULT_COLOR_TAG.toString());
 		store.setDefault(P_COLOR_UNK_TAG, DEFAULT_COLOR_UNKTAG.toString());
+		store.setDefault(P_COLOR_HTM_FORM_TAG, DEFAULT_COLOR_FORMTAG.toString());
+		store.setDefault(P_COLOR_HTM_TABLE_TAG, DEFAULT_COLOR_TABLETAG.toString());
 	}
 	
 	public void initializeDefaultValues() {
@@ -156,7 +159,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	{
 		//try to get the color as a string from the store
 		String rgbString = store.getString(key);
-		System.err.println(key + " :: " + rgbString);
+		//System.err.println(key + " :: " + rgbString);
 		
 		//if we didnt get anything back...
 		if(rgbString.length() <= 0)

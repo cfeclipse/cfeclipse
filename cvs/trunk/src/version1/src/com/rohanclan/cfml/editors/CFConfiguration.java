@@ -67,34 +67,12 @@ import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 public class CFConfiguration extends SourceViewerConfiguration implements IPropertyChangeListener {
 	
 	private CFDoubleClickStrategy doubleClickStrategy;
-	/** the default html tag scanner */
-	//private HTMTagScanner htmtagScanner;
-	/** the default html tag scanner */
-	//private HTMTagScanner unktagScanner;
-	/** the cold fusion tag scanner */
-	//private CFTagScanner cftagScanner;
-	/** plain text scanner (nodes values)*/
-	//private TextScanner scanner;
-	/** cfscript block scanner */
-	//private CFScriptScanner cfscriptscanner;
-	/** style block scanner */
-	//private StyleScanner stylescanner;
-	/** script (as in javascript) block scanner */
-	//private ScriptScanner scriptscanner;
-	
 	private ColorManager colorManager;
-	
 	private ContentAssistant assistant;
-	
 	private TagIndentStrategy indentTagStrategy;
 	private CFScriptIndentStrategy indentCFScriptStrategy;
-	
 	private CFMLPreferenceManager preferenceManager;
-	
 	private int tabWidth;
-
-	/** the default color token for text */
-	//private Token TextToken;
 	
 	
 	/**
@@ -151,7 +129,9 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			CFPartitionScanner.CF_SCRIPT,
 			CFPartitionScanner.J_SCRIPT,
 			CFPartitionScanner.CSS_TAG,
-			CFPartitionScanner.UNK_TAG
+			CFPartitionScanner.UNK_TAG,
+			CFPartitionScanner.FORM_TAG,
+			CFPartitionScanner.TABLE_TAG
 		};
 	}
 	
@@ -322,6 +302,50 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		scriptscanner.setDefaultReturnToken(textToken);
 		return scriptscanner;
 	}
+	
+	/**
+	 * gets the form scanner (handles highlighting for the form tags)
+	 * partitions
+	 * @return
+	 */
+	protected HTMTagScanner getFormScanner() 
+	{
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_HTM_FORM_TAG
+					)
+				)
+			)
+		);
+		HTMTagScanner formscanner = new HTMTagScanner(colorManager, preferenceManager);
+		formscanner.setDefaultReturnToken(textToken);
+		return formscanner;
+	}
+	
+	/**
+	 * gets the form scanner (handles highlighting for the form tags)
+	 * partitions
+	 * @return
+	 */
+	protected HTMTagScanner getTableScanner() 
+	{
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLPreferenceManager.P_COLOR_HTM_TABLE_TAG
+					)
+				)
+			)
+		);
+		HTMTagScanner tablescanner = new HTMTagScanner(colorManager, preferenceManager);
+		tablescanner.setDefaultReturnToken(textToken);
+		return tablescanner;
+	}
+	
+	
 	///////////////////////// SCANNERS /////////////////////////////////////////////
 	
 	/**
@@ -367,6 +391,13 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		reconciler.setDamager(dr, CFPartitionScanner.CF_END_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_END_TAG);
 		
+		dr = new DefaultDamagerRepairer(getFormScanner());
+		reconciler.setDamager(dr, CFPartitionScanner.FORM_TAG);
+		reconciler.setRepairer(dr, CFPartitionScanner.FORM_TAG);
+		
+		dr = new DefaultDamagerRepairer(getTableScanner());
+		reconciler.setDamager(dr, CFPartitionScanner.TABLE_TAG);
+		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_TAG);
 		
 		//.... the default text in the document
 		dr = new DefaultDamagerRepairer(getTextScanner());
@@ -442,32 +473,31 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		
 		CFCompletionProcessor cfcp = new CFCompletionProcessor(assistant);
 	
-		//assign to the needed partitions
-		
+		//assign the code completion to the needed partitions
 		//for normal text
 		assistant.setContentAssistProcessor(cfcp,IDocument.DEFAULT_CONTENT_TYPE); 
-		//inside cftags
+		//inside cftags and javascript tags
 		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.CF_TAG);
 		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.J_SCRIPT);
 		//inside any other tags
 		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.ALL_TAG);
 		//unknown tags
 		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.UNK_TAG);
-		//inside cfscript tags
+		//cfscript gets their own special type
 		assistant.setContentAssistProcessor(new CFScriptCompletionProcessor(),CFPartitionScanner.CF_SCRIPT);
-		//in style tags 
+		//in style tags
 		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.CSS_TAG);
+		//form and table tags too
+		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.FORM_TAG);
+		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.TABLE_TAG);
 		
-		//in javascript tags
-		//this doesnt quite work right...
+		//in javascript tags - try to give js its own type of completion using the
+		//cfscript processor but using the js dictionary...
+		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
+		cfscp.changeDictionary(DictionaryManager.JSDIC);
+		assistant.setContentAssistProcessor(cfscp,	CFPartitionScanner.J_SCRIPT);
 		
-		//CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
-		//cfscp.changeDictionary(DictionaryManager.JSDIC);
-		//assistant.setContentAssistProcessor(
-		//	cfscp,
-		//	CFPartitionScanner.J_SCRIPT
-		//);
-
+		
 		IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
 		
 		int delay = preferenceManager.insightDelay();

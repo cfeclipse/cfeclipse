@@ -41,7 +41,7 @@ import java.util.HashSet;
  *  
  */
 public class Procedure implements Comparable {
-	/* cold fusion "types" */
+	/* cfml "types" */
 	/** cf string type */
 	public static final String STRING  = "string";
 	/** cf numeric type */
@@ -91,7 +91,8 @@ public class Procedure implements Comparable {
 	
 	/**
 	 * Gets the defined users of this tag. For example
-	 * 3 is both MX and BD
+	 * 3 is both MX and BD. This is also a bit misnamed as it is also used
+	 * to tell what kind of tag this is e.g. getCreatorFlags == FORM
 	 * @return who can use this tag
 	 */
 	public byte getCreatorFlags()

@@ -106,12 +106,8 @@ public class CFTagScanner extends RuleBasedScanner {
 		}
 		
 		CFKeywordDetector cfkd = new CFKeywordDetector();
-		PredicateWordRule words = new PredicateWordRule(
-			cfkd, 
-			cftag, 
-			allkeys, 
-			cfkeyword
-		);
+		PredicateWordRule words = new PredicateWordRule(cfkd,cftag,	allkeys,	cfkeyword);
+		
 		rules[3] = words;
 		
 		// Add generic whitespace rule.

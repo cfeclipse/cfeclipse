@@ -34,9 +34,9 @@ import org.eclipse.swt.graphics.RGB;
 
 public interface ICFColorConstants {
 	/** doctype */
-	//RGB DOCTYPE		 		= new RGB(128, 128, 128);
+	//RGB DOCTYPE		= new RGB(128, 128, 128);
 	/** cf comments */
-	RGB CF_COMMENT 			= new RGB(128, 128, 128);
+	RGB CF_COMMENT 		= new RGB(128, 128, 128);
 	/** html comments */
 	RGB HTM_COMMENT 		= new RGB(96, 153, 96);
 	/** html strings */
@@ -45,6 +45,10 @@ public interface ICFColorConstants {
 	RGB DEFAULT     		= new RGB(0, 0, 0);
 	/** html tag color */
 	RGB TAG         		= new RGB(0, 0, 128);
+	/** html form color */
+	RGB FORM				= new RGB(195, 136, 0);
+	/** html table color  */
+	RGB TABLE      		= new RGB(132, 0, 215);
 	/////////////////////////////////////
 	/** coldfusion attribute strings */
 	RGB CFSTRING    		= new RGB(0, 0, 255);
@@ -59,7 +63,7 @@ public interface ICFColorConstants {
 	RGB CFSCRIPT    		= new RGB(0, 0, 0);
 	RGB CFSCRIPT_KEYWORD	= new RGB(0, 0, 255);
 	RGB CFSCRIPT_FUNCTION	= new RGB(0, 0, 102);
-	RGB CFSCRIPT_STRING		= new RGB(0, 102, 0);
+	RGB CFSCRIPT_STRING	= new RGB(0, 102, 0);
 	
 	/** javascript tag color */
 	RGB JSCRIPT 		    = new RGB(51, 0, 153);

@@ -30,6 +30,7 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WordRule;
+import org.eclipse.jface.text.IDocument;
 
 /**
  * @author Rob
@@ -55,13 +56,14 @@ public class PredicateWordRule extends WordRule implements IPredicateRule {
 	{
 		return successToken;
 	}
-
+	
 	/**
 	 * @see org.eclipse.jface.text.rules.IPredicateRule#evaluate(
 	 * org.eclipse.jface.text.rules.ICharacterScanner, boolean)
 	 */
 	public IToken evaluate(ICharacterScanner scanner, boolean resume) 
 	{
+		
 		successToken = this.evaluate(scanner, resume);//true);
 		return successToken;
 	}

@@ -59,6 +59,9 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String J_SCRIPT		= "__script_tag";
 	public final static String CSS_TAG		= "__css_tag";
 	public final static String UNK_TAG		= "__unk_tag";
+	//form and table
+	public final static String FORM_TAG		= "__form_tag";
+	public final static String TABLE_TAG		= "__table_tag";
 	
 	public CFPartitionScanner() {
 		IToken doctype	 	= new Token(DOCTYPE);
@@ -72,6 +75,9 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken jscript 		= new Token(J_SCRIPT);
 		IToken css 			= new Token(CSS_TAG);
 		IToken unktag		= new Token(UNK_TAG);
+		//
+		IToken form			= new Token(FORM_TAG);
+		IToken table			= new Token(TABLE_TAG);
 		
 		List rules = new ArrayList();
 		
@@ -142,21 +148,34 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		{
 			Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
 			
+			//this is going to be used to tell if we need to add a form, table,
+			//or normal tag for the html tags
+			IToken tmp = tag;
+			
+			//loop over all the tags in the html dictionary and try to set the 
+			//partition to the correct type
 			Iterator it = elements.iterator();
 			while(it.hasNext())
 			{
 				String ename = (String)it.next();
-				//System.out.println(ename);
 				
+				//script and style are handled above (they are special)
 				if(!ename.equals("script") && !ename.equals("style"))
 				{
 					tg = sd.getTag(ename);
-					rules.add(new MultiLineRule("<" + ename,">", tag));
-					rules.add(new MultiLineRule("<" + ename.toUpperCase(),">", tag));
+					
+					//colour (<=for ollie) form and table tags differently...
+					if(tg.isTableTag()){	tmp = table; }
+					else if(tg.isFormTag()){ tmp = form; }
+					else { tmp = tag; }
+					
+					rules.add(new MultiLineRule("<" + ename,">", tmp));
+					rules.add(new MultiLineRule("<" + ename.toUpperCase(),">", tmp));
+					//if this is supposed to have an end tag add it too
 					if(!tg.isSingle())
 					{	
-						rules.add(new MultiLineRule("</" + ename,">", tag));
-						rules.add(new MultiLineRule("</" + ename.toUpperCase(),">", tag));
+						rules.add(new MultiLineRule("</" + ename,">", tmp));
+						rules.add(new MultiLineRule("</" + ename.toUpperCase(),">", tmp));
 					}
 				}
 			}

@@ -124,9 +124,14 @@ public class CFScriptScanner extends RuleBasedScanner {
 		
 		//do any keywords
 		//get any needed operators (or, and et cetra)
-		Set set = dic.getOperators();
+		
+		//Set set = dic.getOperators();
+		
 		//get any script specific keywords (if, case, while, et cetra)		
-		set.addAll(dic.getScriptKeywords());
+		//set.addAll(dic.getScriptKeywords());
+		
+		Set set = dic.getScriptKeywords();
+		
 		String allkeys[] = new String[set.size()<<1];
 		int i=0;
 		Iterator it = set.iterator();

@@ -183,7 +183,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			tagname = (!st.hasMoreTokens()) ? prefix : st.nextToken();
 		// System.out.println("tagname: \'" + tagname + "\'");
 			
-			st2.nextToken();
+			//looks like this is just here to skip, but it causes a 
+			//java.util.NoSuchElementException sometimes so I am just throwning the
+			//hasMore as a quick pactch
+			if(st2.hasMoreTokens())
+				st2.nextToken();
 
 			Set attribs = new HashSet();
 

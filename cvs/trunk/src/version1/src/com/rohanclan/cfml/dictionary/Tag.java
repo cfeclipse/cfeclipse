@@ -37,6 +37,11 @@ public class Tag extends Procedure {
 	protected boolean single = false;
 	protected boolean xmlstyle = false;
 	
+	/** w3c form tag */
+	public static final byte FORM = 16;
+	/** w3c table tag */
+	public static final byte TABLE = 32;
+	
 	public Tag(String name, boolean single)
 	{
 		super(name);
@@ -48,6 +53,32 @@ public class Tag extends Procedure {
 		this(name, single);
 		this.creator = creator;
 		xmlstyle = style;
+	}
+	
+	/**
+	 * returns true if this is a table tag
+	 * @return
+	 */
+	public boolean isTableTag()
+	{
+		if(getCreatorFlags() == TABLE)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * returns true if this is a form tag
+	 * @return
+	 */
+	public boolean isFormTag()
+	{
+		if(getCreatorFlags() == FORM)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	/**

@@ -73,7 +73,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 					CFPartitionScanner.CF_SCRIPT,
 					CFPartitionScanner.J_SCRIPT,
 					CFPartitionScanner.CSS_TAG,
-					CFPartitionScanner.UNK_TAG
+					CFPartitionScanner.UNK_TAG,
+					CFPartitionScanner.FORM_TAG,
+					CFPartitionScanner.TABLE_TAG
 				}
 			);
 			

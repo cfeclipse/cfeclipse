@@ -20,7 +20,7 @@ public interface ICFMLPreferenceConstants {
 	String P_SNIPPETS_PATH 			= "snippetPath";
 	String P_PROJECT_URL 				= "projectURL";
 	
-	/** all comments */
+	/** html, javascript, css comments */
 	String P_COLOR_HTM_COMMENT 		= "htmCommentColor";
 	/** html strings */
 	String P_COLOR_STRING				= "stringColor"; 
@@ -43,7 +43,7 @@ public interface ICFMLPreferenceConstants {
 	String P_COLOR_CFKEYWORD			= "cfkeywordColor";
 	/** cfml numbers */
 	String P_COLOR_CFNUMBER    		= "cfnumberColor";
-	/** cfml numbers */
+	/** cfml comment */
 	String P_COLOR_CFCOMMENT    		= "cfcommentColor";
 	
 	//////////////////////////////////////
@@ -52,9 +52,13 @@ public interface ICFMLPreferenceConstants {
 	String P_COLOR_CFSCRIPT_FUNCTION	= "cfscriptfunctionColor";
 	String P_COLOR_CFSCRIPT_STRING	= "cfscriptStringColor";
 	
+	/** actually the tag color */
 	String P_COLOR_JSCRIPT_TEXT	    = "javascriptColor";
+	/** functions in side of js */
 	String P_COLOR_JSCRIPT_FUNCTION	= "javascriptFunction";
+	/** css tag and text color */
 	String P_COLOR_CSS         		= "cssTextColor";
+	/** css value color i.e. the value part of color: red; */
 	String P_COLOR_CSS_TAG     		= "cssTagColor";
 	
 	/** all xml type tags (i.e. not cf and not html */
