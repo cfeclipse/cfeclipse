@@ -637,6 +637,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	{
 		ISourceViewer viewer = super.createSourceViewer(parent, ruler, styles);
 		getSourceViewerDecorationSupport(viewer);
+
 		return viewer;
 	}
 	

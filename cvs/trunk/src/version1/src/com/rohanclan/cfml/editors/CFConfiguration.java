@@ -132,6 +132,18 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		return tabWidth;
 	}
 	
+	/**
+	 * Returns the prefixes to be used by the line-shift operation. This implementation
+	 * always returns <code>new String[] { "\t", " " }</code>.
+	 *
+	 * @param sourceViewer the source viewer to be configured by this configuration
+	 * @param contentType the content type for which the prefix is applicable
+	 * @return the prefixes or <code>null</code> if the prefix operation should not be supported
+	 */
+	public String[] getIndentPrefixes(ISourceViewer sourceViewer, String contentType) {
+		return new String[] { "\t", " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+	
 	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
 		return this.undoManager;
 	}
