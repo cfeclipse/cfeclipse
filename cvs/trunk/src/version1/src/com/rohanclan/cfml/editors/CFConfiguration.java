@@ -542,6 +542,24 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	
 	
 	/**
+	 * Returns the information control creator. The creator is a factory creating information
+	 * controls for the given source viewer. This implementation always returns a creator for
+	 * <code>DefaultInformationControl</code> instances.
+	 * 
+	 * @param sourceViewer the source viewer to be configured by this configuration
+	 * @return the information control creator or <code>null</code> if no information support should be installed
+	 * @since 2.0
+	 */
+	public IInformationControlCreator getInformationControlCreator(ISourceViewer sourceViewer) {
+		return new IInformationControlCreator() {
+			public IInformationControl createInformationControl(Shell parent) {
+				return new DefaultInformationControl(parent,new InformationPresenter());
+			}
+		};
+	}
+	
+	
+	/**
      * Sets up the primary CFE Content Assistor. CFE now uses it's own series of
      * content assist code to future proof the content assist process. This should
      * allow developers to extend the CFE code easily and more reliably in the future

@@ -96,7 +96,8 @@ public class CFMLFunctionAssist
     		if (params == null) {
     		    return null;
     		}
-    	
+    		
+    		/*
     		ICompletionProposal[] result = new ICompletionProposal[params.size()+2];
     		Iterator i = params.iterator();
 			int x = 0;
@@ -154,6 +155,55 @@ public class CFMLFunctionAssist
                     ")",
                     null,
                     null);
+           */
+    		
+    		ICompletionProposal[] result = new ICompletionProposal[1];
+    		Iterator i = params.iterator();
+			int x = 0;
+			String extraInfo = paramIndent + "<b>" + functionName + "</b> (\n";
+			CompletionProposal proposal = null;
+			String usage = "";
+			
+			while(i.hasNext())
+			{
+			    Object o = i.next();
+			    if (o instanceof Parameter) {
+			        Parameter p = (Parameter)o;
+
+					String delimiter = "";
+					if (x < params.size()) {
+					    delimiter = " ,";
+					}
+					extraInfo += paramIndent + paramIndent;
+					if (x == this.paramsSoFar) {
+						usage = p.toString();
+						extraInfo += "<b>";
+					}
+					extraInfo += p.toString() + delimiter;
+					
+					if (x == this.paramsSoFar) {
+						extraInfo += "</b>";
+					}
+					extraInfo += "\n";
+					x++;
+					
+				}
+			}
+			
+			extraInfo += paramIndent + ") \n\n";
+			extraInfo += helpText;
+			proposal = new CompletionProposal("",
+                    state.getOffset(),
+                    0,
+                    state.getOffset(),
+                    CFPluginImages.get(CFPluginImages.ICON_PARAM),
+                    usage,
+                    null,
+                    extraInfo);
+			
+			
+			result[0] = proposal;
+			
     		return result;
         }
     }
