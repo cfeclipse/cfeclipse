@@ -25,10 +25,14 @@
 package com.rohanclan.cfml.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+
+import org.eclipse.core.internal.utils.Assert;
 
 import com.rohanclan.cfml.dictionary.Parameter;
 
@@ -61,7 +65,10 @@ public class CFDocUtils {
 		ArrayList params2Remove = new ArrayList();
 		
 		while(currAttrIter.hasNext()) {
-			Parameter currParam = (Parameter)currAttrIter.next();
+			Object paramObj = currAttrIter.next();
+			Assert.isTrue(paramObj instanceof Parameter, "A parameter proposal from a tag attribute contributor is not of type Parameter");
+			
+			Parameter currParam = (Parameter)paramObj;
 			Iterator set1Iter = set2.iterator();
 			while(set1Iter.hasNext()) {
 				String set1Val = (String)set1Iter.next();
@@ -84,22 +91,50 @@ public class CFDocUtils {
 	 * @param string2Scan Says it all. The string to scan for attributes. Please note that it shouldn't contain any tags.
 	 * @returns A Set of strings containing the names of the attributes found.
 	 */
-	public static Set parseForAttributes(String string2Scan) {
-		Set attribs = new HashSet();
+	public static Map parseForAttributes(String string2Scan) {
+		Map attribs = new HashMap();
 		StringTokenizer st2 = new StringTokenizer(string2Scan," ");
 		if(st2.hasMoreTokens())
 			st2.nextToken();
 
 		String[] fullAttrib;
-		String attribName = "";
 		while(st2.hasMoreTokens()) {
 		    fullAttrib = st2.nextToken().split("=");
 		    if (fullAttrib.length > 1 && fullAttrib[1].length() > 1) {
-			    attribName = fullAttrib[0];
-			    attribs.add(attribName.trim());
+		    	String attribName = fullAttrib[0];
+			    String attribValue = fullAttrib[1];
+			    
+			    if(!CFDocUtils.isValidAttributeValue(attribValue))
+			    	continue;
+			    
+			    attribValue = attribValue.substring(1, attribValue.length()-1);
+			    
+			    attribs.put(attribName, attribValue);
 		    }
 		}
-		
 		return attribs;
-	}	
+	}
+	
+	/**
+	 * Checks a attribute value string to make sure it's valid.
+	 * Rules for value attribute are:
+	 * - Has more than two characters
+	 * - First character and last characters are double quotes
+	 * - Thats about it :D No further checks just yet.
+	 * 
+	 * @param attribValue - The attribute to check
+	 * @return true/false on whether it's a valid attribute
+	 */
+	public static boolean isValidAttributeValue(String attribValue) {
+		if(attribValue.length() < 2) {
+	    	return false;
+	    }
+	    if(attribValue.charAt(0) != '\"') {
+	    	return false;
+	    }
+	    else if(attribValue.charAt(attribValue.length()-1) != '\"') {
+	    	return false;
+	    }
+	    return true;
+	}
 }
