@@ -56,6 +56,10 @@ public class CFPluginImages {
 	public static final String ICON_ATTR    = "attribute.gif";
 	/** the little blue square thing (denotes a function) */
 	public static final String ICON_FUNC    = "function.gif";
+	/** the little green circle with a 'p' inside it (denotes a function parameter) */
+	public static final String ICON_PARAM    = "param.gif";
+	/** the little dark green circle with a 'p' inside it (denotes a highlighted function parameter) */
+	public static final String ICON_PARAM_DARK    = "param_dark.gif";
 	/** the package icon (the little gift wrapped thing */
 	public static final String ICON_PACKAGE = "package.gif";
 	/** generic value icon the three bars with the arrow */
@@ -163,6 +167,8 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_TAG);
 			addImageToRegistry(MODEL_OBJECTS,ICON_ATTR);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FUNC);
+			addImageToRegistry(MODEL_OBJECTS,ICON_PARAM);
+			addImageToRegistry(MODEL_OBJECTS,ICON_PARAM_DARK);
 			addImageToRegistry(MODEL_OBJECTS,ICON_SNIP);
 			addImageToRegistry(MODEL_OBJECTS,ICON_DW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);

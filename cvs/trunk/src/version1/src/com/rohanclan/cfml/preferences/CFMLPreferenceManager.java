@@ -226,6 +226,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	}
 	
 	public int tabWidth() {
+	    System.out.println("Tab width retrieved as: " + Integer.parseInt(store.getString(ICFMLPreferenceConstants.P_TAB_WIDTH).trim()));
 		return Integer.parseInt(store.getString(ICFMLPreferenceConstants.P_TAB_WIDTH).trim());
 	}
 	

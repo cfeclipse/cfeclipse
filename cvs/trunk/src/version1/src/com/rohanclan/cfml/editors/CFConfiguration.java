@@ -111,7 +111,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
 		this.indentTagStrategy = new TagIndentStrategy(editor);
 		
-		//tabWidth = preferenceManager.tabWidth();
+		tabWidth = preferenceManager.tabWidth();
 		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
 		indentCFScriptStrategy.setIndentString(tabWidth,insertSpacesForTabs);
 		indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());

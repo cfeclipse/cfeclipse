@@ -458,7 +458,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
 			docCommand.text+= prevLineWhitespace;
 		} catch(BadLocationException ex) {
-			System.err.println("XmlIndentStategy::customizeDocumentCommand() - Caught BadLocationException");
+			System.err.println("TagIndentStategy::customizeDocumentCommand() - Caught BadLocationException");
+			//ex.printStackTrace();
 			return;
 		}
     }
@@ -479,7 +480,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private void handleDelete(IDocument doc, DocumentCommand docCommand) throws BadLocationException {
 		char prevChar = doc.getChar(docCommand.offset);
-		char nextChar = doc.getChar(docCommand.offset + 1);
+		// Initialize nextChar to an ASCII null
+		char nextChar = (char)0; 
+		// If we're not at the end of the document reassign nextChar
+		if (doc.getLength() > docCommand.offset + 1) {
+		 nextChar = doc.getChar(docCommand.offset + 1);
+		}
 		
 		switch(prevChar) {
 			case '\"':

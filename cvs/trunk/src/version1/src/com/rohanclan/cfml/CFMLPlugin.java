@@ -36,11 +36,7 @@ import java.util.MissingResourceException;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
-import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
-import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
-import com.rohanclan.cfml.editors.contentassist.CFMLScopeAssist;
-import com.rohanclan.cfml.editors.contentassist.CFMLTagAssist;
-import com.rohanclan.cfml.editors.contentassist.HTMLTagAssistContributor;
+import com.rohanclan.cfml.editors.contentassist.*;
 
 import org.eclipse.jface.preference.PreferenceStore;
 import org.osgi.framework.BundleContext;
@@ -153,6 +149,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		this.camInstance.registerRootAssist(cfscp);
         this.camInstance.registerRootAssist(new CFContentAssist());
         this.camInstance.registerRootAssist(new CFMLScopeAssist());
+        this.camInstance.registerRootAssist(new CFMLFunctionAssist());
 
         this.camInstance.registerTagAssist(cfmlAssistor);
         this.camInstance.registerAttributeAssist(cfmlAssistor);

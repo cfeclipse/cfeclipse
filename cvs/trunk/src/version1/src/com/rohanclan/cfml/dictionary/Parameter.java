@@ -176,7 +176,7 @@ public class Parameter implements Comparable {
 			return new HashSet();
 
 		
-		System.err.println("Parameter::getValues() - I have " + values.size() + " elements");
+		//System.err.println("Parameter::getValues() - I have " + values.size() + " elements");
 		return values;
 	}
 	
@@ -207,6 +207,9 @@ public class Parameter implements Comparable {
 		sb.append("[" + type + "]");
 		if(required)
 			sb.append("*");
+		if (this.help.trim().length() > 0) {
+		    sb.append(" - " + this.help);
+		}
 		
 		return sb.toString();
 	}

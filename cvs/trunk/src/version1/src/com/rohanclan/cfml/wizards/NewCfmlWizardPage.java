@@ -24,15 +24,27 @@
  */
 package com.rohanclan.cfml.wizards;
 
-import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.SWT;
-import org.eclipse.core.resources.*;
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.swt.events.*;
+import org.eclipse.jface.dialogs.IDialogPage;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
-import org.eclipse.jface.viewers.*;
 
 /**
  * The "New" wizard page allows setting the container for
@@ -56,6 +68,7 @@ public class NewCfmlWizardPage extends WizardPage {
 		setTitle("New CFML Template");
 		setDescription("New CFML Template wizard.");
 		this.selection = selection;
+		
 	}
 
 	/**
@@ -100,8 +113,25 @@ public class NewCfmlWizardPage extends WizardPage {
 		initialize();
 		dialogChanged();
 		setControl(container);
+		setFilenameFocus();
+		
+		//System.out.println("the class that called me is: " + parent.getClass().getName());
+		
+		
 	}
-	
+	/**
+	 * 
+	 * Mark D  I added this as I am trying to make it focus on the right item when you open the dialog
+	 *
+	 */
+	private void setFilenameFocus(){
+		//		TODO: this works if you do a right click but not if you come here from a select your page type page
+		fileText.setFocus();
+		System.out.println("setting the focus");
+		int textLen = fileText.getText().length() - 4;
+		fileText.setSelection(0,textLen);
+		
+	}
 	/**
 	 * Tests if the current workbench selection is a suitable
 	 * container to use.
@@ -121,7 +151,10 @@ public class NewCfmlWizardPage extends WizardPage {
 				containerText.setText(container.getFullPath().toString());
 			}
 		}
+		
+		//TODO: this works if you do a right click but not if you come here from a select your page type page
 		fileText.setText("untitled.cfm");
+		setFilenameFocus();
 	}
 	
 	/**
@@ -169,11 +202,13 @@ public class NewCfmlWizardPage extends WizardPage {
 			}
 		}
 		updateStatus(null);
+		
 	}
 
 	private void updateStatus(String message) {
 		setErrorMessage(message);
 		setPageComplete(message == null);
+		
 	}
 
 	public String getContainerName() {

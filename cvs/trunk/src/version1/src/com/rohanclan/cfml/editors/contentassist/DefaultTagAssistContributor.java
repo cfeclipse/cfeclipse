@@ -89,8 +89,9 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 		if(invokerChar == '\"')
 		{
 			try {
-				if(doc.getChar(offset) == '\"' &&
-						doc.getChar(offset-2) != '=')
+				if(doc.getLength() > offset 
+				   && doc.getChar(offset) == '\"' &&
+				   doc.getChar(offset-2) != '=')
 				{	// " entered and there already is one in the document.
 					doc.replace(offset, 1, "");
 					return new ICompletionProposal[0];

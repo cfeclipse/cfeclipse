@@ -171,7 +171,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 				if(its.getText().length() == 0) {
 					event.doit = false;
 				}
-				System.err.println("Drag Start");
+				//System.err.println("Drag Start");
 			}
 
 			public void dragSetData(DragSourceEvent event) {

@@ -26,15 +26,13 @@ package com.rohanclan.cfml.editors.contentassist;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.*;
 
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.dictionary.Function;
-import com.rohanclan.cfml.dictionary.Parameter;
-import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.*;
 import com.rohanclan.cfml.editors.CFCompletionProcessor;
 
 /**
@@ -63,11 +61,23 @@ public class CFMLScopeAssist
      * @see com.rohanclan.cfml.editors.contentassist.IAssistContributor#getTagProposals(com.rohanclan.cfml.editors.contentassist.IAssistState)
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
-        if(state.getTriggerData() != '.')
+        //System.out.println("Triggered By: " + state.getTriggerData());
+        if(state.getDataSoFar().lastIndexOf(".") < 0)
             return null;
-
+        
         String prefix = state.getDataSoFar().trim();
+        
+        
+        Pattern p = Pattern.compile("[\\w\\.]+$");
+        Matcher m = p.matcher(prefix);
+        
+        if (m.find()) {
+            prefix = m.group();
+        }
+        
         int length = prefix.length();
+        
+        //System.out.println("Scope prefix: " + prefix);
 		// If the taglimiting has a space in we're assuming that the user
 		// is intending to input or has inputted some attributes.
 		Set proposals = ((SyntaxDictionaryInterface)this.sourceDict).getFilteredScopeVars(prefix);
@@ -75,10 +85,20 @@ public class CFMLScopeAssist
 		Iterator i = proposals.iterator();
 		
 		while (i.hasNext()) {
-		    if (i.next() instanceof Function) {
+		    Object o = i.next();
+		    /* TODO: Figure out what this stuff is supposed to be doing
+		    if (o instanceof Function) {
 		        length = prefix.length() - prefix.lastIndexOf(".");
 // System.out.println("Function found in scope lookup. Length reset to " + length);
 		        break;
+		    }
+		    
+		    else*/
+		    if (o instanceof ScopeVar) {
+		        ScopeVar s = (ScopeVar)o;
+		        if (s.getValue().equalsIgnoreCase(prefix)) {
+		            proposals.remove(s);
+		        }
 		    }
 		}
 		

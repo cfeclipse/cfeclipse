@@ -77,6 +77,22 @@ public interface SyntaxDictionaryInterface {
 	 * @return the limited set
 	 */
 	public Set getFilteredScopeVars(String start);
+
+	
+	/**
+	 * Gets the parameter set for the passed function name
+	 * @param functionName
+	 * @return the parameter set
+	 */
+	public Set getFunctionParams(String functionName);
+
+	
+	/**
+	 * Gets the help text for the passed function name
+	 * @param functionName
+	 * @return the help text
+	 */
+	public String getFunctionHelp(String functionName);
 	
 	/**
 	 * Gets the attribtues set for the tag tag and limits the

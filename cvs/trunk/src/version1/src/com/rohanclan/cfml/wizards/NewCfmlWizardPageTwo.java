@@ -24,15 +24,11 @@
  */
 package com.rohanclan.cfml.wizards;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.swt.widgets.*;
-//import org.eclipse.swt.layout.*;
-//import org.eclipse.swt.SWT;
-//import org.eclipse.core.resources.*;
-//import org.eclipse.core.runtime.Path;
-//import org.eclipse.swt.events.*;
-//import org.eclipse.ui.dialogs.ContainerSelectionDialog;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * @author cq

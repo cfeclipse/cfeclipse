@@ -74,6 +74,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
             int offset) {
         ArrayList proposals = new ArrayList();
         ArrayList proposers = new ArrayList();
+        try {
         /*
         CFContentAssist temp = new CFContentAssist();
         temp.getCompletionProposalAutoActivationCharacters();
@@ -113,10 +114,14 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
             {
 // System.out.println("It decided not to give any proposals (null)");
             }
-            
         }
         
         return (ICompletionProposal[])proposals.toArray(new ICompletionProposal[proposals.size()]);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /* (non-Javadoc)
@@ -124,192 +129,61 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
      */
     public IContextInformation[] computeContextInformation(ITextViewer viewer,
             int offset) {
-        // TODO Auto-generated method stub
-        return null;
+        ArrayList proposals = new ArrayList();
+        ArrayList proposers = new ArrayList();
+        
+        if(viewer.getDocument() instanceof ICFEFileDocument)
+        {
+            proposers = ((ICFEFileDocument)viewer.getDocument()).getContentAssistManager().getRootAssistors();
+        }
+        DefaultAssistState state = AssistUtils.initialiseDefaultAssistState(viewer, offset);
+        Iterator proposerIter = proposers.iterator();
+        
+        while(proposerIter.hasNext())
+        {
+            Object currProc = proposerIter.next();
+            Assert.isNotNull(currProc);
+            IContextInformation [] tempProps = null;
+            if(currProc instanceof IContentAssistProcessor)
+            {
+                IContentAssistProcessor currProcessor = (IContentAssistProcessor)currProc;
+                tempProps = currProcessor.computeContextInformation(viewer, offset);
+            }
+            /*
+             * TODO: Should probably add a custom interface for context info like we have for completion proposals
+            else if(currProc instanceof IAssistContributor) 
+            {
+                IAssistContributor currContrib = (IAssistContributor)currProc;
+                tempProps = currContrib.getTagProposals(state);
+            }
+            */
+            if(tempProps != null && tempProps.length > 0)
+            {
+// System.out.println("Got \'" + tempProps.length + "\' proposals");             
+                proposals.addAll(arrayToCollection(tempProps));
+            }
+            else
+            {
+// System.out.println("It decided not to give any proposals (null)");
+            }
+            
+        }
+        
+        return (IContextInformation[])proposals.toArray(new IContextInformation[proposals.size()]);
+        
     }
 
 	/**
 	 * Creates the array of characters that will trigger content assist
 	 */
 	private void generateAutoActivationChars() {
-	    char[] chars = new char[72];
-	    int index = 0;
+	    String autoActivationString = new String("");
+	    autoActivationString += "abcdefghijklmnopqrstuvwxyz";
+	    autoActivationString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    autoActivationString += "0123456789";
+	    autoActivationString += "=._< ~\t\n\r\"";
 	    
-	    try {
-	        /*
-	         * No idea why this doesn't work
-	         * 
-	        // Upper case letters
-		    for (int i = 65; i <= 90; i++) {
-		        index++;
-			    chars[index]  = (char)i;
-		    }
-		    // Lower case letters
-		    for (int i = 65; i <= 90; i++) {
-		        index++;
-			    chars[index]  = (char)i;
-		    }
-		    // Numbers
-		    for (int i = 48; i <= 57; i++) {
-		        index++;
-			    chars[index]  = (char)i;
-		    }
-		    */
-		    // Other characters
-
-		    index++;
-		    chars[index] = '<';
-		    index++;
-		    chars[index] = ' ';
-		    index++;
-		    chars[index] = '~';
-		    index++;
-		    chars[index] = '\t';
-		    index++;
-		    chars[index] = '\n';
-		    index++;
-		    chars[index] = '\r';
-		    index++;
-		    chars[index] = '>';
-		    index++;
-		    chars[index] = '\"';
-		    index++;
-		    chars[index] = '.';
-		    index++;
-		    chars[index] = '_';
-		    index++;
-		    chars[index] = 'A';
-		    index++;
-		    chars[index] = 'B';
-		    index++;
-		    chars[index] = 'C';
-		    index++;
-		    chars[index] = 'D';
-		    index++;
-		    chars[index] = 'E';
-		    index++;
-		    chars[index] = 'F';
-		    index++;
-		    chars[index] = 'G';
-		    index++;
-		    chars[index] = 'H';
-		    index++;
-		    chars[index] = 'I';
-		    index++;
-		    chars[index] = 'J';
-		    index++;
-		    chars[index] = 'K';
-		    index++;
-		    chars[index] = 'L';
-		    index++;
-		    chars[index] = 'M';
-		    index++;
-		    chars[index] = 'N';
-		    index++;
-		    chars[index] = 'O';
-		    index++;
-		    chars[index] = 'P';
-		    index++;
-		    chars[index] = 'Q';
-		    index++;
-		    chars[index] = 'R';
-		    index++;
-		    chars[index] = 'S';
-		    index++;
-		    chars[index] = 'T';
-		    index++;
-		    chars[index] = 'U';
-		    index++;
-		    chars[index] = 'V';
-		    index++;
-		    chars[index] = 'W';
-		    index++;
-		    chars[index] = 'X';
-		    index++;
-		    chars[index] = 'Y';
-		    index++;
-		    chars[index] = 'Z';
-		    index++;
-		    chars[index] = 'a';
-		    index++;
-		    chars[index] = 'b';
-		    index++;
-		    chars[index] = 'c';
-		    index++;
-		    chars[index] = 'd';
-		    index++;
-		    chars[index] = 'e';
-		    index++;
-		    chars[index] = 'f';
-		    index++;
-		    chars[index] = 'g';
-		    index++;
-		    chars[index] = 'h';
-		    index++;
-		    chars[index] = 'i';
-		    index++;
-		    chars[index] = 'j';
-		    index++;
-		    chars[index] = 'k';
-		    index++;
-		    chars[index] = 'l';
-		    index++;
-		    chars[index] = 'm';
-		    index++;
-		    chars[index] = 'n';
-		    index++;
-		    chars[index] = 'o';
-		    index++;
-		    chars[index] = 'p';
-		    index++;
-		    chars[index] = 'q';
-		    index++;
-		    chars[index] = 'r';
-		    index++;
-		    chars[index] = 's';
-		    index++;
-		    chars[index] = 't';
-		    index++;
-		    chars[index] = 'u';
-		    index++;
-		    chars[index] = 'v';
-		    index++;
-		    chars[index] = 'w';
-		    index++;
-		    chars[index] = 'x';
-		    index++;
-		    chars[index] = 'y';
-		    index++;
-		    chars[index] = 'z';
-		    index++;
-		    chars[index] = '1';
-		    index++;
-		    chars[index] = '2';
-		    index++;
-		    chars[index] = '3';
-		    index++;
-		    chars[index] = '4';
-		    index++;
-		    chars[index] = '5';
-		    index++;
-		    chars[index] = '6';
-		    index++;
-		    chars[index] = '7';
-		    index++;
-		    chars[index] = '8';
-		    index++;
-		    chars[index] = '9';
-
-
-
-		   
-		    
-	    }
-	    catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    
-	    //System.out.println("Auto-activation chars: " + new String(chars));
+	    char[] chars = autoActivationString.toCharArray();
 	    
 	    this.autoActivationChars = chars;
 	    
@@ -335,7 +209,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
      */
     public char[] getContextInformationAutoActivationCharacters() {
         // TODO Auto-generated method stub
-        return null;
+        return new char[] {',', '('};
     }
 
     /* (non-Javadoc)

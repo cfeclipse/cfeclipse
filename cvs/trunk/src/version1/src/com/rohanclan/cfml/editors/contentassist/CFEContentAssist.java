@@ -67,7 +67,8 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 	public static final short VALUETYPE = 2;
 	/** scope type */
 	public static final short SCOPETYPE = 3;
-	
+	/** function parameter type */
+	public static final short PARAMETERTYPE = 4;
 
 	
 	/**
@@ -268,6 +269,9 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
 				break;
 			case SCOPETYPE:
+				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
+				break;
+			case PARAMETERTYPE:
 				insertlen = name.length();
 				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
 				break;

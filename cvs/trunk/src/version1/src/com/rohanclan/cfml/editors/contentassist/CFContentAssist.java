@@ -92,7 +92,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @param message The message to output to the console
 	 */
 	private void UserMsg(String message) {
-// System.out.println("CFContentAssist - " + message);
+ //System.out.println("CFContentAssist - " + message);
 	}
 	/**
 	 * Provides a standarised user console message for debugging.
@@ -100,7 +100,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @param message The message to output to the console
 	 */
 	private void UserMsg(String method, String message) {
-// System.out.println("CFContentAssist::" + method + "() - " + message);
+ //System.out.println("CFContentAssist::" + method + "() - " + message);
 	}
 	/**
 	 * Provides a standarised user error console message for debugging.
@@ -149,7 +149,7 @@ public class CFContentAssist extends CFEContentAssist{
 	/**
 	 * Pre-compiled pattern for getAttributeName
 	 */
-	private Pattern currAttribPattern = Pattern.compile("([\\w]*)\\s*=\\s*\\\"[\\.\\w\\s]*\\\"{0,1}$");
+	private Pattern currAttribPattern = Pattern.compile("([\\w]*)\\s*=\\s*\\\"[#\\.\\w\\s]*\\\"{0,1}$");
 
 	/**
 	 * Retrieves the attribute name tha the user has requested content assist upon.
@@ -161,8 +161,10 @@ public class CFContentAssist extends CFEContentAssist{
 	{
 	    Matcher attrMatcher = this.currAttribPattern.matcher(input);
 	    
-	    if(!attrMatcher.find())
+	    if(!attrMatcher.find()) {
+	        ///System.out.println("Pattern: " + this.currAttribPattern.pattern());
 	        return null;
+	    }
 	    	    
 	    int startPos = attrMatcher.start(/*attrMatcher.groupCount()*/1);  
 	    int endPos = attrMatcher.end(1);
@@ -180,6 +182,7 @@ public class CFContentAssist extends CFEContentAssist{
      */
     private DefaultAssistAttributeState prepareForValueAssist(IAssistTagState assistState) {
         String inputText = assistState.getDataSoFar();
+        //System.out.println("Input text: " + inputText);
 	    int quotes = inputText.lastIndexOf("\"");
 	    int lastSpace = inputText.substring(0, quotes).lastIndexOf(" ");
 		String valueSoFar = "";
@@ -193,9 +196,10 @@ public class CFContentAssist extends CFEContentAssist{
 			quotes = inputText.length() - 2;
 		
 		if(inputText.charAt(0) != '<') {
-			System.err.println("input text did not begin with an open chevron!!");
+			//System.err.println("input text did not begin with an open chevron!!");
 		}
 		String attribute = getAttributeName(inputText);
+		//System.out.println("Attribute: " + attribute);
 		
 		DefaultAssistAttributeState attrState = new DefaultAssistAttributeState(assistState, attribute, valueSoFar);
         return attrState;
@@ -310,6 +314,7 @@ public class CFContentAssist extends CFEContentAssist{
         DefaultAssistState assistState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
         assistState.setPrevDelim(0);	// TODO: Bodge job, need to assign correct previous delim position
         assistState.setDataSoFar(assistState.getDataSoFar().trim());
+
         return getTagProposals(assistState);
 	}
 	
@@ -366,7 +371,7 @@ public class CFContentAssist extends CFEContentAssist{
 		    return null;
 		}
 		prefix = prefix.substring(this.lastOpenChevronPos).trim();
-
+		UserMsg("getTagProposals","Prefix set to " + prefix);
 		ArrayList partItems = CFEContentAssist.getTokenisedString(/*assistState.getDataSoFar()*/prefix);
 		//
 		// The assumption here is that what will be entered goes along the lines of
@@ -377,8 +382,8 @@ public class CFContentAssist extends CFEContentAssist{
 		if(partItems.size() > 1)
 		{
 			attrText = (String)partItems.get(partItems.size()-1);
+			UserMsg("getTagProposals","attrText set to " + attrText);
 		}		
-		
 		boolean isDefinatelyAnAttribute = invokerChar == ' ';
 		boolean invokerIsSpace = invokerChar == ' ';
 		boolean invokerIsTab = invokerChar == '\t';
@@ -397,12 +402,17 @@ public class CFContentAssist extends CFEContentAssist{
 		//	Test to see whether we're invoked within an attribute value def
 		if(prefixHasOddQuotes) 
 		{	
+		UserMsg("getTagProposals","Prefix has odd number of quotes.");
 			DefaultAssistTagState attrTagState = prepareForAttributeAssist(assistState, attrText, prefix, partItems);
 			return getAttributeValueProposals(attrTagState);
 		}	// TODO: Need to figure out why the next line works...
-		else if(attrText.length() <= 0 && !invokerIsSpace 
-		        && !invokerIsTab && !invokerIsCloseChevron && !isDefinatelyAnAttribute) 
+		else if(attrText.length() <= 0 
+		        && !invokerIsSpace 
+		        && !invokerIsTab 
+		        && !invokerIsCloseChevron 
+		        && !isDefinatelyAnAttribute) 
 		{
+		    UserMsg("getTagProposals","No standard invokers found.");
 			try 
 			{
 				return getTagProposalsFromCACors(assistState);
@@ -415,7 +425,8 @@ public class CFContentAssist extends CFEContentAssist{
 			}
 		}
 		else if(prefix.trim().length() > 0 || isDefinatelyAnAttribute)	
-		{									
+		{
+		    UserMsg("getTagProposals","Prefix has length, or we're definitely dealing with an attribute.");
 			if(partItems.size() == 0)	// Catch this potential error situation. Don't think it should happen.
 			{
 				UserMsg(mName, "partItems is 0 length for attribute insight. This is soooo wrong!");

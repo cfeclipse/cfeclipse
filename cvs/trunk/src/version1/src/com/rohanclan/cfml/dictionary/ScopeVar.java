@@ -46,7 +46,7 @@ public class ScopeVar implements Comparable {
 	 */
 	public String getValue()
 	{
-		return value;
+		return value.trim();
 	}
 	
 	public void setValue(String newValue)

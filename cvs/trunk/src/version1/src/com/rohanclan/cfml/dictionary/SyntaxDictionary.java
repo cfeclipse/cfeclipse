@@ -226,6 +226,38 @@ public abstract class SyntaxDictionary {
 		//return limitSet(getAllElements(),start);
 	}
 	
+	
+	/**
+	 * get a set params for the passed function name
+	 * @param functionName the function whose params should be returned
+	 * @return set of matching elements.
+	 */
+	public Set getFunctionParams(String functionName)
+	{
+	    Set entries = functions.keySet();
+	    Iterator i = entries.iterator();
+	    try 
+	    {
+		    while (i.hasNext()) 
+		    {
+		        Object o = i.next();
+		        if (functions.get(o) instanceof Function) {
+		            Function f = (Function)functions.get(o);
+		            //System.out.println("Found function " + f.getName());
+		            if(f.getName().equalsIgnoreCase(functionName)) {
+		                return f.getParameters();
+		            }
+		        }
+		        //System.out.println("Entry: " + functions.get(o).getClass().getName());
+		    }
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	    
+	}
+	
 	/**
 	 * Get the tag "name" from the dictionary - null if not found
 	 * @param name - name of the tag to search for. 
@@ -338,6 +370,24 @@ public abstract class SyntaxDictionary {
 		Assert.isNotNull(functionname, "Functionname parameter is null");
 		
 		return (String)functions.get(functionname.toLowerCase());
+	}
+	
+	/**
+	 * retuns a functions help text
+	 * @param functionname
+	 * @return
+	 */
+	public String getFunctionHelp(String functionname)
+	{
+		Assert.isNotNull(functions, "Private member functions is null");
+		Assert.isNotNull(functionname, "Functionname parameter is null");
+		String helpText = "";
+		Object o = functions.get(functionname.toLowerCase());
+		if (o instanceof Function) {
+		    Function f = (Function)o;
+		    helpText = f.getHelp().trim();
+		}
+		return helpText;
 	}
 	
 	/**
@@ -466,7 +516,7 @@ public abstract class SyntaxDictionary {
 				if (start.endsWith("(") && possible.equalsIgnoreCase(start.substring(0,start.length()-1))) {
 					filterset.add(item);
 				}
-				else if (possible.toUpperCase().startsWith(start.toUpperCase()) && !possible.equalsIgnoreCase(start))
+				else if (possible.toUpperCase().startsWith(start.toUpperCase()))
 				{
 					//System.out.println(possible);
 					filterset.add(item);
