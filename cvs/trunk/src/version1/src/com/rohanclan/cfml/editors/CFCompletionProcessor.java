@@ -34,6 +34,8 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
 import org.eclipse.jface.text.IDocument;
 import com.rohanclan.cfml.util.CFPluginImages;
+
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.Set;
@@ -43,6 +45,10 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 
 import com.rohanclan.cfml.dictionary.*;
 //import org.eclipse.jface.text.ITextSelection;
+
+import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
+//import org.eclipse.jface.text.contentassist.IContextInformationValidator;
+import org.eclipse.jface.text.TextPresentation;
 
 /**
  * @author Rob
@@ -56,7 +62,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	private static final short TAGTYPE = 0;
 	/** attribute type */
 	private static final short ATTRTYPE = 1;
+	/** value type */
+	private static final short VALUETYPE = 2;
 	
+	protected IContextInformationValidator validator = new Validator();
+		
 	/**
 	 * Startup the completer
 	 */
@@ -73,8 +83,9 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 *  
 	 * @author Oliver Tupman
 	 */
-	protected ICompletionProposal[] getAttributeValueProposals(SyntaxDictionary syntax, 
-											String inputText, int indexOfFirstSpace, int docOffset)
+	protected ICompletionProposal[] getAttributeValueProposals(
+		SyntaxDictionary syntax, String inputText, int indexOfFirstSpace, 
+		int docOffset)
 	{
 		int lastSpace = inputText.lastIndexOf(" ");
 		int quotes = inputText.lastIndexOf("\"");
@@ -90,7 +101,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		String attribute = inputText.substring(lastSpace+1, quotes-1);
 		String tag = inputText.substring(0, indexOfFirstSpace);
 		
-		
 		System.err.println("I think I need to be looking up: " + attribute);
 		System.err.println("Tag I think I have is \'" + tag + "\'");
 
@@ -103,17 +113,18 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 			System.err.println("CFCompletionProcessor::computeCompletionProposals() - I have " + attrProps.size() + " elements available to me");
 			return makeSetToProposal(
-					attrProps,
-					docOffset,
-					TAGTYPE,
-					valueSoFar.length()
-				);
+				attrProps,
+				docOffset,
+				VALUETYPE,
+				valueSoFar.length()
+			);
 			
 		}	
 		return null;
 	}
 	/**
-	 * for tag and attribute insight
+	 * for tag, attribute, value, insight and auto close ... um this might be 
+	 * getting out of control
 	 * this whole thing is a bit of a hack, but basically it looks at the current
 	 * partition and tokenizes the contents to the current offset. It then tries
 	 * to figure out what is being typed and limits the suggested items accordingly
@@ -244,12 +255,24 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					
 				if(invoker.charAt(0) == '\"')
 				{
-					if(document.getChar(documentOffset) == '\"' &&
-					   document.getChar(documentOffset-2) != '=')
-					{	// " entered and there already is one in the document.
-						document.replace(documentOffset, 1, "");
-						return null;	 	
-					}
+					/* spike@spike.org.uk :: Added code
+                     * Make sure we aren't at the end of the document 
+                     * before doing the check to see if we have two sets of double quotes. 
+                     */
+                    if (document.getLength() > documentOffset) 
+                    {
+                    	/* spike@spike.org.uk :: Added comment
+                         * This checks if the invoking charcter is the second of a pair of qoutes
+                         * and if the first is preceded by an '='. If so we don't want to show
+                         * insight, so it returns null. 
+                         */
+						if(document.getChar(documentOffset) == '\"' &&
+						   document.getChar(documentOffset-2) != '=')
+						{	// " entered and there already is one in the document.
+							document.replace(documentOffset, 1, "");
+							return null;
+						}
+                    }
 				}				
 				
 				// If the taglimiting has a space in we're assuming that the user
@@ -257,8 +280,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				int indexOfFirstSpace = taglimiting.indexOf(" "); 
 				if(indexOfFirstSpace != -1)
 				{
-					return getAttributeValueProposals(syntax, taglimiting, indexOfFirstSpace, 
-														documentOffset);
+					return getAttributeValueProposals(
+						syntax, 
+						taglimiting, 
+						indexOfFirstSpace, 
+						documentOffset
+					);
 				}
 				else
 				{
@@ -275,13 +302,43 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				String taglimiting = prefix.trim().substring(1);
 				//System.out.println("tl:" + taglimiting);
 				System.err.println("Doing tag limiting");
-				return makeSetToProposal(
-					((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
-					//CFSyntaxDictionary.getFilteredElements(taglimiting),
-					documentOffset,
-					TAGTYPE,
-					taglimiting.length()
-				);
+				
+				/*////////////////////////// copy from above dup code! //////*/
+				if(invoker.charAt(0) == '\"')
+				{
+					if(document.getChar(documentOffset) == '\"' &&
+							document.getChar(documentOffset-2) != '=')
+					{	// " entered and there already is one in the document.
+						document.replace(documentOffset, 1, "");
+						return null;
+					}
+				}				
+				
+				// If the taglimiting has a space in we're assuming that the user
+				// is intending to input or has inputted some attributes.
+				int indexOfFirstSpace = taglimiting.indexOf(" "); 
+				if(indexOfFirstSpace != -1)
+				{
+					return getAttributeValueProposals(
+							syntax, 
+							taglimiting, 
+							indexOfFirstSpace, 
+							documentOffset
+					);
+				}
+				else
+				{
+				/*////////////////////////// copy from above dup code! //////*/	
+					
+					return makeSetToProposal(
+						((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
+						//CFSyntaxDictionary.getFilteredElements(taglimiting),
+						documentOffset,
+						TAGTYPE,
+						taglimiting.length()
+					);
+					
+				}
 			}
 			//this is (hopefully) a close tag try to finish it out if needed
 			//careful though that (for now) javascript and css sections will run
@@ -353,16 +410,24 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				System.err.println("lim2::"+limiting+"::");
 				System.err.println("prefix::"+prefix+"::"+prefix.indexOf('>'));
 				
-				//and return our best guess (tagname should have been defined
-				//up there ^
-				if(syntax != null && prefix.indexOf('>') < 0)
+				//hacks hacks everywhere :) this looks to see if there are an
+				//odd number of " in the string prior to this invoke before 
+				//showing attribute insight. (to keep it from showing attributes
+				//inside of attributes)
+				String quote_parts[] = prefix.split("\"");
+				if(quote_parts.length % 2 != 0)				
 				{
-					return makeSetToProposal(
-						syntax.getFilteredAttributes(tagname.trim(),limiting),
-						documentOffset,
-						ATTRTYPE,
-						limiting.length()
-					);
+					//and return our best guess (tagname should have been defined
+					//up there ^
+					if(syntax != null && prefix.indexOf('>') < 0)
+					{
+						return makeSetToProposal(
+							syntax.getFilteredAttributes(tagname.trim(),limiting),
+							documentOffset,
+							ATTRTYPE,
+							limiting.length()
+						);
+					}
 				}
 			}
 		}
@@ -390,14 +455,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			System.err.println("st is " + st.size() + " elements in size");
 			TreeSet ts = new TreeSet();
 			ts.addAll(st);
-			//This needs to be changed. Probably something to do with the Value class.
-			//if(ts.size() != st.size())
-			//{
-			//	System.err.println("CFCompletionProcessor::makeSetToPropsal() - Proposal tree set is different size from input set! Copying manually...");
-			//	obj = st.toArray();
-			//}
-			//else 
-				obj = ts.toArray();
+			obj = ts.toArray();
 			
 			//build a Completion dodad with the right amount of records
 			ICompletionProposal[] result = new ICompletionProposal[obj.length];
@@ -440,7 +498,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				}
 				else if(obj[i] instanceof Value) 
 				{
-					name = ((Value)obj[i]).getValue();
+					/* spike@spike.org.uk :: Added code
+                     * Append qoute to end of value so the cursor jumps past the 
+                     * closing quote when the user selects the insight value. 
+                     */
+					name = ((Value)obj[i]).getValue() + "\"";
 					display = ((Value)obj[i]).toString();
 					help = "";
 				}
@@ -459,20 +521,25 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				int insertlen = 0;
 				org.eclipse.swt.graphics.Image img = null;
 				
-				if(type == ATTRTYPE)
+				switch(type)
 				{
-					name += "=\"\"";
-					insertlen = name.length() - 1;
-					img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
+					case ATTRTYPE:
+						name += "=\"\"";
+						insertlen = name.length() - 1;
+						img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
+						break;
+					case TAGTYPE:
+						//name += " ";
+						//default to the tag len and icon
+						insertlen = name.length();
+						img = CFPluginImages.get(CFPluginImages.ICON_TAG);
+						break;
+					case VALUETYPE:
+						insertlen = name.length();
+						img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
+						break;
 				}
-				else if(type == TAGTYPE)
-				{
-					//name += " ";
-					//default to the tag len and icon
-					insertlen = name.length();
-					img = CFPluginImages.get(CFPluginImages.ICON_TAG);
-				}
-				
+								
 				//System.err.println(name);
 				result[i] = new CompletionProposal(
 					name,
@@ -509,7 +576,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * not sure what it does though :-/
 	 */
 	public IContextInformationValidator getContextInformationValidator() {
-		return null;
+		//return null;
+		return validator;
 	}
 	
 	/**
@@ -517,6 +585,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 */
 	public IContextInformation[] computeContextInformation(ITextViewer viewer,
 		int documentOffset) {
+		
+		//System.out.println("hi");
 		
 		try
 		{
@@ -529,6 +599,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			currentline = currentline.replace('\"',' ');
 			currentline = currentline.replace('\'',' ');
 			currentline = currentline.replace('#',' ');
+			currentline = currentline.replace('(',' ');
+			currentline = currentline.replace(')',' ');
 			//tokenize the bad boy
 			StringTokenizer st = new StringTokenizer(currentline," ");
 			
@@ -538,19 +610,27 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			{
 				functionname = st.nextToken();
 			}
-			//remove the last char (which should be the '(')
-			functionname = functionname.substring(0,functionname.length() - 1);
 			
-			System.out.println(functionname.trim());
+			//remove the last char (which should be the '(')
+			//if(functionname.length() > 1)
+			//	functionname = functionname.substring(0,functionname.length() - 1);
+			
+			System.out.println("f>>" + functionname.trim() + "<<f");
 			
 			//System.err.println(functionname.trim());
 			SyntaxDictionary syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
 			
-			Function fun = syntax.getFunction(functionname.trim());
-			String usage = fun.toString();
+			Set fst = syntax.getFunctions();
+			fst = SyntaxDictionary.limitSet(fst,functionname.trim());
+			
+			//Function fun = syntax.getFunction(functionname.trim());
+			//String usage = fun.toString();
+			
 			//String usage = ((SyntaxDictionaryInterface)syntax).getFunctionUsage(functionname.trim());
 						
-			if(usage != null)
+			//if(usage != null)
+			System.out.println(fst.size());
+			if(fst.size() > 0)
 			{
 				//bit of a hack - there are only a copule functions that have
 				//several wasys to call them, so if there are more then one
@@ -560,9 +640,37 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				////////////////////////////////////////////////////////////////
 				//TODO figure out why this has to have 2 - it wont show otherwise
 				//IContextInformation[] result = new IContextInformation[st.countTokens() + 1];
-				IContextInformation result[] = new IContextInformation[2];
+				//IContextInformation result[] = new IContextInformation[2];
+				IContextInformation result[] = new IContextInformation[fst.size()+1];
 				
-				int i = 0;
+				Iterator i = fst.iterator();
+				int x = 0;
+				while(i.hasNext())
+				{
+					System.out.println(x);
+					Function fun = syntax.getFunction((String)i.next()); 
+						//(Function)i.next();
+					
+					String usage = fun.toString();
+					System.err.println(usage);
+					
+					result[x] = new ContextInformation(
+						CFPluginImages.get(CFPluginImages.ICON_FUNC),
+						//info,
+						usage,
+						//""
+						usage //fun.getHelp()
+					);
+					this.validator.install(result[x], viewer, documentOffset);
+					x++;
+				}
+				System.out.println(x);
+				result[x] = new ContextInformation(
+					"",
+					""
+				);
+				
+				/*int i = 0;
 				//while(st.hasMoreTokens())
 				//{
 					//String info = st.nextToken().trim();
@@ -571,14 +679,16 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 						//info,
 						usage,
 						//""
-						fun.getHelp()
+						usage //fun.getHelp()
 					);
 					i++;
 				//}
 				result[i] = new ContextInformation(
 					"",
 					""
-				);
+				); */
+				
+				//this.validator.install(result[0], viewer, documentOffset);
 				
 				return result;
 			}
@@ -586,7 +696,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 		}catch(Exception e)
 		{
-			//?
+			e.printStackTrace(System.err);
 		}
 		
 		return null;
@@ -598,4 +708,55 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	public String getErrorMessage() {
 		return null;
 	}
+	///////////////////////////////////////////////////////////////////////////
+	protected static class Validator implements IContextInformationValidator, 
+		IContextInformationPresenter {
+		
+		//protected int installoffset;
+		protected ITextViewer view;
+		
+		/*
+		 * @see IContextInformationValidator#isContextInformationValid(int)
+		 */
+		public boolean isContextInformationValid(int offset) 
+		{
+			try
+			{
+				String paren = view.getDocument().get(
+					offset-1,
+					1
+				);
+				System.out.println(paren);
+				if(paren.equals(")"))
+				{
+					return false;
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace(System.err);
+				return false;
+			}
+			
+			return true;
+			//return Math.abs(installoffset - offset) < 5;
+		}
+
+		/*
+		 * @see IContextInformationValidator#install(IContextInformation, ITextViewer, int)
+		 */
+		public void install(IContextInformation info, ITextViewer viewer, int offset) 
+		{
+			//installoffset = offset;
+			view = viewer;
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.contentassist.IContextInformationPresenter#updatePresentation(int, TextPresentation)
+		 */
+		public boolean updatePresentation(int documentPosition, TextPresentation presentation)
+		{
+			return true;
+		}
+	};
 }
