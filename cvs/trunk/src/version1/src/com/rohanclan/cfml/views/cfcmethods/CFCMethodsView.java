@@ -2,7 +2,12 @@ package com.rohanclan.cfml.views.cfcmethods;
 
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -12,6 +17,7 @@ import org.eclipse.swt.SWT;
 import com.rohanclan.cfml.editors.ICFDocument;
 import org.eclipse.ui.texteditor.ITextEditor;
 import com.rohanclan.cfml.util.CFPluginImages;
+import com.rohanclan.cfml.editors.actions.Encloser;
 //import org.eclipse.swt.events.MouseTrackListener;
 //import org.eclipse.swt.events.MouseEvent;
 
@@ -40,10 +46,15 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	private TableViewer viewer;
 	private Action jumpToMethod;
 	private Action selectMethod;
+	private Action refreshAction;
 	private Action sortMethodsAction;
 	private Action doubleClickAction;
+	private Action pinAction;
+	private Action insertAction;
+	private boolean autoRefresh = true;
 	private boolean visible = false;
 	private boolean sortItems = false;
+	private IFile CFCMethodsFile = null;
 
 	/*
 	 * The content provider class is responsible for
@@ -120,6 +131,9 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
+	    manager.add(insertAction);
+		manager.add(pinAction);
+		manager.add(refreshAction);
 		manager.add(sortMethodsAction);
 		manager.add(jumpToMethod);
 		manager.add(selectMethod);
@@ -127,6 +141,9 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
+	    manager.add(insertAction);
+		manager.add(pinAction);
+		manager.add(refreshAction);
 		manager.add(sortMethodsAction);
 		manager.add(jumpToMethod);
 		manager.add(selectMethod);
@@ -135,6 +152,9 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
+	    manager.add(insertAction);
+		manager.add(pinAction);
+		manager.add(refreshAction);
 		manager.add(sortMethodsAction);
 		manager.add(jumpToMethod);
 		manager.add(selectMethod);
@@ -159,6 +179,43 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		selectMethod.setText("Jump To and Select");
 		selectMethod.setToolTipText("Jump to the currently selected method and select its contents.");
 		selectMethod.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW_AND_SELECT));
+		
+
+
+		refreshAction = new Action() {
+			public void run() {
+				reload(true);
+			}
+		};
+		refreshAction.setText("Refresh view");
+		refreshAction.setToolTipText("Rebuild the view from the contents of the current file.");
+		refreshAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH));
+		
+
+
+		pinAction = new Action(null, IAction.AS_CHECK_BOX) {
+			public void run() {
+				pin();
+			}
+		};
+		pinAction.setText("Pin view");
+		pinAction.setToolTipText("Don't automatically update the method list when the editor changes.");
+		pinAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_PIN));
+		
+
+
+
+		
+
+
+		insertAction = new Action() {
+			public void run() {
+				insert();
+			}
+		};
+		insertAction.setText("Insert");
+		insertAction.setToolTipText("Insert at current cursor position.");
+		insertAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_INSERT_SNIP));
 		
 
 
@@ -209,10 +266,19 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		{
 			IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
 			selectedMethod = (CFCMethodViewItem)selection.getFirstElement();
-			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			ITextEditor ite = (ITextEditor)iep;
-			ite.setHighlightRange(selectedMethod.getDocumentOffset(),0,true);
-			ite.setFocus();
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			try  {
+				IEditorPart iep = IDE.openEditor(page,CFCMethodsFile,true);
+				//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+				ITextEditor ite = (ITextEditor)iep;
+				ite.setHighlightRange(selectedMethod.getDocumentOffset(),0,true);
+				ite.setFocus();}
+			catch (Exception e) {
+			    MessageBox msg = new MessageBox(page.getActivePart().getSite().getShell());
+	            msg.setText("Error!");
+	            msg.setMessage(e.getMessage());
+	            msg.open();
+			}
 		}
 	}
 	
@@ -228,10 +294,20 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		{
 			IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
 			selectedMethod = (CFCMethodViewItem)selection.getFirstElement();
-			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			ITextEditor ite = (ITextEditor)iep;
-			ite.selectAndReveal(selectedMethod.getDocumentOffset(),selectedMethod.getSize(ite));
-			ite.setFocus();
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			try  {
+				IEditorPart iep = IDE.openEditor(page,CFCMethodsFile,true);
+				//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+				ITextEditor ite = (ITextEditor)iep;
+				ite.selectAndReveal(selectedMethod.getDocumentOffset(),selectedMethod.getSize(ite));
+				ite.setFocus();
+			}
+			catch (Exception e) {
+			    MessageBox msg = new MessageBox(page.getActivePart().getSite().getShell());
+	            msg.setText("Error!");
+	            msg.setMessage(e.getMessage());
+	            msg.open();
+			}
 		}
 	}
 	
@@ -244,9 +320,41 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		} else {
 		    this.sortItems = true;
 		}
-		reload();
+		reload(false);
 	}
 	
+	private void pin() {
+	    if (autoRefresh) {
+	        autoRefresh = false;
+	        sortMethodsAction.setEnabled(false);
+	    }
+	    else {
+	        autoRefresh = true;
+	        sortMethodsAction.setEnabled(true);
+	    }
+	}
+	
+	private void insert() {
+	    CFCMethodViewItem selectedMethod;
+	    if(viewer.getSelection().isEmpty()) 
+		{
+			return;
+		}
+		else 
+		{
+		    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+			selectedMethod = (CFCMethodViewItem)selection.getFirstElement();
+			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			IDocument doc =  ((ITextEditor)iep).getDocumentProvider().getDocument(iep.getEditorInput());
+			ITextEditor ite = (ITextEditor)iep;
+			ISelection sel = ite.getSelectionProvider().getSelection();
+			int cursorOffset = ((ITextSelection)sel).getOffset();
+			int selectionLength = ((ITextSelection)sel).getLength();
+			Encloser encloser = new Encloser();
+			encloser.enclose(doc,(ITextSelection)sel,selectedMethod.getInsertString(),"");
+			
+		}
+	}
 	
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
@@ -278,27 +386,30 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	
-	public void reload() {
-		
-		try {
-			IWorkbenchPartSite site = getSite();
-			IWorkbenchWindow window =  site.getWorkbenchWindow();
-			IWorkbenchPage page = window.getActivePage();
-			IEditorPart iep = page.getActiveEditor();
-			if (iep != null) {
-				iep.addPropertyListener(this);
-				//System.out.println("CFCMethods View updated");
-				viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(),sortItems));
-				viewer.setInput(getRootInput());
+	public void reload(boolean forced) {
+		if (autoRefresh || forced) {
+			try {
+				IWorkbenchPartSite site = getSite();
+				IWorkbenchWindow window =  site.getWorkbenchWindow();
+				IWorkbenchPage page = window.getActivePage();
+				IEditorPart iep = page.getActiveEditor();
+				if (iep != null) {
+					iep.addPropertyListener(this);
+					CFCMethodsFile = ((FileEditorInput)iep.getEditorInput()).getFile();
+					
+					//System.out.println("CFCMethods View updated");
+					viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(),sortItems));
+					viewer.setInput(getRootInput());
+				}
+				else {
+					viewer.setContentProvider(new CFCMethodsContentProvider(null,sortItems));
+					viewer.setInput(null);
+				}
+				
 			}
-			else {
-				viewer.setContentProvider(new CFCMethodsContentProvider(null,sortItems));
-				viewer.setInput(null);
+			catch (Exception e) {
+				System.err.println("Couldn't add property listener to editor.");
 			}
-			
-		}
-		catch (Exception e) {
-			System.err.println("Couldn't add property listener to editor.");
 		}
 		
 	}
@@ -308,13 +419,13 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	
 	public void partActivated(IWorkbenchPart part) {
 	//System.out.println("Part activated: "+part.getClass().getName());
-		reload();
+		reload(false);
 	}
 	
 	public void partBroughtToTop(IWorkbenchPart part) {
 	//System.out.println("Part brought to top: "+part.getClass().getName());
 		//if (!part.equals(this)) {
-			reload();
+			reload(false);
 		//}
 	}
 	
@@ -333,7 +444,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 				}		
 		}
 		else {
-			reload();
+			reload(false);
 			
 		}
 	}
@@ -341,7 +452,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	public void partDeactivated(IWorkbenchPart part) {
 	//System.out.println("Part deactivated: "+part.getClass().getName());
 		if (!part.equals(this)) {
-			reload();
+			reload(false);
 		}
 		else {
 			
@@ -360,14 +471,14 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	public void partOpened(IWorkbenchPart part) {
 	//System.out.println("Part opened: "+part.getClass().getName());
 		//if (!part.equals(this)) {
-			reload();
+			reload(false);
 		//}
 	}
 	
 	public void propertyChanged(Object source, int propId) {
 		//System.out.println("Property changed: "+source.getClass().getName());
 		//if (!part.equals(this)) {
-			reload();
+			reload(false);
 		//}
 	}
 }

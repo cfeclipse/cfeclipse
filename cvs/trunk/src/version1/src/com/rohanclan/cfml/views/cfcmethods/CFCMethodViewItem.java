@@ -65,6 +65,50 @@ public class CFCMethodViewItem  {
 			return "Couldn't get valid information for method";
 		}
 	}
+
+
+	
+	public String getInsertString() {
+		try {
+			StringBuffer method = new StringBuffer(" ");
+			
+			method.append(functionTag.getAttribute("name"));
+			method.append("(");
+			CFNodeList args = functionTag.selectNodes("//argument");
+			Iterator j = args.iterator();
+			while(j.hasNext()) {
+				try {
+					TagItem thisArg = (TagItem)j.next();
+					method.append(thisArg.getAttribute("type") + " " + thisArg.getAttribute("name"));
+					if (j.hasNext()) {
+						method.append(", ");
+					}
+				}
+				catch (Exception e) {
+					//System.err.println(e.getMessage());
+				}
+			}
+			method.append(")");
+			
+			/*
+			String returntype = functionTag.getAttribute("returntype");
+			if(returntype != null)
+			{
+				method.append(" - " + returntype); 
+			}
+			
+			String hint = functionTag.getAttribute("hint");
+			if (hint != null) 
+			{
+			    method.append("  '"+hint+"'");
+			}
+			*/
+			return method.toString();
+		}
+		catch (Exception e) {
+			return "Couldn't get valid information for method";
+		}
+	}
 	
 	public String getReturnType() {
 		String returnType;

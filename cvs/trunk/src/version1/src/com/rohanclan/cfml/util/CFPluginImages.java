@@ -64,6 +64,8 @@ public class CFPluginImages {
 	public static final String ICON_CLASS	= "class.gif";
 	/** generic snip icon the plugin looking thing */
 	public static final String ICON_SNIP    = "snip.gif";
+	/** Insert snippet icon */
+	public static final String ICON_INSERT_SNIP    = "insertsnip.gif";
 	/** the D dreamweaver icon */
 	public static final String ICON_DW      = "dw.gif";
 	
@@ -122,6 +124,9 @@ public class CFPluginImages {
 	
 	/** sorting icon */
 	public static final String ICON_SORTAZ = "sortaz.gif";
+
+	/** Pinning stuff icon */
+	public static final String ICON_PIN = "pin.gif";
 	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
@@ -187,6 +192,8 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_GLOBE);
 			addImageToRegistry(TOOLBAR,ICON_LIBRARY);
 			addImageToRegistry(TOOLBAR,ICON_SORTAZ);
+			addImageToRegistry(TOOLBAR,ICON_PIN);
+			addImageToRegistry(TOOLBAR,ICON_INSERT_SNIP);
 		}
 	}
 	
