@@ -24,6 +24,7 @@ import com.rohanclan.cfml.net.ftp.FTPConnection;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class FtpLogView extends ViewPart implements FTPMessageListener {
+	public static final String ID_FTP_LOG_VIEW = "com.rohanclan.cfml.views.explorer.ftp.FtpLogView";
     FTPConnection ftpClient = null;
     private StyledText styledText;
     public void createPartControl(Composite parent) {

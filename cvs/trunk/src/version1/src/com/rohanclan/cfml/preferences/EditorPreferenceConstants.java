@@ -114,7 +114,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_INSERT_SPACES_FOR_TABS - false</li>
 	 * <li>P_TAB_WIDTH - 4</li>
 	 * <li>P_MAX_UNDO_STEPS - 25</li>
-	 * <li>P_BRACKET_MATCHING_COLOR - "128,255,255"</li>
+	 * <li>P_BRACKET_MATCHING_COLOR - "255,0,0"</li>
 	 * <li>P_TAB_INDENTS_CURRENT_LINE - true</li>
 	 * <li>P_SHOW_LINE_NUMBERS - true</li>
 	 * <li>P_RTRIM_ON_SAVE - false</li>
@@ -132,7 +132,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_SELECTION_FOREGROUND_SYSTEM_DEFAULT - true</li>
 	 * <li>P_SELECTION_BACKGROUND_SYSTEM_DEFAULT - true</li>
 	 * <li>P_WARN_READ_ONLY_FILES - true</li>
-	 * <li>P_BRACKET_MATCHING_STYLE - BRACKET_MATCHING_BACKGROUND</li>
+	 * <li>P_BRACKET_MATCHING_STYLE - BRACKET_MATCHING_BOLD</li>
 	 * </ul>
 	 * 
 	 */
@@ -141,7 +141,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_INSERT_SPACES_FOR_TABS,false);
 		store.setDefault(P_TAB_WIDTH,4);
 		store.setDefault(P_MAX_UNDO_STEPS,100);
-		store.setDefault(P_BRACKET_MATCHING_COLOR,"128,255,255");
+		store.setDefault(P_BRACKET_MATCHING_COLOR,"255,0,0");
 		store.setDefault(P_BRACKET_MATCHING_ENABLED,true);
 		store.setDefault(P_TAB_INDENTS_CURRENT_LINE,true);
 		store.setDefault(P_SHOW_LINE_NUMBERS,true);
@@ -161,7 +161,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_SELECTION_FOREGROUND_SYSTEM_DEFAULT,false);
 		store.setDefault(P_SELECTION_BACKGROUND_SYSTEM_DEFAULT,false);
 		store.setDefault(P_WARN_READ_ONLY_FILES,true);
-		store.setDefault(P_BRACKET_MATCHING_STYLE,BRACKET_MATCHING_BACKGROUND);
+		store.setDefault(P_BRACKET_MATCHING_STYLE,BRACKET_MATCHING_BOLD);
 	}
 	
 	

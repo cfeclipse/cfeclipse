@@ -230,7 +230,7 @@ public class EditorPreferencePage extends PreferencePage
 		label = "Warn when opening read only files";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_WARN_READ_ONLY_FILES, 0);
 		label = "Use c&ustom caret";
-		Button master = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN, 0);
+		Button master = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, 0);
 		label = "Ena&ble thick caret";
 		Button slave = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_USE_WIDE_CARET, 0);
 		createDependency(master, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, slave);

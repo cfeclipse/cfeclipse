@@ -47,6 +47,7 @@ import com.rohanclan.cfml.views.explorer.ftp.FtpConnectionDialog;
  * of the file explorer tab in Homesite/CFStudio.
  */
 public class FileExplorerView extends ViewPart {
+	public final static String ID_FILE_EXPLORER = "com.rohanclan.cfml.views.explorer.FileExplorerView";
 
     private MenuItem disconnectItem,connectItem,manageItem;
     

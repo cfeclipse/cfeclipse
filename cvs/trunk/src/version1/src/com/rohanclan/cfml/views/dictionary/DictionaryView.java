@@ -40,8 +40,8 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.graphics.Color;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.Function;
@@ -71,6 +71,7 @@ import com.rohanclan.cfml.views.packageview.FolderTypes;
  */
 
 public class DictionaryView extends ViewPart {
+	public static final String ID_DICTIONARY = "com.rohanclan.cfml.views.dictionary.DictionaryView";
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
 	private Action action1;
@@ -432,12 +433,19 @@ public class DictionaryView extends ViewPart {
 		layout.numColumns = 1;
 		layout.verticalSpacing = 2;
 		layout.marginWidth = 0;
-		layout.marginHeight = 2;
+		layout.marginHeight = 0;
 		parent.setLayout(layout);
 		
     	//This is what makes the controls resizable
-        SashForm sash = new SashForm(parent,SWT.VERTICAL|SWT.BORDER);
+        SashForm sash = new SashForm(parent,SWT.VERTICAL);
+        
+        layout = new GridLayout();
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        sash.setLayout(layout);
+        
         GridData sashData = new GridData(GridData.FILL_BOTH);
+        
         sashData.horizontalSpan = 1;
         sash.setLayoutData(sashData);
 
@@ -471,20 +479,26 @@ public class DictionaryView extends ViewPart {
 
 		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		
-		
-		previewLabel = new Label(bottomHalf, SWT.WRAP);
+		/*
+		previewLabel = new Label(bottomHalf, SWT.HORIZONTAL|SWT.SEPARATOR);
+		layoutData = new GridData(GridData.FILL_HORIZONTAL);
+		layoutData.heightHint = 2;
+		previewLabel.setLayoutData(layoutData);
+		*/
+		/*
+		previewLabel = new Label(bottomHalf, SWT.LEFT);
 		layoutData  = new GridData(GridData.FILL_HORIZONTAL);
 		layoutData.heightHint = Dialog.convertHeightInCharsToPixels(new GC(previewLabel).getFontMetrics(),1);
 		layoutData.horizontalIndent = 5;
 		previewLabel.setLayoutData(layoutData);
         previewLabel.setText("Preview"); //$NON-NLS-1$
-		
+		*/
 		
 		preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		// layout the text field above the treeviewer
-		
+		preview.setEnabled(false);
 		preview.setLayoutData(new GridData(GridData.FILL_BOTH));
-		
+		preview.setBackground(new Color(Display.getCurrent(),255,255,255));
 		
 		
 		
@@ -617,7 +631,7 @@ public class DictionaryView extends ViewPart {
 		        Object obj = ((IStructuredSelection)selection).getFirstElement();
 		        
 			    
-			    System.out.println("User has touched something" + obj.toString());
+			    //System.out.println("User has touched something" + obj.toString());
 				// if the selection is empty clear the label
 				if(event.getSelection().isEmpty()) 
 				{

@@ -31,6 +31,9 @@ import org.eclipse.ui.IPerspectiveFactory;
 import com.rohanclan.cfml.views.snips.SnipTreeView;
 import com.rohanclan.cfml.views.cfcmethods.CFCMethodsView;
 import com.rohanclan.cfml.views.browser.BrowserView;
+import com.rohanclan.cfml.views.explorer.FileExplorerView;
+import com.rohanclan.cfml.views.explorer.ftp.FtpLogView;
+import com.rohanclan.cfml.views.dictionary.DictionaryView;
 
 /**
  * @author Rob
@@ -55,6 +58,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		//standard resource nav (file / project lister)
 		left.addView(IPageLayout.ID_RES_NAV);
 		left.addView(SnipTreeView.ID_SNIPVIEWTREE);
+		left.addView(FileExplorerView.ID_FILE_EXPLORER);
 		
 		//views to the bottom
 		IFolderLayout bottom = layout.createFolder(
@@ -65,6 +69,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		bottom.addView(IPageLayout.ID_PROBLEM_VIEW);
 		bottom.addView(IPageLayout.ID_BOOKMARKS);
 		bottom.addView(BrowserView.ID_BROWSER);
+		bottom.addView(FtpLogView.ID_FTP_LOG_VIEW);
 		
 		//views to the right
 		IFolderLayout right = layout.createFolder(
