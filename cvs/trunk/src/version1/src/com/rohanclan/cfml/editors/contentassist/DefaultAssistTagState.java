@@ -24,6 +24,7 @@
  */
 package com.rohanclan.cfml.editors.contentassist;
 
+
 import org.eclipse.ui.internal.misc.Assert;
 
 /**
