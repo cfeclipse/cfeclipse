@@ -92,6 +92,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		scriptkeywords.add("break");
 		scriptkeywords.add("true");
 		scriptkeywords.add("false");
+		scriptkeywords.add("to");
 		scriptkeywords.addAll(operators);
 	}
 	
@@ -119,7 +120,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		operators.add("than");
 		operators.add("less");
 		operators.add("equal");
-		operators.add("to");
+		//operators.add("to");
 		operators.add("xor");
 		operators.add("eqv");
 		operators.add("imp");
