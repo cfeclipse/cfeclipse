@@ -53,12 +53,12 @@
       </editor>
       
       <editor
-            name="CFC Editor"
+            name="CFML Editor"
             extensions="cfc"
             icon="icons/obj16/cfc.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="com.rohanclan.cfml.editors.CFMLEditor"
-            id="com.rohanclan.cfml.editors.CFCEditor">
+            id="com.rohanclan.cfml.editors.CFMLEditor">
       </editor>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
@@ -265,6 +265,14 @@
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.LastActionAction">
+         </action>
+         <!-- jump to matching tag -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction"
+               label="Jump to matching tag"
+               class="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
+               id="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction">
          </action>
          <!-- Trim trailing spaces from lines -->
          <action
@@ -896,6 +904,19 @@
             string="Ctrl+Q"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.LastAction"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- jump to matching tag -->
+      <command
+            name="Jump to matching tag"
+            description="Jump to matching tag"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction">
+      </command>
+      <keyBinding
+            string="Ctrl+M"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- Go and Get Help -->
