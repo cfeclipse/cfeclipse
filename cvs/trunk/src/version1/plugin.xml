@@ -408,7 +408,7 @@
    </extension>
 
 	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- the snip viewer -->
+	<!-- the snip viewers -->
 	<extension point="org.eclipse.ui.views">
 		<category 
 		   id="com.rohanclan.coldfusionmx"
@@ -427,5 +427,14 @@
 			class="com.rohanclan.coldfusionmx.views.snips.SnipTreeView"
 		/>
 	</extension>
-
+	
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- help -->
+	<extension point="org.eclipse.help.toc">
+      <toc file="doc/toc_main.xml" primary="true" />
+   	</extension>
+   	<extension point="org.eclipse.help.toc">
+       <toc file="doc/toc_general.xml" />
+   	</extension>
+   	
 </plugin>
