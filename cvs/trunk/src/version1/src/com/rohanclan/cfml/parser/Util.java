@@ -17,9 +17,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -384,4 +388,203 @@ public class Util {
 		}
 		return true;		
 	}
+	
+	/*
+	 * The following have been added as part of the CFEclipse plugin. Everything above is
+	 * from phpeclipse.
+	 */
+	
+	/**
+	 * Calculates line numbers.
+	 * 
+	 * @param inputData - the string to scan
+	 * @return number of lines in the document
+	 * @author Oliver Tupman.
+	 */
+	static protected int[] calcLineNumbers(String inputData)
+	{
+		int [] lineOffsets = null;
+		/*
+		 * This is a very simple line scanner. It simply runs the regex \r\n that
+		 * should search for line breaks (assuming a CRLF method). If it finds 0
+		 * it runs again with the line break method \n. Otherwise we finally
+		 * try \r.
+		 * 
+		 * Having done that we simply loop through the matches. Each match is a line,
+		 * the end value being the end position of the line in document offsets.
+		 */
+		int [] lineOffs = null;
+		try {
+			ArrayList matches = new ArrayList();
+			String inText = inputData;
+			Matcher matcher;
+			Pattern pattern;
+	
+			pattern = Pattern.compile("(\\r\\n)");
+			matcher = pattern.matcher(inText);
+			
+			if(!matcher.find(0))
+			{
+				pattern = Pattern.compile("(\\n)");
+				matcher = pattern.matcher(inText);
+				if(!matcher.find(0))
+				{
+					pattern = Pattern.compile("(\\r)");
+					matcher = pattern.matcher(inText);
+				}
+			}
+			if(matcher.find(0))
+			{
+				
+				int lineCnt = 0;
+				while(matcher.find())
+					lineCnt++;
+
+				lineOffs = new int[lineCnt+2];
+				matcher = pattern.matcher(inText);
+				lineCnt = 0;
+				while(matcher.find())
+				{
+					lineOffs[lineCnt] = matcher.end();
+					lineCnt++;
+				}
+				lineOffsets = lineOffs;
+			}
+			else
+			{
+				System.err.println("CFParser::calcLineNumbers() - Didn't find any lines!");
+				lineOffsets = new int[1];
+				lineOffsets[0] = 0;
+			}
+		} catch(Exception anException) {
+			System.err.println("CFParser::calcLineNumbers() - Error, could not calculate line numbers because: " + anException.getMessage());
+		}
+		System.err.println("CFParser::calcLineNumbers() - Got " + lineOffsets.length + " lines. Is this correct?");
+		return lineOffsets;
+	}	
+	
+	/**
+	 * <code>searchItemStack</code> - Searches the item stack for an item with <code>itemName</code>
+	 * 
+	 * This method is intended for when there is a parse error - we can try and determine whether
+	 * the erroring tag is actually correct and the previous, opening tag is incorrect or not. Need
+	 * to work on that really.
+	 * 
+	 * @param matchStack - the stack to search
+	 * @param itemName - the item to search for
+	 * @return the position in the stack where the item is
+	 */
+	static protected int searchItemStack(Stack matchStack, String itemName)
+	{
+		int startSize = matchStack.size();
+		int popCount = 0;
+		Stack tempStack = new Stack();
+		tempStack.copyInto(matchStack.toArray());
+		
+		while(tempStack.size() > 0)
+		{
+			DocItem tempItem = (DocItem)tempStack.pop();
+			if(tempItem.getName().compareTo(itemName) == 0)
+				break;
+		}
+		return startSize - popCount;
+	}	
+	
+	static protected void dumpMatches(ArrayList matches)
+	{
+		System.out.println("Dumping the matches:");
+		for(int i = 0; i < matches.size(); i++)
+		{
+			System.out.println("Match: \'" + ((TagMatch)matches.get(i)).match + "\'");
+		}
+	}
+	
+	
+	/**
+	 * <code>GetTabs</code> - Helper function for debugging.
+	 * @param inStack - stack to use as a count for the number of tabs required.
+	 * @return - a string with tabs in.
+	 */
+	static protected String GetTabs(Stack inStack)
+	{
+		String retval = "";
+		for(int i = 0; i < inStack.size(); i++)
+			retval += "\t";
+		return retval;
+	}
+	
+	/**
+	 * <code>GetIndent</code> does much the same as @see GetTabs(Stack inStack) except you pass an integer
+	 * @param count - tabs to make
+	 * @return - string with <code>count</code> tabs in
+	 */
+	static protected String GetIndent(int count)
+	{
+		String retval = "";
+		for(int i = 0; i < count; i++)
+			retval += "\t";
+		
+		return retval;
+	}
+	/**
+	 * <code>walkTreeMain</code> - recursive tree walker, dumps the tree info out.
+	 * @param rootItem - the current root item
+	 * @param count - current depth in the tree, used for outputting indentation.
+	 */
+	static protected void walkTreeMain(DocItem rootItem, int count)
+	{
+		System.out.println(GetIndent(count) + "Tree: " + rootItem.itemName  + "\' + match data was : " + rootItem.getItemData());
+		if(rootItem.hasChildren())
+		{
+			ArrayList children = rootItem.getChildren();
+			for(int i = 0; i < children.size(); i++)
+			{
+				walkTreeMain((DocItem)children.get(i), count + 1);
+			}
+		}
+	}
+
+	/**
+	 * <code>walkTreeNamesOnly</code> - recursive tree walker, only dumps the names of the nodes for brevity
+	 * @param rootItem - the current root item
+	 * @param count - current depth in the tree, used for outputting indentation.
+	 */
+	static protected void walkTreeNamesOnly(DocItem rootItem, int count)
+	{
+		System.out.println(GetIndent(count) + rootItem.itemName);
+		if(rootItem.hasChildren())
+		{
+			ArrayList children = rootItem.getChildren();
+			for(int i = 0; i < children.size(); i++)
+			{
+				walkTreeNamesOnly((DocItem)children.get(i), count + 1);
+			}
+		}
+	}	
+	
+	/**
+	 * <code>walkTreeMain</code> - Call to dump the document tree to the console.
+	 * @param rootItem - the node to begin at.
+	 */
+	static protected void walkTree(DocItem rootItem)
+	{
+		System.out.println("########### Tree walk 1, full info:");
+		walkTreeMain(rootItem, 1);
+		System.out.println("########### Tree walk 2, names only:");
+		walkTreeNamesOnly(rootItem, 1);
+	}
+	
+	/**
+	 * <code>dumpStack</code> - Dumps all of the elements of the stack to the console.
+	 * @param inStack
+	 */
+	static protected void dumpStack(Stack inStack)
+	{
+		for(int i = 0; i < inStack.size(); i++)
+		{
+			DocItem tempItem = (DocItem)inStack.get(i);
+			System.out.println("Parser: Stack at "+ i+ " is \', " + tempItem.itemName + "\' + match data was : " + tempItem.getItemData());
+		}
+		
+	}	
 }

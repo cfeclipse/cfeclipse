@@ -37,18 +37,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorActionDelegate;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.parser.exception.DuplicateAttributeException;
 import com.rohanclan.cfml.parser.exception.InvalidAttributeException;
 import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
@@ -103,7 +97,7 @@ import com.rohanclan.cfml.parser.ParseMessage;
  * embedded CF therefore breaking some of the attributes - we may not know the correct values 
  * because the embedded CF decides it. 
  */
-public class CFParser implements IEditorActionDelegate {
+public class CFParser {
 
 	/**
 	 * <code>REG_TAG</code> - the regular expression for matching tags. NB: Doesn't work on multi-line tags :(
@@ -120,97 +114,6 @@ public class CFParser implements IEditorActionDelegate {
 	static protected final int USRMSG_WARNING 	= 0x01;
 	static protected final int USRMSG_ERROR		= 0x02;
 	
-	/**
-	 * 
-	 * @author Oliver Tupman
-	 *
-	 * Represents the current state of the parser.
-	 */
-	public class State {
-		protected ArrayList messages = new ArrayList();
-		protected String filename;
-		protected int errCount = 0;
-		protected boolean hadFatal = false;
-		protected MatchList matches = new MatchList();
-		
-		//
-		// The following is to keep track of function & variable names
-		// TODO: I think the following should be a map so we can store the doc items against name for type recognition, etc.
-		protected HashMap functionNames = new HashMap();
-		protected HashMap variableNames = new HashMap();
-		
-		static public final int ADD_BEFORE = 0x01;
-		static public final int ADD_AFTER =  0x02;
-		
-		public void addFunction(TagItem newFunction)
-		{
-			String funcName = newFunction.getAttribute("name");
-			if(functionNames.containsKey(funcName))
-			{
-				addMessage(new ParseError(newFunction.lineNumber, newFunction.startPosition,
-												newFunction.endPosition, newFunction.getItemData(), 
-												"Duplicate function \'" + funcName + "\' found."));
-			}
-			else
-				functionNames.put(funcName, funcName);
-		}
-		
-		public MatchList getMatches()
-		{
-			return matches;
-		}
-		
-		public State(String docFilename)
-		{
-			filename = docFilename;
-		}
-		
-		public ArrayList getMessages()
-		{
-			return messages;
-		}
-		
-		public void addMatch(TagMatch newMatch, int position, int numIndicies)
-		{
-			switch(position)
-			{
-				case ADD_BEFORE:
-					matches.add(matches.size() - numIndicies, newMatch);
-					break;
-				case ADD_AFTER:
-					addMatch(newMatch);
-					break;
-				default:
-					// Should this raise an exception?
-					break;
-			}
-		}
-		
-		public void addMatch(TagMatch newMatch)
-		{
-			matches.add(newMatch);
-		}
-		
-		public boolean hadFatal() { return hadFatal; }
-		
-		/**
-		 * Adds a message to the parser state.
-		 * @param newMsg
-		 */
-		public void addMessage(ParseMessage newMsg)
-		{
-			if(newMsg instanceof ParseError)
-			{
-				if(((ParseError)newMsg).isFatal())
-					hadFatal = true;
-				
-				errCount++;				
-			}
-			
-			messages.add(newMsg);
-		}
-	}
-	
 	protected State parserState = null;
 	
 	protected IResource res = null;
@@ -224,10 +127,7 @@ public class CFParser implements IEditorActionDelegate {
 	 * <code>docFilename</code> - the pathname of the document, so we can stick messages into the Problems tasklist
 	 */
 	protected IPath docFilename = null;	// Document file info... not working just yet.
-	/**
-	 * <code>editor</code> - the TextEditor for the action (not used at present)
-	 */
-	protected ITextEditor editor = null;	// If this actually works as an action, we'll need this.
+
 	/**
 	 * <code>parseResult</code> - the resultant document tree.
 	 * <b>NB:</b> Currently the root node is called 'root' and has no real data, it's just a root node.
@@ -236,86 +136,11 @@ public class CFParser implements IEditorActionDelegate {
 	
 	protected String data2Parse = null;
 	
-	
-	/*
-	 * 
-	 * @author Oliver Tupman
-	 *
-	 * This is simply a alias for an ArrayList, used to show what the return result really is.
-	 */
-	public class MatchList extends ArrayList {	}	// Just so I know what the array is!
-	
 	/**
 	 * <code>getParseResult</code> - Get's the document tree from a parse 
 	 * @return The CF document tree that results from calling <code>parseDoc()</code>
 	 */
 	public CFDocument getParseResult()	{ return parseResult; }
-
-	
-	/**
-	 * @author Oliver Tupman
-	 *
-	 * <code>TagMatch</code> is a class to represent a match within a document. 
-	 */
-	public class TagMatch {
-		/**
-		 * <code>match</code> - The full text of the tag match made.
-		 */
-		public String match;
-		/**
-		 * <code>startPos</code> - The document offset where the match began
-		 */
-		public int startPos;
-		/**
-		 * <code>endPos</code> - The document offset where the match ended.
-		 */
-		public int endPos;
-		
-		/**
-		 * <code>lineNumber</code> - the line number on which this occured.
-		 * TODO: Actually set the line number.
-		 */
-		public int lineNumber;
-		
-		/**
-		 * <code>TagMatch</code> - Constructor for the TagMatch class. 
-		 * @param text
-		 * @param start
-		 * @param end
-		 */
-		public TagMatch(String text, int start, int end, int lineNum)
-		{
-			match = text;
-			startPos = start;
-			endPos = end;
-			lineNumber = lineNum;
-		}
-	}
-	
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		if( targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor )
-		{
-			editor = (ITextEditor)targetEditor;
-			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
-			this.parseDoc = doc;
-		}
-		
-		//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-		
-		//IDocument testdoc = ((ITextEditor)targetEditor).getDocumentProvider().getDocument(targetEditor);
-		//this.parseDoc = testdoc;
-		//System.err.println(">>>" + testdoc + "<<<");
-	}
-
-	public void run() {
-		parseResult = parseDoc();
-	}
-
-	public void run(IAction arg0) {
-		parseResult = parseDoc();
-		
-	}
-	public void selectionChanged(IAction arg0, ISelection arg1) { ; }
 	
 	/**
 	 * <code>CFParser</code> Constructor without params.
@@ -362,9 +187,9 @@ public class CFParser implements IEditorActionDelegate {
 	 * @param inDoc - the document to run the tag matcher over.
 	 * @return an Array of TagMatches
 	 */
-	protected MatchList getTagMatches(IDocument inDoc)
+	protected ArrayList getTagMatches(IDocument inDoc)
 	{
-		MatchList matches = new MatchList();
+		ArrayList matches = new ArrayList();
 		String inText = inDoc.get();
 		
 		Matcher matcher;
@@ -427,70 +252,7 @@ public class CFParser implements IEditorActionDelegate {
 		return 0;
 	}	
 	
-	/**
-	 * Calculates line numbers.
-	 * 
-	 * @param inputData - the string to scan
-	 */
-	protected void calcLineNumbers(String inputData)
-	{
-		/*
-		 * This is a very simple line scanner. It simply runs the regex \r\n that
-		 * should search for line breaks (assuming a CRLF method). If it finds 0
-		 * it runs again with the line break method \n. Otherwise we finally
-		 * try \r.
-		 * 
-		 * Having done that we simply loop through the matches. Each match is a line,
-		 * the end value being the end position of the line in document offsets.
-		 */
-		int [] lineOffs = null;
-		try {
-			MatchList matches = new MatchList();
-			String inText = inputData;
-			Matcher matcher;
-			Pattern pattern;
 	
-			pattern = Pattern.compile("(\\r\\n)");
-			matcher = pattern.matcher(inText);
-			
-			if(!matcher.find(0))
-			{
-				pattern = Pattern.compile("(\\n)");
-				matcher = pattern.matcher(inText);
-				if(!matcher.find(0))
-				{
-					pattern = Pattern.compile("(\\r)");
-					matcher = pattern.matcher(inText);
-				}
-			}
-			if(matcher.find(0))
-			{
-				
-				int lineCnt = 0;
-				while(matcher.find())
-					lineCnt++;
-
-				lineOffs = new int[lineCnt+2];
-				matcher = pattern.matcher(inText);
-				lineCnt = 0;
-				while(matcher.find())
-				{
-					lineOffs[lineCnt] = matcher.end();
-					lineCnt++;
-				}
-				lineOffsets = lineOffs;
-			}
-			else
-			{
-				System.err.println("CFParser::calcLineNumbers() - Didn't find any lines!");
-				lineOffsets = new int[1];
-				lineOffsets[0] = 0;
-			}
-		} catch(Exception anException) {
-			System.err.println("CFParser::calcLineNumbers() - Error, could not calculate line numbers because: " + anException.getMessage());
-		}
-		System.err.println("CFParser::calcLineNumbers() - Got " + lineOffsets.length + " lines. Is this correct?");		
-	}
 	
 	
 	
@@ -505,94 +267,6 @@ public class CFParser implements IEditorActionDelegate {
 	}
 	
 	/**
-	 * <code>GetTabs</code> - Helper function for debugging.
-	 * @param inStack - stack to use as a count for the number of tabs required.
-	 * @return - a string with tabs in.
-	 */
-	protected String GetTabs(Stack inStack)
-	{
-		String retval = "";
-		for(int i = 0; i < inStack.size(); i++)
-			retval += "\t";
-		return retval;
-	}
-	
-	/**
-	 * <code>GetIndent</code> does much the same as @see GetTabs(Stack inStack) except you pass an integer
-	 * @param count - tabs to make
-	 * @return - string with <code>count</code> tabs in
-	 */
-	protected String GetIndent(int count)
-	{
-		String retval = "";
-		for(int i = 0; i < count; i++)
-			retval += "\t";
-		
-		return retval;
-	}
-	/**
-	 * <code>walkTreeMain</code> - recursive tree walker, dumps the tree info out.
-	 * @param rootItem - the current root item
-	 * @param count - current depth in the tree, used for outputting indentation.
-	 */
-	protected void walkTreeMain(DocItem rootItem, int count)
-	{
-		System.out.println(GetIndent(count) + "Tree: " + rootItem.itemName  + "\' + match data was : " + rootItem.getItemData());
-		if(rootItem.hasChildren())
-		{
-			ArrayList children = rootItem.getChildren();
-			for(int i = 0; i < children.size(); i++)
-			{
-				walkTreeMain((DocItem)children.get(i), count + 1);
-			}
-		}
-	}
-
-	/**
-	 * <code>walkTreeNamesOnly</code> - recursive tree walker, only dumps the names of the nodes for brevity
-	 * @param rootItem - the current root item
-	 * @param count - current depth in the tree, used for outputting indentation.
-	 */
-	protected void walkTreeNamesOnly(DocItem rootItem, int count)
-	{
-		System.out.println(GetIndent(count) + rootItem.itemName);
-		if(rootItem.hasChildren())
-		{
-			ArrayList children = rootItem.getChildren();
-			for(int i = 0; i < children.size(); i++)
-			{
-				walkTreeNamesOnly((DocItem)children.get(i), count + 1);
-			}
-		}
-	}	
-	
-	/**
-	 * <code>walkTreeMain</code> - Call to dump the document tree to the console.
-	 * @param rootItem - the node to begin at.
-	 */
-	protected void walkTree(DocItem rootItem)
-	{
-		System.out.println("########### Tree walk 1, full info:");
-		walkTreeMain(rootItem, 1);
-		System.out.println("########### Tree walk 2, names only:");
-		walkTreeNamesOnly(rootItem, 1);
-	}
-	
-	/**
-	 * <code>dumpStack</code> - Dumps all of the elements of the stack to the console.
-	 * @param inStack
-	 */
-	protected void dumpStack(Stack inStack)
-	{
-		for(int i = 0; i < inStack.size(); i++)
-		{
-			DocItem tempItem = (DocItem)inStack.get(i);
-			System.out.println("Parser: Stack at "+ i+ " is \', " + tempItem.itemName + "\' + match data was : " + tempItem.getItemData());
-		}
-		
-	}
-	
-	/**
 	 * <code>userMessage</code> - Outputs a message at a certain tree depth to the console
 	 * @param indent - the indent to use
 	 * @param method - the method that is doing the calling, so we can keep track nicely
@@ -600,7 +274,7 @@ public class CFParser implements IEditorActionDelegate {
 	 */
 	protected void userMessage(int indent, String method, String message)
 	{
-		System.out.println(GetIndent(indent) + "CFParser::" + method + "() - " + message);
+		System.out.println(Util.GetIndent(indent) + "CFParser::" + method + "() - " + message);
 	}
 	
 	/**
@@ -638,7 +312,7 @@ public class CFParser implements IEditorActionDelegate {
 					//MarkerUtilities.setCharStart(attrs, match.startPos);
 					//MarkerUtilities.setCharEnd(attrs, match.endPos);
 					
-						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+					MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
 					
 				}catch(CoreException excep) {
 					userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
@@ -673,32 +347,7 @@ public class CFParser implements IEditorActionDelegate {
 		return attributes;
 	}
 
-	/**
-	 * <code>searchItemStack</code> - Searches the item stack for an item with <code>itemName</code>
-	 * 
-	 * This method is intended for when there is a parse error - we can try and determine whether
-	 * the erroring tag is actually correct and the previous, opening tag is incorrect or not. Need
-	 * to work on that really.
-	 * 
-	 * @param matchStack - the stack to search
-	 * @param itemName - the item to search for
-	 * @return the position in the stack where the item is
-	 */
-	protected int searchItemStack(Stack matchStack, String itemName)
-	{
-		int startSize = matchStack.size();
-		int popCount = 0;
-		Stack tempStack = new Stack();
-		tempStack.copyInto(matchStack.toArray());
-		
-		while(tempStack.size() > 0)
-		{
-			DocItem tempItem = (DocItem)tempStack.pop();
-			if(tempItem.getName().compareTo(itemName) == 0)
-				break;
-		}
-		return startSize - popCount;
-	}
+	
 	
 	/**
 	 * <code>handleClosingTag</code> - Handles a closing tag in the document
@@ -937,7 +586,7 @@ public class CFParser implements IEditorActionDelegate {
 	 * TODO: break open CFSET's and grab variable assignments.
 	 * TODO: somehow implement tag variable grabbing (i.e. from <cfquery>'s 'name' attribute) Should the tag object do it, or the parser?
 	 */
-	public CFDocument createDocTree(MatchList matches)
+	public CFDocument createDocTree(ArrayList matches)
 	{
 		
 		CFDocument newDoc = new CFDocument();
@@ -946,22 +595,15 @@ public class CFParser implements IEditorActionDelegate {
 		TagItem rootItem = new TagItem(0, 0, 0, "Doc Root");
 		matchStack.push(rootItem);
 		
-//		System.err.println("###################################################################");
-//		System.err.println("####################### Begining Parser ###########################");
-//		System.err.println("###################################################################");
-		
-//		System.out.println(GetTabs(matchStack) + "Parser: About to create doc tree");
 		int matchPos = 0;
 		try {
 			for(; matchPos < matches.size(); matchPos++)
 			{
 				TagMatch match = (TagMatch)matches.get(matchPos);
 				String matchStr = match.match;
-				//dumpStack(matchStack);
 				
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
-//					System.out.println("Parser: Working on match \'" + match.match + "\'");
 					//
 					// Is a tag
 					if(matchStr.charAt(1) == '/')
@@ -978,7 +620,6 @@ public class CFParser implements IEditorActionDelegate {
 							tagEnd = matchStr.indexOf(">");
 						}
 						String tagName = match.match.substring(0, tagEnd);
-//						System.out.println(GetTabs(matchStack) + "Parser: I think I have found \'" + tagName + "\'");
 						
 						boolean isACloser = false;
 						HashMap attrMap = new HashMap();
@@ -988,7 +629,6 @@ public class CFParser implements IEditorActionDelegate {
 							if(tagName.indexOf("/") != -1)
 								tagName = tagName.substring(0, tagName.length()-1); // Is a self-closer (i.e. <br/>)
 							isACloser = true;
-//							System.out.println(GetTabs(matchStack) + "Parser: Hmmm, user specified it closes");
 						}
 						//
 						// Get the attributes from the tag.
@@ -1017,10 +657,8 @@ public class CFParser implements IEditorActionDelegate {
 			}
 		}catch(Exception anyException) {
 			parserState.addMessage(new ParseMessage(getLineNumber(matchPos), matchPos, matchPos, "", "Doc tree creation: caught an unhandled exception: " + anyException.getMessage()));
-			System.err.println(GetTabs(matchStack) + "Parser: Caught an exception!" + anyException.getMessage());
+			System.err.println(Util.GetTabs(matchStack) + "Parser: Caught an exception!" + anyException.getMessage());
 		}
-//		System.err.println("#################### TREE DUMP ##################");
-//		walkTree(rootItem);
 		return newDoc;
 	}
 	
@@ -1036,7 +674,7 @@ public class CFParser implements IEditorActionDelegate {
 	
 	protected final int INDEX_NOTFOUND =	-1;	// For String::indexOf(), make it nicer to read!
 	
-	protected int matchingHTML(CFParser.State parseState, String inData, int currDocOffset)
+	protected int matchingHTML(State parseState, String inData, int currDocOffset)
 	{
 		int finalOffset = currDocOffset;
 		int currPos = currDocOffset + 1;
@@ -1085,7 +723,7 @@ public class CFParser implements IEditorActionDelegate {
 		return currPos;
 	}
 	
-	protected int matchingCFScript(CFParser.State parseState, String inData, int currDocOffset)
+	protected int matchingCFScript(State parseState, String inData, int currDocOffset)
 	{
 		int finalOffset = currDocOffset;
 		int currPos = currDocOffset;
@@ -1120,7 +758,7 @@ public class CFParser implements IEditorActionDelegate {
 		return finalOffset;
 	}
 	
-	protected int matchingCFML(CFParser.State parseState, String inData, int currDocOffset)
+	protected int matchingCFML(State parseState, String inData, int currDocOffset)
 	{
 		int finalOffset = currDocOffset;
 		int currPos = currDocOffset;
@@ -1158,13 +796,13 @@ public class CFParser implements IEditorActionDelegate {
 		return finalOffset;
 	}
 	
-	protected MatchList tagMatchingAttempts(String inData)
+	protected ArrayList tagMatchingAttempts(String inData)
 	{
 		String data = inData;
 		int lastMatch = 0;
 		int currPos = 0;
 		int currState = 0;
-		MatchList matches = new MatchList();
+		ArrayList matches = new ArrayList();
 		try {
 			for(currPos = 0; currPos < data.length(); currPos++)
 			{
@@ -1258,16 +896,6 @@ public class CFParser implements IEditorActionDelegate {
 		return matches;
 	}
 	
-	
-	protected void dumpMatches(MatchList matches)
-	{
-		System.out.println("Dumping the matches:");
-		for(int i = 0; i < matches.size(); i++)
-		{
-			System.out.println("Match: \'" + ((TagMatch)matches.get(i)).match + "\'");
-		}
-	}
-	
 	protected void processParseResultMessages()
 	{
 		ArrayList messages = parserState.getMessages();
@@ -1322,9 +950,9 @@ public class CFParser implements IEditorActionDelegate {
 	{
 		CFDocument docTree = null;
 		try {
-			parserState = new CFParser.State("doesn\'t matter!");
-			calcLineNumbers(inData);
-			MatchList matches = tagMatchingAttempts(inData);
+			parserState = new State("doesn\'t matter!");
+			lineOffsets = Util.calcLineNumbers(inData);
+			ArrayList matches = tagMatchingAttempts(inData);
 			docTree = createDocTree(parserState.getMatches());
 			processParseResultMessages();
 		} catch(Exception excep) 

@@ -24,18 +24,9 @@
  */
 package com.rohanclan.cfml.editors;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-
-import com.rohanclan.cfml.parser.CFParser;
-import com.rohanclan.cfml.parser.Util;
 
 /**
  * 
