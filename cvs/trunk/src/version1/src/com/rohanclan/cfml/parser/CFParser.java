@@ -681,10 +681,11 @@ public class CFParser {
 		
 		// Tokenize the tag and check for invalid contents
 		String[] tokens = match.getMatch().split("\\s");
-
+		
 		if (tokens.length > 1) {
 			for (int i=1;i<tokens.length;i++) {
-				if (tokens[i].charAt(0) == '<') {
+				if (tokens[i].length() > 0 
+						&& tokens[i].charAt(0) == '<') {
 					parserState.addMessage(new ParseError(
 							getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
 							"Invalid token \"" + tokens[i].charAt(0) + "\" found in opening <b>"  + tagName + "</b> tag. The tag is probably missing a closing \">\""
@@ -692,6 +693,7 @@ public class CFParser {
 					
 					throw new FatalException("Fatal parser error. Unable to continue parsing past line " + getLineNumber(match.getStartPos()));
 				}
+				
 			}
 		}
 		//
