@@ -4261,7 +4261,9 @@
 				component = "component name or reference"
 				argumentCollection = "argument collection"
 		-->
-		<tag name="cfinvoke" creator="3" single="false" xmlstyle="false">
+		<tag name="cfinvoke" creator="3" single="false" xmlstyle="false"
+			hybrid="true" allowanyattribute="true"
+		>
 			<help><![CDATA[
 				Does either of the following:
 
@@ -5430,7 +5432,9 @@
 				attribute_name1 = "valuea"
 				attribute_name2 = "valueb" ...
 		-->
-		<tag name="cfmodule" creator="3" single="true" xmlstyle="false">
+		<tag name="cfmodule" creator="3" single="true" xmlstyle="false"
+			hybrid="true" allowanyattribute="true"
+		>
 			<help><![CDATA[
 				Invokes a custom tag for use in CFML application pages.
 				This tag processes custom tag name conflicts.
@@ -5526,8 +5530,8 @@
 				]]></help>
 				<values>
 					<value option="com" />
-					<value option="java" />
 					<value option="corba" />
+					<value option="java" />
 				</values>
 			</parameter>
 			<parameter name="action" type="String" required="true">
@@ -6141,7 +6145,7 @@
 				every cfquery tag, to help secure your databases from
 				unauthorized users
 			]]></help>
-			<parameter name="name" type="String" required="true">
+			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
 					Name of query. Used in page to reference query record set.
 					Must begin with a letter. Can include letters, numbers,
@@ -6149,7 +6153,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="datasource" type="String" required="true">
+			<parameter name="datasource" type="String" required="false">
 				<help><![CDATA[
 					Name of data source from which query gets data.
 				]]></help>
@@ -9028,65 +9032,7 @@
 				CreateObject('component', component-name)
 				CreateObject('corba', context, class, locale)
 				CreateObject('java', class)
-				CreateObject('webservice', urltowsdl)
-				******************************************
-			
-				The CreateObject function can call a method on a CORBA object.
-				The object must be defined and registered for use.
-
-				type : "corba"
-				context :
-				    * IOR to access CORBA server
-				    * NameService: naming service to access server.
-						Valid only with the InitialContext of a VisiBroker ORB.
-				class :
-				    If context = "ior": absolute path of file that contains
-				        string version of the Interoperable Object Reference
-				        (IOR). CFML must be able to read file; it should
-						be local to CFML server or accessible on network
-				    If context = "nameservice:" forward slash-delimited naming
-				        context for naming service.
-                        For example Allaire//Doc/empobject
-				locale :
-                    The name of the Java config that holds the properties file.
-                ********************************************
-                
-                Create a COM object (not available on Unix)
-
-				To create a COM object, you must provide this information:
-				 * The object's program ID or filename
-				 * The methods and properties available to the object through
-					the IDispatch interface
-				 * The arguments and return types of the object's methods
-				 * For most objects, you can get this information from the
-					OLEView utility.    
-					
-				********************************************
-
-
-				The CreateObject function can create a Java object, and, by
-				extension, an EJB object.
-				type : "java"
-				class : A Java class name
-
-				Any Java class available in the class path that is specified in
-				the Administrator can be loaded and used with the CreateObject
-				function.
-
-				Calling a public method on the object without first calling the
-				"init" method invokes a static method. Arguments and return
-				values can be any Java type (simple, array, object). If strings
-				are passed as arguments, CFML does the conversions; if
-				strings are received as return values, CFML does no conversion.
-
-				********************************************************
-
-				This function can create a web service object.
-
-				type : "webservice"
-				urltowsdl : WSDL file URL; location of web service. Note: this
-					URL almost always ends with "?WSDL"
-                    
+				CreateObject('webservice', urltowsdl)   
 			]]></help>
 			
 			<parameter name="type" type="String" required="true">
