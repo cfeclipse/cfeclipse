@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.1 2005-02-11 15:10:02 smilligan Exp $
- * $Revision: 1.1 $
- * $Date: 2005-02-11 15:10:02 $
+ * $Id: CFEPartitioner.java,v 1.2 2005-02-25 23:28:59 chrisbradford Exp $
+ * $Revision: 1.2 $
+ * $Date: 2005-02-25 23:28:59 $
  * 
  * Created on Oct 17, 2004
  *
@@ -43,6 +43,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.IDocumentPartitionerExtension;
 import org.eclipse.jface.text.IDocumentPartitionerExtension2;
+import org.eclipse.jface.text.TypedPosition;
 //import org.eclipse.jface.text.rules.DefaultPartitioner;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITypedRegion;
@@ -245,6 +246,10 @@ public class CFEPartitioner implements IDocumentPartitioner,
                     // Add a partition for the start part of the tag.
                      p = new CFEPartition(start, length, data.getStartPartitionType());
                      p.setTagName(data.tagName());
+                     if (data.isCloser()) {
+                         // System.out.println("Setting partition to be a closer " + rawData);
+                         p.setCloser(true);
+                     }
                     fDocument.addPosition(fPositionCategory, p);
                     
                 }
@@ -1176,11 +1181,64 @@ public class CFEPartitioner implements IDocumentPartitioner,
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return new CFEPartition[0];
     }
 
     /**
-     * Returns the position in the partitoner's position category which is close
+     * @param offset the start position of the desired partition
+     * @return the CFEPartition that starts at precisely <code>offset</code>
+     * @see CFEPartitioner#getCFEPartitions(int, int)
+     */
+    public CFEPartition getCFEPartition(int offset) {
+        CFEPartition[] parts = getCFEPartitions(offset,offset);
+        if (parts.length > 0) {
+            return parts[0];
+        }
+        return null;
+    }
+    
+    /**
+     * @param offset
+     * @return
+     */
+    public CFEPartition[] getStartTagPartitions(int offset) {
+        ArrayList partitionList =  new ArrayList();
+        Position[] category;
+        CFEPartition firstPart = getCFEPartition(offset);
+        
+        if (firstPart.isCloser()) {
+            //System.out.println("In end tag; no partitions to return");
+            return new CFEPartition[0];
+        }
+        while (!firstPart.isStartPartition()) {
+            //System.out.println(firstPart.getType() + ":" + firstPart.getTagName() + " = Not a start partition; get previous");
+            firstPart = getPreviousPartition(firstPart.getOffset());
+            if (firstPart == null) {
+                return(CFEPartition[]) partitionList.toArray();
+            }
+        }
+        CFEPartition nextPart = firstPart;
+        do {
+            //System.out.println("Adding partition to start partitions: "  + nextPart.getType() + ": " + nextPart.getTagName());
+            partitionList.add(nextPart);
+            nextPart = getNextPartition(nextPart.getOffset());
+            //System.out.println("Retrieved next partition: "  + nextPart.getType() + ": " + nextPart.getTagName());
+        } while (firstPart.getTagName().equalsIgnoreCase(nextPart.getTagName()) && nextPart.isMidPartition());
+        // Should have the end partition now
+        //System.out.println("Adding end partition to start partitions: "  + nextPart.getType() + ": " + nextPart.getTagName());
+        partitionList.add(nextPart);
+        
+        CFEPartition[] parts = new CFEPartition[partitionList.size()];
+        
+        for (int i=0;i<partitionList.size();i++) {
+            parts[i] = (CFEPartition) partitionList.get(i);
+        }
+
+        return parts;
+    }
+
+    /**
+     * Returns the partition in the partitioner's position category which is close
      * to the given offset. This is, the position has either an offset which is
      * the same as the given offset or an offset which is smaller than the given
      * offset. This method profits from the knowledge that a partitioning is a
@@ -1190,7 +1248,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
      *            the offset for which to search the closest position
      * @return the closest position in the partitioner's category
      */
-    protected CFEPartition findClosestPosition(int offset) {
+    public CFEPartition findClosestPartition(int offset) {
 
         try {
 
@@ -1218,11 +1276,53 @@ public class CFEPartitioner implements IDocumentPartitioner,
         return null;
     }
 
+
+    /**
+     * @param offset
+     * @return the partition before the one in which the offset is found
+     */
+    public CFEPartition getPreviousPartition(int offset) {
+        try {
+            int index = fDocument.computeIndexInCategory(fPositionCategory, offset);
+            Position[] category = fDocument.getPositions(fPositionCategory);
+            if (index == 0) {
+                return null;
+            }
+            //System.out.println("Previous partition found at index " + (index - 1));
+            return (CFEPartition) category[index - 1];
+        }
+        catch (BadLocationException e) {
+            return null;
+        } catch (BadPositionCategoryException e) {
+            return null;
+        }
+    }
+    
+    /**
+     * @param offset
+     * @return the partition after the one in which the offset is found
+     */
+    public CFEPartition getNextPartition(int offset) {
+        try {
+            int index = fDocument.computeIndexInCategory(fPositionCategory, offset);
+            Position[] category = fDocument.getPositions(fPositionCategory);
+            if (index < (category.length - 1)) {
+                //System.out.println("Next partition found at index " + (index + 1));
+                return (CFEPartition) category[index + 1];
+            }
+            return null;
+        } catch (BadLocationException e) {
+            return null;
+        } catch (BadPositionCategoryException e) {
+            return null;
+        }
+    }
+    
     /*
      * @see IDocumentPartitioner#getContentType(int)
      */
     public String getContentType(int offset) {
-        CFEPartition p = findClosestPosition(offset);
+        CFEPartition p = findClosestPartition(offset);
         
         if (p != null && p.includes(offset))
             return p.getType();
@@ -1386,7 +1486,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
         String firstPartition = null;
         String lastPartition = null;
         try {
-	        CFEPartition cfp = findClosestPosition(offset);
+	        CFEPartition cfp = findClosestPartition(offset);
 	        if (cfp == null) {
 	            return null;
 	        }
