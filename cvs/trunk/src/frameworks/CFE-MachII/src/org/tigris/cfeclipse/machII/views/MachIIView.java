@@ -12,7 +12,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
-import com.rohanclan.cfml.editors.actions.OpenCFCAtMethodAction;
+import com.rohanclan.cfml.editors.actions.OpenAtMethodAction;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 import org.tigris.cfeclipse.machII.views.forms.PropertyForm;
@@ -409,7 +409,7 @@ public class MachIIView extends ViewPart {
 		if(method == null)
 			return;
 		
-		OpenCFCAtMethodAction openAct = new OpenCFCAtMethodAction();
+		OpenAtMethodAction openAct = new OpenAtMethodAction();
 		openAct.setFile(targetFile);
 		openAct.setMethodName(method);
 		openAct.run();
