@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.7 2005-01-09 02:06:33 smilligan Exp $
- * $Revision: 1.7 $
- * $Date: 2005-01-09 02:06:33 $
+ * $Id: CFEDefaultPartitioner.java,v 1.8 2005-01-09 02:40:19 smilligan Exp $
+ * $Revision: 1.8 $
+ * $Date: 2005-01-09 02:40:19 $
  * 
  * Created on Oct 17, 2004
  *
@@ -208,13 +208,16 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 		       
 		   } else {
 				TypedPosition p= new TypedPosition(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType);
-				System.out.println("Token found " + contentType + " From " + p.offset + " length " + p.length);
+				//System.out.println("Token found " + contentType + " From " + p.offset + " length " + p.length);
 				fDocument.addPosition(fPositionCategory, p);
 		   }
 	    }
-	    catch (Exception e) {
-	        e.printStackTrace();
-	    }
+	    catch (BadLocationException e) {
+        e.printStackTrace();
+    }
+	    catch (BadPositionCategoryException e) {
+        e.printStackTrace();
+    }
 	}
 	
 	/*
