@@ -55,6 +55,38 @@ import com.rohanclan.cfml.parser.exception.InvalidAttributeException;
 import com.rohanclan.cfml.parser.ParseError;
 import com.rohanclan.cfml.parser.ParseMessage;
 
+/*
+ Nasty, bastard test data for the parser:
+ 
+<html>
+	<cffunction name="test">
+		<cfargument name="fred" test="test"/>
+		<cfscript>
+			WriteOutput("FREDFREDFRED");
+		</cfscript>
+		<cfif thisisatest is 1>
+			<cfoutput>asdfasdf</cfoutput>
+		</cfif>
+	</cffunction>
+
+	<cfset fred = 2/>
+	<cfset test(fred)/>
+	<cffunction name="test" >
+		<cfargument name="test" default="#WriteOutput("">"")#"/> <!--- I think this is valid! --->
+	</cffunction>
+	<cfoutput>
+		This is a <b>test</b>
+	</cfoutput>
+	<table>
+		<tr>
+			<td style="<cfoutput>#somethinghere#</cfoutput>">asdfasdf</td>
+			<td style="fred"></td>
+		</td>
+	</table>
+</html>
+
+ */
+
 /**
  * @author Oliver Tupman
  *
@@ -70,6 +102,7 @@ public class CFParser implements IEditorActionDelegate{
 	static protected final String REG_TAG = "<(\\w*)(.*)/{0,1}>";
 	/**
 	 * <code>REG_ATTRIBUTES</code> - regular expression for getting the attributes out of a tag match.
+	 * \s*(\w*)="(\w*)"
 	 */
 	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"(\\w*)\"";
 	
@@ -88,7 +121,7 @@ public class CFParser implements IEditorActionDelegate{
 		protected String filename;
 		protected int errCount = 0;
 		protected boolean hadFatal = false;
-		protected MatchList matches = null;
+		protected MatchList matches = new MatchList();
 		
 		public State(String docFilename)
 		{
@@ -98,6 +131,11 @@ public class CFParser implements IEditorActionDelegate{
 		public ArrayList getMessages()
 		{
 			return messages;
+		}
+		
+		public void addMatch(TagMatch newMatch)
+		{
+			matches.add(newMatch);
 		}
 		
 		public boolean hadFatal() { return hadFatal; }
@@ -702,11 +740,186 @@ public class CFParser implements IEditorActionDelegate{
 		return newDoc;
 	}
 	
+	protected final int MATCHER_NOTHING = 		0x00;
+	protected final int MATCHER_COMMENT = 		0x01;
+	protected final int MATCHER_HTMLTAG =		0x02;
+	protected final int MATCHER_ATTRIBUTE = 	0x04;
+	protected final int MATCHER_CFSCRIPT = 		0x08;
+	protected final int MATCHER_CFMLCOMMENT = 	0x16;
+	protected final int MATCHER_CFSCRCOMMENT = 	0x32;
+	protected final int MATCHER_STRING = 		0x64;
+	protected final int MATCHER_CFMLTAG = 		0x128;
+	
+	protected final int INDEX_NOTFOUND =	-1;	// For String::indexOf(), make it nicer to read!
+	
+	protected int getLineNumber(int docOffset)
+	{
+		return 0;
+	}
+	
+	protected int matchingHTML(CFParser.State parseState, String inData, int currDocOffset)
+	{
+		int finalOffset = currDocOffset;
+		int currPos = currDocOffset;
+		
+		int quoteCount = 0;
+		
+		for(; currPos < inData.length(); currPos++)
+		{
+			char currChar = inData.charAt(currPos);
+			boolean inQuotes = (0 == quoteCount % 2);
+			String next2Chars = "";
+			if(inData.length() - currPos > 2)	// For CF stuff we get the next two chars as well.
+				next2Chars = inData.substring(currPos, currPos + 2);
+			
+			if(currChar == '<' && next2Chars.compareTo("cf") == 0)
+			{	// CFML tag embedded in HTML
+				System.out.println("FOUND!: an embedded CFML tag within HTML!");
+				currPos = matchingCFML(parseState, inData, currPos);
+			}
+			else if(!inQuotes && currChar == '>')
+			{
+				System.out.println("FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos));				
+				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos), currDocOffset, currPos, 0));				
+			}
+			else if(currChar == '\"')
+				quoteCount++;
+		}
+		if(finalOffset == currDocOffset)
+		{
+			System.err.println("FATAL ERROR: Failed to find the end of an HTML tag!: " + inData.substring(currDocOffset, currPos));
+			
+			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
+												inData.substring(currDocOffset, currPos), 
+												"Reached end of document before finding end of HTML tag.",
+												true )); // Fatal error
+		}
+		return currPos;
+	}
+	
+	protected int matchingCFML(CFParser.State parseState, String inData, int currDocOffset)
+	{
+		int finalOffset = currDocOffset;
+		int currPos = currDocOffset;
+		//
+		// for recognising double quote escape sequences.
+		// If it's even we're out of quotes, odd we're in 'em. Try it out manually and see!
+		int quoteCount = 0;
+		
+		for(; currPos < inData.length(); currPos++)
+		{
+			char currChar = inData.charAt(currPos);
+			boolean inQuotes = (0 == quoteCount % 2);
+			if(!inQuotes && currChar == '>')
+			{
+				finalOffset = currPos;
+				System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos));
+				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos), currDocOffset, currPos, 
+												getLineNumber(currDocOffset)));
+				break;
+			}
+			else if(currChar == '\"')
+				quoteCount++;
+
+		}
+		if(finalOffset == currDocOffset)
+		{
+			System.err.println("FATAL ERROR: Failed to find the end of a CFML tag!: " + inData.substring(currDocOffset, currPos));
+			
+			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
+												inData.substring(currDocOffset, currPos), 
+												"Reached end of document before finding end of CFML tag.",
+												true )); // Fatal error
+		}
+		
+		return finalOffset;
+	}
+	
+	protected MatchList tagMatchingAttempts(CFParser.State parserState, String inData)
+	{
+		String data = inData;
+		int lastMatch = 0;
+		int currPos = 0;
+		int currState = 0;
+		MatchList matches = new MatchList();
+		
+		for(currPos = 0; currPos < data.length(); currPos++)
+		{
+			char currChar = data.charAt(currPos);
+			String next2Chars = "";
+			String next3Chars = "";
+			
+			// Make sure we haven't had any fatal errors during parsing.
+			if(parserState.hadFatal())
+			{
+				System.err.println("Parser encountered a fatal parse error");
+				break;
+			}
+			
+			if(data.length() - currPos > 2)	// For CF stuff we get the next two chars as well.
+				next2Chars = data.substring(currPos, currPos + 2);
+			
+			if(data.length() - currPos > 3)
+				next3Chars = next2Chars + data.charAt(currPos + 3);
+			
+			if(currState == MATCHER_NOTHING)
+			{	
+				switch(currChar) 
+				{
+					case '<':
+						if(next2Chars.compareTo("--") == 0)
+						{	// Testing for comment: <!--
+							// TODO: Find out whether comments can occur in tags
+							System.out.println("Found a comment");
+							if(next2Chars.compareTo("--") == 0 && data.charAt(currPos+3) == '-')
+							{
+								System.out.println("\t it's a CFML comment");
+								currState = MATCHER_CFMLCOMMENT;
+							}
+							else
+								currState = MATCHER_COMMENT;
+						}
+						else if(next2Chars.compareTo("cf") == 0)
+						{
+							System.out.println("Found the beginnings of a CF tag");
+							currPos = matchingCFML(parserState, inData, currPos);
+						}
+						else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
+						{
+							System.out.println("Found the beginnings of an HTML tag.");
+							currPos = matchingHTML(parserState, inData, currPos);
+							
+						}
+						break;
+					default:
+						// Not a char we care about.
+						break;
+				}
+			}
+			else if(currState == MATCHER_CFMLCOMMENT && currChar == '-' && 
+					next2Chars.compareTo("--") == 0 && 
+					inData.charAt(currPos+3) == '>')
+			{
+				System.out.println("Found the end of a CFML comment");
+				currState = MATCHER_NOTHING;
+			}
+			else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
+			{
+				System.out.println("Found the end of an HTML comment");
+				currState = MATCHER_NOTHING;
+			}
+		}
+		return matches;
+	}
+	
+	
 	public CFDocument parseDoc()
 	{
 		CFDocument docTree = null;
 		try {
 			docTree = createDocTree(getTagMatches(parseDoc));
+			//CFParser.State pState = new CFParser.State("fred");
+			//MatchList matches = tagMatchingAttempts(pState, parseDoc.get());
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
