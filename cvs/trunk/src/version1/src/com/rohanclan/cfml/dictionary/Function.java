@@ -28,10 +28,12 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 /**
+ * This is a function. Functions are like tags except they have a return
+ * type. A function derives from the Procedure class but as mentioned a 
+ * moment ago, it has a return value. 
+ * 
  * @author Rob
  *
- * This is a function. Functions are like tags except they have a return
- * type
  */
 public class Function extends Procedure {
 	

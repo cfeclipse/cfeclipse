@@ -24,19 +24,35 @@
  */
 package com.rohanclan.cfml.dictionary;
 
-//import java.util.Set;
-//import java.util.HashSet;
-
 /**
+ * <p>
+ * This class represents a syntax dictionary tag (should probably
+ * be renamed to DictionaryTag or something similar). Like Function
+ * it inherits from Procedure as a Tag is really a Procedure - it
+ * takes parameters and returns no value. Bear that in mind :)
+ * </p>
+ * <p>
+ * A tag has a number of states with regards to it's HTML/XML
+ * compatibility. For example:
+ * </p>
+ * <ul>
+ * 	<li>Single: The tag is something like a &lt;cfbreak&gt;</li>
+ *  <li>xmlstyle: The tag is XML compatible like a &lt;cfbreak/&gt;</li>
+ *  <li>hybrid: ????</li>
+ * </ul>
+ * 
+ * 
  * @author Rob
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class Tag extends Procedure {
+	/** Is this tag a single tag or not? */
 	protected boolean single = false;
+	/** Is this tag xmlstyle? (i.e. &lt;br/&gt;) */
 	protected boolean xmlstyle = false;
+	/** Is this tag a hybrid tag (???) */
 	protected boolean hybrid = false;
+	/** Can this tag take any attribute like a &lt;cfif&gt; */
 	protected boolean anyAttribute = false;
 	
 	/** w3c form tag */
@@ -44,12 +60,29 @@ public class Tag extends Procedure {
 	/** w3c table tag */
 	public static final byte TABLE = 32;
 	
+	/**
+	 * Constructs a new Tag with the specified name and whether
+	 * or not it is a single tag or not (i.e. &lt;cfbreak&gt;).
+	 * 
+	 * @param name The name of the tag
+	 * @param single Is the tag a single tag or not
+	 */
 	public Tag(String name, boolean single)
 	{
 		super(name);
 		this.single = single;
 	}
 	
+	/**
+	 * Creates a tag with a series of tag-based info. The name, whether
+	 * or not the tag is single or not, the style (is it xmlstyle or not)
+	 * and it's creator (see syntax dictionaries for more info).
+	 * 
+	 * @param name The name of the tag
+	 * @param single Is the tag a single tag or not?
+	 * @param style Is the tag XML style or not?
+	 * @param creator The creator/author of the tag
+	 */
 	public Tag(String name, boolean single, boolean style, byte creator)
 	{
 		this(name, single);
@@ -57,6 +90,20 @@ public class Tag extends Procedure {
 		xmlstyle = style;
 	}
 	
+	/**
+	 * Creates a tag with a series of tag-based info. The name, whether
+	 * or not the tag is single or not, the style (is it xmlstyle or not)
+	 * and it's creator (see syntax dictionaries for more info). Additionally
+	 * it takes whether or not the tag is a hybrid (???) and whether it can
+	 * take any attribute (ala &lt;cfif&gt;).
+	 * 
+	 * @param name The name of the tag
+	 * @param single Is the tag a single tag or not?
+	 * @param style Is the tag XML style or not?
+	 * @param creator The creator/author of the tag
+	 * @param hybrid Is the tag a hybrid or not
+	 * @param anyAttribute Can the tag take any attribute
+	 */
 	public Tag(String name, boolean single, boolean style, byte creator, boolean hybrid, boolean anyAttribute)
 	{
 		this(name, single);
@@ -68,7 +115,7 @@ public class Tag extends Procedure {
 	
 	/**
 	 * returns true if this is a table tag
-	 * @return
+	 * @return 
 	 */
 	public boolean isTableTag()
 	{
