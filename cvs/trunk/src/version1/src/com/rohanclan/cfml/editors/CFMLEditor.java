@@ -231,7 +231,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 					//NOTE: on unsupported platforms this will return null
 					String t = (String)(textTransfer.nativeToJava(event.currentDataType));
 					if(t != null) {
-						System.out.println(t);
+// System.out.println(t);
 					}
 				}
 			}
@@ -290,7 +290,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 					gofa = new com.rohanclan.cfml.editors.actions.GenericOpenFileAction();
 					
 					for(int i = 0; i < files.length; i++) {
-						System.out.println("File: " + files[i]);
+// System.out.println("File: " + files[i]);
 						gofa.setFilename(files[i]);
 						gofa.run();
 					}

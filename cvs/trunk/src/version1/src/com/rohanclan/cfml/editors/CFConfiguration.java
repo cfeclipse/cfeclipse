@@ -24,12 +24,7 @@
  */
 package com.rohanclan.cfml.editors;
 
-/**
- * @author Rob
- * 
- * This sets up the whole editor. Assigin partition damagers and repairers, and
- * assign insight to partitions - bunch of other stuff too.
- */
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.IDocument;
@@ -57,13 +52,26 @@ import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.editors.CFTextHover;
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
+import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
+import com.rohanclan.cfml.editors.contentassist.CFEPrimaryAssist;
 import com.rohanclan.cfml.editors.indentstrategies.CFScriptIndentStrategy;
 import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
-
+/**
+ * <p>
+ * This sets up the whole editor. Assigin partition damagers and repairers, and
+ * assign insight to partitions - bunch of other stuff too.
+ * </p>
+ * <p>
+ *  * It is recommended that you  <b>DO NOT EDIT THIS CLASS</b>. This class contains
+ * all of the vital setup information for the editor. Before playing with this
+ * class please talk to one of the development team for more information.
+ * </p>
+ * @author Rob
+ */
 public class CFConfiguration extends SourceViewerConfiguration implements IPropertyChangeListener {
 	
 	private CFDoubleClickStrategy doubleClickStrategy;
@@ -74,6 +82,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	private CFMLPreferenceManager preferenceManager;
 	private int tabWidth;
 	
+	
+	/**
+	 * Need a color manager to get partition colors
+	 * @param colorManager that would be the color manager
+	 */
 	private void configTagIndentStrat() {
 		indentTagStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
 		indentTagStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
@@ -476,32 +489,17 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			colorManager.getColor(new RGB(0,0,0))
 		);
 		
-		
-		CFCompletionProcessor cfcp = new CFCompletionProcessor(assistant);
-	
-		//assign the code completion to the needed partitions
-		//for normal text
-		assistant.setContentAssistProcessor(cfcp,IDocument.DEFAULT_CONTENT_TYPE); 
-		//inside cftags and javascript tags
-		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.CF_TAG);
-		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.J_SCRIPT);
-		//inside any other tags
-		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.ALL_TAG);
-		//unknown tags
-		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.UNK_TAG);
-		//cfscript gets their own special type
+		setupPrimaryCFEContentAssist();
+
 		assistant.setContentAssistProcessor(new CFScriptCompletionProcessor(),CFPartitionScanner.CF_SCRIPT);
-		//in style tags
-		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.CSS_TAG);
-		//form and table tags too
-		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.FORM_TAG);
-		assistant.setContentAssistProcessor(cfcp,CFPartitionScanner.TABLE_TAG);
 		
 		//in javascript tags - try to give js its own type of completion using the
 		//cfscript processor but using the js dictionary...
+		/*
 		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
 		cfscp.changeDictionary(DictionaryManager.JSDIC);
 		assistant.setContentAssistProcessor(cfscp,	CFPartitionScanner.J_SCRIPT);
+		*/
 		
 		
 		IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
@@ -541,6 +539,23 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	
 	
 	/**
+     * Sets up the primary CFE Content Assistor. CFE now uses it's own series of
+     * content assist code to future proof the content assist process. This should
+     * allow developers to extend the CFE code easily and more reliably in the future
+     * resulting in fewer hacks and changes to the core code.
+     */
+    private void setupPrimaryCFEContentAssist() {
+        CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist();
+		assistant.setContentAssistProcessor(mainCFAssistant, CFPartitionScanner.CF_TAG);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.ALL_TAG);	//inside any other tags
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.UNK_TAG);	//unknown tags
+		assistant.setContentAssistProcessor(mainCFAssistant,IDocument.DEFAULT_CONTENT_TYPE);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_TAG);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_TAG);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.J_SCRIPT);
+    }
+
+    /**
 	 * Register the text hover
 	 * @author Oliver Tupman
 	 */
@@ -585,7 +600,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	// This method gets called when the preference page is saved.
 	public void propertyChange(PropertyChangeEvent event)
     {
-		System.out.println("CFConfiguration property change listener notified." + event.getProperty());
+// System.out.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
     	
 		if(prop.equals("insightDelay")) {

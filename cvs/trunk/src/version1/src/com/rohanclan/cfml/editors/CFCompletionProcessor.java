@@ -27,6 +27,7 @@ package com.rohanclan.cfml.editors;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.BadLocationException;
@@ -60,6 +61,7 @@ import com.rohanclan.cfml.dictionary.*;
 import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 //import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.text.TextPresentation;
+import org.eclipse.ui.IPropertyListener;
 
 /**
  * @author Rob
@@ -80,8 +82,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	
 	private Pattern pattern = Pattern.compile("[^a-z.]$",Pattern.CASE_INSENSITIVE);
 	
-	/** Characters that will trigger content assist */
-	private char[] autoActivationChars = null;
 	
 	
 	private ContentAssistant assistant;
@@ -93,7 +93,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 */
 	public CFCompletionProcessor(ContentAssistant assistant){
 		this.assistant = assistant;
-		generateAutoActivationChars();
 	}
 
 	
@@ -136,13 +135,13 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				IPath folder = res.getFullPath().removeLastSegments(1);
 				folder = folder.append(valueSoFar);
 				valueSoFar = "";
-				System.out.println("OS Path: \'" + folder.toOSString() + "\'");
+// System.out.println("OS Path: \'" + folder.toOSString() + "\'");
 				IFolder folderRes = res.getWorkspace().getRoot().getFolder(folder);
 				
 				if(folderRes == null) {
-					System.out.println("Folder is null!");
+// System.out.println("Folder is null!");
 				} else {
-					System.out.println("Got folder: \'" + folderRes.getName() + "\'");
+// System.out.println("Got folder: \'" + folderRes.getName() + "\'");
 					try {
 						IResource children[] = folderRes.members();
 						for(int i = 0; i < children.length; i++) {
@@ -200,11 +199,10 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			String tagname = "";
 			int start = 0;
 			
-			//System.out.println("Computing proposals");
-			
 			if(documentOffset > 0)	// Get the text that invoked content assist
 				invoker = document.get(documentOffset-1,1);
 			
+// System.out.println("CFCOMPLETIONPROCESSOR - CALLED! BAD BAD BAD BAD!");
 			
 			//this is because when they hit > it often moves them into
 			//another partiton type - so get the last partition
@@ -215,10 +213,10 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			    String text = document.get(0,documentOffset);
 			    Matcher matcher = pattern.matcher(text);
 			    
-			    System.out.println("Searching for start of scope vars from " + documentOffset);
+// System.out.println("Searching for start of scope vars from " + documentOffset);
 			    
 			    if (matcher.find()) {
-			        System.out.println("Matcher found " + matcher.group());
+// System.out.println("Matcher found " + matcher.group());
 			    }
 			    */
 
@@ -253,9 +251,9 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 			//if st has nothing then we got called by mistake or something just
 			//bail out
-			System.out.println("Prefix: \'" + prefix + "\'");
+		//// System.out.println("Prefix: \'" + prefix + "\'");
 			tagname = (!st.hasMoreTokens()) ? prefix : st.nextToken();
-		// System.out.println("tagname: \'" + tagname + "\'");
+		//// System.out.println("tagname: \'" + tagname + "\'");
 			
 			//looks like this is just here to skip, but it causes a 
 			//java.util.NoSuchElementException sometimes so I am just throwning the
@@ -324,12 +322,6 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			boolean invokerIsCloseChevron = invoker.equals(">");
 			boolean invokerIsPeriod = invoker.equals(".");
 			
-			// If there's a "." somewhere in the string then we treat that as the invoker
-			if (prefix.lastIndexOf(".") > -1){
-			     invokerIsPeriod = true;
-			}
-			
-			
 			SyntaxDictionary syntax = null;
 			
 			if (cftag || invokerIsPeriod) {
@@ -383,15 +375,15 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		    searchText = limiting.substring(0,limiting.length()-1);
 		}
 		
-		//hacks hacks everywhere :) this looks to see if there are an
-		//odd number of " in the string prior to this invoke before 
-		//showing attribute insight. (to keep it from showing attributes
-		//inside of attributes)
+		// hacks hacks everywhere :) this looks to see if there are an
+		// odd number of " in the string prior to this invoke before 
+		// showing attribute insight. (to keep it from showing attributes
+		// inside of attributes)
 		String quote_parts[] = prefix.split("\"");
 		if(quote_parts.length % 2 != 0)
 		{
-			//and return our best guess (tagname should have been defined
-			//up there ^
+			// and return our best guess (tagname should have been defined
+			// up there ^
 			if(syntax != null && prefix.indexOf('>') < 0)
 			{
 			    //This is a nasty hack to filter out the attributes that have already been typed.
@@ -486,9 +478,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 
 	private ICompletionProposal[] lookUpScopeVars(int documentOffset, SyntaxDictionary syntax, String invoker, IDocument document, String prefix) throws BadLocationException {
 		
-	    //System.out.println("Looking for scope vars with prefix " + prefix);
-		prefix = prefix.trim();
-	    int length = prefix.length();
+// System.out.println("Looking for scope vars with prefix " + prefix);
+		int length = prefix.length();
 		// If the taglimiting has a space in we're assuming that the user
 		// is intending to input or has inputted some attributes.
 		Set proposals = ((SyntaxDictionaryInterface)syntax).getFilteredScopeVars(prefix);
@@ -498,7 +489,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		while (i.hasNext()) {
 		    if (i.next() instanceof Function) {
 		        length = prefix.length() - prefix.lastIndexOf(".");
-		        //System.out.println("Function found in scope lookup. Length reset to " + length);
+// System.out.println("Function found in scope lookup. Length reset to " + length);
 		        break;
 		    }
 		}
@@ -669,7 +660,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					name = ((ScopeVar)obj[i]).getValue();
 					display = ((ScopeVar)obj[i]).toString();
 					help = ((ScopeVar)obj[i]).getHelp();
-					//System.out.println("Scope var found with name " + name);
+//					//System.out.println("Scope var found with name " + name);
 				}
 				else if(obj[i] instanceof Function) 
 				{
@@ -756,200 +747,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		return prop;
 	}
 
-	/**
-	 * Creates the array of characters that will trigger content assist
-	 */
-	private void generateAutoActivationChars() {
-	    char[] chars = new char[72];
-	    int index = 0;
-	    
-	    try {
-	        /*
-	         * No idea why this doesn't work
-	         * 
-	        // Upper case letters
-		    for (int i = 65; i <= 90; i++) {
-		        index++;
-			    chars[index]  = (char)i;
-		    }
-		    // Lower case letters
-		    for (int i = 65; i <= 90; i++) {
-		        index++;
-			    chars[index]  = (char)i;
-		    }
-		    // Numbers
-		    for (int i = 48; i <= 57; i++) {
-		        index++;
-			    chars[index]  = (char)i;
-		    }
-		    */
-		    // Other characters
 
-		    index++;
-		    chars[index] = '<';
-		    index++;
-		    chars[index] = ' ';
-		    index++;
-		    chars[index] = '~';
-		    index++;
-		    chars[index] = '\t';
-		    index++;
-		    chars[index] = '\n';
-		    index++;
-		    chars[index] = '\r';
-		    index++;
-		    chars[index] = '>';
-		    index++;
-		    chars[index] = '\"';
-		    index++;
-		    chars[index] = '.';
-		    index++;
-		    chars[index] = '_';
-		    index++;
-		    chars[index] = 'A';
-		    index++;
-		    chars[index] = 'B';
-		    index++;
-		    chars[index] = 'C';
-		    index++;
-		    chars[index] = 'D';
-		    index++;
-		    chars[index] = 'E';
-		    index++;
-		    chars[index] = 'F';
-		    index++;
-		    chars[index] = 'G';
-		    index++;
-		    chars[index] = 'H';
-		    index++;
-		    chars[index] = 'I';
-		    index++;
-		    chars[index] = 'J';
-		    index++;
-		    chars[index] = 'K';
-		    index++;
-		    chars[index] = 'L';
-		    index++;
-		    chars[index] = 'M';
-		    index++;
-		    chars[index] = 'N';
-		    index++;
-		    chars[index] = 'O';
-		    index++;
-		    chars[index] = 'P';
-		    index++;
-		    chars[index] = 'Q';
-		    index++;
-		    chars[index] = 'R';
-		    index++;
-		    chars[index] = 'S';
-		    index++;
-		    chars[index] = 'T';
-		    index++;
-		    chars[index] = 'U';
-		    index++;
-		    chars[index] = 'V';
-		    index++;
-		    chars[index] = 'W';
-		    index++;
-		    chars[index] = 'X';
-		    index++;
-		    chars[index] = 'Y';
-		    index++;
-		    chars[index] = 'Z';
-		    index++;
-		    chars[index] = 'a';
-		    index++;
-		    chars[index] = 'b';
-		    index++;
-		    chars[index] = 'c';
-		    index++;
-		    chars[index] = 'd';
-		    index++;
-		    chars[index] = 'e';
-		    index++;
-		    chars[index] = 'f';
-		    index++;
-		    chars[index] = 'g';
-		    index++;
-		    chars[index] = 'h';
-		    index++;
-		    chars[index] = 'i';
-		    index++;
-		    chars[index] = 'j';
-		    index++;
-		    chars[index] = 'k';
-		    index++;
-		    chars[index] = 'l';
-		    index++;
-		    chars[index] = 'm';
-		    index++;
-		    chars[index] = 'n';
-		    index++;
-		    chars[index] = 'o';
-		    index++;
-		    chars[index] = 'p';
-		    index++;
-		    chars[index] = 'q';
-		    index++;
-		    chars[index] = 'r';
-		    index++;
-		    chars[index] = 's';
-		    index++;
-		    chars[index] = 't';
-		    index++;
-		    chars[index] = 'u';
-		    index++;
-		    chars[index] = 'v';
-		    index++;
-		    chars[index] = 'w';
-		    index++;
-		    chars[index] = 'x';
-		    index++;
-		    chars[index] = 'y';
-		    index++;
-		    chars[index] = 'z';
-		    index++;
-		    chars[index] = '1';
-		    index++;
-		    chars[index] = '2';
-		    index++;
-		    chars[index] = '3';
-		    index++;
-		    chars[index] = '4';
-		    index++;
-		    chars[index] = '5';
-		    index++;
-		    chars[index] = '6';
-		    index++;
-		    chars[index] = '7';
-		    index++;
-		    chars[index] = '8';
-		    index++;
-		    chars[index] = '9';
-
-
-
-		   
-		    
-	    }
-	    catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    
-	    //System.out.println("Auto-activation chars: " + new String(chars));
-	    
-	    this.autoActivationChars = chars;
-	    
-	}
-	
-	
 	/**
 	 * What characters cause us to wake up (for tags and attributes)
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
-	    //System.out.println("Auto-activation chars retrieved: " + new String(this.autoActivationChars));
-	    return this.autoActivationChars;
+		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>', '\"', '.' };
 	}
 
 	/**

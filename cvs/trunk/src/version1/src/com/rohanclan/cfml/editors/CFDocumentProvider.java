@@ -24,11 +24,6 @@
  */
 package com.rohanclan.cfml.editors;
 
-/**
- * @author Rob
- * 
- * You got me. This was a wizard generated file seems to do partition stuff too
- */
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -42,8 +37,14 @@ import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
-//import com.rohanclan.cfml.parser.cfscript.ParseException;
-
+/**
+ * 
+ * This document handles the opening and closing of CF documents.
+ * It assigns and runs a the parser over a document.
+ * 
+ * @author Rob
+ * 
+ */
 public class CFDocumentProvider extends FileDocumentProvider {
 
 	protected IDocument createDocument(Object element) throws CoreException {
@@ -75,19 +76,10 @@ public class CFDocumentProvider extends FileDocumentProvider {
 
 			//returns an IFile which is a subclass of IResource
 			try {
-				if (element instanceof FileEditorInput) {
-					document.setParserResource(((FileEditorInput) element)
-							.getFile());
-
-					// Now begins the fun of obtaining the resource that
-					// represents the file that has
-					// been opened and that this createDocument() method has
-					// been called upon.
-					//
-					// Delete all of the problem markers for the resource
+				if (element instanceof FileEditorInput) 
+				{
+					document.setParserResource(((FileEditorInput)element).getFile());
 					document.clearAllMarkers();
-
-					// Run the parser with the pref store.
 					document.parseDocument();
 				}
 			} catch (Exception e) {
