@@ -20,6 +20,9 @@
 	::NOTES::
     Missing: cfslider, cfregistry, cfinput
  -->
+<!DOCTYPE dictionary [
+  <!ENTITY value_boolean SYSTEM "inc/value_boolean.xml">
+]>
 <dictionary xmlns="http://www.cfeclipse.org/version1/dictionary"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://www.cfeclipse.org/version1/dictionary/dictionary.xsd"
@@ -178,8 +181,9 @@
 					enables client variables
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
+					<!-- <value option="true" />
+					<value option="false" /> -->
 				</values>
 			</parameter>
 			<parameter name="clientstorage" type="String" required="false">

@@ -587,7 +587,8 @@ public abstract class SyntaxDictionary {
 		//System.err.println("loading dictionary: " + filename);
 		if(this.filename == null) throw new IOException("Dictionary file name can not be null!");
 		
-		URLConnection urlcon = new URL(dictionaryBaseURL + "/" + this.filename).openConnection();
+		URL url = new URL(dictionaryBaseURL + "/" + this.filename);
+		URLConnection urlcon = url.openConnection();
 		BufferedInputStream xml = new BufferedInputStream(
 			urlcon.getInputStream()
 		);
@@ -603,6 +604,9 @@ public abstract class SyntaxDictionary {
 		);
 		
 		InputSource input = new InputSource(xml);
+		//System.err.println("sid: " + url.toString() );
+		input.setSystemId(url.toString());
+		
 		xmlReader.parse(input);
 	}
 	
