@@ -60,7 +60,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
-import org.eclipse.ui.internal.editors.text.EditorsPlugin;
+//import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
@@ -84,7 +84,8 @@ import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.dialogs.MessageDialog;
-//import org.eclipse.ui.texteditor.AnnotationPreference;
+import java.util.Iterator;
+import org.eclipse.ui.texteditor.AnnotationPreference;
 /**
  * @author Rob
  * 
@@ -206,7 +207,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		setEditorContextMenuId("#CFMLEditorContext"); //$NON-NLS-1$
 		setRulerContextMenuId("#TextRulerContext"); //$NON-NLS-1$
 		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
-		setPreferenceStore(EditorsPlugin.getDefault().getPreferenceStore());
+		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);
 
@@ -588,9 +589,16 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		//register the brackets and colors
 		support.setMatchingCharacterPainterPreferenceKeys(EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED,
 				EditorPreferenceConstants.P_BRACKET_MATCHING_COLOR );
-		support.install(this.getPreferenceStore());
+		
 		
 		super.configureSourceViewerDecorationSupport(support);
+		Iterator e= getAnnotationPreferences().getAnnotationPreferences().iterator();
+		while (e.hasNext()) {
+			AnnotationPreference pref = (AnnotationPreference) e.next();
+			support.setAnnotationPainterPreferenceKeys(pref.getAnnotationType(),pref.getColorPreferenceKey(),pref.getTextPreferenceKey(),pref.getOverviewRulerPreferenceKey(),4);
+		}
+		support.install(this.getPreferenceStore());
+		
 	}
 	
 	

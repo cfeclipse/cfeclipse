@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 import org.apache.xpath.compiler.Compiler;
 import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
@@ -908,7 +909,7 @@ public class CFParser {
 			//newDoc.docTree = matchStack;
 			
 		}catch(Exception anyException) {
-			parserState.addMessage(new ParseMessage(
+			parserState.addMessage(new ParseError(
 				getLineNumber(matchPos), matchPos, matchPos, "", 
 				"Doc tree creation: caught an unhandled exception: " 
 				+ anyException.getMessage()
@@ -1267,6 +1268,9 @@ public class CFParser {
 			Map attrs = new HashMap();
 			MarkerUtilities.setLineNumber(attrs, currMsg.getLineNumber()+1);
 			MarkerUtilities.setMessage(attrs, currMsg.getMessage());
+			attrs.put(IMarker.CHAR_START,new Integer(currMsg.docStartOffset));
+			attrs.put(IMarker.CHAR_END,new Integer(currMsg.docStartOffset+currMsg.docData.length()));
+			
 			//
 			// Not sure what the start & end positions are good for!
 			//MarkerUtilities.setCharStart(attrs, currMsg.getDocStartOffset());
@@ -1275,18 +1279,18 @@ public class CFParser {
 			// Not sure right now how to set the problem to be a warning or an error.
 			// There is IMarker.SEVERITY_ERROR & IMarker.SEVERITY_WARNING but I'm 
 			// not sure how I set them.
+			String type = "com.rohanclan.cfml.parserProblemMarker";
 			if(currMsg instanceof ParseError)
 			{
-
+				type = "com.rohanclan.cfml.parserProblemMarker";
 			}
 			else if(currMsg instanceof ParseWarning)
 			{
-				
-
+				type = "com.rohanclan.cfml.parserWarningMarker";
 			}			
 			
 			try {
-				MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+				MarkerUtilities.createMarker(this.res, attrs, type);
 			}catch(CoreException excep) {
 				userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 			}catch(Exception anyExcep) {

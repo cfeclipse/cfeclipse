@@ -24,6 +24,7 @@
  */
 package com.rohanclan.cfml;
 
+import org.eclipse.ui.editors.text.TextEditorPreferenceConstants;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 //import org.eclipse.core.runtime.IPluginDescriptor;
 import org.eclipse.core.internal.utils.Assert;
@@ -179,6 +180,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
         //super.initializeDefaultPluginPreferences();
         CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
+		TextEditorPreferenceConstants.initializeDefaultValues(getPreferenceStore());
 		try {
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
         	propertyManager.initializeDefaultValues();

@@ -288,6 +288,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 		if (fPreferenceStore != null) {
 			fPropertyChangeListener= new IPropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent event) {
+					System.out.println(event.getProperty());
 					handlePreferenceStoreChanged(event);
 				}
 			};
@@ -352,6 +353,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 			AnnotationPreference info= (AnnotationPreference) fAnnotationTypeKeyMap.get(annotationType);
 			if (info != null) {
 				String key= info.getTextStylePreferenceKey();
+				
 				if (key != null)
 					return fPreferenceStore.getString(key);
 				else
@@ -428,6 +430,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 */
 	public void setAnnotationPainterPreferenceKeys(Object type, String colorKey, String editorKey, String overviewRulerKey, int layer) {
 		AnnotationPreference info= new AnnotationPreference(type, colorKey, editorKey, overviewRulerKey, layer);
+		
 		fAnnotationTypeKeyMap.put(type, info);
 	}
 	
@@ -815,8 +818,10 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 			fAnnotationPainter.setAnnotationTypeColor(annotationType, getAnnotationTypeColor(annotationType));
 			if (highlighting)
 				fAnnotationPainter.addHighlightAnnotationType(annotationType);
-			else
+			else {
+				
 				fAnnotationPainter.addAnnotationType(annotationType, getAnnotationDecorationType(annotationType));
+			}
 			
 			if (updatePainter)
 				updateAnnotationPainter();
@@ -874,11 +879,13 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 */
 	private void hideAnnotations(Object annotationType, boolean highlighting, boolean updatePainter) {
 		if (fAnnotationPainter != null) {
+			try {
 			if (highlighting)
 				fAnnotationPainter.removeHighlightAnnotationType(annotationType);
 			else
 				fAnnotationPainter.removeAnnotationType(annotationType);
-			
+			}
+			catch (NullPointerException e) {}
 			if (updatePainter) {
 				updateAnnotationPainter();
 			}
@@ -896,6 +903,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 			AnnotationPreference info= (AnnotationPreference) fAnnotationTypeKeyMap.get(annotationType);
 			if (info != null) {
 				String key= info.getTextPreferenceKey();
+				
 				return key != null && fPreferenceStore.getBoolean(key);
 			}
 		}

@@ -33,9 +33,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.ui.texteditor.MarkerUtilities;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import com.rohanclan.cfml.parser.docitems.CFCommentItem;
 /**
@@ -232,10 +238,11 @@ public class CommentParser {
                     try {
 	                    Map attrs = new HashMap();
 	                    MarkerUtilities.setLineNumber(attrs, comment.getLineNumber()+line + 1);
-                    
+	                    
                         String message = lines[line].substring(matcher.start(),lines[line].length());
 	                    MarkerUtilities.setMessage(attrs, message);
 	                    MarkerUtilities.createMarker(resource,attrs,"com.rohanclan.cfml.todomarker");
+	                    
 	                    
 	                    //System.out.println("Marker added for " + comment.getContents());
                     }

@@ -50,7 +50,7 @@ public class CFEProjectionAnnotation extends ProjectionAnnotation {
 	 * The type of projection annotations.
 	 */
 	public static final String TYPE= "org.eclipse.projection"; //$NON-NLS-1$
-		
+	
 	
 	private static final int COLOR= SWT.COLOR_DARK_GRAY;
 	private static Image fgCollapsedImage;

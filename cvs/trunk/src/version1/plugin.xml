@@ -921,6 +921,11 @@
             name="Editor"
             id="com.rohanclan.cfml.preferences.EditorPreferencePage"/>
       <page
+            class="com.rohanclan.cfml.preferences.AnnotationPreferencePage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="Annotations"
+            id="com.rohanclan.cfml.preferences.AnnotationPreferencePage"/>
+      <page
             class="com.rohanclan.cfml.preferences.FoldingPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             name="Code Folding"
@@ -1080,7 +1085,9 @@
             id="com.rohanclan.cfml.CFENature_Image"/>
    </extension>
 
-   <extension id="todomarker" point="org.eclipse.core.resources.markers" name="CFEclipse TODO Task">
+   <extension point="org.eclipse.core.resources.markers" 
+   			  id="todomarker" 
+   			  name="CFEclipse TODO Task">
    	<super type="org.eclipse.core.resources.taskmarker"/>
    	<persistent value="true"/>
    	<attribute name="priority"/>
@@ -1088,6 +1095,74 @@
    	<attribute name="done"/>
 
    </extension>
+   
+   
+   
+   <extension point="org.eclipse.core.resources.markers"
+		id="parserProblemMarker"
+		name="parserProblemMarker">
+		<super type="org.eclipse.core.resources.problemmarker"/>
+		<persistent value="true"/>
+	</extension>
+   
+   
+   
+   <extension point="org.eclipse.core.resources.markers"
+		id="parserWarningMarker"
+		name="parserWarningMarker">
+		<super type="org.eclipse.core.resources.problemmarker"/>
+		<persistent value="true"/>
+	</extension>
+
+    <extension point="org.eclipse.ui.editors.annotationTypes">
+    	<type name="com.rohanclan.cfml.parserProblemAnnotation"
+    		markerType="com.rohanclan.cfml.parserProblemMarker"/>
+    </extension>
+
+    <extension point="org.eclipse.ui.editors.annotationTypes">
+    	<type name="com.rohanclan.cfml.parserWarningAnnotation"
+    		markerType="com.rohanclan.cfml.parserWarningMarker"/>
+    </extension>
+
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification
+			annotationType="com.rohanclan.cfml.parserProblemAnnotation"
+			verticalRulerPreferenceKey="parserproblem.rulers.vertical"
+			textPreferenceKey="parserproblem.text"
+			colorPreferenceKey="parserproblem.color"
+			highlightPreferenceKey="parserproblem.background"
+			textPreferenceValue="true"
+			overviewRulerPreferenceKey="parserproblem.rulers.overview"
+			presentationLayer="4"
+			highlightPreferenceValue="false"
+			label="Parser problem"
+			colorPreferenceValue="255,0,128"
+			verticalRulerPreferenceValue="true"
+			overviewRulerPreferenceValue="true"
+			symbolicIcon="error"/>
+	</extension>
+
+	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
+		<specification
+			annotationType="com.rohanclan.cfml.parserWarningAnnotation"
+			verticalRulerPreferenceKey="parserwarning.rulers.vertical"
+			textPreferenceKey="parserwarning.text"
+			colorPreferenceKey="parserwarning.color"
+			highlightPreferenceKey="parserwarning.background"
+			textPreferenceValue="true"
+			overviewRulerPreferenceKey="parserwarning.rulers.overview"
+			presentationLayer="4"
+			highlightPreferenceValue="false"
+			label="Parser warning"
+			colorPreferenceValue="244,200,45"
+			verticalRulerPreferenceValue="true"
+			overviewRulerPreferenceValue="true"
+			symbolicIcon="warning"/>
+	</extension>
+   
+   
+   
+   
    
    <extension point="org.eclipse.ui.perspectiveExtensions">
         <perspectiveExtension
