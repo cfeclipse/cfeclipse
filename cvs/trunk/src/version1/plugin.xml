@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.6"
+   version="1.1.7"
    provider-name="RohanClan"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -436,6 +436,7 @@
             name="CFML"
             id="com.rohanclan.cfml">
       </category>
+      <!-- pointless?
       <view
             name="Snip View"
             icon="icons/obj16/snip.gif"
@@ -443,6 +444,7 @@
             class="com.rohanclan.cfml.views.SnipView"
             id="com.rohanclan.cfml.views.snipview">
       </view>
+      -->
       <view
             name="Snip Tree View"
             icon="icons/obj16/snip.gif"
@@ -457,9 +459,16 @@
             class="com.rohanclan.cfml.views.browser.BrowserView"
             id="com.rohanclan.cfml.views.browser">
       </view>
+      <view
+            name="Outline View"
+            icon="icons/obj16/snip.gif"
+            category="com.rohanclan.cfml"
+            class="com.rohanclan.cfml.views.contentoutline.CFContentOutlineView"
+            id="com.rohanclan.cfml.views.contentoutline.CFContentOutline">
+      </view>
    </extension>
 
-  <!--  <extension
+  	<!-- <extension
          point="org.eclipse.ui.views.contentoutline.IContentOutlinePage">
       <view
             name="Outline View"
