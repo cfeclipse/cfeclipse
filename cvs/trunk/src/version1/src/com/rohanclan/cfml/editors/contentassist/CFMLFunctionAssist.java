@@ -100,6 +100,10 @@ public class CFMLFunctionAssist
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
         
+        if (state.getTriggerData() == ' '
+        	|| state.getTriggerData() == '\t') {
+            return null;
+        }
         if (!checkContext(state))
         	return null;
 
@@ -425,7 +429,7 @@ public class CFMLFunctionAssist
         
         try {
             String trigger = docText.substring(offset-1,offset);
-            
+            //System.out.println("Triggered by ["+trigger+"]");
             if (trigger.equals("#")) {
             	newOffset = offset -1;
             	trigger = docText.substring(offset-2,offset-1);
@@ -450,19 +454,23 @@ public class CFMLFunctionAssist
             if (!trigger.equals("(") 
                     && !trigger.equals(",")
                     && !trigger.equals(")")) {
-                int lastParen = state.getDataSoFar().lastIndexOf("(");
+                int lastOpenParen = state.getDataSoFar().lastIndexOf("(");
                 int lastComma = state.getDataSoFar().lastIndexOf(",");
-                if (lastParen > 0 || lastComma > 0) {
-                    if (lastParen > lastComma) {
-                        newOffset = state.getOffset() - state.getDataSoFar().length() + lastParen + 1;
+                int lastCloseParen = state.getDataSoFar().lastIndexOf(")");
+                if (lastOpenParen > 0 || lastComma > 0) {
+                    if (lastOpenParen > lastComma) {
+                        newOffset = state.getOffset() - state.getDataSoFar().length() + lastOpenParen + 1;
                         trigger = docText.substring(newOffset-1,newOffset);
                         paramText = docText.substring(newOffset,state.getOffset());
                     }
-                    else {
+                    else if (lastComma > lastCloseParen){
                         newOffset = state.getOffset() - state.getDataSoFar().length() + lastComma + 1;
                         trigger = docText.substring(newOffset-1,newOffset);
                         paramText = docText.substring(newOffset,state.getOffset());
                        
+                    }
+                    else {
+                        return false;
                     }
                     // Auto insert closing " or '
                     docText.substring(state.getOffset(),state.getOffset()+1);
@@ -502,6 +510,7 @@ public class CFMLFunctionAssist
                 byte[] docBytes = docText.substring(0,newOffset).getBytes();
                 int lastParamEndedAt = docBytes.length;
                 String functionText = docText.substring(0,newOffset);
+                
                 for (int i=docBytes.length-1;i>=0;i--) {
                     byte thisByte = docBytes[i];
                     //System.out.println("Looking at: " + (char)thisByte);

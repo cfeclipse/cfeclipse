@@ -34,6 +34,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.*;
 import com.rohanclan.cfml.util.CFPluginImages;
+import com.sun.rsasign.p;
 
 /**
  * Provides CFML Scope Assist at the tag-insight level. So the if
@@ -51,7 +52,7 @@ public class CFMLScopeAssist
     private SyntaxDictionary sourceDict;
     
     private Pattern wordPattern = Pattern.compile("[\\w]");
-    private Pattern scopePattern = Pattern.compile("[\\w\\.]+$");
+    private Pattern scopePattern = Pattern.compile("[0-9a-zA-z_\\.]+$");
     
     
     /**
@@ -95,18 +96,24 @@ public class CFMLScopeAssist
         
         String prefix = state.getDataSoFar().trim();
         
+
         //Checking if the prefix could be a scope variable
         Matcher scopeMatcher = scopePattern.matcher(prefix);
         
         if (scopeMatcher.find()) {
             prefix = scopeMatcher.group();
-            //System.out.println(state.getDataSoFar());
         }
         else {
            // Nope, no point in going any further.
            return null;
         }
-
+        
+        // Check if the "." came before the prefix.
+        if (prefix.indexOf(".") < 0) {
+            return null;
+        }
+        
+        
         // Get an initial set of possibilities.
 		Set proposals = ((SyntaxDictionaryInterface)this.sourceDict).getFilteredScopeVars(prefix);
 		
