@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
 import com.rohanclan.cfml.editors.HTMLSyntaxDictionary;
-import com.rohanclan.cfml.editors.script.JSSyntaxDictionary;
+import com.rohanclan.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
 
 /**
  * @author Rob

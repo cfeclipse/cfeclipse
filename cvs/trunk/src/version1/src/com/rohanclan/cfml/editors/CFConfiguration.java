@@ -53,8 +53,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
-import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
 import com.rohanclan.cfml.editors.contentassist.CFEPrimaryAssist;
 import com.rohanclan.cfml.editors.indentstrategies.CFScriptIndentStrategy;
 import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
@@ -62,8 +60,11 @@ import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFTagScanner;
 import com.rohanclan.cfml.editors.partitioner.scanners.HTMTagScanner;
 import com.rohanclan.cfml.editors.partitioner.scanners.TextScanner;
-import com.rohanclan.cfml.editors.script.ScriptScanner;
-import com.rohanclan.cfml.editors.style.StyleScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
+import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.css.CSSScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.jscript.JavaScriptScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.sql.SQLScanner;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.AutoIndentPreferenceConstants;
 import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
@@ -324,7 +325,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 * partitions
 	 * @return
 	 */
-	protected StyleScanner getStyleScanner() 
+	protected CSSScanner getStyleScanner() 
 	{
 		Token textToken = new Token(
 			new TextAttribute(
@@ -335,7 +336,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 				)
 			)
 		);
-		StyleScanner stylescanner = new StyleScanner(colorManager, preferenceManager);
+		CSSScanner stylescanner = new CSSScanner(colorManager, preferenceManager);
 		stylescanner.setDefaultReturnToken(textToken);
 		return stylescanner;
 	}
@@ -345,7 +346,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 * partitions
 	 * @return
 	 */
-	protected ScriptScanner getScriptScanner() 
+	protected JavaScriptScanner getScriptScanner() 
 	{
 		Token textToken = new Token(
 			new TextAttribute(
@@ -356,9 +357,31 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 				)
 			)
 		);
-		ScriptScanner scriptscanner = new ScriptScanner(colorManager, preferenceManager);
+		JavaScriptScanner scriptscanner = new JavaScriptScanner(colorManager, preferenceManager);
 		scriptscanner.setDefaultReturnToken(textToken);
 		return scriptscanner;
+	}
+	
+	/**
+	 * gets the script scanner (handles highlighting for the script tag)
+	 * partitions
+	 * @return
+	 */
+
+	protected SQLScanner getSQLScanner() 
+	{
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+							CFMLColorsPreferenceConstants.P_COLOR_SQL_TEXT
+					)
+				)
+			)
+		);
+		SQLScanner cfqueryscanner = new SQLScanner(colorManager, preferenceManager);
+		cfqueryscanner.setDefaultReturnToken(textToken);		
+		return cfqueryscanner;
 	}
 	
 	/**
@@ -442,6 +465,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		dr = new DefaultDamagerRepairer(getStyleScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CSS);
 		reconciler.setRepairer(dr, CFPartitionScanner.CSS);
+		
+		//SQL
+		dr = new DefaultDamagerRepairer(getSQLScanner());
+		reconciler.setDamager(dr, CFPartitionScanner.SQL);
+		reconciler.setRepairer(dr, CFPartitionScanner.SQL);
 		
 		//CF script (if this is put before the cfscript stuff
 		//you'll get jacked up keyword highlighting

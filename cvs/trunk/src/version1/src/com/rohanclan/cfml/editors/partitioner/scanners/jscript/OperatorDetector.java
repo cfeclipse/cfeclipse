@@ -1,5 +1,5 @@
 /*
- * Created on Feb 1, 2004
+ * Created on Jan 31, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Rob Rohan
@@ -22,28 +22,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors.cfscript;
+package com.rohanclan.cfml.editors.partitioner.scanners.jscript;
 
 import org.eclipse.jface.text.rules.IWordDetector;
+
+import java.util.Set;
+//import java.util.Iterator;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
 
 /**
  * @author Rob
  *
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
- * @deprecated
  */
-public class CFScriptKeywordDetector implements IWordDetector {
+public class OperatorDetector implements IWordDetector {
+
+	private JSSyntaxDictionary jssd;
+	
+	public OperatorDetector()
+	{
+		super();
+		jssd = (JSSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.JSDIC);
+	}
 	
 	/* (non-Javadoc)
 	 * Method declared on IWordDetector.
 	 */
 	public boolean isWordStart(char character) 
 	{
-		//make sure its a valid char (keywords should start with
-		//a letter or underscore ... ) this needs work :-/
-		return Character.isLetter(character) || (character == '_');
-		//|| (0x7F <= character && character <= 0xFF);
+		
+		boolean isok = !Character.isLetterOrDigit(character); 
+		
+		if(isok)
+		{
+			Set set = jssd.getOperators();
+			if(set.contains(character+""))
+			{
+				return true;
+			}
+		}
+		
+		return false; //&& 
+			//((character == ' ') || Character.isLetter(character) || (character == '_'));
 	}
 	
 	/* (non-Javadoc)
@@ -51,10 +72,12 @@ public class CFScriptKeywordDetector implements IWordDetector {
 	 */
 	public boolean isWordPart(char character) 
 	{
+		Set set = jssd.getOperators();
+		return set.contains(character+"");
+		
 		//make sure any following char is a valid one - since I am using this for
 		//non user defined things we have a bit of leeway
-		return Character.isLetterOrDigit(character) || (character == '-')
-		|| (character == '_'); //|| (0x7F <= character && character <= 0xFF);
+		//return Character.isLetterOrDigit(character) || (character == '-')
+		//|| (character == '_'); //|| (0x7F <= character && character <= 0xFF);
 	} 
 }
-

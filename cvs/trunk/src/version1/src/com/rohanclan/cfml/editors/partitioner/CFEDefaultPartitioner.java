@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.9 2005-01-19 02:50:11 smilligan Exp $
- * $Revision: 1.9 $
- * $Date: 2005-01-19 02:50:11 $
+ * $Id: CFEDefaultPartitioner.java,v 1.10 2005-01-19 05:27:48 smilligan Exp $
+ * $Revision: 1.10 $
+ * $Date: 2005-01-19 05:27:48 $
  * 
  * Created on Oct 17, 2004
  *
@@ -318,14 +318,14 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 	                                    length, fPseudoPartition);
 	                            if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
 	                                fDocument.addPosition(fPositionCategory, p);
-	                                /*
+	                                
 	                                System.out.println("Added pseudo partition of type " 
 	                                        + fPseudoPartition 
 	                                        + " from " 
 	                                        + fPseudoPartitionStart 
 	                                        + " to " 
 	                                        + Integer.toString(p.getOffset() + p.getLength()));
-	                                        */
+	                                        
 	                            }
 	                            
 	                            fPseudoPartition = null;
@@ -334,13 +334,13 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 	                        }
 	                    }
                         if (fPseudoPartition != null) {
-                            //System.out.println("Found end tag " + rawData + " inside pseudo partition.");
+                            System.out.println("Found end tag " + rawData + " inside pseudo partition.");
                             length =  fScanner.getTokenOffset() - fPseudoPartitionStart;
                             p = new CFEPartition(fPseudoPartitionStart,
                                     length, fPseudoPartition);
                             if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
                                 fDocument.addPosition(fPositionCategory, p);
-                                /*
+                                
     	                        System.out.println("Added position for pseudo partition of type "  
                                         + fPseudoPartition
                                         + " from " 
@@ -349,10 +349,10 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                                         + Integer.toString(p.getOffset() + p.getLength())
                                         + " "
                                         + rawData);
-                                        */
+                                        
                             }
                             fPseudoPartitionStart = fScanner.getTokenOffset() + fScanner.getTokenLength();
-                            //System.out.println("Pseudo partition start set to " + fPseudoPartitionStart);
+                            System.out.println("Pseudo partition start set to " + fPseudoPartitionStart);
                         }
                     }
                 }

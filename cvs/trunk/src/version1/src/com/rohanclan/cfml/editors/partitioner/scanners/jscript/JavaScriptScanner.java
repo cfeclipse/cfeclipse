@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors.script;
+package com.rohanclan.cfml.editors.partitioner.scanners.jscript;
 
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.IToken;
@@ -56,9 +56,9 @@ import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
  *
  * This is the Javascript rule scanner (color coder rules).
  */
-public class ScriptScanner extends RuleBasedScanner {
+public class JavaScriptScanner extends RuleBasedScanner {
 	
-	public ScriptScanner(ColorManager manager, CFMLPreferenceManager prefs)
+	public JavaScriptScanner(ColorManager manager, CFMLPreferenceManager prefs)
 	{
 		super();
 		

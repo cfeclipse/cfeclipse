@@ -34,13 +34,13 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
 import com.rohanclan.cfml.editors.contentassist.CFMLFunctionAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLScopeAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLTagAssist;
 import com.rohanclan.cfml.editors.contentassist.HTMLTagAssistContributor;
+import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 
 /**
  * @author Administrator

@@ -39,6 +39,12 @@ import org.eclipse.jface.text.rules.WordRule;
  */
 public class PredicateWordRule extends WordRule implements IPredicateRule {
 
+	/** Buffer used for pattern detection */
+	private StringBuffer fBuffer= new StringBuffer();
+	
+	/** Is this word rule case sensitive or not */
+	private boolean fCaseSensitive = true;
+	
 	/**
 	 * @see org.eclipse.jface.text.rules.IPredicateRule#getSuccessToken()
 	 */
@@ -48,7 +54,12 @@ public class PredicateWordRule extends WordRule implements IPredicateRule {
 	{
 		for(int i=0; i<tokens.length; i++) 
 		{
-			addWord(tokens[i], token);
+		    if (fCaseSensitive) {
+		        addWord(tokens[i], token);
+		    }
+		    else {
+		        addWord(tokens[i].toLowerCase(),token);
+		    }
 		}
 	}
 	 
@@ -67,6 +78,41 @@ public class PredicateWordRule extends WordRule implements IPredicateRule {
 		successToken = this.evaluate(scanner, resume);//true);
 		return successToken;
 	}
+	
+	
+	public IToken evaluate(ICharacterScanner scanner) {
+		int c= scanner.read();
+		if (fDetector.isWordStart((char) c)) {
+			if (fColumn == UNDEFINED || (fColumn == scanner.getColumn() - 1)) {
+				
+				fBuffer.setLength(0);
+				do {
+					fBuffer.append((char) c);
+					c= scanner.read();
+				} while (c != ICharacterScanner.EOF && fDetector.isWordPart((char) c));
+				scanner.unread();
+				 IToken token = null;
+				 
+				if (fCaseSensitive) {
+				    token= (IToken) fWords.get(fBuffer.toString());
+				} else {
+				    token= (IToken) fWords.get(fBuffer.toString().toLowerCase());
+				}
+				
+				if (token != null)
+					return token;
+					
+				if (fDefaultToken.isUndefined())
+					unreadBuffer(scanner);
+					
+				return fDefaultToken;
+			}
+		}
+		
+		scanner.unread();
+		return Token.UNDEFINED;
+	}
+	
 	
 	/**
 	 * Creates a rule which, with the help of an word detector, will return the 
@@ -118,5 +164,9 @@ public class PredicateWordRule extends WordRule implements IPredicateRule {
 	{
 		super(detector, defaultToken);
 		this.addWords(tokens, tokenType);
+	}
+	
+	public void setCaseSensitive(boolean caseSensitive) {
+	    fCaseSensitive = caseSensitive;
 	}
 }

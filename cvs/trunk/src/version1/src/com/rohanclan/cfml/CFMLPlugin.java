@@ -36,8 +36,8 @@ import java.util.MissingResourceException;
 
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.editors.contentassist.*;
+import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 
 import org.eclipse.jface.preference.PreferenceStore;
 import org.osgi.framework.BundleContext;

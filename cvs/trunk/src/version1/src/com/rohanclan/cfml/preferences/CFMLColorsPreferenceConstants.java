@@ -47,6 +47,21 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	
 	/** Preference key identifier for cfscript string color*/
 	public static final String P_COLOR_CFSCRIPT_STRING = "cfscriptStringColor";
+	
+	/** Preference key identifier for SQL default color*/
+	public static final String P_COLOR_SQL_TEXT = "SQLTextColor";
+	
+	/** Preference key identifier for SQL keyword color*/
+	public static final String P_COLOR_SQL_KEYWORD = "SQLKeywordColor";
+	
+	/** Preference key identifier for SQL string color*/
+	public static final String P_COLOR_SQL_STRING = "SQLStringColor";
+	
+	/** Preference key identifier for SQL operator color */
+	public static final String P_COLOR_SQL_OPERATOR = "SQLOperatorColor";
+	
+	/** Preference key identifier for SQL comment color */
+	public static final String P_COLOR_SQL_COMMENT = "SQLCommentColor";
 
 	
 	/**
@@ -62,6 +77,11 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	 * 	<li>P_COLOR_CFSCRIPT_KEYWORD - "0,0,255"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_STRING - "0,102,0"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_FUNCTION - "0,0,102"</li>
+	 * 	<li>P_COLOR_SQL_TEXT - "0,0,0"</li>
+	 * 	<li>P_COLOR_SQL_KEYWORD - "0,0,255"</li>
+	 * 	<li>P_COLOR_SQL_STRING - "255,0,0"</li>
+	 * 	<li>P_COLOR_SQL_OPERATOR - "128,128,128"</li>
+	 * 	<li>P_COLOR_SQL_COMMENT - "0,128,128"</li>
 	 * </ul>
 	 */
 	public static void setDefaults(IPreferenceStore store) { 
@@ -75,6 +95,11 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFSCRIPT_STRING,"0,102,0");
 		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION,"0,0,102");
+		store.setDefault(P_COLOR_SQL_TEXT,"0,0,0");
+		store.setDefault(P_COLOR_SQL_KEYWORD,"0,0,255");
+		store.setDefault(P_COLOR_SQL_STRING,"255,0,0");
+		store.setDefault(P_COLOR_SQL_OPERATOR,"128,128,128");
+		store.setDefault(P_COLOR_SQL_COMMENT,"0,128,128");
 	}
 
 }

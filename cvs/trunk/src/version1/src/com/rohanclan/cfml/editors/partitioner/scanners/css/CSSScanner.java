@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors.style;
+package com.rohanclan.cfml.editors.partitioner.scanners.css;
 
 import org.eclipse.jface.text.rules.*;
 import org.eclipse.jface.text.*;
@@ -50,9 +50,9 @@ import java.util.List;
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class StyleScanner extends RuleBasedScanner {
+public class CSSScanner extends RuleBasedScanner {
 	
-	public StyleScanner(ColorManager manager,CFMLPreferenceManager prefs)
+	public CSSScanner(ColorManager manager,CFMLPreferenceManager prefs)
 	{
 		super();
 				

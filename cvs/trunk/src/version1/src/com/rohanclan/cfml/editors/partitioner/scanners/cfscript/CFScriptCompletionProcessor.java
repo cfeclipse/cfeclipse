@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.editors.cfscript;
+package com.rohanclan.cfml.editors.partitioner.scanners.cfscript;
 
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 
