@@ -28,19 +28,19 @@ import java.lang.Object;
 
 public class DebugResponse extends DebugMessage {
 	/** the return type is xml */
-	public static byte AS_XML		= 0;
+	//public static byte AS_XML		= 0;
 	/** the return type is plain text */
-	public static byte AS_TEXT		= 1;
+	//public static byte AS_TEXT		= 1;
 	/** the return type is an editor change */
-	public static byte AS_COMMAND	= 2;
+	//public static byte AS_COMMAND	= 2;
 
-	private byte responsetype;
+	//private byte responsetype;
 	private Object response;
 	
-	public byte getResponseType() 
-	{
-		return responsetype;
-	}
+	//public byte getResponseType() 
+	//{
+	//	return responsetype;
+	//}
 	
 	public Object getResponse() 
 	{

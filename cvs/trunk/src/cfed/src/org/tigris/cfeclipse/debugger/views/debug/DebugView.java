@@ -37,6 +37,11 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 import org.eclipse.core.runtime.IAdaptable;
 
+import org.tigris.cfeclipse.debugger.core.*;
+import org.tigris.cfeclipse.debugger.protocol.*;
+
+import java.net.ConnectException;
+
 /**
  * This sample class demonstrates how to plug-in a new
  * workbench view. The view shows data obtained from the
@@ -58,8 +63,10 @@ import org.eclipse.core.runtime.IAdaptable;
 public class DebugView extends ViewPart {
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
-	private Action action1;
-	private Action action2;
+	private Action startsession;
+	private Action endsession;
+	private Action step;
+	
 	private Action doubleClickAction;
 
 	/*
@@ -234,14 +241,17 @@ public class DebugView extends ViewPart {
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
+		manager.add(startsession);
+		manager.add(step);
 		manager.add(new Separator());
-		manager.add(action2);
+		manager.add(endsession);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(action2);
+		manager.add(startsession);
+		manager.add(step);
+		manager.add(new Separator());
+		manager.add(endsession);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 		// Other plug-ins can contribute there actions here
@@ -249,32 +259,68 @@ public class DebugView extends ViewPart {
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action1);
-		manager.add(action2);
+		manager.add(startsession);
+		manager.add(step);
+		manager.add(new Separator());
+		manager.add(endsession);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 	}
 
 	private void makeActions() {
-		action1 = new Action() {
+		startsession = new Action() {
 			public void run() {
-				showMessage("Action 1 executed");
+				try
+				{
+					DebugSessionManager.initSession();
+				}
+				catch(ConnectException e)
+				{
+					showMessage(e.toString());
+					//e.printStackTrace(System.err);
+				}
 			}
 		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		startsession.setText("Start");
+		startsession.setToolTipText("Start the debug session");
+		startsession.setImageDescriptor(
+			PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK)
+		);
 		
-		action2 = new Action() {
+		endsession = new Action() {
 			public void run() {
-				showMessage("Action 2 executed");
+				//showMessage("Action 2 executed");
+				DebugSessionManager.shutdownSession();
 			}
 		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		endsession.setText("Stop");
+		endsession.setToolTipText("Stop the debug session");
+		endsession.setImageDescriptor(
+			PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK)
+		);
+		
+		step = new Action() {
+			public void run() {
+				//showMessage("Action 2 executed");
+				DebugCommand dc = new DebugCommand();
+				dc.setCommand(DebugProtocol.CFE_COMMAND_STEP);
+				try
+				{
+					DebugSessionManager.issueCommand(dc);
+				}
+				catch(Exception e)
+				{
+					showMessage(e.toString());
+					e.printStackTrace(System.err);
+				}
+			}
+		};
+		step.setText("Step");
+		step.setToolTipText("Step");
+		step.setImageDescriptor(
+			PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK)
+		);
+		
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -294,7 +340,7 @@ public class DebugView extends ViewPart {
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
-			"Sample View",
+			"Debug Session",
 			message);
 	}
 

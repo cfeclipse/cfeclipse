@@ -27,9 +27,12 @@ package org.tigris.cfeclipse.debugger.views.variable;
 import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
@@ -63,6 +66,8 @@ public class VariableView extends ViewPart {
 	private Action action2;
 	private Action doubleClickAction;
 
+	protected Text text;
+	
 	/*
 	 * The content provider class is responsible for
 	 * providing objects to the view. It can wrap
@@ -195,27 +200,55 @@ public class VariableView extends ViewPart {
 	/**
 	 * The constructor.
 	 */
-	public VariableView() {
-	}
+	public VariableView(){;}
 
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
 	 */
-	public void createPartControl(Composite parent) {
+	public void createPartControl(Composite parent) 
+	{
+		//Create a grid layout object so the text and treeviewer
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 1;
+		layout.verticalSpacing = 2;
+		layout.marginWidth = 0;
+		layout.marginHeight = 2;
+		parent.setLayout(layout);
+		
+		text = new Text(parent, SWT.SINGLE | SWT.BORDER);
+		
+		//layout the text field above the treeviewer
+		GridData layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		layoutData.horizontalAlignment = GridData.FILL;
+		text.setLayoutData(layoutData);
+		
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		
+		viewer.getControl().setLayoutData(layoutData);
+		
+		layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		layoutData.grabExcessVerticalSpace = true;
+		layoutData.horizontalAlignment = GridData.FILL;
+		layoutData.verticalAlignment = GridData.FILL;
+		viewer.getControl().setLayoutData(layoutData);
+		
 		drillDownAdapter = new DrillDownAdapter(viewer);
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
+		
 		makeActions();
 		hookContextMenu();
 		hookDoubleClickAction();
 		contributeToActionBars();
 	}
 
-	private void hookContextMenu() {
+	private void hookContextMenu() 
+	{
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(new IMenuListener() {
@@ -228,45 +261,54 @@ public class VariableView extends ViewPart {
 		getSite().registerContextMenu(menuMgr, viewer);
 	}
 
-	private void contributeToActionBars() {
+	private void contributeToActionBars() 
+	{
 		IActionBars bars = getViewSite().getActionBars();
 		fillLocalPullDown(bars.getMenuManager());
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
-	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(new Separator());
-		manager.add(action2);
+	private void fillLocalPullDown(IMenuManager manager) 
+	{
+		//manager.add(action1);
+		//manager.add(new Separator());
+		//manager.add(action2);
 	}
 
-	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(action2);
-		manager.add(new Separator());
+	private void fillContextMenu(IMenuManager manager)
+	{
+		//manager.add(action1);
+		//manager.add(action2);
+		//manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
-	private void fillLocalToolBar(IToolBarManager manager) {
+	private void fillLocalToolBar(IToolBarManager manager)
+	{
 		manager.add(action1);
-		manager.add(action2);
-		manager.add(new Separator());
+		//manager.add(action2);
+		//manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 	}
 
-	private void makeActions() {
+	private void makeActions() 
+	{
 		action1 = new Action() {
 			public void run() {
 				showMessage("Action 1 executed");
 			}
 		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		action1.setText("Get Data");
+		action1.setToolTipText("Get Variable Data");
+		action1.setImageDescriptor(
+			PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
+				ISharedImages.IMG_OBJS_INFO_TSK
+			)
+		);
 		
+		/*
 		action2 = new Action() {
 			public void run() {
 				showMessage("Action 2 executed");
@@ -276,6 +318,8 @@ public class VariableView extends ViewPart {
 		action2.setToolTipText("Action 2 tooltip");
 		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		*/
+		
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -285,24 +329,27 @@ public class VariableView extends ViewPart {
 		};
 	}
 
-	private void hookDoubleClickAction() {
+	private void hookDoubleClickAction()
+	{
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
 				doubleClickAction.run();
 			}
 		});
 	}
-	private void showMessage(String message) {
+	
+	private void showMessage(String message)
+	{
 		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"Sample View",
-			message);
+			viewer.getControl().getShell(),"Variables",message
+		);
 	}
 
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
-	public void setFocus() {
+	public void setFocus() 
+	{
 		viewer.getControl().setFocus();
 	}
 }

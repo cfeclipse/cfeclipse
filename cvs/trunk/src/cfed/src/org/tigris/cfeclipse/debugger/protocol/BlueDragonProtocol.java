@@ -33,6 +33,7 @@ import org.tigris.cfeclipse.debugger.core.UnknownCommandException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.StringTokenizer;
 import java.util.List;
@@ -51,7 +52,7 @@ public class BlueDragonProtocol extends DebugProtocol {
 	
 	protected DebugConnection dc;
 	
-	public BlueDragonProtocol(DebugSession ds) throws IOException
+	public BlueDragonProtocol(DebugSession ds) throws IOException, ConnectException
 	{
 		super(ds); 
 		dc = new DebugConnection(ds.getServer());
@@ -318,40 +319,5 @@ public class BlueDragonProtocol extends DebugProtocol {
 		{
     		ioe.printStackTrace(System.err);
 		}
-    }
-    
-    
-    
-    
-    
-    /**
-     * call to go to the next step, all protocols will need to support this
-     * @return
-     */
-    public String nextStep()
-    {
-    	return null;
-    }
-    
-    /**
-     * get a variable
-     * @param var
-     * @return
-     */
-    public String getVariable(String var)
-    {
-    	return null;
-    }
-    
-    /**
-     * set a break point
-     * @param file
-     * @param line
-     * @param column
-     * @return
-     */
-    public String setBreakPoint(String file, int line, int column)
-    {
-    	return null;
     }
 }

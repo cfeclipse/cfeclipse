@@ -25,6 +25,7 @@
 package org.tigris.cfeclipse.debugger.core;
 
 import java.lang.String;
+import java.net.ConnectException;
 import java.net.URL;
 import java.net.MalformedURLException;
 import org.tigris.cfeclipse.debugger.protocol.DebugProtocol;
@@ -55,9 +56,9 @@ public class DebugSession {
 	
 	/**
 	 * the default ctor. If they dont pass anything assume
-	 * its localhost bd sever stuff with no auth
+	 * its localhost bd sever stuff with no auth needed
 	 */
-    public DebugSession()
+    public DebugSession() throws ConnectException
     {
     	setServer("http://127.0.0.1:45000");	
     	setUsername("");
@@ -85,7 +86,18 @@ public class DebugSession {
      */
     public List issueCommand(DebugCommand command) throws UnknownCommandException
     {
-    	return debugprotocol.sendReceive(command);
+    	List responses = debugprotocol.sendReceive(command);
+    	//as a double check to make sure our session is correct
+    	//get the session id from the last command - this is a bit of a hack
+    	//to make the bd protocol work
+    	int size = responses.size()-1;
+    	if(size >= 0)
+    	{
+	    	DebugResponse dr = (DebugResponse)responses.get(size);
+			sessionid = (String)dr.getArgs().get("0");
+    	}
+    	
+    	return responses;
     }
     
 	/**

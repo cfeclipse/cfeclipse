@@ -26,6 +26,7 @@
 package org.tigris.cfeclipse.debugger.core;
 
 import java.net.*;
+import java.net.ConnectException;
 import java.io.*;
 
 /**
@@ -55,7 +56,7 @@ public class DebugConnection {
 	 * @param url
 	 * @throws IOException
 	 */
-	public DebugConnection(URL url) throws IOException
+	public DebugConnection(URL url) throws IOException, ConnectException
 	{
 		initConnection(url);
 	}
@@ -68,7 +69,7 @@ public class DebugConnection {
 	 * @param url
 	 * @throws IOException
 	 */
-	public void initConnection(URL url) throws IOException
+	public void initConnection(URL url) throws IOException, ConnectException
 	{
 		s = new Socket(url.getHost(),url.getPort());
 		out = new PrintWriter(s.getOutputStream());

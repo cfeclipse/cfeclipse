@@ -93,7 +93,6 @@ public abstract class DebugProtocol {
 	 */
 	public abstract void shutdown();
 	
-	
     /**
      * Translates the cfeclipse debug command into a sendable command for
      * the remote system, it should then communcate with the remote system and 
@@ -112,26 +111,4 @@ public abstract class DebugProtocol {
      * @throws DebugProtocolException if bad username password etc
      */
     abstract public String doLogin(String username, String password) throws DebugProtocolException;
-        
-    /**
-     * call to go to the next step, all protocols will need to support this
-     * @return
-     */
-    abstract public String nextStep();
-    
-    /**
-     * get a variable
-     * @param var
-     * @return
-     */
-    abstract public String getVariable(String var);
-    
-    /**
-     * set a break point
-     * @param file
-     * @param line
-     * @param column
-     * @return
-     */
-    abstract public String setBreakPoint(String file, int line, int column);
 }

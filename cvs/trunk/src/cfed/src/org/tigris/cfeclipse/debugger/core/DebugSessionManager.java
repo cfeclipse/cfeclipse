@@ -1,5 +1,5 @@
 /*
- * Created on Jun 12, 2004
+ * Created on Jun 19, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Rob Rohan
@@ -22,9 +22,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-
 package org.tigris.cfeclipse.debugger.core;
 
-public class DebugCommand extends DebugMessage {
+import java.util.List;
+
+import java.net.ConnectException;
+
+/**
+ * @author Rob
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ */
+public class DebugSessionManager {
+
+	private static DebugSession ds = null;
 	
+	private DebugSessionManager(){;}
+	
+	public static void initSession() throws ConnectException
+	{
+		System.err.println("Starting Debug Session.");
+		ds = new DebugSession();
+	}
+	
+	public static void shutdownSession()
+	{
+		System.err.println("Ending Debug Session.");
+		ds.end();
+		ds = null;
+	}
+	
+	public static synchronized List issueCommand(DebugCommand dc) throws UnknownCommandException
+	{
+		return ds.issueCommand(dc);
+	}
 }

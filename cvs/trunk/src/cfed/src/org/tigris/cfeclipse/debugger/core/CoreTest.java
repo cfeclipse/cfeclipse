@@ -34,21 +34,19 @@ public class CoreTest {
 	
 	public static void main(String args[])
 	{
-		DebugSession ds = new DebugSession();
-		
-		DebugCommand dc = new DebugCommand();
-		dc.setCommand("STEP");
-		
 		try
 		{
+			DebugSession ds = new DebugSession();
+			
+			DebugCommand dc = new DebugCommand();
+			dc.setCommand("STEP");
+				
 			ds.issueCommand(dc);
+			ds.end();
 		}
-		catch(UnknownCommandException uce)
+		catch(Exception uce)
 		{
 			uce.printStackTrace(System.err);
 		}
-		
-		ds.end();
 	}
-	
 }
