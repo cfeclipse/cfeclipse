@@ -64,6 +64,7 @@ public class DictionaryManager {
 		//when all is done this will actually load a dictionary
 		dic.loadDictionary("cfml.xml");
 		dic.loadDictionary("user.xml");
+		dic.loadDictionary("farcry.xml");
 		addDictionary(CFDIC,dic);
 		
 		dic = new HTMLSyntaxDictionary();
@@ -73,7 +74,7 @@ public class DictionaryManager {
 		dic = new JSSyntaxDictionary();
 		dic.loadDictionary("js.xml");
 		addDictionary(JSDIC,dic);
-		System.out.println("Dictionaries initialized");
+		//System.out.println("Dictionaries initialized");
 	}
 	
 	public static void initDictionaries(Shell shell) {

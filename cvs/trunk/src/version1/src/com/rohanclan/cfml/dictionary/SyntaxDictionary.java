@@ -69,6 +69,8 @@ public abstract class SyntaxDictionary {
 	
 	/** the file name for this dictionary */
 	protected String filename = null;
+	
+	
 	/** the base url for this dictionary (this will be set on
 	 * object creation)
 	 */
@@ -111,6 +113,7 @@ public abstract class SyntaxDictionary {
 	public void loadDictionary(String filename)
 	{
 		setFilename(filename);
+		
 		try
 		{
 			loadDictionary();
@@ -184,7 +187,7 @@ public abstract class SyntaxDictionary {
 		while(it.hasNext())
 		{
 		    name = (String)it.next();
-		    System.out.println("Added " + name);
+		    //System.out.println("Added " + name);
 			total.add(scopeVars.get(name));
 		}
 		
@@ -386,7 +389,7 @@ public abstract class SyntaxDictionary {
 				    while (i.hasNext()) {
 				        
 				        possible = (String)i.next();
-				        System.out.println("Checking " + possible + ":" + start);
+				        //System.out.println("Checking " + possible + ":" + start);
 				        if (possible.toUpperCase().startsWith(start.toUpperCase())) {
 				            val = new ScopeVar(possible);
 				            val.setHelp(((Component)item).getHelp());
@@ -412,7 +415,7 @@ public abstract class SyntaxDictionary {
 				if (start.endsWith("(") && possible.equalsIgnoreCase(start.substring(0,start.length()-1))) {
 					filterset.add(item);
 				}
-				else if (possible.toUpperCase().startsWith(start.toUpperCase()))
+				else if (possible.toUpperCase().startsWith(start.toUpperCase()) && !possible.equalsIgnoreCase(start))
 				{
 					//System.out.println(possible);
 					filterset.add(item);
@@ -448,9 +451,9 @@ public abstract class SyntaxDictionary {
 	private void loadDictionary() throws IOException, SAXException, ParserConfigurationException
 	{
 		//System.err.println("loading dictionary: " + filename);
-		if(filename == null) throw new IOException("Filename can not be null!");
+		if(this.filename == null) throw new IOException("Dictionary file name can not be null!");
 		
-		URLConnection urlcon = new URL(dictionaryBaseURL + "/" + filename).openConnection();
+		URLConnection urlcon = new URL(dictionaryBaseURL + "/" + this.filename).openConnection();
 		BufferedInputStream xml = new BufferedInputStream(
 			urlcon.getInputStream()
 		);
@@ -468,5 +471,6 @@ public abstract class SyntaxDictionary {
 		InputSource input = new InputSource(xml);
 		xmlReader.parse(input);
 	}
+	
 	
 }

@@ -98,7 +98,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
 		this.indentTagStrategy = new TagIndentStrategy(editor);
 		
-		tabWidth = preferenceManager.tabWidth();
+		//tabWidth = preferenceManager.tabWidth();
 		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
 		indentCFScriptStrategy.setIndentString(tabWidth,insertSpacesForTabs);
 		indentCFScriptStrategy.setDreamweaverCompatibility(preferenceManager.dreamweaverCompatibility());
@@ -585,7 +585,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	// This method gets called when the preference page is saved.
 	public void propertyChange(PropertyChangeEvent event)
     {
-		System.err.println("CFConfiguration property change listener notified." + event.getProperty());
+		System.out.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
     	
 		if(prop.equals("insightDelay")) {
