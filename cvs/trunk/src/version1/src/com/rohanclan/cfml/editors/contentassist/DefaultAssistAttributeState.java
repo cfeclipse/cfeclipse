@@ -27,8 +27,6 @@ package com.rohanclan.cfml.editors.contentassist;
 import org.eclipse.core.internal.utils.Assert;
 
 /**
- * TODO Provide class description 
- *
  * @author Oliver Tupman
  */
 public class DefaultAssistAttributeState extends DefaultAssistTagState
@@ -48,7 +46,6 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      */
     public DefaultAssistAttributeState() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     /**

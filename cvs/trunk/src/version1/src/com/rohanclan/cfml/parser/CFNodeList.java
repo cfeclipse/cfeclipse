@@ -27,8 +27,6 @@ package com.rohanclan.cfml.parser;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.rohanclan.cfml.parser.docitems.DocItem;
-
 /**
  * @author Oliver Tupman
  * 

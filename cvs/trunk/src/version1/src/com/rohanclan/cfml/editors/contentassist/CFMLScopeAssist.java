@@ -24,17 +24,21 @@
  */
 package com.rohanclan.cfml.editors.contentassist;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.dictionary.*;
+import com.rohanclan.cfml.dictionary.ScopeVar;
+import com.rohanclan.cfml.dictionary.SyntaxDictionary;
+import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import com.rohanclan.cfml.util.CFPluginImages;
-import com.sun.rsasign.p;
 
 /**
  * Provides CFML Scope Assist at the tag-insight level. So the if

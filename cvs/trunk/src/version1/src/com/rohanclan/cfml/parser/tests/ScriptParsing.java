@@ -153,8 +153,9 @@ public class ScriptParsing extends TestCase {
 	{
 		//SPLParser parser = null;
 		try {
-//			parser = new SPLParser(new java.io.FileInputStream(filename));
-			tempParser.ReInit(new java.io.FileInputStream(testFileDir + filename));
+			//parser = new SPLParser(new java.io.FileInputStream(filename));
+			//tempParser.ReInit(new java.io.FileInputStream(testFileDir + filename));
+			SPLParser.ReInit(new java.io.FileInputStream(testFileDir + filename));
 			
 		} catch(FileNotFoundException e)
 		{
@@ -165,7 +166,8 @@ public class ScriptParsing extends TestCase {
 		SimpleNode rootNode;
 		
 		try {
-			tempParser.CompilationUnit();
+			//tempParser.CompilationUnit();
+			SPLParser.CompilationUnit();
 			System.out.println("Hello world");
 			rootNode = (SimpleNode)tempParser.getDocumentRoot();
 			rootNode.dump("treeDump:");

@@ -24,23 +24,15 @@
  */
 package com.rohanclan.cfml.preferences;
 
-//import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-//import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.ui.IWorkbenchPreferencePage;
-//import org.eclipse.jface.preference.*;
-//import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
-import com.rohanclan.cfml.CFMLPlugin;
+import org.eclipse.ui.IWorkbenchPreferencePage;
 
-//import com.rohanclan.cfml.editors.ICFColorConstants;
+import com.rohanclan.cfml.CFMLPlugin;
 
 /**
  * @author Rob
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implements 
 	IWorkbenchPreferencePage, ICFMLPreferenceConstants {

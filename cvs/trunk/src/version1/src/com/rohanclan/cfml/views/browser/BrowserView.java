@@ -18,9 +18,11 @@
 package com.rohanclan.cfml.views.browser;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.part.*;
-import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.ui.part.ViewPart;
+
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 /**

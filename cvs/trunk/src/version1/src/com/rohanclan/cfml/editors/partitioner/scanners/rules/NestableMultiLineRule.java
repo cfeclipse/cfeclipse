@@ -24,8 +24,10 @@
  */
 package com.rohanclan.cfml.editors.partitioner.scanners.rules;
 
-import org.eclipse.jface.text.rules.*;
-import com.rohanclan.cfml.editors.partitioner.scanners.*;
+import org.eclipse.jface.text.rules.ICharacterScanner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.MultiLineRule;
+import org.eclipse.jface.text.rules.Token;
 
 
 /**

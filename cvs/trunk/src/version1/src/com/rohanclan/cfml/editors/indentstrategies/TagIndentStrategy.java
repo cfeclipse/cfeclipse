@@ -27,7 +27,6 @@ package com.rohanclan.cfml.editors.indentstrategies;
 //import java.util.HashMap;
 
 import org.eclipse.jface.text.BadLocationException;
-//import org.eclipse.jface.text.DefaultAutoIndentStrategy;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
 
@@ -36,9 +35,7 @@ import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
-//import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ICFDocument;
-import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 /**
  * This represents a tag-based auto-indent strategy. It not only

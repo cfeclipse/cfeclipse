@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.rohanclan.cfml.parser.docitems.TagItem;
-
 /**
  * Represents the current state of the parser.
  * 

@@ -70,8 +70,6 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 	
 	/** 
 	 * build all the cfscript keywords 
-	 *
-	 * TODO: these should probably be in the xml file... 
 	 */
 	protected static void buildScriptKeywordSyntax()
 	{
@@ -98,8 +96,6 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 	
 	/** 
 	 * build all the operators in the language 
-	 *
-	 * TODO: these should be in the xml file. 
 	 */
 	protected static void buildOperatorSyntax()
 	{

@@ -136,7 +136,6 @@ public class GetHelpAction implements IEditorActionDelegate {
 				theFullURL = urldest + keyword;
 				
 			} catch (BadLocationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

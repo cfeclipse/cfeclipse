@@ -24,25 +24,23 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
-import com.rohanclan.cfml.editors.CFMLEditor;
-import com.rohanclan.cfml.views.snips.SnipKeyCombos;
-import com.rohanclan.cfml.views.snips.SnipReader;
-import com.rohanclan.cfml.views.snips.SnipVarParser;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.jface.text.FindReplaceDocumentAdapter;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.TextSelection;
 
-import java.util.regex.*;
+import com.rohanclan.cfml.editors.CFMLEditor;
+import com.rohanclan.cfml.views.snips.SnipKeyCombos;
+import com.rohanclan.cfml.views.snips.SnipReader;
+import com.rohanclan.cfml.views.snips.SnipVarParser;
 
 /**
  * @author Stephen Milligan

@@ -37,8 +37,6 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 
 import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 /**
  * This is a property store for a project. It stores all of it's values within
@@ -373,58 +371,37 @@ public class ProjectPropertyStore implements IPreferenceStore {
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setDefault(java.lang.String, double)
      */
-    public void setDefault(String name, double value) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setDefault(String name, double value) {;}
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setDefault(java.lang.String, float)
      */
-    public void setDefault(String name, float value) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setDefault(String name, float value) {;}
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setDefault(java.lang.String, int)
      */
-    public void setDefault(String name, int value) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setDefault(String name, int value) {;}
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setDefault(java.lang.String, long)
      */
-    public void setDefault(String name, long value) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setDefault(String name, long value) {;}
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setDefault(java.lang.String, java.lang.String)
      */
-    public void setDefault(String name, String defaultObject) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setDefault(String name, String defaultObject) {;}
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setDefault(java.lang.String, boolean)
      */
-    public void setDefault(String name, boolean value) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setDefault(String name, boolean value) {;}
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setToDefault(java.lang.String)
      */
-    public void setToDefault(String name) {
-        // TODO Auto-generated method stub
-
-    }
+    public void setToDefault(String name) {;}
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#setValue(java.lang.String, double)

@@ -25,12 +25,9 @@
 package com.rohanclan.cfml.editors.contentassist;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
-import org.eclipse.jface.text.contentassist.IContentAssistant;
 
 /**
  * <p>

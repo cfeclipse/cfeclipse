@@ -24,8 +24,6 @@
  */
 package com.rohanclan.cfml.editors.contentassist;
 
-import org.eclipse.jface.text.contentassist.ICompletionProposal;
-
 import com.rohanclan.cfml.dictionary.Parameter;
 
 /**

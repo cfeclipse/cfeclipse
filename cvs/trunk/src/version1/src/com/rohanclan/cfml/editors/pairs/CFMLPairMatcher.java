@@ -36,9 +36,6 @@ import org.eclipse.jface.text.source.ICharacterPairMatcher;
 
 /**
  * @author Matt
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class CFMLPairMatcher implements ICharacterPairMatcher
 {

@@ -26,12 +26,9 @@ package com.rohanclan.cfml.editors.contentassist;
 
 
 import org.eclipse.core.internal.utils.Assert;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 
 /**
  * The CFML tag assistor.

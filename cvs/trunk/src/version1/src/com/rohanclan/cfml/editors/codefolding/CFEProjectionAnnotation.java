@@ -5,6 +5,9 @@
 package com.rohanclan.cfml.editors.codefolding;
 
 
+import org.eclipse.jface.text.source.IAnnotationPresentation;
+import org.eclipse.jface.text.source.ImageUtilities;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
@@ -12,12 +15,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.jface.resource.ImageDescriptor;
-import com.rohanclan.cfml.util.CFPluginImages;
 
-import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
-import org.eclipse.jface.text.source.IAnnotationPresentation;
-import org.eclipse.jface.text.source.ImageUtilities;
+import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
  * Annotation used to represent the projection of a master document onto a

@@ -67,10 +67,8 @@ public class GenericNewFileAction  implements IEditorActionDelegate{
 
     }
  
-    public void selectionChanged(IAction action, ISelection selection) {
-        // TODO Auto-generated method stub
-
-    }
+    public void selectionChanged(IAction action, ISelection selection) {;}
+    
     public boolean isCreated(){
         return this.isCreated;
     }

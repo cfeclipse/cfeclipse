@@ -110,8 +110,7 @@ public class CFScriptScanner extends RuleBasedScanner {
 		
 		//I think the reason this doesnt work as well as the <!-- type of comment
 		//is that the <! type is defined on the partition scanner where this is
-		//only here... javascript has the same problem 
-		//TODO: can the bad commment coloring be fixed?
+		//only here... javascript has the same problem
 		rules.add(new MultiLineRule("/*", "*/", cfcomment));
 		rules.add(new EndOfLineRule("//", cfcomment));
 		

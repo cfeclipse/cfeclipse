@@ -27,18 +27,16 @@ package com.rohanclan.cfml.editors;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.rules.DefaultPartitioner;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
-import com.rohanclan.cfml.editors.partitioner.*;
+import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**

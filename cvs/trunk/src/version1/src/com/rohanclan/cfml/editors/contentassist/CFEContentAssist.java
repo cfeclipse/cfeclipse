@@ -45,8 +45,6 @@ import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.ScopeVar;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.dictionary.Value;
-import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.util.CFPluginImages;
  
 /**

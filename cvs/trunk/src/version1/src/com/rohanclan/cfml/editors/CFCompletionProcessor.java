@@ -24,45 +24,43 @@
  */
 package com.rohanclan.cfml.editors;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+import java.util.regex.Pattern;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.TextPresentation;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
+import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
-import org.eclipse.jface.text.IDocument;
-import com.rohanclan.cfml.util.CFPluginImages;
-
-import java.util.Iterator;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.regex.*;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.dictionary.Function;
+import com.rohanclan.cfml.dictionary.Parameter;
+import com.rohanclan.cfml.dictionary.ScopeVar;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
-import org.eclipse.jface.text.contentassist.ContentAssistant;
-
-import com.rohanclan.cfml.dictionary.*;
+import com.rohanclan.cfml.dictionary.Tag;
+import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-//import org.eclipse.jface.text.ITextSelection;
-
-import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
-//import org.eclipse.jface.text.contentassist.IContextInformationValidator;
-import org.eclipse.jface.text.TextPresentation;
-import org.eclipse.ui.IPropertyListener;
+import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
  * @author Rob

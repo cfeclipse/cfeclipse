@@ -26,7 +26,6 @@
 package com.rohanclan.cfml.parser;
 
 import java.io.StringReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,37 +34,36 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.xpath.compiler.Compiler;
-import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-//import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.parser.cfmltagitems.*;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagCase;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagCatch;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagDefaultCase;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagElse;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagElseIf;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagFunction;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagIf;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagInvokeArgument;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagProperty;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagQueryParam;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagSet;
 import com.rohanclan.cfml.parser.cfscript.ParseException;
 import com.rohanclan.cfml.parser.cfscript.SPLParser;
 import com.rohanclan.cfml.parser.cfscript.SimpleNode;
-import com.rohanclan.cfml.parser.cfscript.TokenMgrError;
 import com.rohanclan.cfml.parser.docitems.AttributeItem;
 import com.rohanclan.cfml.parser.docitems.CfmlCustomTag;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 import com.rohanclan.cfml.parser.docitems.TagItem;
-
-//import com.rohanclan.cfml.util.Debug;
-
-import com.rohanclan.cfml.parser.ParseError;
-import com.rohanclan.cfml.parser.ParseMessage;
 
 /*
  Nasty, bastard test data for the parser:
@@ -771,8 +769,6 @@ public class CFParser {
 	 * @param matches - the matches found previously
 	 * @return a document tree.
 	 * 
-	 */
-	/*
 	 * The document tree is created using two things: 
 	 * 1) A match stack.
 	 * 2) A document tree

@@ -24,13 +24,18 @@
  */
 package com.rohanclan.cfml.editors;
 
-//import org.eclipse.jface.text.AbstractDocument;
-
-//import java.util.Iterator;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectNature;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
@@ -46,22 +51,6 @@ import com.rohanclan.cfml.parser.CommentParser;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.util.ResourceUtils;
-import com.rohanclan.cfml.parser.docitems.TagItem;
-
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectNature;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProduct;
-import org.eclipse.core.runtime.QualifiedName;
-//import org.eclipse.jface.text.IDocument; 
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
-import com.rohanclan.cfml.parser.docitems.TagItem;
-
-//import org.eclipse.ui.IEditorPart;
 
 /**
  * <p>

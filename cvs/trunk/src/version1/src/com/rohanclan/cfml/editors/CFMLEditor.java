@@ -26,68 +26,61 @@ package com.rohanclan.cfml.editors;
 
 import java.util.LinkedList;
 
-import org.eclipse.swt.widgets.Composite;
-
-import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
-import com.rohanclan.cfml.editors.actions.JumpToDocPos;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
-
-import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
-import org.eclipse.ui.texteditor.TextOperationAction;
-import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.source.*;
-import org.eclipse.jface.text.source.projection.*;
+import org.eclipse.jface.text.source.CompositeRuler;
+import org.eclipse.jface.text.source.IChangeRulerColumn;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.IVerticalRuler;
+import org.eclipse.jface.text.source.LineNumberRulerColumn;
+import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.text.source.projection.ProjectionSupport;
+import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
-
 import org.eclipse.ui.internal.editors.text.EditorsPlugin;
-import org.eclipse.swt.dnd.*;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
+import org.eclipse.ui.texteditor.TextOperationAction;
 
-
+import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
+import com.rohanclan.cfml.editors.actions.JumpToDocPos;
 import com.rohanclan.cfml.editors.actions.RTrimAction;
+import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
+import com.rohanclan.cfml.editors.decoration.DecorationSupport;
+import com.rohanclan.cfml.editors.dnd.CFEDragDropListener;
+import com.rohanclan.cfml.editors.dnd.SelectionCursorListener;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
-import com.rohanclan.cfml.editors.decoration.DecorationSupport;
-import com.rohanclan.cfml.editors.dnd.*;
-
-
-import org.eclipse.jface.action.Action;
-
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
-
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
-import org.eclipse.swt.SWT;
-
-import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
-
-
-
-import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-
-
-import org.eclipse.core.filebuffers.FileBuffers;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.resources.IFile;
 
 /**
  * @author Rob
@@ -130,14 +123,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void doSave(IProgressMonitor monitor) {
-		//TODO: Once we get the document outline going, we can update it from
-		// here.
 		//On save parsing should apparently go into a builder.
-
-	
-	    
-	    
-	    
 	    if (getPreferenceStore().getBoolean("rTrimOnSave")) {
 	        
 	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(false);
@@ -393,14 +379,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 			String n = cti.getName();
 			if (n.equalsIgnoreCase("cfinclude") || n.equalsIgnoreCase("cfmodule")) {
 				//this is a bit hokey - there has to be a way to load the
-				// action
-				//in the xml file then just call it here...
-				//TODO
-
+				//action in the xml file then just call it here...
 				gfa.setActiveEditor(null,getSite().getPage().getActiveEditor());
-			
 				
-							
 				Action ack = new Action(
 					"Open/Create File",
 					CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)

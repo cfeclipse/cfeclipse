@@ -25,11 +25,7 @@
 package com.rohanclan.cfml.editors.contentassist;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
-
 
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.ITextViewer;
@@ -210,7 +206,6 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getContextInformationAutoActivationCharacters()
      */
     public char[] getContextInformationAutoActivationCharacters() {
-        // TODO Auto-generated method stub
         return null;
         //return new char[] {',', '('};
     }
@@ -219,7 +214,6 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getErrorMessage()
      */
     public String getErrorMessage() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -227,7 +221,6 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getContextInformationValidator()
      */
     public IContextInformationValidator getContextInformationValidator() {
-        // TODO Auto-generated method stub
         return null;
     }
 

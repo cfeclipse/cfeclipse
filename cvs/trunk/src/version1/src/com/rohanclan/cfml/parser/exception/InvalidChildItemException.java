@@ -26,9 +26,6 @@ package com.rohanclan.cfml.parser.exception;
 
 /**
  * @author Oliver Tupman
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class InvalidChildItemException extends ParseException {
 	/**
@@ -36,7 +33,6 @@ public class InvalidChildItemException extends ParseException {
 	 */
 	public InvalidChildItemException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param arg0

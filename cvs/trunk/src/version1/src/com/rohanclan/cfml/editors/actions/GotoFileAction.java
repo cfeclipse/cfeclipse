@@ -26,18 +26,10 @@ package com.rohanclan.cfml.editors.actions;
 
 import java.util.Iterator;
 
-//import org.eclipse.core.resources.IFile;
-//import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
-//import org.eclipse.core.resources.IWorkspace;
-//import org.eclipse.core.resources.IWorkspaceRoot;
-//import org.eclipse.core.resources.ResourcesPlugin;
-//import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -46,22 +38,13 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
-//import org.eclipse.ui.IWorkbenchPage;
-//import org.eclipse.ui.PartInitException;
-//import org.eclipse.ui.PlatformUI;
-//import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-//import com.rohanclan.cfml.CFMLPlugin;
-//import com.rohanclan.cfml.editors.CFMLEditor;
-//import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-//import com.rohanclan.cfml.parser.DocItem;
-//import com.rohanclan.cfml.parser.TagItem;
 
 /**
  * @author OLIVER
@@ -80,7 +63,6 @@ public class GotoFileAction implements IEditorActionDelegate {
 	 */
 	public GotoFileAction() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -136,7 +118,7 @@ public class GotoFileAction implements IEditorActionDelegate {
 							return;
 					}
 						
-					String template = currItem.getAttribute("template");
+					String template = currItem.getAttributeValue("template");
 					IEditorPart iep = this.editor.getSite().getPage().getActiveEditor();
 					ITextEditor editor = (ITextEditor)iep;
 					
@@ -159,7 +141,7 @@ public class GotoFileAction implements IEditorActionDelegate {
 						currentpath += template;
 					}
 					
-// System.out.println("about to open the file");
+						// System.out.println("about to open the file");
 						GenericOpenFileAction openFileAction;
 						openFileAction = new GenericOpenFileAction();
 						openFileAction.setFilename(currentpath);

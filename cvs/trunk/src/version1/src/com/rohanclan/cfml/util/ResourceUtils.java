@@ -26,7 +26,6 @@ package com.rohanclan.cfml.util;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IFile;
@@ -37,9 +36,6 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-
-import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.dictionary.Value;
 
 /**
  * This is a helper class to provide various useful methods that related to Eclipse

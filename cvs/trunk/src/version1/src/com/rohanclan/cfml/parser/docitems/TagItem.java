@@ -24,15 +24,12 @@
  */
 package com.rohanclan.cfml.parser.docitems;
 
-import com.rohanclan.cfml.parser.ParseError;
-import com.rohanclan.cfml.parser.docitems.DocItem;
-import com.rohanclan.cfml.parser.exception.*;
-import com.rohanclan.cfml.dictionary.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
+
+import com.rohanclan.cfml.dictionary.Tag;
+import com.rohanclan.cfml.parser.ParseError;
 
 /**
  * 

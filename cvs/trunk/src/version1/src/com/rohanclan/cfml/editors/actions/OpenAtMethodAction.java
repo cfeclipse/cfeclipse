@@ -28,33 +28,27 @@ import java.util.Iterator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
-
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.jface.action.IAction;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagFunction;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-//import com.rohanclan.cfml.wizards.NewCfmlWizard;
-
-import org.eclipse.core.resources.ResourcesPlugin;
 
 /**
  * @author Rob
@@ -184,7 +178,7 @@ public class OpenAtMethodAction implements IEditorActionDelegate {
 			{
 				CfmlTagItem item = (CfmlTagItem)methodIter.next();
 				
-				String methodName = item.getAttribute("name");
+				String methodName = item.getAttributeValue("name");
 				if(methodName.toLowerCase().equals(this.methodName.toLowerCase()))
 				{
 					/*

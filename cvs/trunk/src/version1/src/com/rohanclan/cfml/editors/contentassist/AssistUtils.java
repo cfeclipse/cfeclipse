@@ -29,8 +29,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 
-import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-
 /**
  *
  * This class provides a few helper utilities for the content assist code.

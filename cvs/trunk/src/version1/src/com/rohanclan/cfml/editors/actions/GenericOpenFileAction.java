@@ -26,25 +26,20 @@ package com.rohanclan.cfml.editors.actions;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
-
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.jface.action.IAction;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
-//import com.rohanclan.cfml.wizards.NewCfmlWizard;
-
-import org.eclipse.core.resources.ResourcesPlugin;
 
 /**
  * @author Rob

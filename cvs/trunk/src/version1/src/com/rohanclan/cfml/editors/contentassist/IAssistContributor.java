@@ -30,7 +30,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  * <p>
  * All clients that wish to provide assist for documents should implement
  * this interface. Plugins should register their contributors with the
- * CFE core (please see XXX for registration information).
+ * CFE core (please see ... for registration information).
  * </p><br/>
  * The CFE core assistors compute the assist state information that is
  * kept in a class derived from AssistState. The assistor then calls each
