@@ -46,6 +46,8 @@ import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import com.rohanclan.cfml.parser.cfscript.ParseException;
+
 //import com.rohanclan.cfml.CFMLPlugin;
 //import com.rohanclan.cfml.parser.CFParser;
 //import com.rohanclan.cfml.parser.CFParser;
@@ -58,7 +60,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 	/* public static void setLastFilename(IPath newFilename)
 	{
 		lastFilename = newFilename;
-	//System.out.println(
+		System.out.println(
 			"CFDocumentProvider::setLastFilename() - <b>Last</b> filename is set to " 
 			+ newFilename.toString()
 		);
