@@ -378,7 +378,7 @@
 	<!-- enclose in double quotes -->
       <command
             name="Double Quotes"
-            description="Surround with pound/number signs"
+            description="Surround with double quotes"
             category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
       </command>
@@ -615,13 +615,13 @@
       <page
             class="com.rohanclan.cfml.preferences.CFMLColorsPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="CFML Colors"
+            name="CFML Colours"
             id="com.rohanclan.cfml.preferences.CFMLColorsPreferencePage">
       </page>
        <page
             class="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="HTML Colors"
+            name="HTML Colours"
             id="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage">
       </page>
       <page
