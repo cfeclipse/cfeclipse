@@ -1806,7 +1806,7 @@
 			cfflush   
 				interval = "integer number of bytes"
 		-->
-		<tag name="flush" creator="3" single="false" xmlstyle="false">
+		<tag name="flush" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Flushes currently available data to the client.
 			]]></help>
@@ -1942,6 +1942,16 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter required="false" type="String" name="method">
+				<help><![CDATA[
+					 The HTTP method for sending data to the action URL.
+					 Default is get.
+				]]></help>
+				<values>
+					<value option="get"/>
+					<value option="post"/>
+				</values>
+			</parameter>
 		</tag>
 		
 		<!-- 
@@ -1999,7 +2009,7 @@
 				retryCount = "number"   
 				stopOnError = "Yes" or "No"
 		-->
-		<tag name="ftp" creator="3" single="false" xmlstyle="false">
+		<tag name="ftp" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Lets users implement File Transfer Protocol (FTP) operations.
 			]]></help>
@@ -2160,6 +2170,12 @@
 			<parameter name="new" type="String" required="false">
 				<help><![CDATA[
 					New name of file or directory on the remote server
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help><![CDATA[
+					Query name of directory listing.
 				]]></help>
 				<values/>
 			</parameter>

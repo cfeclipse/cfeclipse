@@ -1463,7 +1463,10 @@
 					 The HTTP method for sending data to the action URL.
 					 Default is get.
 				]]></help>
-<values/>
+<values>
+	<values option="get"/>
+	<values option="post"/>
+</values>
 </parameter>
 <parameter required="false" type="String" name="name">
 <help><![CDATA[
