@@ -107,6 +107,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    e.printStackTrace();
 			}
 			
+			
 			if (sequence.length() > 0) {
 			    
 			    String[] stringArray = sequence.split("\\*");
