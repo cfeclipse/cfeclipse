@@ -212,23 +212,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	
 	private boolean tagIsSingle(IDocument doc, DocumentCommand docCommand, String tagName) {
 		boolean retval = true;
-		/*
-		HashMap singleTags = new HashMap();
-		
-		singleTags.put("cfbreak", "cfbreak");
-		singleTags.put("cfset", "cfset");
-		singleTags.put("cfreturn", "cfreturn");
-		singleTags.put("cfelse", "cfelse");
-		singleTags.put("cfelseif", "cfelseif");
-		singleTags.put("cfargument", "cfargument");
-		singleTags.put("cfqueryparam", "cfqueryparam");
-		singleTags.put("cfhttpparam", "cfhttpparam");
-		*/
+
 		boolean cftag = tagName.startsWith("cf");
-		//
-		// Comment the following lines to use the funky content assist
-		if(cftag) 
-			tagName = tagName.substring(2);
 		//
 		// End of block to comment out
 		//
