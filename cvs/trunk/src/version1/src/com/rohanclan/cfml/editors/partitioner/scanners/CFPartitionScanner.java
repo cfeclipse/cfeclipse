@@ -40,14 +40,11 @@ import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import com.rohanclan.cfml.dictionary.Tag;
-import com.rohanclan.cfml.editors.actions.CFScriptAction;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.*;
-import com.rohanclan.cfml.editors.partitioner.TagData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 import java.util.Iterator;
 
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
@@ -88,19 +85,11 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	
 	
 	
-	private Stack partitionStack = new Stack();
-	private int lastPartitionStart = -1;
 	
 	public CFPartitionScanner() {
 		IToken doctype	 	= new Token(DOCTYPE);
 		IToken cfComment 	= new Token(CF_COMMENT);
 		IToken htmComment 	= new Token(HTM_COMMENT);
-		//IToken cfdefault 	= new Token(CF_DEFAULT);
-		IToken cfscript		= new Token(CF_SCRIPT);
-		IToken cfexpression		= new Token(CF_EXPRESSION);
-		IToken jscript 		= new Token(J_SCRIPT);
-		IToken css 			= new Token(CSS);
-		IToken sql 			= new Token(SQL);
 		IToken unktag		= new Token(UNK_TAG);
 		
 		
@@ -237,7 +226,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	}
 	
 	public int getOffset() {
-	    return fOffset;
+	    return this.fOffset;
 	}
 
 	
@@ -253,15 +242,15 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			 * there are some rules defined we run through
 			 * the rules and look for a token.
 			 */
-			if (fContentType == null || fRules == null) {
+			if (this.fContentType == null || this.fRules == null) {
 				IToken token;
 				// Keep running until we find something.
 				while (true) {
 					// Reinitialize the token and column markers.
-					fTokenOffset= fOffset;
-					fColumn= UNDEFINED;
+				    this.fTokenOffset= this.fOffset;
+				    this.fColumn= UNDEFINED;
 					
-					if (fRules != null) {
+					if (this.fRules != null) {
 
 							
 						int c = -1;
@@ -278,18 +267,17 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 						        return Token.EOF;
 						    }
 						    if (c != '<') {
-						        return fDefaultReturnToken;
+						        return this.fDefaultReturnToken;
 						    }
 						    break;
 						}
 						unread();
 						 
-						for (int i= 0; i < fRules.length; i++) {
+						for (int i= 0; i < this.fRules.length; i++) {
 							// Get the token for the current rule.
-							token= (fRules[i].evaluate(this));
+							token= (this.fRules[i].evaluate(this));
 							// Check if the rule found anything
 							if (!token.isUndefined()) {
-								
 							    // Return the token.
 							    return token;
 							}
@@ -299,53 +287,52 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					// If we got to here, none of the rules found a token.
 					
 					// Check if we're at the end of the file. If so, return the relevant token.
-					if (read() == EOF)
+					if (read() == EOF) {
 						return Token.EOF;
-					else {
-						
-					  return fDefaultReturnToken;
 					}
+					return this.fDefaultReturnToken;
+					
 				}
 			}
 			
 			// If we get to here we're already inside a partition
 			
 			// re-initialize column constraint
-			fColumn= UNDEFINED;
+			this.fColumn= UNDEFINED;
 			// Check if we are inside a partition.
-			boolean resume= (fPartitionOffset > -1 && fPartitionOffset < fOffset);
+			boolean resume= (this.fPartitionOffset > -1 && this.fPartitionOffset < this.fOffset);
 			// Set the token offset according to whether we're in a partition or not.
-			fTokenOffset= resume ? fPartitionOffset : fOffset;
+			this.fTokenOffset= resume ? this.fPartitionOffset : this.fOffset;
 			
 			
 			IPredicateRule rule;
 			IToken token;
 			// Run through all the rules looking for a match.
-			for (int i= 0; i < fRules.length; i++) {
-				rule= (IPredicateRule) fRules[i];
+			for (int i= 0; i < this.fRules.length; i++) {
+				rule= (IPredicateRule) this.fRules[i];
 				/* 
 				 * Get the success token for this rule so we can 
 				 * check if it matches the current content type.
 				 */
 				token = rule.getSuccessToken();
 				//System.out.println("Checking if content type - " + fContentType + " matches " + token.getData());
-				if (fContentType.equals(token.getData().toString())
-				        || fContentType.equals(token.getData().toString() + "_begin")
-				        || fContentType.equals(token.getData().toString() + "_end")
-				        || fContentType.equals(token.getData().toString() + "_attribs")) {
+				if (this.fContentType.equals(token.getData().toString())
+				        || this.fContentType.equals(token.getData().toString() + "_begin")
+				        || this.fContentType.equals(token.getData().toString() + "_end")
+				        || this.fContentType.equals(token.getData().toString() + "_attribs")) {
 					// The content type matches, so we want to run the resume on the rule.
 					token= rule.evaluate(this, resume);
 					if (!token.isUndefined()) {
-						fContentType= null;
+					    this.fContentType= null;
 						return token;
 					}
 				}
 			}
 
 			// haven't found any rule for this type of partition
-			fContentType= null;
+			this.fContentType= null;
 			if (resume) {
-				fOffset= fPartitionOffset;
+			    this.fOffset= this.fPartitionOffset;
 			}
 			return super.nextToken();
 		}

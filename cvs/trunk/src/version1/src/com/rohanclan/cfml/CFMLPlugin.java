@@ -25,9 +25,11 @@
 package com.rohanclan.cfml;
 
 import java.io.File;
+import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -135,6 +137,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			+ "/properties.ini"
 		); */
 		
+		PropertyConfigurator.configure(CFMLPlugin.getDefault().getBundle().getEntry("/lib/log4j.properties"));
 		this.propertyStore = new PreferenceStore(
 			CFMLPlugin.getDefault().getStateLocation().toString()
 			+ "/properties.ini"

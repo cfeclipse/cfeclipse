@@ -11,6 +11,9 @@
       <library name="cfml.jar">
          <export name="*"/>
       </library>
+      <library name="lib/log4j-1.2.9.jar">
+         <export name="*"/>
+      </library>
    </runtime>
    
    <requires>

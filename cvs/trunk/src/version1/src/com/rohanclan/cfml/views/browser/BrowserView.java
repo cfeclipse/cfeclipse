@@ -71,7 +71,7 @@ public class BrowserView extends ViewPart {
 			    container = new Composite(folder,SWT.NONE);
 			    item.setControl(container);
 			    helpInstance = new CFBrowser(container,this);
-			    helpInstance.browser.setUrl("http://www.cfdocs.org");
+			    helpInstance.browser.setUrl("http://cfdocs.org/cfeclipse");
 			    
 			    setFocus();
 		    }

@@ -24,6 +24,9 @@
  */
 package com.rohanclan.cfml.editors;
 
+import org.apache.log4j.Logger;
+
+
 //import java.util.Iterator;
 import java.text.MessageFormat;
 import java.util.Iterator;
@@ -116,6 +119,11 @@ import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
  */
 public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		IPropertyChangeListener {
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(CFMLEditor.class);
+    
 
     private final boolean DEBUG = DebugSettings.EDITORS;
     
@@ -237,7 +245,11 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	}
 
 	public void createPartControl(Composite parent) {
+	    
+	    
+
 		//this.parent = parent;
+	    
 		super.createPartControl(parent);
 		this.setBackgroundColor();
 		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
@@ -258,7 +270,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning");
 		this.fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
 			public IInformationControl createInformationControl(Shell shell) {
-				return new DefaultInformationControl(shell);
+
+                IInformationControl returnIInformationControl = new DefaultInformationControl(
+                        shell);
+				return returnIInformationControl;
 			}
 		});
 		this.fProjectionSupport.install();
@@ -309,9 +324,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			}
 			*/
 		} catch (Exception e) {
+            
+
 			e.printStackTrace();
 		}
-
 	}
 
 	public IVerticalRuler verticalRuler() {
