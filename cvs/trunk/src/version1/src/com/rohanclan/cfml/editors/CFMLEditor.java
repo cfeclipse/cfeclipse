@@ -370,9 +370,17 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			//ok got our tag (or null)
 			int startpos = sel.getOffset();
 			ITypedRegion[] partitioning = cfd.getDocumentPartitioner().computePartitioning(startpos, 1); 
-			
-			Action act = new Action("Partition Type: "
-					+ partitioning[0].getType(), null) {
+
+			Action act = new Action("Partition type: "
+					+ partitioning[0].getType()
+					, null) {
+				public void run() {
+						// Do Nothing
+				}
+			};
+			menu.add(act);
+			act = new Action("Next character offset: "
+					+ sel.getOffset(), null) {
 				public void run() {
 						// Do Nothing
 				}

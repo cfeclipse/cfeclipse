@@ -320,13 +320,20 @@ public class CFContentAssist extends CFEContentAssist{
 	            CFPartitionScanner.CF_START_TAG_BEGIN,
 	            CFPartitionScanner.CF_START_TAG_END,
 	            CFPartitionScanner.CF_TAG_ATTRIBS,
-	            CFPartitionScanner.FORM_TAG, 
+	            CFPartitionScanner.FORM_END_TAG,
+	            CFPartitionScanner.FORM_START_TAG_BEGIN,
+	            CFPartitionScanner.FORM_START_TAG_END,
 	            CFPartitionScanner.CSS, 
 	            CFPartitionScanner.SQL,
-	            CFPartitionScanner.TABLE_TAG,
+	            CFPartitionScanner.TABLE_END_TAG,
+	            CFPartitionScanner.TABLE_START_TAG_BEGIN,
+	            CFPartitionScanner.TABLE_START_TAG_END,
 	            CFPartitionScanner.UNK_TAG,
 	            CFPartitionScanner.J_SCRIPT,
-	            CFPartitionScanner.HTM_TAG,
+	            CFPartitionScanner.HTM_END_TAG,
+	            CFPartitionScanner.HTM_START_TAG_BEGIN,
+	            CFPartitionScanner.HTM_START_TAG_END,
+	            CFPartitionScanner.HTM_TAG_ATTRIBS,
 	            IDocument.DEFAULT_CONTENT_TYPE};
 	    
 	    return AssistUtils.isInCorrectPartitionTypes(state, partitions);

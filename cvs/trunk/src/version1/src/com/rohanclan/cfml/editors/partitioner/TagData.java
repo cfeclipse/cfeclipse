@@ -1,7 +1,7 @@
 /* 
- * $Id: TagData.java,v 1.1 2005-01-09 02:06:33 smilligan Exp $
- * $Revision: 1.1 $
- * $Date: 2005-01-09 02:06:33 $
+ * $Id: TagData.java,v 1.2 2005-01-19 02:50:11 smilligan Exp $
+ * $Revision: 1.2 $
+ * $Date: 2005-01-19 02:50:11 $
  * 
  * Created Jan 4, 2005 10:51:03 PM
  *
@@ -29,14 +29,12 @@
  */
 package com.rohanclan.cfml.editors.partitioner;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TagData {
 
@@ -155,10 +153,12 @@ public class TagData {
                 throw new Exception(
                         "Data length less than 3 characters for tag: " + fData);
             }
-            if (fData.charAt(2) == '/') {
+            if (fData.charAt(1) == '/') {
                 isCloser = true;
+                fStartPartitionEnd = fData.length();
                 return;
             }
+            fStartPartitionEnd = fData.length();
             // find out where the name ends
             for (int i = 0; i < fData.length(); i++) {
                 if ((int) fData.charAt(i) <= 32 
@@ -169,11 +169,14 @@ public class TagData {
                 }
             }
             // find out where the mid part ends
-            if (fData.charAt(fData.length() - 1) == '/') {
+            if (fData.charAt(fData.length() - 2) == '/') {
                 fMidPartitionEnd = fData.length() - 2;
-            } else {
+            } else if (fData.charAt(fData.length() - 1) == '>') {
                 fMidPartitionEnd = fData.length() - 1;
+            } else {
+                fMidPartitionEnd = fData.length();
             }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -195,4 +198,7 @@ public class TagData {
  * CVS LOG ====================================================================
  * 
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/01/09 02:06:33  smilligan
+ * First commit of rewritten partitioner.
+ *
  */

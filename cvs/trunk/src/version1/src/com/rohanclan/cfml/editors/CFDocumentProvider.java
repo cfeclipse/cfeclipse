@@ -75,7 +75,10 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		if (document != null) {
 			IDocumentPartitioner partitioner = new CFEDefaultPartitioner(
 					new CFPartitionScanner(), new String[] {
-							CFPartitionScanner.HTM_TAG,
+							CFPartitionScanner.HTM_END_TAG,
+							CFPartitionScanner.HTM_TAG_ATTRIBS,
+							CFPartitionScanner.HTM_START_TAG_BEGIN,
+							CFPartitionScanner.HTM_START_TAG_END,
 							CFPartitionScanner.CF_COMMENT,
 							CFPartitionScanner.HTM_COMMENT,
 							CFPartitionScanner.DOCTYPE,
@@ -88,8 +91,13 @@ public class CFDocumentProvider extends FileDocumentProvider {
 							CFPartitionScanner.CSS,
 							CFPartitionScanner.SQL,
 							CFPartitionScanner.UNK_TAG,
-							CFPartitionScanner.FORM_TAG,
-							CFPartitionScanner.TABLE_TAG });
+							CFPartitionScanner.FORM_END_TAG,
+							CFPartitionScanner.FORM_START_TAG_BEGIN,
+							CFPartitionScanner.FORM_START_TAG_END,
+							CFPartitionScanner.TABLE_END_TAG,
+							CFPartitionScanner.TABLE_START_TAG_BEGIN,
+							CFPartitionScanner.TABLE_START_TAG_END
+							});
 
 			partitioner.connect(document);
 

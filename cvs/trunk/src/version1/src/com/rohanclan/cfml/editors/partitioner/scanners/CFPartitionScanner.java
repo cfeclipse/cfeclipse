@@ -55,16 +55,19 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String DOCTYPE	 	= "__doctype";
 	public final static String CF_COMMENT		= "__cf_comment";
 	public final static String HTM_COMMENT 	= "__htm_comment";
-	public final static String CF_START_TAG		= "__cf_start_tag";
+	public final static String CF_START_TAG = "__cf_start_tag";
 	public final static String CF_START_TAG_BEGIN		= "__cf_start_tag_begin";
 	public final static String CF_START_TAG_END		= "__cf_start_tag_end";
 	public final static String CF_TAG_ATTRIBS		= "__cf_tag_attribs";
-	public final static String HTM_TAG_ATTRIBS		= "__cf_tag_attribs";
 	public final static String CF_SET_STATEMENT = "__cf_set_statment";
 	public final static String CF_RETURN_STATEMENT = "__cf_return_statement";
 	public final static String CF_BOOLEAN_STATEMENT = "__cf_boolean_statement";
 	public final static String CF_END_TAG		= "__cf_end_tag";
-	public final static String HTM_TAG 		= "__html_tag";
+	public final static String HTM_START_TAG 		= "__htm_start_tag";
+	public final static String HTM_END_TAG 		= "__htm_end_tag";
+	public final static String HTM_START_TAG_BEGIN		= "__htm_start_tag_begin";
+	public final static String HTM_START_TAG_END		= "__htm_start_tag_end";
+	public final static String HTM_TAG_ATTRIBS		= "__htm_tag_attribs";
 	public final static String CF_SCRIPT		= "__cf_script";
 	public final static String CF_EXPRESSION		= "__cf_expression";
 	public final static String J_SCRIPT		= "__jscript";
@@ -72,8 +75,16 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String SQL		= "__sql";
 	public final static String UNK_TAG		= "__unk_tag";
 	//form and table
-	public final static String FORM_TAG		= "__form_tag";
-	public final static String TABLE_TAG		= "__table_tag";
+	public final static String FORM_END_TAG		= "__form_end_tag";
+	public final static String FORM_START_TAG		= "__form_start_tag";
+	public final static String FORM_START_TAG_BEGIN		= "__form_start_tag_begin";
+	public final static String FORM_START_TAG_END		= "__form_start_tag_end";
+	public final static String TABLE_END_TAG		= "__table_end_tag";
+	public final static String TABLE_START_TAG		= "__table_start_tag";
+	public final static String TABLE_START_TAG_BEGIN		= "__table_start_tag_begin";
+	public final static String TABLE_START_TAG_END		= "__table_start_tag_end";
+	
+	
 	
 	private Stack partitionStack = new Stack();
 	private int lastPartitionStart = -1;
@@ -171,7 +182,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			
 			//this is going to be used to tell if we need to add a form, table,
 			//or normal tag for the html tags
-			String thisTokenType = HTM_TAG;
+			String startTokenType = HTM_START_TAG;
+			String endTokenType = HTM_END_TAG;
 			
 			//loop over all the tags in the html dictionary and try to set the 
 			//partition to the correct type
@@ -185,20 +197,23 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					
 					//colour form and table tags differently...
 					if(tg.isTableTag()) {	
-					    thisTokenType = TABLE_TAG; 
+					    startTokenType = TABLE_START_TAG;
+					    endTokenType = TABLE_END_TAG; 
 					}
 					else if(tg.isFormTag()) { 
-					    thisTokenType = FORM_TAG; 
+					    startTokenType = FORM_START_TAG;
+					    endTokenType = FORM_END_TAG; 
 					}
 					else { 
-					    thisTokenType = HTM_TAG; 
+					    startTokenType = HTM_START_TAG; 
+					    endTokenType = HTM_END_TAG;
 					}
 					
-					rules.add(new NamedTagRule("<" + ename,">", thisTokenType, HTM_TAG_ATTRIBS));
+					rules.add(new NamedTagRule("<" + ename,">", startTokenType, HTM_TAG_ATTRIBS));
 					//if this is supposed to have an end tag add it too
 					if(!tg.isSingle())
 					{	
-						rules.add(new NamedTagRule("</" + ename,">", thisTokenType, HTM_TAG_ATTRIBS));
+						rules.add(new NamedTagRule("</" + ename,">", endTokenType, endTokenType));
 					}
 				
 			}
@@ -218,37 +233,54 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		setPredicateRules(rulearry);
 	}
 	
+	public int getOffset() {
+	    return fOffset;
+	}
+	/*
+	public IToken getDefaultReturnToken() {
+	    return fDefaultReturnToken;
+	}*/
+	
+	public void pushPartitionToStack(String partition) {
+	    // Only add it if it isn't already on the top of the stack.
+	    if (!partitionStack.isEmpty() 
+	            && partitionStack.peek().toString().equalsIgnoreCase(partition)) {
+	        //System.out.println("Partition " + partition + " not injected.");
+	        return;
+	    }
+        //System.out.println("Partition " + partition + " injected.");
+	    partitionStack.push(partition);
+	}
+	
 	
 	private void updatePartitionStack(IToken token) {
 		try {
 	    if (token.getData() instanceof TagData) {
 	       TagData data = (TagData)token.getData();
 	       String text = data.getRawData().toLowerCase(); 
+	       //System.out.println("Found partition of type " + token.getData() + " with text " + text);
 	       if (text.startsWith("<cfscript")) {
-	           //System.out.println("cfscript added to partiton stack");
-	           partitionStack.push(CF_SCRIPT);
+	           pushPartitionToStack(CF_SCRIPT);
 	       }  else if (text.startsWith("<cfquery")) {
-	           //System.out.println("SQL added to partiton stack");
-	           partitionStack.push(SQL);
+	           pushPartitionToStack(SQL);
 	       }  else if (text.startsWith("<script")) {
-	           //System.out.println("javascript added to partiton stack");
-	           partitionStack.push(J_SCRIPT);
+	           pushPartitionToStack(J_SCRIPT);
 	       }  else if (text.startsWith("<style")) {
-	           //System.out.println("style added to partiton stack");
-	           partitionStack.push(CSS);
+	           pushPartitionToStack(CSS);
 	       } else if (text.startsWith("</cfscript")
 	               || text.startsWith("</cfquery")
 	               || text.startsWith("</style")
 	               || text.startsWith("</script")) {
 	           if (partitionStack.size() > 0) {
 	               Object o = partitionStack.pop();
-	               //System.out.println("Popped partition " + o.toString() + " from stack.");
+	               
+	               System.out.println("Popped partition " + o.toString() + " from stack.");
 	           } else {
 	               //System.out.println("Encountered closing tag " + text + " with empty partition stack");
 	           }
 	           
 	       }
-	           
+
 	    }
 		}
 		catch (Exception e) {
@@ -263,33 +295,49 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	 * 
 	 * @return The new partition.
 	 */
-	private void findPartitionEnd() {
+	private IToken findPartitionEnd() {
+	   
 		//System.out.println("Looking for end of partition " + partitionStack.peek());
+	   
 		try {
+		    // Keep running until we find something.
 			while (true) {
 				//The next token;
 				IToken token;
 				if (fRules != null) {
+				    // Loop over all the rules looking for a match.
 					for (int i = 0; i < fRules.length; i++) {
 						token = (fRules[i].evaluate(this));
+						 // Check if we found a real token.
 						if (!token.isUndefined()) {
-							
-							while (this.fOffset > this.lastPartitionStart) {
-								this.unread();
-							}
-							//System.out.println("Found new partition - " + token.getData());
-							this.lastPartitionStart = -1;
-							return;
+						    if (token.getData() instanceof TagData) {
+						        TagData data = (TagData)token.getData();
+						        //System.out.println("Found " + data.getRawData());
+						        int len = data.getRawData().length();
+						        int j = 0;
+						        while (j < len) {
+						            this.unread();
+						            j++;
+						        }
+						    } else {
+						        // System.out.println("Found Nothing.");
+						        this.unread();
+						    }
+						    System.out.println("Returning token from stack - " + partitionStack.peek());
+							return new Token(partitionStack.peek());
 						}
 					}
 				}
+				//System.out.println("Nothing found in this pass.");
 				if (read() == EOF) {
-					return;
+
+				    System.out.println("Returning token from stack - EOF");
+					return Token.EOF;
 				}
-				lastPartitionStart = this.fOffset;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return Token.UNDEFINED;
 		}
 	}
 	
@@ -306,6 +354,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			 * the rules and look for a token.
 			 */
 			if (fContentType == null 
+			        || fContentType == CF_SCRIPT
+			        || fContentType == J_SCRIPT
+			        || fContentType == CSS
+			        || fContentType == SQL
 					|| fRules == null) {
 				IToken token;
 				// Keep running until we find something.
@@ -320,9 +372,9 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 							token= (fRules[i].evaluate(this));
 							// Check if the rule found anything
 							if (!token.isUndefined()) {
-								//System.out.println("Found partition of type " + token.getData());
-									// Update the partition stack with this token.
-							    updatePartitionStack(token);
+								
+								// Update the partition stack with this token.
+							    // updatePartitionStack(token);
 							    // Return the token.
 							    return token;
 							}
@@ -338,14 +390,16 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 						/*
 						 * We're not at the end of the file.
 						 * Check if there is anything on the partition stack.
-						 */
+						 
 						if (!partitionStack.empty()) {
-						    findPartitionEnd();
-						    //System.out.println("Returning token from stack - " + partitionStack.peek());
+						   
+						    System.out.println("Returning token from stack - " + partitionStack.peek());
 						    // Return whatever is on the partition stack.
-						    return new Token(partitionStack.peek());
+						    return  findPartitionEnd();
 						    
 						}
+						*/
+					    //System.out.println("Nothing found in this scan. Returning default token.");
 						// There's nothing on the stack, so return the default token.
 					  return fDefaultReturnToken;
 					}
@@ -373,33 +427,39 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 				 */
 				token= rule.getSuccessToken();
 				//System.out.println("Checking if content type - " + fContentType + " matches " + token.getData());
-				if (fContentType.equals(token.getData().toString())) {
+				if (fContentType.equals(token.getData().toString())
+				        || fContentType.equals(token.getData().toString() + "_begin")
+				        || fContentType.equals(token.getData().toString() + "_end")
+				        || fContentType.equals(token.getData().toString() + "_attribs")) {
 					// The content type matches, so we want to run the resume on the rule.
 					token= rule.evaluate(this, resume);
 					if (!token.isUndefined()) {
 						fContentType= null;
+						//updatePartitionStack(token);
 						return token;
 					}
 				}
 			}
-			
+			/*
 			if (!partitionStack.empty()) {
 				//System.out.println("Returning token from stack.");
-				findPartitionEnd();
-		    return new Token(partitionStack.peek());
+				return findPartitionEnd();
 			} else if (
 					fContentType.equals(CF_SCRIPT)
 					|| fContentType.equals(J_SCRIPT)
 					|| fContentType.equals(CSS)
 					|| fContentType.equals(SQL) ) {
-				findPartitionEnd();
-				return new Token(fContentType); 
+			    partitionStack.push(fContentType);
+				
+				//System.out.println("Scanner offset is now " + this.fOffset);
+				return findPartitionEnd();
 			}
-			
+			*/
 			// haven't found any rule for this type of partition
 			fContentType= null;
-			if (resume)
+			if (resume) {
 				fOffset= fPartitionOffset;
+			}
 			return super.nextToken();
 		}
 

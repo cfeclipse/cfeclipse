@@ -47,13 +47,31 @@ public class HTMLTagAssistContributor extends DefaultTagAssistContributor {
         return super.getTagProposals(state);
     }
     public Value[] getAttributeValueProposals(IAssistTagAttributeState state) {
-        if(!DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_TAG))
+        if(!DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_END_TAG)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_START_TAG_BEGIN)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_START_TAG_END)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_TAG_ATTRIBS)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.TABLE_START_TAG_BEGIN)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.TABLE_START_TAG_END)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.TABLE_END_TAG)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.FORM_START_TAG_BEGIN)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.FORM_START_TAG_END)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.FORM_END_TAG))
             return null;
        
         return super.getAttributeValueProposals(state);
     }
     public Parameter[] getAttributeProposals(IAssistTagState state) {
-        if(!DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_TAG))
+        if(!DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_END_TAG)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_START_TAG_BEGIN)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_START_TAG_END)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.HTM_TAG_ATTRIBS)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.TABLE_START_TAG_BEGIN)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.TABLE_START_TAG_END)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.TABLE_END_TAG)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.FORM_START_TAG_BEGIN)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.FORM_START_TAG_END)
+                && !DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.FORM_END_TAG))
             return null;
 
         return super.getAttributeProposals(state);

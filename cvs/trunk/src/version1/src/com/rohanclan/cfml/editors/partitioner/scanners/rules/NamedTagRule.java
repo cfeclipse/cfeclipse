@@ -17,6 +17,7 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.Assert;
 
 import com.rohanclan.cfml.editors.partitioner.TagData;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**
  * @author Stephen Milligan
@@ -71,7 +72,6 @@ public class NamedTagRule implements IPredicateRule {
 	public NamedTagRule(String startSequence, String endSequence, String partitionType, String midPartitionType) {
 		Assert.isTrue(startSequence != null && startSequence.length() > 0);
 		Assert.isNotNull(partitionType);
-		
 		fStartSequence= startSequence.toCharArray();
 		fEndSequence= (endSequence == null ? new char[0] : endSequence.toCharArray());
 		fPartitionType= partitionType;
@@ -170,7 +170,7 @@ public class NamedTagRule implements IPredicateRule {
 	protected boolean endSequenceDetected(ICharacterScanner scanner, StringBuffer tagString) {
 		int c;
 		char[][] delimiters= scanner.getLegalLineDelimiters();
-
+		//System.out.println("Looking for end sequence for tagString " + tagString);
 		while ((c = scanner.read()) != ICharacterScanner.EOF) {
 			boolean isEscapeChar = false;
 			int uc = c;
@@ -194,8 +194,12 @@ public class NamedTagRule implements IPredicateRule {
 			} else if (fEndSequence.length > 0 
 								&& (c == fEndSequence[0] 
 										|| uc == fEndSequence[0])) {
+			    //System.out.println("Found matching first char " + (char)c + " for end sequence " + new String(fEndSequence) + " at offset " + ((CFPartitionScanner)scanner).getOffset());
 				// Check if the specified end sequence has been found.
 				if (!fDblQuotesOpen && !fSnglQuotesOpen) {
+				    if (fEndSequence.length == 1) {
+				        return true;
+				    }
 					if (sequenceDetected(scanner, fEndSequence, true, tagString)) {
 						return true;
 					}
@@ -238,11 +242,15 @@ public class NamedTagRule implements IPredicateRule {
 				return false;
 			}
 		}
-		char next = (char)scanner.read();
+		int tmp = scanner.read();
 		scanner.unread();
+		if (tmp == ICharacterScanner.EOF) {
+		    return true;
+		}
+		char next = (char)tmp;
 		Matcher m = p.matcher(String.valueOf(next));
 		if (!m.matches()) {
-			//System.out.println("Named tag found for " + new String(this.fStartSequence) + ", but next char is invalid.");
+			//System.out.println("Named tag found for " + new String(this.fStartSequence) + ", but next char " + next +" is invalid.");
 		    for (int j = sequence.length-1; j > 0; j--)
 				scanner.unread();
 			return false;

@@ -28,6 +28,7 @@ import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.Token;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 
 /**
@@ -50,7 +51,7 @@ public class NestableMultiLineRule extends MultiLineRule {
 
 	protected boolean endSequenceDetected(ICharacterScanner scanner) {
 	    try {
-	   
+	   //System.out.println("Looking for end sequence in nested rule.");
 		int c;
 		char[][] delimiters= scanner.getLegalLineDelimiters();
 		boolean previousWasEscapeCharacter = false;
@@ -58,13 +59,14 @@ public class NestableMultiLineRule extends MultiLineRule {
 		scanner.unread();
 		int nestedLevel = 1;
 		while ((c = scanner.read()) != ICharacterScanner.EOF) {
+		    //System.out.println("Read character " + (char)c + " Start sequence match test: (" + fStartSequence[0] + ")" + (nextChar == fStartSequence[0]));
 			if (c == fEscapeCharacter) {
 				//System.out.println("Skipping an escape character." + fEscapeCharacter);
 				// Skip the escaped character.
 				scanner.read();
-			} else if (nextChar == fStartSequence[0] 
+			} else if (c == fStartSequence[0] 
 						&& sequenceDetected(scanner, fStartSequence, true)) {
-				// System.out.println("Found a nested start sequence." + new String(fStartSequence));
+				//System.out.println("Found a nested start sequence." + new String(fStartSequence));
 			    // Check for a start sequence so the nesting gets updated correctly
 			    nestedLevel++;
 			    
@@ -146,7 +148,7 @@ public class NestableMultiLineRule extends MultiLineRule {
 		// Something has already detected that the first char matched. So we start at char 1 rather than 0
 		for (int i= 1; i < sequence.length; i++) {
 			int c= scanner.read();
-			//System.out.println("Checking " +  c + ", " + sequence[i]);
+			//System.out.println("Checking character " + sequence[i] + " at position " + ((CFPartitionScanner)scanner).getOffset());
 			
 			if (c == ICharacterScanner.EOF && eofAllowed) {
 				return true;
