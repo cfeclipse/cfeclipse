@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<dictionary>
+	<tags>
+		<!-- example cf tag -->
+		<cftag creator="8" name="test" single="false" xmlstyle="false">
+			<help><![CDATA[
+				<b>this is a test tag this would be the overall help</b><br>
+				This tag does nothing at all
+			]]></help>
+			<attribute name="fakeattribute" type="string">
+				<help><![CDATA[ this attribute does nothing yet ]]></help>
+				<values>
+					<value>red</value>
+					<value>green</value>
+					<value>blue</value>
+				</values>
+			</attribute>
+			<!-- more attrs if needed -->
+		</cftag>
+	
+		<!-- example html tag -->	
+		<htmltag creator="4" name="input" single="true" xmlstyle="false">
+			<help><![CDATA[ creates a form input element ]]></help>
+			<attribute name="type" type="string">
+				<help><![CDATA[ you can create different elements by
+					using <i>different</i> values 
+				]]></help>
+				<values>
+					<value>text</value>
+					<value>hidden</value>
+					<value>checkbox</value>
+					<value>radio</value>
+				</values>
+			</attribute>
+			<attribute name="maxlen" type="numeric">
+				<help><![CDATA[ max len for the input <b>Note</b> does not
+					apply to checkbox ]]></help>
+				<values />
+			</attribute>
+			<attribute name="size" type="numeric">
+				<help>The size</help>
+				<values />
+			</attribute>
+		</htmltag>
+	</tags>
+
+	<!-- function example -->
+	<functions>
+		<function creator="1" name="writeoutput" returns="string">
+			<help>Writes output from a cfscript block</help>
+			<params>
+				<param name="text" type="string">
+					<help>The text to write to the page</help>
+				</param>
+			</params>
+		</function>
+	</functions>
+</dictionary>

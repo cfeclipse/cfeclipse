@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="com.rohanclan.coldfusionmx"
+   name="ColdfusionMX Plug-in"
+   version="1.1.2"
+   provider-name="RohanClan"
+   class="com.rohanclan.coldfusionmx.ColdfusionMXPlugin">
+
+   <runtime>
+      <library name="coldfusionmx.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.runtime.compatibility"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+   </requires>
+
+	<!-- ////////////////////////////////////////////////////////////// -->
+   <!-- Editor -->
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="CFML Editor"
+            extensions="cfm,cfml,cfc"
+            icon="icons/obj16/default.gif"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="com.rohanclan.coldfusionmx.editors.CFMLEditor"
+            id="com.rohanclan.coldfusionmx.editors.CFMLEditor">
+      </editor>
+   </extension>
+   
+	<!-- ////////////////////////////////////////////////////////////// -->
+   <!-- Actions -->
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            targetID="com.rohanclan.coldfusionmx.editors.CFMLEditor"
+            id="com.rohanclan.coldfusionmx.editors.CFMLEditorActions"
+      >
+            
+         <menu label="&amp;Cold Fusion"
+               path="window"
+               id="com.rohanclan.coldfusionmx.cfmxmenu">
+            <separator name="maingroup"></separator>
+            <separator name="output"></separator>
+         </menu>
+         
+         <!-- <menu label="&amp;Output"
+               path="com.rohanclan.coldfusionmx.cfmxmenu/maingroup"
+               id="com.rohanclan.coldfusionmx.cfmxmenu.suboutput">
+	     	<separator name="output"></separator>
+	     </menu> -->
+         
+         <!-- cfcomment -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.CFComment"
+               label="&amp;Comment"
+               tooltip="Insert a Cold Fusion comment"
+               class="com.rohanclan.coldfusionmx.editors.actions.CFCommentAction"  
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/maingroup"
+               id="com.rohanclan.coldfusionmx.editors.actions.CFCommentAction"
+               icon="icons/ctool16/comment.gif"
+               toolbarPath="BasicCFEditorText"
+               >
+         </action>
+         <!-- smart comment -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.AutoComment"
+               label="&amp;Auto Comment"
+               tooltip="Insert comment based on section"
+               class="com.rohanclan.coldfusionmx.editors.actions.AutoCommentAction"  
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/maingroup"
+               id="com.rohanclan.coldfusionmx.editors.actions.AutoCommentAction"
+               icon="icons/ctool16/smartcomment.gif"
+               toolbarPath="BasicCFEditorText"
+               >
+         </action>
+         <!-- Surround with #s -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.CFVariable"
+               label="&amp;Variable"
+               tooltip="Surround with pound/number signs"
+               class="com.rohanclan.coldfusionmx.editors.actions.CFVariableAction"
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/output"
+               id="com.rohanclan.coldfusionmx.editors.actions.CFVariableAction"
+               icon="icons/ctool16/hash.gif"
+               toolbarPath="BasicCFEditorText"
+               >
+         </action>
+         <!-- Surround with single quotes -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.CFSingleQuote"
+               label="&amp;Single Quotes"
+               tooltip="Surround with single quotes"
+               class="com.rohanclan.coldfusionmx.editors.actions.CFSingleQuoteAction"
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/output"
+               id="com.rohanclan.coldfusionmx.editors.actions.CFSingleQuoteAction"
+               icon="icons/ctool16/squote.gif"
+               toolbarPath="BasicCFEditorText"
+               >
+         </action>
+         <!-- Surround with double quotes -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.CFDoubleQuote"
+               label="&amp;Double Quotes"
+               tooltip="Surround with double quotes"
+               class="com.rohanclan.coldfusionmx.editors.actions.CFDoubleQuoteAction"
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/output"
+               id="com.rohanclan.coldfusionmx.editors.actions.CFDoubleQuoteAction"
+               icon="icons/ctool16/dquote.gif"
+               toolbarPath="BasicCFEditorText"
+               >
+         </action>
+         <!-- Surround with simple cfoutputs -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.CFOutput"
+               label="CF &amp;Output"
+               tooltip="Surround with cfoutput"
+               class="com.rohanclan.coldfusionmx.editors.actions.CFOutputAction"
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/output"
+               id="com.rohanclan.coldfusionmx.editors.actions.CFOutputAction"
+               icon="icons/ctool16/output.gif"
+               toolbarPath="BasicCFEditorCommand"
+               >
+         </action>
+         <!-- Surround with a simple cfdump -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.CFDump"
+               label="CF D&amp;ump"
+               tooltip="Surround with simple cfdump"
+               class="com.rohanclan.coldfusionmx.editors.actions.CFDumpAction"
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/output"
+               id="com.rohanclan.coldfusionmx.editors.actions.CFDumpAction"
+               icon="icons/ctool16/dump.gif"
+               toolbarPath="BasicCFEditorCommand"
+               >
+         </action>
+         <!-- Surround with a cfscript -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.CFScript"
+               label="CF S&amp;cript"
+               tooltip="Surround with cfscript"
+               class="com.rohanclan.coldfusionmx.editors.actions.CFScriptAction"
+               id="com.rohanclan.coldfusionmx.editors.actions.CFScriptAction"
+               icon="icons/ctool16/script.gif"
+               toolbarPath="BasicCFEditorCommand"
+               >
+               <!-- menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/output" -->
+         </action>
+         <!-- to lower case -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.ToLowerCase"
+               label="To L&amp;ower"
+               tooltip="Lower case selected text"
+               class="com.rohanclan.coldfusionmx.editors.actions.ToLowerCaseAction"
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/maingroup"
+               id="com.rohanclan.coldfusionmx.editors.actions.ToLowerCaseAction"
+               icon="icons/ctool16/tolower.gif"
+               toolbarPath="BasicCFEditorText"
+               >
+         </action>
+         <!-- to upper case -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.ToUpperCase"
+               label="To U&amp;pper"
+               tooltip="Upper case selected text"
+               class="com.rohanclan.coldfusionmx.editors.actions.ToUpperCaseAction"
+               menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/maingroup"
+               id="com.rohanclan.coldfusionmx.editors.actions.ToUpperCaseAction"
+               icon="icons/ctool16/toupper.gif"
+               toolbarPath="BasicCFEditorText"
+               >
+         </action>
+         <!-- insert date -->
+         <action
+               definitionId="com.rohanclan.coldfusionmx.editors.actions.InsertDate"
+               label="Insert Date"
+               tooltip="Insert the current date"
+               class="com.rohanclan.coldfusionmx.editors.actions.InsertDateAction"
+               id="com.rohanclan.coldfusionmx.editors.actions.InsertDateAction"
+               icon="icons/ctool16/time.gif"
+               toolbarPath="BasicCFEditorCommand"
+               >
+               <!-- menubarPath="com.rohanclan.coldfusionmx.cfmxmenu/maingroup" -->
+         </action>
+      </editorContribution>
+   </extension>
+   
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- popup menu -->
+	<extension point="org.eclipse.ui.popupMenus"> 
+		<viewerContribution 
+			id="org.eclipse.ui.articles.action.contribution.popup.editor"
+			targetID="#TextEditorContext"> 
+			<!-- <action
+				id="org.eclipse.ui.articles.action.contribution.editor.action1" 
+				label="Editor Action 1"
+				menubarPath="additions" 
+				class="com.rohanclan.coldfusionmx.editors.actions.ToLowerCaseAction"> 
+			</action> -->
+			<action
+				id="com.rohanclan.coldfusionmx.editors.actions.CFComment" 
+				label="CF Comment"
+				menubarPath="additions" 
+				class="com.rohanclan.coldfusionmx.editors.actions.CFCommentAction"
+				>
+			</action>
+			
+			<menu
+				id="com.rohanclan.coldfusionmx.editors.contribution.subMenu"
+				label="Text"
+				path="additions">
+				<separator name="text"/>
+				<separator name="text1"/>
+			</menu>
+			<action
+				id="com.rohanclan.coldfusionmx.editors.actions.ToLowerCase" 
+				label="To Lower Case"
+				menubarPath="com.rohanclan.coldfusionmx.editors.contribution.subMenu/text" 
+				class="com.rohanclan.coldfusionmx.editors.actions.ToLowerCaseAction"
+				>
+				<!-- icon="icons/red_dot.gif" enablesFor="1" -->
+			</action> 
+			<action
+				id="com.rohanclan.coldfusionmx.editors.actions.ToUpperCase" 
+				label="To Upper Case"
+				menubarPath="com.rohanclan.coldfusionmx.editors.contribution.subMenu/text" 
+				class="com.rohanclan.coldfusionmx.editors.actions.ToUpperCaseAction"
+				>
+				<!-- icon="icons/red_dot.gif" enablesFor="2+" -->
+			</action>
+			<!-- ////// -->
+			<action
+				id="com.rohanclan.coldfusionmx.editors.actions.CFVariable" 
+				label="Wrap In #s"
+				menubarPath="com.rohanclan.coldfusionmx.editors.contribution.subMenu/text1" 
+				class="com.rohanclan.coldfusionmx.editors.actions.CFVariableAction"
+				>
+			</action>
+			<action
+				id="com.rohanclan.coldfusionmx.editors.actions.CFSingleQuote" 
+				label="Wrap In 's"
+				menubarPath="com.rohanclan.coldfusionmx.editors.contribution.subMenu/text1" 
+				class="com.rohanclan.coldfusionmx.editors.actions.CFSingleQuoteAction"
+				>
+			</action>
+			<action
+				id="com.rohanclan.coldfusionmx.editors.actions.CFDoubleQuote" 
+				label="Wrap In &quot;s"
+				menubarPath="com.rohanclan.coldfusionmx.editors.contribution.subMenu/text1" 
+				class="com.rohanclan.coldfusionmx.editors.actions.CFDoubleQuoteAction"
+				>
+			</action>
+			
+			
+		</viewerContribution>
+		<!-- icon="icons/red_dot.gif" -->
+	</extension>
+
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Commands -->
+   <extension point="org.eclipse.ui.commands">
+      <category
+            name="CFML Editor"
+            description="CFML Editor key bindings"
+            id="com.rohanclan.coldfusionmx.commandCategory">
+      </category>
+      
+      <!-- this will always make a cf type comment -->
+      <command name="Insert Comment"
+            description="Insert a CFML comment."
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.CFComment">
+      </command>
+      <keyBinding string="Ctrl+Shift+M"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.CFComment"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- comment based on section (i.e. js comments in js blocks, etc) -->
+      <command name="Insert Auto Comment"
+            description="Insert a comment based on section."
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.AutoComment">
+      </command>
+      <keyBinding string="Ctrl+Shift+C"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.AutoComment"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- enclose in pound signs -->
+      <command name="CF Variable"
+            description="Surround with pound/number signs"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.CFVariable">
+      </command>
+      <keyBinding string="Ctrl+3"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.CFVariable"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- enclose in single quotes -->
+      <command name="Single Quotes"
+            description="Surround with Single Quotes"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.CFSingleQuote">
+      </command>
+      <keyBinding string="Ctrl+'"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.CFSingleQuote"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- enclose in double quotes -->
+      <command name="Double Quotes"
+            description="Surround with pound/number signs"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.CFDoubleQuote">
+      </command>
+      <keyBinding string="Ctrl+Shift+'"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.CFDoubleQuote"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- enclose in cfoutputs -->
+      <command name="CF Outputs"
+            description="Surround with cfoutputs"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.CFOutput">
+      </command>
+      <keyBinding string="Ctrl+Shift+O"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.CFOutput"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- enclose in cfdump -->
+      <command name="CF Dump"
+            description="Surround with a simple cfdump"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.CFDump">
+      </command>
+      <keyBinding string="Ctrl+Shift+D"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.CFDump"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- enclose in cfscript -->
+      <command name="CF Script"
+            description="Surround with a cfscript"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.CFScript">
+      </command>
+      <keyBinding string="Ctrl+Shift+R"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.CFScript"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- to lower case -->
+      <command name="To Lower"
+            description="Lower case selected text"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.ToLowerCase">
+      </command>
+      <keyBinding string="Ctrl+Shift+L"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.ToLowerCase"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- to upper case -->
+      <command name="To Upper"
+            description="Upper case selected text"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.ToUpperCase">
+      </command>
+      <keyBinding string="Ctrl+Shift+U"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.ToUpperCase"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
+      <!-- to upper case -->
+      <command name="Insert Date"
+            description="Insert the current date"
+            category="com.rohanclan.coldfusionmx.commandCategory"
+            id="com.rohanclan.coldfusionmx.editors.actions.InsertDate">
+      </command>
+      <!-- <keyBinding string="Ctrl+Shift+T"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.coldfusionmx.editors.actions.InsertDate"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding> -->
+      
+   </extension>
+
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- the snip viewer -->
+	<extension point="org.eclipse.ui.views">
+		<category 
+		   id="com.rohanclan.coldfusionmx"
+		   name="Cold Fusion">
+		</category>
+		<view id="com.rohanclan.coldfusionmx.views.snipview"
+		    name="Snip View"
+		    icon="icons/obj16/snip.gif"
+			category="com.rohanclan.coldfusionmx"
+			class="com.rohanclan.coldfusionmx.views.SnipView"
+		/>
+		<view id="com.rohanclan.coldfusionmx.views.snips.sniptreeview"
+		    name="Snip Tree View"
+		    icon="icons/obj16/snip.gif"
+			category="com.rohanclan.coldfusionmx"
+			class="com.rohanclan.coldfusionmx.views.snips.SnipTreeView"
+		/>
+	</extension>
+
+</plugin>
