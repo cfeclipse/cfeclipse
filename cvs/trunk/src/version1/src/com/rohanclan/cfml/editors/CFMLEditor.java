@@ -72,6 +72,7 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import com.rohanclan.cfml.editors.actions.JumpToDocPos;
+import com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction;
 import com.rohanclan.cfml.editors.actions.RTrimAction;
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 import com.rohanclan.cfml.editors.decoration.DecorationSupport;
@@ -406,6 +407,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
 				    String info = "Partitioning info from offset " + startpos + " to " + Integer.toString(startpos + len) + "\n\n";
+				    CFEPartition part = partitioner.findClosestPartition(startpos);
+				    info += "(Closest partition: " + part.getType() + " = " + part.getTagName() + ")\n";
 					for (int i=0;i<partitioning.length;i++) {
 					    info += partitioning[i].getType(); 
 					    info += " starting at ";
@@ -432,6 +435,15 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 							0);
 				    msg.open();
 				}
+			};
+			menu.add(act);
+
+			act = new Action("Jump to matching tag", null) {
+			    public void run() {
+			        JumpToMatchingTagAction matchTagAction = new JumpToMatchingTagAction();
+			        matchTagAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
+			        matchTagAction.run(null);
+			    }
 			};
 			menu.add(act);
 			
