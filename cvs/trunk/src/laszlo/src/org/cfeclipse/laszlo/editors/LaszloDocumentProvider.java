@@ -71,7 +71,8 @@ public class LaszloDocumentProvider extends FileDocumentProvider {
 			IDocumentPartitioner partitioner = new DefaultPartitioner(
 				new LaszloPartitionScanner(),
 				new String[] {
-					CFPartitionScanner.ALL_TAG,
+					//CFPartitionScanner.ALL_TAG,
+					CFPartitionScanner.HTM_START_TAG, // HTM_TAG,
 					CFPartitionScanner.HTM_COMMENT,
 					CFPartitionScanner.J_SCRIPT
 				}

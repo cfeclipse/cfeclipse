@@ -47,11 +47,12 @@ public class LaszloPartitionScanner extends RuleBasedPartitionScanner {
 	public LaszloPartitionScanner() {
 		IToken doctype	 	= new Token(CFPartitionScanner.DOCTYPE);
 		IToken xmlComment 	= new Token(CFPartitionScanner.HTM_COMMENT);
-		IToken tag 			= new Token(CFPartitionScanner.ALL_TAG);
+		//IToken tag 			= new Token(CFPartitionScanner.ALL_TAG);
+		IToken tag 			= new Token(CFPartitionScanner.HTM_START_TAG);// HTM_TAG);
 		IToken script 		= new Token(CFPartitionScanner.J_SCRIPT);
 		//
-		IToken form			= new Token(CFPartitionScanner.FORM_TAG);
-		IToken table			= new Token(CFPartitionScanner.TABLE_TAG);
+		IToken form			= new Token(CFPartitionScanner.FORM_START_TAG);// FORM_TAG);
+		IToken table			= new Token(CFPartitionScanner.TABLE_START_TAG); //TABLE_TAG);
 		IToken unktag		= new Token(CFPartitionScanner.UNK_TAG);
 		
 		List rules = new ArrayList();

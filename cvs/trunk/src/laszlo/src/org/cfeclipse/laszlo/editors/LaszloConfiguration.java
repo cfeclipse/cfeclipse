@@ -34,7 +34,8 @@ import com.rohanclan.cfml.editors.CFConfiguration;
 import com.rohanclan.cfml.editors.CFTextHover;
 import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-import com.rohanclan.cfml.editors.script.ScriptScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.jscript.JavaScriptScanner;
+//import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 
 public class LaszloConfiguration extends CFConfiguration { 
@@ -50,7 +51,9 @@ public class LaszloConfiguration extends CFConfiguration {
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
 		return new String[] {
 			IDocument.DEFAULT_CONTENT_TYPE,
-			CFPartitionScanner.ALL_TAG,
+			//CFPartitionScanner.ALL_TAG,
+			//CFPartitionScanner.HTM_TAG,
+			CFPartitionScanner.HTM_START_TAG,
 			CFPartitionScanner.HTM_COMMENT,
 			CFPartitionScanner.J_SCRIPT
 		};
@@ -60,7 +63,7 @@ public class LaszloConfiguration extends CFConfiguration {
 	 * Override the javascript scanner so we can provide laszlo specific stuff
 	 * @return
 	 */
-	protected ScriptScanner getScriptScanner() 
+	protected JavaScriptScanner getScriptScanner() 
 	{
 		Token textToken = new Token(
 			new TextAttribute(

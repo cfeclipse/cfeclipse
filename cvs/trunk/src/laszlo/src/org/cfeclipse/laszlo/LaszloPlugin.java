@@ -35,7 +35,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
+//import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
+import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
 import com.rohanclan.cfml.editors.contentassist.CFMLFunctionAssist;

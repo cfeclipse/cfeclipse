@@ -3,6 +3,7 @@
 	<name>laszlo</name>
 	<comment></comment>
 	<projects>
+		<project>CFML_W_CFML</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

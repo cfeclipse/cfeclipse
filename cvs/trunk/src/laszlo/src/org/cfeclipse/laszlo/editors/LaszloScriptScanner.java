@@ -37,11 +37,14 @@ import org.eclipse.jface.text.TextAttribute;
 import com.rohanclan.cfml.editors.ColorManager;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 //import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
+import com.rohanclan.cfml.editors.partitioner.scanners.jscript.JavaScriptScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.jscript.OperatorDetector;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.CFKeywordDetector;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
-import com.rohanclan.cfml.editors.script.JSSyntaxDictionary;
-import com.rohanclan.cfml.editors.script.OperatorDetector;
-import com.rohanclan.cfml.editors.script.ScriptScanner;
+//import com.rohanclan.cfml.editors.script.JSSyntaxDictionary;
+//import com.rohanclan.cfml.editors.script.OperatorDetector;
+//import com.rohanclan.cfml.editors.script.ScriptScanner;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -60,7 +63,7 @@ import org.cfeclipse.laszlo.editors.LaszloSyntaxDictionary;
  *
  * This is the Javascript rule scanner (color coder rules).
  */
-public class LaszloScriptScanner extends ScriptScanner {
+public class LaszloScriptScanner extends JavaScriptScanner {
 	
 	public LaszloScriptScanner(ColorManager manager, CFMLPreferenceManager prefs)
 	{
