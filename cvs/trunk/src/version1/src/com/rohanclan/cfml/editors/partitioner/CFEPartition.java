@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.7 2005-02-01 01:52:49 smilligan Exp $
- * $Revision: 1.7 $
- * $Date: 2005-02-01 01:52:49 $
+ * $Id: CFEPartition.java,v 1.8 2005-02-25 23:24:22 chrisbradford Exp $
+ * $Revision: 1.8 $
+ * $Date: 2005-02-25 23:24:22 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -35,7 +35,7 @@ import org.eclipse.jface.text.Assert;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public final class CFEPartition extends TypedPosition {
 
@@ -52,6 +52,7 @@ public final class CFEPartition extends TypedPosition {
     private boolean fEndPartition = false;
     private String fTagName = null;
     private boolean fIsPseudoPartition = false;
+    private boolean fIsCloser;
     
     /**
      * @param offset
@@ -154,6 +155,20 @@ public final class CFEPartition extends TypedPosition {
         return fIsPseudoPartition;
     }
 
+    /**
+     * @param value
+     */
+    public void setCloser(boolean value) {
+        this.fIsCloser = value;
+    }
+    
+    /**
+     * @return whether this partition is a closer
+     */
+    public boolean isCloser() {
+        return this.fIsCloser;
+    }
+
 }
 
 
@@ -162,6 +177,9 @@ public final class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2005/02/01 01:52:49  smilligan
+ * Fixed a couple of issues with the partitioner.
+ *
  * Revision 1.6  2005/01/31 08:01:13  smilligan
  * Refactored a lot of the partitioner so it is more manageable. This should be the final refactor I think. From here on in it ought to be performance tweaks and bug fixes.
  *
