@@ -52,6 +52,7 @@ import com.rohanclan.cfml.parser.cfmltagitems.*;
 import com.rohanclan.cfml.parser.cfscript.ParseException;
 import com.rohanclan.cfml.parser.cfscript.SPLParser;
 import com.rohanclan.cfml.parser.cfscript.SimpleNode;
+import com.rohanclan.cfml.parser.cfscript.TokenMgrError;
 
 //import com.rohanclan.cfml.util.Debug;
 
@@ -516,11 +517,11 @@ public class CFParser {
 				System.err.println("CFParser::handleCFScriptBlock() - Caught exception whilst creating markers!");
 				innerEx.printStackTrace();
 			}
-//			ex.printStackTrace();
-		} catch(Exception ex) {
-			System.err.println("CFParser::handleCFScriptBlock() - Caught exception \'" + ex.getMessage() + "\'");
-			ex.printStackTrace();
+		} catch(Throwable lastDitch) {
+			userMessage(matchStack.size(), "handleCFScriptBlock()", "Error during parse: " + lastDitch.getMessage(), CFParser.USRMSG_ERROR, match);
+			lastDitch.printStackTrace();
 		}
+		return;
 		
 	}
 	
