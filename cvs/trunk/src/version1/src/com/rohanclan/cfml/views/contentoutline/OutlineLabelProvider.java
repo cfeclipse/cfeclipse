@@ -138,6 +138,9 @@ public class OutlineLabelProvider extends LabelProvider {
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_TAG);
 			}
+		}else if(element instanceof CfmlComment){
+			//TODO this icon should be something else at some point
+			return CFPluginImages.get(CFPluginImages.ICON_TOOLS);
 		}
 		
 		return CFPluginImages.get(CFPluginImages.ICON_ALERT);
@@ -203,7 +206,18 @@ public class OutlineLabelProvider extends LabelProvider {
 		{
 			String commentData = ((CfmlComment)element).getItemData();
 			
-			return "<!--- " + commentData +  "--->";
+			//this kind of sucks...
+			commentData = commentData.replace('\n',' ');
+			commentData = commentData.replaceAll("<!---","");
+			commentData = commentData.replaceAll("--->","");
+			
+			//keep comments to label status...
+			if(commentData.trim().length() > 40)
+			{
+				commentData = commentData.trim().substring(0,40) + "...";
+			}
+			
+			return commentData;
 		}
 		
 		return "unknown (add to user.xml if custom)";
