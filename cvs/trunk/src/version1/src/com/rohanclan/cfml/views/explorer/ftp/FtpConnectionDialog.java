@@ -317,7 +317,6 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		    MessageBox confirm = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_QUESTION | SWT.YES | SWT.NO);
 		    confirm.setMessage("Are you sure you want to delete this connection?");
 		    if (confirm.open() == SWT.YES) {
-		        System.out.println("Deleting " + connectionProperties.getConnectionid());
 				FtpConnectionProperties.deleteConnection(connectionProperties.getConnectionid());
 				connectionTable.setInput(new Object());
 		    }
