@@ -30,7 +30,6 @@ public class FtpConnection implements IFileProvider {
 	FtpConnectionProperties connectionProperties;
 	private static FtpConnection instance = null;
 	
-	private boolean isConnected = false;
 	
 	private int fConnectionTimeout = 30000;
 	
@@ -49,7 +48,7 @@ public class FtpConnection implements IFileProvider {
 	}
 	
 	public BufferedInputStream getInputStream(String filepath) {
-	    connect(connectionProperties);
+	    connect();
 	    try {
 	        
 		    byte[] contents = ftpClient.get(filepath);
@@ -64,7 +63,7 @@ public class FtpConnection implements IFileProvider {
 	}
 	
 	public void saveFile(byte[] content, String remotefile) {
-	    connect(connectionProperties);
+	    connect();
 	    try {
 	        ftpClient.put(content,remotefile);
 	    }
@@ -77,7 +76,6 @@ public class FtpConnection implements IFileProvider {
 	public void disconnect() {
 	    try {
 	        ftpClient.quit();
-	        isConnected = false;
 	    }
 	    catch (Exception e) {
 	        e.printStackTrace();
@@ -86,7 +84,11 @@ public class FtpConnection implements IFileProvider {
 	
 	public void connect(FtpConnectionProperties connectionProperties) {
 		this.connectionProperties = connectionProperties;
-		if (isConnected) {
+		connect();
+	}
+	
+	private void connect() {
+	    if (isConnected()) {
 		    return;
 		}
 		try {
@@ -100,14 +102,12 @@ public class FtpConnection implements IFileProvider {
 	
 	       ftpClient.setConnectMode(FTPConnectMode.PASV);
 	       ftpClient.setType(FTPTransferType.ASCII);
-	       isConnected = true;
 		}
 		catch (Exception e) {
 		    
 		    e.printStackTrace();
 		}
 	}
-	
 
 	/* (non-Javadoc)
 	 * @see com.rohanclan.cfml.views.explorer.IFileProvider#getRoots()
@@ -125,7 +125,7 @@ public class FtpConnection implements IFileProvider {
 		
 		try {
 		    
-		    connect(connectionProperties);
+		    connect();
 		    
 		    FTPFile[] files = ftpClient.dirDetails(parent);
 		    
@@ -145,9 +145,7 @@ public class FtpConnection implements IFileProvider {
 		    
 			return filteredFiles;
 		}
-		catch (FTPException e) {
-		    this.isConnected = false;
-		}
+
 		catch (Exception e) {
 		    e.printStackTrace();
 		}
@@ -165,7 +163,6 @@ public class FtpConnection implements IFileProvider {
 				//System.out.println("Disconnecting FTP client.");
 				ftpClient.quit();
 				ftpClient = null;
-				isConnected = false;
 			}
 		}
 		catch (Exception e) {
@@ -173,9 +170,24 @@ public class FtpConnection implements IFileProvider {
 		}
 	}
 	
+	private boolean isConnected() {
+	    if (ftpClient == null) {
+	        return false;
+	    }
+	    try {
+	        ftpClient.quote("NOOP",new String[] {"200"});
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	    return true;
+	}
+	
 	
 	public IEditorInput getEditorInput(String filename) {
 	    try {
+	        connect();
 		    FTPFile[] files = ftpClient.dirDetails(filename);
 		    RemoteFile remoteFile = new RemoteFile(files[0],filename);
 		    FtpFileEditorInput input = new FtpFileEditorInput(remoteFile);

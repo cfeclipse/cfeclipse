@@ -30,7 +30,6 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.editors.text.ILocationProvider;
 
-import com.enterprisedt.net.ftp.*;
 
 
 import org.eclipse.core.runtime.IPath;
@@ -38,6 +37,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 
 import org.eclipse.ui.model.IWorkbenchAdapter;
+
+import com.rohanclan.cfml.external.ExternalMarkerAnnotationModel;
 /**
  * @author Stephen Milligan
  *
@@ -86,7 +87,7 @@ public class FtpFileEditorInput implements IEditorInput, ILocationProvider {
 
 	private RemoteFile fFile;
 	private WorkbenchAdapter fWorkbenchAdapter= new WorkbenchAdapter();
-	
+
     /**
      * 
      */
@@ -95,6 +96,9 @@ public class FtpFileEditorInput implements IEditorInput, ILocationProvider {
 		fFile= file;
 		fWorkbenchAdapter= new WorkbenchAdapter();
 	}
+    
+    
+    
 	/*
 	 * @see org.eclipse.ui.IEditorInput#exists()
 	 */

@@ -260,6 +260,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	
 	
 	public IVerticalRuler verticalRuler() {
+	    
 	    return this.getVerticalRuler();
 	}
 	

@@ -4,7 +4,7 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-package com.rohanclan.cfml.util;
+package com.rohanclan.cfml.external;
 /*
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -39,9 +39,14 @@ import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.internal.utils.Policy;
 */
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.internal.resources.MarkerInfo;
 import org.eclipse.core.internal.resources.Workspace;
+import org.eclipse.core.internal.utils.Assert;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+
 /**
  * @author Stephen Milligan
  *
@@ -50,15 +55,43 @@ import org.eclipse.core.runtime.IPath;
  */
 public class ExternalFile extends File {
 
+    Workspace workspace;
+
+	private ExternalMarkerAnnotationModel model = null;
+	
     public ExternalFile(IPath path, Workspace container) {
 		super(path, container);
+		workspace = container;
+		model = new ExternalMarkerAnnotationModel(this);
 	}
     
     public Object getAdapter(Class adapter) {
-        System.out.println("Adapter requested for " + adapter.getName());
-        System.out.println("Retrieved " + super.getAdapter(adapter));
+
         return super.getAdapter(adapter);
     }
+    
+    
+    /* (non-Javadoc)
+	 * @see IResource#createMarker(String)
+	 */
+	public IMarker createMarker(String type) throws CoreException {
+		Assert.isNotNull(type);
+		final ISchedulingRule rule = workspace.getRuleFactory().markerRule(this);
+		try {
+			workspace.prepareOperation(rule, null);
+			checkAccessible(getFlags(getResourceInfo(false, false)));
+			workspace.beginOperation(true);
+			MarkerInfo info = new MarkerInfo();
+			info.setType(type);
+			info.setCreationTime(System.currentTimeMillis());
+			workspace.getMarkerManager().add(this, info);
+			return new ExternalMarker();
+			//return new ExternalMarker(this, info.getId());
+		} 
+		finally {
+			workspace.endOperation(rule, false, null);
+		}
+	}
     
     public void checkExists(int flags, boolean checkType) throws CoreException {
         return;
@@ -71,4 +104,9 @@ public class ExternalFile extends File {
     public void checkValidPath(IPath toValidate, int type, boolean lastSegmentOnly) throws CoreException {
      return;   
     }
+    
+    public ExternalMarkerAnnotationModel getAnnotationModel() {
+        return model;
+    }
+    
 }

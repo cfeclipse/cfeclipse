@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
@@ -42,8 +43,9 @@ import org.eclipse.core.runtime.Path;
 
 import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import com.rohanclan.cfml.external.ExternalFile;
+import com.rohanclan.cfml.external.ExternalMarkerAnnotationModel;
 import com.rohanclan.cfml.ftp.*;
-import com.rohanclan.cfml.util.ExternalFile;
 import com.rohanclan.cfml.CFMLPlugin;
 
 /**
@@ -56,6 +58,10 @@ import com.rohanclan.cfml.CFMLPlugin;
  */
 public class CFDocumentProvider extends FileDocumentProvider {
 
+    
+
+	private ExternalMarkerAnnotationModel model = null;
+    
 	protected IDocument createDocument(Object element) throws CoreException {
 		ICFDocument document = null;
 		
@@ -97,7 +103,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			        String filepath = ((JavaFileEditorInput)element).getPath(element).toString();
 			        Path path = new Path(filepath);
 			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
-					document.setParserResource(new ExternalFile(path,workspace));
+			        ExternalFile file = new ExternalFile(path,workspace);
+			        model = file.getAnnotationModel();
+					document.setParserResource(file);
 					document.clearAllMarkers();
 					document.parseDocument();
 				}
@@ -106,7 +114,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			        String filepath = ((FtpFileEditorInput)element).getPath(element).toString();
 			        Path path = new Path(filepath);
 			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
-			        document.setParserResource(new ExternalFile(path,workspace));
+			        ExternalFile file = new ExternalFile(path,workspace);
+			        model = file.getAnnotationModel();
+			        document.setParserResource(file);
 					document.clearAllMarkers();
 					document.parseDocument();
 				}
@@ -189,6 +199,16 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		FtpConnection connection = FtpConnection.getInstance();
 		connection.saveFile(doc.get().getBytes(),input.getPath(input).toString());
 		
+	}
+	
+	public IAnnotationModel getAnnotationModel(Object element) {
+	    if (element instanceof FileEditorInput) {
+	        return super.getAnnotationModel(element);
+	    }
+	    
+	    return model;
+
+	    
 	}
 	
 	
