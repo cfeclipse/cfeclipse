@@ -143,7 +143,7 @@ public class GetHelpAction implements IEditorActionDelegate {
 		}
 		
 		if (theFullURL.length() == 0) {
-		    theFullURL = "http://cfdocs.org";
+		    theFullURL = "http://livedocs.macromedia.com";
 		}
 		
 		//Get thecurrent page

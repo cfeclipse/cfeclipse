@@ -211,7 +211,7 @@
                label="InsertSnippet"
                class="com.rohanclan.cfml.editors.actions.InsertSnippetAction"
                tooltip="Insert a snippet"
-               icon="icons/obj16/snip.gif"
+               icon="icons/ctool16/insertsnip.gif"
                definitionId="com.rohanclan.cfml.editors.actions.InsertSnippet"
                id="com.rohanclan.cfml.editors.actions.InsertSnippetAction">
          </action>
@@ -220,7 +220,7 @@
          	   toolbarPath="BasicCFEditorCommand"
                definitionId="com.rohanclan.cfml.editors.actions.GetHelp"
                label="Get Tag Help"
-               icon="icons/ctool16/refresh.gif"
+               icon="icons/ctool16/help.gif"
                tooltip="Get tag and function help"
                class="com.rohanclan.cfml.editors.actions.GetHelpAction"
                id="com.rohanclan.cfml.editors.actions.GetHelpAction">
