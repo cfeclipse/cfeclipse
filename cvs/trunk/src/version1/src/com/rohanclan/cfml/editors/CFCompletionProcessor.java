@@ -296,31 +296,41 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				if(syntax != null && syntax.tagExists(tagname))
 				{	
 					Tag tag = syntax.getTag(tagname);
+					//get the char right before the >, if its a / then they
+					//did an xhtml style <br/> kind of thing. If so then
+					//don't auto close it
+					String xmlclose = viewer.getDocument().get(documentOffset-2,1);
+					
 					if(tag != null && !tag.isSingle())
 					{
-						StringBuffer sb = new StringBuffer();
-						sb.append("</" + tagnamespace + tagname + ">");
-						//String addtag = "</";
-						//addtag += tagnamespace;
-						//addtag += tagname + ">";
-						String addtag = sb.toString();
-						
-						IDocument doc = viewer.getDocument();
-						
-						//the fully qualified tag name
-						String fqt = tagnamespace + tagname;
-						
-						//get the word before this one and see if it is a closing
-						//tag for this tag, if it is dont auto close
-						String wordb4 = doc.get(
-							(documentOffset - fqt.length()-2),(fqt.length()+1)
-						);
-						//System.err.println(wordb4);
-						//if it doesnt look like they closed the tag already
-						//go ahead and close it
-						if( !wordb4.equalsIgnoreCase("/" + fqt) )
+						//if they didnt xml close it
+						if(!xmlclose.equals("/"))
 						{
-							doc.replace(documentOffset, 0, addtag);
+							
+							StringBuffer sb = new StringBuffer();
+							sb.append("</" + tagnamespace + tagname + ">");
+							//String addtag = "</";
+							//addtag += tagnamespace;
+							//addtag += tagname + ">";
+							String addtag = sb.toString();
+							
+							IDocument doc = viewer.getDocument();
+							
+							//the fully qualified tag name
+							String fqt = tagnamespace + tagname;
+							
+							//get the word before this one and see if it is a closing
+							//tag for this tag, if it is dont auto close
+							String wordb4 = doc.get(
+								(documentOffset - fqt.length()-2),(fqt.length()+1)
+							);
+							//System.err.println(wordb4);
+							//if it doesnt look like they closed the tag already
+							//go ahead and close it
+							if( !wordb4.equalsIgnoreCase("/" + fqt) )
+							{
+								doc.replace(documentOffset, 0, addtag);
+							}
 						}
 					}
 				}
