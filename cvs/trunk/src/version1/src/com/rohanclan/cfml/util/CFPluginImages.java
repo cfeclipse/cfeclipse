@@ -128,6 +128,10 @@ public class CFPluginImages {
 	/** Pinning stuff icon */
 	public static final String ICON_PIN = "pin.gif";
 	
+	public static final String ICON_PVIEW_FOLDER_WWW = "folder-www.png";
+	public static final String ICON_PVIEW_FOLDER_CFC = "folder-cfc.png";
+	public static final String ICON_PVIEW_FOLDER_CUS = "folder-custom.png";
+	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
 	public static final String TOOLBAR 		 = "ctool16";
@@ -194,6 +198,10 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_SORTAZ);
 			addImageToRegistry(TOOLBAR,ICON_PIN);
 			addImageToRegistry(TOOLBAR,ICON_INSERT_SNIP);
+			
+			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_WWW);
+			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_CFC);
+			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_CUS);
 		}
 	}
 	
