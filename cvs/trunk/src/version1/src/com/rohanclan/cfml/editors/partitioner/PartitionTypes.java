@@ -1,7 +1,7 @@
 /* 
- * $Id: PartitionTypes.java,v 1.1 2005-03-01 23:32:47 smilligan Exp $
- * $Revision: 1.1 $
- * $Date: 2005-03-01 23:32:47 $
+ * $Id: PartitionTypes.java,v 1.2 2005-03-29 19:19:49 smilligan Exp $
+ * $Revision: 1.2 $
+ * $Date: 2005-03-29 19:19:49 $
  * 
  * Created Mar 1, 2005 11:51:23 AM
  *
@@ -36,7 +36,7 @@ import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public final class PartitionTypes {
 
@@ -64,6 +64,7 @@ public final class PartitionTypes {
     	CFPartitionScanner.CSS,
     	CFPartitionScanner.SQL,
     	CFPartitionScanner.UNK_TAG,
+    	CFPartitionScanner.TAGLIB_TAG,
     	CFPartitionScanner.FORM_END_TAG,
     	CFPartitionScanner.FORM_START_TAG,
     	CFPartitionScanner.FORM_START_TAG_BEGIN,
@@ -83,4 +84,7 @@ public final class PartitionTypes {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/03/01 23:32:47  smilligan
+ * Fixed a bunch of issues relating to the new partitioner and a few other bits and pieces.
+ *
  */

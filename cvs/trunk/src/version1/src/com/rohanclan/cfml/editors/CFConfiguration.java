@@ -252,6 +252,29 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	}
 	
 	/**
+	 * gets the unknown tag scanner (handles highlighting for any non defined tags)
+	 * i.e. not cfscript, not cf..., not style, not html etc
+	 * partitons
+	 * @return
+	 */
+	protected HTMTagScanner getTaglibTagScanner() 
+	{
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+						CFMLColorsPreferenceConstants.P_COLOR_TAGLIB_TAG
+					)
+				)
+			)
+		);
+	
+		HTMTagScanner unktagScanner = new HTMTagScanner(colorManager,preferenceManager);
+		unktagScanner.setDefaultReturnToken(textToken);
+		return unktagScanner;
+	}
+	
+	/**
 	 * gets the cfml tag scanner (handles highlighting cf tags)
 	 * partitons
 	 * @return
@@ -439,6 +462,9 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		dr = new DefaultDamagerRepairer(getStyleScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CSS);
 		reconciler.setRepairer(dr, CFPartitionScanner.CSS);
+		dr = new DefaultDamagerRepairer(getTaglibTagScanner());
+		reconciler.setDamager(dr, CFPartitionScanner.TAGLIB_TAG);
+		reconciler.setRepairer(dr, CFPartitionScanner.TAGLIB_TAG);
 		
 		//SQL
 		dr = new DefaultDamagerRepairer(getSQLScanner());

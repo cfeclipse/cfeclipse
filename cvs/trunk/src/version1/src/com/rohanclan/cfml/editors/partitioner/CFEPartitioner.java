@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.7 2005-03-15 04:50:44 smilligan Exp $
- * $Revision: 1.7 $
- * $Date: 2005-03-15 04:50:44 $
+ * $Id: CFEPartitioner.java,v 1.8 2005-03-29 19:19:49 smilligan Exp $
+ * $Revision: 1.8 $
+ * $Date: 2005-03-29 19:19:49 $
  * 
  * Created on Oct 17, 2004
  *
@@ -57,7 +57,6 @@ import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.plugindebug.DebugSettings;
 import com.rohanclan.cfml.plugindebug.DebugUtils;
 
-import org.eclipse.jface.text.rules.DefaultPartitioner;
 
 /**
  * @author Stephen Milligan
@@ -865,6 +864,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
          * start or end character we can just return true without
          * scanning back or forward.
          */  
+
         
         if (fDeletedText.indexOf('>') >= 0
             || fInsertedText.indexOf('>') >= 0
@@ -873,7 +873,8 @@ public class CFEPartitioner implements IDocumentPartitioner,
             || fDeletedText.indexOf('"') >= 0
             || fInsertedText.indexOf('"') >= 0
             || fDeletedText.indexOf('\'') >= 0
-            || fInsertedText.indexOf('\'') >= 0) {
+            || fInsertedText.indexOf('\'') >= 0
+            || fInsertedText.indexOf(10) >= 0) {
 
             return true;
         }
@@ -1030,12 +1031,27 @@ public class CFEPartitioner implements IDocumentPartitioner,
              * of reparsing partitions that may have changed.
              */
             int first = d.computeIndexInCategory(fPositionCategory,
-                    e.getOffset());
+                    fReparseStart);
+            if (first >= category.length) {
+                first = Math.max(0,category.length-1);
+            }
+            
+            if (category.length > 0) {
+	            CFEPartition cfp = (CFEPartition)category[first];
+	            if (cfp.getNextPartitionType() != null && 
+	                    cfp.getNextPartitionType().equals(cfp.getType())) {
+	                first--;
+	                cfp = (CFEPartition)category[first];
+	            }
+	            fReparseStart = Math.min(fReparseStart,cfp.offset);
+            }
             
             if (fReparseStart == 0 
                     && category.length > first) {
-                fReparseEnd = Math.max(fReparseStart,category[first].getOffset()+category[first].getLength());
+                fReparseEnd = Math.max(fReparseEnd,category[first].getOffset()+category[first].getLength());
             }
+            
+            
            
             //System.out.println("Reparsing from " + fReparseStart + " to " + fReparseEnd + " doc length is " + fDocument.getLength());
             fScanner.setPartialRange(d, fReparseStart, d.getLength()
@@ -1052,11 +1068,13 @@ public class CFEPartitioner implements IDocumentPartitioner,
                 lastOffset = fScanner.getTokenOffset();
                 contentType = getTokenContentType(token);
 
-
+                /*
                 if (lastOffset > fReparseEnd) {
+                    System.out.println("Last offset was " + lastOffset + " end is " + fReparseEnd);
                     repairPseudoPartitions();
                     return createRegion();
                 }
+                */
                 if (!isSupportedContentType(contentType)) {
                     token = fScanner.nextToken();
                     continue;
@@ -1103,6 +1121,8 @@ public class CFEPartitioner implements IDocumentPartitioner,
                             rememberRegion(p.offset, p.length);
                             //System.out.println("Deleted position " + p.offset + ":" + Integer.toString(p.offset+p.length));
 	                        d.removePosition(fPositionCategory, p);
+	                        fReparseEnd = Math.max(fReparseEnd,p.offset+p.length);
+
 	                        
                         } else {
                             if (p.offset+p.length > start) {
@@ -1613,14 +1633,22 @@ public class CFEPartitioner implements IDocumentPartitioner,
 	 */
 	public ITypedRegion[] computePartitioning(int offset, int length, boolean includeZeroLengthPartitions) {
 		List list= new ArrayList();
-		if (DEBUG) {
-		    DebugUtils.printMessage(getClass(),"Computing partitioning from " 
-		            + offset 
-		            + " to " 
-		            + Integer.toString(offset + length));
-		}
 		try {
-			
+		    if (fReparseEnd > 0) {
+				int end = Math.max(fReparseEnd,offset+length);
+				offset = Math.min(fReparseStart,offset);
+				length = end-offset;
+				fReparseStart = 0;
+				fReparseEnd = 0;
+		    }
+
+			if (DEBUG) {
+			    DebugUtils.printMessage(getClass(),"Computing partitioning from " 
+			            + offset 
+			            + " to " 
+			            + Integer.toString(offset + length));
+			}
+		    
 			int endOffset= offset + length;
 			
 			Position[] category= fDocument.getPositions(fPositionCategory);

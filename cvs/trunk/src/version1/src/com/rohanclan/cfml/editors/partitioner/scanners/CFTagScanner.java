@@ -63,6 +63,12 @@ public class CFTagScanner extends RuleBasedScanner {
 			)
 		));
 		
+		IToken taglibtag = new Token(new TextAttribute(
+			manager.getColor(
+				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_TAGLIB_TAG)
+			)
+		));
+		
 		IToken string =	new Token(new TextAttribute(
 			manager.getColor(
 				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSTRING)

@@ -70,6 +70,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String J_SCRIPT		= "__jscript";
 	public final static String CSS		= "__css";
 	public final static String SQL		= "__sql";
+	public final static String TAGLIB_TAG		= "__taglib_tag";
 	public final static String UNK_TAG		= "__unk_tag";
 	//form and table
 	public final static String FORM_END_TAG		= "__form_end_tag";
@@ -90,6 +91,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken doctype	 	= new Token(DOCTYPE);
 		IToken cfComment 	= new Token(CF_COMMENT);
 		IToken htmComment 	= new Token(HTM_COMMENT);
+		IToken taglibtag		= new Token(TAGLIB_TAG);
 		IToken unktag		= new Token(UNK_TAG);
 		
 		
@@ -214,6 +216,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		{
 			e.printStackTrace(System.err);
 		}
+
+		// Taglibs that may have been imported
+		// <foo:bar> type tags
+		rules.add(new TaglibRule(taglibtag));
 		
 		//catch any other tags we dont know about (xml etc) and make them
 		//a different color

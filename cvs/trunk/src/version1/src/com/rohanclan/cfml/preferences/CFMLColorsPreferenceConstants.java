@@ -26,6 +26,9 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 
 	/** Preference key identifier for cfml tags */
 	public static final String P_COLOR_CFTAG = "cftagColor";
+
+	/** Preference key identifier for cfml tags */
+	public static final String P_COLOR_TAGLIB_TAG = "cftaglibColor";
 	
 	/** Preference key identifier for cfml keywords (eq, and, or, et cetra) */
 	public static final String P_COLOR_CFKEYWORD = "cfkeywordColor";
@@ -70,6 +73,7 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	 * 	<li>P_COLOR_DEFAULT_TEXT - "0,0,0"</li>
 	 * 	<li>P_COLOR_CFSTRING - "0,0,255"</li>
 	 * 	<li>P_COLOR_CFTAG - "128,0,0"</li>
+	 * 	<li>P_COLOR_TAGLIB_TAG - "127,95,202"</li>
 	 * 	<li>P_COLOR_CFKEYWORD - "0,0,255"</li>
 	 * 	<li>P_COLOR_CFNUMBER - "255,10,10"</li>
 	 * 	<li>P_COLOR_CFCOMMENT - "128,128,128"</li>
@@ -88,6 +92,7 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_COLOR_DEFAULT_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_CFSTRING,"0,0,255");
 		store.setDefault(P_COLOR_CFTAG,"128,0,0");
+		store.setDefault(P_COLOR_TAGLIB_TAG,"60,60,170");
 		store.setDefault(P_COLOR_CFKEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFNUMBER,"255,10,10");
 		store.setDefault(P_COLOR_CFCOMMENT,"128,128,128");
