@@ -75,10 +75,10 @@ public abstract class SyntaxDictionary {
 	/** the base url for this dictionary (this will be set on
 	 * object creation)
 	 */
-	protected static URL dictionaryBaseURL;
+	protected URL dictionaryBaseURL;
 	
 	/** get a handle to the dictionary base */
-	static
+	/* static
 	{
 		if(dictionaryBaseURL == null)
 		{
@@ -95,13 +95,25 @@ public abstract class SyntaxDictionary {
 				e.printStackTrace(System.err);
 			}
 		}
-	}
+	} */
 	
 	public SyntaxDictionary()
 	{
 		syntaxelements = new HashMap();
 		functions = new HashMap();
 		scopeVars = new HashMap();
+		
+		try 
+		{
+			dictionaryBaseURL = new URL(
+				CFMLPlugin.getDefault().getBundle().getEntry("/"),
+				"dictionary/"
+			);
+		} 
+		catch (MalformedURLException e) 
+		{
+			e.printStackTrace(System.err);
+		}
 	}
 	
 	/**
@@ -594,5 +606,23 @@ public abstract class SyntaxDictionary {
 		xmlReader.parse(input);
 	}
 	
+	/**
+	 * Get the base URL for this plug-in. This is used as the offset to load the
+	 * dictionary file
+	 * @return
+	 */
+	public URL getDictionaryBaseURL() {
+		return dictionaryBaseURL;
+	}
 	
+	/**
+	 * Set the base URL for this plug-in. This is used as the offset to load the
+	 * dictionary file. The default for this setting is dictionary directory in the
+	 * CFEclipse plugin direcotry
+	 * 
+	 * @param dictionaryBaseURL
+	 */
+	public void setDictionaryBaseURL(URL dictionaryBaseURL) {
+		this.dictionaryBaseURL = dictionaryBaseURL;
+	}
 }
