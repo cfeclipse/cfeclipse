@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.ArrayList;
 //import java.util.Iterator;
 
+import java.nio.*;
+
 /**
  * BlueDragon specific protocol
  * 
@@ -75,7 +77,7 @@ public class BlueDragonProtocol extends DebugProtocol {
 			}
 		);
 		
-		System.out.println("init [" + new String(di.getData()) + "]");
+		System.out.println("init [" + di.getDataAsString() + "]");
 	}
 	
 	/**

@@ -26,6 +26,7 @@ package org.tigris.cfeclipse.debugger.core;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.nio.charset.*;
 
 /**
  * @author Rob
@@ -84,5 +85,30 @@ public class DebugInformation implements IDebugInformation
 		);
 		
 		return requestBytes;
+	}
+	
+	public String getDataAsString()
+	{
+	    CharsetDecoder decoder = DebugConnection.LATAN1.newDecoder();
+	    //CharsetEncoder encoder = DebugConnection.LATAN1.newEncoder();
+	    String s = null;
+	    
+	    try {
+	        // Convert a string to ISO-LATIN-1 bytes in a ByteBuffer
+	        // The new ByteBuffer is ready to be read.
+	        //ByteBuffer bbuf = encoder.encode(CharBuffer.wrap("a string"));
+	    	ByteBuffer bbuf = ByteBuffer.wrap(getData());
+	    	
+	        // Convert ISO-LATIN-1 bytes in a ByteBuffer to a character ByteBuffer and then to a string.
+	        // The new ByteBuffer is ready to be read.
+	        CharBuffer cbuf = decoder.decode(bbuf);
+	        s = cbuf.toString();
+	    } 
+	    catch(CharacterCodingException e) 
+		{
+	    	e.printStackTrace(System.err);
+	    }
+	    
+	    return s;
 	}
 }
