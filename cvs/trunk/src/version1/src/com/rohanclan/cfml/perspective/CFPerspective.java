@@ -30,6 +30,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 //import com.rohanclan.cfml.views.SnipView;
 import com.rohanclan.cfml.views.snips.SnipTreeView;
 import com.rohanclan.cfml.views.cfcmethods.CFCMethodsView;
+import com.rohanclan.cfml.views.browser.BrowserView;
 
 /**
  * @author Rob
@@ -63,29 +64,28 @@ public class CFPerspective implements IPerspectiveFactory {
 		bottom.addView(IPageLayout.ID_TASK_LIST);
 		bottom.addView(IPageLayout.ID_PROBLEM_VIEW);
 		bottom.addView(IPageLayout.ID_BOOKMARKS);
-				
+		bottom.addView(BrowserView.ID_BROWSER);
+		
 		//views to the right
 		IFolderLayout right = layout.createFolder(
 			"right", IPageLayout.RIGHT, (float)0.75, editorid
 		);
 		right.addView(IPageLayout.ID_OUTLINE);
-		//right.addView(SnipTreeView.ID_SNIPVIEWTREE);
 		right.addView(CFCMethodsView.ID_CFCMETHODVIEW);
 		
 		layout.addActionSet(IPageLayout.ID_NAVIGATE_ACTION_SET);
-		
 		//views that should show up on the quick menu on show view
 		layout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
 		layout.addShowViewShortcut(IPageLayout.ID_TASK_LIST);
 		layout.addShowViewShortcut(IPageLayout.ID_BOOKMARKS);
 		layout.addShowViewShortcut(SnipTreeView.ID_SNIPVIEWTREE);
 		layout.addShowViewShortcut(CFCMethodsView.ID_CFCMETHODVIEW);
+		layout.addShowViewShortcut(BrowserView.ID_BROWSER);
 		
 		//add wizards here
 		layout.addNewWizardShortcut("com.rohanclan.cfml.wizards.NewCfmlWizard");
 		layout.addNewWizardShortcut("com.rohanclan.cfml.wizards.NewCfcWizard");
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.folder");
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.file");
-		
 	}
 }
