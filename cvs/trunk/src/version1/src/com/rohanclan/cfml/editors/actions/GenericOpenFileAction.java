@@ -39,6 +39,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
+import com.rohanclan.cfml.wizards.NewCfmlWizard;
+
 import org.eclipse.core.resources.ResourcesPlugin;
 
 /**
@@ -84,6 +86,16 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 	{
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IFile file = root.getFile(new Path(filename));
+		
+		if(!root.exists(file.getFullPath())) {
+			System.err.println("File \'" + filename + "\' does not exist. Stupid user.");
+			/*
+			 	TODO: Ask the user whether they wish to create the file. If so, call the
+			 	NewCfmlWizard to handle it for us 
+						NewCfmlWizard newFile = new NewCfmlWizard();
+			*/
+			return;
+		}
 		
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
