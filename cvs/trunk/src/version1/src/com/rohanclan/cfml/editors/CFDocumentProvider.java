@@ -29,13 +29,6 @@ package com.rohanclan.cfml.editors;
  *
  * You got me. This was a wizard generated file seems to do partition stuff too
  */
-//import org.eclipse.core.resources.IMarker;
-//import org.eclipse.core.resources.IFile;
-//import org.eclipse.core.resources.IMarker;
-//import org.eclipse.core.resources.IProject;
-//import org.eclipse.core.resources.IResource;
-//import org.eclipse.core.resources.IWorkspaceRoot;
-//import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
@@ -46,30 +39,10 @@ import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.rohanclan.cfml.parser.cfscript.ParseException;
+//import com.rohanclan.cfml.parser.cfscript.ParseException;
 
-//import com.rohanclan.cfml.CFMLPlugin;
-//import com.rohanclan.cfml.parser.CFParser;
-//import com.rohanclan.cfml.parser.CFParser;
 
 public class CFDocumentProvider extends FileDocumentProvider {
-
-	//private static IPath lastFilename;
-	//private static IResource lastRes = null;
-	
-	/* public static void setLastFilename(IPath newFilename)
-	{
-		lastFilename = newFilename;
-		System.out.println(
-			"CFDocumentProvider::setLastFilename() - <b>Last</b> filename is set to " 
-			+ newFilename.toString()
-		);
-	}
-	
-	public static void setLastResource(IResource newRes)
-	{
-		lastRes = newRes;
-	} */
 	
 	protected IDocument createDocument(Object element) throws CoreException 
 	{
@@ -79,7 +52,6 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		if(setDocumentContent(document, (IEditorInput)element, getEncoding(element))) 
 		{
 			setupDocument(element, document);
-			//System.out.println("Document created");
 		}
 		
 		if (document != null) 
@@ -89,7 +61,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 				new String[] 
 				{
 					CFPartitionScanner.ALL_TAG,
+					CFPartitionScanner.CF_COMMENT,
 					CFPartitionScanner.HTM_COMMENT,
+					CFPartitionScanner.DOCTYPE,
 					CFPartitionScanner.CF_TAG,
 					CFPartitionScanner.CF_END_TAG,
 					CFPartitionScanner.CF_SCRIPT,

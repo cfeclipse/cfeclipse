@@ -122,6 +122,8 @@ public class CFConfiguration extends SourceViewerConfiguration
 	{	
 		return new String[] {
 			IDocument.DEFAULT_CONTENT_TYPE,
+			CFPartitionScanner.CF_COMMENT,
+			CFPartitionScanner.DOCTYPE,
 			CFPartitionScanner.HTM_COMMENT,
 			CFPartitionScanner.ALL_TAG,
 			CFPartitionScanner.CF_TAG,
@@ -352,14 +354,32 @@ public class CFConfiguration extends SourceViewerConfiguration
 		reconciler.setDamager(dr, CFPartitionScanner.UNK_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.UNK_TAG);
 		
-		//set up the comment section
+		//set up the cf comment section
 		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(
+			new TextAttribute(
+				colorManager.getColor(ICFColorConstants.CF_COMMENT)
+			)
+		);
+		reconciler.setDamager(ndr, CFPartitionScanner.CF_COMMENT);
+		reconciler.setRepairer(ndr, CFPartitionScanner.CF_COMMENT);
+		
+		//set up the html comment section
+		NonRuleBasedDamagerRepairer ndr2 = new NonRuleBasedDamagerRepairer(
 			new TextAttribute(
 				colorManager.getColor(ICFColorConstants.HTM_COMMENT)
 			)
 		);
-		reconciler.setDamager(ndr, CFPartitionScanner.HTM_COMMENT);
-		reconciler.setRepairer(ndr, CFPartitionScanner.HTM_COMMENT);
+		reconciler.setDamager(ndr2, CFPartitionScanner.HTM_COMMENT);
+		reconciler.setRepairer(ndr2, CFPartitionScanner.HTM_COMMENT);
+		
+		//set up the doctype section
+		NonRuleBasedDamagerRepairer ndr3 = new NonRuleBasedDamagerRepairer(
+			new TextAttribute(
+				colorManager.getColor(ICFColorConstants.DOCTYPE)
+			)
+		);
+		reconciler.setDamager(ndr3, CFPartitionScanner.DOCTYPE);
+		reconciler.setRepairer(ndr3, CFPartitionScanner.DOCTYPE);
 		
 		return reconciler;
 	}

@@ -49,6 +49,8 @@ import java.util.Iterator;
 
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
+	public final static String DOCTYPE	 	= "__doctype";
+	public final static String CF_COMMENT 	= "__cf_comment";
 	public final static String HTM_COMMENT 	= "__htm_comment";
 	public final static String CF_TAG 		= "__cf_tag";
 	public final static String CF_END_TAG 	= "__cf_end_tag";
@@ -59,7 +61,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String UNK_TAG		= "__unk_tag";
 	
 	public CFPartitionScanner() {
-
+		IToken doctype	 	= new Token(DOCTYPE);
+		IToken cfComment 	= new Token(CF_COMMENT);
 		IToken htmComment 	= new Token(HTM_COMMENT);
 		IToken tag 			= new Token(ALL_TAG);
 		IToken cftag 		= new Token(CF_TAG);
@@ -76,10 +79,12 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		//general as the rules are applied in order
 		
 		// Partitions in the document will get marked in this order
+		rules.add(new MultiLineRule("<!---", "--->", cfComment));
+		//rules.add(new TagRule(htmComment));
 		rules.add(new MultiLineRule("<!--", "-->", htmComment));
 		
 		//doctype rule
-		rules.add(new MultiLineRule("<!", ">", htmComment));
+		rules.add(new MultiLineRule("<!", ">", doctype));
 		
 		//script block as its own highlighting
 		rules.add(new MultiLineRule("<cfscript>", "</cfscript>", cfscript));

@@ -26,35 +26,110 @@ package com.rohanclan.cfml.editors;
 
 import org.eclipse.jface.text.rules.*;
 
+/**
+ * 
+ * @author Rob
+ * 
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ * @deprecated
+ */
 public class TagRule extends MultiLineRule {
 
 	public TagRule(IToken token) {
-		super("<", ">", token);
+		super("<!--", "-->", token);
 	}
 	
 	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence,
 		boolean eofAllowed) 
 	{
-		int c = scanner.read();
+		System.out.println(sequence);
 		
-		if (sequence[0] == '<') 
+		if(sequence[0] == '<') 
 		{
-			scanner.unread();
-			/*
-			//System.err.println((char)c);
-			if (c == '!') 
+			int c = scanner.read();
+			//<!
+			if(c == '!')
+			{
+				c = scanner.read();
+				//<!-
+				if(c == '-')
+				{
+					c = scanner.read();
+					
+					//<!--
+					if(c == '-')
+					{
+						//html comment
+						c = scanner.read();
+						
+						//<!---
+						if(c == '-')
+						{
+							//a cfcomment!
+							System.err.println("cfcomment!");
+							return true;
+						}
+						else
+						{
+							scanner.unread();
+							scanner.unread();
+							scanner.unread();
+							scanner.unread();
+							return false;
+						}
+					}
+					else
+					{
+						scanner.unread();
+						scanner.unread();
+						scanner.unread();
+						return false;
+					}
+				}
+				else
+				{
+					scanner.unread();
+					scanner.unread();
+					return false;
+				}
+			}
+			else
 			{
 				scanner.unread();
-				// comment - abort
 				return false;
 			}
+			
+			//scanner.unread();
+			//System.out.println("::" + (char)c);
+			//if(c == '-')
+			//{
+				//cfcomment
+			//	System.err.println("cfcomment!");
+			//	scanner.unread();
+			//	return true;
+			//}
+			//else
+			//{
+				//html comment
+				//scanner.unread();
+				//return false;
+			//}
+						
+			//System.err.println((char)c);
+			//if (c == '!') 
+			//{
+			//	scanner.unread();
+				// comment - abort
+			//	return false;
+			//}
 			////////////////////////////////////////////////////////////////////
 			//ALL CFTAGS
 			//we need to skip here if its a cf tag
 			//for some reason - else the code completion
 			//wont get invoked
 			//if ( (c == '/' && f == 'c') || (c == 'c' && f == 'f') )
-			if(c == 'c' || c == 'C')
+			/* if(c == 'c' || c == 'C')
 			{
 				c = scanner.read();
 				//System.err.println(" " + (char)c);

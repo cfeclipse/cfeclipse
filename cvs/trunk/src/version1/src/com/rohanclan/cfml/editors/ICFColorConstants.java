@@ -33,8 +33,12 @@ package com.rohanclan.cfml.editors;
 import org.eclipse.swt.graphics.RGB;
 
 public interface ICFColorConstants {
-	/** all comments */
-	RGB HTM_COMMENT 		= new RGB(128, 128, 128);
+	/** doctype */
+	RGB DOCTYPE		 		= new RGB(128, 128, 128);
+	/** cf comments */
+	RGB CF_COMMENT 			= new RGB(128, 128, 128);
+	/** html comments */
+	RGB HTM_COMMENT 		= new RGB(96, 153, 96);
 	/** html strings */
 	RGB STRING      		= new RGB(0, 0, 255);
 	/** page default text */
