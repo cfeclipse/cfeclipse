@@ -76,6 +76,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		{
 			//attributes typed text (if it exists)
 			String limiting = "";
+			String tagnamespace = "";
 			//where we are going to lookup insight stuff
 			SyntaxDictionary syntax = null;
 			
@@ -134,6 +135,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				if(prefix.trim().substring(0,3).equalsIgnoreCase("<cf"))
 				{
 					cftag = true;
+					tagnamespace = "cf";
 					//should now have just the lookup key : "abort" for example
 					tagname = tagname.trim().substring(3);
 					//System.err.println("tag2>>"+tagname+"<<");
@@ -207,16 +209,30 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					Tag tag = syntax.getTag(tagname);
 					if(tag != null && !tag.isSingle())
 					{
-						String addtag = "</";
-						if(cftag) addtag += "cf";
-						addtag += tagname + ">";
+						StringBuffer sb = new StringBuffer();
+						sb.append("</" + tagnamespace + tagname + ">");
+						//String addtag = "</";
+						//addtag += tagnamespace;
+						//addtag += tagname + ">";
+						String addtag = sb.toString();
 						
 						IDocument doc = viewer.getDocument();
-						 //editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
-						//ISelection sel = editor.getSelectionProvider().getSelection();
-						//ITextSelection sel = (ITextSelection)viewer.getSelectionProvider().getSelection();
-						//addtag.length()
-						doc.replace(documentOffset, 0, addtag);
+						
+						//the fully qualified tag name
+						String fqt = tagnamespace + tagname;
+						
+						//get the word before this one and see if it is a closing
+						//tag for this tag, if it is dont auto close
+						String wordb4 = doc.get(
+							(documentOffset - fqt.length()-2),(fqt.length()+1)
+						);
+						//System.err.println(wordb4);
+						//if it doesnt look like they closed the tag already
+						//go ahead and close it
+						if( !wordb4.equalsIgnoreCase("/" + fqt) )
+						{
+							doc.replace(documentOffset, 0, addtag);
+						}
 					}
 				}
 			}
@@ -303,7 +319,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					}
 					else if( ptr_tg.isSingle() && ptr_tg.isXMLStyle() && !ptr_tg.hasParameters())
 					{
-						name += "/>";
+						name += " />";
 					}
 					else
 					{

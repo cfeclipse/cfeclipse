@@ -54,6 +54,8 @@ public class CFConfiguration extends SourceViewerConfiguration {
 	private CFDoubleClickStrategy doubleClickStrategy;
 	/** the default html tag scanner */
 	private HTMTagScanner htmtagScanner;
+	/** the default html tag scanner */
+	private HTMTagScanner unktagScanner;
 	/** the cold fusion tag scanner */
 	private CFTagScanner cftagScanner;
 	/** plain text scanner (nodes values)*/
@@ -90,7 +92,8 @@ public class CFConfiguration extends SourceViewerConfiguration {
 			CFPartitionScanner.CF_END_TAG,
 			CFPartitionScanner.CF_SCRIPT,
 			CFPartitionScanner.J_SCRIPT,
-			CFPartitionScanner.CSS_TAG
+			CFPartitionScanner.CSS_TAG,
+			CFPartitionScanner.UNK_TAG
 		};
 	}
 	
@@ -147,6 +150,28 @@ public class CFConfiguration extends SourceViewerConfiguration {
 			);
 		}
 		return htmtagScanner;
+	}
+	
+	/**
+	 * gets the unknown tag scanner (handles highlighting for any non defined tags)
+	 * i.e. not cfscript, not cf..., not style, not html etc
+	 * partitons
+	 * @return
+	 */
+	protected HTMTagScanner getUNKTagScanner() 
+	{
+		if (unktagScanner == null) 
+		{
+			unktagScanner = new HTMTagScanner(colorManager);
+			unktagScanner.setDefaultReturnToken(
+				new Token(
+					new TextAttribute(
+						colorManager.getColor(ICFColorConstants.UNK_TAG)
+					)
+				)
+			);
+		}
+		return unktagScanner;
 	}
 	
 	/**
@@ -251,6 +276,8 @@ public class CFConfiguration extends SourceViewerConfiguration {
 		reconciler.setDamager(dr, CFPartitionScanner.ALL_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.ALL_TAG);
 		
+		
+		
 		//javascript tag
 		dr = new DefaultDamagerRepairer(getScriptScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.J_SCRIPT);
@@ -284,6 +311,11 @@ public class CFConfiguration extends SourceViewerConfiguration {
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 
+		//unknown tags
+		dr = new DefaultDamagerRepairer(getUNKTagScanner());
+		reconciler.setDamager(dr, CFPartitionScanner.UNK_TAG);
+		reconciler.setRepairer(dr, CFPartitionScanner.UNK_TAG);
+		
 		//set up the comment section
 		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(
 			new TextAttribute(
@@ -321,6 +353,13 @@ public class CFConfiguration extends SourceViewerConfiguration {
 			cfcp,
 			CFPartitionScanner.ALL_TAG
 		);
+		
+		//unknown tags
+		assistant.setContentAssistProcessor(
+			cfcp,
+			CFPartitionScanner.UNK_TAG
+		);
+		
 		//inside cfscript tags
 		//new processor by oliver :)
 		assistant.setContentAssistProcessor(

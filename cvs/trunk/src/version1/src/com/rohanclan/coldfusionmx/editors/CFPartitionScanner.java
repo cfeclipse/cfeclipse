@@ -45,6 +45,7 @@ import com.rohanclan.coldfusionmx.dictionary.DictionaryManager;
 //import com.rohanclan.coldfusionmx.dictionary.Tag;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionary;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.coldfusionmx.dictionary.Tag;
 
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
@@ -56,6 +57,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String CF_SCRIPT	= "__cf_script";
 	public final static String J_SCRIPT		= "__script_tag";
 	public final static String CSS_TAG		= "__css_tag";
+	public final static String UNK_TAG		= "__unk_tag";
 	
 	public CFPartitionScanner() {
 
@@ -67,6 +69,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken cfscript 	= new Token(CF_SCRIPT);
 		IToken jscript 		= new Token(J_SCRIPT);
 		IToken css 			= new Token(CSS_TAG);
+		IToken unktag		= new Token(UNK_TAG);
 		
 		//IPredicateRule[] rules = new IPredicateRule[13];
 		List rules = new ArrayList();
@@ -91,6 +94,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		SyntaxDictionary sd = DictionaryManager.getDictionary(
 			DictionaryManager.CFDIC
 		);
+		Tag tg = null;
 		
 		try
 		{
@@ -104,10 +108,14 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 				
 				if(!ename.equals("script"))
 				{	
+					tg = sd.getTag(ename);
 					rules.add(new MultiLineRule("<cf" + ename,">", cftag));
-					rules.add(new MultiLineRule("</cf" + ename,">", cfendtag));
 					rules.add(new MultiLineRule("<CF" + ename.toUpperCase(),">", cftag));
-					rules.add(new MultiLineRule("</CF" + ename.toUpperCase(),">", cfendtag));
+					if(!tg.isSingle())
+					{	
+						rules.add(new MultiLineRule("</cf" + ename,">", cfendtag));
+						rules.add(new MultiLineRule("</CF" + ename.toUpperCase(),">", cfendtag));
+					}
 				}
 			}
 		}
@@ -134,7 +142,41 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		//should be *before* this rule. Reorder if needed.
 		//rules[12] = new TagRule(tag);
 		//rules[12] = new MultiLineRule("<", ">", tag);
-		rules.add(new MultiLineRule("<", ">", tag));
+		sd = DictionaryManager.getDictionary(
+			DictionaryManager.HTDIC
+		);
+		
+		try
+		{
+			Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
+			
+			Iterator it = elements.iterator();
+			while(it.hasNext())
+			{
+				String ename = (String)it.next();
+				//System.out.println(ename);
+				
+				if(!ename.equals("script") && !ename.equals("style"))
+				{
+					tg = sd.getTag(ename);
+					rules.add(new MultiLineRule("<" + ename,">", tag));
+					rules.add(new MultiLineRule("<" + ename.toUpperCase(),">", tag));
+					if(!tg.isSingle())
+					{	
+						rules.add(new MultiLineRule("</" + ename,">", tag));
+						rules.add(new MultiLineRule("</" + ename.toUpperCase(),">", tag));
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+		
+		//catch any other tags we dont know about (xml etc) and make them
+		//a different color
+		rules.add(new MultiLineRule("<", ">", unktag));
 		
 		IPredicateRule[] rulearry = new IPredicateRule[rules.size()];
 		rules.toArray(rulearry);
