@@ -35,84 +35,88 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 
-
 /**
  * @author Stephen Milligan
  */
-public class RTrimAction  implements IEditorActionDelegate {
-    
-    ITextEditor editor = null;
-    CodeFoldingSetter foldingSetter = null;
-    
-    /**
-     * 
-     */
-    public RTrimAction() {
-        super();
-    }
-    public void setActiveEditor(IAction action, IEditorPart targetEditor) 
-	{
-        
-		if( targetEditor instanceof ITextEditor )
-		{
-			editor = (ITextEditor)targetEditor;
+public class RTrimAction implements IEditorActionDelegate {
+
+	ITextEditor editor = null;
+
+	CodeFoldingSetter foldingSetter = null;
+
+	/**
+	 *  
+	 */
+	public RTrimAction() {
+		super();
+	}
+
+	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+
+		if (targetEditor instanceof ITextEditor) {
+			editor = (ITextEditor) targetEditor;
 			foldingSetter = new CodeFoldingSetter(editor);
 		}
 	}
-	
+
 	/**
 	 * this gets called for every action
 	 */
-	public void run(IAction action) 
-	{
-		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
-		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();
-		
+	public void run(IAction action) {
+		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+
 		int currentLine = 0;
 		int originalCursorOffset = sel.getOffset();
 		int cursorOffset = originalCursorOffset;
 		int originalSelectionLength = sel.getLength();
 		int selectionLength = originalSelectionLength;
-		StringBuffer newDoc = new StringBuffer();
+		String oldText;
+		int	lineEnd;
+		
 		try {
-		    //foldingSetter.takeSnapshot();
-		    
+			//foldingSetter.takeSnapshot();
+
 			while (currentLine < doc.getNumberOfLines()) {
-			    int offset = doc.getLineOffset(currentLine);
-			    int length = doc.getLineLength(currentLine);
-			    String oldText = doc.get(offset,length);
-			    String newText = oldText.replaceAll("[\\t ]+$","");
-			    
-			    if (!newText.equals(oldText)) {
-			        doc.replace(offset,length,newText);
-				    
-				    if (offset + length <= cursorOffset) {
-				        if(oldText.length() != newText.length()) {
-					        cursorOffset -= oldText.length() - newText.length();
-				        }
-				    }
-				    else if (offset <= cursorOffset + selectionLength 
-				            && selectionLength > 0) {
-				        selectionLength -= oldText.length() - newText.length();
-				        
-				    }
-				    // Check if the cursor is at the end of the line.
-				    else if (offset + length == cursorOffset+2) {
-				        cursorOffset -= 2;
-				    }
-			    }
-			    currentLine++;
+				int offset = doc.getLineOffset(currentLine);
+				int length = doc.getLineLength(currentLine);
+				oldText = doc.get(offset, length);
+				
+				//-- Starts at the end of the line, looking for the first non-first 'white space'
+				//-- it then breaks out. No point in carrying on, as we have found our true line end
+				for (lineEnd=oldText.length(); lineEnd > 0; --lineEnd ){
+					if ( oldText.charAt(lineEnd-1) != '\t' && oldText.charAt(lineEnd-1) != ' ' ){
+						break;
+					}
+				}
+				
+				//-- Only replace the line if the lengths are different
+				if ( lineEnd != oldText.length() ) {
+					String newText = oldText.substring(0, lineEnd);
+					doc.replace(offset, length, newText);
+
+					if (offset + length <= cursorOffset) {
+						if (oldText.length() != newText.length()) {
+							cursorOffset -= oldText.length() - newText.length();
+						}
+					} else if (offset <= cursorOffset + selectionLength	&& selectionLength > 0) {
+						selectionLength -= oldText.length() - newText.length();
+					}	else if (offset + length == cursorOffset + 2) { // Check if the cursor is at the end of the line.
+						cursorOffset -= 2;
+					}
+				}
+				currentLine++;
 			}
 
-			TextSelection selection = new TextSelection(doc,cursorOffset,selectionLength);
+			TextSelection selection = new TextSelection(doc, cursorOffset, selectionLength);
 			editor.getSelectionProvider().setSelection(selection);
 			//foldingSetter.restoreSnapshot();
-		}
-		catch (Exception blx) {
-		    blx.printStackTrace();
+		} catch (Exception blx) {
+			blx.printStackTrace();
 		}
 	}
-	
-	
-	public void selectionChanged(IAction action, ISelection selection) {;}
+
+	public void selectionChanged(IAction action, ISelection selection) {
+		;
+	}
 }
