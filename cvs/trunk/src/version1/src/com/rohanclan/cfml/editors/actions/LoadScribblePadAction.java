@@ -24,6 +24,8 @@ import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.views.browser.BrowserView;
+import org.eclipse.core.runtime.NullProgressMonitor;
+
 /**
  * @author Stephen Milligan
  *
@@ -77,18 +79,27 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
                     FileEditorInput input = new FileEditorInput(scribbleFile);
                 	IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 	               
-	                
-	                IEditorPart editorPart = IDE.openEditor(page,scribbleFile,true);
-	                if (clearOnLoad) {
-	                    editor.getDocumentProvider().getDocument(editor.getEditorInput()).set("");
-	                }
-	                if (loadBrowser) {
-
-		         		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-		         		   browser.setUrl(scribbleURL);
-		         		   //browser.refresh();
-		             }
-	                
+                	
+                	String currentFile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
+                	
+                	if (currentFile.equalsIgnoreCase(scribbleFile.getName())) {
+                	    System.out.println("Yep, saved and refreshed");
+                	    editor.doSave(new NullProgressMonitor());
+                	    BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+		         		browser.setUrl(scribbleURL);
+                	}
+                	else {
+		                IEditorPart editorPart = IDE.openEditor(page,scribbleFile,true);
+		                if (clearOnLoad) {
+		                    editor.getDocumentProvider().getDocument(editor.getEditorInput()).set("");
+		                }
+		                if (loadBrowser) {
+	
+			         		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+			         		   browser.setUrl(scribbleURL);
+			         		   //browser.refresh();
+			             }
+                	}
 	                editor.setFocus();
                 }
 	        }
