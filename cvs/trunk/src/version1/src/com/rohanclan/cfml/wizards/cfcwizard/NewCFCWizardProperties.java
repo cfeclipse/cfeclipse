@@ -207,6 +207,7 @@ public class NewCFCWizardProperties extends WizardPage {
 		propertyName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updatePropertyNameInList();
+				checkForDuplicateProperty();
 			}
 		});
 		//but only update the bean we we lose focus
@@ -522,6 +523,7 @@ public class NewCFCWizardProperties extends WizardPage {
 	private void dialogChanged()
 	{		
 		updateStatus(null);
+		checkForDuplicateProperty();
 	}
 	
 	/**
@@ -597,6 +599,7 @@ public class NewCFCWizardProperties extends WizardPage {
 		
 		updateProperties();
 		updateStatus(null);
+		checkForDuplicateProperty();
 	}
 	
 	/**
@@ -850,4 +853,18 @@ public class NewCFCWizardProperties extends WizardPage {
 		else
 			return false;
 	}
+
+	private void checkForDuplicateProperty() {
+	    String currentName =  propertyName.getText();
+        for (int i=0; i<propertyNames.getItemCount(); i++) {
+            if (i != propertyNames.getSelectionIndex() && propertyNames.getItem(i).equalsIgnoreCase(currentName)) {
+                updateStatus("Duplicate property names not allowed.");
+            }
+            else {
+                updateStatus(null);
+            }
+        }
+        
+    }
+
 }

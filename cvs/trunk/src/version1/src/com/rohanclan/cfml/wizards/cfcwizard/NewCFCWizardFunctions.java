@@ -224,6 +224,7 @@ public class NewCFCWizardFunctions extends WizardPage {
 		functionName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updatePropertyNameInList();
+				checkForDuplicateFunction();
 			}
 		});
 		//but only update the bean we we lose focus
@@ -479,6 +480,7 @@ public class NewCFCWizardFunctions extends WizardPage {
 	
 	private void dialogChanged() {
 		updateStatus(null);
+		checkForDuplicateFunction();
 	}
 	
 	/**
@@ -500,6 +502,7 @@ public class NewCFCWizardFunctions extends WizardPage {
 		
 		updateProperties();
 		updateStatus(null);
+		checkForDuplicateFunction();
 		
 		/*
 		if(functionIdx != -1)
@@ -543,8 +546,9 @@ public class NewCFCWizardFunctions extends WizardPage {
 			}
 			
 			
-		}else{
-			System.err.println("Current bean is null");
+		}
+		else {
+			//System.err.println("Current bean is null");
 		}
 	}
 	
@@ -575,6 +579,9 @@ public class NewCFCWizardFunctions extends WizardPage {
 		
 		NewCFCWizardArguments page4 = (NewCFCWizardArguments)getNextPage();
 		page4.setFunctionItems(getTagArray());
+	
+		// Update the Next button in case the function list is empty
+		dialogChanged();
 	}
 	
 	/**
@@ -598,6 +605,12 @@ public class NewCFCWizardFunctions extends WizardPage {
 		
 		//make the current bean this bean
 		currentbean = bean;
+		
+		// Update properties so the next page has the functions
+		updateProperties();
+		
+		// Update the Next button
+		dialogChanged();
 		
 	}
 		
@@ -645,13 +658,13 @@ public class NewCFCWizardFunctions extends WizardPage {
 		
 		int idx = functionNames.getSelectionIndex();
 		
-		System.err.println("loading bean... " + idx);
-		System.err.println("current: " + currentbean);
+		// System.err.println("loading bean... " + idx);
+		// System.err.println("current: " + currentbean);
 		
 		if(idx > -1)
 		{
 			currentbean = (CFCFunctionBean)functionBeans.get(new Integer(idx));
-			System.err.println("new current: " + currentbean);
+			// System.err.println("new current: " + currentbean);
 			
 			loadBeanToEdit(currentbean);
 		}
@@ -830,4 +843,30 @@ public class NewCFCWizardFunctions extends WizardPage {
 		}
 		return null;
 	} */
+
+	/* (non-Javadoc)
+     * @see org.eclipse.jface.wizard.IWizardPage#canFlipToNextPage()
+     */
+    public boolean canFlipToNextPage() {
+        if (functionBeans.isEmpty()) {
+            return false;
+        }
+        else {
+            return super.canFlipToNextPage();
+        }
+    }
+
+	private void checkForDuplicateFunction() {
+	    String currentName =  functionName.getText();
+        for (int i=0; i<functionNames.getItemCount(); i++) {
+            if (i != functionNames.getSelectionIndex() && functionNames.getItem(i).equalsIgnoreCase(currentName)) {
+                updateStatus("Duplicate function names not allowed.");
+            }
+            else {
+                updateStatus(null);
+            }
+        }
+        
+    }
+
 }

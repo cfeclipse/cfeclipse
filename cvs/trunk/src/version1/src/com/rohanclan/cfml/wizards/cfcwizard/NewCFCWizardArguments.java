@@ -76,7 +76,12 @@ public class NewCFCWizardArguments extends WizardPage {
 	private Button argumentIsRequired;
 	private List argumentList;
 	
-	private ISelection selection;
+	private Button plus;
+	private Button minus;
+	
+    private Text widgetClicked = null;
+
+    private ISelection selection;
 	
 	private NewCFCWizardFunctions functPage;
 
@@ -91,7 +96,7 @@ public class NewCFCWizardArguments extends WizardPage {
 	private static CFCFunctionBean currentFunctionBean;
 	
 	/** the currently loaded (editing argument bean) */
-	private static CFCArgumentBean currentbean;
+	private static CFCArgumentBean currentArgumentBean;
 	
 	/** all the argument beans */
 	//private Hashtable argumentBeans;
@@ -102,15 +107,43 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	public NewCFCWizardArguments(ISelection selection) {
 		super("wizardPage");
+
+		// System.err.println("constructor");
+
 		setTitle("New CF Component");
 		setDescription("New CF Component Arguments wizard.");
 		this.selection = selection;
 	}
 
+	// Listener to select all text when focus passes to a Text field
+	private MouseListener mListener = new MouseListener() {
+	    public void mouseDown(MouseEvent e) {}
+	    public void mouseDoubleClick(MouseEvent e) {}
+	    public void mouseUp(MouseEvent e) {
+	        Text item = (Text)e.widget;
+	        if (!item.equals(widgetClicked)) {
+	            item.selectAll();
+		        widgetClicked = item;
+	        }
+	    }
+	};
+	
+	private FocusListener fListener = new FocusListener() {
+	    public void focusGained(FocusEvent e) {
+	        ((Text)e.widget).selectAll();
+	    }
+	    public void focusLost(FocusEvent e) {
+	        widgetClicked = null;
+	    }
+	};
+	
 	/**
 	 * @see IDialogPage#createControl(Composite)
 	 */
 	public void createControl(Composite parent) {
+
+		// System.err.println("create control");
+
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -140,12 +173,12 @@ public class NewCFCWizardArguments extends WizardPage {
 			public void widgetDefaultSelected(SelectionEvent e){;}
 		});
 		
-		funcList.addFocusListener(new FocusListener(){
+		/* funcList.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent e){	;}
 			public void focusLost(FocusEvent e){
 				loadFunction();
 			}
-		});
+		}); */
 		
 		
 		Label blankLabel = new Label(container, SWT.NULL);
@@ -161,11 +194,12 @@ public class NewCFCWizardArguments extends WizardPage {
 		buttons.setLayout(buttonLayout);
 		
 		///////////////////////////////////////////////////////////////// ADD BUTTON
-		Button plus = new Button(buttons, SWT.PUSH);
+		plus = new Button(buttons, SWT.PUSH);
 		plus.setText(" + ");
 		//plus.setFont(new Font(plus.getDisplay(),"arial", 12, java.awt.Font.BOLD));
 		data = new GridData ();
 		data.horizontalAlignment = GridData.BEGINNING;
+		plus.setEnabled(false);
 		plus.setLayoutData(data);
 		plus.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -175,11 +209,12 @@ public class NewCFCWizardArguments extends WizardPage {
 		
 		
 		//////////////////////////////////////////////////////////////REMOVE BUTTON
-		Button minus = new Button(buttons, SWT.PUSH);
+		minus = new Button(buttons, SWT.PUSH);
 		minus.setText(" - ");
 		//minus.setFont(new Font(plus.getDisplay(),"arial", 12, java.awt.Font.BOLD));
 		data = new GridData ();
 		data.horizontalAlignment = GridData.BEGINNING;
+		minus.setEnabled(false);
 		minus.setLayoutData(data);		
 		minus.addMouseListener(new MouseListener(){
 			public void mouseDoubleClick(MouseEvent e) {;}
@@ -234,7 +269,9 @@ public class NewCFCWizardArguments extends WizardPage {
 		argumentName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updatePropertyNameInList();
+				checkForDuplicateProperty();
 			}
+
 		});
 		//but only update the bean we we lose focus
 		argumentName.addFocusListener(new FocusListener(){
@@ -390,6 +427,16 @@ public class NewCFCWizardArguments extends WizardPage {
 			}
 		});
 		
+		argumentName.addFocusListener(fListener);
+		argumentDisplayName.addFocusListener(fListener);
+		argumentHint.addFocusListener(fListener);
+		argumentDefault.addFocusListener(fListener);
+
+		argumentName.addMouseListener(mListener);
+		argumentDisplayName.addMouseListener(mListener);
+		argumentHint.addMouseListener(mListener);
+		argumentDefault.addMouseListener(mListener);
+
 		//initialize();
 		
 		dialogChanged();
@@ -401,6 +448,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void disable()
 	{
+
+		// System.err.println("disable");
+
 		setControlsEnabled(false);
 	}
 	
@@ -409,6 +459,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void enable()
 	{
+
+		// System.err.println("enable");
+
 		setControlsEnabled(true);
 	}
 	
@@ -417,6 +470,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 * @param to
 	 */
 	public void setControlsEnabled(boolean to){
+
+		// System.err.println("setControlsEnabled");
+
 		argumentName.setEnabled(to);
 		argumentDisplayName.setEnabled(to);
 		argumentHint.setEnabled(to);
@@ -432,9 +488,14 @@ public class NewCFCWizardArguments extends WizardPage {
 	 * change event only.
 	 */
 	private void updatePropertyNameInList(){
+
+		// System.err.println("updateProperyNameInList");
+
 		//update the list text, then the bean
 		int idx = argumentList.getSelectionIndex();
-		argumentList.setItem(idx, argumentName.getText());
+		if (idx >= 0) {
+		    argumentList.setItem(idx, argumentName.getText());
+		}
 	}
 
 	/**
@@ -442,54 +503,81 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void propertyChanged() 
 	{
-		//System.err.println("I was asked to update the beans props");
+		//// System.err.println("I was asked to update the beans props");
 		
+
+		// System.err.println("propertyChanged");
+
 		updateProperties();
 		updateStatus(null);
+		checkForDuplicateProperty();
 	}
 	
 	/**
 	 * Load up the currently selected function so we can add arguments 
 	 */
 	private void loadFunction(){
+
+		// System.err.println("loadFunction");
+
+	    plus.setEnabled(true);
+	    updateProperties();
 		int index = 0;
 		
 		Iterator i = functionBeans.keySet().iterator();
 		while(i.hasNext())
 		{
-			if(index == funcList.getSelectionIndex())
+			Object cfcb = i.next();
+			if(index++ == funcList.getSelectionIndex())
 			{
-				Object cfcb = i.next();
-				//System.err.println("finding bean: " + cfcb);
+				// // System.err.println("finding bean: " + cfcb);
 				currentFunctionBean = (CFCFunctionBean)functionBeans.get(cfcb);
+				currentArgumentBean = null;
 				break;
 			}
-			i.next();
-			index++;
 		}
-		
+		argIdx = -1;
 		loadCurrentArguments();
+		clearAllFields();
 	}
 	
 	/**
+     * When switching functions, need to clear info in all fields
+     */
+    private void clearAllFields() {
+
+		// System.err.println("clearAllFields");
+
+		argumentName.setText("");
+		argumentDisplayName.setText("");
+		argumentHint.setText("");
+		argumentType.setText("");
+		argumentDefault.setText("");
+		argumentIsRequired.setSelection(false);
+    }
+
+    /**
 	 * When a selection has changed call the updating function
 	 */
 	private void selectionChanged()
 	{
-		//updateProperties();
+
+		// System.err.println("selectionChanged");
+
+		updateProperties();
 		//selectProperties();
 		
 		int idx = argumentList.getSelectionIndex();
 		
-		System.err.println("loading bean... " + idx);
-		System.err.println("current: " + currentbean);
+		// // System.err.println("loading argument bean... " + idx);
+		// // System.err.println("current: " + currentArgumentBean);
 		
 		if(idx > -1)
 		{
-			currentbean = (CFCArgumentBean)currentFunctionBean.getArgumentBeans().get(new Integer(idx));
-			System.err.println("new current: " + currentbean);
+			currentArgumentBean = (CFCArgumentBean)currentFunctionBean.getArgumentBeans().get(new Integer(idx));
+			// // System.err.println("new current: " + currentArgumentBean);
 			
-			loadBeanToEdit(currentbean);
+			loadBeanToEdit(currentArgumentBean);
 		}
 	}
 	
@@ -497,17 +585,23 @@ public class NewCFCWizardArguments extends WizardPage {
 	 * Load all the arguments from the current function bean 
 	 */
 	private void loadCurrentArguments(){
+
+		// System.err.println("loadCurrentArguments");
+
 		argumentList.removeAll();
 		
 		Iterator i = currentFunctionBean.getArgumentBeans().keySet().iterator();
-		
 		while(i.hasNext())
 		{
 			Object cab = i.next();
-			System.err.println("finding bean: " + cab);
+			// // System.err.println("finding bean: " + cab);
 			CFCArgumentBean cfab = (CFCArgumentBean)currentFunctionBean.getArgumentBeans().get(cab);
 			argumentList.add( cfab.getName() );
-			currentbean = cfab;
+			argIdx++;
+			// currentArgumentBean = cfab;
+		}
+		if (argIdx >= 0) {
+		    minus.setEnabled(true);
 		}
 	}
 	
@@ -517,6 +611,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	public void setFunctionItems(String[] s)
 	{
+
+		// System.err.println("setFunctionItems");
+
 		this.funcList.setItems(s);
 		//this.funcList.select(0);
 	}
@@ -526,7 +623,11 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 
 	private void dialogChanged() {
+
+		// System.err.println("dialogChanged");
+
 		updateStatus(null);
+		checkForDuplicateProperty();
 	}
 	
 	/**
@@ -534,6 +635,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 * @param message
 	 */
 	private void updateStatus(String message) {
+
+		// System.err.println("updateStatus");
+
 		setErrorMessage(message);
 		setPageComplete(message == null);
 	}
@@ -543,29 +647,39 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void updateProperties()
 	{
-		if(currentbean != null)
+
+		// System.err.println("updateProperties");
+
+		if(currentArgumentBean != null)
 		{	
-			currentbean.setName(argumentName.getText());
-			currentbean.setDisplayName(argumentDisplayName.getText());
-			currentbean.setHint(argumentHint.getText());
-			currentbean.setType(argumentType.getText());
-			currentbean.setDefaultVal(argumentDefault.getText());
-			currentbean.setRequired(argumentIsRequired.getSelection());
-			
-		}else{
-			System.err.println("Current bean is null");
+			currentArgumentBean.setName(argumentName.getText());
+			currentArgumentBean.setDisplayName(argumentDisplayName.getText());
+			currentArgumentBean.setHint(argumentHint.getText());
+			currentArgumentBean.setType(argumentType.getText());
+			currentArgumentBean.setDefaultVal(argumentDefault.getText());
+			currentArgumentBean.setRequired(argumentIsRequired.getSelection());
+		}
+		else {
+			// System.err.println("Current bean is null");
 		}
 	}
 	
 	/**
-	 * Add a function
+	 * Add an argument
 	 */
 	private void handleAdd() 
 	{
+
+		// System.err.println("handleAdd");
+
 		this.argIdx++;
 		CFCArgumentBean bean = new CFCArgumentBean();
 		
 		enable();
+		
+		if (currentArgumentBean != null) {
+		    updateProperties();
+		}
 		
 		bean.setName("newArgument");
 				
@@ -576,8 +690,10 @@ public class NewCFCWizardArguments extends WizardPage {
 		
 		loadBeanToEdit(bean);
 		
-		//make the current bean this bean
-		currentbean = bean;
+		//make the current argument bean this bean
+		currentArgumentBean = bean;
+		
+		minus.setEnabled(true);
 	}
 	
 	/**
@@ -585,8 +701,15 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void handleMinus()
 	{
+
+		// System.err.println("handleMinus");
+
 		//this is the bean we are killing...
 		int i = argumentList.getSelectionIndex();
+		
+		if (i < 0) {
+		    return;
+		}
 	
 		//remove the index
 		argumentList.remove(i);
@@ -594,16 +717,16 @@ public class NewCFCWizardArguments extends WizardPage {
 		//try to set the current bean to the last one or 0
 		if(i-1 != 0 && i != 0) {
 			argumentList.select(i-1);
-			currentbean = (CFCArgumentBean)currentFunctionBean.getArgumentBeans().get(new Integer(i-1));
+			currentArgumentBean = (CFCArgumentBean)currentFunctionBean.getArgumentBeans().get(new Integer(i-1));
 		} else {
 			argumentList.select(0);
-			currentbean = (CFCArgumentBean)currentFunctionBean.getArgumentBeans().get(new Integer(0));
+			currentArgumentBean = (CFCArgumentBean)currentFunctionBean.getArgumentBeans().get(new Integer(0));
 		}
 		
 		resortBeans(i);
 		argIdx--;
 		
-		loadBeanToEdit(currentbean);
+		loadBeanToEdit(currentArgumentBean);
 	}
 	
 	
@@ -613,6 +736,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 * @param bean
 	 */
 	private void loadBeanToEdit(CFCArgumentBean bean){
+
+		// System.err.println("loadBeanToEdit");
+
 		//setup the gui to be able to edit the beans current values
 		argumentName.setText(bean.getName());
 		argumentDisplayName.setText(bean.getDisplayName());
@@ -627,6 +753,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private int getTypeIndex(String s)
 	{
+
+		// System.err.println("getTypeIndex");
+
 		int frtc = argumentType.getItemCount();
 		for(int i = 0; i < frtc; i++)
 		{	
@@ -641,6 +770,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 * @return
 	 */
 	public LinkedHashMap getFunctionBeans() {
+
+		// System.err.println("getFunctionBeans");
+
 		return functionBeans;
 	}
 	
@@ -649,6 +781,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 * @param functionBeans
 	 */
 	public void setFunctionBeans(LinkedHashMap functionBeans) {
+
+		// System.err.println("setFunctionBeans");
+
 		NewCFCWizardArguments.functionBeans = functionBeans;
 	}
 	
@@ -661,6 +796,9 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void resortBeans(int i)
 	{
+
+		// System.err.println("resortBeans");
+
 		int loopLen = currentFunctionBean.getArgumentBeans().size();
 		//int loopLen = functionBeans.size();
 		for(int j = i; j < loopLen; j++)
@@ -676,4 +814,21 @@ public class NewCFCWizardArguments extends WizardPage {
 		}
 		currentFunctionBean.getArgumentBeans().remove(new Integer(loopLen - 1));
 	}
+
+	private void checkForDuplicateProperty() {
+
+		// System.err.println("checkForDuplicateProperty");
+
+	    String currentName =  argumentName.getText();
+        for (int i=0; i<argumentList.getItemCount(); i++) {
+            if (i != argumentList.getSelectionIndex() && argumentList.getItem(i).equalsIgnoreCase(currentName)) {
+                updateStatus("Duplicate argument names not allowed.");
+            }
+            else {
+                updateStatus(null);
+            }
+        }
+        
+    }
+
 }
