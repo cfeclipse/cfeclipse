@@ -288,7 +288,6 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 		if (fPreferenceStore != null) {
 			fPropertyChangeListener= new IPropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent event) {
-					System.out.println(event.getProperty());
 					handlePreferenceStoreChanged(event);
 				}
 			};
