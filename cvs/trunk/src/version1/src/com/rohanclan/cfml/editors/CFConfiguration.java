@@ -185,7 +185,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		if (doubleClickStrategy == null)
 			doubleClickStrategy = new CFDoubleClickStrategy();
 		
-		return doubleClickStrategy;
+		//return doubleClickStrategy;
+		// Spike::
+		// Moved this to com.rohanclan.cfml.editors.dnd.SelectionCursorListener 
+		// so that we can handle ctrl and ctrl+shift modifiers
+		return null;
 	}
 
 	///////////////////////// SCANNERS /////////////////////////////////////////////

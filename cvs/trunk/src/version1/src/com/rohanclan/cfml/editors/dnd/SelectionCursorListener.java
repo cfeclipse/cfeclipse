@@ -22,9 +22,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
+
+import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 /**
  * @author Stephen Milligan
@@ -203,7 +208,6 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 	        ITextSelection sel = (ITextSelection)viewer.getSelection();
 	        selectionStart = sel.getOffset();
 	        selection = sel.getText();
-
         }
     }
 
@@ -274,20 +278,104 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      * @see org.eclipse.swt.widgets.Display#getDoubleClickTime()
      */
     public void mouseDoubleClick(MouseEvent e) {
+        TextSelection sel = (TextSelection)viewer.getSelection();
+        
+        int startpos = sel.getOffset() + sel.getLength();
+        
         if ((e.stateMask & SWT.CONTROL) != 0) {
-            //System.out.println("Need to select whole tag.");
+            ICFDocument cfd = (ICFDocument) viewer.getDocument();
+    		CfmlTagItem cti = cfd.getTagAt(startpos, startpos);
+    		
+    		
+    		
+            int start = 0;
+            int length = 0;
+    		if (cti != null) {
+
+	            if ((e.stateMask & SWT.SHIFT) != 0 
+	                    && cti.matchingItem != null) {
+	                start = cti.getStartPosition();
+	                length = cti.matchingItem.getEndPosition()-cti.getStartPosition()+1;
+
+	            }
+	            else {
+	                start = cti.getStartPosition();
+	                length = cti.getEndPosition()-cti.getStartPosition()+1;
+	            }
+
+	            TextSelection newSel = new TextSelection(cfd,start,length);
+	            viewer.setSelection(newSel);
+                
+    		}
         }
+        else {
+            selectWord(startpos);
+        }
+
     }
 
+    
+    protected boolean selectWord(int caretPos) 
+	{
+
+		IDocument doc = viewer.getDocument();
+		int startPos, endPos;
+		
+		try 
+		{
+			int pos = caretPos;
+			char c;
+
+			while (pos >= 0)
+			{
+				c = doc.getChar(pos);
+				if(!Character.isJavaIdentifierPart(c) && c != '-')
+					break;
+				--pos;
+			}
+
+			startPos = pos;
+
+			pos = caretPos;
+			int length = doc.getLength();
+
+			while (pos < length) 
+			{
+				c = doc.getChar(pos);
+				if(!Character.isJavaIdentifierPart(c) && c != '-')
+					break;
+				++pos;
+			}
+
+			endPos = pos;
+			TextSelection newSel = new TextSelection(doc,startPos,endPos-startPos);
+	        viewer.setSelection(newSel);
+			return true;
+
+		} 
+		catch (BadLocationException x) 
+		{
+			//?
+		}
+
+		return false;
+	}
+
+    
+    
+    
+    
+    
     /**
      * Sent when a mouse button is pressed.
      *
      * @param e an event containing information about the mouse button press
      */
     public void mouseDown(MouseEvent e) {
-        mouseDown = true;
-        downUp = true;
-        
+        if ((e.stateMask & SWT.CONTROL) == 0) {
+	        mouseDown = true;
+	        downUp = true;
+        }
     }
 
     /**
@@ -297,15 +385,16 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      */
     public void mouseUp(MouseEvent e) {
         
-        mouseDown = false;
-        if (downUp) {
-            reset();
+        if ((e.stateMask & SWT.CONTROL) == 0) {
+	        mouseDown = false;
+	        if (downUp) {
+	            reset();
+	        }
+	        if (selectionStart >= 0) {
+	            checkFolding();
+	        }
+	        
         }
-        if (selectionStart >= 0) {
-            checkFolding();
-        }
-        
-        
     }
 
 	
