@@ -6,8 +6,8 @@
  */
 package com.rohanclan.cfml.editors.dnd;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
@@ -66,6 +66,7 @@ public class AnnotationTracker {
 	    ProjectionAnnotationModel pModel = viewer.getProjectionAnnotationModel();
         Iterator i = pModel.getAnnotationIterator();
         
+        
         while (i.hasNext()) {
             Object o = i.next();
             if (o instanceof ProjectionAnnotation) {
@@ -73,8 +74,8 @@ public class AnnotationTracker {
                 Position pos = pModel.getPosition(annotation);
                 
                 // The annotation is completely inside the selection
-                if (pos.offset > selectionOffset 
-                        && pos.offset < selectionOffset + length) {
+                if (pos.offset >= selectionOffset 
+                        && pos.offset <= selectionOffset + length) {
                     boolean collapsed = annotation.isCollapsed();
                     pModel.expand(annotation);
                     Position newPos = new Position(pos.offset-selectionOffset,pos.length);
@@ -110,8 +111,8 @@ public class AnnotationTracker {
                 Annotation annotation = (Annotation)o;
                 Position pos = aModel.getPosition(annotation);
                 // The annotation is completely inside the selection
-                if (pos.offset > selectionOffset 
-                        && pos.offset < selectionOffset + length) {
+                if (pos.offset >= selectionOffset 
+                        && pos.offset <= selectionOffset + length) {
                     Position newPos = new Position(pos.offset-selectionOffset,pos.length);
                     
                     annotationList.add(new AnnotationPosition(annotation,newPos));
@@ -150,23 +151,34 @@ public class AnnotationTracker {
 	    if (annotationList == null) {
 	        return;
 	    }
-	    Iterator i = annotationList.iterator();
-	    
+	    Object[] allAnnotations = annotationList.toArray();
+	    ArrayList collapsedAnnotations = new ArrayList();
 	    try {
 	    ProjectionAnnotationModel pModel = viewer.getProjectionAnnotationModel();
 	    IAnnotationModel aModel = viewer.getAnnotationModel();
-	    while(i.hasNext()) {
-	        AnnotationPosition ap = (AnnotationPosition)i.next(); 
+	    for(int i=0;i<allAnnotations.length;i++) {
+	        AnnotationPosition ap = (AnnotationPosition)allAnnotations[i]; 
 	        Position p = new Position(ap.position().offset+offset,ap.position().length);
 	        if (ap.annotation() instanceof ProjectionAnnotation) {
 	            pModel.addAnnotation(ap.annotation(),p);
+	           
+	            // Don't collapse this in here in case there are 
+	            // non-collapsed nested annotations
+	            // that haven't been added to the model yet.
 	            if (ap.collapsed()) {
-	                pModel.collapse(ap.annotation());
+	                collapsedAnnotations.add(ap.annotation());
 	            }
+	            
 	        }
 	        else {
 	            aModel.addAnnotation(ap.annotation(),p);
 	        }
+	    }
+	    
+	    // Now collapse the annotations that were collapsed before
+	    Object[] annotations = collapsedAnnotations.toArray();
+	    for (int x =0;x<annotations.length;x++) {
+	        pModel.collapse((ProjectionAnnotation)annotations[x]);
 	    }
 	    }
 	    catch (Exception e) {

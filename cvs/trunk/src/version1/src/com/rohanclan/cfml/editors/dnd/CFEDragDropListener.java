@@ -57,9 +57,9 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
      */
     final TextTransfer textTransfer = TextTransfer.getInstance();
     /**
-     * This indidates whether or not the drag a copy rather than a move.
+     * This indidates whether or not the drag is internal.
      */
-    private boolean isCopy = true;
+    private boolean isInternalDrag = true;
     
     /**
      * This constructor sets up the editor, text widget viewer and cursor listeners
@@ -67,12 +67,15 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
      * 
      */
     public CFEDragDropListener(ITextEditor editor, ProjectionViewer viewer, SelectionCursorListener cursorListener) {
-        this.editor = editor;
-        this.textWidget = viewer.getTextWidget();
-        this.viewer = viewer;
-        this.cursorListener = cursorListener;
-        widgetPositionTracker = new WidgetPositionTracker(textWidget);
-        
+        try {
+	        this.editor = editor;
+	        this.textWidget = viewer.getTextWidget();
+	        this.viewer = viewer;
+	        this.cursorListener = cursorListener;
+	        widgetPositionTracker = new WidgetPositionTracker(textWidget);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -84,6 +87,7 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
      * 
      */
     public void dragEnter(DropTargetEvent event) {
+        /*
 		if(event.detail == DND.DROP_DEFAULT) {
 			if ((event.operations & DND.DROP_MOVE) != 0 
 			        ||(event.operations & DND.DROP_COPY) != 0) {
@@ -98,6 +102,7 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 			    event.detail = DND.DROP_NONE;
 			}
 		}
+		*/
 	}
 	
     /**
@@ -110,34 +115,39 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
      * 
      */
 	public void dragOver(DropTargetEvent event) {
-		event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
-		if (textTransfer.isSupportedType(event.currentDataType)) {
-			//NOTE: on unsupported platforms this will return null
-		    
-			String t = (String)(textTransfer.nativeToJava(event.currentDataType));
-
-			if(t != null) {
-			    // Convert the display co-ordinates to text widget co-ordinates
+	    try {
+			event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
+			
+			if (textTransfer.isSupportedType(event.currentDataType)) {
+				//NOTE: on unsupported platforms this will return null
 			    
-		        Point mousePosition = textWidget.toControl(event.x,event.y);
-		        
-			    int widgetOffset = widgetPositionTracker.getWidgetOffset(mousePosition);
-			    int viewerOffset = viewer.widgetOffset2ModelOffset(widgetOffset);
-			   
-			    widgetPositionTracker.doScroll(mousePosition);
-			    
-			    // Make sure we don't allow text to be dropped onto itself
-			    if (viewerOffset > cursorListener.selectionStart 
-			            && viewerOffset < cursorListener.selectionStart + cursorListener.selection.length()) {
-			        event.detail = DND.DROP_NONE;
-			    }
-			    else if (viewerOffset != lastOffset) {
-			        event.detail = DND.DROP_MOVE;
-			        viewer.setSelectedRange(viewerOffset,0);
-				    editor.setFocus();
-			        lastOffset = viewerOffset;
-			    }
+				String t = (String)(textTransfer.nativeToJava(event.currentDataType));
+	
+				if(t != null) {
+				    // Convert the display co-ordinates to text widget co-ordinates
+				    
+			        Point mousePosition = textWidget.toControl(event.x,event.y);
+			        
+				    int widgetOffset = widgetPositionTracker.getWidgetOffset(mousePosition);
+				    int viewerOffset = viewer.widgetOffset2ModelOffset(widgetOffset);
+				   
+				    widgetPositionTracker.doScroll(mousePosition);
+				    
+				    // Make sure we don't allow text to be dropped onto itself
+				    if (viewerOffset > cursorListener.selectionStart 
+				            && viewerOffset < cursorListener.selectionStart + cursorListener.selection.length()) {
+				        event.feedback = DND.DROP_NONE;
+				    }
+				    else if (viewerOffset != lastOffset) {
+				        viewer.setSelectedRange(viewerOffset,0);
+					    editor.setFocus();
+				        lastOffset = viewerOffset;
+				    }
+				}
 			}
+	    }
+		catch (Exception e ) {
+		    e.printStackTrace();
 		}
 	}
 	
@@ -163,13 +173,18 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 	}
 	
 	public void drop(DropTargetEvent event) {
-		
-		if(textTransfer.isSupportedType(event.currentDataType)) {
-			handleTextDrop(event);
-		}
-		
-		if(fileTransfer.isSupportedType(event.currentDataType)){
-			handleFileDrop(event);
+		try {
+			if(textTransfer.isSupportedType(event.currentDataType)) {
+				handleTextDrop(event);
+			}
+			
+			if(fileTransfer.isSupportedType(event.currentDataType)){
+				handleFileDrop(event);
+			}
+
+	    }
+		catch (Exception e ) {
+		    e.printStackTrace();
 		}
 	}
 	
@@ -184,10 +199,10 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 	 * @param event
 	 */
 	private void handleTextDrop(DropTargetEvent event) {
-	    String text =  (String)event.data;
-	    AnnotationTracker annotationTracker = new AnnotationTracker(viewer);
 		try
 		{
+		    String text =  (String)event.data;
+		    AnnotationTracker annotationTracker = new AnnotationTracker(viewer);
 		    // Figure out where to drop the text
 		    TextSelection sel = (TextSelection)viewer.getSelectionProvider().getSelection();
 		    // Offset of the drop point in viewer co-ordinates
@@ -195,7 +210,8 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 		    
 		    
 		    // Delete the text from the old location
-		    if (!isCopy) {
+		    if (!isInternalDrag 
+		            && (event.detail & DND.DROP_MOVE) != 0) {
 		        // Offset of the selection start in viewer co-ordinates
 		        int selectionOffset = cursorListener.selectionStart;
 			    int length = cursorListener.selection.length();
@@ -225,13 +241,13 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 	        viewer.getSelectionProvider().setSelection(sel);
 	        //System.out.println("Dropped text re-selected.");
 			editor.setFocus();
-			isCopy = true;
+			isInternalDrag = false;
 			lastOffset = -1;
 
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace(System.err);
+			e.printStackTrace();
 		}
 	}
 
@@ -264,44 +280,68 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 
     public void dragStart(DragSourceEvent event) {
 	  	
-        if (!cursorListener.doDrag()) {
-            event.doit = false;
-            return;
-        }
-        isCopy = false;
-        
-	    
+        try {
+	        if (!cursorListener.doDrag()) {
+	            event.doit = false;
+	            return;
+	        }
+	        
+	        isInternalDrag = false;
+	        
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
     
 	public void dragSetData(DragSourceEvent event) {
-		// Provide the data of the requested type.
-		if(TextTransfer.getInstance().isSupportedType(event.dataType)) {
-			
-		    String selectedText = cursorListener.selection;
-		    
-	        if (selectedText.endsWith(textWidget.getLineDelimiter())) {
-	            selectedText = selectedText.substring(0,selectedText.length()-textWidget.getLineDelimiter().length());
-	        }
-	        event.data = selectedText;
-
+	    try {
+			// Provide the data of the requested type.
+			if(TextTransfer.getInstance().isSupportedType(event.dataType)) {
+				
+			    String selectedText = cursorListener.selection;
+			    
+		        if (selectedText.endsWith(textWidget.getLineDelimiter())) {
+		            selectedText = selectedText.substring(0,selectedText.length()-textWidget.getLineDelimiter().length());
+		        }
+	
+		        event.data = selectedText;
+	
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
+	
+	
+
 
 	/**
 	 * resets the <code>SelectionCursorListener</code> if the drag
 	 * finishes without a copy or move.
 	 */
 	public void dragFinished(DragSourceEvent event) {
-		if(event.detail == DND.DROP_MOVE){
-		    //System.out.println("Data Moved");
+	    try {
+			if(event.detail == DND.DROP_MOVE){
+			    //System.out.println("Data Moved");
+			}
+			else if(event.detail == DND.DROP_COPY) {
+			    //System.out.println("Data Copied");
+			}
+			// We don't know why it stopped, but we want to reset the listener state. 
+			else {
+			    cursorListener.reset();
+			}
+
 		}
-		else if(event.detail == DND.DROP_COPY) {
-		    //System.out.println("Data Copied");
-		}
-		// We don't know why it stopped, but we want to reset the listener state. 
-		else {
-		    cursorListener.reset();
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	

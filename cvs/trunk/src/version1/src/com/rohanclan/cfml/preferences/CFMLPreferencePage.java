@@ -166,8 +166,24 @@ public class CFMLPreferencePage
         GridLayout layout = new GridLayout();        
         layout.numColumns = 3;              
         FilePathComposite.setLayout(layout);
-        GridData gridData =
-            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        //GridData gridData =
+        //    new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        GridData gridData = new GridData();
+
+        gridData.horizontalSpan = 3;
+
+        gridData.grabExcessHorizontalSpace = true;
+
+        gridData.horizontalAlignment = GridData.FILL;
+
+        // default width is 'client screen width/2'
+
+        int screenwidth = parent.getDisplay().getBounds().width;
+
+        gridData.widthHint = 250;
+
+        // [End] Rudi R.P. 
+        
         gridData.horizontalSpan = 3;
         FilePathComposite.setLayoutData(gridData);        
         

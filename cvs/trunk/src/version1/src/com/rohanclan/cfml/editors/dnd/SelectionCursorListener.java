@@ -6,7 +6,11 @@
  */
 package com.rohanclan.cfml.editors.dnd;
 
+import java.util.Iterator;
+
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
@@ -19,6 +23,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.TextSelection;
 
 /**
  * @author Stephen Milligan
@@ -70,6 +76,13 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      * Was the mouse down the last time we were notified
      */
     private boolean mouseDown = false;
+    
+    /**
+     * Indicates whether or not the selection needs to be expanded
+     * to contain folded text. This is set to true when the 
+     * selection ends at the end of a line.
+     */
+    public boolean expandSelection = false;
     
     /**
      * This allows us to handle the case where the user clicks and releases on a selection.
@@ -187,13 +200,69 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
     
     public void selectionChanged(SelectionChangedEvent event) {
         if (!hovering) {
-	        ITextSelection sel = (ITextSelection)viewer.getSelectionProvider().getSelection();
+	        ITextSelection sel = (ITextSelection)viewer.getSelection();
 	        selectionStart = sel.getOffset();
 	        selection = sel.getText();
+
         }
     }
 
+    /**
+     * Determines if the selection needs to be expanded
+     * to account for a closed fold.
+     * 
+     * If so, it modifies the selection in the editor
+     * and updates the selected text.
+     * 
+     */
+    private void checkFolding() {
+        int widgetOffset = viewer.modelOffset2WidgetOffset(selectionStart);
+        String[] lines = selection.split(textWidget.getLineDelimiter());
+        int widgetLine = textWidget.getContent().getLineAtOffset(widgetOffset);
+        int lineCount = 0;
+        
+        if (lines.length > 0) {
+            lineCount = lines.length -1;
+        }
+        
+        // If we've already grabbed the text inside a fold we 
+        // could end up with more lines than the widget knows about.
+        if (widgetLine+lineCount > textWidget.getLineCount()) {
+            return;
+        }
 
+        String line = textWidget.getContent().getLine(widgetLine+lineCount);
+        
+        if (lines.length > 0 
+                && line.equals(lines[lines.length-1])) {
+            // Figure out the viewer offset for the start of the line.
+            int widgetLineStart = textWidget.getContent().getOffsetAtLine(widgetLine + lineCount);
+            int viewerLineStart = viewer.widgetOffset2ModelOffset(widgetLineStart);
+           
+            ProjectionAnnotationModel model = viewer.getProjectionAnnotationModel();
+            Iterator i = model.getAnnotationIterator();
+            while (i.hasNext()) {
+                ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
+                Position pos = model.getPosition(annotation);
+                /* Check if the line is the start line of a collapsed
+                 * region.
+                 */
+                if (pos.offset == viewerLineStart 
+                        && annotation.isCollapsed()) {
+                    int selectionLength = viewerLineStart - selectionStart + pos.length;
+                    // Grab the current caret position so we can put it back after changing the selection
+                    Point oldCaret = textWidget.getCaret().getLocation();
+                    TextSelection sel = new TextSelection(viewer.getDocument(),selectionStart,selectionLength);
+                    viewer.setSelection(sel,false);
+                    /* Restore the caret. Using this rather than textWidget.setCaretOffset()
+                     * because setCaretOffset() clears the selection
+                     */ 
+                    textWidget.getCaret().setLocation(oldCaret);
+                }
+            }
+        }
+        
+    }
     
 
     /**
@@ -230,6 +299,10 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
         if (downUp) {
             reset();
         }
+        if (selectionStart >= 0) {
+            checkFolding();
+        }
+        
         
     }
 
