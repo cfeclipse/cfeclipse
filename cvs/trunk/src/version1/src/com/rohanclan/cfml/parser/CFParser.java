@@ -1161,7 +1161,7 @@ public class CFParser {
 			lineOffsets = Util.calcLineNumbers(inData);
 			ArrayList matches = tagMatchingAttempts(inData);
 			docTree = createDocTree(parserState.getMatches());
-			parserState.addMessages(finalDocTreeTraversal(docTree.getDocumentRoot()));
+			parserState.addMessages(finalDocTreeTraversal(docTree. getDocumentRoot()));
 			processParseResultMessages();
 		} catch(Exception excep) 
 		{

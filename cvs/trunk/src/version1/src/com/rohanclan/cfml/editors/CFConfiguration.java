@@ -30,6 +30,8 @@ package com.rohanclan.cfml.editors;
  * This sets up the whole editor. Assigin partition damagers and repairers, and
  * assign insight to partitions - bunch of other stuff too.
  */
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.TextAttribute;
@@ -549,6 +551,14 @@ public class CFConfiguration extends SourceViewerConfiguration
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
         	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
         	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
+        }
+        else if(prop.equals(ICFMLPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
+        	boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
+        	try {
+        		CFMLPlugin.getWorkspace().getRoot().deleteMarkers(null, true, IResource.DEPTH_INFINITE);
+        	}catch(CoreException ex) {
+        		ex.printStackTrace();
+        	}
         }
 
     }
