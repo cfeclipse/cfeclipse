@@ -653,6 +653,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					break;
 				case ';':
 					break;
+				case '>':
+					break;
 				case '\"':
 					break;
 				default:

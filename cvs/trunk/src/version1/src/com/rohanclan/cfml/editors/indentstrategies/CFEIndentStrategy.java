@@ -55,7 +55,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 	
 	public void setIndentString(int tabWidth, boolean tabsAsSpaces) {
 		if(tabsAsSpaces) {
-			System.err.println("Indent string set to "+tabWidth+" spaces.");
+			//System.err.println("Indent string set to "+tabWidth+" spaces.");
 			String s = new String();
 			for (int i=0;i<tabWidth;i++) {
 				s+= " ";
@@ -63,7 +63,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 			indentString = s;
 		}
 		else {
-			System.err.println("Indent string set to 1 tab.");
+			//System.err.println("Indent string set to 1 tab.");
 			indentString = "\t";
 		}
 	}

@@ -4,22 +4,22 @@
  * The MIT License
  * Copyright (c) 2004 Oliver Tupman
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the Software 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software
  * is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in 
+ * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
 package com.rohanclan.cfml.editors.indentstrategies;
@@ -42,9 +42,9 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 /**
  * This represents a tag-based auto-indent strategy. It not only
- * does the auto-indenting, but it also does the auto-closing & 
+ * does the auto-indenting, but it also does the auto-closing &
  * step-through of various characters.
- * 
+ *
  * @author Oliver Tupman
  */
 public class TagIndentStrategy extends CFEIndentStrategy {
@@ -55,7 +55,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	public static final int INDENT_ONCLOSEDTAGENTER = 1;
 	/** Don't indent */
 	public static final int INDENT_DONTDOIT = 2;
-	
+
 	/** Auto-close double quotes */
 	private boolean autoClose_DoubleQuotes = true;
 	/** Auto-close single quotes */
@@ -68,22 +68,23 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private boolean autoInsert_CloseTags = true;
 	/** When to trigger the auto-indent strategy when the user is in a tag */
 	private int autoIndent_OnTagClose = INDENT_ONCLOSEDTAGENTER;
-	
-	
+
+
 	/**
 	 * @param editor
 	 */
 	public TagIndentStrategy(CFMLEditor editor) {
 		super(editor);
+
 	}
 	/**
-	 * Returns the integer position of the previous chevron. Basically 
+	 * Returns the integer position of the previous chevron. Basically
 	 * scans backwards through the string until it hits a '<'. Note that
-	 * it's not particularly clever so if there's a '<' within a string 
+	 * it's not particularly clever so if there's a '<' within a string
 	 * it will return it's position.
-	 * 
+	 *
 	 * @param docData - the string to search in
-	 * @param position - the start position 
+	 * @param position - the start position
 	 * @return - the position of the previous chevron, or -1 on failure
 	 */
 	private int findPreviousChevron(String docData, int position) {
@@ -92,24 +93,24 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		{
 			if(docData.charAt(i) == '<')
 			{
-				
+
 			}
 		}
-		
+
 		return retval;
 	}
-	
+
 	private String getIntRep(String data) {
 		String retval = "";
-		
+
 		for(int i = 0; i < data.length(); i++)
 		{
 			retval += data.charAt(i) + " = " + (int)data.charAt(i) + " ";
 		}
-		
+
 		return retval;
 	}
-	
+
 	private String getWhiteSpace(String data, char stopChar) {
 		String retval = "";
 		boolean found = false;
@@ -117,14 +118,14 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 		for(pos = 0; pos < data.length(); pos++) {
 			char currChar = data.charAt(pos);
-			
+
 			if(currChar != ' ' && currChar != '\t')
 			{
 				break;
 			}
 		}
 		retval = data.substring(0, pos);
-		
+
 		return retval;
 	}
 
@@ -132,7 +133,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * Returns the closing tag based upon the previous tag entered.
 	 * So enter <cf_fred> and the closing tag returned is "cf_fred".
 	 * The calling function can sort out the chevrons.
-	 * 
+	 *
 	 * @param currDoc - Current document that we're in
 	 * @param documentOffset - the offset in the document
 	 * @return the string name of the tag sans chevrons, otherwise a blank string
@@ -149,7 +150,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		int opener = preTrigger.lastIndexOf('<');
 		if(opener == -1)
 			return "";
-		
+
 		String startOfTag = preTrigger.substring(opener);
 		int i;
 		for(i = 1; i < startOfTag.length(); i++) {
@@ -159,10 +160,10 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				break;
 			}
 		}
-		
+
 		return startOfTag.substring(1, i);
 	}
-	
+
 	/**
 	 * Modifies the DocumentCommand to handle the user closing a single tag (i.e. &lt;nop/&gt;)
 	 * @param command - the document command to modify
@@ -170,7 +171,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private DocumentCommand singleTagTakeAction(IDocument doc, DocumentCommand command) {
 
-	    
+
 	    char nextChar = ' ';
 	    if (command.offset < doc.getLength()) {
 	        try {
@@ -180,35 +181,35 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	            e.printStackTrace();
 	        }
 	    }
-	    
+
 	    if (nextChar != '>') {
 	        return command;
 	    }
-	    
+
 		stepThrough(command);
 		return command;
 	}
 
 	private int findStartofTag(IDocument doc, int offset) throws BadLocationException {
 		int retval = -1;
-		
+
 		for(int i = offset; i >= 0; i--) {
 			char currChar = doc.getChar(i);
 			if(currChar == '>')
 				return -1;
-			
+
 			if(currChar == '<')  {
 				return i;
 			}
 		}
-		
+
 		return retval;
 	}
-	
+
 	private boolean isWhitespace(char c) {
 		return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
 	}
-	
+
 	private String getTagName(IDocument doc, int startPos) throws BadLocationException {
 		String retStr = "";
 		int i = 0;
@@ -217,10 +218,10 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				break;
 			}
 		}
-		
+
 		return doc.get(startPos, i - startPos);
 	}
-	
+
 	private boolean tagIsSingle(IDocument doc, DocumentCommand docCommand, String tagName) {
 		boolean retval = true;
 
@@ -230,16 +231,16 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		//
 		SyntaxDictionary syntax = DictionaryManager.getDictionary((cftag) ? DictionaryManager.CFDIC : DictionaryManager.HTDIC);
 		Tag currTag = syntax.getTag(tagName);
-		if(currTag == null) 
+		if(currTag == null)
 			return true;
 		return currTag.isSingle();
 	}
-	
+
 	/**
 	 * Handles a closing, non-single tag. It will insert two lines. The first will be the next line
 	 * that the cursor will be upon and will be indented by the opener tag's indent + 1 tab. The 2nd
 	 * line will be on the same level as the opener and will contain the closing tag.
-	 * 
+	 *
 	 * @param doc - the document that this action is taking place within
 	 * @param docCommand - the document command to modify
 	 * @return the modified document command
@@ -253,25 +254,25 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 		if(docCommand.offset >= 0)
 			lastChar = doc.getChar(docCommand.offset - 1);
-		
+
 		if(docCommand.offset < doc.getLength())
 			nextChar = doc.getChar(docCommand.offset + 1);
-		
+
 		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1);
-		
+
 		isSingleTag = tagIsSingle(doc,docCommand,closingTag);
-		
+
 //		autoCloseTag = !tagIsSingle(doc,docCommand, closingTag) && autoCloseTag;
-		
-		// If the user hasn't got auto-insertion of closing chevrons on, then 
+
+		// If the user hasn't got auto-insertion of closing chevrons on, then
 		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
 //		if(!autoCloseTag
-	//	        || nextChar != '>')	
+	//	        || nextChar != '>')
 		if(!autoCloseTag)
-			closingTag+= ">";	
-		
+			closingTag+= ">";
+
 		closingTag = "</" + closingTag;
-		
+
 		if(this.autoIndent_OnTagClose == INDENT_ONTAGCLOSE)
 			doInBetweenTagIndent(doc, docCommand, lastChar);	// User wants us to insert a CR and indent.
 		else {
@@ -284,20 +285,20 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					docCommand.shiftsCaret = false;
 				}
 				if(autoCloseTag)	// If we're auto-closing tags then we need a closing chevron.
-					closingTag+= ">"; 
-				
+					closingTag+= ">";
+
 				//docCommand.caretOffset = docCommand.offset;
 				//docCommand.shiftsCaret = true;
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-			
+
 		if(!isSingleTag)
 			docCommand.text += closingTag;		// Use the first line's whitespace and insert the closing tag.
 		return docCommand;
 	}
-	
+
 	/**
 	 * @param doc
 	 * @param docCommand
@@ -317,22 +318,22 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		int openChevron = doc.get(0, docCommand.offset).lastIndexOf('<');
 		if(openChevron == -1)
 			return;
-		
-		String whiteSpace = getPrevLineWhiteSpace(doc,openChevron);		
+
+		String whiteSpace = getPrevLineWhiteSpace(doc,openChevron);
 		docCommand.caretOffset = docCommand.offset + 3 + whiteSpace.length();
 
-		
+
 		if(lastChar == '>')
 		{
 			docCommand.text = "";
 			docCommand.offset++;
 		}
-			
+
 		if(whiteSpace.length() == 0)
 			docCommand.caretOffset--;
-		
+
 		docCommand.shiftsCaret = false;
-		
+
 		docCommand.text += "\n";	// End the current line the user is on.
 		if(lastChar == '>') docCommand.text+="\t";
 		docCommand.text += whiteSpace + "\t" + "\n";	// Create the whitespace for the next line (the user will end up on this one)
@@ -343,7 +344,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * <cffunction name="fred>				: true
 	 * <cffunction name="fred"
 	 * 			   returntype="boolean">	: true
-	 * 
+	 *
 	 * </cfoutput>							: false (1)
 	 * <cfoutput>
 	 * </cfoutput>
@@ -352,7 +353,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private static final int AFTEROPENTAG_AFTER 	= 0;
 	private static final int AFTEROPENTAG_CLOSER 	= 1;
 	private static final int AFTEROPENTAG_NOTAFTER 	= 2;
-	
+
 	private int afterOpenTag(IDocument doc, int offset) {
 		int pos = offset - 1;
 		try {
@@ -373,7 +374,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 		return AFTEROPENTAG_AFTER;
 	}
-	
+
 	/**
 	 * Handles the case where the user has pressed <! and the strategy has
 	 * auto-inserted a closing '>'. This deletes the next '>'
@@ -383,7 +384,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private void handleHTMLComment(IDocument doc, DocumentCommand docCommand) {
 		docCommand.offset++;
 	}
-	
+
 	/**
 	 * The method called by the editor.
 	 */
@@ -394,15 +395,15 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			//
 			// We're only interested in the insertion of single characters, so catch the user pasting
 			// something (making sure that it's not going to be a carriage return)
-		    
+
 			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
 				return;
 			}
-			
+
 			//int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';
 			char firstCommandChar = (docCommand.text.length() > 0) ? docCommand.text.charAt(0) : ' ';
-			
+
 			if(docCommand.offset - 1 >= 0) {
 				beforeLastChar = doc.getChar(docCommand.offset-1);
 			}
@@ -413,8 +414,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.length > 0 && docCommand.text.length() == 0) {
 				firstCommandChar = '\b';
 			}
-			
-			
+
+
 			switch(firstCommandChar) {
 			case '\b':	// User wishes to delete something
 				handleDelete(doc, docCommand);
@@ -433,12 +434,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 						stepThrough(docCommand);
 					return;
 				}
-					
+
 				handleClosingChevron(doc, docCommand, beforeLastChar);
 				return;
 			case '<':
 				if(!this.autoClose_Tags) return;
-				
+
 				handleOpenChevron(docCommand);
 				return;
 			case '\"':
@@ -467,34 +468,35 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				break;
 			}
 			//
-			// Here the user must've pressed enter to go to a new line. 
+			// Here the user must've pressed enter to go to a new line.
 			// So we have two options:
 			// 1) They're just pressing in between two tags OR
 			// 2) They've pressed enter WITHIN a tag (i.e. <cffred name="blah" [ENTER]>
-			
+
 			if(isEnterInTag(doc, docCommand)) {
 				handleEnterInTag(doc, docCommand);
 			}
-	
-			String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
-			docCommand.text+= prevLineWhitespace;
+			else {
+				String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+				docCommand.text+= prevLineWhitespace;
+			}
 		} catch(BadLocationException ex) {
 			System.err.println("TagIndentStategy::customizeDocumentCommand() - Caught BadLocationException");
 			//ex.printStackTrace();
 			return;
 		}
     }
-	
+
 	/**
 	 * Handles the event when a user presses 'delete'.
 	 * Basically it's here to try and remove any auto-inserted characters.
 	 * Say the user entered an open chevron. It's quite probable that on
 	 * opening a closer was inserted. So here we try and work out whether the user
-	 * entered an opener, we auto-inserted a closer and the user now wishes to 
+	 * entered an opener, we auto-inserted a closer and the user now wishes to
 	 * get rid of both.
-	 * 
+	 *
 	 * Doesn't work at the moment :(
-	 * 
+	 *
 	 * @param doc document to work upon
 	 * @param docCommand command to change
 	 * @throws BadLocationException doh
@@ -502,12 +504,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private void handleDelete(IDocument doc, DocumentCommand docCommand) throws BadLocationException {
 		char prevChar = doc.getChar(docCommand.offset);
 		// Initialize nextChar to an ASCII null
-		char nextChar = (char)0; 
+		char nextChar = (char)0;
 		// If we're not at the end of the document reassign nextChar
 		if (doc.getLength() > docCommand.offset + 1) {
 		 nextChar = doc.getChar(docCommand.offset + 1);
 		}
-		
+
 		switch(prevChar) {
 			case '\"':
 			case '#':
@@ -536,7 +538,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @throws BadLocationException
 	 */
 	private void handleClosingChevron(IDocument doc, DocumentCommand docCommand, char beforeLastChar) throws BadLocationException {
-	    
+
 	    if(beforeLastChar == '<')	// Have we not got a tag name
 			return;
 		else if(beforeLastChar == '/')	{	// A self-closer, i.e. : <br/>
@@ -562,14 +564,14 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			default:
 				break;
 			}
-				
-		}			
+
+		}
 		return;
 	}
 	/**
 	 * Performs the required operations to provide indenting when the user presses enter
 	 * inside a tag.
-	 * 
+	 *
 	 * @param docCommand - the document command to work up.
 	 */
 	private void handleEnterInTag(IDocument doc, DocumentCommand docCommand) {
@@ -577,12 +579,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		try {
 			int currLine = doc.getLineOfOffset(docCommand.offset);
 			int nextLineOffset = doc.getLineOffset(currLine+1);
-			
+
 			String lineDelim = doc.getLineDelimiter(currLine);
 			if(lineDelim == null) lineDelim = "\r\n";
-			
+
 			int colPosition = doc.getLineLength(currLine) - 1 - lineDelim.length();
-			
+
 			//
 			// Now we just need to work out how much indentation to do...
 			//int posForIndent = findEndOfTagNameOrStartOfAttribute(doc.get(), docCommand.offset-1);
@@ -590,29 +592,30 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			int numIndents = 0;
 			int indentWidth = 0;
 			int spaceRemainder = 0;
-			int colPos = posForIndent - doc.getLineOffset(currLine);
-
+			//int prevLineIndent = getPrevLineWhiteSpace(doc,docCommand.offset).length();
+			int colPos = posForIndent - doc.getLineOffset(currLine) + 1;// - prevLineIndent;
 			//
 			// Work out our indent. If it's a tab we just use 4 (editor default), otherwise the length of the indent string
 			// Then we work out the indents required to get us to the column position. Then we work out
 			// what the remainder is that cannot be made up of full indents. This will be made up of spaces.
 			// Then we simply append the required indents in, then the required number of spaces.
-			if(this.getIndentString().compareTo("\t") == 0) 
-				indentWidth = 4;	// TODO: Work out how to get the texteditor tab width
+			if(this.getIndentString().compareTo("\t") == 0)
+				indentWidth = Integer.parseInt(CFMLPlugin.getDefault().getPreferenceStore().getString("tabWidth")) ;	// TODO: Work out how to get the texteditor tab width
 			else
 				indentWidth = this.getIndentString().length();
-			
+
 			numIndents = colPos / indentWidth;
 			spaceRemainder = colPos - (indentWidth * numIndents);
+
 			
 			for(int i = 0; i < numIndents; i++ ) {
 				docCommand.text += this.getIndentString();
 			}
-			
+
 			for(int i = 0; i < spaceRemainder; i++) {
 				docCommand.text += " ";
 			}
-				
+
 		} catch(BadLocationException ex) {
 			ex.printStackTrace();
 			return;
@@ -624,26 +627,26 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 	/**
 	 * Finds the end of the tag. Really just looks until it hits non-whitespace.
-	 * 
+	 *
 	 * @param data - the data to scan
 	 * @param offset - the offset within the document to start looking from.
 	 * @return - the position of the character <strong>after</strong> the end of tag.
 	 */
 	//private int findEndOfTag(String data, int offset) {
-	private int findEndOfTag(IDocument data, int offset) {	
+	private int findEndOfTag(IDocument data, int offset) {
 		int pos = offset;
 		int startOfTag = 0;
-		
+
 		try {
 			startOfTag = findStartofTag(data, pos-1);
 		}catch(BadLocationException ex) {
 			ex.printStackTrace();
 			return 0;
 		}
-		
+
 		if(startOfTag == -1)
 			return 0;
-		
+
 		try {
 			for(int i = startOfTag; i < data.getLength(); i++) {
 				char currChar = data.getChar(i);
@@ -657,11 +660,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 		return pos;
 	}
-		
+
 	/**
 	 * Has the user pressed enter from within a tag (i.e. they were editing the attributes)?
-	 * 
-	 * @param doc - Document that we're operating on 
+	 *
+	 * @param doc - Document that we're operating on
 	 * @param command - the command
 	 * @return - True: yes, enter pressed in a tag. False: Nope, outside of a tag.
 	 */
@@ -679,7 +682,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			for(; i > 0; i--) {
 				if(docData.charAt(i) == '>')
 					return false;	// Found closing chevron, die now.	// TODO: Will kill if closing chevron is in quotes!
-				
+
 				if(docData.charAt(i) == '<')
 					break;
 			}
@@ -688,11 +691,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
-	
-	/** 
+
+	/**
 	 * Handles the opening of a chevron. Basically it inserts a matching closing '>' and does
 	 * not shift the caret.
 	 * @param docCommand - the document command to modify
@@ -707,7 +710,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * Handles the insertion of quotes by the user. If the user has opened quotes then
 	 * it inserts a closing quote after the opened quote and does not move the caret.
 	 * If the user is closing some quotes it steps through the existing quote.
-	 * 
+	 *
 	 * @param doc - The document that the command is being performed in
 	 * @param docCommand - the command to modify
 	 * @param quoteChar - the quote character that triggered this. This allows us to handle " and ' quotes.
@@ -722,7 +725,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			docCommand.caretOffset = docCommand.offset+1;
 			return;
 		}
-		
+
 		docCommand.text+= quoteChar;
 		docCommand.caretOffset = docCommand.offset+1;
 		docCommand.shiftsCaret = false;
@@ -731,7 +734,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 	/**
 	 * Gets the whitespace of the previous line. Doesn't work very well at the moment :(
-	 * 
+	 *
 	 * @param doc
 	 * @param docCommand
 	 * @param lineNumber
@@ -739,7 +742,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private String getPrevLineWhiteSpace(IDocument doc, int offset) throws BadLocationException {
 		int lineNumber = doc.getLineOfOffset(offset);
-		
+
 		if(lineNumber == 0)
 			return "";
 		int prevLineOffset = doc.getLineOffset(lineNumber);

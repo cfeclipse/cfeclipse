@@ -24,6 +24,7 @@
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.junit"/>
    </requires>
 
 
@@ -204,6 +205,14 @@
                class="com.rohanclan.cfml.editors.actions.InsertNBSPAction"
                id="com.rohanclan.cfml.editors.actions.InsertNBSPAction">
          </action>
+         <!-- insert an html nbsp action (for Michael Wolfe) -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.RTrim"
+               label="Insert nbsp Entity Reference"
+               tooltip="Insert an nbsp Entity Reference"
+               class="com.rohanclan.cfml.editors.actions.RTrimAction"
+               id="com.rohanclan.cfml.editors.actions.RTrimAction">
+         </action>
          <!-- Reload the syntax dictionaries -->
          <action
                toolbarPath="BasicCFEditorCommand"
@@ -282,8 +291,14 @@
                menubarPath="additions"
                id="com.rohanclan.cfml.editors.actions.CFComment">
          </action>
+         <action
+               label="Trim trailing spaces"
+               class="com.rohanclan.cfml.editors.actions.RTrimAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu"
+               id="com.rohanclan.cfml.editors.actions.RTrim">
+         </action>
          <menu
-               label="Text"
+               label="Selection"
                path="additions"
                id="com.rohanclan.cfml.editors.contribution.subMenu">
             <separator

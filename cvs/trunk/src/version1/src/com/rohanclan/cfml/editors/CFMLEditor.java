@@ -67,9 +67,12 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.jface.viewers.IStructuredSelection;
 //import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 //import org.eclipse.jface.text.ITextSelection;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
+import com.rohanclan.cfml.editors.actions.RTrimAction;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
 
@@ -125,7 +128,11 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		//TODO: Once we get the document outline going, we can update it from
 		// here.
 		//On save parsing should apparently go into a builder.
-	    
+	    if (getPreferenceStore().getBoolean("rTrimOnSave")) {
+	        RTrimAction trimAction = new RTrimAction();
+	        trimAction.setActiveEditor(null,getSite().getPage().getActiveEditor());
+	        trimAction.run(null);
+	    }
 		super.doSave(monitor);
 	}
 
@@ -170,6 +177,26 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 	}
 
+	
+
+	
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * This method configures the editor but does not define a
+	 * <code>SourceViewerConfiguration</code>. When only interested in
+	 * providing a custom source viewer configuration, subclasses may extend
+	 * this method.
+	 */
+	protected void initializeEditor() {
+		setEditorContextMenuId("#TextEditorContext"); //$NON-NLS-1$
+		setRulerContextMenuId("#TextRulerContext"); //$NON-NLS-1$
+		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
+		setPreferenceStore(EditorsPlugin.getDefault().getPreferenceStore());
+		configureInsertMode(SMART_INSERT, false);
+		setInsertMode(INSERT);
+	}
+	
 	public void createPartControl(Composite parent) 
 	{
 		//this.parent = parent;

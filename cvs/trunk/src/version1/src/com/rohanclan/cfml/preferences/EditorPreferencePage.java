@@ -105,6 +105,7 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "currentLineColor"));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "currentLine"));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "bracketMatchingEnabled"));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "rTrimOnSave"));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, "tabWidth"));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, "insightDelay"));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "tabsAsSpaces"));
@@ -178,6 +179,8 @@ public class EditorPreferencePage extends PreferencePage
 		addTextField(appearanceComposite, label, "insightDelay", 4, 0, true);
 		label = "Use spaces for tabs";
 		addCheckBox(appearanceComposite, label, "tabsAsSpaces", 0);
+		label = "Trim trailing spaces before saving";
+		addCheckBox(appearanceComposite, label, "rTrimOnSave", 0);
 		label = "Enable bracket highlighting";
 		addCheckBox(appearanceComposite, label, "bracketMatchingEnabled", 0);
 		label = "Show overview &ruler";
