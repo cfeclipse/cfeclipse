@@ -26,12 +26,14 @@ public class SnipFileDialog extends Dialog {
 	
 	private static String dialogTitle = "New Snippet";
 	private static String snippetNameLabel = "Snippet name: ";
+	private static String snippetKeyComboLabel = "trigger text: ";
 	private static String snippetDescriptionLabel = "Snippet description: ";
 	private static String snippetCodeStartLabel = "Snippet starting block: ";
 	private static String snippetCodeEndLabel = "Snippet closing block: ";
 	private TreeViewer treeView;
-	private Text snippetNameText, snippetDescriptionText, snippetStartText, snippetEndText;
+	private Text snippetNameText, snippetKeyComboText, snippetDescriptionText, snippetStartText, snippetEndText;
 	private String snippetNameValue = "";
+	private String snippetKeyComboValue = "";
 	private String snippetDescriptionValue = "";
 	private String snippetStartValue = "";
 	private String snippetEndValue = "";
@@ -50,12 +52,16 @@ public class SnipFileDialog extends Dialog {
 	
 	
 	
-	public SnipFileDialog(Shell parent, SnipWriter fileWriter, TreeViewer treeView, String snippetNameInitialValue, String snippetDescriptionInitialValue, String startTextInitialValue, String endTextInitialValue) {
+	public SnipFileDialog(Shell parent, SnipWriter fileWriter, TreeViewer treeView, String snippetNameInitialValue, String snippetKeyComboInitialValue, String snippetDescriptionInitialValue, String startTextInitialValue, String endTextInitialValue) {
 		//super(parent, dialogTitle, snippetNameLabel, snippetNameInitialValue, null);
 		
 		super(parent);
 		if (snippetNameInitialValue != null){
 			snippetNameValue = snippetNameInitialValue;
+		}
+		
+		if (snippetKeyComboInitialValue != null){
+			snippetKeyComboValue = snippetKeyComboInitialValue;
 		}
 		
 		if (snippetDescriptionInitialValue != null){
@@ -70,6 +76,8 @@ public class SnipFileDialog extends Dialog {
 			snippetEndValue = endTextInitialValue;
 		}
 		
+		
+		
 		// TODO: Really should put some validation on this
 		//this.validator = validator;
 		
@@ -82,7 +90,7 @@ public class SnipFileDialog extends Dialog {
 		
 		Composite composite = (Composite)super.createDialogArea(parent);
 
-		// Snippet name text box label
+//		 Snippet name text box label
 		
 			Label label = new Label(composite, SWT.WRAP);
 			label.setText(snippetNameLabel);
@@ -111,6 +119,36 @@ public class SnipFileDialog extends Dialog {
 			}
 		);
 		snippetNameText.setFont(parent.getFont());
+		
+		//Snippet key combo text box label
+		
+			label = new Label(composite, SWT.WRAP);
+			label.setText(snippetKeyComboLabel);
+			data = new GridData(
+				GridData.GRAB_HORIZONTAL |
+				GridData.GRAB_VERTICAL |
+				GridData.HORIZONTAL_ALIGN_FILL |
+				GridData.VERTICAL_ALIGN_CENTER);
+			data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
+			label.setLayoutData(data);
+			label.setFont(parent.getFont());
+		
+		
+		// Snippet key combo text box
+		snippetKeyComboText= new Text(composite, SWT.SINGLE | SWT.BORDER);
+		data = new GridData(
+				GridData.GRAB_HORIZONTAL |
+				GridData.HORIZONTAL_ALIGN_FILL);
+		data.widthHint = convertWidthInCharsToPixels(20);
+		snippetKeyComboText.setLayoutData(data);
+		snippetKeyComboText.addModifyListener(
+			new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					validateInput();
+				}
+			}
+		);
+		snippetKeyComboText.setFont(parent.getFont());
 		
 
 
@@ -219,7 +257,9 @@ public class SnipFileDialog extends Dialog {
 
 	protected void okPressed() {
 
-		writer.writeSnippet(snippetNameText.getText(),snippetDescriptionText.getText(), snippetStartText.getText(),snippetEndText.getText());
+		writer.writeSnippet(snippetNameText.getText(),snippetKeyComboText.getText(),snippetDescriptionText.getText(), snippetStartText.getText(),snippetEndText.getText());
+		
+		
 		
 		close();
 		treeView.refresh();
@@ -230,11 +270,13 @@ public class SnipFileDialog extends Dialog {
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
 			snippetNameValue = snippetNameText.getText();
+			snippetKeyComboValue = snippetKeyComboText.getText();
 			snippetDescriptionValue = snippetDescriptionText.getText();
 			snippetStartValue = snippetStartText.getText();
 			snippetEndValue = snippetEndText.getText();
 		} else {
 			snippetNameValue= null;
+			snippetKeyComboValue = null;
 			snippetDescriptionValue = null;
 			snippetStartValue = null;
 			snippetEndValue = null;
@@ -262,6 +304,10 @@ public class SnipFileDialog extends Dialog {
 			snippetNameText.selectAll();
 		}
 
+		if (snippetKeyComboValue != null) {
+			snippetKeyComboText.setText(snippetKeyComboValue);
+		}
+		
 		if (snippetDescriptionValue != null) {
 			snippetDescriptionText.setText(snippetDescriptionValue);
 		}

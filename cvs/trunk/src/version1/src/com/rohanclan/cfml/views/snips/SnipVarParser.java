@@ -11,6 +11,9 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.swt.widgets.Shell;
+
 import java.io.File;
 
 /**
@@ -27,7 +30,7 @@ public class SnipVarParser {
 		super();
 	}
 	
-	public static String parse(String str, IFile activeFile) {
+	public static String parse(String str, IFile activeFile, Shell shell ) {
 		
 		String currentFile = "";
 		String currentFolder = "";
@@ -138,6 +141,27 @@ public class SnipVarParser {
 		formatter = new SimpleDateFormat("yy");
 		String formattedYear2Digit = formatter.format(currentTime);
 		newStr = newStr.replaceAll("\\$\\$\\{YEAR2DIGIT\\}",formattedYear2Digit);
+		
+		
+		while(newStr.indexOf("$${") > 0) {
+			int expressionStart = newStr.indexOf("$${")+3;
+			int expressionEnd = newStr.indexOf("}",expressionStart);
+			String expression = newStr.substring(expressionStart,expressionEnd);
+			InputDialog replacementDialog = new InputDialog(shell,"Replace variable","Replace variable "+ expression +" in start block with:","",null);
+			
+			if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
+				String replacement = replacementDialog.getValue(); 
+				String pattern = "\\$\\$\\{"+expression+"\\}";
+				newStr = newStr.replaceAll(pattern,replacement);
+			}
+			else {
+				break;
+			}
+
+		}
+		
+		
+		
 		
 		return newStr;
 	}

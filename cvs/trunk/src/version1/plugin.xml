@@ -205,10 +205,21 @@
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.RefreshBrowserAction">
          </action>
+         <!-- insert snippet action -->
+         <action
+               toolbarPath="BasicCFEditorCommand"
+               label="InsertSnippet"
+               class="com.rohanclan.cfml.editors.actions.InsertSnippetAction"
+               tooltip="Insert a snippet"
+               icon="icons/ctool16/snippet.gif"
+               definitionId="com.rohanclan.cfml.editors.actions.InsertSnippet"
+               id="com.rohanclan.cfml.editors.actions.InsertSnippetAction">
+         </action>
       </editorContribution>
    </extension>
 	
 	<!-- I have no idea why this doesnt work. (or why it would) -->
+	<!-- Spike: Removing this because it's been implemented in the java code 
 	<extension point="org.eclipse.ui.acceleratorSets">
 		<acceleratorSet
 			scopeId="org.eclipse.ui.textEditorScope"
@@ -237,7 +248,7 @@
 			/>
 		</acceleratorSet>
 	</extension>
-	
+	-->
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- popup menu -->
    <extension
@@ -465,6 +476,19 @@
             string="F5"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.RefreshBrowser"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- insert a snippet -->
+      <command
+            name="Insert Snippet"
+            description="Insert Snippet"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertSnippet">
+      </command>
+      <keyBinding
+            string="Ctrl+i"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.InsertSnippet"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
    </extension>

@@ -55,7 +55,7 @@ import java.io.File;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jface.dialogs.InputDialog;
+
 
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.core.runtime.Path;
@@ -470,52 +470,15 @@ public class SnipTreeView extends ViewPart
 		
 		try
 		{
-			//try to load up the xml file
-			//xmlconfile.setFileName(f);
-			//xmlconfile.openFile();
 			
 			IFile activeFile = null;
 			if (iep.getEditorInput() instanceof IFileEditorInput) {
 				activeFile = ((IFileEditorInput) iep.getEditorInput()).getFile();
 			}
 			
-			String startBlock = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile);
-			String endBlock = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile);
+			String startBlock = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.getViewSite().getShell());
+			String endBlock = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.getViewSite().getShell());
 
-			while(startBlock.indexOf("$${") > 0) {
-				int expressionStart = startBlock.indexOf("$${")+3;
-				int expressionEnd = startBlock.indexOf("}",expressionStart);
-				String expression = startBlock.substring(expressionStart,expressionEnd);
-				InputDialog replacementDialog = new InputDialog(this.getViewSite().getShell(),"Replace variable","Replace variable "+ expression +" in start block with:","",null);
-				
-				if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
-					String replacement = replacementDialog.getValue(); 
-					String pattern = "\\$\\$\\{"+expression+"\\}";
-					startBlock = startBlock.replaceAll(pattern,replacement);
-				}
-				else {
-					break;
-				}
-
-			}
-			
-			while(endBlock.indexOf("$${") > 0) {
-				int expressionStart = endBlock.indexOf("$${")+3;
-				int expressionEnd = endBlock.indexOf("}",expressionStart);
-				String expression = endBlock.substring(expressionStart,expressionEnd);
-				InputDialog replacementDialog = new InputDialog(this.getViewSite().getShell(),"Replace variable","Replace variable "+ expression +" in end block with:","",null);
-				
-				if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
-					String replacement = replacementDialog.getValue(); 
-					String pattern = "\\$\\$\\{"+expression+"\\}";
-					endBlock = endBlock.replaceAll(pattern,replacement);
-				
-				}
-				else {
-					break;
-				}
-
-			}
 			
 			tmpAction.setEnclosingStrings(startBlock,endBlock);
 			
@@ -528,6 +491,7 @@ public class SnipTreeView extends ViewPart
 		}
 	}
 
+	
 
 	
 
@@ -571,7 +535,7 @@ public class SnipTreeView extends ViewPart
 			selectedfile = selectedfile.getParentFile();
 		}
 
-		SnipWriter writer = new SnipWriter(selectedfile,snippetType);
+		SnipWriter writer = new SnipWriter(selectedfile,snippetType,snipBase);
 		SnipFolderDialog folderDialog = new SnipFolderDialog(this.getViewSite().getShell(),writer,this.treeViewer);
 		folderDialog.open();
 
@@ -584,7 +548,7 @@ public class SnipTreeView extends ViewPart
 			selectedfile = selectedfile.getParentFile();
 		}
 
-		SnipWriter writer = new SnipWriter(selectedfile,snippetType);
+		SnipWriter writer = new SnipWriter(selectedfile,snippetType,snipBase);
 		MessageBox deleteDialog = new MessageBox(this.getViewSite().getShell(),SWT.YES | SWT.NO);
 		deleteDialog.setMessage("Are you sure you want to delete this folder?");
 		if (deleteDialog.open() == SWT.YES) {
@@ -603,8 +567,8 @@ public class SnipTreeView extends ViewPart
 			selectedfile = selectedfile.getParentFile();
 		}
 		snippetType = CFECLIPSE_SNIP_TYPE;
-		SnipWriter writer = new SnipWriter(selectedfile,snippetType);
-		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,"","","","");
+		SnipWriter writer = new SnipWriter(selectedfile,snippetType,snipBase);
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,"","","","","");
 		snippetDialog.open();
 
 	}
@@ -647,13 +611,21 @@ public class SnipTreeView extends ViewPart
 		
 		snipReader.read(f);
 		
+		SnipKeyCombos keyCombos = new SnipKeyCombos();
+		
+		String filepath = selectedfile.getAbsolutePath().replaceAll("\\\\","/");
+		String basePath = snipBase.toString();
+		
+		String relativePath = filepath.replaceFirst(basePath,"");
+
 		String snippetName = selectedfile.getName().substring(0,selectedfile.getName().length()-4);
+		String snippetKeyCombo = keyCombos.getSequence(relativePath);
 		String snippetDescription = snipReader.getSnipDescription();
 		String snippetStartText = snipReader.getSnipStartBlock();
 		String snippetEndText = snipReader.getSnipEndBlock();
 		
-		SnipWriter writer = new SnipWriter(parentDirectory,snippetType);
-		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,snippetName,snippetDescription,snippetStartText,snippetEndText);
+		SnipWriter writer = new SnipWriter(parentDirectory,snippetType,snipBase);
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,snippetName,snippetKeyCombo,snippetDescription,snippetStartText,snippetEndText);
 		snippetDialog.open();
 		
 	}

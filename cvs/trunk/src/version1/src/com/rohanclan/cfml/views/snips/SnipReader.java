@@ -61,8 +61,7 @@ public class SnipReader {
 	
 	
 	public void read(String fileName) {
-		this.snippetFile = new File(fileName);
-		
+		this.snippetFile = new File(fileName);		
 		if (snippetFile.exists()) {
 
 			try {
@@ -212,7 +211,7 @@ public class SnipReader {
 	public String getSnipStartBlock() {
 		if (this.snipStartBlock == null) {
 			this.snipStartBlock = "";
-		}
+		}		
 		return this.snipStartBlock;
 	}
 	

@@ -9,6 +9,7 @@ package com.rohanclan.cfml.views.snips;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.eclipse.core.runtime.IPath;
 /**
  * @author Stephen Milligan
  *
@@ -18,13 +19,15 @@ public class SnipWriter {
 	File snippetFile, parentFolder;
 	String snippetType;
 	String fileExtension;
+	IPath snipBase;
 	/**
 	 * 
 	 */
-	public SnipWriter(File parentFolder, String snippetType) {
+	public SnipWriter(File parentFolder, String snippetType, IPath snipBase) {
 		super();
 		this.parentFolder = parentFolder;
 		this.snippetType = snippetType;
+		this.snipBase = snipBase;
 		if (snippetType == SnipTreeView.DREAMWEAVER_SNIP_TYPE) {
 			fileExtension = "." + SnipTreeView.DW_SNIP_EXT;
 		}
@@ -34,7 +37,7 @@ public class SnipWriter {
 	}
 	
 	
-	public void writeSnippet(String snippetName, String snippetDescription, String startText, String endText) {
+	public void writeSnippet(String snippetName, String snippetKeyCombo, String snippetDescription, String startText, String endText) {
 		
 		
 		File snippetFile = new File(parentFolder.toString() + File.separator + snippetName + fileExtension);
@@ -46,6 +49,16 @@ public class SnipWriter {
 			FileWriter writer = new FileWriter(snippetFile);
 			writer.write(snippetContents);
 			writer.close();
+			if (snippetKeyCombo.length() > 0) {
+			    SnipKeyCombos snipKeyCombos = new SnipKeyCombos();
+
+				String filepath = snippetFile.getAbsolutePath().replaceAll("\\\\","/");
+				String basePath = snipBase.toString();
+				
+				String relativePath = filepath.replaceFirst(basePath,"");
+			    
+			    snipKeyCombos.setKeyCombo(snippetKeyCombo,relativePath);
+			}
 		}
 		catch (IOException e) {
 			e.printStackTrace(System.err);
