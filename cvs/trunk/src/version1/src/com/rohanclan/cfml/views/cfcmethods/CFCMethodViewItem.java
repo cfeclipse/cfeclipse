@@ -70,7 +70,7 @@ public class CFCMethodViewItem  {
 	
 	public String getInsertString() {
 		try {
-			StringBuffer method = new StringBuffer(" ");
+			StringBuffer method = new StringBuffer("");
 			
 			method.append(functionTag.getAttribute("name"));
 			method.append("(");
