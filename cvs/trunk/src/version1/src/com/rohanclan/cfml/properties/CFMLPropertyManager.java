@@ -33,8 +33,9 @@ public class CFMLPropertyManager implements ICFMLPreferenceConstants {
 			store.load();
 		}
 		catch (Exception e) {
-			System.err.println("Couldn't load property store");
-		}
+			System.err.println("CFMLPropertyManager::CFMLPropertyManager() - Couldn't load property store");
+			e.printStackTrace();
+		} 
 		this.preferenceManager = new CFMLPreferenceManager();
 	}
 	
@@ -60,6 +61,7 @@ public class CFMLPropertyManager implements ICFMLPreferenceConstants {
 		}
 		catch (IOException e) {
 			System.err.println("Failed to save property store " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
