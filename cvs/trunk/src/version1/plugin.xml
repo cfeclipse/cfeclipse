@@ -187,6 +187,24 @@
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.InsertDateAction">
          </action>
+         <!-- insert an html br action (for Brian Sadler) -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.InsertBR"
+               label="Insert BR"
+               tooltip="Insert a BR tag"
+               class="com.rohanclan.cfml.editors.actions.InsertBRAction"
+               id="com.rohanclan.cfml.editors.actions.InsertBRAction">
+         </action>
+         <!-- refresh the browser view action -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.RefreshBrowser"
+               label="Refresh"
+               icon="icons/ctool16/refresh.gif"
+               tooltip="Refresh Browser View"
+               class="com.rohanclan.cfml.editors.actions.RefreshBrowserAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.RefreshBrowserAction">
+         </action>
       </editorContribution>
    </extension>
 	
@@ -277,8 +295,8 @@
          </action>
       </viewerContribution>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- Commands -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Commands -->
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -286,7 +304,7 @@
             description="CFML Editor key bindings"
             id="com.rohanclan.cfml.commandCategory">
       </category>
-<!-- this will always make a cf type comment -->
+	<!-- this will always make a cf type comment -->
       <command
             name="Insert Comment"
             description="Insert a CFML comment."
@@ -299,7 +317,7 @@
             command="com.rohanclan.cfml.editors.actions.CFComment"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- comment based on section (i.e. js comments in js blocks, etc) -->
+	<!-- comment based on section (i.e. js comments in js blocks, etc) -->
       <command
             name="Insert Auto Comment"
             description="Insert a comment based on section."
@@ -312,7 +330,7 @@
             command="com.rohanclan.cfml.editors.actions.AutoComment"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in pound ... er ... hash signs -->
+	<!-- enclose in pound ... er ... hash signs -->
       <command
             name="CF Variable"
             description="Surround with pound/number signs"
@@ -325,7 +343,7 @@
             command="com.rohanclan.cfml.editors.actions.CFVariable"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in single quotes -->
+	<!-- enclose in single quotes -->
       <command
             name="Single Quotes"
             description="Surround with Single Quotes"
@@ -338,7 +356,7 @@
             command="com.rohanclan.cfml.editors.actions.CFSingleQuote"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in double quotes -->
+	<!-- enclose in double quotes -->
       <command
             name="Double Quotes"
             description="Surround with pound/number signs"
@@ -351,7 +369,7 @@
             command="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in cfoutputs -->
+	<!-- enclose in cfoutputs -->
       <command
             name="CF Outputs"
             description="Surround with cfoutputs"
@@ -364,7 +382,7 @@
             command="com.rohanclan.cfml.editors.actions.CFOutput"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in cfdump -->
+	<!-- enclose in cfdump -->
       <command
             name="CF Dump"
             description="Surround with a simple cfdump"
@@ -377,7 +395,7 @@
             command="com.rohanclan.cfml.editors.actions.CFDump"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in cfscript -->
+	<!-- enclose in cfscript -->
       <command
             name="CF Script"
             description="Surround with a cfscript"
@@ -390,7 +408,7 @@
             command="com.rohanclan.cfml.editors.actions.CFScript"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- to lower case -->
+	<!-- to lower case -->
       <command
             name="To Lower"
             description="Lower case selected text"
@@ -403,7 +421,7 @@
             command="com.rohanclan.cfml.editors.actions.ToLowerCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- to upper case -->
+	<!-- to upper case -->
       <command
             name="To Upper"
             description="Upper case selected text"
@@ -416,16 +434,42 @@
             command="com.rohanclan.cfml.editors.actions.ToUpperCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- insert date -->
+	<!-- insert date -->
       <command
             name="Insert Date"
             description="Insert the current date"
             category="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.InsertDate">
       </command>
+      <!-- insert an html br action (for Brian Sadler) -->
+      <command
+            name="Insert br Tag"
+            description="Insert a br tag"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertBR">
+      </command>
+      <keyBinding
+            string="Ctrl+Enter"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.InsertBR"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- refresh the browser -->
+      <command
+            name="Refresh Browser"
+            description="Refresh Browser View"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.RefreshBrowser">
+      </command>
+      <keyBinding
+            string="F5"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.RefreshBrowser"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- the snip viewers -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- the snip viewers -->
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -469,6 +513,7 @@
             file="doc/toc_general.xml">
       </toc>
    </extension>
+   
 	<!-- Stephen Milligans (aka spike) area -->
    <extension
          point="org.eclipse.ui.preferencePages">
@@ -494,6 +539,7 @@
             id="com.rohanclan.cfml.properties.samplePropertyPage">
       </page>
    </extension>
+   
 	<!-- Chris Queeners area -->
    <extension
          point="org.eclipse.ui.newWizards">

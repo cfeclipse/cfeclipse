@@ -1,5 +1,5 @@
 /*
- * Created on Jun 19, 2004
+ * Created on Jun 20, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Rob Rohan
@@ -24,49 +24,32 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspaceRoot;
-
-import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.jface.action.IAction;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
-import org.eclipse.core.resources.ResourcesPlugin;
+import com.rohanclan.cfml.views.browser.BrowserView;
 
 /**
  * @author Rob
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * Simple action to refresh the browser view
  */
-public class GenericOpenFileAction implements IEditorActionDelegate {
+public class RefreshBrowserAction implements IEditorActionDelegate {
 	protected ITextEditor editor = null;
-	protected String filename = "untitled.cfm";
-	
-	public GenericOpenFileAction()
-	{
-		super();
-	}
-	
-	public GenericOpenFileAction(String filename, String container)
-	{
-		super();
-		setFilename(filename);
-	}
-	
-	public void setFilename(String filename)
-	{
-		this.filename = filename;
-	}
 		
+	public RefreshBrowserAction()
+	{
+		super();
+	}
+	
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
 	{
 		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor)
@@ -82,20 +65,21 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 		
 	public void run(IAction action) 
 	{
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile file = root.getFile(new Path(filename));
-		
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
-		try
+		IViewReference ref[] = page.getViewReferences();
+		for(int q=0; q<ref.length; q++)
 		{
-			IDE.openEditor(page, file, true);
-		}
-		catch (PartInitException e) 
-		{
-			e.printStackTrace(System.err);
+			//System.err.println("ref: " + ref[q].getId() );
+			if(ref[q].getId().equals(BrowserView.ID_BROWSER))
+			{
+				IWorkbenchPart iwbp = ref[q].getPart(true);
+				((BrowserView)iwbp).refresh();
+				break;
+			}
 		}
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){;}
+
 }

@@ -160,7 +160,7 @@ public class CFBrowser {
 		{
 			// Browser widget could not be instantiated
 			Label label = new Label(parent, SWT.CENTER | SWT.WRAP);
-			label.setText(getResourceString("Browser Not Created"));
+			label.setText(getResourceString("Browser Not Created (" + e.toString() + ")" ));
 			label.setLayoutData(data);
 		}
 		
