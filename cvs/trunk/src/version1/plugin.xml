@@ -822,7 +822,6 @@
       </toc>
    </extension>
    
-	<!-- Stephen Milligans (aka spike) area -->
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
@@ -928,11 +927,82 @@
       </runtime>
       <one-of-nature id="CFEclipse-2.one-of-nature1"/>
    </extension>
+   
    <extension
          point="org.eclipse.ui.ide.resourceFilters">
+      <filter pattern="*.bak">
+         <description>
+            Backup filefilter
+         </description>
+      </filter>
+      <filter pattern="*.cfc">
+         <description>
+            CFC filter
+         </description>
+      </filter>
+      <filter pattern="*.cfm">
+         <description>
+            CFML Filter
+         </description>
+      </filter>
       <filter pattern="*.cfml">
          <description>
             CFML Filter
+         </description>
+      </filter>
+      <filter pattern="*.css">
+         <description>
+            CFML Filter
+         </description>
+      </filter>
+      <filter pattern="*.gif">
+         <description>
+            Gif filter
+         </description>
+      </filter>
+      <filter pattern="*.htm">
+         <description>
+            HTML filter
+         </description>
+      </filter>
+      <filter pattern="*.html">
+         <description>
+            HTML filter
+         </description>
+      </filter>
+      <filter pattern="*.js">
+         <description>
+            HTML filter
+         </description>
+      </filter>
+      <filter pattern="*.log">
+         <description>
+            Log file filter
+         </description>
+      </filter>
+      <filter pattern="*.project">
+         <description>
+            Project file filter
+         </description>
+      </filter>
+      <filter pattern="*.properties">
+         <description>
+            Properties file filter
+         </description>
+      </filter>
+      <filter pattern="*.swf">
+         <description>
+            SWF filter
+         </description>
+      </filter>
+      <filter pattern="*.txt">
+         <description>
+            Text file filter
+         </description>
+      </filter>
+      <filter pattern="*.xml">
+         <description>
+            Text file filter
          </description>
       </filter>
    </extension>

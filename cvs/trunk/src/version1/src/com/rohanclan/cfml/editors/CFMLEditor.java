@@ -83,6 +83,12 @@ import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 
+import org.eclipse.core.filebuffers.FileBuffers;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.resources.IFile;
+
 /**
  * @author Rob
  * 
@@ -186,6 +192,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
+		
+
+		
 	}
 
 	

@@ -17,6 +17,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 
+
 /**
  * @author Stephen Milligan
  *
@@ -52,6 +53,7 @@ public class RTrimAction  implements IEditorActionDelegate {
 	{
 		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
 		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();
+		
 		int currentLine = 0;
 		int originalCursorOffset = sel.getOffset();
 		int cursorOffset = originalCursorOffset;
@@ -59,35 +61,38 @@ public class RTrimAction  implements IEditorActionDelegate {
 		int selectionLength = originalSelectionLength;
 		StringBuffer newDoc = new StringBuffer();
 		try {
-		    foldingSetter.takeSnapshot();
+		    //foldingSetter.takeSnapshot();
+		    
 			while (currentLine < doc.getNumberOfLines()) {
 			    int offset = doc.getLineOffset(currentLine);
 			    int length = doc.getLineLength(currentLine);
 			    String oldText = doc.get(offset,length);
 			    String newText = oldText.replaceAll("[\\t ]+$","");
-			    doc.replace(offset,length,newText);
-			    //newDoc.append(newText);
-			    if (offset + length <= cursorOffset) {
-			        if(oldText.length() != newText.length()) {
-				        cursorOffset -= oldText.length() - newText.length();
-			        }
-			    }
-			    else if (offset <= cursorOffset + selectionLength 
-			            && selectionLength > 0) {
-			        selectionLength -= oldText.length() - newText.length();
-			        
-			    }
-			    // Check if the cursor is at the end of the line.
-			    else if (offset + length == cursorOffset+2) {
-			        cursorOffset -= 2;
-			    }
 			    
+			    if (!newText.equals(oldText)) {
+			        doc.replace(offset,length,newText);
+				    
+				    if (offset + length <= cursorOffset) {
+				        if(oldText.length() != newText.length()) {
+					        cursorOffset -= oldText.length() - newText.length();
+				        }
+				    }
+				    else if (offset <= cursorOffset + selectionLength 
+				            && selectionLength > 0) {
+				        selectionLength -= oldText.length() - newText.length();
+				        
+				    }
+				    // Check if the cursor is at the end of the line.
+				    else if (offset + length == cursorOffset+2) {
+				        cursorOffset -= 2;
+				    }
+			    }
 			    currentLine++;
 			}
 
 			TextSelection selection = new TextSelection(doc,cursorOffset,selectionLength);
 			editor.getSelectionProvider().setSelection(selection);
-			foldingSetter.restoreSnapshot();
+			//foldingSetter.restoreSnapshot();
 		}
 		catch (Exception blx) {
 		    blx.printStackTrace();

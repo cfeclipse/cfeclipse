@@ -484,7 +484,11 @@ public class CodeFoldingSetter {
     
     
     
-
+    /**
+     * Returns a list of annotations that are either in or surrounding the selected text.
+     * @param selection
+     * @return
+     */
     private ArrayList findAnnotations(ITextSelection selection) {
         ArrayList annotations = new ArrayList();
         
