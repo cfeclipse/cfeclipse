@@ -115,7 +115,10 @@ public class CFPluginImages {
 	/** yellow diamond with an ! "This really shouldnt be but will work anyway" 
 	 * errors */
 	public static final String ICON_ALERT = "alert.gif";
-	
+	/** a little blue globe */
+	public static final String ICON_GLOBE = "globe.gif";
+	/** some books */
+	public static final String ICON_LIBRARY = "library.gif";
 	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
@@ -178,6 +181,8 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_DUMP);
 			addImageToRegistry(TOOLBAR,ICON_SCRIPT);
 			addImageToRegistry(TOOLBAR,ICON_IMPORT);
+			addImageToRegistry(TOOLBAR,ICON_GLOBE);
+			addImageToRegistry(TOOLBAR,ICON_LIBRARY);
 		}
 	}
 	
