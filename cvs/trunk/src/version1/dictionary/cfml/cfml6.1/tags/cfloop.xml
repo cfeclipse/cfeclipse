@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfloop" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Different items are required based on loop type. Items listed
+				as required may not be depending on your loop type.
+				Loop forms:
+				[query] [condition] [index + from + to ] [index + list]
+				[collection + item ]
+			]]></help>
+			<parameter name="index" required="true" type="String">
+				<help><![CDATA[
+					Index value. CFML sets it to from value and
+					increments or decrements by step value, until it equals to
+					value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="to" required="true" type="Numeric">
+				<help><![CDATA[
+					Beginning value of index.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="from" required="true" type="Numeric">
+				<help><![CDATA[
+					Ending value of index.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="step" required="false" type="Numeric">
+				<help><![CDATA[
+					Ending value of index.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="condition" required="true" type="boolean">
+				<help><![CDATA[
+					Condition that controls the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="query" required="true" type="String">
+				<help><![CDATA[
+					Query that controls the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startrow" required="false" type="Numeric">
+				<help><![CDATA[
+					First row of query that is included in the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="endrow" required="false" type="Numeric">
+				<help><![CDATA[
+					Last row of query that is included in the loop.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="list" required="true" type="String">
+				<help><![CDATA[
+					A list, variable, or filename; contains a list
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="delimiters" required="false" type="String">
+				<help><![CDATA[
+					Character(s) that separates items in list
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="collection" required="true" type="Object">
+				<help><![CDATA[
+					The collection attribute is used with the item attribute.
+					often to loop over a structure
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="item" required="true" type="String">
+				<help><![CDATA[
+					The item attribute is used with the collection attribute.
+					often to loop over a structure
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>

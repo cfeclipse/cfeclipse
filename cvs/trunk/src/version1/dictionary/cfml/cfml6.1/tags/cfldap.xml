@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfldap" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Provides an interface to a Lightweight Directory Access Protocol
+				(LDAP) directory server, such as the Netscape Directory Server.
+			]]></help>
+			<parameter name="server" required="true" type="String">
+				<help><![CDATA[
+					Host name or IP address of LDAP server.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="port" required="false" type="Numeric">
+				<help><![CDATA[
+					Port of the LDAP server (default 389).
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="username" required="false" type="String">
+				<help><![CDATA[
+					The User ID. Required if secure = "CFSSL_BASIC"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" required="false" type="String">
+				<help><![CDATA[
+					Password that corresponds to user name.
+					If secure = "CFSSL_BASIC", V2 encrypts the password before
+					transmission.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="action" required="false" type="String">
+				<help><![CDATA[
+					* query: returns LDAP entry information only. Requires name,
+						start, and attributes attributes.
+					* add: adds LDAP entries to LDAP server. Requires attributes
+						attribute.
+					* modify: modifies LDAP entries, except distinguished name dn
+						attribute, on LDAP server. Requires dn. See modifyType attribute.
+					* modifyDN: modifies distinguished name attribute for LDAP
+						entries on LDAP server. Requires dn.
+					* delete: deletes LDAP entries on an LDAP server. Requires dn.
+				]]></help>
+				<values>
+					<value option="query"/>
+					<value option="add"/>
+					<value option="modify"/>
+					<value option="modifyDN"/>
+					<value option="delete"/>
+				</values>
+			</parameter>
+			<parameter name="name" required="false" type="String">
+				<help><![CDATA[
+					Required if action = "Query"
+					Name of LDAP query. The tag validates the value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="timeout" required="false" type="Numeric">
+				<help><![CDATA[
+					Maximum length of time, in seconds, to wait for LDAP processing.
+					Default 60
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" required="false" type="Numeric">
+				<help><![CDATA[
+					Maximum number of entries for LDAP queries.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="start" required="false" type="Numeric">
+				<help><![CDATA[
+					Required if action = "Query"
+					Distinguished name of entry to be used to start a search.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="scope" required="false" type="String">
+				<help><![CDATA[
+					Scope of search, from entry specified in start attribute for
+					action = "Query".
+					* oneLevel: entries one level below entry.
+					* base: only the entry.
+					* subtree: entry and all levels below it.
+				]]></help>
+				<values>
+					<value option="onelevel"/>
+					<value option="base"/>
+					<value option="subtree"/>
+				</values>
+			</parameter>
+			<parameter name="attributes" required="false" type="String">
+				<help><![CDATA[
+					Required if action = "Query", "Add", "ModifyDN", or "Modify"
+					For queries: comma-delimited list of attributes to return. For
+					queries, to get all attributes, specify "*".
+
+					If action = "add" or "modify", you can specify a list of update
+					columns. Separate attributes with a semicolon.
+
+					If action = "ModifyDN", CFML passes attributes to the
+					LDAP server without syntax checking.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="filter" required="false" type="String">
+				<help><![CDATA[
+					Search criteria for action = "query".
+					List attributes in the form:
+					"(attribute operator value)" Example: "(sn = Smith)"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="sort" required="false" type="String">
+				<help><![CDATA[
+					Attribute(s) by which to sort query results. Use a comma
+					delimiter.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="sortcontrol" required="false" type="String">
+				<help><![CDATA[
+					Default asc
+					* nocase: case-insensitive sort
+					* asc: ascending (a to z) case-sensitive sort
+					* desc: descending (z to a) case-sensitive sort
+
+					You can enter a combination of sort types; for example,
+					sortControl = "nocase, asc".
+				]]></help>
+				<values>
+					<value option="nocase"/>
+					<value option="asc"/>
+					<value option="desc"/>
+					<value option="nocase, desc"/>
+					<value option="nocase, asc"/>
+				</values>
+			</parameter>
+			<parameter name="dn" required="false" type="String">
+				<help><![CDATA[
+					Required if action = "Add", "Modify", "ModifyDN", or "delete"
+					Distinguished name, for update action. Example:
+					"cn = Bob Jensen, o = Ace Industry, c = US"
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startrow" required="false" type="Numeric">
+				<help><![CDATA[
+					Used with action = "query". First row of LDAP query to insert
+					into a CFML query.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="modifytype" required="false" type="String">
+				<help><![CDATA[
+					Default replace
+
+					How to process an attribute in a multi-value list.
+					* add: appends it to any attributes
+					* delete: deletes it from the set of attributes
+					* replace: replaces it with specified attributes
+
+					You cannot add an attribute that is already present or that is
+					empty.
+				]]></help>
+				<values>
+					<value option="add"/>
+					<value option="delete"/>
+					<value option="replace"/>
+				</values>
+			</parameter>
+			<parameter name="rebind" required="false" type="boolean">
+				<help><![CDATA[
+					Default No
+					* Yes: attempt to rebind referral callback and reissue query by
+						referred address using original credentials.
+					* No: referred connections are anonymous
+				]]></help>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
+			</parameter>
+			<parameter name="referral" required="false" type="Numeric">
+				<help><![CDATA[
+					Number of hops allowed in a referral. A value of 0 disables
+					referred addresses for LDAP; no data is returned.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="secure" required="false" type="String">
+				<help><![CDATA[
+					Security to employ, and required information. One option:
+					* CFSSL_BASIC
+
+					"CFSSL_BASIC" provides V2 SSL encryption
+					and server authentication.
+				]]></help>
+				<values>
+					<value option="CFSSL_BASIC"/>
+				</values>
+			</parameter>
+			<parameter name="separator" required="false" type="String">
+				<help><![CDATA[
+					Default , (a comma)
+					Delimiter to separate attribute values of multi-value
+					attributes. Used by query, add, and modify actions, and by
+					cfldap to output multi-value attributes.
+
+					For example, if $ (dollar sign), the attributes attribute could
+					be "objectclass = top$person", where the first value of
+					objectclass is top, and the second value is person. This avoids
+					confusion if values include commas.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="delimiter" required="false" type="String">
+				<help><![CDATA[
+					Separator between attribute name-value pairs. Use this
+					attribute if:
+
+					* the attributes attribute specifies more than one item, or
+					* an attribute contains the default delimiter (semicolon). For
+						example: mgrpmsgrejecttext;lang-en
+
+					Used by query, add, and modify actions, and by cfldap to output
+					multi-value attributes.
+
+					For example, if $ (dollar sign), you could specify
+					"cn = Double Tree Inn$street = 1111 Elm; Suite 100 where the
+					semicolon is part of the street value.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>

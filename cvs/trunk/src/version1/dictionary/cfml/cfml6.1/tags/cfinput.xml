@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfinput" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Used within the cfform tag, to place radio buttons, check boxes,
+				or text boxes on a form. Provides input validation for the
+				specified control type.
+			]]></help>
+			<parameter name="type" required="false" type="String">
+				<help><![CDATA[
+					text: creates a text entry box control
+                    radio: creates a radio button control
+                    checkbox: creates a check box control
+                    password: creates a password entry control
+				]]></help>
+				<values>
+					<value option="text"/>
+					<value option="radio"/>
+					<value option="checkbox"/>
+					<value option="password"/>
+				</values>
+			</parameter>
+			<parameter name="name" required="true" type="String">
+				<help><![CDATA[
+					Name for form input element.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="value" required="false" type="String">
+				<help><![CDATA[
+					Initial value for form input element.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="required" required="false" type="boolean">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="range" required="false" type="String">
+				<help><![CDATA[
+					Minimum and maximum value range, separated by a comma. If
+					type = "text" or "password", this applies only to numeric
+					data.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="validate" required="false" type="String">
+				<help><![CDATA[
+					date: verifies format mm/dd/yy.
+					eurodate: verifies date format dd/mm/yyyy.
+					time: verifies time format hh:mm:ss.
+					float: verifies floating point format.
+					integer: verifies integer format.
+					telephone: verifies telephone format ###-###-####. The
+						separator can be a blank. Area code and exchange must
+						begin with digit 1 - 9.
+					zipcode: verifies, in U.S. formats only, 5- or 9-digit
+						format #####-####. The separator can be a blank.
+					creditcard: strips blanks and dashes; verifies number using
+						mod10 algorithm. Number must have 13-16 digits.
+					social_security_number: verifies format ###-##-####. The
+						separator can be a blank.
+					regular_expression: matches input against pattern
+						attribute.
+				]]></help>
+				<values>
+					<value option="date"/>
+					<value option="eurodate"/>
+					<value option="time"/>
+					<value option="float"/>
+					<value option="integer"/>
+					<value option="telephone"/>
+					<value option="zipcode"/>
+					<value option="creditcard"/>
+					<value option="social_security_number"/>
+					<value option="regular_expression"/>
+				</values>
+			</parameter>
+			<parameter name="onvalidate" required="false" type="String">
+				<help><![CDATA[
+					Custom JavaScript function to validate user input. The form
+					 object, input object, and input object values are passed
+					 to the routine, which should return True if validation
+					 succeeds, and False otherwise. If used, the validate
+					 attribute is ignored.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pattern" required="false" type="Regex">
+				<help><![CDATA[
+					JavaScript regular expression pattern to validate input.
+					Omit leading and trailing slashes.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="message" required="false" type="String">
+				<help><![CDATA[
+					Message text to display if validation fails
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" required="false" type="String">
+				<help><![CDATA[
+					Custom JavaScript function to execute if validation fails.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="size" required="false" type="Numeric">
+				<help><![CDATA[
+					Size of input control. Ignored, if type = "radio" or
+					"checkbox".
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxlength" required="false" type="Numeric">
+				<help><![CDATA[
+					Maximum length of text entered, if type = "Text" or
+					"password".
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="checked" required="false" type="boolean">
+				<help><![CDATA[
+					Selects a control. No value is required.
+
+					Applies if type = "radio" or "checkbox".
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="passthrough" required="false" type="String">
+				<help><![CDATA[
+					Passes one or more arbitrary attribute-value pairs to the
+					HTML code that is generated for the tag. You can use either
+					of the following formats to include the quotation marks
+					around the attribute value:
+
+					passthrough="ID=""myID"""
+					passthrough='ID="myID"'
+
+					The second format, which surrounds all the attribute-value
+					pairs to be passed through in single quotation marks is
+					clearer, particularly when you pass multiple HTML
+					attributes.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>

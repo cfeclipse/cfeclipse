@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="1" name="cfchart" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Generates and displays a chart.
+			]]></help>
+			<parameter name="format" required="false" type="String">
+				<help><![CDATA[
+					File format in which to save graph.
+				]]></help>
+				<values>
+					<value option="flash"/>
+					<value option="jpg"/>
+					<value option="png"/>
+				</values>
+			</parameter>
+			<parameter name="chartheight" required="false" type="Numeric">
+				<help><![CDATA[
+					Chart height; integer number of pixels
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="chartwidth" required="false" type="Numeric">
+				<help><![CDATA[
+					Chart width; integer number of pixels
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="scalefrom" required="false" type="Numeric">
+				<help><![CDATA[
+					Y-axis minimum value; integer
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="scaleto" required="false" type="Numeric">
+				<help><![CDATA[
+					Y-axis max value; integer
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="showxgridlines" required="false" type="boolean">
+				<help><![CDATA[
+					yes: display X-axis gridlines
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="showygridlines" required="false" type="boolean">
+				<help><![CDATA[
+					yes: display Y-axis gridlines
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="gridlines" required="false" type="Numeric">
+				<help><![CDATA[
+					Number of grid lines to display on value axis, including
+					axis; positive integer.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="seriesplacement" required="false" type="String">
+				<help><![CDATA[
+					Applies to charts that have more than one data series.
+					Relative positions of series.
+				]]></help>
+				<values>
+					<value option="cluster"/>
+					<value option="stacked"/>
+					<value option="percent"/>
+				</values>
+			</parameter>
+			<parameter name="foregroundcolor" required="false" type="String">
+				<help><![CDATA[
+					color for control. For a hex value, use the form:
+					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+					signs or none.
+				]]></help>
+				<values>
+					<value option="black"/>
+					<value option="red"/>
+					<value option="blue"/>
+					<value option="magenta"/>
+					<value option="cyan"/>
+					<value option="orange"/>
+					<value option="darkgray"/>
+					<value option="pink"/>
+					<value option="white"/>
+					<value option="lightgray"/>
+					<value option="yellow"/>
+				</values>
+			</parameter>
+			<parameter name="databackgroundcolor" required="false" type="String">
+				<help><![CDATA[
+					color for control. For a hex value, use the form:
+					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+					signs or none.
+				]]></help>
+				<values>
+					<value option="black"/>
+					<value option="red"/>
+					<value option="blue"/>
+					<value option="magenta"/>
+					<value option="cyan"/>
+					<value option="orange"/>
+					<value option="darkgray"/>
+					<value option="pink"/>
+					<value option="white"/>
+					<value option="lightgray"/>
+					<value option="yellow"/>
+				</values>
+			</parameter>
+			<parameter name="showborder" required="false" type="boolean">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="font" required="false" type="String">
+				<help><![CDATA[
+					Font of data in column.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="fontsize" required="false" type="Numeric">
+				<help><![CDATA[
+					Size of text in column.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="fontitalic" required="false" type="boolean">
+				<help><![CDATA[
+					Yes: displays grid control text in italics
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="fontbold" required="false" type="boolean">
+				<help><![CDATA[
+					Yes: displays grid control text in bold
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="labelformat" required="false" type="String">
+				<help><![CDATA[
+					Format for Y-axis labels.
+				]]></help>
+				<values>
+					<value option="number"/>
+					<value option="currency"/>
+					<value option="percent"/>
+					<value option="date"/>
+				</values>
+			</parameter>
+			<parameter name="xaxistitle" required="false" type="String">
+				<help><![CDATA[
+					text; X-axis title
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="yaxistitle" required="false" type="String">
+				<help><![CDATA[
+					text; X-axis title
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="xaxistype" required="false" type="String">
+				<help><![CDATA[
+					category The axis indicates the data category. Data is
+					sorted according to the sortXAxis attribute.
+					scale The axis is numeric. All cfchartdata item attribute
+					values must numeric. The X axis is automatically sorted
+					numerically.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="yaxistype" required="false" type="String">
+				<help><![CDATA[
+					Currently has no effect, as Y axis is always used for data
+					values. Valid values are category and scale
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="sortxaxis" required="false" type="boolean">
+				<help><![CDATA[
+					yes: display column labels in alphabetic order along X-axis
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="show3d" required="false" type="boolean">
+				<help><![CDATA[
+					yes: display chart with three-dimensional appearance
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="xoffset" required="false" type="Numeric">
+				<help><![CDATA[
+					Applies if show3D="yes". Number of units by which to
+					display the chart as angled, horizontally
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="yoffset" required="false" type="Numeric">
+				<help><![CDATA[
+					Applies if show3D="yes". Number of units by which to
+					display the chart as angled, horizontally
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="rotated" required="false" type="boolean">
+				<help><![CDATA[
+					yes: rotate chart 90 degrees. For a horizontal bar chart,
+					use this option.
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="showlegend" required="false" type="boolean">
+				<help><![CDATA[
+					yes: if chart contains more than one data series, display
+					legend
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="tipstyle" required="false" type="String">
+				<help><![CDATA[
+					Determines the action that opens a popup window to display
+					information about the current chart element.
+				]]></help>
+				<values>
+					<value option="mouseDown"/>
+					<value option="mouseOver"/>
+					<value option="none"/>
+				</values>
+			</parameter>
+			<parameter name="tipbgcolor" required="false" type="String">
+				<help><![CDATA[
+					color for control. For a hex value, use the form:
+					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+					signs or none.
+				]]></help>
+				<values>
+					<value option="black"/>
+					<value option="red"/>
+					<value option="blue"/>
+					<value option="magenta"/>
+					<value option="cyan"/>
+					<value option="orange"/>
+					<value option="darkgray"/>
+					<value option="pink"/>
+					<value option="white"/>
+					<value option="lightgray"/>
+					<value option="yellow"/>
+				</values>
+			</parameter>
+			<parameter name="showmarkers" required="false" type="boolean">
+				<help><![CDATA[
+					Applies to chartseries type attribute values line, curve
+					and scatter.
+					yes: display markers at data points
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="markersize" required="false" type="Numeric">
+				<help><![CDATA[
+					Size of data point marker. in pixels. Integer.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pieslicestyle" required="false" type="String">
+				<help><![CDATA[
+					Applies to chartseries type attribute value pie.
+				]]></help>
+				<values>
+					<value option="solid"/>
+					<value option="sliced"/>
+				</values>
+			</parameter>
+			<parameter name="url" required="false" type="URL">
+				<help><![CDATA[
+					URL to open if the user clicks item in a data series; the
+					onClick destination page.
+
+					You can specify variables within the URL string;
+					CFML passes current values of the variables.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="name" required="false" type="String">
+				<help><![CDATA[
+					Page variable name. String. Generates the the graph as
+					binary data and assigns it to the specified variable.
+					Suppresses chart display. You can use the name value in
+					the cffile tag to write the chart to a file.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>

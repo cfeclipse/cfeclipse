@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfproperty" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Defines properties of a CFML component (CFC). Used to
+				create complex data types for web services. The attributes of
+				this tag are exposed as component metadata and are subject to
+				inheritance rules.
+			]]></help>
+			<parameter name="name" required="true" type="String">
+				<help><![CDATA[
+					A string; a property name. Must be a static value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" required="false" type="String">
+				<help><![CDATA[
+					A string; identifies the property data type
+				]]></help>
+				<values>
+					<value option="any"/>
+					<value option="array"/>
+					<value option="binary"/>
+					<value option="boolean"/>
+					<value option="date"/>
+					<value option="guid"/>
+					<value option="numeric"/>
+					<value option="query"/>
+					<value option="string"/>
+					<value option="struct"/>
+					<value option="uuid"/>
+				</values>
+			</parameter>
+			<parameter name="required" required="false" type="boolean">
+				<help><![CDATA[
+					Whether the parameter is required
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="default" required="false" type="Object">
+				<help><![CDATA[
+					If no property value is set when the component is used for
+					a web service, specifies a default value.
+
+					If this attribute is present, the required attribute must
+					be set to "no" or not specified.
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="displayname" required="false" type="String">
+				<help><![CDATA[
+					A value to be displayed when using introspection to show
+					information about the CFC. The value appears in parentheses
+					following the property name.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="hint" required="false" type="String">
+				<help><![CDATA[
+					Text to be displayed when using introspection to show
+					information about the CFC. This attribute can be useful
+					for describing the purpose of the parameter.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>

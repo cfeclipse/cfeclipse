@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfdefaultcase" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Used only inside the cfswitch tag body. Contains code to
+				execute when the expression specified in the cfswitch tag does
+				not match a of the value specified by a cfcase tag.
+			]]></help>
+		</tag>
