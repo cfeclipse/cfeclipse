@@ -207,12 +207,14 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
 				case EditorPreferenceConstants.BRACKET_MATCHING_BOLD: 
 				{
 					gc.setForeground(fColor);
-					gc.getFont();
+					Font oldFont = gc.getFont();
 					FontData[] data = gc.getFont().getFontData();
 					data[0].setStyle(SWT.BOLD);
+					
 					Font font = new Font(fTextWidget.getDisplay(),data);
 					gc.setFont(font);
 					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
+					gc.setFont(oldFont);
 					font.dispose();
 					break;
 				}

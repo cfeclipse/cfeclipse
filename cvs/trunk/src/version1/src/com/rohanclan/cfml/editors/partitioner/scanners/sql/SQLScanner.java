@@ -129,8 +129,6 @@ public class SQLScanner extends RuleBasedScanner {
 			allkeys[i++] = keywd;
 		}
 
-		System.out.println(cfquerytext.getData());
-		System.out.println(sqlkeyword.getData());
 		
 		//build the word highlighter
 		SQLKeywordDetector cfqkd = new SQLKeywordDetector();

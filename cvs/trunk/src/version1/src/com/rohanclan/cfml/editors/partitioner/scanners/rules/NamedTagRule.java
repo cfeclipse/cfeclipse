@@ -197,8 +197,7 @@ public class NamedTagRule implements IPredicateRule {
 			    && !fDblQuotesOpen
 			    && !fSnglQuotesOpen) {
 			    scanner.unread();
-			    tagString.deleteCharAt(tagString.length()-1);
-			    System.out.println(new String(tagString));
+			    //tagString.deleteCharAt(tagString.length()-1);
 			    return true;
 			} else if (fEndSequence.length > 0 
 								&& (c == fEndSequence[0] 
@@ -254,7 +253,7 @@ public class NamedTagRule implements IPredicateRule {
 		int tmp = scanner.read();
 		scanner.unread();
 		if (tmp == ICharacterScanner.EOF) {
-		    return true;
+		    return false;
 		}
 		char next = (char)tmp;
 		Matcher m = p.matcher(String.valueOf(next));

@@ -156,10 +156,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 
 					tg = sd.getTag(ename);
 					rules.add(new NamedTagRule("<" + ename,">", CF_START_TAG, CF_TAG_ATTRIBS));
-					if(!tg.isSingle())
-					{	
+					//if(!tg.isSingle())
+					//{	
 						rules.add(new NamedTagRule("</" + ename,">", CF_END_TAG, CF_END_TAG));
-					}
+					//}
 				
 			}
 		}
@@ -211,10 +211,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					
 					rules.add(new NamedTagRule("<" + ename,">", startTokenType, HTM_TAG_ATTRIBS));
 					//if this is supposed to have an end tag add it too
-					if(!tg.isSingle())
-					{	
+					//if(!tg.isSingle())
+					//{	
 						rules.add(new NamedTagRule("</" + ename,">", endTokenType, endTokenType));
-					}
+					//}
 				
 			}
 		}
@@ -236,110 +236,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public int getOffset() {
 	    return fOffset;
 	}
-	/*
-	public IToken getDefaultReturnToken() {
-	    return fDefaultReturnToken;
-	}*/
-	
-	public void pushPartitionToStack(String partition) {
-	    // Only add it if it isn't already on the top of the stack.
-	    if (!partitionStack.isEmpty() 
-	            && partitionStack.peek().toString().equalsIgnoreCase(partition)) {
-	        //System.out.println("Partition " + partition + " not injected.");
-	        return;
-	    }
-        //System.out.println("Partition " + partition + " injected.");
-	    partitionStack.push(partition);
-	}
-	
-	
-	private void updatePartitionStack(IToken token) {
-		try {
-	    if (token.getData() instanceof TagData) {
-	       TagData data = (TagData)token.getData();
-	       String text = data.getRawData().toLowerCase(); 
-	       //System.out.println("Found partition of type " + token.getData() + " with text " + text);
-	       if (text.startsWith("<cfscript")) {
-	           pushPartitionToStack(CF_SCRIPT);
-	       }  else if (text.startsWith("<cfquery")) {
-	           pushPartitionToStack(SQL);
-	       }  else if (text.startsWith("<script")) {
-	           pushPartitionToStack(J_SCRIPT);
-	       }  else if (text.startsWith("<style")) {
-	           pushPartitionToStack(CSS);
-	       } else if (text.startsWith("</cfscript")
-	               || text.startsWith("</cfquery")
-	               || text.startsWith("</style")
-	               || text.startsWith("</script")) {
-	           if (partitionStack.size() > 0) {
-	               Object o = partitionStack.pop();
-	               
-	               System.out.println("Popped partition " + o.toString() + " from stack.");
-	           } else {
-	               //System.out.println("Encountered closing tag " + text + " with empty partition stack");
-	           }
-	           
-	       }
 
-	    }
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	/**
-	 * Returns the last consecutive token that has the same type as the passed
-	 * token.
-	 * 
-	 * @return The new partition.
-	 */
-	private IToken findPartitionEnd() {
-	   
-		//System.out.println("Looking for end of partition " + partitionStack.peek());
-	   
-		try {
-		    // Keep running until we find something.
-			while (true) {
-				//The next token;
-				IToken token;
-				if (fRules != null) {
-				    // Loop over all the rules looking for a match.
-					for (int i = 0; i < fRules.length; i++) {
-						token = (fRules[i].evaluate(this));
-						 // Check if we found a real token.
-						if (!token.isUndefined()) {
-						    if (token.getData() instanceof TagData) {
-						        TagData data = (TagData)token.getData();
-						        //System.out.println("Found " + data.getRawData());
-						        int len = data.getRawData().length();
-						        int j = 0;
-						        while (j < len) {
-						            this.unread();
-						            j++;
-						        }
-						    } else {
-						        // System.out.println("Found Nothing.");
-						        this.unread();
-						    }
-						    System.out.println("Returning token from stack - " + partitionStack.peek());
-							return new Token(partitionStack.peek());
-						}
-					}
-				}
-				//System.out.println("Nothing found in this pass.");
-				if (read() == EOF) {
-
-				    System.out.println("Returning token from stack - EOF");
-					return Token.EOF;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Token.UNDEFINED;
-		}
-	}
 	
 	
 	/**
@@ -373,8 +270,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 							// Check if the rule found anything
 							if (!token.isUndefined()) {
 								
-								// Update the partition stack with this token.
-							    // updatePartitionStack(token);
 							    // Return the token.
 							    return token;
 							}
@@ -387,20 +282,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					if (read() == EOF)
 						return Token.EOF;
 					else {
-						/*
-						 * We're not at the end of the file.
-						 * Check if there is anything on the partition stack.
-						 
-						if (!partitionStack.empty()) {
-						   
-						    System.out.println("Returning token from stack - " + partitionStack.peek());
-						    // Return whatever is on the partition stack.
-						    return  findPartitionEnd();
-						    
-						}
-						*/
-					    //System.out.println("Nothing found in this scan. Returning default token.");
-						// There's nothing on the stack, so return the default token.
+						
 					  return fDefaultReturnToken;
 					}
 				}
@@ -435,26 +317,11 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					token= rule.evaluate(this, resume);
 					if (!token.isUndefined()) {
 						fContentType= null;
-						//updatePartitionStack(token);
 						return token;
 					}
 				}
 			}
-			/*
-			if (!partitionStack.empty()) {
-				//System.out.println("Returning token from stack.");
-				return findPartitionEnd();
-			} else if (
-					fContentType.equals(CF_SCRIPT)
-					|| fContentType.equals(J_SCRIPT)
-					|| fContentType.equals(CSS)
-					|| fContentType.equals(SQL) ) {
-			    partitionStack.push(fContentType);
-				
-				//System.out.println("Scanner offset is now " + this.fOffset);
-				return findPartitionEnd();
-			}
-			*/
+
 			// haven't found any rule for this type of partition
 			fContentType= null;
 			if (resume) {
