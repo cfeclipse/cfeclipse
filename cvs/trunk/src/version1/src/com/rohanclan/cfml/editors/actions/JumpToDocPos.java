@@ -25,6 +25,8 @@
 package com.rohanclan.cfml.editors.actions;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
@@ -40,6 +42,8 @@ public class JumpToDocPos implements IEditorActionDelegate {
 
 	private ITextEditor editor = null;
 	private int docPos = 0;
+	private int selectionLength = 0;
+	
 	/**
 	 * 
 	 */
@@ -70,7 +74,11 @@ public class JumpToDocPos implements IEditorActionDelegate {
 	 * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
 	 */
 	public void run(IAction action) {
-		editor.setHighlightRange(this.docPos,0,true);
+		editor.setHighlightRange(this.docPos,this.selectionLength,true);
+		if (this.selectionLength > 0) {
+			TextSelection sel = new TextSelection(editor.getDocumentProvider().getDocument(editor.getEditorInput()), this.docPos, this.selectionLength);
+			editor.getSelectionProvider().setSelection(sel);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -79,4 +87,8 @@ public class JumpToDocPos implements IEditorActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 	}
 
+    public void setSelectionLength(int selectionLength) {
+        this.selectionLength = selectionLength;
+    }
+    
 }
