@@ -70,6 +70,7 @@ public class InformationPresenter implements IInformationPresenter {
 	                int length = newText.indexOf("</b>") - start -3 ; 
 	                
 	                StyleRange range = new StyleRange(start,length,null,null,SWT.BOLD);
+	                
 	                presentation.addStyleRange(range);
 	                //System.out.println("Text before: " + newText);
 	                newText = newText.replaceFirst("<b>","");

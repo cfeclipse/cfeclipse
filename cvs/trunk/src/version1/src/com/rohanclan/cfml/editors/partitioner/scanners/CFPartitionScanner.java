@@ -94,8 +94,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("<!", ">", doctype));
 		
 		//script block as its own highlighting
-		rules.add(new MultiLineRule("<cfscript>", "</cfscript>", cfscript));
-		rules.add(new MultiLineRule("<CFSCRIPT>", "</CFSCRIPT>", cfscript));
+		//rules.add(new MultiLineRule("<cfscript>", "</cfscript>", cfscript));
+		//rules.add(new MultiLineRule("<CFSCRIPT>", "</CFSCRIPT>", cfscript));
 		rules.add(new MultiLineRule("<style", "</style>", css));
 		rules.add(new MultiLineRule("<STYLE", "</STYLE>", css));
 		rules.add(new MultiLineRule("<script", "</script>", jscript));
@@ -117,12 +117,12 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 				if(!ename.equals("script"))
 				{	
 					tg = sd.getTag(ename);
-					rules.add(new MultiLineRule("<" + ename,">", cftag));
-					rules.add(new MultiLineRule("<" + ename.toUpperCase(),">", cftag));
+					rules.add(new CFTagRule("<" + ename,">", cftag));
+					rules.add(new CFTagRule("<" + ename.toUpperCase(),">", cftag));
 					if(!tg.isSingle())
 					{	
-						rules.add(new MultiLineRule("</" + ename,">", cfendtag));
-						rules.add(new MultiLineRule("</" + ename.toUpperCase(),">", cfendtag));
+						rules.add(new CFTagRule("</" + ename,">", cfendtag));
+						rules.add(new CFTagRule("</" + ename.toUpperCase(),">", cfendtag));
 					}
 				}
 			}
@@ -134,10 +134,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		//these are not really handled in the dictionary because you can call 
 		//normal pages as cf_'s
-		rules.add(new MultiLineRule("<cf_",">", cftag));
-		rules.add(new MultiLineRule("</cf_",">", cfendtag));
-		rules.add(new MultiLineRule("<CF_",">", cftag));
-		rules.add(new MultiLineRule("</CF_",">", cfendtag));
+		rules.add(new CFTagRule("<cf_",">", cftag));
+		rules.add(new CFTagRule("</cf_",">", cfendtag));
+		rules.add(new CFTagRule("<CF_",">", cftag));
+		rules.add(new CFTagRule("</CF_",">", cfendtag));
 		
 		//do the html tags now
 		sd = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
@@ -193,5 +193,60 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		setPredicateRules(rulearry);
 	}
 	
+	
+	
+	
+	public IToken nextToken() {
+		
+			
+			if (fContentType == null || fRules == null) {
+				IToken token;
+				while (true) {
+					
+					fTokenOffset= fOffset;
+					fColumn= UNDEFINED;
+					
+					if (fRules != null) {
+						for (int i= 0; i < fRules.length; i++) {
+							token= (fRules[i].evaluate(this));
+							if (!token.isUndefined()) {								
+								return token;
+							}
+						}
+					}
+					
+					if (read() == EOF)
+						return Token.EOF;
+					else
+						return fDefaultReturnToken;
+				}
+			}
+			// inside a partition
+			
+			fColumn= UNDEFINED;
+			boolean resume= (fPartitionOffset > -1 && fPartitionOffset < fOffset);
+			fTokenOffset= resume ? fPartitionOffset : fOffset;
+					
+			IPredicateRule rule;
+			IToken token;
+			
+			for (int i= 0; i < fRules.length; i++) {
+				rule= (IPredicateRule) fRules[i];
+				token= rule.getSuccessToken();
+				if (fContentType.equals(token.getData())) {
+					token= rule.evaluate(this, resume);
+					if (!token.isUndefined()) {
+						fContentType= null;
+						return token;
+					}
+				}
+			}
+			
+			// haven't found any rule for this type of partition
+			fContentType= null;
+			if (resume)
+				fOffset= fPartitionOffset;
+			return super.nextToken();
+		}
 
 }

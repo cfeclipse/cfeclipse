@@ -304,14 +304,14 @@ public class CFParser {
 					try {					
 						//
 						// Not sure what the start & end positions are good for!
-						//MarkerUtilities.setCharStart(attrs, match.startPos);
-						//MarkerUtilities.setCharEnd(attrs, match.endPos);
 						
 						//MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
-						IMarker marker = this.res.createMarker(IMarker.PROBLEM);
+						IMarker marker = this.res.createMarker("com.rohanclan.cfml.parserProblemMarker");
 						Map attrs = new HashMap();
 						MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
 						MarkerUtilities.setMessage(attrs, message);
+						MarkerUtilities.setCharStart(attrs, match.startPos);
+						MarkerUtilities.setCharEnd(attrs, match.endPos);
 						marker.setAttributes(attrs);
 						marker.setAttribute(IMarker.MESSAGE,message);
 						
@@ -665,6 +665,7 @@ public class CFParser {
 	 * @param isACloser - whether it's a self-closer
 	 */
 	protected void handleCFTag(String tagName, ParseItemMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
+	throws Exception
 	{
 		//
 		// If a CF tag then we get it's CF tag name (i.e. <cffunction, CF tag name is 'function')
@@ -678,7 +679,21 @@ public class CFParser {
 		TagItem newItem;
 		//System.out.println("CFParser::handleCFTag found " + tagName);
 		
+		// Tokenize the tag and check for invalid contents
+		String[] tokens = match.getMatch().split("\\s");
 
+		if (tokens.length > 1) {
+			for (int i=1;i<tokens.length;i++) {
+				if (tokens[i].charAt(0) == '<') {
+					parserState.addMessage(new ParseError(
+							getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
+							"Invalid token \"" + tokens[i].charAt(0) + "\" found in opening <b>"  + tagName + "</b> tag. The tag is probably missing a closing \">\""
+						));
+					
+					throw new FatalException("Fatal parser error. Unable to continue parsing past line " + getLineNumber(match.getStartPos()));
+				}
+			}
+		}
 		//
 		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
 		// Also tests to make sure it catches CFX tags.
@@ -908,7 +923,14 @@ public class CFParser {
 			
 			//newDoc.docTree = matchStack;
 			
-		}catch(Exception anyException) {
+		}
+		catch (FatalException e) {
+			parserState.addMessage(new ParseError(
+					getLineNumber(matchPos), matchPos, matchPos, "", 
+					e.getMessage()
+				));
+		}
+		catch(Exception anyException) {
 			parserState.addMessage(new ParseError(
 				getLineNumber(matchPos), matchPos, matchPos, "", 
 				"Doc tree creation: caught an unhandled exception: " 
@@ -1269,7 +1291,15 @@ public class CFParser {
 			MarkerUtilities.setLineNumber(attrs, currMsg.getLineNumber()+1);
 			MarkerUtilities.setMessage(attrs, currMsg.getMessage());
 			attrs.put(IMarker.CHAR_START,new Integer(currMsg.docStartOffset));
-			attrs.put(IMarker.CHAR_END,new Integer(currMsg.docStartOffset+currMsg.docData.length()));
+			int endOffset = 0;
+			if (currMsg.docEndOffset > currMsg.docStartOffset) {
+				endOffset = currMsg.docEndOffset;
+				System.out.println("End offset is: " + endOffset + " start is " + currMsg.docStartOffset);
+			}
+			else {
+				endOffset = currMsg.docStartOffset+currMsg.docData.length();
+			}
+			attrs.put(IMarker.CHAR_END,new Integer(endOffset));
 			
 			//
 			// Not sure what the start & end positions are good for!

@@ -899,6 +899,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 */	
 	private boolean areAnnotationsShown(Object annotationType) {
 		if (fPreferenceStore != null) {
+			
 			AnnotationPreference info= (AnnotationPreference) fAnnotationTypeKeyMap.get(annotationType);
 			if (info != null) {
 				String key= info.getTextPreferenceKey();

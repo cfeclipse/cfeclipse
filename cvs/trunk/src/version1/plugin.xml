@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.18.2"
+   version="1.1.18.3"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -1100,7 +1100,7 @@
    
    <extension point="org.eclipse.core.resources.markers"
 		id="parserProblemMarker"
-		name="parserProblemMarker">
+		name="CFEclipse Parser problem">
 		<super type="org.eclipse.core.resources.problemmarker"/>
 		<persistent value="true"/>
 	</extension>
@@ -1109,7 +1109,7 @@
    
    <extension point="org.eclipse.core.resources.markers"
 		id="parserWarningMarker"
-		name="parserWarningMarker">
+		name="CFEclipse parser warning">
 		<super type="org.eclipse.core.resources.problemmarker"/>
 		<persistent value="true"/>
 	</extension>

@@ -129,13 +129,13 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 			while (!token.isEOF()) {
 				
 				String contentType= getTokenContentType(token);
-				
+				//System.out.println(contentType + "parttion found at offset " + fScanner.getTokenOffset()+" with length "+fScanner.getTokenLength());
 				if (isSupportedContentType(contentType)) {
 					TypedPosition p= new TypedPosition(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType);
 					//System.out.println("Token found " + contentType + " From " + p.offset + " length " + p.length);
 					fDocument.addPosition(fPositionCategory, p);
 				}
-								
+				
 				token= fScanner.nextToken();
 			}
 		} catch (BadLocationException x) {
@@ -551,7 +551,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 		List list= new ArrayList();
 		try {
 			
-			int endOffset= offset + length;
+			int endOffset = offset + length;
 			
 			Position[] category= fDocument.getPositions(fPositionCategory);
 			

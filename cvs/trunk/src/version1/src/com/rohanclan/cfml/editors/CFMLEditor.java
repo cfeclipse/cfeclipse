@@ -227,7 +227,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
         fProjectionSupport = new ProjectionSupport(projectionViewer,
                 getAnnotationAccess(), getSharedColors());
         fProjectionSupport
-                .addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error");
+        .addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error");
+        fProjectionSupport
+        .addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
+        fProjectionSupport
+        .addSummarizableAnnotationType("com.rohanclan.cfml.parserProblemAnnotation");
+        fProjectionSupport
+        .addSummarizableAnnotationType("com.rohanclan.cfml.parserWarningAnnotation");
         fProjectionSupport
                 .addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning");
         fProjectionSupport

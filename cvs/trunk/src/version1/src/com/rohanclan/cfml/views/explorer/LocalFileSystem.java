@@ -8,7 +8,8 @@ package com.rohanclan.cfml.views.explorer;
 
 import java.util.ArrayList;
 import java.io.File;
-import javax.swing.filechooser.*;
+// Removed this because it doesn't work on OS X
+//import javax.swing.filechooser.*;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IViewPart;
@@ -36,6 +37,7 @@ public class LocalFileSystem implements IFileProvider {
     }
 
     public Object[] getRoots() {
+    	/*
     	ArrayList tmpRoots = new ArrayList();
     	FileSystemView view = FileSystemView.getFileSystemView();
     	for (int i=0;i<systemroot.length;i++) {
@@ -51,12 +53,12 @@ public class LocalFileSystem implements IFileProvider {
 				}
 				
 				
-				/*
-				int index = name.lastIndexOf(" (");
-				if (index > 0) {
-					name = name.substring(0, index);
-				}
-				*/
+				
+				//int index = name.lastIndexOf(" (");
+				//if (index > 0) {
+				//	name = name.substring(0, index);
+				//}
+				
 				if (name.length() > 0) {
 					FileSystemRoot drive = new FileSystemRoot(name);
 					drive.setPath(systemroot[i].toString());
@@ -75,8 +77,14 @@ public class LocalFileSystem implements IFileProvider {
 				
     		}
 		}
-    	
-    	
+    	*/
+    	ArrayList tmpRoots = new ArrayList();
+    	for (int i=0;i<systemroot.length;i++) {
+    		String driveLetter =  systemroot[i].toString();
+    		FileSystemRoot drive = new FileSystemRoot(driveLetter);
+    		drive.setPath(systemroot[i].toString());
+    		tmpRoots.add(drive);
+    	}
         return tmpRoots.toArray();
     }
     
