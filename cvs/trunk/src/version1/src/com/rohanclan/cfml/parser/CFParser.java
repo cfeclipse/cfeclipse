@@ -463,7 +463,7 @@ public class CFParser {
 		mainData = mainData.substring("<cfscript>".length());
 		StringReader tempRdr =new StringReader(mainData);
 		SimpleNode rootElement = null;
-		
+		/*
 		if(parser == null) {
 			parser = new SPLParser(tempRdr);
 		}
@@ -478,7 +478,8 @@ public class CFParser {
 			if(rootElement != null) {
 				
 			}
-		} catch(ParseException ex) {
+			
+		}  catch(ParseException ex) {
 			//
 			// A ParseException has a nice error message for us... unfortunately the message returned
 			// contains a reference to the line number of the error from _the start of the CFScript block_
@@ -502,6 +503,7 @@ public class CFParser {
 			System.err.println("CFParser::handleCFScriptBlock() - Caught exception \'" + ex.getMessage() + "\'");
 			ex.printStackTrace();
 		}
+		*/
 	}
 	
 	/**
