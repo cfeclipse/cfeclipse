@@ -57,7 +57,7 @@ public class CommentParser {
     private int CFQueryDepth = 0;
     private int lineCommentEnd = 0;
     
-    private Pattern pattern = Pattern.compile("(<!---)|(<cfscript)|(<cfquery)|(--->)|(</cfscript)|(</cfquery)|(/\\*)|(//)|(\\*/)");
+    private Pattern pattern = Pattern.compile("(<!---)|(<cfscript)|(--->)|(</cfscript)|(<cfquery\\s)|(</cfquery)|(/\\*)|(//)|(\\*/)",Pattern.CASE_INSENSITIVE);
 
     private Document doc;
     
@@ -154,7 +154,35 @@ public class CommentParser {
             
         }
         
+        //Checking for opening CFQUERY tag (<cfquery)
+        if (CFQueryDepth == 0 
+                && CFCommentDepth == 0
+                && group.length() > 7
+                && "<cfquery".equalsIgnoreCase(group.substring(0,8))) {
+            // We use substring here because the regular expression uses a space class (\s)
+            // to distinguish cfquery from cfqueryparam
+            
+            // Looks like we've found the start of a CFQUERY block
+            
+
+            //System.out.println("Found a CFQUERY start tag at " + start);
+            
+            CFQueryDepth++;
+            
+        }
         
+        //Checking for closing CFQUERY tag (</cfquery)
+        if (CFQueryDepth == 1 
+                && CFCommentDepth == 0
+                && "</cfquery".equalsIgnoreCase(group)) {
+            // Looks like we've found the end of a CFQUERY block
+            
+
+            //System.out.println("Found a CFQUERY end tag at " + start);
+            
+            CFQueryDepth--;
+            
+        }
         
         //Checking for opening CFQUERY tag (<cfquery)
         if (CFQueryDepth == 0 
