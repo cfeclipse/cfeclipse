@@ -66,6 +66,11 @@ public class CFPluginImages {
 	public static final String ICON_REMOVE	= "remove.gif";
 	public static final String ICON_DELETE	= "delete.gif";
 	public static final String ICON_REFRESH	= "refresh.gif";
+	public static final String ICON_BACK	= "back.gif";
+	public static final String ICON_FORWARD	= "forward.gif";
+	public static final String ICON_PROCESS	= "process.gif";
+	public static final String ICON_STOP	= "stop.gif";
+	
 	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
@@ -108,6 +113,11 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_REMOVE);
 			addImageToRegistry(TOOLBAR,ICON_DELETE);
 			addImageToRegistry(TOOLBAR,ICON_REFRESH);
+			
+			addImageToRegistry(TOOLBAR,ICON_BACK);
+			addImageToRegistry(TOOLBAR,ICON_FORWARD);
+			addImageToRegistry(TOOLBAR,ICON_PROCESS);
+			addImageToRegistry(TOOLBAR,ICON_STOP);
 		}
 	}
 	

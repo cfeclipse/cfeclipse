@@ -38,7 +38,7 @@ import org.eclipse.swt.browser.WindowEvent;
 import org.eclipse.swt.graphics.Image;
 //import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
+//import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -89,25 +89,41 @@ public class CFBrowser {
 	*/
 	public CFBrowser(Composite parent) 
 	{
-		initResources();
+		//initResources();
 		final Display display = parent.getDisplay();
 		FormLayout layout = new FormLayout();
 		parent.setLayout(layout);
+		
 		ToolBar toolbar = new ToolBar(parent, SWT.NONE);
 		final ToolItem itemBack = new ToolItem(toolbar, SWT.PUSH);
-		itemBack.setText(getResourceString("Back"));
+		//itemBack.setText(getResourceString("Back"));
+		itemBack.setImage(CFPluginImages.get(CFPluginImages.ICON_BACK));
+		itemBack.setToolTipText(getResourceString("Back"));
+		
 		final ToolItem itemForward = new ToolItem(toolbar, SWT.PUSH);
-		itemForward.setText(getResourceString("Forward"));
+		//itemForward.setText(getResourceString("Forward"));
+		itemForward.setImage(CFPluginImages.get(CFPluginImages.ICON_FORWARD));
+		itemForward.setToolTipText(getResourceString("Forward"));
+		
 		final ToolItem itemStop = new ToolItem(toolbar, SWT.PUSH);
-		itemStop.setText(getResourceString("Stop"));
+		//itemStop.setText(getResourceString("Stop"));
+		itemStop.setImage(CFPluginImages.get(CFPluginImages.ICON_STOP));
+		itemStop.setToolTipText(getResourceString("Stop"));
+		
 		final ToolItem itemRefresh = new ToolItem(toolbar, SWT.PUSH);
-		itemRefresh.setText(getResourceString("Refresh"));
+		//itemRefresh.setText(getResourceString("Refresh"));
+		itemRefresh.setImage(CFPluginImages.get(CFPluginImages.ICON_REFRESH));
+		itemRefresh.setToolTipText(getResourceString("Refresh"));
+		
 		final ToolItem itemGo = new ToolItem(toolbar, SWT.PUSH);
-		itemGo.setText(getResourceString("Go"));
+		//itemGo.setText(getResourceString("Go"));
+		itemGo.setImage(CFPluginImages.get(CFPluginImages.ICON_PROCESS));
+		itemGo.setToolTipText(getResourceString("Go"));
+		
 		location = new Text(parent, SWT.BORDER);
 		final Canvas canvas = new Canvas(parent, SWT.NO_BACKGROUND);
-		final Rectangle rect = images[0].getBounds();
-		canvas.addListener(SWT.Paint, new Listener() {
+		//final Rectangle rect = images[0].getBounds();
+		/* canvas.addListener(SWT.Paint, new Listener() {
 			public void handleEvent(Event e) 
 			{
 				Point pt = canvas.getSize();
@@ -121,9 +137,11 @@ public class CFBrowser {
 		canvas.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event e) 
 			{
-				browser.setUrl(getResourceString("Startup"));
+				//browser.setUrl(getResourceString("Startup"));
+				//for now...
+				browser.setUrl("http://livedocs.macromedia.com/");
 			}
-		});
+		}); */
 		
 		display.asyncExec(new Runnable() {
 			public void run() 
@@ -279,7 +297,9 @@ public class CFBrowser {
 			});
 			
 			initialize(display, browser);
-			browser.setUrl(getResourceString("Startup"));
+			//browser.setUrl(getResourceString("Startup"));
+			//for now...
+			browser.setUrl("http://livedocs.macromedia.com/");
 		}
 	}
 	
@@ -408,7 +428,7 @@ public class CFBrowser {
 	/**
 	 * Loads the resources
 	 */
-	void initResources()
+	/* void initResources()
 	{
 		final Class clazz = this.getClass();
 		
@@ -420,15 +440,15 @@ public class CFBrowser {
 				{
 					images = new Image[1];
 					images[0] = CFPluginImages.get(CFPluginImages.ICON_DEFAULT);
-					/* images = new Image[imageLocations.length];
-					for(int i = 0; i < imageLocations.length; ++i) 
-					{
-						ImageData source = new ImageData(
-							clazz.getResourceAsStream(imageLocations[i])
-						);
-						ImageData mask = source.getTransparencyMask();
-						images[i] = new Image(null, source, mask);
-					} */
+					// images = new Image[imageLocations.length];
+					//for(int i = 0; i < imageLocations.length; ++i) 
+					//{
+					//	ImageData source = new ImageData(
+					//		clazz.getResourceAsStream(imageLocations[i])
+					//	);
+					//	ImageData mask = source.getTransparencyMask();
+					//	images[i] = new Image(null, source, mask);
+					//}
 				}
 				return;
 			} 
@@ -444,7 +464,7 @@ public class CFBrowser {
 		
 		freeResources();
 		//throw new RuntimeException(error);
-	}
+	} */
 
 	/* public static void main(String[] args) 
 	{
