@@ -25,9 +25,13 @@
 package com.rohanclan.cfml.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.rohanclan.cfml.dictionary.*;
 import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 import com.rohanclan.cfml.parser.exception.NodeNotFound;
+import com.rohanclan.cfml.parser.xpath.XPathSearch;
+import com.rohanclan.cfml.parser.xpath.expressions.ComparisonType;
 
 /** 
  * The DocItem class is intended to be the abstract base class for parsing and representing 
@@ -124,7 +128,7 @@ public abstract class DocItem implements Comparable {
 	
 	protected void addParseMessage(ParseMessage newMsg)
 	{
-		System.out.println("DocItem::addParseMessage() - Adding message " + newMsg.getMessage());
+	//System.out.println("DocItem::addParseMessage() - Adding message " + newMsg.getMessage());
 		parseMessages.addMessage(newMsg);
 	}
 	
@@ -278,40 +282,49 @@ public abstract class DocItem implements Comparable {
 		return false;
 	}
 	
-	/**
-	 * Supply a <strong>basic</strong> search string (i.e. a single node name).
-	 * 
-	 * Currently supported are the following syntaxes:
-	 * "aTagName", "//aTagName"
-	 *
-	 * @param searchString
-	 * @return
-	 */
-	public CFNodeList selectNodes(String searchString)
-	{
-		CFNodeList result = new CFNodeList();
-		boolean doChildNodes = false;
-		String tagName = searchString; 
-		
-		if(searchString.length() > 2 &&
-		   searchString.charAt(0) == '/' && searchString.charAt(1) == '/')
-		{
-			doChildNodes = true;
-			tagName = searchString.substring(2);
-		}
+	private CFNodeList selectNodes(XPathSearch search) {
+		CFNodeList result = new CFNodeList();		
 		
 		for(int i = 0; i < docNodes.size(); i++)
 		{
 			DocItem currItem = (DocItem)docNodes.get(i);
+			int matches = 0;
 			
-			if(doChildNodes)
-				result.addAll(currItem.selectNodes(searchString));
+			if(search.doChildNodes)
+				result.addAll(currItem.selectNodes(search));
 			
-			if(currItem.getName().compareToIgnoreCase(tagName) == 0)
+			if(search.searchForTag && currItem.getName().compareToIgnoreCase(search.tagName) == 0)
+				matches++;
+			
+			if(search.attrSearch.containsKey(XPathSearch.ATTR_STARTPOS)) {
+				ComparisonType comp = (ComparisonType)search.attrSearch.get(XPathSearch.ATTR_STARTPOS);
+				if(comp.performComparison(Integer.parseInt(comp.getValue())))
+					matches++;
+			}
+			if(search.attrSearch.containsKey(XPathSearch.ATTR_ENDPOS)) {
+				ComparisonType comp = (ComparisonType)search.attrSearch.get(XPathSearch.ATTR_ENDPOS);
+				if(comp.performComparison(Integer.parseInt(comp.getValue())))
+					matches++;
+			}
+			
+			if(matches == search.getMatchesRequired())
+			{
+			//System.out.println("DocItem::selectNodes(XPathSearch) - Got match for " + currItem.itemName);
 				result.add(currItem);
-		}		
+			}
+		}				
 		
-		return result; 
+		return result;
+	}
+	
+	public CFNodeList selectNodes(String searchString)/* throws Exception */
+	{
+		CFNodeList result = new CFNodeList();
+		XPathSearch search = new XPathSearch();
+		if(!search.parseXPath(searchString)) {
+			//throw new Exception("XPath string \'" + searchString + "\' was invalid");
+		}
+		return selectNodes(search); 
 	}
 	
 	/**
@@ -358,7 +371,7 @@ public abstract class DocItem implements Comparable {
 			//the same (this may need to be adjusted in the future)
 			if( ((DocItem)obj).toString().equals(toString()) )
 			{
-				System.err.println("we are equal: " + toString());
+				//System.err.println("we are equal: " + toString());
 				return true;
 			}
 		}
