@@ -24,16 +24,16 @@
  */
 package com.rohanclan.cfml.preferences;
 
-import org.eclipse.jface.preference.BooleanFieldEditor;
+//import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IPreferenceStore;
+//import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.jface.preference.*;
-import org.eclipse.ui.IWorkbenchPreferencePage;
+//import org.eclipse.jface.preference.*;
+//import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.editors.ICFColorConstants;
+//import com.rohanclan.cfml.editors.ICFColorConstants;
 
 /**
  * @author Rob

@@ -119,20 +119,21 @@ public class NewCfmlWizard extends Wizard implements INewWizard {
 	 * the editor on the newly created file.
 	 */
 
-	private void doFinish(
-		String containerName,
-		String fileName,
-		IProgressMonitor monitor)
+	private void doFinish(String containerName,String fileName,IProgressMonitor monitor)
 		throws CoreException {
 		// create a sample file
 		monitor.beginTask("Creating " + fileName, 2);
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IResource resource = root.findMember(new Path(containerName));
-		if (!resource.exists() || !(resource instanceof IContainer)) {
+		
+		if (!resource.exists() || !(resource instanceof IContainer)) 
+		{
 			throwCoreException("Container \"" + containerName + "\" does not exist.");
 		}
+		
 		IContainer container = (IContainer) resource;
 		final IFile file = container.getFile(new Path(fileName));
+		
 		try {
 			InputStream stream = openContentStream();
 			if (file.exists()) {

@@ -57,9 +57,14 @@ public interface ICFColorConstants {
 	RGB CFSCRIPT_FUNCTION	= new RGB(0, 0, 102);
 	RGB CFSCRIPT_STRING		= new RGB(0, 102, 0);
 	
+	/** javascript tag color */
 	RGB JSCRIPT 		    = new RGB(51, 0, 153);
+	/** javascript function color */
 	RGB JSCRIPT_FUNCTION	= new RGB(0, 153, 255);
+	
+	/** non css values color */
 	RGB CSS         		= new RGB(255, 0, 255);
+	/** the css tag color */
 	RGB CSS_TAG     		= new RGB(153, 0, 153);
 	
 	/** all xml type tags (i.e. not cf and not html */

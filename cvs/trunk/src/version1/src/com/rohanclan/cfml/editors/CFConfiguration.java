@@ -47,6 +47,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 
+import org.eclipse.swt.graphics.RGB;
+
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
 import com.rohanclan.cfml.editors.style.StyleScanner;
@@ -55,6 +57,7 @@ import com.rohanclan.cfml.editors.CFTextHover;
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+
 
 public class CFConfiguration extends SourceViewerConfiguration 
 	implements IPropertyChangeListener {
@@ -368,7 +371,13 @@ public class CFConfiguration extends SourceViewerConfiguration
 		//make our assistant and processor
 		assistant = new ContentAssistant();
 		
-		
+		//The Mac Assistant looks a bit odd this is an attempt to fix it
+		assistant.setContextSelectorBackground(
+			colorManager.getColor(new RGB(255,255,255))
+		);
+		assistant.setContextSelectorForeground(
+			colorManager.getColor(new RGB(0,0,0))
+		);
 		
 		CFCompletionProcessor cfcp = new CFCompletionProcessor(assistant);
 	

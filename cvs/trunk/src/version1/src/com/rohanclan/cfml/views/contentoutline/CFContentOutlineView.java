@@ -24,36 +24,39 @@
  */
 package com.rohanclan.cfml.views.contentoutline;
 
-import java.util.Iterator;
-
+import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.texteditor.ITextEditor;
-import com.rohanclan.cfml.editors.ICFDocument;
-import com.rohanclan.cfml.parser.*;
-
-import org.eclipse.jface.viewers.IStructuredSelection;
-import com.rohanclan.cfml.util.CFPluginImages;
-
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Control;
 
-//import org.eclipse.jface.viewers.ISelection;
-//import org.eclipse.jface.viewers.SelectionChangedEvent;
-//import org.eclipse.jface.viewers.ISelectionChangedListener;
-
-import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import com.rohanclan.cfml.editors.CFMLEditor;
+import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
+import com.rohanclan.cfml.util.CFPluginImages;
+import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.TagItem;
+import com.rohanclan.cfml.parser.CFDocument;
+import com.rohanclan.cfml.parser.CFNodeList;
+import com.rohanclan.cfml.parser.CfmlTagItem;
 
+import java.util.Iterator;
 import java.util.ArrayList;
 
 /**
@@ -65,7 +68,10 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	public static final String ID_CONTENTOUTLINE = "com.rohanclan.cfml.views.contentoutline.cfcontentoutlineview";
 	
 	protected LabelProvider labelProvider;
-	protected Action jumpAction, expandAction;
+	protected Action jumpAction, expandAction, filterOnAction, openAction;
+	
+	protected static GenericOpenFileAction openFileAction;
+	
 	protected Action filters[];
 	protected MenuManager menuMgr;
 	
@@ -96,6 +102,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			createMenus();
 			createToolbar();
 			createContextMenu();
+			hookDoubleClickAction();
 			menusmade = true;
 		}
 		
@@ -192,7 +199,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			}
 			else
 			{
-				return new TagItem(1,1,1,"Unk");
+				return createFakeRoot();
 			}
 		}
 		catch(Exception e)
@@ -201,7 +208,36 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		}
 		
 		//a fake root
-		return new TagItem(1,1,1,"Unk");
+		return createFakeRoot();
+	}
+	
+	private TagItem createFakeRoot()
+	{
+		TagItem tg = new TagItem(1,1,1,"Unk");
+		return tg;
+	}
+	
+	/**
+	 * gets the currently selected item in docitem form or <code>null</code>
+	 * if there is none
+	 * @return
+	 */
+	private DocItem getSelectedDocItem()
+	{
+		DocItem selecteditem = null;
+		
+		//can't do much if nothing is selected
+		if(getTreeViewer().getSelection().isEmpty()) 
+		{
+			return null;
+		}
+		else 
+		{
+			IStructuredSelection selection = (IStructuredSelection)getTreeViewer().getSelection();
+			selecteditem = (DocItem)selection.getFirstElement();
+		}
+		
+		return selecteditem;
 	}
 	
 	
@@ -213,32 +249,26 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	{
 		//get a handle to the current editor and assign it to our temp action
 		IEditorPart iep = getSite().getPage().getActiveEditor();
-		DocItem selecteditem = null;
+		DocItem selecteditem = getSelectedDocItem();
 		
-		//can't do much if nothing is selected
-		if(getTreeViewer().getSelection().isEmpty()) 
-		{
-			return;
-		}
-		else 
-		{
-			IStructuredSelection selection = (IStructuredSelection)getTreeViewer().getSelection();
-			//selectedfile = (File)selection.getFirstElement();
-			selecteditem = (DocItem)selection.getFirstElement();
-		}
+		if(selecteditem == null) return;
+		
+		ITextEditor editor = (ITextEditor)iep;
+		editor.setHighlightRange(selecteditem.getStartPosition(),0,true);
+	}
+	
+	/**
+	 * filters the outline on the currenly selected element
+	 */
+	protected void filterOnSelected()
+	{
+		DocItem selecteditem = getSelectedDocItem();
 		
 		if(selecteditem == null)
 			return;
 		
-		try
-		{
-			ITextEditor editor = (ITextEditor)iep;
-			//IDocument doc = editor.getDocumentProvider().getDocument(iep.getEditorInput());
-			editor.setHighlightRange(selecteditem.getStartPosition(),0,true);
-		}catch(Exception e)
-		{
-			e.printStackTrace(System.err);
-		}
+		filter = "//" + selecteditem.getName();
+		reload();
 	}
 	
 	public void reload(DocItem root)
@@ -248,7 +278,6 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		if(cop == null)
 		{
 			cop = new OutlineContentProvider(root);
-			//getTreeViewer().setUseHashlookup(true);
 			getTreeViewer().setContentProvider(cop);
 		}
 		
@@ -287,11 +316,20 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	protected void createActions() 
 	{
 		jumpAction = new Action(
-			"Jump",
+			"Jump To",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW)
 		){
 			public void run() { 
 				jumpToItem();
+			}
+		};
+		
+		filterOnAction = new Action(
+			"Filter On This",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
+		){
+			public void run() { 
+				filterOnSelected();
 			}
 		};
 		
@@ -305,11 +343,20 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			}
 		};
 		
+		openAction = new Action(
+			"Open File",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_DEFAULT)
+		){
+			public void run() { 
+				openFile();
+			}
+		};
+		
 		///filters
 		filters = new Action[6];
 		
 		filters[0] = new Action(
-			"None",
+			"Remove Filter",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_DELETE)
 		){
 			public void run(){
@@ -385,6 +432,87 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		};
 	}
 	
+	/**
+	 * method to open the currently selected docitem if its a include or a 
+	 * module item
+	 */
+	private void openFile()
+	{
+		IEditorPart iep = getSite().getPage().getActiveEditor();
+		DocItem selecteditem = getSelectedDocItem();
+		
+		if(openFileAction == null)
+		{
+			openFileAction = new GenericOpenFileAction(); 
+		}
+		
+		if(selecteditem == null) return;
+		
+		if(selecteditem.getName().equals("include") 
+			|| selecteditem.getName().equals("module")
+		)
+		{	
+			ITextEditor editor = (ITextEditor)iep;
+			//System.out.println(editor.getEditorInput());
+			
+			//this gets the full path (system wise)
+			//String pth = ((FileEditorInput)editor.getEditorInput()).getPath().toString();
+			
+			//this gets the project path (name) ... got enough casting there?
+			String pth = (
+				(IResource)((FileEditorInput)editor.getEditorInput()
+			).getFile()).getProject().toString();
+			
+			
+			//this will be like:
+			// /test/dir/file.cfm
+			String currentpath = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getFullPath().toString();
+			
+			//this is the current file name:
+			// file.cfm
+			String currentfile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
+			
+			//this can take many shapes such as:
+			// ../dir/otherfile.cfm
+			// ../../../dir/otherfile.cfm
+			// /dir/otherfile.cfm
+			// dir/otherfile.cfm
+			String newfile = ((TagItem)selecteditem).getAttribute("template");
+			
+			//first lets get where we really are in the project
+			currentpath = currentpath.replaceFirst(currentfile,"");			
+			
+			//currentpath should now be like:
+			// /test/dir/
+			
+			//if the newfile starts with a "/" then its an absolute path (from 
+			// the cf standpoint) - so use it but tack on the project offset. If 
+			// it doesn't add the current direcotry in the hopes that it's 
+			//relative
+			if(newfile.startsWith("/"))
+			{
+				currentpath = pth.replaceFirst("P/","") + newfile;
+			}
+			else
+			{
+				currentpath += newfile;
+			}
+			
+			System.out.println(currentpath);
+			
+			openFileAction.setFilename(currentpath);
+			openFileAction.run();
+		}
+	}
+	
+	private void hookDoubleClickAction() {
+		getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
+			public void doubleClick(DoubleClickEvent event) {
+				jumpAction.run();
+			}
+		});
+	}
+	
 	////////////////////////////////////////////////////////////////////////////
 	
 	public void partActivated(IWorkbenchPart part) {
@@ -439,7 +567,6 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	protected void createMenus()
 	{
 		IMenuManager rootMenuManager = super.getSite().getActionBars().getMenuManager();
-		//rootMenuManager.add(refreshSnippetsAction);
 		int flen = filters.length;
 		for(int i=0; i<flen; i++)
 		{
@@ -466,6 +593,19 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	private void fillContextMenu(IMenuManager mgr) 
 	{
 		mgr.add(jumpAction);
+		mgr.add(new Separator());
+		mgr.add(filterOnAction);
+		
+		if(filter.length() > 0)
+			mgr.add(filters[0]);
+		
+		DocItem di = getSelectedDocItem();
+		if(di != null)
+		{
+			String sname = di.getName();
+			if(sname.equals("include") || sname.equals("module"))
+				mgr.add(openAction);
+		}
 	}
 	
 	
@@ -473,16 +613,6 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	{
 		IToolBarManager toolbarManager = super.getSite().getActionBars().getToolBarManager();
 		toolbarManager.add(jumpAction);
-		//toolbarManager.add(expandAction);
-		//toolbarManager.add(refreshAction);
+		toolbarManager.add(filterOnAction);
 	}
-	
-	/*
-	public void setSelection(ISelection selection){;}  
-	public void selectionChanged(SelectionChangedEvent event) {;}
-	public void removeSelectionChangedListener(ISelectionChangedListener listener){;}
-	public ISelection getSelection(){ return null; } 
-	protected void fireSelectionChanged(ISelection selection){;} 
-	public void addSelectionChangedListener(ISelectionChangedListener listener){;}
-	*/
 }

@@ -33,12 +33,22 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
+//import org.eclipse.jface.action.Separator;
+//import org.eclipse.ui.IEditorPart;
+//import org.eclipse.ui.IWorkbenchActionConstants;
+//import org.eclipse.ui.texteditor.ITextEditor;
+//import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+//import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+//import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.editors.text.TextEditor;
+//import org.eclipse.jface.text.ITextSelection;
+
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
 
@@ -94,6 +104,38 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 		super.createPartControl(parent);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected void editorContextMenuAboutToShow(IMenuManager menu) {
+		super.editorContextMenuAboutToShow(menu);
+		
+		//addAction(menu, ITextEditorActionConstants.FIND);
+		
+		//TODO: figure out how to figure out what tag was clicked on and 
+		//then do some magic based on the tag context. For example, right
+		//clicking on cfincludes to open the files...
+		addTagSpecificMenuItems(menu);
+		
+	}
+	
+	/**
+	 * Add menu items based on the tag that was right clicked on... doesnt work
+	 * as I have no idea how to find out what tag was just clicked on :) seems
+	 * like perhaps the CFDocument could know...
+	 * @param menu
+	 */
+	protected void addTagSpecificMenuItems(IMenuManager menu)
+	{
+		/* IEditorPart iep = getSite().getPage().getActiveEditor();
+		ITextEditor editor = (ITextEditor)iep;
+		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		ISelection sel = editor.getSelectionProvider().getSelection();
+		
+		int tgoffset = ((ITextSelection)sel).getOffset();
+		*/
+	}
+		
 	/**
 	 * @see IAdaptable#getAdapter(java.lang.Class)
 	 * @since 2.0

@@ -67,7 +67,7 @@ public class StyleScanner extends RuleBasedScanner {
 		);
 		
 		IToken cfkeyword = new Token(new TextAttribute(
-				manager.getColor(ICFColorConstants.CFSCRIPT_KEYWORD))
+			manager.getColor(ICFColorConstants.CFSCRIPT_KEYWORD))
 		);
 		
 		/* IToken cffunction = new Token(new TextAttribute(
