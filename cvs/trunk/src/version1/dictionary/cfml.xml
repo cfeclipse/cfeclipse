@@ -10855,7 +10855,7 @@
 				<help><![CDATA[
 				]]></help>
 			</parameter>
-			<parameter name="delimiters" type="String" required="false">
+			<parameter name="delimiters" type="String" required="false" default=",">
 				<help><![CDATA[
 				]]></help>
 			</parameter>

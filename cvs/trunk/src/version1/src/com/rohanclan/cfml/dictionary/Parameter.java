@@ -117,6 +117,7 @@ public class Parameter implements Comparable {
 	protected String name = "";
 	protected String type = Procedure.VOID;
 	protected String help = "";
+	protected String defaultValue = null;
 	protected Set values;
 	protected boolean required = false;
 		
@@ -130,11 +131,18 @@ public class Parameter implements Comparable {
 		this(name);
 		this.type = type;
 	}
-		
+	
 	public Parameter(String name, String type, boolean required)
 	{
 		this(name,type);
 		this.required = required;
+	}
+	
+	public Parameter(String name, String type, boolean required, String defaultValue)
+	{
+		this(name,type);
+		this.required = required;
+		this.defaultValue = defaultValue;
 	}
 	
 	/**
@@ -185,6 +193,11 @@ public class Parameter implements Comparable {
 		return this.name;
 	}
 	
+	public String getDefaultValue()
+	{
+		return this.defaultValue;
+	}
+	
 	public String getType()
 	{
 		return this.type;
@@ -203,12 +216,15 @@ public class Parameter implements Comparable {
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append(name + " ");
-		sb.append("[" + type + "]");
-		if(required)
-			sb.append("*");
-		if (this.help.trim().length() > 0) {
-		    sb.append(" - " + this.help);
+		if(required) {
+			sb.append(name + " - " + type);
+		}
+		else {
+			sb.append("[" + name + " - " + type );
+			if (this.defaultValue != null) {
+			    sb.append(" \"" + this.defaultValue + "\"");
+			}
+			sb.append("]");
 		}
 		
 		return sb.toString();

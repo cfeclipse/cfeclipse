@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
+
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -45,6 +46,7 @@ import com.rohanclan.cfml.editors.ICFEFileDocument;
  */
 public class CFEPrimaryAssist implements IContentAssistProcessor {
 
+    
     
 	/** Characters that will trigger content assist */
 	private char[] autoActivationChars = null;
@@ -181,7 +183,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	    autoActivationString += "abcdefghijklmnopqrstuvwxyz";
 	    autoActivationString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	    autoActivationString += "0123456789";
-	    autoActivationString += "=._< ~\t\n\r\"";
+	    autoActivationString += "(,=._< ~\t\n\r\"";
 	    
 	    char[] chars = autoActivationString.toCharArray();
 	    
@@ -209,7 +211,8 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
      */
     public char[] getContextInformationAutoActivationCharacters() {
         // TODO Auto-generated method stub
-        return new char[] {',', '('};
+        return null;
+        //return new char[] {',', '('};
     }
 
     /* (non-Javadoc)

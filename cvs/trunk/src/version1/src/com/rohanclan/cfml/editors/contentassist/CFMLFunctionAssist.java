@@ -27,18 +27,14 @@ package com.rohanclan.cfml.editors.contentassist;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.*;
-import java.util.HashSet;
 
 import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.*;
-import org.eclipse.jface.text.ITextViewer;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.dictionary.Function;
 import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
-import com.rohanclan.cfml.editors.CFCompletionProcessor;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
@@ -49,7 +45,7 @@ import com.rohanclan.cfml.util.CFPluginImages;
  * @author Stephen Milligan
  */
 public class CFMLFunctionAssist 
-	   		 implements IContentAssistProcessor 
+	   		 implements IAssistContributor 
 {
     /**
      * Source dictionary for the scope info. Currently defaults
@@ -73,6 +69,8 @@ public class CFMLFunctionAssist
      */
     private int paramsSoFar = -1;
     
+    
+    
     /**
      * 
      */
@@ -85,40 +83,81 @@ public class CFMLFunctionAssist
      * @see com.rohanclan.cfml.editors.contentassist.IAssistContributor#getTagProposals(com.rohanclan.cfml.editors.contentassist.IAssistState)
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
-        //if(state.getTriggerData() != '.')
-        //    return null;
-        
-        //System.out.println("Checking functions");
         
         if (!checkContext(state.getIDocument().get(),state.getOffset()))
         	return null;
 
-        int length = this.functionName.length();
-        
-		Set params = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionParams(this.functionName);
-		
-		if (params == null) {
-		    return null;
-		}
-		
-		Set proposal = new HashSet();
-		
-		// We only want to show the next possible parameter
-		if (params.size() >= 1) {
-		    Iterator i = params.iterator();
-			proposal.add(i.next());
-		}
-		
-		
-		// Do we have methods in the returned set?
-		return CFEContentAssist.makeSetToProposal(
-			proposal,
-			state.getOffset(),
-			CFEContentAssist.PARAMETERTYPE,
-			length
-		);
-		
+        else {
+            int length = this.functionName.length();
+            
+    		Set params = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionParams(this.functionName);
+    		String helpText = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionHelp(this.functionName);
+    		
+    		if (params == null) {
+    		    return null;
+    		}
+    	
+    		ICompletionProposal[] result = new ICompletionProposal[params.size()+2];
+    		Iterator i = params.iterator();
+			int x = 0;
+			
+
+			 CompletionProposal foo = new CompletionProposal("",
+                    state.getOffset(),
+                    0,
+                    state.getOffset(),
+                    CFPluginImages.get(CFPluginImages.ICON_FUNC),
+                    functionName + " (",
+                    null,
+                    helpText);
+			result[x] = foo;
+			x++;
+			
+			  
+			
+			while(i.hasNext())
+			{
+			    Object o = i.next();
+			    if (o instanceof Parameter) {
+			        Parameter p = (Parameter)o;
+					String usage = p.toString();
+					String icon = "";
+					if (x == this.paramsSoFar + 1) {
+					    icon = CFPluginImages.ICON_PARAM_DARK;
+					}
+					else {
+					    icon = CFPluginImages.ICON_PARAM;
+					}
+					String delimiter = "";
+					if (x < params.size()) {
+					    delimiter = " ,";
+					}
+					
+					
+					result[x] = new CompletionProposal("",
+		                    state.getOffset(),
+		                    0,
+		                    state.getOffset(),
+		                    CFPluginImages.get(icon),
+		                    paramIndent + usage + delimiter,
+		                    null,
+		                    p.getHelp());
+					
+					x++;
+			    }
+			}
+			result[x] = new CompletionProposal("",
+                    state.getOffset(),
+                    0,
+                    state.getOffset(),
+                    null,
+                    ")",
+                    null,
+                    null);
+    		return result;
+        }
     }
+    
     
     
     /**
@@ -223,105 +262,7 @@ public class CFMLFunctionAssist
             return false;
     }
     
-    public IContextInformation[] computeContextInformation(ITextViewer viewer, int offset) {
-        if (!checkContext(viewer.getDocument().get(),offset)) {
-            return null;
-        }
-        else {
-            int length = this.functionName.length();
-            
-    		Set params = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionParams(this.functionName);
-    		String helpText = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionHelp(this.functionName);
-    		
-    		if (params == null) {
-    		    return null;
-    		}
-    	
-    		IContextInformation result[] = new IContextInformation[params.size()+2];
-    		Iterator i = params.iterator();
-			int x = 0;
-			
-			ContextInformation foo = new ContextInformation(
-			        CFPluginImages.get(CFPluginImages.ICON_FUNC),
-					functionName + " (",
-					""
-				);
-			result[x] = foo;
-			x++;
-			
-			  
-			
-			while(i.hasNext())
-			{
-			    Object o = i.next();
-			    if (o instanceof Parameter) {
-			        Parameter p = (Parameter)o;
-					String usage = p.toString();
-					//System.err.println(usage);
-					String icon = "";
-					if (x == this.paramsSoFar + 1) {
-					    icon = CFPluginImages.ICON_PARAM_DARK;
-					}
-					else {
-					    icon = CFPluginImages.ICON_PARAM;
-					}
-					String delimiter = "";
-					if (x < params.size()) {
-					    delimiter = " ,";
-					}
-					
-					
-					result[x] = new ContextInformation(
-						CFPluginImages.get(icon),
-						//info,
-						paramIndent + usage + delimiter,
-						"" //fun.getHelp()
-					);
-					//this.validator.install(result[x], viewer, documentOffset);
-					x++;
-			    }
-			}
-			/* TODO: Find a way to add the full function help information to the context info display. 
-			result[x] = new ContextInformation(
-					"",
-					""
-				);
-			x++;
-			result[x] = new ContextInformation(
-					functionName,
-					""
-				);
-			
-			x++;
-			*/
-			result[x] = new ContextInformation(
-					")",
-					""
-				);
-    		return result;
-        }
-    }
     
-    public char[] getCompletionProposalAutoActivationCharacters() {
-        return null;
-    }
-
-    
-    public char[] getContextInformationAutoActivationCharacters() {
-        return null;
-    }
-    
-    public String getErrorMessage() {
-        return null;
-    }
-    
-    public IContextInformationValidator getContextInformationValidator() {
-        return null;
-    }
-    
-    public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
-        return null;
-    }
     
     
 }

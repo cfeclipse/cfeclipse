@@ -244,6 +244,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		String name = "";
 		String type = "";
 		boolean required = false;
+		String defaultValue = null;
 		
 		for(int x=0; x< attributes.getLength(); x++)
 		{
@@ -257,12 +258,15 @@ public class DictionaryContentHandler implements ContentHandler {
 			else if(attrname.equals("required")) {
 				required = parseBoolean(attributes.getValue(x));
 			}
+			else if(attrname.equals("default")) {
+				defaultValue = attributes.getValue(x);
+			}
 		}
 		
 		//System.out.println("Param: " + name + " " + type + " " + required);
 		//
 		// Create a new parameter and store it as the current parameter
-		this.paramItem = new Parameter(name,type,required);
+		this.paramItem = new Parameter(name,type,required,defaultValue);
 	}
 	
 	/**

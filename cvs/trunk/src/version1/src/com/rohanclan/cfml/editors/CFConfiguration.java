@@ -27,7 +27,10 @@ package com.rohanclan.cfml.editors;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IInformationControl;
+import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -45,6 +48,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Shell;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
@@ -52,7 +56,6 @@ import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.editors.CFTextHover;
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
-import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFEPrimaryAssist;
 import com.rohanclan.cfml.editors.indentstrategies.CFScriptIndentStrategy;
 import com.rohanclan.cfml.editors.indentstrategies.TagIndentStrategy;
