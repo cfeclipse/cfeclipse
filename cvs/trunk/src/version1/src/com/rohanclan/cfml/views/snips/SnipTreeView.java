@@ -53,6 +53,7 @@ import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import java.io.File;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import com.rohanclan.cfml.util.SnippetVarParser;
 
 
 import org.eclipse.core.runtime.Path;
@@ -74,6 +75,10 @@ public class SnipTreeView extends ViewPart
 	implements IPropertyChangeListener {
 	public static final String ID_SNIPVIEWTREE = "com.rohanclan.cfml.views.snips.sniptreeview";
 	
+	public static final String DREAMWEAVER_SNIP_TYPE = "Dreamweaver";
+	public static final String CFECLIPSE_SNIP_TYPE = "CFEclipse";
+	public static final String UNKNOWN_SNIP_TYPE = "Unknown";
+	
 	/** the treeviewer control */
 	protected TreeViewer treeViewer;
 	protected Text text;
@@ -87,8 +92,11 @@ public class SnipTreeView extends ViewPart
 	 * simple items via DOM - not recommended for large documents
 	 */
 	private static XMLConfigFile xmlconfile;
+	private String snippetType;
 	
-	protected Action insertAction; //addItemAction; //, deleteItemAction, selectAllAction;
+	MenuManager menuMgr;
+	
+	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction; //, deleteItemAction, selectAllAction;
 	
 	/** the root directory */
 	protected File root;
@@ -105,25 +113,19 @@ public class SnipTreeView extends ViewPart
 
 		// This ensures that we are notified when the properties are saved
 		CFMLPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
-		if(snipBase == null)
-		{
-			try 
-			{
-				//snipBase = CFMLPlugin.getDefault().getStateLocation();
-				/*
-				 * TODO: Need to figure out some way for this to be notified
-				 * when the property is changed. 
-				 * 
-				 */
-				snipBase = new Path(propertyManager.snippetsPath());
-				System.out.println("SnipBase set to "+snipBase);
-			} 
-			catch (Exception e) 
-			{
-				e.printStackTrace(System.err);
-			}
-		}
 		
+		try 
+		{
+			//snipBase = CFMLPlugin.getDefault().getStateLocation();
+
+			snipBase = new Path(propertyManager.snippetsPath());
+			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace(System.err);
+		}
+
 		if(tmpAction == null)
 			tmpAction = new GenericEncloserAction();
 		if(xmlconfile == null)
@@ -217,14 +219,17 @@ public class SnipTreeView extends ViewPart
 						//and set the encloser accordingly
 						if(f.endsWith(".xml") || f.endsWith(".XML"))
 						{
+							snippetType=CFECLIPSE_SNIP_TYPE;
 							toShow.append(xmlconfile.getValue("help"));
 						}
 						else if(f.endsWith(".csn") || f.endsWith(".CSN"))
 						{	
+							snippetType = DREAMWEAVER_SNIP_TYPE;
 							toShow.append("Dreamweaver Import");
 						}
 						else
 						{
+							snippetType = UNKNOWN_SNIP_TYPE;
 							toShow.append("Unknown Snip Type");
 						}
 					}
@@ -248,14 +253,35 @@ public class SnipTreeView extends ViewPart
 				insertItem();
 			}
 		};
+		createFolderAction = new Action("Create Folder"){
+			public void run() { 
+				createSnipFolder();
+			}
+		};
+		createSnippetAction = new Action("Create Snippet"){
+			public void run() { 
+				createSnippet();
+			}
+		};
+		editSnippetAction = new Action("Edit Snippet"){
+			public void run() { 
+				editSnippet();
+			}
+		};
+		
+		//TODO: Need to add a deleteSnippetAction and deleteFolderAction
+		
 	}
+	
+	
+	
 	
 	/**
 	 * creates all the menus
 	 */
 	protected void createMenus() {
 		IMenuManager rootMenuManager = getViewSite().getActionBars().getMenuManager();
-		rootMenuManager.add(insertAction);
+		//rootMenuManager.add(insertAction);
 	}
 
 
@@ -264,7 +290,7 @@ public class SnipTreeView extends ViewPart
 	 */
 	private void createContextMenu() {
 		// Create menu manager.
-		MenuManager menuMgr = new MenuManager();
+		menuMgr = new MenuManager();
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(new IMenuListener() {
 			public void menuAboutToShow(IMenuManager mgr) {
@@ -281,7 +307,26 @@ public class SnipTreeView extends ViewPart
 	}
 	
 	private void fillContextMenu(IMenuManager mgr) {
-		mgr.add(insertAction);
+		
+		
+		File selectedFile = getSelectedFile();
+		
+		System.out.println("Is it a directory : " + selectedFile.isDirectory());
+		
+		if (selectedFile.isDirectory()) {
+			mgr.add(createFolderAction);
+			// TODO: Need to modify this once non-dreamweaver file writing has been figured out.
+			if (snippetType == DREAMWEAVER_SNIP_TYPE) {
+				mgr.add(createSnippetAction);
+			}
+		}
+		else {
+			mgr.add(insertAction);
+			// TODO: Need to modify this once non-dreamweaver file writing has been figured out.
+			if (snippetType == DREAMWEAVER_SNIP_TYPE) {
+				mgr.add(editSnippetAction);
+			}
+		}
 		mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 		//mgr.add(deleteItemAction);
 		//mgr.add(new Separator());
@@ -293,7 +338,9 @@ public class SnipTreeView extends ViewPart
 	 */
 	protected void createToolbar() {
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
-		toolbarManager.add(insertAction);
+		//toolbarManager.add(insertAction);
+		//toolbarManager.add(createSnippetAction);
+		//toolbarManager.add(createFolderAction);
 	}
 	
 	/**
@@ -301,7 +348,6 @@ public class SnipTreeView extends ViewPart
 	 * @return the root directory
 	 */
 	public File getRootInput(){
-		System.out.println("RootInput retrieved " + snipBase);
 		return snipBase.toFile();
 	}
 	
@@ -315,6 +361,7 @@ public class SnipTreeView extends ViewPart
 		IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 		tmpAction.setActiveEditor(null,iep);
 		File selectedfile = null;
+		
 		
 		if(treeViewer.getSelection().isEmpty()) 
 		{
@@ -341,18 +388,18 @@ public class SnipTreeView extends ViewPart
 			
 			//figure out if this is a DWimport or a normal cfeclipse snip
 			//and set the encloser accordingly
-			if(f.endsWith(".xml") || f.endsWith(".XML"))
+			if(snippetType == CFECLIPSE_SNIP_TYPE)
 			{
 				tmpAction.setEnclosingStrings(
-					xmlconfile.getValue("starttext"),
-					xmlconfile.getValue("endtext")	
+						SnippetVarParser.parse(xmlconfile.getValue("starttext")),
+						SnippetVarParser.parse(xmlconfile.getValue("endtext"))	
 				);
 			}
-			else if(f.endsWith(".csn") || f.endsWith(".CSN"))
+			else if(snippetType == DREAMWEAVER_SNIP_TYPE)
 			{	
 				tmpAction.setEnclosingStrings(
-					xmlconfile.getValue("insertText",0),
-					xmlconfile.getValue("insertText",1)	
+						SnippetVarParser.parse(xmlconfile.getValue("insertText",0)),
+						SnippetVarParser.parse(xmlconfile.getValue("insertText",1))	
 				);
 			}
 			
@@ -365,6 +412,122 @@ public class SnipTreeView extends ViewPart
 	}
 
 
+	
+
+	/*
+	 * Returns the currently selected file or the root directory if nothing is selected
+	 */
+	
+	private File getSelectedFile() {
+		File selectedfile = null;
+		
+		if(treeViewer.getSelection().isEmpty()) 
+		{
+			selectedfile = getRootInput();
+		}
+		else 
+		{
+			IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+			selectedfile = (File)selection.getFirstElement();
+			treeViewer.setExpandedState(selection.getFirstElement(),true);
+
+		}
+		return selectedfile;
+	}
+
+
+	
+	/**
+	 * Creates a new folder called 'Untitled' below the currently active folder
+	 * If no folder is currently active it creates the folder below the root.
+	 * 
+	 */
+	
+	protected void createSnipFolder() {
+		File selectedfile = getSelectedFile();
+		
+		if(!selectedfile.isDirectory())  {
+			selectedfile = selectedfile.getParentFile();
+		}
+
+		SnipWriter writer = new SnipWriter(selectedfile,snippetType);
+		SnipFolderDialog folderDialog = new SnipFolderDialog(this.getViewSite().getShell(),writer,this.treeViewer);
+		folderDialog.open();
+
+	}
+	
+	
+	
+	protected void createSnippet() {
+		File selectedfile = getSelectedFile();
+
+		if(!selectedfile.isDirectory())  {
+			selectedfile = selectedfile.getParentFile();
+		}
+		
+		
+		SnipWriter writer = new SnipWriter(selectedfile,snippetType);
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,"","","");
+		snippetDialog.open();
+
+	}
+	
+	
+	protected void editSnippet() {
+		File selectedfile = getSelectedFile();
+
+		if(selectedfile.isDirectory())  {
+			return;
+		}
+		
+		File parentDirectory = selectedfile.getParentFile();
+
+		String f = selectedfile.getAbsolutePath();
+		String snippetName = selectedfile.getName().substring(0,selectedfile.getName().length()-4);
+		String snippetStartText = "";
+		String snippetEndText = "";
+		try
+		{
+			//try to load up the xml file
+			xmlconfile.setFileName(f);
+			xmlconfile.openFile();
+			
+			//figure out if this is a DWimport or a normal cfeclipse snip
+			//and set the encloser accordingly
+			if(snippetType == CFECLIPSE_SNIP_TYPE)
+			{
+				snippetStartText = xmlconfile.getValue("starttext");
+				snippetEndText = xmlconfile.getValue("endtext");
+				
+			}
+			else if(snippetType == DREAMWEAVER_SNIP_TYPE)
+			{
+				// For some reason this is sticking an extra line break in front of the string.
+				snippetStartText = xmlconfile.getValue("insertText",0);
+				snippetEndText = xmlconfile.getValue("insertText",1);	
+				snippetStartText = snippetStartText.substring(1,snippetStartText.length()-1);
+				snippetEndText = snippetEndText.substring(1,snippetEndText.length()-1);
+			}
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+		
+		
+		
+		SnipWriter writer = new SnipWriter(parentDirectory,snippetType);
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,snippetName,snippetStartText,snippetEndText);
+		snippetDialog.open();
+		
+	}
+	
+	
+	/*
+	 *  (non-Javadoc)
+	 * @see org.eclipse.jface.util.IPropertyChangeListener#propertyChange(org.eclipse.jface.util.PropertyChangeEvent)
+	 */
 	public void propertyChange(PropertyChangeEvent event)
     {
 
