@@ -80,7 +80,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			int nextSpaceOffset = -1;
 			FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
 			try {
-			    IRegion lastSpace = finder.find(cursorOffset-1,"[^0-9a-zA-Z_-]",false,false,false,true);
+			    IRegion lastSpace = finder.find(cursorOffset-1,"[^\\*0-9a-zA-Z_-]",false,false,false,true);
 			    
 			    if (lastSpace == null) {
 			        lastSpaceOffset = 0;
@@ -96,7 +96,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			        // ok, it could be valid, but we need to check what comes after the cursor.
 			        if (cursorOffset != doc.getLength()) {
 			            //System.out.println("yep");
-			            IRegion nextSpace = finder.find(cursorOffset-1,"[^0-9a-zA-Z_-]",true,false,false,true);
+			            IRegion nextSpace = finder.find(cursorOffset-1,"[^\\*0-9a-zA-Z_-]",true,false,false,true);
 			            if (nextSpace != null
 			                    && nextSpace.getOffset() == cursorOffset) {
 			                //System.out.println("Next space bit");

@@ -63,6 +63,8 @@ import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
 
+import java.util.Iterator;
+
 import com.rohanclan.cfml.parser.CfmlTagItem;
 
 /**
@@ -88,7 +90,10 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	{
 		//TODO: Once we get the document outline going, we can update it from here.
 		//On save parsing should apparently go into a builder.	
+
 		super.doSave(monitor);
+		
+		
 	}
 	
 	public CFMLEditor() 
@@ -117,6 +122,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	{
 		//this.parent = parent;
 		super.createPartControl(parent);
+		
 	}
 	
 	/**

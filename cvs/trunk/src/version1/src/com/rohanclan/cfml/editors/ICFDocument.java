@@ -32,6 +32,7 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.CFParser;
+import com.rohanclan.cfml.parser.CommentParser;
 import com.rohanclan.cfml.parser.CfmlTagItem;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 //import com.rohanclan.cfml.parser.DocItem;
@@ -42,6 +43,7 @@ import org.eclipse.core.runtime.CoreException;
 //import org.eclipse.jface.text.IDocument; 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Document;
+import org.eclipse.ui.texteditor.MarkerRulerAction;
 //import org.eclipse.ui.IEditorPart;
 
 /**
@@ -55,6 +57,7 @@ public class ICFDocument extends Document {
 
 	private /* static */ CFParser docParser = null;
 	private /* static */ IResource lastRes = null;
+	private CommentParser commentParser = new CommentParser();
 	private static Thread t;
 	private CFDocument docStructure = null;
 	
@@ -72,10 +75,14 @@ public class ICFDocument extends Document {
 	{
 		if(docParser != null)
 		{
-			IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
+			
+		    IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
 			docParser.setCFScriptParsing(prefStore.getBoolean(ICFMLPreferenceConstants.P_PARSE_DOCFSCRIPT));
 			docParser.setReportErrors(prefStore.getBoolean(ICFMLPreferenceConstants.P_PARSE_REPORT_ERRORS));
 			docStructure = docParser.parseDoc();
+			
+			commentParser.ParseDocument(this,lastRes);
+			commentParser.setTaskMarkers();
 			
 			if(docStructure == null)
 				System.err.println(
@@ -148,8 +155,14 @@ public class ICFDocument extends Document {
 		try
 		{
 			lastRes.deleteMarkers(
-				IMarker.PROBLEM, true, IResource.DEPTH_ONE
-			);
+					IMarker.PROBLEM, true, IResource.DEPTH_ONE
+				);
+			
+			lastRes.deleteMarkers(
+					IMarker.TASK, true, IResource.DEPTH_ONE
+				);
+			
+
 		}
 		catch(CoreException ce)
 		{
