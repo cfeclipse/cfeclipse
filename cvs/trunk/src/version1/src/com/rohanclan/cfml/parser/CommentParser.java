@@ -214,7 +214,7 @@ public class CommentParser {
 	                    Map attrs = new HashMap();
 	                    MarkerUtilities.setLineNumber(attrs, comment.getLineNumber()+line + 1);
                     
-                        String message = lines[line].substring(matcher.start(),lines[line].length()-1);
+                        String message = lines[line].substring(matcher.start(),lines[line].length());
 	                    MarkerUtilities.setMessage(attrs, message);
 	                    MarkerUtilities.createMarker(resource,attrs,IMarker.TASK);
                     
