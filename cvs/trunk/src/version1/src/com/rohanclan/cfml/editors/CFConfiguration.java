@@ -60,7 +60,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.editors.script.JSCompletionProcessor;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-import com.sun.rsasign.i;
+//import com.sun.rsasign.i;
 
 public class CFConfiguration extends SourceViewerConfiguration 
 	implements IPropertyChangeListener {

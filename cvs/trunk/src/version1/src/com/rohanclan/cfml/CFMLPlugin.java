@@ -25,7 +25,7 @@
 package com.rohanclan.cfml;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.core.runtime.IPluginDescriptor;
+//import org.eclipse.core.runtime.IPluginDescriptor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 
@@ -35,6 +35,7 @@ import java.util.MissingResourceException;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import org.eclipse.jface.preference.PreferenceStore;
+import org.osgi.framework.BundleContext;
 
 import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.preferences.*;
@@ -54,6 +55,67 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	private static CFParser cfparserAction = null;
 	private PreferenceStore propertyStore; 
 	
+	/**
+	 * create a new cfml plugin
+	 */
+	public CFMLPlugin()
+	{
+		super();
+		plugin = this;
+		try 
+		{
+			resourceBundle = ResourceBundle.getBundle("plugin");	
+		} 
+		catch (MissingResourceException x) 
+		{
+			x.printStackTrace(System.err);
+			resourceBundle = null;
+		}
+	}
+	
+	/**
+	 * This method is called upon plug-in activation. Seems like most startup 
+	 * stuff should now go here.
+	 */
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+		
+		/* System.out.println(
+			"Property store file set to " + 
+			CFMLPlugin.getDefault().getStateLocation().toString()
+			+ "/properties.ini"
+		); */
+		
+		propertyStore = new PreferenceStore(
+			CFMLPlugin.getDefault().getStateLocation().toString()
+			+ "/properties.ini"
+		);
+		
+		try
+		{
+			//load all the syntax dictionaries
+			DictionaryManager.initDictionaries();
+			
+			//startup the image registry
+			CFPluginImages.initCFPluginImages();
+		}
+		catch(Exception e)
+		{
+			//lots of bad things can happen...
+			e.printStackTrace(System.err);
+		}
+	}
+
+	/**
+	 * This method is called when the plug-in is stopped
+	 */
+	public void stop(BundleContext context) throws Exception {
+		super.stop(context);
+	}
+	
+	
+	
+	
 	//private CFMLPreferenceManager preferenceManager;
 	/**
 	 * The constructor. This is supposedly replaced with
@@ -64,7 +126,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 * but if I try to do it that way I get errors and the editor
 	 * wont work
 	 */
-	public CFMLPlugin(IPluginDescriptor descriptor)
+	/* public CFMLPlugin(IPluginDescriptor descriptor)
 	{
 		super(descriptor);
 	
@@ -107,7 +169,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			//lots of bad things can happen...
 			e.printStackTrace(System.err);
 		}
-	}
+	} */
+	
 	protected void initializeDefaultPluginPreferences() 
 	{
         //super.initializeDefaultPluginPreferences();
