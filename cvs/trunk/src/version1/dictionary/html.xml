@@ -1,0 +1,385 @@
+<?xml version="1.0" ?>
+<!--
+	This is the HTML dictionary - based on HTML4.01
+	Creator is who made / supports the tag. Values are:
+    	MX          = 0x1;
+    	BlueDragon  = 0x2;
+    	W3C         = 0x4;
+    	UserDefined = 0x8;
+    	If support exists between two you can add them together.
+    	for example 3 means MX and BlueDragon.
+    Single is if the tag lacks a closing tag
+    XMLStyle is if a single tag does it close thusly /&gt;
+    
+	::NOTES::
+ -->
+<dictionary>
+	<tags>
+		<!-- 
+		
+		<tag creator="4" name="xml" single="false" xmlstyle="false">
+			<help><![CDATA[
+				
+			]]></help>
+			<parameter name="booga" type="String" required="false">
+				<help><![CDATA[
+					
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="casesensitive" type="boolean" required="false">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="yes" />
+					<value option="no" />
+				</values>
+			</parameter>
+			
+			<parameter name="class" type="String" required="false">
+				<help><![CDATA[
+					The class of the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="false">
+				<help><![CDATA[
+					A unique id for the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					An inline style definition
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="title" type="String" required="false">
+				<help><![CDATA[
+					A text to display in a tool tip
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		-->
+		
+		
+		
+		
+		<!-- 
+			tr
+		-->
+		<tag creator="4" name="tr" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Defines a row in a table.
+			]]></help>
+			<parameter name="align" type="String" required="false">
+				<help><![CDATA[
+					Defines the text alignment in cells
+				]]></help>
+				<values>
+					<value option="right" />
+					<value option="left" />
+					<value option="center" />
+					<value option="justify" />
+					<value option="char" />
+				</values>
+			</parameter>
+			<parameter name="bgcolor" type="String" required="false">
+				<help><![CDATA[
+					Specifies the background color of the table cell. 
+					Deprecated. Use styles instead.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="char" type="String" required="false">
+				<help><![CDATA[
+					Specifies which character to align text on.
+					Note: Only used if align="char"!
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="charoff" type="String" required="false">
+				<help><![CDATA[
+					Specifies the alignment offset to the first character to 
+					align on. Note: Only used if align="char"!
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="valign" type="String" required="false">
+				<help><![CDATA[
+					Specifies the vertical text alignment in cells
+				]]></help>
+				<values>
+					<value option="top" />
+					<value option="middle" />
+					<value option="bottom" />
+					<value option="baseline" />
+				</values>
+			</parameter>
+			<parameter name="class" type="String" required="false">
+				<help><![CDATA[
+					The class of the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="false">
+				<help><![CDATA[
+					A unique id for the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					An inline style definition
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="title" type="String" required="false">
+				<help><![CDATA[
+					A text to display in a tool tip
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		
+		
+		<!-- 
+			tt
+		-->
+		<tag creator="4" name="tt" single="false" xmlstyle="false">
+			<help><![CDATA[
+				The following elements are all font style elements. They are 
+				not deprecated, but it is possible to achieve richer effects 
+				using style sheets.
+			]]></help>
+			<parameter name="class" type="String" required="false">
+				<help><![CDATA[
+					The class of the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="false">
+				<help><![CDATA[
+					A unique id for the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					An inline style definition
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="title" type="String" required="false">
+				<help><![CDATA[
+					A text to display in a tool tip
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+	
+		
+		<!-- 
+			ul
+		-->
+		<tag creator="4" name="ul" single="false" xmlstyle="false">
+			<help><![CDATA[
+				The <ul> tag defines an unordered list.
+			]]></help>
+			<parameter name="class" type="String" required="false">
+				<help><![CDATA[
+					class_rule or style_rule The class of the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="false">
+				<help><![CDATA[
+					A unique id for the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					An inline style definition
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="title" type="String" required="false">
+				<help><![CDATA[
+					A text to display in a tool tip
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+				
+		<!-- 
+			a
+		-->
+		<tag creator="4" name="a" single="false" xmlstyle="false">
+			<help><![CDATA[
+				The <a> tag defines an anchor element. An anchor can be used 
+				in two ways:
+
+				To create a link to another document by using the href 
+				attribute To create a bookmark inside a document, by using the 
+				name or id attribute 
+			]]></help>
+			<parameter name="charset" type="String" required="false">
+				<help><![CDATA[
+					Specifies the character encoding of the target URL
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="coords" type="String" required="false">
+				<help><![CDATA[
+					Specifies the coordinates appropriate to the shape 
+					attribute to define a region of an image for image maps
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="href" type="String" required="false">
+				<help><![CDATA[
+					The target URL of the link
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="hreflang" type="String" required="false">
+				<help><![CDATA[
+					The target URL of the link
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help><![CDATA[
+					Names an anchor. Use this attribute to create a bookmark in
+					a document.
+					In future versions of XHTML the name attribute will be 
+					replaced by the id attribute!!
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="rel" type="String" required="false">
+				<help><![CDATA[
+					Specifies the relationship between the current document and
+					the target URL
+				]]></help>
+				<values>
+					<value option="alternate" />
+					<value option="designates" />
+					<value option="stylesheet" />
+					<value option="start" />
+					<value option="next" />
+					<value option="prev" />
+					<value option="contents" />
+					<value option="index" />
+					<value option="glossary" />
+					<value option="copyright" />
+					<value option="chapter" />
+					<value option="section" />
+					<value option="subsection" />
+					<value option="appendix" />
+					<value option="help" />
+					<value option="bookmark" />
+				</values>
+			</parameter>
+			<parameter name="rev" type="String" required="false">
+				<help><![CDATA[
+					Specifies the relationship between the target URL and the 
+					current document
+				]]></help>
+				<values>
+					<value option="alternate" />
+					<value option="designates" />
+					<value option="stylesheet" />
+					<value option="start" />
+					<value option="next" />
+					<value option="prev" />
+					<value option="contents" />
+					<value option="index" />
+					<value option="glossary" />
+					<value option="copyright" />
+					<value option="chapter" />
+					<value option="section" />
+					<value option="subsection" />
+					<value option="appendix" />
+					<value option="help" />
+					<value option="bookmark" />
+				</values>
+			</parameter>
+			<parameter name="shape" type="String" required="false">
+				<help><![CDATA[
+					Defines the type of region to be defined for mapping in the 
+					current area tag. Used with the coords attribute.
+				]]></help>
+				<values>
+					<value option="rect" />
+					<value option="rectangle" />
+					<value option="circ" />
+					<value option="circle" />
+					<value option="poly" />
+					<value option="polygon" />
+				</values>
+			</parameter>
+			<parameter name="target" type="String" required="false">
+				<help><![CDATA[
+					Defines the type of region to be defined for mapping in the 
+					current area tag. Used with the coords attribute.
+				]]></help>
+				<values>
+					<value option="_blank" />
+					<value option="_parent" />
+					<value option="_self" />
+					<value option="_top" />
+				</values>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					Specifies the MIME (Multipurpose Internet Mail Extensions) 
+					type of the target URL
+				]]></help>
+				<values>
+					<value option="text/plain" />
+					<value option="text/html" />
+				</values>
+			</parameter>
+			<parameter name="class" type="String" required="false">
+				<help><![CDATA[
+					class_rule or style_rule The class of the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="false">
+				<help><![CDATA[
+					A unique id for the element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					An inline style definition
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="title" type="String" required="false">
+				<help><![CDATA[
+					A text to display in a tool tip
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+	</tags>
+	<!-- ///////////////////////////////////////////////////////////// -->
+	<functions/>
+		<!-- <function creator="3" name="writeoutput" returns="string">
+			<help><![CDATA[
+			]]></help>
+			<parameter name="text" type="string" required="true">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function> 
+	</functions> -->
+</dictionary>
