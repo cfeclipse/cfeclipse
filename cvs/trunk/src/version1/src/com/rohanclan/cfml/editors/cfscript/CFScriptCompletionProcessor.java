@@ -586,7 +586,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				if(lastChar != '(' && lastChar != ',')
 					return null;
 			}
-			
+
 			switch(lastChar)
 			{
 				case '.':
@@ -646,6 +646,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					break;
 				case ';':
 					DeleteText(document, triggerPos-1, 1);
+					break;
+				case '\"':
 					break;
 				default:
 					messages = "Received the character " + lastChar;
