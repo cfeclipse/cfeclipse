@@ -198,9 +198,9 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 			//if st has nothing then we got called by mistake or something just
 			//bail out
-			System.out.println("Prefix: \'" + prefix + "\'");
+		// System.out.println("Prefix: \'" + prefix + "\'");
 			tagname = (!st.hasMoreTokens()) ? prefix : st.nextToken();
-			System.out.println("tagname: \'" + tagname + "\'");
+		// System.out.println("tagname: \'" + tagname + "\'");
 			
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)

@@ -161,9 +161,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @return the modified document command.
 	 */
 	private DocumentCommand singleTagTakeAction(IDocument doc, DocumentCommand command) {
+		/*
 		command.text = "";
 		command.offset++;
 		command.doit = false;
+		*/
+		stepThrough(command);
 		return command;
 	}
 
@@ -347,6 +350,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
 				return;
 			}
+			
 			int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';
 			char firstCommandChar = (docCommand.text.length() > 0) ? docCommand.text.charAt(0) : ' ';
@@ -354,7 +358,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.offset - 1 >= 0) {
 				beforeLastChar = doc.getChar(docCommand.offset-1);
 			}
-			
+			System.out.println("TagIndentStrategy::customizeDocumentCommand() - Got a \'" + firstCommandChar + "\'");
 			//
 			// Handle a backspace or delete
 			if(docCommand.length > 0 && docCommand.text.length() == 0) {
@@ -474,7 +478,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		if(beforeLastChar == '<')	// Have we not got a tag name
 			return;
 		else if(beforeLastChar == '/')	{	// A self-closer, i.e. : <br/>
-			singleTagTakeAction(doc, docCommand);
+			//singleTagTakeAction(doc, docCommand);
+			if(this.autoClose_Tags)
+				singleTagTakeAction(doc, docCommand);
+			else
+				docCommand.doit =true;
 		}
 		else {	
 			// Got a '>', make sure that it's not a random closer and if not close the tag.
