@@ -866,6 +866,18 @@ public class CFParser implements IEditorActionDelegate {
 			else
 			{ 	// It's a closing item, so we get the parent item and add this item to it's children.
 				DocItem top = (DocItem)matchStack.pop();
+				//
+				// the cfif,cfelseif,...,cfelse tags are exceptions to the XML-like compliance of
+				// CFML. Therefore here is a fudge to cope with it. Bad Macromedia! Bad!
+/*				
+				if(newItem instanceof CfmlTagElse)
+				{
+					//
+					// Pop the next item off (should be the if)
+					DocItem ifTag = (CfmlTagIf)matchStack.pop();
+					ifTag.addChild()
+				}
+*/
 				try {
 					top.addChild(newItem);
 				} catch(InvalidChildItemException excep) {

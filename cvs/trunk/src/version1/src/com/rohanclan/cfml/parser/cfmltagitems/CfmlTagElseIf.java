@@ -38,6 +38,7 @@ public class CfmlTagElseIf extends CfmlTagItem {
 	 * @see com.rohanclan.cfml.parser.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
+		
 		return parentItem.getName().compareToIgnoreCase("if") == 0;
 	}
 	/**
@@ -48,6 +49,5 @@ public class CfmlTagElseIf extends CfmlTagItem {
 	 */
 	public CfmlTagElseIf(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
-		// TODO Auto-generated constructor stub
 	}
 }

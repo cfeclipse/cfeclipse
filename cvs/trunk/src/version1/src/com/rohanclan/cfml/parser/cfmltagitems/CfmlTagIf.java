@@ -27,16 +27,18 @@ public class CfmlTagIf extends CfmlTagItem {
 		if(docNodes.size() != 0)
 		{
 			DocItem mostRecentItem = (DocItem)docNodes.get(docNodes.size()-1);
-			boolean lastIsElseIf = mostRecentItem.getName().compareToIgnoreCase("elseif") == 0;
-			boolean lastIsElse = mostRecentItem.getName().compareToIgnoreCase("else") == 0;
+			boolean lastIsElseIf = 	mostRecentItem.getName().compareToIgnoreCase("elseif") == 0;
+			boolean lastIsElse = 	mostRecentItem.getName().compareToIgnoreCase("else") == 0;
+			boolean itemIsElse = 	newItem.getName().compareToIgnoreCase("else") == 0;
+			boolean itemIsElseIf = 	newItem.getName().compareToIgnoreCase("elseif") == 0; 
 			//
 			// Tests to make sure that the user isn't trying to do something stupid.
 			if(newItem.getName().compareToIgnoreCase("else") == 0 && lastIsElse)
 				throw new InvalidChildItemException("<cfif> already has a <cfelse>", newItem.getLineNumber(), newItem.getStartPosition());
 			else if(newItem.getName().compareToIgnoreCase("elseif") == 0 && lastIsElse)
 				throw new InvalidChildItemException("<cfelseif> after <cfelse>", newItem.getLineNumber(), newItem.getStartPosition());
-			else if(lastIsElseIf || lastIsElse)		// We have a <cfelse> or <cfelseif> as the most recent item, therefore 
-				mostRecentItem.addChild(newItem); 	// we add all child items to it.
+			else if((lastIsElseIf || lastIsElse) && !(itemIsElse || itemIsElseIf) )	// Is the previous item an else/elseif and the current item isn't one?		 
+				mostRecentItem.addChild(newItem); 	
 			else 
 				super.addChild(newItem);	// No elses if elseifs, so we add it to the if's children.
 		}

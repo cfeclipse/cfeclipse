@@ -34,7 +34,9 @@ import com.rohanclan.cfml.parser.DocItem;
  */
 public class CfmlTagElse extends CfmlTagItem {
 	/**
-	 * Else tags must reside within an if tag. This just performs the check to make sure of this. 
+	 * Else tags must reside within an if tag. This just performs the check to make sure of this.
+	 *  
+	 * @param parentItem - the parent item to add this item to.
 	 * @see com.rohanclan.cfml.parser.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
