@@ -85,8 +85,8 @@ public class StyleScanner extends RuleBasedScanner {
 		
 		rules.add(new MultiLineRule("/*", "*/", cfcomment));
 		
-		rules.add(new SingleLineRule("\"", "\"", string, '\\'));
-		rules.add(new SingleLineRule("'", "'", string, '\\'));
+		rules.add(new SingleLineRule("\"", "\"", string));
+		rules.add(new SingleLineRule("'", "'", string));
 		
 		//the value of a css - this will change when the StyleDictionary is done
 		rules.add(new SingleLineRule(":", ";", cfkeyword));

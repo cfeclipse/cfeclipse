@@ -42,25 +42,19 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.IAutoIndentStrategy;
-
-//import org.eclipse.jface.text.IAutoEditStrategy;
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.preference.IPreferenceStore;
-
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
 import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
 import com.rohanclan.cfml.editors.CFTextHover;
-import org.eclipse.jface.text.ITextHover;
-import com.rohanclan.cfml.dictionary.DictionaryManager;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
-
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
-import com.rohanclan.cfml.editors.script.JSCompletionProcessor;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-//import com.sun.rsasign.i;
 
 public class CFConfiguration extends SourceViewerConfiguration 
 	implements IPropertyChangeListener {
@@ -413,10 +407,12 @@ public class CFConfiguration extends SourceViewerConfiguration
 			cfcp,
 			CFPartitionScanner.CSS_TAG
 		);
+		
 		//in javascript tags 
+		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
+		cfscp.changeDictionary(DictionaryManager.JSDIC);
 		assistant.setContentAssistProcessor(
-			//cfcp,
-			new JSCompletionProcessor(),
+			cfscp,
 			CFPartitionScanner.J_SCRIPT
 		);
 		
@@ -447,9 +443,6 @@ public class CFConfiguration extends SourceViewerConfiguration
 
 		return assistant;
 	}
-	
-	
-	
 	
 	
 	/**

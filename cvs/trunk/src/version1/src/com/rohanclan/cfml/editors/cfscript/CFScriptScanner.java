@@ -24,21 +24,27 @@
  */
 package com.rohanclan.cfml.editors.cfscript;
 
-import org.eclipse.jface.text.rules.*;
-import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.rules.SingleLineRule;
+import org.eclipse.jface.text.rules.MultiLineRule;
+import org.eclipse.jface.text.rules.EndOfLineRule;
+import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.TextAttribute;
+
+import com.rohanclan.cfml.editors.CFKeywordDetector;
 import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.editors.ICFColorConstants;
-//import com.rohanclan.coldfusionmx.editors.CFKeywordDetector;
+import com.rohanclan.cfml.editors.PredicateWordRule;
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
 
 import java.util.Iterator;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.rohanclan.cfml.dictionary.DictionaryManager;
 
 /**
  * @author Rob
@@ -75,6 +81,10 @@ public class CFScriptScanner extends RuleBasedScanner {
 			manager.getColor(ICFColorConstants.CFSCRIPT_FUNCTION))
 		);
 		
+		IToken cfdefault = new Token(new TextAttribute(
+			manager.getColor(ICFColorConstants.DEFAULT))
+		);
+		
 		List rules = new ArrayList();
 		
 		//so the script tags look correct
@@ -83,28 +93,43 @@ public class CFScriptScanner extends RuleBasedScanner {
 		rules.add(new SingleLineRule("<CFSCRIPT", ">", cftag));
 		rules.add(new SingleLineRule("</CFSCRIPT", ">", cftag));
 		
+		//I think the reason this doesnt work as well as the <!-- type of comment
+		//is that the <! type is defined on the partition scanner where this is
+		//only here... javascript has the same problem 
+		//TODO: can the bad commment coloring be fixed?
 		rules.add(new MultiLineRule("/*", "*/", cfcomment));
 		rules.add(new EndOfLineRule("//", cfcomment));
-		rules.add(new SingleLineRule("\"", "\"", string, '\\'));
-		rules.add(new SingleLineRule("'", "'", string, '\\'));
+		
+		rules.add(new SingleLineRule("\"", "\"", string));
+		rules.add(new SingleLineRule("'", "'", string));
+		
 		rules.add(new NumberRule(cfnumber));
 		
 		CFSyntaxDictionary dic = (CFSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.CFDIC);
 		
 		//do any keywords
-		WordRule wr = new WordRule(new CFScriptKeywordDetector());
 		//get any needed operators (or, and et cetra)
 		Set set = dic.getOperators();
-		//get any script specific keywords (if, case, while, et cetra)
+		//get any script specific keywords (if, case, while, et cetra)		
 		set.addAll(dic.getScriptKeywords());
+		String allkeys[] = new String[set.size()<<1];
+		int i=0;
 		Iterator it = set.iterator();
 		while(it.hasNext())
 		{
-			String op = (String)it.next();
-			wr.addWord(op,cfkeyword);
-			wr.addWord(op.toUpperCase(),cfkeyword);
+			String opname = (String)it.next(); 
+			allkeys[i++] = opname;
+			allkeys[i++] = opname.toUpperCase();
 		}
 		
+		//build the word highlighter
+		CFKeywordDetector cfkd = new CFKeywordDetector();
+		PredicateWordRule words = new PredicateWordRule(
+			cfkd, 
+			cfdefault, 
+			allkeys, 
+			cfkeyword
+		);
 		
 		//now do the cffuntions so they look pretty too :)
 		set = dic.getFunctions();
@@ -112,12 +137,10 @@ public class CFScriptScanner extends RuleBasedScanner {
 		while(it.hasNext())
 		{
 			String fun = (String)it.next();
-			wr.addWord(fun, cffunction);
-			wr.addWord(fun.toUpperCase(), cffunction);
+			words.addWord(fun, cffunction);
+			words.addWord(fun.toUpperCase(), cffunction);
 		}
-		
-		rules.add(wr);
-		
+		rules.add(words);
 		
 		IRule[] rulearry = new IRule[rules.size()];
 		rules.toArray(rulearry);

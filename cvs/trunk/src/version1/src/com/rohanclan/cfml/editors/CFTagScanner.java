@@ -32,14 +32,18 @@ import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.WhitespaceRule;
-//import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-//import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Rob
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This is the cftag color scanner. Looks at the tags and colors 'em as best as 
+ * it can
  */
 public class CFTagScanner extends RuleBasedScanner {
 
@@ -66,52 +70,40 @@ public class CFTagScanner extends RuleBasedScanner {
 		IToken cfdefault = new Token(new TextAttribute(
 			manager.getColor(ICFColorConstants.DEFAULT))
 		);
-				
-		IRule[] rules = new IRule[4];
+		
+		///////////////////////////////////////////////////////////////////////
+		
+		IRule[] rules = new IRule[5];
 		
 		// Add rule for double quotes
 		rules[0] = new SingleLineRule("\"", "\"", string);
-		// Add a rule for single quotes
 		rules[1] = new SingleLineRule("'", "'", string);
-		
 		rules[2] = new NumberRule(cfnumber);
 		
-		//load all the keywords - this just doesnt work. See the comment below
-		//for a description of the problem
-		/* WordRule wr = new WordRule(new CFKeywordDetector());
-		Set set = CFSyntaxDictionary.getOperators();
+		CFSyntaxDictionary cfd = (CFSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.CFDIC);
+		
+		Set set = cfd.getOperators();
+		String allkeys[] = new String[set.size()<<1];
+		int i=0;
 		Iterator it = set.iterator();
 		while(it.hasNext())
 		{
 			String op = (String)it.next();
-			System.err.println("adding: " + op);
-			wr.addWord(op,cfkeyword);
-			wr.addWord(op.toUpperCase(),cfkeyword);
+			allkeys[i++] = op;
+			allkeys[i++] = op.toUpperCase();
 		}
-		rules[3]  = wr;
-		*/
 		
-		/** THIS IS A HACK
-		 *  for some reason cfscript function keywords bleed all over the page
-		 *  so any function name that is shared between cfscript and cftags 
-		 *  (for example the word "function") is blue every where the word is
-		 * 	typed (i.e. function booga() and <cffunction both are blue. This 
-		 *  attempts to hack it by making all function names red
-		 
-		wr = new WordRule(new CFKeywordDetector());
-		set = SyntaxDictionary.getScriptKeywords();
-		it = set.iterator();
-		while(it.hasNext())
-		{
-			String op = (String)it.next();
-			wr.addWord(op,cftag);
-			wr.addWord(op.toUpperCase(),cftag);
-		}
-		rules[4]  = wr; 
-		*/
+		CFKeywordDetector cfkd = new CFKeywordDetector();
+		PredicateWordRule words = new PredicateWordRule(
+			cfkd, 
+			cftag, 
+			allkeys, 
+			cfkeyword
+		);
+		rules[3] = words;
 		
 		// Add generic whitespace rule.
-		rules[3] = new WhitespaceRule(new CFWhitespaceDetector());
+		rules[4] = new WhitespaceRule(new CFWhitespaceDetector());
 		
 		setRules(rules);
 	}

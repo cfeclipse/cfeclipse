@@ -82,6 +82,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	private static final short ATTRTYPE = 1;
 	private String className = "CFScriptCompletionProcessor";
 	
+	private String DictionaryToUse = DictionaryManager.CFDIC;
+	
 	// Define the characters that make up the activation set.
 	// There are three parts to the activation set:
 	
@@ -116,7 +118,20 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		return new char[] { '+' };
 	}
  
-	
+	/**
+	 * change the dictionary this uses to the pass dictionary name (use 
+	 * DictionaryManager to get the name. This is here so we can re-use this
+	 * for the JS partition. (we should really make only one completion class
+	 * somehow)
+	 * 
+	 * @param to the new dictionary to use
+	 * 
+	 * @author Rob
+	 */
+	public void changeDictionary(String to)
+	{
+		DictionaryToUse = to;
+	}
 	
 	/**
 	 * Startup the completer
@@ -636,7 +651,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						//}
 						
 						Set poss = SyntaxDictionary.limitSet(
-							DictionaryManager.getDictionary(DictionaryManager.CFDIC).getAllFunctions(),
+							DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions(),
 							toBeMatched
 						);
 						
@@ -662,7 +677,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					//quick an dirty way to see all functions (hitting ctrl+space
 					//but this doesn't limit the selections and only works when
 					//not in a function :-/
-					Set mst = DictionaryManager.getDictionary(DictionaryManager.CFDIC).getAllFunctions();
+					Set mst = DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions();
 					return makeSetToProposal(
 						mst,
 						documentOffset, 

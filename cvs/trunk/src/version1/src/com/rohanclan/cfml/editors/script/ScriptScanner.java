@@ -24,29 +24,33 @@
  */
 package com.rohanclan.cfml.editors.script;
 
-import org.eclipse.jface.text.rules.*;
-import org.eclipse.jface.text.*;
-//import org.eclipse.jface.text.rules.RuleBasedScanner;
-//import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.rules.RuleBasedScanner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.rules.SingleLineRule;
+import org.eclipse.jface.text.rules.MultiLineRule;
+import org.eclipse.jface.text.rules.WordRule;
+import org.eclipse.jface.text.rules.EndOfLineRule;
+import org.eclipse.jface.text.rules.NumberRule;
+import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.TextAttribute;
 import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.editors.ICFColorConstants;
-//import com.rohanclan.coldfusionmx.editors.CFKeywordDetector;
-//import com.rohanclan.coldfusionmx.editors.SyntaxDictionary;
-//import com.rohanclan.coldfusionmx.editors.TagRule;
 import com.rohanclan.cfml.editors.CFKeywordDetector;
-//import com.rohanclan.coldfusionmx.editors.CFPartitionScanner;
+import com.rohanclan.cfml.editors.PredicateWordRule;
 
 import java.util.Iterator;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.editors.CFPartitionScanner;
 
 /**
  * @author Rob
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This is the Javascript rule scanner (color coder rules).
  */
 public class ScriptScanner extends RuleBasedScanner {
 	
@@ -54,9 +58,9 @@ public class ScriptScanner extends RuleBasedScanner {
 	{
 		super();
 		
-		//IToken cfnumber = new Token(new TextAttribute(
-		//	manager.getColor(ICFColorConstants.CFNUMBER))
-		//);
+		IToken defaulttoken = new Token(new TextAttribute(
+			manager.getColor(ICFColorConstants.DEFAULT))
+		);
 		
 		IToken cfnumber = new Token(new TextAttribute(
 			manager.getColor(ICFColorConstants.CFNUMBER))
@@ -81,10 +85,7 @@ public class ScriptScanner extends RuleBasedScanner {
 		IToken function = new Token(new TextAttribute(
 			manager.getColor(ICFColorConstants.JSCRIPT_FUNCTION))
 		);
-		
-		//IToken cftag 		= new Token(CFPartitionScanner.CF_TAG);
-		//IToken cfendtag 	= new Token(CFPartitionScanner.CF_END_TAG);
-		
+				
 		List rules = new ArrayList();
 		
 		//style the whole block with some default colors
@@ -94,30 +95,55 @@ public class ScriptScanner extends RuleBasedScanner {
 		rules.add(new SingleLineRule("<SCRIPT", ">", scripttag));
 		rules.add(new SingleLineRule("</SCRIPT", ">", scripttag));
 		
-		//rules.add(new MultiLineRule("<cf",">", cftag));
-		//rules.add(new MultiLineRule("<CF",">", cftag));
-		//rules.add(new SingleLineRule("</cf",">", cfendtag));
-		//rules.add(new SingleLineRule("</CF",">", cfendtag));
+		//TODO: is there a way to have a partition in a partition in a partition?
+		rules.add(new MultiLineRule("<cf",">", new Token(CFPartitionScanner.CF_TAG)));
+		rules.add(new MultiLineRule("<CF",">", new Token(CFPartitionScanner.CF_TAG)));
+		rules.add(new SingleLineRule("</cf",">", new Token(CFPartitionScanner.CF_END_TAG)));
+		rules.add(new SingleLineRule("</CF",">", new Token(CFPartitionScanner.CF_END_TAG)));
 		
 		JSSyntaxDictionary jssd = (JSSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.JSDIC);
 		
 		///////////////////////////////////////////////////////////////////////
 		//do any keywords
-		WordRule wr = new WordRule(new CFKeywordDetector());
 		//get any script specific keywords (if, case, while, et cetra)
 		Set set = jssd.getScriptKeywords();
-		//set.addAll();
+		String allkeys[] = new String[set.size()];
+		int i=0;
+		
 		Iterator it = set.iterator();
 		while(it.hasNext())
 		{
-			String op = (String)it.next();
-			wr.addWord(op,keyword);
+			allkeys[i++] = (String)it.next();
 		}
-		rules.add(wr);
+		
+		CFKeywordDetector cfkd = new CFKeywordDetector();
+		PredicateWordRule words = new PredicateWordRule(
+			cfkd, 
+			defaulttoken, 
+			allkeys, 
+			keyword
+		);
+		
+		///////////////////////////////////////////////////////////////////////
+		//do any known functions
+		//get any script specific functions (alert, parseInt, confirm, et cetra)
+		set = jssd.getFunctions();
+		i=0;
+		//String allfuncs[] = new String[set.size()];
+		it = set.iterator();
+		while(it.hasNext())
+		{
+			//allfuncs[i++] = (String)it.next();
+			String op = (String)it.next();
+			//wr.addWord(op,function);
+			words.addWord(op,function);
+		}
+		
+		rules.add(words);
 		
 		///////////////////////////////////////////////////////////////////////
 		//do any operatores
-		wr = new WordRule(new OperatorDetector());
+		WordRule wr = new WordRule(new OperatorDetector());
 		//get any script specific operators (*, +, =, et cetra)
 		set = jssd.getOperators();
 		it = set.iterator();
@@ -125,19 +151,6 @@ public class ScriptScanner extends RuleBasedScanner {
 		{
 			String op = (String)it.next();
 			wr.addWord(op,keyword);
-		}
-		rules.add(wr);
-		
-		///////////////////////////////////////////////////////////////////////
-		//do any known functions
-		wr = new WordRule(new CFKeywordDetector());
-		//get any script specific functions (alert, parseInt, confirm, et cetra)
-		set = jssd.getFunctions();
-		it = set.iterator();
-		while(it.hasNext())
-		{
-			String op = (String)it.next();
-			wr.addWord(op,function);
 		}
 		rules.add(wr);
 		

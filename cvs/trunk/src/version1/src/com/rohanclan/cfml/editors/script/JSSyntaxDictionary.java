@@ -24,28 +24,22 @@
  */
 package com.rohanclan.cfml.editors.script;
 
-//import java.util.Map;
-//import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 
-//import com.rohanclan.coldfusionmx.dictionary.*;
-
 /**
  * @author Rob
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This is the javascript specific syntax dictionary dictionary
  */
 public class JSSyntaxDictionary extends SyntaxDictionary implements SyntaxDictionaryInterface {
 	//protected static Map functions;
 	protected static Set operators;
 	protected static Set scriptkeywords;
 	
-	//private JSSyntaxDictionary(){;}
 	public JSSyntaxDictionary()
 	{
 		super();
@@ -196,7 +190,7 @@ public class JSSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 	{
 		//these are only top level functions -- could do more I guess
 		//but that could get hairy
-		functions.put("escape","String Escape(String)");
+		/* functions.put("escape","String Escape(String)");
 		functions.put("eval","Object Eval(codeString)");
 		functions.put("isFinite","boolean isFinite(testnumber)");
 		functions.put("isNaN","boolean isNaN(testvalue)");
@@ -208,5 +202,6 @@ public class JSSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		
 		functions.put("alert","void alert(String)");
 		functions.put("confirm","boolean confirm(String)");
+		*/
 	}
 }

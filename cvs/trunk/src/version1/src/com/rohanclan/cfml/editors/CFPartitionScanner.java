@@ -27,25 +27,25 @@ package com.rohanclan.cfml.editors;
 /**
  * @author Rob
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This scans the overall document and slices it into partitions. Then the
+ * partition scanners are applied to those partitions
  */
-//import org.eclipse.jface.text.rules.*;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.MultiLineRule;
-//import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.IPredicateRule;
+
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.dictionary.SyntaxDictionary;
+import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.Tag;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
-import com.rohanclan.cfml.dictionary.DictionaryManager;
-//import com.rohanclan.coldfusionmx.dictionary.Tag;
-import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
-import com.rohanclan.cfml.dictionary.Tag;
+
 
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
@@ -53,7 +53,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String CF_TAG 		= "__cf_tag";
 	public final static String CF_END_TAG 	= "__cf_end_tag";
 	public final static String ALL_TAG 		= "__all_tag";
-	////////////////////////////////////////////////////////////
 	public final static String CF_SCRIPT	= "__cf_script";
 	public final static String J_SCRIPT		= "__script_tag";
 	public final static String CSS_TAG		= "__css_tag";
@@ -71,12 +70,11 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken css 			= new Token(CSS_TAG);
 		IToken unktag		= new Token(UNK_TAG);
 		
-		//IPredicateRule[] rules = new IPredicateRule[13];
 		List rules = new ArrayList();
 		
 		//the order here is important. It should go from specific to
 		//general as the rules are applied in order
-		//
+		
 		// Partitions in the document will get marked in this order
 		rules.add(new MultiLineRule("<!--", "-->", htmComment));
 		
@@ -94,6 +92,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		SyntaxDictionary sd = DictionaryManager.getDictionary(
 			DictionaryManager.CFDIC
 		);
+		
 		Tag tg = null;
 		
 		try
@@ -124,27 +123,15 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			e.printStackTrace(System.err);
 		}
 		
-		//catch all custom tags - these should be handeled in the dictionary
-		/* rules.add(new MultiLineRule("<cfx",">", cftag));
-		rules.add(new MultiLineRule("</cfx",">", cfendtag));
-		rules.add(new MultiLineRule("<CFX",">", cftag));
-		rules.add(new MultiLineRule("</CFX",">", cfendtag));
-		*/
-		
-		//these not so much because you can call normal pages as cf_'s
+		//these are not really handled in the dictionary because you can call 
+		//normal pages as cf_'s
 		rules.add(new MultiLineRule("<cf_",">", cftag));
 		rules.add(new MultiLineRule("</cf_",">", cfendtag));
 		rules.add(new MultiLineRule("<CF_",">", cftag));
 		rules.add(new MultiLineRule("</CF_",">", cfendtag));
-			
-		//if there is a special tag rule, don't forget to check this class
-		//this will try to paint everything in the html blue. Any additions
-		//should be *before* this rule. Reorder if needed.
-		//rules[12] = new TagRule(tag);
-		//rules[12] = new MultiLineRule("<", ">", tag);
-		sd = DictionaryManager.getDictionary(
-			DictionaryManager.HTDIC
-		);
+		
+		//do the html tags now
+		sd = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
 		
 		try
 		{

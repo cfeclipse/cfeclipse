@@ -52,7 +52,8 @@ public class CFKeywordDetector implements IWordDetector {
 	public boolean isWordPart(char character) 
 	{
 		//make sure any following char is a valid one
-		return Character.isLetterOrDigit(character) || (character == '-') || (character == '_');
+		return Character.isLetterOrDigit(character) || (character == '-') 
+			|| (character == '_');
 	} 
 }
 
