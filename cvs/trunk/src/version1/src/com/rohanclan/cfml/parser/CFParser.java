@@ -123,6 +123,11 @@ public class CFParser implements IEditorActionDelegate{
 		protected boolean hadFatal = false;
 		protected MatchList matches = new MatchList();
 		
+		public MatchList getMatches()
+		{
+			return matches;
+		}
+		
 		public State(String docFilename)
 		{
 			filename = docFilename;
@@ -767,25 +772,30 @@ public class CFParser implements IEditorActionDelegate{
 		for(; currPos < inData.length(); currPos++)
 		{
 			char currChar = inData.charAt(currPos);
-			boolean inQuotes = (0 == quoteCount % 2);
+			boolean inQuotes = (1 == quoteCount % 2);
 			String next2Chars = "";
+			String next3Chars = "";
 			if(inData.length() - currPos > 2)	// For CF stuff we get the next two chars as well.
-				next2Chars = inData.substring(currPos, currPos + 2);
+				next2Chars = inData.substring(currPos + 1, currPos + 3);
+			if(inData.length() - currPos > 3)	// For CF closer tags </cf...
+				next3Chars = inData.substring(currPos + 1, currPos + 4);
 			
-			if(currChar == '<' && next2Chars.compareTo("cf") == 0)
+			if(currChar == '<' && (next2Chars.compareTo("cf") == 0 || next3Chars.compareTo("/cf") == 0))
 			{	// CFML tag embedded in HTML
 				System.out.println("FOUND!: an embedded CFML tag within HTML!");
 				currPos = matchingCFML(parseState, inData, currPos);
 			}
 			else if(!inQuotes && currChar == '>')
 			{
-				System.out.println("FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos));				
-				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos), currDocOffset, currPos, 0));				
+				System.out.println("FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos+1));				
+				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 0));
+				finalOffset = currPos;
+				break;
 			}
 			else if(currChar == '\"')
 				quoteCount++;
 		}
-		if(finalOffset == currDocOffset)
+		if(finalOffset != currPos)
 		{
 			System.err.println("FATAL ERROR: Failed to find the end of an HTML tag!: " + inData.substring(currDocOffset, currPos));
 			
@@ -809,12 +819,12 @@ public class CFParser implements IEditorActionDelegate{
 		for(; currPos < inData.length(); currPos++)
 		{
 			char currChar = inData.charAt(currPos);
-			boolean inQuotes = (0 == quoteCount % 2);
+			boolean inQuotes = (1 == quoteCount % 2);
 			if(!inQuotes && currChar == '>')
 			{
 				finalOffset = currPos;
-				System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos));
-				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos), currDocOffset, currPos, 
+				System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
+				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
 												getLineNumber(currDocOffset)));
 				break;
 			}
@@ -822,7 +832,7 @@ public class CFParser implements IEditorActionDelegate{
 				quoteCount++;
 
 		}
-		if(finalOffset == currDocOffset)
+		if(finalOffset != currPos)
 		{
 			System.err.println("FATAL ERROR: Failed to find the end of a CFML tag!: " + inData.substring(currDocOffset, currPos));
 			
@@ -842,72 +852,84 @@ public class CFParser implements IEditorActionDelegate{
 		int currPos = 0;
 		int currState = 0;
 		MatchList matches = new MatchList();
-		
-		for(currPos = 0; currPos < data.length(); currPos++)
-		{
-			char currChar = data.charAt(currPos);
-			String next2Chars = "";
-			String next3Chars = "";
-			
-			// Make sure we haven't had any fatal errors during parsing.
-			if(parserState.hadFatal())
+		try {
+			for(currPos = 0; currPos < data.length(); currPos++)
 			{
-				System.err.println("Parser encountered a fatal parse error");
-				break;
-			}
-			
-			if(data.length() - currPos > 2)	// For CF stuff we get the next two chars as well.
-				next2Chars = data.substring(currPos, currPos + 2);
-			
-			if(data.length() - currPos > 3)
-				next3Chars = next2Chars + data.charAt(currPos + 3);
-			
-			if(currState == MATCHER_NOTHING)
-			{	
-				switch(currChar) 
+				char currChar = data.charAt(currPos);
+				String next2Chars = "";
+				String next3Chars = "";
+				String around = "";
+				
+				// Make sure we haven't had any fatal errors during parsing.
+				if(parserState.hadFatal())
 				{
-					case '<':
-						if(next2Chars.compareTo("--") == 0)
-						{	// Testing for comment: <!--
-							// TODO: Find out whether comments can occur in tags
-							System.out.println("Found a comment");
-							if(next2Chars.compareTo("--") == 0 && data.charAt(currPos+3) == '-')
-							{
-								System.out.println("\t it's a CFML comment");
-								currState = MATCHER_CFMLCOMMENT;
+					System.err.println("Parser encountered a fatal parse error");
+					break;
+				}
+				
+				if(data.length() - currPos > 2)	// For CF stuff we get the next two chars as well.
+					next2Chars = data.substring(currPos + 1, currPos + 3);
+				
+				if(data.length() - currPos > 3)
+					next3Chars = next2Chars + data.charAt(currPos + 3);
+				
+				if(data.length() - currPos > 10 && currPos > 10)
+					around = data.substring(currPos - 10, currPos) + data.substring(currPos, currPos + 10);
+				else if(data.length() - currPos > 10)
+					around = data.substring(currPos, currPos + 10);
+				
+				if(currState == MATCHER_NOTHING)
+				{	
+					switch(currChar) 
+					{
+						case '~':
+							System.out.println("Trigger char found. Breaking!");
+							break;
+						case '<': 
+							if(next2Chars.compareTo("!-") == 0)
+							{	// Testing for comment: <!--
+								// TODO: Find out whether comments can occur in tags
+								System.out.println("Found a comment");
+								if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
+								{
+									System.out.println("\t it's a CFML comment");
+									currState = MATCHER_CFMLCOMMENT;
+								}
+								else
+									currState = MATCHER_COMMENT;
 							}
-							else
-								currState = MATCHER_COMMENT;
-						}
-						else if(next2Chars.compareTo("cf") == 0)
-						{
-							System.out.println("Found the beginnings of a CF tag");
-							currPos = matchingCFML(parserState, inData, currPos);
-						}
-						else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
-						{
-							System.out.println("Found the beginnings of an HTML tag.");
-							currPos = matchingHTML(parserState, inData, currPos);
-							
-						}
-						break;
-					default:
-						// Not a char we care about.
-						break;
+							else if(next2Chars.compareTo("cf") == 0)
+							{
+								System.out.println("Found the beginnings of a CF tag");
+								currPos = matchingCFML(parserState, inData, currPos);
+							}
+							else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
+							{
+								System.out.println("Found the beginnings of an HTML tag.");
+								currPos = matchingHTML(parserState, inData, currPos);
+								
+							}
+							break;
+						default:
+							// Not a char we care about.
+							break;
+					}
+				}
+				else if(currState == MATCHER_CFMLCOMMENT && currChar == '-' && 
+						next2Chars.compareTo("--") == 0 && 
+						inData.charAt(currPos+3) == '>')
+				{
+					System.out.println("Found the end of a CFML comment");
+					currState = MATCHER_NOTHING;
+				}
+				else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
+				{
+					System.out.println("Found the end of an HTML comment");
+					currState = MATCHER_NOTHING;
 				}
 			}
-			else if(currState == MATCHER_CFMLCOMMENT && currChar == '-' && 
-					next2Chars.compareTo("--") == 0 && 
-					inData.charAt(currPos+3) == '>')
-			{
-				System.out.println("Found the end of a CFML comment");
-				currState = MATCHER_NOTHING;
-			}
-			else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
-			{
-				System.out.println("Found the end of an HTML comment");
-				currState = MATCHER_NOTHING;
-			}
+		}catch(Exception excep) {
+			parserState.addMessage(new ParseError(0, currPos, currPos, "", "Caught an exception during parsing.", true));
 		}
 		return matches;
 	}
@@ -917,9 +939,16 @@ public class CFParser implements IEditorActionDelegate{
 	{
 		CFDocument docTree = null;
 		try {
-			docTree = createDocTree(getTagMatches(parseDoc));
-			//CFParser.State pState = new CFParser.State("fred");
-			//MatchList matches = tagMatchingAttempts(pState, parseDoc.get());
+			//docTree = createDocTree(getTagMatches(parseDoc));
+			CFParser.State pState = new CFParser.State("fred");
+			MatchList matches = tagMatchingAttempts(pState, parseDoc.get());
+			MatchList pMatches = pState.getMatches();
+			System.err.println("############ DUMPING MATCHES ###########");
+			for(int i = 0; i < pMatches.size(); i++)
+			{
+				System.out.println("Match: \'" + ((TagMatch)pMatches.get(i)).match + "\'");
+			}
+				
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
