@@ -108,7 +108,15 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			}
 			
 			if (sequence.length() > 0) {
-			    String fileName = keyCombos.getKeyCombo(sequence);
+			    
+			    String[] stringArray = sequence.split("\\*");
+			    String trigger = stringArray[0];
+			    int loopcount = 1;
+			    if (stringArray.length > 1) {
+			        loopcount = Integer.parseInt(stringArray[1].trim());
+			    }
+			    
+			    String fileName = keyCombos.getKeyCombo(trigger);
 			   
 			    SnipReader snipReader = new SnipReader();
 			    
@@ -119,12 +127,18 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 				
 			    snipReader.read(keyCombos.getSnippetFolder() + fileName);
 			    
-			    start = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.editor.getSite().getShell());
-			    end = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.editor.getSite().getShell());
+			    String snippet = "";
 			    
-			    if (start != null && end != null && (start.length() > 0 || end.length() > 0)) {
 			    
-					this.enclose(doc,(ITextSelection)sel,start,end);
+			    for (int i=0; i < loopcount; i++) {
+			    
+				    snippet += SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.editor.getSite().getShell());
+				    snippet += SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.editor.getSite().getShell());
+			    }
+			    
+			    if (snippet != null && snippet.length() > 0 ) {
+			    
+					this.enclose(doc,(ITextSelection)sel,snippet,"");
 					
 					//move the cursor to before the end of the new insert
 					int offset = ((ITextSelection)sel).getOffset();
