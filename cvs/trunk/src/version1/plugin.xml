@@ -557,6 +557,16 @@
             name="CFML Wizard"
             id="com.rohanclan.cfml.category1">
       </category>
+      <wizard name="CFML Project"
+			icon="icons/obj16/default.gif"
+			class="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
+			category="com.rohanclan.cfml.category1"
+			preferredPerspectives="com.rohanclan.cfml.perspective.CFML"
+			project="true" 
+			finalPerspective="com.rohanclan.cfml.perspective.CFML"
+			id="com.rohanclan.cfml.wizards.NewProject">
+			<description>Create a new CFML Project</description>
+	 </wizard>
       <wizard
             name="CFML Page"
             icon="icons/obj16/default.gif"
@@ -566,6 +576,7 @@
             finalPerspective="CFML"
             project="true"
             id="com.rohanclan.cfml.wizards.NewCfmlWizard">
+            <description>Create a new blank CFML file</description>
       </wizard>
       <wizard
             name="CFC"
@@ -576,6 +587,7 @@
             finalPerspective="CFML"
             project="true"
             id="com.rohanclan.cfml.wizards.NewCfcWizard">
+            <description>Create a new CFC</description>
       </wizard>
    </extension>
 </plugin>
