@@ -176,7 +176,9 @@ public class FTPConnection implements IFileProvider {
     public Object[] getRoots() {
 
         if (isConnected()) {
-            return new FileSystemRoot[] { new FileSystemRoot(connectionProperties.getPath()) };
+        	FileSystemRoot root = new FileSystemRoot(connectionProperties.getPath());
+        	root.setPath(connectionProperties.getPath());
+            return new FileSystemRoot[] { root };
         } else if (connectFailed) {
             return new String[] { CONNECT_FAILED };
         } else {

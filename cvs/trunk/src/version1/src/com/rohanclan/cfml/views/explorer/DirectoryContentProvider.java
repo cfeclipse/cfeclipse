@@ -89,7 +89,14 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	            
 	            return fileProvider.getChildren(((RemoteFile)parentElement).getAbsolutePath(),directoryFilter);
 	            
-	        } else {
+	        } else if (parentElement instanceof FileSystemRoot) {
+	            FileSystemRoot file = (FileSystemRoot)parentElement;
+	           
+	            return fileProvider.getChildren(file.getPath(),directoryFilter);
+	            
+	        } 
+	        
+	        else {
                 return fileProvider.getChildren(parentElement.toString(),directoryFilter);
 	        }
     	}

@@ -15,11 +15,21 @@ package com.rohanclan.cfml.views.explorer;
 public class FileSystemRoot {
 
 	private String name = "";
+	private String path = "";
 	/**
 	 * 
 	 */
 	public FileSystemRoot(String name) {
 		this.name = name;
+	}
+	
+	
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	public String getPath() {
+		return this.path;
 	}
 	
 	public String toString() {

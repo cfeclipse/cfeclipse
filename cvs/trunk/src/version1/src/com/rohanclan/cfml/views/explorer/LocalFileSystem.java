@@ -58,7 +58,9 @@ public class LocalFileSystem implements IFileProvider {
 				}
 				*/
 				if (name.length() > 0) {
-					tmpRoots.add(new FileSystemRoot(name));
+					FileSystemRoot drive = new FileSystemRoot(name);
+					drive.setPath(systemroot[i].toString());
+					tmpRoots.add(drive);
 				}
 				else {
 					String driveLetter =  systemroot[i].toString();
@@ -66,7 +68,9 @@ public class LocalFileSystem implements IFileProvider {
 					if (index > 0) {
 						driveLetter = driveLetter.substring(0,index);
 					}
-					tmpRoots.add(new FileSystemRoot(view.getSystemTypeDescription(systemroot[i]) + " (" + driveLetter + ")"));
+					FileSystemRoot drive = new FileSystemRoot(view.getSystemTypeDescription(systemroot[i]) + " (" + driveLetter + ")");
+					drive.setPath(systemroot[i].toString());
+					tmpRoots.add(drive);
 				}
 				
     		}
