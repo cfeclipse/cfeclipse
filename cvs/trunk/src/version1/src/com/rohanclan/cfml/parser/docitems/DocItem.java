@@ -351,7 +351,7 @@ public abstract class DocItem implements Comparable {
 		return result;
 	}
 	
-	public CFNodeList selectNodes(String searchString)/* throws Exception */
+	public CFNodeList selectNodes(String searchString)// throws Exception 
 	{
 		CFNodeList result = new CFNodeList();
 		XPathSearch search = new XPathSearch();

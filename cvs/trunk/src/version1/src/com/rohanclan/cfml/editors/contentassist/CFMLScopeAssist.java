@@ -100,7 +100,7 @@ public class CFMLScopeAssist
         
         if (scopeMatcher.find()) {
             prefix = scopeMatcher.group();
-            System.out.println(state.getDataSoFar());
+            //System.out.println(state.getDataSoFar());
         }
         else {
            // Nope, no point in going any further.

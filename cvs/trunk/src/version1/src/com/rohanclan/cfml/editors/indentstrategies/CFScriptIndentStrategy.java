@@ -375,7 +375,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			command.text= buf.toString();
 
 		} catch (BadLocationException excp) {
-			System.err.println("BadLocationException");
+			System.err.println("BadLocationException in CFScriptIndentStrategy::smartIndentAfterNewLine");
 		}
 	}
 	

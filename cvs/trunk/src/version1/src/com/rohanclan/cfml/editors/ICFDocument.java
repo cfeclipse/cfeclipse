@@ -157,16 +157,22 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	{
 		//build the xpath
 		String attrString = "[#startpos<" + startpos + " and #endpos>" + endpos + "]";
+		//System.out.println(attrString);
 		CFDocument docRoot = getCFDocument();
-		CFNodeList matchingNodes = docRoot.getDocumentRoot().selectNodes(
-			"//*" + attrString
-		);
-		
-		//there should only be 0 or 1 nodes in any one position (unless it spans
-		//more then one tag I suppose
-		if(matchingNodes.size() > 0)
-		{
-			return (CfmlTagItem)matchingNodes.get(0);
+		try {
+			CFNodeList matchingNodes = docRoot.getDocumentRoot().selectNodes(
+				"//*" + attrString
+			);
+			
+			//there should only be 0 or 1 nodes in any one position (unless it spans
+			//more then one tag I suppose
+			if(matchingNodes.size() > 0)
+			{
+				return (CfmlTagItem)matchingNodes.get(0);
+			}
+		}
+		catch (Exception e) {
+		    //e.printStackTrace();
 		}
 		
 		return null;

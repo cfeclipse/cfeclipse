@@ -139,7 +139,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 				}
 				catch (BadLocationException e) {
 					// do nothing
-					System.err.println("BadLocationException caught in singleLineIndent method");
+					System.err.println("BadLocationException caught in CFEIndentStrategy::singleLineIndent method");
 				}
 		 	}
 		 	else {

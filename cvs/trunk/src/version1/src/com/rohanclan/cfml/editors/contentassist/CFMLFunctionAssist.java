@@ -72,6 +72,11 @@ public class CFMLFunctionAssist
     private int paramsSoFar = -1;
     
     /**
+     * The text typed so far in the current parameter if any.
+     */
+    private String paramText = "";
+    
+    /**
      * The list of parameters that have already been specified for the function
      *
      */
@@ -95,7 +100,7 @@ public class CFMLFunctionAssist
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
         
-        if (!checkContext(state.getIDocument().get(),state.getOffset()))
+        if (!checkContext(state))
         	return null;
 
         else {
@@ -321,14 +326,28 @@ public class CFMLFunctionAssist
       String value = "";
       String suffix = ",";
       Set values = activeParam.getValues();
-      ICompletionProposal[] result = new ICompletionProposal[values.size()];
+      ICompletionProposal[] tmpResult = new ICompletionProposal[values.size()];
       
       
       if (this.paramsSoFar == paramCount-1) {
           suffix = "";
       }
-      
+
       Iterator i = values.iterator();
+      
+      Pattern pattern = Pattern.compile("([\"']?)([^\"']*)([\"']?)");
+      Matcher matcher = pattern.matcher(paramText);
+      
+      String cleanParamText = "";
+      
+      if (matcher.find()) {
+          cleanParamText = matcher.group(2);
+          if (cleanParamText.equals("\"")
+              || cleanParamText.equals("'")) {
+              cleanParamText = "";
+          }
+      }
+      
       
       int x = 0;
       while (i.hasNext()) {
@@ -336,22 +355,50 @@ public class CFMLFunctionAssist
       	Object o = i.next();
       	if (o instanceof Value) {
       		Value val = (Value)o;
-		      CompletionProposal proposal = new CompletionProposal(val.toString()+suffix,
+      		if (cleanParamText.length() == 0
+      		        || val.toString().toLowerCase().startsWith(cleanParamText.toLowerCase())) {
+      		    String insertion = val.toString().substring(cleanParamText.length(),val.toString().length());
+      		    int cursorOffset = insertion.length()+suffix.length();
+      		    
+      		    if (!paramText.endsWith("\"") 
+      		            && paramText.startsWith("\"")) { 
+      		        insertion += "\"";
+      		        cursorOffset ++;
+      		    }
+      		    else if(paramText.startsWith("\"")){
+      		        cursorOffset ++;
+      		    }
+      		    if (!paramText.endsWith("'")
+      		            && paramText.startsWith("'")) { 
+      		        insertion += "'";;
+      		        cursorOffset ++;
+      		    }
+      		    else if(paramText.startsWith("'")){
+      		        cursorOffset ++;
+      		    }
+      		    
+		      CompletionProposal proposal = new CompletionProposal(
+		              insertion+suffix,
 		              offset,
 		              0,
-		              val.toString().length()+suffix.length(),
+		              cursorOffset,
 		              CFPluginImages.get(CFPluginImages.ICON_PARAM),
 		              activeParam.toString() + " - " + val.toString(),
 		              null,
 		              extraInfo);
 		      
 		      //System.out.println("Added " + val.toString());
-		      result[x] = proposal;
+		      tmpResult[x] = proposal;
 		      x++;
+      		}
       	}
       }
       
-	
+      ICompletionProposal[] result = new ICompletionProposal[x];
+      //System.out.println("Temp array length: " + x);
+      for (int y=0;y<x;y++) {
+          result[y] = tmpResult[y];
+      }
 	return result;
   }
   
@@ -367,11 +414,15 @@ public class CFMLFunctionAssist
      * @param offset
      * @return
      */
-    private boolean checkContext(String docText, int offset) {
+    private boolean checkContext(IAssistState state) {
         this.paramsSoFar = 0;
         this.paramList = new ArrayList();
         this.paramPositions = new HashMap();
+        String docText = state.getIDocument().get();
+        this.paramText = "";
+        int offset = state.getOffset();
         int newOffset = offset;
+        
         try {
             String trigger = docText.substring(offset-1,offset);
             
@@ -391,8 +442,45 @@ public class CFMLFunctionAssist
             	
             }
             
+            /*
+             * This block checks to see if we're in a parameter already. 
+             * If so, it tries to figure out which one and resets the offset and trigger
+             */
+            
+            if (!trigger.equals("(") 
+                    && !trigger.equals(",")
+                    && !trigger.equals(")")) {
+                int lastParen = state.getDataSoFar().lastIndexOf("(");
+                int lastComma = state.getDataSoFar().lastIndexOf(",");
+                if (lastParen > 0 || lastComma > 0) {
+                    if (lastParen > lastComma) {
+                        newOffset = state.getOffset() - state.getDataSoFar().length() + lastParen + 1;
+                        trigger = docText.substring(newOffset-1,newOffset);
+                        paramText = docText.substring(newOffset,state.getOffset());
+                    }
+                    else {
+                        newOffset = state.getOffset() - state.getDataSoFar().length() + lastComma + 1;
+                        trigger = docText.substring(newOffset-1,newOffset);
+                        paramText = docText.substring(newOffset,state.getOffset());
+                       
+                    }
+                    // Auto insert closing " or '
+                    docText.substring(state.getOffset(),state.getOffset()+1);
+                    //System.out.println("Start of param text: " + paramText.substring(0,1));
+                    //System.out.println("End of param text " + docText.substring(state.getOffset(),state.getOffset()+1));
+                    
+                    if (docText.length() > state.getOffset()
+                            && docText.substring(state.getOffset(),state.getOffset()+1).equals(paramText.substring(0,1))) {
+                        paramText += paramText.substring(0,1);
+                        //System.out.println("Param: " + paramText);
+                    }
+                }
+            }
+            
+            
             // Check if we're at the start of a function.
             if (trigger.equals("(")) {
+               
                 Pattern p = Pattern.compile("\\b\\w+\\($");
                 Matcher m = p.matcher(docText.substring(0,newOffset));
                 if(m.find()) {

@@ -125,7 +125,7 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 	{
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		if(!root.exists(file.getFullPath())) {
-			System.err.println("File \'" + filename + "\' does not exist. Stupid user.");
+			//System.err.println("File \'" + filename + "\' does not exist. Stupid user.");
 			this.success = false;
 			return;
 		}else{

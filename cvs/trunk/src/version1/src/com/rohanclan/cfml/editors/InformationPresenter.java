@@ -50,8 +50,8 @@ public class InformationPresenter implements IInformationPresenter {
 	            if (newText.indexOf("<b>") > -1
 	                    && newText.indexOf("</b>") > newText.indexOf("<b>") ) {
 	                
-	              //  System.out.println("Start Tag found at " + newText.indexOf("<b>"));
-	              //  System.out.println("End Tag found at " + newText.indexOf("</b>"));
+	              //System.out.println("Start Tag found at " + newText.indexOf("<b>"));
+	              //System.out.println("End Tag found at " + newText.indexOf("</b>"));
 	                
 	                int start = newText.indexOf("<b>");
 	                int length = newText.indexOf("</b>") - start -3 ; 

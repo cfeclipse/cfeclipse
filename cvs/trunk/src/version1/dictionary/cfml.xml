@@ -9009,61 +9009,7 @@
 				CreateObject('corba', context, class, locale)
 				CreateObject('java', class)
 				CreateObject('webservice', urltowsdl)
-        ********************************************
-
-        type : "com"
-
-				To create a COM object, you must know this information:
-				 * The object's program ID or filename
-				 * The methods and properties available to the object through
-					the IDispatch interface
-				 * The arguments and return types of the object's methods
-				 * For most objects, you can get this information from the
-					OLEView utility.
-
-				********************************************
-
-				type : "java"
-				class : A Java class name
-
-				Any Java class available in the class path that is specified in
-				the Administrator can be loaded and used with the CreateObject
-				function.
-
-				Calling a public method on the object without first calling the
-				"init" method invokes a static method. Arguments and return
-				values can be any Java type (simple, array, object). If strings
-				are passed as arguments, CFML does the conversions; if
-				strings are received as return values, CFML does no conversion.
-
-				********************************************************
-
-				type : "webservice"
-				urltowsdl : WSDL file URL; location of web service. Note: this
-
-				URL almost always ends with "?WSDL"
-
-				******************************************
-
-				type : "corba"
-				context :
-				    * IOR to access CORBA server
-				    * NameService: naming service to access server.
-						Valid only with the InitialContext of a VisiBroker ORB.
-				class :
-				    If context = "ior": absolute path of file that contains
-				        string version of the Interoperable Object Reference
-				        (IOR). CFML must be able to read file; it should
-						be local to CFML server or accessible on network
-				    If context = "nameservice:" forward slash-delimited naming
-				        context for naming service.
-                        For example Allaire//Doc/empobject
-				locale :	The name of the Java config that holds the properties file.
-
-				The object must be defined and registered for use.
-
-
-			]]></help>
+        ]]></help>
 
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[

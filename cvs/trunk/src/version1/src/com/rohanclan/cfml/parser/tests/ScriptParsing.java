@@ -65,8 +65,8 @@ public class ScriptParsing extends TestCase {
 	
 	public boolean compareTrees(Node xmlNode, SimpleNode parseResult) 
 	{
-		System.out.println("Got item \'" + parseResult.toString() + "\' ");
-		System.out.println("XML Got item \'" + xmlNode.getNodeName() + "\'");
+		//System.out.println("Got item \'" + parseResult.toString() + "\' ");
+		//System.out.println("XML Got item \'" + xmlNode.getNodeName() + "\'");
 		int compResult = xmlNode.getNodeName().compareToIgnoreCase(parseResult.toString());
 		boolean comparisonResult = xmlNode.getNodeName().compareToIgnoreCase(parseResult.toString()) == 0;
 		assertTrue("Apparently the xml item \'" + xmlNode.getNodeName() + "\' and the parse node \'" + parseResult.toString() + "\' do not match!", 

@@ -27,6 +27,7 @@ package com.rohanclan.cfml.editors;
 import java.util.LinkedList;
 import java.util.Iterator;
 
+import java.util.regex.*;
 import org.eclipse.swt.widgets.Composite;
 
 import com.rohanclan.cfml.CFMLPlugin;
@@ -66,6 +67,7 @@ import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import com.rohanclan.cfml.editors.actions.RTrimAction;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
+import com.rohanclan.cfml.parser.CFNodeList;
 
 
 import org.eclipse.jface.action.Action;
@@ -289,9 +291,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 					ITextSelection its = (ITextSelection)sel;
 					event.data = its.getText();
 					
-					System.err.println(event.data);
+					//System.err.println(event.data);
 				}
-				System.err.println("Drag Set Data for " + event.dataType);
+				//System.err.println("Drag Set Data for " + event.dataType);
 			}
 
 			public void dragFinished(DragSourceEvent event) {
@@ -300,7 +302,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 				if(event.detail == DND.DROP_MOVE){
 					//dragLabel.setText("");
 				}
-				System.err.println("Drag Finished");
+				//System.err.println("Drag Finished");
 			}
 		});
 		
@@ -409,8 +411,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		  * {@inheritDoc}
 		  */
 	protected void editorContextMenuAboutToShow(IMenuManager menu) {
+	    
 
-		addTagSpecificMenuItems(menu);
+	    addTagSpecificMenuItems(menu);
+
 		super.editorContextMenuAboutToShow(menu);
 
 		//addAction(menu, ITextEditorActionConstants.FIND);
@@ -469,14 +473,16 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		ITextEditor editor = (ITextEditor) iep;
 		IDocument doc = editor.getDocumentProvider().getDocument(
 				editor.getEditorInput());
+		
 		ICFDocument cfd = (ICFDocument) doc;
-		ISelection sel = editor.getSelectionProvider().getSelection();
-
+		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();
+	
 		//ok got our tag (or null)
-		int startpos = ((ITextSelection) sel).getOffset();
+		int startpos = sel.getOffset();
 
 		CfmlTagItem cti = cfd.getTagAt(startpos, startpos);
-
+		
+		
 		if (cti != null) {
 			if (cti.matchingItem != null) {
 				jumpAction.setDocPos(cti.matchingItem.getEndPosition());
