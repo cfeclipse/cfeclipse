@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import org.eclipse.core.resources.IFile;
-//import java.io.File;
+import java.io.File;
 
 /**
  * @author Stephen Milligan
@@ -37,21 +37,28 @@ public class SnipVarParser {
 		
 		/* not sure why this next block is needed, but it causes the snippet 
 		 * insert to fail on QA. Hope I am not misunderstanding something...
+		 * */
 		 if (activeFile != null) {
-		 currentFile = activeFile.getName();
-		 currentPath = activeFile.getRawLocation().toFile().getAbsolutePath();
-		 File fullPath = new File(currentPath);
-		 currentFolder = fullPath.getParent();
-		 currentProjectPath = activeFile.getProjectRelativePath().toOSString();
-		 
-		 currentProjectPath = currentProjectPath.substring(0, currentProjectPath.lastIndexOf('\\'));
-		 
-		 // Get your laughing gear round this little lot :)
-		 currentFile = currentFile.replaceAll("\\\\","\\\\\\\\");
-		 currentPath = currentPath.replaceAll("\\\\","\\\\\\\\");
-		 currentFolder = currentFolder.replaceAll("\\\\","\\\\\\\\");
-		 currentProjectPath = currentProjectPath.replaceAll("\\\\","\\\\\\\\");
-		}*/
+		 	try {
+			 currentFile = activeFile.getName();
+			 currentPath = activeFile.getRawLocation().toFile().getAbsolutePath();
+			 File fullPath = new File(currentPath);
+			 currentFolder = fullPath.getParent();
+			 currentProjectPath = activeFile.getParent().toString();
+			 String[] path = currentProjectPath.split("/");
+			 if (path.length > 0) {
+			 	currentProjectPath = path[path.length-1];
+			 }
+			 // Get your laughing gear round this little lot :)
+			 currentFile = currentFile.replaceAll("\\\\","\\\\\\\\");
+			 currentPath = currentPath.replaceAll("\\\\","\\\\\\\\");
+			 currentFolder = currentFolder.replaceAll("\\\\","\\\\\\\\");
+			 currentProjectPath = currentProjectPath.replaceAll("\\\\","\\\\\\\\");
+		 	}
+		 	catch (Exception e) {
+		 		e.printStackTrace(System.err);
+		 	}
+		}
 		
 		/*     
 		 * $${DATE}
