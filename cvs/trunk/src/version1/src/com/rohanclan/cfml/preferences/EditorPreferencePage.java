@@ -132,6 +132,7 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SELECTION_FOREGROUND_SYSTEM_DEFAULT));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SELECTION_BACKGROUND_SYSTEM_DEFAULT));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_WARN_READ_ONLY_FILES));
 		OverlayPreferenceStore.OverlayKey keys[] = new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
 		overlayKeys.toArray(keys);
 		return new OverlayPreferenceStore(getPreferenceStore(), keys);
@@ -204,8 +205,10 @@ public class EditorPreferencePage extends PreferencePage
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_HIGHLIGHT_CURRENT_LINE, 0);
 		label = "Sho&w print margin";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN, 0);
+		label = "Warn when opening read only files";
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_WARN_READ_ONLY_FILES, 0);
 		label = "Use c&ustom caret";
-		Button master = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, 0);
+		Button master = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN, 0);
 		label = "Ena&ble thick caret";
 		Button slave = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_USE_WIDE_CARET, 0);
 		createDependency(master, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, slave);

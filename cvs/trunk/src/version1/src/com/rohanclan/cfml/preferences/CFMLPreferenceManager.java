@@ -182,7 +182,7 @@ public class CFMLPreferenceManager {
 	}
 	
 	public String defaultProjectURL() {
-		return store.getDefaultString(CFMLPreferenceConstants.DEFAULT_PROJECT_URL);
+		return store.getDefaultString(CFMLPreferenceConstants.P_PROJECT_URL);
 	}
 	
 	public boolean defaultTabbedBrowser() {

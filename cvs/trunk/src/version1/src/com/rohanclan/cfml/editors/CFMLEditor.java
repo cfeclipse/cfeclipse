@@ -56,6 +56,7 @@ import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
@@ -78,11 +79,11 @@ import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
-import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
-import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.dialogs.MessageDialog;
 //import org.eclipse.ui.texteditor.AnnotationPreference;
 /**
  * @author Rob
@@ -251,11 +252,34 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
         
         createDragAndDrop(projectionViewer);
 
-        if (isEditorInputReadOnly()) {
-            MessageBox msg = new MessageBox(this.getEditorSite().getShell());
-            msg.setText("Warning!");
-            msg.setMessage("You are opening a read only file. You will not be able to make or save any changes.");
-            msg.open();
+        try {
+	        if (isEditorInputReadOnly() && getPreferenceStore().getBoolean(EditorPreferenceConstants.P_WARN_READ_ONLY_FILES)) {
+	        	String[] labels = new String[1];
+	        	labels[0] = "OK";
+	        	MessageDialogWithToggle msg = new MessageDialogWithToggle(
+	        			this.getEditorSite().getShell()
+						,"Warning!"
+						,null
+						,"You are opening a read only file. You will not be able to make or save any changes."
+						,MessageDialog.WARNING
+						,labels
+						,0
+						,"Don't show this warning in future."
+						,false
+	        			);
+	            //MessageBox msg = new MessageBox(this.getEditorSite().getShell());
+	            //msg.setText("Warning!");
+	            //msg.setMessage("You are opening a read only file. You will not be able to make or save any changes.");
+	            if (msg.open() == 0) {
+	            	if (msg.getToggleState()){
+	            		// Don't show warning in future.
+	            		getPreferenceStore().setValue(EditorPreferenceConstants.P_WARN_READ_ONLY_FILES,false);
+	            	}
+	            }
+	        }
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
         }
 
 	}
@@ -536,7 +560,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	private void setBackgroundColor() {
 		// Only try to set the background color when the source viewer is
 		// available
-		if (this.getSourceViewer() != null) {
+		if (this.getSourceViewer() != null
+				&& this.getSourceViewer().getTextWidget() != null) {
 			CFMLPreferenceManager manager = new CFMLPreferenceManager();
 			// Set the background color of the editor
 			this
@@ -544,10 +569,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 					.getTextWidget()
 					.setBackground(
 							new org.eclipse.swt.graphics.Color(
-									this.getSourceViewer().getTextWidget()
-											.getDisplay(),
-									manager
-											.getColor(EditorPreferenceConstants.P_COLOR_BACKGROUND)));
+									Display.getCurrent()
+									,manager.getColor(EditorPreferenceConstants.P_COLOR_BACKGROUND)));
 		}
 	}	
 	

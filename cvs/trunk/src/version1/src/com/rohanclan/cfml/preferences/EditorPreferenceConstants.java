@@ -89,6 +89,9 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for using the system default for the selection background color */
 	public static final String P_SELECTION_BACKGROUND_SYSTEM_DEFAULT = "AbstractTextEditor.Color.SelectionBackground.SystemDefault";
 	
+	/** Preference key identifier for warning when opening read only files */
+	public static final String P_WARN_READ_ONLY_FILES = "cfeclipse.editor.warnReadOnlyFiles";
+	
 	
 	
 	
@@ -116,6 +119,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_ENABLE_CUSTOM_CARETS - true</li>
 	 * <li>P_SELECTION_FOREGROUND_SYSTEM_DEFAULT - true</li>
 	 * <li>P_SELECTION_BACKGROUND_SYSTEM_DEFAULT - true</li>
+	 * <li>P_WARN_READ_ONLY_FILES - true</li>
 	 * </ul>
 	 * 
 	 */
@@ -142,6 +146,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_USE_WIDE_CARET,true);
 		store.setDefault(P_SELECTION_FOREGROUND_SYSTEM_DEFAULT,false);
 		store.setDefault(P_SELECTION_BACKGROUND_SYSTEM_DEFAULT,false);
+		store.setDefault(P_WARN_READ_ONLY_FILES,true);
 	}
 	
 	

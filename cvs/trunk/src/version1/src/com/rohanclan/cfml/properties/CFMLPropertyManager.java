@@ -89,6 +89,7 @@ public class CFMLPropertyManager {
 	}
 	
 	public String defaultProjectURL() {
+		
 		return preferenceManager.defaultProjectURL();
 	}
 	
