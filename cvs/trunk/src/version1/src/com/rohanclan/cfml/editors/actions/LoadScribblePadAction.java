@@ -72,7 +72,11 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
                 if (!scribbleFile.exists()) {
                     MessageBox msg = new MessageBox(editor.getEditorSite().getShell());
     	            msg.setText("Error!");
-    	            msg.setMessage("The scribble pad file could not be found. You can modify the scribble pad in the preferences area for cfeclipse \n (Window > preferences > CFEclipse >Scribble pad ).");
+    	            String pathWarning = "";
+    	            if (scribbleFileName.toLowerCase().startsWith("/"+scribbleProjectName.toLowerCase())) {
+    	                pathWarning = "\n\n NOTE: It looks like you have put the name of the project at the start of the path to the scribble file. \n Don't include the project name in the path to the scribble file, just the relative path under the project.";
+    	            }
+    	            msg.setMessage("The scribble pad file could not be found. You can modify the scribble pad in the preferences area for cfeclipse \n (Window > preferences > CFEclipse >Scribble pad )."+pathWarning);
     	            msg.open();
                 }
                 else { 
