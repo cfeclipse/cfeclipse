@@ -41,13 +41,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
-import org.w3c.dom.NodeList;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.parser.exception.DuplicateAttributeException;
-import com.rohanclan.cfml.parser.exception.InvalidAttributeException;
-import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 import com.rohanclan.cfml.parser.cfmltagitems.*;
 
 
@@ -281,7 +277,7 @@ public class CFParser {
 	 */
 	protected void userMessage(int indent, String method, String message)
 	{
-		System.out.println("CFParser::userMessage() - " + Util.GetIndent(indent) + "CFParser::" + method + "() - " + message);
+		//System.out.println("CFParser::userMessage() - " + Util.GetIndent(indent) + "CFParser::" + method + "() - " + message);
 	}
 	
 	/**
@@ -348,7 +344,7 @@ public class CFParser {
 		while(matcher.find())
 		{
 			attributes.put(matcher.group(1), matcher.group(2));
-			System.out.println("CFParser::stripAttributes() - Got \'" + matcher.group(1) + "\'=\"" + matcher.group(2) + "\"");
+			//System.out.println("CFParser::stripAttributes() - Got \'" + matcher.group(1) + "\'=\"" + matcher.group(2) + "\"");
 		}
 		
 		return attributes;
@@ -374,7 +370,7 @@ public class CFParser {
 	 * If the item does not match the most recent item we've a problem. At the moment
 	 * it reports an error and throws away the closer.
 	*/
-		System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
+		//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
 		// Closing tag, so we attempt to match it to the current top of the stack.
 		String closerName = match.match;
 		if(closerName.indexOf("</cf") != -1)
@@ -383,7 +379,7 @@ public class CFParser {
 			closerName = closerName.substring(4, closerName.length()-1);
 			
 			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
-System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
+//System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
 		
 			if(topItem.itemName.compareTo(closerName) == 0)
 			{
@@ -395,9 +391,9 @@ System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) 
 				{
 					//
 					// Tell the user there was a problem and then rethrow the exception.
-					System.out.println("CFParser::handleClosingTag() - Caught exception \'" + excep.getMessage() + "\'");
+					//System.out.println("CFParser::handleClosingTag() - Caught exception \'" + excep.getMessage() + "\'");
 					excep.printStackTrace();
-					System.out.println(excep.hashCode());
+					//System.out.println(excep.hashCode());
 					throw (RuntimeException)excep.fillInStackTrace();
 				}
 				matchStack.push(parentItem);
@@ -436,7 +432,7 @@ System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) 
 	 */
 	protected void handleCFScriptBlock(TagMatch match, Stack matchStack)
 	{
-System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");		
+		//System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");		
 	}
 	
 	/**
@@ -450,7 +446,7 @@ System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStac
 	 */
 	protected void handleHTMLTag(String tagName, TagMatch match, Stack matchStack, HashMap attrMap, boolean isACloser)
 	{
-System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
+		System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
 	}
 	
 	/**
@@ -530,17 +526,17 @@ System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + 
 		
 		if(!newItem.addAttributes(attrMap))
 		{
-			System.out.println("CFParser::handleCFTag() - Item \'" + newItem.getName() + "\' failed on map attr add!");
+			//System.out.println("CFParser::handleCFTag() - Item \'" + newItem.getName() + "\' failed on map attr add!");
 		}
 		if(newItem instanceof CfmlTagFunction)
 		{
-			System.out.println("CFParser::handleCFTag() - Map 'name': " + attrMap.get("name"));
-			System.out.println("CFParser::handleCFTag() - Tag 'name': " + newItem.getAttribute("name"));
+			//System.out.println("CFParser::handleCFTag() - Map 'name': " + attrMap.get("name"));
+			//System.out.println("CFParser::handleCFTag() - Tag 'name': " + newItem.getAttribute("name"));
 		}
 	
 		if(newItem instanceof CfmlTagFunction)
 		{
-System.out.println("CFParser::handleCFTag() - Function has name of" + ((CfmlTagFunction)newItem).getAttribute("name"));
+//System.out.println("CFParser::handleCFTag() - Function has name of" + ((CfmlTagFunction)newItem).getAttribute("name"));
 			parserState.addFunction(newItem);
 		}
 		
@@ -568,13 +564,13 @@ System.out.println("CFParser::handleCFTag() - Function has name of" + ((CfmlTagF
 */
 				top.addChild(newItem);
 				matchStack.push(top);
-System.out.println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
+//System.out.println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
 			}	
 		} catch(Exception anExcep) {
 			parserState.addMessage(new ParseError(getLineNumber(match.startPos), match.startPos, match.endPos, match.match, "An unknown error occurred during parsing."));
 			System.err.println("CFParser::handleCFTag() - Caught an exception during item popping. Exception was " + anExcep.getLocalizedMessage());
 			anExcep.printStackTrace();
-			System.out.println(anExcep.hashCode());
+			//System.out.println(anExcep.hashCode());
 			throw (RuntimeException)anExcep.fillInStackTrace();
 		}
 	}
@@ -624,7 +620,7 @@ System.out.println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Pa
 			{
 				TagMatch match = (TagMatch)matches.get(matchPos);
 				String matchStr = match.match;
-System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
+//System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					// Is a tag
@@ -667,7 +663,7 @@ System.out.println("CFParser::createDocTree() - Processing match \'" + match.mat
 							}
 							else
 							{
-System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "\'");
+//System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "\'");
 								handleCFTag(tagName, match, matchStack, stripAttributes(attributes), isACloser);
 							}
 						}
@@ -692,7 +688,7 @@ System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "
 				+ anyException.getMessage()
 			);
 			anyException.printStackTrace();
-			System.out.println(anyException.hashCode());
+			//System.out.println(anyException.hashCode());
 		}
 		newDoc.setDocumentRoot(rootItem);
 		return newDoc;
@@ -732,13 +728,13 @@ System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "
 			
 			if(currChar == '<' && (next2Chars.compareTo("cf") == 0 || next3Chars.compareTo("/cf") == 0))
 			{	// CFML tag embedded in HTML
-System.out.println("CFParser::matchingHTML() - FOUND!: an embedded CFML tag within HTML! : " + inData.substring(0, currPos));
+				//System.out.println("CFParser::matchingHTML() - FOUND!: an embedded CFML tag within HTML! : " + inData.substring(0, currPos));
 				currPos = matchingCFML(parseState, inData, currPos);
 				cfTagCount++;
 			}
 			else if(!inQuotes && currChar == '>')
 			{
-System.out.println("CFParser::matchingHTML() - FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos+1));				
+				//System.out.println("CFParser::matchingHTML() - FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos+1));				
 				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 0), 
 									State.ADD_BEFORE, cfTagCount);
 				finalOffset = currPos;
@@ -810,7 +806,7 @@ System.out.println("CFParser::matchingHTML() - FOUND!: an HTML tag!: " + inData.
 			if(!inQuotes && currChar == '>')
 			{
 				finalOffset = currPos;
-System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
+//System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
 				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
 												getLineNumber(currDocOffset)));
 				break;
@@ -873,10 +869,10 @@ System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, curr
 							if(next2Chars.compareTo("!-") == 0)
 							{	// Testing for comment: <!--
 								// TODO: Find out whether comments can occur in tags
-System.out.println("CFParser::tagMatchingAttempts() - Found a comment");
+//System.out.println("CFParser::tagMatchingAttempts() - Found a comment");
 								if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
 								{
-System.out.println("CFParser::tagMatchingAttempts() - \t it's a CFML comment");
+//System.out.println("CFParser::tagMatchingAttempts() - \t it's a CFML comment");
 									currState = MATCHER_CFMLCOMMENT;
 									lastMatch = currPos;
 								}
@@ -888,7 +884,7 @@ System.out.println("CFParser::tagMatchingAttempts() - \t it's a CFML comment");
 							}
 							else if(next2Chars.compareTo("cf") == 0)
 							{
-System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
+//System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
 								//
 								// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 								// container *only* for things to go in the document tree.
@@ -904,7 +900,7 @@ System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a 
 							}
 							else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
 							{
-								System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of an HTML tag.");
+								//System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of an HTML tag.");
 								currPos = matchingHTML(parserState, inData, currPos);
 							}
 							break;
@@ -917,12 +913,12 @@ System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a 
 						next2Chars.compareTo("--") == 0 && 
 						inData.charAt(currPos+3) == '>')
 				{
-System.out.println("CFParser::tagMatchingAttempts() - Found the end of a CFML comment");
+//System.out.println("CFParser::tagMatchingAttempts() - Found the end of a CFML comment");
 					currState = MATCHER_NOTHING;
 				}
 				else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
 				{
-System.out.println("CFParser::tagMatchingAttempts() - Found the end of an HTML comment");
+//System.out.println("CFParser::tagMatchingAttempts() - Found the end of an HTML comment");
 					currState = MATCHER_NOTHING;
 				}
 			}
@@ -1049,7 +1045,7 @@ System.out.println("CFParser::tagMatchingAttempts() - Found the end of an HTML c
 	 */
 	public void parseSaveDoc()
 	{
-		System.out.println(parseDoc.get());
+		//System.out.println(parseDoc.get());
 		parseResult = parseDoc();
 	}
 	
