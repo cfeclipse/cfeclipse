@@ -116,8 +116,10 @@ public class TagItem extends DocItem {
 			System.err.println("TagItem::hasClosingTag() - The tag I've retrieved is null! Tag name is \'" + itemName + "\'");
 			//
 			// Should really raise an exception?
+			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
+										"Unknown cf tag \'<cf" + itemName + ">\'."));
 			
-			throw new NullPointerException("Tag for " + itemName + " is null. Probably doesn't exist!");
+			return true;	// Let's say it's a single tag.
 		}
 		return !tag.isSingle();
 	}
