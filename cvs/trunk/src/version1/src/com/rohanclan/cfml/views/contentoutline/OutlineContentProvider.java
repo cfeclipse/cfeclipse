@@ -96,13 +96,20 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	
 	/**
 	 * Get the parent of element
+	 * TODO this doesnt work, and I think that's why it has that crazy refresh
+	 * thing
 	 * @see ITreeContentProvider#getParent(Object)
 	 */
 	public Object getParent(Object element) 
 	{
-		if(element instanceof DocItem)
+		if(element instanceof DocItem && ((DocItem)element).getParent() != rootdir)
 		{
-			return ((DocItem)element).getName();
+			//System.out.println("parent is: " + ((DocItem)element).getParent().getName());
+			//this should be getParent(), but if I do that I get:
+			//Unhandled event loop exception
+			//Reason:
+			//java.lang.StackOverflowError
+			return ((DocItem)element).getParent().getName();
 		}
 		
 		return null;

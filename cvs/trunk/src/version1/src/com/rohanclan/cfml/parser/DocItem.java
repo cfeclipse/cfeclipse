@@ -157,6 +157,15 @@ public abstract class DocItem {
 		return (DocItem)docNodes.get(docNodes.size());
 	}
 	
+	/**
+	 * gets the parent of this docitem
+	 * @return
+	 */
+	public DocItem getParent()
+	{
+		return parentNode;
+	}
+	
 	public void setParent(DocItem newParent)
 	{
 		parentNode = newParent;

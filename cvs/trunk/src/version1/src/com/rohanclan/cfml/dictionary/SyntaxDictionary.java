@@ -327,7 +327,7 @@ public abstract class SyntaxDictionary {
 				}
 				if(possible.toUpperCase().startsWith(start.toUpperCase()))
 				{
-					System.out.println(possible);
+					//System.out.println(possible);
 					filterset.add(item);
 				}
 			}

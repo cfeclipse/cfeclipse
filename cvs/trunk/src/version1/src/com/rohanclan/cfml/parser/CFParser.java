@@ -1095,11 +1095,12 @@ public class CFParser {
 	 * Parses the document and saves the result into the parseResult variable
 	 * so it maintains it's tree.
 	 * @author rob
+	 * @deprecated
 	 */
-	public void parseSaveDoc()
+	/* public void parseSaveDoc()
 	{
 		////System.out.println(parseDoc.get());
 		parseResult = parseDoc();
-	}
+	} */
 	
 }

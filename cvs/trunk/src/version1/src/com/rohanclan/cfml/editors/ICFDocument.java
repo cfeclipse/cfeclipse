@@ -38,8 +38,9 @@ import org.eclipse.jface.text.Document;
 /**
  * @author Rob
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This is mostly just a wrapper document that holds the parser and is
+ * attached to a Document. So if you can get access to a document you
+ * can get to this and get the parser
  */
 public class ICFDocument extends Document {
 
@@ -51,7 +52,6 @@ public class ICFDocument extends Document {
 	public ICFDocument()
 	{
 		super();
-	
 	}
 	
 	public CFParser getParser()
@@ -61,34 +61,15 @@ public class ICFDocument extends Document {
 	
 	public void parseDocument()
 	{
-		/* if(t == null)
+		if(docParser != null)
 		{
-			t = new Thread(){
-				public void run(){
-					for(;;)
-					{
-						try
-						{ */
-							if(docParser != null)
-							{
-								//System.out.println("Runnin");
-								//docParser.parseSaveDoc(); // parseDoc();
-								docStructure = docParser.parseDoc();
-								if(docStructure == null)
-									System.err.println("ICFDocument::parseDocument() - Parse result is null!");
-							}
-							/* Thread.sleep(3000);
-						}
-						catch(Exception e)
-						{
-							e.printStackTrace(System.err);
-						}
-					}
-				}
-			};
+			docStructure = docParser.parseDoc();
 			
-			t.start();
-		} */
+			if(docStructure == null)
+				System.err.println(
+					"ICFDocument::parseDocument() - Parse result is null!"
+				);
+		}
 	}
 	
 	public void setParserResource(IResource newRes)

@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jface.operation.*;
 import java.lang.reflect.InvocationTargetException;
@@ -68,10 +69,17 @@ public class NewCfmlWizard extends Wizard implements INewWizard {
 	 */
 
 	public void addPages() {
-		page = new NewCfmlWizardPage(selection);
-		pageTwo = new NewCfmlWizardPageTwo(selection);
-		addPage(page);
-		addPage(pageTwo);
+		if(selection != null)
+		{
+			page = new NewCfmlWizardPage(selection);
+			//pageTwo = new NewCfmlWizardPageTwo(selection);
+			addPage(page);
+			//addPage(pageTwo);
+		}
+		else
+		{
+			System.err.println("selection is null?");
+		}
 	}
 
 	/**

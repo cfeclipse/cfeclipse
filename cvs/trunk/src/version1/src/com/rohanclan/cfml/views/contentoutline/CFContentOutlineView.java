@@ -19,7 +19,6 @@ import com.rohanclan.cfml.parser.*;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import com.rohanclan.cfml.util.CFPluginImages;
-//import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
@@ -37,31 +36,33 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import com.rohanclan.cfml.editors.CFMLEditor;
 
-
-
-//import com.rohanclan.cfml.parser.*;
-
 /**
  * @author Rob
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This is the default content outline view
  */
 public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener {
 	public static final String ID_CONTENTOUTLINE = "com.rohanclan.cfml.views.contentoutline.cfcontentoutlineview";
 	
 	protected LabelProvider labelProvider;
-	protected Action jumpAction; //, refreshAction, expandAction;
+	protected Action jumpAction;
 	protected Action filters[];
 	protected MenuManager menuMgr;
 	
 	private boolean menusmade = false;
+	private boolean treemade = false;
 	
 	private static String filter = "";
 	
+	private DocItem lastDocRoot = null;
+	
 	public Control getControl()
 	{
-		createTree();
+		if(!treemade)
+		{
+			createTree();
+			treemade = true;
+		}
 		return getTreeViewer().getControl();
 	}
 	
@@ -117,23 +118,42 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	
 	/**
-	 * Gets the root element of the document
+	 * Gets the root element of the document. Saves information into a local
+	 * cache so if there is an error in the parser it uses the last known
+	 * good outline (which kind of sucks but it looks better)
 	 * @return the root directory
 	 */
 	public DocItem getRootInput()
 	{	
 		try
 		{
-			IEditorPart iep = super.getSite().getPage().getActiveEditor();
+			DocItem docRoot = null;
+			
+			IEditorPart iep = getSite().getPage().getActiveEditor();
+			
 			iep.addPropertyListener(this);
 			getSite().getPage().addPartListener(this);
+			
 			ITextEditor ite = (ITextEditor)iep;
 			ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
 			
-			icfd.getParser().parseSaveDoc();
-			DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot();
+			icfd.clearAllMarkers();
+			icfd.parseDocument();
 			
-			return docRoot;
+			CFDocument cfd = icfd.getCFDocument();
+			if(cfd != null)
+			{
+				docRoot = cfd.getDocumentRoot();
+				lastDocRoot = docRoot;
+			}
+			if(lastDocRoot != null)
+			{
+				return lastDocRoot;
+			}
+			else
+			{
+				return new TagItem(1,1,1,"Unk");
+			}
 		}
 		catch(Exception e)
 		{
@@ -209,7 +229,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		}
 	}
 	
-	protected void expand()
+	public void expand()
 	{
 		getTreeViewer().expandAll();
 	}
@@ -227,23 +247,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				jumpToItem();
 			}
 		};
-		/* refreshAction = new Action(
-			"Refresh",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH)		
-		) {
-			public void run() {
-				reload();
-			}
-		};
-		expandAction = new Action(
-			"Expand All",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_ADD)
-		){
-			public void run() { 
-				expand();
-			}
-		};
-		*/
+		
 		///filters
 		filters = new Action[6];
 		
@@ -336,20 +340,20 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	public void partBroughtToTop(IWorkbenchPart part) {
 		//System.out.println("Part brought to top: "+part.getClass().getName());
-		if(part instanceof CFMLEditor)
-		{
-			reload();
-		}
+		//if(part instanceof CFMLEditor)
+		//{
+		//	reload();
+		//}
 	}
 	
 	public void partClosed(IWorkbenchPart part) 
 	{
-		System.out.println("Part closed: " + part.getClass().getName());
+		//System.out.println("Part closed: " + part.getClass().getName());
 	}
 	
 	public void partDeactivated(IWorkbenchPart part) 
 	{
-		System.out.println("Part deactivated: " + part.getClass().getName());
+		//System.out.println("Part deactivated: " + part.getClass().getName());
 	}
 	
 	public void partOpened(IWorkbenchPart part) 
