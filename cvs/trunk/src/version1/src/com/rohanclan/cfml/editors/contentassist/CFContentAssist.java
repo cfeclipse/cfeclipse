@@ -97,7 +97,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @param message The message to output to the console
 	 */
 	private void UserMsg(String method, String message) {
-	    // System.out.println("CFContentAssist::" + method + "() - " + message);
+	     //System.out.println("CFContentAssist::" + method + "() - " + message);
 	}
 	/**
 	 * Provides a standarised user error console message for debugging.
@@ -365,6 +365,7 @@ public class CFContentAssist extends CFEContentAssist{
 		DefaultAssistState defaultAssistState = (DefaultAssistState)assistState;
 		if(!inValidPartitionType(assistState))
 		{
+		    
 		    UserMsg(mName, "Not in a valid partition type of \'" + assistState.getOffsetPartition().getType() + "\'");
 		    return null;
 		}
@@ -379,7 +380,9 @@ public class CFContentAssist extends CFEContentAssist{
 		    return null;
 		}
 		*/
-		prefix = prefix.substring(this.lastOpenChevronPos).trim();
+		
+		//prefix = prefix.substring(this.lastOpenChevronPos).trim();
+		prefix = prefix.trim();
 		UserMsg("getTagProposals","Prefix set to " + prefix);
 		ArrayList partItems = CFEContentAssist.getTokenisedString(/*assistState.getDataSoFar()*/prefix);
 		//
@@ -421,6 +424,7 @@ public class CFContentAssist extends CFEContentAssist{
 		        && !invokerIsCloseChevron 
 		        && !isDefinatelyAnAttribute) 
 		{
+		    
 		    UserMsg("getTagProposals","No standard invokers found.");
 			try 
 			{

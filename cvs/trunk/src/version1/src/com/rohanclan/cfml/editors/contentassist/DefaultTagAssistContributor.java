@@ -84,7 +84,32 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 		int offset = state.getOffset();
 		IDocument doc = state.getIDocument();
 		char invokerChar = state.getTriggerData();
-		String tagLimiting = state.getDataSoFar().substring(1).toLowerCase().trim();
+		
+		boolean doubleQuoted = false;
+		boolean singleQuoted = false;
+		int tagStart = 1;
+		for (int i=state.getDataSoFar().length()-1;i>=0;i--) {
+		    char c = state.getDataSoFar().charAt(i);
+		    
+		    if (c == '"') {
+		        if (!singleQuoted) {
+		            doubleQuoted = !doubleQuoted;
+		        }
+		    }
+		    if (c == '\'') {
+		        if (!doubleQuoted) {
+		            singleQuoted = !singleQuoted;
+		        }
+		    }
+		    if (!doubleQuoted && !singleQuoted) {
+			    if (c == '<') {
+			        tagStart = i+1;
+			        break;
+			    }
+		    }
+		}
+		
+		String tagLimiting = state.getDataSoFar().substring(tagStart).toLowerCase().trim();
 		
 		if(invokerChar == '\"')
 		{

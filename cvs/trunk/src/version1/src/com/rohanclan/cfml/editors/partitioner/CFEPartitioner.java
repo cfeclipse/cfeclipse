@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.5 2005-03-05 21:11:11 smilligan Exp $
- * $Revision: 1.5 $
- * $Date: 2005-03-05 21:11:11 $
+ * $Id: CFEPartitioner.java,v 1.6 2005-03-06 03:03:42 smilligan Exp $
+ * $Revision: 1.6 $
+ * $Date: 2005-03-06 03:03:42 $
  * 
  * Created on Oct 17, 2004
  *
@@ -1498,6 +1498,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
         String lastPartition = null;
         try {
 	        CFEPartition cfp = findClosestPartition(offset);
+	        
 	        if (cfp == null) {
 	            return null;
 	        }

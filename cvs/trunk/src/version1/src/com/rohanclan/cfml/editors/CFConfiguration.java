@@ -651,7 +651,10 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
      */
     private void setupPrimaryCFEContentAssist() {
         CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist();
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_BEGIN);
+        for (int i=0;i<PartitionTypes.ALL_PARTITION_TYPES.length;i++) {
+            assistant.setContentAssistProcessor(mainCFAssistant,PartitionTypes.ALL_PARTITION_TYPES[i]);
+        }
+        /*
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_END);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_TAG_ATTRIBS);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.HTM_END_TAG);	//inside any other tags
@@ -669,6 +672,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_START_TAG_END);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_TAG_ATTRIBS);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.J_SCRIPT);
+		*/
     }
 
     /**

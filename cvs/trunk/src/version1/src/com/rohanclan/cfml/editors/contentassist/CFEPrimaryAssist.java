@@ -83,6 +83,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
         */
         if(viewer.getDocument() instanceof ICFEFileDocument)
         {
+            
             try {
                 proposers = ((ICFEFileDocument)viewer.getDocument()).getContentAssistManager().getRootAssistors();
             }
