@@ -6,6 +6,8 @@
     	BlueDragon  = 0x2;
     	W3C         = 0x4;
     	UserDefined = 0x8;
+	W3C_form    = 0x16;
+	W3C_table   = 0x32;
     	If support exists between two you can add them together.
     	for example 3 means MX and BlueDragon.
     Single is if the tag lacks a closing tag
@@ -44,7 +46,7 @@
 		<!-- 
 			abbr
 		-->
-		<tag creator="4" name="abbr" single="false" xmlstyle="false">
+		<tag name="abbr" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Indicates an abbreviated form, like "Inc.", "etc."
 			]]></help>
@@ -57,7 +59,7 @@
 		<!-- 
 			acronym
 		-->
-		<tag creator="4" name="acronym" single="false" xmlstyle="false">
+		<tag name="acronym" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines an acronym
 			]]></help>
@@ -71,7 +73,7 @@
 		<!-- 
 			address
 		-->
-		<tag creator="4" name="address" single="false" xmlstyle="false">
+		<tag name="address" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines the start of an address. You should use it to define 
 				addresses, signatures, or authorships of documents.
@@ -91,7 +93,7 @@
 		<!-- 
 			applet
 		-->
-		<tag creator="4" name="applet" single="false" xmlstyle="false">
+		<tag name="applet" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines an embedded applet.
 				The applet element was deprecated in HTML 4.01; use object
@@ -178,7 +180,7 @@
 		<!-- 
 			area
 		-->
-		<tag creator="4" name="area" single="true" xmlstyle="false">
+		<tag name="area" creator="4" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines a region in an image map. 
 			]]></help>
@@ -204,7 +206,10 @@
 				<help><![CDATA[
 					Excludes an area from the image map
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="shape" type="String" required="false">
 				<help><![CDATA[
@@ -228,7 +233,7 @@
 		<!-- 
 			base
 		-->
-		<tag creator="4" name="base" single="true" xmlstyle="false">
+		<tag name="base" creator="4" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Specifies a base URL for all the links in a page.
 				* In HTML the tag has no end tag.
@@ -253,7 +258,7 @@
 		<!-- 
 			basefont
 		-->
-		<tag creator="4" name="basefont" single="false" xmlstyle="false">
+		<tag name="basefont" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a base font.
 				Deprecated in HTML 4.01.
@@ -286,7 +291,7 @@
 		<!-- 
 			bdo	
 		-->
-		<tag creator="4" name="bdo" single="false" xmlstyle="false">
+		<tag name="bdo" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				 Overrides the default text direction.
 			]]></help>
@@ -306,7 +311,7 @@
 		<!-- 
 			blockquote
 		-->
-		<tag creator="4" name="blockquote" single="false" xmlstyle="false">
+		<tag name="blockquote" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines the start of a long quotation.
 			]]></help>
@@ -326,7 +331,7 @@
 		<!-- 
 			body
 		-->
-		<tag creator="4" name="body" single="false" xmlstyle="false">
+		<tag name="body" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The body element defines the documents' body.
 				All "presentation attributes" of the body element were 
@@ -383,7 +388,7 @@
 		<!-- 
 			br
 		-->
-		<tag creator="4" name="br" single="true" xmlstyle="false">
+		<tag name="br" creator="4" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Inserts a single line break. 
 				* In HTML the tag has no end tag.
@@ -395,7 +400,7 @@
 		<!-- 
 			button
 		-->
-		<tag creator="4" name="button" single="false" xmlstyle="false">
+		<tag name="button" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a push button form element.
 			]]></help>
@@ -403,7 +408,10 @@
 				<help><![CDATA[
 					Disables the button
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
@@ -439,7 +447,7 @@
 		<!-- 
 			fieldset
 		-->
-		<tag creator="4" name="fieldset" single="false" xmlstyle="false">
+		<tag name="fieldset" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The fieldset element draws a box around its containing elements.
 			]]></help>
@@ -450,7 +458,7 @@
 		<!-- 
 			font
 		-->
-		<tag creator="4" name="font" single="false" xmlstyle="false">
+		<tag name="font" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Specifies the font face, font size, and font color of text.
 				The font element was deprecated in HTML 4.01.
@@ -483,7 +491,7 @@
 		<!-- 
 			form
 		-->
-		<tag creator="4" name="form" single="false" xmlstyle="false">
+		<tag name="form" creator="16" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Creates a form for client input
 			]]></help>
@@ -512,7 +520,11 @@
 				<help><![CDATA[
 					The mime type used to encode the content of the form
 				]]></help>
-				<values/>
+				<values>
+					<value option="application/x-www-form-urlencoded"/>
+					<value option="multipart/form-data"/>
+					<value option="text/plain"/>
+				</values>
 			</parameter>
 			<parameter name="method" type="String" required="false">
 				<help><![CDATA[
@@ -520,8 +532,8 @@
 					 Default is get.
 				]]></help>
 				<values>
-					<values option="get"/>
-					<values option="post"/>
+					<value option="get"/>
+					<value option="post"/>
 				</values>
 			</parameter>
 			<parameter name="name" type="String" required="false">
@@ -551,7 +563,7 @@
 		<!-- 
 			frame
 		-->
-		<tag creator="4" name="frame" single="false" xmlstyle="false">
+		<tag name="frame" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a sub window (a frame). 
 				* In HTML the tag has no end tag.
@@ -561,7 +573,10 @@
 				<help><![CDATA[
 					Specifies whether or not to display a frame border
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="longdesc" type="URL" required="false">
 				<help><![CDATA[
@@ -591,7 +606,10 @@
 				<help><![CDATA[
 					When set to noresize the user cannot resize the frame
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="scrolling" type="String" required="false">
 				<help><![CDATA[
@@ -616,7 +634,7 @@
 		<!-- 
 			frameset
 		-->
-		<tag creator="4" name="frameset" single="false" xmlstyle="false">
+		<tag name="frameset" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The frameset element defines a frameset. It is used to 
 				organize multiple windows (frames)
@@ -639,7 +657,7 @@
 		<!-- 
 			h1
 		-->
-		<tag creator="4" name="h1" single="false" xmlstyle="false">
+		<tag name="h1" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The "align" attribute was deprecated in HTML 4.01.
 			]]></help>
@@ -653,7 +671,7 @@
 		<!-- 
 			h2
 		-->
-		<tag creator="4" name="h2" single="false" xmlstyle="false">
+		<tag name="h2" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The "align" attribute was deprecated in HTML 4.01.
 			]]></help>
@@ -667,7 +685,7 @@
 		<!-- 
 			h3
 		-->
-		<tag creator="4" name="h3" single="false" xmlstyle="false">
+		<tag name="h3" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The "align" attribute was deprecated in HTML 4.01.
 			]]></help>
@@ -681,7 +699,7 @@
 		<!-- 
 			h4
 		-->
-		<tag creator="4" name="h4" single="false" xmlstyle="false">
+		<tag name="h4" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The "align" attribute was deprecated in HTML 4.01.
 			]]></help>
@@ -695,7 +713,7 @@
 		<!-- 
 			h5
 		-->
-		<tag creator="4" name="h5" single="false" xmlstyle="false">
+		<tag name="h5" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The "align" attribute was deprecated in HTML 4.01.
 			]]></help>
@@ -709,7 +727,7 @@
 		<!-- 
 			h6
 		-->
-		<tag creator="4" name="h6" single="false" xmlstyle="false">
+		<tag name="h6" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The "align" attribute was deprecated in HTML 4.01.
 			]]></help>
@@ -723,7 +741,7 @@
 		<!-- 
 			head
 		-->
-		<tag creator="4" name="head" single="false" xmlstyle="false">
+		<tag name="head" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The head element can contain information about the document. 
 			]]></help>
@@ -740,7 +758,7 @@
 		<!-- 
 			hr
 		-->
-		<tag creator="4" name="hr" single="true" xmlstyle="false">
+		<tag name="hr" creator="4" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Inserts a horizontal rule.
 				* In HTML the tag has no end tag.
@@ -753,7 +771,10 @@
 					when set to false the rule should render in a two-color "groove".
 					Deprecated. Use styles instead
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="size" type="String" required="false">
 				<help><![CDATA[
@@ -779,7 +800,7 @@
 		<!-- 
 			html
 		-->
-		<tag creator="4" name="html" single="false" xmlstyle="false">
+		<tag name="html" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				This element tells a browser that this is an HTML document.
 				The xmlns attribute is required in XHTML but not in HTML.
@@ -799,7 +820,7 @@
 		<!-- 
 			iframe
 		-->
-		<tag creator="4" name="iframe" single="false" xmlstyle="false">
+		<tag name="iframe" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				 Creates an inline frame that contains another document.
 			]]></help>
@@ -807,7 +828,10 @@
 				<help><![CDATA[
 					Specifies whether or not to display a frame border
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="longdesc" type="URL" required="false">
 				<help><![CDATA[
@@ -859,7 +883,7 @@
 		<!-- 
 			img
 		-->
-		<tag creator="4" name="img" single="true" xmlstyle="false">
+		<tag name="img" creator="4" single="true" xmlstyle="false">
 			<help><![CDATA[
 				The img element defines an image.
 				* In HTML the tag has no end tag.
@@ -929,7 +953,7 @@
 		<!-- 
 			input
 		-->
-		<tag creator="4" name="input" single="true" xmlstyle="false">
+		<tag name="input" creator="16" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines the start of an input field where the client
 				can enter data.
@@ -960,21 +984,30 @@
 					 Indicates that the input element should be checked when 
 					 it first loads.
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="disabled" type="boolean" required="false">
 				<help><![CDATA[
 					Disables the input element when it first loads so that the 
 					user can not write text in it, or select it.
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="readonly" type="boolean" required="false">
 				<help><![CDATA[
 					Indicates that the value of this field cannot be 
 					modified.
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="maxlength" type="Numeric" required="false">
 				<help><![CDATA[
@@ -1030,7 +1063,7 @@
 		<!-- 
 			ins
 		-->
-		<tag creator="4" name="ins" single="false" xmlstyle="false">
+		<tag name="ins" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines inserted text.
 			]]></help>
@@ -1058,7 +1091,7 @@
 		<!-- 
 			label
 		-->
-		<tag creator="4" name="label" single="false" xmlstyle="false">
+		<tag name="label" creator="16" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a label to a control
 			]]></help>
@@ -1080,7 +1113,7 @@
 		<!-- 
 			caption
 		-->
-		<tag creator="4" name="caption" single="false" xmlstyle="false">
+		<tag name="caption" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a table caption
 			]]></help>
@@ -1100,7 +1133,7 @@
 		<!-- 
 			center
 		-->
-		<tag creator="4" name="center" single="false" xmlstyle="false">
+		<tag name="center" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Centers its enclosed text horizontally.
 				The center element was deprecated in HTML 4.01.
@@ -1116,7 +1149,7 @@
 		<!-- 
 			col
 		-->
-		<tag creator="4" name="col" single="false" xmlstyle="false">
+		<tag name="col" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines the attribute values for one or more columns in a table.
 			]]></help>
@@ -1158,7 +1191,7 @@
 		<!-- 
 			colgroup
 		-->
-		<tag creator="4" name="colgroup" single="false" xmlstyle="false">
+		<tag name="colgroup" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines groups of table columns. With this element, you 
 				can group columns for formatting. This element is only 
@@ -1203,7 +1236,7 @@
 		<!-- 
 			dd
 		-->
-		<tag creator="4" name="dd" single="false" xmlstyle="false">
+		<tag name="dd" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines the description of a term in a definition list.
 			]]></help>
@@ -1217,7 +1250,7 @@
 		<!-- 
 			del
 		-->
-		<tag creator="4" name="del" single="false" xmlstyle="false">
+		<tag name="del" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines text that has been deleted in a document.
 			]]></help>
@@ -1245,7 +1278,7 @@
 		<!-- 
 			dir
 		-->
-		<tag creator="4" name="dir" single="false" xmlstyle="false">
+		<tag name="dir" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				defines a directory list.
 				The dir element was deprecated in HTML 4.01.
@@ -1265,7 +1298,7 @@
 		<!-- 
 			div
 		-->
-		<tag creator="4" name="div" single="false" xmlstyle="false">
+		<tag name="div" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a division/section in a document.
 				The "align" attribute of the div element was deprecated 
@@ -1282,7 +1315,7 @@
 		<!-- 
 			dl
 		-->
-		<tag creator="4" name="dl" single="false" xmlstyle="false">
+		<tag name="dl" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a definition list.
 			]]></help>
@@ -1296,7 +1329,7 @@
 		<!-- 
 			dt
 		-->
-		<tag creator="4" name="dt" single="false" xmlstyle="false">
+		<tag name="dt" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines the start of a term in a definition list. 
 			]]></help>
@@ -1310,7 +1343,7 @@
 		<!-- 
 			legend
 		-->
-		<tag creator="4" name="legend" single="false" xmlstyle="false">
+		<tag name="legend" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a caption for a fieldset.
 			]]></help>
@@ -1326,7 +1359,7 @@
 		<!-- 
 			li
 		-->
-		<tag creator="4" name="li" single="false" xmlstyle="false">
+		<tag name="li" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The tag defines the start of a list item.
 				It is used in both ordered and unordered lists.
@@ -1357,7 +1390,7 @@
 		<!-- 
 			link
 		-->
-		<tag creator="4" name="link" single="false" xmlstyle="false">
+		<tag name="link" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				This element defines the relationship between two linked 
 				documents.
@@ -1478,7 +1511,7 @@
 		<!-- 
 			map
 		-->
-		<tag creator="4" name="map" single="false" xmlstyle="false">
+		<tag name="map" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a client-side image-map. An image-map is an image 
 				with clickable regions.
@@ -1508,7 +1541,7 @@
 		<!-- 
 			menu
 		-->
-		<tag creator="4" name="menu" single="false" xmlstyle="false">
+		<tag name="menu" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a menu list.
 				The menu element was deprecated in HTML 4.01.
@@ -1529,7 +1562,7 @@
 		<!-- 
 			meta
 		-->
-		<tag creator="4" name="meta" single="true" xmlstyle="false">
+		<tag name="meta" creator="4" single="true" xmlstyle="false">
 			<help><![CDATA[
 				The element provides meta-information about your page, such as 
 				descriptions and keywords for search engines and refresh rates.
@@ -1584,7 +1617,7 @@
 		<!-- 
 			noframes
 		-->
-		<tag creator="4" name="noframes" single="false" xmlstyle="false">
+		<tag name="noframes" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Displays text for browsers that do not handle frames. 
 				The noframes element goes inside the frameset element.
@@ -1596,7 +1629,7 @@
 		<!-- 
 			noscript
 		-->
-		<tag creator="4" name="noscript" single="false" xmlstyle="false">
+		<tag name="noscript" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used to define an alternate content (text) if a script 
 				is NOT executed.
@@ -1614,7 +1647,7 @@
 		<!-- 
 			object
 		-->
-		<tag creator="4" name="object" single="false" xmlstyle="false">
+		<tag name="object" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines an embedded object. Use this element to add multimedia 
 				to your XHTML page.
@@ -1662,7 +1695,10 @@
 					Defines that the object should only be declared, not created 
 					or instantiated until needed
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="hspace" type="Numeric" required="false">
 				<help><![CDATA[
@@ -1713,7 +1749,7 @@
 		<!-- 
 			ol
 		-->
-		<tag creator="4" name="ol" single="false" xmlstyle="false">
+		<tag name="ol" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				 Defines the start of an ordered list.
 				 The "compact", "start" and "type" attributes of the ol element
@@ -1755,7 +1791,7 @@
 		<!-- 
 			optgroup
 		-->
-		<tag creator="4" name="optgroup" single="false" xmlstyle="false">
+		<tag name="optgroup" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines an option group. This element allows you to group 
 				choices. When you have a long list of options, groups of 
@@ -1771,7 +1807,10 @@
 				<help><![CDATA[
 					Disables the option-group when it first loads
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			
 			<addgroup id="core" />
@@ -1784,7 +1823,7 @@
 		<!-- 
 			option
 		-->
-		<tag creator="4" name="option" single="false" xmlstyle="false">
+		<tag name="option" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines an option in the drop-down list.
 				* In HTML the tag has no end tag.
@@ -1795,7 +1834,10 @@
 					Specifies that the option should be disabled when 
 					it first loads
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="label" type="String" required="false">
 				<help><![CDATA[
@@ -1808,7 +1850,10 @@
 					Specifies that the option should appear selected 
 					(will be displayed first in the list)
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="value" type="String" required="false">
 				<help><![CDATA[
@@ -1827,7 +1872,7 @@
 		<!-- 
 			p
 		-->
-		<tag creator="4" name="p" single="false" xmlstyle="false">
+		<tag name="p" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				 Defines a paragraph.
 				 All "presentation attributes" of the p element were 
@@ -1845,7 +1890,7 @@
 		<!-- 
 			param
 		-->
-		<tag creator="4" name="param" single="true" xmlstyle="false">
+		<tag name="param" creator="4" single="true" xmlstyle="false">
 			<help><![CDATA[
 				The param element allows you to specify the run-time settings 
 				for an object inserted into XHTML documents.
@@ -1889,7 +1934,7 @@
 		<!-- 
 			pre
 		-->
-		<tag creator="4" name="pre" single="false" xmlstyle="false">
+		<tag name="pre" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The pre element defines preformatted text.
 				The "width" attribute of the pre element was deprecated in
@@ -1912,7 +1957,7 @@
 		<!-- 
 			q
 		-->
-		<tag creator="4" name="q" single="false" xmlstyle="false">
+		<tag name="q" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines the start of a short quotation.
 			]]></help>
@@ -1931,7 +1976,7 @@
 		<!-- 
 			script
 		-->
-		<tag creator="4" name="script" single="false" xmlstyle="false">
+		<tag name="script" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a script, such as a JavaScript.
 				The "language" attribute of the script element was deprecated 
@@ -1986,7 +2031,7 @@
 		<!-- 
 			select
 		-->
-		<tag creator="4" name="select" single="false" xmlstyle="false">
+		<tag name="select" creator="16" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The select element creates a drop-down list. 
 			]]></help>
@@ -2007,14 +2052,20 @@
 				<help><![CDATA[
 					When set, it disables the drop-down list
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="multiple" type="boolean" required="false">
 				<help><![CDATA[
 					When set, it specifies that multiple items can be selected 
 					at a time
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			
 			<addgroup id="core" />
@@ -2028,7 +2079,7 @@
 		<!-- 
 			span
 		-->
-		<tag creator="4" name="span" single="false" xmlstyle="false">
+		<tag name="span" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				 Used to group inline-elements in a document.
 			]]></help>
@@ -2044,7 +2095,7 @@
 		<!-- 
 			strike
 		-->
-		<tag creator="4" name="strike" single="false" xmlstyle="false">
+		<tag name="strike" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				** Deprecated in HTML 4.01. **
 				Defines strikethrough text
@@ -2058,7 +2109,7 @@
 		<!-- 
 			s
 		-->
-		<tag creator="4" name="s" single="false" xmlstyle="false">
+		<tag name="s" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				** Deprecated in HTML 4.01. **
 				Defines strikethrough text
@@ -2072,7 +2123,7 @@
 		<!-- 
 			cite
 		-->
-		<tag creator="4" name="var" single="false" xmlstyle="false">
+		<tag name="cite" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a citation
 			]]></help>
@@ -2085,7 +2136,7 @@
 		<!-- 
 			var
 		-->
-		<tag creator="4" name="var" single="false" xmlstyle="false">
+		<tag name="var" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a variable
 			]]></help>
@@ -2098,7 +2149,7 @@
 		<!-- 
 			kbd
 		-->
-		<tag creator="4" name="samp" single="false" xmlstyle="false">
+		<tag name="kbd" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines keyboard text
 			]]></help>
@@ -2111,7 +2162,7 @@
 		<!-- 
 			samp
 		-->
-		<tag creator="4" name="samp" single="false" xmlstyle="false">
+		<tag name="samp" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines sample computer code
 			]]></help>
@@ -2124,7 +2175,7 @@
 		<!-- 
 			code
 		-->
-		<tag creator="4" name="code" single="false" xmlstyle="false">
+		<tag name="code" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines computer code text
 			]]></help>
@@ -2137,7 +2188,7 @@
 		<!-- 
 			dfn
 		-->
-		<tag creator="4" name="dfn" single="false" xmlstyle="false">
+		<tag name="dfn" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a definition term
 			]]></help>
@@ -2150,7 +2201,7 @@
 		<!-- 
 			strong
 		-->
-		<tag creator="4" name="strong" single="false" xmlstyle="false">
+		<tag name="strong" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Renders as strong emphasized text
 			]]></help>
@@ -2163,7 +2214,7 @@
 		<!-- 
 			em
 		-->
-		<tag creator="4" name="em" single="false" xmlstyle="false">
+		<tag name="em" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Renders as emphasized text
 			]]></help>
@@ -2176,7 +2227,7 @@
 		<!-- 
 			style
 		-->
-		<tag creator="4" name="style" single="false" xmlstyle="false">
+		<tag name="style" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a style in a document.
 			]]></help>
@@ -2217,7 +2268,7 @@
 		<!-- 
 			sub
 		-->
-		<tag creator="4" name="sub" single="false" xmlstyle="false">
+		<tag name="sub" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines subscript text.
 			]]></help>
@@ -2230,7 +2281,7 @@
 		<!-- 
 			sup
 		-->
-		<tag creator="4" name="sup" single="false" xmlstyle="false">
+		<tag name="sup" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines superscript text.
 			]]></help>
@@ -2243,7 +2294,7 @@
 		<!-- 
 			table
 		-->
-		<tag creator="4" name="table" single="false" xmlstyle="false">
+		<tag name="table" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a table. Inside a table tag you can put table headers, 
 				table rows, table cells, and other tables.
@@ -2318,7 +2369,7 @@
 		<!-- 
 			tbody
 		-->
-		<tag creator="4" name="tbody" single="false" xmlstyle="false">
+		<tag name="tbody" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a table body.
 			]]></help>
@@ -2350,7 +2401,7 @@
 		<!-- 
 			td
 		-->
-		<tag creator="4" name="td" single="false" xmlstyle="false">
+		<tag name="td" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a cell in a table.
 			]]></help>
@@ -2372,7 +2423,10 @@
 					Whether to disable or enable automatic text wrapping in 
 					this cell. Deprecated. Use styles instead.
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="headers" type="String" required="false">
 				<help><![CDATA[
@@ -2431,7 +2485,7 @@
 		<!-- 
 			textarea
 		-->
-		<tag creator="4" name="textarea" single="false" xmlstyle="false">
+		<tag name="textarea" creator="16" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a text-area (a multi-line text input control).
 			]]></help>
@@ -2453,7 +2507,10 @@
 				<help><![CDATA[
 					Disables the text-area when it is first displayed
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
@@ -2466,7 +2523,10 @@
 					Indicates that the user cannot modify the content in 
 					the text-area
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			
 			<addgroup id="core" />
@@ -2481,7 +2541,7 @@
 		<!-- 
 			tfoot
 		-->
-		<tag creator="4" name="tfoot" single="false" xmlstyle="false">
+		<tag name="tfoot" creator="16" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a table footer.
 			]]></help>
@@ -2512,7 +2572,7 @@
 		<!-- 
 			th
 		-->
-  		<tag creator="4" name="th" single="false" xmlstyle="false">
+  		<tag name="th" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a table header cell in a table. The text within 
 				the th element usually renders in bold.
@@ -2535,7 +2595,10 @@
 					Whether to disable or enable automatic text wrapping in 
 					this cell. Deprecated. Use styles instead.
 				]]></help>
-				<values/>
+				<values>
+					<value option="true"/>
+					<value option="false"/>
+				</values>
 			</parameter>
 			<parameter name="headers" type="String" required="false">
 				<help><![CDATA[
@@ -2600,7 +2663,7 @@
 		<!-- 
 			thead
 		-->
-		<tag creator="4" name="thead" single="false" xmlstyle="false">
+		<tag name="thead" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a table header.
 			]]></help>
@@ -2632,7 +2695,7 @@
 		<!-- 
 			title
 		-->
-		<tag creator="4" name="title" single="false" xmlstyle="false">
+		<tag name="title" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				This element defines the title of the document.
 			]]></help>
@@ -2661,7 +2724,7 @@
 		<!-- 
 			tr
 		-->
-		<tag creator="4" name="tr" single="false" xmlstyle="false">
+		<tag name="tr" creator="32" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Defines a row in a table.
 			]]></help>
@@ -2699,7 +2762,7 @@
 		<!-- 
 			small
 		-->
-		<tag creator="4" name="small" single="false" xmlstyle="false">
+		<tag name="small" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Renders as smaller text
 			]]></help>
@@ -2712,7 +2775,7 @@
 		<!-- 
 			big
 		-->
-		<tag creator="4" name="big" single="false" xmlstyle="false">
+		<tag name="big" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Renders as bigger text
 			]]></help>
@@ -2725,7 +2788,7 @@
 		<!-- 
 			b
 		-->
-		<tag creator="4" name="b" single="false" xmlstyle="false">
+		<tag name="b" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Renders as bold text
 			]]></help>
@@ -2738,7 +2801,7 @@
 		<!-- 
 			i
 		-->
-		<tag creator="4" name="i" single="false" xmlstyle="false">
+		<tag name="i" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Renders as italic text
 			]]></help>
@@ -2751,7 +2814,7 @@
 		<!-- 
 			tt
 		-->
-		<tag creator="4" name="tt" single="false" xmlstyle="false">
+		<tag name="tt" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Renders as teletype or mono spaced text
 			]]></help>
@@ -2764,7 +2827,7 @@
 		<!-- 
 			u
 		-->
-		<tag creator="4" name="u" single="false" xmlstyle="false">
+		<tag name="u" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				** The u element was deprecated in HTML 4.01. **
 				This tag defines underlined text.
@@ -2779,7 +2842,7 @@
 		<!-- 
 			ul
 		-->
-		<tag creator="4" name="ul" single="false" xmlstyle="false">
+		<tag  name="ul" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The <ul> tag defines an unordered list.
 			]]></help>
@@ -2802,7 +2865,7 @@
 		<!-- 
 			a
 		-->
-		<tag creator="4" name="a" single="false" xmlstyle="false">
+		<tag name="a" creator="4" single="false" xmlstyle="false">
 			<help><![CDATA[
 				The <a> tag defines an anchor element. An anchor can be used 
 				in two ways:

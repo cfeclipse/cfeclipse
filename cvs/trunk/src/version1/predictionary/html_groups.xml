@@ -11,27 +11,19 @@
 <groups>
 	<group id="core">
 	<parameter name="class" type="String" required="false">
-		<help><![CDATA[
-			The class of the element
-		]]></help>
+		<help>The class of the element</help>
 		<values/>
 	</parameter>
 	<parameter name="id" type="String" required="false">
-		<help><![CDATA[
-			A unique id for the element
-		]]></help>
+		<help>A unique id for the element</help>
 		<values/>
 	</parameter>
 	<parameter name="style" type="String" required="false">
-		<help><![CDATA[
-			An inline style definition
-		]]></help>
+		<help>An inline style definition</help>
 		<values/>
 	</parameter>
 	<parameter name="title" type="String" required="false">
-		<help><![CDATA[
-			A text to display in a tool tip
-		]]></help>
+		<help>A text to display in a tool tip</help>
 		<values/>
 	</parameter>
 	</group>
@@ -39,18 +31,14 @@
 	<!-- /////////////////////////////////////////////////// -->
 	<group id="language">
 	<parameter name="dir" type="String" required="false">
-		<help><![CDATA[
-			Sets the text direction
-		]]></help>
+		<help>Sets the text direction</help>
 		<values>
 			<value option="ltr" />
 			<value option="rtl" />
 		</values>
 	</parameter>
 	<parameter name="lang" type="String" required="false">
-		<help><![CDATA[
-			Sets the language code
-		]]></help>
+		<help>Sets the language code</help>
 		<values/>
 	</parameter>
 	</group>
@@ -58,15 +46,11 @@
 	<!-- /////////////////////////////////////////////////// -->
 	<group id="keyboard">
 	<parameter name="accesskey" type="Character" required="false">
-		<help><![CDATA[
-			Sets a keyboard shortcut to access an element
-		]]></help>
+		<help>Sets a keyboard shortcut to access an element</help>
 		<values/>
 	</parameter>
 	<parameter name="tabindex" type="Numeric" required="false">
-		<help><![CDATA[
-			Sets the tab order of an element
-		]]></help>
+		<help>Sets the tab order of an element</help>
 		<values/>
 	</parameter>
 	</group>
@@ -74,15 +58,11 @@
 	<!-- /////////////////////////////////////////////////// -->
 	<group id="event_window">
 	<parameter name="onload" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a document loads
-		]]></help>
+		<help>Script to be run when a document loads</help>
 		<values/>
 	</parameter>
 	<parameter name="onunload" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a document unloads
-		]]></help>
+		<help>Script to be run when a document unloads</help>
 		<values/>
 	</parameter>
 	</group>
@@ -90,27 +70,19 @@
 	<!-- /////////////////////////////////////////////////// -->
 	<group id="event_form">
 	<parameter name="onchange" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when the element changes
-		]]></help>
+		<help>Script to be run when the element changes</help>
 		<values/>
 	</parameter>
 	<parameter name="onsubmit" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when the form is submitted
-		]]></help>
+		<help>Script to be run when the form is submitted</help>
 		<values/>
 	</parameter>
 	<parameter name="onreset" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when the form is reset
-		]]></help>
+		<help>Script to be run when the form is reset</help>
 		<values/>
 	</parameter>
 	<parameter name="onselect" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when the element is selected
-		]]></help>
+		<help>Script to be run when the element is selected</help>
 		<values/>
 	</parameter>
 	</group>
@@ -118,15 +90,11 @@
 	<!-- /////////////////////////////////////////////////// -->
 	<group id="event_focus">
 	<parameter name="onblur" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when the element loses focus
-		]]></help>
+		<help>Script to be run when the element loses focus</help>
 		<values/>
 	</parameter>
 	<parameter name="onfocus" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when the element gets focus 
-		]]></help>
+		<help>Script to be run when the element gets focus</help>
 		<values/>
 	</parameter>
 	</group>
@@ -134,21 +102,15 @@
 	<!-- /////////////////////////////////////////////////// -->
 	<group id="event_keyboard">
 	<parameter name="onkeydown" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when key is pressed
-		]]></help>
+		<help>Script to be run when key is pressed</help>
 		<values/>
 	</parameter>
 	<parameter name="onkeypress" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a key is pressed and released
-		]]></help>
+		<help>Script to be run when a key is pressed and released</help>
 		<values/>
 	</parameter>
 	<parameter name="onkeyup" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a key is released
-		]]></help>
+		<help>Script to be run when a key is released</help>
 		<values/>
 	</parameter>
 	</group>
@@ -156,45 +118,33 @@
 	<!-- /////////////////////////////////////////////////// -->
 	<group id="event_mouse">
 	<parameter name="onclick" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run on a mouse click
-		]]></help>
+		<help>Script to be run on a mouse click</help>
 		<values/>
 	</parameter>
 	<parameter name="ondblclick" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a mouse is doubleclicked
-		]]></help>
+		<help>Script to be run when a mouse is doubleclicked</help>
 		<values/>
 	</parameter>
 	<parameter name="onmousedown" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a mouse button is pressed
-		]]></help>
+		<help>Script to be run when a mouse button is pressed</help>
 		<values/>
 	</parameter>
 	<parameter name="onmousemove" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a mouse pointer moves
-		]]></help>
+		<help>Script to be run when a mouse pointer moves</help>
 		<values/>
 	</parameter>
 	<parameter name="onmouseover" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a mouse pointer moves over an element
-		]]></help>
+		<help>Script to be run when a mouse pointer moves over an 
+			element</help>
 		<values/>
 	</parameter>
 	<parameter name="onmouseout" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a mouse pointer moves out of an element
-		]]></help>
+		<help>Script to be run when a mouse pointer moves out of an 
+			element</help>
 		<values/>
 	</parameter>
 	<parameter name="onmouseup" type="Script" required="false">
-		<help><![CDATA[
-			Script to be run when a mouse button is released
-		]]></help>
+		<help>Script to be run when a mouse button is released</help>
 		<values/>
 	</parameter>
 	</group>
@@ -202,9 +152,7 @@
 	<!-- //////////////////////////////////////////////////// -->
 	<group id="halign">
 	<parameter name="align" type="String" required="false">
-		<help><![CDATA[
-			Defines the text alignment in cells
-		]]></help>
+		<help>Defines the text alignment in cells</help>
 		<values>
 			<value option="right" />
 			<value option="left" />
@@ -218,9 +166,7 @@
 	<!-- //////////////////////////////////////////////////// -->
 	<group id="valign">
 	<parameter name="valign" type="String" required="false">
-		<help><![CDATA[
-			Specifies the vertical text alignment in cells
-		]]></help>
+		<help>Specifies the vertical text alignment in cells</help>
 		<values>
 			<value option="top" />
 			<value option="middle" />
@@ -233,17 +179,13 @@
 	<!-- //////////////////////////////////////////////////// -->
 	<group id="size">
 	<parameter name="height" type="String" required="false">
-		<help><![CDATA[
-			Deprecated. Use styles instead.
-			Specifies the height of the table cell. 
-		]]></help>
+		<help>** Deprecated. Use styles instead. **
+			Specifies the height of the table cell.</help>
 		<values/>
 	</parameter>
 	<parameter name="width" type="String" required="false">
-		<help><![CDATA[
-			Deprecated. Use styles instead.
-			Specifies the width of the table cell.
-		]]></help>
+		<help>** Deprecated. Use styles instead. **
+			Specifies the width of the table cell.</help>
 		<values/>
 	</parameter>
 	</group>
@@ -251,13 +193,9 @@
 	<!-- //////////////////////////////////////////////////// -->
 	<group id="bgcolor">
 	<parameter name="bgcolor" type="String" required="false">
-		<help><![CDATA[
-			** Deprecated. Use styles instead. **
-			Specifies the elements background color. 
-		]]></help>
+		<help>** Deprecated. Use styles instead. **
+			Specifies the elements background color.</help>
 		<values/>
 	</parameter>
 	</group>
-	
 </groups>
-

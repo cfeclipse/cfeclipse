@@ -13,7 +13,7 @@
 >
 	<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 	
-	<xsl:variable name="groups" select="document('/home/rob/html_groups.xml')" />
+	<xsl:variable name="groups" select="document('html_groups.xml')" />
 	
 	<xsl:template match="/">
 		<xsl:comment>
@@ -23,16 +23,15 @@
 		do not report the bug.
 		</xsl:comment>
 		<dictionary>
-			<xsl:apply-templates />
+			<tags>
+				<xsl:apply-templates />
+			</tags>
+			<functions />
 		</dictionary>
 	</xsl:template>
 	
 	<xsl:template match="tags">
-		<!-- <xsl:copy-of select="." /> -->
 		<xsl:apply-templates select="tag" />
-		<!-- <xsl:call-template name="getGroup">
-			<xsl:with-param name="id" select="'core'"/>
-		</xsl:call-template> -->
 	</xsl:template>
 	
 	<xsl:template match="tag">
@@ -47,7 +46,6 @@
 		<parameter name="{@name}" type="{@type}" required="{@required}">
 			<xsl:apply-templates select="help" />
 			<xsl:apply-templates select="values" />
-			<!-- <xsl:copy-of select="." /> -->
 		</parameter>
 	</xsl:template>
 	
