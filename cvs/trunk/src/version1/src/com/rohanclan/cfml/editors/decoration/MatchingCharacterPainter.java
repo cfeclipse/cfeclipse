@@ -162,11 +162,8 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
 		}
 			
 		if (ICharacterPairMatcher.RIGHT == fAnchor) {
-			int endOffset = offset + length;
-			if(length > 1) {
-			    endOffset += 1;
-			}
-
+			int endOffset = offset + length + 1;
+			
 			draw(gc, offset, 1);
 			draw(gc, endOffset, 1);
 			

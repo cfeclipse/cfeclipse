@@ -12,11 +12,7 @@ import org.eclipse.ui.IEditorInput;
 
 import org.eclipse.ui.part.ViewPart;
 
-import com.rohanclan.cfml.util.AlertUtils;
-
-
-import com.rohanclan.cfml.ftp.FtpConnection;
-import com.rohanclan.cfml.ftp.FtpConnectionProperties;
+import com.rohanclan.cfml.net.FTPConnectionProperties;
 
 import java.io.*;
 
@@ -42,7 +38,7 @@ class FileContentProvider implements IStructuredContentProvider {
 	        if (inputElement != null) {
 	            
 	            if (inputElement instanceof LocalFileSystem
-	                    || inputElement instanceof FtpConnectionProperties) {
+	                    || inputElement instanceof FTPConnectionProperties) {
 		            return new String[0];
 	            }
 	            
@@ -76,14 +72,7 @@ class FileContentProvider implements IStructuredContentProvider {
 	    	//System.out.println("File viewer input changed to ." + newInput.getClass().getName());
 	        if (newInput instanceof IFileProvider) {
 	            fileProvider = (IFileProvider)newInput;
-	        }
-	        else if (newInput instanceof FtpConnectionProperties) {
-	        	fileProvider = FtpConnection.getInstance();
-	        	FtpConnection ftpClient = (FtpConnection)fileProvider;
-	        	// The file view should only get content if the directory view has already connected.
-	        	if (!ftpClient.connectFailed()) {
-	        	    ftpClient.connect();
-	        	}
+	            fileProvider.connect();
 	        }
         }
         catch (Exception e) {

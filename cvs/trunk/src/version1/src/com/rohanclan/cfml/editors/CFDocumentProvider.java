@@ -45,7 +45,8 @@ import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.external.ExternalFile;
 import com.rohanclan.cfml.external.ExternalMarkerAnnotationModel;
-import com.rohanclan.cfml.ftp.*;
+import com.rohanclan.cfml.net.RemoteFileEditorInput;
+import com.rohanclan.cfml.net.ftp.*;
 import com.rohanclan.cfml.CFMLPlugin;
 
 /**
@@ -109,9 +110,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 					document.clearAllMarkers();
 					document.parseDocument();
 				}
-			    else if (element instanceof FtpFileEditorInput) 
+			    else if (element instanceof RemoteFileEditorInput) 
 				{
-			        String filepath = ((FtpFileEditorInput)element).getPath(element).toString();
+			        String filepath = ((RemoteFileEditorInput)element).getPath(element).toString();
 			        Path path = new Path(filepath);
 			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
 			        ExternalFile file = new ExternalFile(path,workspace);
@@ -143,9 +144,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			}
 			setDocumentContent(document, contentStream, encoding);
 		}
-		if (editorInput instanceof FtpFileEditorInput) {
-			FtpFileEditorInput input = (FtpFileEditorInput) editorInput;
-			FtpConnection connection = FtpConnection.getInstance();
+		if (editorInput instanceof RemoteFileEditorInput) {
+			RemoteFileEditorInput input = (RemoteFileEditorInput) editorInput;
+			FTPConnection connection = new FTPConnection();
 			BufferedInputStream contentStream = null;
 			contentStream = connection.getInputStream(input.getPath(editorInput).toString());
 			
@@ -171,9 +172,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		   }
 		   
 		}
-		if (element instanceof FtpFileEditorInput)  {
+		if (element instanceof RemoteFileEditorInput)  {
 		    try {
-		    saveExternalFile((FtpFileEditorInput)element,document);
+		    saveExternalFile((RemoteFileEditorInput)element,document);
 		    }
 		   catch (IOException e) {
 		       Status status = new Status(IStatus.ERROR,"com.rohanclan.cfml",IStatus.OK,e.getMessage(),e);
@@ -193,10 +194,10 @@ public class CFDocumentProvider extends FileDocumentProvider {
 	    
 	}
 	
-	private void saveExternalFile(FtpFileEditorInput input, IDocument doc) throws IOException {
+	private void saveExternalFile(RemoteFileEditorInput input, IDocument doc) throws IOException {
 
 	    BufferedOutputStream contentStream = null;
-		FtpConnection connection = FtpConnection.getInstance();
+		FTPConnection connection = new FTPConnection();
 		connection.saveFile(doc.get().getBytes(),input.getPath(input).toString());
 		
 	}
@@ -222,8 +223,8 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		    JavaFileEditorInput input = (JavaFileEditorInput)element;
 	        return input.getPath(input).toFile().canWrite();
 		}
-		if (element instanceof FtpFileEditorInput) {
-		    FtpFileEditorInput input = (FtpFileEditorInput)element;
+		if (element instanceof RemoteFileEditorInput) {
+		    RemoteFileEditorInput input = (RemoteFileEditorInput)element;
 		    
 		    return input.canWrite();
 		}
@@ -236,8 +237,8 @@ public class CFDocumentProvider extends FileDocumentProvider {
 	        return !input.getPath(input).toFile().canWrite();
 		    
 		}
-		if (element instanceof FtpFileEditorInput) {
-		    FtpFileEditorInput input = (FtpFileEditorInput)element;
+		if (element instanceof RemoteFileEditorInput) {
+		    RemoteFileEditorInput input = (RemoteFileEditorInput)element;
 		    
 		    return !input.canWrite();
 		}

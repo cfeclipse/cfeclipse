@@ -11,7 +11,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.TableItem;
 
-import com.rohanclan.cfml.ftp.FtpConnectionProperties;
+import com.rohanclan.cfml.net.FTPConnectionProperties;
 
 
 class ConnectionsContentProvider implements IStructuredContentProvider {
@@ -20,7 +20,7 @@ class ConnectionsContentProvider implements IStructuredContentProvider {
 	
     
     public Object[] getElements(Object element) {
-        String[] connections = FtpConnectionProperties.getConnectionIds();
+        String[] connections = FTPConnectionProperties.getConnectionIds();
         String[] result = new String[connections.length+1];
         for (int i=0;i<connections.length;i++) {
             result[i] = connections[i];

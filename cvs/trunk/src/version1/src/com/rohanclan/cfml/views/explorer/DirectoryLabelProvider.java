@@ -14,9 +14,9 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
+import com.rohanclan.cfml.net.RemoteFile;
 import com.rohanclan.cfml.util.CFPluginImages;
 
-import com.rohanclan.cfml.ftp.RemoteFile;
 
 class DirectoryLabelProvider extends LabelProvider {
     

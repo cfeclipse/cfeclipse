@@ -35,13 +35,10 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 
 
-import com.rohanclan.cfml.ftp.FtpConnection;
-import com.rohanclan.cfml.ftp.FtpConnectionProperties;
+import com.rohanclan.cfml.net.FTPConnectionProperties;
 import com.rohanclan.cfml.views.explorer.ftp.FtpConnectionDialog;
-import com.sun.rsasign.s;
 
 
-import org.eclipse.jface.action.IStatusLineManager;
 
 /**
  * @author Stephen Milligan
@@ -52,6 +49,8 @@ import org.eclipse.jface.action.IStatusLineManager;
 public class FileExplorerView extends ViewPart {
 
     private MenuItem disconnectItem,connectItem,manageItem;
+    
+    protected IFileProvider fileProvider = null;
     
     private final class ComboSelectionListener implements ISelectionChangedListener {
         ViewPart viewpart = null;
@@ -64,7 +63,7 @@ public class FileExplorerView extends ViewPart {
         	    StructuredSelection sel = (StructuredSelection)e.getSelection();
         		directoryTreeViewer.setInput(sel.getFirstElement());
         		fileViewer.setInput(sel.getFirstElement());
-        		if (sel.getFirstElement() instanceof FtpConnectionProperties) {
+        		if (sel.getFirstElement() instanceof FTPConnectionProperties) {
         		    connectItem.setEnabled(true);
         		    disconnectItem.setEnabled(true);
         		}
@@ -117,8 +116,6 @@ public class FileExplorerView extends ViewPart {
     
     public void createPartControl(Composite parent) {
 
-	    FtpConnection.getInstance().setViewPart(this);
-    	this.initializeStatusBar();
         Composite container = new Composite(parent, SWT.NONE);
         GridLayout containerLayout = new GridLayout();
         containerLayout.numColumns = 2;
@@ -193,8 +190,8 @@ public class FileExplorerView extends ViewPart {
 	        	try {
 	            String connectionID = null;
 	            StructuredSelection sel = (StructuredSelection)comboViewer.getSelection();
-	            if (sel.getFirstElement() instanceof FtpConnectionProperties) {
-	                connectionID = ((FtpConnectionProperties)sel.getFirstElement()).getConnectionid();
+	            if (sel.getFirstElement() instanceof FTPConnectionProperties) {
+	                connectionID = ((FTPConnectionProperties)sel.getFirstElement()).getConnectionid();
 	            }
                 FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),connectionID);
             	if (dialog.open() == IDialogConstants.OK_ID) {
@@ -214,7 +211,7 @@ public class FileExplorerView extends ViewPart {
         disconnectItem.addListener(SWT.Selection, new Listener() {
 	        public void handleEvent(Event e) {
 	            try {
-		            FtpConnection.getInstance().disconnect();
+		            fileProvider.disconnect();
 		            disconnectItem.setEnabled(false);
 		            connectItem.setEnabled(true);
 		            
@@ -231,7 +228,7 @@ public class FileExplorerView extends ViewPart {
         connectItem.addListener(SWT.Selection, new Listener() {
 	        public void handleEvent(Event e) {
 	            try {
-		            FtpConnection.getInstance().connect();
+		            fileProvider.connect();
 		            disconnectItem.setEnabled(true);
 		            connectItem.setEnabled(false);
 	            }
@@ -256,10 +253,6 @@ public class FileExplorerView extends ViewPart {
         IMenuManager manager = getViewSite().getActionBars().getMenuManager();
     }
     
-    private void initializeStatusBar() {
-        IStatusLineManager manager = getViewSite().getActionBars().getStatusLineManager();
-        //manager.setMessage("TEST");
-    }
 
     public void setFocus() {
     

@@ -9,8 +9,9 @@ package com.rohanclan.cfml.views.explorer;
 import java.util.ArrayList;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import com.rohanclan.cfml.ftp.FtpConnectionProperties;
 
+import com.rohanclan.cfml.net.FTPConnectionProperties;
+import com.rohanclan.cfml.net.ftp.FTPConnection;
 
 
 class ComboContentProvider implements IStructuredContentProvider {
@@ -18,15 +19,19 @@ class ComboContentProvider implements IStructuredContentProvider {
     
     public Object[] getElements(Object inputElement) {
     	
-    	String[] connections = FtpConnectionProperties.getConnectionIds(); 
+    	String[] connections = FTPConnectionProperties.getConnectionIds(); 
     
     	ArrayList items = new ArrayList();
     	
     	items.add(new LocalFileSystem());
     	
-		for (int i=0;i<connections.length;i++) {						
-			FtpConnectionProperties connectionProperties = new FtpConnectionProperties(connections[i]);
-			items.add(connectionProperties);
+		for (int i=0;i<connections.length;i++) {
+			FTPConnectionProperties connectionProperties = new FTPConnectionProperties(connections[i]);
+
+		    FTPConnection connection = new FTPConnection();
+			connection.setConnectionProperties(connectionProperties);
+			items.add(connection);
+			
 		}
 	
         return items.toArray();

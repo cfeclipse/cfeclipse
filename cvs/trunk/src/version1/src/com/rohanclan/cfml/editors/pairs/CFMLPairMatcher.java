@@ -137,6 +137,7 @@ public class CFMLPairMatcher implements ICharacterPairMatcher
 					//get the distance to the match
 					int matchDistance = findDistanceToMatch();
 					
+					
 					//note that the region must contain both pairs, hence the 2x factor
 					
 					//if the match is before the cursor, step back the match distance plus 1 pair length
@@ -144,6 +145,7 @@ public class CFMLPairMatcher implements ICharacterPairMatcher
 					if( matchDistance < 0 )
 					{
 						region = new Region(startOffset+matchDistance-matchingPair.getLength(),0-matchDistance);
+						
 					}
 					//if matchDistance is zero, check to see which side the anchor is on
 					//and use the appropriate region tweaking (this handles matches right next to the
@@ -176,7 +178,7 @@ public class CFMLPairMatcher implements ICharacterPairMatcher
 					region = null;
 				}
 			}
-		}		
+		}
 		
 		return region;
 	}

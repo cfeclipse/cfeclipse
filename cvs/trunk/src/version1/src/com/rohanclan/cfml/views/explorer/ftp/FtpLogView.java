@@ -15,8 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 import com.enterprisedt.net.ftp.FTPMessageListener;
-import com.rohanclan.cfml.ftp.FtpConnection;
-import com.rohanclan.cfml.ftp.LogListener;
+import com.rohanclan.cfml.net.ftp.FTPConnection;
 
 /**
  * @author Stephen Milligan
@@ -25,42 +24,30 @@ import com.rohanclan.cfml.ftp.LogListener;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class FtpLogView extends ViewPart implements FTPMessageListener {
-    FtpConnection ftpClient = null;
+    FTPConnection ftpClient = null;
     private StyledText styledText;
     public void createPartControl(Composite parent) {
-        ftpClient = FtpConnection.getInstance();
-        ftpClient.addLogListener(this);
-        
-        
-        Composite container = new Composite(parent, SWT.NONE);
-        container.setLayout(new FillLayout());
-        styledText = new StyledText(container, SWT.BORDER|SWT.MULTI|SWT.H_SCROLL|SWT.V_SCROLL);
-        styledText.setLayout(new FillLayout());
-        styledText.setEditable(false);
-        
-        String log = ftpClient.getLog();
-        if (log == null) {
-            log = "Log initialized";
-        }
-        styledText.setText(log);
-        styledText.setTopIndex(styledText.getLineCount());
-        
-        //
-        createActions();
-        initializeToolBar();
-        initializeMenu();
+
+    ftpClient = new FTPConnection();
+    ftpClient.addLogListener(this);
+    
+    
+    Composite container = new Composite(parent, SWT.NONE);
+    container.setLayout(new FillLayout());
+    styledText = new StyledText(container, SWT.BORDER|SWT.MULTI|SWT.H_SCROLL|SWT.V_SCROLL);
+    styledText.setLayout(new FillLayout());
+    styledText.setEditable(false);
+    
+    String log = ftpClient.getLog();
+    if (log == null) {
+        log = "Log initialized";
+    }
+    styledText.setText(log);
+    styledText.setTopIndex(styledText.getLineCount());
+
+
     }
 
-    private void createActions() {
-    }
-
-    private void initializeToolBar() {
-        IToolBarManager tbm = getViewSite().getActionBars().getToolBarManager();
-    }
-
-    private void initializeMenu() {
-        IMenuManager manager = getViewSite().getActionBars().getMenuManager();
-    }
 
     public void setFocus() {
     }

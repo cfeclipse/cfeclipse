@@ -8,6 +8,7 @@ package com.rohanclan.cfml.views.explorer;
 
 
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IViewPart;
 
 /**
  * @author Stephen Milligan
@@ -25,6 +26,16 @@ public interface IFileProvider {
     public Object[] getChildren(String parent, FileNameFilter filter);
     
     public void dispose();
+
+    public void connect();
+    
+    public void disconnect();
+
+    /**
+     * This allows the file provider to add status messages to the view status bar.
+     * @param viewPart
+     */
+    public void setViewPart(IViewPart part);
     
     public IEditorInput getEditorInput(String filename);
     

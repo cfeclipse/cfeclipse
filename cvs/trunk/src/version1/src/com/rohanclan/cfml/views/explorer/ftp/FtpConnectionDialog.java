@@ -33,7 +33,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import com.rohanclan.cfml.ftp.FtpConnectionProperties;
+
+import com.rohanclan.cfml.net.FTPConnectionProperties;
 
 
 /**
@@ -45,14 +46,15 @@ import com.rohanclan.cfml.ftp.FtpConnectionProperties;
 public class FtpConnectionDialog extends Dialog  implements ISelectionChangedListener {
 
 
-	public FtpConnectionProperties connectionProperties;
+	public FTPConnectionProperties connectionProperties;
 	private Text host,path,username,password,connectionid,port;
-	private Button passive;
+	private Button passive,sftp;
 	private int DELETE_ID = 3242;
 	private Button deleteButton = null;
 	private Button okButton = null;
 	private TableViewer connectionTable = null;
 	private Label errorMessageLabel = null;
+	private boolean isDirty = false;
 	
 	/**
 	 * @param parent
@@ -61,7 +63,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		super(parent);
 		// TODO Auto-generated constructor stub
 		
-		connectionProperties = new FtpConnectionProperties(connectionId);
+		connectionProperties = new FTPConnectionProperties(connectionId);
 		
 	}
 	
@@ -84,7 +86,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	        connectionId = null;
 	    }
 	    
-	    connectionProperties = new FtpConnectionProperties(connectionId);
+	    connectionProperties = new FTPConnectionProperties(connectionId);
 	    redraw();
     }
 
@@ -176,6 +178,9 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		// Connectionid
 		connectionid = createTextControl(editArea,"Connection Name:",connectionProperties.getHost(),50);
 
+		// Sftp or not
+		//sftp = createCheckboxControl(editArea,"SFTP:",connectionProperties.getSecure());
+		
 		// Host name
 		host = createTextControl(editArea,"Host Name:",connectionProperties.getHost(),50);
 		
@@ -184,7 +189,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		
 		// Path
 		path = createTextControl(editArea,"Path:",connectionProperties.getPath(),20);
-		
+
 		// Passive mode
 		passive = createCheckboxControl(editArea,"Passive mode:",true);
 		passive.setEnabled(false);
@@ -308,6 +313,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 			connectionProperties.setConnectionid(connectionid.getText());
 			connectionProperties.setPort(Integer.parseInt(port.getText()));
 			//connectionProperties.setPassive(passive.getSelection());
+			//connectionProperties.setSecure(sftp.getSelection());
 			connectionProperties.save();
 			}
 			catch (Exception e) {
@@ -317,7 +323,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		    MessageBox confirm = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_QUESTION | SWT.YES | SWT.NO);
 		    confirm.setMessage("Are you sure you want to delete this connection?");
 		    if (confirm.open() == SWT.YES) {
-				FtpConnectionProperties.deleteConnection(connectionProperties.getConnectionid());
+				FTPConnectionProperties.deleteConnection(connectionProperties.getConnectionid());
 				connectionTable.setInput(new Object());
 		    }
 		}

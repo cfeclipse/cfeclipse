@@ -15,10 +15,10 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
-import com.rohanclan.cfml.ftp.RemoteFile;
 
 import java.util.regex.*;
 
+import com.rohanclan.cfml.net.RemoteFile;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 class FileLabelProvider extends LabelProvider implements ITableLabelProvider {

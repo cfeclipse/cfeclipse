@@ -13,7 +13,8 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.part.ViewPart;
 
-import com.rohanclan.cfml.ftp.*;
+import com.rohanclan.cfml.net.RemoteFile;
+import com.rohanclan.cfml.net.ftp.*;
 import com.rohanclan.cfml.util.AlertUtils;
 
 
@@ -33,19 +34,22 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
         this.viewer = viewer;
+        //System.out.println("Directory Input change notified " + newInput.getClass().getName());
         try {
 	    	if (fileProvider != null) {
 	    		fileProvider.dispose();
+	            //System.out.println("File provider disposed.");
 	    	}
 	        if (newInput instanceof IFileProvider) {
 
+	            // Clear any status errors
 		        AlertUtils.showStatusErrorMessage(null,viewpart);
-		        AlertUtils.showStatusMessage("Connected to: Local Filesystem",viewpart);
+		        
 	            fileProvider = (IFileProvider)newInput;
-	        }
-	        else if (newInput instanceof FtpConnectionProperties) {
-	        	fileProvider = FtpConnection.getInstance();
-	        	((FtpConnection)fileProvider).connect((FtpConnectionProperties)newInput);
+	            fileProvider.setViewPart(this.viewpart);
+
+	            //System.out.println("Directory provider attempting to connect.");
+	            fileProvider.connect();
 	        }
 	        else {
 	        	
@@ -76,8 +80,7 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	        if (fileProvider == null){
 	            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
 	        }
-	        if (parentElement instanceof LocalFileSystem
-	        		|| parentElement instanceof FtpConnectionProperties) {
+	        if (parentElement instanceof IFileProvider) {
 	        	
 	        	return fileProvider.getRoots();
 	        	
@@ -109,7 +112,7 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     		    return ((File)element).isDirectory();
     		}
     		else if (element instanceof String
-    		        	&& element.toString().equals(FtpConnection.CONNECT_FAILED)) {
+    		        	&& element.toString().equals(FTPConnection.CONNECT_FAILED)) {
     		        return false;
     		}
     		return true;
