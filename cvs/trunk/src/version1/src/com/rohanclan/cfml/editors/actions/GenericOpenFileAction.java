@@ -99,6 +99,7 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 	 */
 	public void setFilename(String filename)
 	{
+		this.filename = filename;
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		this.file = root.getFile(new Path(filename));
 	}

@@ -35,7 +35,6 @@ import org.eclipse.jface.text.BadLocationException;
  * or a cf variable, etc). This class is often extended not used directly
  */
 public class Encloser {
-
 	/** 
 	 * Wraps the selection with the start and end string
 	 * @param doc the document this belongs to
