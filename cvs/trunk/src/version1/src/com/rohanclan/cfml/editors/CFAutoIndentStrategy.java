@@ -69,7 +69,6 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 			System.err.println("Indent string set to 1 tab.");
 			indentString = "\t";
 		}
-		//System.err.println("Indent string set to: |"+indentString+"|");
 	}
 
 	

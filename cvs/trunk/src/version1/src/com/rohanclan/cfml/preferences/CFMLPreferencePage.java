@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 //import org.eclipse.jface.dialogs.Dialog;
@@ -63,7 +64,7 @@ public class CFMLPreferencePage
 	Button dreamweaverCompatibilityCheckBox;
 	Button homesiteCompatibilityCheckBox;
 	CFMLPreferenceManager preferenceManager;
-	
+	DirectoryFieldEditor snippetsPathField;
 	
 	public CFMLPreferencePage() {
 		super();
@@ -79,10 +80,10 @@ public class CFMLPreferencePage
 	
 	private Composite createContainer(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
-        GridLayout layout = new GridLayout();
-        layout.numColumns = 2;
-        layout.makeColumnsEqualWidth = false;
-        composite.setLayout(layout);
+        //GridLayout layout = new GridLayout();
+        //layout.numColumns = 2;
+        //layout.makeColumnsEqualWidth = false;
+        //composite.setLayout(layout);
         GridData gridData =
             new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL);
         composite.setLayoutData(gridData);
@@ -116,6 +117,7 @@ public class CFMLPreferencePage
         label.setLayoutData(gridData);
         label.setText("Editor"); //$NON-NLS-1$
 
+		
         // Tabs and spaces options
         createTabsAndSpacesGroup(defPanel);
         
@@ -124,6 +126,9 @@ public class CFMLPreferencePage
         
         // Dreamweaver and Homesite options
         createDWAndHSGroup(defPanel);
+        
+        // File paths
+        createFilePathGroup(defPanel);
         
         
         return composite;
@@ -137,7 +142,7 @@ public class CFMLPreferencePage
     public void widgetSelected(SelectionEvent selectionEvent) {}
     
     
-    
+
     
     private void createInsightGroup(Composite parent) {
     	Group insightGroup = new Group(parent, SWT.SHADOW_ETCHED_IN); 
@@ -262,12 +267,33 @@ public class CFMLPreferencePage
 
         
         // Homesite
-        
-        
+
         homesiteCompatibilityCheckBox = createLabeledCheck(
             "Enable Homesite compatibility", //$NON-NLS-1$
             preferenceManager.homesiteCompatibility(), 
 			DWHSComposite);
+    }
+    
+    
+
+    
+    private void createFilePathGroup(Composite parent) {
+    	Group FilePathComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
+        GridLayout layout = new GridLayout();        
+        layout.numColumns = 3;              
+        FilePathComposite.setLayout(layout);
+        GridData gridData =
+            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData.horizontalSpan = 3;
+        FilePathComposite.setLayoutData(gridData);        
+        
+        
+        FilePathComposite.setText("File Paths"); //$NON-NLS-1$
+        
+        // Snippets
+        snippetsPathField = new DirectoryFieldEditor("", "Path to snippets directory", FilePathComposite);
+        snippetsPathField.setStringValue(preferenceManager.snippetsPath());
+
     }
     
     
@@ -323,6 +349,8 @@ public class CFMLPreferencePage
         fButton.setToolTipText(labelText);
         return fButton;
     }
+
+
 /**
  * Sets the default values of the preferences.
  */
@@ -333,6 +361,7 @@ public class CFMLPreferencePage
         tabsAsSpacesCheckBox.setSelection(preferenceManager.defaultSpacesForTabs());
         dreamweaverCompatibilityCheckBox.setSelection(preferenceManager.defaultDreamweaverCompatibility());
         homesiteCompatibilityCheckBox.setSelection(preferenceManager.defaultHomesiteCompatibility());
+        snippetsPathField.setStringValue(preferenceManager.defaultSnippetsPath());
     }
 
 
@@ -343,6 +372,7 @@ public class CFMLPreferencePage
         store.setValue(ICFMLPreferenceConstants.P_INSERT_SPACES_FOR_TABS, String.valueOf(tabsAsSpacesCheckBox.getSelection()));
         store.setValue(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY, String.valueOf(dreamweaverCompatibilityCheckBox.getSelection()));
         store.setValue(ICFMLPreferenceConstants.P_ENABLE_HS_COMPATIBILITY, String.valueOf(homesiteCompatibilityCheckBox.getSelection()));
+        store.setValue(ICFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());
         return true;
     }
 

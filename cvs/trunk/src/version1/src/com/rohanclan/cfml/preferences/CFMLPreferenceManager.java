@@ -36,6 +36,7 @@ public class CFMLPreferenceManager {
         store.setDefault(ICFMLPreferenceConstants.P_INSERT_SPACES_FOR_TABS, DEFAULT_INSERT_SPACES_FOR_TABS);
         store.setDefault(ICFMLPreferenceConstants.P_ENABLE_HS_COMPATIBILITY, DEFAULT_ENABLE_HS_COMPATIBILITY);
         store.setDefault(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY, DEFAULT_ENABLE_DW_COMPATIBILITY);
+        store.setDefault(ICFMLPreferenceConstants.P_SNIPPETS_PATH, CFMLPlugin.getDefault().getStateLocation().toString());
 	}
 	
 	
@@ -85,5 +86,15 @@ public class CFMLPreferenceManager {
 	
 	public boolean defaultDreamweaverCompatibility() {
 		return DEFAULT_ENABLE_DW_COMPATIBILITY;
+	}
+	
+	
+	
+	public String snippetsPath() {
+		return store.getString(ICFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
+	}
+	
+	public String defaultSnippetsPath() {
+		return CFMLPlugin.getDefault().getStateLocation().toString();
 	}
 }

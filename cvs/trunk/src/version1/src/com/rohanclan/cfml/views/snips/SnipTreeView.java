@@ -47,8 +47,15 @@ import org.eclipse.ui.IEditorPart;
 import com.rohanclan.cfml.util.XMLConfigFile;
 import org.eclipse.core.runtime.IPath;
 import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.properties.CFMLPropertyManager;
+import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import java.io.File;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+
+
+import org.eclipse.core.runtime.Path;
 
 /**
  * @author Rob
@@ -63,7 +70,8 @@ import java.io.File;
  * By Chris Grindstaff, Applied Reasoning (chrisg at appliedReasoning.com)
  * May 5, 2002
  */
-public class SnipTreeView extends ViewPart {
+public class SnipTreeView extends ViewPart 
+	implements IPropertyChangeListener {
 	public static final String ID_SNIPVIEWTREE = "com.rohanclan.cfml.views.snips.sniptreeview";
 	
 	/** the treeviewer control */
@@ -85,16 +93,30 @@ public class SnipTreeView extends ViewPart {
 	/** the root directory */
 	protected File root;
 	
+	private CFMLPropertyManager propertyManager;
+	
 	/**
 	 * The constructor.
 	 */
 	public SnipTreeView() {
 		super();
+
+		propertyManager = new CFMLPropertyManager();
+
+		// This ensures that we are notified when the properties are saved
+		CFMLPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
 		if(snipBase == null)
 		{
 			try 
 			{
-				snipBase = CFMLPlugin.getDefault().getStateLocation();
+				//snipBase = CFMLPlugin.getDefault().getStateLocation();
+				/*
+				 * TODO: Need to figure out some way for this to be notified
+				 * when the property is changed. 
+				 * 
+				 */
+				snipBase = new Path(propertyManager.snippetsPath());
+				System.out.println("SnipBase set to "+snipBase);
 			} 
 			catch (Exception e) 
 			{
@@ -279,6 +301,7 @@ public class SnipTreeView extends ViewPart {
 	 * @return the root directory
 	 */
 	public File getRootInput(){
+		System.out.println("RootInput retrieved " + snipBase);
 		return snipBase.toFile();
 	}
 	
@@ -341,6 +364,15 @@ public class SnipTreeView extends ViewPart {
 		}
 	}
 
+
+	public void propertyChange(PropertyChangeEvent event)
+    {
+
+    	if (event.getProperty().equals(ICFMLPreferenceConstants.P_SNIPPETS_PATH)) {
+    		snipBase = new Path(propertyManager.snippetsPath());
+    		treeViewer.setInput(getRootInput());
+    	}
+    }
 	/*
 	 * @see IWorkbenchPart#setFocus()
 	 */

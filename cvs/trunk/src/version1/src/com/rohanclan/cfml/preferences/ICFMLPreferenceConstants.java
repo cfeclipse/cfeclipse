@@ -23,4 +23,6 @@ public interface ICFMLPreferenceConstants {
 	String P_ENABLE_DW_COMPATIBILITY = "dreamweaverCompatibility";
 	
 	String P_ENABLE_HS_COMPATIBILITY = "homesiteCompatibility";
+	
+	String P_SNIPPETS_PATH = "snippetPath";
 }

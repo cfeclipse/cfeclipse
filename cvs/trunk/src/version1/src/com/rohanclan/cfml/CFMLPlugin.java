@@ -43,9 +43,11 @@ import java.util.MissingResourceException;
 //import com.rohanclan.cfml.util.*;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
+import org.eclipse.jface.preference.PreferenceStore;
 
 import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.preferences.*;
+import com.rohanclan.cfml.properties.CFMLPropertyManager;
 
 /**
  * @author Rob
@@ -59,6 +61,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	private ResourceBundle resourceBundle;
 	
 	private static CFParser cfparserAction = null;
+	private PreferenceStore propertyStore; 
 	
 	//private CFMLPreferenceManager preferenceManager;
 	/**
@@ -68,12 +71,17 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		super(descriptor);
 		plugin = this;
 		
+		System.out.println("Property store file set to "+ CFMLPlugin.getDefault().getStateLocation().toString()+"/properties.ini");
+		
+		propertyStore = new PreferenceStore(CFMLPlugin.getDefault().getStateLocation().toString()+"/properties.ini");
+		
 		try 
 		{
 			resourceBundle = ResourceBundle.getBundle(
 				//"com.rohanclan.cfml.CFMLPluginResources"
 				"plugin"
 			);
+			
 		} 
 		catch (MissingResourceException x) 
 		{
@@ -86,9 +94,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			//load all the syntax dictionaries (they dont really load right now)
 			DictionaryManager.initDictionaries();
 			
-	        
-			
-	        System.out.println("Preference manager initialized:");
 	        
 			//startup the image registry
 			CFPluginImages.initCFPluginImages();
@@ -103,6 +108,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
         super.initializeDefaultPluginPreferences();
         CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
+        CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+        propertyManager.initializeDefaultValues();
     }
 	/**
 	 * Returns the shared instance.
@@ -110,6 +117,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	public static CFMLPlugin getDefault() 
 	{
 		return plugin;
+	}
+	
+	public PreferenceStore getPropertyStore() {
+		return propertyStore;
 	}
 	
 

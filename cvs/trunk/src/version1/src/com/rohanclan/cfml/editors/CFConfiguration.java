@@ -431,7 +431,7 @@ public class CFConfiguration extends SourceViewerConfiguration
 		assistant.enableAutoActivation(true);
 		assistant.setAutoActivationDelay(delay);
 
-		System.err.println("Insight Delay set to:"+ delay);
+		System.out.println("Insight Delay set to: "+ delay + "ms");
 		
 		assistant.setProposalPopupOrientation(
 			IContentAssistant.PROPOSAL_OVERLAY
