@@ -194,7 +194,7 @@
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertColor"
                label="Insert Color"
-     		  icon="icons/ctool16/palette.gif"
+     		   icon="icons/ctool16/palette.gif"
                tooltip="Insert a color"
                class="com.rohanclan.cfml.editors.actions.InsertColorAction"
                toolbarPath="BasicCFEditorCommand"
@@ -215,6 +215,47 @@
                tooltip="Insert an nbsp Entity Reference"
                class="com.rohanclan.cfml.editors.actions.InsertNBSPAction"
                id="com.rohanclan.cfml.editors.actions.InsertNBSPAction">
+         </action>
+         <!-- insert an html strong tag action (for Michael Wolfe) -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.StrongTag"
+               label="Insert strong tag"
+			   icon="icons/ctool16/bold.gif"
+               tooltip="Insert a strong tag"
+               class="com.rohanclan.cfml.editors.actions.StrongTagAction"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
+               id="com.rohanclan.cfml.editors.actions.StrongTagAction">
+         </action>
+         <!-- insert an html em tag action (for Michael Wolfe) -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.EmTag"
+               label="Insert em tag"
+			   icon="icons/ctool16/italic.gif"
+               tooltip="Insert an em tag"
+               class="com.rohanclan.cfml.editors.actions.EmTagAction"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
+               id="com.rohanclan.cfml.editors.actions.EmTagAction">
+         </action>
+         <!-- insert an html p tag action (for Michael Wolfe) -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.PTag"
+               label="Insert p tag"
+			   icon="icons/ctool16/paragraph.gif"
+               tooltip="Insert a p tag"
+               class="com.rohanclan.cfml.editors.actions.PTagAction"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
+               id="com.rohanclan.cfml.editors.actions.PTagAction">
+         </action>
+         <!-- repeat last tag (for Brian Sadler) -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.LastAction"
+               label="Repeat last tag"
+     		   icon="icons/ctool16/repeattag.gif"
+               tooltip="Repeat last tag"
+               class="com.rohanclan.cfml.editors.actions.LastActionAction"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
+               toolbarPath="BasicCFEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.LastActionAction">
          </action>
          <!-- Trim trailing spaces from lines -->
          <action
@@ -316,6 +357,26 @@
                class="com.rohanclan.cfml.editors.actions.RefreshBrowserAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.RefreshBrowserAction">
+         </action>
+         <!-- browse to root project URL action -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot"
+               label="Browse to Project Root URL"
+               icon="icons/ctool16/home.gif"
+               tooltip="Browse to Project Root URL"
+               class="com.rohanclan.cfml.editors.actions.BrowseToProjectRootAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.BrowseToProjectRootAction">
+         </action>
+         <!-- browse to current page action -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage"
+               label="Browse to Current Page"
+               icon="icons/ctool16/globe.gif"
+               tooltip="Browse to Current Page"
+               class="com.rohanclan.cfml.editors.actions.BrowseToCurrentPageAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.BrowseToCurrentPageAction">
          </action>
          <!-- insert snippet action -->
          <action
@@ -442,6 +503,12 @@
                class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
+         </action>
+         <action
+               label="Repeat last tag"
+               class="com.rohanclan.cfml.editors.actions.LastActionAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
+               id="com.rohanclan.cfml.editors.actions.LastTag">
          </action>
          <menu
                label="File"
@@ -706,6 +773,45 @@
             command="com.rohanclan.cfml.editors.actions.InsertNBSP"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+      <!-- insert an html p action (for Michael Wolfe) -->
+      <command
+            name="Insert p Tag"
+            description="Insert a p tag"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.PTag">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+P"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.PTag"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- insert an html strong action (for Brian Sadler) -->
+      <command
+            name="Insert strong Tag"
+            description="Insert a strong tag"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.StrongTag">
+      </command>
+      <keyBinding
+            string="Ctrl+B"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.StrongTag"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- insert an html em action (for Brian Sadler) -->
+      <command
+            name="Insert em Tag"
+            description="Insert an em tag"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.EmTag">
+      </command>
+      <keyBinding
+            string="Ctrl+I"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.EmTag"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
       <!-- Reload the syntax dictionaries -->
       <command
             name="Reload Dictionaries"
@@ -732,6 +838,32 @@
             command="com.rohanclan.cfml.editors.actions.RefreshBrowser"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+      <!-- browse to project root URL -->
+      <command
+            name="Browse to Project Root URL"
+            description="Browse to Project Root URL"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot">
+      </command>
+      <keyBinding
+            string="Ctrl+F5"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- browse to current page -->
+      <command
+            name="Browse to Current Page"
+            description="Browse to Current Page"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage">
+      </command>
+      <keyBinding
+            string="Shift+F5"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
       <!-- insert a snippet -->
       <command
             name="Insert Snippet"
@@ -740,9 +872,22 @@
             id="com.rohanclan.cfml.editors.actions.InsertSnippet">
       </command>
       <keyBinding
-            string="Ctrl+i"
+            string="Ctrl+Shift+I"
             scope="org.eclipse.ui.textEditorScope"
             command="com.rohanclan.cfml.editors.actions.InsertSnippet"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      <!-- repeat last tag -->
+      <command
+            name="Repeat last tag"
+            description="Repeat last tag"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.LastAction">
+      </command>
+      <keyBinding
+            string="Ctrl+Q"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.LastAction"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- Go and Get Help -->
