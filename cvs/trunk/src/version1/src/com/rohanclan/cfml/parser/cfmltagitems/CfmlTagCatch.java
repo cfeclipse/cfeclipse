@@ -30,6 +30,5 @@ public class CfmlTagCatch extends CfmlTagItem {
 	 */
 	public CfmlTagCatch(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
-		// TODO Auto-generated constructor stub
 	}
 }

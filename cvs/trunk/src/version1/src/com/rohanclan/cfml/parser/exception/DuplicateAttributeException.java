@@ -39,7 +39,6 @@ public class DuplicateAttributeException extends AttributeException {
 	 */
 	public DuplicateAttributeException(String name, String value, int pLineNum) {
 		super(name, value, pLineNum);
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param name
@@ -50,7 +49,6 @@ public class DuplicateAttributeException extends AttributeException {
 	public DuplicateAttributeException(String name, String value, int pLineNum,
 			int pDocOffset) {
 		super(name, value, pLineNum, pDocOffset);
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param name
@@ -58,7 +56,6 @@ public class DuplicateAttributeException extends AttributeException {
 	 */
 	public DuplicateAttributeException(String name, String value) {
 		super(name, value);
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param name

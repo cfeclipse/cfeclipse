@@ -43,14 +43,14 @@ public class InvalidChildItemException extends ParseException {
 	 */
 	public InvalidChildItemException(String arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
+		// 
 	}
 	/**
 	 * @param arg0
 	 */
 	public InvalidChildItemException(Throwable arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
+		// 
 	}
 	/**
 	 * @param arg0
@@ -58,7 +58,7 @@ public class InvalidChildItemException extends ParseException {
 	 */
 	public InvalidChildItemException(String arg0, Throwable arg1) {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+		// 
 	}
 	/**
 	 * @param arg0
@@ -66,7 +66,7 @@ public class InvalidChildItemException extends ParseException {
 	 */
 	public InvalidChildItemException(String arg0, int pLineNum) {
 		super(arg0, pLineNum);
-		// TODO Auto-generated constructor stub
+		// 
 	}
 	/**
 	 * @param arg0
@@ -75,7 +75,7 @@ public class InvalidChildItemException extends ParseException {
 	 */
 	public InvalidChildItemException(String arg0, int pLineNum, int pDocOffset) {
 		super(arg0, pLineNum, pDocOffset);
-		// TODO Auto-generated constructor stub
+		// 
 	}
 	/**
 	 * @param pLineNum
@@ -83,13 +83,13 @@ public class InvalidChildItemException extends ParseException {
 	 */
 	public InvalidChildItemException(int pLineNum, int pDocOffset) {
 		super(pLineNum, pDocOffset);
-		// TODO Auto-generated constructor stub
+		// 
 	}
 	/**
 	 * @param pLineNum
 	 */
 	public InvalidChildItemException(int pLineNum) {
 		super(pLineNum);
-		// TODO Auto-generated constructor stub
+		// 
 	}
 }
