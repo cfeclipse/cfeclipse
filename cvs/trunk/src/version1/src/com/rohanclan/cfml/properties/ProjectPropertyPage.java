@@ -1,7 +1,9 @@
 package com.rohanclan.cfml.properties;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -11,12 +13,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
+import org.eclipse.jface.preference.RadioGroupFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 public class ProjectPropertyPage extends PropertyPage {
-
+    
 	private static final String PATH_TITLE = "Path:";
 	private static final String SNIPPETS_PATH_TITLE = "&Snippets Path:";
 	private static final String SNIPPETS_PATH_PROPERTY = "snippetsPath";
@@ -25,6 +29,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	private static final String PROJECT_URL_PROPERTY = ICFMLPreferenceConstants.P_PROJECT_URL;
 	private static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
+	private static final String CFML_DICTIONARY_TITLE = "&CFML Language Version";
 
 	private static final int TEXT_FIELD_WIDTH = 50;
 
@@ -32,16 +37,27 @@ public class ProjectPropertyPage extends PropertyPage {
 	private DirectoryFieldEditor snippetsPathField;
 	private StringFieldEditor projectURLField;
 	private CFMLPropertyManager propertyManager;
+	private RadioGroupFieldEditor cfmlSyntaxField;
 
+	private ProjectPropertyStore propStore;
+	
 	/**
 	 * Constructor for SamplePropertyPage.
 	 */
 	public ProjectPropertyPage() {
 		super();
 		propertyManager = new CFMLPropertyManager();
+		
+		this.propStore = new ProjectPropertyStore();
 		DEFAULT_SNIPPETS_PATH = propertyManager.defaultSnippetsPath();
 	}
 
+	public void setElement(IAdaptable element) {
+        super.setElement(element);
+        IProject project = (IProject)getElement();
+        this.propStore.setProject(project);
+    }
+	
 	private void addPathSection(Composite parent) {
 		Composite composite = createDefaultComposite(parent);
 
@@ -78,7 +94,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		}
 	}
 
-
+	
 
 	private void addURLSection(Composite parent) {
 		Composite composite = createDefaultComposite(parent);
@@ -89,18 +105,37 @@ public class ProjectPropertyPage extends PropertyPage {
 		try {
 			QualifiedName propertyName = new QualifiedName("", PROJECT_URL_PROPERTY);
 			String projectURL = ((IResource) getElement()).getPersistentProperty(propertyName);
-			
 			if (projectURL == null || projectURL == "") {
 				projectURL = DEFAULT_PROJECT_URL;
 			}
 			projectURLField.setStringValue(projectURL);
-			
 		} catch (CoreException e) {
 			projectURLField.setStringValue(DEFAULT_PROJECT_URL);
 		}
-
 	}
 
+	private void addCFMLSyntaxSection(Composite parent)
+	{
+	    Composite composite = createDefaultComposite(parent);
+	    String [][] options = new String[][] {
+	            {"CFML 6.0 (CFMX)", ProjectPropertyStore.P_CFML_DICTIONARY_DEFAULT},
+	            {"CFML 5.0", "cfml-5.0.xml"}
+	    };
+	    
+	    this.cfmlSyntaxField = new RadioGroupFieldEditor(
+	            ProjectPropertyStore.P_CFML_DICTIONARY, 
+	            CFML_DICTIONARY_TITLE, 
+	            1,
+	            options, 
+	            composite,
+	            true
+	    );
+	    this.cfmlSyntaxField.setPreferencePage(this);
+	    this.cfmlSyntaxField.setPreferenceStore(this.propStore/*this.getPreferenceStore()*/);
+	    this.cfmlSyntaxField.load();
+	    
+	}
+	
 	/**
 	 * @see PreferencePage#createContents(Composite)
 	 */
@@ -116,6 +151,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		addSeparator(composite);
 		addSnippetsSection(composite);
 		addURLSection(composite);
+		addCFMLSyntaxSection(composite);
 		return composite;
 	}
 
@@ -137,6 +173,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		// Populate the owner text field with the default value
 		snippetsPathField.setStringValue(DEFAULT_SNIPPETS_PATH);
 		projectURLField.setStringValue(DEFAULT_PROJECT_URL);
+		this.cfmlSyntaxField.loadDefault();
 	}
 	
 	public boolean performOk() {
@@ -159,6 +196,9 @@ public class ProjectPropertyPage extends PropertyPage {
 			//e.printStackTrace(System.err);
 			return false;
 		}
+		
+		this.cfmlSyntaxField.store();
+
 		return true;
 	}
 
