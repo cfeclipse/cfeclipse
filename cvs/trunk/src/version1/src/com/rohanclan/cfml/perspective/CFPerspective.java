@@ -85,7 +85,10 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(IPageLayout.ID_BOOKMARKS);
 		layout.addShowViewShortcut(SnipTreeView.ID_SNIPVIEWTREE);
 		layout.addShowViewShortcut(CFCMethodsView.ID_CFCMETHODVIEW);
+		layout.addShowViewShortcut(FileExplorerView.ID_FILE_EXPLORER);
+		layout.addShowViewShortcut(DictionaryView.ID_DICTIONARY);
 		layout.addShowViewShortcut(BrowserView.ID_BROWSER);
+		layout.addShowViewShortcut(FtpLogView.ID_FTP_LOG_VIEW);
 		
 		//add wizards here
 		layout.addNewWizardShortcut("com.rohanclan.cfml.wizards.NewCfmlWizard");
