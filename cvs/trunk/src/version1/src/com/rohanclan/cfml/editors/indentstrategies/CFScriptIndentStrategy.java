@@ -169,7 +169,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	 * Method declared on IAutoIndentStrategy
 	 */
 	public void customizeDocumentCommand(IDocument d, DocumentCommand c) {
-	    System.out.println("Script is customzing command");
+	    
 		codeInsertion(d, c);
 		if (c.length == 0 && c.text != null && endsWithDelimiter(d, c.text))
 			smartIndentAfterNewLine(d, c);

@@ -33,6 +33,7 @@ public class FileDoubleClickListener implements IDoubleClickListener {
         IEditorInput input = contentProvider.getEditorInput(e.getSelection().toString());
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         try {
+            
             page.openEditor(input,"com.rohanclan.cfml.editors.CFMLEditor");
         }
         catch (Exception ex) {

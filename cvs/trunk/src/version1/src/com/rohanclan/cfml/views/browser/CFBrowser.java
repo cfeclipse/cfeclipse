@@ -166,6 +166,7 @@ public class CFBrowser{
 		try 
 		{
 			browser = new Browser(parent, SWT.NONE);
+			
 			browser.setLayoutData(data);
 		}
 		catch(SWTError e)

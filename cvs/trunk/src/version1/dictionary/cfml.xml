@@ -5,7 +5,7 @@
     	BlueDragon  = 0x2;
     	W3C         = 0x4;
     	UserDefined = 0x8;
-	
+
     	If support exists between two you can add them together.
     	for example 3 means MX and BlueDragon.
     Single is if the tag lacks a closing tag
@@ -13,7 +13,7 @@
 
     Note: you can not put cfx or cf_ tags in here ... well you can
     but this is the dictionary for the cfxxxxx tags only (system tags)
-   	
+
 	A better place to put the cfx and cf_ tags is in the user.xml file
 
 	::NOTES::
@@ -11680,7 +11680,21 @@
 				]]></help>
 			</parameter>
 		</function>
-
+<!--
+			Numeric Month(date)
+		-->
+		<function creator="3" name="month" returns="Numeric">
+			<help><![CDATA[
+				Extracts the month value from a date/time object.
+			]]></help>
+			<parameter name="date" type="DateTime" required="true">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
+			</parameter>
+		</function>
 		<!--
 			String ParagraphFormat(string)
 		-->

@@ -240,7 +240,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	}
 
 	public void createPartControl(Composite parent) {
-
 		//this.parent = parent;
 		super.createPartControl(parent);
 		this.setBackgroundColor();

@@ -24,31 +24,38 @@
  */
 package com.rohanclan.cfml.editors;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
+import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
-import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.core.runtime.Path;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
+import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.external.ExternalFile;
 import com.rohanclan.cfml.external.ExternalMarkerAnnotationModel;
 import com.rohanclan.cfml.net.RemoteFileEditorInput;
-import com.rohanclan.cfml.net.ftp.*;
-import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
+import com.rohanclan.cfml.net.ftp.FTPConnection;
+
 /**
  * 
  * This document handles the opening and closing of CF documents.
@@ -57,7 +64,7 @@ import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
  * @author Rob
  * 
  */
-public class CFDocumentProvider extends FileDocumentProvider {
+public class CFDocumentProvider extends FileDocumentProvider{
 
     
 
@@ -77,7 +84,8 @@ public class CFDocumentProvider extends FileDocumentProvider {
 					new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
 
 			partitioner.connect(document);
-
+			
+			
 			//returns an IFile which is a subclass of IResource
 			try {
 			    if (element instanceof FileEditorInput) 
@@ -141,6 +149,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			setDocumentContent(document, contentStream, encoding);
 		}
 		return super.setDocumentContent(document, editorInput, encoding);
+		
 	}
 
 	protected void doSaveDocument(IProgressMonitor monitor, Object element,
