@@ -77,6 +77,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		if(setDocumentContent(document, (IEditorInput)element, getEncoding(element))) 
 		{
 			setupDocument(element, document);
+			System.out.println("Document created");
 		}
 		
 		if (document != null) 

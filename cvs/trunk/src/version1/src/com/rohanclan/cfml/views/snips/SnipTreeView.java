@@ -59,7 +59,8 @@ import org.eclipse.jface.dialogs.InputDialog;
 
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.core.runtime.Path;
-
+//import org.eclipse.swt.events.MouseTrackListener;
+//import org.eclipse.swt.events.MouseEvent;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
@@ -112,11 +113,14 @@ public class SnipTreeView extends ViewPart
 	
 	private CFMLPropertyManager propertyManager;
 	
+	
+	
 	/**
 	 * The constructor.
 	 */
 	public SnipTreeView() {
 		super();
+		
 		
 		
 		propertyManager = new CFMLPropertyManager();
@@ -157,6 +161,8 @@ public class SnipTreeView extends ViewPart
 		layout.marginHeight = 2;
 		parent.setLayout(layout);
 		
+		
+		
 		//Create a "label" to display information in. I'm
 		//using a text field instead of a lable so you can
 		//copy-paste out of it.
@@ -166,6 +172,7 @@ public class SnipTreeView extends ViewPart
 		layoutData.grabExcessHorizontalSpace = true;
 		layoutData.horizontalAlignment = GridData.FILL;
 		text.setLayoutData(layoutData);
+		
 		
 		//Create the tree viewer as a child of the composite parent
 		treeViewer = new TreeViewer(parent);
@@ -194,6 +201,24 @@ public class SnipTreeView extends ViewPart
 		//treeViewer.expandAll();
 	}
 
+	
+	
+
+	/*
+	public void mouseEnter(MouseEvent e) {
+		System.out.println("Mouse entered viewer");
+	}
+	
+	public void mouseHover(MouseEvent e) {
+		System.out.println("Mouse hovered over viewer");
+	}
+	
+	public void mouseExit(MouseEvent e) {
+		System.out.println("Mouse exited viewer");
+	}
+	*/
+	
+	
 	protected void hookListeners() 
 	{
 		//add a selection listener so we can look at the selected file and
@@ -236,8 +261,15 @@ public class SnipTreeView extends ViewPart
 				}
 			}
 		});
-
+		/*
 		treeViewer.addDoubleClickListener(new SnipDoubleClickListener(this));
+		try {
+			this.getViewSite().getShell().addMouseTrackListener(this);
+		}
+		catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+		*/
 	}
 	
 	/**
