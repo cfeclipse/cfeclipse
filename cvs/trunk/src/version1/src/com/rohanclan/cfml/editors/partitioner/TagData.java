@@ -1,7 +1,7 @@
 /* 
- * $Id: TagData.java,v 1.2 2005-01-19 02:50:11 smilligan Exp $
- * $Revision: 1.2 $
- * $Date: 2005-01-19 02:50:11 $
+ * $Id: TagData.java,v 1.3 2005-01-21 08:25:15 smilligan Exp $
+ * $Revision: 1.3 $
+ * $Date: 2005-01-21 08:25:15 $
  * 
  * Created Jan 4, 2005 10:51:03 PM
  *
@@ -34,7 +34,7 @@ package com.rohanclan.cfml.editors.partitioner;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TagData {
 
@@ -52,6 +52,12 @@ public class TagData {
 
     /** Where does the middle partition end */
     private int fMidPartitionEnd = -1;
+    
+    /** Does this tag have a mid part */
+    public boolean fHasMid = false;
+    
+    /** Does this tag have an end part */
+    public boolean fHasEnd = false;
 
     /**
      * What partition type should be assigned to the bit between the name and
@@ -174,7 +180,15 @@ public class TagData {
             } else if (fData.charAt(fData.length() - 1) == '>') {
                 fMidPartitionEnd = fData.length() - 1;
             } else {
-                fMidPartitionEnd = fData.length();
+                fMidPartitionEnd = fStartPartitionEnd;
+            }
+            
+            if (fMidPartitionEnd > fStartPartitionEnd) {
+                fHasMid = true;
+            }
+            
+            if (fData.endsWith(">")) {
+                fHasEnd = true;
             }
             
         } catch (Exception e) {
@@ -198,6 +212,9 @@ public class TagData {
  * CVS LOG ====================================================================
  * 
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/01/19 02:50:11  smilligan
+ * Second commit of (now hopefully working) rewritten partitioner.
+ *
  * Revision 1.1  2005/01/09 02:06:33  smilligan
  * First commit of rewritten partitioner.
  *

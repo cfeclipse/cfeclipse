@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.1 2005-01-19 02:50:11 smilligan Exp $
- * $Revision: 1.1 $
- * $Date: 2005-01-19 02:50:11 $
+ * $Id: CFEPartition.java,v 1.2 2005-01-21 08:25:15 smilligan Exp $
+ * $Revision: 1.2 $
+ * $Date: 2005-01-21 08:25:15 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -36,11 +36,11 @@ import org.eclipse.jface.text.IDocument;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CFEPartition extends TypedPosition {
 
-    private String fNextPartitionType = IDocument.DEFAULT_CONTENT_TYPE;
+    private String fNextPartitionType = null;
     /**
      * @param offset
      * @param length
@@ -74,4 +74,7 @@ public class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/01/19 02:50:11  smilligan
+ * Second commit of (now hopefully working) rewritten partitioner.
+ *
  */

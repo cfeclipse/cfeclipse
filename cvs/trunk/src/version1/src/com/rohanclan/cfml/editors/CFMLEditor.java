@@ -386,8 +386,14 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				}
 			};
 			menu.add(act);
-
-			CfmlTagItem cti = cfd.getTagAt(startpos, startpos);
+			
+			CfmlTagItem cti = null; 
+		    try {
+		        //cti = cfd.getTagAt(startpos, startpos);
+		    }
+			catch (Exception e) {
+			    // do nothing.
+			}
 
 			if (cti != null) {
 

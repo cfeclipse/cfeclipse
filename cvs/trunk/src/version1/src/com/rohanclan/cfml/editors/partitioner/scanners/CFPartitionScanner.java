@@ -170,8 +170,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		//these are not really handled in the dictionary because you can call 
 		//normal pages as cf_'s
-		rules.add(new NamedTagRule("<cf_",">", CF_START_TAG, CF_TAG_ATTRIBS));
-		rules.add(new NamedTagRule("</cf_",">", CF_END_TAG, CF_END_TAG));
+		rules.add(new CustomTagRule("<cf_",">", CF_START_TAG, CF_TAG_ATTRIBS));
+		rules.add(new CustomTagRule("</cf_",">", CF_END_TAG, CF_END_TAG));
 		
 		//do the html tags now
 		sd = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
@@ -307,7 +307,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 				 * Get the success token for this rule so we can 
 				 * check if it matches the current content type.
 				 */
-				token= rule.getSuccessToken();
+				token = rule.getSuccessToken();
 				//System.out.println("Checking if content type - " + fContentType + " matches " + token.getData());
 				if (fContentType.equals(token.getData().toString())
 				        || fContentType.equals(token.getData().toString() + "_begin")

@@ -53,6 +53,8 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import com.rohanclan.cfml.preferences.ParserPreferenceConstants;
 import com.rohanclan.cfml.util.ResourceUtils;
 import com.rohanclan.cfml.external.ExternalFile;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+import org.eclipse.jface.text.Position;
 
 /**
  * <p>
@@ -275,6 +277,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		    //e.printStackTrace();
 		}
 	}
+	
 	
 	/**
 	 * Gets the parse result of this document.

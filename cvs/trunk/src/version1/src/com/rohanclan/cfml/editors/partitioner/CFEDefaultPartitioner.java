@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.12 2005-01-19 10:23:06 smilligan Exp $
- * $Revision: 1.12 $
- * $Date: 2005-01-19 10:23:06 $
+ * $Id: CFEDefaultPartitioner.java,v 1.13 2005-01-21 08:25:15 smilligan Exp $
+ * $Revision: 1.13 $
+ * $Date: 2005-01-21 08:25:15 $
  * 
  * Created on Oct 17, 2004
  *
@@ -54,7 +54,7 @@ import org.eclipse.jface.text.TypedRegion;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-
+import com.rohanclan.cfml.editors.ICFDocument;
 
 /**
  * @author Stephen Milligan
@@ -92,12 +92,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 
     /** The offset at which a partition has been deleted */
     protected int fDeleteOffset;
-
-    /** The type of pseudo partition that is currently open if any. Otherwise null */
-    private String fPseudoPartition = null;
-    
-    /** The offset at which the currently open pseudo partition starts. */
-    private int fPseudoPartitionStart = -1;
 
     /** 
      * Pseudo partitions such as the contents of a cfquery tag block
@@ -167,7 +161,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
     protected void initialize() {
 
         fScanner.setRange(fDocument, 0, fDocument.getLength());
-
+        String nextPartitionType = IDocument.DEFAULT_CONTENT_TYPE;
         try {
             IToken token = fScanner.nextToken();
 
@@ -175,7 +169,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 
                 String contentType = getTokenContentType(token);
                 if (isSupportedContentType(contentType)) {
-                    handleToken(token, contentType);
+                    nextPartitionType = handleToken(token, contentType,nextPartitionType);
                 }
 
                 token = fScanner.nextToken();
@@ -201,173 +195,72 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
         }
     }
 
-    private void handleToken(IToken token, String contentType) {
+    /**
+     * 
+     *  
+     * @param token - The token that was found by the scanner
+     * @param contentType - The content type of the token
+     */
+    private String handleToken(IToken token, String contentType, String nextPartitionType) {
         try {
+            CFEPartition p = null;
+            int length;
+            int indexOffset = 0;
+            String rawData = null;
             if (token.getData() instanceof TagData) {
                 TagData data = (TagData) token.getData();
                 int start = fScanner.getTokenOffset();
-                int length = data.getFirstPartitionEnd();
-                String rawData = data.getRawData().toLowerCase();
-                CFEPartition p = new CFEPartition(start, length, data.getStartPartitionType());
-                if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
+                length = data.getFirstPartitionEnd();
+                rawData = data.getRawData().toLowerCase();
+                if (!fDocument.containsPosition(fPositionCategory,start,length)) {
+                    // Add a partition for the start part of the tag.
+                     p = new CFEPartition(start, length, data.getStartPartitionType());
                     fDocument.addPosition(fPositionCategory, p);
-                    /*
-                    System.out.println("Added position for partition of type " 
-                            + data.getStartPartitionType()
-                            + " from " 
-                            + p.getOffset() 
-                            + " to " 
-                            + Integer.toString(p.getOffset() + p.getLength())
-                            + " "
-                            + rawData);
-                     */       
                 }
                 if (!data.isCloser()) {
-                    start = start + data.getFirstPartitionEnd();
-                    length = data.getMidPartitionEnd()-data.getFirstPartitionEnd();
-                    if (length > 0) {
+                    if (p != null) {
+                        p.setNextPartitionType(data.getMidPartitionType());
+                    }
+                    if (data.fHasMid) {
+                        indexOffset++;
+                        start = start + data.getFirstPartitionEnd();
+                        length = data.getMidPartitionEnd()-data.getFirstPartitionEnd();
                         p = new CFEPartition(start, length, data.getMidPartitionType());
                         if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
                             fDocument.addPosition(fPositionCategory, p);
-                            /*
-                            System.out.println("Added position for partition of type " 
-                                    + data.getMidPartitionType() 
-                                    + " from " 
-                                    + p.getOffset() 
-                                    + " to " 
-                                    + Integer.toString(p.getOffset() + p.getLength())
-                                    + " "
-                                    + rawData);
-                             */
                         }
                     }
-                    start = start + data.getMidPartitionEnd() - data.getFirstPartitionEnd();
-                    length = data.getRawData().length()- data.getMidPartitionEnd();
-                    if (length > 0 
-                            && data.getMidPartitionEnd() >= data.getFirstPartitionEnd()) {
-	                    p = new CFEPartition(start, length, data.getEndPartitionType());
-	                    if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
+                    if (data.fHasEnd) {
+                        indexOffset++;
+                        start = fScanner.getTokenOffset() + data.getMidPartitionEnd();
+                        length = data.getRawData().length()- data.getMidPartitionEnd();
+	                    if (!fDocument.containsPosition(fPositionCategory,start,length)) {
+		                    p = new CFEPartition(start, length, data.getEndPartitionType());
 	                        fDocument.addPosition(fPositionCategory, p);
-	                        /*
-	                        System.out.println("Added position for partition of type "  
-                                    + data.getEndPartitionType() 
-                                    + " from " 
-                                    + p.getOffset() 
-                                    + " to " 
-                                    + Integer.toString(p.getOffset() + p.getLength())
-                                    + " "
-                                    + rawData);
-                              */
 	                    }
+
                     }
 
-
-                    Set keys = fPseudoPartitions.keySet();
-                    Object[] tags = keys.toArray();
-                    for (int i = 0; i < tags.length; i++)
-                    {
-                        String tag = "<" + tags[i].toString();
-                        if (rawData.startsWith(tag)
-                                && !Character.isLetter(rawData.charAt(tag.length()))) {
-                            fPseudoPartition = fPseudoPartitions.getProperty(tags[i].toString());
-                            p.setNextPartitionType(fPseudoPartition);
-                            fPseudoPartitionStart = fScanner.getTokenOffset() + fScanner.getTokenLength();
-                            //System.out.println("Found start of new pseudo partition.");
-                            break;
-                        }
-                    }
-                    
-                    /*
-                     * If the tag is embedded in a pseudo partition we want
-                     * to create the pseudo partition up to the start of 
-                     * this tag and update the pseudo partition start 
-                     */
-                    if (fPseudoPartition != null 
-                            && !p.getNextPartitionType().equals(fPseudoPartition)) {
-                        p.setNextPartitionType(fPseudoPartition);
-                        //System.out.println("Found start tag " + rawData + " in pseudo partition.");
-                        length =  fScanner.getTokenOffset() - fPseudoPartitionStart;
-                        p = new CFEPartition(fPseudoPartitionStart,
-                                length, fPseudoPartition);
-                        if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
-                            fDocument.addPosition(fPositionCategory, p);
-                            /*
-	                        System.out.println("Added position for pseudo partition of type "  
-                                    + fPseudoPartition
-                                    + " from " 
-                                    + p.getOffset() 
-                                    + " to " 
-                                    + Integer.toString(p.getOffset() + p.getLength())
-                                    + " "
-                                    + rawData);
-                            */
-                        }
-                        fPseudoPartitionStart = fScanner.getTokenOffset() + fScanner.getTokenLength();
-                        //System.out.println("Pseudo partition start set to " + fPseudoPartitionStart);
-                    }
-                    
-                    
-                } 
-                else {
-                    if (fPseudoPartition != null) {
-                        Set keys = fPseudoPartitions.keySet();
-	                    Object[] tags = keys.toArray();
-                        for (int i = 0; i < tags.length; i++)
-	                    {
-	                        String tag = "</" + tags[i].toString();
-	                        if (rawData.startsWith(tag)
-	                                && !Character.isLetter(rawData.charAt(tag.length()))) {
-	                            length =  fScanner.getTokenOffset() - fPseudoPartitionStart;
-	                            p = new CFEPartition(fPseudoPartitionStart,
-	                                    length, fPseudoPartition);
-	                            if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
-	                                fDocument.addPosition(fPositionCategory, p);
-	                                /*
-	                                System.out.println("Added pseudo partition of type " 
-	                                        + fPseudoPartition 
-	                                        + " from " 
-	                                        + fPseudoPartitionStart 
-	                                        + " to " 
-	                                        + Integer.toString(p.getOffset() + p.getLength()));
-	                                 */
-	                            }
-	                            
-	                            fPseudoPartition = null;
-	                            fPseudoPartitionStart = -1;
-	                            
-	                        }
-	                    }
-                        if (fPseudoPartition != null) {
-                            //System.out.println("Found end tag " + rawData + " inside pseudo partition.");
-                            length =  fScanner.getTokenOffset() - fPseudoPartitionStart;
-                            p = new CFEPartition(fPseudoPartitionStart,
-                                    length, fPseudoPartition);
-                            if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
-                                fDocument.addPosition(fPositionCategory, p);
-                                /*
-    	                        System.out.println("Added position for pseudo partition of type "  
-                                        + fPseudoPartition
-                                        + " from " 
-                                        + p.getOffset() 
-                                        + " to " 
-                                        + Integer.toString(p.getOffset() + p.getLength())
-                                        + " "
-                                        + rawData);
-                                */ 
-                            }
-                            fPseudoPartitionStart = fScanner.getTokenOffset() + fScanner.getTokenLength();
-                            //System.out.println("Pseudo partition start set to " + fPseudoPartitionStart);
-                        }
-                    }
-                }
-            } else {
+                } // End handle opening tag
+            } // End token is instance of tagData 
+            else {
                 
-                CFEPartition p = new CFEPartition(fScanner.getTokenOffset(),
-                        fScanner.getTokenLength(), contentType);
-                if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
+                if (!fDocument.containsPosition(fPositionCategory,fScanner.getTokenOffset(),fScanner.getTokenLength())) {
+                    p = new CFEPartition(fScanner.getTokenOffset(),fScanner.getTokenLength(), contentType);
                     fDocument.addPosition(fPositionCategory, p);
                 }
             }
+            
+            if (p != null 
+                    && p.getNextPartitionType() == null) {
+                String next = getNextPartitionType(fScanner.getTokenOffset(),rawData,indexOffset);
+                //System.out.println("Got next " + next + " for partition " + p.getType());
+		        p.setNextPartitionType(next);
+		        return next;
+            } else {
+                return null;
+            }
+    
         } catch (BadLocationException e) {
             e.printStackTrace();
         } catch (BadPositionCategoryException e) {
@@ -375,9 +268,113 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    /** Determines if the given partition type is a pseudo partition */
+    private boolean isPseudoPartition(String type) {
+        Object[] types = fPseudoPartitions.values().toArray();
+        for (int i=0;i<types.length;i++) {
+            if (types[i].equals(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Determines whether or not the given tag terminates a pseudo partition */
+    private boolean closesPseudoPartition(String tag) {
+        if (tag == null) {
+            return false;
+        }
+        Set keys = fPseudoPartitions.keySet();
+        Object[] tags = keys.toArray();
+        for (int i = 0; i < tags.length; i++)
+        {
+            String closer = "</" + tags[i].toString();
+            if (tag.startsWith(closer)
+                    && !Character.isLetter(tag.charAt(closer.length()))) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
+    /** Determines whether or not the given tag starts a pseudo partition */
+    private String opensPseudoPartition(String tag) {
+        if (tag == null) {
+            return null;
+        }
+        Set keys = fPseudoPartitions.keySet();
+        Object[] tags = keys.toArray();
+        for (int i = 0; i < tags.length; i++)
+        {
+            String closer = "<" + tags[i].toString();
+            if (tag.startsWith(closer)
+                    && !Character.isLetter(tag.charAt(closer.length()))) {
+                return fPseudoPartitions.getProperty(tags[i].toString());
+            }
+        }
+        return null;
+    }
+    
+    
+    private String getNextPartitionType(int offset,String data,int indexOffset) {
+        try {
+            String next = opensPseudoPartition(data);
+            //System.out.println("Checking next partition for " + data + " next is " + next);
+            if (closesPseudoPartition(data)) {
+                next = null;
+            }
+            
+            Position[] category = fDocument.getPositions(fPositionCategory);
+            int index = fDocument.computeIndexInCategory(fPositionCategory,offset);
+            CFEPartition thisPartition = (CFEPartition)category[index];
+            // System.out.println("Index is " + index + " of " + category.length);
+            if (index > 1) {
+	            CFEPartition prevPartition = (CFEPartition)category[index-1];
+	            if (next == null) {
+	                
+	                next = prevPartition.getNextPartitionType();
+	                // System.out.println("Prev partition is " + prevPartition.getNextPartitionType());
+	            }
+	            
+	            if (thisPartition.offset > prevPartition.offset + prevPartition.length) {
+	                int start = prevPartition.offset + prevPartition.length;
+	                int length = thisPartition.offset - start;
+	                CFEPartition p = new CFEPartition(start,length,prevPartition.getNextPartitionType());
+	                p.setNextPartitionType(next);
+	                fDocument.addPosition(fPositionCategory, p);
+	                
+	            }
+	            
+            }
+            
+            // Check if the subsequent partition needs to be modified.
+            if (index+1+indexOffset < category.length) {
+                thisPartition = (CFEPartition)category[index+indexOffset];
+                CFEPartition nextPartition = (CFEPartition)category[index+indexOffset+1];
+                //System.out.println("This partition is " + thisPartition.getType() + " from " + thisPartition.offset + " to " + Integer.toString(thisPartition.offset + thisPartition.length) + " next type should be " + next);
+                //System.out.println("Next partition is " + nextPartition.getType() + " from " + nextPartition.offset + " to " + Integer.toString(nextPartition.offset + nextPartition.length));
+                if (nextPartition.getType().equals(next)) {
+                    //System.out.println("Moved partition start from " + nextPartition.offset + " to "  + Integer.toString(thisPartition.offset + thisPartition.length) + " for partition of type " + nextPartition.getType());
+                    nextPartition.setOffset(thisPartition.offset + thisPartition.length);
+                } else if (thisPartition.offset + thisPartition.length < nextPartition.offset) {
+                    int start = thisPartition.offset + thisPartition.length;
+	                int length = nextPartition.offset - start;
+	                CFEPartition p = new CFEPartition(start,length,next);
+	                p.setNextPartitionType(next);
+	                fDocument.addPosition(fPositionCategory, p);
+                }
+            }
+            
+            return next;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /*
      * @see IDocumentPartitioner#documentAboutToBeChanged(DocumentEvent)
@@ -482,89 +479,79 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             int partitionEnd = partitionStart;
             // Initialize the content type of the start partition to null
             String contentType = null;
+            // Initialize the content type of the next partition 
+            String nextPartitionType = null;
             // Initialize the length of the text change.
             int newLength = e.getText() == null ? 0 : e.getText().length();
             // Find the index in the position array where a new position with 
             // this offset would be inserted
+            
+            //System.out.println("Got document event at " + e.getOffset() + " of length " + e.getLength());
+            
+            /*
+             * This should be the index of the next partition that starts
+             * that starts after the event offset. Used for figuring out
+             * where to start reparsing partitions that may have changed.
+             */
             int first = d.computeIndexInCategory(fPositionCategory,
-                    reparseStart);
-            Position[] pos = d.getPositions(fPositionCategory);
-            //System.out.println("Got a doc change event at offset " + e.fOffset + " of length " + e.fLength + " with text [" + e.fText + "]");
+                    e.getOffset());
             
             // Check if we are starting from somewhere in the middle of the document
             if (first > 0) {
                 
-                //Get the position immeditately prior to the start of the changes.
-                CFEPartition partition = (CFEPartition) category[first - 1];
+                
+                //Get the partition that was affected by this change.
+                CFEPartition activePartition = (CFEPartition) category[first - 1];
+                
+                String partitionType = activePartition.getType(); 
+                
+                
+                /*
+                 * If the event occurred at the end of a start tag 
+                 * jump back to the beginning of the tag
+                 */
+                if (partitionType.equals(CFPartitionScanner.CF_START_TAG_END)) {
+                    --first;
+                    activePartition = (CFEPartition) category[first - 1];
+                    if (!activePartition.getType().equals(CFPartitionScanner.CF_START_TAG_BEGIN)) {
+                        --first;
+                        activePartition = (CFEPartition) category[first - 1];
+                    }
+                } else {
+	                /*
+	                 * If we're in the middle of a tag we want to jump back to
+	                 * the beginning
+	                 */
+	                if (partitionType.equals(CFPartitionScanner.CF_BOOLEAN_STATEMENT) 
+	                        || partitionType.equals(CFPartitionScanner.CF_EXPRESSION)
+	                        || partitionType.equals(CFPartitionScanner.CF_SET_STATEMENT)
+	                        || partitionType.equals(CFPartitionScanner.CF_TAG_ATTRIBS) ) {
+	                    --first;
+	                    activePartition = (CFEPartition) category[first - 1];
+	                }
+                }
+                
+                /*
+                 * If this isn't the first partition in the document get the
+                 * next partition info from the partition before this one.
+                 */ 
+                if (first - 2 > 0) {
+                    CFEPartition prevPartition = (CFEPartition) category[first - 2];
+                    nextPartitionType = prevPartition.getNextPartitionType();
+                }
 
+                
+                contentType = IDocument.DEFAULT_CONTENT_TYPE;
+                
+                --first;
+                
                 // Set the start position to the start of the partition.
-                partitionStart = partition.getOffset();
-                partitionEnd = partition.getOffset() + partition.getLength();
+                partitionStart = activePartition.getOffset();
+                partitionEnd = activePartition.getOffset() + activePartition.getLength();
                 
                 // Set the content type to the type of the partition
-                contentType = partition.getType();
-                //System.out.println("Previous partition is of type " + contentType + " from offset " + partition.offset);
-                /*
-                 * Check if we're in one of the pseudo partition types.
-                 * If so, we want to push it onto the scanner stack.
-                 */
+                // contentType = activePartition.getType();
                 
-                Object[] partitions = fPseudoPartitions.values().toArray();
-
-                for (int i = 0; i < partitions.length; i++)
-                {
-                    
-                    if (partitions[i].toString().equals(contentType)) {
-                        //System.out.println("Found a pseudo partition. Need to reparse from start.");
-                        --first;
-                        partition = (CFEPartition) category[first - 1];
-                        partitionEnd = partition.getOffset() + partition.getLength();
-                        partitionStart = partitionEnd+1;
-                        //System.out.println("Found partition of type " + contentType + " Reparsing from start of previous partition of type " + partition.getType());
-                        contentType = partition.getType();
-                        reparseStart = partitionEnd;
-                        //System.out.println("New partition type is " + contentType + " starting at " + partition.getOffset() + " to " + Integer.toString(partition.getOffset() + partition.getLength()) + ". Next partition will be " + partition.getNextPartitionType());
-                       
-                        break;
-                    }
-                }
-                
-                
-                // Make sure we set the pseudo partition markers.
-                if (partition.getNextPartitionType() != IDocument.DEFAULT_CONTENT_TYPE) {
-                    fPseudoPartition = partition.getNextPartitionType();
-                    fPseudoPartitionStart = partition.getOffset() + partition.getLength();
-                }
-                
-                /*
-                 * Does the partition span the document event.
-                 */
-                if (partition.includes(reparseStart)) {
-                    if (e.getOffset() == partitionEnd) {
-                        reparseStart = partitionStart;
-                    }
-                    //System.out.println("Partition spans event.");
-                    --first;
-                    /*
-                     * Did the event occur at the start of the line and does
-                     * that mark the end of the partition.
-                     */
-                } else if (reparseStart == e.getOffset()
-                        && reparseStart == partitionEnd) {
-                    reparseStart = partitionStart;
-                    //System.out.println("partition starts at line start and offset is at start of line.");
-                    --first;
-                } else {
-                    /*
-                     * The event must have occured past the end of the partition.
-                     */
-                    //System.out.println("Event occurred past end of partition.");
-                    if (fPseudoPartition == null) {
-                        partitionStart = partition.getOffset() + partition.getLength();
-                    }
-                    contentType = IDocument.DEFAULT_CONTENT_TYPE;
-                }
-
                 
                 /*
                  * If we're inside a partition that can have nested items we
@@ -573,8 +560,16 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                  */ 
                 if (contentType.equals(CFPartitionScanner.CF_COMMENT)
                         || contentType.equals(CFPartitionScanner.HTM_COMMENT)) {
-                    //System.out.println("Reparsing from start of comment block");
+                    //System.out.println("Reparsing from start of comment block " + partitionStart);
                     reparseStart = partitionStart;
+                    /*
+                     * Make sure we set the content type to a cf comment.
+                     * If we dont' do that then adding a - to a <!-- will
+                     * result in the scanner running the check for html comment
+                     * first.
+                     */
+                    contentType = CFPartitionScanner.CF_COMMENT;
+                    //fDocument.removePosition(fPositionCategory,new Position(partition.offset,partition.length));
                 }
 
             }
@@ -602,12 +597,13 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
              * document again.
              */
             category = d.getPositions(fPositionCategory);
-
+            
             fScanner.setPartialRange(d, reparseStart, d.getLength()
                     - reparseStart, contentType, partitionStart);
 
             int lastScannedPosition = reparseStart;
             IToken token = fScanner.nextToken();
+            
             int lastOffset = -1;
             
 
@@ -643,8 +639,29 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                                     .containsPosition(fPositionCategory, start,
                                             length) || !contentType.equals(p
                                     .getType())))) {
-                        rememberRegion(p.offset, p.length);
-                        d.removePosition(fPositionCategory, p);
+                        /*
+                         * Don't delete it if it's a pseudo partition.
+                         * Pseudo partitions have the same next type 
+                         * as themselves
+                         */
+                        if (!p.getType().equals(p.getNextPartitionType())) {
+                            rememberRegion(p.offset, p.length);
+	                        d.removePosition(fPositionCategory, p);
+	                        
+                        } else {
+                            //System.out.println("Found pseudo partition from " + p.offset + " with length " + p.length + " start is " + start );
+                                if (p.offset+p.length > start) {
+                                    int oldLength = p.length;
+                                    p.length = start - p.offset;
+                                } else if (p.offset + p.length < start) {
+                                    p.length = start - p.offset;
+                                } else {
+                                }
+                                if (p.length < 0) {
+                                    rememberRegion(p.offset, p.length);
+        	                        d.removePosition(fPositionCategory, p);
+                                }
+                        }
                         ++first;
 
                     } else
@@ -654,10 +671,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                 // if position already exists and we have scanned at least the
                 // area covered by the event, we are done
                 if (d.containsPosition(fPositionCategory, start, length)) {
-
-                    if (fPseudoPartition != null) {
-                        handleToken(token,getTokenContentType(token));
-                    }
                     if (lastScannedPosition >= e.getOffset() + newLength) {
                         return createRegion();
                     }
@@ -665,11 +678,10 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                 } else {
                     
                     //System.out.println("Calling handleToken.");
-                    handleToken(token, getTokenContentType(token));
+                    handleToken(token, getTokenContentType(token),nextPartitionType);
                     
                     rememberRegion(start, length);
                 }
-
                 token = fScanner.nextToken();
             }
 
@@ -899,7 +911,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 			int endOffset= offset + length;
 			
 			Position[] category= fDocument.getPositions(fPositionCategory);
-			
 			CFEPartition previous= null, current= null;
 			int start, end, gapOffset;
 			Position gap= new Position(0);
@@ -918,38 +929,10 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 			    } else {
 			        gapOffset = 0;
 			    }
-			    //
+
 				gap.setOffset(gapOffset);
-				try {
 				gap.setLength(current.getOffset() - gapOffset);
-				}
-				catch (Exception e) {
-				    /*
-				    System.err.println("Error!" + e.getMessage());
-				    System.err.println("Got partition of type " 
-					        + current.getType() 
-					        + " from " 
-					        + current.getOffset() 
-					        + " with length " 
-					        + current.getLength() 
-					        + " text: ["
-					        + fDocument.get(current.offset,current.length)
-					        + "]");
-				    if (previous != null) {
-				    System.err.println("Previous partition was of type " 
-					        + previous.getType() 
-					        + " from " 
-					        + previous.getOffset() 
-					        + " with length " 
-					        + previous.getLength() 
-					        + " text: ["
-					        + fDocument.get(previous.offset,previous.length)
-					        + "]");
-				    }
-				    System.err.println("Gap offset is " + gapOffset);
-				    */
-				    throw(e);
-				}
+				
 				if ((includeZeroLengthPartitions && overlapsOrTouches(gap, offset, length)) || 
 						(gap.getLength() > 0 && gap.overlapsWith(offset, length))) {
 					start= Math.max(offset, gapOffset);
