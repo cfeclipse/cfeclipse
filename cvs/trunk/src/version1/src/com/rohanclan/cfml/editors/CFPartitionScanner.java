@@ -187,7 +187,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		//catch any other tags we dont know about (xml etc) and make them
 		//a different color
-		rules.add(new MultiLineRule("<", ">", unktag));
+		rules.add(new TagRule(unktag));
 		
 		IPredicateRule[] rulearry = new IPredicateRule[rules.size()];
 		rules.toArray(rulearry);

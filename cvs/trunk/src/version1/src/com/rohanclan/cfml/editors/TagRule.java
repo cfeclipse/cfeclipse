@@ -24,195 +24,35 @@
  */
 package com.rohanclan.cfml.editors;
 
-import org.eclipse.jface.text.rules.*;
+import org.eclipse.jface.text.rules.MultiLineRule;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.ICharacterScanner;
 
 /**
  * 
  * @author Rob
- * 
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- * @deprecated
+ * Rule to handle "other" tags. Not cfml not html. Also breaks out if it looks like
+ * the tag is '< ' or '<=' so cfqueries are colored correctly
  */
 public class TagRule extends MultiLineRule {
 
-	public TagRule(IToken token) {
-		super("<!--", "-->", token);
+	public TagRule(IToken token) 
+	{
+		super("<", ">", token);
 	}
 	
-	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence,
-		boolean eofAllowed) 
+	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) 
 	{
-		System.out.println(sequence);
-		
+		//System.out.println(sequence);
 		if(sequence[0] == '<') 
 		{
 			int c = scanner.read();
-			//<!
-			if(c == '!')
-			{
-				c = scanner.read();
-				//<!-
-				if(c == '-')
-				{
-					c = scanner.read();
-					
-					//<!--
-					if(c == '-')
-					{
-						//html comment
-						c = scanner.read();
-						
-						//<!---
-						if(c == '-')
-						{
-							//a cfcomment!
-							System.err.println("cfcomment!");
-							return true;
-						}
-						else
-						{
-							scanner.unread();
-							scanner.unread();
-							scanner.unread();
-							scanner.unread();
-							return false;
-						}
-					}
-					else
-					{
-						scanner.unread();
-						scanner.unread();
-						scanner.unread();
-						return false;
-					}
-				}
-				else
-				{
-					scanner.unread();
-					scanner.unread();
-					return false;
-				}
-			}
-			else
+			//< or <=
+			if(c == ' ' || c == '=')
 			{
 				scanner.unread();
 				return false;
 			}
-			
-			//scanner.unread();
-			//System.out.println("::" + (char)c);
-			//if(c == '-')
-			//{
-				//cfcomment
-			//	System.err.println("cfcomment!");
-			//	scanner.unread();
-			//	return true;
-			//}
-			//else
-			//{
-				//html comment
-				//scanner.unread();
-				//return false;
-			//}
-						
-			//System.err.println((char)c);
-			//if (c == '!') 
-			//{
-			//	scanner.unread();
-				// comment - abort
-			//	return false;
-			//}
-			////////////////////////////////////////////////////////////////////
-			//ALL CFTAGS
-			//we need to skip here if its a cf tag
-			//for some reason - else the code completion
-			//wont get invoked
-			//if ( (c == '/' && f == 'c') || (c == 'c' && f == 'f') )
-			/* if(c == 'c' || c == 'C')
-			{
-				c = scanner.read();
-				//System.err.println(" " + (char)c);
-				if(c == 'f' || c == 'F')
-				{
-					//probably a cf tag - abort
-					scanner.unread();
-					return false;
-				}
-			}
-			
-			if(c == '/')
-			{
-				c = scanner.read();
-				//System.err.println(" " + (char)c);
-				if(c == 'c' || c == 'C')
-				{
-					c = scanner.read();
-					//System.err.println("  " + (char)c);
-					if(c == 'f' || c == 'F')
-					{
-						scanner.unread();
-						return false;
-					}
-				}
-			}
-			
-			////////////////////////////////////////////////////////////////////
-			//STYLE / SCRIPT tags
-			if(c == 's' || c == 'S')
-			{
-				c = scanner.read();
-				//Could be "style" but could be "strong"
-				if(c == 't' || c == 'T')
-				{
-					c = scanner.read();
-					//its probably style - so skip
-					if(c == 'y' || c == 'Y')
-					{
-						scanner.unread();
-						return false;
-					}
-				}
-				else if(c == 'c' || c == 'C')
-				{
-					//probably "script" - skip
-					scanner.unread();
-					return false;
-				}
-			}
-			// now for the closing parts
-			if(c == '/')
-			{
-				c = scanner.read();
-				if(c == 's' || c == 'S')
-				{
-					c = scanner.read();
-					//Could be "style" but could be "strong"
-					if(c == 't' || c == 'T')
-					{
-						c = scanner.read();
-						//its probably style - so skip
-						if(c == 'y' || c == 'Y')
-						{
-							scanner.unread();
-							return false;
-						}
-					}
-					else if(c == 'c' || c == 'C')
-					{
-						//probably "script" - skip
-						System.err.println("I hit /sc");
-						scanner.unread();
-						return false;
-					}
-				}
-			}
-			
-			 */
-		}
-		else if (sequence[0] == '>') 
-		{
-			scanner.unread();
 		}
 		
 		return super.sequenceDetected(scanner, sequence, eofAllowed);
