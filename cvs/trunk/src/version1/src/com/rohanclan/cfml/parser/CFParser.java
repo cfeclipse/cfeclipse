@@ -1038,6 +1038,8 @@ public class CFParser {
 		int lastMatch = 0;
 		int currPos = 0;
 		int currState = 0;
+		Stack stateStack = new Stack();
+		
 		ArrayList matches = new ArrayList();
 		try {
 			for(currPos = 0; currPos < data.length(); currPos++)
@@ -1073,10 +1075,9 @@ public class CFParser {
 							if(next2Chars.compareTo("!-") == 0)
 							{	// Testing for comment: <!--
 								// TODO: Find out whether comments can occur in tags
-////System.out..println("CFParser::tagMatchingAttempts() - Found a comment");
 								if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
 								{
-////System.out..println("CFParser::tagMatchingAttempts() - \t it's a CFML comment");
+									stateStack.push(new Integer(currState));
 									currState = MATCHER_CFMLCOMMENT;
 									lastMatch = currPos;
 								}
@@ -1118,7 +1119,8 @@ public class CFParser {
 						inData.charAt(currPos+3) == '>')
 				{
 ////System.out..println("CFParser::tagMatchingAttempts() - Found the end of a CFML comment");
-					currState = MATCHER_NOTHING;
+					//currState = MATCHER_NOTHING;
+					currState = ((Integer)stateStack.pop()).intValue();
 				}
 				else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
 				{
