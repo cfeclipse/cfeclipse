@@ -6,21 +6,15 @@ import org.eclipse.ui.IWorkbench;
 import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 
+
 /**
- * This class represents a preference page that
- * is contributed to the Preferences dialog. By 
- * subclassing <samp>FieldEditorPreferencePage</samp>, we
- * can use the field support built into JFace that allows
- * us to create a page that is small and knows how to 
- * save, restore and apply itself.
- * <p>
- * This page is used to modify preferences only. They
- * are stored in the preference store that belongs to
- * the main plug-in class. That way, preferences can
- * be accessed directly via the preference store.
+ * THIS CLASS IS MEANT TO BE FOR THE FILE PARSER
+ * For some reason Eclipse decides to put the wrong pref page under the wrong
+ * title. This is a quick fix for the next release. I'll fix it sometime soon..
+ * 
+ * @author Oliver Tupman
+ *
  */
-
-
 public class AutoIndentPrefPage
 	extends FieldEditorPreferencePage
 	implements IWorkbenchPreferencePage, ICFMLPreferenceConstants {
@@ -31,13 +25,17 @@ public class AutoIndentPrefPage
 	{
 		super(GRID);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
-		setDescription("CFML & CFScript parsing options. ");
+		setDescription("CFML and CFScript parsing options.\n\n" +
+						"The CFScript parser is HIGHLY experimental and is really only there\n" +
+						"as a convenience for CFEclipse developers and those that are brave.\n\n" +
+						"CFML is parsed automatically as it is used to create the CFC Methods\n" +
+						"and outline views.");
 		cfmlpm = new CFMLPreferenceManager();
 	}
 	
 	public void createFieldEditors()
 	{
-		addField(new BooleanFieldEditor(P_PARSE_DOCFSCRIPT, "Parse CFScript", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_PARSE_DOCFSCRIPT, "Parse CFScript (WARNING: HIGHLY EXPERIMENTAL.It WILL report incorrect ERRORS.)", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(P_PARSE_REPORT_ERRORS, "Report parse errors", getFieldEditorParent()));
 
 	}
