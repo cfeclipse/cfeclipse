@@ -1,0 +1,57 @@
+<parameter name="autoscrollbar" type="boolean" required="false">
+	<help>The index of the default selected item, if none is provided 
+		via the selected="true" attribute on an item.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="border_bottom" type="Any" required="false">
+	<help>The size of the bottom border which defaults to bordersize.</help>
+	<values />
+</parameter>
+<parameter name="border_left" type="Any" required="false">
+	<help>The size of the left border which defaults to bordersize.</help>
+	<values />
+</parameter>
+<parameter name="border_right" type="Any" required="false">
+	<help>The size of the right border which defaults to bordersize.</help>
+	<values />
+</parameter>
+<parameter name="border_top" type="Any" required="false">
+	<help>The size of the top border which defaults to bordersize.</help>
+	<values />
+</parameter>
+<parameter name="bordersize" type="Any" required="false">
+	<help>The size in pixels for this list.</help>
+	<values />
+</parameter>
+<parameter name="minheight" type="Numeric" required="false">
+	<help>The size in pixels for this listminumum height of the list, 
+		default: 24.</help>
+	<values />
+</parameter>
+<parameter name="scrollable" type="boolean" required="false">
+	<help></help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="shownitems" type="Any" required="false">
+	<help>The number of items that are displayed. This value will 
+		ignored if this view attempts to draw past the canvas 
+		boundary.</help>
+	<values />
+</parameter>
+<parameter name="spacing" type="Any" required="false">
+	<help>The number of pixels that items should be spaced from one 
+		another.</help>
+	<values />
+</parameter>
+<parameter name="tracking" type="boolean" required="false">
+	<help>Toggles the mousedown tracking.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<!-- base list -->
+&baselist;

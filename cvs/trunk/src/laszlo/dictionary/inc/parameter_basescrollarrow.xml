@@ -1,0 +1,7 @@
+<parameter name="direction" type="Numeric" required="false">
+	<help>The direction in which the scroll should move. Use -1 to go 
+		back. Default: 1</help>
+	<values />
+</parameter>
+<!-- same as Basebuttonrepeater -->
+&basebutton;

@@ -1,0 +1,39 @@
+<parameter name="axis" type="String" required="false">
+	<help>Axis may be "x" or "y", controls the orientation and default 
+		scrollattr, default: "y"</help>
+	<values>
+		<value option="x" />
+		<value option="y" />
+	</values>
+</parameter>
+<parameter name="scrollable" type="boolean" required="false">
+	<help>True if the scrolltarget is bigger than the containing view 
+		therefore the scrollbar is active. The scrollbar appears 
+		disabled when scrollable is false. You can make the scrollbar 
+		invisible when there is nothing to scroll by setting 
+		visible="${scrollable}"</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="scrollattr" type="String" required="false">
+	<help>The attribute of the scrolltarget that is modified by the 
+		scrollbar, default: value of axis attribute.</help>
+	<values />
+</parameter>
+<parameter name="scrollmax" type="Numeric" required="false">
+	<help>The maximum distance to scroll, default: the height or width 
+		of the scrolltarget.</help>
+	<values />
+</parameter>
+<parameter name="scrolltarget" type="Any" required="false">
+	<help>The view that is controlled by the scrollbar.</help>
+	<values />
+</parameter>
+<parameter name="stepsize" type="Numeric" required="false">
+	<help>The amount that the scrolltarget is moved when the user 
+		clicks on the scrolltrack or when the step method is called, 
+		default: 10.</help>
+	<values />
+</parameter>
+&basecomponent;

@@ -23,16 +23,14 @@
 		control key is down, any item may be added to the selection.
 		</help>
 	<values>
-		<value option="true"/>
-		<value option="false"/>
+		&value_boolean;
 	</values>
 </parameter>
 <parameter name="toggleselected" type="boolean" required="false">
 	<help>When true, the first click on a list item selects it and the 
 		second click deselects it.</help>
 	<values>
-		<value option="true"/>
-		<value option="false"/>
+		&value_boolean;
 	</values>
 </parameter>
 &baseformitem;

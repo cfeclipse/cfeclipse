@@ -1,0 +1,26 @@
+<parameter name="apply" type="boolean" required="false">
+	<help>By default, states are not applied. It is often convenient to 
+		assign this attribute as a constraint in the tag. For example: 
+		state name="mystate" apply="parent.opened" will apply the state
+		if parent.opened is true.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="pooling" type="boolean" required="false">
+	<help>If true, the state will merely hide any views it has created 
+		when it is removed, instead of destroying them.</help>
+	<values/>
+</parameter>
+<parameter name="onapply" type="Function" required="false">
+	<help>Script that is executed when the state is applied to its 
+		parent.</help>
+	<values/>
+</parameter>
+<parameter name="onremove" type="Function" required="false">
+	<help>Script that is executed when the state is removed from its 
+		parent.</help>
+	<values/>
+</parameter>
+<!-- NODE -->
+&node;

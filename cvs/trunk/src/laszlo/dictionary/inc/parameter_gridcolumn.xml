@@ -1,0 +1,25 @@
+<parameter name="resizable" type="boolean" required="false">
+	<help>If set to false, the column cannot be resized.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="resizemargin" type="Numeric" required="false">
+	<help>If set to false, the column cannot be resized.</help>
+	<values />
+</parameter>
+<parameter name="showheader" type="boolean" required="false">
+	<help>If set to false, then no header will be shown for this column.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="sortable" type="boolean" required="false">
+	<help>If true, the column header is clickable and will initiate a 
+		sort</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<!-- === BASE GRID COLUMN === -->
+&basegridcolumn;

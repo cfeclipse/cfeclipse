@@ -1,0 +1,32 @@
+<parameter name="closeable" type="boolean" required="false">
+	<help>If true, the window will have a close control. Default: false</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="inset_bottom" type="Numeric" required="false">
+	<help>The bottom inset for the window content area. Default: 20</help>
+	<values />
+</parameter>
+<parameter name="inset_left" type="Numeric" required="false">
+	<help>The left inset for the window content area. Default: 6</help>
+	<values />
+</parameter>
+<parameter name="inset_right" type="Numeric" required="false">
+	<help>The right inset for the window content area. Default: 11</help>
+	<values />
+</parameter>
+<parameter name="inset_top" type="Numeric" required="false">
+	<help>The top inset for the window content area. Default: 22</help>
+	<values />
+</parameter>
+<parameter name="title" type="String" required="false">
+	<help>the title of a window : this string appears at the top of the 
+		window. Default: none</help>
+	<values />
+</parameter>
+<parameter name="titlearea_inset_top" type="Numeric" required="false">
+	<help>The top inset for the window title area. Default: 6</help>
+	<values />
+</parameter>
+&basewindow;

@@ -1,0 +1,51 @@
+<parameter name="bordersize" type="Numeric" required="false">
+	<help>The border width. This can be set with a style.</help>
+	<values />
+</parameter>
+<parameter name="keystep" type="Numeric" required="false">
+	<help>How far to move when key navigating.</help>
+	<values />
+</parameter>
+<parameter name="maxvalue" type="Numeric" required="false">
+	<help>The maximum value.</help>
+	<values />
+</parameter>
+<parameter name="minvalue" type="Numeric" required="false">
+	<help>The minimum value.</help>
+	<values />
+</parameter>
+<parameter name="showfill" type="boolean" required="false">
+	<help>The minimum value.</help>
+	<values>
+		<value option="true" />
+		<value option="false" />
+	</values>
+</parameter>
+<parameter name="showrange" type="boolean" required="false">
+	<help>Turns on / off the bounding range text.</help>
+	<values>
+		<value option="true" />
+		<value option="false" />
+	</values>
+</parameter>
+<parameter name="showvalue" type="boolean" required="false">
+	<help>Turns on / off the floating value text when the user drags.</help>
+	<values>
+		<value option="true" />
+		<value option="false" />
+	</values>
+</parameter>
+<parameter name="thumbheight" type="Numeric" required="false">
+	<help>The height of the thumb.</help>
+	<values />
+</parameter>
+<parameter name="thumbwidth" type="Numeric" required="false">
+	<help>The width of the thumb.</help>
+	<values />
+</parameter>
+<parameter name="trackheight" type="Numeric" required="false">
+	<help>The height of the track.</help>
+	<values />
+</parameter>
+<!-- BASE VALUE COMPONENT -->
+&basevaluecomponent;

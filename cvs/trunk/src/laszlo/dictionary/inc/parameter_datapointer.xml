@@ -1,0 +1,36 @@
+<parameter name="ondata" type="Function" required="false">
+	<help></help>
+	<values/>
+</parameter>
+<parameter name="onerror" type="Function" required="false">
+	<help></help>
+	<values/>
+</parameter>
+<parameter name="ontimeout" type="Function" required="false">
+	<help></help>
+	<values/>
+</parameter>
+<parameter name="p" type="Any" required="false">
+	<help>The LzDataNode that the datapointer is pointing to. Calling 
+		setAttribute on attribute calls LzDatapointer.setPointer.</help>
+	<values/>
+</parameter>
+<parameter name="rerunxpath" type="boolean" required="false">
+	<help>If true, re-evaluate the XPath expression when the dataset is 
+		edited. Defaults to false.</help>
+	<values>
+		<value option="true"/>
+		<value option="false"/>
+	</values>
+</parameter>
+<parameter name="spacing" type="Numeric" required="false">
+	<help>This controls the spacing between elements if lazy 
+		replication is true.</help>
+	<values/>
+</parameter>
+<parameter name="xpath" type="String" required="false">
+	<help></help>
+	<values/>
+</parameter>
+<!-- NODE -->
+&node;

@@ -1,0 +1,38 @@
+<parameter name="datacontrolsvisibility" type="boolean" required="false">
+	<help>Controls the datapath of this window. If true, the datapath 
+		associated with the window will cause the window to be 
+		invisible if it matches no data or visible if it does match 
+		data, overriding whatever had been set as the visible attribute 
+		of the window. Default: false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="haswindowfocus" type="boolean" required="false">
+	<help>True if the window is frontmost, default: false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="minheight" type="Numeric" required="false">
+	<help>Minimum height for the window, default: 50.</help>
+	<values />
+</parameter>
+<parameter name="minwidth" type="Numeric" required="false">
+	<help>Minimum width for the windowy, default: 60.</help>
+	<values />
+</parameter>
+<parameter name="state" type="Numeric" required="false">
+	<help>The state of the window: 1=selected (frontmost) window, 
+		2=not-selected window, 3=dragging, 4=disabled, 5=resizing. 
+		Default: 1</help>
+	<values>
+		<value option="1"/>
+		<value option="2"/>
+		<value option="3"/>
+		<value option="4"/>
+		<value option="5"/>
+	</values>
+</parameter>
+<!-- basecomponent -->
+&basecomponent;

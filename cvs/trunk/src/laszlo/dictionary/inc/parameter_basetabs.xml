@@ -1,0 +1,50 @@
+<parameter name="bar" type="Any" required="false">
+	<help>This is a reference to its basetabsbar.</help>
+	<values />
+</parameter>
+<parameter name="barclass" type="String" required="false">
+	<help>Class to instantiate to contain tab items. Default is 
+		'basetabsbar'.</help>
+	<values />
+</parameter>
+<parameter name="bordersize" type="Numeric" required="false">
+	<help>The size of the border surrounding a basetabpane. Default is 
+		0.</help>
+	<values />
+</parameter>
+<parameter name="content" type="Any" required="false">
+	<help>This is a reference to basetab's content area. This is where 
+		all basetabpanes in tabs are placed.</help>
+	<values />
+</parameter>
+<parameter name="contentclass" type="String" required="false">
+	<help>Class to instantiate to contain basetabpanes.</help>
+	<values />
+</parameter>
+<parameter name="inset_bottom" type="Numeric" required="false">
+	<help>The bottom inset for content appearing within a basetabpane. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="inset_left" type="Numeric" required="false">
+	<help>The left inset for content appearing within a basetabpane. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="inset_right" type="Numeric" required="false">
+	<help>The right inset for content appearing within a basetabpane. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="inset_top" type="Numeric" required="false">
+	<help>The top inset for content appearing within a basetabpane. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="tabclass" type="Numeric" required="false">
+	<help>Class to instantiate tab items for basetabsbar. Can be 
+		overridden by basetabpane. Default is 'basetab'.</help>
+	<values />
+</parameter>
+<!-- base component -->
+&basecomponent;

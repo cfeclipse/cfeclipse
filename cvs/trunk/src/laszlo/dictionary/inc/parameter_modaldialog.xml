@@ -1,0 +1,21 @@
+<parameter name="content_inset_bottom" type="Numeric" required="false">
+	<help>The bottom inset for the dialog contents from the edge of the 
+		window inner frame.</help>
+	<values/>
+</parameter>
+<parameter name="content_inset_left" type="Numeric" required="false">
+	<help>The left inset for the dialog contents from the edge of the 
+		window inner frame.</help>
+	<values/>
+</parameter>
+<parameter name="content_inset_right" type="Numeric" required="false">
+	<help>The right inset for the dialog contents from the edge of the 
+		window inner frame</help>
+	<values/>
+</parameter>
+<parameter name="content_inset_top" type="Numeric" required="false">
+	<help>The top inset for the dialog contents from the edge of the 
+		window inner frame.</help>
+	<values/>
+</parameter>
+&windowpanel;

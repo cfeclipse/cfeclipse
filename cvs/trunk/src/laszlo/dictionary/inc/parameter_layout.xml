@@ -1,0 +1,6 @@
+<parameter name="locked" type="boolean" required="false">
+	<help>Set to true if layout is locked from updates.</help>
+	<values/>
+</parameter>
+<!-- NODE -->
+&node;

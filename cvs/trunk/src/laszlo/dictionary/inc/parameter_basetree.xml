@@ -1,0 +1,111 @@
+<parameter name="autoscroll" type="boolean" required="false">
+	<help>Auto scroll if tree is clipped. Default is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="closechildren" type="boolean" required="false">
+	<help>Close all immediate children when this tree is closed. Default 
+		is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="closesiblings" type="boolean" required="false">
+	<help>Flag to close other siblings when this tree is open. Default 
+		is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="focused" type="boolean" required="false">
+	<help>If true, this tree is focused. Default is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="focusoverlay" type="boolean" required="false">
+	<help>Meaningful only in root. If focusselect is false and 
+		focusoverlay is true, then focus has a visual bracket overlay 
+		over the focused tree. Default is false
+	</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="focusselect" type="boolean" required="false">
+	<help>Meaningful only in root. Flag to select a tree on focus. 
+		Default is false.
+	</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="isleaf" type="boolean" required="false">
+	<help>If true, this basetree is a leaf node. Default is false.
+	</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="multiselect" type="boolean" required="false">
+	<help>Meaningful only in root. Whether to multiselect items. 
+		Default is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="onfocused" type="Any" required="false">
+	<help>This event gets triggered whenever this tree is focused. The 
+		value of the focus (true or false) is sent with this event.</help>
+	<values />
+</parameter>
+<parameter name="onopen" type="Any" required="false">
+	<help>This event gets triggered whenever this tree is open. The open 
+		value of this tree is also sent.</help>
+	<values />
+</parameter>
+<parameter name="onselected" type="Any" required="false">
+	<help>This event gets triggered whenever this tree is selected. The 
+		value of the selection (true or false) is sent with this event. 
+		Note the args of this has changed from the previous release.</help>
+	<values />
+</parameter>
+<parameter name="open" type="boolean" required="false">
+	<help>Check to see if this tree is open. Default is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="recurse" type="boolean" required="false">
+	<help>Meaningful only with data replication. If true, it will 
+		recursively follow the datapath's children. Default is true.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="showroot" type="boolean" required="false">
+	<help>Meaningful only in root tree. If false, the root item is 
+		invisible and its children are displayed. Default is true.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="toggleselected" type="boolean" required="false">
+	<help>Meaningful only in root. Flag to toggle selected nodes. 
+		Default is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="xindent" type="Numeric" required="false">
+	<help>Spacing to indent trees on the x-axis. Default is 10.</help>
+	<values />
+</parameter>
+<parameter name="yindent" type="Numeric" required="false">
+	<help>Spacing to indent trees on the y-axis. Default is 20.</help>
+	<values />
+</parameter>
+
+<!-- basecomponent -->
+&basecomponent;

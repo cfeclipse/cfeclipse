@@ -1,0 +1,45 @@
+<parameter name="datacontrolsvisibility" type="boolean" required="false">
+	<help>If a datapath tag is declared, this attribute will be passed 
+		to the datapath when it's created. Default is false.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="inset_bottom" type="Numeric" required="false">
+	<help>Bottom inset for basetabpane in tabs content. Default is 
+		basetabs's inset_bottom.</help>
+	<values />
+</parameter>
+<parameter name="inset_left" type="Numeric" required="false">
+	<help>Left inset for basetabpane in tabs content. Default is 
+		basetabs's inset_left.</help>
+	<values />
+</parameter>
+<parameter name="inset_right" type="Numeric" required="false">
+	<help>Right inset for basetabpane in tabs content. Default is 
+		basetabs's inset_right.</help>
+	<values />
+</parameter>
+<parameter name="inset_top" type="Numeric" required="false">
+	<help>Top inset for basetabpane in tabs content. Default is 
+		basetabs's inset_top.</help>
+	<values />
+</parameter>
+<parameter name="selected" type="boolean" required="false">
+	<help>If a basetabpane is selected, then it will be shown. Its 
+		associated tab will be also be selected.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="tab" type="Any" required="false">
+	<help>The tab associated with this basetabpane.</help>
+	<values />
+</parameter>
+<parameter name="tabclass" type="String" required="false">
+	<help>The tabclass to use to instantiate its associated tab. This 
+		overrides the basetabs tabclass.</help>
+	<values />
+</parameter>
+<!-- base component -->
+&basecomponent;

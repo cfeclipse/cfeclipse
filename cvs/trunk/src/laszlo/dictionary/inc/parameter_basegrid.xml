@@ -1,0 +1,83 @@
+<parameter name="bgcolor0" type="Numeric" required="false">
+	<help>If given, sets the bgcolor for even numbered rows. If not 
+		given, the bgcolor for these rows is taken from the style's 
+		bgcolor.</help>
+	<values />
+</parameter>
+<parameter name="bgcolor1" type="Numeric" required="false">
+	<help>If given, sets the bgcolor for odd numbered rows. If not 
+		given, the bgcolor for these rows is taken from the style's 
+		bgcolor.</help>
+	<values />
+</parameter>
+<parameter name="columns" type="Function" required="false">
+	<help>An array holding the basegridcolumns used by this grid</help>
+	<values />
+</parameter>
+<parameter name="contentdatapath" type="String" required="false">
+	<help>The datapath to use for the contents of the grid. By default, 
+		this is set to "*", meaning all of the nodes underneath the 
+		datacontext of the grid.</help>
+	<values />
+</parameter>
+<parameter name="hilite" type="Any" required="false">
+	<help>The view which is currently hilited.</help>
+	<values />
+</parameter>
+<parameter name="multiselect" type="boolean" required="false">
+	<help>If true, the list will allow for multiple selection, and the 
+		getSelection method will always return a list. If false, only 
+		single selection is allowed.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="rowheight" type="Numeric" required="false">
+	<help>Optional height for the rows contained by the grid. If no 
+		value is given for this attribute, it will be set to the 
+		calculated height of rows.</help>
+	<values />
+</parameter>
+<parameter name="selectable" type="boolean" required="false">
+	<help>If false, the rows are not clickable and the grid does not 
+		support selection.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="showhlines" type="boolean" required="false">
+	<help>If true, lines will be drawn (in component's style's 
+		bordercolor) vertically at each at each column division. This 
+		attribute can be set after instantiation.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="shownitems" type="Numeric" required="false">
+	<help>Sets the height of the grid to show a maximum of 'n' items.</help>
+	<values />
+</parameter>
+<parameter name="showvlines" type="boolean" required="false">
+	<help>If true, lines will be drawn (in component's style's 
+		bordercolor) horizontally at each at each row division. This 
+		attribute cannot be set after instantiation.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="sizetoheader" type="boolean" required="false">
+	<help>A boolean. If true, the grid will keep its width set to the 
+		size of the header. This is automatically set to true for grids 
+		that do not have a set width. This is initially set to 0, which 
+		means that it is not true, but if it is explicitly set to false, 
+		the automatic behavior will be disabled for grids with no set 
+		width.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<parameter name="spacing" type="Numeric" required="false">
+	<help>Spacing between the rows.</help>
+	<values />
+</parameter>
+&basecomponent;

@@ -1,0 +1,8 @@
+<parameter name="toggle" type="boolean" required="false">
+	<help>If true, a re-selected element will lose the selection.</help>
+	<values>
+		&value_boolean;
+	</values>
+</parameter>
+<!-- NODE -->
+&node;

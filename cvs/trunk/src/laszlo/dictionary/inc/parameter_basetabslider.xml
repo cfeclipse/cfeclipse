@@ -1,0 +1,34 @@
+<parameter name="inset_bottom" type="Numeric" required="false">
+	<help>The bottom inset for content appearing within a tabelement. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="inset_left" type="Numeric" required="false">
+	<help>The left inset for content appearing within a tabelement. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="inset_right" type="Numeric" required="false">
+	<help>The right inset for content appearing within a tabelement. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="inset_top" type="Numeric" required="false">
+	<help>The top inset for content appearing within a tabelement. 
+		Default is 8.</help>
+	<values />
+</parameter>
+<parameter name="mintabheight" type="Numeric" required="false">
+	<help>The default height of every tab when closed. Default is 22.</help>
+	<values />
+</parameter>
+<parameter name="slideduration" type="Numeric" required="false">
+	<help>The duration of the tabs openning and closing. Default is 300.</help>
+	<values />
+</parameter> 
+<parameter name="spacing" type="Numeric" required="false">
+	<help>The spacing of the tabs. Default is 0.</help>
+	<values />
+</parameter>
+<!-- BASE LIST -->
+&baselist;
