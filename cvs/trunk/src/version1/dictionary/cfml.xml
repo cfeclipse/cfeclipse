@@ -458,7 +458,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="delimiter" type="String" required="false">
+			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 					Specifies the delimiter character or characters that
 					separate multiple values to match. If you specify multiple
