@@ -122,6 +122,9 @@ public class CFBrowser {
 		location = new Text(parent, SWT.BORDER);
 		final Canvas canvas = new Canvas(parent, SWT.ICON_INFORMATION);
 		
+		/* Removed by Spike. It seems to have no effect on the 
+		 * operation of the browser and may be the cause of the 
+		 * OS X CPU hogging bug.
 		//this is supposed to be the working icon but...
 		display.asyncExec(new Runnable() {
 			public void run() 
@@ -130,16 +133,18 @@ public class CFBrowser {
 					return;
 				if(busy) 
 				{
-					/* index++;
+					 index++;
 					if(index == images.length)
 					index = 0;
 					canvas.redraw();
-					*/
+					
 				}
 				
 				display.timerExec(150, this);
 			}
 		});
+		
+		*/
 		
 		final Label status = new Label(parent, SWT.NONE);
 		final ProgressBar progressBar = new ProgressBar(parent, SWT.NONE);

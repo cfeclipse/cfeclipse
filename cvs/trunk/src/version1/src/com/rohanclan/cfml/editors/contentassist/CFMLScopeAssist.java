@@ -24,16 +24,16 @@
  */
 package com.rohanclan.cfml.editors.contentassist;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.*;
 
 import org.eclipse.core.internal.utils.Assert;
+import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.*;
-import com.rohanclan.cfml.editors.CFCompletionProcessor;
+import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
  * Provides CFML Scope Assist at the tag-insight level. So the if
@@ -49,6 +49,11 @@ public class CFMLScopeAssist
      * to the global CF dictionary.
      */
     private SyntaxDictionary sourceDict;
+    
+    private Pattern wordPattern = Pattern.compile("[\\w]");
+    private Pattern scopePattern = Pattern.compile("[\\w\\.]+$");
+    
+    
     /**
      * 
      */
@@ -61,54 +66,117 @@ public class CFMLScopeAssist
      * @see com.rohanclan.cfml.editors.contentassist.IAssistContributor#getTagProposals(com.rohanclan.cfml.editors.contentassist.IAssistState)
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
-        //System.out.println("Triggered By: " + state.getTriggerData());
-        if(state.getDataSoFar().lastIndexOf(".") < 0)
+        
+        int dotOffset = 0;
+        Properties filteredItems = new Properties();
+        String doc = state.getIDocument().get();
+        //If there isn't a "." in the state data we can exit.
+        if(state.getDataSoFar().lastIndexOf(".") < 0){
             return null;
+        }
+        
+        // Check if the next character after the cursor is valid
+        try {
+            if (doc.length() > state.getOffset()) {
+		        Matcher wordMatcher = wordPattern.matcher(state.getIDocument().get(state.getOffset(),1));
+		        if (wordMatcher.find()) {
+		            // Nope, stop right here.
+		            return null;
+		        }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // The offset of the last dot before the cursor
+        dotOffset = state.getIDocument().get().lastIndexOf(".",state.getOffset())+1;
+        
         
         String prefix = state.getDataSoFar().trim();
         
+        //Checking if the prefix could be a scope variable
+        Matcher scopeMatcher = scopePattern.matcher(prefix);
         
-        Pattern p = Pattern.compile("[\\w\\.]+$");
-        Matcher m = p.matcher(prefix);
-        
-        if (m.find()) {
-            prefix = m.group();
+        if (scopeMatcher.find()) {
+            prefix = scopeMatcher.group();
+            System.out.println(state.getDataSoFar());
         }
-        
-        int length = prefix.length();
-        
-        //System.out.println("Scope prefix: " + prefix);
-		// If the taglimiting has a space in we're assuming that the user
-		// is intending to input or has inputted some attributes.
+        else {
+           // Nope, no point in going any further.
+           return null;
+        }
+
+        // Get an initial set of possibilities.
 		Set proposals = ((SyntaxDictionaryInterface)this.sourceDict).getFilteredScopeVars(prefix);
+		
+		
 		
 		Iterator i = proposals.iterator();
 		
+		int x = 0; 
+		ICompletionProposal[] workingSet = new ICompletionProposal[proposals.size()];
+		
+		// Build the proposals
 		while (i.hasNext()) {
-		    Object o = i.next();
-		    /* TODO: Figure out what this stuff is supposed to be doing
-		    if (o instanceof Function) {
-		        length = prefix.length() - prefix.lastIndexOf(".");
-// System.out.println("Function found in scope lookup. Length reset to " + length);
-		        break;
-		    }
 		    
-		    else*/
+		    Object o = i.next();
+		    
 		    if (o instanceof ScopeVar) {
 		        ScopeVar s = (ScopeVar)o;
-		        if (s.getValue().equalsIgnoreCase(prefix)) {
-		            proposals.remove(s);
+		        
+		        StringBuffer sb = new StringBuffer(s.getValue());
+		        
+		        String newValue = s.getValue();
+		        
+		        // Eliminate anything that exactly matches the prefix or has a "." immediately after the end of current prefix. 
+		        if (!newValue.equalsIgnoreCase(prefix) 
+		                && sb.charAt(prefix.length()) != '.') {
+		            
+		            /*
+		             * Get the position of the last dot in the proposal so we can replace the
+		             * entire string from there forwards in the document. This allows us to maintain
+		             * the case of the inserted string the same as it appears in the insight.
+		             */
+		            if (sb.lastIndexOf(".") > prefix.length()) {
+		                int valueDotIndex = sb.indexOf(".",prefix.length());
+			            newValue = sb.substring(0,valueDotIndex);
+		            }
+		            
+		            // Make sure we don't keep any duplicates in the list
+		            if(!filteredItems.containsKey(newValue)) {
+		                filteredItems.setProperty(newValue,"");
+		                
+		                String insertion = newValue.substring(prefix.lastIndexOf(".")+1,newValue.length());
+		    	        
+		    	        
+		    	        CompletionProposal proposal = new CompletionProposal(insertion,
+		    	                dotOffset,
+		    	                state.getOffset()-dotOffset,
+		    	                insertion.length(),
+		    	                CFPluginImages.get(CFPluginImages.ICON_VALUE),
+		    	                s.toString(),
+		    	                null,
+		    	                "");
+
+		    			workingSet[x] = proposal;
+		    		    x++;
+		                
+		            }
 		        }
 		    }
 		}
 		
+		// Now bulid a new array of the correct size from the working set
+		ICompletionProposal[] result =  new ICompletionProposal[x];
 		
-		// Do we have methods in the returned set?
-		return CFEContentAssist.makeSetToProposal(
-			proposals,
-			state.getOffset(),
-			CFEContentAssist.SCOPETYPE,
-			length
-		);
+		for (int n=0;n<x;n++) {
+		    result[n] = workingSet[n];
+		}
+		
+		return result;
     }
+    
+    
+    
 }

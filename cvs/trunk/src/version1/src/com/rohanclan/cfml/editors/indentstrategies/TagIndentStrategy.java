@@ -169,11 +169,22 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @return the modified document command.
 	 */
 	private DocumentCommand singleTagTakeAction(IDocument doc, DocumentCommand command) {
-		/*
-		command.text = "";
-		command.offset++;
-		command.doit = false;
-		*/
+
+	    
+	    char nextChar = ' ';
+	    if (command.offset < doc.getLength()) {
+	        try {
+	        nextChar = doc.getChar(command.offset);
+	        }
+	        catch (BadLocationException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    if (nextChar != '>') {
+	        return command;
+	    }
+	    
 		stepThrough(command);
 		return command;
 	}
@@ -236,21 +247,26 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private DocumentCommand doCloser(IDocument doc, DocumentCommand docCommand) throws BadLocationException {
 		char lastChar = ' ';
+		char nextChar = ' ';
 		boolean autoCloseTag = this.autoClose_Tags;
 		boolean isSingleTag = false;
-		
+
 		if(docCommand.offset >= 0)
 			lastChar = doc.getChar(docCommand.offset - 1);
+		
+		if(docCommand.offset < doc.getLength())
+			nextChar = doc.getChar(docCommand.offset + 1);
 		
 		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1);
 		
 		isSingleTag = tagIsSingle(doc,docCommand,closingTag);
-			
+		
 //		autoCloseTag = !tagIsSingle(doc,docCommand, closingTag) && autoCloseTag;
 		
 		// If the user hasn't got auto-insertion of closing chevrons on, then 
 		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
-		if(!autoCloseTag)	
+		if(!autoCloseTag
+		        || nextChar != '>')	
 			closingTag+= ">";	
 		
 		closingTag = "</" + closingTag;
@@ -347,8 +363,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					if(doc.getChar(pos-1) == '<')	// Condition (1)
 						return AFTEROPENTAG_CLOSER;
 				}
-				else if(currChar =='<') 
-					return AFTEROPENTAG_AFTER;
+				else if(currChar =='<') {
+				    return AFTEROPENTAG_AFTER;
+				}
 			}
 		}catch(BadLocationException ex) {
 			ex.printStackTrace();
@@ -381,7 +398,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				return;
 			}
 			
-			int pos = docCommand.text.compareTo(">");
+			//int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';
 			char firstCommandChar = (docCommand.text.length() > 0) ? docCommand.text.charAt(0) : ' ';
 			
@@ -395,6 +412,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.length > 0 && docCommand.text.length() == 0) {
 				firstCommandChar = '\b';
 			}
+			
 			
 			switch(firstCommandChar) {
 			case '\b':	// User wishes to delete something
@@ -515,16 +533,18 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @throws BadLocationException
 	 */
 	private void handleClosingChevron(IDocument doc, DocumentCommand docCommand, char beforeLastChar) throws BadLocationException {
-		if(beforeLastChar == '<')	// Have we not got a tag name
+	    
+	    if(beforeLastChar == '<')	// Have we not got a tag name
 			return;
 		else if(beforeLastChar == '/')	{	// A self-closer, i.e. : <br/>
 			//singleTagTakeAction(doc, docCommand);
-			if(this.autoClose_Tags)
+			if(this.autoClose_Tags) {
 				singleTagTakeAction(doc, docCommand);
+			}
 			else
 				docCommand.doit =true;
 		}
-		else {	
+		else {
 			// Got a '>', make sure that it's not a random closer and if not close the tag.
 			switch(afterOpenTag(doc, docCommand.offset)) {
 			case AFTEROPENTAG_AFTER:

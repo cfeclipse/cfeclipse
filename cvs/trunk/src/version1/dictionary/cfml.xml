@@ -8260,11 +8260,11 @@
 		-->
 		<function creator="3" name="acos" returns="Numeric">
 			<help><![CDATA[
-				Arccosine function. The arccosine is the angle whose cosine
-				is number
+				Returns the angle whose cosine is the value passed as the argument.
 			]]></help>
 			<parameter name="number" type="Numeric" required="true">
 				<help><![CDATA[
+				The value to be converted into an angle. Must be between -1 and 1.
 				]]></help>
 			</parameter>
 		</function>
@@ -8278,10 +8278,12 @@
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
+				The array to which the element should be appended.
 				]]></help>
 			</parameter>
-			<parameter name="value" type="Object" required="true">
+			<parameter name="value" type="Any" required="true">
 				<help><![CDATA[
+				The element to append. Can be any type.
 				]]></help>
 			</parameter>
 		</function>
@@ -8292,6 +8294,8 @@
 		<function creator="3" name="arrayavg" returns="Numeric">
 			<help><![CDATA[
 				Calculates the average of the values in an array.
+				All elements in the array must contain values that can be
+				automatically converted to numeric.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
@@ -8304,7 +8308,7 @@
 		-->
 		<function creator="3" name="arrayclear" returns="boolean">
 			<help><![CDATA[
-				Deletes the data in an array.
+				Removes all elements from an array.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
@@ -8317,16 +8321,18 @@
 		-->
 		<function creator="3" name="arraydeleteat" returns="boolean">
 			<help><![CDATA[
-				Deletes an element from an array.
-				When an element is deleted, CFML recalculates index
-				positions.
+				Deletes an element from an array and resizes the array
+				so that the deleted element doesn't leave a gap.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
+				The array that the element will be deleted from.
 				]]></help>
 			</parameter>
 			<parameter name="position" type="Numeric" required="true">
 				<help><![CDATA[
+				The numeric position of the element. Remember that
+				ColdFusion arrays start at 1 not 0.
 				]]></help>
 			</parameter>
 		</function>
@@ -8336,20 +8342,25 @@
 		-->
 		<function creator="3" name="arrayinsertat" returns="boolean">
 			<help><![CDATA[
-				Inserts a value into an array. Array elements whose indexes
-				are greater than the new position are incremented by one. The
-				array length increases by one.
+				Inserts a value at the specified position in the array. If
+				the element is inserted before the end of the array, ColdFusion
+				shifts the positions of all elements with a higher index to make room.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
+				The array which will have the new element inserted.
 				]]></help>
 			</parameter>
 			<parameter name="position" type="Numeric" required="true">
 				<help><![CDATA[
+				The numerical index in the array where the new element will be inserted.
+				Must be less than or equal to the length of the array.
+				Remember ColdFusion arrays start at 1 not 0.
 				]]></help>
 			</parameter>
-			<parameter name="value" type="Numeric" required="true">
+			<parameter name="value" type="Any" required="true">
 				<help><![CDATA[
+				The new element to insert.
 				]]></help>
 			</parameter>
 		</function>
@@ -8359,7 +8370,9 @@
 		-->
 		<function creator="3" name="arrayisempty" returns="boolean">
 			<help><![CDATA[
-				Determines whether an array is empty of data elements
+				Determines whether an array is empty. Equivalent to arrayLen().
+				Calling this function on an array with 10 undefined elements
+				will return false.
 				CFML MX: this function can be used on XML objects.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
@@ -8389,6 +8402,8 @@
 			<help><![CDATA[
 				Returns the largest numeric value in an array. If the array
 				parameter value is an empty array, returns zero.
+				All elements must contain values that can be automatically
+				converted to numeric values.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
@@ -8403,6 +8418,8 @@
 			<help><![CDATA[
 				Returns the smallest numeric value in an array. If the array
 				parameter value is an empty array, returns zero.
+				All elements must contain values that can be automatically
+				converted to numeric values.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[
@@ -8419,7 +8436,7 @@
 				with square brackets: [ ].
 				CFML arrays expand dynamically as data is added.
 			]]></help>
-			<parameter name="dimension" type="Numeric" required="true">
+			<parameter name="dimension" type="Numeric" required="true" default="1">
 				<help><![CDATA[
 				]]></help>
 			</parameter>
@@ -8430,7 +8447,9 @@
 		-->
 		<function creator="3" name="arrayprepend" returns="boolean">
 			<help><![CDATA[
-				Inserts an array element at the beginning of an array.
+				Inserts an array element at the beginning of an array
+				and shifts the positions of the existing elements to
+				make room.
 			]]></help>
 			<parameter name="array" type="Array" required="true">
 				<help><![CDATA[

@@ -96,73 +96,13 @@ public class CFMLFunctionAssist
     		if (params == null) {
     		    return null;
     		}
-    		
-    		/*
-    		ICompletionProposal[] result = new ICompletionProposal[params.size()+2];
-    		Iterator i = params.iterator();
-			int x = 0;
-			
 
-			 CompletionProposal foo = new CompletionProposal("",
-                    state.getOffset(),
-                    0,
-                    state.getOffset(),
-                    CFPluginImages.get(CFPluginImages.ICON_FUNC),
-                    functionName + " (",
-                    null,
-                    helpText);
-			result[x] = foo;
-			x++;
-			
-			  
-			
-			while(i.hasNext())
-			{
-			    Object o = i.next();
-			    if (o instanceof Parameter) {
-			        Parameter p = (Parameter)o;
-					String usage = p.toString();
-					String icon = "";
-					if (x == this.paramsSoFar + 1) {
-					    icon = CFPluginImages.ICON_PARAM_DARK;
-					}
-					else {
-					    icon = CFPluginImages.ICON_PARAM;
-					}
-					String delimiter = "";
-					if (x < params.size()) {
-					    delimiter = " ,";
-					}
-					
-					
-					result[x] = new CompletionProposal("",
-		                    state.getOffset(),
-		                    0,
-		                    state.getOffset(),
-		                    CFPluginImages.get(icon),
-		                    paramIndent + usage + delimiter,
-		                    null,
-		                    p.getHelp());
-					
-					x++;
-			    }
-			}
-			result[x] = new CompletionProposal("",
-                    state.getOffset(),
-                    0,
-                    state.getOffset(),
-                    null,
-                    ")",
-                    null,
-                    null);
-           */
-    		
-    		ICompletionProposal[] result = new ICompletionProposal[1];
     		Iterator i = params.iterator();
 			int x = 0;
 			String extraInfo = paramIndent + "<b>" + functionName + "</b> (\n";
 			CompletionProposal proposal = null;
 			String usage = "";
+			Parameter activeParam = null;
 			
 			while(i.hasNext())
 			{
@@ -176,7 +116,7 @@ public class CFMLFunctionAssist
 					}
 					extraInfo += paramIndent + paramIndent;
 					if (x == this.paramsSoFar) {
-						usage = p.toString();
+					    activeParam = p;
 						extraInfo += "<b>";
 					}
 					extraInfo += p.toString() + delimiter;
@@ -192,21 +132,105 @@ public class CFMLFunctionAssist
 			
 			extraInfo += paramIndent + ") \n\n";
 			extraInfo += helpText;
-			proposal = new CompletionProposal("",
-                    state.getOffset(),
-                    0,
-                    state.getOffset(),
-                    CFPluginImages.get(CFPluginImages.ICON_PARAM),
-                    usage,
-                    null,
-                    extraInfo);
 			
+			return getParamProposals(activeParam,extraInfo,state.getOffset(),params.size());
 			
-			result[0] = proposal;
-			
-    		return result;
         }
     }
+    
+    
+    private ICompletionProposal[] getParamProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
+        
+        if (activeParam.getType().equalsIgnoreCase("boolean")) {
+            
+            return getBooleanParamProposals(activeParam,extraInfo,offset,paramCount);
+            
+        }
+        else {
+            
+			return getDefaultParamProposals(activeParam,extraInfo,offset,paramCount);
+
+        }
+        
+    }
+    
+    
+    private ICompletionProposal[] getBooleanParamProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
+        String value = "";
+        String suffix = ",";
+        ICompletionProposal[] result = new ICompletionProposal[2];
+        
+        value = "true";
+        
+        if (this.paramsSoFar == paramCount-1) {
+            suffix = ")";
+        }
+        CompletionProposal proposal = new CompletionProposal(value+suffix,
+                offset,
+                0,
+                value.length()+suffix.length(),
+                CFPluginImages.get(CFPluginImages.ICON_PARAM),
+                value,
+                null,
+                extraInfo);
+        
+		
+		result[0] = proposal;
+        
+        value = "false";
+        proposal = new CompletionProposal(value,
+                offset,
+                0,
+                value.length()+suffix.length(),
+                CFPluginImages.get(CFPluginImages.ICON_PARAM),
+                value,
+                null,
+                extraInfo);
+        
+		
+		result[1] = proposal;
+		
+		return result;
+    }
+    
+   
+    private ICompletionProposal[] getDefaultParamProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
+        String value = "";
+        String suffix = ",";
+        ICompletionProposal[] result = new ICompletionProposal[1];
+        
+        if (activeParam.getType().equalsIgnoreCase("string")) {
+            value = "\"\"";
+        }
+        else if (activeParam.getType().equalsIgnoreCase("regex")) {
+            value = "\"[.]*\"";
+        }
+        
+        if (activeParam.getDefaultValue() != null) {
+            value = activeParam.getDefaultValue();
+        }
+        
+        if (this.paramsSoFar == paramCount-1) {
+            suffix = ")";
+        }
+        CompletionProposal proposal = new CompletionProposal(value+suffix,
+                offset,
+                0,
+                value.length()+suffix.length(),
+                CFPluginImages.get(CFPluginImages.ICON_PARAM),
+                activeParam.toString() + " - " + value,
+                null,
+                extraInfo);
+        
+		
+		result[0] = proposal;
+        
+		
+		return result;
+    }
+    
+    
+    
     
     
     

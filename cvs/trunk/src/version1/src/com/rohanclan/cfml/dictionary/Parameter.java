@@ -117,7 +117,7 @@ public class Parameter implements Comparable {
 	protected String name = "";
 	protected String type = Procedure.VOID;
 	protected String help = "";
-	protected String defaultValue = null;
+	protected String defaultValue = "";
 	protected Set values;
 	protected boolean required = false;
 		
