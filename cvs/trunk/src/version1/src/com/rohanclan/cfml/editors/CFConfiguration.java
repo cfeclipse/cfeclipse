@@ -42,8 +42,10 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.IAutoIndentStrategy;
+
 //import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.preference.IPreferenceStore;
+
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
@@ -58,6 +60,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import com.rohanclan.cfml.editors.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.editors.script.JSCompletionProcessor;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.sun.rsasign.i;
 
 public class CFConfiguration extends SourceViewerConfiguration 
 	implements IPropertyChangeListener {
@@ -373,7 +376,7 @@ public class CFConfiguration extends SourceViewerConfiguration
 		
 		
 		
-		CFCompletionProcessor cfcp = new CFCompletionProcessor();
+		CFCompletionProcessor cfcp = new CFCompletionProcessor(assistant);
 	
 		//assign to the needed partitions
 		
@@ -428,18 +431,27 @@ public class CFConfiguration extends SourceViewerConfiguration
 		
 		assistant.enableAutoActivation(true);
 		assistant.setAutoActivationDelay(delay);
+		
 
-		System.out.println("Insight Delay set to: "+ delay + "ms");
+		//System.out.println("Insight Delay set to: "+ delay + "ms");
 		
 		assistant.setProposalPopupOrientation(
-			IContentAssistant.PROPOSAL_OVERLAY
-		);
+				IContentAssistant.PROPOSAL_OVERLAY
+		);		
 		
+
 		assistant.setInformationControlCreator(
 			getInformationControlCreator(sourceViewer)
 		);
+		
+
 		return assistant;
 	}
+	
+	
+	
+	
+	
 	/**
 	 * Register the text hover
 	 * @author Oliver Tupman
@@ -475,7 +487,7 @@ public class CFConfiguration extends SourceViewerConfiguration
 	public void propertyChange(PropertyChangeEvent event)
     {
 
-    	System.err.println("CFConfiguration property change listener notified." + event.getProperty());
+    	//System.err.println("CFConfiguration property change listener notified." + event.getProperty());
     	
         if(event.getProperty().equals("insightDelay")) {
     		int delay = preferenceManager.insightDelay();

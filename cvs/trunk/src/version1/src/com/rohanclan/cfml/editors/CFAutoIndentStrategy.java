@@ -26,6 +26,7 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 	
 	
 	private CFMLEditor editor;
+	private CFConfiguration configuration;
 	
 	public CFAutoIndentStrategy(CFMLEditor editor) {
 		this.editor = editor;

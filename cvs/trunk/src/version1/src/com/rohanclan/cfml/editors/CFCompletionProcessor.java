@@ -42,6 +42,7 @@ import java.util.Set;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
 
 import com.rohanclan.cfml.dictionary.*;
 //import org.eclipse.jface.text.ITextSelection;
@@ -65,12 +66,16 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	/** value type */
 	private static final short VALUETYPE = 2;
 	
+	private ContentAssistant assistant;
+	
 	protected IContextInformationValidator validator = new Validator();
 		
 	/**
 	 * Startup the completer
 	 */
-	public CFCompletionProcessor(){;}
+	public CFCompletionProcessor(ContentAssistant assistant){
+		this.assistant = assistant;
+	}
 
 	
 	/*
@@ -151,6 +156,19 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			String invoker = "";
 			if(documentOffset > 0)
 				invoker = viewer.getDocument().get(documentOffset-1,1);
+			
+			// Stop the content assist from popping up if there are multiple spaces or tabs
+			try {
+				if (viewer.getDocument().get(documentOffset-2,2).matches("\\s+")){
+					assistant.enableAutoActivation(false);
+					System.out.println("Auto activation disabled");
+					
+				} else {
+					assistant.enableAutoActivation(true);
+					System.out.println("Auto activation enabled");
+				}
+			}
+			catch (Exception e) {}
 			
 			IDocument document = viewer.getDocument();
 			String current_partition = viewer.getDocument().getPartition(documentOffset).getType();
@@ -571,7 +589,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * What characters cause us to wake up (for functions / methods)
 	 */
 	public char[] getContextInformationAutoActivationCharacters() {
-		return new char[] { '(', '.' };
+		return new char[] { '(', '.',',' };
 		//return null;
 	}
  
@@ -592,6 +610,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		
 		//System.out.println("context do dad running");
 		
+		boolean insideFunction = false;
+		
 		try
 		{
 			//find out the line number and get the begining of the line
@@ -599,12 +619,21 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			int linestart = viewer.getDocument().getLineOffset(linenum);
 			//get the line
 			String currentline = viewer.getDocument().get(linestart,documentOffset - linestart);
+			// Check if we could be inside a function
+			if (currentline.lastIndexOf("(") > 0) {
+				// Ensure there isn't a closing bracket
+				if (currentline.lastIndexOf(")") == -1 || currentline.lastIndexOf(")") < currentline.lastIndexOf("(")) {
+					currentline = currentline.substring(0,currentline.lastIndexOf("("));
+					insideFunction = true;
+				}
+			}
 			//make it a space delimited list
 			currentline = currentline.replace('\"',' ');
 			currentline = currentline.replace('\'',' ');
 			currentline = currentline.replace('#',' ');
 			currentline = currentline.replace('(',' ');
 			currentline = currentline.replace(')',' ');
+
 			//tokenize the bad boy
 			StringTokenizer st = new StringTokenizer(currentline," ");
 			
@@ -613,6 +642,10 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			while(st.hasMoreTokens())
 			{
 				functionname = st.nextToken();
+			}
+			
+			if (insideFunction) {
+				functionname += "(";
 			}
 			
 			//remove the last char (which should be the '(')
@@ -654,19 +687,19 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					//System.out.println(x);
 					Function fun = syntax.getFunction((String)i.next()); 
 						//(Function)i.next();
-					
-					String usage = fun.toString();
-					//System.err.println(usage);
-					
-					result[x] = new ContextInformation(
-						CFPluginImages.get(CFPluginImages.ICON_FUNC),
-						//info,
-						usage,
-						//""
-						usage //fun.getHelp()
-					);
-					this.validator.install(result[x], viewer, documentOffset);
-					x++;
+
+						String usage = fun.toString();
+						//System.err.println(usage);
+						
+						result[x] = new ContextInformation(
+							CFPluginImages.get(CFPluginImages.ICON_FUNC),
+							//info,
+							usage,
+							//""
+							usage //fun.getHelp()
+						);
+						this.validator.install(result[x], viewer, documentOffset);
+						x++;
 				}
 				//System.out.println(x);
 				result[x] = new ContextInformation(

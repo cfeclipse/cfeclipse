@@ -292,6 +292,8 @@ public abstract class SyntaxDictionary {
 		Set filterset = new HashSet();
 		Set fullset = st;
 		
+		
+		
 		if(fullset != null){
 			Iterator it = fullset.iterator();
 			while(it.hasNext())
@@ -325,7 +327,12 @@ public abstract class SyntaxDictionary {
 						"The passed set must have only Strings, Procedures, or Parameters"
 					);
 				}
-				if(possible.toUpperCase().startsWith(start.toUpperCase()))
+				
+				// Strip out unnecessary entries if we are inside a function.
+				if (start.endsWith("(") && possible.equalsIgnoreCase(start.substring(0,start.length()-1))) {
+					filterset.add(item);
+				}
+				else if (possible.toUpperCase().startsWith(start.toUpperCase()))
 				{
 					//System.out.println(possible);
 					filterset.add(item);

@@ -40,6 +40,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.editors.text.TextEditor;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
+import org.eclipse.swt.SWT;
 
 /**
  * @author Rob
@@ -142,8 +143,11 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 				ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS
 				//ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION
 			);
-			
+
 			setAction("ContentAssistAction",action);
+
+			setActionActivationCode(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS,' ', -1, SWT.CTRL);
+
 		}
 		catch(Exception e)
 		{
