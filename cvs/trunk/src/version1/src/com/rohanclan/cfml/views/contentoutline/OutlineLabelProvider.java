@@ -55,6 +55,7 @@ import com.rohanclan.cfml.parser.cfscript.ASTParameterList;
 import com.rohanclan.cfml.parser.cfscript.SimpleNode;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
+import com.rohanclan.cfml.parser.docitems.TagItem;
 
 public class OutlineLabelProvider extends LabelProvider {
 	
@@ -166,29 +167,24 @@ public class OutlineLabelProvider extends LabelProvider {
 	 */
 	public String getText(Object element) 
 	{	
-		if(element instanceof CfmlTagItem)
+		if(element instanceof TagItem) //CfmlTagItem)
 		{
-//			StringBuffer sb = new StringBuffer("cf");
 			StringBuffer sb = new StringBuffer("");			
-			String tname = ((CfmlTagItem)element).getName(); 
+			String tname = ((TagItem)element).getName(); 
 			sb.append( tname );
 			
 			//this is a yucky hack... some items look stupid if not kid gloved
 			if(hasSpecialNeeds(tname))
 			{
-				String data = ((CfmlTagItem)element).getItemData();
-//				data = data.replaceAll("<cf"+tname,"");
-//				data = data.replaceAll("<CF"+tname,"");
-				data = data.replaceAll("<cf"+tname,"");
-				data = data.replaceAll("<CF"+tname,"");
-				
+				String data = ((TagItem)element).getItemData();
+				data = data.replaceAll("<"+tname,"");
 				data = data.replaceAll(">","");
 				sb.append( data );
 			}
 			else
 			{
-				synchronized(syntax)
-				{
+				//synchronized(syntax)
+				//{
 					Set st = syntax.getElementAttributes(tname);
 					
 					//they could use undefined custom tags or made up tags
@@ -200,7 +196,7 @@ public class OutlineLabelProvider extends LabelProvider {
 							p = (Parameter)i.next();
 							if(p.isRequired())
 							{
-								String aval = ((CfmlTagItem)element).getAttributeValue(p.getName());
+								String aval = ((TagItem)element).getAttributeValue(p.getName());
 								if(aval != null && aval.length() > 0)
 								{
 									sb.append(" " + p.getName() + ": " + aval);
@@ -208,11 +204,9 @@ public class OutlineLabelProvider extends LabelProvider {
 							}
 						}
 					}
-				}
+				//}
 			}
 			
-			//sb.append( ((CfmlTagItem)element).getItemData() );
-						
 			return sb.toString();
 		}
 		else if(element instanceof CfmlComment)
@@ -292,13 +286,11 @@ public class OutlineLabelProvider extends LabelProvider {
 	 */
 	private boolean hasSpecialNeeds(String item)
 	{
-		if(
-			item.equals("if") || item.equals("set") || item.equals("loop")
-			|| item.equals("else") || item.equals("elseif") || item.equals("break")
-			|| item.equals("return") || item.equals("defaultcase") || item.equals("try")
-			|| item.equals("rethrow")
-		)
-		{
+		if(item.equals("cfif") || item.equals("cfset") || item.equals("cfloop")
+			|| item.equals("cfelse") || item.equals("cfelseif") || item.equals("cfbreak")
+			|| item.equals("cfreturn") || item.equals("cfdefaultcase") || item.equals("cftry")
+			|| item.equals("cfrethrow")
+		){
 			return true;
 		}
 		return false;
