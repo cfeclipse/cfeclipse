@@ -3304,7 +3304,7 @@
 					<value option="utf-16" />
 				</values>
 			</parameter>
-			<parameter name="statuscode" type="Numeric" required="true">
+			<parameter name="statuscode" type="Numeric" required="false">
 				<help><![CDATA[
 					HTTP status code
 					Required if name not specified
