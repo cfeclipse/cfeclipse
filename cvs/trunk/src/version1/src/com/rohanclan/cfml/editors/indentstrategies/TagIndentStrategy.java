@@ -256,19 +256,20 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			lastChar = doc.getChar(docCommand.offset - 1);
 
 		if(docCommand.offset < doc.getLength())
-			nextChar = doc.getChar(docCommand.offset + 1);
+			nextChar = doc.getChar(docCommand.offset);
 
 		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1);
 
 		isSingleTag = tagIsSingle(doc,docCommand,closingTag);
 
-//		autoCloseTag = !tagIsSingle(doc,docCommand, closingTag) && autoCloseTag;
+		autoCloseTag = !tagIsSingle(doc,docCommand, closingTag) && autoCloseTag;
 
 		// If the user hasn't got auto-insertion of closing chevrons on, then
 		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
-//		if(!autoCloseTag
-	//	        || nextChar != '>')
-		if(!autoCloseTag)
+		if(!autoCloseTag
+	        || nextChar != '>')
+		    //System.out.println("Next char is a " + nextChar);
+		//if(!autoCloseTag)
 			closingTag+= ">";
 
 		closingTag = "</" + closingTag;
@@ -284,7 +285,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					docCommand.caretOffset = docCommand.offset + 1;
 					docCommand.shiftsCaret = false;
 				}
-				if(autoCloseTag)	// If we're auto-closing tags then we need a closing chevron.
+				if(autoCloseTag && !closingTag.endsWith(">"))	// If we're auto-closing tags then we need a closing chevron.
 					closingTag+= ">";
 
 				//docCommand.caretOffset = docCommand.offset;
@@ -482,7 +483,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			}
 		} catch(BadLocationException ex) {
 			System.err.println("TagIndentStategy::customizeDocumentCommand() - Caught BadLocationException");
-			//ex.printStackTrace();
+			ex.printStackTrace();
 			return;
 		}
     }
@@ -584,7 +585,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(lineDelim == null) lineDelim = "\r\n";
 
 			int colPosition = doc.getLineLength(currLine) - 1 - lineDelim.length();
-
+			
 			//
 			// Now we just need to work out how much indentation to do...
 			//int posForIndent = findEndOfTagNameOrStartOfAttribute(doc.get(), docCommand.offset-1);
@@ -592,20 +593,32 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			int numIndents = 0;
 			int indentWidth = 0;
 			int spaceRemainder = 0;
-			//int prevLineIndent = getPrevLineWhiteSpace(doc,docCommand.offset).length();
-			int colPos = posForIndent - doc.getLineOffset(currLine) + 1;// - prevLineIndent;
+			
+			
+			String prefix = getPrevLineWhiteSpace(doc,docCommand.offset);
+			String newPrefix = "";
+			
 			//
 			// Work out our indent. If it's a tab we just use 4 (editor default), otherwise the length of the indent string
 			// Then we work out the indents required to get us to the column position. Then we work out
 			// what the remainder is that cannot be made up of full indents. This will be made up of spaces.
 			// Then we simply append the required indents in, then the required number of spaces.
-			if(this.getIndentString().compareTo("\t") == 0)
+			if(this.getIndentString().compareTo("\t") == 0) {
 				indentWidth = Integer.parseInt(CFMLPlugin.getDefault().getPreferenceStore().getString("tabWidth")) ;	// TODO: Work out how to get the texteditor tab width
-			else
+				newPrefix = prefix.replaceAll(" ","");
+			}
+			else {
 				indentWidth = this.getIndentString().length();
+				 newPrefix = prefix.replaceAll("\\t","");
+			}
+			
+			docCommand.text += newPrefix;
 
-			numIndents = colPos / indentWidth;
-			spaceRemainder = colPos - (indentWidth * numIndents);
+			
+			int indentChars = posForIndent - doc.getLineOffset(currLine) - newPrefix.length() + 1;
+			
+			numIndents = indentChars / indentWidth;
+			spaceRemainder = indentChars - (indentWidth * numIndents);
 
 			
 			for(int i = 0; i < numIndents; i++ ) {
