@@ -216,7 +216,7 @@ public class CFParser {
 					+ ": Got the text \'" + matcher.group() + "\'"
 				);
 			}catch(BadLocationException excep) {
-				//System.err.println("Apparently the match was out of the document!");
+				System.err.println("Apparently the match was out of the document!");
 				userMessage(0, "getTagMatches", "Apparently the match was out of the document!");
 			}
 			matches.add(new TagMatch(matcher.group(), matcher.start(), matcher.end(), lineNumber));
@@ -281,7 +281,7 @@ public class CFParser {
 	 */
 	protected void userMessage(int indent, String method, String message)
 	{
-		System.out.println(Util.GetIndent(indent) + "CFParser::" + method + "() - " + message);
+		System.out.println("CFParser::userMessage() - " + Util.GetIndent(indent) + "CFParser::" + method + "() - " + message);
 	}
 	
 	/**
@@ -374,7 +374,7 @@ public class CFParser {
 	 * If the item does not match the most recent item we've a problem. At the moment
 	 * it reports an error and throws away the closer.
 	*/
-		//System.out.println(GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
+		System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Found closing tag of " + match.match);
 		// Closing tag, so we attempt to match it to the current top of the stack.
 		String closerName = match.match;
 		if(closerName.indexOf("</cf") != -1)
@@ -383,7 +383,7 @@ public class CFParser {
 			closerName = closerName.substring(4, closerName.length()-1);
 			
 			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
-//			System.out.println(GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
+System.out.println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
 		
 			if(topItem.itemName.compareTo(closerName) == 0)
 			{
@@ -436,7 +436,7 @@ public class CFParser {
 	 */
 	protected void handleCFScriptBlock(TagMatch match, Stack matchStack)
 	{
-//		System.out.println(GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");		
+System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");		
 	}
 	
 	/**
@@ -450,7 +450,7 @@ public class CFParser {
 	 */
 	protected void handleHTMLTag(String tagName, TagMatch match, Stack matchStack, HashMap attrMap, boolean isACloser)
 	{
-//		System.err.println(GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
+System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
 	}
 	
 	/**
@@ -530,17 +530,17 @@ public class CFParser {
 		
 		if(!newItem.addAttributes(attrMap))
 		{
-//			System.out.println("CFParser::handleCFTag() - Item \'" + newItem.getName() + "\' failed on map attr add!");
+			System.out.println("CFParser::handleCFTag() - Item \'" + newItem.getName() + "\' failed on map attr add!");
 		}
 		if(newItem instanceof CfmlTagFunction)
 		{
-//			System.out.println("CFParser::handleCFTag() - Map 'name': " + attrMap.get("name"));
-//			System.out.println("CFParser::handleCFTag() - Tag 'name': " + newItem.getAttribute("name"));
+			System.out.println("CFParser::handleCFTag() - Map 'name': " + attrMap.get("name"));
+			System.out.println("CFParser::handleCFTag() - Tag 'name': " + newItem.getAttribute("name"));
 		}
-
+	
 		if(newItem instanceof CfmlTagFunction)
 		{
-//			System.out.println("CFParser::handleCFTag() - Function has name of" + ((CfmlTagFunction)newItem).getAttribute("name"));
+System.out.println("CFParser::handleCFTag() - Function has name of" + ((CfmlTagFunction)newItem).getAttribute("name"));
 			parserState.addFunction(newItem);
 		}
 		
@@ -568,7 +568,7 @@ public class CFParser {
 */
 				top.addChild(newItem);
 				matchStack.push(top);
-//				System.out.println(GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
+System.out.println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
 			}	
 		} catch(Exception anExcep) {
 			parserState.addMessage(new ParseError(getLineNumber(match.startPos), match.startPos, match.endPos, match.match, "An unknown error occurred during parsing."));
@@ -624,7 +624,7 @@ public class CFParser {
 			{
 				TagMatch match = (TagMatch)matches.get(matchPos);
 				String matchStr = match.match;
-//				System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
+System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					// Is a tag
@@ -667,7 +667,7 @@ public class CFParser {
 							}
 							else
 							{
-//								System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "\'");
+System.out.println("CFParser::createDocTree() - Found CFML tag \'" + tagName + "\'");
 								handleCFTag(tagName, match, matchStack, stripAttributes(attributes), isACloser);
 							}
 						}
@@ -732,13 +732,13 @@ public class CFParser {
 			
 			if(currChar == '<' && (next2Chars.compareTo("cf") == 0 || next3Chars.compareTo("/cf") == 0))
 			{	// CFML tag embedded in HTML
-//				System.out.println("FOUND!: an embedded CFML tag within HTML! : " + inData.substring(0, currPos));
+System.out.println("CFParser::matchingHTML() - FOUND!: an embedded CFML tag within HTML! : " + inData.substring(0, currPos));
 				currPos = matchingCFML(parseState, inData, currPos);
 				cfTagCount++;
 			}
 			else if(!inQuotes && currChar == '>')
 			{
-//				System.out.println("FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos+1));				
+System.out.println("CFParser::matchingHTML() - FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos+1));				
 				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 0), 
 									State.ADD_BEFORE, cfTagCount);
 				finalOffset = currPos;
@@ -749,7 +749,7 @@ public class CFParser {
 		}
 		if(finalOffset != currPos)
 		{
-			System.err.println("FATAL ERROR: Failed to find the end of an HTML tag!: " + inData.substring(currDocOffset, currPos));
+			System.err.println("CFParser::matchingHTML() - FATAL ERROR: Failed to find the end of an HTML tag!: " + inData.substring(currDocOffset, currPos));
 			
 			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
 												inData.substring(currDocOffset, currPos), 
@@ -810,7 +810,7 @@ public class CFParser {
 			if(!inQuotes && currChar == '>')
 			{
 				finalOffset = currPos;
-//				System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
+System.out.println("FOUND!:a CFML tag!: " + inData.substring(currDocOffset, currPos+1));
 				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
 												getLineNumber(currDocOffset)));
 				break;
@@ -873,10 +873,10 @@ public class CFParser {
 							if(next2Chars.compareTo("!-") == 0)
 							{	// Testing for comment: <!--
 								// TODO: Find out whether comments can occur in tags
-//								System.out.println("Found a comment");
+System.out.println("CFParser::tagMatchingAttempts() - Found a comment");
 								if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
 								{
-//									System.out.println("\t it's a CFML comment");
+System.out.println("CFParser::tagMatchingAttempts() - \t it's a CFML comment");
 									currState = MATCHER_CFMLCOMMENT;
 									lastMatch = currPos;
 								}
@@ -888,7 +888,7 @@ public class CFParser {
 							}
 							else if(next2Chars.compareTo("cf") == 0)
 							{
-//								System.out.println("Found the beginnings of a CF tag");
+System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
 								//
 								// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 								// container *only* for things to go in the document tree.
@@ -904,7 +904,7 @@ public class CFParser {
 							}
 							else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
 							{
-								//System.out.println("Found the beginnings of an HTML tag.");
+								System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of an HTML tag.");
 								currPos = matchingHTML(parserState, inData, currPos);
 							}
 							break;
@@ -917,12 +917,12 @@ public class CFParser {
 						next2Chars.compareTo("--") == 0 && 
 						inData.charAt(currPos+3) == '>')
 				{
-//					System.out.println("Found the end of a CFML comment");
+System.out.println("CFParser::tagMatchingAttempts() - Found the end of a CFML comment");
 					currState = MATCHER_NOTHING;
 				}
 				else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
 				{
-//					System.out.println("Found the end of an HTML comment");
+System.out.println("CFParser::tagMatchingAttempts() - Found the end of an HTML comment");
 					currState = MATCHER_NOTHING;
 				}
 			}

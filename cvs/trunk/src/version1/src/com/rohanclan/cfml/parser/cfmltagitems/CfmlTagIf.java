@@ -54,10 +54,10 @@ public class CfmlTagIf extends CfmlTagItem {
 			else if((lastIsElseIf || lastIsElse) && !(itemIsElse || itemIsElseIf) )	// Is the previous item an else/elseif and the current item isn't one?		 
 				mostRecentItem.addChild(newItem); 	
 			else 
-				addOkay = addOkay && super.addChild(newItem);	// No elses if elseifs, so we add it to the if's children.
+				addOkay = addOkay & super.addChild(newItem);	// No elses if elseifs, so we add it to the if's children.
 		}
 		else
-			addOkay = addOkay && super.addChild(newItem);
+			addOkay = addOkay & super.addChild(newItem);
 		
 		return addOkay;
 	}

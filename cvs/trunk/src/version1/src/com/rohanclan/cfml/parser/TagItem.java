@@ -40,7 +40,7 @@ import java.util.Set;
  */
 public class TagItem extends DocItem {
 	
-	protected HashMap attributes;
+	protected HashMap itemAttributes;
 	/** Optional. 
 	   *  
 	   *  The matching item for this DocItem. For example CFML tags quite often have a matching closing tag, as do HTML tags. One example:
@@ -68,34 +68,34 @@ public class TagItem extends DocItem {
 		/*
 		 * Is the attribute already present in the tag's attribute list? 
 		 */
-		if(attributes.containsKey(attrName))
+		if(itemAttributes.containsKey(attrName))
 		{
 			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
 									"Attribute \'" + attrName + "\' has already been defined."));
 			addOkay = false;
 		}
 		
-		attributes.put(attrName, attrValue);
+		itemAttributes.put(attrName, attrValue);
 		
 		return addOkay;
 	}
 
-	public boolean addAttributes(HashMap attributes) 
+	public boolean addAttributes(HashMap newAttributes) 
 	{
 		boolean addOkay = true;
-		Set keySet = attributes.keySet();
+		Set keySet = newAttributes.keySet();
 		Object [] keys = keySet.toArray();
 		for(int i = 0; i < keys.length; i++)
 		{
 			String key = (String)keys[i];
-			addOkay = addOkay && addAttribute(key, (String)attributes.get(key));
+			addOkay = addAttribute(key, (String)newAttributes.get(key)) & addOkay;
 		}
 		return addOkay;
 	}
 	
 	public String getAttribute(String attrName)
 	{
-		return (String)attributes.get(attrName);
+		return (String)itemAttributes.get(attrName);
 	}
 	
 	public DocItem getMatchingItem() {
@@ -105,7 +105,7 @@ public class TagItem extends DocItem {
 	public TagItem(int line, int startDocPos, int endDocPos, String name)
 	{
 		super(line, startDocPos, endDocPos, name);
-		attributes = new HashMap();
+		itemAttributes = new HashMap();
 	}
 	
 	public boolean hasClosingTag() throws NullPointerException 

@@ -33,11 +33,11 @@ public class CfmlTagModule extends CfmlTagItem {
 	public boolean addAttribute(String attrName, String attrValue) {
 		boolean addOkay = true;
 		
-		if(attributes.containsKey(attrName))
+		if(itemAttributes.containsKey(attrName))
 		{
 			addOkay = false;
 		}
-		attributes.put(attrName, attrValue);
+		itemAttributes.put(attrName, attrValue);
 		return addOkay;
 	}
 }

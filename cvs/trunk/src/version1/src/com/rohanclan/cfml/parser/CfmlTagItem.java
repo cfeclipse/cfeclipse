@@ -56,7 +56,7 @@ public class CfmlTagItem extends TagItem {
 	public boolean addAttribute(String attrName, String attrValue) 
 	{
 		boolean addOkay = true;
-		Set attributes = syntax.getFilteredAttributes(itemName, attrName);
+		Set attributes = syntax.getFilteredAttributes(itemName.toLowerCase(), attrName.toLowerCase());
 		if(attributes.size() == 0)
 		{
 			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,

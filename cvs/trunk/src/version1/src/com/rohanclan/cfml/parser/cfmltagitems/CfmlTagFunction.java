@@ -6,6 +6,9 @@
  */
 package com.rohanclan.cfml.parser.cfmltagitems;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import com.rohanclan.cfml.parser.CfmlTagItem;
 import com.rohanclan.cfml.parser.ParseError;
 
@@ -23,7 +26,7 @@ public class CfmlTagFunction extends CfmlTagItem {
 	public boolean IsSane() {
 		boolean retval = true;
 		
-		if(!attributes.containsKey("name") || ((String)attributes.get("name")).length() == 0)
+		if(!itemAttributes.containsKey("name") || ((String)itemAttributes.get("name")).length() == 0)
 		{
 			addParseMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 							"<cffunction> must have a name."));
