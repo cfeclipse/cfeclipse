@@ -80,6 +80,12 @@ public class CFConfiguration extends SourceViewerConfiguration
 	private ColorManager colorManager;
 	
 	private ContentAssistant assistant;
+	
+	private CFAutoIndentStrategy indentStrategy;
+	
+	private IPreferenceStore store;
+	
+	private int tabWidth;
 
 	/**
 	 * Need a color manager to get partition colors
@@ -88,14 +94,22 @@ public class CFConfiguration extends SourceViewerConfiguration
 	public CFConfiguration(ColorManager colorManager) 
 	{
 		this.colorManager = colorManager;
-		
+		 store = CFMLPlugin.getDefault().getPreferenceStore();
+	     indentStrategy = new CFAutoIndentStrategy();
+	     tabWidth = Integer.parseInt(store.getString(ICFMLPluginConstants.P_TAB_WIDTH).trim());
+	     indentStrategy.setIndentString(tabWidth,store.getString(ICFMLPluginConstants.P_TABS_AS_SPACES).trim().equalsIgnoreCase("true"));
+	        
 		
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 		
+		
 	}
 	
-
+	public int getTabWidth(ISourceViewer sourceViewer) {
+		System.out.println("GetTabWidth called");
+		return tabWidth;
+	}
 	
 	/**
 	 * This defines what sections (partitions) are valid for the document
@@ -451,24 +465,32 @@ public class CFConfiguration extends SourceViewerConfiguration
 	
 	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0,
             String arg1) {
-        CFAutoIndentStrategy newStrategy = new CFAutoIndentStrategy();
-        return newStrategy;
+        return indentStrategy;
     } 	
 	
+
 	// This method gets called when the preference page is saved.
 	public void propertyChange(PropertyChangeEvent event)
     {
 
-    	System.err.println("Property change listener notified." + event.getProperty());
+    	System.err.println("CFConfiguration property change listener notified." + event.getProperty());
     	
         if(event.getProperty().equals("insightDelay")) {
-        	IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
     		int delay = Integer.parseInt(store.getString(ICFMLPluginConstants.P_INSIGHT_DELAY).trim());
     		assistant.enableAutoActivation(true);
     		assistant.setAutoActivationDelay(delay);
     		//System.err.println("Insight delay set to " + delay);
         }
+        else if(event.getProperty().equals("tabsAsSpaces") || event.getProperty().equals("tabWidth")) {
+        	IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
+    		tabWidth = Integer.parseInt(store.getString(ICFMLPluginConstants.P_TAB_WIDTH).trim());
+    		boolean tabsAsSpaces = store.getString(ICFMLPluginConstants.P_TABS_AS_SPACES).trim().equalsIgnoreCase("true");    		
+        	indentStrategy.setIndentString(tabWidth,tabsAsSpaces);
+        	
+        }
+		
         
     }
+
 	
 }

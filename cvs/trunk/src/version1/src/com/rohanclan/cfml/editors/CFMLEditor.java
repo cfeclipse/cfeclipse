@@ -35,6 +35,8 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 //import java.util.ResourceBundle;
 //import org.eclipse.swt.SWT;
 
@@ -48,9 +50,13 @@ import org.eclipse.jface.text.source.ISourceViewer;
 //import org.eclipse.ui.texteditor.StatusTextEditor;
 import org.eclipse.ui.editors.text.TextEditor;
 
-public class CFMLEditor extends TextEditor {
+public class CFMLEditor extends TextEditor  
+implements IPropertyChangeListener {
 
 	private ColorManager colorManager;
+	
+	private CFConfiguration configuration;
+	//private Composite parent;
 	
 	protected GenericEncloserAction testAction;
 	
@@ -59,7 +65,9 @@ public class CFMLEditor extends TextEditor {
 		super();
 		colorManager = new ColorManager();
 		//setup color coding and the damage repair stuff
-		setSourceViewerConfiguration(new CFConfiguration(colorManager));
+		
+		configuration = new CFConfiguration(colorManager);
+		setSourceViewerConfiguration(configuration);
 		//assign the cfml document provider which does the partitioning
 		//and connects it to this Edtior
 		
@@ -69,10 +77,14 @@ public class CFMLEditor extends TextEditor {
 		// getting the document filename when a new document is opened.
 		IResourceChangeListener listener = new MyResourceChangeReporter();
 		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
+
+		// This ensures that we are notified when the preferences are saved
+		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 	}
 	
 	public void createPartControl(Composite parent) 
 	{
+		//this.parent = parent;
 		super.createPartControl(parent);
 	}
 	
@@ -111,5 +123,20 @@ public class CFMLEditor extends TextEditor {
 		super.dispose();
 	}
 	
-	
+	public void propertyChange(PropertyChangeEvent event)
+    {
+		/*
+		 * TODO: See if there's any way to implement this without resetting the
+		 * tabs for the whole document. If not then at least try to find a way
+		 * to have the cursor stay at the position it was when the person went 
+		 * to the preferences page.
+		 * 
+		 */
+		if(event.getProperty().equals("tabsAsSpaces") || event.getProperty().equals("tabWidth")) {
+			System.out.println("Tab preferences have changed. Resetting the editor.");
+			ISourceViewer sourceViewer = getSourceViewer();
+			sourceViewer.getTextWidget().setTabs(configuration.getTabWidth(sourceViewer));
+        }
+		
+    }
 }

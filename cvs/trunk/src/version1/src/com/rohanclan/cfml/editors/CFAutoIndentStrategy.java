@@ -17,8 +17,12 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.BadLocationException;
 
 
-public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 
+public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
+	
+	private String indentString = "\t";
+	
+	
 	/* (non-Javadoc)
 	 * Method declared on IAutoIndentStrategy
 	 */
@@ -28,6 +32,25 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 		else if ("}".equals(c.text)) {  
 			smartInsertAfterBracket(d, c);
 		}
+		else if (c.text.equals("\t")) {
+			c.text = indentString;
+		}
+	}
+	
+	public void setIndentString(int tabWidth, boolean tabsAsSpaces) {
+		if(tabsAsSpaces) {
+			System.err.println("Indent string set to "+tabWidth+" spaces.");
+			String s = new String();
+			for (int i=0;i<tabWidth;i++) {
+				s+= " ";
+			}
+			indentString = s;
+		}
+		else {
+			System.err.println("Indent string set to 1 tab.");
+			indentString = "\t";
+		}
+		//System.err.println("Indent string set to: |"+indentString+"|");
 	}
 	
 	/**
@@ -264,4 +287,5 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 			System.out.println("BadLocationException");
 		}
 	}
+
 } 

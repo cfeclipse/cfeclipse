@@ -98,6 +98,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
         super.initializeDefaultPluginPreferences();
         IPreferenceStore store = getPreferenceStore();
         store.setDefault(ICFMLPluginConstants.P_INSIGHT_DELAY, "500");   //$NON-NLS-1$
+        store.setDefault(ICFMLPluginConstants.P_TAB_WIDTH, "1");
+        store.setDefault(ICFMLPluginConstants.P_TABS_AS_SPACES, "true");
     }
 	/**
 	 * Returns the shared instance.

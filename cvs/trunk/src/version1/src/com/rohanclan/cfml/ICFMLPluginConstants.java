@@ -15,4 +15,8 @@ package com.rohanclan.cfml;
  */
 public interface ICFMLPluginConstants {
 	String P_INSIGHT_DELAY = "insightDelay";
+	
+	String P_TABS_AS_SPACES = "tabsAsSpaces";
+	
+	String P_TAB_WIDTH = "tabWidth";
 }
