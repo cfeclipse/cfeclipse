@@ -24,27 +24,99 @@
  */
 package org.cfeclipse.laszlo.editors;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.Token;
 
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.dictionary.SyntaxDictionary;
+import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.TagRule;
 
 public class LaszloPartitionScanner extends RuleBasedPartitionScanner {
 	
 	public LaszloPartitionScanner() {
-		IToken xmlComment = new Token(CFPartitionScanner.HTM_COMMENT);
-		IToken tag = new Token(CFPartitionScanner.ALL_TAG);
-		IToken script = new Token(CFPartitionScanner.J_SCRIPT);
+		IToken doctype	 	= new Token(CFPartitionScanner.DOCTYPE);
+		IToken xmlComment 	= new Token(CFPartitionScanner.HTM_COMMENT);
+		IToken tag 			= new Token(CFPartitionScanner.ALL_TAG);
+		IToken script 		= new Token(CFPartitionScanner.J_SCRIPT);
+		//
+		IToken form			= new Token(CFPartitionScanner.FORM_TAG);
+		IToken table			= new Token(CFPartitionScanner.TABLE_TAG);
+		IToken unktag		= new Token(CFPartitionScanner.UNK_TAG);
 		
-		IPredicateRule[] rules = new IPredicateRule[3];
-
-		rules[0] = new MultiLineRule("<!--", "-->", xmlComment);
-		rules[1] = new MultiLineRule("<script>","</script>",script);
-		rules[2] = new TagRule(tag);
+		List rules = new ArrayList();
 		
-		setPredicateRules(rules);
+		//declare rule
+		rules.add(new MultiLineRule("<?", "?>", doctype));
+		//comments
+		rules.add(new MultiLineRule("<!--", "-->", xmlComment));
+		
+		rules.add(new MultiLineRule("<script","</script>",script));
+				
+		SyntaxDictionary sd = DictionaryManager.getDictionary(LaszloSyntaxDictionary.LASDIC);
+		
+		Tag tg = null;
+		try
+		{
+			Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
+			
+			//this is going to be used to tell if we need to add a form, table,
+			//or normal tag for the html tags
+			IToken tmp = tag;
+			
+			//loop over all the tags in the html dictionary and try to set the 
+			//partition to the correct type
+			Iterator it = elements.iterator();
+			while(it.hasNext())
+			{
+				String ename = (String)it.next();
+				
+				//script and style are handled above (they are special)
+				if(!ename.equals("script"))
+				{
+					tg = sd.getTag(ename);
+					
+					if(tg != null){
+						
+						//colour (<=for ollie) form and table tags differently...
+						if(tg.isTableTag()){	tmp = table; }
+						else if(tg.isFormTag()){ tmp = form; }
+						else { tmp = tag; }
+						
+						rules.add(new MultiLineRule("<" + ename,">", tmp));
+						//if this is supposed to have an end tag add it too
+						if(!tg.isSingle())
+						{	
+							rules.add(new MultiLineRule("</" + ename,">", tmp));
+						}
+					}else{
+						System.err.println(ename + " is null?");
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+		
+		//catch any other tags we dont know about (xml etc) and make them
+		//a different color
+		rules.add(new TagRule(unktag));
+		
+		IPredicateRule[] rulearry = new IPredicateRule[rules.size()];
+		rules.toArray(rulearry);
+		
+		setPredicateRules(rulearry);
 	}
 }

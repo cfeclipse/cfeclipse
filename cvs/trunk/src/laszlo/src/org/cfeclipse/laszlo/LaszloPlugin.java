@@ -82,11 +82,24 @@ public class LaszloPlugin extends AbstractUIPlugin {
 			laszlodic.setDictionaryBaseURL(new URL(
 				LaszloPlugin.getDefault().getBundle().getEntry("/"), "dictionary/"
 			));
-			laszlodic.loadDictionary("laszlo_base.xml");
+			//this should be a setting or something at some point. the base
+			//one holds the lowest level laszlo objects only hard core people use
+			//that stuff I think not us newbies :)
+			//laszlodic.loadDictionary("laszlo_base.xml");
 			laszlodic.loadDictionary("laszlo.xml");
 			
 			DictionaryManager.addDictionary(
 				LaszloSyntaxDictionary.LASDIC, laszlodic
+			);
+			
+			LaszloSyntaxDictionary laszloscript = new LaszloSyntaxDictionary();
+			laszloscript.setDictionaryBaseURL(new URL(
+				LaszloPlugin.getDefault().getBundle().getEntry("/"), "dictionary/"
+			));
+			laszloscript.loadDictionary("laszlo_script.xml");
+			
+			DictionaryManager.addDictionary(
+				LaszloSyntaxDictionary.LASSCRIPT, laszloscript
 			);
 			
 			//startup the image registry
@@ -124,7 +137,8 @@ public class LaszloPlugin extends AbstractUIPlugin {
 		);
 		
 		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
-		cfscp.changeDictionary(DictionaryManager.JSDIC);
+		//cfscp.changeDictionary(DictionaryManager.JSDIC);
+		cfscp.changeDictionary(LaszloSyntaxDictionary.LASSCRIPT);
 		
 		//thses are kind of like the rules on how to do content assist
 		camInstance.registerRootAssist(cfscp);

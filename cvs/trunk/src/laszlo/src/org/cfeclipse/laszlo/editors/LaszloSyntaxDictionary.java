@@ -33,7 +33,8 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
  * @author robrohan
  */
 public class LaszloSyntaxDictionary extends SyntaxDictionary implements SyntaxDictionaryInterface {
-	public static final String LASDIC = "LASDIC_DICTIONARY";
+	public static final String LASDIC 	= "LASDIC_DICTIONARY";
+	public static final String LASSCRIPT 	= "LASSCRIPT_DICTIONARY";
 	
 	/**
 	 * 

@@ -26,12 +26,16 @@ package org.cfeclipse.laszlo.editors;
 
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.CFConfiguration;
 import com.rohanclan.cfml.editors.CFTextHover;
 import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import com.rohanclan.cfml.editors.script.ScriptScanner;
+import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 
 public class LaszloConfiguration extends CFConfiguration { 
 	
@@ -51,6 +55,27 @@ public class LaszloConfiguration extends CFConfiguration {
 			CFPartitionScanner.J_SCRIPT
 		};
 	}	
+	
+	/**
+	 * Override the javascript scanner so we can provide laszlo specific stuff
+	 * @return
+	 */
+	protected ScriptScanner getScriptScanner() 
+	{
+		Token textToken = new Token(
+			new TextAttribute(
+				colorManager.getColor(
+					preferenceManager.getColor(
+							CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT
+					)
+				)
+			)
+		);
+		LaszloScriptScanner scriptscanner = new LaszloScriptScanner(colorManager, preferenceManager);
+		scriptscanner.setDefaultReturnToken(textToken);
+		return scriptscanner;
+	}
+	
 	
 	/**
 	 * Register the text hover
