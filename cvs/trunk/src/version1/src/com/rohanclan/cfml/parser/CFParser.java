@@ -107,7 +107,7 @@ public class CFParser {
 	 * \s*(\w*)="(\w*)"
 	 */
 	//static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"(\\w*)\"";
-	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"([#|\\.|\\w]*)\"";
+	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"([-|#|_|\\.|\\w]*)\"";
 	
 	
 	static protected final int USRMSG_INFO 		= 0x00;
