@@ -66,7 +66,7 @@ public class CFScriptScanner extends RuleBasedScanner {
 		);
 		
 		IToken cfcomment = new Token(new TextAttribute(
-			manager.getColor(ICFColorConstants.HTM_COMMENT))
+			manager.getColor(ICFColorConstants.CF_COMMENT))
 		);
 		
 		IToken string = new Token(new TextAttribute(
