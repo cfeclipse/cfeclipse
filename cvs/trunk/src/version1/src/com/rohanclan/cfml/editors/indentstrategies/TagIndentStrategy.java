@@ -395,7 +395,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.offset - 1 >= 0) {
 				beforeLastChar = doc.getChar(docCommand.offset-1);
 			}
-			System.out.println("TagIndentStrategy::customizeDocumentCommand() - Got a \'" + firstCommandChar + "\'");
+			//System.out.println("TagIndentStrategy::customizeDocumentCommand() - Got a \'" + firstCommandChar + "\'");
 			//
 			// Handle a backspace or delete
 			if(docCommand.length > 0 && docCommand.text.length() == 0) {
