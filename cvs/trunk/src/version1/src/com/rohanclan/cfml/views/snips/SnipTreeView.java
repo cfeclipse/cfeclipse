@@ -58,8 +58,9 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.InputDialog;
 
 import org.eclipse.ui.IFileEditorInput;
-
 import org.eclipse.core.runtime.Path;
+
+import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
  * @author Rob
@@ -82,6 +83,9 @@ public class SnipTreeView extends ViewPart
 	public static final String HOMESITE_SNIP_TYPE = "Homesite";
 	public static final String CFECLIPSE_SNIP_TYPE = "CFEclipse";
 	public static final String UNKNOWN_SNIP_TYPE = "Unknown";
+	
+	public static final String DW_SNIP_EXT  = "csn";
+	public static final String CFE_SNIP_EXT = "xml";
 	
 	/** the treeviewer control */
 	protected TreeViewer treeViewer;
@@ -241,60 +245,84 @@ public class SnipTreeView extends ViewPart
 	 */
 	protected void createActions() 
 	{
-		insertAction = new Action("Insert"){
+		
+		insertAction = new Action(
+			"Insert",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SNIP)
+		){
 			public void run() { 
 				insertItem();
 			}
 		};
-		createFolderAction = new Action("Create Folder"){
+		
+		createFolderAction = new Action(
+			"Create Folder",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_PACKAGE)
+		){
 			public void run() { 
 				createSnipFolder();
 			}
 		};
-		createSnippetAction = new Action("Create Snippet"){
+		createSnippetAction = new Action(
+			"Create Snippet",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_ADD)
+		){
 			public void run() { 
 				createSnippet();
 			}
 		};
-		editSnippetAction = new Action("Edit Snippet"){
+		editSnippetAction = new Action(
+			"Edit Snippet",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_EDIT)
+		){
 			public void run() { 
 				editSnippet();
 			}
 		};
-		refreshSnippetsAction = new Action("Refresh Snippets") {
+		refreshSnippetsAction = new Action(
+			"Refresh Snippets",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH)		
+		) {
 			public void run() {
 				reloadSnippets();
 			}
-			
 		};
-		deleteSnippetAction = new Action("Delete Snippet") {
+		deleteSnippetAction = new Action(
+			"Delete Snippet",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REMOVE)
+		){
 			public void run() {
 				deleteSnippet();
 			}
-			
 		};
-		deleteFolderAction = new Action("Delete Folder") {
+		deleteFolderAction = new Action(
+			"Delete Folder",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_DELETE)
+		) {
 			public void run() {
 				deleteSnipFolder();
 			}
-			
 		};
-		
-		
 	}
-	
-	
-	
 	
 	/**
 	 * creates all the menus
+	 * This is here mosly because I have found Mac users dont like to right 
+	 * click most of the time (ctrl+click actually)
 	 */
 	protected void createMenus() {
 		IMenuManager rootMenuManager = getViewSite().getActionBars().getMenuManager();
-		//rootMenuManager.add(refreshSnippetsAction);
+		rootMenuManager.add(refreshSnippetsAction);
+		rootMenuManager.add(insertAction);
+		
+		rootMenuManager.add(createSnippetAction);
+		rootMenuManager.add(editSnippetAction);
+		rootMenuManager.add(deleteSnippetAction);
+		
+		rootMenuManager.add(createFolderAction);
+		rootMenuManager.add(deleteFolderAction);
 	}
-
-
+	
 	/**
 	 * Create context menu.
 	 */
@@ -316,15 +344,10 @@ public class SnipTreeView extends ViewPart
 		getSite().registerContextMenu(menuMgr, treeViewer);
 	}
 	
-	
-	
 	private void fillContextMenu(IMenuManager mgr) {
-		
-		
 		File selectedFile = getSelectedFile();
-
 		
-		if (selectedFile.isDirectory()) {
+		if(selectedFile.isDirectory()) {
 			mgr.add(createFolderAction);
 			mgr.add(createSnippetAction);
 			String[] files = selectedFile.list();
@@ -332,12 +355,12 @@ public class SnipTreeView extends ViewPart
 				mgr.add(deleteFolderAction);
 			}
 			
-		}
-		else {
+		} else {
 			mgr.add(insertAction);
 			mgr.add(editSnippetAction);
 			mgr.add(deleteSnippetAction);
 		}
+		
 		mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 		//mgr.add(deleteItemAction);
 		//mgr.add(new Separator());
@@ -349,9 +372,17 @@ public class SnipTreeView extends ViewPart
 	 */
 	protected void createToolbar() {
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
-		toolbarManager.add(refreshSnippetsAction);
 		//toolbarManager.add(createSnippetAction);
 		//toolbarManager.add(createFolderAction);
+		toolbarManager.add(refreshSnippetsAction);
+		toolbarManager.add(insertAction);
+		
+		toolbarManager.add(createSnippetAction);
+		toolbarManager.add(editSnippetAction);
+		toolbarManager.add(deleteSnippetAction);
+		
+		toolbarManager.add(createFolderAction);
+		toolbarManager.add(deleteFolderAction);
 	}
 	
 	/**
@@ -560,9 +591,9 @@ public class SnipTreeView extends ViewPart
 		
 		File parentDirectory = selectedfile.getParentFile();
 
-		String f = selectedfile.getAbsolutePath();
+		String f = selectedfile.getAbsolutePath().toLowerCase();
 
-		if (f.endsWith(".csn") || f.endsWith(".CSN")){
+		if (f.endsWith(SnipTreeView.DW_SNIP_EXT)){
 			snippetType = DREAMWEAVER_SNIP_TYPE;
 		}
 		else {

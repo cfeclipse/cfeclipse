@@ -23,8 +23,6 @@ public class SnipVarParser {
 	/**
 	 * 
 	 */
-
-	
 	public SnipVarParser() {
 		super();
 	}

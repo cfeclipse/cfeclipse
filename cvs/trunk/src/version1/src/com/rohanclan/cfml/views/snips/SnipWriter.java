@@ -26,10 +26,10 @@ public class SnipWriter {
 		this.parentFolder = parentFolder;
 		this.snippetType = snippetType;
 		if (snippetType == SnipTreeView.DREAMWEAVER_SNIP_TYPE) {
-			fileExtension = ".csn";
+			fileExtension = "." + SnipTreeView.DW_SNIP_EXT;
 		}
 		else {
-			fileExtension = ".xml";
+			fileExtension = "." + SnipTreeView.CFE_SNIP_EXT;
 		}
 	}
 	
@@ -76,11 +76,9 @@ public class SnipWriter {
 		return snippetContents;
 	}
 	
-	
 	public void writeFolder (String folderName) {
 		File newFolder = new File(parentFolder.toString() + File.separator + folderName);
 		newFolder.mkdir();
 	}
-	
 	
 }

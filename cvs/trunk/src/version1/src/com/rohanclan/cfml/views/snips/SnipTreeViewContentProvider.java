@@ -40,10 +40,31 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import java.io.File;
+import java.io.FileFilter;
+
+class SnippetFileFilter implements FileFilter {
+	public boolean accept(File f)
+	{
+		String sflower = f.getAbsoluteFile().toString().toLowerCase(); 
+		if(sflower.endsWith(SnipTreeView.DW_SNIP_EXT)
+			|| sflower.endsWith(SnipTreeView.CFE_SNIP_EXT)
+			|| f.isDirectory())	
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public String getDescription()
+	{
+		return "A snippet file filter";
+	}
+}
 
 public class SnipTreeViewContentProvider implements ITreeContentProvider { //, IDeltaListener {
 	/** scratch pad */
 	private static Object[] EMPTY_ARRAY = new Object[0];
+	private static FileFilter snippetfilter = new SnippetFileFilter();
 	protected TreeViewer viewer;
 	protected File rootdir;
 	
@@ -84,7 +105,7 @@ public class SnipTreeViewContentProvider implements ITreeContentProvider { //, I
 		if(parentElement instanceof File)
 		{
 			if(((File)parentElement).isDirectory())
-				return ((File)parentElement).listFiles();
+				return ((File)parentElement).listFiles(snippetfilter);
 		}
 		
 		return EMPTY_ARRAY;
