@@ -1188,7 +1188,7 @@ public class CFParser {
 							lastMatch = currPos;
 						}
 					}
-					else if(next2Chars.compareTo("cf") == 0)
+					else if(next2Chars.toLowerCase().compareTo("cf") == 0)
 					{
 						//
 						// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
