@@ -34,6 +34,9 @@ import com.rohanclan.cfml.util.CFPluginImages;
  */
 
 public class CFCMethodsView extends ViewPart implements IPartListener, IPropertyListener {
+	/** the id for this view (so it can be set in the perspective */
+	public static final String ID_CFCMETHODVIEW = "com.rohanclan.cfml.views.cfcmethods.CFCMethodsView";
+	
 	private TableViewer viewer;
 	private Action jumpToMethod;
 	private Action selectMethod;

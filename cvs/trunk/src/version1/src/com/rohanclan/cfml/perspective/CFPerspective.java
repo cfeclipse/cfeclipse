@@ -29,6 +29,7 @@ import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 //import com.rohanclan.cfml.views.SnipView;
 import com.rohanclan.cfml.views.snips.SnipTreeView;
+import com.rohanclan.cfml.views.cfcmethods.CFCMethodsView;
 
 /**
  * @author Rob
@@ -52,7 +53,8 @@ public class CFPerspective implements IPerspectiveFactory {
 		);
 		//standard resource nav (file / project lister)
 		left.addView(IPageLayout.ID_RES_NAV);
-	
+		left.addView(SnipTreeView.ID_SNIPVIEWTREE);
+		
 		//views to the bottom
 		IFolderLayout bottom = layout.createFolder(
 			"bottom", IPageLayout.BOTTOM, (float)0.75, editorid
@@ -67,8 +69,8 @@ public class CFPerspective implements IPerspectiveFactory {
 			"right", IPageLayout.RIGHT, (float)0.75, editorid
 		);
 		right.addView(IPageLayout.ID_OUTLINE);
-		right.addView(SnipTreeView.ID_SNIPVIEWTREE);
-		
+		//right.addView(SnipTreeView.ID_SNIPVIEWTREE);
+		right.addView(CFCMethodsView.ID_CFCMETHODVIEW);
 		
 		layout.addActionSet(IPageLayout.ID_NAVIGATE_ACTION_SET);
 		
@@ -76,12 +78,14 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
 		layout.addShowViewShortcut(IPageLayout.ID_TASK_LIST);
 		layout.addShowViewShortcut(IPageLayout.ID_BOOKMARKS);
-		//layout.addShowViewShortcut(SnipView.ID_SNIPVIEW);
 		layout.addShowViewShortcut(SnipTreeView.ID_SNIPVIEWTREE);
+		layout.addShowViewShortcut(CFCMethodsView.ID_CFCMETHODVIEW);
 		
 		//add wizards here
+		layout.addNewWizardShortcut("com.rohanclan.cfml.wizards.NewCfmlWizard");
+		layout.addNewWizardShortcut("com.rohanclan.cfml.wizards.NewCfcWizard");
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.folder");
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.file");
-		//layout.addNewWizardShortcut("com.rohanclan.cfml.wizards. ...");
+		
 	}
 }

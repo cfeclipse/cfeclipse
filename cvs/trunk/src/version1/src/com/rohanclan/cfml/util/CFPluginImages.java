@@ -42,9 +42,6 @@ import com.rohanclan.cfml.CFMLPlugin;
  */
 public class CFPluginImages {
 	
-	//protected static final String NAME_PREFIX =	"net.sourceforge.phpdt.internal.ui.";
-	//protected static final int NAME_PREFIX_LENGTH = NAME_PREFIX.length();
-
 	/** the path to the icons. i.e. file://C/blah/plugin/icons/ */
 	protected static URL iconBaseURL;
 	
@@ -56,6 +53,7 @@ public class CFPluginImages {
 	public static final String ICON_FUNC    = "function.gif";
 	public static final String ICON_PACKAGE = "package.gif";
 	public static final String ICON_VALUE	= "value.gif";
+	public static final String ICON_CLASS	= "class.gif";
 	
 	public static final String ICON_SNIP    = "snip.gif";
 	public static final String ICON_DW      = "dw.gif";
@@ -73,11 +71,9 @@ public class CFPluginImages {
 	public static final String ICON_SHOW	= "show.gif";
 	public static final String ICON_SHOW_AND_SELECT	= "showandselect.gif";
 	
-	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
 	public static final String TOOLBAR 		 = "ctool16";
-	
 	
 	private CFPluginImages(){;}
 	
@@ -109,6 +105,7 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_DW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_VALUE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_CLASS);
 			
 			addImageToRegistry(TOOLBAR,ICON_ADD);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);
@@ -131,26 +128,6 @@ public class CFPluginImages {
 	public static Image get(String key) {
 		return IMAGE_REGISTRY.get(key);
 	}
-
-	/**
-	 * Sets the three image descriptors for enabled, disabled, and hovered to an action. The actions
-	 * are retrieved from the *tool16 folders.
-	 
-	public static void setToolImageDescriptors(
-			IAction action,
-			String iconName) {
-		setImageDescriptors(action, "tool16", iconName);
-	} */
-
-	/**
-	 * Sets the three image descriptors for enabled, disabled, and hovered to an action. The actions
-	 * are retrieved from the *lcl16 folders.
-	
-	public static void setLocalImageDescriptors(
-			IAction action,
-			String iconName) {
-		setImageDescriptors(action, "lcl16", iconName);
-	} */
 
 	/** 
 	 * gets a handle to the registry 

@@ -527,7 +527,7 @@
             id="com.rohanclan.cfml.category1">
       </category>
       <wizard
-            name="New CFML Wizard"
+            name="CFML Page"
             icon="icons/obj16/default.gif"
             category="com.rohanclan.cfml.category1"
             class="com.rohanclan.cfml.wizards.NewCfmlWizard"
@@ -537,15 +537,14 @@
             id="com.rohanclan.cfml.wizards.NewCfmlWizard">
       </wizard>
       <wizard
-            name="New CFC Wizard"
-            icon="icons/obj16/default.gif"
+            name="CFC"
+            icon="icons/obj16/class.gif"
             category="com.rohanclan.cfml.category1"
             class="com.rohanclan.cfml.wizards.NewCfcWizard"
             preferredPerspectives="CFML"
             finalPerspective="CFML"
             project="true"
-            id="NewCfcWizard">
+            id="com.rohanclan.cfml.wizards.NewCfcWizard">
       </wizard>
    </extension>
-
 </plugin>
