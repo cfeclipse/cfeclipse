@@ -36,7 +36,7 @@ public class CfmlTagProperty extends CfmlTagItem {
 	 * @see com.rohanclan.cfml.parser.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
-		return parentItem.getName().compareToIgnoreCase("property") == 0;
+		return parentItem.getName().compareToIgnoreCase("component") == 0;
 	}
 	/**
 	 * @param line
