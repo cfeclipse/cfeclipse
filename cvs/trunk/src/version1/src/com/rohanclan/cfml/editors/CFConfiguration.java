@@ -43,7 +43,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
-import org.eclipse.jface.text.IAutoEditStrategy;
+import org.eclipse.jface.text.IAutoIndentStrategy;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -552,7 +552,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 * the auto-completion & character step-through are now implemented within the
 	 * auto-indentors. The auto-indentors differ for the two languages.
 	 */
-	public IAutoEditStrategy getAutoEditStrategy(ISourceViewer arg0, String partitionType) 
+	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0, String partitionType) 
 	{
 		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) {
 			return indentCFScriptStrategy;

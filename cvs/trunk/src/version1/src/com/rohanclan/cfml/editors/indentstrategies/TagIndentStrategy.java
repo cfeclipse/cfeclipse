@@ -382,6 +382,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			//
 			// We're only interested in the insertion of single characters, so catch the user pasting
 			// something (making sure that it's not going to be a carriage return)
+		    
 			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
 				return;
 			}
@@ -513,7 +514,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @throws BadLocationException
 	 */
 	private void handleClosingChevron(IDocument doc, DocumentCommand docCommand, char beforeLastChar) throws BadLocationException {
-		if(beforeLastChar == '<')	// Have we not got a tag name
+		
+	    if(beforeLastChar == '<')	// Have we not got a tag name
 			return;
 		else if(beforeLastChar == '/')	{	// A self-closer, i.e. : <br/>
 			//singleTagTakeAction(doc, docCommand);

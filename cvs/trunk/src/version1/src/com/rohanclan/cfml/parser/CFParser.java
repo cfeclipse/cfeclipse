@@ -388,10 +388,10 @@ public class CFParser {
 				//System.out.println("CFParser::stripAttributes() - Got \'" + attributeName + "\'=\"" + attributeValue + "\" with " + matcher.groupCount() + " matches");
 		    }
 		    else {
-		        System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
-		        for (int i = 0; i<=matcher.groupCount(); i++) {
-		            System.out.println("Match " + i + " : " + matcher.group(i));
-		        }
+		        //System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
+		        //for (int i = 0; i<=matcher.groupCount(); i++) {
+		        //    System.out.println("Match " + i + " : " + matcher.group(i));
+		       // }
 		    }
 		}
 		
@@ -976,7 +976,7 @@ public class CFParser {
 		int currPos = currDocOffset;
 		String nextChars = ""; // </cfscript>
 		String closingText = "</cfscript>";
-		System.out.println("CFParser::matchingCFScript() - Matching CFScript");
+		//System.out.println("CFParser::matchingCFScript() - Matching CFScript");
 		for(; currPos < inData.length(); currPos++)
 		{
 			if(inData.length() - currPos + 1 > closingText.length())
