@@ -25,6 +25,7 @@
 package com.rohanclan.cfml.editors.actions;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
@@ -68,8 +69,14 @@ public class RefreshBrowserAction implements IEditorActionDelegate {
 
 	    try {
 	        
+	        //IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
+			//ISelection sel = editor.getSelectionProvider().getSelection();
+	        
 	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
 	        browser.refresh();
+	        
+	        editor.setFocus();
+	        
 	    }
 	    catch (Exception e) {
 	        e.printStackTrace();

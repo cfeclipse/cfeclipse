@@ -73,19 +73,23 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
     	            msg.setMessage("The scribble pad file could not be found. You can modify the scribble pad in the preferences area for cfeclipse \n (Window > preferences > CFEclipse >Scribble pad ).");
     	            msg.open();
                 }
-                else {
-	                FileEditorInput input = new FileEditorInput(scribbleFile);
-	                IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                else { 
+                    FileEditorInput input = new FileEditorInput(scribbleFile);
+                	IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+	               
+	                
 	                IEditorPart editorPart = IDE.openEditor(page,scribbleFile,true);
 	                if (clearOnLoad) {
 	                    editor.getDocumentProvider().getDocument(editor.getEditorInput()).set("");
 	                }
 	                if (loadBrowser) {
 
-	         		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-	         		   browser.setUrl(scribbleURL);
-	         		   //browser.refresh();
-	                }
+		         		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+		         		   browser.setUrl(scribbleURL);
+		         		   //browser.refresh();
+		             }
+	                
+	                editor.setFocus();
                 }
 	        }
         }
