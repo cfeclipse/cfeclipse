@@ -38,7 +38,14 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-
+//import java.util.ResourceBundle;
+//import org.eclipse.swt.SWT;
+//import org.eclipse.ui.texteditor.StatusTextEditor;
+import org.eclipse.ui.editors.text.TextEditor;
+//import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
+//import org.eclipse.jface.util.IPropertyChangeListener;
+//import org.eclipse.jface.util.PropertyChangeEvent;
 
 /**
  * @author Rob
@@ -46,9 +53,6 @@ import org.eclipse.jface.util.PropertyChangeEvent;
  * This is the start of the Editor. It loads up the configuration and starts up
  * the image manager and syntax dictionaries.
  */
-//import org.eclipse.ui.texteditor.StatusTextEditor;
-import org.eclipse.ui.editors.text.TextEditor;
-
 public class CFMLEditor extends TextEditor  
 implements IPropertyChangeListener {
 
@@ -96,6 +100,34 @@ implements IPropertyChangeListener {
 	{
 		//this.parent = parent;
 		super.createPartControl(parent);
+	}
+	
+	/**
+	 * @see IAdaptable#getAdapter(java.lang.Class)
+	 * @since 2.0
+	 */
+	public Object getAdapter(Class adapter) 
+	{
+		//if(adapter.equals(IContentOutlinePage.class)) 
+		//{
+			/* 
+			return new GroovyContentOutline(
+				(IFile)getEditorInput().getAdapter(IFile.class)
+			);
+			*/
+		//}
+		System.out.println("Give me adapter: " + adapter.getName());
+		if(adapter.getName().trim().equals(
+			"org.eclipse.ui.views.contentoutline.IContentOutlinePage"
+		))
+		{
+			System.err.println("test");
+			return new CFContentOutlineView();
+		}
+		else
+		{
+			return super.getAdapter(adapter);
+		}
 	}
 	
 	public void createActions()

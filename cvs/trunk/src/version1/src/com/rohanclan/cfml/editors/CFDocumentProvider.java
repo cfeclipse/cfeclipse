@@ -29,27 +29,69 @@ package com.rohanclan.cfml.editors;
  *
  * You got me. This was a wizard generated file seems to do partition stuff too
  */
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
+//import org.eclipse.core.resources.IMarker;
+//import org.eclipse.core.resources.IFile;
+//import org.eclipse.core.resources.IMarker;
+//import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
+//import org.eclipse.core.resources.IWorkspaceRoot;
+//import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.DefaultPartitioner;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
+//import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
 
-import com.rohanclan.cfml.parser.CFParser;
+//import com.rohanclan.cfml.CFMLPlugin;
+//import com.rohanclan.cfml.parser.CFParser;
+//import com.rohanclan.cfml.parser.CFParser;
 
 public class CFDocumentProvider extends FileDocumentProvider {
 
-	protected IDocument createDocument(Object element) throws CoreException {
-		IDocument document = super.createDocument(element);
-		if (document != null) {
+	//private static IPath lastFilename;
+	private static IResource lastRes = null;
+	
+	/* public static void setLastFilename(IPath newFilename)
+	{
+		lastFilename = newFilename;
+		System.out.println(
+			"CFDocumentProvider::setLastFilename() - <b>Last</b> filename is set to " 
+			+ newFilename.toString()
+		);
+	} */
+	
+	public static void setLastResource(IResource newRes)
+	{
+		lastRes = newRes;
+	}
+	
+	protected IDocument createDocument(Object element) throws CoreException 
+	{
+		//IDocument document = super.createDocument(element);
+		//ICFDocument document = (ICFDocument)super.createDocument(element);
+		ICFDocument document = null; 
+		
+		//if(element instanceof IEditorInput)
+		//{
+			//IDocument 
+			//document = (ICFDocument)crecreateEmptyDocument();
+	//protected IDocument createDocument(Object element) throws CoreException {
+		//IDocument document = super.createDocument(element);
+		//if (document != null) {
 			
+			document = new ICFDocument();
+			if(setDocumentContent(document, (IEditorInput)element, getEncoding(element))) 
+			{
+				setupDocument(element, document);
+				//return document;
+			}
+		//}
+		
+		if (document != null) 
+		{
 			IDocumentPartitioner partitioner = new DefaultPartitioner(
 				new CFPartitionScanner(),
 				new String[] 
@@ -67,9 +109,24 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			
 			partitioner.connect(document);
 			//
+			// Save the document to trigger an event for the change listener. The change listener
+			// will then call our Delta Visitor which will call out setLastFilename() method.
+			// TODO: Work out how to properly obtain a filename from the IDocument! (this is soooo a bodge job!)
+			
+			//saveDocument(null, element, document, true);
+			//CFParser docParser = new CFParser(document, lastRes);
+			
+			//returns an IFile which is a subclass of IResource
+			document.setParserResource(((FileEditorInput)element).getFile());
+			//document.setParserResource(lastRes);
+			
 			// Now begins the fun of obtaining the resource that represents the file that has
 			// been opened and that this createDocument() method has been called upon.
 			//
+			// Delete all of the problem markers for the resource 
+			//lastRes.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_ONE);
+			document.clearAllMarkers();
+			
 			// Opening a file should open an editor, so we check that it is and if so make the
 			// appropriate cast.
 			// To obtain the filename would you believe we use the editor's tooltip text!! This
@@ -78,7 +135,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			// Having got the filename, it will consist of <projectName>/<path2File>. We grab
 			// the project name & path2file and then get the relevant project. We then get
 			// the IFile (which is implements [?] IResource) and away we go. 
-			IFile file = null;
+			/* IFile file = null;
 			if(element instanceof IEditorInput)
 			{
 				IEditorInput eleEditor = (IEditorInput)element;
@@ -105,9 +162,9 @@ public class CFDocumentProvider extends FileDocumentProvider {
 				{
 					System.out.println("Caught exception: " + excep.getMessage());
 				}
-			}			
+			} */
 
-			if(file != null)
+			/* if(file != null)
 			{
 				//
 				// Delete all of the problem markers for the resource 
@@ -117,20 +174,27 @@ public class CFDocumentProvider extends FileDocumentProvider {
 				// Parse the document.
 				CFParser docParser = new CFParser(document, file);
 				docParser.parseDoc();	
-			}
+			} */
+			
  			// 
  			// Uncomment the following code to remove ALL markers from the Problem list. Useful if we've
  			// stuck in a non-transient marker that won't go away!
-/*			
+			/*			
 			IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
 			IMarker [] markers = myWorkspaceRoot.findMarkers(null, true, IResource.DEPTH_INFINITE);
 			for(int i = 0; i < markers.length; i++)
 			{
 				markers[i].delete();
 			}
-*/
+			*/
+			
+			//Run the parser. Nothing is done with the resultant data at present.
+			//docParser.parseDoc();
+			document.parseDocument();
+			
 			document.setDocumentPartitioner(partitioner);
 		}
+		
 		return document;
 	}
 
