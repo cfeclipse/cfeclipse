@@ -498,6 +498,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		}
 		CFMLPlugin.getDefault().getPreferenceStore().removePropertyChangeListener(
 				this);
+		CFMLPlugin.getDefault().getLastActionManager().removeAction(this);
 		super.dispose();
 	}
 
