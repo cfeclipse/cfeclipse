@@ -1,5 +1,5 @@
 /*
- * Created on Mar 21, 2004
+ * Created on Mar 29, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Oliver Tupman
@@ -22,21 +22,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.parser;
+package com.rohanclan.cfml.parser.cfmltagitems;
+
+import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.parser.DocItem;
 
 /**
  * @author Oliver Tupman
- * 
- * Represents a HTML item in a CF document.
- *  
+ *
+ * To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class HtmlTagItem extends TagItem {
+public class CfmlTagElseIf extends CfmlTagItem {
 	/**
-	 * An HTML item doesn't care about whether it's a valid child or not. At least not yet.
 	 * @see com.rohanclan.cfml.parser.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
-		return true;
+		return parentItem.getName().compareToIgnoreCase("if") == 0;
 	}
 	/**
 	 * @param line
@@ -44,7 +46,8 @@ public class HtmlTagItem extends TagItem {
 	 * @param endDocPos
 	 * @param name
 	 */
-	public HtmlTagItem(int line, int startDocPos, int endDocPos, String name) {
+	public CfmlTagElseIf(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
+		// TODO Auto-generated constructor stub
 	}
 }

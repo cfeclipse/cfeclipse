@@ -25,68 +25,71 @@
 package com.rohanclan.cfml.parser.exception;
 
 /**
- * @author Oliver Tupman.
+ * @author Oliver Tupman
  *
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class DuplicateAttributeException extends AttributeException {
-	
+public class InvalidChildItemException extends ParseException {
 	/**
-	 * @param name
-	 * @param value
-	 * @param pLineNum
+	 * 
 	 */
-	public DuplicateAttributeException(String name, String value, int pLineNum) {
-		super(name, value, pLineNum);
+	public InvalidChildItemException() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 	/**
-	 * @param name
-	 * @param value
+	 * @param arg0
+	 */
+	public InvalidChildItemException(String arg0) {
+		super(arg0);
+		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * @param arg0
+	 */
+	public InvalidChildItemException(Throwable arg0) {
+		super(arg0);
+		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * @param arg0
+	 * @param arg1
+	 */
+	public InvalidChildItemException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
+		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * @param arg0
+	 * @param pLineNum
+	 */
+	public InvalidChildItemException(String arg0, int pLineNum) {
+		super(arg0, pLineNum);
+		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * @param arg0
 	 * @param pLineNum
 	 * @param pDocOffset
 	 */
-	public DuplicateAttributeException(String name, String value, int pLineNum,
-			int pDocOffset) {
-		super(name, value, pLineNum, pDocOffset);
+	public InvalidChildItemException(String arg0, int pLineNum, int pDocOffset) {
+		super(arg0, pLineNum, pDocOffset);
 		// TODO Auto-generated constructor stub
 	}
 	/**
-	 * @param name
-	 * @param value
-	 */
-	public DuplicateAttributeException(String name, String value) {
-		super(name, value);
-		// TODO Auto-generated constructor stub
-	}
-	/**
-	 * @param name
-	 * @param value
-	 * @param reason
-	 */
-	public DuplicateAttributeException(String name, String value, String reason) {
-		super(name, value, reason);
-	}
-	/**
-	 * @param name
-	 * @param value
-	 * @param reason
-	 * @param pLineNum
-	 */
-	public DuplicateAttributeException(String name, String value,
-			String reason, int pLineNum) {
-		super(name, value, reason, pLineNum);
-	}
-	/**
-	 * @param name
-	 * @param value
-	 * @param reason
 	 * @param pLineNum
 	 * @param pDocOffset
 	 */
-	public DuplicateAttributeException(String name, String value,
-			String reason, int pLineNum, int pDocOffset) {
-		super(name, value, reason, pLineNum, pDocOffset);
+	public InvalidChildItemException(int pLineNum, int pDocOffset) {
+		super(pLineNum, pDocOffset);
+		// TODO Auto-generated constructor stub
+	}
+	/**
+	 * @param pLineNum
+	 */
+	public InvalidChildItemException(int pLineNum) {
+		super(pLineNum);
+		// TODO Auto-generated constructor stub
 	}
 }

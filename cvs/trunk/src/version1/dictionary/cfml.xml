@@ -20,6 +20,7 @@
  -->
 <dictionary>
 	<tags>
+		
 		<!-- tag template -->
 		<!-- 
 		<tag creator="3" name="xml" single="false" xmlstyle="false">
@@ -5668,7 +5669,7 @@
 				displayname="descriptive name"
 				hint="extended description"
 		-->
-		<tag creator="3" name="xml" single="true" xmlstyle="false">
+		<tag creator="3" name="property" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines properties of a CFML component (CFC). Used to 
 				create complex data types for web services. The attributes of 

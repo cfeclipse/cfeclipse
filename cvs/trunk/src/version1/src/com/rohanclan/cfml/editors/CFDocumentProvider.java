@@ -31,6 +31,7 @@ package com.rohanclan.cfml.editors;
  */
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
@@ -38,6 +39,7 @@ import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.DefaultPartitioner;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.parser.CFParser;
 
 public class CFDocumentProvider extends FileDocumentProvider {
@@ -81,14 +83,23 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			// TODO: Work out how to properly obtain a filename from the IDocument! (this is soooo a bodge job!)
 			
 			saveDocument(null, element, document, true);
-			CFParser docParser = new CFParser(document, lastFilename);
-			//
-			// Actually needs the IResource handle from the document. So as a temporary fix we'll
-			// pass it in here. Should really replace the IPath.
-			docParser.setResource(lastRes);
+			CFParser docParser = new CFParser(document, lastRes);
 			//
 			// Delete all of the problem markers for the resource 
 			lastRes.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_ONE);
+			
+
+ 			// 
+ 			// Uncomment the following code to remove ALL markers from the Problem list. Useful if we've
+ 			// stuck in a non-transient marker that won't go away!
+/*			
+			IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
+			IMarker [] markers = myWorkspaceRoot.findMarkers(null, true, IResource.DEPTH_INFINITE);
+			for(int i = 0; i < markers.length; i++)
+			{
+				markers[i].delete();
+			}
+*/
 			
 			docParser.parseDoc();	// Run the parser. Nothing is done with the resultant data at present.
 

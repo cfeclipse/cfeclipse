@@ -32,7 +32,6 @@ package com.rohanclan.cfml.parser;
  * An error can be set to be fatal which means that 
  */
 public class ParseError extends ParseMessage {
-	protected boolean fatalError = false;
 	/**
 	 * @param lineNum
 	 * @param docStart
@@ -44,7 +43,6 @@ public class ParseError extends ParseMessage {
 			String msg) 
 	{
 		super(lineNum, docStart, docEnd, data, msg);
-		fatalError = false;
 	}
 	/**
 	 * @param lineNum
@@ -57,9 +55,7 @@ public class ParseError extends ParseMessage {
 	public ParseError(int lineNum, int docStart, int docEnd, String data,
 			String msg, boolean fatal) 
 	{
-		super(lineNum, docStart, docEnd, data, msg);
-		fatalError = fatal;
+		super(lineNum, docStart, docEnd, data, msg, fatal);
 	}
-	
-	public boolean isFatal() { return fatalError; }
+
 }

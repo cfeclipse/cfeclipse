@@ -30,6 +30,7 @@ public class ParseMessage {
 	protected int docEndOffset;
 	protected String docData;
 	protected String message;
+	protected boolean fatal = false;
 	
 	public ParseMessage(int lineNum, int docStart, int docEnd, String data, String msg)
 	{
@@ -39,6 +40,19 @@ public class ParseMessage {
 		docData = data;
 		message = msg;
 	}
+
+	public ParseMessage(int lineNum, int docStart, int docEnd, String data, String msg, boolean isFatal)
+	{
+		lineNumber = lineNum;
+		docStartOffset = docStart;
+		docEnd = docStartOffset;
+		docData = data;
+		message = msg;
+		fatal = isFatal;
+	}
+	
+	public boolean isFatal() { return fatal; }
+	
 	/**
 	 * @return Returns the docData.
 	 */

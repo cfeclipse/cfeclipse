@@ -1,7 +1,32 @@
+/*
+ * Created on Mar 21, 2004
+ *
+ * The MIT License
+ * Copyright (c) 2004 Oliver Tupman
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a 
+ * copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation 
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software 
+ * is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ * SOFTWARE.
+ */
 package com.rohanclan.cfml.parser;
 
 import java.util.ArrayList;
 import com.rohanclan.cfml.dictionary.*;
+import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 
 /** 
  * The DocItem class is intended to be the abstract base class for parsing and representing 
@@ -98,13 +123,13 @@ public abstract class DocItem {
 	}
 	public String getName() 
 	{
-		return null;
+		return itemName;
 	}
 	public int getStartPosition() {
-		return 0;
+		return startPosition;
 	}
 	public int getEndPosition() {
-		return 0;
+		return endPosition;
 	}
 	public DocItem getMatchingItem() {
 		return null;
@@ -120,8 +145,29 @@ public abstract class DocItem {
 		return docNodes;
 	}
 	
-	public void addChild(DocItem newItem) 
+	public int getLineNumber() { return lineNumber; }
+	
+	/**
+	 * Adds a child to the child node list. 
+	 * Before it does so it calls 
+	 * @param newItem
+	 */
+	public void addChild(DocItem newItem) throws InvalidChildItemException 
 	{
+		if(!newItem.validChildAddition(this))
+			throw new InvalidChildItemException("Child item of type \'" + newItem.getName() + "\' says it is not allowed to belong to this (\'" + itemName + "\') doc item");
 		docNodes.add(newItem);
+	}
+	
+	/**
+	 * Intended to be called from a DocItem's addChild() method. Asks the new child item to check whether
+	 * it is allowed to belong to the parent item.
+	 * <b>NB:</b> The default implementation <b>ALWAYS</b> returns false. Override in any derived classes.
+	 * @param parentItem
+	 * @return
+	 */
+	public boolean validChildAddition(DocItem parentItem)
+	{
+		return false;
 	}
 }

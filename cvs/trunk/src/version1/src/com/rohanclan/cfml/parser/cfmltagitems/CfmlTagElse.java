@@ -1,5 +1,5 @@
 /*
- * Created on Mar 21, 2004
+ * Created on Mar 28, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Oliver Tupman
@@ -22,21 +22,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.parser;
+package com.rohanclan.cfml.parser.cfmltagitems;
+
+import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.parser.DocItem;
 
 /**
  * @author Oliver Tupman
- * 
- * Represents a HTML item in a CF document.
- *  
+ *
+ * Represents a &lt;cfelse&gt; tag
  */
-public class HtmlTagItem extends TagItem {
+public class CfmlTagElse extends CfmlTagItem {
 	/**
-	 * An HTML item doesn't care about whether it's a valid child or not. At least not yet.
+	 * Else tags must reside within an if tag. This just performs the check to make sure of this. 
 	 * @see com.rohanclan.cfml.parser.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
-		return true;
+		 return parentItem.getName().compareToIgnoreCase("if") == 0;
 	}
 	/**
 	 * @param line
@@ -44,7 +46,7 @@ public class HtmlTagItem extends TagItem {
 	 * @param endDocPos
 	 * @param name
 	 */
-	public HtmlTagItem(int line, int startDocPos, int endDocPos, String name) {
+	public CfmlTagElse(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
 	}
 }
