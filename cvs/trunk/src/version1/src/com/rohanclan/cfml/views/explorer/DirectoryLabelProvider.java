@@ -10,9 +10,7 @@ import java.io.File;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
 
 import com.rohanclan.cfml.net.RemoteFile;
 import com.rohanclan.cfml.util.CFPluginImages;
@@ -26,6 +24,9 @@ class DirectoryLabelProvider extends LabelProvider {
         try {
             if (element instanceof RemoteFile) {
                 return ((RemoteFile)element).getName();
+            }
+            if (element instanceof FileSystemRoot) {
+            	return element.toString(); 
             }
 	        if (element.toString().length() == 1) {
 	        	return element.toString();
@@ -47,13 +48,14 @@ class DirectoryLabelProvider extends LabelProvider {
             if (element instanceof RemoteFile) {
                 return addPermissionIcon(element,CFPluginImages.get(CFPluginImages.ICON_FOLDER));
             }
+            if (element instanceof FileSystemRoot) {
+            	return CFPluginImages.get(CFPluginImages.ICON_REPOSITORY);
+            }
 	        String[] fullpath = element.toString().split("[\\\\/]");
 	        if (fullpath.length > 1) {
 	            return CFPluginImages.get(CFPluginImages.ICON_FOLDER);
 	        }
-	        else {
-	            return CFPluginImages.get(CFPluginImages.ICON_REPOSITORY);
-	        }
+	        return null;
         }
         catch (Exception e) {
             e.printStackTrace();

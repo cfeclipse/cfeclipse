@@ -16,6 +16,7 @@ import org.eclipse.ui.IViewPart;
 import com.enterprisedt.net.ftp.*;
 import com.rohanclan.cfml.views.explorer.IFileProvider;
 import com.rohanclan.cfml.views.explorer.FileNameFilter;
+import com.rohanclan.cfml.views.explorer.FileSystemRoot;
 import com.rohanclan.cfml.net.FTPConnectionProperties;
 import com.rohanclan.cfml.net.RemoteFile;
 import com.rohanclan.cfml.net.RemoteFileEditorInput;
@@ -175,7 +176,7 @@ public class FTPConnection implements IFileProvider {
     public Object[] getRoots() {
 
         if (isConnected()) {
-            return new String[] { connectionProperties.getPath() };
+            return new FileSystemRoot[] { new FileSystemRoot(connectionProperties.getPath()) };
         } else if (connectFailed) {
             return new String[] { CONNECT_FAILED };
         } else {

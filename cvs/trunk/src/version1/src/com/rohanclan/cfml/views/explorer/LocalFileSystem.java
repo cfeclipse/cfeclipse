@@ -7,7 +7,7 @@
 package com.rohanclan.cfml.views.explorer;
 
 import java.io.File;
-
+import javax.swing.filechooser.*;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IViewPart;
@@ -35,7 +35,31 @@ public class LocalFileSystem implements IFileProvider {
     }
 
     public Object[] getRoots() {
-        return systemroot;
+    	FileSystemRoot[] roots = new FileSystemRoot[systemroot.length];
+    	FileSystemView view = FileSystemView.getFileSystemView();
+    	for (int i=0;i<systemroot.length;i++) {
+    		String name = view.getSystemDisplayName(systemroot[i]);
+			if (name == null) {
+				name = "";
+			}
+			name = name.trim();
+			if (name == null || name.length() < 1) {
+				name = "";
+			}
+			int index = name.lastIndexOf(" (");
+			if (index > 0) {
+				name = name.substring(0, index);
+			}
+			if (name.length() > 0) {
+				roots[i] = new FileSystemRoot(name + " (" + systemroot[i].toString() + ")");
+				
+			}
+			else {
+				roots[i] = new FileSystemRoot(systemroot[i].toString());
+			}
+		}
+
+        return roots;
     }
     
     public void connect() {
