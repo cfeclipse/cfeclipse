@@ -185,8 +185,8 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			ITextEditor ite = (ITextEditor)iep;
 			ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
 			
-			icfd.clearAllMarkers();
-			icfd.parseDocument();
+			//icfd.clearAllMarkers();
+			//icfd.parseDocument();
 			
 			CFDocument cfd = icfd.getCFDocument();
 			if(cfd != null)
