@@ -53,6 +53,12 @@ public class CFCMethodViewItem  {
 				method.append(" - " + returntype); 
 			}
 			
+			String hint = functionTag.getAttribute("hint");
+			if (hint != null) 
+			{
+			    method.append("  '"+hint+"'");
+			}
+			
 			return method.toString();
 		}
 		catch (Exception e) {
