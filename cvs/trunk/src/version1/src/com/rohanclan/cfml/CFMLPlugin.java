@@ -67,11 +67,13 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		try 
 		{
 			resourceBundle = ResourceBundle.getBundle(
-				"com.rohanclan.coldfusionmx.ColdfusionMXPluginResources"
+				//"com.rohanclan.cfml.CFMLPluginResources"
+				"plugin"
 			);
 		} 
 		catch (MissingResourceException x) 
 		{
+			x.printStackTrace(System.err);
 			resourceBundle = null;
 		}
 		
