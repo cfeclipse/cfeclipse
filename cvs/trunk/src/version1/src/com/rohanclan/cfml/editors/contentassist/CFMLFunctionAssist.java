@@ -25,7 +25,7 @@
 package com.rohanclan.cfml.editors.contentassist;
 
 import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.*;
 
 import org.eclipse.core.internal.utils.Assert;
@@ -33,6 +33,8 @@ import org.eclipse.jface.text.contentassist.*;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.Parameter;
+import com.rohanclan.cfml.dictionary.Value;
+import com.rohanclan.cfml.dictionary.Trigger;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import com.rohanclan.cfml.util.CFPluginImages;
@@ -69,8 +71,17 @@ public class CFMLFunctionAssist
      */
     private int paramsSoFar = -1;
     
+    /**
+     * The list of parameters that have already been specified for the function
+     *
+     */
+    private ArrayList paramList = new ArrayList();
     
-    
+    /**
+     * The positions of any parameters that have explicitly declared index values in the dictionary
+     *
+     */
+    private HashMap paramPositions = new HashMap();
     /**
      * 
      */
@@ -93,62 +104,133 @@ public class CFMLFunctionAssist
     		Set params = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionParams(this.functionName);
     		String helpText = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionHelp(this.functionName);
     		
+    		
+    		    		
+    		
     		if (params == null) {
     		    return null;
     		}
+    		
+    		Parameter[] filteredParams = getFilteredParams(params);
+    		
+				int x = 0;
+				String extraInfo = paramIndent + "<b>" + functionName + "</b> (\n";
+				CompletionProposal proposal = null;
+				String usage = "";
+				Parameter activeParam = null;
+				
+				int paramCount = 0;
+				
+				while(x < filteredParams.length)
+				{
+				  if (filteredParams[x] instanceof Parameter) {  
+				  	Parameter p = filteredParams[x];
+				    paramCount++;
+						String delimiter = "";
+						if (x < filteredParams.length) {
+						    delimiter = " ,";
+						}
+						extraInfo += paramIndent + paramIndent;
+						if (x == this.paramsSoFar) {
+						    activeParam = p;
+							extraInfo += "<b>";
+						}
+						extraInfo += p.toString() + delimiter;
+						
+						if (x == this.paramsSoFar) {
+							extraInfo += "</b>";
+						}
+						extraInfo += "\n";
+						
+				  }
+				  x++;
+				}
+				
+				if (this.paramsSoFar == paramCount) {
+					//System.out.println("End of params");
+					return null;
+				}
+				
+				extraInfo += paramIndent + ") \n\n";
+				extraInfo += helpText;
+				
+				
+				return getParamProposals(activeParam,extraInfo,state.getOffset(),paramCount);
+				
+        }
+    }
+    
+    
+    private Parameter[] getFilteredParams(Set params) {
+    	HashSet s = new HashSet();
+    	Parameter[] sortingArray = new Parameter[params.size()];
+    	//Build the triggers map
+  		HashMap paramMap = new HashMap();
+      
+      Object[] paramValues = paramList.toArray();
+      Object[] paramNames = params.toArray();
+      int n = 0;
+      //System.out.println(paramValues.length + ":" + paramList.size());
+      while(n < paramValues.length-1) {
+      	String paramName = ((Parameter)paramNames[n]).getName();
+      	String paramValue = (String)paramValues[paramValues.length-1-n];
+      	if ((paramValue.startsWith("'") 
+      			&& paramValue.endsWith("'"))
+						|| paramValue.startsWith("\"") 
+      			&& paramValue.endsWith("\"")) {
+      		paramValue = paramValue.substring(1,paramValue.length()-1);
+      	}
+      	//System.out.println("Adding param to map: " + paramName + " - " + paramValue);
+      	paramMap.put(paramName,paramValue);
+      	n++;
+      }
+      
 
-    		Iterator i = params.iterator();
-			int x = 0;
-			String extraInfo = paramIndent + "<b>" + functionName + "</b> (\n";
-			CompletionProposal proposal = null;
-			String usage = "";
-			Parameter activeParam = null;
-			
+      Iterator i = params.iterator();
+      int x = 0;
 			while(i.hasNext())
 			{
 			    Object o = i.next();
 			    if (o instanceof Parameter) {
 			        Parameter p = (Parameter)o;
-
-					String delimiter = "";
-					if (x < params.size()) {
-					    delimiter = " ,";
-					}
-					extraInfo += paramIndent + paramIndent;
-					if (x == this.paramsSoFar) {
-					    activeParam = p;
-						extraInfo += "<b>";
-					}
-					extraInfo += p.toString() + delimiter;
-					
-					if (x == this.paramsSoFar) {
-						extraInfo += "</b>";
-					}
-					extraInfo += "\n";
-					x++;
-					
-				}
+      
+			      if (p.isTriggered(paramMap) == Parameter.PARAM_NOTTRIGGERED) {
+			      	//System.out.println(p.getName() + " not triggered.");
+			      	continue;
+			      }
+			      Trigger currentTrigger = p.activeTrigger();
+		        if (currentTrigger != null) {
+		        	//System.out.println(p.getName() + " index is " + currentTrigger.paramIndex());
+		        	//this.paramPositions.put(p.getName(),new Integer(currentTrigger.paramIndex()));
+		        	sortingArray[currentTrigger.paramIndex()] = p;
+		        }
+		        else {
+		        	sortingArray[x] = p;
+		        }
+			      x++;
+			    }
+			    
 			}
-			
-			extraInfo += paramIndent + ") \n\n";
-			extraInfo += helpText;
-			
-			return getParamProposals(activeParam,extraInfo,state.getOffset(),params.size());
-			
-        }
+
+    	return sortingArray;
     }
     
     
     private ICompletionProposal[] getParamProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
+        Set values = activeParam.getValues();
         
-        if (activeParam.getType().equalsIgnoreCase("boolean")) {
+        if (values != null 
+        		&& values.size() != 0) {
+        	return getValueProposals(activeParam,extraInfo,offset,paramCount);
+        }
+        else if (activeParam.getType().equalsIgnoreCase("boolean")) {
             
             return getBooleanParamProposals(activeParam,extraInfo,offset,paramCount);
             
         }
         else {
             
-			return getDefaultParamProposals(activeParam,extraInfo,offset,paramCount);
+				return getDefaultParamProposals(activeParam,extraInfo,offset,paramCount);
 
         }
         
@@ -163,7 +245,7 @@ public class CFMLFunctionAssist
         value = "true";
         
         if (this.paramsSoFar == paramCount-1) {
-            suffix = ")";
+            suffix = "";
         }
         CompletionProposal proposal = new CompletionProposal(value+suffix,
                 offset,
@@ -195,41 +277,79 @@ public class CFMLFunctionAssist
     
    
     private ICompletionProposal[] getDefaultParamProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
-        String value = "";
-        String suffix = ",";
-        ICompletionProposal[] result = new ICompletionProposal[1];
-        
-        if (activeParam.getType().equalsIgnoreCase("string")) {
-            value = "\"\"";
-        }
-        else if (activeParam.getType().equalsIgnoreCase("regex")) {
-            value = "\"[.]*\"";
-        }
-        
-        if (activeParam.getDefaultValue() != null) {
-            value = activeParam.getDefaultValue();
-        }
-        
-        if (this.paramsSoFar == paramCount-1) {
-            suffix = ")";
-        }
-        CompletionProposal proposal = new CompletionProposal(value+suffix,
-                offset,
-                0,
-                value.length()+suffix.length(),
-                CFPluginImages.get(CFPluginImages.ICON_PARAM),
-                activeParam.toString() + " - " + value,
-                null,
-                extraInfo);
-        
-		
-		result[0] = proposal;
-        
-		
-		return result;
-    }
-    
-    
+      String value = "";
+      String suffix = ",";
+      ICompletionProposal[] result = new ICompletionProposal[1];
+      
+      if (activeParam.getType().equalsIgnoreCase("string")) {
+          value = "\"\"";
+      }
+      else if (activeParam.getType().equalsIgnoreCase("regex")) {
+          value = "\"[.]*\"";
+      }
+      
+      if (activeParam.getDefaultValue() != null) {
+          value = activeParam.getDefaultValue();
+      }
+      
+      if (this.paramsSoFar == paramCount-1) {
+          suffix = "";
+      }
+      CompletionProposal proposal = new CompletionProposal(value+suffix,
+              offset,
+              0,
+              value.length()+suffix.length(),
+              CFPluginImages.get(CFPluginImages.ICON_PARAM),
+              activeParam.toString() + " - " + value,
+              null,
+              extraInfo);
+      
+	
+	result[0] = proposal;
+      
+	
+	return result;
+  }
+  
+    private ICompletionProposal[] getValueProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
+      String value = "";
+      String suffix = ",";
+      Set values = activeParam.getValues();
+      ICompletionProposal[] result = new ICompletionProposal[values.size()];
+      
+      
+      if (this.paramsSoFar == paramCount-1) {
+          suffix = "";
+      }
+      
+      Iterator i = values.iterator();
+      
+      int x = 0;
+      while (i.hasNext()) {
+      	
+      	Object o = i.next();
+      	if (o instanceof Value) {
+      		Value val = (Value)o;
+		      CompletionProposal proposal = new CompletionProposal(val.toString()+suffix,
+		              offset,
+		              0,
+		              val.toString().length()+suffix.length(),
+		              CFPluginImages.get(CFPluginImages.ICON_PARAM),
+		              activeParam.toString() + " - " + val.toString(),
+		              null,
+		              extraInfo);
+		      
+		      //System.out.println("Added " + val.toString());
+		      result[x] = proposal;
+		      x++;
+      	}
+      }
+      
+	
+	return result;
+  }
+  
+  
     
     
     
@@ -243,15 +363,36 @@ public class CFMLFunctionAssist
      */
     private boolean checkContext(String docText, int offset) {
         this.paramsSoFar = 0;
+        this.paramList = new ArrayList();
+        this.paramPositions = new HashMap();
+        int newOffset = offset;
         try {
             String trigger = docText.substring(offset-1,offset);
+            
+            if (trigger.equals("#")) {
+            	newOffset = offset -1;
+            	trigger = docText.substring(offset-2,offset-1);
+            	if (trigger.equals("'")
+              		|| trigger.equals("\"")) {
+              	newOffset = offset -2;
+              	trigger = docText.substring(offset-3,offset-2);
+              }
+            }
+            else if (trigger.equals("'")
+            		|| trigger.equals("\"")) {
+            	newOffset = offset -1;
+            	trigger = docText.substring(offset-2,offset-1);
+            	
+            }
+            
             // Check if we're at the start of a function.
             if (trigger.equals("(")) {
                 Pattern p = Pattern.compile("\\b\\w+\\($");
-                Matcher m = p.matcher(docText.substring(0,offset));
+                Matcher m = p.matcher(docText.substring(0,newOffset));
                 if(m.find()) {
                     this.functionName = m.group().substring(0,m.group().length()-1);
                     this.paramsSoFar = 0;
+                    
                     return true;
                 }
             }
@@ -264,8 +405,9 @@ public class CFMLFunctionAssist
                 singleQuotesOpen = doubleQuotesOpen = functionStart = false;
                 int openFunctionCount = 0;
                 
-                
-                byte[] docBytes = docText.substring(0,offset).getBytes();
+                byte[] docBytes = docText.substring(0,newOffset).getBytes();
+                int lastParamEndedAt = docBytes.length;
+                String functionText = docText.substring(0,newOffset);
                 for (int i=docBytes.length-1;i>=0;i--) {
                     byte thisByte = docBytes[i];
                     //System.out.println("Looking at: " + (char)thisByte);
@@ -289,7 +431,12 @@ public class CFMLFunctionAssist
 	                	{
 	                	    openFunctionCount--;
 	                	    if (openFunctionCount < 0) {
-	                	        functionStart = true;
+	                	        
+	                	    	String thisParam = functionText.substring(i+1,lastParamEndedAt);
+	  	                	  paramList.add(thisParam);
+	  	                		lastParamEndedAt = i;
+	  	                		
+	                	    	functionStart = true;
 	                	        //System.out.println("Function start found.");
 	                	    }
 	                	    else {
@@ -309,8 +456,12 @@ public class CFMLFunctionAssist
 	                	        	&& !doubleQuotesOpen 
 	                	        	&& openFunctionCount < 1) 
 	                	{
-	                	    this.paramsSoFar++;
-	                	    //System.out.println("Comma found. Params so far" + this.paramsSoFar);
+	                		
+	                	  String thisParam = functionText.substring(i+1,lastParamEndedAt);
+	                	  paramList.add(thisParam);
+	                		lastParamEndedAt = i;
+	                		this.paramsSoFar++;
+	                	  //System.out.println("Comma found. Params so far " + this.paramsSoFar);
 	                	}
                     	break;
 	                	
@@ -324,6 +475,7 @@ public class CFMLFunctionAssist
                         if(m.find()) {
                             //System.out.println("Found " + m.group());
                             this.functionName = m.group().substring(0,m.group().length()-1);
+                            //System.out.println(this.functionName);
                             return true;
                         }
                     }

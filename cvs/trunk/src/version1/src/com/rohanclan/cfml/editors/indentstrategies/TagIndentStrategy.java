@@ -730,7 +730,13 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @throws BadLocationException - ack.
 	 */
 	private void handleQuotes(IDocument doc, DocumentCommand docCommand, char quoteChar) throws BadLocationException {
-		char nextChar = doc.getChar(docCommand.offset);
+		char nextChar = (char)0;
+		try {
+			nextChar = doc.getChar(docCommand.offset);
+		}
+		catch (BadLocationException bex) {
+			// do nothing
+		}
 		if(nextChar == quoteChar)
 		{
 			docCommand.text = "";

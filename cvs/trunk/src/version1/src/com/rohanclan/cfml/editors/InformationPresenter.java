@@ -50,18 +50,18 @@ public class InformationPresenter implements IInformationPresenter {
 	            if (newText.indexOf("<b>") > -1
 	                    && newText.indexOf("</b>") > newText.indexOf("<b>") ) {
 	                
-	                System.out.println("Start Tag found at " + newText.indexOf("<b>"));
-	                System.out.println("End Tag found at " + newText.indexOf("</b>"));
+	              //  System.out.println("Start Tag found at " + newText.indexOf("<b>"));
+	              //  System.out.println("End Tag found at " + newText.indexOf("</b>"));
 	                
 	                int start = newText.indexOf("<b>");
 	                int length = newText.indexOf("</b>") - start -3 ; 
 	                
 	                StyleRange range = new StyleRange(start,length,null,null,SWT.BOLD);
 	                presentation.addStyleRange(range);
-	                System.out.println("Text before: " + newText);
+	                //System.out.println("Text before: " + newText);
 	                newText = newText.replaceFirst("<b>","");
 	                newText = newText.replaceFirst("</b>","");
-	                System.out.println("Text after: " + newText);
+	                //System.out.println("Text after: " + newText);
 	            }
 	            else {
 	                break;
