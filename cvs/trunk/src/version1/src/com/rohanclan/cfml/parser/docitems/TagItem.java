@@ -149,7 +149,7 @@ public class TagItem extends DocItem {
 		Tag tag = syntax.getTag(itemName);
 		if(tag == null)
 		{
-			System.err.println("TagItem::hasClosingTag() - The tag I've retrieved is null! Tag name is \'" + itemName + "\'");
+			System.err.println("TagItem::hasClosingTag() - The tag I've retrieved is null! Tag name is \'" + itemName + "\' Line number: " + this.lineNumber);
 			//
 			// Should really raise an exception?
 			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 

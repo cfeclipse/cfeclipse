@@ -910,7 +910,7 @@ public class CFParser {
 		int currPos = currDocOffset;
 		String nextChars = ""; // </cfscript>
 		String closingText = "</cfscript>";
-		System.out.println("CFParser::matchingCFScript() - Matching CFScript");
+		//System.out.println("CFParser::matchingCFScript() - Matching CFScript");
 		for(; currPos < inData.length(); currPos++)
 		{
 			if(inData.length() - currPos + 1 > closingText.length())
@@ -925,8 +925,8 @@ public class CFParser {
 			}
 			
 		}
-		System.out.println("matchingCFScript() -");
-		System.out.println(inData.substring(currDocOffset, finalOffset));
+		//System.out.println("matchingCFScript() -");
+		//System.out.println(inData.substring(currDocOffset, finalOffset));
 	
 		if(finalOffset != currPos)
 		{
@@ -942,8 +942,8 @@ public class CFParser {
 			int scriptStart = currDocOffset + "<cfscript>".length();
 			String cfScriptData = inData.substring(currDocOffset, finalOffset);
 			cfScriptData = cfScriptData.trim();
-			System.out.println("CFScript data:");
-			System.out.println(cfScriptData);
+			//System.out.println("CFScript data:");
+			//System.out.println(cfScriptData);
 			//
 			// We cheat now. We're actually creating a tag match for a <cfscript> block and pass all
 			// of the data in so we have a tag called "<cfscript>...". But this breaks if it's empty,

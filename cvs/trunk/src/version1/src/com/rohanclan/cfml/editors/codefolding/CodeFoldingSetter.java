@@ -70,10 +70,10 @@ public class CodeFoldingSetter {
 	            
 
 	    		foldPartitions(CFPartitionScanner.CF_COMMENT,autoCollapse,2);
-	    		foldPartitions(CFPartitionScanner.CF_SCRIPT,false,2);
 	    		foldPartitions(CFPartitionScanner.J_SCRIPT,false,2);
 	    		foldPartitions(CFPartitionScanner.CSS_TAG,false,2);
-	    		
+
+	    		foldTags("cfscript", false, 2);
 	    		foldTags("cffunction", false, 2);
 	    		foldTags("cfquery", false, 2);
 	    		
@@ -88,8 +88,15 @@ public class CodeFoldingSetter {
     
     
     private void foldTags(String tagName, boolean autoCollapse, int minLines) {
-        DocItem rootItem = doc.getCFDocument().getDocumentRoot();
-
+        DocItem rootItem = null;
+        try {
+            rootItem = doc.getCFDocument().getDocumentRoot();
+        }
+        catch (NullPointerException e) {
+            //e.printStackTrace();
+            System.out.println("CodeFoldingSetter::foldTags got a null from doc.getCFDocument().");
+            return;
+        }
 		//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
         CFNodeList nodes = rootItem.selectNodes("//" + tagName.toLowerCase());
         
