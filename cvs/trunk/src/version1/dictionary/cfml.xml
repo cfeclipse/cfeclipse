@@ -15,6 +15,8 @@
    	If you want to do it anyway, leave off the cf portion. so for
    	example cfxRohanCrypt becomes xrohancrypt (needs to be lowercase too)
     
+	A better place to put the cfx and cf_ tags is in the user.xml file
+	
 	::NOTES::
     Missing: cfslider, cfregistry, cfldap, cfinput
  -->
@@ -278,7 +280,6 @@
 					<value option="string" />
 					<value option="struct" />
 					<value option="uuid" />
-					<value option="variable_name" />
 				</values>
 			</parameter>
 			<parameter name="required" type="boolean" required="false">
@@ -4606,8 +4607,8 @@
 		<tag name="loop" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Different items are required based on loop type. Items listed
-				at required can be required but may not be depending on your
-				loop type.
+				as required may not be depending on your loop type.
+				Loop forms:
 				[query] [condition] [index + from + to ] [index + list]
 				[collection + item ]
 			]]></help>
@@ -7882,7 +7883,7 @@
 				Creates a CFML XML document object that contains the 
 				markup in the tag body. This tag can include XML and CFML tags. 
 				CFML processes the CFML code in the tag body, then assigns 
-				the resulting text to an XML document object variable. 
+				the resulting text to an XML document object variable.
 			]]></help>
 			<parameter name="variable" type="string" required="true">
 				<help><![CDATA[
