@@ -200,8 +200,46 @@
                >
                <!-- menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup" -->
          </action>
+         
+         <!-- <action
+               definitionId="com.rohanclan.cfml.parser.CFParse"
+               label="Insert Date"
+               tooltip="Insert the current date"
+               class="com.rohanclan.cfml.parser.CFParser"
+               id="com.rohanclan.cfml.parser.CFParser"
+               >
+         </action> -->
+         
       </editorContribution>
    </extension>
+   
+   <!-- /////
+	<extension 
+		point="org.eclipse.ui.actionDefinitions">
+		<actionDefinition
+			id="org.eclipse.ui.edit.text.contentAssist.proposals" />
+	</extension>
+	
+	<extension 
+		point="org.eclipse.ui.acceleratorSets">
+		<acceleratorSet
+			scopeId="org.eclipse.ui.globalScope"
+			configurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<accelerator
+				key="CTRL+q"
+				id="org.eclipse.ui.edit.text.contentAssist.proposals"/>
+		</acceleratorSet>
+
+		<acceleratorSet
+			scopeId="org.eclipse.ui.globalScope"
+			configurationId="org.eclipse.ui.emacsAcceleratorConfiguration">
+			<accelerator
+				key="CTRL+q"
+				id="org.eclipse.ui.edit.text.contentAssist.proposals"/>
+		</acceleratorSet>
+	</extension> 
+	-->
+   
    
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- popup menu -->
@@ -414,6 +452,12 @@
             command="com.rohanclan.cfml.editors.actions.InsertDate"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding> -->
+      
+      <!-- <command name="Parse"
+            description="Parse The document"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.parser.CFParse">
+      </command> -->
       
    </extension>
 
