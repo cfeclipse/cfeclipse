@@ -31,7 +31,7 @@ package com.rohanclan.cfml.editors;
  */
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
+//import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
@@ -39,7 +39,7 @@ import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.DefaultPartitioner;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 
-import com.rohanclan.cfml.CFMLPlugin;
+//import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.parser.CFParser;
 
 public class CFDocumentProvider extends FileDocumentProvider {

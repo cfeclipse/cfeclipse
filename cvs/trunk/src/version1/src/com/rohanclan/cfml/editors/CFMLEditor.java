@@ -30,15 +30,23 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 
 import org.eclipse.core.resources.IResourceChangeListener;
+
+//import org.eclipse.jface.action.IAction;
+//import org.eclipse.ui.texteditor.TextOperationAction;
+//import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+//import org.eclipse.jface.text.source.ISourceViewer;
+//import java.util.ResourceBundle;
+
 /**
  * @author Rob
  *
  * This is the start of the Editor. It loads up the configuration and starts up
  * the image manager and syntax dictionaries.
  */
-import org.eclipse.ui.texteditor.StatusTextEditor;
+//import org.eclipse.ui.texteditor.StatusTextEditor;
+import org.eclipse.ui.editors.text.TextEditor;
 
-public class CFMLEditor extends StatusTextEditor {
+public class CFMLEditor extends TextEditor {
 
 	private ColorManager colorManager;
 	
@@ -54,8 +62,7 @@ public class CFMLEditor extends StatusTextEditor {
 		//and connects it to this Edtior
 		
 		setDocumentProvider(new CFDocumentProvider());
-
-		//
+		
 		// The following is to enable us to listen to changes. Mainly it's used for
 		// getting the document filename when a new document is opened.
 		IResourceChangeListener listener = new MyResourceChangeReporter();
@@ -65,75 +72,34 @@ public class CFMLEditor extends StatusTextEditor {
 	public void createPartControl(Composite parent) 
 	{
 		super.createPartControl(parent);
-		
-		//label = new Label(parent, 0);
-		//label.setText("Hello World");
-		//getViewSite().getPage().addSelectionListener(this);
 	}
 	
 	public void createActions()
 	{
 		super.createActions();
-		//System.err.println("buildin actions");
-		/* testAction = new Action("test") {
-			public void run() { 
-				System.err.println("hi there :)");
-			}
-		}; */
 		
-		//this.getEditorSite().getActionBars().updateActionBars();
-		//createMenu();
-		//createToolbar();
+		/*
+		final ResourceBundle bundle = CFMLPlugin.getDefault().getResourceBundle();
+		IAction a = new TextOperationAction(
+			bundle, 
+			"ContentAssistProposal.", 
+			this, 
+			ISourceViewer.CONTENTASSIST_PROPOSALS
+		);
+		a.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
+		setAction("ContentAssistProposal", a); 
+		
+		a = new TextOperationAction(
+			bundle, 
+			"ContentAssistTip.", 
+			this, 
+			ISourceViewer.CONTENTASSIST_CONTEXT_INFORMATION
+		);
+		a.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION);
+		setAction("ContentAssistTip", a);
+		*/
 	}
 	
-	/**
-	 * Create menu.
-	 */
-	/* private void createMenu() 
-	{
-		//IMenuManager mgr = getViewSite().getActionBars().getMenuManager();
-		//mgr.add(selectAllAction);
-		IMenuManager imm = this.getEditorSite().getActionBars().getMenuManager();
-			
-		
-		testAction = new GenericEncloserAction("hi","hi");
-		testAction.setText("hi");
-		testAction.setId("com.rohanclan.coldfusionmx.actions.GenericEncloserAction.test");
-		testAction.setDescription("I am a thing");
-		//testAction.setActionDefinitionId("org.eclipse.ui.editorActions");
-				
-		//imm.appendToGroup("org.eclipse.ui.editorActions",testAction);
-		imm.add(testAction);
-		//this.getEditorSite().getActionBars().updateActionBars();
-	} */
-	
-	/**
-	 * Create toolbar.
-	 
-	private void createToolbar() 
-	{
-		//IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
-		//mgr.add(addItemAction);
-		//mgr.add(deleteItemAction);
-		//IToolBarManager tbm = this.getEditorSite().getActionBars().getToolBarManager();
-		//tbm.add(testAction);
-		//this.getEditorSite().getActionBars().updateActionBars();
-	}*/
-	
-	
-	
-	/* protected MenuManager createMenuManager()
-	{
-		SnippetActionLoader sa = new SnippetActionLoader();
-		return sa.createMenuManager();
-	} */
-	
-	
-	/* right click menu 
-	public void editorContextMenuAboutToShow(MenuManager menu) {
-		//super.editorContextMenuAboutToShow(menu);
-		menu.add(new CFCommentAction());
-	}*/
 	public void dispose() 
 	{
 		colorManager.dispose();
