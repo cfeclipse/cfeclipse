@@ -68,7 +68,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	// Scribble pad defaults
 	private static final String DEFAULT_SCRIBBLE_PAD_FILE = "scribble.cfm";
 	private static final boolean DEFAULT_SCRIBBLE_CLEAR_ON_LOAD = false;
-	private static final String DEFAULT_SCRIBBLE_PROJECT_ID = "";
+	private static final String DEFAULT_SCRIBBLE_PROJECT_ID = "scribble";
 	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
