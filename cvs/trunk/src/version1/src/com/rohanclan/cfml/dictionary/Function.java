@@ -82,23 +82,26 @@ public class Function extends Procedure {
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-		Iterator it = parameters.iterator();
-		
-		sb.append(this.returns + " ");
-		sb.append(this.name + "(");
-		if(parameters != null)
-		{
-			while(it.hasNext())
+		if(this.name != null)
+		{	
+			sb.append(this.returns + " ");
+			sb.append(this.name + "(");
+			
+			if(parameters != null)
 			{
-				Parameter pm = (Parameter)it.next();
-				if(!pm.isRequired()) sb.append("[");
-				sb.append(pm.getType() + " " + pm.getName());
-				if(!pm.isRequired()) sb.append("]");
-				sb.append(", ");
+				Iterator it = parameters.iterator();
+				while(it.hasNext())
+				{
+					Parameter pm = (Parameter)it.next();
+					if(!pm.isRequired()) sb.append("[");
+					sb.append(pm.getType() + " " + pm.getName());
+					if(!pm.isRequired()) sb.append("]");
+					sb.append(", ");
+				}
+				sb.delete(sb.length()-2,sb.length());
 			}
-			sb.delete(sb.length()-2,sb.length());
+			sb.append(")");
 		}
-		sb.append(")");
 		
 		return sb.toString();
 	}
