@@ -25,6 +25,7 @@
 
 package com.rohanclan.cfml.parser;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,6 +46,9 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.parser.cfmltagitems.*;
+import com.rohanclan.cfml.parser.cfscript.ParseException;
+import com.rohanclan.cfml.parser.cfscript.SPLParser;
+import com.rohanclan.cfml.parser.cfscript.SimpleNode;
 
 //import com.rohanclan.cfml.util.Debug;
 
@@ -443,6 +447,7 @@ public class CFParser {
 		}
 		return true;
 	}
+	private SPLParser parser = null;
 	
 	/**
 	 * <code>handleCFScriptBlock</code> - handles a CFScript'd block (at the moment it does nothing)
@@ -451,7 +456,51 @@ public class CFParser {
 	 */
 	protected void handleCFScriptBlock(TagMatch match, Stack matchStack)
 	{
-		//System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");		
+		//System.out.println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");
+		String mainData = match.match;
+		mainData = mainData.substring("<cfscript>".length());
+		StringReader tempRdr =new StringReader(mainData);
+		SimpleNode rootElement = null;
+		
+		if(parser == null) {
+			parser = new SPLParser(tempRdr);
+		}
+		else
+			parser.ReInit(tempRdr);
+		
+		try {
+			parser.CompilationUnit();
+			rootElement = (SimpleNode)parser.getDocumentRoot();
+			
+			//System.out.println("CFParser::handleCFScriptBlock() - Parsed okay");
+			if(rootElement != null) {
+				
+			}
+		} catch(ParseException ex) {
+			//
+			// A ParseException has a nice error message for us... unfortunately the message returned
+			// contains a reference to the line number of the error from _the start of the CFScript block_
+			// which is therefore confusing to the user. 
+			// So we format our own message here. First we tell the user what the parser was processing
+			// when it encountered the error, then it goes through the tokens it was expecting.
+			// Finally we create a temp TagMatch that we ajust it's document positions so that the line
+			// number isn't the start of the CFScript block but the actual line of the error.
+			String errMsg = "Encountered \"" + ex.currentToken.next.image + "\". Was expecting one of: ";
+			for(int i = 0; i < ex.expectedTokenSequences.length; i++) {
+				String expToken =ex.tokenImage[ex.expectedTokenSequences[i][0]]; 
+				errMsg+= expToken.substring(1, expToken.length()-1);
+				if(i > 0) errMsg += ",";
+			}
+			TagMatch tempMatch = match;
+			tempMatch.lineNumber+= ex.currentToken.beginLine-1;
+			tempMatch.startPos += ex.currentToken.beginColumn;
+			tempMatch.endPos += ex.currentToken.endColumn;
+			userMessage(matchStack.size(), "handleCFScriptBlock()", errMsg, CFParser.USRMSG_ERROR, tempMatch);
+			ex.printStackTrace();
+		} catch(Exception ex) {
+			System.err.println("CFParser::handleCFScriptBlock() - Caught exception \'" + ex.getMessage() + "\'");
+			ex.printStackTrace();
+		}
 	}
 	
 	/**
@@ -662,11 +711,13 @@ public class CFParser {
 		
 		int matchPos = 0;
 		try {
+			
 			for(; matchPos < matches.size(); matchPos++)
 			{
 				TagMatch match = (TagMatch)matches.get(matchPos);
+				
 				String matchStr = match.match;
-				//System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
+				System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					// Is a tag
@@ -703,13 +754,14 @@ public class CFParser {
 
 						// Get the attributes from the tag.
 						
-
+						System.out.println("CFParser::createDocTree() - Handling cftag \'" + tagName + "\'");
 						if(IsCFTag(tagName))
 						{
 							// Anything within a CFScript block should really be placed at the current level of the
 							// doc tree. So send it off to the CFScript block hanlder
 							// TODO: CFScript blocks are ignored at present! Sort it! Should there be a specialised cfscript tag that does it?
-							if(tagName.compareTo("script") == 0)
+							
+							if(tagName.startsWith("<cfscript>"))
 							{
 								handleCFScriptBlock(match, matchStack);
 							}
@@ -813,7 +865,7 @@ public class CFParser {
 		int currPos = currDocOffset;
 		String nextChars = ""; // </cfscript>
 		String closingText = "</cfscript>";
-		
+		System.out.println("CFParser::matchingCFScript() - Matching CFScript");
 		for(; currPos < inData.length(); currPos++)
 		{
 			if(inData.length() - currPos + 1 > closingText.length())
@@ -828,6 +880,11 @@ public class CFParser {
 			}
 			
 		}
+		int scriptStart = currDocOffset + "<cfscript>".length();
+		String cfScriptData = inData.substring(currDocOffset, finalOffset);
+		
+		TagMatch scriptMatch = new TagMatch(cfScriptData, scriptStart, finalOffset, getLineNumber(scriptStart));
+		parseState.addMatch(scriptMatch);
 		
 		if(finalOffset != currPos)
 		{
@@ -937,7 +994,7 @@ public class CFParser {
 							}
 							else if(next2Chars.compareTo("cf") == 0)
 							{
-//System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
+System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
 								//
 								// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 								// container *only* for things to go in the document tree.
@@ -1013,15 +1070,6 @@ public class CFParser {
 			
 			try {
 				MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
-/*
-				IMarker newMarker = myWorkspaceRoot.createMarker(IMarker.PROBLEM);
-				newMarker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
-				newMarker.setAttribute(IMarker.CHAR_START, currMsg.getDocStartOffset());
-				newMarker.setAttribute(IMarker.CHAR_END, currMsg.getDocEndOffset());
-				newMarker.setAttribute(IMarker.TRANSIENT, true);
-				//newMarker.setAttribute(IMarker.LOCATION, this.res);
-*/
-				
 			}catch(CoreException excep) {
 				userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 			}catch(Exception anyExcep) {
