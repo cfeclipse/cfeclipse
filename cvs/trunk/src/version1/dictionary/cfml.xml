@@ -5,6 +5,7 @@
     	BlueDragon  = 0x2;
     	W3C         = 0x4;
     	UserDefined = 0x8;
+	
     	If support exists between two you can add them together.
     	for example 3 means MX and BlueDragon.
     Single is if the tag lacks a closing tag
@@ -12,9 +13,7 @@
 
     Note: you can not put cfx or cf_ tags in here ... well you can
     but this is the dictionary for the cfxxxxx tags only (system tags)
-   	If you want to do it anyway, leave off the cf portion. so for
-   	example cfxRohanCrypt becomes xrohancrypt (needs to be lowercase too)
-
+   	
 	A better place to put the cfx and cf_ tags is in the user.xml file
 
 	::NOTES::
@@ -182,8 +181,6 @@
 				]]></help>
 				<values>
 					&value_boolean;
-					<!-- <value option="true" />
-					<value option="false" /> -->
 				</values>
 			</parameter>
 			<parameter name="clientstorage" type="String" required="false">
@@ -210,8 +207,7 @@
 					Client variables
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="sessionmanagement" type="boolean" required="false">
@@ -219,8 +215,7 @@
 					enables session variables
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="sessiontimeout" type="Timespan" required="false">
@@ -245,8 +240,7 @@
 					Required, for applications running on clusters.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -295,8 +289,7 @@
 					method.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="default" type="String" required="false">
@@ -591,8 +584,7 @@
 					yes: display X-axis gridlines
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="showygridlines" type="boolean" required="false">
@@ -600,8 +592,7 @@
 					yes: display Y-axis gridlines
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="gridlines" type="Numeric" required="false">
@@ -666,8 +657,7 @@
 				<help><![CDATA[
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="font" type="String" required="false">
@@ -687,8 +677,7 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="fontbold" type="boolean" required="false">
@@ -696,8 +685,7 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="labelformat" type="String" required="false">
@@ -745,8 +733,7 @@
 					yes: display column labels in alphabetic order along X-axis
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="show3d" type="boolean" required="false">
@@ -754,8 +741,7 @@
 					yes: display chart with three-dimensional appearance
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="xoffset" type="Numeric" required="false">
@@ -778,8 +764,7 @@
 					use this option.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="showlegend" type="boolean" required="false">
@@ -788,8 +773,7 @@
 					legend
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="tipstyle" type="String" required="false">
@@ -830,8 +814,7 @@
 					yes: display markers at data points
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="markersize" type="Numeric" required="false">
@@ -1169,8 +1152,7 @@
 					of cffunction tags in the component.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="displayname" type="String" required="false">
@@ -1232,8 +1214,7 @@
 					No: leaves the file on the server.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="file" type="String" required="false">
@@ -1257,8 +1238,7 @@
 					this case all output is sent with the specified type.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -1316,8 +1296,7 @@
 					page must be accessed using the https protocol.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="path" type="String" required="false">
@@ -1457,8 +1436,7 @@
 					Yes: In Internet Explorer and Mozilla, expands views
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="label" type="String" required="false">
@@ -1742,8 +1720,7 @@
 					Yes: appends newline character to text written to file
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 				<triggers>
 					<selectedValue attributeName="action" value="append" required="true"/>
@@ -1945,8 +1922,7 @@
 		            true: corresponding submitted values are used
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="onsubmit" type="String" required="false">
@@ -2168,8 +2144,7 @@
 					No: populates the error	variables
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="passive" type="boolean" required="false">
@@ -2177,8 +2152,7 @@
 					Yes: enable passive mode
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="asciiextensionist" type="String" required="false">
@@ -2205,8 +2179,7 @@
 					Yes: if a local file with same name exists, getFile fails
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="directory" type="String" required="false">
@@ -2335,8 +2308,7 @@
 					HTML output.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="displayname" type="String" required="false">
@@ -2447,8 +2419,7 @@
 						CFML sets to this width, if possible
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="vspace" type="Numeric" required="false">
@@ -2491,8 +2462,7 @@
 					selectmode="edit"
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="delete" type="boolean" required="false">
@@ -2501,8 +2471,7 @@
 					if selectmode="edit"
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="sort" type="boolean" required="false">
@@ -2514,8 +2483,7 @@
 					Yes: sort buttons display on grid control
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="font" type="String" required="false">
@@ -2535,8 +2503,7 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -2544,8 +2511,7 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="textcolor" type="String" required="false">
@@ -2597,8 +2563,7 @@
 					No
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="highlighthref" type="boolean" required="false">
@@ -2608,8 +2573,7 @@
 					No: disables highlight
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="onvalidate" type="String" required="false">
@@ -2644,8 +2608,7 @@
 					Yes: enables row and column rules in grid control
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="rowheight" type="Numeric" required="false">
@@ -2662,8 +2625,7 @@
 					control
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="rowheaderalign" type="String" required="false">
@@ -2695,8 +2657,7 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="rowheaderbold" type="boolean" required="false">
@@ -2704,8 +2665,7 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="rowheadertextcolor" type="String" required="false">
@@ -2734,8 +2694,7 @@
 					control
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="colheaderalign" type="String" required="false">
@@ -2767,8 +2726,7 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="colheaderbold" type="boolean" required="false">
@@ -2776,8 +2734,7 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="colheadertextcolor" type="String" required="false">
@@ -2884,8 +2841,7 @@
 					Yes: images for Insert, Delete, Sort buttons
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="insertbutton" type="String" required="false">
@@ -2964,8 +2920,7 @@
 					Column header text. Used only if cfgrid colHeaders = "Yes".
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="width" type="Numeric" required="false">
@@ -2991,8 +2946,7 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -3000,8 +2954,7 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="bgcolor" type="String" required="false">
@@ -3069,8 +3022,7 @@
 					Yes: user can select the column in grid control.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="display" type="boolean" required="false">
@@ -3078,8 +3030,7 @@
 					No: hides column
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="type" type="String" required="false">
@@ -3118,8 +3069,7 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="headerbold" type="boolean" required="false">
@@ -3127,8 +3077,7 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="headertextcolor" type="String" required="false">
@@ -3302,8 +3251,7 @@
 						values of changed fields
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -3566,8 +3514,7 @@
 						page remain functional.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="throwonerror" type="boolean" required="false">
@@ -3581,8 +3528,7 @@
 						an error and its cause.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="redirect" type="boolean" required="false">
@@ -3592,8 +3538,7 @@
 					specified in the field.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="timeout" type="Numeric" required="false">
@@ -3704,8 +3649,7 @@
 					header.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="mimetype" type="String" required="false">
@@ -3950,8 +3894,7 @@
 						specified in key are included in indexing operation
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="language" type="String" required="false">
@@ -4016,8 +3959,7 @@
 				<help><![CDATA[
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="range" type="String" required="false">
@@ -4110,8 +4052,7 @@
 					Applies if type = "radio" or "checkbox".
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="passthrough" type="String" required="false">
@@ -4661,8 +4602,7 @@
 					clientManagement must be enabled (see cfapplication).
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -4720,8 +4660,7 @@
 					How timeout conditions are handled.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="type" type="String" required="false">
@@ -4798,8 +4737,7 @@
 					tag.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -5190,8 +5128,7 @@
 					group on case-sensitive records, set this attribute to Yes.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="startrow" type="Numeric" required="false">
@@ -5247,8 +5184,7 @@
 					Spool mail messages to disk for delivery setting.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -5653,8 +5589,7 @@
 					Whether to consider the case in grouping rows.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="startrow" type="Numeric" required="false">
@@ -5839,8 +5774,7 @@
 					saved
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -5874,8 +5808,7 @@
 					affect any white space in HTML code.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="pageencoding" type="String" required="false">
@@ -6005,8 +5938,7 @@
 					used with OUT type parameters.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -6090,8 +6022,7 @@
 					Whether the parameter is required
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="default" type="Object" required="false">
@@ -6103,8 +6034,7 @@
 					be set to "no" or not specified.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="displayname" type="String" required="false">
@@ -6244,8 +6174,7 @@
 						enabled, suppresses display.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -6333,8 +6262,7 @@
                     No: does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="list" type="boolean" required="false">
@@ -6343,8 +6271,7 @@
 					No: it is not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="separator" type="char" required="false">
@@ -6352,8 +6279,7 @@
 					Character that separates values in list, in value attribute.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -6598,8 +6524,7 @@
 					No: does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="enddate" type="String" required="false">
@@ -6679,8 +6604,7 @@
 					No: does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -6837,8 +6761,7 @@
 						submits the displayed item.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="message" type="String" required="false">
@@ -6860,8 +6783,7 @@
 					No: does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="query" type="String" required="false">
@@ -6941,8 +6863,7 @@
 					No: displays HTML that is outside cfoutput tags.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="showdebugoutput" type="boolean" required="false">
@@ -6953,8 +6874,7 @@
 						display at end of generated page.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="requesttimeout" type="Numeric" required="false">
@@ -7032,8 +6952,7 @@
 					No: does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="returncode" type="boolean" required="false">
@@ -7043,8 +6962,7 @@
 					No: does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -7215,8 +7133,7 @@
 					No
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="range" type="String" required="false">
@@ -7311,8 +7228,7 @@
 					No: it does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -7321,8 +7237,7 @@
 					No: it does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="height" type="Numeric" required="false">
@@ -7536,8 +7451,7 @@
 					No
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="category" type="String" required="false">
@@ -7554,8 +7468,7 @@
 					No: does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="text" type="String" required="false">
@@ -7677,8 +7590,7 @@
 					No: they do not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="delimiter" type="String" required="false">
@@ -7702,8 +7614,7 @@
 					a root name, CFML returns the query name as the root.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="appendkey" type="boolean" required="false">
@@ -7715,8 +7626,7 @@
 					No
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="highlighthref" type="boolean" required="false">
@@ -7726,8 +7636,7 @@
 					No: disables highlight
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="onvalidate" type="String" required="false">
@@ -7784,8 +7693,7 @@
 					No: it does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -7794,8 +7702,7 @@
 					No: it does not
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="height" type="Numeric" required="false">
@@ -7852,8 +7759,7 @@
 					* No
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="hscroll" type="boolean" required="false">
@@ -7862,8 +7768,7 @@
 					No
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="vscroll" type="boolean" required="false">
@@ -7872,8 +7777,7 @@
 					No
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="notsupported" type="String" required="false">
@@ -8019,8 +7923,7 @@
 					No: keeps tree item collapsed
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -8182,8 +8085,7 @@
 						- No: the local time is output.
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="validate" type="boolean" required="false">
@@ -8196,8 +8098,7 @@
 						- No: no input validation
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
@@ -8227,8 +8128,7 @@
 					no
 				]]></help>
 				<values>
-					<value option="true" />
-					<value option="false" />
+					&value_boolean;
 				</values>
 			</parameter>
 		</tag>
