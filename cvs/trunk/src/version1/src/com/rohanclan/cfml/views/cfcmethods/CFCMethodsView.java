@@ -1,8 +1,12 @@
 package com.rohanclan.cfml.views.cfcmethods;
 
 
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.*;
 import org.eclipse.core.resources.IFile;
@@ -55,6 +59,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	private boolean visible = false;
 	private boolean sortItems = false;
 	private IFile CFCMethodsFile = null;
+	private Text fileLabel;
 
 	/*
 	 * The content provider class is responsible for
@@ -79,16 +84,45 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
+	    GridLayout layout = new GridLayout();
+		layout.numColumns = 1;
+		layout.verticalSpacing = 2;
+		layout.marginWidth = 0;
+		layout.marginHeight = 2;
+		parent.setLayout(layout);
+		
+		
+		fileLabel = new Text(parent, SWT.READ_ONLY | SWT.SINGLE | SWT.BORDER);
+		// layout the label above the method list
+		GridData layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		layoutData.horizontalAlignment = GridData.FILL;
+		FontData labelFontData = new FontData();
+		labelFontData.setStyle(SWT.BOLD);
+		labelFontData.setHeight(10);
+		Font labelFont = new Font(parent.getDisplay(),labelFontData);
+		fileLabel.setFont(labelFont);
+		fileLabel.setLayoutData(layoutData);
+		
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(), sortItems));
 		viewer.setLabelProvider(new CFCMethodsLabelProvider());
+		
+		layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		layoutData.grabExcessVerticalSpace = true;
+		layoutData.horizontalAlignment = GridData.FILL;
+		layoutData.verticalAlignment = GridData.FILL;
+		viewer.getControl().setLayoutData(layoutData);
+		
+		
 		//viewer.setSorter(new CFCMethodsNameSorter());
 		viewer.setInput(getRootInput());
 		try {
 			IWorkbenchPartSite site = getSite();
-			IWorkbenchWindow window =  site.getWorkbenchWindow();
-			IWorkbenchPage page = window.getActivePage();
-			IEditorPart iep = page.getActiveEditor();
+			
+			IWorkbenchPage page = site.getPage();
+			
 			//iep.addPropertyListener(this);
 			page.addPartListener(this);
 		}
@@ -201,7 +235,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		pinAction.setText("Pin view");
 		pinAction.setToolTipText("Don't automatically update the method list when the editor changes.");
 		pinAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_PIN));
-		
+		pinAction.setChecked(!autoRefresh);
 
 
 
@@ -387,12 +421,29 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	
 	
 	public void reload(boolean forced) {
+	    
 		if (autoRefresh || forced) {
 			try {
 				IWorkbenchPartSite site = getSite();
 				IWorkbenchWindow window =  site.getWorkbenchWindow();
+				viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(),sortItems));
+				viewer.setInput(getRootInput());
+				
 				IWorkbenchPage page = window.getActivePage();
 				IEditorPart iep = page.getActiveEditor();
+				if (iep != null) {
+				    CFCMethodsFile = ((FileEditorInput)iep.getEditorInput()).getFile();
+				    fileLabel.setText(CFCMethodsFile.getFullPath().toString());
+				}
+				else {
+				    CFCMethodsFile = null;
+				    fileLabel.setText("No methods are available.");
+				}
+				
+				
+				//
+				//
+				/*
 				if (iep != null) {
 					iep.addPropertyListener(this);
 					CFCMethodsFile = ((FileEditorInput)iep.getEditorInput()).getFile();
@@ -400,15 +451,17 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 					//System.out.println("CFCMethods View updated");
 					viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(),sortItems));
 					viewer.setInput(getRootInput());
+					fileLabel.setText(CFCMethodsFile.getFullPath().toString());
 				}
 				else {
 					viewer.setContentProvider(new CFCMethodsContentProvider(null,sortItems));
 					viewer.setInput(null);
 				}
+				*/
 				
 			}
 			catch (Exception e) {
-				System.err.println("Couldn't add property listener to editor.");
+				//System.err.println("Couldn't add property listener to editor.");
 			}
 		}
 		

@@ -378,6 +378,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void customizeDocumentCommand(IDocument doc, DocumentCommand docCommand)
     {
+
 		try {
 			//
 			// We're only interested in the insertion of single characters, so catch the user pasting
