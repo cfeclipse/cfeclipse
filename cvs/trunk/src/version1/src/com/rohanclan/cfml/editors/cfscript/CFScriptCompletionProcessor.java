@@ -52,12 +52,6 @@ import java.lang.Character;
 import com.keygeotech.utils.Debug;
 
 /**
- * @author ollie
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
-/**
  * @author OLIVER
  *
  * This handles CFScript code insight / completion for cfscript blocks. It 
@@ -93,7 +87,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	
 	// 1) The standard completion chars. These are some activation characters 
 	//that non-opener/closer characters
-	protected static final String completionChars = ".(;~\"#[\'>";
+	protected static final String completionChars = ".(;~\"#[\'>,";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -166,6 +160,9 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		{
 			char currChar = inString.charAt(strPos);
 			
+			if(currChar == ';')
+				return -1;
+			
 			if(SpacerCharacter(currChar))
 				break;
 		}
@@ -173,6 +170,19 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		return strPos;
 	}
 	
+	protected int FindItemStartIgnoreCommas(String inString, int startPos)
+	{
+		int strPos = startPos;
+		for(; strPos > 0; strPos--)
+		{
+			char currChar = inString.charAt(strPos);
+
+			if(SpacerCharacter(currChar) && currChar != ',')
+				break;
+		}
+		
+		return strPos;
+	}
 	
 	
 	protected int BracketScan(String input, int startPos)
@@ -198,7 +208,16 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	 * 	 * 
 	 */
 	protected int BalanceScan(String input, char opener, char closer, 
-								int startPos, boolean backwards)
+			int startPos, boolean backwards)
+	{
+		return BalanceScan(input, opener, closer, startPos, backwards, 0);
+	}
+	
+
+	
+	
+	protected int BalanceScan(String input, char opener, char closer, 
+								int startPos, boolean backwards, int balancePoint)
 	{
 		int searchPos = startPos;
 		int balanceCount = 1;
@@ -219,7 +238,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					break;
 				// If we reach 0, then we've no more brackets
 				// and we're at the right place.
-				if(balanceCount == 0)
+				if(balanceCount == balancePoint)
 					break;
 			}
 		}	
@@ -433,6 +452,9 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			case '\"':
 				extraData = "\"";
 				break;
+			case '\'':
+				extraData = "\'";
+				break;
 			case '(':
 				extraData = ")";
 				break;
@@ -444,6 +466,36 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		}
 		return InsertText(document, documentOffset, extraData);		
 	}
+	
+	/**
+	 * Finds the start of a function from inside a function, i.e.:
+	 * ArrayAppend(ArrayNew(),
+	 * 
+	 * @param input - the input to search through
+	 * @param startPos - erm, where to start
+	 * @return The position of the start of the function
+	 */
+	protected int FindFuncStartFromInside(String input, int startPos)
+	{
+		int searchPos = startPos;
+		int balanceCount = 1;
+		char opener = '(';
+		char closer = ')';
+		
+		for(; searchPos > 0 && balanceCount > 0; searchPos--)
+		{
+			char searchChar = input.charAt(searchPos);
+			
+			if(searchChar == opener)
+				balanceCount--;
+			else if(searchChar == closer)
+				balanceCount++;
+		}	
+		
+		
+		return searchPos;
+	}
+	
 	
 	/*
 	 * Welcome to the horror that is the computeCompletionProposals() method.
@@ -524,7 +576,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			{
 				handleOpener(document, lastChar, documentOffset);
 				
-				if(lastChar != '(')
+				if(lastChar != '(' && lastChar != ',')
 					return null;
 			}
 			
@@ -535,9 +587,23 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					// TODO: Implement variable insight (just hard code if for the moment).
 					messages = " - I this it\'s a period.";
 					break;
+				case ',':
+					
+					//
+					// First check: is there an open bracket after a semicolon, if so
+					// then we're in business.
+					int prevBracket = scanData.lastIndexOf('(');
+					int prevSemicolon = scanData.lastIndexOf(';');
+					if(prevBracket < prevSemicolon)
+						return null;
+
+					//
+					// Call FindFuncStartFromInside() to work out where the start of the function is.
+					triggerPos = FindFuncStartFromInside(scanData, triggerPos) + 1;
+					//System.out.println("CFScriptCompletionProcessor - substring result: "+ triggerPos + "scanData: \'" + scanData.substring(0, triggerPos) + "\'\n");
 				case '(':
 					messages = " - In a function... maybe";
-					Debug.println(mName, this, messages);
+					//Debug.println(mName, this, messages);
 					int strPos = FindItemStart(scanData, triggerPos - 1); 
 					
 					if(strPos == 0)
@@ -547,18 +613,10 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					else
 					{
 						//
-						// TODO: Indent is getting large, stick this in a separate method
 						// TODO: Work out which argument we are currently in and highlight it
 						// TODO: Possibly mark when the parameter being passed to the argument is incorrect?
 						String toBeMatched = scanData.substring(strPos+1, triggerPos);
-						messages = "End of brackets at " + strPos;
-						messages+= ". String I think we will have is '" + toBeMatched + "'";
-						Debug.println(mName, this, messages);
 						
-						//... just so it works with the new dictionaries ...
-						//String usage = 
-						//	((SyntaxDictionaryInterface)DictionaryManager.getDictionary(DictionaryManager.CFDIC)).getFunctionUsage(toBeMatched);
-						//... again ...
 						Function fun = DictionaryManager.getDictionary(DictionaryManager.CFDIC).getFunction(toBeMatched);
 						String usage = fun.toString(); 
 							
@@ -568,7 +626,6 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 							return null;
 						}
 						proposals.add(usage);
-						messages = usage;
 					}
 					break;
 				case ';':

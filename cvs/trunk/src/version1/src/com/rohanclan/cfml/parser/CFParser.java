@@ -761,12 +761,12 @@ public class CFParser {
 	{
 		int finalOffset = currDocOffset;
 		int currPos = currDocOffset;
-		String nextChars; // </cfscript>
+		String nextChars = ""; // </cfscript>
 		String closingText = "</cfscript>";
 		
 		for(; currPos < inData.length(); currPos++)
 		{
-			if(inData.length() - currPos > closingText.length())
+			if(inData.length() - currPos + 1 > closingText.length())
 				nextChars = inData.substring(currPos, currPos + closingText.length());
 			else 
 				break;	// Not enough space left for it to be a closing cfscript tag.
@@ -776,6 +776,7 @@ public class CFParser {
 				finalOffset = currPos;
 				break;
 			}
+			
 		}
 		
 		if(finalOffset != currPos)

@@ -90,8 +90,8 @@ public class CFAutoIndentStrategy extends DefaultAutoIndentStrategy {
 		 */
 			ITextSelection textSelection = (ITextSelection)editor.getSelectionProvider().getSelection();
 			String selectedText = textSelection.getText();
-			System.out.println("Command offset: |"+c.offset+"|");
-			System.out.println("Command caret offset: |"+c.caretOffset+"|");
+			//System.out.println("Command offset: |"+c.offset+"|");
+			//System.out.println("Command caret offset: |"+c.caretOffset+"|");
 		 	if (selectedText.length() > 0 && (dreamweaverCompatibility || homesiteCompatibility)) {
 
 				try {
