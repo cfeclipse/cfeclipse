@@ -910,8 +910,8 @@ public class CFParser {
 			MarkerUtilities.setMessage(attrs, currMsg.getMessage());
 			//
 			// Not sure what the start & end positions are good for!
-			MarkerUtilities.setCharStart(attrs, currMsg.getDocStartOffset());
-			MarkerUtilities.setCharEnd(attrs, currMsg.getDocEndOffset());
+			//MarkerUtilities.setCharStart(attrs, currMsg.getDocStartOffset());
+			//MarkerUtilities.setCharEnd(attrs, currMsg.getDocEndOffset());
 			//
 			// Not sure right now how to set the problem to be a warning or an error.
 			// There is IMarker.SEVERITY_ERROR & IMarker.SEVERITY_WARNING but I'm 
