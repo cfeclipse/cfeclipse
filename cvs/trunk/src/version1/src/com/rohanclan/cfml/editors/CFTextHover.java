@@ -135,9 +135,10 @@ public class CFTextHover implements ITextHover {
 					{
 						//message = "<" + wordFound + ">";
 						String tglookup = wordFound;
-						
+						/*
 						if(wordFound.startsWith("cf"))
 							tglookup = wordFound.substring(2, wordFound.length());
+					*/
 						
 						//System.err.println("]" + tglookup + "[");
 						

@@ -180,9 +180,11 @@ public class XPathSearch {
 			tagName = tagName.substring(0, findEndOfString(tagName));
 			//
 			// Handle any tags that come in starting with 'cf'
+			/*
 			if(tagName.startsWith("cf")) {
 				tagName = tagName.substring(2);
 			}
+			*/
 			this.setTagSearch(tagName);
 		}
 		

@@ -152,8 +152,8 @@ public class OutlineLabelProvider extends LabelProvider {
 	{	
 		if(element instanceof CfmlTagItem)
 		{
-			StringBuffer sb = new StringBuffer("cf");
-			
+//			StringBuffer sb = new StringBuffer("cf");
+			StringBuffer sb = new StringBuffer("");			
 			String tname = ((CfmlTagItem)element).getName(); 
 			sb.append( tname );
 			
@@ -161,8 +161,11 @@ public class OutlineLabelProvider extends LabelProvider {
 			if(hasSpecialNeeds(tname))
 			{
 				String data = ((CfmlTagItem)element).getItemData();
+//				data = data.replaceAll("<cf"+tname,"");
+//				data = data.replaceAll("<CF"+tname,"");
 				data = data.replaceAll("<cf"+tname,"");
 				data = data.replaceAll("<CF"+tname,"");
+				
 				data = data.replaceAll(">","");
 				sb.append( data );
 			}
