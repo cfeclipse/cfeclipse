@@ -264,7 +264,15 @@ public class DictionaryContentHandler implements ContentHandler {
 			//if the param is not null its help for the param
 			else if(currentitem != null && paramitem != null)
 			{
-				paramitem.setHelp(resvalue.toString().trim().replace('\t',' '));
+				//TODO here too
+				//paramitem.setHelp(resvalue.toString().trim().replace('\t',' '));
+				if(resvalue.toString().trim().length() > 0)
+				{
+					paramitem.setHelp(
+						paramitem.getHelp() + " " +
+						resvalue.toString().trim().replace('\t',' ') + "\n"
+					);
+				}
 			}
 		}
 	}
