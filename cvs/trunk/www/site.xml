@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-
+   <feature url="features/com.rohanclan.cfml.release_1.1.15.jar" id="com.rohanclan.cfml.release" version="1.1.15">
+      <category name="Stable CFEclipse"/>
+   </feature>
    <feature url="features/com.rohanclan.cfml.release_1.1.14.jar" id="com.rohanclan.cfml.release" version="1.1.14">
       <category name="Stable CFEclipse"/>
    </feature>
-
    <feature url="features/com.rohanclan.cfml.release_1.0.13.jar" id="com.rohanclan.cfml.release" version="1.0.13">
       <category name="Stable CFEclipse"/>
    </feature>
@@ -14,11 +15,9 @@
    <feature url="features/com.rohanclan.cfml.release_1.0.11.jar" id="com.rohanclan.cfml.release" version="1.0.11">
       <category name="Stable CFEclipse"/>
    </feature>
-   
    <feature url="features/com.rohanclan.cfml.release_1.0.10.jar" id="com.rohanclan.cfml.release" version="1.0.10">
       <category name="Stable CFEclipse"/>
    </feature>
-
    <category-def name="Stable CFEclipse" label="com.rohanclan.cfml.release.stable">
       <description>
          This is the (in theory) stable release of CFEclipse. If you wish to test the latest, newest features then you can opt to use the CFEclipse Bleeding Edge version.

@@ -6,4 +6,5 @@
    <feature id="com.rohanclan.cfml.release" version="1.0.12"/>
    <feature id="com.rohanclan.cfml.release" version="1.0.13"/>
    <feature id="com.rohanclan.cfml.release" version="1.1.14"/>
+   <feature id="com.rohanclan.cfml.release" version="1.1.15"/>
 </site-build>
