@@ -12,6 +12,7 @@ import com.rohanclan.cfml.editors.ICFDocument;
 import org.eclipse.jface.viewers.*;
 import com.rohanclan.cfml.parser.*;
 import java.util.Iterator;
+import java.util.Collections;
 /**
  * @author Stephen Milligan
  *
@@ -25,10 +26,12 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 	CFDocumentProvider provider;
 	CFNodeList nodes;
 	TableViewer viewer;
+	boolean sortItems = false;
 	
-	public CFCMethodsContentProvider (ICFDocument icfd) {
+	public CFCMethodsContentProvider (ICFDocument icfd, boolean sortItems) {
 		// By default we create an empty tag
 		document = icfd;
+		this.sortItems = sortItems;
 	}
 	
 	
@@ -43,6 +46,7 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 	public void dispose() {
 	}
 	
+
 	
 	public Object[] getElements(Object parent) {
 		
@@ -55,7 +59,12 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 
 			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
 			nodes = rootItem.selectNodes("//function");
-
+			
+			if (sortItems) {
+			    CFCMethodsComparator comparator = new CFCMethodsComparator();
+				Collections.sort(nodes,comparator);
+			}
+			
 			Iterator i = nodes.iterator();
 			CFCMethodViewItem[] methods = new CFCMethodViewItem[nodes.size()];
 			int index = 0;
@@ -63,6 +72,7 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 			{
 				try {
 					TagItem thisTag = (TagItem)i.next();
+					
 					CFCMethodViewItem item = new CFCMethodViewItem(thisTag);
 					methods[index] = item;
 					index++;

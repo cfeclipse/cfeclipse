@@ -40,8 +40,10 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	private TableViewer viewer;
 	private Action jumpToMethod;
 	private Action selectMethod;
+	private Action sortMethodsAction;
 	private Action doubleClickAction;
 	private boolean visible = false;
+	private boolean sortItems = false;
 
 	/*
 	 * The content provider class is responsible for
@@ -67,7 +69,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	 */
 	public void createPartControl(Composite parent) {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput()));
+		viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(), sortItems));
 		viewer.setLabelProvider(new CFCMethodsLabelProvider());
 		//viewer.setSorter(new CFCMethodsNameSorter());
 		viewer.setInput(getRootInput());
@@ -118,12 +120,14 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
+		manager.add(sortMethodsAction);
 		manager.add(jumpToMethod);
 		manager.add(selectMethod);
 		manager.add(new Separator());
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
+		manager.add(sortMethodsAction);
 		manager.add(jumpToMethod);
 		manager.add(selectMethod);
 		// Other plug-ins can contribute there actions here
@@ -131,6 +135,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(sortMethodsAction);
 		manager.add(jumpToMethod);
 		manager.add(selectMethod);
 	}
@@ -144,7 +149,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		jumpToMethod.setText("Jump To Method");
 		jumpToMethod.setToolTipText("Jump to the currently selected method");
 		jumpToMethod.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW));
-		
+
 
 		selectMethod = new Action() {
 			public void run() {
@@ -154,6 +159,17 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		selectMethod.setText("Jump To and Select");
 		selectMethod.setToolTipText("Jump to the currently selected method and select its contents.");
 		selectMethod.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW_AND_SELECT));
+		
+
+
+		sortMethodsAction = new Action() {
+			public void run() {
+				sortMethods();
+			}
+		};
+		sortMethodsAction.setText("Toggle method sorting");
+		sortMethodsAction.setToolTipText("Toggle the sort order of the methods from natural to alphabetic.");
+		sortMethodsAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SORTAZ));
 		
 
 		doubleClickAction = jumpToMethod;
@@ -220,6 +236,18 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	
+	
+	private void sortMethods() {
+		CFCMethodViewItem selectedMethod;
+		if(this.sortItems) {
+		    this.sortItems = false;
+		} else {
+		    this.sortItems = true;
+		}
+		reload();
+	}
+	
+	
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
@@ -260,11 +288,11 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			if (iep != null) {
 				iep.addPropertyListener(this);
 				//System.out.println("CFCMethods View updated");
-				viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput()));
+				viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput(),sortItems));
 				viewer.setInput(getRootInput());
 			}
 			else {
-				viewer.setContentProvider(new CFCMethodsContentProvider(null));
+				viewer.setContentProvider(new CFCMethodsContentProvider(null,sortItems));
 				viewer.setInput(null);
 			}
 			

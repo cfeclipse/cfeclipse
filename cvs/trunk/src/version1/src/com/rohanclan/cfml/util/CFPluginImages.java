@@ -120,6 +120,9 @@ public class CFPluginImages {
 	/** some books */
 	public static final String ICON_LIBRARY = "library.gif";
 	
+	/** sorting icon */
+	public static final String ICON_SORTAZ = "sortaz.gif";
+	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
 	public static final String TOOLBAR 		 = "ctool16";
@@ -183,6 +186,7 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_IMPORT);
 			addImageToRegistry(TOOLBAR,ICON_GLOBE);
 			addImageToRegistry(TOOLBAR,ICON_LIBRARY);
+			addImageToRegistry(TOOLBAR,ICON_SORTAZ);
 		}
 	}
 	
