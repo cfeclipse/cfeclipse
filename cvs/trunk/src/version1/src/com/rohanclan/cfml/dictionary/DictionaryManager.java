@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 package com.rohanclan.cfml.dictionary;
-
+ 
 import java.util.Map;
 import java.util.HashMap;
 
@@ -40,7 +40,7 @@ import com.rohanclan.cfml.editors.script.JSSyntaxDictionary;
  *
  * This class loads all the dictionaries and can be used to get specific
  * dictionaries. This (hopefully) well help in abstracting the dictionaries
- * not intended to be instanceated
+ * not intended to be instantiated
  */
 public class DictionaryManager {
 	/** the cold fusion dictionary */
