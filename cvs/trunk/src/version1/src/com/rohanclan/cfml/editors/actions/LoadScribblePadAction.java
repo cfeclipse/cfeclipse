@@ -23,6 +23,7 @@ import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.views.browser.BrowserView;
 /**
  * @author Stephen Milligan
  *
@@ -33,8 +34,8 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
     
     protected ITextEditor editor = null;
     
-    private String scribbleFileName, scribbleProjectName;
-    boolean clearOnLoad;
+    private String scribbleFileName, scribbleProjectName, scribbleURL;
+    boolean clearOnLoad,loadBrowser;
     private IPreferenceStore store;
     
     public LoadScribblePadAction () {
@@ -46,8 +47,10 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
 
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         scribbleFileName = store.getString(ICFMLPreferenceConstants.P_SCRIBBLE_PAD_FILE);
-        scribbleProjectName = store.getString(ICFMLPreferenceConstants.P_SCRIBBLE_PROJECT_ID);
+        scribbleProjectName = store.getString(ICFMLPreferenceConstants.P_SCRIBBLE_PROJECT_NAME);
         clearOnLoad = store.getBoolean(ICFMLPreferenceConstants.P_SCRIBBLE_CLEAR_ON_LOAD);
+        loadBrowser = store.getBoolean(ICFMLPreferenceConstants.P_SCRIBBLE_LOAD_BROWSER);
+        scribbleURL = store.getString(ICFMLPreferenceConstants.P_SCRIBBLE_URL);
         
         try {
         
@@ -76,6 +79,12 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
 	                IEditorPart editorPart = IDE.openEditor(page,scribbleFile,true);
 	                if (clearOnLoad) {
 	                    editor.getDocumentProvider().getDocument(editor.getEditorInput()).set("");
+	                }
+	                if (loadBrowser) {
+
+	         		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+	         		   browser.setUrl(scribbleURL);
+	         		   //browser.refresh();
 	                }
                 }
 	        }

@@ -28,9 +28,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -67,17 +65,16 @@ public class RefreshBrowserAction implements IEditorActionDelegate {
 	{
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
-		IViewReference ref[] = page.getViewReferences();
-		for(int q=0; q<ref.length; q++)
-		{
-			//System.err.println("ref: " + ref[q].getId() );
-			if(ref[q].getId().equals(BrowserView.ID_BROWSER))
-			{
-				IWorkbenchPart iwbp = ref[q].getPart(true);
-				((BrowserView)iwbp).refresh();
-				break;
-			}
-		}
+
+	    try {
+	        
+	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+	        browser.refresh();
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){;}

@@ -46,8 +46,10 @@ public class ScribblePadPrefPage
 	public void createFieldEditors()
 	{
 		addField(new BooleanFieldEditor(P_SCRIBBLE_CLEAR_ON_LOAD, "Clear scribble pad every time you launch it", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(P_SCRIBBLE_LOAD_BROWSER, "Automatically load and set the URL for the browser view.", getFieldEditorParent()));
 		addField(new StringFieldEditor(P_SCRIBBLE_PAD_FILE,"File name to use as scribble pad.",getFieldEditorParent()));
-		addField(new StringFieldEditor(P_SCRIBBLE_PROJECT_ID,"Project to use for scribble pad.",getFieldEditorParent()));
+		addField(new StringFieldEditor(P_SCRIBBLE_PROJECT_NAME,"Project to use for scribble pad.",getFieldEditorParent()));
+		addField(new StringFieldEditor(P_SCRIBBLE_URL,"URL to scribble file.",getFieldEditorParent()));
 	}
 	
 	 protected void performDefaults() 

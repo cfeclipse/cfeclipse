@@ -69,6 +69,8 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final String DEFAULT_SCRIBBLE_PAD_FILE = "scribble.cfm";
 	private static final boolean DEFAULT_SCRIBBLE_CLEAR_ON_LOAD = false;
 	private static final String DEFAULT_SCRIBBLE_PROJECT_ID = "scribble";
+	private static final String DEFAULT_SCRIBBLE_URL = "";
+	private static final boolean DEFAULT_SCRIBBLE_LOAD_BROWSER = true;
 	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
@@ -150,7 +152,9 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         // Scribble pad prefs
         store.setDefault(P_SCRIBBLE_PAD_FILE, DEFAULT_SCRIBBLE_PAD_FILE);
         store.setDefault(P_SCRIBBLE_CLEAR_ON_LOAD, DEFAULT_SCRIBBLE_CLEAR_ON_LOAD);
-        store.setDefault(P_SCRIBBLE_PROJECT_ID, DEFAULT_SCRIBBLE_PROJECT_ID);
+        store.setDefault(P_SCRIBBLE_PROJECT_NAME, DEFAULT_SCRIBBLE_PROJECT_ID);
+        store.setDefault(P_SCRIBBLE_LOAD_BROWSER, DEFAULT_SCRIBBLE_LOAD_BROWSER);
+        store.setDefault(P_SCRIBBLE_URL, DEFAULT_SCRIBBLE_URL);
         
         // Tag indent prefs
         store.setDefault(P_AUTOCLOSE_DOUBLE_QUOTES, DEFAULT_AUTOCLOSE_DOUBLEQUOTES);
