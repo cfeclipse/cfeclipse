@@ -6221,28 +6221,28 @@
 					SQL type that parameter (any type) is bound to.
 				]]></help>
 				<values>
-					<value option="CF_SQL_BIGINT" />
-					<value option="CF_SQL_BIT" />
-					<value option="CF_SQL_CHAR" />
-					<value option="CF_SQL_BLOB" />
-					<value option="CF_SQL_CLOB" />
-					<value option="CF_SQL_DATE" />
-					<value option="CF_SQL_DECIMAL" />
-					<value option="CF_SQL_DOUBLE" />
-					<value option="CF_SQL_FLOAT" />
-					<value option="CF_SQL_IDSTAMP" />
-					<value option="CF_SQL_INTEGER" />
-					<value option="CF_SQL_LONGVARCHAR" />
-					<value option="CF_SQL_MONEY" />
-					<value option="CF_SQL_MONEY4" />
-					<value option="CF_SQL_NUMERIC" />
-					<value option="CF_SQL_REAL" />
-					<value option="CF_SQL_REFCURSOR" />
-					<value option="CF_SQL_SMALLINT" />
-					<value option="CF_SQL_TIME" />
-					<value option="CF_SQL_TIMESTAMP" />
-					<value option="CF_SQL_TINYINT" />
-					<value option="CF_SQL_VARCHAR" />
+					<value option="cf_sql_bigint" />
+					<value option="cf_sql_bit" />
+					<value option="cf_sql_char" />
+					<value option="cf_sql_blob" />
+					<value option="cf_sql_clob" />
+					<value option="cf_sql_date" />
+					<value option="cf_sql_decimal" />
+					<value option="cf_sql_double" />
+					<value option="cf_sql_float" />
+					<value option="cf_sql_idstamp" />
+					<value option="cf_sql_integer" />
+					<value option="cf_sql_longvarchar" />
+					<value option="cf_sql_money" />
+					<value option="cf_sql_money4" />
+					<value option="cf_sql_numeric" />
+					<value option="cf_sql_real" />
+					<value option="cf_sql_refcursor" />
+					<value option="cf_sql_smallint" />
+					<value option="cf_sql_time" />
+					<value option="cf_sql_timestamp" />
+					<value option="cf_sql_tinyint" />
+					<value option="cf_sql_varchar" />
 				</values>
 			</parameter>
 			<parameter name="maxlength" type="Numeric" required="false">
