@@ -30,8 +30,15 @@ import java.util.HashSet;
 /**
  * @author Rob
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This class represents a Procedure that resides within the syntax dictionary.
+ * 
+ * A procedure is a sub-routine that does not return a value (though it can have
+ * out parameters, i.e. &lt;cfquery&gt;).
+ * 
+ * Currently one can define a procedure as belonging to CFMX, BD, W3C (i.e. HTML)
+ * and USR (user defined procedure). This will all change soon as we bring in 
+ * separate syntax files for different languages.
+ *  
  */
 public class Procedure implements Comparable {
 	/* cold fusion "types" */
@@ -65,10 +72,18 @@ public class Procedure implements Comparable {
 	 * as Tag - so use those Tag.MX Tag.BD etc
 	 */
 	protected byte creator = MX;
+	
+	/** The help associated with this procedure */
 	protected String help = "";
 	
+	/** The parameters that belong to this procedure (if any) */
 	protected Set parameters = null;
 	
+	/**
+	 * Constructs the procedure with a name.
+	 * 
+	 * @param name - name of the procedure to create.
+	 */
 	public Procedure(String name)
 	{
 		this.name = name;
@@ -84,6 +99,11 @@ public class Procedure implements Comparable {
 		return creator;
 	}
 	
+	/**
+	 * Has this procedure got any parameters?
+	 * 
+	 * @return true/false, figure it out :)
+	 */
 	public boolean hasParameters()
 	{
 		if(parameters == null || parameters.size() < 1)
@@ -104,6 +124,10 @@ public class Procedure implements Comparable {
 		parameters.add(param);
 	}
 
+	/**
+	 * Debug function for dumping what parameters belong to this procedure.
+	 *
+	 */
 	public void dumpParams()
 	{
 		Object [] params = parameters.toArray();
@@ -114,23 +138,39 @@ public class Procedure implements Comparable {
 	}
 	
 	/**
-	 * get all the values for this attribute
+	 * Gets the parameters for this procedure.
+	 * 
+	 * @return Set of parameters belong to this procedure.
 	 */
 	public Set getParameters()
 	{
 		return parameters;
 	}
 	
+	/**
+	 * Gets the name of this procedure.
+	 * 
+	 * @return name of procedure
+	 */
 	public String getName()
 	{
 		return this.name;
 	}
 	
+	/**
+	 * Sets the help to be associated with this procedure
+	 * 
+	 * @param help
+	 */
 	public void setHelp(String help)
 	{
 		this.help = help;
 	}
 	
+	/**
+	 * Gets the help associated with this procedure.
+	 * @return
+	 */
 	public String getHelp()
 	{
 		return help;
@@ -162,7 +202,9 @@ public class Procedure implements Comparable {
 	}
 	
 	/**
-	 * so we can sort these bad boys
+	 * Enables us to sort this object
+	 * @param o - the object to compare this procedure with
+	 * @throws NullPointerException if <code>o</code> is null.
 	 */
 	public int compareTo(Object o)
 	{

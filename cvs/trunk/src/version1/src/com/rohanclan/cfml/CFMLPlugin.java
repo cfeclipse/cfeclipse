@@ -37,24 +37,29 @@ import com.rohanclan.cfml.dictionary.DictionaryManager;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.osgi.framework.BundleContext;
 
-import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.preferences.*;
 import com.rohanclan.cfml.properties.CFMLPropertyManager;
 
 /**
+ * 
+ * The CFEclipse plugin itself.
+ * 
+ * Also see 'Simple plug-in example' in the Platform Plug-in Developer Guide 
+ * that comes with the SDK version of Eclipse.
+ * 
+ * @see org.eclipse.ui.plugin.AbstractUIPlugin
  * @author Rob
- * (actually the wizard made this file)
- * The main plugin class
  */
 public class CFMLPlugin extends AbstractUIPlugin {
-	//The shared instance.
+	/** Singleton instance so that everything can access the plugin */
 	private static CFMLPlugin plugin;
-	//Resource bundle.
+	
+	/** The bundle of resources for the plugin */
 	private ResourceBundle resourceBundle;
 	
-	private static CFParser cfparserAction = null;
+	/** The preferences for the plugin. */
 	private PreferenceStore propertyStore; 
-	
+	  
 	/**
 	 * create a new cfml plugin
 	 */

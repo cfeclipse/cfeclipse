@@ -49,7 +49,15 @@ import java.io.BufferedInputStream;
 /**
  * @author Rob
  *
- * Base class for dictionaries
+ * Base class for dictionaries.
+ * 
+ * The syntax dictionary keeps a name/object map of the tags and functions defined 
+ * in the dictionary. It provides the methods for gaining access to the dictionary's
+ * defined functions & tags, plus access to the attributes that belong to a tag.
+ * 
+ * I think, in future, the acces to the attributes should be done on an per-attribute
+ * basis, not gained from the syntax dictionary.
+ * 
  */
 public abstract class SyntaxDictionary {
 	/** any tag based items in the dictionary */
@@ -163,8 +171,8 @@ public abstract class SyntaxDictionary {
 	
 	/**
 	 * get a set of filtered tags limited by start
-	 * @param start
-	 * @return
+	 * @param start the string to filter by (i.e. "cfou" will return all tags beginning with "cfou"
+	 * @return set of matching elements.
 	 */
 	public Set getFilteredElements(String start)
 	{
@@ -174,8 +182,8 @@ public abstract class SyntaxDictionary {
 	
 	/**
 	 * Get the tag "name" from the dictionary - null if not found
-	 * @param name
-	 * @return
+	 * @param name - name of the tag to search for. 
+	 * @return the Tag matched, otherwise <code>null</code>
 	 */
 	public Tag getTag(String name)
 	{
@@ -186,11 +194,19 @@ public abstract class SyntaxDictionary {
 		return null;
 	}
 	/**
-	 * gets the attributes(params) for a tag(or function... I think)
-	 * @param tag
-	 * @param attribute
-	 * @param start
-	 * @return
+	 * Gets the parameter values for a procedure (aka tag or function).
+	 * Parameter values could be, for example, ColdFusion boolean value
+	 * options (true/false) for the <code>output</code> attribute for
+	 * a <code>cffunction</code>.
+	 * 	 * 
+	 * The set of attribute values is based on the tag being searched for and the
+	 * attribute required. The values returned will also be filtered by anything
+	 * contained in the string <code>start</code>.
+	 * 
+	 * @param tag - name of tag to search for
+	 * @param attribute - attribute that we're looking for
+	 * @param start - A partial or full value to filter by 
+	 * @return set of filtered attribute values
 	 */
 	public Set getFilteredAttributeValues(String tag, String attribute, String start)
 	{
@@ -209,10 +225,11 @@ public abstract class SyntaxDictionary {
 	}
 	
 	/**
-	 * get the attribtues for tag tag, limited to start
-	 * @param tag
-	 * @param start
-	 * @return
+	 * Gets the attributes for a tag, filtered by start
+	 * 
+	 * @param tag - tag to search for
+	 * @param start - attribute text that we wish to filter by
+	 * @return the filtered set of attributes
 	 */
 	public Set getFilteredAttributes(String tag, String start)
 	{
@@ -220,8 +237,9 @@ public abstract class SyntaxDictionary {
 	}
 	
 	/**
-	 * gets all the functions in a string Format (lowercase only). In other words
+	 * Gets all the functions in a string Format (lowercase only). In other words
 	 * the keyset of the function map not the function objects
+	 * 
 	 * @param elementname
 	 * @return
 	 */
