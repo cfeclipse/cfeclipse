@@ -25,16 +25,12 @@
 package com.rohanclan.cfml.views;
 
 import org.eclipse.ui.part.ViewPart;
-//import org.eclipse.ui.part.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-//import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.action.Action;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 
-//import java.net.MalformedURLException;
-//import java.net.URL;
 import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.core.runtime.IPath;
 
@@ -43,9 +39,6 @@ import org.eclipse.jface.action.*;
 import com.rohanclan.cfml.util.XMLConfigFile;
 import java.io.File;
 import org.eclipse.ui.IEditorPart;
-
-//import com.rohanclan.coldfusionmx.util.CFPluginImages;
-
 
 /**
  * @author Rob
@@ -61,9 +54,10 @@ import org.eclipse.ui.IEditorPart;
  * Found on www.eclipse.org
  */
 public class SnipView extends ViewPart {
+	public static final String ID_SNIPVIEW = "com.rohanclan.cfml.views.snipview";
 	
-	ListViewer viewer;
-	Action insertAction; //addItemAction; //, deleteItemAction, selectAllAction;
+	protected ListViewer viewer;
+	protected Action insertAction; //addItemAction; //, deleteItemAction, selectAllAction;
 	
 	private static GenericEncloserAction tmpAction;
 	private static XMLConfigFile xmlconfile;

@@ -64,6 +64,8 @@ import java.io.File;
  * May 5, 2002
  */
 public class SnipTreeView extends ViewPart {
+	public static final String ID_SNIPVIEWTREE = "com.rohanclan.cfml.views.snips.sniptreeview";
+	
 	/** the treeviewer control */
 	protected TreeViewer treeViewer;
 	protected Text text;
