@@ -45,11 +45,20 @@
          point="org.eclipse.ui.editors">
       <editor
             name="CFML Editor"
-            extensions="cfm,cfml,cfc,html,htm,xhtml"
+            extensions="cfm,cfml,html,htm,xhtml"
             icon="icons/obj16/default.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="com.rohanclan.cfml.editors.CFMLEditor"
             id="com.rohanclan.cfml.editors.CFMLEditor">
+      </editor>
+      
+      <editor
+            name="CFC Editor"
+            extensions="cfc"
+            icon="icons/obj16/cfc.gif"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="com.rohanclan.cfml.editors.CFMLEditor"
+            id="com.rohanclan.cfml.editors.CFCEditor">
       </editor>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->

@@ -28,6 +28,7 @@ package com.rohanclan.cfml.editors;
 import java.util.LinkedList;
 
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
@@ -375,11 +376,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				    
 				  IEditorPart iep = getSite().getPage().getActiveEditor();
 					ITextEditor editor = (ITextEditor) iep;
+					ISelection sel = editor.getSelectionProvider().getSelection();
 					IDocument doc = editor.getDocumentProvider().getDocument(
 							editor.getEditorInput());
 					String docText = doc.get();
 					doc.set("");
 					doc.set(docText);
+					editor.getSelectionProvider().setSelection(sel);
 				}
 			};
 			menu.add(act);
