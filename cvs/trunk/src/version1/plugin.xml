@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.5"
+   version="1.1.6"
    provider-name="RohanClan"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -32,8 +32,8 @@
             id="com.rohanclan.cfml.perspective.CF">
       </perspective>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- Editor -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Editor -->
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -45,8 +45,8 @@
             id="com.rohanclan.cfml.editors.CFMLEditor">
       </editor>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- Actions -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Actions -->
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
@@ -63,12 +63,12 @@
                   name="output">
             </separator>
          </menu>
-<!-- <menu label="&amp;Output"
+		<!-- <menu label="&amp;Output"
                path="com.rohanclan.cfml.cfmxmenu/maingroup"
                id="com.rohanclan.cfml.cfmxmenu.suboutput">
 	     	<separator name="output"></separator>
 	     </menu> -->
-<!-- cfcomment -->
+		<!-- cfcomment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFComment"
                label="&amp;Comment"
@@ -79,7 +79,7 @@
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFCommentAction">
          </action>
-<!-- smart comment -->
+		<!-- smart comment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.AutoComment"
                label="&amp;Auto Comment"
@@ -90,7 +90,7 @@
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.AutoCommentAction">
          </action>
-<!-- Surround with #s -->
+		<!-- Surround with #s -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFVariable"
                label="&amp;Variable"
@@ -101,7 +101,7 @@
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFVariableAction">
          </action>
-<!-- Surround with single quotes -->
+		<!-- Surround with single quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFSingleQuote"
                label="&amp;Single Quotes"
@@ -112,7 +112,7 @@
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction">
          </action>
-<!-- Surround with double quotes -->
+		<!-- Surround with double quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
                label="&amp;Double Quotes"
@@ -123,7 +123,7 @@
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction">
          </action>
-<!-- Surround with simple cfoutputs -->
+		<!-- Surround with simple cfoutputs -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFOutput"
                label="CF &amp;Output"
@@ -134,7 +134,7 @@
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFOutputAction">
          </action>
-<!-- Surround with a simple cfdump -->
+		<!-- Surround with a simple cfdump -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDump"
                label="CF D&amp;ump"
@@ -145,7 +145,7 @@
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFDumpAction">
          </action>
-<!-- Surround with a cfscript -->
+		<!-- Surround with a cfscript -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFScript"
                label="CF S&amp;cript"
@@ -155,7 +155,7 @@
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFScriptAction">
          </action>
-<!-- to lower case -->
+		<!-- to lower case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToLowerCase"
                label="To L&amp;ower"
@@ -166,7 +166,7 @@
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.ToLowerCaseAction">
          </action>
-<!-- to upper case -->
+		<!-- to upper case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToUpperCase"
                label="To U&amp;pper"
@@ -177,7 +177,7 @@
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.ToUpperCaseAction">
          </action>
-<!-- insert date -->
+		<!-- insert date -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertDate"
                label="Insert Date"
@@ -189,13 +189,13 @@
          </action>
       </editorContribution>
    </extension>
-<!-- I have no idea why this doesnt work. (or why it would) -->
-<!-- <extension point="org.eclipse.ui.acceleratorSets">
+	<!-- I have no idea why this doesnt work. (or why it would) -->
+	<!-- <extension point="org.eclipse.ui.acceleratorSets">
 		<acceleratorSet 
 			scopeId="org.eclipse.ui.textEditorScope" 
 			configurationId="org.eclipse.ui.emacsAcceleratorConfiguration"> -->
-<!-- id="org.eclipse.ui.edit.text.contentAssist.proposals" -->
-<!--	<accelerator key="Ctrl+1"
+	<!-- id="org.eclipse.ui.edit.text.contentAssist.proposals" -->
+	<!--	<accelerator key="Ctrl+1"
 				id="org.eclipse.ui.edit.text.contentAssist.contextInformation"
 			/> 
 		</acceleratorSet>
@@ -218,14 +218,14 @@
 			/>
 		</acceleratorSet>
 	</extension> -->
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- popup menu -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- popup menu -->
    <extension
          point="org.eclipse.ui.popupMenus">
       <viewerContribution
             targetID="#TextEditorContext"
             id="org.eclipse.ui.articles.action.contribution.popup.editor">
-<!-- <action
+			<!-- <action
 				id="org.eclipse.ui.articles.action.contribution.editor.action1" 
 				label="Editor Action 1"
 				menubarPath="additions" 
@@ -260,7 +260,7 @@
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text"
                id="com.rohanclan.cfml.editors.actions.ToUpperCase">
          </action>
-<!-- ////// -->
+		<!-- ////// -->
          <action
                label="Wrap In #s"
                class="com.rohanclan.cfml.editors.actions.CFVariableAction"
@@ -281,8 +281,8 @@
          </action>
       </viewerContribution>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- Commands -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Commands -->
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -290,7 +290,7 @@
             description="CFML Editor key bindings"
             id="com.rohanclan.cfml.commandCategory">
       </category>
-<!-- this will always make a cf type comment -->
+		<!-- this will always make a cf type comment -->
       <command
             name="Insert Comment"
             description="Insert a CFML comment."
@@ -303,7 +303,7 @@
             command="com.rohanclan.cfml.editors.actions.CFComment"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- comment based on section (i.e. js comments in js blocks, etc) -->
+	<!-- comment based on section (i.e. js comments in js blocks, etc) -->
       <command
             name="Insert Auto Comment"
             description="Insert a comment based on section."
@@ -316,7 +316,7 @@
             command="com.rohanclan.cfml.editors.actions.AutoComment"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in pound signs -->
+	<!-- enclose in pound ... er ... hash signs -->
       <command
             name="CF Variable"
             description="Surround with pound/number signs"
@@ -329,7 +329,7 @@
             command="com.rohanclan.cfml.editors.actions.CFVariable"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in single quotes -->
+	<!-- enclose in single quotes -->
       <command
             name="Single Quotes"
             description="Surround with Single Quotes"
@@ -342,7 +342,7 @@
             command="com.rohanclan.cfml.editors.actions.CFSingleQuote"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in double quotes -->
+	<!-- enclose in double quotes -->
       <command
             name="Double Quotes"
             description="Surround with pound/number signs"
@@ -355,7 +355,7 @@
             command="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in cfoutputs -->
+	<!-- enclose in cfoutputs -->
       <command
             name="CF Outputs"
             description="Surround with cfoutputs"
@@ -368,7 +368,7 @@
             command="com.rohanclan.cfml.editors.actions.CFOutput"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in cfdump -->
+	<!-- enclose in cfdump -->
       <command
             name="CF Dump"
             description="Surround with a simple cfdump"
@@ -381,7 +381,7 @@
             command="com.rohanclan.cfml.editors.actions.CFDump"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- enclose in cfscript -->
+	<!-- enclose in cfscript -->
       <command
             name="CF Script"
             description="Surround with a cfscript"
@@ -394,7 +394,7 @@
             command="com.rohanclan.cfml.editors.actions.CFScript"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- to lower case -->
+	<!-- to lower case -->
       <command
             name="To Lower"
             description="Lower case selected text"
@@ -407,7 +407,7 @@
             command="com.rohanclan.cfml.editors.actions.ToLowerCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- to upper case -->
+	<!-- to upper case -->
       <command
             name="To Upper"
             description="Upper case selected text"
@@ -420,7 +420,7 @@
             command="com.rohanclan.cfml.editors.actions.ToUpperCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- to upper case -->
+	<!-- to upper case -->
       <command
             name="Insert Date"
             description="Insert the current date"
@@ -428,8 +428,8 @@
             id="com.rohanclan.cfml.editors.actions.InsertDate">
       </command>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- the snip viewers -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- the snip viewers -->
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -458,8 +458,21 @@
             id="com.rohanclan.cfml.views.browser">
       </view>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- help -->
+   
+  <!--  <extension
+         point="org.eclipse.ui.views.contentoutline.IContentOutlinePage">
+      <view
+            name="Outline View"
+            icon="icons/obj16/snip.gif"
+            category="com.rohanclan.cfml"
+            class="com.rohanclan.cfml.views.contentoutline.CFContentOutlineView"
+            id="com.rohanclan.cfml.views.contentoutline.CFContentOutline">
+      </view>
+   </extension> -->
+   
+   
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- help -->
    <extension
          point="org.eclipse.help.toc">
       <toc
@@ -473,6 +486,8 @@
             file="doc/toc_general.xml">
       </toc>
    </extension>
+   
+   <!-- Stephen Milligans (aka spike) area -->
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
@@ -481,6 +496,35 @@
             class="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             id="com.rohanclan.cfml.preferences.CFMLPreferencePage">
       </page>
+   </extension>
+   
+	<!-- Chris Queeners area -->
+	<extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="CFML Wizard"
+            id="com.rohanclan.cfml.category1">
+      </category>
+      <wizard
+            name="New CFML Wizard"
+            icon="icons/obj16/default.gif"
+            category="com.rohanclan.cfml.category1"
+            class="com.rohanclan.cfml.wizards.NewCfmlWizard"
+            preferredPerspectives="CFML"
+            project="true"
+            finalPerspective="CFML"
+            id="com.rohanclan.cfml.wizards.NewCfmlWizard">
+      </wizard>
+      <wizard
+            name="New CFC Wizard"
+            icon="icons/obj16/default.gif"
+            category="com.rohanclan.cfml.category1"
+            class="com.rohanclan.cfml.wizards.NewCfcWizard"
+            preferredPerspectives="CFML"
+            project="true"
+            finalPerspective="CFML"
+            id="NewCfcWizard">
+      </wizard>
    </extension>
 
 </plugin>
