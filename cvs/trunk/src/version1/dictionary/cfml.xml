@@ -4259,7 +4259,7 @@
 				component = "component name or reference"
 				argumentCollection = "argument collection"
 		-->
-		<tag name="cfinvoke" creator="3" single="false" xmlstyle="false">
+		<tag name="cfinvoke" creator="3" single="false" hybrid="true" allowanyattribute="true" xmlstyle="false">
 			<help><![CDATA[
 				Does either of the following:
 
@@ -5428,7 +5428,7 @@
 				attribute_name1 = "valuea"
 				attribute_name2 = "valueb" ...
 		-->
-		<tag name="cfmodule" creator="3" single="true" xmlstyle="false">
+		<tag name="cfmodule" creator="3" single="false" hybrid="true" allowanyattribute="true" xmlstyle="false">
 			<help><![CDATA[
 				Invokes a custom tag for use in CFML application pages.
 				This tag processes custom tag name conflicts.
@@ -6141,7 +6141,7 @@
 				every cfquery tag, to help secure your databases from
 				unauthorized users
 			]]></help>
-			<parameter name="name" type="String" required="true">
+			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
 					Name of query. Used in page to reference query record set.
 					Must begin with a letter. Can include letters, numbers,
@@ -6149,7 +6149,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="datasource" type="String" required="true">
+			<parameter name="datasource" type="String" required="false">
 				<help><![CDATA[
 					Name of data source from which query gets data.
 				]]></help>
@@ -13657,7 +13657,7 @@
 		<scope value="CFERROR.rootCause"/>
 		<scope value="CFERROR.tagContext"/>
 		<scope value="CFERROR.type"/>
-		
+
 		<!-- error variables -->
 		<scope value="ERROR.validationHeader"/>
 		<scope value="ERROR.invalidFields"/>

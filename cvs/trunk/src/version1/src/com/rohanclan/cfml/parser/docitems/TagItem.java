@@ -143,7 +143,11 @@ public class TagItem extends DocItem {
 		super(line, startDocPos, endDocPos, name);
 		itemAttributes = new HashMap();
 	}
-	
+	/**
+	 * Indicates whether or  not this tag <b>requires</b> a closing tag.
+	 * @return
+	 * @throws NullPointerException
+	 */
 	public boolean hasClosingTag() throws NullPointerException 
 	{
 		Tag tag = syntax.getTag(itemName);
@@ -158,7 +162,23 @@ public class TagItem extends DocItem {
 			
 			return true;	// Let's say it's a single tag.
 		}
+		
 		return !tag.isSingle();
+	}
+	
+	/**
+	 * Indicates whether this tag can be either single or closed
+	 */
+	public boolean isHybrid() {
+	    Tag tag = syntax.getTag(itemName);
+		if(tag == null)
+		{
+		    return true;
+		}
+		else {
+		    return tag.isHybrid();
+		}
+		    
 	}
 
 }

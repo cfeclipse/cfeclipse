@@ -430,6 +430,7 @@ public class CFParser {
 				}
 				matchStack.push(parentItem);
 			}
+			
 			else
 			{
 				//
@@ -760,7 +761,15 @@ public class CFParser {
 						}
 					}
 					else {
-						int tagEnd = matchStr.indexOf(" ");	// Look for the first space
+					    int tagEnd = -1;
+					    Pattern p = Pattern.compile("[ \\t\\r\\n]");
+					    Matcher m = p.matcher(matchStr);
+					    if (m.find()) {
+					        tagEnd  = m.end()-1;
+					    }
+					    
+					    /*
+						tagEnd = matchStr.indexOf(" ");	// Look for the first space
 						int tabIndex = matchStr.indexOf("\t"); // Check if there's a tab before the space
 						
 						if (tabIndex > 0 
@@ -768,12 +777,13 @@ public class CFParser {
 						    
 						    tagEnd = tabIndex;
 						}
-						
+						*/
 						if(tagEnd == -1) {
 							// No spaces, therefore it has no attributes (i.e. <cfscript>)
 							tagEnd = matchStr.indexOf(">");
 						}
 						String tagName = match.match.substring(0, tagEnd);
+						System.out.println(tagName);
 						boolean isACloser = false;
 						//
 						// Find the end of the tag

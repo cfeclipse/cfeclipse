@@ -173,6 +173,8 @@ public class DictionaryContentHandler implements ContentHandler {
 		String name = "";
 		boolean single = false;
 		boolean xmlstyle = false;
+		boolean hybrid = false;
+		boolean anyAttribute = false;
 		
 		//get all the attributes needed for the tag
 		for(int x=0; x< attributes.getLength(); x++)
@@ -194,11 +196,19 @@ public class DictionaryContentHandler implements ContentHandler {
 			{
 				xmlstyle = parseBoolean(attributes.getValue(x));
 			}
+			else if(attrname.equals("hybrid"))
+			{
+				hybrid = parseBoolean(attributes.getValue(x));
+			}
+			else if(attrname.equals("allowanyattribute"))
+			{
+				anyAttribute = parseBoolean(attributes.getValue(x));
+			}
 		}
 		
 		//System.out.println("Tag: " + creator + " " + name + " " + single + " " + xmlstyle);
 		//create a new tag
-		this.currentitem = new Tag(name,single,xmlstyle,creator);
+		this.currentitem = new Tag(name,single,xmlstyle,creator,hybrid,anyAttribute);
 	}
 	
 	

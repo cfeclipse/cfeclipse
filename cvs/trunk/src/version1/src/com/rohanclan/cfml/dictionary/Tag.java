@@ -36,6 +36,8 @@ package com.rohanclan.cfml.dictionary;
 public class Tag extends Procedure {
 	protected boolean single = false;
 	protected boolean xmlstyle = false;
+	protected boolean hybrid = false;
+	protected boolean anyAttribute = false;
 	
 	/** w3c form tag */
 	public static final byte FORM = 16;
@@ -53,6 +55,15 @@ public class Tag extends Procedure {
 		this(name, single);
 		this.creator = creator;
 		xmlstyle = style;
+	}
+	
+	public Tag(String name, boolean single, boolean style, byte creator, boolean hybrid, boolean anyAttribute)
+	{
+		this(name, single);
+		this.creator = creator;
+		xmlstyle = style;
+		this.hybrid = hybrid;
+		this.anyAttribute = anyAttribute;
 	}
 	
 	/**
@@ -91,6 +102,8 @@ public class Tag extends Procedure {
 		return single;
 	}
 
+	
+	
 	/**
 	 * Is this tag in xml style (mostly used with is single to tell
 	 * if the tag shoule be &lt;tag&gt; or &lt;tag/&gt;
@@ -99,6 +112,24 @@ public class Tag extends Procedure {
 	public boolean isXMLStyle()
 	{
 		return xmlstyle;
+	}
+	
+	/**
+	 * Is this tag a hybrid that can be either single or paired:
+	 * e.g. &lt;cftransaction&gt; and &lt;cfinvoke&gt;
+	 */
+	public boolean isHybrid()
+	{
+		return hybrid;
+	}
+	
+	/**
+	 * Does the tag allow any attribute:
+	 * e.g. &lt;cfmodule&gt;
+	 */
+	public boolean allowsAnyAttribute()
+	{
+		return anyAttribute;
 	}
 	
 	public String toString()

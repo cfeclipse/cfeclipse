@@ -25,6 +25,7 @@
 package com.rohanclan.cfml.parser.docitems;
 
 import com.rohanclan.cfml.dictionary.Parameter;
+import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.parser.ParseError;
 import com.rohanclan.cfml.parser.exception.*;
 
@@ -77,14 +78,18 @@ public class CfmlTagItem extends TagItem {
 	public boolean addAttribute(AttributeItem newAttr) 
 	{
 		boolean addOkay = true;
-		Set attributes = syntax.getFilteredAttributes(this.itemName.toLowerCase(), newAttr.getName());
-		if(attributes.size() == 0)
-		{
-			this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-										 "Attribute \'" + newAttr.getName() + "\' is not valid."));
-			addOkay = false;	// While it's incorrect we still wish to add it to the item
-		}
 		
+		Tag tag = syntax.getTag(itemName);
+		if (tag == null 
+		        || !tag.allowsAnyAttribute()) {
+			Set attributes = syntax.getFilteredAttributes(this.itemName.toLowerCase(), newAttr.getName());
+			if(attributes.size() == 0)
+			{
+				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+											 "Attribute \'" + newAttr.getName() + "\' is not valid."));
+				addOkay = false;	// While it's incorrect we still wish to add it to the item
+			}
+		}
 		addOkay = super.addAttribute(newAttr) && addOkay;
 		
 		return addOkay;
