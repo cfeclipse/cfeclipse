@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.editors;
 
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -82,7 +82,7 @@ import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.ui.texteditor.AnnotationPreference;
+//import org.eclipse.ui.texteditor.AnnotationPreference;
 /**
  * @author Rob
  * 
@@ -91,9 +91,9 @@ import org.eclipse.ui.texteditor.AnnotationPreference;
  */
 public class CFMLEditor extends AbstractDecoratedTextEditor implements IPropertyChangeListener {
 
-	private ColorManager colorManager;
+	protected ColorManager colorManager;
 
-	private CFConfiguration configuration;
+	protected CFConfiguration configuration;
 	
 	protected CFMLPairMatcher cfmlBracketMatcher;
 

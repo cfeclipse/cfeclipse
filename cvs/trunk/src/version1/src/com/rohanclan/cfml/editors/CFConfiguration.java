@@ -592,7 +592,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
      */
     private void setupPrimaryCFEContentAssist() {
         CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist();
-		assistant.setContentAssistProcessor(mainCFAssistant, CFPartitionScanner.CF_TAG);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_TAG);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.ALL_TAG);	//inside any other tags
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.UNK_TAG);	//unknown tags
 		assistant.setContentAssistProcessor(mainCFAssistant,IDocument.DEFAULT_CONTENT_TYPE);

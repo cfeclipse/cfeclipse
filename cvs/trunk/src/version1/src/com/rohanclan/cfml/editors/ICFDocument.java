@@ -77,9 +77,9 @@ import com.rohanclan.cfml.external.ExternalFile;
 public class ICFDocument extends Document implements ICFEFileDocument {
 
     /** The parser that was/is run over this document */
-	private CFParser docParser = null;
+	protected CFParser docParser = null;
 	/** The resource that this document is derived from. Required for the parser */
-	private IResource lastRes = null;
+	protected IResource lastRes = null;
 	/** Comment parser - parses the TODOs. Will one day be put into the CFParser */
 	private CommentParser commentParser = new CommentParser();
 	/** ?? */
@@ -318,7 +318,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		return returnManager;
     }
     
-    private CFEContentAssistManager getCAM()
+    protected CFEContentAssistManager getCAM()
     {
         try {
             refreshCAM();
