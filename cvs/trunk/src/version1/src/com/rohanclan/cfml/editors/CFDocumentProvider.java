@@ -84,7 +84,8 @@ public class CFDocumentProvider extends FileDocumentProvider {
 
 			//returns an IFile which is a subclass of IResource
 			try {
-				if (element instanceof FileEditorInput) 
+				if (element instanceof FileEditorInput 
+						|| element instanceof JavaFileEditorInput) 
 				{
 					document.setParserResource(((FileEditorInput)element).getFile());
 					document.clearAllMarkers();
