@@ -36,6 +36,7 @@ package com.rohanclan.cfml.views.contentoutline;
  * May 5, 2002
  */
 
+import org.eclipse.core.internal.runtime.Assert;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -117,7 +118,17 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 			//Unhandled event loop exception
 			//Reason:
 			//java.lang.StackOverflowError
-			return ((DocItem)element).getParent().getName();
+		    DocItem item = (DocItem)element;
+		    if(element == null)
+		    {
+		        return null;
+		    }
+		    else if(item.getParent() == null)
+		    {
+		        return null;
+		    }
+		    Assert.isNotNull(item.getParent().getName());
+			return item.getParent().getName();
 		}
 		
 		return null;

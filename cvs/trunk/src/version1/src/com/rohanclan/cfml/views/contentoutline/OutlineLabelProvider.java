@@ -47,8 +47,14 @@ import java.util.Set;
 import java.util.Iterator;
 
 //import com.rohanclan.cfml.parser.*;
+import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
+import com.rohanclan.cfml.parser.cfscript.ASTFunctionDeclaration;
+import com.rohanclan.cfml.parser.cfscript.ASTId;
+import com.rohanclan.cfml.parser.cfscript.ASTParameterList;
+import com.rohanclan.cfml.parser.cfscript.SimpleNode;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
 
 public class OutlineLabelProvider extends LabelProvider {
 	
@@ -142,6 +148,13 @@ public class OutlineLabelProvider extends LabelProvider {
 			//TODO this icon should be something else at some point
 			return CFPluginImages.get(CFPluginImages.ICON_TOOLS);
 		}
+		else if(element instanceof SimpleNode)
+		{
+		    if(element instanceof ASTFunctionDeclaration)
+		    {
+		        return CFPluginImages.get(CFPluginImages.ICON_FUNC);
+		    }
+		}
 		
 		return CFPluginImages.get(CFPluginImages.ICON_ALERT);
 	}
@@ -219,11 +232,58 @@ public class OutlineLabelProvider extends LabelProvider {
 			
 			return commentData;
 		}
+		else if(element instanceof SimpleNode)
+		{
+		    if(element instanceof ASTFunctionDeclaration)
+		    {
+		        return getCFScriptFunctionName(element);
+		    }
+		}
 		
 		return "unknown (add to user.xml if custom)";
 	}
 	
 	/**
+	 * Gets the name of a CFScript function.
+	 * 
+     * @param element The element that (should be) the CFScript function
+     * @return The formatted name of the funciton + parameters
+     */
+    private String getCFScriptFunctionName(Object element) {
+        ASTFunctionDeclaration function = (ASTFunctionDeclaration)element;
+        CFNodeList children = function.getChildNodes();
+        StringBuffer nameBuffer = new StringBuffer();
+        
+        if(children.size() > 0)
+        {
+            DocItem firstChild = (DocItem)children.get(0);
+            if(firstChild instanceof ASTParameterList)
+            {
+                CFNodeList params = ((ASTParameterList)firstChild).getChildNodes();
+                Iterator paramIter = params.iterator();
+                while(paramIter.hasNext())
+                {
+                    Object currentParam = paramIter.next();
+                    if(!(currentParam instanceof ASTId))
+                    {
+                        continue;
+                    }
+                    if(nameBuffer.length() > 0)
+                    {
+                        nameBuffer.append(", ");
+                    }
+                    nameBuffer.append(((ASTId)currentParam).getName());
+                    
+                }
+            }
+        }
+        nameBuffer.insert(0, function.getItemData() + "(");
+
+        return nameBuffer.toString();
+    }
+
+
+    /**
 	 * this is part of the formatting hack. This is a list of items that
 	 * should just show their contents, or they have no possible attributes
 	 * so it jacks up the display
