@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="xmlparse" returns="Object">
+			<help><![CDATA[
+				Converts an XML document that is represented as a string
+				variable into an XML document object.
+			]]></help>
+			<parameter name="xmlstring" required="true" type="String">
+				<help><![CDATA[
+					An XML document object string
+				]]></help>
+			</parameter>
+			<parameter name="casesensitive" required="false" type="boolean">
+				<help><![CDATA[
+					maintains the case of document elements and attributes
+				]]></help>
+			</parameter>
+		</function>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="releasecomobject" returns="void">
+			<help><![CDATA[
+				Releases a COM Object and frees up resources that it used.
+			]]></help>
+			<parameter name="objectName" required="true" type="Object">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>

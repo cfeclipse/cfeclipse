@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="setlocale" returns="String">
+			<help><![CDATA[
+				Sets the country/language locale for CFML processing
+				and the page returned to the client. The locale value
+				determines the default format of date, time, number, and
+				currency values, according to language and regional
+				conventions.
+			]]></help>
+			<parameter name="new_locale" required="true" type="String">
+				<help><![CDATA[
+					The name of a locale; for example, "English (US)"
+				]]></help>
+				<values>
+					<value option="Chinese (China)"/>
+					<value option="Chinese (Hong Kong)"/>
+					<value option="Chinese (Taiwan)"/>
+					<value option="Dutch (Belgian)"/>
+					<value option="Dutch (Standard)"/>
+					<value option="English (Australian)"/>
+					<value option="English (Canadian)"/>
+					<value option="English (New Zealand)"/>
+					<value option="English (US)"/>
+					<value option="English (UK)"/>
+					<value option="French (Belgian)"/>
+					<value option="French (Canadian)"/>
+					<value option="French (Standard)"/>
+					<value option="French (Swiss)"/>
+					<value option="German (Austrian)"/>
+					<value option="German (Standard)"/>
+					<value option="German (Swiss)"/>
+					<value option="Italian (Standard)"/>
+					<value option="Italian (Swiss)"/>
+					<value option="Japanese"/>
+					<value option="Korean"/>
+					<value option="Norwegian (Bokmal)"/>
+					<value option="Norwegian (Nynorsk)"/>
+					<value option="Portuguese (Brazilian)"/>
+					<value option="Portuguese (Standard)"/>
+					<value option="Spanish (Modern)"/>
+					<value option="Spanish (Standard)"/>
+					<value option="Swedish"/>
+				</values>
+			</parameter>
+		</function>

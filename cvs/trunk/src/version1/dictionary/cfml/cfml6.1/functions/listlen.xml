@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="listlen" returns="Numeric">
+			<help><![CDATA[
+				Determines the number of elements in a list.
+			]]></help>
+			<parameter name="list" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiters" required="false" type="String">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option=","/>
+				</values>
+			</parameter>
+		</function>

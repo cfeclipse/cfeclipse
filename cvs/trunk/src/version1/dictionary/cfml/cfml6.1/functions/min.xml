@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="min" returns="Numeric">
+			<help><![CDATA[
+				Determines the lesser of two numbers.
+			]]></help>
+			<parameter name="number1" required="true" type="Numeric">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="number2" required="true" type="Numeric">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="createdate" returns="DateTime">
+			<help><![CDATA[
+				Creates a date/time object
+			]]></help>
+			<parameter name="year" required="true" type="Numeric">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="year(Now())"/>
+				</values>
+			</parameter>
+			<parameter name="month" required="true" type="Numeric">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="month(Now())"/>
+				</values>
+			</parameter>
+			<parameter name="day" required="true" type="Numeric">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="day(Now())"/>
+				</values>
+			</parameter>
+		</function>
