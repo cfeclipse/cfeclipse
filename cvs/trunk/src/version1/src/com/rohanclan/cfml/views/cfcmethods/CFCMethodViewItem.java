@@ -33,7 +33,7 @@ public class CFCMethodViewItem  {
 			
 			method.append(functionTag.getAttribute("name"));
 			method.append(" ( ");
-			CFNodeList args = functionTag.selectNodes("//argument");
+			CFNodeList args = functionTag.selectNodes("//cfargument");
 			Iterator j = args.iterator();
 			while(j.hasNext()) {
 				try {

@@ -61,7 +61,7 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 			DocItem rootItem = doc.getDocumentRoot();
 
 			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
-			nodes = rootItem.selectNodes("//function");
+			nodes = rootItem.selectNodes("//cffunction");
 			
 			if (sortItems) {
 			    CFCMethodsComparator comparator = new CFCMethodsComparator();

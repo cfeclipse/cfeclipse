@@ -358,7 +358,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		};
 		
 		///filters
-		filters = new Action[6];
+		filters = new Action[7];
 		
 		filters[0] = new Action(
 			"Remove Filter",
@@ -375,7 +375,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
 		){
 			public void run(){
-				filter = "//include";
+				filter = "//cfinclude";
 				reload(getItems(filter));
 			}
 		};
@@ -385,7 +385,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
 		){
 			public void run(){
-				filter = "//module";
+				filter = "//cfmodule";
 				reload(getItems(filter));
 			}
 		};
@@ -395,7 +395,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
 		){
 			public void run(){
-				filter = "//query";
+				filter = "//cfquery";
 				reload(getItems(filter));
 			}
 		};
@@ -405,12 +405,22 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
 		){
 			public void run(){
-				filter = "//set";
+				filter = "//cfset";
 				reload(getItems(filter));
 			}
 		};
 		
 		filters[5] = new Action(
+			"Case",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
+		){
+			public void run(){
+				filter = "//cfcase";
+				reload(getItems(filter));
+			}
+		};
+		
+		filters[6] = new Action(
 			"Custom",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
 		){
@@ -419,7 +429,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				InputDialog pathdialog = new InputDialog(
 					getSite().getShell(),
 					"CFML Path Filter",
-					"Filter outline using path (i.e. \"//output\" for all the cfoutput tags):",
+					"Filter outline using path (i.e. \"//cfoutput\" for all the cfoutput tags):",
 					"",
 					null
 				);
