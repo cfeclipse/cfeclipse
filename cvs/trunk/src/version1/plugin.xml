@@ -205,13 +205,29 @@
                class="com.rohanclan.cfml.editors.actions.InsertNBSPAction"
                id="com.rohanclan.cfml.editors.actions.InsertNBSPAction">
          </action>
-         <!-- insert an html nbsp action (for Michael Wolfe) -->
+         <!-- Trim trailing spaces from lines -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.RTrim"
-               label="Insert nbsp Entity Reference"
-               tooltip="Insert an nbsp Entity Reference"
+               label="Tirm trailing spaces"
+               tooltip="Trim trailing spaces from lines."
                class="com.rohanclan.cfml.editors.actions.RTrimAction"
                id="com.rohanclan.cfml.editors.actions.RTrimAction">
+         </action>
+         <!-- Fold the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection"
+               label="Collapse the selected text"
+               tooltip="Add folding markers and collapse the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
+         </action>
+         <!-- Remove folding markers from the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection"
+               label="Clear folding markers."
+               tooltip="Clear folding markers from the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection">
          </action>
          <!-- Reload the syntax dictionaries -->
          <action
@@ -283,7 +299,7 @@
    <extension
          point="org.eclipse.ui.popupMenus">
       <viewerContribution
-            targetID="#TextEditorContext"
+            targetID="#CFMLEditorContext"
             id="org.eclipse.ui.articles.action.contribution.popup.editor">
          <action
                label="CF Comment"
@@ -306,6 +322,9 @@
             </separator>
             <separator
                   name="text1">
+            </separator>
+            <separator
+                  name="text2">
             </separator>
          </menu>
          <action
@@ -338,6 +357,18 @@
                class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
+         </action>
+         <action
+               label="Remove folding markers"
+               class="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelectionAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.folding"
+               id="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection">
+         </action>
+         <action
+               label="Collapse selection"
+               class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.folding"
+               id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
          </action>
       </viewerContribution>
       <objectContribution
