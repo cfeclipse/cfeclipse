@@ -29,6 +29,8 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     private Viewer viewer = null;
     private ViewPart viewpart = null;
     
+    protected static LocalFileSystem localFS = new LocalFileSystem();
+    
     public DirectoryContentProvider(ViewPart viewpart) {
         directoryFilter.allowFiles(false);
         this.viewpart = viewpart;
@@ -76,9 +78,10 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     }
     
     public Object[] getChildren(Object parentElement) {
-       
+        
     	ArrayList children = new ArrayList();
     	Object[] results = null;
+    	//System.out.println("getting children of " + parentElement);
     	try {
     		
 	        if (fileProvider == null){
@@ -98,7 +101,8 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	        } 
 	        
 	        else {
-                results =  fileProvider.getChildren(parentElement.toString(),directoryFilter);
+	        	
+                results = fileProvider.getChildren(parentElement.toString(),directoryFilter);
 	        }
 	        
 	        for (int i=0;i<results.length;i++) {
@@ -119,7 +123,37 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
         }
         
     }
+    
+    
+    
     public Object getParent(Object element) {
+    	try {
+    		// Check if we're currently looking at a local file system. If not then ignore for now.
+	    	if (element instanceof File) {
+	    		File currentFile = (File)element;
+	    		
+	    		// Check if the parent of this element is a system root.
+	    		// If so, grab the static shared copy from the localFS so that the viewer recognizes it.
+	    		if (currentFile.getParent().indexOf("\\") == currentFile.getParent().length()-1
+	    				|| currentFile.getParent().length() == 1) {
+	    			Object[] roots = localFS.getRoots();
+	    			for (int i=0;i<roots.length;i++) {
+	    				if (roots[i].toString().equals(currentFile.getParent())) {
+	    					return roots[i];
+	    				}
+	    			}
+	    			// This should never happen, but make sure we return null if it does.
+	    			return null;
+	    		}
+	    		
+	    		return new File(currentFile.getParent());
+	    	}
+
+	    	
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+    	}
         return null;
     }
     

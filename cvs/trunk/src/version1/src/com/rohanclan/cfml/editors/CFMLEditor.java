@@ -148,7 +148,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		
 	}
 
-
 	public CFMLEditor() {
 		super();
 		
@@ -194,7 +193,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 
 	
 
-	
 	/**
 	 * {@inheritDoc}
 	 * 

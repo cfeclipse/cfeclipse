@@ -6,7 +6,7 @@
  */
 package com.rohanclan.cfml.views.explorer;
 
-
+import java.io.File;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -36,6 +36,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 
 
 import com.rohanclan.cfml.net.FTPConnectionProperties;
+import com.rohanclan.cfml.util.AlertUtils;
 import com.rohanclan.cfml.views.explorer.ftp.FtpConnectionDialog;
 
 
@@ -173,7 +174,7 @@ public class FileExplorerView extends ViewPart {
         fileViewer.setComparer(new FileComparer());
         final Table table = fileViewer.getTable();
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
-        fileViewer.setInput(new LocalFileSystem());
+        fileViewer.setInput(DirectoryContentProvider.localFS);
         
         createActions();
         initializeToolBar();
@@ -258,6 +259,14 @@ public class FileExplorerView extends ViewPart {
     public void setFocus() {
     
     }
+    
+    public void showFile(String filePath) {
+    	String directory = filePath.substring(0,filePath.lastIndexOf("/"));
+    	directoryTreeViewer.setInput(DirectoryContentProvider.localFS);
+    	directoryTreeViewer.setSelection(new StructuredSelection(new File(directory)),true);
+    	this.fileViewer.setSelection(new StructuredSelection(new File(filePath)));
+    }
+    
     
     public void dispose() {
 

@@ -540,7 +540,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		assistant.setAutoActivationDelay(delay);
 		
 		assistant.setProposalPopupOrientation(
-			IContentAssistant.PROPOSAL_OVERLAY
+			IContentAssistant.PROPOSAL_REMOVE
 		);		
 		
 		assistant.setInformationControlCreator(

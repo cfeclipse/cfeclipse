@@ -347,14 +347,23 @@
                class="com.rohanclan.cfml.editors.actions.LoadScribblePadAction"
                id="com.rohanclan.cfml.editors.actions.LoadScribbleAction">
          </action>
-          <!-- Locate in tree -->
+          <!-- Locate in project tree -->
          <action
          	   toolbarPath="BasicCFEditorCommand"
                definitionId="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
-               label="Locate in tree"
-               tooltip="Locate file in project tree"
+               label="Locate in Navigator View"
+               tooltip="Locate file in Navigator View"
                class="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
                id="com.rohanclan.cfml.editors.actions.LocateInTreeAction">
+         </action>
+          <!-- Locate in file system -->
+         <action
+         	   toolbarPath="BasicCFEditorCommand"
+               definitionId="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
+               label="Locate in File Explorer View"
+               tooltip="Locate file in File Explorer View"
+               class="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
+               id="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction">
          </action>
           <!-- Highlight bracket pair 
          <action
@@ -443,10 +452,16 @@
             </separator>
          </menu>
          <action
-               label="Locate in project tree"
+               label="Locate in Navigator View"
                class="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu1/text"
                id="com.rohanclan.cfml.editors.actions.LocateInTreeAction">
+         </action>
+         <action
+               label="Locate in File Explorer Viiew"
+               class="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu1/text"
+               id="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction">
          </action>
          <action
                label="Remove folding markers"

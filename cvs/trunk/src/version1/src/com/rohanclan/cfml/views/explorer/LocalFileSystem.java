@@ -26,6 +26,7 @@ public class LocalFileSystem implements IFileProvider {
 
     File[] systemroot = File.listRoots();
     
+    private static Object[] roots = null;
     private static IViewPart viewpart = null;
     
     /**
@@ -78,14 +79,17 @@ public class LocalFileSystem implements IFileProvider {
     		}
 		}
     	*/
-    	ArrayList tmpRoots = new ArrayList();
-    	for (int i=0;i<systemroot.length;i++) {
-    		String driveLetter =  systemroot[i].toString();
-    		FileSystemRoot drive = new FileSystemRoot(driveLetter);
-    		drive.setPath(systemroot[i].toString());
-    		tmpRoots.add(drive);
+    	if (roots == null) {
+	    	ArrayList tmpRoots = new ArrayList();
+	    	for (int i=0;i<systemroot.length;i++) {
+	    		String driveLetter =  systemroot[i].toString();
+	    		FileSystemRoot drive = new FileSystemRoot(driveLetter);
+	    		drive.setPath(systemroot[i].toString());
+	    		tmpRoots.add(drive);
+	    	}
+	    	roots = tmpRoots.toArray();
     	}
-        return tmpRoots.toArray();
+        return roots;
     }
     
     public void connect() {
