@@ -484,6 +484,8 @@ public class CFParser {
 			return new CfmlTagInvokeArgument(lineNum, match.startPos, match.endPos, tagName);
 		else if(tagName.compareToIgnoreCase("function") == 0)
 			return new CfmlTagFunction(lineNum, match.startPos, match.endPos, tagName);
+		else if(tagName.compareToIgnoreCase("set") == 0)
+			return new CfmlTagSet(lineNum, match.startPos, match.endPos, tagName);
 		else
 			return new CfmlTagItem(lineNum, match.startPos, match.endPos, tagName);
 	}
