@@ -7040,7 +7040,7 @@
 				extendedInfo = "additional_information"
 			 	object = "java_except_object"
 		-->
-		<tag creator="3" name="throw" single="false" xmlstyle="false">
+		<tag creator="3" name="throw" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Throws a developer-specified exception, which can be caught 
 				with a cfcatch tag that has any of the following type attribute
