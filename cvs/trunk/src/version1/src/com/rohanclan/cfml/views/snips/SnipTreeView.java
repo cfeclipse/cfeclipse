@@ -96,7 +96,7 @@ public class SnipTreeView extends ViewPart
 	
 	MenuManager menuMgr;
 	
-	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction; //, deleteItemAction, selectAllAction;
+	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction, refreshSnippetsAction; //, deleteItemAction, selectAllAction;
 	
 	/** the root directory */
 	protected File root;
@@ -268,6 +268,12 @@ public class SnipTreeView extends ViewPart
 				editSnippet();
 			}
 		};
+		refreshSnippetsAction = new Action("Refresh Snippets") {
+			public void run() {
+				reloadSnippets();
+			}
+			
+		};
 		
 		//TODO: Need to add a deleteSnippetAction and deleteFolderAction
 		
@@ -281,7 +287,7 @@ public class SnipTreeView extends ViewPart
 	 */
 	protected void createMenus() {
 		IMenuManager rootMenuManager = getViewSite().getActionBars().getMenuManager();
-		//rootMenuManager.add(insertAction);
+		//rootMenuManager.add(refreshSnippetsAction);
 	}
 
 
@@ -338,7 +344,7 @@ public class SnipTreeView extends ViewPart
 	 */
 	protected void createToolbar() {
 		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
-		//toolbarManager.add(insertAction);
+		toolbarManager.add(refreshSnippetsAction);
 		//toolbarManager.add(createSnippetAction);
 		//toolbarManager.add(createFolderAction);
 	}
@@ -435,10 +441,14 @@ public class SnipTreeView extends ViewPart
 		return selectedfile;
 	}
 
-
+	
+	protected void reloadSnippets() {
+		treeViewer.setInput(getRootInput());		
+	}
+	
 	
 	/**
-	 * Creates a new folder called 'Untitled' below the currently active folder
+	 * Creates a new folder called below the currently active folder
 	 * If no folder is currently active it creates the folder below the root.
 	 * 
 	 */
