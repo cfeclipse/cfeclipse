@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>attributes</name>
+<help>writes out attributes(dot)</help>
+<starttext><![CDATA[attributes.]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>
