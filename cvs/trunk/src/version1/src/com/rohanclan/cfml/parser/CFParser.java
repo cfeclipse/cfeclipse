@@ -695,7 +695,9 @@ public class CFParser {
 							if(tagName.indexOf("/") != -1)
 								tagName = tagName.substring(0, tagName.length()-1); // Is a self-closer (i.e. <br/>)
 							isACloser = true;
-							attributes = match.match.substring(tagEnd, match.match.length()-2); // minus one to strip the closing '/>'
+							if(match.match.length() - tagEnd >= 2)
+								attributes = match.match.substring(tagEnd, match.match.length()-2); // minus one to strip the closing '/>'
+
 						}
 						else
 							attributes = match.match.substring(tagEnd, match.match.length()-1); // minus one to strip the closing '>'
