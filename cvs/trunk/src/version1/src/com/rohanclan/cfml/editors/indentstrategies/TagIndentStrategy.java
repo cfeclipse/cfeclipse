@@ -382,7 +382,6 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private void handleHTMLComment(IDocument doc, DocumentCommand docCommand) {
 		docCommand.offset++;
 	}
-
 	/**
 	 * The method called by the editor.
 	 */
@@ -398,6 +397,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
 				return;
 			}
+			
 
 			//int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';

@@ -39,6 +39,7 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.util.Assert;
+import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.rohanclan.cfml.dictionary.Function;
 import com.rohanclan.cfml.dictionary.Parameter;
@@ -46,7 +47,9 @@ import com.rohanclan.cfml.dictionary.ScopeVar;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.util.CFPluginImages;
- 
+import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.preferences.AutoIndentPreferenceConstants;
+
 /**
  * @author Oliver Tupman
  * 
@@ -170,13 +173,14 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 					   || name.compareToIgnoreCase("cfelseif") == 0) {
 						takesCFScriptExp = true;
 					}
-					
 					if(!(takesCFScriptExp || hasParams)) {
 						name += (isXmlStyle) ? "/" : "";
 						name += (isSingle) ? "> " : ">";
+					} else if (hasParams) {
+						name+= " ";
 					}
+
 					
-					name+= " ";
 				}
 				else if(obj[i] instanceof Parameter) {					
 					name = ((Parameter)obj[i]).getName();
@@ -214,7 +218,13 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 					help = "";
 				}
 				
-				result[i] = finaliseProposal(offset, type, (currentlen > name.length()) ? name.length() : currentlen, name, display, help);
+				result[i] = finaliseProposal(
+								offset
+								,type
+								,(currentlen > name.length()) ? name.length() : currentlen
+								,name
+								,display
+								,help);
 			}	
 			return result;
 		}
@@ -259,8 +269,22 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 				img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
 				break;
 			case TAGTYPE:
-				//name += " ";
-				//default to the tag len and icon
+				//Check if we need to add the closer.
+				if (name.endsWith(">"))  {
+					IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
+					if(store.getBoolean(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
+						if(store.getBoolean(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
+							/* TODO figure out how to do this properly. 
+							 * Right now the whole auto insertion thing is a mess that needs to be seriously thought out and refactored. 
+							 */ 
+							replacementString += "</"+name;
+						}
+						else {
+							replacementString += "</"+name;
+						}
+					}
+					
+				}
 				img = CFPluginImages.get(CFPluginImages.ICON_TAG);
 				break;
 			case VALUETYPE:

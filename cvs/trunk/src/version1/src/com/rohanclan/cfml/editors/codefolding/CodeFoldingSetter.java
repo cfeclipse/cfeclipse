@@ -144,7 +144,8 @@ public class CodeFoldingSetter {
         Iterator it = nodes.iterator();
         while (it.hasNext()) {
             Object o = it.next();
-            if (o instanceof CfmlTagItem) {
+            if (o instanceof CfmlTagItem 
+            		&& ((CfmlTagItem)o).matchingItem != null) {
                 CfmlTagItem tag = (CfmlTagItem)o;
 
                

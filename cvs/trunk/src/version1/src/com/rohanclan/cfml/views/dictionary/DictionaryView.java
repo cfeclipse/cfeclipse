@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -39,6 +40,8 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.swt.graphics.GC;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.Function;
@@ -323,7 +326,7 @@ public class DictionaryView extends ViewPart {
                             
                         }
                     } catch (Throwable ex) {
-                        System.out.println("Errror whilst trying to get the scopes");
+                        System.out.println("Error whilst trying to get the scopes");
 				        ex.printStackTrace(); 
                     }
 				    
@@ -423,7 +426,8 @@ public class DictionaryView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 	    try {
-//	  Create a grid layout object so the text and treeviewer
+	        
+	        //Create a grid layout object so the text and treeviewer
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 1;
 		layout.verticalSpacing = 2;
@@ -431,8 +435,21 @@ public class DictionaryView extends ViewPart {
 		layout.marginHeight = 2;
 		parent.setLayout(layout);
 		
-		
-		text = new Text(parent, SWT.READ_ONLY | SWT.SINGLE | SWT.BORDER);
+    	//This is what makes the controls resizable
+        SashForm sash = new SashForm(parent,SWT.VERTICAL|SWT.BORDER);
+        GridData sashData = new GridData(GridData.FILL_BOTH);
+        sashData.horizontalSpan = 1;
+        sash.setLayoutData(sashData);
+
+        Composite topHalf = new Composite(sash,SWT.NONE);
+        topHalf.setLayout(new GridLayout());
+        topHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        Composite bottomHalf = new Composite(sash,SWT.NONE);
+        bottomHalf.setLayout(new GridLayout());
+        bottomHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+		text = new Text(topHalf, SWT.READ_ONLY | SWT.SINGLE | SWT.BORDER);
 		GridData layoutData = new GridData();
 		layoutData.grabExcessHorizontalSpace = true;
 		layoutData.horizontalAlignment = GridData.FILL;
@@ -445,35 +462,28 @@ public class DictionaryView extends ViewPart {
 		viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());*/
 		
-		viewer = new TreeViewer(parent);
+		viewer = new TreeViewer(topHalf);
 		drillDownAdapter = new DrillDownAdapter(viewer);
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
 
-		layoutData = new GridData();
-		layoutData.grabExcessHorizontalSpace = true;
-		layoutData.grabExcessVerticalSpace = true;
-		layoutData.horizontalAlignment = GridData.FILL;
-		layoutData.verticalAlignment = GridData.FILL;
-		viewer.getControl().setLayoutData(layoutData);
+		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		
-		previewLabel = new Label(parent, SWT.WRAP);
-        GridData gridData = new GridData();
-        gridData.horizontalSpan = 2;
-        previewLabel.setLayoutData(gridData);
+		previewLabel = new Label(bottomHalf, SWT.WRAP);
+		layoutData  = new GridData(GridData.FILL_HORIZONTAL);
+		layoutData.heightHint = Dialog.convertHeightInCharsToPixels(new GC(previewLabel).getFontMetrics(),1);
+		layoutData.horizontalIndent = 5;
+		previewLabel.setLayoutData(layoutData);
         previewLabel.setText("Preview"); //$NON-NLS-1$
 		
 		
-		preview = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		// layout the text field above the treeviewer
-		layoutData = new GridData();
-		layoutData.grabExcessHorizontalSpace = true;
-		layoutData.heightHint = 100;
-		layoutData.horizontalAlignment = GridData.FILL;
-		preview.setLayoutData(layoutData);
+		
+		preview.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		
 		
