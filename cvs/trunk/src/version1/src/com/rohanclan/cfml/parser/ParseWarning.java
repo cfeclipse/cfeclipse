@@ -31,11 +31,13 @@ package com.rohanclan.cfml.parser;
  */
 public class ParseWarning extends ParseMessage {
 	/**
+	 * 
 	 * @param lineNum
 	 * @param docStart
 	 * @param docEnd
 	 * @param data
 	 * @param msg
+	 * @see ParseMessage
 	 */
 	public ParseWarning(int lineNum, int docStart, int docEnd, String data,
 			String msg) {

@@ -20,10 +20,11 @@ import org.eclipse.core.resources.IResource;
 
 import com.rohanclan.cfml.parser.docitems.CFCommentItem;
 /**
+ * Parses a document looking for every type of comment. Once it's found
+ * the comment it parses looking for TODOs.
+ * 
+ * TODO: Spike, you need to comment this.
  * @author Stephen Milligan
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class CommentParser {
 

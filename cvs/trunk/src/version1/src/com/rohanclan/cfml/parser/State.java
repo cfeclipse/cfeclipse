@@ -30,10 +30,9 @@ import java.util.Iterator;
 import com.rohanclan.cfml.parser.docitems.TagItem;
 
 /**
+ * Represents the current state of the parser.
  * 
  * @author Oliver Tupman
- *
- * Represents the current state of the parser.
  */
 public class State 
 {
@@ -51,35 +50,48 @@ public class State
 	
 	static public final int ADD_BEFORE = 0x01;
 	static public final int ADD_AFTER =  0x02;
-	/*
-	public void addFunction(TagItem newFunction)
-	{
-		String funcName = newFunction.getAttribute("name");
-		if(functionNames.containsKey(funcName))
-		{
-			addMessage(new ParseError(newFunction.lineNumber, newFunction.startPosition,
-											newFunction.endPosition, newFunction.getItemData(), 
-											"Duplicate function \'" + funcName + "\' found."));
-		}
-		else
-			functionNames.put(funcName, funcName);
-	}
-	*/
+
+	/**
+	 * Returns the ParseItemMatch'es that were found in a document during a parse.
+	 * Intended only to be used by the parser itself.
+	 * 
+	 * @return ArrayList of ParseItemMatch'es
+	 */
 	public ArrayList getMatches()
 	{
 		return matches;
 	}
 	
+	/**
+	 * The document being parsed.
+	 * 
+	 * @param docFilename Filename of the document being parsed.
+	 */
 	public State(String docFilename)
 	{
 		filename = docFilename;
 	}
 	
+	/**
+	 * Returns the list of messages that have been reported during the 
+	 * parse.
+	 * 
+	 * @return
+	 */
 	public ArrayList getMessages()
 	{
 		return messages;
 	}
 	
+	/**
+	 * Adds a parser match to the parser state.
+	 * It's added dependant on position, values should be either ADD_BEFORE
+	 * or ADD_AFTER
+	 * 
+	 * @param newMatch The parser match found
+	 * @param position The position - before or after the most recent match
+	 * @param numIndicies Number of indicies to move from.
+	 */
 	public void addMatch(ParseItemMatch newMatch, int position, int numIndicies)
 	{
 		switch(position)
@@ -96,16 +108,25 @@ public class State
 		}
 	}
 	
+	/**
+	 * Simply adds a match to the current match list.
+	 * 
+	 * @param newMatch The new match to add
+	 */
 	public void addMatch(ParseItemMatch newMatch)
 	{
 		matches.add(newMatch);
 	}
 	
+	/**
+	 * Returns whether this parse has experienced a fatal error or not.
+	 * @return True - a fatal error has occured, false - lets go onwards!
+	 */
 	public boolean hadFatal() { return hadFatal; }
 	
 	/**
 	 * Adds a message to the parser state.
-	 * @param newMsg
+	 * @param newMsg The message to report to the user post-parse.
 	 */
 	public void addMessage(ParseMessage newMsg)
 	{
@@ -120,6 +141,11 @@ public class State
 		messages.add(newMsg);
 	}
 	
+	/**
+	 * Adds a whole bunch of messages to the message list.
+	 * 
+	 * @param newMessages ArrayList of ParseMessage's
+	 */
 	public void addMessages(ArrayList newMessages)
 	{
 		Iterator msgIter = newMessages.iterator();

@@ -25,19 +25,20 @@
 package com.rohanclan.cfml.parser;
 
 /**
- * 
- * @author Oliver Tupman
- *
  * Reprents a parser error.
  * An error can be set to be fatal which means that 
+ * 
+ * @author Oliver Tupman
  */
 public class ParseError extends ParseMessage {
 	/**
-	 * @param lineNum
-	 * @param docStart
-	 * @param docEnd
-	 * @param data
-	 * @param msg
+	 * Creates an error that occurred during a CF parse.
+	 * 
+	 * @param lineNum The line number the error occurred on
+	 * @param docStart The start position within the document that it occurred on
+	 * @param docEnd The end position within the document that it occured on
+	 * @param data The data associated with it (i.e. tag name)
+	 * @param msg The message to be reported to the user.
 	 */
 	public ParseError(int lineNum, int docStart, int docEnd, String data,
 			String msg) 
@@ -45,12 +46,14 @@ public class ParseError extends ParseMessage {
 		super(lineNum, docStart, docEnd, data, msg);
 	}
 	/**
-	 * @param lineNum
-	 * @param docStart
-	 * @param docEnd
-	 * @param data
-	 * @param msg
-	 * @param fatal
+	 * Creates an error that occurred during a CF parse.
+	 * 
+	 * @param lineNum The line number the error occurred on
+	 * @param docStart The start position within the document that it occurred on
+	 * @param docEnd The end position within the document that it occured on
+	 * @param data The data associated with it (i.e. tag name)
+	 * @param msg The message to be reported to the user.
+	 * @param fatal Was the error fatal or not?
 	 */
 	public ParseError(int lineNum, int docStart, int docEnd, String data,
 			String msg, boolean fatal) 

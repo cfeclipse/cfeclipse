@@ -24,6 +24,12 @@
  */
 package com.rohanclan.cfml.parser;
 
+/**
+ * Represents a problem encountered during the parse of a document.
+ *  
+ * @author OLIVER
+ * @deprecated Don't use. Use ParseError & ParseWarning instead.
+ */
 public class CFProblem {
 	protected String filename = "";
 	protected String description = "";

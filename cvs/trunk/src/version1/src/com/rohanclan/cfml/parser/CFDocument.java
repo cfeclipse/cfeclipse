@@ -64,26 +64,31 @@ public class CFDocument {
 	 */
 	public Stack docTree = null;
 	
+	/**
+	 * The internal root of the document tree.
+	 * This will remain null if the tree parse fails.
+	 */
 	protected DocItem treeRoot = null;
-	
-	public void addRootElement(DocItem newItem)
-	{
-		if(docRoot == null)
-		{
-			docRoot = new ArrayList();
-		}
-		docRoot.add(newItem);
-	}
 
+	/**
+	 * Sets the document root to the root item of a CFDOC parse.
+	 * @param newRootItem
+	 */
 	public void setDocumentRoot(DocItem newRootItem)
 	{
 		treeRoot = newRootItem;
 	}
 	
+	/**
+	 * Returns the root of the parsed document.
+	 * @return The parsed document or null if the parse failed.
+	 */
 	public DocItem getDocumentRoot()
 	{
 		if(treeRoot == null)
 		{
+			//
+			// Warn developer if the parse fails.
 			System.err.println(
 				"CFDocument::getDocumentRoot() - WARNING: treeRoot is null, have you run the parser yet?"
 			);
@@ -100,20 +105,36 @@ public class CFDocument {
 		docVariables.add(newVar);
 	}
 	
+	/**
+	 * Returns the filename of this CF document.
+	 * @return The filename
+	 */
 	public String getFilename() {
 		return docFilename;
 	}
 
+	/**
+	 * Constructor.
+	 *
+	 */
 	public CFDocument()
 	{
 		docFilename = "";
 	}
 	
+	/**
+	 * Constructs the document with a specific file to be used.
+	 * @param filename The file that this document represents.
+	 */
 	public CFDocument(String filename) {
 		docFilename = filename;
 	}
 
+	/**
+	 * Constructs the document based upon a IDocument.
+	 * @param eclipseDocument The document to base this on.
+	 * @deprecated Don't use at this does nothing!
+	 */
 	public CFDocument(IDocument eclipseDocument) {
-		
 	}
 }

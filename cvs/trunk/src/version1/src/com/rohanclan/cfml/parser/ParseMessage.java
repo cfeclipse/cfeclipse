@@ -24,14 +24,50 @@
  */
 package com.rohanclan.cfml.parser;
 
+/**
+ * A message to be reported to the user. This is intended to be the base class
+ * for all other messages that are reported to the user. Clients may create
+ * instances of this class. It's not an abstract class.
+ *  
+ * @author Oliver
+ */
 public class ParseMessage {
+	/**
+	 * The line number that the message should be reported for.
+	 */
 	protected int lineNumber;
+	/**
+	 * The start offset within the document that the message should be reported for.
+	 */
 	protected int docStartOffset;
+	/**
+	 * The end offset within the document that the message should be reported for.
+	 */
 	protected int docEndOffset;
+	/**
+	 * The data to be reported. Generally the relevant data from the document.
+	 */
 	protected String docData;
+	/**
+	 * The message to report to the user.
+	 */
 	protected String message;
+	/**
+	 * Was the message fatal or not (should really be in ParseError!)
+	 */
 	protected boolean fatal = false;
 	
+	/**
+	 * Constructs a message that begins on a line number, starts at an offset within a
+	 * document, ends at another offset with a certain data (generally docEnd - docStart 
+	 * substring within the document) and a message for the user.
+	 * 
+	 * @param lineNum The line number
+	 * @param docStart Start offset within the doc
+	 * @param docEnd End offset within the doc
+	 * @param data Data that the message is about
+	 * @param msg The message for the user
+	 */
 	public ParseMessage(int lineNum, int docStart, int docEnd, String data, String msg)
 	{
 		lineNumber = lineNum;
@@ -41,6 +77,19 @@ public class ParseMessage {
 		message = msg;
 	}
 
+	/**
+	 * Constructs a message that begins on a line number, starts at an offset within a
+	 * document, ends at another offset with a certain data (generally docEnd - docStart 
+	 * substring within the document) and a message for the user.
+	 * 
+
+	 * @param lineNum The line number
+	 * @param docStart Start offset within the doc
+	 * @param docEnd End offset within the doc
+	 * @param data Data that the message is about
+	 * @param msg The message for the user
+	 * @param isFatal Is the message being reported a fatal one?
+	 */
 	public ParseMessage(int lineNum, int docStart, int docEnd, String data, String msg, boolean isFatal)
 	{
 		lineNumber = lineNum;
@@ -50,7 +99,12 @@ public class ParseMessage {
 		message = msg;
 		fatal = isFatal;
 	}
-	
+
+	/**
+	 * Is this message fatal? If so, it generally stops the parsing of the
+	 * document
+	 * @return True - this is a fatal problem, false otherwise
+	 */
 	public boolean isFatal() { return fatal; }
 	
 	/**
