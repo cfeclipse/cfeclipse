@@ -463,7 +463,7 @@
 				value = "value or delimited set of values"   
 				delimiters = "delimiter characters"
 		-->
-		<tag creator="3" name="case" single="true" xmlstyle="false">
+		<tag creator="3" name="case" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used only inside the cfswitch tag body. Contains code to 
 				execute when the expression specified in the cfswitch tag has 
@@ -1446,7 +1446,7 @@
 				expand = "Yes or No"    
 				label = "text"
 		-->
-		<tag creator="3" name="dump" single="false" xmlstyle="false">
+		<tag creator="3" name="dump" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Outputs the elements, variables and values of most kinds of 
 				CFML objects. Useful for debugging. You can display the 
@@ -4315,7 +4315,7 @@
 				url = "url"   
 				addToken = "Yes" or "No"
 		-->
-		<tag creator="3" name="location" single="false" xmlstyle="false">
+		<tag creator="3" name="location" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Stops execution of the current page and opens a CFML page or HTML file. 
 			]]></help>
