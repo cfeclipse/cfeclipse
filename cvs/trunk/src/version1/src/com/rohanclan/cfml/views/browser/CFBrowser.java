@@ -37,6 +37,10 @@ import org.eclipse.swt.browser.VisibilityWindowListener;
 import org.eclipse.swt.browser.WindowEvent;
 //import org.eclipse.swt.graphics.Image;
 //import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
 //import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -74,6 +78,7 @@ public class CFBrowser{
 	protected Browser browser;
 	private WorkbenchPart container;
 	private CFMLPreferenceManager preferenceManager;
+	private boolean locationSelectedOnce = false;
 	
 	/**
 	 * Creates an instance of a ControlExample embedded inside the supplied
@@ -191,6 +196,26 @@ public class CFBrowser{
 		data.right = new FormAttachment(100, -5);
 		data.bottom = new FormAttachment(100, -5);
 		progressBar.setLayoutData(data);
+		
+		location.addFocusListener(new FocusListener() {
+	        public void focusGained(FocusEvent e) {}
+	        public void focusLost(FocusEvent e) {
+	            locationSelectedOnce = false;
+	        }
+		}
+		);
+		
+		location.addMouseListener(new  MouseListener() {
+		    public void mouseUp(MouseEvent e) {
+		        if (!locationSelectedOnce) {
+		            System.out.println("No text selected; selecting");
+		            location.selectAll();
+		            locationSelectedOnce = true;
+		        }
+		    }
+		    public void mouseDown(MouseEvent e) {}
+		    public void mouseDoubleClick(MouseEvent e) {}
+		});
 		
 		if(browser != null) 
 		{
