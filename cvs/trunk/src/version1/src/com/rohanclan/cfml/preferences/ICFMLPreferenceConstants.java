@@ -95,5 +95,10 @@ public interface ICFMLPreferenceConstants {
 	String P_BRACKET_MATCHING_ENABLED = "bracketMatchingEnabled";
 	String P_BRACKET_MATCHING_COLOR = "bracketMatchingColor";
 	
+	//////////////////////////////////////
+	// Folding prefs
+	String P_ENABLE_CODE_FOLDING = "enableCodeFolding";
+	
+	
 	String P_CFML_DICTIONARY = "__cfmlDictionary";
 }

@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.16.4"
+   version="1.1.16.5"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -799,6 +799,11 @@
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             name="Editor"
             id="com.rohanclan.cfml.preferences.EditorPreferencePage"/>
+      <page
+            class="com.rohanclan.cfml.preferences.FoldingPreferencePage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="Code Folding"
+            id="com.rohanclan.cfml.preferences.FoldingPreferencePage"/>
    </extension>
    <extension
          point="org.eclipse.ui.propertyPages">

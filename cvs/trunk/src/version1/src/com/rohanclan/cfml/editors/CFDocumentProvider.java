@@ -52,7 +52,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 
 	protected IDocument createDocument(Object element) throws CoreException {
 		ICFDocument document = null;
-		System.out.println(element.getClass().getName());
+		
 		document = new ICFDocument();
 		if (setDocumentContent(document, (IEditorInput) element,
 				getEncoding(element))) {

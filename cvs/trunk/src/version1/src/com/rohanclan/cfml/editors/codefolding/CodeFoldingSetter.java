@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.HashMap;
 
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
@@ -24,6 +23,8 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+
 
 import com.rohanclan.cfml.parser.*;
 import com.rohanclan.cfml.parser.docitems.*;
@@ -42,17 +43,21 @@ public class CodeFoldingSetter {
     private ProjectionAnnotationModel model = null;
     
     private ICFDocument doc = null;
+    
+    private CFMLPreferenceManager preferenceManager = null;
 
     public CodeFoldingSetter(ITextEditor editor) {
         this.editor = editor;
         model = (ProjectionAnnotationModel) editor
         .getAdapter(ProjectionAnnotationModel.class);
         doc = (ICFDocument)editor.getDocumentProvider().getDocument(editor.getEditorInput());
-        
+        preferenceManager = new CFMLPreferenceManager();
     }
 
     public synchronized void docChanged(boolean autoCollapse) {
-        addMarksToModel(autoCollapse);
+        if (preferenceManager.enableFolding()) {
+            addMarksToModel(autoCollapse);
+        }
     }
 
     /**
@@ -68,7 +73,7 @@ public class CodeFoldingSetter {
 	            scrubAnnotations();
 
 	            
-
+	            foldPartitions(CFPartitionScanner.HTM_COMMENT, autoCollapse,2);
 	    		foldPartitions(CFPartitionScanner.CF_COMMENT,autoCollapse,2);
 	    		foldPartitions(CFPartitionScanner.J_SCRIPT,false,2);
 	    		foldPartitions(CFPartitionScanner.CSS_TAG,false,2);
@@ -218,7 +223,10 @@ public class CodeFoldingSetter {
      */
     public void addFoldingMark(int start, int length, ProjectionAnnotation annotation) throws BadLocationException {
 
- 
+        	if(!preferenceManager.enableFolding()) {
+        	    return;
+        	}
+        
             Position position = new Position(start, length);
             
             Iterator i = model.getAnnotationIterator();
@@ -242,7 +250,9 @@ public class CodeFoldingSetter {
     
     
     public void addFoldToSelection(boolean collapse) {
-		
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
 		initModel();
 		
 		ITextSelection textSelection = getSelection();
@@ -266,7 +276,9 @@ public class CodeFoldingSetter {
     
     
     public void removeFoldFromSelection() {
-        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
         initModel();
 		
 		ITextSelection textSelection = getSelection();
@@ -301,6 +313,11 @@ public class CodeFoldingSetter {
 
     
     public void expandSelection() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
         initModel();
         
         ITextSelection textSelection = getSelection();
@@ -333,6 +350,11 @@ public class CodeFoldingSetter {
     }
 
     public void toggleSelection() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
         initModel();
         
         Boolean collapsing = null;
@@ -383,6 +405,11 @@ public class CodeFoldingSetter {
 
     
     public void collapseSelection() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
         initModel();
         
         ITextSelection textSelection = getSelection();
@@ -422,6 +449,11 @@ public class CodeFoldingSetter {
     
     
     public void takeSnapshot() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
         snapshot = new HashMap();
         ProjectionAnnotationModel model = (ProjectionAnnotationModel) editor
         .getAdapter(ProjectionAnnotationModel.class);
@@ -434,6 +466,11 @@ public class CodeFoldingSetter {
     
     
     public void restoreSnapshot() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
         if (this.snapshot != null) {
 	        ProjectionAnnotationModel model = (ProjectionAnnotationModel) editor
 	        .getAdapter(ProjectionAnnotationModel.class);

@@ -81,6 +81,9 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final boolean DEFAULT_BRACKET_MATCHING_ENABLED = true;
 	private static final RGB DEFAULT_BRACKET_MATCHING_COLOR = ICFColorConstants.BRACKET_MATCHING_COLOR;
 	
+	// Folding defaults
+	private static final boolean DEFAULT_ENABLE_CODE_FOLDING = true;
+	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
@@ -184,7 +187,10 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_CFML_DICTIONARY, DEFAULT_CFML_DICTIONARY);
         initialiseDefaultColours();
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
-
+        
+        
+        // Folding
+        store.setDefault(P_ENABLE_CODE_FOLDING,DEFAULT_ENABLE_CODE_FOLDING);
 	}
 	
 	/**
@@ -308,6 +314,14 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	public String projectURL() {
 		return DEFAULT_PROJECT_URL;
 	}
+	
+
+	
+	public boolean enableFolding() {
+		return store.getString(ICFMLPreferenceConstants.P_ENABLE_CODE_FOLDING).trim().equalsIgnoreCase("true");
+	}
+	
+	
 	
 	public boolean useFunkyContentAssist() {
 		return true;
