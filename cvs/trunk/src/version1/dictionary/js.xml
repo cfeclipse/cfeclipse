@@ -129,6 +129,22 @@
 				]]></help>
 			</parameter>
 		</function>
+		
+		<function creator="4" name="typeof" returns="String">
+			<help><![CDATA[
+				returns one of the following strings:
+				* number
+				* string
+				* boolean
+				* object
+				* function
+				* undefined
+			]]></help>
+			<parameter name="object" type="Object" required="true">
+				<help><![CDATA[
+					The object who's type is in question
+				]]></help>
+			</parameter>
+		</function>
 	</functions>
-	
 </dictionary>
