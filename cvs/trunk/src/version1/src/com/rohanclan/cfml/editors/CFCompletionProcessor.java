@@ -24,6 +24,11 @@
  */
 package com.rohanclan.cfml.editors;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IRegion;
@@ -100,7 +105,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 */
 	protected ICompletionProposal[] getAttributeValueProposals(
 		SyntaxDictionary syntax, String inputText, int indexOfFirstSpace, 
-		int docOffset)
+		int docOffset, IDocument doc)
 	{
 		int lastSpace = inputText.lastIndexOf(" ");
 		int quotes = inputText.lastIndexOf("\"");
@@ -120,6 +125,36 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		//System.err.println("Tag I think I have is \'" + tag + "\'");
 
 		Set attrProps = ((SyntaxDictionaryInterface)syntax).getFilteredAttributeValues(tag, attribute, valueSoFar);
+		if(attribute.compareToIgnoreCase("template") == 0) {
+			TreeSet suggestions = new TreeSet();
+			if(doc instanceof ICFDocument) {
+				IResource res = ((ICFDocument)doc).getResource();
+				IPath folder = res.getFullPath().removeLastSegments(1);
+				folder = folder.append(valueSoFar);
+				valueSoFar = "";
+				System.out.println("OS Path: \'" + folder.toOSString() + "\'");
+				IFolder folderRes = res.getWorkspace().getRoot().getFolder(folder);
+				
+				if(folderRes == null) {
+					System.out.println("Folder is null!");
+				} else {
+					System.out.println("Got folder: \'" + folderRes.getName() + "\'");
+					try {
+						IResource children[] = folderRes.members();
+						for(int i = 0; i < children.length; i++) {
+							if(children[i] instanceof IFolder) {
+								suggestions.add(new Value(children[i].getName() + "/"));
+							} else if(children[i] instanceof IFile) {
+								suggestions.add(new Value(children[i].getName()));
+							}
+						}
+					}catch(CoreException ex) {
+						ex.printStackTrace();
+					}
+				}
+				attrProps.addAll(suggestions);
+			}
+		}
 		if(attrProps != null/* && attrProps.size() > 0*/)
 		{
 
@@ -418,7 +453,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					syntax, 
 					taglimiting, 
 					indexOfFirstSpace, 
-					documentOffset
+					documentOffset, document
 			);
 		}
 		else
@@ -535,7 +570,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				syntax, 
 				taglimiting, 
 				indexOfFirstSpace, 
-				documentOffset
+				documentOffset, document
 			);
 		}
 		else

@@ -150,6 +150,10 @@ public class ICFDocument extends Document {
 		}
 	}
 	
+	public IResource getResource() {
+		return this.lastRes;
+	}
+	
 	public void clearAllMarkers()
 	{
 		try
