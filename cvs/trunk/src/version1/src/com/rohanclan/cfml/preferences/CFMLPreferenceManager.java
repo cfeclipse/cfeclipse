@@ -76,6 +76,8 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
+	private static final String DEFAULT_CFML_DICTIONARY = "cfml.xml";
+	
 	public CFMLPreferenceManager() {
 		store = CFMLPlugin.getDefault().getPreferenceStore();
 	}
@@ -165,6 +167,9 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_AUTOCLOSE_HASHES, DEFAULT_AUTOCLOSE_HASHES);
         store.setDefault(P_AUTOINSERT_CLOSE_TAGS, DEFAULT_AUTOINSERT_TAGS);
         store.setDefault(P_AUTOINDENT_ONTAGCLOSE, DEFAULT_AUTOINDENT_ONTAGCLOSE);
+        
+        // CFML Dictionary pref
+        store.setDefault(P_CFML_DICTIONARY, DEFAULT_CFML_DICTIONARY);
         initialiseDefaultColours();
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
 	}
@@ -287,7 +292,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	}
 	
 	public boolean useFunkyContentAssist() {
-		return false;
+		return true;
 		//return true;
 	}
 	
