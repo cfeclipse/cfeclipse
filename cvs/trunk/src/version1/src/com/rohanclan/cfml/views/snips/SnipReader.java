@@ -22,6 +22,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 /**
  * @author Stephen Milligan
  *
@@ -191,6 +193,9 @@ public class SnipReader {
 			{
 				CDATASection cds = (CDATASection)document.getElementsByTagName(key).item(iteration).getFirstChild();
 				val = cds.getNodeValue();
+				if (val.endsWith(" ")) {
+				    val = val.substring(0,val.length()-1);
+				}
 			}
 			else {
 				val = "";
@@ -199,6 +204,51 @@ public class SnipReader {
 		}
 
 	
+	public void performIndent(String indentString) {
+	    CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
+	    int tabWidth = preferenceManager.tabWidth();
+	    boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
+	    int i;
+	    
+	    
+	    if (!insertSpacesForTabs) {
+	        String spaces = "";
+	        for (i=0;i<tabWidth;i++) {
+	            spaces += " ";
+	        }
+	        
+	        indentString = indentString.replaceAll("	",spaces);
+	        
+	        int tabcount = indentString.length()/tabWidth;
+	        int spacecount = indentString.length() % tabWidth;
+
+	        indentString = "";
+	        for (i=0;i<tabcount;i++) {
+	            indentString += "\t";
+	        }
+	        for (i=0;i<spacecount;i++) {
+	            indentString += " ";
+	        }
+	    }
+	    else {
+	        indentString = "";
+	        for (i=0;i<indentString.length();i++) {
+	            indentString += " ";
+	        }
+	    }
+	    
+	    String start[] = this.snipStartBlock.split("[\\n\\r]");
+	    this.snipStartBlock = start[0];
+	    for (i=1;i<start.length;i++) {
+	        this.snipStartBlock += "\n" + indentString + start[i] ;
+	    }
+	    
+	    String end[] = this.snipEndBlock.split("[\\n\\r]");
+	    this.snipEndBlock = end[0];
+	    for (i=1;i<end.length;i++) {
+	        this.snipEndBlock += "\n" + indentString + end[i] ;
+	    }
+	}
 	
 	
 	public String getSnipDescription() {
@@ -209,14 +259,14 @@ public class SnipReader {
 	}
 	
 	public String getSnipStartBlock() {
-		if (this.snipStartBlock == null) {
+		if (this.snipStartBlock == null || this.snipStartBlock.trim().length() == 0) {
 			this.snipStartBlock = "";
 		}		
 		return this.snipStartBlock;
 	}
 	
 	public String getSnipEndBlock() {
-		if (this.snipEndBlock == null) {
+		if (this.snipEndBlock == null || this.snipEndBlock.trim().length() == 0) {
 			this.snipEndBlock = "";
 		}
 		return this.snipEndBlock;

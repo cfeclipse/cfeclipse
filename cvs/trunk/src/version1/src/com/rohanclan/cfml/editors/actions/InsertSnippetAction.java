@@ -42,6 +42,7 @@ import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextSelection;
 
+import java.util.regex.*;
 
 /**
  * @author Stephen Milligan
@@ -132,6 +133,23 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 				}
 				
 			    snipReader.read(keyCombos.getSnippetFolder() + fileName);
+			    
+			    
+			    String indentString = "";
+			    try {
+			        int lineNumber = doc.getLineOfOffset(lastSpaceOffset);
+			        int lineOffset = doc.getLineOffset(lineNumber);
+			        indentString = doc.get().substring(lineOffset,lastSpaceOffset);
+			    }
+			    catch (Exception e) {
+			        // do nothing
+			        //System.err.println("Insert snippet failed to get insert string.");
+			    }
+			    
+			    if (indentString.length() > 0) {
+			        snipReader.performIndent(indentString);
+			    }
+
 			    
 			    String snippet = "";
 			    

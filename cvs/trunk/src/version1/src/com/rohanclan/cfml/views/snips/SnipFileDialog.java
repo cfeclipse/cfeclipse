@@ -195,7 +195,7 @@ public class SnipFileDialog extends Dialog {
 		label.setFont(parent.getFont());
 
 		// Snippet start block text
-		snippetStartText= new Text(composite, SWT.BORDER | SWT.MULTI);
+		snippetStartText= new Text(composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		data = new GridData(
 				GridData.GRAB_HORIZONTAL |
 				GridData.HORIZONTAL_ALIGN_FILL |
@@ -227,7 +227,7 @@ public class SnipFileDialog extends Dialog {
 		label.setFont(parent.getFont());
 
 		//Snippet end block text
-		snippetEndText= new Text(composite, SWT.BORDER | SWT.MULTI);
+		snippetEndText= new Text(composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		data = new GridData(
 				GridData.GRAB_HORIZONTAL |
 				GridData.HORIZONTAL_ALIGN_FILL |
