@@ -255,6 +255,17 @@
                class="com.rohanclan.cfml.editors.actions.LoadScribblePadAction"
                id="com.rohanclan.cfml.editors.actions.LoadScribbleAction">
          </action>
+          <!-- Highlight bracket pair 
+         <action
+         	   toolbarPath="BasicCFEditorCommand"
+               definitionId="com.rohanclan.cfml.editors.actions.FindBracket"
+               label="Highlight Bracket Pair"
+               icon="icons/ctool16/help.gif"
+               tooltip="Highlight Bracket Pair"
+               class="com.rohanclan.cfml.editors.actions.FindBracketAction"
+               id="com.rohanclan.cfml.editors.actions.FindBracketAction">
+         </action>
+         -->
       </editorContribution>
    </extension>
    
@@ -571,6 +582,20 @@
             command="com.rohanclan.cfml.editors.actions.LoadScribblePad"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+      <!-- Find a matching bracket pair
+      <command
+            name="Highlight matching bracket pair"
+            description="Highlights the pair of characters for the character beside the cursor."
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.FindBracket">
+      </command>
+      <keyBinding
+            string="F6"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.FindBracket"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+       -->
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- the snip viewers -->
@@ -659,6 +684,11 @@
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             name="Scribble pad"
             id="com.rohanclan.cfml.preferences.ScribblePrefPage"/>
+      <page
+            class="com.rohanclan.cfml.preferences.EditorPreferencePage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="Editor"
+            id="com.rohanclan.cfml.preferences.EditorPreferencePage"/>
    </extension>
    <extension
          point="org.eclipse.ui.propertyPages">

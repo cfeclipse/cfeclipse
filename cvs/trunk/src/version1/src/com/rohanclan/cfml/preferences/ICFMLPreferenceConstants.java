@@ -89,5 +89,10 @@ public interface ICFMLPreferenceConstants {
 	String 	P_AUTOINSERT_CLOSE_TAGS		= "__autoInsertCloseTags";
 	String	P_AUTOINDENT_ONTAGCLOSE		= "__autoIndentOnTagClose";
 	
+	//////////////////////////////////////
+	// bracket matching prefs
+	String P_BRACKET_MATCHING_ENABLED = "bracketMatchingEnabled";
+	String P_BRACKET_MATCHING_COLOR = "bracketMatchingColor";
+	
 	String P_CFML_DICTIONARY = "__cfmlDictionary";
 }

@@ -460,6 +460,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 						&& docCommand.text.compareTo("\n") != 0)
 						|| docCommand.length != 0) {
 				//System.out..println("TagIndentStrategy::customizeDocument() - In fall out");
+					//attempt to register a default behavior
+					super.customizeDocumentCommand(doc,docCommand);
 					return;
 				}
 				break;

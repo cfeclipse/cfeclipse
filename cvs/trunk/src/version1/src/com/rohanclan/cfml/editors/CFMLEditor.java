@@ -25,6 +25,7 @@
 package com.rohanclan.cfml.editors;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.eclipse.swt.widgets.Composite;
 
@@ -47,14 +48,20 @@ import org.eclipse.jface.action.IMenuManager;
 //import org.eclipse.ui.texteditor.ITextEditor;
 //import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 //import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.source.CompositeRuler;
+import org.eclipse.jface.text.source.IChangeRulerColumn;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.IVerticalRuler;
+import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
@@ -63,6 +70,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.editors.text.TextEditor;
 //import org.eclipse.jface.text.ITextSelection;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
+import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
+import com.rohanclan.cfml.editors.pairs.Pair;
+
 import org.eclipse.jface.action.Action;
 
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
@@ -85,11 +95,13 @@ import org.eclipse.swt.dnd.*;
  * This is the start of the Editor. It loads up the configuration and starts up
  * the image manager and syntax dictionaries.
  */
-public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
+public class CFMLEditor extends AbstractDecoratedTextEditor implements IPropertyChangeListener {
 
 	private ColorManager colorManager;
 
 	private CFConfiguration configuration;
+	
+	protected CFMLPairMatcher cfmlBracketMatcher;
 
 	protected GenericEncloserAction testAction;
 
@@ -97,6 +109,15 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 
 	private final JumpToDocPos jumpAction = new JumpToDocPos();
 
+
+	protected LineNumberRulerColumn fLineNumberRulerColumn;
+	/**
+	 * The change ruler column.
+	 */
+	private IChangeRulerColumn fChangeRulerColumn;
+	
+	boolean fIsChangeInformationShown;
+	
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -112,6 +133,23 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 
 	public CFMLEditor() {
 		super();
+		
+		//	this is for bracket matching
+		//create the pairs for testing
+		Pair parenthesis = new Pair("(",")",1);
+		Pair curlyBraces = new Pair("{","}",1);
+		Pair squareBraces = new Pair("[","]",1);
+		
+		//create the collection
+		LinkedList brackets = new LinkedList();
+		brackets.add(parenthesis);
+		brackets.add(curlyBraces);
+		brackets.add(squareBraces);
+		
+		//create the CFMLPairMatcher
+		cfmlBracketMatcher = new CFMLPairMatcher(brackets);
+		//end bracket matching stuff
+		
 		colorManager = new ColorManager();
 		//setup color coding and the damage repair stuff
 
@@ -127,7 +165,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 		// getting the document filename when a new document is opened.
 		IResourceChangeListener listener = new MyResourceChangeReporter();
 		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
-
+		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 	}
@@ -152,7 +190,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 		//Receive data in Text or File format
 		final TextTransfer textTransfer = TextTransfer.getInstance();
 		final FileTransfer fileTransfer = FileTransfer.getInstance();
-		final TextEditor thistxt = this;
+		final CFMLEditor thistxt = this;
 		
 		types = new Transfer[] {fileTransfer, textTransfer};
 		target.setTransfer(types);
@@ -432,23 +470,25 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 
 	public void dispose() {
 		colorManager.dispose();
+		if( this.cfmlBracketMatcher != null)
+		{
+			this.cfmlBracketMatcher.dispose();
+		}
 		CFMLPlugin.getDefault().getPreferenceStore()
 				.removePropertyChangeListener(this);
 		super.dispose();
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
-		/*
-		 * TODO: See if there's any way to implement this without resetting the
-		 * tabs for the whole document. If not then at least try to find a way
-		 * to have the cursor stay at the position it was when the person went
-		 * to the preferences page.
-		 */
-		if (event.getProperty().equals("tabsAsSpaces")
+	    handlePreferenceStoreChanged(event);
+	}
+	
+	
+	
+	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {
+	    if (event.getProperty().equals("tabsAsSpaces")
 				|| event.getProperty().equals("tabWidth")) {
-			//System.out.println(
-			//"Tab preferences have changed. Resetting the editor."
-			//);
+
 			ISourceViewer sourceViewer = getSourceViewer();
 			if (sourceViewer != null) {
 				sourceViewer.getTextWidget().setTabs(
@@ -456,8 +496,64 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 			}
 		}
 		setBackgroundColor();
+		
+	    super.handlePreferenceStoreChanged(event);
 	}
 
+	
+	/**
+	 * Shows the line number ruler column.
+	 */
+	private void showLineNumberRuler() {
+		showChangeRuler(false);
+		if (fLineNumberRulerColumn == null) {
+			IVerticalRuler v= getVerticalRuler();
+			if (v instanceof CompositeRuler) {
+				CompositeRuler c= (CompositeRuler) v;
+				c.addDecorator(1, createLineNumberRulerColumn());
+			}
+		}
+	}
+	
+	/**
+	 * Hides the line number ruler column.
+	 */
+	private void hideLineNumberRuler() {
+		if (fLineNumberRulerColumn != null) {
+			IVerticalRuler v= getVerticalRuler();
+			if (v instanceof CompositeRuler) {
+				CompositeRuler c= (CompositeRuler) v;
+				c.removeDecorator(fLineNumberRulerColumn);
+			}
+			fLineNumberRulerColumn = null;
+		}
+		if (fIsChangeInformationShown)
+			showChangeRuler(true);
+	}
+	
+	
+
+
+	/**
+	 * Sets the display state of the separate change ruler column (not the quick diff display on
+	 * the line number ruler column) to <code>show</code>.
+	 * 
+	 * @param show <code>true</code> if the change ruler column should be shown, <code>false</code> if it should be hidden
+	 */
+	private void showChangeRuler(boolean show) {
+		IVerticalRuler v= getVerticalRuler();
+		if (v instanceof CompositeRuler) {
+			CompositeRuler c= (CompositeRuler) v;
+			if (show && fChangeRulerColumn == null)
+				c.addDecorator(1, createChangeRulerColumn());
+			else if (!show && fChangeRulerColumn != null) {
+				c.removeDecorator(fChangeRulerColumn);
+				fChangeRulerColumn= null;
+			}
+		}
+	}
+	
+	
 	/**
 	 * Set the background color of the editor window based on the user's
 	 * preferences
@@ -478,5 +574,36 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 									manager
 											.getColor(ICFMLPreferenceConstants.P_COLOR_BACKGROUND)));
 		}
+	}	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#configureSourceViewerDecorationSupport(org.eclipse.ui.texteditor.SourceViewerDecorationSupport)
+	 */
+	protected void configureSourceViewerDecorationSupport(
+			SourceViewerDecorationSupport support)
+	{
+		//register the pair matcher
+		support.setCharacterPairMatcher(cfmlBracketMatcher);
+		
+		//register the brackets and colors
+		support.setMatchingCharacterPainterPreferenceKeys(ICFMLPreferenceConstants.P_BRACKET_MATCHING_ENABLED,
+				ICFMLPreferenceConstants.P_BRACKET_MATCHING_COLOR );
+		support.install(this.getPreferenceStore());
+		
+		super.configureSourceViewerDecorationSupport(support);
 	}
+	
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.texteditor.AbstractTextEditor#createSourceViewer(org.eclipse.swt.widgets.Composite, org.eclipse.jface.text.source.IVerticalRuler, int)
+	 */
+	protected ISourceViewer createSourceViewer(Composite parent,
+			IVerticalRuler ruler, int styles)
+	{
+		ISourceViewer viewer = super.createSourceViewer(parent, ruler, styles);
+		getSourceViewerDecorationSupport(viewer);
+		return viewer;
+	}
+	
 }

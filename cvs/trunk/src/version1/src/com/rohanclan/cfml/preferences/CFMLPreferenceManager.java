@@ -14,6 +14,8 @@ import com.rohanclan.cfml.editors.ICFColorConstants;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.jface.resource.StringConverter;
+import org.eclipse.jface.preference.PreferenceStore;
+import java.io.IOException;
 
 /**
  * @author Stephen Milligan
@@ -73,6 +75,10 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final String DEFAULT_SCRIBBLE_URL = "";
 	private static final boolean DEFAULT_SCRIBBLE_LOAD_BROWSER = true;
 	
+	//Bracket Matching defaults
+	private static final boolean DEFAULT_BRACKET_MATCHING_ENABLED = true;
+	private static final RGB DEFAULT_BRACKET_MATCHING_COLOR = ICFColorConstants.BRACKET_MATCHING_COLOR;
+	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
@@ -114,6 +120,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		store.setDefault(P_COLOR_UNK_TAG, getColorString(DEFAULT_COLOR_UNKTAG));
 		store.setDefault(P_COLOR_HTM_FORM_TAG, getColorString(DEFAULT_COLOR_FORMTAG));
 		store.setDefault(P_COLOR_HTM_TABLE_TAG, getColorString(DEFAULT_COLOR_TABLETAG));
+		store.setDefault(P_BRACKET_MATCHING_COLOR, getColorString(DEFAULT_BRACKET_MATCHING_COLOR));
 	}
 	
 	private String getColorString(RGB color) {
@@ -167,11 +174,14 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_AUTOCLOSE_HASHES, DEFAULT_AUTOCLOSE_HASHES);
         store.setDefault(P_AUTOINSERT_CLOSE_TAGS, DEFAULT_AUTOINSERT_TAGS);
         store.setDefault(P_AUTOINDENT_ONTAGCLOSE, DEFAULT_AUTOINDENT_ONTAGCLOSE);
+        store.setDefault(P_BRACKET_MATCHING_ENABLED,DEFAULT_BRACKET_MATCHING_ENABLED);
+        
         
         // CFML Dictionary pref
         store.setDefault(P_CFML_DICTIONARY, DEFAULT_CFML_DICTIONARY);
         initialiseDefaultColours();
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
+
 	}
 	
 	/**

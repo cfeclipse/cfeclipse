@@ -79,4 +79,7 @@ public interface ICFColorConstants {
 	RGB UNK_TAG			= new RGB(0, 0, 128);
 	/** editor background color */
 	RGB BACKGROUND_COLOR = new RGB(255, 255, 255);
+	
+	/** bracket matching color */
+	RGB BRACKET_MATCHING_COLOR = new RGB(255, 0, 0);
 }
