@@ -46,14 +46,20 @@ public class FileExplorerView extends ViewPart {
     
     
     public void createPartControl(Composite parent) {
+    	
         Composite container = new Composite(parent, SWT.NONE);
         container.setLayout(new GridLayout());
         // Combo viewer
         comboViewer = new ComboViewer(container, SWT.READ_ONLY);
         comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
             public void selectionChanged(SelectionChangedEvent e) {
-                directoryTreeViewer.setInput(((StructuredSelection)e.getSelection()).getFirstElement());
-                fileViewer.setInput(((StructuredSelection)e.getSelection()).getFirstElement());
+            	try {
+            		directoryTreeViewer.setInput(((StructuredSelection)e.getSelection()).getFirstElement());
+            		fileViewer.setInput(((StructuredSelection)e.getSelection()).getFirstElement());
+            	}
+            	catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
             }
         });
         comboViewer.setLabelProvider(new ComboLabelProvider());
@@ -111,6 +117,7 @@ public class FileExplorerView extends ViewPart {
         createActions();
         initializeToolBar();
         initializeMenu();
+    	
     }
 
     private void createActions() {

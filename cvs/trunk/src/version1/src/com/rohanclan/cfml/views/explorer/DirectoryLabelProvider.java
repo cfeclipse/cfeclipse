@@ -6,7 +6,6 @@
  */
 package com.rohanclan.cfml.views.explorer;
 
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
@@ -18,8 +17,13 @@ class DirectoryLabelProvider extends LabelProvider {
     
     public String getText(Object element) {
         
-        String[] fullpath = element.toString().split("[\\\\/]");
-        return fullpath[fullpath.length-1];
+        if (element.toString().length() == 1) {
+        	return element.toString();
+        }
+        else {
+        	String[] fullpath = element.toString().split("[\\\\/]");
+        	return fullpath[fullpath.length-1];
+        }
     }
     
     

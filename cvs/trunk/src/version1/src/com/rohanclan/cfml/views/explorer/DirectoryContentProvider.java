@@ -44,14 +44,14 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
         return getChildren(parent);
     }
     public Object[] getChildren(Object parentElement) {
-        if (fileProvider == null){
-            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
-        }
-        if (parentElement instanceof LocalFileSystem) {
-            return fileProvider.getRoots();
-        }
-        else {
-            try {
+    	try {
+	        if (fileProvider == null){
+	            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
+	        }
+	        if (parentElement instanceof LocalFileSystem) {
+	            return fileProvider.getRoots();
+	        }
+	        else {
                 File parent;
                 if (parentElement instanceof File) {
                     parent = (File)parentElement;
@@ -60,10 +60,11 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
                     parent = new File(parentElement.toString());
                 }
                 return fileProvider.getChildren(parent,directoryFilter);
-            }
-            catch (Exception e) {
-                return new Object[] {"Error!"};
-            }
+	        }
+    	}
+        catch (Exception e) {
+        	e.printStackTrace();
+            return new Object[] {"Error! " + e.getMessage()};
         }
         
     }

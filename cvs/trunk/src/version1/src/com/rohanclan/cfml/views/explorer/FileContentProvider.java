@@ -23,21 +23,28 @@ class FileContentProvider implements IStructuredContentProvider {
     }
     
     public Object[] getElements(Object inputElement) {
-        if (fileProvider == null) {
-            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
-        }
-        if (inputElement != null) {
-            String directoryName = inputElement.toString();
-            if (directoryName.indexOf("[") == 0) {
-                directoryName = directoryName.substring(1,directoryName.length()-1);
-            }
-            
-            File parent = new File(directoryName);
-            return fileProvider.getChildren(parent,fileFilter);
-            
-        }
-        else {
-            contents = new File[] {};
+    	
+    	try {
+	        if (fileProvider == null) {
+	            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
+	        }
+	        if (inputElement != null) {
+	            String directoryName = inputElement.toString();
+	            if (directoryName.indexOf("[") == 0) {
+	                directoryName = directoryName.substring(1,directoryName.length()-1);
+	            }
+	            
+	            File parent = new File(directoryName);
+	            return fileProvider.getChildren(parent,fileFilter);
+	            
+	        }
+	        else {
+	            contents = new File[] {};
+	        }
+    	}
+        catch (Exception e) {
+        	e.printStackTrace();
+            return new Object[] {"Error! " + e.getMessage()};
         }
         return contents;
     }
@@ -48,9 +55,6 @@ class FileContentProvider implements IStructuredContentProvider {
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
         if (newInput instanceof IFileProvider) {
             fileProvider = (IFileProvider)newInput;
-        }
-        else {
-            fileProvider = null;
         }
     }
     
