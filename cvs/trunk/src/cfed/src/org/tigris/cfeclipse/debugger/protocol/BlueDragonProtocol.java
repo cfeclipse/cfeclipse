@@ -28,17 +28,20 @@ import org.tigris.cfeclipse.debugger.core.DebugCommand;
 import org.tigris.cfeclipse.debugger.core.DebugResponse;
 import org.tigris.cfeclipse.debugger.core.DebugSession;
 import org.tigris.cfeclipse.debugger.core.DebugConnection;
+import org.tigris.cfeclipse.debugger.core.IDebugListener;
+import org.tigris.cfeclipse.debugger.core.IDebugInformation;
+import org.tigris.cfeclipse.debugger.core.DebugInformation;
 import org.tigris.cfeclipse.debugger.core.UnknownCommandException;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
 import java.net.ConnectException;
-import java.net.SocketTimeoutException;
+//import java.net.SocketTimeoutException;
 import java.util.StringTokenizer;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Iterator;
+//import java.util.Iterator;
 
 /**
  * BlueDragon specific protocol
@@ -51,11 +54,28 @@ import java.util.Iterator;
 public class BlueDragonProtocol extends DebugProtocol {
 	
 	protected DebugConnection dc;
+	protected DebugInformation di;
 	
 	public BlueDragonProtocol(DebugSession ds) throws IOException, ConnectException
 	{
 		super(ds); 
-		dc = new DebugConnection(ds.getServer());
+		dc = new DebugConnection(null);
+		
+		di = dc.initConnection(
+			ds.getServer(),
+			new IDebugListener(){
+				public void done(IDebugInformation di)
+				{
+					System.err.println("Done");
+				}
+				public void error(IDebugInformation di, Throwable t)
+				{
+					System.err.println(t);
+				}
+			}
+		);
+		
+		System.out.println("init [" + new String(di.getData()) + "]");
 	}
 	
 	/**
@@ -115,8 +135,11 @@ public class BlueDragonProtocol extends DebugProtocol {
     	try
 		{
     		server_response = dc.sendRecieve(
-    			bdd_cmd,debugsession.getSessionId(),command.hashCode()
-			);
+    			bdd_cmd, debugsession.getSessionId(), command.hashCode()
+    		);
+    		//server_response = dc.sendRecieve(
+    		//	bdd_cmd,debugsession.getSessionId(),command.hashCode()
+			//);
 		}
     	catch(Exception e)
 		{
@@ -283,27 +306,28 @@ public class BlueDragonProtocol extends DebugProtocol {
     
     public String doLogin(String username, String password) throws DebugProtocolException 
 	{
-		try
-		{
-			System.out.println("Sending login command");
+		//try
+		//{
+			//System.out.println("Sending login command");
 			
-			String rawdata = dc.sendRecieve("","",1);
-			List listback = unPackMessage(rawdata);
+			//String rawdata = dc.sendRecieve("","",1);
+			//List listback = unPackMessage(rawdata);
 			
 			//grab the second response after login because the first one will
 			//be the bd banner
-			DebugResponse dr = (DebugResponse)listback.get(1);
+			//DebugResponse dr = (DebugResponse)listback.get(1);
 			
-			return (String)dr.getArgs().get("0");
-		}
-		catch(SocketTimeoutException ste)
+			//return (String)dr.getArgs().get("0");
+			return "";
+		//}
+		/*catch(SocketTimeoutException ste)
 		{ 
 			throw new DebugProtocolException(ste.getMessage());
 		}
 		catch(IOException ioe)
 		{ 
 			throw new DebugProtocolException(ioe.getMessage());
-		}
+		} */
 	}
     
     /**

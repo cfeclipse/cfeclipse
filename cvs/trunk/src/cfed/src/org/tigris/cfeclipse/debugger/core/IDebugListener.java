@@ -1,5 +1,5 @@
 /*
- * Created on Jun 12, 2004
+ * Created on Jun 30, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Rob Rohan
@@ -25,28 +25,12 @@
 package org.tigris.cfeclipse.debugger.core;
 
 /**
- * @author rob
+ * @author Rob
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * implement this interface to know when debug information comes
  */
-public class CoreTest {
-	
-	public static void main(String args[])
-	{
-		try
-		{
-			DebugSession ds = new DebugSession();
-			
-			DebugCommand dc = new DebugCommand();
-			dc.setCommand("STEP");
-			
-			ds.issueCommand(dc);
-			ds.end();
-		}
-		catch(Exception uce)
-		{
-			uce.printStackTrace(System.err);
-		}
-	}
-}
+public interface IDebugListener
+{
+	public void done(IDebugInformation debuginfo);
+	public void error(IDebugInformation debuginfo, Throwable throwable);
+} 

@@ -1,6 +1,6 @@
 /*
- * Created on Jun 12, 2004
- *
+ * Created on Jun 30, 2004
+ * 
  * The MIT License
  * Copyright (c) 2004 Rob Rohan
  *
@@ -24,29 +24,23 @@
  */
 package org.tigris.cfeclipse.debugger.core;
 
+import java.nio.ByteBuffer;
+
 /**
- * @author rob
+ * @author Rob
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * everything you need to know about the debug connection
  */
-public class CoreTest {
+public interface IDebugInformation
+{
+	/** host name we connected to */
+	public String getHost();
+	public int getPort();
+	public String getPath();
+	public Status getStatus();
+	public byte[] getData();
 	
-	public static void main(String args[])
-	{
-		try
-		{
-			DebugSession ds = new DebugSession();
-			
-			DebugCommand dc = new DebugCommand();
-			dc.setCommand("STEP");
-			
-			ds.issueCommand(dc);
-			ds.end();
-		}
-		catch(Exception uce)
-		{
-			uce.printStackTrace(System.err);
-		}
-	}
+	public void setSendData(String to);
+	public ByteBuffer getSendData();
+	//public int getHttpStatus();
 }

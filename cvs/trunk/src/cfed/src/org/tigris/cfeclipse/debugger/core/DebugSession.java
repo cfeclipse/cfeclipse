@@ -26,8 +26,10 @@ package org.tigris.cfeclipse.debugger.core;
 
 import java.lang.String;
 import java.net.ConnectException;
-import java.net.URL;
-import java.net.MalformedURLException;
+//import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+//import java.net.MalformedURLException;
 import org.tigris.cfeclipse.debugger.protocol.DebugProtocol;
 import org.tigris.cfeclipse.debugger.protocol.DebugProtocolException;
 import java.io.IOException;
@@ -46,7 +48,7 @@ public class DebugSession {
 	 * BDD needs to connect to http://localhost:45000/ to open the 
 	 * debug terminal, not the page.
 	 */
-	private URL server;
+	private URI server;
 	
 	/** the server should provide this */
 	private String sessionid;
@@ -135,7 +137,7 @@ public class DebugSession {
 	/**
 	 * @return Returns the server.
 	 */
-	public URL getServer() 
+	public URI getServer() 
 	{
 		return server;
 	}
@@ -144,18 +146,18 @@ public class DebugSession {
 	{
 		try
 		{
-			setServer(new URL(url));
+			setServer(new URI(url));
 		}
-    	catch(MalformedURLException mae)
+    	catch(URISyntaxException use)
 		{
-    		mae.printStackTrace(System.err);
+    		use.printStackTrace(System.err);
 		}
 	}
 	
 	/**
 	 * @param server The server to set.
 	 */
-	public void setServer(URL server) 
+	public void setServer(URI server) 
 	{
 		this.server = server;
 	}
