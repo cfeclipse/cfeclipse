@@ -12,7 +12,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
-
+import org.eclipse.jface.preference.StringFieldEditor;
+import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 public class ProjectPropertyPage extends PropertyPage {
 
@@ -20,12 +21,16 @@ public class ProjectPropertyPage extends PropertyPage {
 	private static final String SNIPPETS_PATH_TITLE = "&Snippets Path:";
 	private static final String SNIPPETS_PATH_PROPERTY = "snippetsPath";
 	private static String DEFAULT_SNIPPETS_PATH = "";
+	private static final String PROJECT_URL_TITLE = "Project URL:";
+	private static final String PROJECT_URL_PROPERTY = ICFMLPreferenceConstants.P_PROJECT_URL;
+	private static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
 
 	private static final int TEXT_FIELD_WIDTH = 50;
 
-	//private Text ownerText;
+	
 	private DirectoryFieldEditor snippetsPathField;
+	private StringFieldEditor projectURLField;
 	private CFMLPropertyManager propertyManager;
 
 	/**
@@ -37,7 +42,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		DEFAULT_SNIPPETS_PATH = propertyManager.defaultSnippetsPath();
 	}
 
-	private void addFirstSection(Composite parent) {
+	private void addPathSection(Composite parent) {
 		Composite composite = createDefaultComposite(parent);
 
 		//Label for path field
@@ -57,7 +62,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		separator.setLayoutData(gridData);
 	}
 
-	private void addSecondSection(Composite parent) {
+	private void addSnippetsSection(Composite parent) {
 		Composite composite = createDefaultComposite(parent);
 		snippetsPathField = new DirectoryFieldEditor("", "Path to snippets directory", composite);
         snippetsPathField.setStringValue(SNIPPETS_PATH_PROPERTY);
@@ -73,6 +78,29 @@ public class ProjectPropertyPage extends PropertyPage {
 		}
 	}
 
+
+
+	private void addURLSection(Composite parent) {
+		Composite composite = createDefaultComposite(parent);
+
+
+		// Project URL field
+		projectURLField = new StringFieldEditor("projectURL",PROJECT_URL_TITLE,composite);
+		try {
+			QualifiedName propertyName = new QualifiedName("", PROJECT_URL_PROPERTY);
+			String projectURL = ((IResource) getElement()).getPersistentProperty(propertyName);
+			
+			if (projectURL == null || projectURL == "") {
+				projectURL = DEFAULT_PROJECT_URL;
+			}
+			projectURLField.setStringValue(projectURL);
+			
+		} catch (CoreException e) {
+			projectURLField.setStringValue(DEFAULT_PROJECT_URL);
+		}
+
+	}
+
 	/**
 	 * @see PreferencePage#createContents(Composite)
 	 */
@@ -84,9 +112,10 @@ public class ProjectPropertyPage extends PropertyPage {
 		data.grabExcessHorizontalSpace = true;
 		composite.setLayoutData(data);
 
-		addFirstSection(composite);
+		addPathSection(composite);
 		addSeparator(composite);
-		addSecondSection(composite);
+		addSnippetsSection(composite);
+		addURLSection(composite);
 		return composite;
 	}
 
@@ -107,16 +136,27 @@ public class ProjectPropertyPage extends PropertyPage {
 	protected void performDefaults() {
 		// Populate the owner text field with the default value
 		snippetsPathField.setStringValue(DEFAULT_SNIPPETS_PATH);
+		projectURLField.setStringValue(DEFAULT_PROJECT_URL);
 	}
 	
 	public boolean performOk() {
-		// store the value in the owner text field
+		// Snippets path
 		try {
 			((IResource) getElement()).setPersistentProperty(
 				new QualifiedName("", SNIPPETS_PATH_PROPERTY),
 				snippetsPathField.getStringValue());
 			propertyManager.setSnippetsPath(snippetsPathField.getStringValue());
 		} catch (CoreException e) {
+			return false;
+		}
+		// Project URL
+		try {
+			((IResource) getElement()).setPersistentProperty(
+				new QualifiedName("", PROJECT_URL_PROPERTY),
+				projectURLField.getStringValue());
+			propertyManager.setProjectURL(projectURLField.getStringValue());
+		} catch (CoreException e) {
+			//e.printStackTrace(System.err);
 			return false;
 		}
 		return true;

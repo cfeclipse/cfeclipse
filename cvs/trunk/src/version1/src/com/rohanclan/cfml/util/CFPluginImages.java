@@ -68,6 +68,7 @@ public class CFPluginImages {
 	public static final String ICON_FORWARD	= "forward.gif";
 	public static final String ICON_PROCESS	= "process.gif";
 	public static final String ICON_STOP	= "stop.gif";
+	public static final String ICON_HOME	= "home.gif";
 	public static final String ICON_SHOW	= "show.gif";
 	public static final String ICON_SHOW_AND_SELECT	= "showandselect.gif";
 	
@@ -117,6 +118,7 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_FORWARD);
 			addImageToRegistry(TOOLBAR,ICON_PROCESS);
 			addImageToRegistry(TOOLBAR,ICON_STOP);
+			addImageToRegistry(TOOLBAR,ICON_HOME);
 			addImageToRegistry(TOOLBAR,ICON_SHOW);
 			addImageToRegistry(TOOLBAR,ICON_SHOW_AND_SELECT);
 		}

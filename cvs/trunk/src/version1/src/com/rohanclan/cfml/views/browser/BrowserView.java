@@ -20,6 +20,7 @@ package com.rohanclan.cfml.views.browser;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
+
 /**
  * <code>BrowserView</code> is a simple demonstration of the SWT Browser
  * widget. It consists of a workbench view and tab folder where each tab in the
@@ -39,7 +40,8 @@ public class BrowserView extends ViewPart {
 	{
 		try
 		{
-			instance = new CFBrowser(frame);
+			
+			instance = new CFBrowser(frame,this);
 		}
 		catch(Exception e)
 		{

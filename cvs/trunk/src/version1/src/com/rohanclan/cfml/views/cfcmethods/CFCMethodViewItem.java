@@ -87,7 +87,10 @@ public class CFCMethodViewItem  {
 			int endPosition = functionTag.getStartPosition();
 			try {
 				if (documentContents.toLowerCase().indexOf("</cffunction",functionTag.getStartPosition()) > 0) {
-					endPosition = documentContents.toLowerCase().indexOf("</cffunction",functionTag.getStartPosition()) + 13;
+					if(functionTag.getMatchingItem() == null) // Just in case . . . 
+						endPosition = documentContents.toLowerCase().indexOf("</cffunction",functionTag.getStartPosition()) + 13;
+					else
+						endPosition = functionTag.getMatchingItem().getEndPosition();
 				}
 			}
 			catch (Exception e){

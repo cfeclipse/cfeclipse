@@ -54,9 +54,17 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-
+import org.eclipse.ui.part.ViewPart; 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.util.CFPluginImages;
+//import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.QualifiedName;
+import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+
 
 public class CFBrowser {
 
@@ -70,6 +78,7 @@ public class CFBrowser {
 	protected Image images[];
 	protected Text location;
 	protected Browser browser;
+	private ViewPart viewer;
 	
 	/* static final String[] imageLocations = 
 	{
@@ -81,14 +90,18 @@ public class CFBrowser {
 	
 	//static final String iconLocation = "document.gif";
 	
+
+	
+	
 	/**
 	* Creates an instance of a ControlExample embedded inside the supplied
 	* parent Composite.
 	* @param parent
 	* the container of the example
 	*/
-	public CFBrowser(Composite parent) 
+	public CFBrowser(Composite parent,ViewPart viewer) 
 	{
+		this.viewer = viewer;
 		//initResources();
 		final Display display = parent.getDisplay();
 		FormLayout layout = new FormLayout();
@@ -115,15 +128,21 @@ public class CFBrowser {
 		itemRefresh.setImage(CFPluginImages.get(CFPluginImages.ICON_REFRESH));
 		itemRefresh.setToolTipText(getResourceString("Refresh"));
 		
+		final ToolItem itemHome = new ToolItem(toolbar, SWT.PUSH);
+		//itemGo.setText(getResourceString("Go"));
+		itemHome.setImage(CFPluginImages.get(CFPluginImages.ICON_HOME));
+		itemHome.setToolTipText(getResourceString("Go to project homepage"));
+		
 		final ToolItem itemGo = new ToolItem(toolbar, SWT.PUSH);
 		//itemGo.setText(getResourceString("Go"));
 		itemGo.setImage(CFPluginImages.get(CFPluginImages.ICON_PROCESS));
 		itemGo.setToolTipText(getResourceString("Go"));
 		
 		location = new Text(parent, SWT.BORDER);
-		final Canvas canvas = new Canvas(parent, SWT.NO_BACKGROUND);
-		//final Rectangle rect = images[0].getBounds();
-		/* canvas.addListener(SWT.Paint, new Listener() {
+		final Canvas canvas = new Canvas(parent, SWT.ICON_INFORMATION);
+		/*
+		final Rectangle rect = images[0].getBounds();
+		 canvas.addListener(SWT.Paint, new Listener() {
 			public void handleEvent(Event e) 
 			{
 				Point pt = canvas.getSize();
@@ -133,15 +152,24 @@ public class CFBrowser {
 				);
 			}
 		});
+		canvas.setToolTipText("Go to project homepage");
 		
 		canvas.addListener(SWT.MouseDown, new Listener() {
 			public void handleEvent(Event e) 
 			{
 				//browser.setUrl(getResourceString("Startup"));
 				//for now...
-				browser.setUrl("http://livedocs.macromedia.com/");
+				browser.setUrl(getProjectURL());
 			}
-		}); */
+		}); 
+		
+		
+		*/
+		
+		
+		
+		
+		
 		
 		display.asyncExec(new Runnable() {
 			public void run() 
@@ -211,17 +239,32 @@ public class CFBrowser {
 			Listener listener = new Listener(){
 				public void handleEvent(Event event) 
 				{
+					System.out.println("Event fired");
 					ToolItem item = (ToolItem) event.widget;
-					if (item == itemBack)
+					if (item == itemBack) {
+						System.out.println("Back pressed");
 						browser.back();
-					else if (item == itemForward)
+					}
+					else if (item == itemForward) {
+						System.out.println("Forward pressed");
 						browser.forward();
-					else if (item == itemStop)
+					}
+					else if (item == itemStop){
+						System.out.println("Stop pressed");
 						browser.stop();
-					else if (item == itemRefresh)
+					}
+					else if (item == itemRefresh) {
+						System.out.println("Refresh pressed");
 						browser.refresh();
-					else if (item == itemGo)
+					}
+					else if (item == itemGo) {
+						System.out.println("Go pressed");
 						browser.setUrl(location.getText());
+					}
+					else if (item == itemHome) {
+						System.out.println("Home pressed");
+						browser.setUrl(getProjectURL());
+					}
 				}
 			};
 			
@@ -288,6 +331,7 @@ public class CFBrowser {
 			itemStop.addListener(SWT.Selection, listener);
 			itemRefresh.addListener(SWT.Selection, listener);
 			itemGo.addListener(SWT.Selection, listener);
+			itemHome.addListener(SWT.Selection, listener);
 			
 			location.addListener(SWT.DefaultSelection, new Listener() {
 				public void handleEvent(Event e)
@@ -299,9 +343,36 @@ public class CFBrowser {
 			initialize(display, browser);
 			//browser.setUrl(getResourceString("Startup"));
 			//for now...
-			browser.setUrl("http://livedocs.macromedia.com/");
+			
+			
+			browser.setUrl(getProjectURL());
 		}
 	}
+	
+	
+	private String getProjectURL() {
+		String projectURL = "http://livedocs.macromedia.com";
+		try {
+			IEditorPart  editorPart =
+				viewer.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+
+				if(editorPart  != null)
+				{
+				    IFileEditorInput input = (IFileEditorInput)editorPart.getEditorInput() ;
+				    IFile file = input.getFile();
+				     IProject activeProject = file.getProject();
+				     QualifiedName propertyName = new QualifiedName("", ICFMLPreferenceConstants.P_PROJECT_URL);
+						projectURL = activeProject.getPersistentProperty(propertyName);
+				}
+		}
+		catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+		return projectURL;
+	}
+	
+	
+	
 	
 	/**
 	 * Gets a string from the resource bundle. We don't want to crash because of

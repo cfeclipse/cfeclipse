@@ -25,4 +25,6 @@ public interface ICFMLPreferenceConstants {
 	String P_ENABLE_HS_COMPATIBILITY = "homesiteCompatibility";
 	
 	String P_SNIPPETS_PATH = "snippetPath";
+	
+	String P_PROJECT_URL = "projectURL";
 }

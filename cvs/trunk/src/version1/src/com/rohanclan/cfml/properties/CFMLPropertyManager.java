@@ -42,6 +42,7 @@ public class CFMLPropertyManager {
 	
 	public void initializeDefaultValues() {
         store.setDefault(ICFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
+        store.setDefault(ICFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.projectURL());
 	}
 	
 	
@@ -55,6 +56,25 @@ public class CFMLPropertyManager {
 	
 	public void setSnippetsPath(String path) {
 		store.setValue(ICFMLPreferenceConstants.P_SNIPPETS_PATH,path);
+		try {
+			store.save();
+		}
+		catch (IOException e) {
+			System.err.println("Failed to save property store " + e.getMessage());
+		}
+	}
+	
+	
+	public String projectURL() {
+		return store.getString(ICFMLPreferenceConstants.P_PROJECT_URL).trim();
+	}
+	
+	public String defaultProjectURL() {
+		return preferenceManager.projectURL();
+	}
+	
+	public void setProjectURL(String path) {
+		store.setValue(ICFMLPreferenceConstants.P_PROJECT_URL,path);
 		try {
 			store.save();
 		}

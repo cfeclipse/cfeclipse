@@ -23,6 +23,7 @@ public class CFMLPreferenceManager {
 	private static boolean DEFAULT_INSERT_SPACES_FOR_TABS = false;
 	private static boolean DEFAULT_ENABLE_HS_COMPATIBILITY = false;
 	private static boolean DEFAULT_ENABLE_DW_COMPATIBILITY = false;
+	private static String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
 	
 	public CFMLPreferenceManager() {
@@ -97,4 +98,9 @@ public class CFMLPreferenceManager {
 	public String defaultSnippetsPath() {
 		return CFMLPlugin.getDefault().getStateLocation().toString();
 	}
+	
+	public String projectURL() {
+		return DEFAULT_PROJECT_URL;
+	}
+	
 }
