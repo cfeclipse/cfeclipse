@@ -347,6 +347,15 @@
                class="com.rohanclan.cfml.editors.actions.LoadScribblePadAction"
                id="com.rohanclan.cfml.editors.actions.LoadScribbleAction">
          </action>
+          <!-- Locate in tree -->
+         <action
+         	   toolbarPath="BasicCFEditorCommand"
+               definitionId="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
+               label="Locate in tree"
+               tooltip="Locate file in project tree"
+               class="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
+               id="com.rohanclan.cfml.editors.actions.LocateInTreeAction">
+         </action>
           <!-- Highlight bracket pair 
          <action
          	   toolbarPath="BasicCFEditorCommand"
@@ -424,6 +433,20 @@
                class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
+         </action>
+         <menu
+               label="File"
+               path="additions"
+               id="com.rohanclan.cfml.editors.contribution.subMenu1">
+            <separator
+                  name="text">
+            </separator>
+         </menu>
+         <action
+               label="Locate in project tree"
+               class="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.subMenu1/text"
+               id="com.rohanclan.cfml.editors.actions.LocateInTreeAction">
          </action>
          <action
                label="Remove folding markers"

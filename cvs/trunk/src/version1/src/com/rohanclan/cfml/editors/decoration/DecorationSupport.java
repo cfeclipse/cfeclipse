@@ -706,6 +706,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 * Shows the cursor line.
 	 */	
 	private void showCursorLine() {
+		try {
 		if (fCursorLinePainter == null) {
 			if (fSourceViewer instanceof ITextViewerExtension2) {
 				fCursorLinePainter= new CursorLinePainter(fSourceViewer);
@@ -713,6 +714,10 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 				ITextViewerExtension2 extension= (ITextViewerExtension2) fSourceViewer;
 				extension.addPainter(fCursorLinePainter);
 			}
+		}
+		}
+		catch (NullPointerException npe) {
+			npe.printStackTrace();
 		}
 	}
 

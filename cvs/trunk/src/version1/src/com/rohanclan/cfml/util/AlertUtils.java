@@ -43,6 +43,13 @@ public class AlertUtils {
         msg.open();
     }
     
+    public static void alertUser(String message) {
+        MessageBox msg = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_INFORMATION);
+        msg.setText("Error!");
+        msg.setMessage(message);
+        msg.open();
+    }
+    
     public static void showStatusMessage(String message,IEditorPart editorPart) {
         try {
          IStatusLineManager statusManager = editorPart.getEditorSite().getActionBars().getStatusLineManager();
