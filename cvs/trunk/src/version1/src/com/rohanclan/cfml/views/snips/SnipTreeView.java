@@ -271,7 +271,7 @@ public class SnipTreeView extends ViewPart
 						
 						snipReader.read(f);
 						toShow.append(snipReader.getSnipDescription());
-						toPreview.append(snipReader.getSnipStartBlock());
+						toPreview.append(snipReader.getSnipStartBlock() + snipReader.getSnipEndBlock());
 						
 					}
 					catch(Exception e)
