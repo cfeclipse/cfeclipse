@@ -434,6 +434,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				if(!this.autoClose_SingleQuotes) return;
 				handleQuotes(doc, docCommand, firstCommandChar);
 				return;
+			case '\t': // handle tabs
+			    docCommand.text = this.indentString;
+			    return;
 			default:
 				//
 				// Check to make sure that the text entered isn't a CF/CRLF and that

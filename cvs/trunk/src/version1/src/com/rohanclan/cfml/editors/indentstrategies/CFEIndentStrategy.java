@@ -42,7 +42,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 
 	private boolean dreamweaverCompatibility = false;
 	private boolean homesiteCompatibility = false;
-	private String indentString = "\t";
+	protected String indentString = "\t";
 	
 	protected CFMLEditor editor;
 	private CFConfiguration configuration;
