@@ -31,12 +31,14 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
 //import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 /**
  * This represents a tag-based auto-indent strategy. It not only
@@ -223,7 +225,13 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		singleTags.put("cfhttpparam", "cfhttpparam");
 		*/
 		boolean cftag = tagName.startsWith("cf");
-		if(cftag) tagName = tagName.substring(2);
+		//
+		// Comment the following lines to use the funky content assist
+		if(cftag) 
+			tagName = tagName.substring(2);
+		//
+		// End of block to comment out
+		//
 		SyntaxDictionary syntax = DictionaryManager.getDictionary((cftag) ? DictionaryManager.CFDIC : DictionaryManager.HTDIC);
 		Tag currTag = syntax.getTag(tagName);
 		if(currTag == null) 
@@ -395,6 +403,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.offset - 1 >= 0) {
 				beforeLastChar = doc.getChar(docCommand.offset-1);
 			}
+		//System.out.println("TagIndentStrategy::customizeDocumentCommand() - Got a \'" + firstCommandChar + "\'");
 			//System.out.println("TagIndentStrategy::customizeDocumentCommand() - Got a \'" + firstCommandChar + "\'");
 			//
 			// Handle a backspace or delete
@@ -515,8 +524,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @throws BadLocationException
 	 */
 	private void handleClosingChevron(IDocument doc, DocumentCommand docCommand, char beforeLastChar) throws BadLocationException {
-		
-	    if(beforeLastChar == '<')	// Have we not got a tag name
+		if(beforeLastChar == '<')	// Have we not got a tag name
 			return;
 		else if(beforeLastChar == '/')	{	// A self-closer, i.e. : <br/>
 			//singleTagTakeAction(doc, docCommand);
