@@ -55,6 +55,7 @@ public class CFPluginImages {
 	public static final String ICON_ATTR    = "attribute.gif";
 	public static final String ICON_FUNC    = "function.gif";
 	public static final String ICON_PACKAGE = "package.gif";
+	public static final String ICON_VALUE	= "value.gif";
 	
 	public static final String ICON_SNIP    = "snip.gif";
 	public static final String ICON_DW      = "dw.gif";
@@ -83,6 +84,7 @@ public class CFPluginImages {
 			{
 				e.printStackTrace(System.err);
 			}
+			
 			//load up images on our first go round
 			addImageToRegistry(MODEL_OBJECTS,ICON_DEFAULT);
 			addImageToRegistry(MODEL_OBJECTS,ICON_TOOLS);
@@ -92,6 +94,7 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_SNIP);
 			addImageToRegistry(MODEL_OBJECTS,ICON_DW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_VALUE);
 		}
 	}
 	
