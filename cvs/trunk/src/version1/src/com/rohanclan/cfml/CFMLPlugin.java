@@ -67,6 +67,9 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	/** Content Assist Manager */
 	private CFEContentAssistManager camInstance;
 	
+	/** Unique ID of the CFENature */
+	public static final String NATURE_ID = "com.rohanclan.cfml.CFENature";
+	
 	/**
 	 * Returns the global Content Assist Manager.
 	 * 
