@@ -105,7 +105,7 @@ public class TagItem extends DocItem {
 	 * Gets the string-based value of an attribute
 	 * @param attrName
 	 * @return the string value of the attribute if it exists; if not, null. 
-	 * @deprecated
+	 * @deprecated please use getAttributeValue()
 	 */
 	public String getAttribute(String attrName)
 	{
