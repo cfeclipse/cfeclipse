@@ -83,6 +83,27 @@ public class TagItem extends DocItem {
 		
 		return addOkay;
 	}
+	
+
+	/**
+	 * Gets the attributes that belong to this tag.
+	 * 
+	 * @return An array of attribute items. An empty array will be returned if the tag has no attributes.
+	 */
+	public AttributeItem [] getAttributes()
+	{
+		Iterator attrIter = this.itemAttributes.keySet().iterator();
+		AttributeItem [] attributes = new AttributeItem[this.itemAttributes.keySet().size()];
+		
+		for(int attrCounter = 0; attrIter.hasNext(); attrCounter++)
+		{
+			String attrName = (String)attrIter.next();
+			attributes[attrCounter] = (AttributeItem)this.itemAttributes.get(attrName);
+		}
+
+		return attributes;
+	}
+	
 
 	public boolean addAttributes(ArrayList newAttributes) 
 	{
