@@ -528,6 +528,11 @@
             name="Colors"
             id="com.rohanclan.cfml.preferences.ColorsPreferencePage">
       </page>
+      <page
+            class="com.rohanclan.cfml.preferences.ParsePrefPage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="CFML &amp; CFScript Parser"
+            id="com.rohanclan.cfml.preferences.ParsePrefPage"/>
    </extension>
    <extension
          point="org.eclipse.ui.propertyPages">
