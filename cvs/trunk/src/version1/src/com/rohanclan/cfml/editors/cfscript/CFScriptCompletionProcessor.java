@@ -44,6 +44,8 @@ import org.eclipse.jface.text.*;
 import java.util.StringTokenizer;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.dictionary.*;
+import com.rohanclan.cfml.editors.CFPartitionScanner;
+import com.rohanclan.cfml.editors.contentassist.AssistUtils;
 
 import java.util.TreeSet;
 import java.util.Set;
@@ -530,6 +532,9 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 
 		//System.err.println("runnin!!!!");
 		
+		if(!AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.J_SCRIPT))
+		    return null;
+	
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
 			IDocument document = viewer.getDocument();
