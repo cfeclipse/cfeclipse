@@ -13,6 +13,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.ViewPart;
 
 import com.rohanclan.cfml.net.FTPConnectionProperties;
+import com.rohanclan.cfml.net.ftp.FTPConnection;
 
 import java.io.*;
 
@@ -38,7 +39,8 @@ class FileContentProvider implements IStructuredContentProvider {
 	        if (inputElement != null) {
 	            
 	            if (inputElement instanceof LocalFileSystem
-	                    || inputElement instanceof FTPConnectionProperties) {
+	                    || inputElement instanceof FTPConnectionProperties
+	                    || inputElement instanceof FTPConnection) {
 		            return new String[0];
 	            }
 	            
@@ -46,7 +48,7 @@ class FileContentProvider implements IStructuredContentProvider {
 	            if (directoryName.indexOf("[") == 0) {
 	                directoryName = directoryName.substring(1,directoryName.length()-1);
 	            }
-	            //System.out.println("File provider is " + fileProvider.getClass().getName());
+	            //System.out.println("Getting children of  " + inputElement.getClass().getName());
 	            Object[] files = fileProvider.getChildren(directoryName,fileFilter);
 	            return files;
 	            

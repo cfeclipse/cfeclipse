@@ -43,6 +43,7 @@ public class RemoteFile {
         this.fPath = path;
         this.fDirectory = ftpFile.isDir();
         this.fPermissions = ftpFile.getPermissions();
+        //System.out.println(ftpFile.getRaw());
         this.fSize = ftpFile.size();
     }
     
@@ -51,7 +52,9 @@ public class RemoteFile {
     }
     
     public boolean canWrite() {
-        
+    	if (fPermissions == null) {
+        	return true;
+        }
         if (fPermissions.length() >= 6 
                 && fPermissions.charAt(5) == 'w') {
             return true;
@@ -61,7 +64,9 @@ public class RemoteFile {
     }
     
     public boolean canRead() {
-        
+        if (fPermissions == null) {
+        	return true;
+        }
         if (fPermissions.length() >= 5 
                 && fPermissions.charAt(4) == 'r') {
             return true;
@@ -78,7 +83,7 @@ public class RemoteFile {
 	}
     
     public void setPermissions(String permissions) {
-        //System.out.println("Permissions set to " + permissions);
+        
         fPermissions = permissions;
     }
     

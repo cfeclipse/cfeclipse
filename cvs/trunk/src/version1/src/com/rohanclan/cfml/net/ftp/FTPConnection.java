@@ -207,10 +207,10 @@ public class FTPConnection implements IFileProvider {
             if (files == null) {
                 files = new FTPFile[0];
             }
-
+            
             // Check if we've got back the directory itself.
             if (files.length == 1 && parent.endsWith("/" + files[0].getName())) {
-
+            	
                 FTPFile[] test = ftpClient.dirDetails(parent + "/"
                         + files[0].getName());
                 if (test == null || test.length == 0) {
@@ -223,6 +223,7 @@ public class FTPConnection implements IFileProvider {
                 if (filter.accept(files[i])) {
                     RemoteFile file = new RemoteFile(files[i], parent + "/"
                             + files[i].getName());
+                    
                     filteredFileList.add(file);
                 }
             }
@@ -233,7 +234,7 @@ public class FTPConnection implements IFileProvider {
         }
 
         catch (Exception e) {
-            AlertUtils.alertUser(e);
+        	AlertUtils.alertUser(e);
         }
         return new String[0];
     }

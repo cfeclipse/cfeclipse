@@ -853,8 +853,8 @@
             name="Dictionary View"
             id="com.rohanclan.cfml.views.dictionary.DictionaryView"/>
       <view
-            icon="icons/obj16/explorer.gif"
             class="com.rohanclan.cfml.views.explorer.FileExplorerView"
+            icon="icons/obj16/explorer.gif"
             category="com.rohanclan.cfml"
             name="File Explorer View"
             id="com.rohanclan.cfml.views.explorer.FileExplorerView"/>
