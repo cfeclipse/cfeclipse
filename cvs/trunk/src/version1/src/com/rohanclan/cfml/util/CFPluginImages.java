@@ -60,7 +60,14 @@ public class CFPluginImages {
 	public static final String ICON_SNIP    = "snip.gif";
 	public static final String ICON_DW      = "dw.gif";
 	
-	/* directory offsets */
+	//toolbar dir
+	public static final String ICON_ADD		= "add.gif";
+	public static final String ICON_EDIT	= "edit.gif";
+	public static final String ICON_REMOVE	= "remove.gif";
+	public static final String ICON_DELETE	= "delete.gif";
+	public static final String ICON_REFRESH	= "refresh.gif";
+	
+	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
 	public static final String TOOLBAR 		 = "ctool16";
 	
@@ -95,6 +102,12 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_DW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_VALUE);
+			
+			addImageToRegistry(TOOLBAR,ICON_ADD);
+			addImageToRegistry(TOOLBAR,ICON_EDIT);
+			addImageToRegistry(TOOLBAR,ICON_REMOVE);
+			addImageToRegistry(TOOLBAR,ICON_DELETE);
+			addImageToRegistry(TOOLBAR,ICON_REFRESH);
 		}
 	}
 	
