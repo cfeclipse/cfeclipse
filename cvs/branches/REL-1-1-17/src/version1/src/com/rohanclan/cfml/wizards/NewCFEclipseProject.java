@@ -67,6 +67,9 @@ import org.eclipse.ui.internal.registry.PerspectiveDescriptor;
 import org.eclipse.ui.internal.util.PrefUtil;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
+import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.util.ResourceUtils;
+
 /**
  * Standard workbench wizard that creates a new project resource in the
  * workspace.
@@ -234,7 +237,7 @@ public class NewCFEclipseProject extends BasicNewResourceWizard	implements IExec
 		}
 
 		newProject = newProjectHandle;
-
+		
 		return newProject;
 	}
 	/**
@@ -356,6 +359,14 @@ public class NewCFEclipseProject extends BasicNewResourceWizard	implements IExec
 
 		if (newProject == null)
 			return false;
+		try {
+		    ResourceUtils.applyNature(this.newProject, CFMLPlugin.NATURE_ID);
+		}
+		catch(CoreException ex) 
+		{
+		    System.err.println("NewCFEclipseProject::performFinish() - Exception whilst apply CFE nature");
+		    ex.printStackTrace();
+		}
 
 		updatePerspective();
 		selectAndReveal(newProject);
