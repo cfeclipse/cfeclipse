@@ -64,7 +64,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
  * The file will be opened with whatever editor is associated with the file
  * type.
  */
-public class OpenCFCAtMethodAction implements IEditorActionDelegate {
+public class OpenAtMethodAction implements IEditorActionDelegate {
 	protected ITextEditor editor = null;
 	protected String filename = "untitled.cfm";
 	protected IFile file;
@@ -72,7 +72,7 @@ public class OpenCFCAtMethodAction implements IEditorActionDelegate {
 	protected Shell shell;
 	private String methodName;
 	
-	public OpenCFCAtMethodAction()
+	public OpenAtMethodAction()
 	{
 		super();
 	}
@@ -82,7 +82,7 @@ public class OpenCFCAtMethodAction implements IEditorActionDelegate {
 	 * 
 	 * @param srcFile The file to open
 	 */
-	public OpenCFCAtMethodAction(IFile srcFile, String method) {
+	public OpenAtMethodAction(IFile srcFile, String method) {
 		this.setFile(srcFile);
 		setMethodName(method);
 	}
@@ -93,7 +93,7 @@ public class OpenCFCAtMethodAction implements IEditorActionDelegate {
 	 * 
 	 * @param filename The file to open, relative to the workspace root.
 	 */
-	public OpenCFCAtMethodAction(String filename, String method)
+	public OpenAtMethodAction(String filename, String method)
 	{
 		super();
 		setFilename(filename);
