@@ -39,18 +39,28 @@ import org.eclipse.jface.action.IMenuManager;
 //import org.eclipse.ui.IWorkbenchActionConstants;
 //import org.eclipse.ui.texteditor.ITextEditor;
 //import org.eclipse.ui.texteditor.ITextEditorActionConstants;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 //import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.editors.text.TextEditor;
 //import org.eclipse.jface.text.ITextSelection;
+import com.rohanclan.cfml.editors.actions.GotoFileAction;
+import org.eclipse.jface.action.Action;
 
+import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
+
+import com.rohanclan.cfml.parser.CfmlTagItem;
 
 /**
  * @author Rob
@@ -65,6 +75,8 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	private CFConfiguration configuration;
 	
 	protected GenericEncloserAction testAction;
+	
+	final GotoFileAction gfa = new GotoFileAction();
 	
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
@@ -107,16 +119,16 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void editorContextMenuAboutToShow(IMenuManager menu) {
+	protected void editorContextMenuAboutToShow(IMenuManager menu) 
+	{
+		addTagSpecificMenuItems(menu);
 		super.editorContextMenuAboutToShow(menu);
 		
 		//addAction(menu, ITextEditorActionConstants.FIND);
-		
-		//TODO: figure out how to figure out what tag was clicked on and 
-		//then do some magic based on the tag context. For example, right
-		//clicking on cfincludes to open the files...
-		addTagSpecificMenuItems(menu);
-		
+		//this is the right way to do lower case stuff, but how do you get it
+		//on the menu?
+		//addAction(menu,ITextEditorActionConstants.UPPER_CASE);
+		//addAction(menu,ITextEditorActionConstants.LOWER_CASE);
 	}
 	
 	/**
@@ -127,13 +139,40 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	 */
 	protected void addTagSpecificMenuItems(IMenuManager menu)
 	{
-		/* IEditorPart iep = getSite().getPage().getActiveEditor();
+		//all this mess is really just to get the offset and a handle to the
+		//CFDocument object attached to the Document...
+		IEditorPart iep = getSite().getPage().getActiveEditor();
 		ITextEditor editor = (ITextEditor)iep;
-		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		ICFDocument cfd = (ICFDocument)doc;
 		ISelection sel = editor.getSelectionProvider().getSelection();
 		
-		int tgoffset = ((ITextSelection)sel).getOffset();
-		*/
+		//ok got our tag (or null)
+		int startpos = ((ITextSelection)sel).getOffset();
+		CfmlTagItem cti = cfd.getTagAt(startpos,startpos);
+		
+		//System.out.println(cti.getName());
+		if(cti != null)
+		{
+			String n = cti.getName(); 
+			if(n.equalsIgnoreCase("include") || n.equalsIgnoreCase("module"))
+			{
+				//this is a bit hokey - there has to be a way to load the action
+				//in the xml file then just call it here...
+				//TODO
+				gfa.setActiveEditor(null,getSite().getPage().getActiveEditor());
+				Action ack = new Action(
+					"Open File",
+					CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)
+				){
+					public void run()
+					{
+						gfa.run(null);
+					}
+				};
+				menu.add(ack);
+			}
+		}
 	}
 		
 	/**

@@ -144,13 +144,14 @@ public class XPathSearch {
 	
 	/**
 	 * Finds the end of a string of alphabetical characters
+	 * r2: added the * selection
 	 * @param inStr the string to search
 	 * @return the character after the chracter string or -1 if not found.
 	 */
-	private Pattern charStrRegEx =  Pattern.compile("([a-zA-Z0-9])*");
+	private static Pattern charStrRegEx = Pattern.compile("([a-zA-Z0-9\\*])*");
 	
 	private int findEndOfString(String inStr) {
-		Matcher matcher = this.charStrRegEx.matcher(inStr);
+		Matcher matcher = charStrRegEx.matcher(inStr);
 		if(matcher.find()) {
 			int retval = matcher.group(0).length();
 			int groupCount = matcher.groupCount();
@@ -190,7 +191,7 @@ public class XPathSearch {
 		return true;
 	}
 	
-	XPathSearch(String xPathStr) {
+	public XPathSearch(String xPathStr) {
 		this();
 		this.parseXPath(xPathStr);
 	}

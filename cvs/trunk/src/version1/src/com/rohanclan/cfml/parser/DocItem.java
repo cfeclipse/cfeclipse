@@ -25,7 +25,7 @@
 package com.rohanclan.cfml.parser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 import com.rohanclan.cfml.dictionary.*;
 import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
@@ -301,7 +301,10 @@ public abstract class DocItem implements Comparable {
 			if(search.doChildNodes)
 				result.addAll(currItem.selectNodes(search));
 			
-			if(search.searchForTag && currItem.getName().compareToIgnoreCase(search.tagName) == 0)
+			//r2 added simple * node selection
+			if(search.searchForTag 
+				&& (currItem.getName().compareToIgnoreCase(search.tagName) == 0 || search.tagName.equals("*"))
+			)
 				matches++;
 	//System.out.print("DocItem::selectNodes() - Testing \'" + currItem.getName() + "\'");
 			if(search.attrSearch.containsKey(XPathSearch.ATTR_STARTPOS)) {

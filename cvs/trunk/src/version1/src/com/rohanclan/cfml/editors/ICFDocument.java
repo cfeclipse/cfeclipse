@@ -26,14 +26,20 @@ package com.rohanclan.cfml.editors;
 
 //import org.eclipse.jface.text.AbstractDocument;
 
+//import java.util.Iterator;
+
 import com.rohanclan.cfml.parser.CFDocument;
+import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.CFParser;
+import com.rohanclan.cfml.parser.CfmlTagItem;
+//import com.rohanclan.cfml.parser.DocItem;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 //import org.eclipse.jface.text.IDocument; 
 import org.eclipse.jface.text.Document;
+//import org.eclipse.ui.IEditorPart;
 
 /**
  * @author Rob
@@ -70,6 +76,50 @@ public class ICFDocument extends Document {
 					"ICFDocument::parseDocument() - Parse result is null!"
 				);
 		}
+	}
+	
+	/**
+	 * Gets a tag object given a starting and ending position
+	 * @param startpos
+	 * @param endpos
+	 * @return
+	 */
+	public CfmlTagItem getTagAt(int startpos, int endpos)
+	{
+		//build the xpath
+		String attrString = "[#startpos<" + startpos + " and #endpos>" + endpos + "]";
+		CFDocument docRoot = getCFDocument();
+		CFNodeList matchingNodes = docRoot.getDocumentRoot().selectNodes(
+			"//*" + attrString
+		);
+		
+		//there should only be 0 or 1 nodes in any one position (unless it spans
+		//more then one tag I suppose
+		if(matchingNodes.size() > 0)
+		{
+			return (CfmlTagItem)matchingNodes.get(0);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Gets the tag name at the given position (i.e. include,set,module,etc)
+	 * @param startpos
+	 * @param endpos
+	 * @return
+	 */
+	public String getTagNameAt(int startpos, int endpos)
+	{
+		String str = null;
+		CfmlTagItem cti = getTagAt(startpos,endpos);
+		
+		if(cti != null)
+		{
+			return cti.getName();
+		}
+		
+		return null;
 	}
 	
 	public void setParserResource(IResource newRes)

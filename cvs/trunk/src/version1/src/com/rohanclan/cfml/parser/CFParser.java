@@ -466,10 +466,10 @@ public class CFParser {
 			parser = new SPLParser(tempRdr);
 		}
 		else
-			parser.ReInit(tempRdr);
+			SPLParser.ReInit(tempRdr);
 		
 		try {
-			parser.CompilationUnit();
+			SPLParser.CompilationUnit();
 			rootElement = (SimpleNode)parser.getDocumentRoot();
 			
 			//System.out.println("CFParser::handleCFScriptBlock() - Parsed okay");

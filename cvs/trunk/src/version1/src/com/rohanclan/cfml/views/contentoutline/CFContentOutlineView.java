@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.views.contentoutline;
 
-import org.eclipse.core.resources.IResource;
+//import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -42,12 +42,13 @@ import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
-import org.eclipse.ui.part.FileEditorInput;
+//import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Control;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
+import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.DocItem;
@@ -71,6 +72,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	protected Action jumpAction, expandAction, filterOnAction, openAction;
 	
 	protected static GenericOpenFileAction openFileAction;
+	protected static GotoFileAction gfa = new GotoFileAction(); 
 	
 	protected Action filters[];
 	protected MenuManager menuMgr;
@@ -345,7 +347,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		
 		openAction = new Action(
 			"Open File",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_DEFAULT)
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)
 		){
 			public void run() { 
 				openFile();
@@ -440,68 +442,13 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	{
 		IEditorPart iep = getSite().getPage().getActiveEditor();
 		DocItem selecteditem = getSelectedDocItem();
-		
-		if(openFileAction == null)
-		{
-			openFileAction = new GenericOpenFileAction(); 
-		}
-		
 		if(selecteditem == null) return;
 		
-		if(selecteditem.getName().equals("include") 
-			|| selecteditem.getName().equals("module")
-		)
+		String si = selecteditem.getName();
+		if(si.equalsIgnoreCase("include") || si.equalsIgnoreCase("module"))
 		{	
-			ITextEditor editor = (ITextEditor)iep;
-			//System.out.println(editor.getEditorInput());
-			
-			//this gets the full path (system wise)
-			//String pth = ((FileEditorInput)editor.getEditorInput()).getPath().toString();
-			
-			//this gets the project path (name) ... got enough casting there?
-			String pth = (
-				(IResource)((FileEditorInput)editor.getEditorInput()
-			).getFile()).getProject().toString();
-			
-			
-			//this will be like:
-			// /test/dir/file.cfm
-			String currentpath = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getFullPath().toString();
-			
-			//this is the current file name:
-			// file.cfm
-			String currentfile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
-			
-			//this can take many shapes such as:
-			// ../dir/otherfile.cfm
-			// ../../../dir/otherfile.cfm
-			// /dir/otherfile.cfm
-			// dir/otherfile.cfm
-			String newfile = ((TagItem)selecteditem).getAttribute("template");
-			
-			//first lets get where we really are in the project
-			currentpath = currentpath.replaceFirst(currentfile,"");			
-			
-			//currentpath should now be like:
-			// /test/dir/
-			
-			//if the newfile starts with a "/" then its an absolute path (from 
-			// the cf standpoint) - so use it but tack on the project offset. If 
-			// it doesn't add the current direcotry in the hopes that it's 
-			//relative
-			if(newfile.startsWith("/"))
-			{
-				currentpath = pth.replaceFirst("P/","") + newfile;
-			}
-			else
-			{
-				currentpath += newfile;
-			}
-			
-		//System.out.println(currentpath);
-			
-			openFileAction.setFilename(currentpath);
-			openFileAction.run();
+			gfa.setActiveEditor(null,iep);
+			gfa.run(null);
 		}
 	}
 	
