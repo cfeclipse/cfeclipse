@@ -144,7 +144,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private int findStartofTag(IDocument doc, int offset) throws BadLocationException {
 		int retval = -1;
 		
-		for(int i = offset; i < doc.getLength(); i--) {
+		for(int i = offset; i >= 0; i--) {
 			char currChar = doc.getChar(i);
 			if(currChar == '>')
 				return -1;

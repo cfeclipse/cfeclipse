@@ -5,10 +5,11 @@
 package com.rohanclan.cfml.preferences;
 
 /**
- * @author Stephen Milligan
- *
+ * 
  * This interface defines all the preferences that are available in the plugin.
- * Just getting started here, so insight delay is looking a bit lonely :-/ 
+ * Just getting started here, so insight delay is looking a bit lonely :-/
+ * 
+ * @author Stephen Milligan 
  */
 public interface ICFMLPreferenceConstants {
 	String P_INSIGHT_DELAY = "insightDelay";
@@ -56,5 +57,12 @@ public interface ICFMLPreferenceConstants {
 	
 	/** all xml type tags (i.e. not cf and not html */
 	String P_UNK_TAG_COLOR			= "unknowTagColors";
+	
+	//////////////////////////////////////
+	// Parser preferences
+	
+	String P_PARSE_DOCFSCRIPT		= "__parseCFScript";
+	String P_PARSE_DOCFML			= "__parseCFML";
+	String P_PARSE_REPORT_ERRORS	= "__parseReportErrors";
 	
 }

@@ -25,6 +25,12 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final boolean DEFAULT_INSERT_SPACES_FOR_TABS = false;
 	private static final boolean DEFAULT_ENABLE_HS_COMPATIBILITY = false;
 	private static final boolean DEFAULT_ENABLE_DW_COMPATIBILITY = false;
+
+	// Parser prefs
+	private static final boolean	DEFAULT_PARSE_DOCFSCRIPT 	= false;
+	private static final boolean	DEFAULT_PARSE_DOCFML	 	= true;
+	private static final boolean	DEFAULT_PARSE_REPORT_ERRORS = true; 
+	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
@@ -40,6 +46,12 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_ENABLE_HS_COMPATIBILITY, DEFAULT_ENABLE_HS_COMPATIBILITY);
         store.setDefault(P_ENABLE_DW_COMPATIBILITY, DEFAULT_ENABLE_DW_COMPATIBILITY);
         store.setDefault(P_SNIPPETS_PATH, CFMLPlugin.getDefault().getStateLocation().toString());
+        
+        // Parser prefs.
+        store.setDefault(P_PARSE_DOCFSCRIPT, DEFAULT_PARSE_DOCFSCRIPT);
+        store.setDefault(P_PARSE_DOCFML, DEFAULT_PARSE_DOCFML);
+        store.setDefault(P_PARSE_REPORT_ERRORS, DEFAULT_PARSE_REPORT_ERRORS);
+                
         //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
 	}
 	

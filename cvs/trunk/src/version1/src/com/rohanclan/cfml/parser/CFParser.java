@@ -39,6 +39,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
@@ -121,9 +122,23 @@ public class CFParser {
 	
 	protected IResource res = null;
 
+	/** Tells the parser whether it should parse CFScript blocks or not. Pretty buggy at the moment */
 	protected boolean parseCFScript = false;
+	protected boolean reportErrors	= true;
 	
+	/**
+	 * Tells the parser whether it should be reporting the errors it finds.
+	 * 
+	 * @param enable set to true to report errors to the Problems view or false to not.
+	 */
+	public void setReportErrors(boolean enable) {
+		this.reportErrors = enable;
+	}
 	
+	/**
+	 * Tells the parser whether it should parse CFScript blocks or not
+	 * @param enable set to true to parse CFScript, false to not
+	 */
 	public void setCFScriptParsing(boolean enable) {
 		this.parseCFScript = enable;
 	}
@@ -315,24 +330,25 @@ public class CFParser {
 				userMessage(indent, method, "WARNING: " + message);
 				break;
 			case USRMSG_ERROR:
-				//System.err.println("ERROR: CFParser::" + method + "() - " + message + ".");
-
-				IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
-			
-				Map attrs = new HashMap();
-				MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
-				MarkerUtilities.setMessage(attrs, message);
-				try {					
-					//
-					// Not sure what the start & end positions are good for!
-					//MarkerUtilities.setCharStart(attrs, match.startPos);
-					//MarkerUtilities.setCharEnd(attrs, match.endPos);
+				if(this.reportErrors) {
+					IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
 					
-					MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
-					
-				}catch(CoreException excep) {
-					userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
+					Map attrs = new HashMap();
+					MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
+					MarkerUtilities.setMessage(attrs, message);
+					try {					
+						//
+						// Not sure what the start & end positions are good for!
+						//MarkerUtilities.setCharStart(attrs, match.startPos);
+						//MarkerUtilities.setCharEnd(attrs, match.endPos);
+						
+						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+						
+					}catch(CoreException excep) {
+						userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
+						}
 				}
+
 				break;
 			default:
 			case USRMSG_INFO:

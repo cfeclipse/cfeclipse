@@ -47,8 +47,6 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
  * the main plug-in class. That way, preferences can
  * be accessed directly via the preference store.
  */
-
-
 public class CFMLPreferencePage
 	extends PreferencePage
 	implements IWorkbenchPreferencePage, SelectionListener  {

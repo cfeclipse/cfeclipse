@@ -28,16 +28,19 @@ package com.rohanclan.cfml.editors;
 
 //import java.util.Iterator;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 //import com.rohanclan.cfml.parser.DocItem;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 //import org.eclipse.jface.text.IDocument; 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Document;
 //import org.eclipse.ui.IEditorPart;
 
@@ -69,6 +72,9 @@ public class ICFDocument extends Document {
 	{
 		if(docParser != null)
 		{
+			IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
+			docParser.setCFScriptParsing(prefStore.getBoolean(ICFMLPreferenceConstants.P_PARSE_DOCFSCRIPT));
+			docParser.setReportErrors(prefStore.getBoolean(ICFMLPreferenceConstants.P_PARSE_REPORT_ERRORS));
 			docStructure = docParser.parseDoc();
 			
 			if(docStructure == null)

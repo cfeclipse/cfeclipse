@@ -30,6 +30,7 @@ package com.rohanclan.cfml.editors;
  * You got me. This was a wizard generated file seems to do partition stuff too
  */
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.DefaultPartitioner;
@@ -38,6 +39,9 @@ import org.eclipse.ui.editors.text.FileDocumentProvider;
 //import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.core.runtime.IProgressMonitor;
+
+import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 //import com.rohanclan.cfml.parser.cfscript.ParseException;
 
@@ -88,8 +92,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 					// Delete all of the problem markers for the resource
 					document.clearAllMarkers();
 					
-					//Run the parser. Nothing is done with the resultant data at present.
-					//docParser.parseDoc();
+					// Run the parser with the pref store.
 					document.parseDocument();
 				}
 			}
