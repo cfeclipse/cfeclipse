@@ -159,7 +159,7 @@ public class GotoFileAction implements IEditorActionDelegate {
 						currentpath += template;
 					}
 					
-					System.out.println("about to open the file");
+// System.out.println("about to open the file");
 						GenericOpenFileAction openFileAction;
 						openFileAction = new GenericOpenFileAction();
 						openFileAction.setFilename(currentpath);
@@ -170,7 +170,7 @@ public class GotoFileAction implements IEditorActionDelegate {
 					    String projectName = pth.replaceFirst("P/","");
 					    currentpath = currentpath.replaceFirst(projectName, "");
 					    currentpath = currentpath.replaceFirst("/", "");
-					    System.out.println(currentpath);
+// System.out.println(currentpath);
 					    
 					    InputDialog confirmDialog = new InputDialog(shell,"Create File","Filename:",currentpath,null);
 						
@@ -200,7 +200,7 @@ public class GotoFileAction implements IEditorActionDelegate {
 		catch(BadLocationException e)
 		{
 			e.printStackTrace(System.err);
-			System.out.println("no file found" + System.err);
+// System.out.println("no file found" + System.err);
 		
 		}
 	}

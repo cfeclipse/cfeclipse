@@ -87,7 +87,7 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
                 	String currentFile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
                 	
                 	if (currentFile.equalsIgnoreCase(scribbleFile.getName())) {
-                	    System.out.println("Yep, saved and refreshed");
+// System.out.println("Yep, saved and refreshed");
                 	    editor.doSave(new NullProgressMonitor());
                 	    BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
 		         		browser.setUrl(scribbleURL);

@@ -70,7 +70,7 @@ public class NewFileAction implements IEditorActionDelegate {
     	
     	public void run(IAction action) 
     	{
-    	    System.out.println("I am running!");
+// System.out.println("I am running!");
     	}
     	
     	public void selectionChanged(IAction action, ISelection selection){}

@@ -115,9 +115,9 @@ public class GenericNewFileAction  implements IEditorActionDelegate{
         
     private void createFile(String filename){
         //I try to create a file
-        System.out.println("I shall create a file called " + this.filename);
+// System.out.println("I shall create a file called " + this.filename);
         IPath path = new Path("untitled.cfm");
-        System.out.println("Path is valid?" + path.isValidPath("untitled.cfm"));
+// System.out.println("Path is valid?" + path.isValidPath("untitled.cfm"));
        
 		try {
 			InputStream stream = openContentStream();
@@ -125,10 +125,10 @@ public class GenericNewFileAction  implements IEditorActionDelegate{
 			stream.close();
 			this.isCreated = true;
 		} catch (IOException e) {
-		    System.out.println("There has been an error in " +  e.getMessage());
+// System.out.println("There has been an error in " +  e.getMessage());
 		    this.isCreated = false;
 		} catch (CoreException co){
-		    System.out.println("There has been an error in " +  co.getMessage());
+// System.out.println("There has been an error in " +  co.getMessage());
 		    this.isCreated = false;
 		}
 		
