@@ -74,6 +74,8 @@ public class HTMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 		
 		addField(new ColorFieldEditor(P_COLOR_UNK_TAG,"&Other Tags:",getFieldEditorParent()));
 	}
+	
+	
 	 
 	public void init(IWorkbench workbench){;}
 }

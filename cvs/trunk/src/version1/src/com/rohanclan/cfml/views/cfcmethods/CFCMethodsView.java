@@ -329,7 +329,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			//System.out.println("CFCMethodView listener removed from editor");
 				}
 				catch (Exception e) {
-					e.printStackTrace(System.err);
+					//e.printStackTrace(System.err);
 				}		
 		}
 		else {

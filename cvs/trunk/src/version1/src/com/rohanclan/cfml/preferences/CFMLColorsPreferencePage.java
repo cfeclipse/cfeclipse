@@ -33,6 +33,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 //import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import com.rohanclan.cfml.CFMLPlugin;
+import org.eclipse.swt.graphics.RGB;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 
 /**
@@ -59,7 +60,8 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 	 */
 	public void createFieldEditors()
 	{
-		addField(new ColorFieldEditor(P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent()));	
+
+		addField(new ColorFieldEditor(P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(P_COLOR_CFCOMMENT,"CFML &Comment:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(P_COLOR_CFTAG,"CFML &Tag:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(P_COLOR_CFSTRING,"CFML St&ring:",getFieldEditorParent()));
@@ -71,6 +73,7 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_KEYWORD,"CFScript Key&word:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_FUNCTION,"CFScript Funct&ion:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(P_COLOR_CFSCRIPT_STRING,"CFScript Strin&g:",getFieldEditorParent()));
+
 	}
 	 
 	public void init(IWorkbench workbench){;}

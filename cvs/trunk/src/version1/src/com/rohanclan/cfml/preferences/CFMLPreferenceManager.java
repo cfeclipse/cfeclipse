@@ -81,28 +81,32 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	 * (and initialise not initialize)
 	 */
 	public void initialiseDefaultColours() {
-		store.setDefault(P_COLOR_CFKEYWORD, DEFAULT_COLOR_CFKEYWORD.toString());
+		store.setDefault(P_COLOR_CFKEYWORD, getColorString(DEFAULT_COLOR_CFKEYWORD));
 		//store.setDefault(P_COLOR_, DEFAULT_COLOR_DOCTYPE.toString());
 		//store.setDefault(P_COLOR_, DEFAULT_COLOR_CFCOMMENT.toString());
 		
-		store.setDefault(P_COLOR_CFNUMBER, DEFAULT_COLOR_CFNUMBER.toString());
-		store.setDefault(P_COLOR_CFCOMMENT, DEFAULT_COLOR_CFCOMMENT.toString());
-		store.setDefault(P_COLOR_CFSCRIPT_TEXT, DEFAULT_COLOR_CFSCRIPT.toString());
-		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION, DEFAULT_COLOR_CFSCRIPTFUNCTION.toString());
-		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD, DEFAULT_COLOR_CFSCRIPT_KEYWORD.toString());
-		store.setDefault(P_COLOR_CFSCRIPT_STRING, DEFAULT_COLOR_CFSCRIPT_STRING.toString());
-		store.setDefault(P_COLOR_CFSTRING, DEFAULT_COLOR_CFSTRING.toString());
-		store.setDefault(P_COLOR_CFTAG, DEFAULT_COLOR_CFTAG.toString());
-		store.setDefault(P_COLOR_CSS, DEFAULT_COLOR_CSS.toString());
-		store.setDefault(P_COLOR_DEFAULT_TEXT, DEFAULT_COLOR_DEFAULT.toString());
-		store.setDefault(P_COLOR_HTM_COMMENT, DEFAULT_COLOR_HTMCOMMENT.toString());
-		store.setDefault(P_COLOR_JSCRIPT_TEXT, DEFAULT_COLOR_JSCRIPT.toString());
-		store.setDefault(P_COLOR_JSCRIPT_FUNCTION, DEFAULT_COLOR_JSCRIPTFUNCTION.toString());
-		store.setDefault(P_COLOR_STRING, DEFAULT_COLOR_STRING.toString());
-		store.setDefault(P_COLOR_HTM_TAG, DEFAULT_COLOR_TAG.toString());
-		store.setDefault(P_COLOR_UNK_TAG, DEFAULT_COLOR_UNKTAG.toString());
-		store.setDefault(P_COLOR_HTM_FORM_TAG, DEFAULT_COLOR_FORMTAG.toString());
-		store.setDefault(P_COLOR_HTM_TABLE_TAG, DEFAULT_COLOR_TABLETAG.toString());
+		store.setDefault(P_COLOR_CFNUMBER, getColorString(DEFAULT_COLOR_CFNUMBER));
+		store.setDefault(P_COLOR_CFCOMMENT, getColorString(DEFAULT_COLOR_CFCOMMENT));
+		store.setDefault(P_COLOR_CFSCRIPT_TEXT, getColorString(DEFAULT_COLOR_CFSCRIPT));
+		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION, getColorString(DEFAULT_COLOR_CFSCRIPTFUNCTION));
+		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD, getColorString(DEFAULT_COLOR_CFSCRIPT_KEYWORD));
+		store.setDefault(P_COLOR_CFSCRIPT_STRING, getColorString(DEFAULT_COLOR_CFSCRIPT_STRING));
+		store.setDefault(P_COLOR_CFSTRING, getColorString(DEFAULT_COLOR_CFSTRING));
+		store.setDefault(P_COLOR_CFTAG, getColorString(DEFAULT_COLOR_CFTAG));
+		store.setDefault(P_COLOR_CSS, getColorString(DEFAULT_COLOR_CSS));
+		store.setDefault(P_COLOR_DEFAULT_TEXT, getColorString(DEFAULT_COLOR_DEFAULT));
+		store.setDefault(P_COLOR_HTM_COMMENT, getColorString(DEFAULT_COLOR_HTMCOMMENT));
+		store.setDefault(P_COLOR_JSCRIPT_TEXT, getColorString(DEFAULT_COLOR_JSCRIPT));
+		store.setDefault(P_COLOR_JSCRIPT_FUNCTION, getColorString(DEFAULT_COLOR_JSCRIPTFUNCTION));
+		store.setDefault(P_COLOR_STRING, getColorString(DEFAULT_COLOR_STRING));
+		store.setDefault(P_COLOR_HTM_TAG, getColorString(DEFAULT_COLOR_TAG));
+		store.setDefault(P_COLOR_UNK_TAG, getColorString(DEFAULT_COLOR_UNKTAG));
+		store.setDefault(P_COLOR_HTM_FORM_TAG, getColorString(DEFAULT_COLOR_FORMTAG));
+		store.setDefault(P_COLOR_HTM_TABLE_TAG, getColorString(DEFAULT_COLOR_TABLETAG));
+	}
+	
+	private String getColorString(RGB color) {
+	    return color.red + "," + color.green + "," + color.blue;
 	}
 	
 	public void initializeDefaultValues() {
