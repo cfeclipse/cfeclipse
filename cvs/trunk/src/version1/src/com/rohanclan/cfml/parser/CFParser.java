@@ -106,8 +106,7 @@ public class CFParser {
 	 * <code>REG_ATTRIBUTES</code> - regular expression for getting the attributes out of a tag match.
 	 * \s*(\w*)="(\w*)"
 	 */
-	//static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"(\\w*)\"";
-	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"([-|#|_|\\.|\\w]*)\"";
+	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)=\"([^\"]*)\""; 
 	
 	
 	static protected final int USRMSG_INFO 		= 0x00;
