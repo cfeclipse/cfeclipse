@@ -78,7 +78,7 @@ import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
 
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
-import com.rohanclan.cfml.editors.codefolding.VerticalRulerListener;
+
 
 
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
