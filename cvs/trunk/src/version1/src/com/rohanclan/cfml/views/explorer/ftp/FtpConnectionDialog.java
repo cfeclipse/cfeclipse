@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.widgets.MessageBox;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.dialogs.Dialog;
@@ -66,11 +67,13 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	protected Control createContents(Composite parent) {
 	    Control contents = super.createContents(parent);
 	    deleteButton = createButton((Composite)buttonBar, DELETE_ID, "Delete",false);
+	    /*
 	    deleteButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
                 buttonPressed(((Integer) event.widget.getData()).intValue());
             }
         });
+        */
 		okButton = getButton(IDialogConstants.OK_ID);
 		okButton.setText("Create");
 		redraw();
@@ -315,9 +318,12 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 				e.printStackTrace();
 			}
 		} else if (buttonId == DELETE_ID) {
-		    
-			FtpConnectionProperties.deleteConnection(connectionProperties.getConnectionid());
-			connectionTable.setInput(new Object());
+		    MessageBox confirm = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+		    confirm.setMessage("Are you sure you want to delete this connection?");
+		    if (confirm.open() == SWT.OK) {
+				FtpConnectionProperties.deleteConnection(connectionProperties.getConnectionid());
+				connectionTable.setInput(new Object());
+		    }
 		}
 		super.buttonPressed(buttonId);
 	}
