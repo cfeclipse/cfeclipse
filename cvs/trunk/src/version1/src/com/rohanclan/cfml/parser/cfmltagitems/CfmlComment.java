@@ -25,6 +25,7 @@
 package com.rohanclan.cfml.parser.cfmltagitems;
 
 import com.rohanclan.cfml.parser.docitems.DocItem;
+import com.rohanclan.cfml.parser.docitems.TagItem;
 
 /**
  * Represents a CFML comment, ala &lt;!--- Comment here ---&gt;.
@@ -48,6 +49,18 @@ public class CfmlComment extends DocItem {
 	 */
 	public CfmlComment() {
 		super();
+	}
+
+    
+
+	
+	public boolean validChildAddition(DocItem parentItem)
+	{
+		
+		if (parentItem instanceof TagItem) {
+			return true;
+		}
+		return false;
 	}
 
 }

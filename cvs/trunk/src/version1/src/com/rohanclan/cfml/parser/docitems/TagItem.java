@@ -95,6 +95,7 @@ public class TagItem extends DocItem {
 		return addOkay;
 	}
 	
+	
 	public boolean hasAttribute(String attrName) {
 		return this.itemAttributes.containsKey(attrName.toLowerCase());
 	}

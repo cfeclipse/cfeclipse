@@ -454,7 +454,7 @@ public class Util {
 			}
 			else
 			{
-				System.err.println("Util::calcLineNumbers() - Didn't find any lines!");
+				//System.err.println("Util::calcLineNumbers() - Didn't find any lines!");
 				lineOffsets = new int[1];
 				lineOffsets[0] = 0;
 			}

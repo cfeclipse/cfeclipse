@@ -227,7 +227,7 @@ public abstract class DocItem implements Comparable {
 		if(!newItem.validChildAddition(this))
 		{
 			parseMessages.addMessage(new ParseError(newItem.getLineNumber(), newItem.getStartPosition(), newItem.getEndPosition(), newItem.getItemData(),
-										"Invalid child \'" + newItem.getName() + "\' for parent \'" + getName() + "\'"));
+										"Invalid child " + newItem.getClass().getName() + ":\'" + newItem.getName() + "\' for parent \'" + getName() + "\'"));
 			addOkay = false;
 		}
 		//

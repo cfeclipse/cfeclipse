@@ -414,16 +414,18 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				firstCommandChar = '\b';
 			}
 			
+			
 
 			switch(firstCommandChar) {
 			case '\b':	// User wishes to delete something
 				handleDelete(doc, docCommand);
 				return;
 			case '!':
-				if(doc.getChar(docCommand.offset) == '<'
+				if(doc.getChar(docCommand.offset-1) == '<'
+					&& doc.getLength() > docCommand.offset+1
 					&& doc.getChar(docCommand.offset+1) == '>')
 				{
-					handleHTMLComment(doc, docCommand);
+						handleHTMLComment(doc, docCommand);
 				}
 				return;
 			case '>':

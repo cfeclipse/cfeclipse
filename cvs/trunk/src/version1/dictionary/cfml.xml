@@ -394,7 +394,7 @@
 				<help><![CDATA[
 					Absolute path of cache directory.
 				]]></help>
-				<values/> 
+				<values/>
 			</parameter>
 			<parameter name="timespan" type="Timespan" required="false">
 				<help><![CDATA[
@@ -2271,7 +2271,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="returntype" type="String" required="true">
+			<parameter name="returntype" type="String" required="false">
 				<help><![CDATA[
 					String; a type name; data type of the function return value
 					Required for a web service; Optional, otherwise.
@@ -9027,14 +9027,14 @@
 		<function creator="3" name="createobject" returns="Object">
 		<help><![CDATA[
 				The CreateObject function takes different arguments depending on the value of the first argument:
-				
+
 				CreateObject('com', class, context, serverName)
 				CreateObject('component', component-name)
 				CreateObject('corba', context, class, locale)
 				CreateObject('java', class)
-				CreateObject('webservice', urltowsdl)   
+				CreateObject('webservice', urltowsdl)
 			]]></help>
-			
+
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
@@ -11428,7 +11428,7 @@
 					<value option="Now()" />
 				</values>
 			</parameter>
-			
+
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
@@ -11463,8 +11463,8 @@
 					<value option="local" />
 					<value option="international" />
 					<value option="none" />
-					
-					
+
+
 				</values>
 			</parameter>
 		</function>
@@ -12470,7 +12470,7 @@
 				<help><![CDATA[
 					The name of a locale; for example, "English (US)"
 				]]></help>
-				<values>	
+				<values>
 					<value option="Chinese (China)" />
 					<value option="Chinese (Hong Kong)" />
 					<value option="Chinese (Taiwan)" />
@@ -13557,7 +13557,7 @@
 
 	</functions>
 
-	<scopes>	
+	<scopes>
 		<!-- Client scope variables -->
 		<scope value="Client.CFID"/>
 		<scope value="Client.CFToken"/>
