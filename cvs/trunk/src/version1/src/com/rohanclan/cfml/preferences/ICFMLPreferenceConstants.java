@@ -89,4 +89,5 @@ public interface ICFMLPreferenceConstants {
 	String 	P_AUTOINSERT_CLOSE_TAGS		= "__autoInsertCloseTags";
 	String	P_AUTOINDENT_ONTAGCLOSE		= "__autoIndentOnTagClose";
 	
+	String P_CFML_DICTIONARY = "__cfmlDictionary";
 }
