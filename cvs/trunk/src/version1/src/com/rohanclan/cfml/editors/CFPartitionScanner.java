@@ -136,9 +136,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("</cf_",">", cfendtag));
 		rules.add(new MultiLineRule("<CF_",">", cftag));
 		rules.add(new MultiLineRule("</CF_",">", cfendtag));
-		
-		//TODO add html dictionary
-		
+			
 		//if there is a special tag rule, don't forget to check this class
 		//this will try to paint everything in the html blue. Any additions
 		//should be *before* this rule. Reorder if needed.

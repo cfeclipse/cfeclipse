@@ -34,23 +34,23 @@ import org.eclipse.swt.graphics.RGB;
 
 public interface ICFColorConstants {
 	/** all comments */
-	RGB HTM_COMMENT = new RGB(128, 128, 128);
+	RGB HTM_COMMENT 		= new RGB(128, 128, 128);
 	/** html strings */
-	RGB STRING      = new RGB(0, 0, 255);
+	RGB STRING      		= new RGB(0, 0, 255);
 	/** page default text */
-	RGB DEFAULT     = new RGB(0, 0, 0);
+	RGB DEFAULT     		= new RGB(0, 0, 0);
 	/** html tag color */
-	RGB TAG         = new RGB(0, 0, 128);
+	RGB TAG         		= new RGB(0, 0, 128);
 	/////////////////////////////////////
 	/** coldfusion attribute strings */
-	RGB CFSTRING    = new RGB(0, 0, 255);
+	RGB CFSTRING    		= new RGB(0, 0, 255);
 	/** coldfusion tags */
-	RGB CFTAG       = new RGB(128, 0, 0);
+	RGB CFTAG       		= new RGB(128, 0, 0);
 	//RGB CFVARIABLE  = new RGB(128, 10, 10);
 	/** coldfusion keywords (eq, and, or, et cetra) */
-	RGB CFKEYWORD   = new RGB(0, 10, 255);
+	RGB CFKEYWORD   		= new RGB(0, 10, 255);
 	/** coldfusion numbers */
-	RGB CFNUMBER    = new RGB(255, 10, 10);
+	RGB CFNUMBER    		= new RGB(255, 10, 10);
 	//////////////////////////////////////
 	RGB CFSCRIPT    		= new RGB(0, 0, 0);
 	RGB CFSCRIPT_KEYWORD	= new RGB(0, 0, 255);

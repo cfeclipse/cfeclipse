@@ -24,12 +24,16 @@
  */
 package com.rohanclan.cfml.editors;
 
-//import java.util.Iterator;
-//import java.util.Set;
-
-import org.eclipse.jface.text.*;
-import org.eclipse.jface.text.rules.*;
-//import com.rohanclan.coldfusionmx.editors.CFSyntaxDictionary;
+import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.rules.RuleBasedScanner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.rules.SingleLineRule;
+import org.eclipse.jface.text.rules.NumberRule;
+import org.eclipse.jface.text.rules.WhitespaceRule;
+//import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+//import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 /**
  * @author Rob

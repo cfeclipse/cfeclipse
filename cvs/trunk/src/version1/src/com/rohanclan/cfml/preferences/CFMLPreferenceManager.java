@@ -8,36 +8,54 @@ package com.rohanclan.cfml.preferences;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import com.rohanclan.cfml.CFMLPlugin;
+//import com.rohanclan.cfml.editors.ICFColorConstants;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.jface.resource.StringConverter;
+
 /**
  * @author Stephen Milligan
  *
  */
-
-
-public class CFMLPreferenceManager {
+public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 
 	private IPreferenceStore store;
 	
-	private static int DEFAULT_TAB_WIDTH = 4;
-	private static int DEFAULT_INSIGHT_DELAY = 500;
-	private static boolean DEFAULT_INSERT_SPACES_FOR_TABS = false;
-	private static boolean DEFAULT_ENABLE_HS_COMPATIBILITY = false;
-	private static boolean DEFAULT_ENABLE_DW_COMPATIBILITY = false;
-	private static String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
-	
+	private static final int DEFAULT_TAB_WIDTH = 4;
+	private static final int DEFAULT_INSIGHT_DELAY = 500;
+	private static final boolean DEFAULT_INSERT_SPACES_FOR_TABS = false;
+	private static final boolean DEFAULT_ENABLE_HS_COMPATIBILITY = false;
+	private static final boolean DEFAULT_ENABLE_DW_COMPATIBILITY = false;
+	/** this is public because the browser uses it on errors */
+	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
 	public CFMLPreferenceManager() {
-		this.store = CFMLPlugin.getDefault().getPreferenceStore();
+		store = CFMLPlugin.getDefault().getPreferenceStore();
 	}
 	
 	public void initializeDefaultValues() {
 		
-        store.setDefault(ICFMLPreferenceConstants.P_INSIGHT_DELAY, DEFAULT_INSIGHT_DELAY);   //$NON-NLS-1$
-        store.setDefault(ICFMLPreferenceConstants.P_TAB_WIDTH, DEFAULT_TAB_WIDTH);
-        store.setDefault(ICFMLPreferenceConstants.P_INSERT_SPACES_FOR_TABS, DEFAULT_INSERT_SPACES_FOR_TABS);
-        store.setDefault(ICFMLPreferenceConstants.P_ENABLE_HS_COMPATIBILITY, DEFAULT_ENABLE_HS_COMPATIBILITY);
-        store.setDefault(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY, DEFAULT_ENABLE_DW_COMPATIBILITY);
-        store.setDefault(ICFMLPreferenceConstants.P_SNIPPETS_PATH, CFMLPlugin.getDefault().getStateLocation().toString());
+        store.setDefault(P_INSIGHT_DELAY, DEFAULT_INSIGHT_DELAY); 
+        store.setDefault(P_TAB_WIDTH, DEFAULT_TAB_WIDTH);
+        store.setDefault(P_INSERT_SPACES_FOR_TABS, DEFAULT_INSERT_SPACES_FOR_TABS);
+        store.setDefault(P_ENABLE_HS_COMPATIBILITY, DEFAULT_ENABLE_HS_COMPATIBILITY);
+        store.setDefault(P_ENABLE_DW_COMPATIBILITY, DEFAULT_ENABLE_DW_COMPATIBILITY);
+        store.setDefault(P_SNIPPETS_PATH, CFMLPlugin.getDefault().getStateLocation().toString());
+        //store.setDefault(P_CFTAG_COLOR,ICFColorConstants.CFTAG.toString());
+	}
+	
+	public RGB getColor(String key)
+	{
+		String rgbString = store.getString(key);
+
+		if (rgbString.length() <= 0)
+		{
+			rgbString = store.getDefaultString(key);
+			if(rgbString.length() <= 0) 
+			{
+				rgbString = "0,0,0";
+			}
+		}
+		return StringConverter.asRGB(rgbString);
 	}
 	
 	

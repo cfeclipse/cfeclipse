@@ -16,10 +16,9 @@ import java.io.IOException;
 /**
  * @author Stephen Milligan
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * This controls the properies for the per project settings
  */
-public class CFMLPropertyManager {
+public class CFMLPropertyManager implements ICFMLPreferenceConstants {
 	/**
 	 * 
 	 */
@@ -41,8 +40,8 @@ public class CFMLPropertyManager {
 	
 	
 	public void initializeDefaultValues() {
-        store.setDefault(ICFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
-        store.setDefault(ICFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.projectURL());
+        store.setDefault(P_SNIPPETS_PATH, preferenceManager.snippetsPath());
+        store.setDefault(P_PROJECT_URL, preferenceManager.projectURL());
 	}
 	
 	
