@@ -293,7 +293,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		CFEContentAssistManager returnManager = null;
 		CFENature nature;		    
 		try {
-		    if(!CFENature.hasCFENature(this.lastRes.getProject()))
+		    if(!ResourceUtils.hasNature(this.lastRes.getProject(), CFMLPlugin.NATURE_ID))
 		        return CFMLPlugin.getDefault().getGlobalCAM();
 		    
 		    nature = (CFENature)lastRes.getProject().getNature(CFMLPlugin.NATURE_ID);
