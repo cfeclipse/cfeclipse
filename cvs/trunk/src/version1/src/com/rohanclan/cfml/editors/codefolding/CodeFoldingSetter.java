@@ -94,10 +94,10 @@ public class CodeFoldingSetter {
 	            scrubAnnotations();
 
 	            if (preferenceManager.foldCFMLComments()) {
-	                foldPartitions(markerMap,CFPartitionScanner.HTM_COMMENT, preferenceManager.collapseCFMLComments() && autoCollapse,preferenceManager.minimumFoldingLines()-1);
+	                foldPartitions(markerMap,CFPartitionScanner.CF_COMMENT, preferenceManager.collapseCFMLComments() && autoCollapse,preferenceManager.minimumFoldingLines()-1);
 	            }
 	            if (preferenceManager.foldHTMLComments()) {
-	                foldPartitions(markerMap,CFPartitionScanner.CF_COMMENT,preferenceManager.collapseHTMLComments() && autoCollapse,preferenceManager.minimumFoldingLines()-1);
+	                foldPartitions(markerMap,CFPartitionScanner.HTM_COMMENT,preferenceManager.collapseHTMLComments() && autoCollapse,preferenceManager.minimumFoldingLines()-1);
 	            }
 	            
 	            for (int i=1;i<9;i++) {
