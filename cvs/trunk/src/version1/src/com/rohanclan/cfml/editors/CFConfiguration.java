@@ -71,7 +71,6 @@ import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 import com.rohanclan.cfml.preferences.HTMLColorsPreferenceConstants;
 import com.rohanclan.cfml.preferences.ParserPreferenceConstants;
-
 /**
  * <p>
  * This sets up the whole editor. Assigin partition damagers and repairers, and
@@ -691,9 +690,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_END_TAG);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_START_TAG_BEGIN);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_START_TAG_END);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_TAG_ATTRIBS);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_END_TAG);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_START_TAG_BEGIN);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_START_TAG_END);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_TAG_ATTRIBS);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.J_SCRIPT);
     }
 

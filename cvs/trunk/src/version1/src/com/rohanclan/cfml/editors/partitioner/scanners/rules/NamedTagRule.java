@@ -124,9 +124,9 @@ public class NamedTagRule implements IPredicateRule {
 			if (endSequenceDetected(scanner, tagString)) {
 			    TagData data = null;
 			    if (fStartSequence[1] != '/') {
-			        data = new TagData(fPartitionType + "_begin",tagString.toString(), fMidPartitionType,fPartitionType +"_end" );
+			        data = new TagData(fPartitionType + "_begin",tagString.toString(), fMidPartitionType,fPartitionType +"_end", new String(fStartSequence).substring(1) );
 			    } else {
-			        data = new TagData(fPartitionType,tagString.toString(), fMidPartitionType,fPartitionType);
+			        data = new TagData(fPartitionType,tagString.toString(), fMidPartitionType,fPartitionType, new String(fStartSequence).substring(2));
 			    }
 				return new Token(data);
 			}
@@ -140,9 +140,9 @@ public class NamedTagRule implements IPredicateRule {
 					if (endSequenceDetected(scanner, tagString)) {
 					    TagData data = null;
 					    if (fStartSequence[1] != '/') {
-					        data = new TagData(fPartitionType + "_begin",tagString.toString(), fMidPartitionType,fPartitionType +"_end" );
+					        data = new TagData(fPartitionType + "_begin",tagString.toString(), fMidPartitionType,fPartitionType +"_end", new String(fStartSequence).substring(1) );
 					    } else {
-					        data = new TagData(fPartitionType,tagString.toString(), fMidPartitionType,fPartitionType);
+					        data = new TagData(fPartitionType,tagString.toString(), fMidPartitionType,fPartitionType, new String(fStartSequence).substring(2));
 					    }
 						return new Token(data);
 					}

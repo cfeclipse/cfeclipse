@@ -29,6 +29,9 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 
+import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+
 /**
  *
  * This class provides a few helper utilities for the content assist code.
@@ -85,10 +88,26 @@ public class AssistUtils {
 			ex.printStackTrace();
 		}	
 		
+
+		
 		assistState.setOffset(offset);
 		assistState.setDoc(viewer.getDocument());
 		assistState.setTextViewer(viewer);
-		assistState = AssistUtils.getPrefix(assistState);
+
+        CFEDefaultPartitioner partitioner = (CFEDefaultPartitioner)document.getDocumentPartitioner();
+        CFEPartition[] partitions = partitioner.getTagPartitions(assistState.getOffset());
+        if (partitions != null) {
+	        int start = partitions[0].getOffset();
+	        int end = partitions[partitions.length-1].getOffset() + partitions[partitions.length-1].getLength();
+	        end = assistState.getOffset();
+	        try {
+	          assistState.setDataSoFar(document.get(start,end-start));  
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+        } else {
+            assistState = AssistUtils.getPrefix(assistState);
+        }
         return assistState;
     }
     

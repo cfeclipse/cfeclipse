@@ -45,6 +45,8 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.editors.ICFEFileDocument;
+import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.util.CFDocUtils;
 
@@ -95,7 +97,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @param message The message to output to the console
 	 */
 	private void UserMsg(String method, String message) {
- //System.out.println("CFContentAssist::" + method + "() - " + message);
+	    System.out.println("CFContentAssist::" + method + "() - " + message);
 	}
 	/**
 	 * Provides a standarised user error console message for debugging.
@@ -309,7 +311,6 @@ public class CFContentAssist extends CFEContentAssist{
         DefaultAssistState assistState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
         assistState.setPrevDelim(0);	// TODO: Bodge job, need to assign correct previous delim position
         assistState.setDataSoFar(assistState.getDataSoFar().trim());
-
         return getTagProposals(assistState);
 	}
 	
@@ -323,11 +324,13 @@ public class CFContentAssist extends CFEContentAssist{
 	            CFPartitionScanner.FORM_END_TAG,
 	            CFPartitionScanner.FORM_START_TAG_BEGIN,
 	            CFPartitionScanner.FORM_START_TAG_END,
+	            CFPartitionScanner.FORM_TAG_ATTRIBS,
 	            CFPartitionScanner.CSS, 
 	            CFPartitionScanner.SQL,
 	            CFPartitionScanner.TABLE_END_TAG,
 	            CFPartitionScanner.TABLE_START_TAG_BEGIN,
 	            CFPartitionScanner.TABLE_START_TAG_END,
+	            CFPartitionScanner.TABLE_TAG_ATTRIBS,
 	            CFPartitionScanner.UNK_TAG,
 	            CFPartitionScanner.J_SCRIPT,
 	            CFPartitionScanner.HTM_END_TAG,
@@ -359,22 +362,23 @@ public class CFContentAssist extends CFEContentAssist{
 	    IDocument document = assistState.getIDocument();
 	    String attrText = "";
 		String prefix = "";
-		
+		DefaultAssistState defaultAssistState = (DefaultAssistState)assistState;
 		if(!inValidPartitionType(assistState))
 		{
 		    UserMsg(mName, "Not in a valid partition type of \'" + assistState.getOffsetPartition().getType() + "\'");
 		    return null;
 		}
-
 		
 	    char invokerChar;
 		prefix = assistState.getDataSoFar();
-		invokerChar = assistState.getTriggerData();		
+		invokerChar = assistState.getTriggerData();
+		/*
 		if(!checkActuallyInTag(prefix))
 		{
 		    UserMsg(mName, "Not in a tag");
 		    return null;
 		}
+		*/
 		prefix = prefix.substring(this.lastOpenChevronPos).trim();
 		UserMsg("getTagProposals","Prefix set to " + prefix);
 		ArrayList partItems = CFEContentAssist.getTokenisedString(/*assistState.getDataSoFar()*/prefix);
@@ -553,6 +557,7 @@ public class CFContentAssist extends CFEContentAssist{
 		String prefix = state.getDataSoFar();
 		String attrText = state.getAttributeText().trim();
 		
+		System.out.println("Prefix is now  " + prefix);
 		// hacks hacks everywhere :) this looks to see if there are an
 		// odd number of " in the string prior to this invoke before 
 		// showing attribute insight. (to keep it from showing attributes

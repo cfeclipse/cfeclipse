@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.3 2005-01-24 23:36:35 smilligan Exp $
- * $Revision: 1.3 $
- * $Date: 2005-01-24 23:36:35 $
+ * $Id: CFEPartition.java,v 1.4 2005-01-27 01:37:25 smilligan Exp $
+ * $Revision: 1.4 $
+ * $Date: 2005-01-27 01:37:25 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -36,7 +36,7 @@ import org.eclipse.jface.text.Assert;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public final class CFEPartition extends TypedPosition {
 
@@ -46,6 +46,12 @@ public final class CFEPartition extends TypedPosition {
     private String fOpensPseudoPartition = null;
     /** The type of partition that this partition closes */
     private String fClosesPseudoPartition = null;
+    
+    
+    private boolean fStartPartition = false;
+    private boolean fMidPartition = false;
+    private boolean fEndPartition = false;
+    private String fTagName = null;
     
     /**
      * @param offset
@@ -98,6 +104,38 @@ public final class CFEPartition extends TypedPosition {
     public final String getClosesPartitionType() {
         return fClosesPseudoPartition;
     }
+    
+    public final boolean isStartPartition() {
+        return fStartPartition;
+    }
+    
+    public final boolean isMidPartition() {
+        return fMidPartition;
+    }
+    
+    public final boolean isEndPartition() {
+        return fEndPartition;
+    }
+    
+    public final void setStartPartition(boolean value) {
+        fStartPartition = value;
+    }
+    
+    public final void setMidPartition(boolean value) {
+        fMidPartition = value;
+    }
+    
+    public final void setEndPartition(boolean value) {
+        fEndPartition = value;
+    }
+    
+    public final void setTagName(String name) {
+        fTagName = name;
+    }
+    
+    public String getTagName() {
+        return fTagName;
+    }
 
 }
 
@@ -107,6 +145,11 @@ public final class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/01/24 23:36:35  smilligan
+ * Hopefully the last major change to the partitioner.
+ *
+ * Seems to be relatively robust and stable now.
+ *
  * Revision 1.2  2005/01/21 08:25:15  smilligan
  * Re-implemented the partitioning in a slightly more robust way.
  *

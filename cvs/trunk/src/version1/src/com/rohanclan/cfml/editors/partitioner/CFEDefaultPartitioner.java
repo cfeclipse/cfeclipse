@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.15 2005-01-26 22:05:55 smilligan Exp $
- * $Revision: 1.15 $
- * $Date: 2005-01-26 22:05:55 $
+ * $Id: CFEDefaultPartitioner.java,v 1.16 2005-01-27 01:37:25 smilligan Exp $
+ * $Revision: 1.16 $
+ * $Date: 2005-01-27 01:37:25 $
  * 
  * Created on Oct 17, 2004
  *
@@ -218,12 +218,14 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                 if (!fDocument.containsPosition(fPositionCategory,start,length)) {
                     // Add a partition for the start part of the tag.
                      p = new CFEPartition(start, length, data.getStartPartitionType());
+                     p.setTagName(data.tagName());
                     fDocument.addPosition(fPositionCategory, p);
                     
                 }
                 if (!data.isCloser()) {
                     if (p != null) {
                         p.setNextPartitionType(data.getMidPartitionType());
+                        p.setStartPartition(true);
                     }
                     if (data.fHasMid) {
                         
@@ -232,6 +234,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                         length = data.getMidPartitionEnd()-data.getFirstPartitionEnd();
                         p = new CFEPartition(start, length, data.getMidPartitionType());
                         p.setNextPartitionType(p.getType());
+                        p.setMidPartition(true);
+                        p.setTagName(data.tagName());
                         if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
                             fDocument.addPosition(fPositionCategory, p);
                         }
@@ -244,6 +248,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                         length = data.getRawData().length()- data.getMidPartitionEnd();
 	                    if (!fDocument.containsPosition(fPositionCategory,start,length)) {
 		                    p = new CFEPartition(start, length, data.getEndPartitionType());
+		                    p.setEndPartition(true);
+	                        p.setTagName(data.tagName());
 	                        fDocument.addPosition(fPositionCategory, p);
 	                    }
 
@@ -958,8 +964,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
      * @see IDocumentPartitioner#getContentType(int)
      */
     public String getContentType(int offset) {
-
         CFEPartition p = findClosestPosition(offset);
+        
         if (p != null && p.includes(offset))
             return p.getType();
 
@@ -1069,6 +1075,112 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             return data.toString();
         return null;
     }
+    
+    
+    
+    private String getStartPartitionName(String partitionType) {
+        if (partitionType.startsWith("__htm_") 
+                && !partitionType.startsWith("__htm_end")) {
+            return CFPartitionScanner.HTM_START_TAG_BEGIN;
+        } else if (partitionType.startsWith("__form_")
+                && !partitionType.startsWith("__form_end")) {
+            return CFPartitionScanner.FORM_START_TAG_BEGIN;
+        } else if (partitionType.startsWith("__table_")
+                && !partitionType.startsWith("__table_end")) {
+            return CFPartitionScanner.TABLE_START_TAG_BEGIN;
+        } else if (partitionType.startsWith("__cf_")
+                && !partitionType.startsWith("__cf_end")) {
+            return CFPartitionScanner.CF_START_TAG_BEGIN;
+        }
+            
+        return null;
+    }
+
+    
+    
+    
+    private String getEndPartitionName(String partitionType) {
+        if (partitionType.startsWith("__htm_") 
+                && !partitionType.startsWith("__htm_end")) {
+            return CFPartitionScanner.HTM_START_TAG_END;
+        } else if (partitionType.startsWith("__form_")
+                && !partitionType.startsWith("__form_end")) {
+            return CFPartitionScanner.FORM_START_TAG_END;
+        } else if (partitionType.startsWith("__table_")
+                && !partitionType.startsWith("__table_end")) {
+            return CFPartitionScanner.TABLE_START_TAG_END;
+        } else if (partitionType.startsWith("__cf_")
+                && !partitionType.startsWith("__cf_end")) {
+            return CFPartitionScanner.CF_START_TAG_END;
+        }
+            
+        return null;
+    }
+    
+    /** 
+     * Returns a position that inicates the start offset and length of the
+     * tag that surrounds the given offset.
+     */ 
+    public CFEPartition[] getTagPartitions(int offset) {
+        
+        int start = -1;
+        int end = -1;
+        String firstPartition = null;
+        String lastPartition = null;
+        try {
+	        CFEPartition cfp = findClosestPosition(offset);
+	        if (cfp == null) {
+	            return null;
+	        }
+	        String tagName = cfp.getTagName();
+            firstPartition = getStartPartitionName(cfp.getType());
+            lastPartition = getEndPartitionName(cfp.getType());
+	        if (firstPartition == null || lastPartition == null) {
+	            return null;
+	        }
+	        
+	        Position[] positions = fDocument.getPositions(fPositionCategory);
+	        int index = getFirstIndexEndingAfterOffset(positions,offset);
+	        //System.out.println("Index is " + index + " of " + positions.length);
+	        for (int i=index-1;i<positions.length;i++) {
+	            //System.out.println("Looking for end in index " + i);
+	            CFEPartition p = (CFEPartition)positions[i];
+	            if (p.getType().equals(lastPartition)) {
+	                //System.out.println("Found.");
+	                end = i;
+	                break;
+	            }
+	        }
+	        
+	        for (int i=index-1;i>=0;i--) {
+	            CFEPartition p = (CFEPartition)positions[i];
+	            //System.out.println("Looking for start in index " + i);
+	            if (p.getType().equals(firstPartition)) {
+	                //System.out.println("Found.");
+	                start = i;
+	                break;
+	            }
+	        }
+	        
+	        if (start == -1 || end == -1 ) {
+	            return null;
+	        }
+	        
+	        //System.out.println("Tag starts at index " + start + " and ends at index " + end);
+	        CFEPartition[] partitions = new CFEPartition[end-start+1];
+	        int i = 0;
+	        while (start <= end) {
+	           partitions[i] = (CFEPartition)positions[start];
+	           start++;
+	           i++;
+	        }
+	        return partitions;
+	        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /* zero-length partition support */
 
@@ -1077,7 +1189,16 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
      * @since 3.0
      */
     public String getContentType(int offset, boolean preferOpenPartitions) {
-        return getPartition(offset, preferOpenPartitions).getType();
+        ITypedRegion region = getPartition(offset, preferOpenPartitions);
+        /*
+        try {
+            throw new Exception();
+        } catch (Exception e) {
+            System.err.println("Region is " + region.getType());
+            e.printStackTrace();
+        }
+        */
+        return region.getType();
     }
 
     /*

@@ -29,6 +29,8 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+
 /**
  * This is the default implementation of the assist state information.
  * The assist state represents how the user has triggered the content assist
@@ -41,6 +43,8 @@ import org.eclipse.jface.text.ITypedRegion;
 public class DefaultAssistState implements IAssistState {
     
     private ITextViewer textViewer;
+    
+    private CFEPartition[] fPartitions = null; 
     
     public ITextViewer getITextView() {
         Assert.isNotNull(this.textViewer,"DefaultAssistState::getITextView()");
@@ -155,5 +159,13 @@ public class DefaultAssistState implements IAssistState {
 	public void setOffsetPartition(ITypedRegion prevRegion)
 	{
 		this.prevRegion = prevRegion;
+	}
+	
+	public void setRelevantPartitions(CFEPartition[] partitions) {
+	    fPartitions = partitions;
+	}
+	
+	public CFEPartition[] getRelevantPartitions() {
+	    return fPartitions;
 	}
 }

@@ -35,7 +35,8 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
 import com.rohanclan.cfml.editors.ICFEFileDocument;
-
+import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 /**
  *
  * @author Oliver Tupman
@@ -73,6 +74,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
         ArrayList proposals = new ArrayList();
         ArrayList proposers = new ArrayList();
         try {
+            
         /*
         CFContentAssist temp = new CFContentAssist();
         temp.getCompletionProposalAutoActivationCharacters();
@@ -95,8 +97,8 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
             Object currProc = proposerIter.next();
             Assert.isNotNull(currProc,"CFEPrimaryAssist::computeCompletionProposals()");
             ICompletionProposal [] tempProps = null;
-// System.out.println("CFPrimaryAssist::computeCompletionProposals:\n");
-// System.out.println("\tAsking assist of type \'" + currProc.getClass().getName() + "\'");
+            //System.out.println("CFPrimaryAssist::computeCompletionProposals:\n");
+            //System.out.println("\tAsking assist of type \'" + currProc.getClass().getName() + "\'");
             if(currProc instanceof IContentAssistProcessor)
             {
                 IContentAssistProcessor currProcessor = (IContentAssistProcessor)currProc;

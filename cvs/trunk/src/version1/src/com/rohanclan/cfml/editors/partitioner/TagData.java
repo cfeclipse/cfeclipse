@@ -1,7 +1,7 @@
 /* 
- * $Id: TagData.java,v 1.3 2005-01-21 08:25:15 smilligan Exp $
- * $Revision: 1.3 $
- * $Date: 2005-01-21 08:25:15 $
+ * $Id: TagData.java,v 1.4 2005-01-27 01:37:25 smilligan Exp $
+ * $Revision: 1.4 $
+ * $Date: 2005-01-27 01:37:25 $
  * 
  * Created Jan 4, 2005 10:51:03 PM
  *
@@ -34,7 +34,7 @@ package com.rohanclan.cfml.editors.partitioner;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TagData {
 
@@ -58,6 +58,7 @@ public class TagData {
     
     /** Does this tag have an end part */
     public boolean fHasEnd = false;
+    
 
     /**
      * What partition type should be assigned to the bit between the name and
@@ -69,7 +70,12 @@ public class TagData {
      * What partition type should be assigned to the third part of the tag
      */
     private final String fEndPartitionType;
-
+    
+    /**
+     * What tag does this instance represent.
+     */
+    private final String fTagName;
+    
     /**
      * 
      * @param type -
@@ -78,11 +84,12 @@ public class TagData {
      *            The text string for the tag from the document.
      */
     public TagData(String startPartitionType, String data,
-            String midPartitionType, String endPartitionType) {
+            String midPartitionType, String endPartitionType, String tagName) {
         fStartPartitionType = startPartitionType;
         fData = data;
         fMidPartitionType = midPartitionType;
         fEndPartitionType = endPartitionType;
+        fTagName = tagName;
         parseData();
         //describeMe();
     }
@@ -149,6 +156,10 @@ public class TagData {
         return isCloser;
     }
     
+    public String tagName() {
+        return fTagName;
+    }
+    
     /**
      * Parse the raw data for the tag.
      *
@@ -212,6 +223,9 @@ public class TagData {
  * CVS LOG ====================================================================
  * 
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/01/21 08:25:15  smilligan
+ * Re-implemented the partitioning in a slightly more robust way.
+ *
  * Revision 1.2  2005/01/19 02:50:11  smilligan
  * Second commit of (now hopefully working) rewritten partitioner.
  *
