@@ -27,6 +27,7 @@ package com.rohanclan.cfml.editors.actions;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
@@ -46,27 +47,60 @@ import org.eclipse.core.resources.ResourcesPlugin;
 /**
  * @author Rob
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * This action causes a file to be opened in the editor. The file can either
+ * be a string-based path relative to the workspace root, or an IFile.
+ * The file will be opened with whatever editor is associated with the file
+ * type.
  */
 public class GenericOpenFileAction implements IEditorActionDelegate {
 	protected ITextEditor editor = null;
 	protected String filename = "untitled.cfm";
+	protected IFile file;
 	
 	public GenericOpenFileAction()
 	{
 		super();
 	}
 	
-	public GenericOpenFileAction(String filename, String container)
+	/**
+	 * Creates the open action based upon an IFile
+	 * 
+	 * @param srcFile The file to open
+	 */
+	public GenericOpenFileAction(IFile srcFile) {
+		this.setFile(srcFile);
+	}
+
+	/**
+	 * Creates the action based upon the workspace-relative
+	 * filename provided
+	 * 
+	 * @param filename The file to open, relative to the workspace root.
+	 */
+	public GenericOpenFileAction(String filename)
 	{
 		super();
 		setFilename(filename);
 	}
+
+	/**
+	 * Sets the file to be opened.
+	 * 
+	 * @param srcFile
+	 */
+	public void setFile(IFile srcFile) {
+		this.file = srcFile;
+	}
 	
+	/**
+	 * Sets the filename to be opened.
+	 * 
+	 * @param filename The file to open, relative to the workspace root.
+	 */
 	public void setFilename(String filename)
 	{
-		this.filename = filename;
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		this.file = root.getFile(new Path(filename));
 	}
 		
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
@@ -85,8 +119,6 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 	public void run(IAction action) 
 	{
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile file = root.getFile(new Path(filename));
-		
 		if(!root.exists(file.getFullPath())) {
 			System.err.println("File \'" + filename + "\' does not exist. Stupid user.");
 			/*
