@@ -62,8 +62,8 @@ public class NewCfcWizardPageFour extends WizardPage {
 	 */
 	public NewCfcWizardPageFour(ISelection selection) {
 		super("wizardPage");
-		setTitle("New CFMX Component");
-		setDescription("New CFMX Component Arguments wizard.");
+		setTitle("New CF Component");
+		setDescription("New CF Component Arguments wizard.");
 		this.selection = selection;
 		
 	}
