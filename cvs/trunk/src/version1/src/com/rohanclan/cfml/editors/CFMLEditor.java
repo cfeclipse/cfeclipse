@@ -43,7 +43,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 //import org.eclipse.ui.texteditor.StatusTextEditor;
 import org.eclipse.ui.editors.text.TextEditor;
 //import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
-import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
+//import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 //import org.eclipse.jface.util.IPropertyChangeListener;
 //import org.eclipse.jface.util.PropertyChangeEvent;
 
@@ -117,7 +117,7 @@ implements IPropertyChangeListener {
 			*/
 		//}
 		System.out.println("Give me adapter: " + adapter.getName());
-		if(adapter.getName().trim().equals(
+		/* if(adapter.getName().trim().equals(
 			"org.eclipse.ui.views.contentoutline.IContentOutlinePage"
 		))
 		{
@@ -127,7 +127,9 @@ implements IPropertyChangeListener {
 		else
 		{
 			return super.getAdapter(adapter);
-		}
+		} */
+		
+		return super.getAdapter(adapter);
 	}
 	
 	public void createActions()
