@@ -48,6 +48,8 @@ public class CFPluginImages {
 	protected static final ImageRegistry IMAGE_REGISTRY = new ImageRegistry();
 	/** the default icon (the cf or bluedragon shield */
 	public static final String ICON_DEFAULT = "default.gif";
+	/** A plain non-cfml document icon */
+	public static final String ICON_DOCUMENT = "document.gif";
 	/** little tools that make an X */
 	public static final String ICON_TOOLS   = "tools.gif";
 	/** generic element icon (the E) */
@@ -116,8 +118,12 @@ public class CFPluginImages {
 	public static final String ICON_SERVER = "server.gif";
 	/** a generic file */
 	public static final String ICON_FILE = "file.gif";
+	/** a folder repository (hard disk) */
+	public static final String ICON_REPOSITORY = "repository.gif";
 	/** a closed folder (directory) */
 	public static final String ICON_FOLDER = "dir.gif";
+	/** an open folder (directory) */
+	public static final String ICON_FOLDER_OPEN = "dir_open.gif";
 	/** a closed folder with a little arrow */
 	public static final String ICON_IMPORT = "import.gif";
 	/** coffee bean icon */
@@ -177,6 +183,7 @@ public class CFPluginImages {
 			
 			//load up images on our first go round
 			addImageToRegistry(MODEL_OBJECTS,ICON_DEFAULT);
+			addImageToRegistry(MODEL_OBJECTS,ICON_DOCUMENT);
 			addImageToRegistry(MODEL_OBJECTS,ICON_TOOLS);
 			addImageToRegistry(MODEL_OBJECTS,ICON_TAG);
 			addImageToRegistry(MODEL_OBJECTS,ICON_ATTR);
@@ -196,6 +203,8 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_SERVER);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FILE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER);
+			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER_OPEN);
+			addImageToRegistry(MODEL_OBJECTS,ICON_REPOSITORY);
 			addImageToRegistry(MODEL_OBJECTS,ICON_BEAN);
 			addImageToRegistry(MODEL_OBJECTS,ICON_ERROR);
 			addImageToRegistry(MODEL_OBJECTS,ICON_WARNING);

@@ -765,7 +765,7 @@
        -->
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- the snip viewers -->
+	<!-- Views -->
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -805,6 +805,13 @@
             category="com.rohanclan.cfml"
             name="Dictionary View"
             id="com.rohanclan.cfml.views.dictionary.DictionaryView"/>
+      <view
+            allowMultiple="true"
+            icon="icons/obj16/explorer.gif"
+            class="com.rohanclan.cfml.views.explorer.FileExplorerView"
+            category="com.rohanclan.cfml"
+            name="File Explorer View"
+            id="com.rohanclan.cfml.views.explorer.FileExplorerView"/>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- help -->
