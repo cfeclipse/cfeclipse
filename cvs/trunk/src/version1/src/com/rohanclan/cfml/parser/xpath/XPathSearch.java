@@ -37,8 +37,10 @@ import com.rohanclan.cfml.parser.xpath.expressions.*;
  * Currently supported are the following syntaxes:
  * "aTagName", "//aTagName"
  *
- * @param searchString
- * @return
+ * Please note that this WILL be changing sooner or later. If it does change
+ * it will be completely different.
+ *
+ * @author Oliver Tupman
  */
 public class XPathSearch {
 	public static final String	ATTR_STARTPOS 	= "startpos";
@@ -160,6 +162,12 @@ public class XPathSearch {
 		return -1;
 	}
 	
+	/**
+	 * Parses an XPath string and prepares the search.
+	 * 
+	 * @param xPathStr The XPath string to parse
+	 * @return True every damn time.
+	 */
 	public boolean parseXPath(String xPathStr) {
 		this.doChildNodes = false;
 		String tagName = xPathStr; 
@@ -191,6 +199,11 @@ public class XPathSearch {
 		return true;
 	}
 	
+	/**
+	 * Constructs an XPath searcher and parses the supplied XPath.
+	 * 
+	 * @param xPathStr The XPath string (nb: should be basic)
+	 */
 	public XPathSearch(String xPathStr) {
 		this();
 		this.parseXPath(xPathStr);
