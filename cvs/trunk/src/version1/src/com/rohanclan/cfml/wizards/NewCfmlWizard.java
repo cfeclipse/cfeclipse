@@ -70,8 +70,8 @@ public class NewCfmlWizard extends Wizard implements INewWizard {
 	public void addPages() {
 		page = new NewCfmlWizardPage(selection);
 		pageTwo = new NewCfmlWizardPageTwo(selection);
-		// addPage(pageTwo);
 		addPage(page);
+		addPage(pageTwo);
 	}
 
 	/**

@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jface.operation.*;
 import java.lang.reflect.InvocationTargetException;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.CoreException;
 import java.io.*;
@@ -53,7 +52,9 @@ import org.eclipse.ui.ide.IDE;
 public class NewCfcWizard extends Wizard implements INewWizard {
 	private NewCfcWizardPage page;
 	private NewCfcWizardPageTwo pageTwo;
-	private ISelection selection;
+	private NewCfcWizardPageThree pageThree;
+	private NewCfcWizardPageFour pageFour;
+	private IStructuredSelection selection;
 
 	/**
 	 * Constructor for NewCfmlWizard.
@@ -65,15 +66,21 @@ public class NewCfcWizard extends Wizard implements INewWizard {
 	}
 	
 	/**
-	 * Adding the page to the wizard.
+	 * Adding the pages to the wizard.
 	 */
 
 	public void addPages() {
 		
 		page = new NewCfcWizardPage(selection);
 		pageTwo = new NewCfcWizardPageTwo(selection);
+		pageThree = new NewCfcWizardPageThree(selection);
+		pageFour = new NewCfcWizardPageFour(selection);
 		addPage(page);
-		// addPage(pageTwo);
+		addPage(pageTwo);
+		addPage(pageThree);
+		addPage(pageFour);
+		
+		
 	}
 
 	/**
@@ -82,8 +89,8 @@ public class NewCfcWizard extends Wizard implements INewWizard {
 	 * using wizard as execution context.
 	 */
 	public boolean performFinish() {
-		final String containerName = page.getCfcPath();
-		final String fileName = page.getCfcName();
+		final String containerName = page.getCfcBean().getPath();
+		final String fileName = page.getCfcBean().getName();
 		final StringBuffer sb = createStringBuffer();
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
@@ -119,11 +126,16 @@ public class NewCfcWizard extends Wizard implements INewWizard {
 		String fileName,
 		IProgressMonitor monitor,
 		StringBuffer sb)
-		throws CoreException {
+		throws CoreException 
+	{
 		// create a sample file
 		monitor.beginTask("Creating " + fileName, 2);
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IResource resource = root.findMember(new Path(containerName));
+		
+		
+		
+		
 		if (!resource.exists() || !(resource instanceof IContainer)) {
 			throwCoreException("Container \"" + containerName + "\" does not exist.");
 		}
@@ -152,16 +164,24 @@ public class NewCfcWizard extends Wizard implements INewWizard {
 			}
 		});
 		monitor.worked(1);
+		
 	}
 	
 	private StringBuffer createStringBuffer() {		
+		
+		
+		
 		StringBuffer sb = new StringBuffer();
 		sb.append("<cfcomponent name=\"");
-		sb.append(page.getCfcName() + "\" ");
-		sb.append("displayname=\"" + page.getCfcDisplayName().trim() + "\"");
-		sb.append(" hint=\"" + page.getCfcHint().trim() + "\"");
-		sb.append(" extends=\"" + page.getCfcExtend().trim() + "\">");
-		sb.append("\n");
+		sb.append(page.getCfcBean().getName() + "\" ");
+		sb.append("displayname=\"" + page.getCfcBean().getDisplayName().trim() + "\"");
+		sb.append(" hint=\"" + page.getCfcBean().getHint().trim() + "\"");
+		sb.append(" extends=\"" + page.getCfcBean().getExtendCfc().trim() + "\">");
+		sb.append("\n\n");
+		if(pageTwo.hasProperties())
+			sb.append(pageTwo.getPropertiesAsTags());
+		if(pageThree.hasFunctions())
+			sb.append(pageThree.getFunctionTags());
 		sb.append("</cfcomponent>");
 		return sb;
 	}
@@ -178,6 +198,7 @@ public class NewCfcWizard extends Wizard implements INewWizard {
 	 * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		
 		this.selection = selection;
 	}
 }

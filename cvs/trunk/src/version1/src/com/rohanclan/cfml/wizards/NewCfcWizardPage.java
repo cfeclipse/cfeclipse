@@ -24,8 +24,6 @@
  */
 package com.rohanclan.cfml.wizards;
 
-//import java.io.File;
-
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.*;
@@ -34,11 +32,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.events.*;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
-//import org.eclipse.ui.dialogs.FileSelectionDialog;
-//import org.eclipse.ui.dialogs.FileSystemElement;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
-//import org.eclipse.ui.dialogs.SelectionDialog;
-//import org.eclipse.ui.internal.Workbench;
 import org.eclipse.jface.viewers.*;
 
 /**
@@ -49,15 +43,18 @@ import org.eclipse.jface.viewers.*;
  */
 
 public class NewCfcWizardPage extends WizardPage {
-	// The directory
-	private Text cfcPath;
-	// The name of the file
+	
+	
 	private Text cfcName;
+	private Text cfcExtends;
+	private Text cfcPath;
 	private Text cfcHint;
 	private Text cfcDisplayName;
-	private Text cfcExtend;
+	
 	
 	private ISelection selection;
+	
+	private CfcBean cfcBean;
 
 	/**
 	 * Constructor for SampleNewWizardPage.
@@ -68,7 +65,7 @@ public class NewCfcWizardPage extends WizardPage {
 		setTitle("New CF Component");
 		setDescription("New CF Component wizard.");
 		this.selection = selection;
-		
+		this.cfcBean = new CfcBean("", "", "", "", "");
 	}
 
 	/**
@@ -83,11 +80,11 @@ public class NewCfcWizardPage extends WizardPage {
 		Label label = new Label(container, SWT.NULL);
 		label.setText("&Path:");
 
-		cfcPath = new Text(container, SWT.BORDER | SWT.SINGLE);
+		this.cfcPath = new Text(container, SWT.BORDER | SWT.SINGLE);
 		GridData gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
-		cfcPath.setLayoutData(gd);
-		cfcPath.addModifyListener(new ModifyListener() {
+		this.cfcPath.setLayoutData(gd);
+		this.cfcPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
@@ -104,11 +101,11 @@ public class NewCfcWizardPage extends WizardPage {
 		
 		label = new Label(container, SWT.NULL);
 		label.setText("&Extends:");
-		cfcExtend = new Text(container, SWT.BORDER | SWT.SINGLE);
+		this.cfcExtends = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
-		cfcExtend.setLayoutData(gd);
-		cfcExtend.addModifyListener(new ModifyListener() {
+		this.cfcExtends.setLayoutData(gd);
+		this.cfcExtends.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
@@ -127,12 +124,12 @@ public class NewCfcWizardPage extends WizardPage {
 				
 		label = new Label(container, SWT.NULL);
 		label.setText("&Component Name:");
-		cfcName = new Text(container, SWT.BORDER | SWT.SINGLE);
+		this.cfcName = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
-		cfcName.setLayoutData(gd);
-		cfcName.addModifyListener(new ModifyListener() {
+		this.cfcName.setLayoutData(gd);
+		this.cfcName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
@@ -141,12 +138,12 @@ public class NewCfcWizardPage extends WizardPage {
 		
 		label = new Label(container, SWT.NULL);
 		label.setText("&Hint:");
-		cfcHint = new Text(container, SWT.BORDER | SWT.SINGLE);
+		this.cfcHint = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
-		cfcHint.setLayoutData(gd);
-		cfcHint.addModifyListener(new ModifyListener() {
+		this.cfcHint.setLayoutData(gd);
+		this.cfcHint.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
@@ -156,12 +153,12 @@ public class NewCfcWizardPage extends WizardPage {
 		
 		label = new Label(container, SWT.NULL);
 		label.setText("&Display Name:");
-		cfcDisplayName = new Text(container, SWT.BORDER | SWT.SINGLE);
+		this.cfcDisplayName = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
-		cfcDisplayName.setLayoutData(gd);
-		cfcDisplayName.addModifyListener(new ModifyListener() {
+		this.cfcDisplayName.setLayoutData(gd);
+		this.cfcDisplayName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
@@ -189,10 +186,12 @@ public class NewCfcWizardPage extends WizardPage {
 					container = (IContainer)obj;
 				else
 					container = ((IResource)obj).getParent();
-				cfcPath.setText(container.getFullPath().toString());
+				this.cfcBean.setPath(container.getFullPath().toString());
+				this.cfcPath.setText(this.cfcBean.getPath());
 			}
 		}
-		cfcName.setText("NewCfCompontent");
+		this.cfcBean.setName("NewCfCompontent");
+		this.cfcName.setText(this.cfcBean.getName());
 	}
 	
 	/**
@@ -213,7 +212,8 @@ public class NewCfcWizardPage extends WizardPage {
 		if (dialog.open() == ContainerSelectionDialog.OK) {
 			Object[] result = dialog.getResult();
 			if (result.length == 1) {
-				cfcPath.setText(((Path)result[0]).toOSString());
+				this.cfcBean.setPath(((Path)result[0]).toOSString());
+				this.cfcPath.setText(this.cfcBean.getPath());
 			}
 		}
 	}
@@ -242,7 +242,8 @@ public class NewCfcWizardPage extends WizardPage {
 				IResource resource = (IResource)result[0];
 				String s = resource.getProjectRelativePath().toString();
 				s = s.replaceAll("/", ".").replaceAll("." + resource.getFileExtension(), "");
-				cfcExtend.setText(s);
+				this.cfcBean.setExtendCfc(s);
+				this.cfcExtends.setText(this.cfcBean.getExtendCfc());
 			}
 		}
 	}
@@ -252,10 +253,18 @@ public class NewCfcWizardPage extends WizardPage {
 	 */
 
 	private void dialogChanged() {
-		String container = getCfcPath();
-		String fileName = getCfcName();
+		String containerName = this.cfcPath.getText();
+		String fileName = this.cfcName.getText();
+		String extend = this.cfcExtends.getText();
+		String hint = this.cfcHint.getText();
+		String displayName = this.cfcDisplayName.getText();
+		this.cfcBean.setDisplayName(displayName);
+		this.cfcBean.setExtendCfc(extend);
+		this.cfcBean.setHint(hint);
+		this.cfcBean.setName(fileName);
+		this.cfcBean.setPath(containerName);
 
-		if (container.length() == 0) {
+		if (containerName.length() == 0) {
 			updateStatus("File container must be specified");
 			return;
 		}
@@ -263,6 +272,21 @@ public class NewCfcWizardPage extends WizardPage {
 			updateStatus("File name must be specified");
 			return;
 		}
+
+		
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IResource resource = root.findMember(new Path(containerName));
+		IContainer container = (IContainer)resource;
+		IFile file = container.getFile(new Path(fileName + ".cfc"));
+		
+		System.out.println(file.getName());
+
+		if(file.exists())
+		{
+			updateStatus("File already exists!");
+			return;
+		}
+		
 		int dotLoc = fileName.lastIndexOf('.');
 		if (dotLoc > 0) {
 			String ext = fileName.substring(dotLoc + 1);
@@ -273,54 +297,20 @@ public class NewCfcWizardPage extends WizardPage {
 		}
 		updateStatus(null);
 	}
+	
+	private boolean validatePage()
+	{
+		return true;
+		
+	}
 
 	private void updateStatus(String message) {
 		setErrorMessage(message);
 		setPageComplete(message == null);
 	}
-
-	public String getCfcPath() {
-		return cfcPath.getText();
-	}
-	public String getCfcName() {
-		return cfcName.getText();
-	}
-	/**
-	 * @return Returns the cfcDisplayName.
-	 */
-	public String getCfcDisplayName() {
-		return cfcDisplayName.getText();
-	}
-	/**
-	 * @param cfcDisplayName The cfcDisplayName to set.
-	 */
-	public void setCfcDisplayName(Text cfcDisplayName) {
-		this.cfcDisplayName = cfcDisplayName;
-	}
-	/**
-	 * @return Returns the cfcExtend.
-	 */
-	public String getCfcExtend() {
-		return cfcExtend.getText();
-	}
-	/**
-	 * @param cfcExtend The cfcExtend to set.
-	 */
-	public void setCfcExtend(Text cfcExtend) {
-		this.cfcExtend = cfcExtend;
-	}
-	/**
-	 * @return Returns the cfcHint.
-	 */
-	public String getCfcHint() {
-		return cfcHint.getText();
-	}
-	/**
-	 * @param cfcHint The cfcHint to set.
-	 */
-	public void setCfcHint(Text cfcHint) {
-		this.cfcHint = cfcHint;
-	}
-
 	
+	public CfcBean getCfcBean()
+	{
+		return this.cfcBean;
+	}
 }
