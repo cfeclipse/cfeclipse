@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
 import com.rohanclan.coldfusionmx.dictionary.DictionaryManager;
+//import com.rohanclan.coldfusionmx.dictionary.Tag;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionary;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionaryInterface;
 
@@ -90,19 +91,29 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		SyntaxDictionary sd = DictionaryManager.getDictionary(
 			DictionaryManager.CFDIC
 		);
-		Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
 		
-		Iterator it = elements.iterator();
-		while(it.hasNext())
+		try
 		{
-			String ename = (String)it.next();
-			if(!ename.equals("script"))
-			{	
-				rules.add(new MultiLineRule("<cf" + ename,">", cftag));
-				rules.add(new MultiLineRule("</cf" + ename,">", cfendtag));
-				rules.add(new MultiLineRule("<CF" + ename.toUpperCase(),">", cftag));
-				rules.add(new MultiLineRule("</CF" + ename.toUpperCase(),">", cfendtag));
+			Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
+			
+			Iterator it = elements.iterator();
+			while(it.hasNext())
+			{
+				String ename = (String)it.next();
+				//System.out.println(ename);
+				
+				if(!ename.equals("script"))
+				{	
+					rules.add(new MultiLineRule("<cf" + ename,">", cftag));
+					rules.add(new MultiLineRule("</cf" + ename,">", cfendtag));
+					rules.add(new MultiLineRule("<CF" + ename.toUpperCase(),">", cftag));
+					rules.add(new MultiLineRule("</CF" + ename.toUpperCase(),">", cfendtag));
+				}
 			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(System.err);
 		}
 		
 		//catch all custom tags
@@ -115,6 +126,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("</cf_",">", cfendtag));
 		rules.add(new MultiLineRule("<CF_",">", cftag));
 		rules.add(new MultiLineRule("</CF_",">", cfendtag));
+		
+		//TODO add html dictionary
 		
 		//if there is a special tag rule, don't forget to check this class
 		//this will try to paint everything in the html blue. Any additions

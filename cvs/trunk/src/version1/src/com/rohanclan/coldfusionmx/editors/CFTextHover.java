@@ -28,11 +28,14 @@ import org.eclipse.jface.text.Region;
 
 import org.eclipse.swt.graphics.Point;
 //import com.rohanclan.coldfusionmx.editors.CFSyntaxDictionary;
-import java.util.Set;
-import java.util.TreeSet;
+//import java.util.Set;
+//import java.util.TreeSet;
+import com.rohanclan.coldfusionmx.dictionary.Tag;
+import com.rohanclan.coldfusionmx.dictionary.Function;
+
 //import com.rohanclan.coldfusionmx.dictionary.DictionaryManager;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionary;
-import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionaryInterface;
+//import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionaryInterface;
 
 /**
  * <b>Note</b> This file is under the </i>Common Public License v1.0</i>
@@ -55,13 +58,13 @@ public class CFTextHover implements ITextHover {
 		return !Character.isLetter(character2test);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * Method declared on ITextHover
 	 */
 	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
 		//
 		// hoverRegion contains the offset in the document of the hovered region
-		String message;	// This is the eventual message we will give to the user for the infopop.
+		String message = "";	// This is the eventual message we will give to the user for the infopop.
 		
 		//System.err.println(hoverRegion.toString());
 		
@@ -112,15 +115,31 @@ public class CFTextHover implements ITextHover {
 					// Now we know, whip out the characters on either side.
 					wordFound = wordFound.substring(1, wordFound.length()-1);
 					
+					//System.err.println(wordFound);
+					
 					if(!wordIsTag)
 					{
-						message = ((SyntaxDictionaryInterface)dictionary).getFunctionUsage(wordFound); 
+						
+						if(dictionary.functionExists(wordFound))
+						{	
+							Function fun = dictionary.getFunction(wordFound); 
+							//message = ((SyntaxDictionaryInterface)dictionary).getFunctionUsage(wordFound);
+							message = " " + fun.getHelp();
+						}
 						//CFSyntaxDictionary.getFunctionUsage(wordFound);
 					}
 					else
 					{
-						message= "<" + wordFound + ">";
+						//message = "<" + wordFound + ">";
+						String tglookup = wordFound.substring(2, wordFound.length());
 						
+						if(dictionary.tagExists(tglookup))
+						{	
+							Tag tag = dictionary.getTag(tglookup);
+							message = " " + tag.getHelp();
+						}
+						
+						/*
 						Set tagAttributes = ((SyntaxDictionaryInterface)dictionary).getElementAttributes(wordFound.substring(2, wordFound.length()));
 						//CFSyntaxDictionary.getElementAttribtues(wordFound.substring(2, wordFound.length()));
 						
@@ -146,7 +165,7 @@ public class CFTextHover implements ITextHover {
 							
 							message += attributeString;
 						}
-						
+						*/
 					}
 					return message;
 				}
@@ -162,11 +181,10 @@ public class CFTextHover implements ITextHover {
 				return message;
 			}
 		}
-		//return JavaEditorMessages.getString("JavaTextHover.emptySelection"); //$NON-NLS-1$
 		return "Unknown area at " + hoverRegion.getOffset() + " to " + hoverRegion.getLength();
 	} 
 	
-	/* (non-Javadoc)
+	/**
 	 * Method declared on ITextHover
 	 */
 	public IRegion getHoverRegion(ITextViewer textViewer, int offset) {

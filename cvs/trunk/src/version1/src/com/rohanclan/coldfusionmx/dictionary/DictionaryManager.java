@@ -57,7 +57,7 @@ public class DictionaryManager {
 	{
 		SyntaxDictionary dic = new CFSyntaxDictionary();
 		//when all is done this will actually load a dictionary
-		dic.loadDictionary("test.xml");
+		dic.loadDictionary("coldfusion.xml");
 		addDictionary(CFDIC,dic);
 		
 		dic = new JSSyntaxDictionary();

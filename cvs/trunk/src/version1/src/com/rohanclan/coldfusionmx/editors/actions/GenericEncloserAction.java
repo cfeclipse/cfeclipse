@@ -51,14 +51,6 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 		super();
 	}
 	
-	/* public GenericEncloserAction(ITextEditor ed, String start, String end)
-	{
-		super();
-		editor = ed;
-		this.start = start;
-		this.end = end;
-	} */
-	
 	public GenericEncloserAction(String start, String end)
 	{
 		super();
@@ -101,17 +93,5 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 		}
 	}
 
-	public void selectionChanged(IAction action, ISelection selection) 
-	{
-		/* System.out.println( "Changin (" + start + ")(" + end + ")" );
-		if(action instanceof org.eclipse.ui.internal.EditorPluginAction
-			&& selection instanceof  org.eclipse.jface.text.TextSelection)
-		{
-			//System.err.println("changed a: " + action);
-			//System.err.println("changed s: " + selection);
-			//((org.eclipse.ui.internal.EditorPluginAction)action)
-			//((org.eclipse.jface.text.TextSelection)selection)
-		}
-		*/
-	}
+	public void selectionChanged(IAction action, ISelection selection){;}
 }

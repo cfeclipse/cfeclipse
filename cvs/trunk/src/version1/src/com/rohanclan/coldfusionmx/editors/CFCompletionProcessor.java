@@ -41,6 +41,8 @@ import com.rohanclan.coldfusionmx.dictionary.DictionaryManager;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionary;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionaryInterface;
 
+import com.rohanclan.coldfusionmx.dictionary.*;
+//import org.eclipse.jface.text.ITextSelection;
 
 /**
  * @author Rob
@@ -79,12 +81,21 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 			//assume its not a cftag
 			boolean cftag = false;
+			boolean httag = false;
 			
 			//what invoked us a space or a f?
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
 			
 			IDocument document = viewer.getDocument();
-			int start = document.getPartition(documentOffset).getOffset();
+			int start = 0;
+			
+			//this is because when they hit > it often moves them into
+			//another partiton type
+			if(invoker.equals(">"))
+				start = document.getPartition(documentOffset - 1).getOffset();
+			else
+				start = document.getPartition(documentOffset).getOffset();
+			
 			String prefix =	document.get(start, documentOffset - start);
 			
 			//System.err.println("Going in" + prefix + " type " + document.getPartition(documentOffset).getType());
@@ -99,22 +110,27 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 			//now go over the whole tag using spaces as the delimiter
 			StringTokenizer st = new StringTokenizer(prefix," ");
+			String tagname = "";
 			
 			//if st has nothing then we got called by mistake or something just
 			//bail out
 			if(!st.hasMoreTokens())
 			{
-				return null;
+				//return null;
+				tagname = prefix;
 			}
-			
-			//first token should be the tag name (with <cf attached)
-			String tagname = st.nextToken();
+			else
+			{
+				//first token should be the tag name (with <cf attached)
+				tagname = st.nextToken();	
+			}
+
 			//System.err.println("tag1>>"+tagname+"<<");
 			
 			//if the tagname has the possibility of being a cf tag
 			if(tagname.trim().length() >= 3)
 			{
-				//clean it up for out lookup
+				//clean it up for our lookup
 				if(prefix.trim().substring(0,3).equalsIgnoreCase("<cf"))
 				{
 					cftag = true;
@@ -124,6 +140,18 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
 				}
 			}
+			
+			//if it was a cftag it should no longer start with a <
+			if(tagname.trim().startsWith("<"))
+			{
+				//do the html dictionary
+				httag = true;
+				tagname = tagname.trim().substring(1);
+				syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
+			}
+			
+			//if this was a <booga> type tag remove the last >
+			if(tagname.endsWith(">")) tagname = tagname.substring(0,tagname.length()-1);
 			
 			//if this is an attribtue, limiting should have the last
 			//entered text (the part we shall filter attribtues on)
@@ -143,7 +171,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			//if we are in a cftag, and there are no attribtues (and we did not
 			//start this mess by getting called with a space or tab) then we
 			//should lookup cf tag names to suggest
-			if(cftag && limiting.length() <= 0 && (!invoker.equals(" ") && !invoker.equals("\t")) )
+			if(cftag && limiting.length() <= 0 && (!invoker.equals(" ") && !invoker.equals("\t") && !invoker.equals(">")) )
 			{
 				//if they have typed more then the cf part get the rest so we
 				//can filter out non matches
@@ -158,6 +186,41 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					taglimiting.length()
 				);
 			}
+			else if(httag && limiting.length() <= 0 && (!invoker.equals(" ") && !invoker.equals("\t") && !invoker.equals(">")) )
+			{
+				String taglimiting = prefix.trim().substring(1);
+				//System.out.println("tl:" + taglimiting);
+				return makeSetToProposal(
+					((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
+					//CFSyntaxDictionary.getFilteredElements(taglimiting),
+					documentOffset,
+					TAGTYPE,
+					taglimiting.length()
+				);
+			}
+			//this is (hopefully) a close tag try to finish it out if needed
+			else if(invoker.equals(">"))
+			{
+				//System.err.println("i go");
+				if(syntax != null && syntax.tagExists(tagname))
+				{	
+					Tag tag = syntax.getTag(tagname);
+					if(tag != null && !tag.isSingle())
+					{
+						String addtag = "</";
+						if(cftag) addtag += "cf";
+						addtag += tagname + ">";
+						
+						IDocument doc = viewer.getDocument();
+						 //editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+						//ISelection sel = editor.getSelectionProvider().getSelection();
+						//ITextSelection sel = (ITextSelection)viewer.getSelectionProvider().getSelection();
+						//addtag.length()
+						doc.replace(documentOffset, 0, addtag);
+					}
+				}
+			}
+			
 			//little bit-o-debug. Hit ~ to see what partiton you are in 
 			//(shows in the debug window
 			else if(invoker.equals("~"))
@@ -209,20 +272,58 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	{
 		if(st != null)
 		{
-			
 			Object obj[] = new Object[st.size()];
-			obj = new TreeSet(st).toArray();
+			TreeSet ts = new TreeSet();
+			ts.addAll(st);
+			//obj = new TreeSet(st).toArray();
+			obj = ts.toArray();
+			//obj = st.toArray();
 			
 			//build a Completion dodad with the right amount of records
 			ICompletionProposal[] result = new ICompletionProposal[obj.length];
 	
 			for(int i=0; i<obj.length; i++)
 			{
-				//if(currentlen == 0) currentlen = 1;
-				//get the full on name
-				String name = obj[i].toString();
-				//make a displayable name
-				String display = new String(name);
+				String name = "";
+				String display = "";
+				String help = "";
+				
+				if(obj[i] instanceof Tag) 
+				{	
+					Tag ptr_tg = (Tag)obj[i];
+					
+					//get the full on name
+					name = ptr_tg.getName();
+					display = ptr_tg.toString();
+					help = ptr_tg.getHelp();
+					
+					if( ptr_tg.isSingle() && !ptr_tg.isXMLStyle() && !ptr_tg.hasParameters())
+					{
+						name += ">";
+					}
+					else if( ptr_tg.isSingle() && ptr_tg.isXMLStyle() && !ptr_tg.hasParameters())
+					{
+						name += "/>";
+					}
+					else
+					{
+						name += " ";
+					}
+				}
+				else if(obj[i] instanceof Parameter)
+				{					
+					name = ((Parameter)obj[i]).getName();
+					display = ((Parameter)obj[i]).toString();
+					//if(((Parameter)obj[i]).isRequired())
+					//	display += "*";
+					help = ((Parameter)obj[i]).getHelp();
+				}
+				else if(obj[i] instanceof String)
+				{
+					name = obj[i].toString();
+					display = new String(name);
+					help = "";
+				}
 				
 				//now remove chars so when they hit enter it wont write the whole
 				//word just the part they havent typed
@@ -241,7 +342,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				}
 				else if(type == TAGTYPE)
 				{
-					name += " ";
+					//name += " ";
 					//default to the tag len and icon
 					insertlen = name.length();
 					img = CFPluginImages.get(CFPluginImages.ICON_TAG);
@@ -256,13 +357,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					img,
 					display,
 					null,
-					"test" 
+					help
 				);
-			}
-			
+			}	
 			return result;
 		}
-		
 		return null;
 	}
 
@@ -270,7 +369,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * What characters cause us to wake up (for tags and attributes)
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
-		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r' };
+		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>' };
 	}
 
 	/**
@@ -316,34 +415,41 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			}
 			//remove the last char (which should be the '(')
 			functionname = functionname.substring(0,functionname.length() - 1);
-		
+			
+			System.out.println(functionname.trim());
+			
 			//System.err.println(functionname.trim());
 			SyntaxDictionary syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
-			String usage = ((SyntaxDictionaryInterface)syntax).getFunctionUsage(functionname.trim());
-			//String usage = CFSyntaxDictionary.getFunctionUsage(functionname.trim());
 			
+			Function fun = syntax.getFunction(functionname.trim());
+			String usage = fun.toString();
+			//String usage = ((SyntaxDictionaryInterface)syntax).getFunctionUsage(functionname.trim());
+						
 			if(usage != null)
 			{
 				//bit of a hack - there are only a copule functions that have
 				//several wasys to call them, so if there are more then one
 				//they are sperated by ||s
-				st = new StringTokenizer(usage,"||");
+				//st = new StringTokenizer(usage,"||");
 				
 				////////////////////////////////////////////////////////////////
 				//TODO figure out why this has to have 2 - it wont show otherwise
-				IContextInformation[] result = new IContextInformation[st.countTokens() + 1];
+				//IContextInformation[] result = new IContextInformation[st.countTokens() + 1];
+				IContextInformation result[] = new IContextInformation[2];
 				
 				int i = 0;
-				while(st.hasMoreTokens())
-				{
-					String info = st.nextToken().trim();
+				//while(st.hasMoreTokens())
+				//{
+					//String info = st.nextToken().trim();
 					result[i] = new ContextInformation(
 						CFPluginImages.get(CFPluginImages.ICON_FUNC),
-						info,
-						""
+						//info,
+						usage,
+						//""
+						fun.getHelp()
 					);
 					i++;
-				}
+				//}
 				result[i] = new ContextInformation(
 					"",
 					""

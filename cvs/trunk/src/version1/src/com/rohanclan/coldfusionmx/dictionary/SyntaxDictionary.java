@@ -49,7 +49,7 @@ import java.io.BufferedInputStream;
 /**
  * @author Rob
  *
- * Base class for dictionaries extend this but don't create one
+ * Base class for dictionaries
  */
 public abstract class SyntaxDictionary {
 	/** any tag based items in the dictionary */
@@ -90,6 +90,13 @@ public abstract class SyntaxDictionary {
 		functions = new HashMap();
 	}
 	
+	/**
+	 * loads the xml dictionary "filename" into this
+	 * object. 
+	 * Note: if this dictionary already has tags defined
+	 * the new items will be added to this dictionary (not replaced)  
+	 * @param filename
+	 */
 	public void loadDictionary(String filename)
 	{
 		setFilename(filename);
@@ -108,12 +115,136 @@ public abstract class SyntaxDictionary {
 		this.filename = fname;
 	}
 	
+	/**
+	 * get all top level language elements (tags)(in lowercase)
+	 * these are the keys used in the tag HashMap <b>not</b> the
+	 * tag objects them selves
+	 * @return set of all the tag names using the keys
+	 */
+	public Set getAllElements()
+	{
+		return syntaxelements.keySet();
+	}
 	
 	/**
-	 * limits a set based on a starting string
+	 * gets a set that is a copy of all the tags
+	 * @return a set of all the tag objects
+	 */
+	public Set getAllTags()
+	{
+		Set total = new HashSet();
+		Set keys = getAllElements();
+		Iterator it = keys.iterator();
+		while(it.hasNext())
+		{
+			total.add(syntaxelements.get((String)it.next()));
+		}
+		
+		return total;
+	}
+	
+	/**
+	 * get a set of filtered tags limited by start
+	 * @param start
+	 * @return
+	 */
+	public Set getFilteredElements(String start)
+	{
+		return limitSet(getAllTags(),start);
+		//return limitSet(getAllElements(),start);
+	}
+	
+	/**
+	 * Get the tag "name" from the dictionary - null if not found
+	 * @param name
+	 * @return
+	 */
+	public Tag getTag(String name)
+	{
+		Object obj = syntaxelements.get(name.toLowerCase());
+		if(obj != null)
+			return (Tag)obj;
+		
+		return null;
+	}
+	
+	/**
+	 * get the attribtues for tag tag, limited to start
+	 * @param tag
+	 * @param start
+	 * @return
+	 */
+	public Set getFilteredAttributes(String tag, String start)
+	{
+		return limitSet(getElementAttributes(tag),start);
+	}
+	
+	/**
+	 * gets all the functions (lowercase only)
+	 * @param elementname
+	 * @return
+	 */
+	public Set getFunctions()
+	{
+		return functions.keySet();
+	}
+	
+	/**
+	 * retuns a functions usage
+	 * @param functionname
+	 * @return
+	 */
+	public String getFunctionUsage(String functionname)
+	{
+		return (String)functions.get(functionname.toLowerCase());
+	}
+	
+	/**
+	 * get a function object by name
+	 * @param name
+	 * @return the function or null if it doesn't exist
+	 */
+	public Function getFunction(String name)
+	{
+		Object obj = functions.get(name.toLowerCase());
+		if(obj != null)
+			return (Function)obj;
+		
+		return null;
+	}
+	
+	/**
+	 * checks to see if the tag is in the dictionary
+	 * @param name
+	 * @return
+	 */
+	public boolean tagExists(String name)
+	{
+		if(syntaxelements == null)
+			return false;
+		
+		return syntaxelements.containsKey(name.toLowerCase());
+	}
+	
+	/**
+	 * checks to see if the function is in the dictionary
+	 * @param name
+	 * @return
+	 */
+	public boolean functionExists(String name)
+	{
+		if(functions == null)
+			return false;
+		
+		return functions.containsKey(name.toLowerCase());
+	}
+	
+	/**
+	 * limits a set based on a starting string. The set can
+	 * either be a set of Strings, Tag, Functions, or Parameters
 	 * @param st the full set
 	 * @param start the string to use as a limiter
-	 * @return everything in the set that starts with start
+	 * @return everything in the set that starts with start in the format passed in
 	 */
 	protected static Set limitSet(Set st, String start)
 	{
@@ -124,20 +255,68 @@ public abstract class SyntaxDictionary {
 			Iterator it = fullset.iterator();
 			while(it.hasNext())
 			{
-				String possible = (String)it.next(); 
-				if(possible.startsWith(start))
+				Object item = it.next();
+				String possible = "";
+				
+				if(item instanceof String)
 				{
-					filterset.add(possible);
+					possible = (String)item;
+				}
+				else if(item instanceof Tag)
+				{
+					possible = ((Tag)item).getName();
+				}
+				else if(item instanceof Function)
+				{
+					possible = ((Function)item).getName();
+				}
+				else if(item instanceof Parameter)
+				{
+					possible = ((Parameter)item).getName();
+				}
+				else
+				{
+					throw new IllegalArgumentException(
+						"The passed set must have only Strings, Procedures, or Parameters"
+					);
+				}
+				
+				if(possible.startsWith(start) || possible.toUpperCase().startsWith(start))
+				{
+					filterset.add(item);
 				}
 			}
 		}
 		return filterset;
 	}
 	
+	/**
+	 * Gets the Parameter objects for the passed element name  
+	 * @param elementname
+	 * @return a set of Parameters
+	 */
+	public Set getElementAttributes(String elementname)
+	{
+		Procedure p = (Procedure)syntaxelements.get(elementname.toLowerCase());
+		if(p != null)
+		{	
+			Set st = p.getParameters();
+			return st;
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Loads and parses an cfeclipse xml dictionary into this dictionary object
+	 * @throws IOException
+	 * @throws SAXException
+	 * @throws ParserConfigurationException
+	 */
 	private void loadDictionary() throws IOException, SAXException, ParserConfigurationException
 	{
 		//System.setProperty("javax.xml.parsers.SAXParserFactory", SAXFactory);
-		System.err.println("ldff: " + filename);
+		System.err.println("loading dictionary: " + filename);
 		if(filename == null) throw new IOException("Filename can not be null!");
 		
 		URLConnection urlcon = new URL(dictionaryBaseURL + "/" + filename).openConnection();

@@ -534,9 +534,12 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						Debug.println(mName, this, messages);
 						
 						//... just so it works with the new dictionaries ...
-						String usage = 
-							((SyntaxDictionaryInterface)DictionaryManager.getDictionary(DictionaryManager.CFDIC)).getFunctionUsage(toBeMatched);
-						
+						//String usage = 
+						//	((SyntaxDictionaryInterface)DictionaryManager.getDictionary(DictionaryManager.CFDIC)).getFunctionUsage(toBeMatched);
+						//... again ...
+						Function fun = DictionaryManager.getDictionary(DictionaryManager.CFDIC).getFunction(toBeMatched);
+						String usage = fun.toString(); 
+							
 						if(usage == null)
 						{
 							Debug.println(mName, this, "Cannot found a match for '" + toBeMatched + "'");
@@ -618,14 +621,14 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				{
 					name += "=\"\"";
 					insertlen = name.length() - 1;
-					img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
+					img = CFPluginImages.get(CFPluginImages.ICON_FUNC);
 				}
 				else if(type == TAGTYPE)
 				{
 					name += " ";
 					//default to the tag len and icon
 					insertlen = name.length();
-					img = CFPluginImages.get(CFPluginImages.ICON_TAG);
+					img = CFPluginImages.get(CFPluginImages.ICON_FUNC);
 				}
 				
 				//System.err.println(name);
@@ -698,31 +701,37 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		
 			Debug.println("computeContextInformation", this, functionname.trim());
 			
-			String usage = ((SyntaxDictionaryInterface)DictionaryManager.getDictionary(DictionaryManager.CFDIC)).getFunctionUsage(functionname.trim());
+			//String usage = ((SyntaxDictionaryInterface)DictionaryManager.getDictionary(DictionaryManager.CFDIC)).getFunctionUsage(functionname.trim());
 			//String usage = CFSyntaxDictionary.getFunctionUsage(functionname.trim());
+			// Dictionary change again
+			Function fun = DictionaryManager.getDictionary(DictionaryManager.CFDIC).getFunction(functionname.trim());
+			String usage = fun.toString(); 
 			
 			if(usage != null)
 			{
 				//bit of a hack - there are only a copule functions that have
 				//several wasys to call them, so if there are more then one
 				//they are sperated by ||s
-				st = new StringTokenizer(usage,"||");
+				//st = new StringTokenizer(usage,"||");
 				
 				////////////////////////////////////////////////////////////////
 				//TODO figure out why this has to have 2 - it wont show otherwise
-				IContextInformation[] result = new IContextInformation[st.countTokens() + 1];
+				//IContextInformation[] result = new IContextInformation[st.countTokens() + 1];
+				IContextInformation[] result = new IContextInformation[2];
 				
 				int i = 0;
-				while(st.hasMoreTokens())
-				{
-					String info = st.nextToken().trim();
+				//while(st.hasMoreTokens())
+				//{
+					//String info = st.nextToken().trim();
 					result[i] = new ContextInformation(
 						CFPluginImages.get(CFPluginImages.ICON_FUNC),
-						info,
-						""
+						//info,
+						usage,
+						//""
+						fun.getHelp()
 					);
 					i++;
-				}
+				//}
 				result[i] = new ContextInformation(
 					"",
 					""

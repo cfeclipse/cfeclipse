@@ -24,15 +24,10 @@
  */
 package com.rohanclan.coldfusionmx.editors;
 
-//import java.util.Map;
-//import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
-//import java.util.Iterator;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionary;
 import com.rohanclan.coldfusionmx.dictionary.SyntaxDictionaryInterface;
-
-//import com.rohanclan.coldfusionmx.dictionary.*;
 
 /**
  * @author Rob
@@ -64,30 +59,33 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 	 * get all top level language elements (tags)(lowercase only)
 	 * @return
 	 */
-	public Set getAllElements()
+	/* public Set getAllElements()
 	{
-		return syntaxelements.keySet();
-	}
+		return syntaxelements.entrySet();
+		//return syntaxelements.keySet();
+	} */
 
-	public Set getFilteredElements(String start)
+	/* public Set getFilteredElements(String start)
 	{
 		return limitSet(getAllElements(),start);
-	}
+	} */
 
-	public Set getFilteredAttributes(String tag, String start)
+	/* public Set getFilteredAttributes(String tag, String start)
 	{
 		return limitSet(getElementAttributes(tag),start);
-	}
+	} */
 	
 	/**
 	 * get an elements attributes (mixed case)
 	 *
 	 */
-	public Set getElementAttributes(String elementname)
+	/* public Set getElementAttributes(String elementname)
 	{
-		Set st = (Set)syntaxelements.get(elementname);
+		//Set st = (Set)syntaxelements.get(elementname);
+		Procedure p = (Procedure)syntaxelements.get(elementname);
+		Set st = p.getParameters();
 		return st;
-	}
+	} */
 	
 	/**
 	 * gets any operators (eq, or, and) (lowercase only)
@@ -113,20 +111,20 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 	 * @param elementname
 	 * @return
 	 */
-	public Set getFunctions()
+	/* public Set getFunctions()
 	{
 		return functions.keySet();
-	}
+	} */
 
 	/**
 	 * retuns a functions usage
 	 * @param functionname
 	 * @return
 	 */
-	public String getFunctionUsage(String functionname)
+	/* public String getFunctionUsage(String functionname)
 	{
 		return (String)functions.get(functionname.toLowerCase());
-	}
+	} */
 
 	
 	///////////////////////////////////////////////////////////////////////////
@@ -173,7 +171,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 	/** build all the functions in the language */
 	protected void buildFunctionSyntax()
 	{
-		functions.put("abs","number Abs(number)");
+		/* functions.put("abs","number Abs(number)");
 		functions.put("acos","number ACos(number)");
 		functions.put("arrayappend","boolean ArrayAppend(array, value)");
 		functions.put("arrayavg","number ArrayAvg(array)");
@@ -434,12 +432,12 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		functions.put("xmltransform","string XmlTransform(xmlString | xmlObj, xslString)");
 		functions.put("year","number Year(date)");
 		functions.put("yesnoformat","boolean YesNoFormat(value)");
+		*/
 	}
 
 
 	/** 
 	 * make all the elements for this language 
-	 * TODO make this some kind of database or file 
 	 */
 	protected void buildTagSyntax()
 	{
@@ -450,7 +448,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		tag.addAttribute(attr);
 		syntaxelements.put("abort",tag); */
 		
-		Set attrs = new HashSet();
+		/* Set attrs = new HashSet();
 		attrs.add("showMessage");
 		syntaxelements.put("abort",attrs);
 		
@@ -467,6 +465,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		attrs.add("param_2");
 		attrs.add("param_n");
 		syntaxelements.put("applet",attrs);
+		*/
 
 		/* <cfapplication 
 		 name = "application_name"
@@ -477,7 +476,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 sessionTimeout = #CreateTimeSpan(days, hours, minutes, seconds)#
 		 applicationTimeout = #CreateTimeSpan(days, hours,minutes, seconds)#
 		 setDomainCookies = "Yes" or "No"> */
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("name");
 		attrs.add("clientManagement");
 		attrs.add("clientStorage");
@@ -487,6 +486,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		attrs.add("applicationTimeout");
 		attrs.add("setDomainCookies");
 		syntaxelements.put("application",attrs);
+		*/
 		
 		/*<cfargument 
 		 name="..." 
@@ -494,24 +494,27 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 required="..." 
 		 default="..." 
 		 ...> */
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("name");
 		attrs.add("type");
 		attrs.add("required");
 		attrs.add("default");
 		syntaxelements.put("argument",attrs);
+		*/
 		
 		/*<cfassociate 
 		 baseTag = "base_tag_name"
 		 dataCollection = "collection_name"> */
-		attrs = new HashSet();
+		/*attrs = new HashSet();
 		attrs.add("baseTag");
 		attrs.add("dataCollection");
 		syntaxelements.put("associate",attrs);
+		*/
 		
 		/* <cfbreak> */
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		syntaxelements.put("break",attrs);
+		*/
 		
 		/*<cfcache 
 		 action = "action"
@@ -522,7 +525,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 password = "password"
 		 port = "port_number"
 		 protocol = "protocol">*/ 
-		attrs = new HashSet();
+		/*attrs = new HashSet();
 		attrs.add("action");
 		attrs.add("directory");
 		attrs.add("timespan");
@@ -532,23 +535,26 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		attrs.add("port");
 		attrs.add("protocol");
 		syntaxelements.put("cache",attrs);
+		*/
 		
 		/* <cfcase 
 		 value = "value" 
 		 delimiters = "delimiters">
 		 HTML and CFML tags
 		 </cfcase> */
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("value");
 		attrs.add("delimiters");
 		syntaxelements.put("case",attrs);
+		*/
 		
 		/* <cfcatch type = "exceptiontype">
 		 Exception processing code here
 		 </cfcatch> */
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("type");
 		syntaxelements.put("catch",attrs);
+		*/
 		
 		/* <cfchart 
 		 format = "flash, jpg, png" 
@@ -585,7 +591,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 url = "onClick destination page" 
 		 name = "String"
 		 </cfchart> */ 
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("format");
 		attrs.add("chartHeight");
 		attrs.add("chartWidth");
@@ -620,14 +626,16 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		attrs.add("url");
 		attrs.add("name");
 		syntaxelements.put("chart",attrs);
+		*/
 		
 		/*<cfchartdata 
 		 item = "text" 
 		 value = "number">*/ 
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("item");
 		attrs.add("value");
 		syntaxelements.put("chartdata",attrs);
+		*/
 
 		/* <cfchartseries 
 		 type="type"
@@ -640,7 +648,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 markerStyle="style"
 		 colorlist = "list">
 		 </cfchartseries> */ 
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("type");
 		attrs.add("query");
 		attrs.add("itemColumn");
@@ -651,18 +659,20 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		attrs.add("paintStyle");
 		attrs.add("colorlist");
 		syntaxelements.put("chartseries",attrs);
+		*/
 
 		/* <cfcol 
 		 header = "column_header_text"
 		 width = "number_indicating_width_of_column"
 		 align = "Left" or "Right" or "Center"
 		 text = "column_text"> */ 
-		attrs = new HashSet();
+		/* attrs = new HashSet();
 		attrs.add("header");
 		attrs.add("width");
 		attrs.add("align");
 		attrs.add("text");
 		syntaxelements.put("col",attrs);
+		*/
 
 		/* <cfcollection 
 		 action = "action"
@@ -670,33 +680,33 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 path = "path_to_verity_collection"
 		 language = "language"
 		 name = "queryname" > */
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("collection");
-		attrs.add("path");
-		attrs.add("language");
-		attrs.add("name");
-		syntaxelements.put("collection",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("collection");
+//		attrs.add("path");
+//		attrs.add("language");
+//		attrs.add("name");
+//		syntaxelements.put("collection",attrs);
 		
 		/* <cfcomponent
 		 extends ="anotherComponent"
 		 output = "yes" or "no"> */
-		attrs = new HashSet();
-		attrs.add("extends");
-		attrs.add("output");
-		syntaxelements.put("component",attrs);
+//		attrs = new HashSet();
+//		attrs.add("extends");
+//		attrs.add("output");
+//		syntaxelements.put("component",attrs);
 
 		/* <cfcontent 
 		 type = "file_type"
 		 deleteFile = "Yes" or "No"
 		 file = "filename"
 		 reset = "Yes" or "No"> */ 
-		attrs = new HashSet();
-		attrs.add("type");
-		attrs.add("deleteFile");
-		attrs.add("file");
-		attrs.add("reset");
-		syntaxelements.put("content",attrs);
+//		attrs = new HashSet();
+//		attrs.add("type");
+//		attrs.add("deleteFile");
+//		attrs.add("file");
+//		attrs.add("reset");
+//		syntaxelements.put("content",attrs);
 		
 		/* <cfcookie 
 		 name = "cookie_name"
@@ -705,18 +715,18 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 secure = "Yes" or "No"
 		 path = "url"
 		 domain = ".domain"> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("value");
-		attrs.add("expires");
-		attrs.add("secure");
-		attrs.add("path");
-		attrs.add("domain");
-		syntaxelements.put("cookie",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("value");
+//		attrs.add("expires");
+//		attrs.add("secure");
+//		attrs.add("path");
+//		attrs.add("domain");
+//		syntaxelements.put("cookie",attrs);
 		
 		/* <cfdefaultcase> */
-		attrs = new HashSet();
-		syntaxelements.put("defaultcase",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("defaultcase",attrs);
 		
 		/* <cfdirectory 
 		 action = "directory action"
@@ -726,49 +736,49 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 mode = "permission"
 		 sort = "sort specification"
 		 newDirectory = "new directory name"> */
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("directory");
-		attrs.add("name");
-		attrs.add("filter");
-		attrs.add("mode");
-		attrs.add("sort");
-		attrs.add("newDirectory");
-		syntaxelements.put("directory",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("directory");
+//		attrs.add("name");
+//		attrs.add("filter");
+//		attrs.add("mode");
+//		attrs.add("sort");
+//		attrs.add("newDirectory");
+//		syntaxelements.put("directory",attrs);
 		
 		/* <cfdump 
 		 var = #variable#
 		 expand = "Yes or No" 
 		 label = "text"> */ 
-		attrs = new HashSet();
-		attrs.add("var");
-		attrs.add("expand");
-		attrs.add("label");
-		syntaxelements.put("dump",attrs);
+//		attrs = new HashSet();
+//		attrs.add("var");
+//		attrs.add("expand");
+//		attrs.add("label");
+//		syntaxelements.put("dump",attrs);
 		
 		/* <cfif> */
-		attrs = new HashSet();
-		syntaxelements.put("if",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("if",attrs);
 		
 		/* <cfelse> */
-		attrs = new HashSet();
-		syntaxelements.put("else",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("else",attrs);
 		
 		/* <cfelseif> */
-		attrs = new HashSet();
-		syntaxelements.put("elseif",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("elseif",attrs);
 		
 		/* <cferror 
 		 type = "a type"
 		 template = "template_path"
 		 mailTo = "email_address"
 		 exception = "exception_type"> */
-		attrs = new HashSet();
-		attrs.add("type");
-		attrs.add("template");
-		attrs.add("mailTo");
-		attrs.add("exception");
-		syntaxelements.put("error",attrs);  
+//		attrs = new HashSet();
+//		attrs.add("type");
+//		attrs.add("template");
+//		attrs.add("mailTo");
+//		attrs.add("exception");
+//		syntaxelements.put("error",attrs);  
 		
 		/* <cfexecute 
 		 name = " ApplicationName "
@@ -776,18 +786,18 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 outputFile = "Output file name"
 		 timeout = "Timeout interval">
 		 ... */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("arguments");
-		attrs.add("outputFile");
-		attrs.add("timeout");
-		syntaxelements.put("execute",attrs); 
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("arguments");
+//		attrs.add("outputFile");
+//		attrs.add("timeout");
+//		syntaxelements.put("execute",attrs); 
 
 		/* <cfexit 
 		 method = "method"> */ 
-		attrs = new HashSet();
-		attrs.add("method");
-		syntaxelements.put("exit",attrs);
+//		attrs = new HashSet();
+//		attrs.add("method");
+//		syntaxelements.put("exit",attrs);
 		
 		/* <cffile 
 		 action = "upload"
@@ -803,27 +813,27 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 variable = "var_name"> 
 		 output = "content"
 		 addNewLine = "Yes" or "No"> */
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("fileField");
-		attrs.add("destination");
-		attrs.add("nameConflict");
-		attrs.add("accept");
-		attrs.add("mode");
-		attrs.add("attributes");
-		attrs.add("source");
-		attrs.add("charset");
-		attrs.add("file");
-		attrs.add("variable");
-		attrs.add("output");
-		attrs.add("addNewLine");
-		syntaxelements.put("file",attrs); 
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("fileField");
+//		attrs.add("destination");
+//		attrs.add("nameConflict");
+//		attrs.add("accept");
+//		attrs.add("mode");
+//		attrs.add("attributes");
+//		attrs.add("source");
+//		attrs.add("charset");
+//		attrs.add("file");
+//		attrs.add("variable");
+//		attrs.add("output");
+//		attrs.add("addNewLine");
+//		syntaxelements.put("file",attrs); 
 		
 		/* <cfflush
 		 interval = "integer number of bytes"> */ 
-		attrs = new HashSet();
-		attrs.add("interval");
-		syntaxelements.put("flush",attrs);
+//		attrs = new HashSet();
+//		attrs.add("interval");
+//		syntaxelements.put("flush",attrs);
 		
 		/* <cfform 
 		 name = "name"
@@ -837,18 +847,18 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 archive = "URL" 
 		 scriptSrc = "path">
 		 ... */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("action");
-		attrs.add("preserveData");
-		attrs.add("onSubmit");
-		attrs.add("target");
-		attrs.add("encType");
-		attrs.add("passThrough");
-		attrs.add("codeBase");
-		attrs.add("archive");
-		attrs.add("scriptSrc");
-		syntaxelements.put("form",attrs); 
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("action");
+//		attrs.add("preserveData");
+//		attrs.add("onSubmit");
+//		attrs.add("target");
+//		attrs.add("encType");
+//		attrs.add("passThrough");
+//		attrs.add("codeBase");
+//		attrs.add("archive");
+//		attrs.add("scriptSrc");
+//		syntaxelements.put("form",attrs); 
 
 		/* <cfftp 
 		 action = "action"
@@ -873,30 +883,30 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 existing = "file or directory name"
 		 new = "file or directory name"
 		 passive = "Yes" or "No"> */
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("server");
-		attrs.add("timeout");
-		attrs.add("port");
-		attrs.add("connection");
-		attrs.add("proxyServer");
-		attrs.add("retryCount");
-		attrs.add("stopOnError");
-		attrs.add("passive");
-		attrs.add("name");
-		attrs.add("ASCIIExtensionList");
-		attrs.add("transferMode");
-		attrs.add("failIfExists");
-		attrs.add("directory");
-		attrs.add("localFile");
-		attrs.add("remoteFile");
-		attrs.add("item");
-		attrs.add("existing");
-		attrs.add("new");
-		attrs.add("passive");
-		syntaxelements.put("ftp",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("server");
+//		attrs.add("timeout");
+//		attrs.add("port");
+//		attrs.add("connection");
+//		attrs.add("proxyServer");
+//		attrs.add("retryCount");
+//		attrs.add("stopOnError");
+//		attrs.add("passive");
+//		attrs.add("name");
+//		attrs.add("ASCIIExtensionList");
+//		attrs.add("transferMode");
+//		attrs.add("failIfExists");
+//		attrs.add("directory");
+//		attrs.add("localFile");
+//		attrs.add("remoteFile");
+//		attrs.add("item");
+//		attrs.add("existing");
+//		attrs.add("new");
+//		attrs.add("passive");
+//		syntaxelements.put("ftp",attrs);
 		
 		/*<cffunction
 		 name = "methodName"
@@ -904,13 +914,13 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 roles = "securityRoles"
 		 access = "methodAccess"
 		 output = "yes" or "no" > */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("returnType");
-		attrs.add("roles");
-		attrs.add("access");
-		attrs.add("output");
-		syntaxelements.put("function",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("returnType");
+//		attrs.add("roles");
+//		attrs.add("access");
+//		attrs.add("output");
+//		syntaxelements.put("function",attrs);
 		
 		/* <cfgrid 
 		 name = "name"
@@ -964,58 +974,58 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 sortAscendingButton = "text"
 		 sortDescendingButton = "text">
 		 </cfgrid> */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("height");
-		attrs.add("width");
-		attrs.add("autoWidth");
-		attrs.add("vSpace");
-		attrs.add("hSpace");
-		attrs.add("align");
-		attrs.add("query");
-		attrs.add("insert");
-		attrs.add("delete");
-		attrs.add("sort");
-		attrs.add("font");
-		attrs.add("fontSize");
-		attrs.add("italic");
-		attrs.add("bold");
-		attrs.add("textColor");
-		attrs.add("href");
-		attrs.add("hrefKey");
-		attrs.add("target");
-		attrs.add("appendKey");
-		attrs.add("highlightHref");
-		attrs.add("onValidate");
-		attrs.add("onError");
-		attrs.add("gridDataAlign");
-		attrs.add("gridLines");
-		attrs.add("rowHeight");
-		attrs.add("rowHeaders");
-		attrs.add("rowHeaderAlign");
-		attrs.add("rowHeaderFont");
-		attrs.add("rowHeaderFontSize");
-		attrs.add("rowHeaderItalic");
-		attrs.add("rowHeaderBold");
-		attrs.add("rowHeaderTextColor");
-		attrs.add("colHeaders");
-		attrs.add("colHeadersAlign");
-		attrs.add("colHeadersFont");
-		attrs.add("colHeadersFontSize");
-		attrs.add("colHeadersItalic");
-		attrs.add("colHeadersBold");
-		attrs.add("colHeadersTextColor");
-		attrs.add("bgColor");
-		attrs.add("selectColor");
-		attrs.add("selectMode");
-		attrs.add("maxRows");
-		attrs.add("notSupported");
-		attrs.add("pictureBar");
-		attrs.add("insertButton");
-		attrs.add("deleteButton");
-		attrs.add("sortAscendingButton");
-		attrs.add("sortDescendingButton");
-		syntaxelements.put("grid",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("height");
+//		attrs.add("width");
+//		attrs.add("autoWidth");
+//		attrs.add("vSpace");
+//		attrs.add("hSpace");
+//		attrs.add("align");
+//		attrs.add("query");
+//		attrs.add("insert");
+//		attrs.add("delete");
+//		attrs.add("sort");
+//		attrs.add("font");
+//		attrs.add("fontSize");
+//		attrs.add("italic");
+//		attrs.add("bold");
+//		attrs.add("textColor");
+//		attrs.add("href");
+//		attrs.add("hrefKey");
+//		attrs.add("target");
+//		attrs.add("appendKey");
+//		attrs.add("highlightHref");
+//		attrs.add("onValidate");
+//		attrs.add("onError");
+//		attrs.add("gridDataAlign");
+//		attrs.add("gridLines");
+//		attrs.add("rowHeight");
+//		attrs.add("rowHeaders");
+//		attrs.add("rowHeaderAlign");
+//		attrs.add("rowHeaderFont");
+//		attrs.add("rowHeaderFontSize");
+//		attrs.add("rowHeaderItalic");
+//		attrs.add("rowHeaderBold");
+//		attrs.add("rowHeaderTextColor");
+//		attrs.add("colHeaders");
+//		attrs.add("colHeadersAlign");
+//		attrs.add("colHeadersFont");
+//		attrs.add("colHeadersFontSize");
+//		attrs.add("colHeadersItalic");
+//		attrs.add("colHeadersBold");
+//		attrs.add("colHeadersTextColor");
+//		attrs.add("bgColor");
+//		attrs.add("selectColor");
+//		attrs.add("selectMode");
+//		attrs.add("maxRows");
+//		attrs.add("notSupported");
+//		attrs.add("pictureBar");
+//		attrs.add("insertButton");
+//		attrs.add("deleteButton");
+//		attrs.add("sortAscendingButton");
+//		attrs.add("sortDescendingButton");
+//		syntaxelements.put("grid",attrs);
 		
 		/*<cfgridcolumn 
 		 name = "column_name"
@@ -1045,40 +1055,40 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 valuesDisplay = "Comma separated strings and/or numeric range"
 		 valuesDelimiter = "delimiter character"> 
 		 */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("header");
-		attrs.add("width");
-		attrs.add("font");
-		attrs.add("fontSize");
-		attrs.add("italic");
-		attrs.add("bold");
-		attrs.add("textColor");
-		attrs.add("bgColor");
-		attrs.add("href");
-		attrs.add("hrefKey");
-		attrs.add("target");
-		attrs.add("select");
-		attrs.add("display");
-		attrs.add("type");
-		attrs.add("headerFont");
-		attrs.add("headerFontSize");
-		attrs.add("headerItalic");
-		attrs.add("headerBold");
-		attrs.add("headerTextColor");
-		attrs.add("dataAlign");
-		attrs.add("headerAlign");
-		attrs.add("numberFormat");
-		attrs.add("values");
-		attrs.add("valuesDisplay");
-		attrs.add("valuesDelimiter");
-		syntaxelements.put("gridcolumn",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("header");
+//		attrs.add("width");
+//		attrs.add("font");
+//		attrs.add("fontSize");
+//		attrs.add("italic");
+//		attrs.add("bold");
+//		attrs.add("textColor");
+//		attrs.add("bgColor");
+//		attrs.add("href");
+//		attrs.add("hrefKey");
+//		attrs.add("target");
+//		attrs.add("select");
+//		attrs.add("display");
+//		attrs.add("type");
+//		attrs.add("headerFont");
+//		attrs.add("headerFontSize");
+//		attrs.add("headerItalic");
+//		attrs.add("headerBold");
+//		attrs.add("headerTextColor");
+//		attrs.add("dataAlign");
+//		attrs.add("headerAlign");
+//		attrs.add("numberFormat");
+//		attrs.add("values");
+//		attrs.add("valuesDisplay");
+//		attrs.add("valuesDelimiter");
+//		syntaxelements.put("gridcolumn",attrs);
 		
 		/* <cfgridrow 
 		 data = "col1, col2, ..."> */ 
-		attrs = new HashSet();
-		attrs.add("data");
-		syntaxelements.put("gridrow",attrs);
+//		attrs = new HashSet();
+//		attrs.add("data");
+//		syntaxelements.put("gridrow",attrs);
 		
 		/* <cfgridupdate 
 		 grid = "gridname"
@@ -1089,16 +1099,16 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 tableOwner = "table owner"
 		 tableQualifier = "qualifier"
 		 keyOnly = "Yes" or "No"> */ 
-		attrs = new HashSet();
-		attrs.add("grid");
-		attrs.add("dataSource");
-		attrs.add("tableName");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("tableOwner");
-		attrs.add("tableQualifier");
-		attrs.add("keyOnly");
-		syntaxelements.put("gridupdate",attrs);
+//		attrs = new HashSet();
+//		attrs.add("grid");
+//		attrs.add("dataSource");
+//		attrs.add("tableName");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("tableOwner");
+//		attrs.add("tableQualifier");
+//		attrs.add("keyOnly");
+//		syntaxelements.put("gridupdate",attrs);
 		
 		/* <cfheader 
 		 name = "header_name"
@@ -1107,18 +1117,18 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 <cfheader 
 		 statusCode = "status_code"
 		 statusText = "status_text"> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("value");
-		attrs.add("statusCode");
-		attrs.add("statusText");
-		syntaxelements.put("header",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("value");
+//		attrs.add("statusCode");
+//		attrs.add("statusText");
+//		syntaxelements.put("header",attrs);
 
 		/* <cfhtmlhead 
 		 text = "text"> */
-		attrs = new HashSet();
-		attrs.add("text");
-		syntaxelements.put("htmlhead",attrs);
+//		attrs = new HashSet();
+//		attrs.add("text");
+//		syntaxelements.put("htmlhead",attrs);
 		
 		/* <cfhttp 
 		 url = "hostname"
@@ -1142,57 +1152,57 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 timeout = "timeout_period"
 		 charset = "character set">
 		 </cfhttp> */ 
-		attrs = new HashSet();
-		attrs.add("url");
-		attrs.add("port");
-		attrs.add("method");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("name");
-		attrs.add("columns");
-		attrs.add("firstrowasheaders");
-		attrs.add("path");
-		attrs.add("file");
-		attrs.add("delimiter");
-		attrs.add("textQualifier");
-		attrs.add("resolveURL");
-		attrs.add("proxyServer");
-		attrs.add("proxyPort");
-		attrs.add("userAgent");
-		attrs.add("throwOnError");
-		attrs.add("redirect");
-		attrs.add("timeout");
-		attrs.add("charset");
-		syntaxelements.put("http",attrs);
+//		attrs = new HashSet();
+//		attrs.add("url");
+//		attrs.add("port");
+//		attrs.add("method");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("name");
+//		attrs.add("columns");
+//		attrs.add("firstrowasheaders");
+//		attrs.add("path");
+//		attrs.add("file");
+//		attrs.add("delimiter");
+//		attrs.add("textQualifier");
+//		attrs.add("resolveURL");
+//		attrs.add("proxyServer");
+//		attrs.add("proxyPort");
+//		attrs.add("userAgent");
+//		attrs.add("throwOnError");
+//		attrs.add("redirect");
+//		attrs.add("timeout");
+//		attrs.add("charset");
+//		syntaxelements.put("http",attrs);
 		
 		/* <cfhttpparam 
 		 name = "name"
 		 type = "type"
 		 value = "transaction type"
 		 file = "filename"> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("type");
-		attrs.add("method");
-		attrs.add("value");
-		attrs.add("file");
-		syntaxelements.put("httpparam",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("type");
+//		attrs.add("method");
+//		attrs.add("value");
+//		attrs.add("file");
+//		syntaxelements.put("httpparam",attrs);
 		
 		/* <cfimport 
 		 taglib = "taglib-location"
 		 prefix = "custom"
 		 webservice = "URL"> */ 
-		attrs = new HashSet();
-		attrs.add("taglib");
-		attrs.add("prefix");
-		attrs.add("webservice");
-		syntaxelements.put("import",attrs);
+//		attrs = new HashSet();
+//		attrs.add("taglib");
+//		attrs.add("prefix");
+//		attrs.add("webservice");
+//		syntaxelements.put("import",attrs);
 		
 		/* <cfinclude 
 		 template = "template_name"> */ 
-		attrs = new HashSet();
-		attrs.add("template");
-		syntaxelements.put("include",attrs);
+//		attrs = new HashSet();
+//		attrs.add("template");
+//		syntaxelements.put("include",attrs);
 		
 		/*<cfindex 
 		 collection = "collection_name"
@@ -1208,21 +1218,21 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 query = "query_name"
 		 recurse = "Yes" or "No"
 		 language = "language"> */ 
-		attrs = new HashSet();
-		attrs.add("collection");
-		attrs.add("action");
-		attrs.add("type");
-		attrs.add("title");
-		attrs.add("key");
-		attrs.add("body");
-		attrs.add("custom1");
-		attrs.add("custom2");
-		attrs.add("URLpath");
-		attrs.add("extensions");
-		attrs.add("query");
-		attrs.add("recurse");
-		attrs.add("language");
-		syntaxelements.put("index",attrs);
+//		attrs = new HashSet();
+//		attrs.add("collection");
+//		attrs.add("action");
+//		attrs.add("type");
+//		attrs.add("title");
+//		attrs.add("key");
+//		attrs.add("body");
+//		attrs.add("custom1");
+//		attrs.add("custom2");
+//		attrs.add("URLpath");
+//		attrs.add("extensions");
+//		attrs.add("query");
+//		attrs.add("recurse");
+//		attrs.add("language");
+//		syntaxelements.put("index",attrs);
 		
 		/* <cfinput 
 		 type = "input_type"
@@ -1239,22 +1249,22 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 maxLength = "integer"
 		 checked 
 		 passThrough = "HTML_attributes"> */ 
-		attrs = new HashSet();
-		attrs.add("type");
-		attrs.add("name");
-		attrs.add("value");
-		attrs.add("required");
-		attrs.add("range");
-		attrs.add("validate");
-		attrs.add("onValidate");
-		attrs.add("pattern");
-		attrs.add("message");
-		attrs.add("onError");
-		attrs.add("size");
-		attrs.add("maxLength");
-		attrs.add("checked");
-		attrs.add("passThrough");
-		syntaxelements.put("input",attrs);
+//		attrs = new HashSet();
+//		attrs.add("type");
+//		attrs.add("name");
+//		attrs.add("value");
+//		attrs.add("required");
+//		attrs.add("range");
+//		attrs.add("validate");
+//		attrs.add("onValidate");
+//		attrs.add("pattern");
+//		attrs.add("message");
+//		attrs.add("onError");
+//		attrs.add("size");
+//		attrs.add("maxLength");
+//		attrs.add("checked");
+//		attrs.add("passThrough");
+//		syntaxelements.put("input",attrs);
 		
 		/* <cfinsert 
 		 dataSource = "ds_name"
@@ -1264,15 +1274,15 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 username = "username"
 		 password = "password"
 		 formFields = "formfield1, formfield2, ..."> */
-		attrs = new HashSet();
-		attrs.add("dataSource");
-		attrs.add("tableName");
-		attrs.add("tableOwner");
-		attrs.add("tableQualifier");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("formFields");
-		syntaxelements.put("insert",attrs);
+//		attrs = new HashSet();
+//		attrs.add("dataSource");
+//		attrs.add("tableName");
+//		attrs.add("tableOwner");
+//		attrs.add("tableQualifier");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("formFields");
+//		syntaxelements.put("insert",attrs);
 		
 		/*<cfinvoke
 		 component = "component name or reference"
@@ -1286,25 +1296,25 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 inputParam2 = "value2"
 		 ...>
 		 */
-		attrs = new HashSet();
-		attrs.add("component");
-		attrs.add("method");
-		attrs.add("returnVariable");
-		attrs.add("argumentCollection");
-		attrs.add("webservice");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("inputParam1");
-		attrs.add("inputParam2");
-		syntaxelements.put("invoke",attrs);
+//		attrs = new HashSet();
+//		attrs.add("component");
+//		attrs.add("method");
+//		attrs.add("returnVariable");
+//		attrs.add("argumentCollection");
+//		attrs.add("webservice");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("inputParam1");
+//		attrs.add("inputParam2");
+//		syntaxelements.put("invoke",attrs);
 
 		/* <cfinvokeargument
 		 name="argument name"
 		 value="argument value"> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("value");
-		syntaxelements.put("invokeargument",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("value");
+//		syntaxelements.put("invokeargument",attrs);
 		
 		/* <cfldap 
 		 server = "server_name"
@@ -1329,38 +1339,38 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 secure = "multi_field_security_string"
 		 separator = "separator_character"
 		 delimiter = "delimiter_character"> */ 
-		attrs = new HashSet();
-		attrs.add("server");
-		attrs.add("port");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("action");
-		attrs.add("name");
-		attrs.add("timeout");
-		attrs.add("maxRows");
-		attrs.add("start");
-		attrs.add("scope");
-		attrs.add("attributes");
-		attrs.add("filter");
-		attrs.add("sort");
-		attrs.add("sortControl");
-		attrs.add("dn");
-		attrs.add("startRow");
-		attrs.add("modifyType");
-		attrs.add("rebind");
-		attrs.add("referral");
-		attrs.add("secure");
-		attrs.add("separator");
-		attrs.add("delimiter");
-		syntaxelements.put("ldap",attrs);
+//		attrs = new HashSet();
+//		attrs.add("server");
+//		attrs.add("port");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("action");
+//		attrs.add("name");
+//		attrs.add("timeout");
+//		attrs.add("maxRows");
+//		attrs.add("start");
+//		attrs.add("scope");
+//		attrs.add("attributes");
+//		attrs.add("filter");
+//		attrs.add("sort");
+//		attrs.add("sortControl");
+//		attrs.add("dn");
+//		attrs.add("startRow");
+//		attrs.add("modifyType");
+//		attrs.add("rebind");
+//		attrs.add("referral");
+//		attrs.add("secure");
+//		attrs.add("separator");
+//		attrs.add("delimiter");
+//		syntaxelements.put("ldap",attrs);
 		
 		/*<cflocation
 		 url = "url"
 		 addToken = "Yes" or "No">*/ 
-		attrs = new HashSet();
-		attrs.add("url");
-		attrs.add("addToken");
-		syntaxelements.put("location",attrs);
+//		attrs = new HashSet();
+//		attrs.add("url");
+//		attrs.add("addToken");
+//		syntaxelements.put("location",attrs);
 		
 		/* <cflock 
 		 timeout = "timeout in seconds "
@@ -1370,13 +1380,13 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 type = "readOnly" or "exclusive "> 
 		 <!--- CFML to be synchronized ---> 
 		 </cflock> */ 
-		attrs = new HashSet();
-		attrs.add("timeout");
-		attrs.add("scope");
-		attrs.add("name");
-		attrs.add("throwOnTimeout");
-		attrs.add("type");
-		syntaxelements.put("lock",attrs);
+//		attrs = new HashSet();
+//		attrs.add("timeout");
+//		attrs.add("scope");
+//		attrs.add("name");
+//		attrs.add("throwOnTimeout");
+//		attrs.add("type");
+//		syntaxelements.put("lock",attrs);
 
 		/* <cflog 
 		 text = "text"
@@ -1384,13 +1394,13 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 file = "filename"
 		 type = "message type"
 		 application = "application name yes or no"> */
-		attrs = new HashSet();
-		attrs.add("text");
-		attrs.add("log");
-		attrs.add("file");
-		attrs.add("type");
-		attrs.add("application");
-		syntaxelements.put("log",attrs);
+//		attrs = new HashSet();
+//		attrs.add("text");
+//		attrs.add("log");
+//		attrs.add("file");
+//		attrs.add("type");
+//		attrs.add("application");
+//		syntaxelements.put("log",attrs);
 		
 		/* <cflogin
 		 idletimeout = "value"
@@ -1403,21 +1413,21 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 roles = "roles">
 		 ...>
 		 </cflogin> */ 
-		attrs = new HashSet();
-		attrs.add("idletimeout");
-		attrs.add("applicationToken");
-		attrs.add("cookieDomain");
-		syntaxelements.put("login",attrs);
+//		attrs = new HashSet();
+//		attrs.add("idletimeout");
+//		attrs.add("applicationToken");
+//		attrs.add("cookieDomain");
+//		syntaxelements.put("login",attrs);
 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("password");
-		attrs.add("roles");
-		syntaxelements.put("loginuser",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("password");
+//		attrs.add("roles");
+//		syntaxelements.put("loginuser",attrs);
 		
 		/* <cflogout>*/ 
-		attrs = new HashSet();
-		syntaxelements.put("logout",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("logout",attrs);
 		
 		/* <cfloop 
 		 index = "parameter_name"
@@ -1432,18 +1442,18 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 delimiters = "item_delimiter">
 		 ...
 		 </cfloop> */ 
-		attrs = new HashSet();
-		attrs.add("index");
-		attrs.add("from");
-		attrs.add("to");
-		attrs.add("step");
-		attrs.add("condition");
-		attrs.add("query");
-		attrs.add("startRow");
-		attrs.add("endRow");
-		attrs.add("list");
-		attrs.add("delimiters");
-		syntaxelements.put("loop",attrs);
+//		attrs = new HashSet();
+//		attrs.add("index");
+//		attrs.add("from");
+//		attrs.add("to");
+//		attrs.add("step");
+//		attrs.add("condition");
+//		attrs.add("query");
+//		attrs.add("startRow");
+//		attrs.add("endRow");
+//		attrs.add("list");
+//		attrs.add("delimiters");
+//		syntaxelements.put("loop",attrs);
 		
 		/* <cfmail 
 		 to = "recipient"
@@ -1463,35 +1473,35 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 mailerid = "headerid"
 		 timeout = "seconds"
 		 spoolenable = "yes" or "no"> */ 
-		attrs = new HashSet();
-		attrs.add("to");
-		attrs.add("from");
-		attrs.add("cc");
-		attrs.add("bcc");
-		attrs.add("subject");
-		attrs.add("type");
-		attrs.add("maxrows");
-		attrs.add("mimeattach");
-		attrs.add("query");
-		attrs.add("group");
-		attrs.add("groupcasesensitive");
-		attrs.add("startrow");
-		attrs.add("server");
-		attrs.add("port");
-		attrs.add("mailerid");
-		attrs.add("timeout");
-		attrs.add("spoolenable");
-		syntaxelements.put("mail",attrs);
+//		attrs = new HashSet();
+//		attrs.add("to");
+//		attrs.add("from");
+//		attrs.add("cc");
+//		attrs.add("bcc");
+//		attrs.add("subject");
+//		attrs.add("type");
+//		attrs.add("maxrows");
+//		attrs.add("mimeattach");
+//		attrs.add("query");
+//		attrs.add("group");
+//		attrs.add("groupcasesensitive");
+//		attrs.add("startrow");
+//		attrs.add("server");
+//		attrs.add("port");
+//		attrs.add("mailerid");
+//		attrs.add("timeout");
+//		attrs.add("spoolenable");
+//		syntaxelements.put("mail",attrs);
 
 		/* <cfmailparam 
 		 file = "file-name" >
 		 name = "header-name"
 		 value = "header-value" > */
-		attrs = new HashSet();
-		attrs.add("file");
-		attrs.add("name");
-		attrs.add("value");
-		syntaxelements.put("mailparam",attrs);
+//		attrs = new HashSet();
+//		attrs.add("file");
+//		attrs.add("name");
+//		attrs.add("value");
+//		syntaxelements.put("mailparam",attrs);
 		
 		/* <cfmodule 
 		 template = "path"
@@ -1500,13 +1510,13 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 attribute_name1 = "valuea"
 		 attribute_name2 = "valueb"
 		 ...> */ 
-		attrs = new HashSet();
-		attrs.add("template");
-		attrs.add("name");
-		attrs.add("attributeCollection");
-		attrs.add("attribute_name1");
-		attrs.add("attribute_name2");
-		syntaxelements.put("module",attrs);
+//		attrs = new HashSet();
+//		attrs.add("template");
+//		attrs.add("name");
+//		attrs.add("attributeCollection");
+//		attrs.add("attribute_name1");
+//		attrs.add("attribute_name2");
+//		syntaxelements.put("module",attrs);
 
 		/* <cfobject 
 		 type = "com"
@@ -1519,23 +1529,23 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 locale = "type-value arguments"
 		 webservice= "http://....?wsdl" or "name set in Administrator">
 		 */
-		attrs = new HashSet();
-		attrs.add("type");
-		attrs.add("action");
-		attrs.add("class");
-		attrs.add("name");
-		attrs.add("context");
-		attrs.add("server");
-		attrs.add("component");
-		attrs.add("locale");
-		attrs.add("webservice");
-		syntaxelements.put("object",attrs);
+//		attrs = new HashSet();
+//		attrs.add("type");
+//		attrs.add("action");
+//		attrs.add("class");
+//		attrs.add("name");
+//		attrs.add("context");
+//		attrs.add("server");
+//		attrs.add("component");
+//		attrs.add("locale");
+//		attrs.add("webservice");
+//		syntaxelements.put("object",attrs);
 
 		/* <cfobjectcache 
 		 action = "clear"> */ 
-		attrs = new HashSet();
-		attrs.add("action");
-		syntaxelements.put("objectcache",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		syntaxelements.put("objectcache",attrs);
 
 		/* <cfoutput 
 		 query = "query_name"
@@ -1544,23 +1554,23 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 startRow = "start_row"
 		 maxRows = "max_rows_output">
 		 </cfoutput> */
-		attrs = new HashSet();
-		attrs.add("query");
-		attrs.add("group");
-		attrs.add("groupCaseSensitive");
-		attrs.add("startRow");
-		attrs.add("maxRows");
-		syntaxelements.put("output",attrs); 
+//		attrs = new HashSet();
+//		attrs.add("query");
+//		attrs.add("group");
+//		attrs.add("groupCaseSensitive");
+//		attrs.add("startRow");
+//		attrs.add("maxRows");
+//		syntaxelements.put("output",attrs); 
 
 		/* <cfparam 
 		 name = "param_name"
 		 type = "data_type"
 		 default = "value"> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("type");
-		attrs.add("default");
-		syntaxelements.put("param",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("type");
+//		attrs.add("default");
+//		syntaxelements.put("param",attrs);
 		
 		/* <cfpop 
 		 server = "servername"
@@ -1576,32 +1586,32 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 maxRows = "number"
 		 startRow = "number"
 		 generateUniqueFilenames = "boolean"> */ 
-		attrs = new HashSet();
-		attrs.add("server");
-		attrs.add("port");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("action");
-		attrs.add("name");
-		attrs.add("messageNumber");
-		attrs.add("uid");
-		attrs.add("attachmentPath");
-		attrs.add("timeout");
-		attrs.add("maxRows");
-		attrs.add("startRow");
-		attrs.add("generateUniqueFilenames");
-		syntaxelements.put("pop",attrs);
+//		attrs = new HashSet();
+//		attrs.add("server");
+//		attrs.add("port");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("action");
+//		attrs.add("name");
+//		attrs.add("messageNumber");
+//		attrs.add("uid");
+//		attrs.add("attachmentPath");
+//		attrs.add("timeout");
+//		attrs.add("maxRows");
+//		attrs.add("startRow");
+//		attrs.add("generateUniqueFilenames");
+//		syntaxelements.put("pop",attrs);
 		
 		/* <cfprocessingdirective
 		 pageencoding = "page-encoding literal string"
 		 suppressWhiteSpace = "Yes" or "No"
 		 pageEncoding = "page-encoding literal string">
 		 </cfprocessingdirective> */ 
-		attrs = new HashSet();
-		attrs.add("pageencoding");
-		attrs.add("suppressWhiteSpace");
-		attrs.add("pageEncoding");
-		syntaxelements.put("processingdirective",attrs);
+//		attrs = new HashSet();
+//		attrs.add("pageencoding");
+//		attrs.add("suppressWhiteSpace");
+//		attrs.add("pageEncoding");
+//		syntaxelements.put("processingdirective",attrs);
 		
 		/* <cfprocparam 
 		 type = "in" or "out" or "inout"
@@ -1612,35 +1622,35 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 maxLength = "length"
 		 scale = "decimal places" 
 		 null = "Yes" or "No"> */ 
-		attrs = new HashSet();
-		attrs.add("type");
-		attrs.add("variable");
-		attrs.add("dbVarName");
-		attrs.add("value");
-		attrs.add("CFSQLType");
-		attrs.add("maxLength");
-		attrs.add("scale");
-		attrs.add("null");
-		syntaxelements.put("procparam",attrs);
+//		attrs = new HashSet();
+//		attrs.add("type");
+//		attrs.add("variable");
+//		attrs.add("dbVarName");
+//		attrs.add("value");
+//		attrs.add("CFSQLType");
+//		attrs.add("maxLength");
+//		attrs.add("scale");
+//		attrs.add("null");
+//		syntaxelements.put("procparam",attrs);
 
 		/* <cfprocresult 
 		 name = "query_name"
 		 resultSet = "1-n" 
 		 maxRows = "maxrows"> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("resultSet");
-		attrs.add("maxRows");
-		syntaxelements.put("procresult",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("resultSet");
+//		attrs.add("maxRows");
+//		syntaxelements.put("procresult",attrs);
 
 		/* <cfproperty 
 		 name="name" 
 		 type="type" 
 		 ...> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("type");
-		syntaxelements.put("property",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("type");
+//		syntaxelements.put("property",attrs);
 		
 		/* <cfquery 
 		 name = "query_name"
@@ -1655,19 +1665,19 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 cachedWithin = "timespan" 
 		 debug = "Yes" or "No">
 		 </cfquery> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("dataSource");
-		attrs.add("dbtype");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("maxRows");
-		attrs.add("blockFactor");
-		attrs.add("timeout");
-		attrs.add("cachedAfter");
-		attrs.add("cachedWithin");
-		attrs.add("debug");
-		syntaxelements.put("query",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("dataSource");
+//		attrs.add("dbtype");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("maxRows");
+//		attrs.add("blockFactor");
+//		attrs.add("timeout");
+//		attrs.add("cachedAfter");
+//		attrs.add("cachedWithin");
+//		attrs.add("debug");
+//		syntaxelements.put("query",attrs);
 		
 		/* <cfqueryparam 
 		 value = "parameter value"
@@ -1677,15 +1687,15 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 null = "Yes" or "No"
 		 list = "Yes" or "No"
 		 separator = "separator character"> */
-		attrs = new HashSet();
-		attrs.add("value");
-		attrs.add("CFSQLType");
-		attrs.add("maxLength");
-		attrs.add("scale");
-		attrs.add("null");
-		attrs.add("list");
-		attrs.add("separator");
-		syntaxelements.put("queryparam",attrs);
+//		attrs = new HashSet();
+//		attrs.add("value");
+//		attrs.add("CFSQLType");
+//		attrs.add("maxLength");
+//		attrs.add("scale");
+//		attrs.add("null");
+//		attrs.add("list");
+//		attrs.add("separator");
+//		syntaxelements.put("queryparam",attrs);
 		
 		/* <cfregistry 
 		 action = "getAll"
@@ -1696,16 +1706,16 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 entry = "key or value"
 		 variable = "variable"
 		 value = "data"> */
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("branch");
-		attrs.add("type");
-		attrs.add("name");
-		attrs.add("sort");
-		attrs.add("entry");
-		attrs.add("variable");
-		attrs.add("value");
-		syntaxelements.put("registry",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("branch");
+//		attrs.add("type");
+//		attrs.add("name");
+//		attrs.add("sort");
+//		attrs.add("entry");
+//		attrs.add("variable");
+//		attrs.add("value");
+//		syntaxelements.put("registry",attrs);
 		
 		/* <cfreport 
 		 report = "report_path"
@@ -1717,32 +1727,32 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 password = "password"
 		 formula = "formula">
 		 </cfreport> */ 
-		attrs = new HashSet();
-		attrs.add("report");
-		attrs.add("dataSource");
-		attrs.add("type");
-		attrs.add("timeout");
-		attrs.add("orderBy");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("formula");
-		syntaxelements.put("report",attrs);
+//		attrs = new HashSet();
+//		attrs.add("report");
+//		attrs.add("dataSource");
+//		attrs.add("type");
+//		attrs.add("timeout");
+//		attrs.add("orderBy");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("formula");
+//		syntaxelements.put("report",attrs);
 		
 		/* <cfrethrow> */ 
-		attrs = new HashSet();
-		syntaxelements.put("rethrow",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("rethrow",attrs);
 
 		/* <cfreturn> */ 
-		attrs = new HashSet();
-		syntaxelements.put("return",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("return",attrs);
 
 		/*<cfsavecontent 
 		 variable = "variable name">
 		 the content
 		 </cfsavecontent> */ 
-		attrs = new HashSet();
-		attrs.add("variable");
-		syntaxelements.put("savecontent",attrs);
+//		attrs = new HashSet();
+//		attrs.add("variable");
+//		syntaxelements.put("savecontent",attrs);
 		
 		/* <cfschedule 
 		 action = "update"
@@ -1764,31 +1774,31 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 proxyServer = "hostname"
 		 port = "port_number"
 		 proxyPort = "port_number"> */
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("task");
-		attrs.add("operation");
-		attrs.add("file");
-		attrs.add("path");
-		attrs.add("startDate");
-		attrs.add("startTime");
-		attrs.add("url");
-		attrs.add("publish");
-		attrs.add("endDate");
-		attrs.add("endTime");
-		attrs.add("interval");
-		attrs.add("requestTimeOut");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("resolveURL");
-		attrs.add("proxyServer");
-		attrs.add("port");
-		attrs.add("proxyPort");
-		syntaxelements.put("schedule",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("task");
+//		attrs.add("operation");
+//		attrs.add("file");
+//		attrs.add("path");
+//		attrs.add("startDate");
+//		attrs.add("startTime");
+//		attrs.add("url");
+//		attrs.add("publish");
+//		attrs.add("endDate");
+//		attrs.add("endTime");
+//		attrs.add("interval");
+//		attrs.add("requestTimeOut");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("resolveURL");
+//		attrs.add("proxyServer");
+//		attrs.add("port");
+//		attrs.add("proxyPort");
+//		syntaxelements.put("schedule",attrs);
 		
 		/* <cfscript> */ 
-		attrs = new HashSet();
-		syntaxelements.put("script",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("script",attrs);
 		
 		/* <cfsearch 
 		 name = "search_name"
@@ -1798,15 +1808,15 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 maxRows = "number"
 		 startRow = "row_number"
 		 language = "language"> */ 
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("collection");
-		attrs.add("type");
-		attrs.add("criteria");
-		attrs.add("maxRows");
-		attrs.add("startRow");
-		attrs.add("language");
-		syntaxelements.put("search",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("collection");
+//		attrs.add("type");
+//		attrs.add("criteria");
+//		attrs.add("maxRows");
+//		attrs.add("startRow");
+//		attrs.add("language");
+//		syntaxelements.put("search",attrs);
 		
 		/* <cfselect 
 		 name = "name"
@@ -1821,38 +1831,38 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 display = "text"
 		 passThrough = "HTML_attributes">
 		 </cfselect> */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("required");
-		attrs.add("message");
-		attrs.add("onError");
-		attrs.add("size");
-		attrs.add("multiple");
-		attrs.add("query");
-		attrs.add("selected");
-		attrs.add("value");
-		attrs.add("display");
-		attrs.add("passThrough");
-		syntaxelements.put("select",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("required");
+//		attrs.add("message");
+//		attrs.add("onError");
+//		attrs.add("size");
+//		attrs.add("multiple");
+//		attrs.add("query");
+//		attrs.add("selected");
+//		attrs.add("value");
+//		attrs.add("display");
+//		attrs.add("passThrough");
+//		syntaxelements.put("select",attrs);
 		
 		/*<cfset 
 		 variable_name = expression> */ 
-		attrs = new HashSet();
-		syntaxelements.put("set",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("set",attrs);
 		
 		/*<cfsilent>*/ 
-		attrs = new HashSet();
-		syntaxelements.put("silent",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("silent",attrs);
 		
 		/* <cfsetting 
 		 enableCFoutputOnly = "Yes" or "No" 
 		 showDebugOutput = "Yes" or "No" 
 		 requestTimeOut = "value in seconds" > */
-		attrs = new HashSet();
-		attrs.add("enableCFoutputOnly");
-		attrs.add("showDebugOutput");
-		attrs.add("requestTimeOut");
-		syntaxelements.put("setting",attrs);
+//		attrs = new HashSet();
+//		attrs.add("enableCFoutputOnly");
+//		attrs.add("showDebugOutput");
+//		attrs.add("requestTimeOut");
+//		syntaxelements.put("setting",attrs);
 		
 		/* <cfslider 
 		 name = "name"
@@ -1882,35 +1892,35 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 italic = "Yes" or "No"
 		 bold = "Yes" or "No"
 		 notSupported = "text"> */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("label");
-		attrs.add("refreshLabel");
-		attrs.add("range");
-		attrs.add("scale");
-		attrs.add("value");
-		attrs.add("onValidate");
-		attrs.add("message");
-		attrs.add("onError");
-		attrs.add("height");
-		attrs.add("width");
-		attrs.add("vSpace");
-		attrs.add("hSpace");
-		attrs.add("align");
-		attrs.add("tickMarkMajor");
-		attrs.add("tickMarkMinor");
-		attrs.add("tickMarkImages");
-		attrs.add("tickMarkLabels");
-		attrs.add("lookAndFeel");
-		attrs.add("vertical");
-		attrs.add("bgColor");
-		attrs.add("textColor");
-		attrs.add("font");
-		attrs.add("fontSize");
-		attrs.add("italic");
-		attrs.add("bold");
-		attrs.add("notSupported");
-		syntaxelements.put("slider",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("label");
+//		attrs.add("refreshLabel");
+//		attrs.add("range");
+//		attrs.add("scale");
+//		attrs.add("value");
+//		attrs.add("onValidate");
+//		attrs.add("message");
+//		attrs.add("onError");
+//		attrs.add("height");
+//		attrs.add("width");
+//		attrs.add("vSpace");
+//		attrs.add("hSpace");
+//		attrs.add("align");
+//		attrs.add("tickMarkMajor");
+//		attrs.add("tickMarkMinor");
+//		attrs.add("tickMarkImages");
+//		attrs.add("tickMarkLabels");
+//		attrs.add("lookAndFeel");
+//		attrs.add("vertical");
+//		attrs.add("bgColor");
+//		attrs.add("textColor");
+//		attrs.add("font");
+//		attrs.add("fontSize");
+//		attrs.add("italic");
+//		attrs.add("bold");
+//		attrs.add("notSupported");
+//		syntaxelements.put("slider",attrs);
 
 		/* <cfstoredproc 
 		 procedure = "procedure name"
@@ -1920,21 +1930,21 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 blockFactor = "blocksize"
 		 debug = "Yes" or "No"
 		 returnCode = "Yes" or "No"> */
-		attrs = new HashSet();
-		attrs.add("procedure");
-		attrs.add("dataSource");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("blockFactor");
-		attrs.add("debug");
-		attrs.add("returnCode");
-		syntaxelements.put("storedproc",attrs);
+//		attrs = new HashSet();
+//		attrs.add("procedure");
+//		attrs.add("dataSource");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("blockFactor");
+//		attrs.add("debug");
+//		attrs.add("returnCode");
+//		syntaxelements.put("storedproc",attrs);
 
 		/* <cfswitch 
 		 expression = "expression"> */
-		attrs = new HashSet();
-		attrs.add("expression");
-		syntaxelements.put("switch",attrs);
+//		attrs = new HashSet();
+//		attrs.add("expression");
+//		syntaxelements.put("switch",attrs);
 		
 		/* <cftable 
 		 query = "query_name"
@@ -1947,16 +1957,16 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 startRow = "row_number">
 		 ...
 		 </cftable> */ 
-		attrs = new HashSet();
-		attrs.add("query");
-		attrs.add("maxRows");
-		attrs.add("colSpacing");
-		attrs.add("headerLines");
-		attrs.add("HTMLTable");
-		attrs.add("border");
-		attrs.add("colHeaders");
-		attrs.add("startRow");
-		syntaxelements.put("table",attrs);
+//		attrs = new HashSet();
+//		attrs.add("query");
+//		attrs.add("maxRows");
+//		attrs.add("colSpacing");
+//		attrs.add("headerLines");
+//		attrs.add("HTMLTable");
+//		attrs.add("border");
+//		attrs.add("colHeaders");
+//		attrs.add("startRow");
+//		syntaxelements.put("table",attrs);
 		
 		/* <cftextinput 
 		 name = "name"
@@ -1981,30 +1991,30 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 textColor = "color"
 		 maxLength = "integer"
 		 notSupported = "text"> */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("value");
-		attrs.add("required");
-		attrs.add("range");
-		attrs.add("validate");
-		attrs.add("onValidate");
-		attrs.add("message");
-		attrs.add("onError");
-		attrs.add("size");
-		attrs.add("font");
-		attrs.add("fontSize");
-		attrs.add("italic");
-		attrs.add("bold");
-		attrs.add("height");
-		attrs.add("width");
-		attrs.add("vSpace");
-		attrs.add("hSpace");
-		attrs.add("align");
-		attrs.add("bgColor");
-		attrs.add("textColor");
-		attrs.add("maxLength");
-		attrs.add("notSupported");
-		syntaxelements.put("textinput",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("value");
+//		attrs.add("required");
+//		attrs.add("range");
+//		attrs.add("validate");
+//		attrs.add("onValidate");
+//		attrs.add("message");
+//		attrs.add("onError");
+//		attrs.add("size");
+//		attrs.add("font");
+//		attrs.add("fontSize");
+//		attrs.add("italic");
+//		attrs.add("bold");
+//		attrs.add("height");
+//		attrs.add("width");
+//		attrs.add("vSpace");
+//		attrs.add("hSpace");
+//		attrs.add("align");
+//		attrs.add("bgColor");
+//		attrs.add("textColor");
+//		attrs.add("maxLength");
+//		attrs.add("notSupported");
+//		syntaxelements.put("textinput",attrs);
 
 		/* <cfthrow 
 		 type = "exception_type "
@@ -2013,14 +2023,14 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 errorCode = "error_code "
 		 extendedInfo = "additional_information" 
 		 object = "java_except_object"> */
-		attrs = new HashSet();
-		attrs.add("type");
-		attrs.add("message");
-		attrs.add("detail");
-		attrs.add("errorCode");
-		attrs.add("extendedInfo");
-		attrs.add("object");
-		syntaxelements.put("throw",attrs);
+//		attrs = new HashSet();
+//		attrs.add("type");
+//		attrs.add("message");
+//		attrs.add("detail");
+//		attrs.add("errorCode");
+//		attrs.add("extendedInfo");
+//		attrs.add("object");
+//		syntaxelements.put("throw",attrs);
 		
 		/* <cftrace 
 		 abort = "Yes or No"
@@ -2030,24 +2040,24 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 type = "format"
 		 var = "variable_name"
 		 </cftrace> */
-		attrs = new HashSet();
-		attrs.add("abort");
-		attrs.add("category");
-		attrs.add("inline");
-		attrs.add("text");
-		attrs.add("type");
-		attrs.add("var");
-		syntaxelements.put("trace",attrs);
+//		attrs = new HashSet();
+//		attrs.add("abort");
+//		attrs.add("category");
+//		attrs.add("inline");
+//		attrs.add("text");
+//		attrs.add("type");
+//		attrs.add("var");
+//		syntaxelements.put("trace",attrs);
 
 		/* <cftransaction 
 		 action = "begin" or "commit" or "rollback"
 		 isolation = "read_uncommitted" or "read_committed" or 
 		 "repeatable_read" >
 		 </cftransaction> */ 
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("isolation");
-		syntaxelements.put("transaction",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("isolation");
+//		syntaxelements.put("transaction",attrs);
 		
 		/* <cftree 
 		 name = "name"
@@ -2074,31 +2084,31 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 vScroll = "Yes" or "No"
 		 notSupported = "text">
 		 </cftree> */
-		attrs = new HashSet();
-		attrs.add("name");
-		attrs.add("required");
-		attrs.add("delimiter");
-		attrs.add("completePath");
-		attrs.add("appendKey");
-		attrs.add("highlightHref");
-		attrs.add("onValidate");
-		attrs.add("message");
-		attrs.add("onError");
-		attrs.add("lookAndFeel");
-		attrs.add("font");
-		attrs.add("fontSize");
-		attrs.add("italic");
-		attrs.add("bold");
-		attrs.add("height");
-		attrs.add("width");
-		attrs.add("vSpace");
-		attrs.add("hSpace");
-		attrs.add("align");
-		attrs.add("border");
-		attrs.add("hScroll");
-		attrs.add("vScroll");
-		attrs.add("notSupported");
-		syntaxelements.put("tree",attrs);
+//		attrs = new HashSet();
+//		attrs.add("name");
+//		attrs.add("required");
+//		attrs.add("delimiter");
+//		attrs.add("completePath");
+//		attrs.add("appendKey");
+//		attrs.add("highlightHref");
+//		attrs.add("onValidate");
+//		attrs.add("message");
+//		attrs.add("onError");
+//		attrs.add("lookAndFeel");
+//		attrs.add("font");
+//		attrs.add("fontSize");
+//		attrs.add("italic");
+//		attrs.add("bold");
+//		attrs.add("height");
+//		attrs.add("width");
+//		attrs.add("vSpace");
+//		attrs.add("hSpace");
+//		attrs.add("align");
+//		attrs.add("border");
+//		attrs.add("hScroll");
+//		attrs.add("vScroll");
+//		attrs.add("notSupported");
+//		syntaxelements.put("tree",attrs);
 		
 		/* <cftreeitem 
 		 value = "text"
@@ -2111,22 +2121,22 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 query = "queryname"
 		 queryAsRoot = "Yes" or "No"
 		 expand = "Yes" or "No"> */
-		attrs = new HashSet();
-		attrs.add("value");
-		attrs.add("display");
-		attrs.add("parent");
-		attrs.add("img");
-		attrs.add("imgopen");
-		attrs.add("href");
-		attrs.add("target");
-		attrs.add("query");
-		attrs.add("queryAsRoot");
-		attrs.add("expand");
-		syntaxelements.put("treeitem",attrs);
+//		attrs = new HashSet();
+//		attrs.add("value");
+//		attrs.add("display");
+//		attrs.add("parent");
+//		attrs.add("img");
+//		attrs.add("imgopen");
+//		attrs.add("href");
+//		attrs.add("target");
+//		attrs.add("query");
+//		attrs.add("queryAsRoot");
+//		attrs.add("expand");
+//		syntaxelements.put("treeitem",attrs);
 
 		/* <cftry> */ 
-		attrs = new HashSet();
-		syntaxelements.put("try",attrs);
+//		attrs = new HashSet();
+//		syntaxelements.put("try",attrs);
 		
 		/* <cfupdate 
 		 dataSource = "ds_name"
@@ -2136,15 +2146,15 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 username = "username"
 		 password = "password"
 		 formFields = "field_names"> */
-		attrs = new HashSet();
-		attrs.add("dataSource");
-		attrs.add("tableName");
-		attrs.add("tableOwner");
-		attrs.add("tableQualifier");
-		attrs.add("username");
-		attrs.add("password");
-		attrs.add("formFields");
-		syntaxelements.put("update",attrs);
+//		attrs = new HashSet();
+//		attrs.add("dataSource");
+//		attrs.add("tableName");
+//		attrs.add("tableOwner");
+//		attrs.add("tableQualifier");
+//		attrs.add("username");
+//		attrs.add("password");
+//		attrs.add("formFields");
+//		syntaxelements.put("update",attrs);
 
 		/* <cfwddx 
 		 action = "action" 
@@ -2153,22 +2163,22 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictio
 		 topLevelVariable = "toplevelvariablenameforjavascript"
 		 useTimeZoneInfo = "Yes" or "No"
 		 validate = "Yes" or "No" > */
-		attrs = new HashSet();
-		attrs.add("action");
-		attrs.add("input");
-		attrs.add("output");
-		attrs.add("topLevelVariable");
-		attrs.add("useTimeZoneInfo");
-		attrs.add("validate");
-		syntaxelements.put("wddx",attrs);
+//		attrs = new HashSet();
+//		attrs.add("action");
+//		attrs.add("input");
+//		attrs.add("output");
+//		attrs.add("topLevelVariable");
+//		attrs.add("useTimeZoneInfo");
+//		attrs.add("validate");
+//		syntaxelements.put("wddx",attrs);
 		
 		/* <CFXML 
 		 variable="xmlVarName" 
 		 caseSensitive="yes" or "no"> */ 
-		attrs = new HashSet();
-		attrs.add("variable");
-		attrs.add("caseSensitive");
-		syntaxelements.put("xml",attrs);
+//		attrs = new HashSet();
+//		attrs.add("variable");
+//		attrs.add("caseSensitive");
+//		syntaxelements.put("xml",attrs);
 	}
 }
 

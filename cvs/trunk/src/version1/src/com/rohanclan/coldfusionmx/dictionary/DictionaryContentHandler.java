@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import java.util.Map;
+//import java.util.HashMap;
 
 /**
  * @author Rob
@@ -38,16 +39,22 @@ import java.util.Map;
 public class DictionaryContentHandler implements ContentHandler {
 	//keep track of the location
 	private Locator locator;
-	private Map namespaceMappings;
+	//private Map namespaceMappings;
 	
 	private Map dtags;
 	private Map dfunctions;	
+	
+	/** used to mark which part of the xml doc we are in */
+	private String currenttag = "";
+	/** current tag/function being built */
+	private Procedure currentitem = null;
+	private Parameter paramitem = null;
 	
 	public DictionaryContentHandler(Map tags, Map functions)
 	{
 		dtags = tags;
 		dfunctions = functions;
-		namespaceMappings = new java.util.HashMap();
+		//namespaceMappings = new java.util.HashMap();
 	}
 	
 	/** sets the documnet locator
@@ -58,86 +65,198 @@ public class DictionaryContentHandler implements ContentHandler {
 		this.locator = locator;
 	}
 	
+	/**
+	 * guesses if the passed string is "true" or "false"
+	 * @param bstring the "true" "false" string
+	 * @return the string in a boolean form
+	 */
+	private boolean parseBoolean(String bstring)
+	{
+		if(bstring.equalsIgnoreCase("true") || bstring.equalsIgnoreCase("yes"))
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
 	/** process a start element */
 	public void startElement(String namespace, String localName, String str2, org.xml.sax.Attributes attributes) 
 		throws SAXException 
 	{
-		//just so we know its a parsin'
-		System.out.print(attributes.getLength());
-		
-		/* String prefix=new String("");
-		if(namespace.length() > 0){
-			prefix = (String)namespaceMappings.get(namespace);
-			if(prefix != null && !prefix.equals("")){
-				prefix += ":";
-			}else{
-				prefix="";
-			}
-		} */
-		
-		//DefaultMutableTreeNode element = new DefaultMutableTreeNode(prefix  + localName);
-		//current.add(element);
-		//current = element;
-		
-		/* for(int x=0; x<attributes.getLength(); x++){
-			//give a little hint to this nodes value
-			String value = attributes.getValue(x);
-			if(value.length() > 15) value = value.substring(0,14) + "...";
+		//save the current tag so we can see where we were
+		currenttag = str2;
+				
+		if(str2.equals("tag"))
+		{
+			//all the attribtues we are going to need to make a tag
+			byte creator = 0;
+			String name = "";
+			boolean single = false;
+			boolean xmlstyle = false;
 			
-			current.add(new DefaultMutableTreeNode('@' + attributes.getQName(x) + " =>[" + value + "]"));
-		} */
+			//get all the attributes needed for the tag
+			for(int x=0; x< attributes.getLength(); x++)
+			{
+				String attrname = attributes.getQName(x);
+				if(attrname.equals("creator"))
+				{
+					creator = Byte.parseByte(attributes.getValue(x));
+				}
+				else if(attrname.equals("name"))
+				{
+					name = attributes.getValue(x);
+				}
+				else if(attrname.equals("single"))
+				{
+					single = parseBoolean(attributes.getValue(x));
+				}
+				else if(attrname.equals("xmlstyle"))
+				{
+					xmlstyle = parseBoolean(attributes.getValue(x));
+				}
+			}
+			
+			//System.out.println("Tag: " + creator + " " + name + " " + single + " " + xmlstyle);
+			//create a new tag
+			this.currentitem = new Tag(name,single,xmlstyle,creator);
+		}
+		else if(str2.equals("function"))
+		{
+			//create a new function
+			byte creator = 0;
+			String name = "";
+			String returns = "";
+			
+			//get all the attributes needed for the tag
+			for(int x=0; x< attributes.getLength(); x++)
+			{
+				String attrname = attributes.getQName(x);
+				if(attrname.equals("creator"))
+				{
+					creator = Byte.parseByte(attributes.getValue(x));
+				}
+				else if(attrname.equals("name"))
+				{
+					name = attributes.getValue(x);
+				}
+				else if(attrname.equals("returns"))
+				{
+					returns = attributes.getValue(x);
+				}
+			}
+			//System.out.println("Fun: " + creator + " " + name + " " + returns);
+			//create a new function
+			this.currentitem = new Function(name, returns, creator);
+		}
+		else if(str2.equals("parameter"))
+		{
+			//get the name and type
+			String name = "";
+			String type = "";
+			boolean required = false;
+			
+			for(int x=0; x< attributes.getLength(); x++)
+			{
+				String attrname = attributes.getQName(x);
+				if(attrname.equals("type"))
+				{
+					type = attributes.getValue(x);
+				}
+				else if(attrname.equals("name"))
+				{
+					name = attributes.getValue(x);
+				}
+				else if(attrname.equals("required"))
+				{
+					required = parseBoolean(attributes.getValue(x));
+				}
+			}
+			
+			//System.out.println("Param: " + name + " " + type + " " + required);
+			//create a new parameter
+			this.paramitem = new Parameter(name,type,required);
+		}
+		else if(str2.equals("value"))
+		{
+			//create a new value and assign it to the current parameter
+			String option = attributes.getValue(0);
+			//System.out.println("Value: " + option);
+			if(option != null && paramitem != null)
+				paramitem.addValue(new Value(option));
+		}
+		else if (str2.equals("help"))
+		{
+			//adds help
+		}
 	}
 	
 	/** process an end element */
 	public void endElement(String str, String str1, String str2) throws SAXException {
-		//current = (DefaultMutableTreeNode)current.getParent();
+		if(str2.equals("tag"))
+		{
+			//add the current item to the tag map
+			if(this.currentitem != null)
+				dtags.put(currentitem.getName(),(Tag)currentitem);
+			//System.err.println(this.currentitem);
+		}
+		else if(str2.equals("function"))
+		{
+			//add the current item to the function map
+			if(this.currentitem != null)
+				dfunctions.put(currentitem.getName(),(Function)currentitem);
+		}
+		else if(str2.equals("parameter"))
+		{
+			//attact the finished parameter to the
+			//current item
+			if(currentitem != null && paramitem != null)
+				currentitem.addParameter(paramitem);
+			
+			//reset the paramitem
+			paramitem = null;
+		}
+		else if(str2.equals("value"))
+		{
+			//nothing?
+		}
+		else if(str2.equals("help"))
+		{
+			//nothing?
+		}
+		currenttag = "";
 	}
 	/** process the start prefix */	
 	public void startPrefixMapping(String str, String str1) throws SAXException {
 		//save the mappings for later use
-		namespaceMappings.put(str1,str);
-		
-		//if there is a prefix add a : to the begining
-		/* if(str != null && str.length() > 0){
-			str=":"+str;
-		}
-		current.add(new DefaultMutableTreeNode("xmlns" + str + "=" + "\"" + str1 + "\"" ));
-		*/
+		//namespaceMappings.put(str1,str);
 	}
 	/** process the end prefix */
-	public void endPrefixMapping(String str) throws SAXException {
-		/* for(java.util.Iterator i = namespaceMappings.keySet().iterator(); i.hasNext();) {
-			String uri = (String)i.next();
-			String thisPrefix = (String)namespaceMappings.get(uri);
-			if(str.equals(thisPrefix)){
-				namespaceMappings.remove(uri);
-				break;
-			}
-		} */
-	}
-	
-	StringBuffer resvalue = new StringBuffer();
+	public void endPrefixMapping(String str) throws SAXException {;}
+		
 	/** process characters */
 	public void characters(char[] values, int start, int length) throws SAXException {
-		//Object obj = current.getUserObject();
-		//if the current object is not null, there is a help value, and it doesnt
-		//look like a help value has been added at one
-		/* if(obj != null && obj.toString().indexOf(" =>[") < 0){
 			
-			//give a hint to the nodes contents
-			int orglen = length;
-			if(length > 15) length = 15;
+		if(currenttag.equals("help"))
+		{
+			StringBuffer resvalue = new StringBuffer();
+			
 			for(int x=start; x<(start+length); x++){
 				resvalue.append(values[x]);
 			}
 			
-			if(resvalue.length() > 0){
-				if(orglen != length) resvalue.append("...");
-				current.setUserObject(( (String)obj) + " =>[" + resvalue.toString() + "]");
+			//if the current item is not null and the prams are its help for the
+			//current item
+			if(currentitem != null && paramitem == null)
+			{
+				currentitem.setHelp(resvalue.toString().trim().replace('\t',' '));
 			}
-			
-			resvalue.delete(0,resvalue.length());
-		} */
+			//if the param is not null its help for the param
+			else if(currentitem != null && paramitem != null)
+			{
+				paramitem.setHelp(resvalue.toString().trim().replace('\t',' '));
+			}
+		}
 	}
 	
 	/** process the end of the document */

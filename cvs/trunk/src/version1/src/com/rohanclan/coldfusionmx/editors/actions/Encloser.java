@@ -27,7 +27,6 @@ package com.rohanclan.coldfusionmx.editors.actions;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.BadLocationException;
-//import org.eclipse.jface.action.Action;
 
 /**
  * @author Rob
@@ -35,8 +34,15 @@ import org.eclipse.jface.text.BadLocationException;
  * This is mostly used as a class to wrap text with something (like a comment,
  * or a cf variable, etc). This class is often extended not used directly
  */
-public class Encloser {  //extends Action {
+public class Encloser {
 
+	/** 
+	 * Wraps the selection with the start and end string
+	 * @param doc the document this belongs to
+	 * @param sel the selection to be wrapped
+	 * @param start the string to put before the selection
+	 * @param end the string to put before the selection
+	 */
 	public void enclose(IDocument doc, ITextSelection sel, String start, String end)
 	{
 		try
