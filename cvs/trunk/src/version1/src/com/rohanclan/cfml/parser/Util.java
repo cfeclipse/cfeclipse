@@ -493,10 +493,10 @@ public class Util {
 	
 	static protected void dumpMatches(ArrayList matches)
 	{
-// System.out.println("Dumping the matches:");
+ //System.out.println("Dumping the matches:");
 		for(int i = 0; i < matches.size(); i++)
 		{
-// System.out.println("Match: \'" + ((ParseItemMatch)matches.get(i)).match + "\'");
+ //System.out.println("Match: \'" + ((ParseItemMatch)matches.get(i)).match + "\'");
 		}
 	}
 	

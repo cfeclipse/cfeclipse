@@ -24,7 +24,6 @@
  */
 package com.rohanclan.cfml.editors;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.swt.widgets.Composite;
@@ -33,56 +32,45 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.JumpToDocPos;
 import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.ui.texteditor.MarkerAnnotation;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.jface.text.*;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
-//import org.eclipse.jface.action.Separator;
-//import org.eclipse.ui.IEditorPart;
-//import org.eclipse.ui.IWorkbenchActionConstants;
-//import org.eclipse.ui.texteditor.ITextEditor;
-//import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.IDocumentProviderExtension;
+import org.eclipse.ui.texteditor.IStatusField;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
-//import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IChangeRulerColumn;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
-import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.projection.*;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
-//import org.eclipse.jface.viewers.IStructuredSelection;
-//import org.eclipse.jface.viewers.ISelection;
+
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
-import org.eclipse.ui.editors.text.TextEditor;
+
 import org.eclipse.ui.internal.editors.text.EditorsPlugin;
-//import org.eclipse.jface.text.ITextSelection;
+
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import com.rohanclan.cfml.editors.actions.RTrimAction;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
-import com.rohanclan.cfml.parser.*;
+
 
 import org.eclipse.jface.action.Action;
 
@@ -90,13 +78,11 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 
 import com.rohanclan.cfml.util.CFPluginImages;
-//import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
 
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 
-//import java.util.Iterator;
 
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
@@ -135,6 +121,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	
 	private ProjectionSupport fProjectionSupport; 
 	
+	
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -143,8 +130,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		// here.
 		//On save parsing should apparently go into a builder.
 
-		
-	    
+	
 	    
 	    
 	    

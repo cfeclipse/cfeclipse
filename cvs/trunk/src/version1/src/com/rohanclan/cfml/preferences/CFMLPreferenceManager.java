@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.jface.preference.PreferenceStore;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Stephen Milligan
@@ -24,6 +25,7 @@ import java.io.IOException;
 public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 
 	private IPreferenceStore store;
+	
 	
 	private static final int DEFAULT_TAB_WIDTH = 4;
 	private static final int DEFAULT_INSIGHT_DELAY = 500;
@@ -83,6 +85,46 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	
 	// Folding defaults
 	private static final boolean DEFAULT_ENABLE_CODE_FOLDING = true;
+	private static final int DEFAULT_MINIMUM_CODE_FOLDING_LINES = 3;
+	
+	// CFML Comments
+	private static final boolean DEFAULT_FOLDING_CFMLCOMMENTS_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_CFMLCOMMENTS_COLLAPSE = true;
+	// HTML Comments
+	private static final boolean DEFAULT_FOLDING_HTMLCOMMENTS_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_HTMLCOMMENTS_COLLAPSE = true;
+	// tag1
+	private static final boolean DEFAULT_FOLDING_TAG1_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG1_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG1_NAME = "cffunction";
+	// tag2
+	private static final boolean DEFAULT_FOLDING_TAG2_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG2_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG2_NAME = "cfquery";
+	// tag3
+	private static final boolean DEFAULT_FOLDING_TAG3_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG3_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG3_NAME = "cfscript";
+	// tag4
+	private static final boolean DEFAULT_FOLDING_TAG4_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG4_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG4_NAME = "cfloop";
+	// tag5
+	private static final boolean DEFAULT_FOLDING_TAG5_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG5_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG5_NAME = "cfoutput";
+	// tag6
+	private static final boolean DEFAULT_FOLDING_TAG6_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG6_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG6_NAME = "cfif";
+	// tag7
+	private static final boolean DEFAULT_FOLDING_TAG7_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG7_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG7_NAME = "cfswitch";
+	// tag8
+	private static final boolean DEFAULT_FOLDING_TAG8_FOLD = true;
+	private static final boolean DEFAULT_FOLDING_TAG8_COLLAPSE = false;
+	private static final String DEFAULT_FOLDING_TAG8_NAME = "cftry";
 	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
@@ -191,6 +233,35 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         
         // Folding
         store.setDefault(P_ENABLE_CODE_FOLDING,DEFAULT_ENABLE_CODE_FOLDING);
+        store.setDefault(P_MINIMUM_CODE_FOLDING_LINES,DEFAULT_MINIMUM_CODE_FOLDING_LINES);
+        store.setDefault(P_FOLDING_CFMLCOMMENTS_COLLAPSE,DEFAULT_FOLDING_CFMLCOMMENTS_COLLAPSE);
+        store.setDefault(P_FOLDING_CFMLCOMMENTS_FOLD,DEFAULT_FOLDING_CFMLCOMMENTS_FOLD);
+        store.setDefault(P_FOLDING_HTMLCOMMENTS_COLLAPSE,DEFAULT_FOLDING_HTMLCOMMENTS_COLLAPSE);
+        store.setDefault(P_FOLDING_HTMLCOMMENTS_FOLD,DEFAULT_FOLDING_HTMLCOMMENTS_FOLD);
+        store.setDefault(P_FOLDING_TAG1_FOLD,DEFAULT_FOLDING_TAG1_FOLD);
+        store.setDefault(P_FOLDING_TAG1_COLLAPSE,DEFAULT_FOLDING_TAG1_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG1_NAME,DEFAULT_FOLDING_TAG1_NAME);
+        store.setDefault(P_FOLDING_TAG2_FOLD,DEFAULT_FOLDING_TAG2_FOLD);
+        store.setDefault(P_FOLDING_TAG2_COLLAPSE,DEFAULT_FOLDING_TAG2_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG2_NAME,DEFAULT_FOLDING_TAG2_NAME);
+        store.setDefault(P_FOLDING_TAG3_FOLD,DEFAULT_FOLDING_TAG3_FOLD);
+        store.setDefault(P_FOLDING_TAG3_COLLAPSE,DEFAULT_FOLDING_TAG3_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG3_NAME,DEFAULT_FOLDING_TAG3_NAME);
+        store.setDefault(P_FOLDING_TAG4_FOLD,DEFAULT_FOLDING_TAG4_FOLD);
+        store.setDefault(P_FOLDING_TAG4_COLLAPSE,DEFAULT_FOLDING_TAG4_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG4_NAME,DEFAULT_FOLDING_TAG4_NAME);
+        store.setDefault(P_FOLDING_TAG5_FOLD,DEFAULT_FOLDING_TAG5_FOLD);
+        store.setDefault(P_FOLDING_TAG5_COLLAPSE,DEFAULT_FOLDING_TAG5_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG5_NAME,DEFAULT_FOLDING_TAG5_NAME);
+        store.setDefault(P_FOLDING_TAG6_FOLD,DEFAULT_FOLDING_TAG6_FOLD);
+        store.setDefault(P_FOLDING_TAG6_COLLAPSE,DEFAULT_FOLDING_TAG6_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG6_NAME,DEFAULT_FOLDING_TAG6_NAME);
+        store.setDefault(P_FOLDING_TAG7_FOLD,DEFAULT_FOLDING_TAG7_FOLD);
+        store.setDefault(P_FOLDING_TAG7_COLLAPSE,DEFAULT_FOLDING_TAG7_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG7_NAME,DEFAULT_FOLDING_TAG7_NAME);
+        store.setDefault(P_FOLDING_TAG8_FOLD,DEFAULT_FOLDING_TAG8_FOLD);
+        store.setDefault(P_FOLDING_TAG8_COLLAPSE,DEFAULT_FOLDING_TAG8_COLLAPSE);
+        store.setDefault(P_FOLDING_TAG8_NAME,DEFAULT_FOLDING_TAG8_NAME);
 	}
 	
 	/**
@@ -318,7 +389,99 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 
 	
 	public boolean enableFolding() {
-		return store.getString(ICFMLPreferenceConstants.P_ENABLE_CODE_FOLDING).trim().equalsIgnoreCase("true");
+		return store.getBoolean(ICFMLPreferenceConstants.P_ENABLE_CODE_FOLDING);
+	}
+	
+	public int minimumFoldingLines() {
+		return store.getInt(ICFMLPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES);
+	}
+
+
+	public boolean foldCFMLComments() {
+		return store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_CFMLCOMMENTS_FOLD);
+	}
+	
+	public boolean collapseCFMLComments() {
+		return store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_CFMLCOMMENTS_COLLAPSE);
+	}
+
+
+	public boolean foldHTMLComments() {
+		return store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_HTMLCOMMENTS_FOLD);
+	}
+	
+	public boolean collapseHTMLComments() {
+		return store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_HTMLCOMMENTS_COLLAPSE);
+	}
+
+	public boolean foldTag(int tagNumber) {
+	    boolean val = false;
+		switch (tagNumber) {
+			case 1: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG1_FOLD); 
+			break;
+			case 2: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG2_FOLD); 
+			break; 
+			case 3: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG3_FOLD); 
+			break;
+			case 4: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG4_FOLD); 
+			break;
+			case 5: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG5_FOLD); 
+			break;
+			case 6: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG6_FOLD); 
+			break;
+			case 7: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG7_FOLD); 
+			break;
+			case 8: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG8_FOLD); 
+			break;
+		}
+	    return val;
+	}
+
+	public boolean collapseTag(int tagNumber) {
+	    boolean val = false;
+		switch (tagNumber) {
+			case 1: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG1_COLLAPSE);
+			break;
+			case 2: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG2_COLLAPSE);
+			break;
+			case 3: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG3_COLLAPSE);
+			break;
+			case 4: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG4_COLLAPSE);
+			break;
+			case 5: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG5_COLLAPSE);
+			break;
+			case 6: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG6_COLLAPSE);
+			break;
+			case 7: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG7_COLLAPSE);
+			break;
+			case 8: val = store.getBoolean(ICFMLPreferenceConstants.P_FOLDING_TAG8_COLLAPSE);
+			break;
+		}
+	    return val;
+	}
+
+	public String foldingTagName(int tagNumber) {
+	    //System.out.println("TEST : " + store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG1_NAME));
+	    String val = "";
+		switch (tagNumber) {
+			case 1: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG1_NAME);
+			break;
+			case 2: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG2_NAME);
+			break;
+			case 3: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG3_NAME);
+			break;
+			case 4: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG4_NAME);
+			break;
+			case 5: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG5_NAME);
+			break;
+			case 6: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG6_NAME);
+			break;
+			case 7: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG7_NAME);
+			break;
+			case 8: val = store.getString(ICFMLPreferenceConstants.P_FOLDING_TAG8_NAME);
+			break;
+		}
+	    return val;
 	}
 	
 	

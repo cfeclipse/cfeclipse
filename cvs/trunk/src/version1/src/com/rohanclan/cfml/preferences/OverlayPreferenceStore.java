@@ -104,6 +104,7 @@ class OverlayPreferenceStore
 		{
 			boolean originValue = orgin.getBoolean(key.fKey);
 			boolean targetValue = target.getBoolean(key.fKey);
+		    
 			if(targetValue != originValue)
 				target.setValue(key.fKey, originValue);
 		} else
@@ -139,6 +140,7 @@ class OverlayPreferenceStore
 		{
 			String originValue = orgin.getString(key.fKey);
 			String targetValue = target.getString(key.fKey);
+		    //System.out.println("Propogating " + key.fKey + " with a value of " + originValue);
 			if(targetValue != null && originValue != null && !targetValue.equals(originValue))
 				target.setValue(key.fKey, originValue);
 		}
@@ -146,8 +148,10 @@ class OverlayPreferenceStore
 
 	public void propagate()
 	{
-		for(int i = 0; i < fOverlayKeys.length; i++)
+		for(int i = 0; i < fOverlayKeys.length; i++){
+		    
 			propagateProperty(fStore, fOverlayKeys[i], fParent);
+		}
 
 	}
 
@@ -181,6 +185,7 @@ class OverlayPreferenceStore
 				target.setValue(key.fKey, 1);
 			target.setValue(key.fKey, orgin.getInt(key.fKey));
 			target.setDefault(key.fKey, orgin.getDefaultInt(key.fKey));
+			
 		} else
 		if(LONG == d)
 		{

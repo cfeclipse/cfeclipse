@@ -57,7 +57,7 @@ public class CFDocument {
 	 * List of variables in the document. Not used at the moment.
 	 */
 	public ArrayList docVariables;	
-
+	
 	/**
 	 * Not sure what this is for!
 	 * @deprecated Do not use. Use getDocumentRoot()

@@ -98,7 +98,45 @@ public interface ICFMLPreferenceConstants {
 	//////////////////////////////////////
 	// Folding prefs
 	String P_ENABLE_CODE_FOLDING = "enableCodeFolding";
-	
+	String P_MINIMUM_CODE_FOLDING_LINES = "minimumCodeFoldingLines";
+	// CFML Comments
+	String P_FOLDING_CFMLCOMMENTS_FOLD = "folding.cfmlcomments.fold";
+	String P_FOLDING_CFMLCOMMENTS_COLLAPSE = "folding.cfmlcomments.collapse";
+	// HTML Comments
+	String P_FOLDING_HTMLCOMMENTS_FOLD = "folding.htmlcomments.fold";
+	String P_FOLDING_HTMLCOMMENTS_COLLAPSE = "folding.htmlcomments.collapse";
+	// tag1
+	String P_FOLDING_TAG1_FOLD = "folding.tag1.fold";
+	String P_FOLDING_TAG1_COLLAPSE = "folding.tag1.collapse";
+	String P_FOLDING_TAG1_NAME = "folding.tag1.name";
+	// tag2
+	String P_FOLDING_TAG2_FOLD = "folding.tag2.fold";
+	String P_FOLDING_TAG2_COLLAPSE = "folding.tag2.collapse";
+	String P_FOLDING_TAG2_NAME = "folding.tag2.name";
+	// tag3
+	String P_FOLDING_TAG3_FOLD = "folding.tag3.fold";
+	String P_FOLDING_TAG3_COLLAPSE = "folding.tag3.collapse";
+	String P_FOLDING_TAG3_NAME = "folding.tag3.name";
+	// tag4
+	String P_FOLDING_TAG4_FOLD = "folding.tag4.fold";
+	String P_FOLDING_TAG4_COLLAPSE = "folding.tag4.collapse";
+	String P_FOLDING_TAG4_NAME = "folding.tag4.name";
+	// tag5
+	String P_FOLDING_TAG5_FOLD = "folding.tag5.fold";
+	String P_FOLDING_TAG5_COLLAPSE = "folding.tag5.collapse";
+	String P_FOLDING_TAG5_NAME = "folding.tag5.name";
+	// tag6
+	String P_FOLDING_TAG6_FOLD = "folding.tag6.fold";
+	String P_FOLDING_TAG6_COLLAPSE = "folding.tag6.collapse";
+	String P_FOLDING_TAG6_NAME = "folding.tag6.name";
+	// tag7
+	String P_FOLDING_TAG7_FOLD = "folding.tag7.fold";
+	String P_FOLDING_TAG7_COLLAPSE = "folding.tag7.collapse";
+	String P_FOLDING_TAG7_NAME = "folding.tag7.name";
+	// tag8
+	String P_FOLDING_TAG8_FOLD = "folding.tag8.fold";
+	String P_FOLDING_TAG8_COLLAPSE = "folding.tag8.collapse";
+	String P_FOLDING_TAG8_NAME = "folding.tag8.name";
 	
 	String P_CFML_DICTIONARY = "__cfmlDictionary";
 }

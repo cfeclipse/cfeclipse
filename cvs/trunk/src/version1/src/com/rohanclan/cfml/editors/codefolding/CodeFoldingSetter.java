@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.HashMap;
 
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
@@ -68,22 +70,37 @@ public class CodeFoldingSetter {
         try{
 	        if (model != null) {
 	            
-	            
+	            // We need this to keep track of what should be collapsed once we've added all the markers.
+	            HashMap markerMap = new HashMap();
 	            
 	            scrubAnnotations();
 
+	            if (preferenceManager.foldCFMLComments()) {
+	                foldPartitions(markerMap,CFPartitionScanner.HTM_COMMENT, preferenceManager.collapseCFMLComments() && autoCollapse,preferenceManager.minimumFoldingLines()-1);
+	            }
+	            if (preferenceManager.foldHTMLComments()) {
+	                foldPartitions(markerMap,CFPartitionScanner.CF_COMMENT,preferenceManager.collapseHTMLComments() && autoCollapse,preferenceManager.minimumFoldingLines()-1);
+	            }
 	            
-	            foldPartitions(CFPartitionScanner.HTM_COMMENT, autoCollapse,2);
-	    		foldPartitions(CFPartitionScanner.CF_COMMENT,autoCollapse,2);
-	    		foldPartitions(CFPartitionScanner.J_SCRIPT,false,2);
-	    		foldPartitions(CFPartitionScanner.CSS_TAG,false,2);
-
-	    		foldTags("cfscript", false, 2);
-	    		foldTags("cffunction", false, 2);
-	    		foldTags("cfquery", false, 2);
+	            for (int i=1;i<9;i++) {
+	                //System.out.println("Checking " + preferenceManager.foldingTagName(i).trim());
+	                if (preferenceManager.foldTag(i) 
+	                        && preferenceManager.foldingTagName(i).trim().length() > 0) {
+	                    foldTags(markerMap,preferenceManager.foldingTagName(i).trim(), preferenceManager.collapseTag(i)&& autoCollapse, preferenceManager.minimumFoldingLines()-1);
+	                }
+	            }
+	            
+	            // Now collapse anything that should be collapsed
+	            Iterator x = markerMap.keySet().iterator();
 	    		
-	    		
-	    		
+	            while(x.hasNext()) {
+	                ProjectionAnnotation p = (ProjectionAnnotation)x.next();
+	                boolean collapsed = ((Boolean)markerMap.get(p)).booleanValue();
+	                if (collapsed) { 
+	                    model.collapse(p);
+	                }
+	            }
+	            
 	            
 	        }
         }catch (Exception e) {
@@ -92,7 +109,8 @@ public class CodeFoldingSetter {
     }
     
     
-    private void foldTags(String tagName, boolean autoCollapse, int minLines) {
+    
+    private void foldTags(HashMap markerMap, String tagName, boolean autoCollapse, int minLines) {
         DocItem rootItem = null;
         try {
             rootItem = doc.getCFDocument().getDocumentRoot();
@@ -117,9 +135,11 @@ public class CodeFoldingSetter {
                     try {
                         int startLine = doc.getLineOfOffset(start);
                         int endLine = doc.getLineOfOffset(start+length);
+                        start = doc.getLineOffset(startLine); 
+                        length = doc.getLineOffset(endLine) + doc.getLineLength(endLine) - start;
                         if (endLine - startLine > minLines) {
                             
-                            addFoldingMark(start,length,new CommentProjectionAnnotation(autoCollapse));
+                            addFoldingMark(markerMap, start,length,new CommentProjectionAnnotation(), autoCollapse);
                         }
                     }
                     catch (BadLocationException blx) {
@@ -131,7 +151,9 @@ public class CodeFoldingSetter {
     }
     
     
-    private void foldPartitions(String partitionType, boolean autoCollapse,int minLines) {
+    
+    
+    private void foldPartitions(HashMap markerMap, String partitionType, boolean autoCollapse,int minLines) {
         // This will hold the regions that should have folding markers.
         ArrayList regions = new ArrayList();
         
@@ -147,7 +169,7 @@ public class CodeFoldingSetter {
 		    }
 		}
 		
-        foldRegions(regions, autoCollapse, minLines);
+        foldRegions(markerMap, regions, autoCollapse, minLines);
     }
     
     
@@ -182,7 +204,7 @@ public class CodeFoldingSetter {
      * @param model
      * @param doc
      */
-    private void foldRegions(ArrayList regions, boolean autoCollapse, int minLines) {
+    private void foldRegions(HashMap markerMap, ArrayList regions, boolean autoCollapse, int minLines) {
         int i=0;
 
         try {
@@ -201,8 +223,8 @@ public class CodeFoldingSetter {
                 
                 if (endLine - startLine > minLines) {
 	                try {
-	                    CommentProjectionAnnotation annotation = new CommentProjectionAnnotation(autoCollapse);
-	                    addFoldingMark(start, length, annotation);
+	                    CommentProjectionAnnotation annotation = new CommentProjectionAnnotation();
+	                    addFoldingMark(markerMap, start, length, annotation, autoCollapse);
 	                } catch (BadLocationException e) {
 	                    e.printStackTrace();
 	                }
@@ -221,7 +243,7 @@ public class CodeFoldingSetter {
      * @param annotation
      * @throws BadLocationException
      */
-    public void addFoldingMark(int start, int length, ProjectionAnnotation annotation) throws BadLocationException {
+    public void addFoldingMark(HashMap markerMap, int start, int length, ProjectionAnnotation annotation, boolean autoCollapse) throws BadLocationException {
 
         	if(!preferenceManager.enableFolding()) {
         	    return;
@@ -230,7 +252,6 @@ public class CodeFoldingSetter {
             Position position = new Position(start, length);
             
             Iterator i = model.getAnnotationIterator();
-
 
 		    
             while (i.hasNext()) {
@@ -242,7 +263,7 @@ public class CodeFoldingSetter {
                     return;
                 }
             }
-            
+            markerMap.put(annotation,new Boolean(autoCollapse));
             model.addAnnotation(annotation, position);
             
             
@@ -255,6 +276,8 @@ public class CodeFoldingSetter {
     	}
 		initModel();
 		
+		HashMap markerMap = new HashMap();
+		
 		ITextSelection textSelection = getSelection();
 		
 		if (!textSelection.isEmpty()) {
@@ -266,7 +289,7 @@ public class CodeFoldingSetter {
 				int offset= doc.getLineOffset(start);
 				int endOffset= doc.getLineOffset(end + 1);
 				
-				addFoldingMark(offset,endOffset-offset,new CustomProjectionAnnotation(collapse));
+				addFoldingMark(markerMap, offset,endOffset-offset,new CustomProjectionAnnotation(collapse), collapse);
 				
 			} catch (BadLocationException x) {
 			}
@@ -359,7 +382,11 @@ public class CodeFoldingSetter {
         
         Boolean collapsing = null;
         
+
+        
         ITextSelection textSelection = getSelection();
+        int cursorOffset = textSelection.getOffset();
+        int selectionLength = textSelection.getLength();
         
         if (!textSelection.isEmpty()) {
 		    try {
@@ -371,7 +398,7 @@ public class CodeFoldingSetter {
 				    ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
 				    
 			        Position position = model.getPosition(annotation);
-			        
+
 		            if (position.offset >= start 
 		                    && position.offset <= end) {
 
@@ -386,6 +413,7 @@ public class CodeFoldingSetter {
 					    }
 		                if (collapsing.booleanValue()) {
 		                   model.collapse(annotation);
+		                   setSelection(position.offset-1,0);
 		                }
 		                else {
 		                    model.expand(annotation);
@@ -445,6 +473,13 @@ public class CodeFoldingSetter {
         ITextSelection selection= (ITextSelection)editor.getSelectionProvider().getSelection();
 		ITextSelection textSelection= (ITextSelection) selection;
 		return textSelection;
+    }
+    
+    
+    private void setSelection(int offset,int length) {
+        TextSelection selection = new TextSelection(offset,length);
+		editor.getSelectionProvider().setSelection(selection);
+		
     }
     
     

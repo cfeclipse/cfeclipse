@@ -616,6 +616,8 @@ public class CFParser {
 	    
 	    tagName = tagName.substring(1, tagName.length());
 		TagItem newItem;
+		//System.out.println("CFParser::handleCFTag found " + tagName);
+		
 
 		//
 		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
@@ -759,6 +761,14 @@ public class CFParser {
 					}
 					else {
 						int tagEnd = matchStr.indexOf(" ");	// Look for the first space
+						int tabIndex = matchStr.indexOf("\t"); // Check if there's a tab before the space
+						
+						if (tabIndex > 0 
+						        && (tabIndex < tagEnd || tagEnd < 0)) {
+						    
+						    tagEnd = tabIndex;
+						}
+						
 						if(tagEnd == -1) {
 							// No spaces, therefore it has no attributes (i.e. <cfscript>)
 							tagEnd = matchStr.indexOf(">");
@@ -1250,9 +1260,9 @@ public class CFParser {
 			
 			this.setData2Parse(inData);
 			ArrayList matches = tagMatchingAttempts(inData);
-			//System.out..println("=============> Beginning match dump");
+			//System.out.println("=============> Beginning match dump");
 			//Util.dumpMatches(parserState.getMatches());
-			//System.out..println("=============> Finishing match dump");
+			//System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(parserState.getMatches());
 			parserState.addMessages(finalDocTreeTraversal(docTree. getDocumentRoot()));
 			processParseResultMessages();
