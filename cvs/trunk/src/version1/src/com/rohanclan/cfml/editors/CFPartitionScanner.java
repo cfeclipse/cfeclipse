@@ -88,7 +88,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("<!---", "--->", cfComment));
 		//rules.add(new TagRule(htmComment));
 		rules.add(new MultiLineRule("<!--", "-->", htmComment));
-		
 		//doctype rule
 		rules.add(new MultiLineRule("<!", ">", doctype));
 		
@@ -100,12 +99,9 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("<script", "</script>", jscript));
 		rules.add(new MultiLineRule("<SCRIPT", "</SCRIPT>", jscript));
 		
-		SyntaxDictionary sd = DictionaryManager.getDictionary(
-			DictionaryManager.CFDIC
-		);
+		SyntaxDictionary sd = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
 		
 		Tag tg = null;
-		
 		try
 		{
 			Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();

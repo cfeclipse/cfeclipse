@@ -502,7 +502,6 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		
 		int delay = preferenceManager.insightDelay();
 		
-		
 		assistant.enableAutoActivation(true);
 		assistant.setAutoActivationDelay(delay);
 		
@@ -510,12 +509,27 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			IContentAssistant.PROPOSAL_OVERLAY
 		);		
 		
-
 		assistant.setInformationControlCreator(
 			getInformationControlCreator(sourceViewer)
 		);
 		
-
+		//I set the insights backgrounds to white because
+		//the colors dont work quite right on osx. Even
+		//the default yellow looks stupid
+		
+		//this is the function insight in tag sections
+		assistant.setContextSelectorBackground(
+			colorManager.getColor(new RGB(255,255,255)	)		
+		);
+		//this is the tag insight
+		assistant.setProposalSelectorBackground(
+			colorManager.getColor(new RGB(255,255,255)	)
+		);
+		//the popup window when you hit enter on a function name
+		assistant.setContextInformationPopupBackground(
+			colorManager.getColor(new RGB(255,255,255)	)
+		);
+		
 		return assistant;
 	}
 	
