@@ -49,6 +49,7 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 		try {
 			DocItem rootItem = document.getCFDocument().getDocumentRoot();
 
+			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 100]");
 			nodes = rootItem.selectNodes("//function");
 
 			Iterator i = nodes.iterator();
@@ -69,7 +70,8 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 		return methods;
 		}
 		catch (Exception e){
-			//System.err.println("CFCMethodsContentProvider has no elements");
+			System.err.println("CFCMethodsContentProvider has no elements");
+			e.printStackTrace();
 			return EMPTY_ARRAY;
 		}
 	}

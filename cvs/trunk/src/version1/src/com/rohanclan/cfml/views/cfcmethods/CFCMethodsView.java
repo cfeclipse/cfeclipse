@@ -258,7 +258,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			IEditorPart iep = page.getActiveEditor();
 			if (iep != null) {
 				iep.addPropertyListener(this);
-				System.out.println("CFCMethods View updated");
+				//System.out.println("CFCMethods View updated");
 				viewer.setContentProvider(new CFCMethodsContentProvider(getRootInput()));
 				viewer.setInput(getRootInput());
 			}
@@ -336,7 +336,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	public void propertyChanged(Object source, int propId) {
-		System.out.println("Property changed: "+source.getClass().getName());
+		//System.out.println("Property changed: "+source.getClass().getName());
 		//if (!part.equals(this)) {
 			reload();
 		//}

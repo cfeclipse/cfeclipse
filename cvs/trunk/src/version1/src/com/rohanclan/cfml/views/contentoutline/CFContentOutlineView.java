@@ -552,7 +552,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	public void propertyChanged(Object source, int propId)
 	{
-		System.out.println("Property changed: " + source.getClass().getName());
+		//System.out.println("Property changed: " + source.getClass().getName());
 		if(source instanceof CFMLEditor)
 		{
 			//reload();

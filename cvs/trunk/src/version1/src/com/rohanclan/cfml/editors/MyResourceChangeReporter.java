@@ -42,7 +42,7 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 					//System.out.println(" is about to be deleted.");
 					break;
 				case IResourceChangeEvent.POST_CHANGE:
-					System.out.println("Resources have changed.");
+					//System.out.println("Resources have changed.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 				/* these two seem to be deprecated... 
@@ -57,7 +57,7 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 				*/
 			}
 		}catch(CoreException temp) {
-			System.out.println("Caught a CoreException");
+			System.err.println("Caught a CoreException");
 		}
 	}
 }
