@@ -9,6 +9,9 @@
    <feature url="features/com.rohanclan.cfml.release_1.1.16.jar" id="com.rohanclan.cfml.release" version="1.1.16">
       <category name="Stable CFEclipse"/>
    </feature>
+   <feature url="features/com.rohanclan.cfml.release_1.1.17.2.jar" id="com.rohanclan.cfml.release" version="1.1.17.2">
+      <category name="Stable CFEclipse"/>
+   </feature>
    <feature url="features/com.rohanclan.cfml.release_1.1.17.jar" id="com.rohanclan.cfml.release" version="1.1.17">
       <category name="Stable CFEclipse"/>
    </feature>
