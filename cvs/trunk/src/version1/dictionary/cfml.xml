@@ -6651,7 +6651,7 @@
 				debug = "Yes" or "No"   
 				returnCode = "Yes" or "No"
 		-->
-		<tag name="storedproc" creator="3" single="true" xmlstyle="false">
+		<tag name="storedproc" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
 				Executes a stored procedure in a server database. It 
 				specifies database connection information and identifies 
