@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.8"
+   version="1.1.9"
    provider-name="RohanClan"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -35,8 +35,9 @@
             id="com.rohanclan.cfml.perspective.CF">
       </perspective>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- Editor -->
+   
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Editor -->
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -48,8 +49,8 @@
             id="com.rohanclan.cfml.editors.CFMLEditor">
       </editor>
    </extension>
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- Actions -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Actions -->
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
@@ -58,7 +59,7 @@
          <menu
                label="&amp;CFML"
                path="window"
-               id="com.rohanclan.cfml.cfmxmenu">
+               id="com.rohanclan.cfml.cfmlmenu">
             <separator
                   name="maingroup">
             </separator>
@@ -66,89 +67,85 @@
                   name="output">
             </separator>
          </menu>
-<!-- <menu label="&amp;Output"
-               path="com.rohanclan.cfml.cfmxmenu/maingroup"
-               id="com.rohanclan.cfml.cfmxmenu.suboutput">
-	     	<separator name="output"></separator>
-	     </menu> -->
-<!-- cfcomment -->
+
+		<!-- cfcomment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFComment"
                label="&amp;Comment"
                icon="icons/ctool16/comment.gif"
                tooltip="Insert a CFML comment"
                class="com.rohanclan.cfml.editors.actions.CFCommentAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFCommentAction">
          </action>
-<!-- smart comment -->
+		<!-- smart comment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.AutoComment"
                label="&amp;Auto Comment"
                icon="icons/ctool16/smartcomment.gif"
                tooltip="Insert comment based on section"
                class="com.rohanclan.cfml.editors.actions.AutoCommentAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.AutoCommentAction">
          </action>
-<!-- Surround with #s -->
+		<!-- Surround with #s -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFVariable"
                label="&amp;Variable"
                icon="icons/ctool16/hash.gif"
                tooltip="Surround with pound/number signs"
                class="com.rohanclan.cfml.editors.actions.CFVariableAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFVariableAction">
          </action>
-<!-- Surround with single quotes -->
+		<!-- Surround with single quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFSingleQuote"
                label="&amp;Single Quotes"
                icon="icons/ctool16/squote.gif"
                tooltip="Surround with single quotes"
                class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction">
          </action>
-<!-- Surround with double quotes -->
+		<!-- Surround with double quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
                label="&amp;Double Quotes"
                icon="icons/ctool16/dquote.gif"
                tooltip="Surround with double quotes"
                class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction">
          </action>
-<!-- Surround with simple cfoutputs -->
+		<!-- Surround with simple cfoutputs -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFOutput"
                label="CF &amp;Output"
                icon="icons/ctool16/output.gif"
                tooltip="Surround with cfoutput"
                class="com.rohanclan.cfml.editors.actions.CFOutputAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFOutputAction">
          </action>
-<!-- Surround with a simple cfdump -->
+		<!-- Surround with a simple cfdump -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDump"
                label="CF D&amp;ump"
                icon="icons/ctool16/dump.gif"
                tooltip="Surround with simple cfdump"
                class="com.rohanclan.cfml.editors.actions.CFDumpAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/output"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFDumpAction">
          </action>
-<!-- Surround with a cfscript -->
+		<!-- Surround with a cfscript -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFScript"
                label="CF S&amp;cript"
@@ -158,29 +155,29 @@
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFScriptAction">
          </action>
-<!-- to lower case -->
+		<!-- to lower case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToLowerCase"
                label="To L&amp;ower"
                icon="icons/ctool16/tolower.gif"
                tooltip="Lower case selected text"
                class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.ToLowerCaseAction">
          </action>
-<!-- to upper case -->
+		<!-- to upper case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToUpperCase"
                label="To U&amp;pper"
                icon="icons/ctool16/toupper.gif"
                tooltip="Upper case selected text"
                class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
-               menubarPath="com.rohanclan.cfml.cfmxmenu/maingroup"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
                id="com.rohanclan.cfml.editors.actions.ToUpperCaseAction">
          </action>
-<!-- insert date -->
+		<!-- insert date -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertDate"
                label="Insert Date"
@@ -192,13 +189,14 @@
          </action>
       </editorContribution>
    </extension>
-<!-- I have no idea why this doesnt work. (or why it would) -->
-<!-- <extension point="org.eclipse.ui.acceleratorSets">
+	
+	<!-- I have no idea why this doesnt work. (or why it would) -->
+	<extension point="org.eclipse.ui.acceleratorSets">
 		<acceleratorSet
 			scopeId="org.eclipse.ui.textEditorScope"
-			configurationId="org.eclipse.ui.emacsAcceleratorConfiguration"> -->
-<!-- id="org.eclipse.ui.edit.text.contentAssist.proposals" -->
-<!--	<accelerator key="Ctrl+1"
+			configurationId="org.eclipse.ui.emacsAcceleratorConfiguration">
+			
+		   	<accelerator key="Ctrl+"
 				id="org.eclipse.ui.edit.text.contentAssist.contextInformation"
 			/>
 		</acceleratorSet>
@@ -220,20 +218,15 @@
 				id="org.eclipse.ui.edit.text.contentAssist.contextInformation"
 			/>
 		</acceleratorSet>
-	</extension> -->
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- popup menu -->
+	</extension>
+	
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- popup menu -->
    <extension
          point="org.eclipse.ui.popupMenus">
       <viewerContribution
             targetID="#TextEditorContext"
             id="org.eclipse.ui.articles.action.contribution.popup.editor">
-<!-- <action
-				id="org.eclipse.ui.articles.action.contribution.editor.action1"
-				label="Editor Action 1"
-				menubarPath="additions"
-				class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction">
-			</action> -->
          <action
                label="CF Comment"
                class="com.rohanclan.cfml.editors.actions.CFCommentAction"
@@ -263,7 +256,7 @@
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text"
                id="com.rohanclan.cfml.editors.actions.ToUpperCase">
          </action>
-<!-- ////// -->
+		<!-- ////// -->
          <action
                label="Wrap In #s"
                class="com.rohanclan.cfml.editors.actions.CFVariableAction"
@@ -423,7 +416,7 @@
             command="com.rohanclan.cfml.editors.actions.ToUpperCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
-<!-- to upper case -->
+<!-- insert date -->
       <command
             name="Insert Date"
             description="Insert the current date"
@@ -439,15 +432,6 @@
             name="CFML"
             id="com.rohanclan.cfml">
       </category>
-<!-- pointless?
-      <view
-            name="Snip View"
-            icon="icons/obj16/snip.gif"
-            category="com.rohanclan.cfml"
-            class="com.rohanclan.cfml.views.SnipView"
-            id="com.rohanclan.cfml.views.snipview">
-      </view>
-      -->
       <view
             name="Snip Tree View"
             icon="icons/obj16/snip.gif"
@@ -470,18 +454,8 @@
             id="com.rohanclan.cfml.views.cfcmethods.CFCMethodsView">
       </view>
    </extension>
-<!-- <extension
-         point="org.eclipse.ui.views.contentoutline.IContentOutlinePage">
-      <view
-            name="Outline View"
-            icon="icons/obj16/snip.gif"
-            category="com.rohanclan.cfml"
-            class="com.rohanclan.cfml.views.contentoutline.CFContentOutlineView"
-            id="com.rohanclan.cfml.views.contentoutline.CFContentOutline">
-      </view>
-   </extension> -->
-<!-- ////////////////////////////////////////////////////////////// -->
-<!-- help -->
+	<!-- ////////////////////////////////////////////////////////////// -->
+	<!-- help -->
    <extension
          point="org.eclipse.help.toc">
       <toc
@@ -495,7 +469,7 @@
             file="doc/toc_general.xml">
       </toc>
    </extension>
-<!-- Stephen Milligans (aka spike) area -->
+	<!-- Stephen Milligans (aka spike) area -->
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
@@ -515,7 +489,7 @@
             id="com.rohanclan.cfml.properties.samplePropertyPage">
       </page>
    </extension>
-<!-- Chris Queeners area -->
+	<!-- Chris Queeners area -->
    <extension
          point="org.eclipse.ui.newWizards">
       <category

@@ -44,7 +44,7 @@ import com.rohanclan.cfml.parser.exception.NodeNotFound;
  * DocItem also stores the children, therefore it can act as a branch for part of a tree. 
  * Hence the addChild() method. Haven't added anything else for retrieving children... because I'm lazy :)
  */
-public abstract class DocItem {
+public abstract class DocItem implements Comparable {
 	/** The name of the item (i.e. &lt;cfscript&gt;) */
 	protected String itemName; 
 	/** The complete start-to-finish data for the item (i.e. &lt;cffunction name="asdf" ... &gt;)	 */
@@ -324,5 +324,55 @@ public abstract class DocItem {
 	public boolean IsSane()
 	{
 		return true;
+	}
+	
+	/**
+	 * This is my sad attempt to make the content outline faster
+	 * it doesnt seem to do much. We can probably remove it but it's here
+	 * so - eh
+	 * @author Rob
+	 */
+	public int compareTo(Object o)
+	{
+		if(o == null) throw new NullPointerException("DocItem compareTo got a null");
+		
+		if(o instanceof DocItem)
+		{
+			return o.toString().compareTo(this.toString());
+		}
+		
+		return 0;
+	}
+	
+	/**
+	 * This is my sad attempt to make the content outline faster
+	 * it doesnt seem to do much. We can probably remove it but it's here
+	 * so - eh
+	 * @author Rob
+	 */
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof DocItem)
+		{
+			//if it has the same name and number of parameters assume its
+			//the same (this may need to be adjusted in the future)
+			if( ((DocItem)obj).toString().equals(toString()) )
+			{
+				System.err.println("we are equal: " + toString());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * override the toString so we can compare (might need to move this to a 
+	 * less obvious method)
+	 * @author Rob
+	 */
+	public String toString()
+	{
+		//weak, but should work, unique id
+		return itemName + ":" + lineNumber + ":" + startPosition + ":" + endPosition;
 	}
 }

@@ -71,12 +71,19 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	 * @param newInput the new input element, or <code>null</code> if the viewer
 	 *   does not have an input
 	 */
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) 
+	public void inputChanged(Viewer viewer2, Object oldInput, Object newInput) 
 	{	
 		if(newInput instanceof DocItem)
 		{
-			this.viewer = (TreeViewer)viewer;
+			if(viewer != null)
+			{
+				((TreeViewer)viewer2).setExpandedElements(
+					((TreeViewer)viewer).getExpandedElements()
+				);
+			}
+			viewer = (TreeViewer)viewer2;
 			rootdir = (DocItem)newInput;
+			//viewer.expandAll();
 		}
 	}
 	
@@ -122,7 +129,6 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	public boolean hasChildren(Object element) 
 	{
 		return ((DocItem)element).hasChildren();
-		//return true;
 	}
 
 	/**

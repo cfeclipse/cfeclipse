@@ -1,8 +1,26 @@
 /*
  * Created on Apr 6, 2004
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * The MIT License
+ * Copyright (c) 2004 Rob Rohan
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a 
+ * copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation 
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software 
+ * is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ * SOFTWARE.
  */
 package com.rohanclan.cfml.views.contentoutline;
 
@@ -36,6 +54,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import com.rohanclan.cfml.editors.CFMLEditor;
 
+import java.util.ArrayList;
+
 /**
  * @author Rob
  *
@@ -45,7 +65,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	public static final String ID_CONTENTOUTLINE = "com.rohanclan.cfml.views.contentoutline.cfcontentoutlineview";
 	
 	protected LabelProvider labelProvider;
-	protected Action jumpAction;
+	protected Action jumpAction, expandAction;
 	protected Action filters[];
 	protected MenuManager menuMgr;
 	
@@ -54,16 +74,44 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	private static String filter = "";
 	
-	private DocItem lastDocRoot = null;
+	private ArrayList lastExpandedElements = null;
+	
+	private OutlineContentProvider cop;
 	
 	public Control getControl()
 	{
 		if(!treemade)
 		{
+			//first go round setup some of our default stuff
+			getTreeViewer().setUseHashlookup(true);
+			lastExpandedElements = new ArrayList();
+			saveExpandedElements();
 			createTree();
 			treemade = true;
 		}
+		
+		if(!menusmade)
+		{
+			createActions();
+			createMenus();
+			createToolbar();
+			createContextMenu();
+			menusmade = true;
+		}
+		
 		return getTreeViewer().getControl();
+	}
+	
+	private void saveExpandedElements()
+	{
+		Object ob[] = getTreeViewer().getExpandedElements();
+		int oblen = ob.length;
+		for(int i=0; i<oblen; i++)
+		{
+			lastExpandedElements.clear();
+			System.out.println(ob[i]);
+			lastExpandedElements.add(ob[i]);
+		}
 	}
 	
 	protected void createTree()
@@ -75,15 +123,6 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		else
 		{
 			reload(getItems(filter));
-		}
-		
-		if(!menusmade)
-		{
-			createActions();
-			createMenus();
-			createToolbar();
-			createContextMenu();
-			menusmade = true;
 		}
 	}
 	
@@ -144,11 +183,12 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			if(cfd != null)
 			{
 				docRoot = cfd.getDocumentRoot();
-				lastDocRoot = docRoot;
+				//lastDocRoot = docRoot;
 			}
-			if(lastDocRoot != null)
+			
+			if(docRoot != null)
 			{
-				return lastDocRoot;
+				return docRoot;
 			}
 			else
 			{
@@ -159,6 +199,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		{
 			e.printStackTrace(System.err);
 		}
+		
 		//a fake root
 		return new TagItem(1,1,1,"Unk");
 	}
@@ -202,18 +243,24 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	public void reload(DocItem root)
 	{
-		//getTreeViewer().setUseHashlookup(true);
-		getTreeViewer().setContentProvider(
-			new OutlineContentProvider(root)
-		);
+		//saveExpandedElements();
+		
+		if(cop == null)
+		{
+			cop = new OutlineContentProvider(root);
+			//getTreeViewer().setUseHashlookup(true);
+			getTreeViewer().setContentProvider(cop);
+		}
 		
 		if(labelProvider == null)
 		{
 			labelProvider = new OutlineLabelProvider();
 			getTreeViewer().setLabelProvider(labelProvider);
 		}
+		
 		getTreeViewer().setInput(root);
-		getTreeViewer().expandAll();
+		//getTreeViewer().setExpandedElements(lastExpandedElements.toArray());
+		//getTreeViewer().expandAll();
 	}
 	
 	public void reload()
@@ -245,6 +292,16 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		){
 			public void run() { 
 				jumpToItem();
+			}
+		};
+		
+		expandAction = new Action(
+			"Expand All",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_ADD)
+		){
+			public void run() 
+			{
+				getTreeViewer().expandAll();
 			}
 		};
 		
@@ -334,7 +391,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		//System.out.println("Part activated: " + part.getClass().getName());
 		if(part instanceof CFMLEditor)
 		{
-			reload();
+			//reload();
 		}
 	}
 	
@@ -361,7 +418,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		System.out.println("Part opened: " + part.getClass().getName());
 		if(part instanceof CFMLEditor)
 		{
-			reload();
+			//reload();
 		}
 	}
 	
@@ -370,7 +427,10 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		System.out.println("Property changed: " + source.getClass().getName());
 		if(source instanceof CFMLEditor)
 		{
+			//reload();
+			DocItem old = (DocItem)getTreeViewer().getInput();
 			reload();
+			cop.inputChanged(getTreeViewer(),old,getTreeViewer().getInput());
 		}
 	}
 	

@@ -170,16 +170,20 @@ public class OutlineLabelProvider extends LabelProvider {
 				{
 					Set st = syntax.getElementAttributes(tname);
 					
-					Iterator i = st.iterator();
-					while(i.hasNext())
+					//they could use undefined custom tags or made up tags
+					if(st != null)
 					{
-						p = (Parameter)i.next();
-						if(p.isRequired())
+						Iterator i = st.iterator();
+						while(i.hasNext())
 						{
-							String aval = ((CfmlTagItem)element).getAttribute(p.getName());
-							if(aval != null && aval.length() > 0)
+							p = (Parameter)i.next();
+							if(p.isRequired())
 							{
-								sb.append(" " + p.getName() + ": " + aval);
+								String aval = ((CfmlTagItem)element).getAttribute(p.getName());
+								if(aval != null && aval.length() > 0)
+								{
+									sb.append(" " + p.getName() + ": " + aval);
+								}
 							}
 						}
 					}
@@ -207,6 +211,7 @@ public class OutlineLabelProvider extends LabelProvider {
 			item.equals("if") || item.equals("set") || item.equals("loop")
 			|| item.equals("else") || item.equals("elseif") || item.equals("break")
 			|| item.equals("return") || item.equals("defaultcase") || item.equals("try")
+			|| item.equals("rethrow")
 		)
 		{
 			return true;
