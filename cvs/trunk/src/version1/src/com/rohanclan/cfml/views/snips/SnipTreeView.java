@@ -55,6 +55,7 @@ import java.io.File;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.dialogs.InputDialog;
 
 import org.eclipse.ui.IFileEditorInput;
 
@@ -402,10 +403,40 @@ public class SnipTreeView extends ViewPart
 				activeFile = ((IFileEditorInput) iep.getEditorInput()).getFile();
 			}
 			
-			tmpAction.setEnclosingStrings(
-					SnippetVarParser.parse(snipReader.getSnipStartBlock(),activeFile),
-					SnippetVarParser.parse(snipReader.getSnipEndBlock(),activeFile)	
-			);
+			String startBlock = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile);
+			String endBlock = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile);
+
+			while(startBlock.indexOf("$${") > 0) {
+				int expressionStart = startBlock.indexOf("$${")+3;
+				int expressionEnd = startBlock.indexOf("}",expressionStart);
+				String expression = startBlock.substring(expressionStart,expressionEnd);
+				InputDialog replacementDialog = new InputDialog(this.getViewSite().getShell(),"Replace variable","Replace variable "+ expression +" in start block with:","",null);
+				
+				if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
+					String replacement = replacementDialog.getValue(); 
+					String pattern = "\\$\\$\\{"+expression+"\\}";
+					startBlock = startBlock.replaceAll(pattern,replacement);
+				
+				}
+
+			}
+			
+			while(endBlock.indexOf("$${") > 0) {
+				int expressionStart = endBlock.indexOf("$${")+3;
+				int expressionEnd = endBlock.indexOf("}",expressionStart);
+				String expression = endBlock.substring(expressionStart,expressionEnd);
+				InputDialog replacementDialog = new InputDialog(this.getViewSite().getShell(),"Replace variable","Replace variable "+ expression +" in end block with:","",null);
+				
+				if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
+					String replacement = replacementDialog.getValue(); 
+					String pattern = "\\$\\$\\{"+expression+"\\}";
+					endBlock = endBlock.replaceAll(pattern,replacement);
+				
+				}
+
+			}
+			
+			tmpAction.setEnclosingStrings(startBlock,endBlock);
 			
 			
 			tmpAction.run(null);

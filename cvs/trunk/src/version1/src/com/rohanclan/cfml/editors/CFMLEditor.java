@@ -116,7 +116,7 @@ implements IPropertyChangeListener {
 			);
 			*/
 		//}
-		System.out.println("Give me adapter: " + adapter.getName());
+		//System.out.println("Give me adapter: " + adapter.getName());
 		/* if(adapter.getName().trim().equals(
 			"org.eclipse.ui.views.contentoutline.IContentOutlinePage"
 		))
