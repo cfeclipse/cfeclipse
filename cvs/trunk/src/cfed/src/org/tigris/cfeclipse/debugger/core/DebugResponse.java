@@ -22,45 +22,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package org.tigris.cfeclipse.debugger.popup.actions;
+package org.tigris.cfeclipse.debugger.core;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
+import java.lang.Object;
 
-public class NewAction implements IObjectActionDelegate {
+public class DebugResponse extends DebugMessage {
+	/** the return type is xml */
+	public static byte AS_XML		= 0;
+	/** the return type is plain text */
+	public static byte AS_TEXT		= 1;
+	/** the return type is an editor change */
+	public static byte AS_COMMAND	= 2;
 
-	/**
-	 * Constructor for Action1.
-	 */
-	public NewAction() {
-		super();
+	private byte responsetype;
+	private Object response;
+	
+	public byte getResponseType() 
+	{
+		return responsetype;
 	}
-
-	/**
-	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
-	 */
-	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
+	
+	public Object getResponse() 
+	{
+		return null;
 	}
-
-	/**
-	 * @see IActionDelegate#run(IAction)
-	 */
-	public void run(IAction action) {
-		Shell shell = new Shell();
-		MessageDialog.openInformation(
-			shell,
-			"Debugger Plug-in",
-			"New Action was executed.");
+	
+	public void setResponse(Object to)
+	{
+		response = to;
 	}
-
-	/**
-	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
-	 */
-	public void selectionChanged(IAction action, ISelection selection) {
-	}
-
 }

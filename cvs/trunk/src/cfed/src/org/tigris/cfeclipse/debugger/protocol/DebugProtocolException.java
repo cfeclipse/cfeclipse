@@ -22,45 +22,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package org.tigris.cfeclipse.debugger.popup.actions;
+package org.tigris.cfeclipse.debugger.protocol;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
-
-public class NewAction implements IObjectActionDelegate {
-
-	/**
-	 * Constructor for Action1.
-	 */
-	public NewAction() {
-		super();
+/**
+ * @author rob
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Generation - Code and Comments
+ */
+public class DebugProtocolException extends Exception {
+	
+	public DebugProtocolException(String msg)
+	{
+		super(msg);
 	}
-
-	/**
-	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
-	 */
-	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-	}
-
-	/**
-	 * @see IActionDelegate#run(IAction)
-	 */
-	public void run(IAction action) {
-		Shell shell = new Shell();
-		MessageDialog.openInformation(
-			shell,
-			"Debugger Plug-in",
-			"New Action was executed.");
-	}
-
-	/**
-	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
-	 */
-	public void selectionChanged(IAction action, ISelection selection) {
-	}
-
 }

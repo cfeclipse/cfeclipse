@@ -1,5 +1,5 @@
 /*
- * Created on Mar 14, 2004
+ * Created on Jun 12, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Rob Rohan

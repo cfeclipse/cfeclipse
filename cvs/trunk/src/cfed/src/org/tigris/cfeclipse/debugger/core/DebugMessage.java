@@ -22,45 +22,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package org.tigris.cfeclipse.debugger.popup.actions;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
+package org.tigris.cfeclipse.debugger.core;
 
-public class NewAction implements IObjectActionDelegate {
+import java.lang.String;
+import java.util.Map;
+import java.util.HashMap;
+import org.tigris.cfeclipse.debugger.protocol.DebugProtocol;
 
-	/**
-	 * Constructor for Action1.
-	 */
-	public NewAction() {
-		super();
+public class DebugMessage {
+	private String command;
+	private Map args;
+	
+	public DebugMessage()
+	{
+		setCommand(DebugProtocol.CFE_COMMAND_NOOP);
+		setArgs(new HashMap());
 	}
-
+	
 	/**
-	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
+	 * @return Returns the args.
 	 */
-	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
+	public Map getArgs() 
+	{
+		return args;
 	}
-
+	
 	/**
-	 * @see IActionDelegate#run(IAction)
+	 * @param args The args to set.
 	 */
-	public void run(IAction action) {
-		Shell shell = new Shell();
-		MessageDialog.openInformation(
-			shell,
-			"Debugger Plug-in",
-			"New Action was executed.");
+	public void setArgs(Map args) 
+	{
+		this.args = args;
 	}
-
+	
 	/**
-	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
+	 * @return Returns the command.
 	 */
-	public void selectionChanged(IAction action, ISelection selection) {
+	public String getCommand() 
+	{
+		return command;
 	}
-
+	
+	/**
+	 * @param command The command to set.
+	 */
+	public void setCommand(String command) 
+	{
+		this.command = command;
+	}
 }
