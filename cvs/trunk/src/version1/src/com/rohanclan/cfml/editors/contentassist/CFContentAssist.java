@@ -317,13 +317,16 @@ public class CFContentAssist extends CFEContentAssist{
 	{
 	    //ITextViewer viewer = state.getITextView();
 	    String partitions [] = {
-	            CFPartitionScanner.CF_TAG,
+	            CFPartitionScanner.CF_START_TAG_BEGIN,
+	            CFPartitionScanner.CF_START_TAG_END,
+	            CFPartitionScanner.CF_TAG_ATTRIBS,
 	            CFPartitionScanner.FORM_TAG, 
-	            CFPartitionScanner.CSS_TAG,
+	            CFPartitionScanner.CSS, 
+	            CFPartitionScanner.SQL,
 	            CFPartitionScanner.TABLE_TAG,
 	            CFPartitionScanner.UNK_TAG,
 	            CFPartitionScanner.J_SCRIPT,
-	            CFPartitionScanner.ALL_TAG,
+	            CFPartitionScanner.HTM_TAG,
 	            IDocument.DEFAULT_CONTENT_TYPE};
 	    
 	    return AssistUtils.isInCorrectPartitionTypes(state, partitions);

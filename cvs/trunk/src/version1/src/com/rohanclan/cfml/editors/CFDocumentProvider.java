@@ -75,15 +75,18 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		if (document != null) {
 			IDocumentPartitioner partitioner = new CFEDefaultPartitioner(
 					new CFPartitionScanner(), new String[] {
-							CFPartitionScanner.ALL_TAG,
+							CFPartitionScanner.HTM_TAG,
 							CFPartitionScanner.CF_COMMENT,
 							CFPartitionScanner.HTM_COMMENT,
 							CFPartitionScanner.DOCTYPE,
-							CFPartitionScanner.CF_TAG,
+							CFPartitionScanner.CF_START_TAG_BEGIN,
+							CFPartitionScanner.CF_START_TAG_END,
+							CFPartitionScanner.CF_TAG_ATTRIBS,
 							CFPartitionScanner.CF_END_TAG,
 							CFPartitionScanner.CF_SCRIPT,
 							CFPartitionScanner.J_SCRIPT,
-							CFPartitionScanner.CSS_TAG,
+							CFPartitionScanner.CSS,
+							CFPartitionScanner.SQL,
 							CFPartitionScanner.UNK_TAG,
 							CFPartitionScanner.FORM_TAG,
 							CFPartitionScanner.TABLE_TAG });

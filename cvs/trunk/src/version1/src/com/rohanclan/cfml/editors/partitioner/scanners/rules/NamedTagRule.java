@@ -15,18 +15,23 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 
 import org.eclipse.jface.text.Assert;
+
+import com.rohanclan.cfml.editors.partitioner.TagData;
+
 /**
  * @author Stephen Milligan
  *
- * This rule is used to find CF tags in the active document.
+ * This rule is used to find tags
  */
 public class NamedTagRule implements IPredicateRule {
 
 	/** Internal setting for the uninitialized column constraint */
 	protected static final int UNDEFINED= -1;
 
-	/** The token to be returned on success */
-	protected IToken fToken;
+	/** The partition type for the start and end tags */
+	protected String fPartitionType;
+	/** The partition type for the contents of the start tag */
+	protected String fMidPartitionType;
 	/** The pattern's start sequence */
 	protected char[] fStartSequence;
 	/** The pattern's end sequence */
@@ -63,13 +68,14 @@ public class NamedTagRule implements IPredicateRule {
 	 * @param escapeCharacter any character following this one will be ignored
 	 * @param breaksOnEOL indicates whether the end of the line also terminates the pattern
 	 */
-	public NamedTagRule(String startSequence, String endSequence, IToken token) {
+	public NamedTagRule(String startSequence, String endSequence, String partitionType, String midPartitionType) {
 		Assert.isTrue(startSequence != null && startSequence.length() > 0);
-		Assert.isNotNull(token);
+		Assert.isNotNull(partitionType);
 		
 		fStartSequence= startSequence.toCharArray();
 		fEndSequence= (endSequence == null ? new char[0] : endSequence.toCharArray());
-		fToken= token;
+		fPartitionType= partitionType;
+		fMidPartitionType = midPartitionType;
 	}
 	
 
@@ -100,7 +106,7 @@ public class NamedTagRule implements IPredicateRule {
 	}
 	
 	/**
-	 * Evaluates this rules without considering any column constraints. Resumes
+	 * Evaluates this rule without considering any column constraints. Resumes
 	 * detection, i.e. look sonly for the end sequence required by this rule if the
 	 * <code>resume</code> flag is set.
 	 *
@@ -110,19 +116,34 @@ public class NamedTagRule implements IPredicateRule {
 	 * @since 2.0
 	 */
 	protected IToken doEvaluate(ICharacterScanner scanner, boolean resume) {
-		
+		StringBuffer tagString = new StringBuffer();
 		if (resume) {
 			
-			if (endSequenceDetected(scanner))
-				return fToken;
+			if (endSequenceDetected(scanner, tagString)) {
+			    TagData data = null;
+			    if (fStartSequence[1] != '/') {
+			        data = new TagData(fPartitionType + "_begin",tagString.toString(), fMidPartitionType,fPartitionType +"_end" );
+			    } else {
+			        data = new TagData(fPartitionType,tagString.toString(), fMidPartitionType,fPartitionType);
+			    }
+				return new Token(data);
+			}
 		
 		} else {
 			
 			int c= scanner.read();
 			if (c == fStartSequence[0]) {
-				if (sequenceDetected(scanner, fStartSequence, false)) {
-					if (endSequenceDetected(scanner))
-						return fToken;
+			    tagString.append((char)c);
+				if (sequenceDetected(scanner, fStartSequence, false, tagString)) {
+					if (endSequenceDetected(scanner, tagString)) {
+					    TagData data = null;
+					    if (fStartSequence[1] != '/') {
+					        data = new TagData(fPartitionType + "_begin",tagString.toString(), fMidPartitionType,fPartitionType +"_end" );
+					    } else {
+					        data = new TagData(fPartitionType,tagString.toString(), fMidPartitionType,fPartitionType);
+					    }
+						return new Token(data);
+					}
 				}
 			}
 		}
@@ -146,12 +167,19 @@ public class NamedTagRule implements IPredicateRule {
 	 * @param scanner the character scanner to be used
 	 * @return <code>true</code> if the end sequence has been detected
 	 */
-	protected boolean endSequenceDetected(ICharacterScanner scanner) {
+	protected boolean endSequenceDetected(ICharacterScanner scanner, StringBuffer tagString) {
 		int c;
 		char[][] delimiters= scanner.getLegalLineDelimiters();
 
-		while ((c= scanner.read()) != ICharacterScanner.EOF) {
+		while ((c = scanner.read()) != ICharacterScanner.EOF) {
 			boolean isEscapeChar = false;
+			int uc = c;
+			tagString.append((char)c);
+			if (c > 96 && c <= 122) {
+				uc = c-32;
+			} else if(c>64 && c <= 90) {
+				uc = c+32;
+			}
 			// Check if we're inside quotes
 			if (c == '"' 
 				|| c == '\'') {
@@ -163,10 +191,12 @@ public class NamedTagRule implements IPredicateRule {
 				}
 				// Skip the escaped character.
 				//scanner.read();
-			} else if (fEndSequence.length > 0 && c == fEndSequence[0]) {
+			} else if (fEndSequence.length > 0 
+								&& (c == fEndSequence[0] 
+										|| uc == fEndSequence[0])) {
 				// Check if the specified end sequence has been found.
 				if (!fDblQuotesOpen && !fSnglQuotesOpen) {
-					if (sequenceDetected(scanner, fEndSequence, true)) {
+					if (sequenceDetected(scanner, fEndSequence, true, tagString)) {
 						return true;
 					}
 				}
@@ -188,12 +218,18 @@ public class NamedTagRule implements IPredicateRule {
 	 * @param eofAllowed indicated whether EOF terminates the pattern
 	 * @return <code>true</code> if the given sequence has been detected
 	 */
-	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
+	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed, StringBuffer tagString) {
 		for (int i= 1; i < sequence.length; i++) {
-			int c= scanner.read();
-			if (c == ICharacterScanner.EOF && eofAllowed) {
-				return true;
-			} else if (c != sequence[i]) {
+			int c = scanner.read();
+			int uc = c;
+			tagString.append((char)c);
+			if (c > 96 && c <= 122) {
+				uc = c-32;
+			} else if(c>64 && c <= 90) {
+				uc = c+32;
+			}
+			if (c != sequence[i]
+					&& uc != sequence[i]) {
 				// Non-matching character detected, rewind the scanner back to the start.
 				// Do not unread the first character.
 				scanner.unread();
@@ -206,7 +242,9 @@ public class NamedTagRule implements IPredicateRule {
 		scanner.unread();
 		Matcher m = p.matcher(String.valueOf(next));
 		if (!m.matches()) {
-			//System.out.println("Named tag found, but next char is invalid.");
+			//System.out.println("Named tag found for " + new String(this.fStartSequence) + ", but next char is invalid.");
+		    for (int j = sequence.length-1; j > 0; j--)
+				scanner.unread();
 			return false;
 		}
 		else {
@@ -236,6 +274,6 @@ public class NamedTagRule implements IPredicateRule {
 	 * @since 2.0
 	 */
 	public IToken getSuccessToken() {
-		return fToken;
+		return new Token(fPartitionType);
 	}
 }

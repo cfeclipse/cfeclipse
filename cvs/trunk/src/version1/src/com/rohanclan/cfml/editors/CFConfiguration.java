@@ -167,12 +167,15 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			CFPartitionScanner.CF_COMMENT,
 			CFPartitionScanner.DOCTYPE,
 			CFPartitionScanner.HTM_COMMENT,
-			CFPartitionScanner.ALL_TAG,
-			CFPartitionScanner.CF_TAG,
+			CFPartitionScanner.HTM_TAG,
+			CFPartitionScanner.CF_START_TAG_BEGIN,
+			CFPartitionScanner.CF_START_TAG_END,
+			CFPartitionScanner.CF_TAG_ATTRIBS,
 			CFPartitionScanner.CF_END_TAG,
 			CFPartitionScanner.CF_SCRIPT,
 			CFPartitionScanner.J_SCRIPT,
-			CFPartitionScanner.CSS_TAG,
+			CFPartitionScanner.CSS,
+			CFPartitionScanner.SQL,
 			CFPartitionScanner.UNK_TAG,
 			CFPartitionScanner.FORM_TAG,
 			CFPartitionScanner.TABLE_TAG
@@ -411,8 +414,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		
 		//HTML part
 		DefaultDamagerRepairer dr =	new DefaultDamagerRepairer(getHTMTagScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.ALL_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.ALL_TAG);
+		reconciler.setDamager(dr, CFPartitionScanner.HTM_TAG);
+		reconciler.setRepairer(dr, CFPartitionScanner.HTM_TAG);
 		
 		//javascript tag
 		dr = new DefaultDamagerRepairer(getScriptScanner());
@@ -421,8 +424,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		
 		//style tag
 		dr = new DefaultDamagerRepairer(getStyleScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.CSS_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.CSS_TAG);
+		reconciler.setDamager(dr, CFPartitionScanner.CSS);
+		reconciler.setRepairer(dr, CFPartitionScanner.CSS);
 		
 		//CF script (if this is put before the cfscript stuff
 		//you'll get jacked up keyword highlighting
@@ -430,10 +433,28 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
 		
+		// cfset tag contents.
+		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_SET_STATEMENT);
+		
+		// cfif and cfelseif tag contents.
+		reconciler.setDamager(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
+		
+		// cfreturn tag contents.
+		reconciler.setDamager(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
+		
 		//general CF
 		dr = new DefaultDamagerRepairer(getCFTagScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.CF_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_TAG);
+		reconciler.setDamager(dr, CFPartitionScanner.CF_START_TAG_BEGIN);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_START_TAG_BEGIN);
+
+		reconciler.setDamager(dr, CFPartitionScanner.CF_START_TAG_END);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_START_TAG_END);
+		
+		reconciler.setDamager(dr, CFPartitionScanner.CF_TAG_ATTRIBS);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_TAG_ATTRIBS);
 		
 		//general end cftag
 		//dr = new DefaultDamagerRepairer(getCFTagScanner());
@@ -594,8 +615,10 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
      */
     private void setupPrimaryCFEContentAssist() {
         CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist();
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_TAG);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.ALL_TAG);	//inside any other tags
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_BEGIN);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_END);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_TAG_ATTRIBS);
+		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.HTM_TAG);	//inside any other tags
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.UNK_TAG);	//unknown tags
 		assistant.setContentAssistProcessor(mainCFAssistant,IDocument.DEFAULT_CONTENT_TYPE);
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_TAG);
@@ -612,7 +635,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		//keep the hover only in the parts where it should be
 		//i.e. not in comments ... (we could add a javascript
 		//css specific thing in the future...)
-		if(contentType == CFPartitionScanner.ALL_TAG)
+		if(contentType == CFPartitionScanner.HTM_TAG)
 		{
 			return new CFTextHover(
 				DictionaryManager.getDictionary(DictionaryManager.HTDIC)

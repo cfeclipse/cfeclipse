@@ -186,10 +186,10 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	    */
 	    String partitions [] = {
 	            CFPartitionScanner.FORM_TAG, 
-	            CFPartitionScanner.CSS_TAG,
+	            CFPartitionScanner.CSS,
 	            CFPartitionScanner.TABLE_TAG,
 	            CFPartitionScanner.UNK_TAG,
-	            CFPartitionScanner.ALL_TAG,
+	            CFPartitionScanner.HTM_TAG,
 	            IDocument.DEFAULT_CONTENT_TYPE};
 	    
 	    return AssistUtils.isInCorrectPartitionTypes(state, partitions);

@@ -76,14 +76,16 @@ public class AutoCommentAction extends Encloser implements IEditorActionDelegate
 				if(
 					parttype.equals(CFPartitionScanner.CF_SCRIPT)
 					|| parttype.equals(CFPartitionScanner.J_SCRIPT)
-					|| parttype.equals(CFPartitionScanner.CSS_TAG))
+					|| parttype.equals(CFPartitionScanner.CSS))
 				{
 					start = "/* ";
 					this.enclose(doc,(ITextSelection)sel,start," */");
 				}
 				else if(
-					parttype.equals(CFPartitionScanner.CF_TAG)
-					|| parttype.equals(CFPartitionScanner.CF_END_TAG)
+						parttype.equals(CFPartitionScanner.CF_START_TAG_BEGIN)
+						|| parttype.equals(CFPartitionScanner.CF_START_TAG_END)
+						|| parttype.equals(CFPartitionScanner.CF_TAG_ATTRIBS)
+						|| parttype.equals(CFPartitionScanner.CF_END_TAG)
 				)
 				{
 					start = "<!--- ";

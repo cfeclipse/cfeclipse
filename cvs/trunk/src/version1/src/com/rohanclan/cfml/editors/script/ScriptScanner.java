@@ -118,9 +118,8 @@ public class ScriptScanner extends RuleBasedScanner {
 		rules.add(new SingleLineRule("<SCRIPT", ">", scripttag));
 		rules.add(new SingleLineRule("</SCRIPT", ">", scripttag));
 		
-		//TODO: is there a way to have a partition in a partition in a partition?
-		rules.add(new MultiLineRule("<cf",">", new Token(CFPartitionScanner.CF_TAG)));
-		rules.add(new MultiLineRule("<CF",">", new Token(CFPartitionScanner.CF_TAG)));
+		rules.add(new MultiLineRule("<cf",">", new Token(CFPartitionScanner.CF_START_TAG)));
+		rules.add(new MultiLineRule("<CF",">", new Token(CFPartitionScanner.CF_START_TAG)));
 		rules.add(new SingleLineRule("</cf",">", new Token(CFPartitionScanner.CF_END_TAG)));
 		rules.add(new SingleLineRule("</CF",">", new Token(CFPartitionScanner.CF_END_TAG)));
 		

@@ -1,26 +1,32 @@
 /*
+ * $Id: CFEDefaultPartitioner.java,v 1.7 2005-01-09 02:06:33 smilligan Exp $
+ * $Revision: 1.7 $
+ * $Date: 2005-01-09 02:06:33 $
+ * 
  * Created on Oct 17, 2004
  *
- * The MIT License
- * Copyright (c) 2004 Stephen Milligan
+ * CFEclipse - The Open Source ColdFusion Development Environment
+ * 
+ * Copyright (c) 2005 Stephen Milligan and others.  All rights reserved.
+ * For more information on cfeclipse, please see http://cfeclipse.tigris.og/.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the Software 
- * is furnished to do so, subject to the following conditions:
+ * ====================================================================
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the Eclipse Public License
+ * as published by the Eclipse Foundation; either
+ * version 1.0 of the License, or (at your option) any later version.
  *
- * The above copyright notice and this permission notice shall be included in 
- * all copies or substantial portions of the Software.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the Eclipse 
+ * Public License for more details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
- * SOFTWARE.
+ * You should have received a copy of the Eclipse Public License with this 
+ * software. If not, the full text of version 1.0 of the Eclipse Public License 
+ * is available online at the following URL:
+ * 
+ * http://www.eclipse.org/legal/epl-v10.html
+ * ====================================================================
  */
 package com.rohanclan.cfml.editors.partitioner;
 
@@ -40,8 +46,8 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;
-import org.eclipse.jface.text.TypedPosition;
 import org.eclipse.jface.text.TypedRegion;
+import org.eclipse.jface.text.TypedPosition;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
@@ -126,23 +132,25 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 		
 		try {
 			IToken token= fScanner.nextToken();
+			
 			while (!token.isEOF()) {
 				
 				String contentType= getTokenContentType(token);
-				//System.out.println(contentType + "parttion found at offset " + fScanner.getTokenOffset()+" with length "+fScanner.getTokenLength());
+				System.out.println(contentType + "partiton found at offset " + fScanner.getTokenOffset()+" with length "+fScanner.getTokenLength());
 				if (isSupportedContentType(contentType)) {
-					TypedPosition p= new TypedPosition(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType);
-					//System.out.println("Token found " + contentType + " From " + p.offset + " length " + p.length);
-					fDocument.addPosition(fPositionCategory, p);
+				   handleToken(token,contentType);
 				}
 				
 				token= fScanner.nextToken();
 			}
-		} catch (BadLocationException x) {
+		//} catch (BadLocationException x) {
 			// cannot happen as offsets come from scanner
-		} catch (BadPositionCategoryException x) {
+		//} catch (BadPositionCategoryException x) {
 			// cannot happen if document has been connected before
+		} catch (Exception e) {
+		    e.printStackTrace();
 		}
+		
 		
 	}	
 	
@@ -158,6 +166,55 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 		} catch (BadPositionCategoryException x) {
 			// can not happen because of Assert
 		}
+	}
+	
+	private void handleToken(IToken token, String contentType) {
+	    try {
+	    if (token.getData() instanceof TagData) {
+		       
+		       //System.out.println("Found a tag partition.");
+		       
+		       TagData data = (TagData)token.getData();
+		       int start = fScanner.getTokenOffset();
+		       int length = data.getFirstPartitionEnd();
+		       
+		       TypedPosition p= new TypedPosition(start, length, data.getStartPartitionType());
+		       fDocument.addPosition(fPositionCategory, p);
+		       
+		       //System.out.println("Added a partition of type " + data.getStartPartitionType()+ " from " + start + " to " + (start + data.getFirstPartitionEnd()));
+		       
+		       if (!data.isCloser()) {
+		           start = start + data.getFirstPartitionEnd();
+		           length = data.getMidPartitionEnd() - length;
+		           
+		           if (length > 0) {
+			           p = new TypedPosition(start, length, data.getMidPartitionType());
+				       fDocument.addPosition(fPositionCategory, p);
+	
+				      // System.out.println("Added a partition of type " + data.getMidPartitionType()+ " from " + start + " to " + (start + length));
+		           } else {
+		               //System.out.println("Skipped zero length mid partition ");
+		           }
+		           	
+			       start = start + data.getMidPartitionEnd() - data.getFirstPartitionEnd();
+			       length = data.getRawData().length() - data.getMidPartitionEnd();
+		           
+			       p = new TypedPosition(start, length, data.getEndPartitionType());
+			       fDocument.addPosition(fPositionCategory, p);
+			       
+			       //System.out.println("Added a partition of type " + data.getEndPartitionType()+ " from " + start + " to " + (start + length));
+			       
+		       }
+		       
+		   } else {
+				TypedPosition p= new TypedPosition(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType);
+				System.out.println("Token found " + contentType + " From " + p.offset + " length " + p.length);
+				fDocument.addPosition(fPositionCategory, p);
+		   }
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	/*
@@ -243,7 +300,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 */
 	public IRegion documentChanged2(DocumentEvent e) {
 		try {
-		
+
 			IDocument d= e.getDocument();
 			Position[] category= d.getPositions(fPositionCategory);			
 			IRegion line= d.getLineInformationOfOffset(e.getOffset());
@@ -256,11 +313,11 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 			if (first > 0)	{
 				TypedPosition partition= (TypedPosition) category[first - 1];
 				if (partition.includes(reparseStart)) {
-					partitionStart= partition.getOffset();
+					partitionStart = partition.getOffset();
 					contentType= partition.getType();
-					
-					if (e.getOffset() == partition.getOffset() + partition.getLength())
-						reparseStart= partitionStart;
+					if (e.getOffset() == partition.getOffset() + partition.getLength()) {
+						reparseStart = partitionStart;
+					}
 					-- first;
 				} else if (reparseStart == e.getOffset() && reparseStart == partition.getOffset() + partition.getLength()) {
 					partitionStart= partition.getOffset();
@@ -291,7 +348,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 				}
 			}
 			category= d.getPositions(fPositionCategory);
-			
 			
 			fScanner.setPartialRange(d, reparseStart, d.getLength() - reparseStart, contentType, partitionStart);
 			
@@ -336,12 +392,15 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 					++ first;
 				} else {
 					// insert the new type position
-					try {
+					//try {
+					    handleToken(token,contentType);
+					    /*
 						d.addPosition(fPositionCategory, new TypedPosition(start, length, contentType));
+						*/
 						rememberRegion(start, length);
-					} catch (BadPositionCategoryException x) {
-					} catch (BadLocationException x) {
-					}
+					//} catch (BadPositionCategoryException x) {
+					//} catch (BadLocationException x) {
+					//}
 				}
 				
 				token= fScanner.nextToken();
@@ -509,8 +568,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 */
 	protected String getTokenContentType(IToken token) {
 		Object data= token.getData();
-		if (data instanceof String) 
-			return (String) data;
+		if (data != null) 
+			return  data.toString();
 		return null;
 	}
 
