@@ -90,9 +90,8 @@ import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
  * <code>open</code> returns.
  * </p>
  */
-public class NewCFEclipseProject extends BasicNewResourceWizard
-		implements
-			IExecutableExtension {
+public class NewCFEclipseProject extends BasicNewResourceWizard	implements IExecutableExtension {
+	
 	private WizardNewProjectCreationPage mainPage;
 	private WizardNewProjectReferencePage referencePage;
 
@@ -104,30 +103,27 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 	 */
 	private IConfigurationElement configElement;
 
-	private static String WINDOW_PROBLEMS_TITLE = ResourceMessages
-			.getString("NewProject.errorOpeningWindow"); //$NON-NLS-1$
+	private static String WINDOW_PROBLEMS_TITLE = ResourceMessages.getString("NewProject.errorOpeningWindow");
 
 	/**
 	 * Extension attribute name for final perspective.
 	 */
-	private static final String FINAL_PERSPECTIVE = "finalPerspective"; //$NON-NLS-1$
+	private static final String FINAL_PERSPECTIVE = "finalPerspective";
 
 	/**
 	 * Extension attribute name for preferred perspectives.
 	 */
-	private static final String PREFERRED_PERSPECTIVES = "preferredPerspectives"; //$NON-NLS-1$
+	private static final String PREFERRED_PERSPECTIVES = "preferredPerspectives";
 
 	/**
 	 * Creates a wizard for creating a new project resource in the workspace.
 	 */
 	public NewCFEclipseProject() {
-		IDialogSettings workbenchSettings = IDEWorkbenchPlugin.getDefault()
-				.getDialogSettings();
-		IDialogSettings section = workbenchSettings
-				.getSection("NewCFEclipseProject");//$NON-NLS-1$
+		IDialogSettings workbenchSettings = IDEWorkbenchPlugin.getDefault().getDialogSettings();
+		IDialogSettings section = workbenchSettings.getSection("NewCFEclipseProject");
 		if (section == null)
-			section = workbenchSettings
-					.addNewSection("NewCFEclipseProject");//$NON-NLS-1$
+			section = workbenchSettings.addNewSection("NewCFEclipseProject");
+		
 		setDialogSettings(section);
 	}
 	/*
@@ -136,20 +132,16 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 	public void addPages() {
 		super.addPages();
 
-		mainPage = new WizardNewProjectCreationPage("basicNewProjectPage");//$NON-NLS-1$
-		mainPage.setTitle(ResourceMessages.getString("NewProject.title")); //$NON-NLS-1$
-		mainPage.setDescription(ResourceMessages
-				.getString("NewProject.description")); //$NON-NLS-1$
+		mainPage = new WizardNewProjectCreationPage("basicNewProjectPage");
+		mainPage.setTitle(ResourceMessages.getString("NewProject.title"));
+		mainPage.setDescription(ResourceMessages.getString("NewProject.description"));
 		this.addPage(mainPage);
 
 		// only add page if there are already projects in the workspace
 		if (ResourcesPlugin.getWorkspace().getRoot().getProjects().length > 0) {
-			referencePage = new WizardNewProjectReferencePage(
-					"basicReferenceProjectPage");//$NON-NLS-1$
-			referencePage.setTitle(ResourceMessages
-					.getString("NewProject.referenceTitle")); //$NON-NLS-1$
-			referencePage.setDescription(ResourceMessages
-					.getString("NewProject.referenceDescription")); //$NON-NLS-1$
+			referencePage = new WizardNewProjectReferencePage("basicReferenceProjectPage");
+			referencePage.setTitle(ResourceMessages.getString("NewProject.referenceTitle"));
+			referencePage.setDescription(ResourceMessages.getString("NewProject.referenceDescription"));
 			this.addPage(referencePage);
 		}
 	}
@@ -182,8 +174,7 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 			newPath = mainPage.getLocationPath();
 
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		final IProjectDescription description = workspace
-				.newProjectDescription(newProjectHandle.getName());
+		final IProjectDescription description = workspace.newProjectDescription(newProjectHandle.getName());
 		description.setLocation(newPath);
 
 		// update the referenced project if provided
@@ -211,36 +202,33 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 			Throwable t = e.getTargetException();
 			if (t instanceof CoreException) {
 				if (((CoreException) t).getStatus().getCode() == IResourceStatus.CASE_VARIANT_EXISTS) {
-					MessageDialog
-							.openError(
-									getShell(),
-									ResourceMessages
-											.getString("NewProject.errorMessage"), //$NON-NLS-1$
-									ResourceMessages
-											.format(
-													"NewProject.caseVariantExistsError", new String[]{newProjectHandle.getName()}) //$NON-NLS-1$,
-							);
+					MessageDialog.openError(
+						getShell(),
+						ResourceMessages.getString("NewProject.errorMessage"),
+						ResourceMessages.format(
+							"NewProject.caseVariantExistsError", new String[]{newProjectHandle.getName()}
+						)
+					);
 				} else {
-					ErrorDialog.openError(getShell(), ResourceMessages
-							.getString("NewProject.errorMessage"), //$NON-NLS-1$
-							null, // no special message
-							((CoreException) t).getStatus());
+					ErrorDialog.openError(
+						getShell(), ResourceMessages.getString("NewProject.errorMessage"),
+						null,
+						((CoreException) t).getStatus()
+					);
 				}
 			} else {
 				// CoreExceptions are handled above, but unexpected runtime
 				// exceptions and errors may still occur.
 				IDEWorkbenchPlugin.getDefault().getLog().log(
-						new Status(IStatus.ERROR,
-								IDEWorkbenchPlugin.IDE_WORKBENCH, 0, t
-										.toString(), t));
-				MessageDialog
-						.openError(
-								getShell(),
-								ResourceMessages
-										.getString("NewProject.errorMessage"), //$NON-NLS-1$
-								ResourceMessages
-										.format(
-												"NewProject.internalError", new Object[]{t.getMessage()})); //$NON-NLS-1$
+					new Status(IStatus.ERROR,	IDEWorkbenchPlugin.IDE_WORKBENCH, 0, t.toString(), t)
+				);
+				MessageDialog.openError(
+					getShell(),
+					ResourceMessages.getString("NewProject.errorMessage"),
+					ResourceMessages.format(
+						"NewProject.internalError", new Object[]{t.getMessage()}
+					)
+				);
 			}
 			return null;
 		}
@@ -252,26 +240,18 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 	/**
 	 * Creates a project resource given the project handle and description.
 	 * 
-	 * @param description
-	 *            the project description to create a project resource for
-	 * @param projectHandle
-	 *            the project handle to create a project resource for
-	 * @param monitor
-	 *            the progress monitor to show visual progress with
-	 * 
-	 * @exception CoreException
-	 *                if the operation fails
-	 * @exception OperationCanceledException
-	 *                if the operation is canceled
+	 * @param description the project description to create a project resource for
+	 * @param projectHandle the project handle to create a project resource for
+	 * @param monitor the progress monitor to show visual progress with
+	 * @exception CoreException if the operation fails
+	 * @exception OperationCanceledException if the operation is canceled
 	 */
-	void createProject(IProjectDescription description, IProject projectHandle,
-			IProgressMonitor monitor) throws CoreException,
-			OperationCanceledException {
+	protected void createProject(IProjectDescription description, IProject projectHandle, IProgressMonitor monitor) 
+		throws CoreException, OperationCanceledException {
+		
 		try {
-			monitor.beginTask("", 2000);//$NON-NLS-1$
-
-			projectHandle.create(description, new SubProgressMonitor(monitor,
-					1000));
+			monitor.beginTask("", 2000);
+			projectHandle.create(description, new SubProgressMonitor(monitor,1000));
 
 			if (monitor.isCanceled())
 				throw new OperationCanceledException();
@@ -281,12 +261,8 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 		} finally {
 			monitor.done();
 		}
-	
-	
-	
-	
+		
 		setProjectNature(description, projectHandle);
-
 	}
 	/**
      * @param description
@@ -296,12 +272,10 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
         /**
 		 * Set the nature of this project when we look at it
 		 **/
-        	
-        	
-		    try {
-		        System.out.println("Call of nature");
-		        IProjectDescription pdesc = projectHandle.getDescription();
-		        String[] natures = pdesc.getNatureIds();
+        	try {
+        		System.out.println("Call of nature");
+        		IProjectDescription pdesc = projectHandle.getDescription();
+        		String[] natures = pdesc.getNatureIds();
 		        //System.out.println("natids: "+natures.);
 		     /*   
 		        IProjectDescription Pdesc = projectHandle.getDescription();
@@ -313,43 +287,45 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 		        
 		        projectHandle.setDescription(description, null);*/
 		
-		    } catch (CoreException e) {
-		        // Something went wrong
-		         System.out.println("Call to project " + "nature failed because: " + e.getMessage());
-		     }
+        	} catch (CoreException e) {
+        		// Something went wrong
+		    System.out.println("Call to project " + "nature failed because: " + e.getMessage());
+        	}
     }
+    
     /**
 	 * Returns the newly created project.
 	 * 
-	 * @return the created project, or <code>null</code> if project not
-	 *         created
+	 * @return the created project, or <code>null</code> if project not created
 	 */
 	public IProject getNewProject() {
 		return newProject;
 	}
+	
 	/*
 	 * (non-Javadoc) Method declared on IWorkbenchWizard.
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
 		super.init(workbench, currentSelection);
 		setNeedsProgressMonitor(true);
-		setWindowTitle(ResourceMessages.getString("NewProject.windowTitle")); //$NON-NLS-1$
+		setWindowTitle(ResourceMessages.getString("NewProject.windowTitle"));
 	}
+	
 	/*
 	 * (non-Javadoc) Method declared on BasicNewResourceWizard.
 	 */
 	protected void initializeDefaultPageImageDescriptor() {
-		String iconPath = "icons/full/";//$NON-NLS-1$		
+		String iconPath = "icons/full/";		
 		try {
-			URL installURL = IDEWorkbenchPlugin.getDefault().getDescriptor()
-					.getInstallURL();
-			URL url = new URL(installURL, iconPath + "wizban/newprj_wiz.gif");//$NON-NLS-1$
+			URL installURL = IDEWorkbenchPlugin.getDefault().getDescriptor().getInstallURL();
+			URL url = new URL(installURL, iconPath + "wizban/newprj_wiz.gif");
 			ImageDescriptor desc = ImageDescriptor.createFromURL(url);
 			setDefaultPageImageDescriptor(desc);
 		} catch (MalformedURLException e) {
 			// Should not happen. Ignore.
 		}
 	}
+	
 	/*
 	 * (non-Javadoc) Opens a new window with a particular perspective and input.
 	 */
@@ -357,17 +333,21 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 
 		// Open the page.
 		try {
-			PlatformUI.getWorkbench().openWorkbenchWindow(desc.getId(),
-					ResourcesPlugin.getWorkspace().getRoot());
+			PlatformUI.getWorkbench().openWorkbenchWindow(
+				desc.getId(),
+				ResourcesPlugin.getWorkspace().getRoot()
+			);
 		} catch (WorkbenchException e) {
-			IWorkbenchWindow window = PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow();
+			IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+			
 			if (window != null) {
-				ErrorDialog.openError(window.getShell(), WINDOW_PROBLEMS_TITLE,
-						e.getMessage(), e.getStatus());
+				ErrorDialog.openError(
+					window.getShell(), WINDOW_PROBLEMS_TITLE,	e.getMessage(), e.getStatus()
+				);
 			}
 		}
 	}
+	
 	/*
 	 * (non-Javadoc) Method declared on IWizard.
 	 */
@@ -382,16 +362,17 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 
 		return true;
 	}
+	
 	/*
 	 * (non-Javadoc) Replaces the current perspective with the new one.
 	 */
 	private static void replaceCurrentPerspective(IPerspectiveDescriptor persp) {
 
 		//Get the active page.
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window == null)
 			return;
+		
 		IWorkbenchPage page = window.getActivePage();
 		if (page == null)
 			return;
@@ -399,20 +380,22 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 		// Set the perspective.
 		page.setPerspective(persp);
 	}
+	
 	/**
 	 * Stores the configuration element for the wizard. The config element will
 	 * be used in <code>performFinish</code> to set the result perspective.
 	 */
-	public void setInitializationData(IConfigurationElement cfig,
-			String propertyName, Object data) {
+	public void setInitializationData(IConfigurationElement cfig, String propertyName, Object data) {
 		configElement = cfig;
 	}
+	
 	/**
 	 * Updates the perspective for the active page within the window.
 	 */
 	protected void updatePerspective() {
 		updatePerspective(configElement);
 	}
+	
 	/**
 	 * Updates the perspective based on the current settings in the
 	 * Workbench/Perspectives preference page.
@@ -439,16 +422,16 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 
 		// Retrieve the new project open perspective preference setting
 		String perspSetting = PrefUtil.getAPIPreferenceStore().getString(
-				IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE);
+			IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE
+		);
 
-		String promptSetting = IDEWorkbenchPlugin.getDefault()
-				.getPreferenceStore().getString(
-						IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+		String promptSetting = IDEWorkbenchPlugin.getDefault().getPreferenceStore().getString(
+			IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE
+		);
 
 		// Return if do not switch perspective setting and are not prompting
 		if (!(promptSetting.equals(MessageDialogWithToggle.PROMPT))
-				&& perspSetting
-						.equals(IWorkbenchPreferenceConstants.NO_NEW_PERSPECTIVE))
+			&& perspSetting.equals(IWorkbenchPreferenceConstants.NO_NEW_PERSPECTIVE))
 			return;
 
 		// Read the requested perspective id to be opened.
@@ -457,38 +440,35 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 			return;
 
 		// Map perspective id to descriptor.
-		IPerspectiveRegistry reg = PlatformUI.getWorkbench()
-				.getPerspectiveRegistry();
+		IPerspectiveRegistry reg = PlatformUI.getWorkbench().getPerspectiveRegistry();
 
 		// leave this code in - the perspective of a given project may map to
 		// activities other than those that the wizard itself maps to.
-		IPerspectiveDescriptor finalPersp = reg
-				.findPerspectiveWithId(finalPerspId);
+		IPerspectiveDescriptor finalPersp = reg.findPerspectiveWithId(finalPerspId);
+		
 		if (finalPersp != null && finalPersp instanceof IPluginContribution) {
 			IPluginContribution contribution = (IPluginContribution) finalPersp;
+			
 			if (contribution.getPluginId() != null) {
-				IWorkbenchActivitySupport workbenchActivitySupport = PlatformUI
-						.getWorkbench().getActivitySupport();
-				IActivityManager activityManager = workbenchActivitySupport
-						.getActivityManager();
-				IIdentifier identifier = activityManager
-						.getIdentifier(WorkbenchActivityHelper
-								.createUnifiedId(contribution));
+				IWorkbenchActivitySupport workbenchActivitySupport = PlatformUI.getWorkbench().getActivitySupport();
+				IActivityManager activityManager = workbenchActivitySupport	.getActivityManager();
+				IIdentifier identifier = activityManager.getIdentifier(
+					WorkbenchActivityHelper.createUnifiedId(contribution)
+				);
+				
 				Set idActivities = identifier.getActivityIds();
 
 				if (!idActivities.isEmpty()) {
-					Set enabledIds = new HashSet(activityManager
-							.getEnabledActivityIds());
+					Set enabledIds = new HashSet(activityManager.getEnabledActivityIds());
 
 					if (enabledIds.addAll(idActivities))
-						workbenchActivitySupport
-								.setEnabledActivityIds(enabledIds);
+						workbenchActivitySupport.setEnabledActivityIds(enabledIds);
 				}
 			}
 		} else {
-			IDEWorkbenchPlugin.log("Unable to find persective " //$NON-NLS-1$
+			IDEWorkbenchPlugin.log("Unable to find persective " 
 					+ finalPerspId
-					+ " in BasicNewProjectResourceWizard.updatePerspective"); //$NON-NLS-1$
+					+ " in BasicNewProjectResourceWizard.updatePerspective");
 			return;
 		}
 
@@ -499,14 +479,14 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 		addPerspectiveAndDescendants(preferredPerspIds, finalPerspId);
 		String preferred = configElement.getAttribute(PREFERRED_PERSPECTIVES);
 		if (preferred != null) {
-			StringTokenizer tok = new StringTokenizer(preferred, " \t\n\r\f,"); //$NON-NLS-1$
+			StringTokenizer tok = new StringTokenizer(preferred, " \t\n\r\f,");
 			while (tok.hasMoreTokens()) {
 				addPerspectiveAndDescendants(preferredPerspIds, tok.nextToken());
 			}
 		}
 
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		
 		if (window != null) {
 			IWorkbenchPage page = window.getActivePage();
 			if (page != null) {
@@ -514,8 +494,7 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 
 				// don't switch if the current perspective is a preferred
 				// perspective
-				if (currentPersp != null
-						&& preferredPerspIds.contains(currentPersp.getId())) {
+				if (currentPersp != null && preferredPerspIds.contains(currentPersp.getId())) {
 					return;
 				}
 			}
@@ -526,8 +505,9 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 			}
 		}
 
-		int workbenchPerspectiveSetting =
-			WorkbenchPlugin.getDefault().getPreferenceStore().getInt(IPreferenceConstants.OPEN_PERSP_MODE);
+		int workbenchPerspectiveSetting =	WorkbenchPlugin.getDefault().getPreferenceStore().getInt(
+			IPreferenceConstants.OPEN_PERSP_MODE
+		);
 		
 		// open perspective in new window setting
 		if (workbenchPerspectiveSetting == IPreferenceConstants.OPM_NEW_WINDOW) {
@@ -538,6 +518,7 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 		// replace active perspective setting otherwise
 		replaceCurrentPerspective(finalPersp);
 	}
+	
 	/**
 	 * Adds to the list all perspective IDs in the Workbench who's original ID
 	 * matches the given ID.
@@ -548,11 +529,10 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 	 *            the id to query.
 	 * @since 3.0
 	 */
-	private static void addPerspectiveAndDescendants(List perspectiveIds,
-			String id) {
-		IPerspectiveRegistry registry = PlatformUI.getWorkbench()
-				.getPerspectiveRegistry();
+	private static void addPerspectiveAndDescendants(List perspectiveIds, String id) {
+		IPerspectiveRegistry registry = PlatformUI.getWorkbench().getPerspectiveRegistry();
 		IPerspectiveDescriptor[] perspectives = registry.getPerspectives();
+		
 		for (int i = 0; i < perspectives.length; i++) {
 			// @issue illegal ref to workbench internal class;
 			// consider adding getOriginalId() as API on IPerspectiveDescriptor
@@ -575,26 +555,24 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 	 * @return <code>true</code> if it's OK to switch, <code>false</code>
 	 *         otherwise
 	 */
-	private static boolean confirmPerspectiveSwitch(IWorkbenchWindow window,
-			IPerspectiveDescriptor finalPersp) {
-		IPreferenceStore store = IDEWorkbenchPlugin.getDefault()
-				.getPreferenceStore();
-		String pspm = store
-				.getString(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+	private static boolean confirmPerspectiveSwitch(IWorkbenchWindow window, IPerspectiveDescriptor finalPersp) {
+		IPreferenceStore store = IDEWorkbenchPlugin.getDefault().getPreferenceStore();
+		String pspm = store.getString(IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+		
 		if (!IDEInternalPreferences.PSPM_PROMPT.equals(pspm)) {
 			// Return whether or not we should always switch
 			return IDEInternalPreferences.PSPM_ALWAYS.equals(pspm);
 		}
 
-		MessageDialogWithToggle dialog = MessageDialogWithToggle
-				.openYesNoQuestion(window.getShell(), ResourceMessages
-						.getString("NewProject.perspSwitchTitle"), //$NON-NLS-1$
-						ResourceMessages.format(
-								"NewProject.perspSwitchMessage", //$NON-NLS-1$
-								new Object[]{finalPersp.getLabel()}),
-						null /* use the default message for the toggle */,
-						false /* toggle is initially unchecked */, store,
-						IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE);
+		MessageDialogWithToggle dialog = MessageDialogWithToggle.openYesNoQuestion(
+			window.getShell(), 
+			ResourceMessages.getString("NewProject.perspSwitchTitle"),
+			ResourceMessages.format("NewProject.perspSwitchMessage", new Object[]{finalPersp.getLabel()}),
+			null /* use the default message for the toggle */,
+			false /* toggle is initially unchecked */, store,
+			IDEInternalPreferences.PROJECT_SWITCH_PERSP_MODE
+		);
+		
 		int result = dialog.getReturnCode();
 
 		//If we are not going to prompt anymore propogate the choice.
@@ -609,9 +587,11 @@ public class NewCFEclipseProject extends BasicNewResourceWizard
 
 			// update PROJECT_OPEN_NEW_PERSPECTIVE to correspond
 			PrefUtil.getAPIPreferenceStore().setValue(
-					IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE,
-					preferenceValue);
+				IDE.Preferences.PROJECT_OPEN_NEW_PERSPECTIVE,
+				preferenceValue
+			);
 		}
+		
 		return result == IDialogConstants.YES_ID;
 	}
 }
