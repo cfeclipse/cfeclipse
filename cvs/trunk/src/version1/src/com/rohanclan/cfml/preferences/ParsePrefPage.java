@@ -19,7 +19,10 @@ import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
- * Parser preference page
+ * THIS CLASS IS MEANT TO BE FOR THE AUTO-INSERTION/COMPLETION
+ * For some reason Eclipse decides to put the wrong pref page under the wrong
+ * title. This is a quick fix for the next release. I'll fix it sometime soon..
+ * 
  * @author Oliver Tupman
  *
  */
