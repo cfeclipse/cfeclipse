@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>XMLUnFormat</name>
+<help>This is a simple UDF which does the exact opposite of CFMX's XmlFormat() function</help>
+<starttext><![CDATA[/**
+ * UN-escapes the five forbidden characters in XML data.
+ * 
+ * @param string 	 String to format. (Required)
+ * @return Returns a string. 
+ * @author Kreig Zimmerman (kkz@foureyes.com) 
+ * @version 1, November 15, 2002 
+ */
+function XMLUnFormat(string) {
+	var resultString=string;
+	resultString=ReplaceNoCase(resultString,"&apos;","'","ALL");
+	resultString=ReplaceNoCase(resultString,"&quot;","""","ALL");
+	resultString=ReplaceNoCase(resultString,"&lt;","<","ALL");
+	resultString=ReplaceNoCase(resultString,"&gt;",">","ALL");
+	resultString=ReplaceNoCase(resultString,"&amp;","&","ALL");
+	return resultString;
+}
+]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>form</name>
+<help>Creates a very basic form block</help>
+<starttext><![CDATA[<form action="$${action}" method="post">
+]]></starttext>
+<endtext><![CDATA[
+</form>]]></endtext>
+</snippet>
