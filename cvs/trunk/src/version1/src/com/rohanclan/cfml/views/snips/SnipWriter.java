@@ -43,6 +43,7 @@ public class SnipWriter {
 		File snippetFile = new File(parentFolder.toString() + File.separator + snippetName + fileExtension);
 		String snippetContents = createFormattedSnip(snippetName,snippetDescription, startText,endText);
 		try {
+		    
 			if (!snippetFile.isFile()) {
 				snippetFile.createNewFile();
 			}
@@ -56,10 +57,12 @@ public class SnipWriter {
 				String basePath = snipBase.toString();
 				
 				String relativePath = filepath.replaceFirst(basePath,"");
-			    
-			    String sequence = snipKeyCombos.getSequence(relativePath);
-			    snipKeyCombos.clearKeyCombo(sequence);
 				
+			    String sequence = snipKeyCombos.getSequence(relativePath);
+			    
+			    if (sequence != null){
+			        snipKeyCombos.clearKeyCombo(sequence);
+			    }
 			    snipKeyCombos.setKeyCombo(snippetKeyCombo,relativePath);
 			}
 		}
