@@ -416,7 +416,9 @@ public class SnipTreeView extends ViewPart
 					String replacement = replacementDialog.getValue(); 
 					String pattern = "\\$\\$\\{"+expression+"\\}";
 					startBlock = startBlock.replaceAll(pattern,replacement);
-				
+				}
+				else {
+					break;
 				}
 
 			}
@@ -432,6 +434,9 @@ public class SnipTreeView extends ViewPart
 					String pattern = "\\$\\$\\{"+expression+"\\}";
 					endBlock = endBlock.replaceAll(pattern,replacement);
 				
+				}
+				else {
+					break;
 				}
 
 			}
