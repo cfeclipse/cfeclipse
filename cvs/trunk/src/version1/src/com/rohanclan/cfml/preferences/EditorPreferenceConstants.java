@@ -19,6 +19,15 @@ import org.eclipse.jface.preference.IPreferenceStore;
  */
 public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 
+	/** Style constant for bracket matching as an outline */
+	public static final int BRACKET_MATCHING_OUTLINE = 0;
+	
+	/** Style constant for bracket matching as a background color */
+	public static final int BRACKET_MATCHING_BACKGROUND = 1;
+	
+	/** Style constant for bracket matching as bold text */
+	public static final int BRACKET_MATCHING_BOLD = 2;
+	
 	
 	/** preference key identifier for content assist delay */
 	public static final String P_INSIGHT_DELAY = "cfeclipse.editor.insightDelay";
@@ -92,6 +101,9 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for warning when opening read only files */
 	public static final String P_WARN_READ_ONLY_FILES = "cfeclipse.editor.warnReadOnlyFiles";
 	
+	/** Preference key identifier for bracket matching style */
+	public static final String P_BRACKET_MATCHING_STYLE = "cfeclipse.editor.bracketMatchingStyle";
+	
 	
 	
 	
@@ -114,12 +126,13 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_SELECTION_FOREGROUND_COLOR - "212,208,200"</li>
 	 * <li>P_SELECTION_BACKGROUND_COLOR - "128,128,128"</li>
 	 * <li>P_COLOR_BACKGROUND - "255,255,255"</li>
-	 * <li>P_SHOW_OVERVIEW_RULER - "255,255,255"</li>
+	 * <li>P_SHOW_OVERVIEW_RULER - true</li>
 	 * <li>P_HIGHLIGHT_CURRENT_LINE - true</li>
 	 * <li>P_ENABLE_CUSTOM_CARETS - true</li>
 	 * <li>P_SELECTION_FOREGROUND_SYSTEM_DEFAULT - true</li>
 	 * <li>P_SELECTION_BACKGROUND_SYSTEM_DEFAULT - true</li>
 	 * <li>P_WARN_READ_ONLY_FILES - true</li>
+	 * <li>P_BRACKET_MATCHING_STYLE - BRACKET_MATCHING_BACKGROUND</li>
 	 * </ul>
 	 * 
 	 */
@@ -129,6 +142,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_TAB_WIDTH,4);
 		store.setDefault(P_MAX_UNDO_STEPS,100);
 		store.setDefault(P_BRACKET_MATCHING_COLOR,"128,255,255");
+		store.setDefault(P_BRACKET_MATCHING_ENABLED,true);
 		store.setDefault(P_TAB_INDENTS_CURRENT_LINE,true);
 		store.setDefault(P_SHOW_LINE_NUMBERS,true);
 		store.setDefault(P_RTRIM_ON_SAVE,false);
@@ -147,6 +161,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_SELECTION_FOREGROUND_SYSTEM_DEFAULT,false);
 		store.setDefault(P_SELECTION_BACKGROUND_SYSTEM_DEFAULT,false);
 		store.setDefault(P_WARN_READ_ONLY_FILES,true);
+		store.setDefault(P_BRACKET_MATCHING_STYLE,BRACKET_MATCHING_BACKGROUND);
 	}
 	
 	

@@ -22,7 +22,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.swt.SWT;
@@ -63,7 +65,9 @@ public class EditorPreferencePage extends PreferencePage
 	private Button fAppearanceColorDefault = null;
 	private boolean fFieldsInitialized = false;
 	private ArrayList fMasterSlaveListeners = null;
-
+	private Map fComboBoxes = null;
+	private SelectionListener fComboBoxListener = null;
+	
 	public EditorPreferencePage()
 	{
 		fCheckBoxes = new HashMap();
@@ -87,6 +91,22 @@ public class EditorPreferencePage extends PreferencePage
 			{
 				Text text = (Text)e.widget;
 				fOverlayStore.setValue((String)fTextFields.get(text), text.getText());
+			}
+
+		};
+		fComboBoxes = new HashMap();
+		fComboBoxListener = new SelectionListener() {
+
+			public void widgetDefaultSelected(SelectionEvent e)
+			{
+				CCombo combo = (CCombo)e.widget;
+				fOverlayStore.setValue((String)fComboBoxes.get(combo), combo.getSelectionIndex());
+			}
+
+			public void widgetSelected(SelectionEvent e)
+			{
+				CCombo combo = (CCombo)e.widget;
+				fOverlayStore.setValue((String)fComboBoxes.get(combo), combo.getSelectionIndex());
 			}
 
 		};
@@ -115,6 +135,8 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_MAX_UNDO_STEPS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_CURRENT_LINE_COLOR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_HIGHLIGHT_CURRENT_LINE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_RTRIM_ON_SAVE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_TAB_WIDTH));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_INSIGHT_DELAY));
@@ -195,8 +217,8 @@ public class EditorPreferencePage extends PreferencePage
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS, 0);
 		label = "Trim trailing spaces before saving";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_RTRIM_ON_SAVE, 0);
-		label = "Enable bracket highlighting";
-		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED, 0);
+		
+		
 		label = "Show overview &ruler";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER, 0);
 		label = "Show lin&e numbers";
@@ -212,6 +234,15 @@ public class EditorPreferencePage extends PreferencePage
 		label = "Ena&ble thick caret";
 		Button slave = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_USE_WIDE_CARET, 0);
 		createDependency(master, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, slave);
+		
+
+		
+		label = "Enable bracket highlighting";
+		Button bracketMatchingBox = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED, 0);
+		String items[] = new String[] {"Outline box", "Solid box", "Bold text"};
+		CCombo bracketStyleCombo  = addComboList(appearanceComposite,"Bracket matching style",EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE,items);
+		createDependency(bracketMatchingBox, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED, bracketStyleCombo);
+		
 		Label l = new Label(appearanceComposite, 16384);
 		GridData gd = new GridData(256);
 		gd.horizontalSpan = 2;
@@ -328,6 +359,7 @@ public class EditorPreferencePage extends PreferencePage
 		for(int i = 0; i < fAppearanceColorListModel.length; i++) {
 			fAppearanceColorList.add(fAppearanceColorListModel[i][0]);
 		}
+		
 		fAppearanceColorList.getDisplay().asyncExec(new Runnable() {
 
 			public void run()
@@ -357,6 +389,13 @@ public class EditorPreferencePage extends PreferencePage
 		{
 			t = (Text)e.next();
 			key = (String)fTextFields.get(t);
+		}
+
+		CCombo c;
+		for(Iterator e = fComboBoxes.keySet().iterator(); e.hasNext(); c.select(fOverlayStore.getInt(key)))
+		{
+			c = (CCombo)e.next();
+			key = (String)fComboBoxes.get(c);
 		}
 
 		fFieldsInitialized = true;
@@ -411,9 +450,29 @@ public class EditorPreferencePage extends PreferencePage
 		super.dispose();
 	}
 
+	private CCombo addComboList(Composite parent, String label, String key, String[] items) {
+		
+		Label labelControl = new Label(parent,SWT.NONE);
+		labelControl.setText(label);
+		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd.horizontalIndent = 0;
+		
+		labelControl.setLayoutData(gd);
+		CCombo combo = new CCombo(parent,SWT.BORDER|SWT.SINGLE|SWT.READ_ONLY);
+		for (int i=0;i<items.length;i++) {
+			combo.add(items[i]);
+		}
+		combo.setBackground(new Color(parent.getDisplay(),255,255,255));
+		
+		combo.addSelectionListener(fComboBoxListener);
+		fComboBoxes.put(combo,key);
+		
+		return combo;
+	}
+	
 	private Button addCheckBox(Composite parent, String label, String key, int indentation)
 	{
-		Button checkBox = new Button(parent, 32);
+		Button checkBox = new Button(parent, SWT.CHECK);
 		checkBox.setText(label);
 		GridData gd = new GridData(32);
 		gd.horizontalIndent = indentation;
@@ -426,13 +485,13 @@ public class EditorPreferencePage extends PreferencePage
 
 	private Control addTextField(Composite composite, String label, String key, int textLimit, int indentation, boolean isNumber)
 	{
-		Label labelControl = new Label(composite, 0);
+		Label labelControl = new Label(composite, SWT.NONE);
 		labelControl.setText(label);
-		GridData gd = new GridData(32);
+		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
 		gd.horizontalIndent = indentation;
 		labelControl.setLayoutData(gd);
-		Text textControl = new Text(composite, 2052);
-		gd = new GridData(32);
+		Text textControl = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
 		gd.widthHint = convertWidthInCharsToPixels(textLimit + 1);
 		textControl.setLayoutData(gd);
 		textControl.setTextLimit(textLimit);

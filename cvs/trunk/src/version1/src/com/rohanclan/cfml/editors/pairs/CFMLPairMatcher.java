@@ -136,6 +136,7 @@ public class CFMLPairMatcher implements ICharacterPairMatcher
 					
 					//get the distance to the match
 					int matchDistance = findDistanceToMatch();
+
 					
 					
 					//note that the region must contain both pairs, hence the 2x factor
@@ -144,7 +145,7 @@ public class CFMLPairMatcher implements ICharacterPairMatcher
 					//and go forward the negated value (now positive) of the match distance
 					if( matchDistance < 0 )
 					{
-						region = new Region(startOffset+matchDistance-matchingPair.getLength(),0-matchDistance);
+						region = new Region(startOffset+matchDistance-matchingPair.getLength(),Math.abs(matchDistance)+2*matchingPair.getLength());
 						
 					}
 					//if matchDistance is zero, check to see which side the anchor is on
@@ -154,11 +155,11 @@ public class CFMLPairMatcher implements ICharacterPairMatcher
 					{
 						if(currentAnchor == CFMLPairMatcher.RIGHT)
 						{
-							region = new Region(startOffset+matchDistance-matchingPair.getLength(),matchingPair.getLength());
+							region = new Region(startOffset-1,2*matchingPair.getLength());
 						}
 						else
 						{
-							region = new Region(startOffset,matchDistance+2*matchingPair.getLength());
+							region = new Region(startOffset,2*matchingPair.getLength());
 						}
 					}
 					//if match distance is positive, start at the offset
@@ -166,6 +167,8 @@ public class CFMLPairMatcher implements ICharacterPairMatcher
 					{
 						region = new Region(startOffset,matchDistance+2*matchingPair.getLength());
 					}
+
+					
 					
 				}
 				catch( UnableToFindMatchException e)

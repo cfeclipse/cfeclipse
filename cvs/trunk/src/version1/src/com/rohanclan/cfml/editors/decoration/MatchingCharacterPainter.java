@@ -17,7 +17,9 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
-
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.SWT;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -28,6 +30,11 @@ import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.source.*;
+
+
+import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
+import com.rohanclan.cfml.CFMLPlugin;
+import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
  * Highlights the peer character matching the character near the caret position.
@@ -161,17 +168,10 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
 			offset -= region.getOffset();
 		}
 			
-		if (ICharacterPairMatcher.RIGHT == fAnchor) {
-			int endOffset = offset + length + 1;
-			
-			draw(gc, offset, 1);
-			draw(gc, endOffset, 1);
-			
-		}
-		else { 
-			draw(gc, offset, 1);
-			draw(gc, offset + length-1, 1);
-		}
+		int endOffset = offset + length-1;
+		draw(gc, offset, 1);
+		draw(gc, endOffset, 1);
+		
 	}
 	
 	/**
@@ -185,14 +185,40 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
 		if (gc != null) {
 			Point left= fTextWidget.getLocationAtOffset(offset);
 			Point right= fTextWidget.getLocationAtOffset(offset + length);
-
-			// draw box around character
-			//gc.setForeground(fColor);
-			//gc.drawRectangle(left.x, left.y+1, right.x - left.x - 1, fTextWidget.getLineHeight() - 1);
 			
-			// Paint a background on the character
-			gc.setBackground(fColor);
-			gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
+			IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
+			int style = store.getInt(EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE);
+			
+			switch (style) {
+				case EditorPreferenceConstants.BRACKET_MATCHING_OUTLINE: 
+				{
+					//draw box around character
+					gc.setForeground(fColor);
+					gc.drawRectangle(left.x, left.y, right.x - left.x - 1, fTextWidget.getLineHeight() - 1);
+					break;
+				}
+				case EditorPreferenceConstants.BRACKET_MATCHING_BACKGROUND: 
+				{
+					//Paint a background on the character
+					gc.setBackground(fColor);
+					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
+					break;
+				}
+				case EditorPreferenceConstants.BRACKET_MATCHING_BOLD: 
+				{
+					gc.setForeground(fColor);
+					gc.getFont();
+					FontData[] data = gc.getFont().getFontData();
+					data[0].setStyle(SWT.BOLD);
+					Font font = new Font(fTextWidget.getDisplay(),data);
+					gc.setFont(font);
+					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
+					break;
+				}
+			}
+			
+			
+			
 							
 		} else {
 			fTextWidget.redrawRange(offset, length, true);
