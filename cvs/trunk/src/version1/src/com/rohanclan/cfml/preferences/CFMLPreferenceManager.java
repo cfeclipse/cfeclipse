@@ -65,6 +65,11 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final RGB DEFAULT_COLOR_FORMTAG			= ICFColorConstants.FORM;
 	private static final RGB DEFAULT_COLOR_TABLETAG		= ICFColorConstants.TABLE;
 	
+	// Scribble pad defaults
+	private static final String DEFAULT_SCRIBBLE_PAD_FILE = "scribble.cfm";
+	private static final boolean DEFAULT_SCRIBBLE_CLEAR_ON_LOAD = false;
+	private static final String DEFAULT_SCRIBBLE_PROJECT_ID = "";
+	
 	/** this is public because the browser uses it on errors */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
@@ -141,6 +146,11 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
         store.setDefault(P_PARSE_DOCFSCRIPT, DEFAULT_PARSE_DOCFSCRIPT);
         store.setDefault(P_PARSE_DOCFML, DEFAULT_PARSE_DOCFML);
         store.setDefault(P_PARSE_REPORT_ERRORS, DEFAULT_PARSE_REPORT_ERRORS);
+        
+        // Scribble pad prefs
+        store.setDefault(P_SCRIBBLE_PAD_FILE, DEFAULT_SCRIBBLE_PAD_FILE);
+        store.setDefault(P_SCRIBBLE_CLEAR_ON_LOAD, DEFAULT_SCRIBBLE_CLEAR_ON_LOAD);
+        store.setDefault(P_SCRIBBLE_PROJECT_ID, DEFAULT_SCRIBBLE_PROJECT_ID);
         
         // Tag indent prefs
         store.setDefault(P_AUTOCLOSE_DOUBLE_QUOTES, DEFAULT_AUTOCLOSE_DOUBLEQUOTES);

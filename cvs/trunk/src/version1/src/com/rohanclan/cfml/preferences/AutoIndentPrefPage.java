@@ -4,7 +4,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import com.rohanclan.cfml.CFMLPlugin;
-import org.eclipse.jface.preference.IPreferenceStore;
+//import org.eclipse.jface.preference.IPreferenceStore;
 
 
 /**

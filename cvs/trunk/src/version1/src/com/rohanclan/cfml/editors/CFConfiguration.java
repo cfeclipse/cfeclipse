@@ -565,7 +565,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	// This method gets called when the preference page is saved.
 	public void propertyChange(PropertyChangeEvent event)
     {
-		//System.err.println("CFConfiguration property change listener notified." + event.getProperty());
+		System.err.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
     	
 		if(prop.equals("insightDelay")) {

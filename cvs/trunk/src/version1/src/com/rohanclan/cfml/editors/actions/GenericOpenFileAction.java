@@ -39,7 +39,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
-import com.rohanclan.cfml.wizards.NewCfmlWizard;
+//import com.rohanclan.cfml.wizards.NewCfmlWizard;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 

@@ -225,6 +225,16 @@
                class="com.rohanclan.cfml.editors.actions.GetHelpAction"
                id="com.rohanclan.cfml.editors.actions.GetHelpAction">
          </action>
+          <!-- Launch Scribble Pad -->
+         <action
+         	   toolbarPath="BasicCFEditorCommand"
+               definitionId="com.rohanclan.cfml.editors.actions.LoadScribblePad"
+               label="Load scribble pad"
+               icon="icons/ctool16/scribble.gif"
+               tooltip="Load the scribble pad"
+               class="com.rohanclan.cfml.editors.actions.LoadScribblePadAction"
+               id="com.rohanclan.cfml.editors.actions.LoadScribbleAction">
+         </action>
       </editorContribution>
    </extension>
 	
@@ -514,6 +524,19 @@
             command="com.rohanclan.cfml.editors.actions.GetHelp"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+      <!-- Fire up the scribble pad -->
+      <command
+            name="Open scribble pad"
+            description="Opens up the scribble pad file."
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.LoadScribblePad">
+      </command>
+      <keyBinding
+            string="F8"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.LoadScribblePad"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- the snip viewers -->
@@ -591,6 +614,11 @@
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
             name="Auto-insertion and closing"
             id="com.rohanclan.cfml.preferences.ParsePrefPage"/>
+      <page
+            class="com.rohanclan.cfml.preferences.ScribblePadPrefPage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="Scribble pad"
+            id="com.rohanclan.cfml.preferences.ScribblePrefPage"/>
    </extension>
    <extension
          point="org.eclipse.ui.propertyPages">

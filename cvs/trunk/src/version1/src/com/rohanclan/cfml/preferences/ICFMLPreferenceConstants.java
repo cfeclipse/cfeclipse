@@ -20,6 +20,10 @@ public interface ICFMLPreferenceConstants {
 	String P_SNIPPETS_PATH 			= "snippetPath";
 	String P_PROJECT_URL 				= "projectURL";
 	
+	String P_SCRIBBLE_PROJECT_ID = "scribbleProjectID";
+	String P_SCRIBBLE_PAD_FILE = "scribblePad";
+	String P_SCRIBBLE_CLEAR_ON_LOAD = "clearScribblePadOnLoad";
+	
 	/** html, javascript, css comments */
 	String P_COLOR_HTM_COMMENT 		= "htmCommentColor";
 	/** html strings */

@@ -34,11 +34,11 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
+//import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.ui.IViewPart;
+//import org.eclipse.ui.IViewPart;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.views.browser.BrowserView;
 
@@ -99,7 +99,7 @@ public class GetHelpAction implements IEditorActionDelegate {
 				int cursorOffset = sel.getOffset()-1;
 				
 				FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
-				IRegion region = finder.find(cursorOffset,"[^a-z]",false,false,false,true);
+				IRegion region = finder.find(cursorOffset,"[^a-z_]",false,false,false,true);
 
 				
 				int keywordStart = 0;
@@ -109,7 +109,7 @@ public class GetHelpAction implements IEditorActionDelegate {
 				
 				//System.out.println("Keyword starts at: "  + keywordStart);
 				
-				region = finder.find(cursorOffset,"[^a-z]",true,false,false,true);
+				region = finder.find(cursorOffset,"[^a-z_]",true,false,false,true);
 				int keywordEnd = doc.getLength()-1;
 				if (region != null) {
 				    keywordEnd = region.getOffset() -1;

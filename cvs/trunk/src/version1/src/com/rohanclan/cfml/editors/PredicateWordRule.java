@@ -30,7 +30,7 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WordRule;
-import org.eclipse.jface.text.IDocument;
+//import org.eclipse.jface.text.IDocument;
 
 /**
  * @author Rob

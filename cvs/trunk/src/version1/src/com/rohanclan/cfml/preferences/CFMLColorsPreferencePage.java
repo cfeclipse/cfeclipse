@@ -33,7 +33,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 //import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import com.rohanclan.cfml.CFMLPlugin;
-import org.eclipse.swt.graphics.RGB;
+
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 
 /**
