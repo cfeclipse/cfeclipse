@@ -85,9 +85,18 @@ public class TagViewer extends Dialog {
 			Iterator i = this.attributes.iterator();
 			while (i.hasNext()) {
 				Parameter pr = (Parameter) i.next();
-
+				
+				String labelname = pr.getName() + " : ";
+				if(pr.isRequired()){
+					labelname = pr.getName() + " *: ";
+					
+				}
+				
+				
+				
 				Label label = new Label(container, SWT.HORIZONTAL);
-				label.setText(pr.getName() + ": ");
+				
+				label.setText(labelname);
 				label.setFont(labelFont);
 				GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 				gridData.widthHint = 200;
@@ -98,7 +107,17 @@ public class TagViewer extends Dialog {
 				} else {
 					addTextField(container, gridData, pr.getName());
 				}
+			
+				
+				
 			}
+			Label reqlabel = new Label(container, SWT.HORIZONTAL);
+			reqlabel.setText("Labels marked with * are required.");
+			reqlabel.setFont(labelFont);
+			GridData labgridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+			labgridData.horizontalSpan = 2;
+			reqlabel.setLayoutData(labgridData);
+			
 		}
 		return container;
 	}

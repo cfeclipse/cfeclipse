@@ -13,6 +13,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
+import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.graphics.Image;
@@ -34,6 +37,7 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.browser.BrowserView;
+import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 import com.rohanclan.cfml.views.packageview.FolderNode;
 import com.rohanclan.cfml.views.packageview.FolderTypes;
 import com.rohanclan.cfml.views.snips.SnipDialog;
@@ -41,6 +45,7 @@ import com.rohanclan.cfml.views.snips.SnipDoubleClickListener;
 import com.rohanclan.cfml.views.snips.SnipTreeViewContentProvider;
 import com.rohanclan.cfml.views.snips.SnipTreeViewLabelProvider;
 import com.rohanclan.cfml.views.snips.SnipVarItem;
+import com.rohanclan.cfml.editors.actions.Encloser;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.GetHelpAction;
 
@@ -609,13 +614,43 @@ public class DictionaryView extends ViewPart {
 
 					// OK button was pressed. Check the values and do whatever
 					// we need to with them.
+					
+					//Get Info about the editor
+					IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+					IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+					IDocument doc =  ((ITextEditor)iep).getDocumentProvider().getDocument(iep.getEditorInput());
+					ITextEditor ite = (ITextEditor)iep;
+					ISelection sel = ite.getSelectionProvider().getSelection();
+					int cursorOffset = ((ITextSelection)sel).getOffset();
+					int selectionLength = ((ITextSelection)sel).getLength();
+					Encloser encloser = new Encloser();
+					//-> this inserts it encloser.enclose(doc,(ITextSelection)sel,selectedMethod.getInsertString(),"");
+					
+					
+					
+					
+					//End Get info about the editor
+					TagFormatter tf = new TagFormatter(tg.getTag());
+					if(selectionLength > 0){
+						tf.setWrapping(true);
+					}
+					
 					Enumeration e = fieldStore.keys();
 					while (e.hasMoreElements()) {
+						//We could pass the attributes back to the tag
+						//Item. or we could do something more radical like have a TagFormatter
 						String attribute = e.nextElement().toString();
 						String value = fieldStore.get(attribute).toString();
+						tf.addAttribute(attribute, value);
 
+						
 						System.out.println(attribute + "," + value);
 					}
+					System.out.println(tf.toString());
+					
+					encloser.enclose(doc,(ITextSelection)sel,tf.getTagStart(),tf.getTagEnd());
+					
+					
 				}
 
 			} catch (Exception e) {
