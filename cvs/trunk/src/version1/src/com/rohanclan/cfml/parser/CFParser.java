@@ -447,8 +447,10 @@ public class CFParser {
 		}
 		return true;
 	}
-	private SPLParser parser = null;
-	
+	static private SPLParser parser = null;
+	static {
+		parser = new SPLParser(new StringReader(""));
+	}
 	/**
 	 * <code>handleCFScriptBlock</code> - handles a CFScript'd block (at the moment it does nothing)
 	 * @param match - the match
