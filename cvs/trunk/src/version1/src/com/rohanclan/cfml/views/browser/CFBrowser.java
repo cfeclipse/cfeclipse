@@ -64,10 +64,9 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.QualifiedName;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
+import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 public class CFBrowser {
-	public static final String DEFAULURL = "http://livedocs.macromedia.com";
-	
 	protected int index;
 	protected boolean busy;
 	protected Image images[];
@@ -300,7 +299,7 @@ public class CFBrowser {
 			String url = getProjectURL();
 			if(url == null || url.equals(""))
 			{
-				browser.setUrl(DEFAULURL);
+				browser.setUrl(CFMLPreferenceManager.DEFAULT_PROJECT_URL);
 			}
 			else
 			{
@@ -310,7 +309,7 @@ public class CFBrowser {
 	}
 	
 	private String getProjectURL() {
-		String projectURL = DEFAULURL;
+		String projectURL = CFMLPreferenceManager.DEFAULT_PROJECT_URL;
 		
 		try 
 		{
