@@ -6075,8 +6075,6 @@
 					<value option="string" />
 					<value option="struct" />
 					<value option="uuid" />
-					<value option="variable_name" />
-					<value option="component_name" />
 				</values>
 			</parameter>
 			<parameter name="required" type="boolean" required="false">
