@@ -176,7 +176,7 @@ public class CFCMethodViewItem  {
 	    String insightXML = "";
 	    
 	    insightXML += "\t\t\t<function creator=\"8\" name=\""+functionTag.getAttribute("name")+"\" returns=\""+functionTag.getAttribute("returnType")+"\">\n";
-		insightXML += "\t\t\\tt<help><![CDATA[\n";
+		insightXML += "\t\t\\t\t<help><![CDATA[\n";
 		insightXML += "\t\t\t\t\t \n";
 		insightXML += "\t\t\t\t]]></help>\n";
 		CFNodeList args = functionTag.selectNodes("//argument");
