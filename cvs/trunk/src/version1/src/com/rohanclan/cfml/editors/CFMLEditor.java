@@ -87,7 +87,7 @@ import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.dialogs.MessageDialog;
 import java.util.Iterator;
 import org.eclipse.ui.texteditor.AnnotationPreference;
-import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 
 /**
@@ -370,7 +370,23 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					.getSelection();
 
 
-			Action act = new Action("Show partition info", null) {
+			Action act = new Action("Refresh syntax highlighting", null) {
+				public void run() {
+				    
+				  IEditorPart iep = getSite().getPage().getActiveEditor();
+					ITextEditor editor = (ITextEditor) iep;
+					IDocument doc = editor.getDocumentProvider().getDocument(
+							editor.getEditorInput());
+					String docText = doc.get();
+					doc.set("");
+					doc.set(docText);
+				}
+			};
+			menu.add(act);
+
+
+
+			act = new Action("Show partition info", null) {
 				public void run() {
 				    
 				    IEditorPart iep = getSite().getPage().getActiveEditor();
@@ -384,7 +400,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 					int startpos = sel.getOffset();
 					int len = Math.max(sel.getLength(),1);
-					CFEDefaultPartitioner partitioner = (CFEDefaultPartitioner)cfd.getDocumentPartitioner();
+					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
 				    String info = "Partitioning info from offset " + startpos + " to " + Integer.toString(startpos + len) + "\n\n";
 					for (int i=0;i<partitioning.length;i++) {

@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.19 2005-02-01 01:52:49 smilligan Exp $
- * $Revision: 1.19 $
- * $Date: 2005-02-01 01:52:49 $
+ * $Id: CFEPartitioner.java,v 1.1 2005-02-11 15:10:02 smilligan Exp $
+ * $Revision: 1.1 $
+ * $Date: 2005-02-11 15:10:02 $
  * 
  * Created on Oct 17, 2004
  *
@@ -64,13 +64,13 @@ import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
  * cleanCompositePartitions(), cleanPsuedoPartitions(), and 
  * repairPseudoPartitions() methods.
  */
-public class CFEDefaultPartitioner implements IDocumentPartitioner,
+public class CFEPartitioner implements IDocumentPartitioner,
         IDocumentPartitionerExtension, IDocumentPartitionerExtension2 {
 
     private final static String CONTENT_TYPES_CATEGORY = "__content_types_category";
 
     /** The partitioner's scanner */
-    protected IPartitionTokenScanner fScanner;
+    protected CFPartitionScanner fScanner;
 
     /** The legal content types of this partitioner */
     protected String[] fLegalContentTypes;
@@ -105,6 +105,18 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
     /** The position index of the last partition affected by a document change */
     private int fReparseEndIndex;
 
+    
+    /**
+     * The text to be inserted by the document event 
+     */
+    
+    private String fInsertedText = "";
+    
+    /**
+     * The text to be deleted by the document event
+     */
+    
+    private String fDeletedText = "";
     /** 
      * Pseudo partitions such as the contents of a cfquery tag block
      * That is, partitions that exist only because of what comes before 
@@ -131,9 +143,9 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
      * @param legalContentTypes
      *            the legal content types of this partitioner
      */
-    public CFEDefaultPartitioner(IPartitionTokenScanner scanner,
+    public CFEPartitioner(IPartitionTokenScanner scanner,
             String[] legalContentTypes) {
-        fScanner = scanner;
+        fScanner = (CFPartitionScanner)scanner;
         fLegalContentTypes = legalContentTypes;
         fPositionCategory = CONTENT_TYPES_CATEGORY + hashCode();
         fPositionUpdater = new PositionUpdater(fPositionCategory);
@@ -166,6 +178,9 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 
         initialize();
     }
+    
+    
+    
 
     /**
      * Performs the initial partitioning of the partitioner's document.
@@ -435,6 +450,34 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
         Assert.isTrue(e.getDocument() == fDocument,
                 "CFEDefaultPartitioner::documentAboutToBeChanged()");
 
+        /*
+         * Calculate the extent of the document change 
+         * before the change occurs. These fields are 
+         * used in documentChanged2 to optimize the deletion
+         * and re-creation of partitions. Since all partitions
+         * start with a < and end with a > we only need to
+         * repartition if one of those has been added or removed
+         * or if the change starts or ends with a - (could change
+         * a comment).
+         * 
+         */
+        fDeletedText = "";
+        fInsertedText = "";
+        try {
+          int textLength = 0;
+          if (e.fText != null) {
+              textLength = e.fText.length();
+          }
+	        if (e.fLength > 0) {
+	            fDeletedText =  fDocument.get(e.fOffset,e.fLength);
+	        } 
+	        if (textLength > 0){
+	            fInsertedText = e.fText;
+	        }
+        } catch (Exception ex) {
+            // do nothing.
+        }
+        
         fPreviousDocumentLength = e.getDocument().getLength();
         fStartOffset = -1;
         fEndOffset = -1;
@@ -798,6 +841,139 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
     }
     
     /**
+     * Determines if the update could have changed any document partitions.
+     * @param e
+     * @return
+     */
+    private boolean updateCouldChangePartitions(DocumentEvent e) {
+
+        int changeDelta = fInsertedText.length() - fDeletedText.length();
+        /*
+         * If the deleted or inserted text contains a partition
+         * start or end character we can just return true without
+         * scanning back or forward.
+         */  
+        
+        if (fDeletedText.indexOf('>') >= 0
+            || fDeletedText.indexOf('<') >= 0
+            || fInsertedText.indexOf('>') >= 0
+            || fInsertedText.indexOf('<') >= 0) {
+            return true;
+        }
+        
+        String doc = fDocument.get();
+        /*
+         * Read back from the offset looking for either a < or a 
+         * character that couldn't be part of a rule start sequence.
+         */ 
+        for (int i=e.fOffset-1;i>=0;i--) {
+            char c = doc.charAt(i);
+            if (!isValidPartitionStartChar(doc.charAt(i))) {
+                break;
+            }
+            if (c == '<') {
+                return true;
+            }
+        }
+
+
+        /*
+         * Read forward from the offset looking for either a < or a 
+         * character that couldn't be part of a rule start sequence.
+         */
+        if (e.fOffset + fDeletedText.length() >= doc.length()) {
+            return false;
+        }
+        
+        for (int i = e.fOffset + changeDelta;i<doc.length();i++) {
+            char c = doc.charAt(i);
+            if (!isValidPartitionEndChar(c)) {
+                break;
+            }
+            if (c == '>' 
+                || c == '<') {
+                return true;
+            }
+            
+        }
+        
+        return false;
+        
+    }
+    
+
+    private static final boolean isValidPartitionStartChar(char c) {
+
+        if (c == '<') {
+            return true;
+        }
+        if (Character.isLetterOrDigit(c)) {
+            return true;
+        }
+        if (c == '_') {
+            return true;
+        }
+        if (c == '-') {
+            return true;
+        }
+        if (c == '!') {
+            return true;
+        }
+        if (c == '/') {
+            return true;
+        }
+        
+        return false;
+    }
+    
+
+    private static final boolean isValidPartitionEndChar(char c) {
+
+        if (c == '>') {
+            return true;
+        }
+        if (Character.isLetterOrDigit(c)) {
+            return true;
+        }
+        if (c == '-') {
+            return true;
+        }
+        if (c == '<') {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Updates the document partition offsets affected by the given
+     * document change. Resizes the containing partition to the size
+     * required by the document change.
+     * @param e
+     * @return
+     */
+    private IRegion updatePartitionOffsets(DocumentEvent e) {
+        int changeDelta = fInsertedText.length() - fDeletedText.length();
+        try {
+         
+            Position[] partitions = fDocument.getPositions(fPositionCategory);
+            for (int i=0;i<partitions.length;i++) {
+                if (partitions[i].offset > e.fOffset) {
+                    partitions[i].offset += changeDelta;
+                } else if (partitions[i].offset + partitions[i].length > e.fOffset) {
+                    partitions[i].length += changeDelta;   
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return createRegion();
+    }
+    
+    
+    
+    
+    /**
      * Called when the document content changes. Updates partitions based on the
      * area of text that has changed.
      */
@@ -806,7 +982,11 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             // Grab a reference to the document
             IDocument d = e.getDocument();
             
-            //System.out.println("Got a document change from " + e.fOffset + " with length " + e.getText().length() + " with text [" + e.getText() + "]");
+            if (!updateCouldChangePartitions(e)) {
+                return updatePartitionOffsets(e);
+            }
+            
+            
             // Grab all the positions in the document
             Position[] category = d.getPositions(fPositionCategory);
             // Get the line where the document event started
@@ -826,7 +1006,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             // Clean up any partitions affected by the change.
             removeAffectedPartitions(e);
            
-            
+           
             /*
              * This should be the index of the next partition that starts
              * that starts after the event offset. Used to limit the extent

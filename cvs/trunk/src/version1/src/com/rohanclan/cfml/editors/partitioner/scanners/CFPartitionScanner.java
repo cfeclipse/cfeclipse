@@ -262,6 +262,28 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					fColumn= UNDEFINED;
 					
 					if (fRules != null) {
+
+							
+						int c = -1;
+						/*
+						 * Short-circuit the rule check if the next character
+						 * isn't a '<'. This assumes that every rule has '<'
+						 * as the first character of the start sequence. Currently
+						 * this is the case, so it should be ok.
+						 * 
+						 */
+						while(true) {
+						    c = read();
+						    if (c == EOF) {
+						        return Token.EOF;
+						    }
+						    if (c != '<') {
+						        return fDefaultReturnToken;
+						    }
+						    break;
+						}
+						unread();
+						 
 						for (int i= 0; i < fRules.length; i++) {
 							// Get the token for the current rule.
 							token= (fRules[i].evaluate(this));

@@ -41,7 +41,7 @@ import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.core.runtime.Path;
 
-import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.external.ExternalFile;
 import com.rohanclan.cfml.external.ExternalMarkerAnnotationModel;
@@ -73,7 +73,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		}
 		
 		if (document != null) {
-			IDocumentPartitioner partitioner = new CFEDefaultPartitioner(
+			IDocumentPartitioner partitioner = new CFEPartitioner(
 					new CFPartitionScanner(), new String[] {
 							CFPartitionScanner.HTM_END_TAG,
 							CFPartitionScanner.HTM_TAG_ATTRIBS,

@@ -29,7 +29,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 
-import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 
 /**
@@ -94,7 +94,7 @@ public class AssistUtils {
 		assistState.setDoc(viewer.getDocument());
 		assistState.setTextViewer(viewer);
 
-        CFEDefaultPartitioner partitioner = (CFEDefaultPartitioner)document.getDocumentPartitioner();
+        CFEPartitioner partitioner = (CFEPartitioner)document.getDocumentPartitioner();
         CFEPartition[] partitions = partitioner.getTagPartitions(assistState.getOffset());
         if (partitions != null) {
 	        int start = partitions[0].getOffset();

@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.18.7"
+   version="1.1.18.8"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -348,6 +348,7 @@
                menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                id="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction">
          </action>
+
          <!-- refresh the browser view action -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.RefreshBrowser"

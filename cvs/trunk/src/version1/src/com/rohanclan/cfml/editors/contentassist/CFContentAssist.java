@@ -45,7 +45,7 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.editors.ICFEFileDocument;
-import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.util.CFDocUtils;
