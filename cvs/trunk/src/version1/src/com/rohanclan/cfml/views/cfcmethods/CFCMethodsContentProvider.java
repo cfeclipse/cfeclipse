@@ -47,7 +47,11 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 	public Object[] getElements(Object parent) {
 		
 		try {
-			DocItem rootItem = document.getCFDocument().getDocumentRoot();
+			CFDocument doc = document.getCFDocument();
+			if(doc == null) {	// OBT: Added to handle when the parse fatally fails.
+				return EMPTY_ARRAY;
+			}
+			DocItem rootItem = doc.getDocumentRoot();
 
 			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
 			nodes = rootItem.selectNodes("//function");
