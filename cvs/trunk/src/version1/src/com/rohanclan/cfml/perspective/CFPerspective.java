@@ -60,6 +60,7 @@ public class CFPerspective implements IPerspectiveFactory {
 	
 		bottom.addView(IPageLayout.ID_TASK_LIST);
 		bottom.addView(IPageLayout.ID_BOOKMARKS);
+		bottom.addView(IPageLayout.ID_PROBLEM_VIEW);
 		
 		//views to the right
 		IFolderLayout right = layout.createFolder(
