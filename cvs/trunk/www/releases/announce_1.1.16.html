@@ -1,0 +1,111 @@
+<html>
+<head>
+	<style type="text/css">
+	/* <![CDATA[ */ 
+	@import "http://www.tigris.org/branding/css/tigris.css"; 
+	@import "http://www.tigris.org/branding/css/inst.css"; 
+	/*  ]]> */
+	</style>
+  
+  	<link rel="stylesheet" type="text/css" 
+  		href="http://www.tigris.org/branding/css/print.css" media="print" 
+  	/>
+	<script src="http://www.tigris.org/branding/scripts/tigris.js" type="text/javascript"></script>
+	<title>CFEclipse 1.1.16 released</title>
+</head>
+
+<body>
+	<div style="background:#663 url('../images/cfeclipse-logo-brown.gif') no-repeat top right;height:92px; margin:-7px 2px 0 2px;"></div>
+	<h3>Announcement: CFEclipse version 1.1.16 "Sonic" released.</h3>
+	<h4>9th September, 2004 : 22:08</h4>
+<p>
+	Installation & update procedures are listed at the bottom of this mail.
+	All current non-CVS users of CFEclipse should hopefully be notified by 
+	Eclipse that there is a new release available. If not, follow the update
+	procedures and mention it to us on the CFE lists.
+</p>
+
+<p>
+	The CFE Development team would like to apologise for the rather large gap in releases. In our defense we claim
+	that real-life has intruded. On the up side we have sorted out around 50 features & bugs that were listed on the
+	Issue Tracker. We've also received more contributions from <a href="http://cybersonic.blogspot.com/">Mark Drew</a>
+	to whom muchos kudos goes.
+</p>
+
+<h3>What's next</h3>
+<p>
+	A brief listing of what's hopefully coming up in the next releases of CFE:
+</p>
+<ul>
+	<li>The beginnings of the parse of your projects</li>
+	<li>Improved CFScript, though this feature is like WinFS for Longhorn...</li>
+	<li>Maybe, if you're lucky, a basic Mach-II plugin</li>
+</ul>
+
+<h3>Enhancements Implemented:</h3>
+<ul>
+	<li>NEW Context insight for scope variables</li>
+	<li>NEW Component insight available for pre-defined CFCs via user.xml</li>
+	<li>NEW Dictionary reload on Ctrl+F5</li>
+	<li>NEW cfinclude 'template' attribute proposals list directories & files</li>
+	<li>NEW Can change the editors background colour (cheers to Mulcahey, Robert J.)</li>
+	<li>NEW Drag and drop text from outside the editor - <strong>beta</strong> and may only work on Macs</li>
+	<li>NEW Snip behaviour modified - single character triggers supported, nsert snippet action now searches back and forward for the first character that is not numeric, alpha, _ or -</li>
+	<li>NEW Snip dialog has scroll bars for edit boxes, multi-line snips inserted with same indent as first line</li>
+	<li>NEW F8 saves & refreshes browser if scribble file is already active</li>
+	<li>NEW Now there's only one dialog per snippet for variables & drop-downs for enumerator values</li>
+	<li>13	ctrl+space to invoke context sensitive insight</li>
+	<li>20	New file type templates</li>
+	<li>56	<a> and <form> tag colour coding</li>
+	<li>91	Homesite Code template support for snippits.</li>
+	<li>93	CFC Method view to be ordered alphabetically</li>
+	<li>99	color customizing</li>
+	<li>106	ColdFusion Comment Colours</li>
+	<li>136	Change CFScript pref text</li>
+	<li>159	Add CFML TODO: comments to Tasks view</li>
+	<li>113	Request for Auto Completion</li>
+</ul>
+
+<h3>Bugs fixed:</h3>
+<ul>
+	<li>5	'<cfscript>' at certain points fails to insert matching closing tag</li>
+	<li>30	Error opening file when no project is associated</li>
+	<li>39	ALL PREFERENCE PAGE REQUESTS HERE...</li>
+	<li>53	F1 keypress brings up documentation</li>
+	<li>54	Keyboard shortcuts for standard tags and methods</li>
+	<li>61	Duplicate attributes are not reported as errors.</li>
+	<li>62	A "/>" anywhere in a tag will cause it to be marked as self-closing</li>
+	<li>88	Problems tab lists somethings as required when shouldn't</li>
+	<li>89	closing cfquery hightlight color</li>
+	<li>114	CFParser reports an incorrect message on empty CFScript blocks</li>
+	<li>128	Lots of error messages changing CFEclipse preferences</li>
+	<li>129	Problem parser treats attributes as case sensitive</li>
+	<li>130	Improve www installation instructions</li>
+	<li>131	'<<' valid code being reported as an error.</li>
+	<li>140	Code colouring incorrectly colours the wrong attributes.</li>
+	<li>142	The CFRETURN tag has an extra closing >.</li>
+	<li>145	Add more versions to this bug reporting form</li>
+	<li>146	Problems with CFC Method View showing blank content</li>
+	<li>147	space in attribute causes error</li>
+	<li>151	Upper case is causing problems with the file parser</li>
+	<li>156	Paste attribute causes problem at end of tag</li>
+	<li>164	Fixed bug #30</li>
+	<li>166	cfprocessingDirective tag not recognised</li>
+	<li>169	Unclosed Tags breaks cfcomponent outline view</li>
+	<li>172	CFScript breaks on empty CFScript blocks</li>
+	<li>173	Some CFScript blocks prevent file opening & saving</li>
+	<li>184	nested cfml-comments cause false syntax highlighting and breaks outline-view</li>
+</ul>
+<h3>Known issues:</h3>
+
+<ul>
+	<li>cfinclude Template attribute completion moves cursor past tag end on directory select</li>
+</ul>
+
+<p>
+A zip version is available on the CFEclipse website if you wish to perform the installation/update manually.
+</p>
+	
+</body>
+	
+</html>
