@@ -86,6 +86,7 @@ public class BrowseToCurrentPageAction implements IEditorActionDelegate {
 	        
 	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
 	        browser.setUrl(calculatedURL);
+	        browser.setFocus();
 	        // browser.refresh();
 	        
 	        editor.setFocus();

@@ -153,7 +153,8 @@ public class GetHelpAction implements IEditorActionDelegate {
 		
 		try {
 		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-		   browser.setUrl(theFullURL);
+		   browser.setUrl(theFullURL, BrowserView.HELP_TAB);
+		   browser.setFocus(BrowserView.HELP_TAB);
 		}
 		catch(Exception e) {
 		    e.printStackTrace();

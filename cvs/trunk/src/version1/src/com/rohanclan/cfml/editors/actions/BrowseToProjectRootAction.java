@@ -82,6 +82,7 @@ public class BrowseToProjectRootAction implements IEditorActionDelegate {
 			
 	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
 	        browser.setUrl(projectURL);
+	        browser.setFocus();
 	        // browser.refresh();
 	        
 	        editor.setFocus();

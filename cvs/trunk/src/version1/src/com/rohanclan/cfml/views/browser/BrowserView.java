@@ -34,7 +34,13 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
  */
 public class BrowserView extends ViewPart {
 	public final static String ID_BROWSER = "com.rohanclan.cfml.views.browser";
-	protected CFBrowser instance = null;
+	public final static int PROJECT_TAB = 0;
+	public final static int HELP_TAB = 2;
+	
+	protected CFBrowser projectInstance = null;
+	protected CFBrowser helpInstance = null;
+	
+	protected TabFolder folder = null;
 
 	/**
 	 * Create the example
@@ -46,21 +52,31 @@ public class BrowserView extends ViewPart {
 		try
 		{
 		    if (preferenceManager.tabbedBrowser()) {
-			    TabFolder folder = new TabFolder(frame,SWT.TOP);
+			    folder = new TabFolder(frame,SWT.TOP);
 			    TabItem item = new TabItem(folder,SWT.NONE);
 			    item.setText("Project browser");
 			    Composite container = new Composite(folder,SWT.NONE);
 			    item.setControl(container);
-				instance = new CFBrowser(container,this);
+				projectInstance = new CFBrowser(container,this);
 				
 				item = new TabItem(folder,SWT.NONE);
 				item.setText("General Browser");
 				container = new Composite(folder,SWT.NONE);
 			    item.setControl(container);
 			    CFBrowser test = new CFBrowser(container,this);
+			    test.browser.setUrl("about:blank");
+			    
+			    item = new TabItem(folder,SWT.NONE);
+			    item.setText("Help browser");
+			    container = new Composite(folder,SWT.NONE);
+			    item.setControl(container);
+			    helpInstance = new CFBrowser(container,this);
+			    helpInstance.browser.setUrl("http://www.cfdocs.org");
+			    
+			    setFocus();
 		    }
 		    else {
-		        instance = new CFBrowser(frame,this);
+		        projectInstance = new CFBrowser(frame,this);
 		    }
 		    
 		}
@@ -76,8 +92,25 @@ public class BrowserView extends ViewPart {
 	 */
 	public void setFocus()
 	{
-		if(instance != null)
-			instance.setFocus();
+		if(projectInstance != null)
+	        folder.setSelection(BrowserView.PROJECT_TAB);
+			projectInstance.setFocus();
+	}
+	
+	/**
+	 * Called when we must grab focus.
+	 * @param whichTab the tab to set focus to
+	 * @see org.eclipse.ui.part.ViewPart#setFocus
+	 */
+	public void setFocus(int whichTab)
+	{
+	    if (BrowserView.HELP_TAB == whichTab && helpInstance != null) {
+	        folder.setSelection(BrowserView.HELP_TAB);
+			helpInstance.setFocus();
+	    }
+	    else {
+	        setFocus();
+	    }
 	}
 	
 	/**
@@ -85,10 +118,14 @@ public class BrowserView extends ViewPart {
 	 */
 	public void dispose() 
 	{
-		if(instance != null)
+		if(projectInstance != null)
 		{
-			instance.dispose();
-			instance = null;
+			projectInstance.dispose();
+			projectInstance = null;
+		}
+		if (helpInstance != null) {
+		    helpInstance.dispose();
+		    helpInstance = null;
 		}
 		super.dispose();
 	}
@@ -101,8 +138,24 @@ public class BrowserView extends ViewPart {
 	 */
 	public void setUrl(String url) 
 	{
-		if(instance != null)
-			instance.browser.setUrl(url);
+		if(projectInstance != null)
+			projectInstance.browser.setUrl(url);
+	}
+	
+	/**
+	 * sets the browsers url externally. This checks to see if the 
+	 * browser exists first so you can assume the browser is there and
+	 * just call it
+	 * @param url the URL to go to
+	 * @param whichTab the tab to set
+	 */
+	public void setUrl(String url, int whichTab) 
+	{
+	    if (BrowserView.HELP_TAB == whichTab && helpInstance != null) {
+	        helpInstance.browser.setUrl(url);
+	    } else  {
+	        setUrl(url);
+	    }
 	}
 	
 	/**
@@ -112,8 +165,25 @@ public class BrowserView extends ViewPart {
 	 */
 	public void refresh() 
 	{
-		if(instance != null)
-			instance.browser.refresh();
+		if(projectInstance != null)
+			projectInstance.browser.refresh();
+	}
+	
+	// The refresh(whichTab) may be unnecessary. Are we ever going to externally refresh the help view?
+	
+	/**
+	 * does a page refresh externally. This checks to see if the 
+	 * browser exists first so you can assume the browser is there and
+	 * just call it
+	 * @param whichTab the tab to refresh
+	 */
+	public void refresh(int whichTab) 
+	{
+	    if (BrowserView.HELP_TAB == whichTab && helpInstance != null) {
+	        helpInstance.browser.refresh();
+	    } else  {
+	        refresh();
+	    }
 	}
 	
 	

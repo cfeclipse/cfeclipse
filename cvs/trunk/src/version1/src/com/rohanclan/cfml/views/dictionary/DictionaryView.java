@@ -467,7 +467,8 @@ public class DictionaryView extends ViewPart {
 
 					BrowserView browser = (BrowserView) page
 							.showView(BrowserView.ID_BROWSER);
-					browser.setUrl(urldest + keyword);
+					browser.setUrl(urldest + keyword, BrowserView.HELP_TAB);
+					browser.setFocus(BrowserView.HELP_TAB);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

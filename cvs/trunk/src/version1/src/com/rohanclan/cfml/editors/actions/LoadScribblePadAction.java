@@ -107,6 +107,7 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
                 	    editor.doSave(new NullProgressMonitor());
                 	    BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
 		         		browser.setUrl(scribbleURL);
+		         		browser.setFocus();
                 	}
                 	else {
 		                IEditorPart editorPart = IDE.openEditor(page,scribbleFile,true);
