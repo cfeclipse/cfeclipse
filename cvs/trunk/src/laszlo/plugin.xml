@@ -3,7 +3,7 @@
 <plugin
    id="org.cfeclipse.laszlo"
    name="Laszlo Plug-in"
-   version="0.1.0"
+   version="0.1.1"
    provider-name="The CFEclipse Crew"
    class="org.cfeclipse.laszlo.LaszloPlugin">
 

@@ -113,6 +113,8 @@ public class LaszloScriptScanner extends ScriptScanner {
 		//style the whole block with some default colors
 		rules.add(new MultiLineRule("<script", ">", scripttag));
 		rules.add(new SingleLineRule("</script", ">", scripttag));
+		rules.add(new MultiLineRule("<method", ">", scripttag));
+		rules.add(new SingleLineRule("</method", ">", scripttag));
 		
 		//get the normal js dictionary for keywords
 		JSSyntaxDictionary jssd = (JSSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.JSDIC);

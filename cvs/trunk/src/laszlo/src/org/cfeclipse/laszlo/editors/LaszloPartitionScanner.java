@@ -62,6 +62,7 @@ public class LaszloPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("<!--", "-->", xmlComment));
 		
 		rules.add(new MultiLineRule("<script","</script>",script));
+		rules.add(new MultiLineRule("<method","</method>",script));
 				
 		SyntaxDictionary sd = DictionaryManager.getDictionary(LaszloSyntaxDictionary.LASDIC);
 		
