@@ -122,6 +122,8 @@ public class SnipReader {
 	
 	private void parseSnipDescription() {
 		
+		this.snipDescription = "";
+		
 		this.snipDescription = getValue("help",0);
 		
 		if (this.snipDescription.length() == 0) {
@@ -139,7 +141,9 @@ public class SnipReader {
 			if (workingNode.getNodeName().equalsIgnoreCase("snippet")) {
 				NamedNodeMap attributes = workingNode.getAttributes();
 				workingNode = attributes.getNamedItem("name");
-				this.snipDescription = workingNode.getNodeValue();
+				if (workingNode != null) {
+					this.snipDescription = workingNode.getNodeValue();
+				}
 			}
 		}
 
