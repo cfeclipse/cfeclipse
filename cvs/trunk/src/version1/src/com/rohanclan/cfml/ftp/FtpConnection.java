@@ -32,7 +32,7 @@ public class FtpConnection implements IFileProvider {
 	private static FtpConnection instance = null;
 	private LogListener listener = null;
 	
-	private int fConnectionTimeout = 30000;
+	private int fConnectionTimeout = 1000;
 	
 	public static FtpConnection getInstance() {
 	    if (instance == null) {
@@ -93,14 +93,26 @@ public class FtpConnection implements IFileProvider {
 		    return;
 		}
 		try {
-			ftpClient = new FTPClient(connectionProperties.getHost(),-1,fConnectionTimeout);
+			ftpClient = new FTPClient(connectionProperties.getHost(),connectionProperties.getPort(),fConnectionTimeout);
 			listener = new LogListener();
 	        ftpClient.setMessageListener(listener);
 	        
 	        // login
 	       ftpClient.login(connectionProperties.getUsername(), connectionProperties.getPassword());
-	
-	       ftpClient.setConnectMode(FTPConnectMode.PASV);
+
+           ftpClient.setConnectMode(FTPConnectMode.PASV);
+           
+           /*
+            * Spike:: Removed this because active mode hangs the client.
+            *
+	       if (connectionProperties.getPassive()) {
+	           ftpClient.setConnectMode(FTPConnectMode.PASV);
+	       }
+	       else {
+	           ftpClient.setConnectMode(FTPConnectMode.ACTIVE);
+	       }
+	       */
+           
 	       ftpClient.setType(FTPTransferType.ASCII);
 		}
 		catch (Exception e) {
@@ -124,11 +136,10 @@ public class FtpConnection implements IFileProvider {
 	public Object[] getChildren(String parent, FileNameFilter filter) {
 		
 		try {
-		    
 		    connect();
-		    
+
 		    FTPFile[] files = ftpClient.dirDetails(parent);
-		    
+
 		    if (files == null) {
 				files = new FTPFile[0];
 			}
@@ -140,9 +151,9 @@ public class FtpConnection implements IFileProvider {
 		            filteredFileList.add(file);
 		        }
 		    }
-		    
+
 		    Object[] filteredFiles = filteredFileList.toArray();
-		    
+
 			return filteredFiles;
 		}
 
@@ -202,6 +213,14 @@ public class FtpConnection implements IFileProvider {
 	}
 	
 	
+	public void addLogListener(FTPMessageListener listener) {
+	    this.listener.addListener(listener);
+	}
+	
+	
+	public void removeLogListener(FTPMessageListener listener) {
+	    this.listener.removeListener(listener);
+	}
 	
 	public String getLog() {
 	    if (listener == null) {

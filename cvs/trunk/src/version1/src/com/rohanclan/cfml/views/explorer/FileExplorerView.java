@@ -119,7 +119,12 @@ public class FileExplorerView extends ViewPart {
         manageItem.setText("Manage FTP Connections");
         manageItem.addListener(SWT.Selection, new Listener() {
 	        public void handleEvent(Event e) {
-                FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),null);
+	            String connectionID = null;
+	            StructuredSelection sel = (StructuredSelection)comboViewer.getSelection();
+	            if (sel.getFirstElement() instanceof FtpConnectionProperties) {
+	                connectionID = ((FtpConnectionProperties)sel.getFirstElement()).getConnectionid();
+	            }
+                FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),connectionID);
             	if (dialog.open() == IDialogConstants.OK_ID) {
             		comboViewer.setInput(dialog.connectionProperties);
             		

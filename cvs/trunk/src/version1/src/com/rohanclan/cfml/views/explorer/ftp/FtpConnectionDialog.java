@@ -15,7 +15,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.*;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -25,6 +25,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.dialogs.Dialog;
@@ -42,7 +44,8 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 
 
 	public FtpConnectionProperties connectionProperties;
-	private Text host,path,username,password,connectionid;
+	private Text host,path,username,password,connectionid,port;
+	private Button passive;
 	private int DELETE_ID = 3242;
 	private Button deleteButton = null;
 	private Button okButton = null;
@@ -70,6 +73,8 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
         });
 		okButton = getButton(IDialogConstants.OK_ID);
 		okButton.setText("Create");
+		redraw();
+		
 	    return contents;
 	}
 	
@@ -115,6 +120,23 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		container.setLayout(layout);
+
+		
+		Label summaryLabel = new Label(container, SWT.LEFT|SWT.WRAP|SWT.BOLD);
+		FontData oldFontData[] = parent.getFont().getFontData();
+		FontData fontData = new FontData();
+		fontData.setStyle(oldFontData[0].getStyle()|SWT.BOLD);
+		fontData.setHeight(oldFontData[0].getHeight());
+		fontData.setName(oldFontData[0].getName());
+		Font font = new Font(container.getDisplay(),fontData);
+		summaryLabel.setFont(font);
+		GridData summaryLabelData = new GridData(
+				GridData.GRAB_HORIZONTAL |
+				GridData.HORIZONTAL_ALIGN_FILL);
+		summaryLabelData.horizontalSpan = 2;
+		summaryLabel.setLayoutData(summaryLabelData);
+		summaryLabel.setText("NOTE: Passive mode is currently forced because active mode causes the workspace to hang if the \nconnection hangs.");
+		summaryLabel.pack();
 		
 
 		final GridData tableData = new GridData(GridData.FILL_BOTH);
@@ -154,13 +176,19 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 
 		// Connectionid
 		connectionid = createTextControl(editArea,"Connection Name:",connectionProperties.getHost(),50);
-		
+
 		// Host name
 		host = createTextControl(editArea,"Host Name:",connectionProperties.getHost(),50);
+		
+		// Port
+		port = createNumberControl(editArea,"Port:",connectionProperties.getPort(),5);
 		
 		// Path
 		path = createTextControl(editArea,"Path:",connectionProperties.getPath(),20);
 		
+		// Passive mode
+		passive = createCheckboxControl(editArea,"Passive mode:",true);
+		passive.setEnabled(false);
 		// Username
 		username = createTextControl(editArea,"Username:",connectionProperties.getUsername(),20);
 		
@@ -199,7 +227,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		
 		
 		selectItem();
-		
+		container.pack();
 		return container;
 	}
 	
@@ -235,6 +263,27 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		control.setText(text);
 		return control;
 	}
+
+	
+	private Text createNumberControl(Composite parent, String labelText, int val, int width) {
+		Label label = new Label(parent,SWT.RIGHT );
+		label.setText(labelText);
+		Text control = new Text(parent,SWT.LEFT | SWT.BORDER);
+		GridData data = new GridData();
+		data.widthHint = convertWidthInCharsToPixels(width);
+		control.setLayoutData(data);
+		control.setText(String.valueOf(val));
+		return control;
+	}
+
+	
+	private Button createCheckboxControl(Composite parent, String labelText, boolean checked) {
+		Label label = new Label(parent,SWT.RIGHT );
+		label.setText(labelText);
+		Button control = new Button(parent,SWT.CHECK);
+		control.setSelection(checked);
+		return control;
+	}
 	
 	
 	private Text createPasswordControl(Composite parent, String labelText, String text, int width) {
@@ -258,6 +307,8 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 			connectionProperties.setUsername(username.getText());
 			connectionProperties.setPassword(password.getText());
 			connectionProperties.setConnectionid(connectionid.getText());
+			connectionProperties.setPort(Integer.parseInt(port.getText()));
+			//connectionProperties.setPassive(passive.getSelection());
 			connectionProperties.save();
 			}
 			catch (Exception e) {
@@ -284,6 +335,9 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		}
 		else if (!host.getText().matches(".*[\\S]+.*")) {
 		    errorMessage = "You must specify a host name";
+		}
+		else if (!port.getText().matches("[0-9]+")) {
+		    errorMessage = "You must specify a port number";
 		}
 		errorMessageLabel.setText(errorMessage == null ? "" : errorMessage); //$NON-NLS-1$
 	    

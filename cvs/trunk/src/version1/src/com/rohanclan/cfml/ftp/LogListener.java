@@ -19,11 +19,15 @@ import com.enterprisedt.net.ftp.FTPMessageListener;
 public class LogListener implements FTPMessageListener {
         
     
-    	private static ArrayList listeners = new ArrayList();
+    	private ArrayList listeners = null;
         /**
          * Log of messages
          */
         private StringBuffer log = new StringBuffer();
+        
+        public LogListener() {
+            listeners = new ArrayList();
+        }
         
         /**
          * Log an FTP command being sent to the server
@@ -83,13 +87,13 @@ public class LogListener implements FTPMessageListener {
             log = new StringBuffer();
         }
         
-        public static void addListener(FTPMessageListener listener) {
+        public void addListener(FTPMessageListener listener) {
             if (!listeners.contains(listener)) {
                 listeners.add(listener);
             }
          }
         
-        public static void removeListener(FTPMessageListener listener) {
+        public void removeListener(FTPMessageListener listener) {
             listeners.remove(listener);
         }
 

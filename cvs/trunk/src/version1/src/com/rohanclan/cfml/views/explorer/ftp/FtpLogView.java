@@ -29,7 +29,7 @@ public class FtpLogView extends ViewPart implements FTPMessageListener {
     private StyledText styledText;
     public void createPartControl(Composite parent) {
         ftpClient = FtpConnection.getInstance();
-        LogListener.addListener(this);
+        ftpClient.addLogListener(this);
         
         
         Composite container = new Composite(parent, SWT.NONE);
@@ -85,6 +85,6 @@ public class FtpLogView extends ViewPart implements FTPMessageListener {
     }
 
     public void dispose() {
-        LogListener.removeListener(this);
+       ftpClient.removeLogListener(this);
     }
 }

@@ -30,6 +30,8 @@ public class FtpConnectionProperties {
 	private static String fUsername = "username";
 	private static String fPassword = "password";
 	private static String fConnectionid = "connectionid";
+	private static String fPort = "port";
+	private static String fPassive = "passive";
 	
 	File storageDirectory;
 	
@@ -124,6 +126,24 @@ public class FtpConnectionProperties {
 
     public void setHost(String host) {
     	connectionProperties.setProperty(fHost,host);
+    }
+
+
+    public int getPort() {
+    	return Integer.parseInt(connectionProperties.getProperty(fPort,"21"));
+    }
+
+    public void setPort(int port) {
+    	connectionProperties.setProperty(fPort,String.valueOf(port));
+    }
+
+
+    public boolean getPassive() {
+    	return Boolean.getBoolean(connectionProperties.getProperty(fPassive,"true"));
+    }
+
+    public void setPassive(boolean passive) {
+    	connectionProperties.setProperty(fPassive,String.valueOf(passive));
     }
     
 
