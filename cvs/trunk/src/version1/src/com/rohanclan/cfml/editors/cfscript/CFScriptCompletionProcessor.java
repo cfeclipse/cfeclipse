@@ -532,7 +532,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 
 		//System.err.println("runnin!!!!");
 		
-		if(!AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.J_SCRIPT))
+		if(!(AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.J_SCRIPT)
+		     || AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.CF_SCRIPT)))
 		    return null;
 	
 		try {
@@ -568,21 +569,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				return null;
 			}
 			
-/*			
-			if((lastChar == '\"' && document.getChar(documentOffset) == '\"') ||
-				(lastChar == '#' && document.getChar(documentOffset) == '#'))
-			{
-				//System.out.println("hit delete text");
-				DeleteText(document, documentOffset, 1);
-			}
-			else if(closerCharMatch != -1)
-			{
-				//System.out.println("hit handlecloser");
-				HandleCloser(document, scanData, lastChar, closerCharMatch, triggerPos, documentOffset);
-				return null;
-			}
-			// Is the char just typed a proper trigger char? See decl of completionChars for info
-			else*/ if(completionChars.indexOf(lastChar) == -1 && lastChar != '{')
+			if(completionChars.indexOf(lastChar) == -1 && lastChar != '{')
 			{
 				//System.out.println("hit this other part");
 				
@@ -665,7 +652,6 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					}
 					break;
 				case ';':
-					//DeleteText(document, triggerPos-1, 1);
 					break;
 				case '\"':
 					break;
