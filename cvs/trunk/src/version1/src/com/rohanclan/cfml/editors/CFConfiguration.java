@@ -41,6 +41,8 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
+import org.eclipse.jface.text.IAutoIndentStrategy;
+
 import com.rohanclan.cfml.editors.cfscript.CFScriptScanner;
 import com.rohanclan.cfml.editors.style.StyleScanner;
 import com.rohanclan.cfml.editors.script.ScriptScanner;
@@ -414,5 +416,11 @@ public class CFConfiguration extends SourceViewerConfiguration {
 		
 		return null;
 	}
+	
+	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0,
+            String arg1) {
+        CFAutoIndentStrategy newStrategy = new CFAutoIndentStrategy();
+        return newStrategy;
+    } 	
 	
 }

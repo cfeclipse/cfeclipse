@@ -103,6 +103,15 @@ public class Procedure implements Comparable {
 		
 		parameters.add(param);
 	}
+
+	public void dumpParams()
+	{
+		Object [] params = parameters.toArray();
+		for(int i = 0; i < params.length; i++)
+		{
+			System.err.println("Procedure::getParameters() - Param for \'" + name + "\' is \'" + ((Parameter)params[i]).name + "\'");
+		}
+	}
 	
 	/**
 	 * get all the values for this attribute

@@ -45,7 +45,6 @@ import java.util.StringTokenizer;
 import com.rohanclan.cfml.util.*;
 import com.rohanclan.cfml.dictionary.*;
 
-import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.Set;
 import java.util.HashSet;
@@ -93,14 +92,14 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	// There are three parts to the activation set:
 	
 	// 1) The standard completion chars. These are some activation characters that non-opener/closer characters
-	protected static final String completionChars = ".(;~\"#[";
+	protected static final String completionChars = ".(;~\"#[\'";
 
 	// 2) The opener/closer characters. This assists with the opening & closing of things such as brackets
-	protected static final String closerChars = ")#]";
-	protected static final String openerChars = "({#[";
+	protected static final String closerChars = ")#]\'";
+	protected static final String openerChars = "(#[\'";
 
 	// This is a simple map between the character that closes a pair to the character that does the opening.
-	protected static final String close2openMatchChars = ")(}{##\"\"]["; 
+	protected static final String close2openMatchChars = "\'\')(}{##\"\"]["; 
 	
 	/**
 	 * What characters cause us to wake up (for tags and attributes)
@@ -482,6 +481,16 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 
 			int triggerPos = scanData.length()-1;
 			int closerCharMatch = closerChars.indexOf(lastChar);
+
+			//
+			// First test to see whether the last two characters are "it"...  if so then we'll
+			// quit out of this
+			if(lastChar == '\'' && document.getChar(documentOffset-1) == 't' && 
+			   document.getChar(documentOffset-2) == 'i')
+			{
+				return null;
+			}
+			
 			
 			if((lastChar == '\"' && document.getChar(documentOffset) == '\"') ||
 				(lastChar == '#' && document.getChar(documentOffset) == '#'))

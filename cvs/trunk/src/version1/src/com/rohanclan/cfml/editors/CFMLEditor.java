@@ -24,29 +24,21 @@
  */
 package com.rohanclan.cfml.editors;
 
-import org.eclipse.ui.editors.text.TextEditor;
-//import com.rohanclan.coldfusionmx.editors.actions.*;
-//import org.eclipse.jface.action.IMenuManager;
-//import org.eclipse.jface.action.MenuManager;
-//import com.rohanclan.coldfusionmx.editors.CFSyntaxDictionary;
-//import com.rohanclan.coldfusionmx.editors.actions.SnippetActionLoader;
-//import com.rohanclan.coldfusionmx.editors.script.JSSyntaxDictionary;
-//import com.rohanclan.coldfusionmx.util.*;
-//import org.eclipse.ui.IActionBars;
-//import org.eclipse.ui.IWorkbenchActionConstants; 
 import org.eclipse.swt.widgets.Composite;
 
-//import org.eclipse.jface.action.*;
-//import org.eclipse.ui.IEditorActionDelegate;
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 
+import org.eclipse.core.resources.IResourceChangeListener;
 /**
  * @author Rob
  *
  * This is the start of the Editor. It loads up the configuration and starts up
  * the image manager and syntax dictionaries.
  */
-public class CFMLEditor extends TextEditor {
+import org.eclipse.ui.texteditor.StatusTextEditor;
+
+public class CFMLEditor extends StatusTextEditor {
 
 	private ColorManager colorManager;
 	
@@ -60,7 +52,14 @@ public class CFMLEditor extends TextEditor {
 		setSourceViewerConfiguration(new CFConfiguration(colorManager));
 		//assign the cfml document provider which does the partitioning
 		//and connects it to this Edtior
+		
 		setDocumentProvider(new CFDocumentProvider());
+
+		//
+		// The following is to enable us to listen to changes. Mainly it's used for
+		// getting the document filename when a new document is opened.
+		IResourceChangeListener listener = new MyResourceChangeReporter();
+		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
 	}
 	
 	public void createPartControl(Composite parent) 
@@ -135,7 +134,6 @@ public class CFMLEditor extends TextEditor {
 		//super.editorContextMenuAboutToShow(menu);
 		menu.add(new CFCommentAction());
 	}*/
-	
 	public void dispose() 
 	{
 		colorManager.dispose();

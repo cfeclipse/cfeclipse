@@ -68,6 +68,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		right.addView(IPageLayout.ID_OUTLINE);
 		right.addView(SnipTreeView.ID_SNIPVIEWTREE);
 		
+		
 		layout.addActionSet(IPageLayout.ID_NAVIGATE_ACTION_SET);
 		
 		//views that should show up on the quick menu on show view
