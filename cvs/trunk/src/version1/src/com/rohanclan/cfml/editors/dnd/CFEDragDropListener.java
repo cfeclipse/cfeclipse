@@ -305,11 +305,6 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 			if(TextTransfer.getInstance().isSupportedType(event.dataType)) {
 				
 			    String selectedText = cursorListener.selection;
-			    /*
-		        if (selectedText.endsWith(textWidget.getLineDelimiter())) {
-		            selectedText = selectedText.substring(0,selectedText.length()-textWidget.getLineDelimiter().length());
-		        }
-		        */
 	
 		        event.data = selectedText;
 	

@@ -274,7 +274,9 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      * @see org.eclipse.swt.widgets.Display#getDoubleClickTime()
      */
     public void mouseDoubleClick(MouseEvent e) {
-        
+        if ((e.stateMask & SWT.CONTROL) != 0) {
+            //System.out.println("Need to select whole tag.");
+        }
     }
 
     /**
