@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
+import com.rohanclan.cfml.editors.actions.JumpToDocPos;
 
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -50,6 +51,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 //import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.editors.text.TextEditor;
 //import org.eclipse.jface.text.ITextSelection;
@@ -57,6 +59,7 @@ import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import org.eclipse.jface.action.Action;
 
 import com.rohanclan.cfml.util.CFPluginImages;
+import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
 
@@ -77,7 +80,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 	protected GenericEncloserAction testAction;
 	
 	final GotoFileAction gfa = new GotoFileAction();
-	
+	private final JumpToDocPos jumpAction = new JumpToDocPos();
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -150,7 +153,14 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 		//ok got our tag (or null)
 		int startpos = ((ITextSelection)sel).getOffset();
 		CfmlTagItem cti = cfd.getTagAt(startpos,startpos);
-		
+		if(cti.matchingItem != null) {
+			jumpAction.setDocPos(cti.matchingItem.getEndPosition());
+			jumpAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
+			Action jumpNow = new Action("Jump to end tag", 
+										CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_FORWARD)
+										) { public void run() { jumpAction.run(null); } };
+			menu.add(jumpNow);			
+		}
 		//System.out.println(cti.getName());
 		if(cti != null)
 		{
