@@ -28,6 +28,45 @@
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
 
+   <extension 
+	    point="org.eclipse.ui.decorators">
+		
+		<decorator
+			adaptable="false"
+			label="CFEclipse CFC Decorator"
+			state="true"
+			lightweight="true"
+			icon="icons/obj16/cfc.gif"
+			id="com.rohanclan.cfml.ui.decorators.cfcdecorator"
+			location="TOP_LEFT">
+			<description>Shows distinct icon for CFC files</description>	
+			<enablement>
+				<and>
+	      			<objectClass name="org.eclipse.core.resources.IResource" />
+    	  			<objectState name="extension" value="cfc" />
+    	  		</and>
+		    </enablement>
+		</decorator>
+
+		<decorator
+			adaptable="false"
+			label="CFEclipse Readonly Decorator"
+			state="true"
+			lightweight="true"
+			icon="icons/obj16/reddot.gif"
+			id="com.rohanclan.cfml.ui.decorators.cfereadonlydecorator"
+			location="BOTTOM_LEFT">
+			<description>Shows readonly indicator</description>	
+			<enablement>
+				<and>
+	      			<objectClass name="org.eclipse.core.resources.IResource" />
+    	  			<objectState name="readOnly" value="true" />
+    	  		</and>
+		    </enablement>
+		</decorator>
+
+	</extension>
+	
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
@@ -44,17 +83,8 @@
          point="org.eclipse.ui.editors">
       <editor
             name="CFML Editor"
-            extensions="cfm,cfml,html,htm,xhtml"
+            extensions="cfc,cfm,cfml,html,htm,xhtml"
             icon="icons/obj16/default.gif"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            class="com.rohanclan.cfml.editors.CFMLEditor"
-            id="com.rohanclan.cfml.editors.CFMLEditor">
-      </editor>
-      
-      <editor
-            name="CFML Editor"
-            extensions="cfc"
-            icon="icons/obj16/cfc.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="com.rohanclan.cfml.editors.CFMLEditor"
             id="com.rohanclan.cfml.editors.CFMLEditor">

@@ -51,6 +51,8 @@ public class CFPluginImages {
 	protected static final ImageRegistry IMAGE_REGISTRY = new ImageRegistry();
 	/** the default icon (the cf or bluedragon shield */
 	public static final String ICON_DEFAULT = "default.gif";
+	/** icon for CFC files */
+	public static final String ICON_CFC = "cfc.gif";
 	/** A plain non-cfml document icon */
 	public static final String ICON_DOCUMENT = "document.gif";
 	/** little tools that make an X */
@@ -192,6 +194,7 @@ public class CFPluginImages {
 			
 			//load up images on our first go round
 			addImageToRegistry(MODEL_OBJECTS,ICON_DEFAULT);
+			addImageToRegistry(MODEL_OBJECTS,ICON_CFC);
 			addImageToRegistry(MODEL_OBJECTS,ICON_DOCUMENT);
 			addImageToRegistry(MODEL_OBJECTS,ICON_READ_ONLY);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PERM_DENIED);
