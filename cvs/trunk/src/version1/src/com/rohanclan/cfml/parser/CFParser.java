@@ -398,23 +398,81 @@ public class CFParser {
 			// CF tag
 		    closerName = closerName.substring(2, closerName.length()-1);
 			
-			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
-			//System.out..println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
+		    
+		    DocItem topItem = (DocItem)matchStack.peek();
+		    
+			//System.out.println("Top item on stack is " + topItem.getName());
 			
 			if(topItem instanceof TagItem)
 			{	
-				
+			    // Look for hybrids at the top of the stack
+			    // and remove them if there is an opener below them.
+			    try {
+				boolean foundCloser = false;
+			    ArrayList removals = new ArrayList();
+			    Object[] items = matchStack.toArray();
+			    //System.out.println("Looking on stack for opening " + closerName + ". Closer found on line: " + this.getLineNumber(match.getStartPos()));
+			    for (int i=items.length-1;i>0;i--) {
+			        if (items[i] instanceof TagItem) {
+			            TagItem item = (TagItem)items[i];
+			            //System.out.println("Checking " + item.getName());
+			        	
+			        	if (item.getName().equalsIgnoreCase(closerName)) {
+			        	    //System.out.println("Found opener. Exiting loop.");
+			        	    foundCloser = true;
+			        	    break;
+			        	} else if (item.isHybrid()) {
+			        	    //System.out.println("Found hybrid. Adding it to the removals list.");
+			        	    removals.add(item);
+			        	}
+			        }
+			    }
+			    
+			    // If we found a closer, we want to remove any unclosed hybrids.
+			    if (foundCloser) {
+			        items = removals.toArray();
+		            DocItem parent = (DocItem)matchStack.get(items.length);
+			        for (int i=0;i<items.length;i++) {
+			            TagItem item = (TagItem)items[i];
+			            //System.out.println(item.getChildNodes().size() + " children need to be moved to " + parent.getName());
+			            Object[] orphans = item.getChildNodes().toArray();
+			            for (int j=0;j<orphans.length;j++) {
+			                DocItem orphan = (DocItem)orphans[j];
+			                //System.out.println("Moving " + orphan.getName() + " under " + parent.getName());
+			                parent.addChild(orphan);
+			                item.removeChild(orphan);
+			            }
+			            //System.out.println("Removing " + item.getName() + " from the stack.");
+			            matchStack.remove(items[i]);
+			        }
+			    }
+			    else {
+			        //System.out.println("Opener not found on stack for " + closerName);
+			        //System.out.println(" ");
+			    }
+			    
+			    }
+			    catch (Exception e) {
+			        e.printStackTrace();
+			    }
+			    
 				try {
-				TagItem tempItem = new TagItem(match.lineNumber, match.startPos, match.endPos+1, match.match);
-				((TagItem)topItem).setMatchingItem(tempItem);
-				} catch(Exception e){
+					TagItem tempItem = new TagItem(match.lineNumber, match.startPos, match.endPos+1, match.match);
+					((TagItem)topItem).setMatchingItem(tempItem);
+					} catch(Exception e){
 					System.err.println("Caught exception: " + e.getMessage());
 					e.printStackTrace();
 				}
 			}
+			
+			// Take the top item off the stack.
+			topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
+			//System.out..println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
+			
 			//SPIKE: Made this case insensitive
 			if(topItem.getName().compareToIgnoreCase(closerName) == 0)
 			{
+			    //System.out.println("Found matcher at top of stack!!!");
 				DocItem parentItem = (DocItem)matchStack.pop();
 				try {
 					parentItem.addChild(topItem);
@@ -757,6 +815,7 @@ public class CFParser {
 				{
 					if(matchStr.charAt(1) == '/') {
 						if(!handleClosingTag(match, matchStack)) {
+						    
 							return null;
 						}
 					}
@@ -783,7 +842,7 @@ public class CFParser {
 							tagEnd = matchStr.indexOf(">");
 						}
 						String tagName = match.match.substring(0, tagEnd);
-						System.out.println(tagName);
+						
 						boolean isACloser = false;
 						//
 						// Find the end of the tag
@@ -825,6 +884,8 @@ public class CFParser {
 										match.getEndPos(),
 										match.getMatch()
 								);
+								
+								newComment.setItemData(match.getMatch());
 								addDocItemToTree(match, matchStack, newComment);
 								
 								break;
@@ -859,6 +920,9 @@ public class CFParser {
 			anyException.printStackTrace();
 			////System.out..println(anyException.hashCode());
 		}
+		
+		//System.out.println(rootItem.getFirstChild().getChildNodes().size() + " first grandchild");
+		
 		newDoc.setDocumentRoot(rootItem);
 		return newDoc;
 	}
