@@ -149,7 +149,6 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 						int offset = ((ITextSelection)sel).getOffset();
 						offset += ((ITextSelection)sel).getLength();
 						offset += snippet.length();
-						System.out.println("Offset: " + ((ITextSelection)sel).getOffset());
 					    if (i==0) {
 							try {
 							    doc.replace(lastSpaceOffset,sequence.length(),"");
