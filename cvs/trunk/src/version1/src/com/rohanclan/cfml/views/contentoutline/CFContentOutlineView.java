@@ -181,13 +181,60 @@ public class CFContentOutlineView extends ViewPart {
 		try
 		{
 			//get a handle to the current editor and assign it to our temp action
+			//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			//ITextEditor ite = (ITextEditor)iep; //.getEditorInput();
+			//ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
+			
+			//icfd.parseDocument();
+			//DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot();
+			//DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot();
+			
+			//System.out.println("Root element is: " + docRoot.getName());
+//			get a handle to the current editor and assign it to our temp action
 			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			//((FileEditorInput)iep.getEditorInput()).getFile();
 			ITextEditor ite = (ITextEditor)iep; //.getEditorInput();
 			ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
 			
-			DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot();
+			//IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			
-			System.out.println("Root element is: " + docRoot.getName());
+			//icfd.parseDocument();
+			//CFDocument cfd = icfd.getParser().getParseResult();
+			//CFDocument cfd = icfd.getParser().parseDoc();
+			//icfd.getParser().parseSaveDoc();
+			//CFDocument cfd = icfd.getParser().getParseResult();
+			
+			//cfd.docVariables
+			
+			ArrayList tmitems = icfd.getParser().getTagMatches(icfd);
+			CFDocument cfd = icfd.getParser().createDocTree(tmitems);
+			
+			//CFDocument cfd = icfd.getParser().parseDoc(icfd);
+			System.out.println("**********" + cfd.getFilename() + "********");
+			
+			Stack items = cfd.docTree;
+			
+			if(items == null || items.size() < 1){
+				System.err.println("No items?!");
+			}
+			else
+			{
+				//DocItem docroot = (DocItem)items.get(0);
+				//TagMatch tm = (TagMatch)items.get(0);
+				
+				//System.out.println(
+				//	"got " + tm.match
+				//);
+				
+				java.util.Iterator i = items.iterator();
+				while(i.hasNext())
+				{
+					System.err.println("Item::::" + (DocItem)i.next());
+				}
+				
+				//return tm;
+				return (DocItem)items.get(0);
+			}
 
 		}
 		catch(Exception e)
