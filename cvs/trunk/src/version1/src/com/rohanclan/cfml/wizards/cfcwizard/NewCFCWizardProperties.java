@@ -71,9 +71,13 @@ public class NewCFCWizardProperties extends WizardPage {
 	private Combo propertyTypes;
 	private Text propertyHint;
 	private Text propertyDefault;
+	private Button propertyWriteGetter;
+	private Button propertyWriteSetter;
+	private Combo getterAccessValues;
+	private Combo setterAccessValues;
 	
 	/** the current list of properties - this is a list control and used like an 
-	 * index to load up properites
+	 * index to load up properties
 	 */
 	private List propertyNames;
 	
@@ -333,6 +337,137 @@ public class NewCFCWizardProperties extends WizardPage {
 		data.widthHint = 295;
 		propertyTypes.setLayoutData(data);
 				
+		///////////////////////////////////////////////////////////// WRITE GETTER
+		Label blankLabel2 = new Label(container, SWT.NULL);
+		blankLabel2.setText("");
+		data = new GridData();
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.verticalAlignment = GridData.BEGINNING;
+		blankLabel2.setLayoutData(data);
+		
+		propertyWriteGetter = new Button(container, SWT.CHECK);
+		propertyWriteGetter.setText("Write &Getter");
+		data = new GridData();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.BEGINNING;
+		propertyWriteGetter.setLayoutData(data);
+		
+		propertyWriteGetter.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+			    setGetterAccessEnabled(propertyWriteGetter.getSelection());
+			    propertyChanged();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {;}
+		});
+		
+		Label getterAccessLabel = new Label (container, SWT.NONE | SWT.READ_ONLY);
+		getterAccessLabel.setText ("&access:");
+		data = new GridData();
+		data.horizontalIndent = 5;
+		data.verticalAlignment = GridData.BEGINNING;
+		data.horizontalAlignment = GridData.END;
+		getterAccessLabel.setLayoutData(data);
+		
+		getterAccessValues = new Combo(container, SWT.BORDER);
+		
+		//get the proper access types
+		TreeSet accessTypes = new TreeSet(cfmldic.getFilteredAttributeValues("cffunction", "access", ""));
+		i = accessTypes.iterator();
+		str = new String[accessTypes.size()];
+		q=0;
+		while(i.hasNext()){
+			str[q++] = ((Value)i.next()).getValue();
+		}
+		
+		getterAccessValues.setItems(str);
+		
+		getterAccessValues.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				propertyChanged();
+			}
+			public void widgetDefaultSelected(SelectionEvent e){;}
+		});
+		
+		getterAccessValues.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e){	;}
+			public void focusLost(FocusEvent e){
+				propertyChanged();
+			}
+		});
+		
+		getterAccessValues.setEnabled(false);
+		data = new GridData ();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.verticalAlignment = GridData.BEGINNING;
+		data.widthHint = 295;
+		getterAccessValues.setLayoutData(data);
+				
+		///////////////////////////////////////////////////////////// WRITE SETTER
+		Label blankLabel3 = new Label(container, SWT.NULL);
+		blankLabel3.setText("");
+		data = new GridData();
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.verticalAlignment = GridData.BEGINNING;
+		blankLabel3.setLayoutData(data);
+		
+		propertyWriteSetter = new Button(container, SWT.CHECK);
+		propertyWriteSetter.setText("Write &Setter");
+		data = new GridData();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.BEGINNING;
+		propertyWriteSetter.setLayoutData(data);
+		
+		propertyWriteSetter.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+			    setSetterAccessEnabled(propertyWriteSetter.getSelection());
+			    propertyChanged();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {;}
+		});
+		
+		Label setterAccessLabel = new Label (container, SWT.NONE | SWT.READ_ONLY);
+		setterAccessLabel.setText ("a&ccess:");
+		data = new GridData();
+		data.horizontalIndent = 5;
+		data.verticalAlignment = GridData.BEGINNING;
+		data.horizontalAlignment = GridData.END;
+		setterAccessLabel.setLayoutData(data);
+		
+		setterAccessValues = new Combo(container, SWT.BORDER);
+		
+		//get the proper access types
+		i = accessTypes.iterator();
+		str = new String[accessTypes.size()];
+		q=0;
+		while(i.hasNext()){
+			str[q++] = ((Value)i.next()).getValue();
+		}
+		
+		setterAccessValues.setItems(str);
+		
+		setterAccessValues.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				propertyChanged();
+			}
+			public void widgetDefaultSelected(SelectionEvent e){;}
+		});
+		
+		setterAccessValues.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e){	;}
+			public void focusLost(FocusEvent e){
+				propertyChanged();
+			}
+		});
+		
+		setterAccessValues.setEnabled(false);
+		data = new GridData ();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.verticalAlignment = GridData.BEGINNING;
+		data.widthHint = 295;
+		setterAccessValues.setLayoutData(data);
+				
 		dialogChanged();
 		setControl(container);
 	}
@@ -366,6 +501,24 @@ public class NewCFCWizardProperties extends WizardPage {
 	}
 	
 	
+	/**
+	 * Turn on and off the getter access values on this page
+	 * @param to
+	 */
+	public void setGetterAccessEnabled(boolean to){
+		getterAccessValues.setEnabled(to);
+	}
+	
+	
+	/**
+	 * Turn on and off the setter access values on this page
+	 * @param to
+	 */
+	public void setSetterAccessEnabled(boolean to){
+		setterAccessValues.setEnabled(to);
+	}
+	
+	
 	private void dialogChanged()
 	{		
 		updateStatus(null);
@@ -384,6 +537,24 @@ public class NewCFCWizardProperties extends WizardPage {
 		for(int i = 0; i < pic; i++)
 		{
 			if(propertyTypes.getItem(i).equalsIgnoreCase(s))
+				return i;
+		}
+		return 0;
+	}
+	
+	/**
+	 * Uses the string of a type "public", "package", "private", etc and finds the 
+	 * proper index in the type drop down
+	 * @param s
+	 * @return
+	 */
+	private int getAccessIndex(String s)
+	{
+		int pic = getterAccessValues.getItemCount();
+		
+		for(int i = 0; i < pic; i++)
+		{
+			if(getterAccessValues.getItem(i).equalsIgnoreCase(s))
 				return i;
 		}
 		return 0;
@@ -422,7 +593,7 @@ public class NewCFCWizardProperties extends WizardPage {
 	 */	
 	private void propertyChanged() 
 	{
-		System.err.println("I was asked to update the beans props");
+		//System.err.println("I was asked to update the beans props");
 		
 		updateProperties();
 		updateStatus(null);
@@ -452,6 +623,10 @@ public class NewCFCWizardProperties extends WizardPage {
 			currentbean.setHint(propertyHint.getText());
 			currentbean.setType(propertyTypes.getText());
 			currentbean.setDefaultVal(propertyDefault.getText());
+			currentbean.setShouldWriteGetter(propertyWriteGetter.getSelection());
+			currentbean.setGetterAccess(getterAccessValues.getText());
+			currentbean.setShouldWriteSetter(propertyWriteSetter.getSelection());
+			currentbean.setSetterAccess(setterAccessValues.getText());
 		}else{
 			System.err.println("Current bean is null");
 		}
@@ -521,6 +696,12 @@ public class NewCFCWizardProperties extends WizardPage {
 		propertyHint.setText(bean.getHint());
 		propertyDefault.setText(bean.getDefaultVal());
 		propertyTypes.select(getTypeIndex(bean.getType()));
+		propertyWriteGetter.setSelection(bean.shouldWriteGetter());
+		getterAccessValues.select(getAccessIndex(bean.getGetterAccess()));
+		propertyWriteSetter.setSelection(bean.shouldWriteSetter());
+		setterAccessValues.select(getAccessIndex(bean.getSetterAccess()));
+		setGetterAccessEnabled(propertyWriteGetter.getSelection());
+		setSetterAccessEnabled(propertyWriteSetter.getSelection());
 	}
 	
 	
@@ -582,6 +763,77 @@ public class NewCFCWizardProperties extends WizardPage {
 			
 			sb.append(" />");
 			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * This is used to get the CFML representation of the properties that were
+	 * collected on this page
+	 * 
+	 * @return the CFML code
+	 */
+	public String getPropertyGettersAndSetters()
+	{
+		StringBuffer sb = new StringBuffer();
+			
+		for(Iterator iter = this.propertyBeans.values().iterator(); iter.hasNext();)
+		{
+			CFCPropertyBean bean = (CFCPropertyBean)iter.next();
+			
+			if (bean.shouldWriteGetter()) {
+			    sb.append("\n\t");
+			    sb.append("<cffunction name=\"get");
+			    sb.append(bean.getName().substring(0,1).toUpperCase());
+			    sb.append(bean.getName().substring(1));
+			    sb.append("\" access=\"");
+			    sb.append(bean.getGetterAccess());
+			    sb.append("\"");
+			    sb.append(" output=\"false\"");
+			    sb.append(" returntype=\"");
+			    sb.append(bean.getType());
+			    sb.append("\"");
+			    sb.append(">");
+			    sb.append("\n\t\t");
+			    sb.append("<cfreturn ");
+			    sb.append(bean.getName());
+			    sb.append(" />");
+			    sb.append("\n\t");
+			    sb.append("</cffunction>");
+			    sb.append("\n");
+			}
+			
+			if (bean.shouldWriteSetter()) {
+			    sb.append("\n\t");
+			    sb.append("<cffunction name=\"set");
+			    sb.append(bean.getName().substring(0,1).toUpperCase());
+			    sb.append(bean.getName().substring(1));
+			    sb.append("\" access=\"");
+			    sb.append(bean.getSetterAccess());
+			    sb.append("\"");
+			    sb.append(" output=\"false\"");
+			    sb.append(" returntype=\"void\"");
+			    sb.append(">");
+			    sb.append("\n\t\t");
+			    sb.append("<cfargument name=\"");
+			    sb.append(bean.getName());
+			    sb.append("\" type=\"");
+			    sb.append(bean.getType());
+			    sb.append("\" required=\"true\" />");
+			    sb.append("\n\t\t");
+			    sb.append("<cfset ");
+			    sb.append(bean.getName());
+			    sb.append(" = arguments.");
+			    sb.append(bean.getName());
+			    sb.append(" />");
+			    sb.append("\n\t\t");
+			    sb.append("<cfreturn />");
+			    sb.append("\n\t");
+			    sb.append("</cffunction>");
+			    sb.append("\n");
+			}
+			
 		}
 		
 		return sb.toString();

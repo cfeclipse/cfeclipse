@@ -80,7 +80,7 @@ public class NewCFCWizardArguments extends WizardPage {
 	
 	private NewCFCWizardFunctions functPage;
 
-	private int argIdx;
+	private int argIdx = -1;
 	
 	/** this is all the functions, the last page should have set these up else they
 	 * are null and we should error
@@ -442,7 +442,7 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void propertyChanged() 
 	{
-		System.err.println("I was asked to update the beans props");
+		//System.err.println("I was asked to update the beans props");
 		
 		updateProperties();
 		updateStatus(null);
@@ -460,7 +460,7 @@ public class NewCFCWizardArguments extends WizardPage {
 			if(index == funcList.getSelectionIndex())
 			{
 				Object cfcb = i.next();
-				System.err.println("finding bean: " + cfcb);
+				//System.err.println("finding bean: " + cfcb);
 				currentFunctionBean = (CFCFunctionBean)functionBeans.get(cfcb);
 				break;
 			}
@@ -562,7 +562,7 @@ public class NewCFCWizardArguments extends WizardPage {
 	 */
 	private void handleAdd() 
 	{
-		argIdx++;
+		this.argIdx++;
 		CFCArgumentBean bean = new CFCArgumentBean();
 		
 		enable();

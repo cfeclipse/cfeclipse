@@ -88,7 +88,7 @@ public class NewCFCWizard extends Wizard implements INewWizard {
 		addPage(pageTwo);
 		addPage(pageThree);
 		//the arguments page is just too damn buggy
-		//addPage(pageFour);
+		addPage(pageFour);
 	}
 
 	/**
@@ -203,9 +203,11 @@ public class NewCFCWizard extends Wizard implements INewWizard {
 		
 		sb.append("\n\n");
 		
-		//do any properties
-		if(pageTwo.hasProperties())
+		//do any properties and getters/setters
+		if(pageTwo.hasProperties()) {
 			sb.append(pageTwo.getPropertiesAsTags());
+			sb.append(pageTwo.getPropertyGettersAndSetters());
+		}
 		
 		//do any functions
 		if(pageThree.hasFunctions())

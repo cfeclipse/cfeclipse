@@ -201,7 +201,7 @@ public class NewCFCWizardPage extends WizardPage {
 			}
 		}
 		
-		this.cfcBean.setName("NewCFCompontent");
+		this.cfcBean.setName("NewCFComponent");
 		this.cfcName.setText(this.cfcBean.getName());
 	}
 	

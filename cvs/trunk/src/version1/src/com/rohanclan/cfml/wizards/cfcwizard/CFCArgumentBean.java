@@ -1,5 +1,5 @@
 /*
- * $Id: CFCArgumentBean.java,v 1.1 2004-11-02 06:06:25 rohanr2 Exp $
+ * $Id: CFCArgumentBean.java,v 1.2 2005-01-25 00:44:19 smilligan Exp $
  * 
  * Created on 11.05.2004
  * Created by Chris Queener (cq@eggs.de)
@@ -23,12 +23,12 @@ package com.rohanclan.cfml.wizards.cfcwizard;
  * </pre>
  */
 public class CFCArgumentBean {
-	private String name;
-	private String displayName;
-	private String hint;
-	private String type;
-	private boolean required;
-	private String defaultVal;
+	private String name = "";
+	private String displayName = "";
+	private String hint = "";
+	private String type = "";
+	private boolean required = false;
+	private String defaultVal = "";
 	
 	/**
 	 * @return Returns the defaultVal.

@@ -54,9 +54,10 @@ public class CommentParser {
     private int CFCommentDepth = 0;
     private int CFCommentStartOffset,CFCommentEndOffset = 0;
     private int CFScriptDepth = 0;
+    private int CFQueryDepth = 0;
     private int lineCommentEnd = 0;
     
-    private Pattern pattern = Pattern.compile("(<!---)|(<cfscript)|(--->)|(</cfscript)|(/\\*)|(//)|(\\*/)");
+    private Pattern pattern = Pattern.compile("(<!---)|(<cfscript)|(<cfquery)|(--->)|(</cfscript)|(</cfquery)|(/\\*)|(//)|(\\*/)");
 
     private Document doc;
     
@@ -87,7 +88,7 @@ public class CommentParser {
        int commentLength;
 
        
-       //System.out.println("Handler matcher called - Start: " + start + " End: " + end + "Group: " + group + "lineComment: " + lineCommentEnd + "CFSCript: " + CFScriptDepth + "CFComment: " + CFCommentDepth);
+       //System.out.println("Handler matcher called - Start: " + start + " End: " + end + " Group: " + group + " lineComment: " + lineCommentEnd + " CFSCript: " + CFScriptDepth + " CFComment: " + CFCommentDepth + " CFQuery: " + CFQueryDepth);
         // Checking for opening CFML comment (<!---)
         if (CFScriptDepth == 0 
                 && "<!---".equalsIgnoreCase(group)) {
@@ -140,7 +141,7 @@ public class CommentParser {
             
         }
         
-        //Checking for closing CFSCRIPT tag (<cfscript)
+        //Checking for closing CFSCRIPT tag (</cfscript)
         if (CFScriptDepth == 1 
                 && CFCommentDepth == 0
                 && "</cfscript".equalsIgnoreCase(group)) {
@@ -155,24 +156,53 @@ public class CommentParser {
         
         
         
+        //Checking for opening CFQUERY tag (<cfquery)
+        if (CFQueryDepth == 0 
+                && CFCommentDepth == 0
+                && "<cfquery".equalsIgnoreCase(group)) {
+            // Looks like we've found the start of a CFQUERY block
+            
+
+            //System.out.println("Found a CFQUERY start tag at " + start);
+            
+            CFQueryDepth++;
+            
+        }
         
-        // Checking for opening CFSCRIPT comment (/*)
-        if (CFScriptDepth == 1 
+        //Checking for closing CFQUERY tag (</cfquery)
+        if (CFQueryDepth == 1 
+                && CFCommentDepth == 0
+                && "</cfquery".equalsIgnoreCase(group)) {
+            // Looks like we've found the end of a CFQUERY block
+            
+
+            //System.out.println("Found a CFQUERY end tag at " + start);
+            
+            CFQueryDepth--;
+            
+        }
+        
+        
+        
+        
+        // Checking for opening CFSCRIPT or SQL comment (/*)
+        if ((CFScriptDepth == 1 || CFQueryDepth == 1) 
                 && "/*".equalsIgnoreCase(group)
                 && start > lineCommentEnd){
-            // Looks like we've found the start of a CFSCRIPT comment
+            // Looks like we've found the start of a CFSCRIPT or SQL comment
             if (CFCommentDepth == 0) {
                 CFCommentStartOffset = end;
-                //System.out.println("Found a CFSCRIPT block comment at " + start);
+                //System.out.println("Found a CFSCRIPT or SQL block comment at " + start);
             }
             CFCommentDepth++;
         }
         
         
-        if (CFScriptDepth == 1 
+        // Check for closing CFSCRIPT or SQL comment (*/)
+        if ((CFScriptDepth == 1 || CFQueryDepth == 1)
                 && "*/".equalsIgnoreCase(group)
                 && start > lineCommentEnd) {
-            // Looks like we've found the end of a CFSCRIPT comment
+            // Looks like we've found the end of a CFSCRIPT or SQL comment
             CFCommentDepth--;
             if (CFCommentDepth == 0) {
                 CFCommentEndOffset = start;
@@ -181,7 +211,7 @@ public class CommentParser {
                 try {
                     comment = new CFCommentItem(doc.getLineOfOffset(CFCommentStartOffset),CFCommentStartOffset,CFCommentEndOffset,doc.get(CFCommentStartOffset,commentLength));
                     CFCommentList.add(comment);
-                    //System.out.println("CFSCRIPT comment added to list " + comment.getContents());
+                    //System.out.println("CFSCRIPT or SQL comment added to list " + comment.getContents());
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -190,6 +220,7 @@ public class CommentParser {
         }
         
         
+        // Check for single line CFSCRIPT comment (//)
         if (CFScriptDepth == 1 
                 && "//".equalsIgnoreCase(group)) {
             // Looks like we've found a single line script comment

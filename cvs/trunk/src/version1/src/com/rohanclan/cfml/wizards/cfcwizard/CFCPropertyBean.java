@@ -1,5 +1,5 @@
 /*
- * $Id: CFCPropertyBean.java,v 1.1 2004-11-02 06:06:25 rohanr2 Exp $
+ * $Id: CFCPropertyBean.java,v 1.2 2005-01-25 00:44:19 smilligan Exp $
  * 
  * Created on 11.05.2004
  * Created by Chris Queener (cq@eggs.de)
@@ -27,9 +27,9 @@ package com.rohanclan.cfml.wizards.cfcwizard;
  * @author Rob 
  */
 public class CFCPropertyBean {
-	/** the name of the cfpropery */
+	/** the name of the cfproperty */
 	private String name = "";
-	/** the displayname of the cfpropery (meaning the cfml attribute) */
+	/** the displayname of the cfproperty (meaning the cfml attribute) */
 	private String displayName = "";
 	/** extended description */
 	private String hint = "";
@@ -37,6 +37,14 @@ public class CFCPropertyBean {
 	private String type = "";
 	/** default value (if any) */
 	private String defaultVal = "";
+	/** whether to write a getter */
+	private boolean writeGetter = false;
+	/** Getter access */
+	private String getterAccess = "public";
+	/** whether to write a setter */
+	private boolean writeSetter = false;
+	/** Setter access */
+	private String setterAccess = "public";
 	
 	/**
 	 * @return Returns the displayName.
@@ -107,4 +115,61 @@ public class CFCPropertyBean {
 	public void setDefaultVal(String defaultVal) {
 		this.defaultVal = defaultVal;
 	}
+
+	/**
+	 * @return access for the getter
+	 */
+	public String getGetterAccess() {
+        return getterAccess;
+    }
+
+	/**
+	 * @param getterAccess
+	 */
+	public void setGetterAccess(String getterAccess) {
+        this.getterAccess = getterAccess;
+    }
+
+	/**
+	 * @return access for the setter
+	 */
+	public String getSetterAccess() {
+        return setterAccess;
+    }
+
+	/**
+	 * @param setterAccess
+	 */
+	public void setSetterAccess(String setterAccess) {
+        this.setterAccess = setterAccess;
+    }
+
+	/**
+	 * @return whether to write a getter method
+	 */
+	public boolean shouldWriteGetter() {
+        return writeGetter;
+    }
+
+	/**
+	 * @param writeGetter
+	 */
+	public void setShouldWriteGetter(boolean writeGetter) {
+        this.writeGetter = writeGetter;
+    }
+    
+	/**
+	 * @return whether to write a setter method
+	 */
+	public boolean shouldWriteSetter() {
+        return writeSetter;
+    }
+
+	/**
+	 * @param writeSetter
+	 */
+	public void setShouldWriteSetter(boolean writeSetter) {
+        this.writeSetter = writeSetter;
+    }
+
 }

@@ -71,7 +71,6 @@ public class NewCFCWizardFunctions extends WizardPage {
 	private Combo functionReturnType;
 	private Combo functionAccess;
 	private Text functionHint;
-	private Text functionDefault;
 	private Button isOutput;
 	private List functionNames;
 	private Text functionRoles;
@@ -301,10 +300,21 @@ public class NewCFCWizardFunctions extends WizardPage {
 		data.horizontalAlignment = GridData.END;
 		accessLabel.setLayoutData(data);
 		
+		// Get access types
+		CFSyntaxDictionary cfmldic = (CFSyntaxDictionary)DictionaryManager.getDictionary(
+				DictionaryManager.CFDIC
+			);
+		TreeSet accessTypes = new TreeSet(cfmldic.getFilteredAttributeValues("cffunction", "access", ""));
+		Iterator i = accessTypes.iterator();
+		String[] str = new String[accessTypes.size()];
+		int q=0;
+		while(i.hasNext()){
+			str[q++] = ((Value)i.next()).getValue();
+		}
+		
+
 		this.functionAccess = new Combo(container, SWT.BORDER);
-		this.functionAccess.setItems(
-			new String[]{"public", "private", "package", "remote"}
-		);
+		this.functionAccess.setItems(str);
 		data = new GridData ();
 		data.horizontalIndent = 5;
 		data.horizontalAlignment = GridData.BEGINNING;
@@ -342,15 +352,12 @@ public class NewCFCWizardFunctions extends WizardPage {
 		functionReturnType = new Combo(container, SWT.BORDER);
 		
 		//get the proper return types
-		CFSyntaxDictionary cfmldic = (CFSyntaxDictionary)DictionaryManager.getDictionary(
-			DictionaryManager.CFDIC
-		);
 		TreeSet cfitems = new TreeSet(
 			cfmldic.getFilteredAttributeValues("cffunction", "returntype", "")
 		);
-		Iterator i = cfitems.iterator();
-		String[] str = new String[cfitems.size()];
-		int q=0;
+		i = cfitems.iterator();
+		str = new String[cfitems.size()];
+		q=0;
 		while(i.hasNext()){
 			str[q++] = ((Value)i.next()).getValue();
 		}
@@ -489,7 +496,7 @@ public class NewCFCWizardFunctions extends WizardPage {
 	 */
 	private void propertyChanged() 
 	{
-		System.err.println("I was asked to update the beans props");
+		//System.err.println("I was asked to update the beans props");
 		
 		updateProperties();
 		updateStatus(null);
@@ -530,8 +537,10 @@ public class NewCFCWizardFunctions extends WizardPage {
 			
 			NewCFCWizardArguments page4 = (NewCFCWizardArguments)getNextPage();
 			
-			page4.setFunctionBeans(functionBeans);
-			page4.setFunctionItems(getTagArray());
+			if (page4!= null) {
+				page4.setFunctionBeans(functionBeans);
+				page4.setFunctionItems(getTagArray());
+			}
 			
 			
 		}else{
@@ -731,7 +740,7 @@ public class NewCFCWizardFunctions extends WizardPage {
 			
 			//now see if there are arguments to this function and write them out
 			//if need be
-			/*
+			
 			if(bean.getArgumentBeans().size() > 0)
 			{
 				for(Iterator iterator = bean.getArgumentBeans().keySet().iterator(); iterator.hasNext();)
@@ -772,7 +781,7 @@ public class NewCFCWizardFunctions extends WizardPage {
 					sb.append(" />");
 				}
 			}
-			*/	
+				
 			
 			sb.append("\n\t\t");
 			sb.append("<!--- TODO: Implement Method --->");
