@@ -573,7 +573,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			encloser.enclose(doc,(ITextSelection)sel,insight,"");
 		}
 		catch (Exception e) {
-		    e.printStackTrace();
+		    //e.printStackTrace();
 		}
 	}
 	
@@ -608,7 +608,6 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	
 	
 	public void reload(boolean forced) {
-
 		try {
 			if (autoRefresh || forced) {
 			    lastInput = getRootInput();
@@ -626,7 +625,9 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 				}
 			}
 		
-
+			if (lastInput == null) {
+			    lastInput = getRootInput();
+			}
 			methodProvider = new CFCMethodsContentProvider(lastInput,sortItems,showRemote,showPublic,showPackage,showPrivate);
 			viewer.setContentProvider(methodProvider);
 			viewer.setInput(lastInput);
@@ -669,7 +670,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			//System.out.println("CFCMethodView listener removed from editor");
 				}
 				catch (Exception e) {
-					//e.printStackTrace(System.err);
+					//e.printStackTrace();
 				}		
 		}
 		else {

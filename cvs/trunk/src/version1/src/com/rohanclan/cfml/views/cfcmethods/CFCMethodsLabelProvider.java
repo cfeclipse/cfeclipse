@@ -17,6 +17,7 @@ public class CFCMethodsLabelProvider  extends LabelProvider implements ITableLab
 	public String getColumnText(Object obj, int index) {
 	    CFCMethodViewItem item = (CFCMethodViewItem)obj;
 		return item.toString();
+
 	}
 	public Image getColumnImage(Object obj, int index) {
 		return getImage(obj);
@@ -34,7 +35,7 @@ public class CFCMethodsLabelProvider  extends LabelProvider implements ITableLab
 		    } else if (item.getAccess().toLowerCase().equals("private")) {
 		        return CFPluginImages.get(CFPluginImages.ICON_METHOD_PRIVATE);
 		    }
-		    return null;
+		    return CFPluginImages.get(CFPluginImages.ICON_ALERT);
 	    }
 	    catch (Exception e) {
 	        //e.printStackTrace();

@@ -38,6 +38,7 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 	public CFCMethodsContentProvider (ICFDocument icfd, boolean sortItems, boolean showRemote, boolean showPublic, boolean showPackage, boolean showPrivate) {
 		// By default we create an empty tag
 		document = icfd;
+		
 		this.sortItems = sortItems;
 		this.showRemote = showRemote;
 		this.showPublic = showPublic;
@@ -71,11 +72,11 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
 			nodes = rootItem.selectNodes("//cffunction");
 			
+			
 			if (sortItems) {
 			    CFCMethodsComparator comparator = new CFCMethodsComparator();
 				Collections.sort(nodes,comparator);
 			}
-			
 			Iterator i = nodes.iterator();
 			CFCMethodViewItem[] methods = new CFCMethodViewItem[nodes.size()];
 			int index = 0;
@@ -114,7 +115,7 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 					}
 				}
 				catch (Exception e) {
-					System.err.println(e.getMessage());
+					e.printStackTrace();
 				}
 			}
 			

@@ -124,11 +124,13 @@ public class CFCMethodViewItem  {
 	
 	public String getAccess() {
 		try {
-			return functionTag.getAttributeValue("access");
+		    if (functionTag.getAttributeValue("access") != null) {
+		        return functionTag.getAttributeValue("access");
+		    }
 		}
 		catch (Exception e) {
-			return "public";
 		}
+		return "public";
 	}
 	
 	public int getDocumentOffset() {
