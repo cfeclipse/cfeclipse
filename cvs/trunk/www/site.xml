@@ -11,7 +11,6 @@
    </feature>
    <feature url="features/com.rohanclan.cfml.release_1.0.13.jar" id="com.rohanclan.cfml.release" version="1.0.13">
       <category name="Stable CFEclipse"/>
-      <category name="Bleeding Edge CFEclipse"/>
    </feature>
    <category-def name="Stable CFEclipse" label="com.rohanclan.cfml.release.stable">
       <description>
