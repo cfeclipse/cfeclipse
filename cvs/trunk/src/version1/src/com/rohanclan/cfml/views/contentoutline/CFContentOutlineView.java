@@ -6,18 +6,17 @@
  */
 package com.rohanclan.cfml.views.contentoutline;
 
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.*;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import com.rohanclan.cfml.util.CFPluginImages;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.IMenuListener;
@@ -26,7 +25,11 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Control;
 
-import org.eclipse.jface.viewers.*; 
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
 /**
  * @author Rob
@@ -34,38 +37,17 @@ import org.eclipse.jface.viewers.*;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class CFContentOutlineView extends ViewPart { //Page { //
+public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener {
 	public static final String ID_CONTENTOUTLINE = "com.rohanclan.cfml.views.contentoutline.cfcontentoutlineview";
 	
-	/** the treeviewer control */
-	protected TreeViewer treeViewer;
-	//protected Text text;
 	protected LabelProvider labelProvider;
-		
-	/** the path to the icons. i.e. file://C/blah/plugin/icons/ */
-	//protected static IPath snipBase;
-	/** used as a proxy action to add snips to the editor */
-	//private static GenericEncloserAction tmpAction;
-	/** Config file is used to load simple xml documents and get to
-	 * simple items via DOM - not recommended for large documents
-	 */
-	//private static XMLConfigFile xmlconfile;
-	
-	protected Action jumpAction, refreshAction, expandAction; //addItemAction; //, deleteItemAction, selectAllAction;
-	
+	protected Action jumpAction, refreshAction, expandAction;
 	protected MenuManager menuMgr;
-	
-	/** the root directory */
-	//protected File root;
 	
 	public Control getControl()
 	{
-		return treeViewer.getControl();
-	}
-	
-	public TreeViewer getTreeViewer()
-	{
-		return treeViewer;
+		createTree();
+		return super.getTreeViewer().getControl();
 	}
 	
 	public void setSelection(ISelection selection){;}  
@@ -75,59 +57,26 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 	protected void fireSelectionChanged(ISelection selection){;} 
 	public void addSelectionChangedListener(ISelectionChangedListener listener){;}
 	
-	public void createPartControl(Composite parent) 
+	public void createTree()
 	{
-		//Create a grid layout object so the text and treeviewer
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 1;
-		layout.verticalSpacing = 2;
-		layout.marginWidth = 0;
-		layout.marginHeight = 2;
-		parent.setLayout(layout);
-		
-		//Create a "label" to display information in. I'm
-		//using a text field instead of a lable so you can
-		//copy-paste out of it.
-		//text = new Text(parent, SWT.READ_ONLY | SWT.SINGLE | SWT.BORDER);
-		// layout the text field above the treeviewer
-		GridData layoutData = new GridData();
-		layoutData.grabExcessHorizontalSpace = true;
-		layoutData.horizontalAlignment = GridData.FILL;
-		//text.setLayoutData(layoutData);
-		
-		//Create the tree viewer as a child of the composite parent
-		treeViewer = new TreeViewer(parent);
-		treeViewer.setContentProvider(
+		getTreeViewer().setContentProvider(
 			new OutlineContentProvider(getRootInput())
 		);
 		labelProvider = new OutlineLabelProvider();
-		treeViewer.setLabelProvider(labelProvider);
+		getTreeViewer().setLabelProvider(labelProvider);
+		getTreeViewer().setUseHashlookup(true);
+		getTreeViewer().setInput(getRootInput());
 		
-		treeViewer.setUseHashlookup(true);
-		
-		//layout the tree viewer below the text field
-		layoutData = new GridData();
-		layoutData.grabExcessHorizontalSpace = true;
-		layoutData.grabExcessVerticalSpace = true;
-		layoutData.horizontalAlignment = GridData.FILL;
-		layoutData.verticalAlignment = GridData.FILL;
-		treeViewer.getControl().setLayoutData(layoutData);
-		
-		//Create menu, toolbars, filters
 		createActions();
 		createMenus();
 		createToolbar();
 		createContextMenu();
-		hookListeners();
-		
-		treeViewer.setInput(getRootInput());
-		//treeViewer.expandAll();
 	}
 	
-	protected void hookListeners(){;}
 	protected void createMenus()
 	{
 		//IMenuManager rootMenuManager = getViewSite().getActionBars().getMenuManager();
+		IMenuManager rootMenuManager = super.getSite().getActionBars().getMenuManager();
 		//rootMenuManager.add(refreshSnippetsAction);
 	}
 	
@@ -143,12 +92,8 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 		});
 		
 		// Create menu.
-		Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
-		treeViewer.getControl().setMenu(menu);
-		
-		// Register menu for extension.
-		getSite().registerContextMenu(menuMgr, treeViewer);
-		//getSite().registerContextMenu("cfml", menuMgr, this.getSite().getSelectionProvider());
+		Menu menu = menuMgr.createContextMenu(getTreeViewer().getControl());
+		getTreeViewer().getControl().setMenu(menu);
 	}
 	
 	private void fillContextMenu(IMenuManager mgr) 
@@ -159,7 +104,7 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 	
 	protected void createToolbar()
 	{
-		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
+		IToolBarManager toolbarManager = super.getSite().getActionBars().getToolBarManager();
 		toolbarManager.add(jumpAction);
 		toolbarManager.add(expandAction);
 		toolbarManager.add(refreshAction);
@@ -170,19 +115,15 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 	 * @return the root directory
 	 */
 	public DocItem getRootInput()
-	{
+	{	
 		try
 		{
-			//this seems to be the right way, but I can't get it to work.
-			
-			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			ITextEditor ite = (ITextEditor)iep; //.getEditorInput();
+			IEditorPart iep = super.getSite().getPage().getActiveEditor();
+			ITextEditor ite = (ITextEditor)iep;
 			ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
 			
 			icfd.getParser().parseSaveDoc();
-			DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot().getFirstChild();
-			
-			//System.out.println("Root element is: " + docRoot.getName());
+			DocItem docRoot = icfd.getParser().getParseResult().getDocumentRoot();
 			
 			return docRoot;
 		}
@@ -190,8 +131,8 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 		{
 			e.printStackTrace(System.err);
 		}
-		
-		return null; //new TagMatch("/",0,0,1);
+		//a fake root
+		return new TagItem(1,1,1,"Unk");
 	}
 	
 	
@@ -201,22 +142,18 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 	 */
 	protected void jumpToItem() 
 	{
-		
 		//get a handle to the current editor and assign it to our temp action
-		IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-		//IEditorPart iep = this.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-		//tmpAction.setActiveEditor(null,iep);
-		//File selectedfile = null;
+		IEditorPart iep = super.getSite().getPage().getActiveEditor();
 		DocItem selecteditem = null;
 		
 		//can't do much if nothing is selected
-		if(treeViewer.getSelection().isEmpty()) 
+		if(getTreeViewer().getSelection().isEmpty()) 
 		{
 			return;
 		}
 		else 
 		{
-			IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+			IStructuredSelection selection = (IStructuredSelection)getTreeViewer().getSelection();
 			//selectedfile = (File)selection.getFirstElement();
 			selecteditem = (DocItem)selection.getFirstElement();
 		}
@@ -235,12 +172,17 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 		}
 	}
 	
-	protected void reload() {
-		treeViewer.setInput(getRootInput());		
+	protected void reload() 
+	{
+		getTreeViewer().setContentProvider(
+			new OutlineContentProvider(getRootInput())
+		);
+		getTreeViewer().setInput(getRootInput());
 	}
 	
-	protected void expand(){
-		treeViewer.expandAll();
+	protected void expand()
+	{
+		getTreeViewer().expandAll();
 	}
 	
 	/**
@@ -274,5 +216,37 @@ public class CFContentOutlineView extends ViewPart { //Page { //
 		};
 	}
 	
-	public void setFocus(){;}
+	////////////////////////////////////////////////////////////////////////////
+	
+	public void partActivated(IWorkbenchPart part) {
+		System.out.println("Part activated: " + part.getClass().getName());
+		reload();
+	}
+	
+	public void partBroughtToTop(IWorkbenchPart part) {
+		System.out.println("Part brought to top: "+part.getClass().getName());
+		reload();
+	}
+	
+	public void partClosed(IWorkbenchPart part) 
+	{
+		System.out.println("Part closed: " + part.getClass().getName());
+	}
+	
+	public void partDeactivated(IWorkbenchPart part) 
+	{
+		System.out.println("Part deactivated: " + part.getClass().getName());
+	}
+	
+	public void partOpened(IWorkbenchPart part) 
+	{
+		System.out.println("Part opened: " + part.getClass().getName());
+		reload();
+	}
+	
+	public void propertyChanged(Object source, int propId)
+	{
+		System.out.println("Property changed: " + source.getClass().getName());
+		reload();
+	}
 }

@@ -44,7 +44,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.editors.text.TextEditor;
 //import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 //import com.rohanclan.cfml.views.cfcmethods.CFCMethodsView;
-//import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
+import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 //import org.eclipse.jface.util.IPropertyChangeListener;
 //import org.eclipse.jface.util.PropertyChangeEvent;
 
@@ -114,8 +114,16 @@ implements IPropertyChangeListener {
 			"org.eclipse.ui.views.contentoutline.IContentOutlinePage"
 		))
 		{
-			//return new CFCMethodsView();
+			try
+			{
+				return new CFContentOutlineView();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace(System.err);
+			}
 			return super.getAdapter(adapter);
+			//return super.getAdapter(adapter);
 		}
 		else
 		{

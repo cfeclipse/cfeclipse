@@ -72,11 +72,12 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	 *   does not have an input
 	 */
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) 
-	{
-		this.viewer = (TreeViewer)viewer;
-		
+	{	
 		if(newInput instanceof DocItem)
+		{
+			this.viewer = (TreeViewer)viewer;
 			rootdir = (DocItem)newInput;
+		}
 	}
 	
 	/**
@@ -85,19 +86,11 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	 */
 	public Object[] getChildren(Object parentElement) 
 	{
-		/* if(parentElement instanceof File)
-		{
-			if(((File)parentElement).isDirectory())
-				return ((File)parentElement).listFiles();
-		}
-		*/
-		
 		if(parentElement instanceof DocItem)
 		{
-			//return ((DocItem)parentElement).getChildren().toArray();
 			return ((DocItem)parentElement).getChildNodes().toArray();
 		}
-		
+		System.err.println("not a doc item");
 		return EMPTY_ARRAY;
 	}
 	
@@ -119,8 +112,9 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	 * does element have any children?
 	 * @see ITreeContentProvider#hasChildren(Object)
 	 */
-	public boolean hasChildren(Object element) {
-		return getChildren(element).length > 0;
+	public boolean hasChildren(Object element) 
+	{
+		return ((DocItem)element).hasChildren();
 		//return true;
 	}
 
