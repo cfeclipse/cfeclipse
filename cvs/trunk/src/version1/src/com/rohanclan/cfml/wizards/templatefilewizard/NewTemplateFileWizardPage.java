@@ -106,7 +106,7 @@ public class NewTemplateFileWizardPage extends WizardPage {
 		GridLayout layout = new GridLayout();
 		parent.setLayout(layout);
 		layout.numColumns = 3;
-		layout.verticalSpacing = 9;
+		//layout.verticalSpacing = 9;
 		
 	    Label label = new Label(parent, SWT.NULL);
 		label.setText("&Path:");
