@@ -115,6 +115,43 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 	{
 		run(null);
 	}
+	/**
+	 * Same us run but you pass in the selection start and selection end
+	 * @param start
+	 * @param end
+	 */
+	public void open(int start, int end){
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		if(!root.exists(file.getFullPath())) {
+			//System.err.println("File \'" + filename + "\' does not exist. Stupid user.");
+			this.success = false;
+			return;
+		}else{
+		    this.success = true;
+		}
+		
+		
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		System.out.println("selection start " + start);
+		System.out.println("selection end " + end);
+		int length = end - start;
+		System.out.println("selection length " + length);
+		try
+		{
+			IEditorPart iep = IDE.openEditor(page, file, true);
+			ITextEditor ite = (ITextEditor)iep;
+			//ite.setHighlightRange(start,end,true);
+			ite.selectAndReveal(start,length);
+			ite.setFocus();
+			
+		}
+		catch (PartInitException e) 
+		{
+		  
+			e.printStackTrace(System.err);
+		}
+		return;
+	}
 		
 	public void run(IAction action) 
 	{
@@ -139,6 +176,7 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 		  
 			e.printStackTrace(System.err);
 		}
+		return;
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){;}
