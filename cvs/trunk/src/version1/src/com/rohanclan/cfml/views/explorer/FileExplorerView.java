@@ -33,8 +33,11 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.TreeListener;
+import org.eclipse.swt.events.TreeEvent;
 
 import org.eclipse.jface.viewers.StructuredSelection;
+
 
 /**
  * @author Stephen Milligan
@@ -122,33 +125,24 @@ public class FileExplorerView extends ViewPart {
         directoryTreeViewer.setSorter(new DirectorySorter());
         directoryTreeViewer.setLabelProvider(new DirectoryLabelProvider());
         directoryTreeViewer.setContentProvider(new DirectoryContentProvider());
-        //final TableTree tableTree = directoryTreeViewer.getTableTree();
         final Tree tree = directoryTreeViewer.getTree();
+        directoryTreeViewer.setComparer(new FileComparer());
         tree.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        
         directoryTreeViewer.setInput(new LocalFileSystem());
         
 
-        
+        FileContentProvider fileProvider = new FileContentProvider();
         fileViewer = new TableViewer(sash, SWT.BORDER);
-        fileViewer.addDoubleClickListener(new IDoubleClickListener() {
-            public void doubleClick(DoubleClickEvent e) {
-                String filename = e.getSelection().toString();
-                if (filename.indexOf("[") == 0) {
-                    filename = filename.substring(1,filename.length()-1);
-                }
-                IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-    	        JavaFileEditorInput input = new JavaFileEditorInput(new File(filename));
-    	        try {
-    	            page.openEditor(input,"com.rohanclan.cfml.editors.CFMLEditor");
-    	        }
-    	        catch (Exception ex) {
-    	            ex.printStackTrace();
-    	        }
-            }
-        });
+        
+        
+        fileViewer.addDoubleClickListener(new FileDoubleClickListener(fileProvider)); 
+
         fileViewer.setSorter(new Sorter());
         fileViewer.setLabelProvider(new FileLabelProvider());
-        fileViewer.setContentProvider(new FileContentProvider());
+        fileViewer.setContentProvider(fileProvider);
+        fileViewer.setComparer(new FileComparer());
         final Table table = fileViewer.getTable();
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
         fileViewer.setInput(new LocalFileSystem());

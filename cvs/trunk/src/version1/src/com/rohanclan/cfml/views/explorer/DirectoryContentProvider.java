@@ -6,20 +6,19 @@
  */
 package com.rohanclan.cfml.views.explorer;
 
+import java.io.File;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import com.rohanclan.cfml.ftp.*;
 
-import org.apache.commons.net.ftp.*;
 
-
-import java.io.*;
 
 class DirectoryContentProvider implements IStructuredContentProvider, ITreeContentProvider {
     
-    
+
     private FileNameFilter directoryFilter = new FileNameFilter();
     private IFileProvider fileProvider = null;
     
@@ -28,18 +27,24 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     }
     
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-    	if (fileProvider != null) {
-    		fileProvider.dispose();
-    	}
-        if (newInput instanceof IFileProvider) {
-            fileProvider = (IFileProvider)newInput;
+        try {
+	    	if (fileProvider != null) {
+	    		fileProvider.dispose();
+	    	}
+	        if (newInput instanceof IFileProvider) {
+	            fileProvider = (IFileProvider)newInput;
+	        }
+	        else if (newInput instanceof FtpConnectionProperties) {
+	        	fileProvider = FtpConnection.getInstance();
+	        	((FtpConnection)fileProvider).connect((FtpConnectionProperties)newInput);
+	        }
+	        else {
+	        	
+	            fileProvider = null;
+	        }
         }
-        else if (newInput instanceof FtpConnectionProperties) {
-        	fileProvider = new FtpConnection((FtpConnectionProperties)newInput);
-        }
-        else {
-        	
-            fileProvider = null;
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
     public void dispose() {
@@ -50,13 +55,13 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     
     
     public Object[] getElements(Object inputElement) {
-
-        Object parent = inputElement;
         
-        
-        return getChildren(parent);
+        return getChildren(inputElement);
     }
+    
     public Object[] getChildren(Object parentElement) {
+        //System.out.println("Parent element is: " + parentElement.getClass().getName());
+       
     	try {
     		
 	        if (fileProvider == null){
@@ -67,8 +72,12 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	        	
 	        	return fileProvider.getRoots();
 	        	
-	        }
-	        else {
+	        } else if (parentElement instanceof RemoteFile) {
+	            RemoteFile file = (RemoteFile)parentElement;
+	            
+	            return fileProvider.getChildren(((RemoteFile)parentElement).getAbsolutePath(),directoryFilter);
+	            
+	        } else {
                 return fileProvider.getChildren(parentElement.toString(),directoryFilter);
 	        }
     	}
@@ -84,7 +93,12 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
     
     public boolean hasChildren(Object element) {
     	try {
-    		
+    		if (element instanceof RemoteFile) {
+    		   return ((RemoteFile)element).isDirectory();
+    		}
+    		else if (element instanceof File) {
+    		    return ((File)element).isDirectory();
+    		}
     		return true;
     	}
     	catch (Exception e) {

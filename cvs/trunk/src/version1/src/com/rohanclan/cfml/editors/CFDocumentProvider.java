@@ -24,10 +24,7 @@
  */
 package com.rohanclan.cfml.editors;
 
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -39,13 +36,15 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
+import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.ui.part.FileEditorInput;
-
-import org.apache.commons.net.ftp.FTPClient;
+import org.eclipse.core.runtime.Path;
 
 import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-
+import com.rohanclan.cfml.ftp.*;
+import com.rohanclan.cfml.util.ExternalFile;
+import com.rohanclan.cfml.CFMLPlugin;
 
 /**
  * 
@@ -86,10 +85,28 @@ public class CFDocumentProvider extends FileDocumentProvider {
 
 			//returns an IFile which is a subclass of IResource
 			try {
-				if (element instanceof FileEditorInput 
-						|| element instanceof JavaFileEditorInput) 
+			    if (element instanceof FileEditorInput) 
 				{
+			        
 					document.setParserResource(((FileEditorInput)element).getFile());
+					document.clearAllMarkers();
+					document.parseDocument();
+				}
+			    else if (element instanceof JavaFileEditorInput) 
+				{
+			        String filepath = ((JavaFileEditorInput)element).getPath(element).toString();
+			        Path path = new Path(filepath);
+			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
+					document.setParserResource(new ExternalFile(path,workspace));
+					document.clearAllMarkers();
+					document.parseDocument();
+				}
+			    else if (element instanceof FtpFileEditorInput) 
+				{
+			        String filepath = ((FtpFileEditorInput)element).getPath(element).toString();
+			        Path path = new Path(filepath);
+			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
+			        document.setParserResource(new ExternalFile(path,workspace));
 					document.clearAllMarkers();
 					document.parseDocument();
 				}
@@ -115,7 +132,14 @@ public class CFDocumentProvider extends FileDocumentProvider {
 				e.printStackTrace();
 			}
 			setDocumentContent(document, contentStream, encoding);
-			return true;
+		}
+		if (editorInput instanceof FtpFileEditorInput) {
+			FtpFileEditorInput input = (FtpFileEditorInput) editorInput;
+			FtpConnection connection = FtpConnection.getInstance();
+			BufferedInputStream contentStream = null;
+			contentStream = connection.getInputStream(input.getPath(editorInput).toString());
+			
+			setDocumentContent(document, contentStream, encoding);
 		}
 		return super.setDocumentContent(document, editorInput, encoding);
 	}
@@ -137,6 +161,16 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		   }
 		   
 		}
+		if (element instanceof FtpFileEditorInput)  {
+		    try {
+		    saveExternalFile((FtpFileEditorInput)element,document);
+		    }
+		   catch (IOException e) {
+		       Status status = new Status(IStatus.ERROR,"com.rohanclan.cfml",IStatus.OK,e.getMessage(),e);
+		       throw new CoreException(status);
+		   }
+		    
+		}
 		super.doSaveDocument(monitor, element, document, overwrite);
 
 	}
@@ -146,6 +180,15 @@ public class CFDocumentProvider extends FileDocumentProvider {
 	    FileWriter writer = new FileWriter(input.getPath(input).toFile());
 	    writer.write(doc.get());
 	    writer.close();
+	    
+	}
+	
+	private void saveExternalFile(FtpFileEditorInput input, IDocument doc) throws IOException {
+
+	    BufferedOutputStream contentStream = null;
+		FtpConnection connection = FtpConnection.getInstance();
+		connection.saveFile(doc.get().getBytes(),input.getPath(input).toString());
+		
 	}
 	
 	
@@ -159,6 +202,11 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		    JavaFileEditorInput input = (JavaFileEditorInput)element;
 	        return input.getPath(input).toFile().canWrite();
 		}
+		if (element instanceof FtpFileEditorInput) {
+		    FtpFileEditorInput input = (FtpFileEditorInput)element;
+		    
+		    return input.canWrite();
+		}
 		return super.isModifiable(element);
 	}
 	
@@ -167,6 +215,11 @@ public class CFDocumentProvider extends FileDocumentProvider {
 	        JavaFileEditorInput input = (JavaFileEditorInput)element;
 	        return !input.getPath(input).toFile().canWrite();
 		    
+		}
+		if (element instanceof FtpFileEditorInput) {
+		    FtpFileEditorInput input = (FtpFileEditorInput)element;
+		    
+		    return !input.canWrite();
 		}
 	    return super.isReadOnly(element);
 	}

@@ -6,7 +6,9 @@
  */
 package com.rohanclan.cfml.views.explorer;
 
-import java.io.FileFilter;
+
+import org.eclipse.ui.IEditorInput;
+
 /**
  * @author Stephen Milligan
  *
@@ -20,8 +22,10 @@ public interface IFileProvider {
 
     public Object[] getRoots();
     
-    public Object[] getChildren(String parent, FileFilter filter);
+    public Object[] getChildren(String parent, FileNameFilter filter);
     
     public void dispose();
+    
+    public IEditorInput getEditorInput(String filename);
     
 }

@@ -11,30 +11,48 @@ import org.eclipse.swt.graphics.Image;
 
 import com.rohanclan.cfml.util.CFPluginImages;
 
+import com.rohanclan.cfml.ftp.RemoteFile;
 
 class DirectoryLabelProvider extends LabelProvider {
     
     
     public String getText(Object element) {
-        
-        if (element.toString().length() == 1) {
-        	return element.toString();
+
+        try {
+            if (element instanceof RemoteFile) {
+                return ((RemoteFile)element).getName();
+            }
+	        if (element.toString().length() == 1) {
+	        	return element.toString();
+	        }
+	        else {
+	        	String[] fullpath = element.toString().split("[\\\\/]");
+	        	return fullpath[fullpath.length-1];
+	        }
         }
-        else {
-        	String[] fullpath = element.toString().split("[\\\\/]");
-        	return fullpath[fullpath.length-1];
+        catch (Exception e) {
+            e.printStackTrace();
+            return "";
         }
     }
     
     
     public Image getImage(Object element) {
-        
-        String[] fullpath = element.toString().split("[\\\\/]");
-        if (fullpath.length > 1) {
-            return CFPluginImages.get(CFPluginImages.ICON_FOLDER);
+        try {
+            if (element instanceof RemoteFile) {
+                return CFPluginImages.get(CFPluginImages.ICON_FOLDER);
+            }
+	        String[] fullpath = element.toString().split("[\\\\/]");
+	        if (fullpath.length > 1) {
+	            return CFPluginImages.get(CFPluginImages.ICON_FOLDER);
+	        }
+	        else {
+	            return CFPluginImages.get(CFPluginImages.ICON_REPOSITORY);
+	        }
         }
-        else {
-            return CFPluginImages.get(CFPluginImages.ICON_REPOSITORY);
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
         
     }

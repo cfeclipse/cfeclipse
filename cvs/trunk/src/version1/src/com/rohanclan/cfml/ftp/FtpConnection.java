@@ -6,12 +6,16 @@
  */
 package com.rohanclan.cfml.ftp;
 
-import java.io.FileFilter;
+import java.util.ArrayList;
+import java.io.ByteArrayInputStream;
+import java.io.BufferedInputStream;
 
-import org.apache.commons.net.ftp.*;
+import org.eclipse.ui.IEditorInput;
 
+import com.enterprisedt.net.ftp.*;
 
 import com.rohanclan.cfml.views.explorer.IFileProvider;
+import com.rohanclan.cfml.views.explorer.FileNameFilter;
 
 /**
  * @author spike
@@ -21,90 +25,166 @@ import com.rohanclan.cfml.views.explorer.IFileProvider;
  */
 public class FtpConnection implements IFileProvider {
 
-	FTPClient ftpClient = null;
+	//FTPClient ftpClient = null;
+    FTPClient ftpClient = null;
 	FtpConnectionProperties connectionProperties;
+	private static FtpConnection instance = null;
+	
+	private boolean isConnected = false;
+	
+	private int fConnectionTimeout = 30000;
+	
+	public static FtpConnection getInstance() {
+	    if (instance == null) {
+	        instance = new FtpConnection();
+	    }
+	    return instance;
+	}
+	
 	/**
 	 * 
 	 */
-	public FtpConnection(FtpConnectionProperties connectionProperties) {
-		this.connectionProperties = connectionProperties;
-		ftpClient = new FTPClient();
-		try {
-			ftpClient.connect(connectionProperties.getHost());
-			System.out.println("Connected to " + connectionProperties.getHost());
-			ftpClient.login(connectionProperties.getUsername(),connectionProperties.getPassword());
-			System.out.println("Logged in to  " + connectionProperties.getHost());
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+	public FtpConnection() {
+		ftpClient = null;
 	}
 	
+	public BufferedInputStream getInputStream(String filepath) {
+	    connect(connectionProperties);
+	    try {
+	        
+		    byte[] contents = ftpClient.get(filepath);
+		    ByteArrayInputStream ins = new ByteArrayInputStream(contents);
+		    BufferedInputStream bis = new BufferedInputStream(ins);
+		    return bis;
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+	
+	public void saveFile(byte[] content, String remotefile) {
+	    connect(connectionProperties);
+	    try {
+	        ftpClient.put(content,remotefile);
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	
+	public void disconnect() {
+	    try {
+	        ftpClient.quit();
+	        isConnected = false;
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void connect(FtpConnectionProperties connectionProperties) {
+		this.connectionProperties = connectionProperties;
+		if (isConnected) {
+		    return;
+		}
+		try {
+			ftpClient = new FTPClient(connectionProperties.getHost(),21,fConnectionTimeout);
+			FTPMessageCollector listener = new FTPMessageCollector();
+	        ftpClient.setMessageListener(listener);
+	        
+	
+	        // login
+	       ftpClient.login(connectionProperties.getUsername(), connectionProperties.getPassword());
+	
+	       ftpClient.setConnectMode(FTPConnectMode.PASV);
+	       ftpClient.setType(FTPTransferType.ASCII);
+	       isConnected = true;
+		}
+		catch (Exception e) {
+		    
+		    e.printStackTrace();
+		}
+	}
 	
 
 	/* (non-Javadoc)
 	 * @see com.rohanclan.cfml.views.explorer.IFileProvider#getRoots()
 	 */
 	public Object[] getRoots() {
-		
-		return new String[] {connectionProperties.getPath()};
-		
+
+	    return new String[] {connectionProperties.getPath()};
+	    
 	}
 
 	/* (non-Javadoc)
 	 * @see com.rohanclan.cfml.views.explorer.IFileProvider#getChildren(java.io.File, java.io.FileFilter)
 	 */
-	public Object[] getChildren(String parent, FileFilter filter) {
-		//secret code....nat loves finn...xxxoooo
+	public Object[] getChildren(String parent, FileNameFilter filter) {
+		
 		try {
-			
-			System.out.println("Getting children of " + parent);
-			int status = ftpClient.pasv();
-			System.out.println("PASV got status " + status);
-			System.out.println(ftpClient.getReplyString());
-			
-			/*
-			//ftpClient.changeWorkingDirectory(parent);
-			FTPFile[] files = ftpClient.listFiles();
-			System.out.println("Listing files got " + files.length + " files ");
-			System.out.println(ftpClient.getReplyString());
-			
-			if (files == null) {
+		    
+		    connect(connectionProperties);
+		    
+		    FTPFile[] files = ftpClient.dirDetails(parent);
+		    
+		    if (files == null) {
 				files = new FTPFile[0];
 			}
-			*/
-			
-			String[] names = ftpClient.listNames(parent);
-			System.out.println("listNames() got " + names.length + " entries.");
-			System.out.println(ftpClient.getReplyString());
-			
-			for (int i=0;i<names.length;i++) {
-				System.out.println(names[i]);
-			}
-			
-			return names;
+		    
+		    ArrayList filteredFileList = new ArrayList();
+		    for (int i=0;i<files.length;i++) {
+		        if (filter.accept(files[i])) {
+		            RemoteFile file = new RemoteFile(files[i],parent + "/" + files[i].getName());
+		            filteredFileList.add(file);
+		        }
+		    }
+		    
+		    Object[] filteredFiles = filteredFileList.toArray();
+		    
+			return filteredFiles;
+		}
+		catch (FTPException e) {
+		    this.isConnected = false;
 		}
 		catch (Exception e) {
-			return new String[0];
+		    e.printStackTrace();
 		}
+		return new String[0];
 	}
+	
+	
 
 	/* (non-Javadoc)
 	 * @see com.rohanclan.cfml.views.explorer.IFileProvider#dispose()
 	 */
 	public void dispose() {
 		try {
-			if (ftpClient != null 
-					&& ftpClient.isConnected()) {			
-				System.out.println("Disconnecting FTP client.");
-				ftpClient.disconnect();
-				System.out.println(ftpClient.getReplyString());
+			if (ftpClient != null) {			
+				//System.out.println("Disconnecting FTP client.");
+				ftpClient.quit();
+				ftpClient = null;
+				isConnected = false;
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	public IEditorInput getEditorInput(String filename) {
+	    try {
+		    FTPFile[] files = ftpClient.dirDetails(filename);
+		    RemoteFile remoteFile = new RemoteFile(files[0],filename);
+		    FtpFileEditorInput input = new FtpFileEditorInput(remoteFile);
+	        return input;
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 
 }

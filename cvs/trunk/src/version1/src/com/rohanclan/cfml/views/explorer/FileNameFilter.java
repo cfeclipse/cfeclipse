@@ -9,6 +9,7 @@ package com.rohanclan.cfml.views.explorer;
 import java.io.File;
 import java.io.FileFilter;
 
+import com.enterprisedt.net.ftp.*;
 /**
  * @author Stephen Milligan
  *
@@ -31,6 +32,18 @@ public class FileNameFilter implements FileFilter {
     /**
      * Determines whether or not the given file should be listed.
      */
+    public boolean accept(FTPFile filename) {
+        // TODO Auto-generated method stub
+        if (filename.isDir() && !allowDirectories) {
+            return false;
+        }
+        if (!filename.isDir() && !allowFiles) {
+            return false;
+        }
+        
+        return true;
+    }
+    
     public boolean accept(File filename) {
         // TODO Auto-generated method stub
         if (filename.isDirectory() && !allowDirectories) {

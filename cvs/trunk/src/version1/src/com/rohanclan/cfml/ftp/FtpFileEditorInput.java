@@ -24,14 +24,13 @@
  */
 package com.rohanclan.cfml.ftp;
 
-import java.io.File;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.editors.text.ILocationProvider;
-import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 
+import com.enterprisedt.net.ftp.*;
 
 
 import org.eclipse.core.runtime.IPath;
@@ -46,7 +45,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
  * It is capable of working with files both within the workspace 
  * and opened from external locations.
  */
-public class FTPEditorInput implements IEditorInput, ILocationProvider {
+public class FtpFileEditorInput implements IEditorInput, ILocationProvider {
 
 
 	/**
@@ -73,7 +72,7 @@ public class FTPEditorInput implements IEditorInput, ILocationProvider {
 		 * @see org.eclipse.ui.model.IWorkbenchAdapter#getLabel(java.lang.Object)
 		 */
 		public String getLabel(Object o) {
-			return ((JavaFileEditorInput)o).getName();
+			return ((FtpFileEditorInput)o).getName();
 		}
 	
 		/*
@@ -85,14 +84,14 @@ public class FTPEditorInput implements IEditorInput, ILocationProvider {
 	}
     
 
-	private File fFile;
+	private RemoteFile fFile;
 	private WorkbenchAdapter fWorkbenchAdapter= new WorkbenchAdapter();
 	
     /**
      * 
      */
-    public FTPEditorInput(File file) {
-		super();
+    public FtpFileEditorInput(RemoteFile file) {
+		
 		fFile= file;
 		fWorkbenchAdapter= new WorkbenchAdapter();
 	}
@@ -101,6 +100,10 @@ public class FTPEditorInput implements IEditorInput, ILocationProvider {
 	 */
 	public boolean exists() {
 		return fFile.exists();
+	}
+	
+	public boolean canWrite() {
+	    return fFile.canWrite();
 	}
 
 	/*
@@ -146,8 +149,8 @@ public class FTPEditorInput implements IEditorInput, ILocationProvider {
 	 * @see org.eclipse.ui.editors.text.ILocationProvider#getPath(java.lang.Object)
 	 */
 	public IPath getPath(Object element) {
-		if (element instanceof JavaFileEditorInput) {
-			FTPEditorInput input= (FTPEditorInput) element;
+		if (element instanceof FtpFileEditorInput) {
+			FtpFileEditorInput input= (FtpFileEditorInput) element;
 			return new Path(input.fFile.getAbsolutePath());
 		}
 		return null;
@@ -160,8 +163,8 @@ public class FTPEditorInput implements IEditorInput, ILocationProvider {
 		if (o == this)
 			return true;
 		
-		if (o instanceof JavaFileEditorInput) {
-			FTPEditorInput input = (FTPEditorInput) o;
+		if (o instanceof FtpFileEditorInput) {
+			FtpFileEditorInput input = (FtpFileEditorInput) o;
 			return fFile.equals(input.fFile);		
 		}
 		

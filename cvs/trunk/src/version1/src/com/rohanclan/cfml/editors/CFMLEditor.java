@@ -24,6 +24,7 @@
  */
 package com.rohanclan.cfml.editors;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -81,7 +82,7 @@ import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.widgets.MessageBox;
-
+import org.eclipse.ui.texteditor.AnnotationPreference;
 /**
  * @author Rob
  * 
@@ -236,8 +237,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
         
         projectionViewer.doOperation(ProjectionViewer.TOGGLE);
 
+
 		foldingSetter = new CodeFoldingSetter(this);
         foldingSetter.docChanged(true);
+
         
         // TODO: If we set this directly the projection viewer loses track of the line numbers.
         // Need to create a class that extends projectionViewer so we can implement wrapped
@@ -255,6 +258,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 
 	}
 	
+	
+	public IVerticalRuler verticalRuler() {
+	    return this.getVerticalRuler();
+	}
 	
 	private void createDragAndDrop(ProjectionViewer projectionViewer) {
 
@@ -598,9 +605,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.texteditor.AbstractTextEditor#createSourceViewer(org.eclipse.swt.widgets.Composite, org.eclipse.jface.text.source.IVerticalRuler, int)
 	 */
-	protected ISourceViewer createSourceViewer(Composite parent,
-			IVerticalRuler ruler, int styles)
-	{
+	protected ISourceViewer createSourceViewer(Composite parent,IVerticalRuler ruler, int styles) {
+
+	   
 	    ProjectionViewer viewer= new ProjectionViewer(parent, ruler, getOverviewRuler(), isOverviewRulerVisible(), styles);
 		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(viewer);
@@ -617,7 +624,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	 * @return the source viewer decoration support
 	 */
 	protected SourceViewerDecorationSupport getSourceViewerDecorationSupport(ISourceViewer viewer) {
-		
+
 	    if (fSourceViewerDecorationSupport == null) {
 			fSourceViewerDecorationSupport= new DecorationSupport(viewer, getOverviewRuler(), getAnnotationAccess(), getSharedColors());
 			configureSourceViewerDecorationSupport(fSourceViewerDecorationSupport);

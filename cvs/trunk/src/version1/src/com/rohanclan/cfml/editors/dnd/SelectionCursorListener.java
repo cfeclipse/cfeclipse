@@ -49,6 +49,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 /**

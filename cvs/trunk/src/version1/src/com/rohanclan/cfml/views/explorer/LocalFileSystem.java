@@ -7,7 +7,9 @@
 package com.rohanclan.cfml.views.explorer;
 
 import java.io.File;
-import java.io.FileFilter;
+
+import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
+import org.eclipse.ui.IEditorInput;
 
 /**
  * @author Stephen Milligan
@@ -32,7 +34,7 @@ public class LocalFileSystem implements IFileProvider {
     }
     
     
-    public Object[] getChildren(String parent, FileFilter filter) {
+    public Object[] getChildren(String parent, FileNameFilter filter) {
     	
         File[] children = new File(parent).listFiles(filter);
         if (children == null) {
@@ -42,6 +44,13 @@ public class LocalFileSystem implements IFileProvider {
             return children;
         }
     }
+   
+    public IEditorInput getEditorInput(String filename) {
+
+        JavaFileEditorInput input = new JavaFileEditorInput(new File(filename));
+        return input;
+    }
+    
     
     public void dispose() {};
     

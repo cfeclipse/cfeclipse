@@ -8,6 +8,9 @@ package com.rohanclan.cfml.views.explorer;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.ui.IEditorInput;
+
+
 
 import com.rohanclan.cfml.ftp.FtpConnection;
 import com.rohanclan.cfml.ftp.FtpConnectionProperties;
@@ -27,22 +30,29 @@ class FileContentProvider implements IStructuredContentProvider {
     
     public Object[] getElements(Object inputElement) {
 
-    	System.out.println("FileContentProvider::getElements called " + inputElement);
     	try {
 	        if (fileProvider == null) {
 	            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
 	        }
 	        if (inputElement != null) {
+	            
+	            if (inputElement instanceof LocalFileSystem
+	                    || inputElement instanceof FtpConnectionProperties) {
+		            return new String[0];
+	            }
+	            
 	            String directoryName = inputElement.toString();
 	            if (directoryName.indexOf("[") == 0) {
 	                directoryName = directoryName.substring(1,directoryName.length()-1);
 	            }
-	            System.out.println("File provider is " + fileProvider.getClass().getName());
-	            return fileProvider.getChildren(directoryName,fileFilter);
+	            //System.out.println("File provider is " + fileProvider.getClass().getName());
+	            Object[] files = fileProvider.getChildren(directoryName,fileFilter);
+	            
+	            return files;
 	            
 	        }
 	        else {
-	            return new String[] {};
+	            return new String[] {"Null input element"};
 	        }
     	}
         catch (Exception e) {
@@ -58,15 +68,28 @@ class FileContentProvider implements IStructuredContentProvider {
     
     
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-    	System.out.println("File viewer input changed to ." + newInput.getClass().getName());
-        if (newInput instanceof IFileProvider) {
-            fileProvider = (IFileProvider)newInput;
+        try {
+	    	//System.out.println("File viewer input changed to ." + newInput.getClass().getName());
+	        if (newInput instanceof IFileProvider) {
+	            fileProvider = (IFileProvider)newInput;
+	        }
+	        else if (newInput instanceof FtpConnectionProperties) {
+	        	fileProvider = FtpConnection.getInstance();
+	        	((FtpConnection)fileProvider).connect((FtpConnectionProperties)newInput);
+	        }
         }
-        else if (newInput instanceof FtpConnectionProperties) {
-        	fileProvider = new FtpConnection((FtpConnectionProperties)newInput);
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
-    
+    public IEditorInput getEditorInput(String filename) {
+        if (filename.indexOf("[") == 0) {
+            filename = filename.substring(1,filename.length()-1);
+        }
+        
+        return fileProvider.getEditorInput(filename);
+        
+    }
     
 }
