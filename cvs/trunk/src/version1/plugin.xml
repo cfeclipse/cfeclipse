@@ -246,6 +246,38 @@
                class="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
          </action>
+         <!-- Expand all markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers"
+               label="Expand all"
+               tooltip="Expand all folding markers"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers">
+         </action>
+         <!-- Collapse all markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers"
+               label="Collapse all"
+               tooltip="Collapse all"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers">
+         </action>
+         <!-- Expand matching markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
+               label="Expand matching"
+               tooltip="Expand any folding markers of a particular type"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
+         </action>
+         <!-- Collapse matching markers -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
+               label="Collapse matching"
+               tooltip="Collapse any folding markers of a particular type"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
+         </action>
          <!-- Toggle the expand/collapse state of the selected text -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
@@ -394,6 +426,30 @@
                class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
+         </action>
+         <action
+               label="Expand All"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.folding"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers">
+         </action>
+         <action
+               label="Collapse All"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.folding"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers">
+         </action>
+         <action
+               label="Expand Matching"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.folding"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
+         </action>
+         <action
+               label="Collapse Matching"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
+               menubarPath="com.rohanclan.cfml.editors.contribution.folding"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
          </action>
       </viewerContribution>
       <objectContribution

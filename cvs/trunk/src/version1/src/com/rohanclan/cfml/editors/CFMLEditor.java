@@ -25,6 +25,7 @@
 package com.rohanclan.cfml.editors;
 
 import java.util.LinkedList;
+import java.util.Iterator;
 
 import org.eclipse.swt.widgets.Composite;
 
@@ -52,16 +53,11 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.source.CompositeRuler;
-import org.eclipse.jface.text.source.IChangeRulerColumn;
-import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jface.text.source.IVerticalRuler;
-import org.eclipse.jface.text.source.LineNumberRulerColumn;
+import org.eclipse.jface.text.source.*;
 import org.eclipse.jface.text.source.projection.*;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
-
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 
 import org.eclipse.ui.internal.editors.text.EditorsPlugin;
@@ -82,6 +78,7 @@ import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
 
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
+import com.rohanclan.cfml.editors.codefolding.VerticalRulerListener;
 
 
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
@@ -218,7 +215,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		this.setBackgroundColor();
 		
 		
-
         ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
 
         fProjectionSupport = new ProjectionSupport(projectionViewer,
@@ -235,7 +231,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
                     }
                 });
         fProjectionSupport.install();
-
+        
         projectionViewer.doOperation(ProjectionViewer.TOGGLE);
 
 		foldingSetter = new CodeFoldingSetter(this);
@@ -715,7 +711,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	    ProjectionViewer viewer= new ProjectionViewer(parent, ruler, getOverviewRuler(), isOverviewRulerVisible(), styles);
 		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(viewer);
-
 		return viewer;
 	}
 	

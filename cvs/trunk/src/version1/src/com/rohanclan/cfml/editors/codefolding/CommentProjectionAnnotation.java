@@ -16,16 +16,16 @@ public class CommentProjectionAnnotation extends CFEProjectionAnnotation {
     /**
      * 
      */
-    public CommentProjectionAnnotation() {
-        super();
+    public CommentProjectionAnnotation(String commentType) {
+        super(commentType);
         // TODO Auto-generated constructor stub
     }
 
     /**
      * @param isCollapsed
      */
-    public CommentProjectionAnnotation(boolean isCollapsed) {
-        super(isCollapsed);
+    public CommentProjectionAnnotation(boolean isCollapsed,String commentType) {
+        super(isCollapsed,commentType);
         // TODO Auto-generated constructor stub
     }
 

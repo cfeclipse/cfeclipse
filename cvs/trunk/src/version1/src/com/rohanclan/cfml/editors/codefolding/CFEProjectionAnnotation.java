@@ -57,6 +57,7 @@ public class CFEProjectionAnnotation extends ProjectionAnnotation {
 	private static Image fgCollapsedImage;
 	private static Image fgExpandedImage;
 	
+	private String regionType;
 	
 	/** The state of this annotation */
 	private boolean fIsCollapsed= false;
@@ -66,8 +67,9 @@ public class CFEProjectionAnnotation extends ProjectionAnnotation {
 	/** 
 	 * Creates a new expanded projection annotation.
 	 */
-	public CFEProjectionAnnotation() {
-		this(false);
+	public CFEProjectionAnnotation(String regionType) {
+		this(false,regionType);
+		this.regionType = regionType;
 	}
 	
 	/**
@@ -76,9 +78,10 @@ public class CFEProjectionAnnotation extends ProjectionAnnotation {
 	 * 
 	 * @param isCollapsed <code>true</code> if the annotation should initially be collapsed, <code>false</code> otherwise
 	 */
-	public CFEProjectionAnnotation(boolean isCollapsed) {
+	public CFEProjectionAnnotation(boolean isCollapsed, String regionType) {
 		//super(TYPE, false, null);
 		fIsCollapsed= isCollapsed;
+		this.regionType = regionType;
 	}
 	
 	/**
@@ -157,4 +160,10 @@ public class CFEProjectionAnnotation extends ProjectionAnnotation {
 	public void markExpanded() {
 		fIsCollapsed= false;
 	}
+	
+
+    public String getRegionType() {
+        return this.regionType;
+    }
+	
 }

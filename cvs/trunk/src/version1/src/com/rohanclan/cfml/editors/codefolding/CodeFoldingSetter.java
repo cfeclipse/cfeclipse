@@ -139,7 +139,7 @@ public class CodeFoldingSetter {
                         length = doc.getLineOffset(endLine) + doc.getLineLength(endLine) - start;
                         if (endLine - startLine > minLines) {
                             
-                            addFoldingMark(markerMap, start,length,new CommentProjectionAnnotation(), autoCollapse);
+                            addFoldingMark(markerMap, start,length,new TagProjectionAnnotation(tagName), autoCollapse);
                         }
                     }
                     catch (BadLocationException blx) {
@@ -169,7 +169,7 @@ public class CodeFoldingSetter {
 		    }
 		}
 		
-        foldRegions(markerMap, regions, autoCollapse, minLines);
+        foldRegions(markerMap, regions, autoCollapse, minLines, partitionType);
     }
     
     
@@ -179,7 +179,7 @@ public class CodeFoldingSetter {
         while (iter.hasNext()) {
             Object o = iter.next();
             ProjectionAnnotation annotation = (ProjectionAnnotation)o;
-            if (!(annotation instanceof CustomProjectionAnnotation)
+            if (!(annotation instanceof TagProjectionAnnotation)
                     && !annotation.isCollapsed()) {
                 Position p = model.getPosition(annotation);
                 try {
@@ -196,7 +196,18 @@ public class CodeFoldingSetter {
         }
     }
     
+    public void expandAll() {
+        initModel();
+        model.expandAll(0,doc.getLength());
+    }
     
+    public void collapseAll() {
+        initModel();
+        Iterator i = model.getAnnotationIterator();
+        while (i.hasNext()) {
+            model.collapse((ProjectionAnnotation)i.next());
+        }
+    }
     
     /**
      *  
@@ -204,7 +215,7 @@ public class CodeFoldingSetter {
      * @param model
      * @param doc
      */
-    private void foldRegions(HashMap markerMap, ArrayList regions, boolean autoCollapse, int minLines) {
+    private void foldRegions(HashMap markerMap, ArrayList regions, boolean autoCollapse, int minLines, String regionType) {
         int i=0;
 
         try {
@@ -223,7 +234,7 @@ public class CodeFoldingSetter {
                 
                 if (endLine - startLine > minLines) {
 	                try {
-	                    CommentProjectionAnnotation annotation = new CommentProjectionAnnotation();
+	                    CommentProjectionAnnotation annotation = new CommentProjectionAnnotation(regionType);
 	                    addFoldingMark(markerMap, start, length, annotation, autoCollapse);
 	                } catch (BadLocationException e) {
 	                    e.printStackTrace();
@@ -304,72 +315,13 @@ public class CodeFoldingSetter {
     	}
         initModel();
 		
-		ITextSelection textSelection = getSelection();
+        ArrayList annotations = findAnnotations(getSelection());
+        Iterator i = annotations.iterator();
+        while(i.hasNext()) {
+            model.removeAnnotation((ProjectionAnnotation)i.next());
+        }
+        
 		
-		if (!textSelection.isEmpty()) {
-		    try {
-				int start = doc.getLineOffset(textSelection.getStartLine());
-				int end = start + textSelection.getLength();
-				
-				Iterator i = model.getAnnotationIterator();
-				while (i.hasNext()) {
-				    ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
-				    if (annotation instanceof CustomProjectionAnnotation) {
-				       
-				        Position position = model.getPosition(annotation);
-				        
-			            if (position.offset >= start 
-			                    && position.offset <= end) {
-			                model.removeAnnotation(annotation);
-			            }
-				    }
-				    
-				}
-		    }
-		    catch (BadLocationException bex) {
-		        bex.printStackTrace();
-		    }
-			
-		}
-		
-    }
-
-    
-    public void expandSelection() {
-        
-        if(!preferenceManager.enableFolding()) {
-    	    return;
-    	}
-        
-        initModel();
-        
-        ITextSelection textSelection = getSelection();
-        
-        if (!textSelection.isEmpty()) {
-		    try {
-				int start = doc.getLineOffset(textSelection.getStartLine());
-				int end = start + textSelection.getLength();
-				
-				Iterator i = model.getAnnotationIterator();
-				while (i.hasNext()) {
-				    ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
-			      
-			        Position position = model.getPosition(annotation);
-			        
-		            if (position.offset >= start 
-		                    && position.offset <= end) {
-		                model.expand(annotation);
-		            }
-			    
-				    
-				}
-		    }
-		    catch (BadLocationException bex) {
-		        bex.printStackTrace();
-		    }
-			
-		}
-        
     }
 
     public void toggleSelection() {
@@ -383,54 +335,135 @@ public class CodeFoldingSetter {
         Boolean collapsing = null;
         
 
+        ArrayList annotations = findAnnotations(getSelection());
         
-        ITextSelection textSelection = getSelection();
-        int cursorOffset = textSelection.getOffset();
-        int selectionLength = textSelection.getLength();
+        Iterator i = annotations.iterator();
         
-        if (!textSelection.isEmpty()) {
-		    try {
-				int start = doc.getLineOffset(textSelection.getStartLine());
-				int end = start + textSelection.getLength();
-				
-				Iterator i = model.getAnnotationIterator();
-				while (i.hasNext()) {
-				    ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
-				    
-			        Position position = model.getPosition(annotation);
-
-		            if (position.offset >= start 
-		                    && position.offset <= end) {
-
-					    if (collapsing == null) {
-					        if (annotation.isCollapsed()) {
-					            collapsing = new Boolean(false);
-					        }
-					        else {
-					            collapsing = new Boolean(true);
-					        }
-					        //System.out.println("Collapsing set to " + collapsing.booleanValue());
-					    }
-		                if (collapsing.booleanValue()) {
-		                   model.collapse(annotation);
-		                   setSelection(position.offset-1,0);
-		                }
-		                else {
-		                    model.expand(annotation);
-		                }
-		            }
-			    
-				    
-				}
+        //int cursorOffset = ((ITextSelection)editor.getSelectionProvider().getSelection()).getOffset();
+        //int selectionLength = ((ITextSelection)editor.getSelectionProvider().getSelection()).getLength();
+        
+        while(i.hasNext()) {
+            ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
+            
+            if (collapsing == null) {
+		        if (annotation.isCollapsed()) {
+		            collapsing = new Boolean(false);
+		        }
+		        else {
+		            collapsing = new Boolean(true);
+		        }
+		        
 		    }
-		    catch (BadLocationException bex) {
-		        bex.printStackTrace();
-		    }
-			
-		}
+            if (collapsing.booleanValue()) {
+               model.collapse(annotation);               
+            }
+            else {
+                model.expand(annotation);
+            }
+            
+        }
         
     }
 
+
+    
+    
+    public void expandMatchingMarkers() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
+        initModel();
+        ArrayList annotations = findAnnotations(getSelection());
+        
+        Iterator i = annotations.iterator();
+		while (i.hasNext()) {
+		    CFEProjectionAnnotation p = (CFEProjectionAnnotation)i.next();
+		    String type = p.getRegionType();
+		    Iterator j = model.getAnnotationIterator();
+		    while (j.hasNext()) {
+		        CFEProjectionAnnotation p1 = (CFEProjectionAnnotation)j.next();
+		        if (p1.getRegionType().equalsIgnoreCase(type)) {
+		            model.expand(p1);
+		        }
+		    }
+		}
+        
+        
+    }
+
+
+    
+    
+    public void collapseMatchingMarkers() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
+        initModel();
+        ArrayList annotations = findAnnotations(getSelection());
+        
+        Iterator i = annotations.iterator();
+		while (i.hasNext()) {
+		    CFEProjectionAnnotation p = (CFEProjectionAnnotation)i.next();
+		    String type = p.getRegionType();
+		    Iterator j = model.getAnnotationIterator();
+		    while (j.hasNext()) {
+		        CFEProjectionAnnotation p1 = (CFEProjectionAnnotation)j.next();
+		        if (p1.getRegionType().equalsIgnoreCase(type)) {
+		            model.collapse(p1);
+		        }
+		    }
+		}
+        
+        
+    }
+
+
+    
+    
+    public void collapseTags(String regionType) {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
+        initModel();
+        
+        Iterator i = model.getAnnotationIterator();
+		while (i.hasNext()) {
+		    Object o = i.next();
+		    if (o instanceof TagProjectionAnnotation 
+		            && ((TagProjectionAnnotation)o).getRegionType().equalsIgnoreCase(regionType)) {
+		        model.collapse((ProjectionAnnotation)o);
+		    }
+		}
+        
+        
+        
+    }
+
+
+    
+    
+    public void expandSelection() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
+        initModel();
+        
+        ArrayList annotations = findAnnotations(getSelection());
+        Iterator i = annotations.iterator();
+        while(i.hasNext()) {
+            model.expand((ProjectionAnnotation)i.next());
+        }
+        
+        
+    }
     
     public void collapseSelection() {
         
@@ -440,25 +473,65 @@ public class CodeFoldingSetter {
         
         initModel();
         
-        ITextSelection textSelection = getSelection();
+        ArrayList annotations = findAnnotations(getSelection());
+        Iterator i = annotations.iterator();
+        while(i.hasNext()) {
+            model.collapse((ProjectionAnnotation)i.next());
+        }
         
-        if (!textSelection.isEmpty()) {
+    }
+    
+    
+    
+    
+
+    private ArrayList findAnnotations(ITextSelection selection) {
+        ArrayList annotations = new ArrayList();
+        
+        if (!selection.isEmpty()) {
 		    try {
-				int start = doc.getLineOffset(textSelection.getStartLine());
-				int end = start + textSelection.getLength();
+				int start = doc.getLineOffset(selection.getStartLine());
+				int end = start + selection.getLength();
+				
+				// Check to see if there's anything selected. If not we want to find the fold that contains the cursor
+				boolean findContainer = selection.getLength() > 0 ? false : true;
+				
+				ProjectionAnnotation containingAnnotation = null;
+				Position oldPosition = null;
 				
 				Iterator i = model.getAnnotationIterator();
 				while (i.hasNext()) {
 				    ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
 				       
 			        Position position = model.getPosition(annotation);
-			        
 		            if (position.offset >= start 
 		                    && position.offset <= end) {
-		                model.collapse(annotation);
+		                annotations.add(annotation);
+		                // If there's nothing selected we can exit once we find the first match
+		                if (findContainer) {
+		                    containingAnnotation = null;
+		                    break;
+		                }
+		            }
+		            else if (findContainer 
+		                    && position.offset < start
+		                    && position.length + position.offset > end) { 
+		                if (containingAnnotation == null) {
+		                    containingAnnotation  = annotation;
+		                    oldPosition = position;
+		                }
+		                else if (position.offset > oldPosition.offset){
+		                    containingAnnotation = annotation;
+		                    oldPosition = position;
+		                }
 		            }
 				    
-				    
+				}
+				if(containingAnnotation != null) {
+				    annotations.add(containingAnnotation);
+				    //int endOfLine = oldPosition.offset + doc.getLineLength(doc.getLineOfOffset(oldPosition.offset))-2;
+				    TextSelection newSelection = new TextSelection(doc,oldPosition.offset,0);
+				    editor.getSelectionProvider().setSelection(newSelection);
 				}
 		    }
 		    catch (BadLocationException bex) {
@@ -466,6 +539,8 @@ public class CodeFoldingSetter {
 		    }
 			
 		}
+        
+        return annotations;
     }
     
     

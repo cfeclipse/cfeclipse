@@ -11,22 +11,22 @@ package com.rohanclan.cfml.editors.codefolding;
  * This represents an annotation that was automatically contributed by the workspace. 
  * It should be safe to remove it when recalculating the annotation positions.
  */
-public class CustomProjectionAnnotation extends CFEProjectionAnnotation {
+public class TagProjectionAnnotation extends CFEProjectionAnnotation {
 
+    
     /**
      * 
      */
-    public CustomProjectionAnnotation() {
-        super("custom");
-        // TODO Auto-generated constructor stub
+    public TagProjectionAnnotation(String tagName) {
+        super(tagName);
     }
 
     /**
      * @param isCollapsed
      */
-    public CustomProjectionAnnotation(boolean isCollapsed) {
-        super(isCollapsed,"custom");
-        // TODO Auto-generated constructor stub
+    public TagProjectionAnnotation(boolean isCollapsed, String tagName) {
+        super(isCollapsed,tagName);
     }
-
+    
+    
 }
