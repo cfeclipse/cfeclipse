@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.6 2005-01-31 08:01:13 smilligan Exp $
- * $Revision: 1.6 $
- * $Date: 2005-01-31 08:01:13 $
+ * $Id: CFEPartition.java,v 1.7 2005-02-01 01:52:49 smilligan Exp $
+ * $Revision: 1.7 $
+ * $Date: 2005-02-01 01:52:49 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -35,7 +35,7 @@ import org.eclipse.jface.text.Assert;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public final class CFEPartition extends TypedPosition {
 
@@ -142,7 +142,7 @@ public final class CFEPartition extends TypedPosition {
     }
     
     public void delete() {
-        //System.out.println("CFEPartition from " + offset + " to " + Integer.toString(offset + length));
+        //System.out.println("Deleted partition " + getType() + " (" + getTagName() + ") from " + offset + " to " + Integer.toString(offset + length));
         super.delete();
     }
     
@@ -162,6 +162,9 @@ public final class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/01/31 08:01:13  smilligan
+ * Refactored a lot of the partitioner so it is more manageable. This should be the final refactor I think. From here on in it ought to be performance tweaks and bug fixes.
+ *
  * Revision 1.5  2005/01/30 18:54:57  smilligan
  * Committing a few more minor patches for the partitioner.
  *

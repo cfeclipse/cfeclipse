@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.18 2005-01-31 08:01:13 smilligan Exp $
- * $Revision: 1.18 $
- * $Date: 2005-01-31 08:01:13 $
+ * $Id: CFEDefaultPartitioner.java,v 1.19 2005-02-01 01:52:49 smilligan Exp $
+ * $Revision: 1.19 $
+ * $Date: 2005-02-01 01:52:49 $
  * 
  * Created on Oct 17, 2004
  *
@@ -38,7 +38,6 @@ import java.util.Set;
 import org.eclipse.jface.text.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
-import org.eclipse.jface.text.DefaultPositionUpdater;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
@@ -54,16 +53,16 @@ import org.eclipse.jface.text.TypedRegion;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-import com.rohanclan.cfml.editors.ICFDocument;
-import org.eclipse.jface.text.rules.ICharacterScanner;
 
 /**
  * @author Stephen Milligan
  * 
  * This is an attempt to create a more flexible and powerful partitioner than
- * the default RuleBasedPartitionScanner.
+ * the default partitioner.
  * 
- * Very much a work in progress at the minute.
+ * Should now be pretty reliable, but still needs some performance tweaks in the
+ * cleanCompositePartitions(), cleanPsuedoPartitions(), and 
+ * repairPseudoPartitions() methods.
  */
 public class CFEDefaultPartitioner implements IDocumentPartitioner,
         IDocumentPartitionerExtension, IDocumentPartitionerExtension2 {
@@ -99,6 +98,12 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
     
     /** The offset at which a reparse should end */
     private int fReparseEnd = -1;
+
+    /** The position index of the first partition affected by a document change */
+    private int fReparseStartIndex;
+
+    /** The position index of the last partition affected by a document change */
+    private int fReparseEndIndex;
 
     /** 
      * Pseudo partitions such as the contents of a cfquery tag block
@@ -514,6 +519,9 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
         try {
 	        Position[] partitions = fDocument.getPositions(fPositionCategory);
 	        
+	        fReparseStartIndex = partitions.length-1;
+	        fReparseEndIndex = 0;
+	        
 	        fPositionUpdater.update(e);
 	        
 	        cleanCompositePartitions(partitions,e);
@@ -524,6 +532,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
 	            CFEPartition p = (CFEPartition)partitions[i];
 	            if (p.isDeleted) {
 	                fDocument.removePosition(fPositionCategory,p);
+	                fReparseEndIndex--;
 	            }
 	        }
 	        
@@ -580,6 +589,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                             //System.out.println("Deleted partition " + current.getType() + " " + current.getOffset() + ":" + Integer.toString(current.getOffset() + current.getLength()) + " start is invalid.");
                             current.delete();
                             updateReparseOffsets(current);
+                            
                         }
                         /*
                          * If it's an end partition make sure the previous one
@@ -673,6 +683,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
      *
      */
     private void repairPseudoPartitions() {
+        
         try {
             Position[] partitions = fDocument.getPositions(fPositionCategory);
             CFEPartition current = null;
@@ -683,16 +694,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             for (int i=0;i<partitions.length;i++) {
                 current = (CFEPartition)partitions[i];
                 
-                if (current.getOpensPartitionType() != null) {
-                    activePseudoPartition = current.getOpensPartitionType();
-                    isAttributePartition = false;
-                } else if (isAttributePartition 
-                        && current.getType().equals(closingPartitionType)) {
-                    isAttributePartition = false;
-                    closingPartitionType = null;
-                    activePseudoPartition = null;
-                }
-                
                 if (previous != null) {
                     // Is there a gap.
                     if (previous.offset + previous.length < current.offset) {
@@ -701,7 +702,9 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                          * to fill the gap.
                          */ 
                         if (current.isPseudoPartition()) {
-                            previous.length = current.offset - previous.offset;
+                            int oldOffset = current.offset;
+                            current.offset = previous.offset + previous.length;
+                            current.length = oldOffset + current.length - current.offset;
                         }
                         /*
                          * Create a new pseudo partition if there should be one.
@@ -712,11 +715,11 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                             int start = previous.offset+previous.length;
                             int length = current.offset - start;
                             if (isAttributePartition) {
-	                            StringBuffer b = new StringBuffer(fDocument.get(start,length));
+	                            String s = fDocument.get(start,length);
 	                            boolean singleQuoted = false;
 	                            boolean doubleQuoted = false;
-	                            for (int j=0;j<b.length();j++) {
-	                                char c = b.charAt(j);
+	                            for (int j=0;j<s.length();j++) {
+	                                char c = s.charAt(j);
 	                                if (c == '\'') {
 	                                    singleQuoted = !singleQuoted;
 	                                }
@@ -759,6 +762,19 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                     }
                 }
 
+                
+                 if (isAttributePartition 
+                        && current.getType().equals(closingPartitionType)) {
+                    isAttributePartition = false;
+                    closingPartitionType = null;
+                    activePseudoPartition = null;
+                }
+                 
+                if (current.getOpensPartitionType() != null) {
+                    activePseudoPartition = current.getOpensPartitionType();
+                    isAttributePartition = false;
+                }
+                
                 if (activePseudoPartition == null
                         && current.isStartPartition()
                         && !current.getType().startsWith("__cf")) {
@@ -769,6 +785,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                 if (current.getClosesPartitionType() != null) {
                     activePseudoPartition = null;
                 }
+                
                 if (current.length == 0) {
                     fDocument.removePosition(fPositionCategory,current);
                 } else {
@@ -788,6 +805,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
         try {
             // Grab a reference to the document
             IDocument d = e.getDocument();
+            
+            //System.out.println("Got a document change from " + e.fOffset + " with length " + e.getText().length() + " with text [" + e.getText() + "]");
             // Grab all the positions in the document
             Position[] category = d.getPositions(fPositionCategory);
             // Get the line where the document event started
@@ -816,6 +835,10 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             int first = d.computeIndexInCategory(fPositionCategory,
                     e.getOffset());
             
+            if (fReparseStart == 0 
+                    && category.length > first) {
+                fReparseEnd = Math.max(fReparseStart,category[first].getOffset()+category[first].getLength());
+            }
            
             //System.out.println("Reparsing from " + fReparseStart + " to " + fReparseEnd + " doc length is " + fDocument.getLength());
             fScanner.setPartialRange(d, fReparseStart, d.getLength()

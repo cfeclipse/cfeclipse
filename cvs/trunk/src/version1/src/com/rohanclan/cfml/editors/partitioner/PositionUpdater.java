@@ -1,7 +1,7 @@
 /* 
- * $Id: PositionUpdater.java,v 1.1 2005-01-31 08:01:13 smilligan Exp $
- * $Revision: 1.1 $
- * $Date: 2005-01-31 08:01:13 $
+ * $Id: PositionUpdater.java,v 1.2 2005-02-01 01:52:49 smilligan Exp $
+ * $Revision: 1.2 $
+ * $Date: 2005-02-01 01:52:49 $
  * 
  * Created Jan 30, 2005 11:33:08 AM
  *
@@ -38,7 +38,7 @@ import org.eclipse.jface.text.Position;
  * occur such as keystrokes or and cut, paste operations.
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PositionUpdater extends DefaultPositionUpdater {
     private String fCategory;
@@ -52,11 +52,7 @@ public class PositionUpdater extends DefaultPositionUpdater {
     }
     
     public void update(DocumentEvent e) {
-       
         super.update(e);
-        
-        
-        
     }
 
 
@@ -68,7 +64,6 @@ public class PositionUpdater extends DefaultPositionUpdater {
  * @return <code>true</code> if position has been deleted
  */
 protected boolean notDeleted() {
-	
 	if (fOffset <= fPosition.offset && (fPosition.offset + fPosition.length <= fOffset + fLength)) {
 		
 		fPosition.delete();
@@ -96,4 +91,7 @@ protected boolean notDeleted() {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/01/31 08:01:13  smilligan
+ * Refactored a lot of the partitioner so it is more manageable. This should be the final refactor I think. From here on in it ought to be performance tweaks and bug fixes.
+ *
  */
