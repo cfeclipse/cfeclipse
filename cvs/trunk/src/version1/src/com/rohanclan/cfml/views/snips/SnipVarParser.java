@@ -143,11 +143,17 @@ public class SnipVarParser {
 		newStr = newStr.replaceAll("\\$\\$\\{YEAR2DIGIT\\}",formattedYear2Digit);
 		
 		
-		while(newStr.indexOf("$${") > 0) {
+		while(newStr.indexOf("$${") >= 0) {
 			int expressionStart = newStr.indexOf("$${")+3;
 			int expressionEnd = newStr.indexOf("}",expressionStart);
 			String expression = newStr.substring(expressionStart,expressionEnd);
-			InputDialog replacementDialog = new InputDialog(shell,"Replace variable",expression,"",null);
+			String stringArray[] = expression.split(":");
+			String variable = stringArray[0];
+			String defaultValue = "";
+			if (stringArray.length > 1) {
+			     defaultValue = stringArray[1]; 
+			}
+			InputDialog replacementDialog = new InputDialog(shell,"Replace variable",variable,defaultValue,null);
 			
 			if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
 				String replacement = replacementDialog.getValue(); 
