@@ -11,6 +11,9 @@
       <library name="cfml.jar">
          <export name="*"/>
       </library>
+      <library name="ext/commons-net-1.2.2.jar">
+         <export name="*"/>
+      </library>
    </runtime>
    
    <requires>

@@ -41,6 +41,8 @@ import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
+import org.apache.commons.net.ftp.FTPClient;
+
 import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
@@ -97,6 +99,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 
 			document.setDocumentPartitioner(partitioner);
 		}
+		
 		return document;
 	}
 
