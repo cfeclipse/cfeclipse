@@ -64,7 +64,7 @@ public class CFMLScopeAssist
      */
     public CFMLScopeAssist() {
         this.sourceDict = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
-        Assert.isNotNull(this.sourceDict);
+        Assert.isNotNull(this.sourceDict,"CFMLScopeAssist()::CFMLScopeAssist()");
     }
 
     /* (non-Javadoc)

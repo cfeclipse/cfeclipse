@@ -61,6 +61,7 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	 * 	<li>P_COLOR_CFSCRIPT_TEXT - "0,0,0"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_KEYWORD - "0,0,255"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_STRING - "0,102,0"</li>
+	 * 	<li>P_COLOR_CFSCRIPT_FUNCTION - "0,0,102"</li>
 	 * </ul>
 	 */
 	public static void setDefaults(IPreferenceStore store) { 
@@ -73,6 +74,7 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_COLOR_CFSCRIPT_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFSCRIPT_STRING,"0,102,0");
+		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION,"0,0,102");
 	}
 
 }

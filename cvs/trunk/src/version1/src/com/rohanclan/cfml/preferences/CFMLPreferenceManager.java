@@ -87,6 +87,14 @@ public class CFMLPreferenceManager {
 			//if we still didnt get anything use black
 			if(rgbString.length() <= 0)
 			{
+				// Force a stack trace to see what called this.
+				try {
+					rgbString = null;
+					System.out.println(rgbString.length());
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				System.err.println("Color key: " + key + " is a no show using black");
 				rgbString = "0,0,0";
 			}

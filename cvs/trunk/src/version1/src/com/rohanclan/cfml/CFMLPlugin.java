@@ -79,7 +79,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public CFEContentAssistManager getGlobalCAM()
 	{
-	    Assert.isNotNull(this.camInstance);
+	    Assert.isNotNull(this.camInstance,"CFMLPlugin::getGlobalCAM()");
 	    return this.camInstance;
 	}
 	

@@ -26,6 +26,7 @@
 package com.rohanclan.cfml.parser;
 
 import java.io.StringReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,36 +35,37 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.xpath.compiler.Compiler;
+import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+//import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagCase;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagCatch;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagDefaultCase;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagElse;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagElseIf;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagFunction;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagIf;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagInvokeArgument;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagProperty;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagQueryParam;
-import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagSet;
+import com.rohanclan.cfml.parser.cfmltagitems.*;
 import com.rohanclan.cfml.parser.cfscript.ParseException;
 import com.rohanclan.cfml.parser.cfscript.SPLParser;
 import com.rohanclan.cfml.parser.cfscript.SimpleNode;
+import com.rohanclan.cfml.parser.cfscript.TokenMgrError;
 import com.rohanclan.cfml.parser.docitems.AttributeItem;
 import com.rohanclan.cfml.parser.docitems.CfmlCustomTag;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 import com.rohanclan.cfml.parser.docitems.TagItem;
+
+//import com.rohanclan.cfml.util.Debug;
+
+import com.rohanclan.cfml.parser.ParseError;
+import com.rohanclan.cfml.parser.ParseMessage;
 
 /*
  Nasty, bastard test data for the parser:
@@ -396,81 +398,23 @@ public class CFParser {
 			// CF tag
 		    closerName = closerName.substring(2, closerName.length()-1);
 			
-		    
-		    DocItem topItem = (DocItem)matchStack.peek();
-		    
-			//System.out.println("Top item on stack is " + topItem.getName());
+			DocItem topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
+			//System.out..println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
 			
 			if(topItem instanceof TagItem)
 			{	
-			    // Look for hybrids at the top of the stack
-			    // and remove them if there is an opener below them.
-			    try {
-				boolean foundCloser = false;
-			    ArrayList removals = new ArrayList();
-			    Object[] items = matchStack.toArray();
-			    //System.out.println("Looking on stack for opening " + closerName + ". Closer found on line: " + this.getLineNumber(match.getStartPos()));
-			    for (int i=items.length-1;i>0;i--) {
-			        if (items[i] instanceof TagItem) {
-			            TagItem item = (TagItem)items[i];
-			            //System.out.println("Checking " + item.getName());
-			        	
-			        	if (item.getName().equalsIgnoreCase(closerName)) {
-			        	    //System.out.println("Found opener. Exiting loop.");
-			        	    foundCloser = true;
-			        	    break;
-			        	} else if (item.isHybrid()) {
-			        	    //System.out.println("Found hybrid. Adding it to the removals list.");
-			        	    removals.add(item);
-			        	}
-			        }
-			    }
-			    
-			    // If we found a closer, we want to remove any unclosed hybrids.
-			    if (foundCloser) {
-			        items = removals.toArray();
-		            DocItem parent = (DocItem)matchStack.get(items.length);
-			        for (int i=0;i<items.length;i++) {
-			            TagItem item = (TagItem)items[i];
-			            //System.out.println(item.getChildNodes().size() + " children need to be moved to " + parent.getName());
-			            Object[] orphans = item.getChildNodes().toArray();
-			            for (int j=0;j<orphans.length;j++) {
-			                DocItem orphan = (DocItem)orphans[j];
-			                //System.out.println("Moving " + orphan.getName() + " under " + parent.getName());
-			                parent.addChild(orphan);
-			                item.removeChild(orphan);
-			            }
-			            //System.out.println("Removing " + item.getName() + " from the stack.");
-			            matchStack.remove(items[i]);
-			        }
-			    }
-			    else {
-			        //System.out.println("Opener not found on stack for " + closerName);
-			        //System.out.println(" ");
-			    }
-			    
-			    }
-			    catch (Exception e) {
-			        e.printStackTrace();
-			    }
-			    
+				
 				try {
-					TagItem tempItem = new TagItem(match.lineNumber, match.startPos, match.endPos+1, match.match);
-					((TagItem)topItem).setMatchingItem(tempItem);
-					} catch(Exception e){
+				TagItem tempItem = new TagItem(match.lineNumber, match.startPos, match.endPos+1, match.match);
+				((TagItem)topItem).setMatchingItem(tempItem);
+				} catch(Exception e){
 					System.err.println("Caught exception: " + e.getMessage());
 					e.printStackTrace();
 				}
 			}
-			
-			// Take the top item off the stack.
-			topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
-			//System.out..println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
-			
 			//SPIKE: Made this case insensitive
 			if(topItem.getName().compareToIgnoreCase(closerName) == 0)
 			{
-			    //System.out.println("Found matcher at top of stack!!!");
 				DocItem parentItem = (DocItem)matchStack.pop();
 				try {
 					parentItem.addChild(topItem);
@@ -486,7 +430,6 @@ public class CFParser {
 				}
 				matchStack.push(parentItem);
 			}
-			
 			else
 			{
 				//
@@ -698,6 +641,7 @@ public class CFParser {
 	private void addDocItemToTree(ParseItemMatch match, Stack matchStack, DocItem newItem)
 	{
 		if(newItem instanceof TagItem) {
+			System.out.println(((TagItem)newItem).getName() + " added to tree.");
 			addTagItemToTree(match, matchStack, false, (TagItem)newItem);
 			System.err.println("CFParser::addDocItemToTree() - A tag item has been passed. This is wrong but I\'ve passed it to addTagItemToTree as a non-closer");
 			return;
@@ -769,6 +713,8 @@ public class CFParser {
 	 * @param matches - the matches found previously
 	 * @return a document tree.
 	 * 
+	 */
+	/*
 	 * The document tree is created using two things: 
 	 * 1) A match stack.
 	 * 2) A document tree
@@ -811,20 +757,11 @@ public class CFParser {
 				{
 					if(matchStr.charAt(1) == '/') {
 						if(!handleClosingTag(match, matchStack)) {
-						    
 							return null;
 						}
 					}
 					else {
-					    int tagEnd = -1;
-					    Pattern p = Pattern.compile("[ \\t\\r\\n]");
-					    Matcher m = p.matcher(matchStr);
-					    if (m.find()) {
-					        tagEnd  = m.end()-1;
-					    }
-					    
-					    /*
-						tagEnd = matchStr.indexOf(" ");	// Look for the first space
+						int tagEnd = matchStr.indexOf(" ");	// Look for the first space
 						int tabIndex = matchStr.indexOf("\t"); // Check if there's a tab before the space
 						
 						if (tabIndex > 0 
@@ -832,13 +769,12 @@ public class CFParser {
 						    
 						    tagEnd = tabIndex;
 						}
-						*/
+						
 						if(tagEnd == -1) {
 							// No spaces, therefore it has no attributes (i.e. <cfscript>)
 							tagEnd = matchStr.indexOf(">");
 						}
 						String tagName = match.match.substring(0, tagEnd);
-						
 						boolean isACloser = false;
 						//
 						// Find the end of the tag
@@ -880,8 +816,6 @@ public class CFParser {
 										match.getEndPos(),
 										match.getMatch()
 								);
-								
-								newComment.setItemData(match.getMatch());
 								addDocItemToTree(match, matchStack, newComment);
 								
 								break;
@@ -916,9 +850,6 @@ public class CFParser {
 			anyException.printStackTrace();
 			////System.out..println(anyException.hashCode());
 		}
-		
-		//System.out.println(rootItem.getFirstChild().getChildNodes().size() + " first grandchild");
-		
 		newDoc.setDocumentRoot(rootItem);
 		return newDoc;
 	}
@@ -1173,6 +1104,7 @@ public class CFParser {
 						// TODO: Find out whether comments can occur in tags
 						if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
 						{
+							
 							stateStack.push(new Integer(currState));
 							statePositionStack.push(new Integer(currPos));
 							currState = MATCHER_CFMLCOMMENT;
@@ -1208,6 +1140,7 @@ public class CFParser {
 						&& next2Chars.compareTo("--") == 0 
 						&& inData.charAt(currPos+3) == '>')
 				{
+					
 					currState = ((Integer)stateStack.pop()).intValue();
 					int lastStatePos = ((Integer)statePositionStack.pop()).intValue();
 					if(currState == MATCHER_NOTHING)

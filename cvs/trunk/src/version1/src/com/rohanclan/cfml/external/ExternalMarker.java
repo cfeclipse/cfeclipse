@@ -37,7 +37,7 @@ public class ExternalMarker implements IMarker {
     
     
     ExternalMarker(IResource resource, long id) {
-		Assert.isLegal(resource != null);
+		Assert.isLegal(resource != null,"ExternalMarker::ExternalMarker()");
 		this.resource = resource;
 		this.id = id;
 	}

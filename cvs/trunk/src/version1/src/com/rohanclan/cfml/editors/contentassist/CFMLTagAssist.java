@@ -58,7 +58,7 @@ public class CFMLTagAssist extends DefaultTagAssistContributor implements IAssis
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistContributor#getProposals(com.rohanclan.cfml.editors.contentassistors.IAssistState)
 	 */
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
-		Assert.isNotNull(state);
+		Assert.isNotNull(state,"CFMLTagAssist::getTagProposals()");
 		//
 		// We're only going to provide CFML insight when the user has entered "<cf"
 		if(state.getDataSoFar().length() > 0 

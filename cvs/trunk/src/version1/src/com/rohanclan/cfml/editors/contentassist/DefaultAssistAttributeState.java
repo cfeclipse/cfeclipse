@@ -95,7 +95,7 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      */
     public void setAttribute(String attributeText)
     {
-        Assert.isNotNull(attributeText);
+        Assert.isNotNull(attributeText,"DefaultAssistAttributeState::setAttribute()");
         this.attribute = attributeText;
     }
     
@@ -106,7 +106,7 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      */
     public void setValueSoFar(String valueSoFar)
     {
-        Assert.isNotNull(valueSoFar);
+        Assert.isNotNull(valueSoFar,"DefaultAssistAttributeState::setValueSoFar()");
         this.valueSoFar = valueSoFar;
     }
     
@@ -114,7 +114,7 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagAttributeState#getAttribute()
      */
     public String getAttribute() {
-        Assert.isNotNull(this.attribute);
+        Assert.isNotNull(this.attribute,"DefaultAssistAttributeState::getAttribute()");
         return this.attribute;
     }
 
@@ -122,7 +122,7 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagAttributeState#getValueSoFar()
      */
     public String getValueSoFar() {
-        Assert.isNotNull(this.valueSoFar);
+        Assert.isNotNull(this.valueSoFar,"DefaultAssistAttributeState::getValueSoFar()");
         
         return this.valueSoFar;
     }

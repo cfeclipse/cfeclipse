@@ -75,7 +75,7 @@ public class ExternalFile extends File {
 	 * @see IResource#createMarker(String)
 	 */
 	public IMarker createMarker(String type) throws CoreException {
-		Assert.isNotNull(type);
+		Assert.isNotNull(type,"ExternalFile::createMarker()");
 		final ISchedulingRule rule = workspace.getRuleFactory().markerRule(this);
 		try {
 			workspace.prepareOperation(rule, null);

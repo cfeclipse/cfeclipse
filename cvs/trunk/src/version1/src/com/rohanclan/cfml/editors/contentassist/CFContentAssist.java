@@ -115,7 +115,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	ICompletionProposal[] getAttributeValueProposals(IAssistTagState assistState)
 	{
-	    Assert.isNotNull(assistState);
+	    Assert.isNotNull(assistState,"CFContentAssist::getAttributeValueProposals()");
 	    
 	    DefaultAssistAttributeState attrState = prepareForValueAssist(assistState);
 	    ArrayList valueContributors = ((ICFEFileDocument)assistState.getIDocument()).getContentAssistManager().getValueAssistors();
@@ -222,7 +222,7 @@ public class CFContentAssist extends CFEContentAssist{
     private int lastOpenChevronPos = 0;
     private  boolean checkActuallyInTag(String cursorPrefix)
     {
-        Assert.isNotNull(cursorPrefix);
+        Assert.isNotNull(cursorPrefix,"Cursor prefix is null!");
         
         int chevronCount = 0;
         int quoteCount = 0;
@@ -453,10 +453,10 @@ public class CFContentAssist extends CFEContentAssist{
 	private DefaultAssistTagState prepareForAttributeAssist(IAssistState assistState, 
 														String attrText, String prefix, ArrayList partItems) 
 	{
-		Assert.isNotNull(assistState);
-		Assert.isNotNull(attrText);
-		Assert.isNotNull(prefix);
-		Assert.isNotNull(partItems);
+		Assert.isNotNull(assistState,"CFContentAssist::prepareForAttributeAssist()");
+		Assert.isNotNull(attrText,"CFContentAssist::prepareForAttributeAssist()");
+		Assert.isNotNull(prefix,"CFContentAssist::prepareForAttributeAssist()");
+		Assert.isNotNull(partItems,"CFContentAssist::prepareForAttributeAssist()");
 		
 		String tagName = ((String)partItems.get(0)).substring(1).trim();
 		
@@ -496,7 +496,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	private Set getAttribsFromContributors(IAssistTagState state)
 	{
-		Assert.isNotNull(state);
+		Assert.isNotNull(state,"CFContentAssist::getAttribsFromContributors()");
 		
 		ArrayList attrValCACors = ((ICFEFileDocument)state.getIDocument()).getContentAssistManager().getAttributeAssistors();
 		HashSet retSet = new HashSet();
@@ -537,8 +537,8 @@ public class CFContentAssist extends CFEContentAssist{
 	private ICompletionProposal[] getAttributeProposals(IAssistTagState state, 
 														Map currAttribs)
 	{
-		Assert.isNotNull(state);
-		Assert.isNotNull(currAttribs);
+		Assert.isNotNull(state,"CFContentAssist::getAttributeProposals()");
+		Assert.isNotNull(currAttribs,"CFContentAssist::getAttributeProposals()");
 		
 		String prefix = state.getDataSoFar();
 		String attrText = state.getAttributeText().trim();
@@ -618,7 +618,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	private ICompletionProposal[] getTagProposalsFromCACors(IAssistState assistState) throws BadLocationException 
 	{
-		Assert.isNotNull(assistState);
+		Assert.isNotNull(assistState,"CFContentAssist::getTagProposalsFromCACors()");
 		
 		ArrayList proposals = new ArrayList();
 		ArrayList tagAssists = ((ICFEFileDocument)assistState.getIDocument()).getContentAssistManager().getTagAssistors();

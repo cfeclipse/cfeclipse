@@ -66,7 +66,7 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	 * @param sourceDictionary The dictionary that the tag assist will base itself on.
 	 */
 	public DefaultTagAssistContributor(SyntaxDictionary sourceDictionary) {
-		Assert.isNotNull(sourceDictionary);
+		Assert.isNotNull(sourceDictionary,"DefaultTagAssistContributor::DefaultTagAssistContributor()");
 		
 		this.sourceDict = sourceDictionary;
 	}
@@ -78,8 +78,8 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	    //
 	    // This method mainly just filters the source dictionaries tag
 	    // library by the current data entered by the user.
-		Assert.isNotNull(state);
-		Assert.isNotNull(this.sourceDict);
+		Assert.isNotNull(state,"DefaultTagAssistContributor::getTagProposals()");
+		Assert.isNotNull(this.sourceDict,"DefaultTagAssistContributor::getTagProposals()");
 		
 		int offset = state.getOffset();
 		IDocument doc = state.getIDocument();
@@ -129,8 +129,8 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	    // Filters the attribute library by tagname and then attribute
 	    // data so far. It must then convert the Set returned by the
 	    // syntax dictionary to be an array of Parameter's.
-		Assert.isNotNull(this.sourceDict);
-		Assert.isNotNull(state);
+		Assert.isNotNull(this.sourceDict,"DefaultTagAssistContributor::getAttributeProposals()");
+		Assert.isNotNull(state,"DefaultTagAssistContributor::getAttributeProposals()");
 		
 		Set filteredAttrs = this.sourceDict.getFilteredAttributes(
 				state.getTagName().toLowerCase(), 
@@ -154,7 +154,7 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	    while(attrIter.hasNext())
 	    {
 	        Object tempAttr = attrIter.next();
-	        Assert.isTrue(tempAttr instanceof Value);
+	        Assert.isTrue(tempAttr instanceof Value,"DefaultTagAssistContributor::getAttributeValueProposals()");
 	            
 	        retArray[i] = (Value)tempAttr;
 	        i++;

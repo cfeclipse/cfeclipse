@@ -117,7 +117,7 @@ public class ResourceUtils {
      */
     public static IProjectNature[] getProjectNatures(IProject srcProject) throws CoreException
     {
-        Assert.isNotNull(srcProject);
+        Assert.isNotNull(srcProject,"ResourceUtils::getProjectNatures()");
         IProjectDescription prjDesc = srcProject.getDescription();
         String [] natures = prjDesc.getNatureIds();
         IProjectNature [] natureArray = new IProjectNature[natures.length];

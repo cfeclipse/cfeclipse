@@ -430,8 +430,8 @@ class OverlayPreferenceStore
 
 	public void addKeys(OverlayKey keys[])
 	{
-		Assert.isTrue(!fLoaded);
-		Assert.isNotNull(keys);
+		Assert.isTrue(!fLoaded,"OverlayPreferenceStore::addKeys()");
+		Assert.isNotNull(keys,"OverlayPreferenceStore::addKeys()");
 		int overlayKeysLength = fOverlayKeys.length;
 		OverlayKey result[] = new OverlayKey[keys.length + overlayKeysLength];
 		int i = 0;

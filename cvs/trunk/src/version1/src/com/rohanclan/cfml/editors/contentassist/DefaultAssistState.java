@@ -43,13 +43,13 @@ public class DefaultAssistState implements IAssistState {
     private ITextViewer textViewer;
     
     public ITextViewer getITextView() {
-        Assert.isNotNull(this.textViewer);
+        Assert.isNotNull(this.textViewer,"DefaultAssistState::getITextView()");
         return this.textViewer;
     }
     
     public void setTextViewer(ITextViewer newViewer)
     {
-        Assert.isNotNull(newViewer);
+        Assert.isNotNull(newViewer,"DefaultAssistState::setTextViewer()");
         this.textViewer = newViewer;
     }
 	/**
@@ -89,7 +89,7 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getDocument()
 	 */
 	public IDocument getIDocument() {
-		Assert.isNotNull(this.doc);
+		Assert.isNotNull(this.doc,"DefaultAssistState::getIDocument()");
 		return this.doc;
 	}
 
@@ -97,7 +97,7 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getOffset()
 	 */
 	public int getOffset() {
-		Assert.isTrue(this.offset >= 0);
+		Assert.isTrue(this.offset >= 0,"DefaultAssistState::getOffset()");
 		return this.offset;
 	}
 
@@ -112,7 +112,7 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getDataSoFar()
 	 */
 	public String getDataSoFar() {
-		Assert.isNotNull(this.dataSoFar);
+		Assert.isNotNull(this.dataSoFar,"DefaultAssistState::getDataSoFar()");
 		return this.dataSoFar;
 	}
 
@@ -120,18 +120,18 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getPreviousDelimiterPosition()
 	 */
 	public int getPreviousDelimiterPosition() {
-		Assert.isTrue(this.prevDelim >= 0);
+		Assert.isTrue(this.prevDelim >= 0,"DefaultAssistState::getPreviousDelimiterPosition()");
 		return this.prevDelim;
 	}
 	
 	
 	public void setDoc(IDocument doc) {
-		Assert.isNotNull(doc);
+		Assert.isNotNull(doc,"DefaultAssistState::setDoc()");
 		this.doc = doc;
 	}
 
 	public void setPrevDelim(int prevDelim) {
-		Assert.isTrue(prevDelim >= 0);
+		Assert.isTrue(prevDelim >= 0,"DefaultAssistState::setPrevDelim()");
 		this.prevDelim = prevDelim;
 	}
 
@@ -139,12 +139,12 @@ public class DefaultAssistState implements IAssistState {
 		this.triggerChar = triggerChar;
 	}
 	public void setDataSoFar(String dataSoFar) {
-		Assert.isNotNull(dataSoFar);
+		Assert.isNotNull(dataSoFar,"DefaultAssistState::setDataSoFar()");
 		this.dataSoFar = dataSoFar;
 	}
 	
 	public void setOffset(int offset) {
-		Assert.isTrue(offset >= 0);
+		Assert.isTrue(offset >= 0,"DefaultAssistState::setOffset()");
 		this.offset = offset;
 	}
 	

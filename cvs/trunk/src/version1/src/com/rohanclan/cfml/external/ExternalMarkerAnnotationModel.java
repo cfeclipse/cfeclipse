@@ -61,7 +61,7 @@ public class ExternalMarkerAnnotationModel extends
 	 * @param resource the resource
 	 */
 	public ExternalMarkerAnnotationModel(IResource resource) {
-		Assert.isNotNull(resource);
+		Assert.isNotNull(resource,"ExternalMarkerAnnotationModel::ExternalMarkerAnnotationModel()");
 		fResource= resource;
 		fWorkspace= resource.getWorkspace();
 	}

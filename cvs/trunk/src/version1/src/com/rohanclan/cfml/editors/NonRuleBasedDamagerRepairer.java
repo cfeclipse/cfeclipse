@@ -49,7 +49,7 @@ public class NonRuleBasedDamagerRepairer implements IPresentationDamager, IPrese
 	 * Constructor for NonRuleBasedDamagerRepairer.
 	 */
 	public NonRuleBasedDamagerRepairer(TextAttribute defaultTextAttribute) {
-		Assert.isNotNull(defaultTextAttribute);
+		Assert.isNotNull(defaultTextAttribute,"NonRuleBasedDamagerRepairer::NonRuleBasedDamagerRepairer()");
 		
 		fDefaultTextAttribute = defaultTextAttribute;
 	}

@@ -52,7 +52,7 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 */
 	public void setTagName(String tag)
 	{
-		Assert.isNotNull(tag);
+		Assert.isNotNull(tag,"DefaultAssistTagState::setTagName()");
 		this.tagName = tag;
 	}
 	
@@ -62,7 +62,7 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 */
 	public void setAttrText(String attrText)
 	{
-		Assert.isNotNull(attrText);
+		Assert.isNotNull(attrText,"DefaultAssistTagState::setAttrText()");
 		this.attrText = attrText;
 	}
 	
@@ -110,7 +110,7 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	{
 		super();
 		
-		Assert.isNotNull(baseState);
+		Assert.isNotNull(baseState,"DefaultAssistTagState::DefaultAssistTagState()");
 				
 		this.setDataSoFar(baseState.getDataSoFar());
 		this.setDoc(baseState.getIDocument());
@@ -124,7 +124,7 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagState#getTagName()
 	 */
 	public String getTagName() {
-		Assert.isNotNull(this.tagName);
+		Assert.isNotNull(this.tagName,"DefaultAssistTagState::getTagName()");
 		return this.tagName;
 	}
 
@@ -132,7 +132,7 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagState#getAttributeText()
 	 */
 	public String getAttributeText() {
-		Assert.isNotNull(this.attrText);
+		Assert.isNotNull(this.attrText,"DefaultAssistTagState::getAttributeText()");
 		return this.attrText;
 	}
 

@@ -72,21 +72,21 @@ class StatusInfo
 
 	public void setError(String errorMessage)
 	{
-		Assert.isNotNull(errorMessage);
+		Assert.isNotNull(errorMessage,"StatusInfo::setError()");
 		fStatusMessage = errorMessage;
 		fSeverity = 4;
 	}
 
 	public void setWarning(String warningMessage)
 	{
-		Assert.isNotNull(warningMessage);
+		Assert.isNotNull(warningMessage,"StatusInfo::setWarning()");
 		fStatusMessage = warningMessage;
 		fSeverity = 2;
 	}
 
 	public void setInfo(String infoMessage)
 	{
-		Assert.isNotNull(infoMessage);
+		Assert.isNotNull(infoMessage,"StatusInfo::setInfo()");
 		fStatusMessage = infoMessage;
 		fSeverity = 1;
 	}

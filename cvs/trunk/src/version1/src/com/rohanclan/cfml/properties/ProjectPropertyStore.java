@@ -74,7 +74,7 @@ public class ProjectPropertyStore implements IPreferenceStore {
      */
     public ProjectPropertyStore(IProject srcProject) {
         this();
-        Assert.isNotNull(srcProject);
+        Assert.isNotNull(srcProject,"ProjectPropertyStore::ProjectPropertyStore()");
         this.project = srcProject;
         this.listeners = new ArrayList();
         this.props = new HashMap();

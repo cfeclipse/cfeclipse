@@ -106,8 +106,8 @@ public class CFEContentAssistManager {
      */
     private void registerAssistor(ArrayList list, Object newAssistor)
     {
-        Assert.isNotNull(list);
-        Assert.isNotNull(newAssistor);
+        Assert.isNotNull(list,"CFEContentAssist::registerAssistor()");
+        Assert.isNotNull(newAssistor,"CFEContentAssist::registerAssistor()");
         
         int cPos = list.indexOf(newAssistor);
         
@@ -126,7 +126,7 @@ public class CFEContentAssistManager {
      */
     public ArrayList getTagAssistors()
     {
-        Assert.isNotNull(this.tagAssistors);
+        Assert.isNotNull(this.tagAssistors,"CFEContentAssist::getTagAssistors()");
         return this.tagAssistors;
     }
     
@@ -136,7 +136,7 @@ public class CFEContentAssistManager {
      */
     public ArrayList getAttributeAssistors()
     {
-        Assert.isNotNull(this.attrAssistors);
+        Assert.isNotNull(this.attrAssistors,"CFEContentAssist::getAttributeAssistors()");
         return this.attrAssistors;
     }
     
@@ -146,7 +146,7 @@ public class CFEContentAssistManager {
      */
     public ArrayList getValueAssistors()
     {
-        Assert.isNotNull(this.valueAssistors);
+        Assert.isNotNull(this.valueAssistors,"CFEContentAssist::getValueAssistors()");
         return this.valueAssistors;
     }
     /**
@@ -165,7 +165,7 @@ public class CFEContentAssistManager {
      */
     public ArrayList getRootAssistors()
     {
-        Assert.isNotNull(this.rootAssistors);
+        Assert.isNotNull(this.rootAssistors,"CFEContentAssist::getRootAssistors()");
         return this.rootAssistors;
     }
     

@@ -48,7 +48,7 @@ import com.rohanclan.cfml.editors.contentassist.HTMLTagAssistContributor;
 public class CFENature implements IContentAssistContributorNature {
 
     public Date getLastUpdateDate() {
-        Assert.isNotNull(this.lastUpdate);
+        Assert.isNotNull(this.lastUpdate,"CFENature::getLastUpdateDate()");
         return this.lastUpdate;
     }
     /** The project that this nature is associated with */

@@ -238,10 +238,10 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 	public static CompletionProposal finaliseProposal(int offset, short type, int currentlen, String name, 
 												String display, String help) 
 	{
-		Assert.isNotNull(name);
-		Assert.isNotNull(display);
-		Assert.isNotNull(help);
-		Assert.isTrue(currentlen <= name.length());
+		Assert.isNotNull(name,"CFEContentAssist::finaliseProposal()");
+		Assert.isNotNull(display,"CFEContentAssist::finaliseProposal()");
+		Assert.isNotNull(help,"CFEContentAssist::finaliseProposal()");
+		Assert.isTrue(currentlen <= name.length(),"CFEContentAssist::finaliseProposal()");
 		
 		//now remove chars so when they hit enter it wont write the whole
 		//word just the part they havent typed

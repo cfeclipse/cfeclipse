@@ -56,17 +56,20 @@ public class NestableMultiLineRule extends MultiLineRule {
 		char[][] delimiters= scanner.getLegalLineDelimiters();
 		boolean previousWasEscapeCharacter = false;	
 		int nestedLevel = 1;
-		while ((c= scanner.read()) != ICharacterScanner.EOF) {
+		while ((c = scanner.read()) != ICharacterScanner.EOF) {
 			if (c == fEscapeCharacter) {
+				//System.out.println("Skipping an escape character.");
 				// Skip the escaped character.
 				scanner.read();
 			} else if (sequenceDetected(scanner, fStartSequence, true)) {
+				//System.out.println("Found a nested start sequence.");
 			    // Check for a start sequence so the nesting gets updated correctly
 			    nestedLevel++;
 			    
 			} else if (fEndSequence.length > 0 && c == fEndSequence[0]) {
 				// Check if the specified end sequence has been found.
 				if (sequenceDetected(scanner, fEndSequence, true)) {
+					//System.out.println("Found end sequence.");
 				    if (nestedLevel > 0) {
 				        nestedLevel--;
 				    }
@@ -76,6 +79,7 @@ public class NestableMultiLineRule extends MultiLineRule {
 					
 				}
 			} else if (fBreaksOnEOL) {
+				//System.out.println("Checking for end of line. THIS SHOULDN'T HAPPEN");
 				// Check for end of line since it can be used to terminate the pattern.
 				for (int i= 0; i < delimiters.length; i++) {
 					if (c == delimiters[i][0] && sequenceDetected(scanner, delimiters[i], true)) {
@@ -107,6 +111,7 @@ public class NestableMultiLineRule extends MultiLineRule {
 			int c= scanner.read();
 			if (c == fStartSequence[0]) {
 				if (sequenceDetected(scanner, fStartSequence, false)) {
+					//System.out.println("Start sequence detected.");
 				    scanner.read();
 					if (endSequenceDetected(scanner)) {
 					    return fToken;

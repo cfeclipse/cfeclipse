@@ -36,7 +36,7 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
-
+import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 /**
  * This represents a tag-based auto-indent strategy. It not only
  * does the auto-indenting, but it also does the auto-closing &
@@ -388,12 +388,13 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void customizeDocumentCommand(IDocument doc, DocumentCommand docCommand)
     {
-	    
+
 		try {
 			//
 			// We're only interested in the insertion of single characters, so catch the user pasting
 			// something (making sure that it's not going to be a carriage return)
-
+			
+			
 			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
 				return;
 			}
@@ -412,7 +413,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.length > 0 && docCommand.text.length() == 0) {
 				firstCommandChar = '\b';
 			}
-
+			
 
 			switch(firstCommandChar) {
 			case '\b':	// User wishes to delete something
@@ -461,6 +462,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				//System.out..println("TagIndentStrategy::customizeDocument() - In fall out");
 					//attempt to register a default behavior
 					super.customizeDocumentCommand(doc,docCommand);
+					
+
 					return;
 				}
 				break;
@@ -482,6 +485,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			System.err.println("TagIndentStategy::customizeDocumentCommand() - Caught BadLocationException");
 			ex.printStackTrace();
 			return;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
     }
 
@@ -601,7 +607,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// what the remainder is that cannot be made up of full indents. This will be made up of spaces.
 			// Then we simply append the required indents in, then the required number of spaces.
 			if(this.getIndentString().compareTo("\t") == 0) {
-				indentWidth = Integer.parseInt(CFMLPlugin.getDefault().getPreferenceStore().getString("tabWidth")) ;	// TODO: Work out how to get the texteditor tab width
+				indentWidth = Integer.parseInt(CFMLPlugin.getDefault().getPreferenceStore().getString(EditorPreferenceConstants.P_TAB_WIDTH)) ;	// TODO: Work out how to get the texteditor tab width
 				newPrefix = prefix.replaceAll(" ","");
 			}
 			else {
@@ -684,17 +690,20 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private boolean isEnterInTag(IDocument doc, DocumentCommand command) {
 		int position = command.offset - 1;
 		String docData = doc.get();
-
+		boolean openerFound = false;
 		//
 		// First, search backwards. We should hit a '<' before we hit a '>'.
 		int i = position;
 		try {
 			for(; i > 0; i--) {
 				if(docData.charAt(i) == '>')
-					return false;	// Found closing chevron, die now.	// TODO: Will kill if closing chevron is in quotes!
+					return false;	// Found closing chevron, die now.	
+									// TODO: Will kill if closing chevron is in quotes!
 
-				if(docData.charAt(i) == '<')
+				if(docData.charAt(i) == '<') {
+					openerFound = true;
 					break;
+				}
 			}
 		} catch(Exception e) {
 			System.err.println("TagIndentStrategy::isEnterInTag() - Caught exception \'" + e.getMessage() +"\'. Dumping.");
@@ -702,7 +711,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			return false;
 		}
 
-		return true;
+		return openerFound;
 	}
 
 	/**

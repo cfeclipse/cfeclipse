@@ -126,7 +126,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	 */
 	public void doSave(IProgressMonitor monitor) {
 		//On save parsing should apparently go into a builder.
-	    if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED)) {
+	    if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
 	        
 	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(false);
 	        RTrimAction trimAction = new RTrimAction();

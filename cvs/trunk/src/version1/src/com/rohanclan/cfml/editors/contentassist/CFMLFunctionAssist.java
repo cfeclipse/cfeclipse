@@ -92,7 +92,7 @@ public class CFMLFunctionAssist
      */
     public CFMLFunctionAssist() {
         this.sourceDict = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
-        Assert.isNotNull(this.sourceDict);
+        Assert.isNotNull(this.sourceDict,"CFMLFunctionAssist::CFMLFunctionAssist()");
     }
 
     /* (non-Javadoc)

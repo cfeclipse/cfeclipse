@@ -60,7 +60,7 @@ public class CFIncludeTemplateAssist implements IAssistAttrValueContributor {
      */
     private boolean trigger(IAssistTagAttributeState state)
     {
-        Assert.isNotNull(state);
+        Assert.isNotNull(state,"CFIncludeTemplateAssist::trigger()");
         
         if(state.getTagName().compareToIgnoreCase("cfinclude") != 0)
             return false;
@@ -124,7 +124,7 @@ public class CFIncludeTemplateAssist implements IAssistAttrValueContributor {
         {
             Object tempObj = sourceIter.next();
             
-            Assert.isTrue(tempObj instanceof Value);
+            Assert.isTrue(tempObj instanceof Value,"CFIncludeTemplateAssist::valueArrayFromSet()");
             
             retArray[i] = (Value)tempObj;
         }

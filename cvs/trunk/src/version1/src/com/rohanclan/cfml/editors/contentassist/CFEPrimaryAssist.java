@@ -93,7 +93,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
         while(proposerIter.hasNext())
         {
             Object currProc = proposerIter.next();
-            Assert.isNotNull(currProc);
+            Assert.isNotNull(currProc,"CFEPrimaryAssist::computeCompletionProposals()");
             ICompletionProposal [] tempProps = null;
 // System.out.println("CFPrimaryAssist::computeCompletionProposals:\n");
 // System.out.println("\tAsking assist of type \'" + currProc.getClass().getName() + "\'");
@@ -145,7 +145,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
         while(proposerIter.hasNext())
         {
             Object currProc = proposerIter.next();
-            Assert.isNotNull(currProc);
+            Assert.isNotNull(currProc,"CFEPrimaryAssist::computeContextInformation");
             IContextInformation [] tempProps = null;
             if(currProc instanceof IContentAssistProcessor)
             {

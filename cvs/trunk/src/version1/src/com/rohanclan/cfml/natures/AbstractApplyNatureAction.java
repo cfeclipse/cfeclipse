@@ -60,14 +60,14 @@ public abstract class AbstractApplyNatureAction   implements IObjectActionDelega
         return associateText;
     }
     public void setAssociateText(String associateText) {
-        Assert.isNotNull(associateText);
+        Assert.isNotNull(associateText,"AbstractApplyNatureAction::setAssociateText()");
         this.associateText = associateText;
     }
     public String getDisassociateText() {
         return disassociateText;
     }
     public void setDisassociateText(String disassociateText) {
-        Assert.isNotNull(disassociateText);
+        Assert.isNotNull(disassociateText,"AbstractApplyNatureAction::setDisassociateText()");
         this.disassociateText = disassociateText;
     }
     

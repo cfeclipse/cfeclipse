@@ -108,8 +108,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 * @see IDocumentPartitioner#connect(IDocument)
 	 */
 	public void connect(IDocument document) {
-		Assert.isNotNull(document);
-		Assert.isTrue(!document.containsPositionCategory(fPositionCategory));
+		Assert.isNotNull(document,"CFEDefaultPartitioner::connect()");
+		Assert.isTrue(!document.containsPositionCategory(fPositionCategory),"CFEDefaultPartitioner::connect()");
 		
 		fDocument= document;
 		fDocument.addPositionCategory(fPositionCategory);
@@ -132,6 +132,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 				
 				if (isSupportedContentType(contentType)) {
 					TypedPosition p= new TypedPosition(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType);
+					//System.out.println("Token found " + contentType + " From " + p.offset + " length " + p.length);
 					fDocument.addPosition(fPositionCategory, p);
 				}
 								
@@ -142,6 +143,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 		} catch (BadPositionCategoryException x) {
 			// cannot happen if document has been connected before
 		}
+		
 	}	
 	
 	/*
@@ -149,7 +151,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 */
 	public void disconnect() {
 		
-		Assert.isTrue(fDocument.containsPositionCategory(fPositionCategory));
+		Assert.isTrue(fDocument.containsPositionCategory(fPositionCategory),"CFEDefaultPartitioner::disconnect()");
 		
 		try {
 			fDocument.removePositionCategory(fPositionCategory);
@@ -162,8 +164,8 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 * @see IDocumentPartitioner#documentAboutToBeChanged(DocumentEvent)
 	 */
 	public void documentAboutToBeChanged(DocumentEvent e) {
-		
-		Assert.isTrue(e.getDocument() == fDocument);
+
+		Assert.isTrue(e.getDocument() == fDocument,"CFEDefaultPartitioner::documentAboutToBeChanged()");
 		
 		fPreviousDocumentLength= e.getDocument().getLength();
 		fStartOffset= -1;
@@ -175,6 +177,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 * @see IDocumentPartitioner#documentChanged(DocumentEvent)
 	 */
 	public boolean documentChanged(DocumentEvent e) {
+
 		IRegion region= documentChanged2(e);
 		return (region != null);
 	}
@@ -219,6 +222,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 * @return the minimal region containing all the partition changes
 	 */
 	private IRegion createRegion() {
+		
 		if (fDeleteOffset == -1) {
 			if (fStartOffset == -1 || fEndOffset == -1)
 				return null;
@@ -230,6 +234,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 			int endOffset= Math.max(fDeleteOffset, fEndOffset);
 			return new Region(offset, endOffset - offset);
 		}
+		
 	}
 
 	/*
@@ -237,7 +242,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 * @since 2.0
 	 */
 	public IRegion documentChanged2(DocumentEvent e) {
-						
 		try {
 		
 			IDocument d= e.getDocument();
@@ -251,10 +255,10 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 			int first= d.computeIndexInCategory(fPositionCategory, reparseStart);
 			if (first > 0)	{
 				TypedPosition partition= (TypedPosition) category[first - 1];
-				
 				if (partition.includes(reparseStart)) {
 					partitionStart= partition.getOffset();
 					contentType= partition.getType();
+					
 					if (e.getOffset() == partition.getOffset() + partition.getLength())
 						reparseStart= partitionStart;
 					-- first;
@@ -269,10 +273,13 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 				}
 				// If we're inside a partition that can have nested items we want to reparse
 				// from the start of the partition rather than from the offset where the change occured.
-				if (partition.getType().equals(CFPartitionScanner.CF_COMMENT) 
-				        || partition.getType().equals(CFPartitionScanner.HTM_COMMENT)) {
+				
+				if (contentType.equals(CFPartitionScanner.CF_COMMENT) 
+				        || contentType.equals(CFPartitionScanner.HTM_COMMENT)) {
+					//System.out.println("Reparsing from start of comment block");
 				    reparseStart= partition.getOffset();
 				}
+				
 			}
 								
 			fPositionUpdater.update(e);
@@ -359,6 +366,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 			// should never happen on connected documents
 		} catch (BadLocationException x) {
 		}
+
 		
 		return createRegion();
 	}
@@ -541,7 +549,6 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 	 */
 	public ITypedRegion[] computePartitioning(int offset, int length, boolean includeZeroLengthPartitions) {
 		List list= new ArrayList();
-		
 		try {
 			
 			int endOffset= offset + length;
@@ -554,12 +561,16 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 			
 			int startIndex= getFirstIndexEndingAfterOffset(category, offset);
 			int endIndex= getFirstIndexStartingAfterOffset(category, endOffset);
+			
 			for (int i= startIndex; i < endIndex; i++) {
 				
 				current= (TypedPosition) category[i];
 				
 				gapOffset= (previous != null) ? previous.getOffset() + previous.getLength() : 0;
 				gap.setOffset(gapOffset);
+				
+				
+				
 				gap.setLength(current.getOffset() - gapOffset);
 				if ((includeZeroLengthPartitions && overlapsOrTouches(gap, offset, length)) || 
 						(gap.getLength() > 0 && gap.overlapsWith(offset, length))) {
@@ -594,6 +605,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner, IDocumentPar
 				
 		} catch (BadPositionCategoryException x) {
 		}
+		
 		
 		TypedRegion[] result= new TypedRegion[list.size()];
 		list.toArray(result);
