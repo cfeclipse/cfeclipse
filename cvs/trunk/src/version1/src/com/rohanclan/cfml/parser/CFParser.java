@@ -498,7 +498,6 @@ public class CFParser {
 			tempMatch.startPos += ex.currentToken.beginColumn;
 			tempMatch.endPos += ex.currentToken.endColumn;
 			userMessage(matchStack.size(), "handleCFScriptBlock()", errMsg, CFParser.USRMSG_ERROR, tempMatch);
-			ex.printStackTrace();
 		} catch(Exception ex) {
 			System.err.println("CFParser::handleCFScriptBlock() - Caught exception \'" + ex.getMessage() + "\'");
 			ex.printStackTrace();
@@ -719,7 +718,7 @@ public class CFParser {
 				TagMatch match = (TagMatch)matches.get(matchPos);
 				
 				String matchStr = match.match;
-				System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
+				//System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					// Is a tag
@@ -756,7 +755,7 @@ public class CFParser {
 
 						// Get the attributes from the tag.
 						
-						System.out.println("CFParser::createDocTree() - Handling cftag \'" + tagName + "\'");
+						//System.out.println("CFParser::createDocTree() - Handling cftag \'" + tagName + "\'");
 						if(IsCFTag(tagName))
 						{
 							// Anything within a CFScript block should really be placed at the current level of the
@@ -863,11 +862,11 @@ public class CFParser {
 	
 	protected int matchingCFScript(State parseState, String inData, int currDocOffset)
 	{
-		int finalOffset = currDocOffset;
+ 		int finalOffset = currDocOffset;
 		int currPos = currDocOffset;
 		String nextChars = ""; // </cfscript>
 		String closingText = "</cfscript>";
-		System.out.println("CFParser::matchingCFScript() - Matching CFScript");
+		//System.out.println("CFParser::matchingCFScript() - Matching CFScript");
 		for(; currPos < inData.length(); currPos++)
 		{
 			if(inData.length() - currPos + 1 > closingText.length())
@@ -882,12 +881,7 @@ public class CFParser {
 			}
 			
 		}
-		int scriptStart = currDocOffset + "<cfscript>".length();
-		String cfScriptData = inData.substring(currDocOffset, finalOffset);
-		
-		TagMatch scriptMatch = new TagMatch(cfScriptData, scriptStart, finalOffset, getLineNumber(scriptStart));
-		parseState.addMatch(scriptMatch);
-		
+	
 		if(finalOffset != currPos)
 		{
 			//System.err.println("FATAL ERROR: Searching for a closing <cfscript> tag but could not find one: " + inData.substring(currDocOffset, currPos));
@@ -897,6 +891,21 @@ public class CFParser {
 												"Reached end of document before finding a closing cfscript tag.",
 												true )); // Fatal error
 		
+		} else {
+			int scriptStart = currDocOffset + "<cfscript>".length();
+			String cfScriptData = inData.substring(currDocOffset, finalOffset);
+			cfScriptData = cfScriptData.trim();
+
+			//
+			// We cheat now. We're actually creating a tag match for a <cfscript> block and pass all
+			// of the data in so we have a tag called "<cfscript>...". But this breaks if it's empty,
+			// so we trimmed the data and now we compare with <cfscript>. If it doesn't equal it (
+			// and therefore it's got CFScript data in) we add the match.
+			if(cfScriptData.compareToIgnoreCase("<cfscript>") != 0) {
+				TagMatch scriptMatch = new TagMatch(cfScriptData, scriptStart, finalOffset, getLineNumber(scriptStart));
+				parseState.addMatch(scriptMatch);
+			}
+
 		}
 		
 		return finalOffset;
@@ -996,7 +1005,7 @@ public class CFParser {
 							}
 							else if(next2Chars.compareTo("cf") == 0)
 							{
-System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
+//System.out.println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
 								//
 								// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 								// container *only* for things to go in the document tree.
