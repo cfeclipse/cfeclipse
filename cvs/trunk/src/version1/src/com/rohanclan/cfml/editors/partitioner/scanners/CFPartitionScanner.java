@@ -117,12 +117,12 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 				if(!ename.equals("script"))
 				{	
 					tg = sd.getTag(ename);
-					rules.add(new CFTagRule("<" + ename,">", cftag));
-					rules.add(new CFTagRule("<" + ename.toUpperCase(),">", cftag));
+					rules.add(new NamedTagRule("<" + ename,">", cftag));
+					rules.add(new NamedTagRule("<" + ename.toUpperCase(),">", cftag));
 					if(!tg.isSingle())
 					{	
-						rules.add(new CFTagRule("</" + ename,">", cfendtag));
-						rules.add(new CFTagRule("</" + ename.toUpperCase(),">", cfendtag));
+						rules.add(new NamedTagRule("</" + ename,">", cfendtag));
+						rules.add(new NamedTagRule("</" + ename.toUpperCase(),">", cfendtag));
 					}
 				}
 			}
@@ -134,10 +134,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		//these are not really handled in the dictionary because you can call 
 		//normal pages as cf_'s
-		rules.add(new CFTagRule("<cf_",">", cftag));
-		rules.add(new CFTagRule("</cf_",">", cfendtag));
-		rules.add(new CFTagRule("<CF_",">", cftag));
-		rules.add(new CFTagRule("</CF_",">", cfendtag));
+		rules.add(new NamedTagRule("<cf_",">", cftag));
+		rules.add(new NamedTagRule("</cf_",">", cfendtag));
+		rules.add(new NamedTagRule("<CF_",">", cftag));
+		rules.add(new NamedTagRule("</CF_",">", cfendtag));
 		
 		//do the html tags now
 		sd = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
@@ -167,13 +167,13 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 					else if(tg.isFormTag()){ tmp = form; }
 					else { tmp = tag; }
 					
-					rules.add(new MultiLineRule("<" + ename,">", tmp));
-					rules.add(new MultiLineRule("<" + ename.toUpperCase(),">", tmp));
+					rules.add(new NamedTagRule("<" + ename,">", tmp));
+					rules.add(new NamedTagRule("<" + ename.toUpperCase(),">", tmp));
 					//if this is supposed to have an end tag add it too
 					if(!tg.isSingle())
 					{	
-						rules.add(new MultiLineRule("</" + ename,">", tmp));
-						rules.add(new MultiLineRule("</" + ename.toUpperCase(),">", tmp));
+						rules.add(new NamedTagRule("</" + ename,">", tmp));
+						rules.add(new NamedTagRule("</" + ename.toUpperCase(),">", tmp));
 					}
 				}
 			}

@@ -6,6 +6,9 @@
  */
 package com.rohanclan.cfml.editors.partitioner.scanners.rules;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IToken;
@@ -17,7 +20,7 @@ import org.eclipse.jface.text.Assert;
  *
  * This rule is used to find CF tags in the active document.
  */
-public class CFTagRule implements IPredicateRule {
+public class NamedTagRule implements IPredicateRule {
 
 	/** Internal setting for the uninitialized column constraint */
 	protected static final int UNDEFINED= -1;
@@ -45,6 +48,9 @@ public class CFTagRule implements IPredicateRule {
 	/** Indicates whether end of file terminates the pattern */
 	protected boolean fBreaksOnEOF = true;
 
+	/** Pattern to make sure that the character after the end of the start sequence is valid */
+	private static Pattern p = Pattern.compile("[\\s/>]");
+	
 	/**
 	 * Creates a rule for the given starting and ending sequence.
 	 * When these sequences are detected the rule will return the specified token.
@@ -57,7 +63,7 @@ public class CFTagRule implements IPredicateRule {
 	 * @param escapeCharacter any character following this one will be ignored
 	 * @param breaksOnEOL indicates whether the end of the line also terminates the pattern
 	 */
-	public CFTagRule(String startSequence, String endSequence, IToken token) {
+	public NamedTagRule(String startSequence, String endSequence, IToken token) {
 		Assert.isTrue(startSequence != null && startSequence.length() > 0);
 		Assert.isNotNull(token);
 		
@@ -196,7 +202,16 @@ public class CFTagRule implements IPredicateRule {
 				return false;
 			}
 		}
-		
+		char next = (char)scanner.read();
+		scanner.unread();
+		Matcher m = p.matcher(String.valueOf(next));
+		if (!m.matches()) {
+			//System.out.println("Named tag found, but next char is invalid.");
+			return false;
+		}
+		else {
+			///System.out.println("Found tag " + new String(sequence) + " with next char " + next);
+		}
 		return true;
 	}
 	
