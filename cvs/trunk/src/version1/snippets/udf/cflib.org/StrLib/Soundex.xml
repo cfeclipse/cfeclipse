@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>Soundex</name>
+<help>Soundex is a mechanism whereby all names can be converted to a four character string based on sound</help>
+<starttext><![CDATA[/**
+ * Returns the Soundex of a string.
+ * 
+ * @param string 	 String to be modified. 
+ * @return Returns a string. 
+ * @author Ben Forta (ben@forta.com) 
+ * @version 1, July 17, 2001 
+ */
+function Soundex(string)
+{
+   VAR WorkString=UCase(string);
+   VAR NumList="";
+   VAR NumListTemp="";
+   VAR Num="";
+   VAR FirstChar="";
+   VAR Result="";
+
+   // Eliminate all non A-Z chars
+   WorkString=REReplace(WorkString,"[^A-Z]","","ALL");
+
+   // Save 1st character
+   FirstChar=Left(WorkString,1);
+
+   // Loop through string
+   for (i=1; i LTE Len(WorkString); i=i+1)
+   {
+      // Init var each time around
+      Num="";
+      // Convert each character to numbers 1-6
+      // 9 is used as place-holder for chars to be ignored
+      switch (Mid(WorkString,i,1))
+      {
+         case "B":
+         case "F":
+         case "P":
+         case "V": Num=1;
+                   break;
+         case "C":
+         case "G":
+         case "J":
+         case "K":
+         case "Q":
+         case "S":
+         case "X":
+         case "Z": Num=2;
+                   break;
+         case "D":
+         case "T": Num=3;
+                   break;
+         case "L": Num=4;
+                   break;
+         case "M":
+         case "N": Num=5;
+                   break;
+         case "R": Num=6;
+                   break;
+         default:  Num=9;
+                   break;
+      }
+      // Append to list
+      NumList=ListAppend(NumList,Num);
+   }
+
+   // Next get rid of any side-by-side dupes
+   NumListTemp=ListFirst(NumList);
+   for (i=2; i LTE ListLen(NumList); i=i+1)
+   {
+      // Append only if not same as previous char
+      if (ListGetAt(NumList, i) NEQ ListGetAt(NumList, i-1))
+         NumListTemp=ListAppend(NumListTemp, ListGetAt(NumList, i));
+   }
+   NumList=NumListTemp;
+
+   // And finally, build soundex
+   Result=FirstChar;
+
+   // Append the chars, if not 9 (excluded)
+   for (i=2; i LTE ListLen(NumList); i=i+1)
+   {
+      if (ListGetAt(NumList, i) NEQ 9)
+         Result=Result&ListGetAt(NumList, i);
+   }
+
+   // If too long, truncate
+   if (Len(Result) GT 4)
+      Result=Left(Result, 4);
+   else if (Len(Result) LT 4)
+      // If too short, pad
+      Result=Result&RepeatString("0", 4-Len(Result));
+
+   return Result;
+}
+]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>Gateway</name>
+<help>Library that allows for javascript remoting (calling web services from javascript)</help>
+<starttext><![CDATA[/** 
+ * Copyright 2004 Rob Rohan
+ * 
+ * REQUIRED LIBS:
+ *	collections.js
+ *  xmldocument.js
+ */
+if(
+	typeof COLLECTIONS_VERSION == "undefined" ||
+	typeof XMLDOCUMENT_VERSION == "undefined"
+)
+{
+	alert(
+		"Fatal Error: Gateway Missing Required Libraries"
+	);
+	throw new Error(
+		"gateway.js Missing Required Libraries"
+	);
+}
+
+var GATEWAY_VERSION = "0.1";
+
+/**
+ * This creates a HTTPConnection factory that can
+ * produce http connetion obejct that are IE and Mozilla 
+ * capable they can be used to GET and POST to a server
+ */
+function HTTPConnectFactory(){
+	/**
+	 * get an instace of the http connect object
+	 * this actually just creates either an MS or
+	 * Gecko type object. Abstracted a bit cause I
+	 * like it :)
+	 */
+    this.getInstance = function()
+    {
+    	/** the soon to be gateway HTTP connection */
+    	var gw_http_request = null;
+    	
+    	//try to create a new http connection object
+        //try MS
+        if(window.ActiveXObject)
+        {
+        	try
+        	{
+        		gw_http_request = new ActiveXObject("Msxml2.XMLHTTP");
+        	}
+        	catch(e) 
+        	{
+        		try 
+        		{
+            		gw_http_request = new ActiveXObject("Microsoft.XMLHTTP");
+        		}catch(ex)
+        		{
+        			throw new Error(
+        				"IE browser, but xmlhttp create failed: " + ex
+        			);
+          		}
+         	}
+        }
+        //try gecko type
+        else
+        {
+        	try
+        	{
+				gw_http_request = new XMLHttpRequest();
+				
+				//some older versions of Moz did not support the readyState property
+				//and the onreadystate event so we patch it!
+				if(gw_http_request.readyState == null)
+    			{
+					gw_http_request.readyState = 1;
+					gw_http_request.addEventListener(
+						"load", 
+						function() 
+						{
+    						gw_http_request.readyState = 4;
+    						if(typeof gw_http_request.onreadystatechange == "function")
+    							gw_http_request.onreadystatechange();
+    					},
+    					false
+    				);
+    			}
+        	}
+        	catch(e) 
+        	{
+        		throw new Error(
+        			"Gecko browser, but xmlhttp create failed: " + ex
+        		);
+         	}
+        }
+        
+		if(gw_http_request == null)
+		{
+    	    throw new Error(
+    			"HTTPConnect::createInstance(): Unable to create HTTPConnect object"
+    	    );
+        }
+        
+     	return gw_http_request;
+    };
+}
+
+/**
+ *
+ */
+function JSRemote(connection,asyn){
+	/** the connection object for this remoter */
+	this.connection = connection;
+	this.loading = false;
+	this.async = asyn;
+	
+    /**
+     * loads the file and uses the call back function
+     * func_into(String)
+     * to pass in the files contents
+     */
+    this.doGetRequest = function(url,func_handler)
+    {
+    	this.loading = true;
+    	var conn = this.connection;
+    	var load = this.loading;
+    	
+    	conn.open("GET", url, this.async);
+    	if(this.async)
+    	{
+        	conn.onreadystatechange = function() 
+        	{
+          		if(conn.readyState == 4)
+          		{
+          			func_handler(conn.responseText);
+          			load = false;
+          			window.status = conn.status;
+          		}
+         	}
+     	}
+     	
+     	conn.send(null);
+     	
+     	if(!this.async)
+     	{
+         	func_handler(conn.responseText);
+          	load = false;
+          	window.status = conn.status;
+		}
+    };
+        
+    /**
+     *
+     */
+    this.doPostRequest = function(url,func_handler,bodyinfo)
+    {
+    	this.loading = true;
+    	var conn = this.connection;
+    	var load = this.loading;
+    	
+    	conn.open("POST", url, this.async);
+    	if(this.async)
+    	{
+        	conn.onreadystatechange = function() 
+        	{
+          		if(conn.readyState == 4)
+          		{
+          			func_handler(conn.responseText);
+          			load = false;
+          			window.status = conn.status;
+          		}
+         	}
+     	}
+     	
+    	conn.setRequestHeader("Content-Length",""+bodyinfo.length);
+     	conn.send(bodyinfo);
+     	
+     	if(!this.async)
+    	{
+         	func_handler(conn.responseText);
+          	load = false;
+          	window.status = conn.status;
+        }
+    };
+    
+    /**
+     *
+     */
+    this.doSoapPost = function(url,func,func_handler,xmlinfo)
+    {
+    	this.loading = true;
+    	var conn = this.connection;
+    	var load = this.loading;
+    	
+    	if(conn == null)
+    		throw new Error("Connection problem in SoapPost");
+    	
+    	try
+    	{
+	    	conn.open("POST", url, this.async);
+	    	if(this.async)
+    		{
+        		conn.onreadystatechange = function() 
+        		{
+          			if(conn.readyState == 4)
+    	      		{
+        	  			func_handler(conn.responseText);
+          				load = false;
+          				window.status = conn.status;
+          			}
+    	     	}
+    		}
+    	
+    		// (2) LOADED (3) INTERACTIVE
+    		if(conn.readyState != 2 && conn.readyState != 3)
+    		{
+        		if(func != null && func != "")
+        			conn.setRequestHeader("SOAPAction", func);
+    	    	conn.setRequestHeader("Content-Type", "application/soap+xml; charset=utf-8");
+        		conn.setRequestHeader("Content-Length",""+xmlinfo.toString().length);
+         		conn.send(xmlinfo.toString());
+         	}
+         	
+         	if(!this.async)
+    		{
+             	func_handler(conn.responseText);
+          		load = false;
+          		window.status = conn.status;
+          	}
+     	}
+     	catch(e)
+     	{
+     		//alert("gateway::" + e);
+     		//this can error some times (on gecko stuff mostly)
+     		//so just try to clear the buffer
+     		conn.send(null);
+     	}
+    };
+}
+
+/**
+ * mostly used internally. an object to hold remote function
+ * information
+ */
+function RemoteFunction(){
+	this.name = "";
+	this.param = new Map();
+	this.returnname = "";
+	this.returntype = "";
+}
+
+/**
+ *
+ */
+function RemoteObjectFactory(){
+	/** the server connection */
+	//this.remote = new JSRemote(connection);
+	this.newobject = new Object();
+	this.async = false;
+	
+	/** all functions this object supports */
+	//this.remotefunctions = new Map();
+		
+	this.setAsync = function(to)
+	{
+		this.async = to;
+	}
+	
+	/**
+	 *
+	 */
+	this.getObject = function()
+	{
+		if(this.newobject == null)
+		{
+			throw new Error("New remote object is null");
+		}
+		else
+		{
+			inst = new Object();
+			
+			for(i in this.newobject)
+            {
+		    	inst[i] = this.newobject[i];
+            }
+            
+            return inst;
+		}
+	};
+	
+	/**
+	 *
+	 */
+	this.createObject = function(connection,url)
+	{
+		remoter = new JSRemote(connection,this.async);
+		//this.remotefunctions = new Map();
+		remotefunctions = new Map();
+		
+    	function RemoteObject(){;}
+    	RemoteObject.prototype.jsremote = remoter;
+    	RemoteObject.prototype.objecturl = url;
+    	RemoteObject.prototype.namespace = "neuro://response/";
+    	RemoteObject.prototype.remotefunctions = remotefunctions; //this.remotefunctions;
+    	
+    	RemoteObject.prototype.__createSOAPRequest = function(rfunc, args)
+    	{
+    		//create the request based on the functions
+    		//and params - this should not be hard coded at some point
+    		//and should probably use *real* xml hehehee
+    		var soapxml  = "<SOAP-ENV:Envelope ";
+			soapxml	+= " xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" ";
+    		soapxml	+= " xmlns:xsi=\"http://www.w3.org/1999/XMLSchema-instance\" ";
+    		soapxml	+= " xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\" ";
+    		soapxml += " xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\" ";
+    		soapxml += " xmlns:ns2=\"http://www.w3.org/2001/XMLSchema\" ";
+    		soapxml += " xmlns:impl=\"http://neuromancer.products\" ";
+    		soapxml += " xmlns:asoap=\"http://xml.apache.org/xml-soap\" ";
+			soapxml	+= ">";
+			soapxml	+= "<SOAP-ENV:Body>";
+			
+			soapxml	+= "<ns1:" + rfunc.name + " xmlns:ns1=\"" + this.namespace + rfunc.name + "\" ";
+			soapxml	+= " SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" ";
+			soapxml	+= ">";
+			
+			for(x=0;x<rfunc.param.size();x++){
+				var pname = rfunc.param.aname[x];
+				var ptype = rfunc.param.avalue[x];
+				var pvalue = args[x];
+				
+				//if it looks like an array...
+				if(ptype == "impl:ArrayOf_xsd_anyType")
+				{
+					soapxml += pvalue.toWSArray(pname,"impl:ArrayOf_xsd_anyType");
+				}
+				//probably a struct
+				else if(ptype == "apachesoap:Map")
+				{
+					soapxml += pvalue.toWSStruct(pname,0,-1);
+				}
+				//normal variable
+				else
+				{
+					soapxml	+= "<" + pname + " xsi:type=\"" + ptype + "\">" + pvalue + "</" + pname + "> ";
+				}
+			}
+			
+			//xmlns:impl="http://neuromancer.products"
+			//impl:ArrayOf_xsd_anyType
+			//xsi:type="soapenc:Array" soapenc:arrayType="ns2:anyType[10]"
+			
+			
+			//soapxml	+= "<booga xsi:type=\"xsd:double\">1.2</booga> ";
+   			soapxml	+= "</ns1:" + rfunc.name + ">";
+   			
+			soapxml	+= "</SOAP-ENV:Body>";
+			soapxml	+= "</SOAP-ENV:Envelope>";
+			
+			/* if(neuro_SystemOut)
+			{
+				neuro_SystemOut(soapxml);
+			} */
+			
+			return soapxml;
+    		
+    	};
+		//////////////////   		
+    	RemoteObject.prototype.__remoteSend = function()
+    	{
+    		/** should be the function name */
+    		var funcName = arguments[0];
+    		/** all the rest of the arguments */
+    		var funcArgs = arguments[1];
+    		
+			//alert("I ran " + funcName);
+    		
+    		//alert(funcName);
+    		var arglen = funcArgs.length;
+    		
+    		//get the remote function object for this function 
+    		//(mostly for lookup values)
+    		remotefunc = this.remotefunctions.get(funcName);
+    		
+    		//if we have no record of the function ... thats bad
+    		if(remotefunc == null)
+    			throw new Error(
+    				"Fatal Error: remote function " + funcName + " not listed in object table"
+    			);
+    		
+    		//quick check to see if there are the right number of
+    		//parameters (-1 because of the handler)
+    		if( remotefunc.param.size() > arglen)
+    			throw new Error(
+    				"Method " + funcName + " takes " + remotefunc.param.size() + " parameters"
+    			);
+    		
+    		var soappacket = this.__createSOAPRequest(remotefunc,funcArgs);
+    		    		   		
+    		nsptr = this.namespace;
+    		fnameptr = remotefunc.name;
+    		rtnameptr = remotefunc.returnname;
+    		//make sure we have a handler if not make a simple one that just
+    		//shows the responses value to stdout
+    		var handler = funcArgs[arglen-1];
+    		if(handler == null || typeof handler != "function") 
+    		{
+    			__neuro__myvar__ = new Object();
+    			handler = new DefaultHandler("__neuro__myvar__");
+    		}
+    		
+    		if(this.objecturl == null || this.objecturl.length < 1)
+    			throw new Error(
+    				"Missing object URL, I have no where to send posts. bah!"
+    			);
+    		
+    		//if we are using DH or a subclass
+    		if(handler instanceof DefaultHandler)
+    		{
+    			this.jsremote.doSoapPost(
+    				this.objecturl,
+    				funcName,
+    				handler.handle,
+    				soappacket
+    			);
+    		}
+    		//assume they know what they are doing and just
+    		//run the function
+    		else
+    		{
+    			this.jsremote.doSoapPost(
+    				this.objecturl,
+    				funcName,
+    				handler,
+    				soappacket
+    			);
+    		}
+    	};
+    	//////////////////////////////////////////////////////////////////
+    	
+    	
+    	//where the wsdl will be
+    	tdoc = "";
+    	//handler to pass to the loader
+    	hnd = function(str)
+    	{
+    		tdoc = str;
+    	};
+    	//get the wsdl
+    	remoter.doGetRequest(
+    		url + "?wsdl",
+    		hnd
+    	);
+    	
+    	//Ok, this is where it gets a bit funky. We can't be sure the wsdl
+    	//will be here right away (it is the internet you know) so we have
+    	//to set a timer to keep checking to see if the document is ready.
+    	//then we have to do all our other stuff to the object that makes it
+    	//"match" the remote service
+    	rter = remoter;
+    	thnd = 0;
+    	//rfptr = this.remotefunctions;
+    	rfptr = remotefunctions;
+    	nobjptr = this.newobject;
+    	
+    	getObjDef = function()
+    	{
+    		//if the remoter is not loading try to 
+    		//do what we need
+    		if(tdoc.length > 1)
+    		{
+    			//first stop this loop
+    			window.clearInterval(thnd);
+    			//neuro_SystemOut("Web service responded - jolly good\n");
+    			
+    			var xmlDocFactory = new XMLDocumentFactory();
+    			var xmldoc = xmlDocFactory.getInstance();
+    			xmldoc.loadXML(tdoc);
+    			
+    			//get the nodes that tell us about the operations
+    			//this object has
+    			var opnodes = xmldoc.getElementsByTagNameNS(
+    				"http://schemas.xmlsoap.org/wsdl/",
+    				"operation"
+    			);
+    			
+    			var partnodes = xmldoc.getElementsByTagNameNS(
+    				"http://schemas.xmlsoap.org/wsdl/",
+    				"part"
+    			);
+    			var partlen = partnodes.length;
+    			
+				//loop over any operation and try to add them to the
+				//object remotefunctions table so the object can use
+				//them corretly ... well ... at all
+				//neuro_SystemOut("Learning web service...\n");
+				//neuro_SystemOut(tdoc);
+				var oplen = opnodes.length;
+    			for(var x=0;x<oplen;x++)
+    			{
+    				var fname   = opnodes[x].getAttribute("name");
+    				var fparams = opnodes[x].getAttribute("parameterOrder");
+    				//if fparams is null this is not a node we care about
+    				//so skip it
+    				//if(fparams != null)
+    				if(!rfptr.contains(fname))
+    				{
+    					var rf = new RemoteFunction();
+        				rf.name = fname;
+        				rf.returnname = fname + "Return";
+        				
+        				//get a list of all the params
+						tarray = new Array();
+						
+						if(fparams != null)
+							tarray = fparams.split(" ");
+        				
+        				//get the type this service uses for params and reutrn type
+        				//needed for sending
+        				var q=0;
+        				for(; q<partlen; q++)
+        				{
+        					var pname = partnodes[q].getAttribute("name");
+        					var ptype = partnodes[q].getAttribute("type");
+        					
+        					//now we have to look at our params and see what types they
+        					//are supposed to be, save it into RemoteFunctoin
+        					var u=0;
+        					for(;u<tarray.length;u++)
+        					{
+        						if(tarray[u] == pname)
+        						{
+        							//got it...
+        							rf.param.put(pname,ptype);
+        							//neuro_SystemOut(pname + " " + ptype + "\n");
+        						}
+        					}
+        					
+        					if(rf.returnname == pname)
+        					{
+        						//got the return type
+        						rf.returntype = ptype;
+        						//neuro_SystemOut(rf.returnname + " " + ptype + "\n");
+        					}
+        				}
+        				
+        				//fparams.replace(/ /g,",")
+        				//neuro_SystemOut(
+        				//	"function:\n\t" + rf.returntype + " " + fname 
+        				//		+ " (" + rf.param.toString()  + ")\n"
+        				//);
+        				
+        				
+        				//we should have all the params for this function so add it
+        				//to the object map
+        				rfcopy = new Object();
+        				for(var i in rf)
+            			{
+		            		rfcopy[i] = rf[i];
+            			}
+            			
+        				rfptr.put(fname,rfcopy);
+        			}
+    			}
+    			
+    			var allnames = rfptr.getKeysAsArray();
+    	
+            	for(var z=0; z<allnames.length; z++)
+            	{
+            		//var rf = this.remotefunctions[z];
+            		//alert(z + " " + allnames[z]);
+        	    	eval("RemoteObject.prototype." + allnames[z] 
+            			+ " = function(){ this.__remoteSend('"+ allnames[z]
+            			+ "',arguments); }"
+            		);
+            	}
+            	
+            	var newremote = new RemoteObject();
+            	//now we need to copy (not pass a pointer)
+            	//for our new object ot get it up to the Factory level
+            	//using the this.newobject pointer
+            	for(var i in newremote)
+            	{
+            		nobjptr[i] = newremote[i];
+            	}
+            	
+            	//neuro_SystemOut(
+        		//	"\n~Local RemoteObject created and ready.~\n"
+        		//);
+    		}
+    		else
+    		{
+    			//neuro_SystemOut(thnd + ' ' + rter.loading);
+    			//neuro_SystemOut("Waiting for web service to respond...\n");
+    		}
+    	}
+    	thnd = thread = window.setInterval("getObjDef();",300);
+    };
+}
+
+/**
+ * The default handler. Used to set variables to what the web service
+ * returns. You can write your own, but you have to handle the soap
+ * parsing... unless you *want* the raw soap response
+ */
+var __dfh__variable;
+function DefaultHandler(v){
+	
+	//if this is a pointer it works great (array).
+	//but if its a string it doesnt work at all.
+	//it saves the values into __dfh__variable but they
+	//never get set back to the original variable.
+	__dfh__variable = v;
+	
+	/**
+	 * try to break apart the soap message and get it to the
+	 * proper place. Note: this is a break off fuction so the
+	 * "this" is useless :-/
+	 */
+    this.handle = function(str)
+    { 
+		var	xmlDocFactory = new XMLDocumentFactory();
+		var xmldoc = xmlDocFactory.getInstance();
+		xmldoc.loadXML(str);
+		  		
+		//neuro_SystemOut(xmldoc.xml);
+		if(typeof nsptr != "undefined" && typeof fnameptr != "undefined")
+		{
+    		var resvalnodes = xmldoc.getElementsByTagNameNS(
+    			nsptr + fnameptr,
+    			rtnameptr
+    		);
+		}
+		
+		if(resvalnodes != null)
+		try{
+			var complextypeid = resvalnodes[0].getAttribute("href");
+		}catch(e){;}
+		
+		//this could be a simple value or an array...
+		if(resvalnodes != null && resvalnodes.length > 0 && complextypeid == null)
+		{    		
+			//this is probably a Fat array	
+			if(resvalnodes[0].childNodes.length > 1)
+			{
+				//alert("running fat array");
+				//neuro_SystemOut("\nIt's probably an array\n");
+				var cnl = resvalnodes[0].childNodes.length;
+				var __alist = new List();
+				for(var z=0;z<cnl;z++)
+				{
+					if(resvalnodes[0].childNodes.item(z).nodeType == XML_ELEMENT)
+					{
+						__alist.add(
+							resvalnodes[0].childNodes.item(z).firstChild.nodeValue
+						);
+					}
+				}
+				//neuro_SystemOut("\n" + list + "\n");
+				for(__i_ in __alist)
+				{
+					eval( __dfh__variable + "[__i_] = __alist[__i_]" );
+				}	
+				//neuro_SystemOut("\n" + list + "\n");
+			}
+			//this is probably a simple value
+			else
+			{
+				//alert("running thin array or string");
+				//if the thin array libs are around (they should be)
+				if(typeof ThinArray != "undefined")
+				{
+					var isThinA = false;
+					eval("isThinA = " + __dfh__variable + " instanceof ThinArray");
+					if(isThinA)
+					{
+						eval(__dfh__variable + ".fromPacket(resvalnodes[0].firstChild.nodeValue)");
+					}
+					//probably a normal string
+					else
+					{
+						eval(__dfh__variable + " = resvalnodes[0].firstChild.nodeValue");
+					}
+				}
+				else
+				{
+					eval(__dfh__variable + " = resvalnodes[0].firstChild.nodeValue");
+				}
+			}
+		}
+		//this is a structure (a cold fusion struct)
+		else if(complextypeid != null && complextypeid.length > 1)
+		{
+			//alert("running struct");
+			
+			//complextid will look like #id1 remove the starting #
+			var lookupid = complextypeid.toString().substring(1,complextypeid.length);
+			
+			//so now we lookup the reference id of the first node and begin building
+			//our map. This is going to be very recursive, but since I am in a break off
+			//function this could get hairy
+			var newstruct = new Map();
+			
+			//recurse over the xml doc and ids and build maps in maps to represent
+			//the cf struct as a js object
+			__gateway__map_from_struct(lookupid, xmldoc, newstruct);
+			
+			//copy the newly made map to the handler
+			for(var __z_ in newstruct)
+			{
+				eval(__dfh__variable + "[__z_] = newstruct[__z_]" );
+			}
+			//null out our temp object
+			newstruct = null;
+		}
+		else
+		{
+			__dfh__variable = null;
+		}
+		
+		//if this is from the handler that was not specified
+		//show the value to stdout
+		if(__dfh__variable == "__neuro__myvar__")
+		{
+			if(neuro_SystemOut != null)
+    		{
+    			neuro_SystemOut("\n");
+    			eval("neuro_SystemOut(" + __dfh__variable + ".toString())");
+    			neuro_SystemOut("\n");
+    			if(neuro_Runner != null)
+    				neuro_Runner("");
+    		}
+		}
+	};
+	
+}
+
+function __gateway__map_from_struct(lookupid, xmldoc, nstruct)
+{
+	var frag = xmldoc.getElementById(lookupid);
+	var dChildren = frag.childNodes;
+	var dcl = dChildren.length;
+	for(var q=0;q<dcl;q++)
+	{
+		if(dChildren.item(q).nodeType == XML_ELEMENT && dChildren.item(q).nodeName == "item")
+		{
+			var dItem = dChildren.item(q).childNodes;
+			var dicl = dChildren.item(q).childNodes.length;
+			var key = null;
+			var value = null;
+			
+			//since mozilla and IE define children differenty this is needed :(
+			for(z=0;z<dicl;z++)
+			{
+				if(dItem.item(z).nodeType == XML_ELEMENT && dItem.item(z).nodeName == "key")
+				{
+					key = dItem.item(z).firstChild.nodeValue;
+				}
+				if(dItem.item(z).nodeType == XML_ELEMENT && dItem.item(z).nodeName == "value")
+				{
+					if(dItem.item(z).getAttribute("href") == null)
+					{
+						value = dItem.item(z).firstChild.nodeValue;	
+					}
+					else
+					{
+						value = new Map();
+						//value = "!ref! " + dItem.item(z).getAttribute("href");
+						var newid = dItem.item(z).getAttribute("href");
+						newid = newid.toString().substring(1,newid.length);
+						__gateway__map_from_struct(newid, xmldoc, value);
+					}
+				}
+			}
+			nstruct.put(key,value);					
+		}
+	}
+}
+]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>
