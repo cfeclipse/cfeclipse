@@ -2,11 +2,11 @@
 <snippet>
 <name>object_template</name>
 <help>Object template to create your own javascript objects</help>
-<starttext><![CDATA[function $${object_name}(){
+<starttext><![CDATA[function $${Object_Name}(){
 	/**
-	 * $${object_name}::$${method_name}
+	 * $${Object_Name}::$${Method_Name}
 	 */
-	this.$${method_name} = function()
+	this.$${Method_Name} = function()
 	{
 		]]></starttext>
 <endtext><![CDATA[

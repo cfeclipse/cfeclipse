@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>scriptifelse</name>
+<help>cfscript type if else statement</help>
+<starttext><![CDATA[if(]]></starttext>
+<endtext><![CDATA[){}else{}]]></endtext>
+</snippet>

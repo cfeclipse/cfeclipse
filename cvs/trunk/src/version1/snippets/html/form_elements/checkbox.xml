@@ -2,6 +2,6 @@
 <snippet>
 <name>checkbox</name>
 <help>Creates a simple checkbox input</help>
-<starttext><![CDATA[<input type="checkbox" name="$${name}" value="]]></starttext>
-<endtext><![CDATA[">]]></endtext>
+<starttext><![CDATA[<input type="checkbox" name="$${Name}" value="$${Value}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
 </snippet>

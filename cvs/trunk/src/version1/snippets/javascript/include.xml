@@ -2,6 +2,6 @@
 <snippet>
 <name>include</name>
 <help>tag to include a javascript library</help>
-<starttext><![CDATA[<script language="javascript" type="text/javascript" src="$${path}"></script>]]></starttext>
+<starttext><![CDATA[<script language="javascript" type="text/javascript" src="$${Path}"></script>]]></starttext>
 <endtext><![CDATA[]]></endtext>
 </snippet>

@@ -6,21 +6,21 @@
 
 Title:      $${CURRENTFILE}
 
-Author:     $${name}
-Email:      $${email}
+Author:     $${Name}
+Email:      $${Email}
 
-company:    $${company}
-Website:    $${website}
+company:    $${Company}
+Website:    $${Website}
 
-Purpose:    $${purpose}
+Purpose:    $${Purpose}
 
-Usage:      $${usage}
+Usage:      $${Usage}
 
 Modification Log:
 
 Name			Date			Description
 ================================================================================
-$${name}		$${DAYOFMONTH}/$${MONTHNUMBER}/$${YEAR}		Created
+$${Name}		$${DAYOFMONTH}/$${MONTHNUMBER}/$${YEAR}		Created
 
 ------------------------------------------------------------------------------->]]></starttext>
 <endtext><![CDATA[]]></endtext>

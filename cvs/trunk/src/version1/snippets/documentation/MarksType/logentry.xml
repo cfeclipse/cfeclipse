@@ -2,6 +2,6 @@
 <snippet>
 <name>logentry</name>
 <help>A log entry</help>
-<starttext><![CDATA[$${name}		$${DAYOFMONTH}/$${MONTHNUMBER}/$${YEAR}		$${Description}]]></starttext>
+<starttext><![CDATA[$${Name}		$${DAYOFMONTH}/$${MONTHNUMBER}/$${YEAR}		$${Description}]]></starttext>
 <endtext><![CDATA[]]></endtext>
 </snippet>

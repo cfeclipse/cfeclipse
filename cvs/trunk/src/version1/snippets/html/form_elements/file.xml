@@ -2,6 +2,6 @@
 <snippet>
 <name>file</name>
 <help>Creates a simple file input box</help>
-<starttext><![CDATA[<input type="file" name="$${name}">]]></starttext>
+<starttext><![CDATA[<input type="file" name="$${Name}">]]></starttext>
 <endtext><![CDATA[]]></endtext>
 </snippet>

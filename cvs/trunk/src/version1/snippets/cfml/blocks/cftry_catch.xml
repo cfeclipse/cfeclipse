@@ -5,7 +5,7 @@
 <starttext><![CDATA[<cftry>
 	]]></starttext>
 <endtext><![CDATA[
-	<cfcatch type="$${catch_type}">
+	<cfcatch type="$${catch_type:Any}">
 		
 	</cfcatch>
 </cftry>]]></endtext>

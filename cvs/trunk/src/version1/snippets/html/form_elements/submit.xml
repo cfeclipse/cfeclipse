@@ -2,6 +2,6 @@
 <snippet>
 <name>submit</name>
 <help>A submit button</help>
-<starttext><![CDATA[<input type="submit" value="]]></starttext>
-<endtext><![CDATA[">]]></endtext>
+<starttext><![CDATA[<input type="submit" value="$${Value}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
 </snippet>

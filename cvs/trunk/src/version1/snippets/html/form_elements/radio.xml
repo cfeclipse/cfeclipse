@@ -2,6 +2,7 @@
 <snippet>
 <name>radio</name>
 <help>Creates a single radio input</help>
-<starttext><![CDATA[<input type="radio" name="$${name}" value="]]></starttext>
-<endtext><![CDATA[">]]></endtext>
+<starttext><![CDATA[
+<input type="radio" name="$${Name}" value="$${Value}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
 </snippet>

@@ -2,6 +2,6 @@
 <snippet>
 <name>content_type</name>
 <help>Sets the content type to html with UTF-8</help>
-<starttext><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=$${charset}">]]></starttext>
+<starttext><![CDATA[<meta http-equiv="Content-Type" content="$${Content:text/html};charset=$${Charset:utf-8}">]]></starttext>
 <endtext><![CDATA[]]></endtext>
 </snippet>
