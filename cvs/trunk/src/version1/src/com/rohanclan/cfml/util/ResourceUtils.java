@@ -38,6 +38,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.Value;
 
 /**
@@ -136,5 +137,90 @@ public class ResourceUtils {
             }
         }
         return natureArray;
+    }
+
+    /**
+     * Checks whether a project has the supplied nature applied to it.
+     * 
+     * @param project2Check The project to check
+     * @param natureID The ID of the nature to check for
+     * 
+     * @return true - nature applied, false - not yet
+     * @throws CoreException 
+     */
+    public static boolean hasNature(IProject project2Check, String natureID)
+    	throws CoreException
+    {
+        IProjectDescription description = project2Check.getDescription();
+        String[] natures = description.getNatureIds();
+        
+        for(int i = 0; i < natures.length; i++)
+        {
+            if(natures[i].equals(natureID))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Applies the CFE nature to the supplied project.
+     * 
+     * If the nature is already applied it will return.
+     * @param project2ApplyTo The project to apply the nature to.
+     * @param natureID The ID of the nature to apply to the project
+     * 
+     * @throws CoreException
+     */
+    public static void applyNature(IProject project2ApplyTo, String natureID) 
+    	throws CoreException
+    {
+        IProjectDescription description = project2ApplyTo.getDescription();
+        String[] natures = description.getNatureIds();
+        
+        for(int i = 0; i < natures.length; i++)
+        {
+            if(natures[i].equals(natureID))
+                return;
+        }
+        
+        String[] newNatures = new String[natures.length + 1];
+        System.arraycopy(natures, 0, newNatures, 0, natures.length);
+        newNatures[natures.length] = natureID;
+        description.setNatureIds(newNatures);
+        project2ApplyTo.setDescription(description, null);
+    }
+
+    /**
+     * Removes the CFE nature from a project.
+     * If the project does not have the nature it simply returns.
+     * @param project Project to remove the nature from.
+     * @param natureID The ID of the nature to remove
+     * 
+     * @throws CoreException
+     */
+    public static void removeNature(IProject project, String natureID)
+    	throws CoreException
+    {
+        IProjectDescription description = project.getDescription();
+        String[] natures = description.getNatureIds();
+        
+        if(natures.length == 0)
+            return;
+        
+        if(!hasNature(project, natureID))
+            return;
+        
+        String[] newNatures = new String[natures.length - 1];
+        
+        for(int i = 0, newNaturePos = 0; i < natures.length; i++)
+        {
+            if(!natures[i].equals(natureID))
+            {
+                newNatures[newNaturePos] = natures[i];
+                newNaturePos++;
+            }
+        }
+        description.setNatureIds(newNatures);
+        project.setDescription(description, null);
     }
 }
