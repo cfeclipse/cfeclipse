@@ -131,12 +131,16 @@ public class CFTextHover implements ITextHover {
 					else
 					{
 						//message = "<" + wordFound + ">";
-						String tglookup = wordFound.substring(2, wordFound.length());
+						String tglookup = wordFound;
+						
+						if(wordFound.startsWith("cf"))
+							tglookup = wordFound.substring(2, wordFound.length());
 						
 						if(dictionary.tagExists(tglookup))
 						{	
 							Tag tag = dictionary.getTag(tglookup);
 							message = " " + tag.getHelp();
+							//System.err.print(tag.getHelp());
 						}
 						
 						/*

@@ -357,7 +357,13 @@ public class CFConfiguration extends SourceViewerConfiguration {
 		//keep the hover only in the parts where it should be
 		//i.e. not in comments ... (we could add a javascript
 		//css specific thing in the future...
-		if(!(contentType == CFPartitionScanner.HTM_COMMENT))
+		if(contentType == CFPartitionScanner.ALL_TAG)
+		{
+			return new CFTextHover(
+				DictionaryManager.getDictionary(DictionaryManager.HTDIC)
+			);
+		}
+		else if(!(contentType == CFPartitionScanner.HTM_COMMENT))
 		{	
 			//load the text hover with the cf dictionary
 			return new CFTextHover(

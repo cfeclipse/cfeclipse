@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import com.rohanclan.coldfusionmx.editors.CFSyntaxDictionary;
+import com.rohanclan.coldfusionmx.editors.HTMLSyntaxDictionary;
 import com.rohanclan.coldfusionmx.editors.script.JSSyntaxDictionary;
 
 /**
@@ -59,6 +60,11 @@ public class DictionaryManager {
 		//when all is done this will actually load a dictionary
 		dic.loadDictionary("coldfusion.xml");
 		addDictionary(CFDIC,dic);
+		
+		dic = new HTMLSyntaxDictionary();
+		dic.loadDictionary("html.xml");
+		addDictionary(HTDIC,dic);
+		
 		
 		dic = new JSSyntaxDictionary();
 		addDictionary(JSDIC,dic);

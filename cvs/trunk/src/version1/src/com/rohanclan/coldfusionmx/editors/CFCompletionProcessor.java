@@ -147,7 +147,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				//do the html dictionary
 				httag = true;
 				tagname = tagname.trim().substring(1);
-				syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
+				syntax = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
 			}
 			
 			//if this was a <booga> type tag remove the last >
@@ -297,7 +297,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					display = ptr_tg.toString();
 					help = ptr_tg.getHelp();
 					
-					if( ptr_tg.isSingle() && !ptr_tg.isXMLStyle() && !ptr_tg.hasParameters())
+					if(!ptr_tg.isXMLStyle() && !ptr_tg.hasParameters())
 					{
 						name += ">";
 					}
