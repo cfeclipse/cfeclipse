@@ -236,16 +236,20 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 * with this document.
 	 *
 	 */
+	
 	public void clearAllMarkers()
 	{
+	    
 		try
 		{
+		    
 			lastRes.deleteMarkers(
 					IMarker.PROBLEM, true, IResource.DEPTH_ONE
 				);
 			
+
 			lastRes.deleteMarkers(
-					IMarker.TASK, true, IResource.DEPTH_ONE
+			        "com.rohanclan.cfml.todomarker", true, IResource.DEPTH_ONE
 				);
 			
 
@@ -254,6 +258,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		{
 			ce.printStackTrace(System.err);
 		}
+		
 	}
 	
 	/**

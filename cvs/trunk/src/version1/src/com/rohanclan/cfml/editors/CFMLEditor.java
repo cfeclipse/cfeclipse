@@ -38,7 +38,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-
+import org.eclipse.ui.texteditor.MarkerAnnotation;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -129,6 +129,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		//TODO: Once we get the document outline going, we can update it from
 		// here.
 		//On save parsing should apparently go into a builder.
+	    
 	    if (getPreferenceStore().getBoolean("rTrimOnSave")) {
 	        
 	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(false);
@@ -137,7 +138,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	        trimAction.run(null);
 	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(true);
 	    }
+	    
 		super.doSave(monitor);
+		
 	}
 
 	private DragSource dragsource;
@@ -634,7 +637,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	{
 		ISourceViewer viewer = super.createSourceViewer(parent, ruler, styles);
 		getSourceViewerDecorationSupport(viewer);
-		
 		return viewer;
 	}
 	

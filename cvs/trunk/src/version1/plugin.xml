@@ -787,5 +787,14 @@
             icon="icons/obj16/project-overlay.png"
             id="com.rohanclan.cfml.CFENature_Image"/>
    </extension>
+
+   <extension id="todomarker" point="org.eclipse.core.resources.markers" name="CFEclipse TODO Task">
+   	<super type="org.eclipse.core.resources.taskmarker"/>
+   	<persistent value="true"/>
+   	<attribute name="priority"/>
+   	<attribute name="message"/>
+   	<attribute name="done"/>
+
+   </extension>
   
 </plugin>

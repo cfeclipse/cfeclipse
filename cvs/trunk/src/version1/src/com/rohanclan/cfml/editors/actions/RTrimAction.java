@@ -60,26 +60,26 @@ public class RTrimAction  implements IEditorActionDelegate {
 			    int length = doc.getLineLength(currentLine);
 			    String oldText = doc.get(offset,length);
 			    String newText = oldText.replaceAll("[\\t ]+$","");
-
-			    newDoc.append(newText);
-			    if (offset + length <= originalCursorOffset) {
+			    doc.replace(offset,length,newText);
+			    //newDoc.append(newText);
+			    if (offset + length <= cursorOffset) {
 			        if(oldText.length() != newText.length()) {
 				        cursorOffset -= oldText.length() - newText.length();
 			        }
 			    }
-			    else if (offset <= originalCursorOffset + originalSelectionLength 
-			            && originalSelectionLength > 0) {
+			    else if (offset <= cursorOffset + selectionLength 
+			            && selectionLength > 0) {
 			        selectionLength -= oldText.length() - newText.length();
 			        
 			    }
 			    // Check if the cursor is at the end of the line.
-			    else if (offset + length == originalCursorOffset+2) {
+			    else if (offset + length == cursorOffset+2) {
 			        cursorOffset -= 2;
 			    }
 			    
 			    currentLine++;
 			}
-			doc.set(newDoc.toString());
+
 			TextSelection selection = new TextSelection(doc,cursorOffset,selectionLength);
 			editor.getSelectionProvider().setSelection(selection);
 		}

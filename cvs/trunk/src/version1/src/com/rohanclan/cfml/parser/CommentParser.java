@@ -216,8 +216,9 @@ public class CommentParser {
                     
                         String message = lines[line].substring(matcher.start(),lines[line].length());
 	                    MarkerUtilities.setMessage(attrs, message);
-	                    MarkerUtilities.createMarker(resource,attrs,IMarker.TASK);
-                    
+	                    MarkerUtilities.createMarker(resource,attrs,"com.rohanclan.cfml.todomarker");
+	                    
+	                    //System.out.println("Marker added for " + comment.getContents());
                     }
                     catch (Exception e) {
                         e.printStackTrace();

@@ -27,6 +27,7 @@ package com.rohanclan.cfml.editors;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
@@ -112,6 +113,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		if (document instanceof ICFDocument) {
 			((ICFDocument) document).clearAllMarkers();
 			((ICFDocument) document).parseDocument();
+			
 		}
 		super.doSaveDocument(monitor, element, document, overwrite);
 	}
