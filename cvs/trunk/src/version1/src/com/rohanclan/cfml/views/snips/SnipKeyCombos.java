@@ -39,8 +39,8 @@ public class SnipKeyCombos {
         }
         catch (IOException e) {
             try {
-            FileOutputStream output = new FileOutputStream(this.keyComboFilePath);
-            keyCombos.store(output,HEADER_TEXT);
+	            FileOutputStream output = new FileOutputStream(this.keyComboFilePath);
+	            keyCombos.store(output,HEADER_TEXT);
             }
             catch (IOException ex) {
                 ex.printStackTrace();
@@ -51,8 +51,8 @@ public class SnipKeyCombos {
     public void setKeyCombo(String sequence, String snippetFile){
         this.keyCombos.setProperty(sequence,snippetFile);
         try {
-        FileOutputStream output = new FileOutputStream(this.keyComboFilePath);
-        keyCombos.store(output,HEADER_TEXT);
+	        FileOutputStream output = new FileOutputStream(this.keyComboFilePath);
+	        keyCombos.store(output,HEADER_TEXT);
         }
         catch (Exception e) {
             e.printStackTrace();

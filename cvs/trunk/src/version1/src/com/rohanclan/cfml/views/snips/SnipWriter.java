@@ -57,6 +57,9 @@ public class SnipWriter {
 				
 				String relativePath = filepath.replaceFirst(basePath,"");
 			    
+			    String sequence = snipKeyCombos.getSequence(relativePath);
+			    snipKeyCombos.clearKeyCombo(sequence);
+				
 			    snipKeyCombos.setKeyCombo(snippetKeyCombo,relativePath);
 			}
 		}
