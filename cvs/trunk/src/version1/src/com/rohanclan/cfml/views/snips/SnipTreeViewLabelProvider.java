@@ -41,6 +41,8 @@ import java.io.File;
 
 public class SnipTreeViewLabelProvider extends LabelProvider {
 	
+    private SnipReader snipReader = new SnipReader();
+    
 	/**
 	 * Get the image for element
 	 * @see ILabelProvider#getImage(Object)
@@ -55,6 +57,11 @@ public class SnipTreeViewLabelProvider extends LabelProvider {
 				//an xml file assume its a snip
 				if(fname.endsWith(".xml") || fname.endsWith(".XML"))
 				{
+				    // Check to see if it's a file template
+				    snipReader.read(((File)element).getAbsolutePath());
+				    if (snipReader.isFileTemplate()) {
+				        return CFPluginImages.get(CFPluginImages.ICON_TEMPLATE_SNIP);
+				    }
 					return CFPluginImages.get(CFPluginImages.ICON_SNIP);
 				}
 				//csn assume its a dreamweaver snippet

@@ -1140,6 +1140,17 @@
             id="com.rohanclan.cfml.wizards.cfcwizard.NewCFCWizard">
             <description>Create a new CFC</description>
       </wizard>
+      <wizard
+            name="File From Template"
+            icon="icons/ctool16/insertsnip.gif"
+            category="com.rohanclan.cfml.category1"
+            class="com.rohanclan.cfml.wizards.templatefilewizard.NewTemplateFileWizard"
+            preferredPerspectives="CFML"
+            finalPerspective="CFML"
+            project="true"
+            id="com.rohanclan.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
+            <description>Create a new file from a template snip</description>
+      </wizard>
    </extension>
    <extension
          id="CFENature"

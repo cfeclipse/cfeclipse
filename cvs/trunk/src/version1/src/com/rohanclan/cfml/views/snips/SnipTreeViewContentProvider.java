@@ -63,8 +63,8 @@ class SnippetFileFilter implements FileFilter {
 
 public class SnipTreeViewContentProvider implements ITreeContentProvider { //, IDeltaListener {
 	/** scratch pad */
-	private static Object[] EMPTY_ARRAY = new Object[0];
-	private static FileFilter snippetfilter = new SnippetFileFilter();
+	protected static Object[] EMPTY_ARRAY = new Object[0];
+	protected static FileFilter snippetfilter = new SnippetFileFilter();
 	protected TreeViewer viewer;
 	protected File rootdir;
 	

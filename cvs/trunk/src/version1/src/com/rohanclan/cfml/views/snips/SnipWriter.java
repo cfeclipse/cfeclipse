@@ -54,11 +54,11 @@ public class SnipWriter {
 	}
 	
 	
-	public void writeSnippet(String snippetName, String snippetKeyCombo, String snippetDescription, String startText, String endText) {
+	public void writeSnippet(String snippetName, String snippetKeyCombo, String snippetDescription, String startText, String endText, boolean useAsTemplate, String templateExtension) {
 		
 		
 		File snippetFile = new File(parentFolder.toString() + File.separator + snippetName + fileExtension);
-		String snippetContents = createFormattedSnip(snippetName,snippetDescription, startText,endText);
+		String snippetContents = createFormattedSnip(snippetName,snippetDescription, startText,endText,useAsTemplate,templateExtension);
 		try {
 		    
 			if (!snippetFile.isFile()) {
@@ -90,11 +90,12 @@ public class SnipWriter {
 	
 	
 	
-	private String createFormattedSnip(String snippetName, String snippetDescription, String startText, String endText) {
+	private String createFormattedSnip(String snippetName, String snippetDescription, String startText, String endText, boolean useAsTemplate, String templateExtension) {
 		String snippetContents;
+		String useSnippetAsTemplate = useAsTemplate ? "true" : "false";
 		if (snippetType == SnipTreeView.CFECLIPSE_SNIP_TYPE) {
 			snippetContents = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-			snippetContents += "<snippet>\n";
+			snippetContents += "<snippet filetemplate=\"" + useSnippetAsTemplate + "\" extension=\"" + templateExtension + "\">\n";
 			snippetContents += "<name>"+snippetName+"</name>\n";
 			snippetContents += "<help>"+snippetDescription+"</help>\n"; 
 			snippetContents += "<starttext><![CDATA["+startText+"]]></starttext>\n";

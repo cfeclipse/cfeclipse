@@ -85,6 +85,8 @@ public class CFPluginImages {
 	public static final String ICON_CLASS	= "class.gif";
 	/** generic snip icon the plugin looking thing */
 	public static final String ICON_SNIP    = "snip.gif";
+	/** file template snip icon the insert snippet icon */
+	public static final String ICON_TEMPLATE_SNIP    = "insertsnip.gif";
 	/** Insert snippet icon */
 	public static final String ICON_INSERT_SNIP    = "insertsnip.gif";
 	/** the D dreamweaver icon */
@@ -204,6 +206,7 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_PARAM);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PARAM_DARK);
 			addImageToRegistry(MODEL_OBJECTS,ICON_SNIP);
+			addImageToRegistry(MODEL_OBJECTS,ICON_TEMPLATE_SNIP);
 			addImageToRegistry(MODEL_OBJECTS,ICON_DW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_VALUE);

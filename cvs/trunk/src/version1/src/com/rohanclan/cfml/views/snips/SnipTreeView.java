@@ -586,7 +586,7 @@ public class SnipTreeView extends ViewPart
 		}
 		snippetType = CFECLIPSE_SNIP_TYPE;
 		SnipWriter writer = new SnipWriter(selectedfile,snippetType,snipBase);
-		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,"","","","","");
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,"","","","","",false,"cfm");
 		snippetDialog.open();
 
 	}
@@ -641,9 +641,11 @@ public class SnipTreeView extends ViewPart
 		String snippetDescription = snipReader.getSnipDescription();
 		String snippetStartText = snipReader.getSnipStartBlock();
 		String snippetEndText = snipReader.getSnipEndBlock();
+		boolean isTemplate = snipReader.isFileTemplate();
+		String templateExtension = snipReader.getTemplateExtension();
 		
 		SnipWriter writer = new SnipWriter(parentDirectory,snippetType,snipBase);
-		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,snippetName,snippetKeyCombo,snippetDescription,snippetStartText,snippetEndText);
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,snippetName,snippetKeyCombo,snippetDescription,snippetStartText,snippetEndText,isTemplate,templateExtension);
 		snippetDialog.open();
 		
 	}

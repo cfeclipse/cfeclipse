@@ -29,10 +29,14 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
 //import org.eclipse.jface.dialogs.IInputValidator;
 /**
  * @author Stephen Milligan
@@ -44,18 +48,24 @@ public class SnipFileDialog extends Dialog {
 	
 	private static String dialogTitle = "New Snippet";
 	private static String snippetNameLabel = "Snippet name: ";
-	private static String snippetKeyComboLabel = "trigger text: ";
+	private static String snippetKeyComboLabel = "Trigger text: ";
 	private static String snippetDescriptionLabel = "Snippet description: ";
 	private static String snippetCodeStartLabel = "Snippet starting block: ";
 	private static String snippetCodeEndLabel = "Snippet closing block: ";
+	private static String useSnippetAsTemplateLabel = "Use this snippet as a file template";
+	private static String templateExtensionLabel = "Template extension:";
 	private TreeViewer treeView;
-	private Text snippetNameText, snippetKeyComboText, snippetDescriptionText, snippetStartText, snippetEndText;
+	private Text snippetNameText, snippetKeyComboText, snippetDescriptionText, snippetStartText, snippetEndText, templateExtensionText;
 	private String snippetNameValue = "";
 	private String snippetKeyComboValue = "";
 	private String snippetDescriptionValue = "";
 	private String snippetStartValue = "";
 	private String snippetEndValue = "";
+	private boolean useAsTemplate = false;
+	private String templateExtensionValue = "cfm";
 	private SnipWriter writer;
+	
+	private Button useAsTemplateButton;
 
 	/**
 	 * Ok button widget.
@@ -70,7 +80,7 @@ public class SnipFileDialog extends Dialog {
 	
 	
 	
-	public SnipFileDialog(Shell parent, SnipWriter fileWriter, TreeViewer treeView, String snippetNameInitialValue, String snippetKeyComboInitialValue, String snippetDescriptionInitialValue, String startTextInitialValue, String endTextInitialValue) {
+	public SnipFileDialog(Shell parent, SnipWriter fileWriter, TreeViewer treeView, String snippetNameInitialValue, String snippetKeyComboInitialValue, String snippetDescriptionInitialValue, String startTextInitialValue, String endTextInitialValue, boolean useAsTemplateInitialValue, String templateExtensionInitialValue) {
 		//super(parent, dialogTitle, snippetNameLabel, snippetNameInitialValue, null);
 		
 		super(parent);
@@ -93,6 +103,12 @@ public class SnipFileDialog extends Dialog {
 		if (endTextInitialValue != null) {
 			snippetEndValue = endTextInitialValue;
 		}
+		
+	    useAsTemplate = useAsTemplateInitialValue;
+	    
+	    if (templateExtensionInitialValue !=  null) {
+	        templateExtensionValue = templateExtensionInitialValue;
+	    }
 		
 		
 		
@@ -261,13 +277,71 @@ public class SnipFileDialog extends Dialog {
 		);
 		snippetEndText.setFont(parent.getFont());
 		
-		errorMessageLabel = new Label(composite, SWT.NONE);
-		errorMessageLabel.setLayoutData(new GridData(
-			GridData.GRAB_HORIZONTAL |
-			GridData.HORIZONTAL_ALIGN_FILL));
+		// Checkbox for use snippet as template
+		useAsTemplateButton = new Button(composite, SWT.CHECK);
+		useAsTemplateButton.setText(useSnippetAsTemplateLabel);
+		data = new GridData(
+				GridData.GRAB_HORIZONTAL |
+				GridData.HORIZONTAL_ALIGN_FILL);
+		data.widthHint = convertWidthInCharsToPixels(35);
+		useAsTemplateButton.setLayoutData(data);
+		useAsTemplateButton.addSelectionListener(
+			new SelectionListener() {
+				public void widgetSelected(SelectionEvent e) {
+					useAsTemplate = useAsTemplateButton.getSelection();
+					// System.out.println("" + useAsTemplate);
+					templateExtensionText.setEnabled(useAsTemplateButton.getSelection());
+				}
+				public void widgetDefaultSelected(SelectionEvent e) {
+				    // Do nothing
+				}
+			}
+		);
+		useAsTemplateButton.setFont(parent.getFont());
+		
+//		 Template extension text box label
+		
+			label = new Label(composite, SWT.WRAP);
+			label.setText(templateExtensionLabel);
+			data = new GridData(
+				GridData.GRAB_HORIZONTAL |
+				GridData.GRAB_VERTICAL |
+				GridData.HORIZONTAL_ALIGN_FILL |
+				GridData.VERTICAL_ALIGN_CENTER);
+			data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
+			label.setLayoutData(data);
+			label.setFont(parent.getFont());
+		
+		
+		// Template extension text box
+		templateExtensionText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		data = new GridData(
+				GridData.GRAB_HORIZONTAL |
+				GridData.HORIZONTAL_ALIGN_FILL);
+		data.widthHint = convertWidthInCharsToPixels(20);
+		templateExtensionText.setEnabled(false);
+		templateExtensionText.setLayoutData(data);
+		templateExtensionText.addModifyListener(
+			new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					validateInput();
+				}
+			}
+		);
+		templateExtensionText.setFont(parent.getFont());
+		
+		errorMessageLabel = new Label(composite, SWT.WRAP);
+		data = new GridData(
+				GridData.GRAB_HORIZONTAL |
+				GridData.GRAB_VERTICAL |
+				GridData.HORIZONTAL_ALIGN_FILL |
+				GridData.VERTICAL_ALIGN_CENTER);
+		data.heightHint = convertHeightInCharsToPixels(2);
+		errorMessageLabel.setLayoutData(data);
 		errorMessageLabel.setFont(parent.getFont());
 		Color color = new Color(Display.getCurrent(),255,0,0);
 		errorMessageLabel.setForeground(color);
+		
 	 	return composite;
 
 	}
@@ -276,7 +350,11 @@ public class SnipFileDialog extends Dialog {
 
 	protected void okPressed() {
 
-		writer.writeSnippet(snippetNameText.getText(),snippetKeyComboText.getText(),snippetDescriptionText.getText(), snippetStartText.getText(),snippetEndText.getText());
+	    // Don't allow empty extension
+	    if (useAsTemplateButton.getSelection() && templateExtensionText.getText().trim().equals("")) {
+	        templateExtensionText.setText("cfm");
+	    }
+		writer.writeSnippet(snippetNameText.getText(),snippetKeyComboText.getText(),snippetDescriptionText.getText(), snippetStartText.getText(),snippetEndText.getText(),useAsTemplateButton.getSelection(),templateExtensionText.getText());
 		
 		
 		
@@ -293,12 +371,16 @@ public class SnipFileDialog extends Dialog {
 			snippetDescriptionValue = snippetDescriptionText.getText();
 			snippetStartValue = snippetStartText.getText();
 			snippetEndValue = snippetEndText.getText();
+			useAsTemplate = useAsTemplateButton.getSelection();
+			templateExtensionValue = templateExtensionText.getText();
 		} else {
 			snippetNameValue= null;
 			snippetKeyComboValue = null;
 			snippetDescriptionValue = null;
 			snippetStartValue = null;
 			snippetEndValue = null;
+			useAsTemplate = false;
+			templateExtensionValue = "cfm";
 		}
 		super.buttonPressed(buttonId);
 	}
@@ -337,6 +419,12 @@ public class SnipFileDialog extends Dialog {
 		if (snippetEndValue != null) {
 			snippetEndText.setText(snippetEndValue);
 		}
+		
+		useAsTemplateButton.setSelection(useAsTemplate);
+		
+	    templateExtensionText.setEnabled(useAsTemplate);
+		
+		templateExtensionText.setText(templateExtensionValue);
 	}
 	
 	
@@ -364,6 +452,9 @@ public class SnipFileDialog extends Dialog {
 		}
 		else if (snippetKeyComboText.getText().length() > 0 && !snippetKeyComboText.getText().matches("[0-9a-zA-Z_-]+")) {
 		    errorMessage = "The trigger text can only contain numbers, alphabetic characters, underscore and dash.";
+		}
+		else if (!templateExtensionText.getText().matches("[0-9a-zA-Z_.]+")) {
+		    errorMessage = "The template extension can only contain numbers, alphabetic characters, periods and underscores";
 		}
 		errorMessageLabel.setText(errorMessage == null ? "" : errorMessage); //$NON-NLS-1$
 	    

@@ -54,8 +54,10 @@ public class SnipReader {
 	private Document document=null;
 	
 	private String snipDescription, snipStartBlock, snipEndBlock;
+	private boolean useAsTemplate = false;
 	
 	File snippetFile;
+    private String templateExtension;
 	/**
 	 * 
 	 */
@@ -130,7 +132,9 @@ public class SnipReader {
 		
 		parseSnipDescription();
 		parseSnipStartBlock();
-		parseSnipEndBlock();	
+		parseSnipEndBlock();
+		parseSnipUseAsTemplate();
+		parseTemplateExtension();
 		
 	}
 	
@@ -163,6 +167,51 @@ public class SnipReader {
 			}
 		}
 
+	}
+	
+	private void parseSnipUseAsTemplate() {
+		
+		this.useAsTemplate = false;
+		
+		NodeList nodes = document.getElementsByTagName("snippet");
+		
+		if (nodes.getLength() == 0) {
+			return;
+		}
+		
+		Node workingNode = nodes.item(0);
+		
+
+		if (workingNode.getNodeName().equalsIgnoreCase("snippet")) {
+			NamedNodeMap attributes = workingNode.getAttributes();
+			workingNode = attributes.getNamedItem("filetemplate");
+			if (workingNode != null) {
+				String isFileTemplate = workingNode.getNodeValue();
+				this.useAsTemplate = "true".equalsIgnoreCase(isFileTemplate);
+			}
+		}
+	}
+	
+	private void parseTemplateExtension() {
+		
+		this.templateExtension = "cfm";
+		
+		NodeList nodes = document.getElementsByTagName("snippet");
+		
+		if (nodes.getLength() == 0) {
+			return;
+		}
+		
+		Node workingNode = nodes.item(0);
+		
+
+		if (workingNode.getNodeName().equalsIgnoreCase("snippet")) {
+			NamedNodeMap attributes = workingNode.getAttributes();
+			workingNode = attributes.getNamedItem("extension");
+			if (workingNode != null) {
+				templateExtension = workingNode.getNodeValue();
+			}
+		}
 	}
 	
 	private void parseSnipStartBlock() {
@@ -286,6 +335,18 @@ public class SnipReader {
 		}
 		return this.snipEndBlock;
 	}
+	
+	public boolean isFileTemplate() {
+		return this.useAsTemplate;
+	}
+
+
+    /**
+     * @return
+     */
+    public String getTemplateExtension() {
+        return this.templateExtension;
+    }
 	
 	
 }
