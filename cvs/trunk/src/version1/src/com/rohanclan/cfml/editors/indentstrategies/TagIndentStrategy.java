@@ -24,12 +24,18 @@
  */
 package com.rohanclan.cfml.editors.indentstrategies;
 
+import java.util.HashMap;
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultAutoIndentStrategy;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
 
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.dictionary.SyntaxDictionary;
+import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
+import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ICFDocument;
 
 /**
@@ -202,6 +208,29 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		return doc.get(startPos, i - startPos);
 	}
 	
+	private boolean tagIsSingle(IDocument doc, DocumentCommand docCommand, String tagName) {
+		boolean retval = true;
+		/*
+		HashMap singleTags = new HashMap();
+		
+		singleTags.put("cfbreak", "cfbreak");
+		singleTags.put("cfset", "cfset");
+		singleTags.put("cfreturn", "cfreturn");
+		singleTags.put("cfelse", "cfelse");
+		singleTags.put("cfelseif", "cfelseif");
+		singleTags.put("cfargument", "cfargument");
+		singleTags.put("cfqueryparam", "cfqueryparam");
+		singleTags.put("cfhttpparam", "cfhttpparam");
+		*/
+		boolean cftag = tagName.startsWith("cf");
+		if(cftag) tagName = tagName.substring(2);
+		SyntaxDictionary syntax = DictionaryManager.getDictionary((cftag) ? DictionaryManager.CFDIC : DictionaryManager.HTDIC);
+		Tag currTag = syntax.getTag(tagName);
+		if(currTag == null) 
+			return true;
+		return currTag.isSingle();
+	}
+	
 	/**
 	 * Handles a closing, non-single tag. It will insert two lines. The first will be the next line
 	 * that the cursor will be upon and will be indented by the opener tag's indent + 1 tab. The 2nd
@@ -214,15 +243,21 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private DocumentCommand doCloser(IDocument doc, DocumentCommand docCommand) throws BadLocationException {
 		char lastChar = ' ';
-
+		boolean autoCloseTag = this.autoClose_Tags;
+		boolean isSingleTag = false;
+		
 		if(docCommand.offset >= 0)
 			lastChar = doc.getChar(docCommand.offset - 1);
 		
 		String closingTag = getClosingTag((ICFDocument)doc, docCommand.offset+1);
 		
+		isSingleTag = tagIsSingle(doc,docCommand,closingTag);
+			
+//		autoCloseTag = !tagIsSingle(doc,docCommand, closingTag) && autoCloseTag;
+		
 		// If the user hasn't got auto-insertion of closing chevrons on, then 
 		// add a closing chevron onto our close tag (handled otherwise due to the fact we're inserting code IN the tag itself!
-		if(!this.autoClose_Tags)	
+		if(!autoCloseTag)	
 			closingTag+= ">";	
 		
 		closingTag = "</" + closingTag;
@@ -238,7 +273,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					docCommand.caretOffset = docCommand.offset + 1;
 					docCommand.shiftsCaret = false;
 				}
-				if(this.autoClose_Tags)	// If we're auto-closing tags then we need a closing chevron.
+				if(autoCloseTag)	// If we're auto-closing tags then we need a closing chevron.
 					closingTag+= ">"; 
 				
 				//docCommand.caretOffset = docCommand.offset;
@@ -248,8 +283,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			}
 		}
 			
-		
-		docCommand.text += closingTag;		// Use the first line's whitespace and insert the closing tag.
+		if(!isSingleTag)
+			docCommand.text += closingTag;		// Use the first line's whitespace and insert the closing tag.
 		return docCommand;
 	}
 	
