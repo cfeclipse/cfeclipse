@@ -142,32 +142,11 @@ public class SnipVarParser {
 		String formattedYear2Digit = formatter.format(currentTime);
 		newStr = newStr.replaceAll("\\$\\$\\{YEAR2DIGIT\\}",formattedYear2Digit);
 		
+		//send the snip string to the smart dialog
+		SnipSmartDialog ssd = new SnipSmartDialog();
+		newStr = ssd.parse(newStr,activeFile, shell);
 		
-		while(newStr.indexOf("$${") >= 0) {
-			int expressionStart = newStr.indexOf("$${")+3;
-			int expressionEnd = newStr.indexOf("}",expressionStart);
-			String expression = newStr.substring(expressionStart,expressionEnd);
-			String stringArray[] = expression.split(":");
-			String variable = stringArray[0];
-			String defaultValue = "";
-			if (stringArray.length > 1) {
-			     defaultValue = stringArray[1]; 
-			}
-			InputDialog replacementDialog = new InputDialog(shell,"Replace variable",variable,defaultValue,null);
-			
-			if (replacementDialog.open() == org.eclipse.jface.window.Window.OK) {
-				String replacement = replacementDialog.getValue(); 
-				String pattern = "\\$\\$\\{"+expression+"\\}";
-				newStr = newStr.replaceAll(pattern,replacement);
-			}
-			else {
-			    return null;
-			}
-
-		}
-		
-		
-		
+				
 		
 		return newStr;
 	}
