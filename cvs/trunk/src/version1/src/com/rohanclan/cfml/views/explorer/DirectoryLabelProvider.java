@@ -65,8 +65,7 @@ class DirectoryLabelProvider extends LabelProvider {
     
 
     private Image addPermissionIcon(Object element, Image image) {
-        int redPixel = image.getImageData().palette.getPixel(new RGB(255,0,0));
-        int greenPixel = image.getImageData().palette.getPixel(new RGB(0,255,0));
+
         boolean canRead = true;
         boolean canWrite = true;
         if (element instanceof RemoteFile) {
@@ -84,61 +83,16 @@ class DirectoryLabelProvider extends LabelProvider {
         }
         
         if (!canRead) {
-            return addOverlay(image,redPixel);
+            return CFPluginImages.addOverlay(image,new RGB(255,0,0));
         }
         else if (!canWrite) {
-            return addOverlay(image,greenPixel);
+            return CFPluginImages.addOverlay(image,new RGB(0,255,0));
         }
         else {
             return image;
         }
     }
     
-    private Image addOverlay(Image image,int color) {
-        ImageData fullImageData = image.getImageData();
-        ImageData transparency = fullImageData.getTransparencyMask();
-        
-        int width = fullImageData.width;
-        int height = fullImageData.height;
-        for (int i=width-1;i>=0;i--) {
-            int pixelColor = fullImageData.getPixel(i,8);
-            int transColor = transparency.getPixel(i,8);
-            if (pixelColor != transColor) {
-                width = i;
-                break;
-            }
-        }
-        for (int i = height-1;i>=0;i--) {
-            int pixelColor = fullImageData.getPixel(8,i);
-            int transColor = transparency.getPixel(8,i);
-            if (pixelColor != transColor) {
-                height = i;
-                break;
-            }
-        }
-        int minX = width-4;
-        int maxX = width-1;
-        int minY = height-4;
-        int maxY = height-1;
-        for (int i=minX;i<=maxX;i++) {
-            for (int j=minY;j<=maxY;j++) {
-                boolean repaint = true;
-                if (i == minX 
-                        || i == maxX) {
-                    if (j == minY) {
-                        repaint = false;
-                    } else if (j == maxY) {
-                        repaint = false;
-                    }
-                }
-                
-                if (repaint) {
-                    fullImageData.setPixel(i,j,color);
-                }
-            }
-        }
-        Image fullImage = new Image(Display.getCurrent(),fullImageData);
-        return fullImage;
-    }
+    
     
 }
