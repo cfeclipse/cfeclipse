@@ -117,6 +117,8 @@ public class NamedTagRule implements IPredicateRule {
 	 */
 	protected IToken doEvaluate(ICharacterScanner scanner, boolean resume) {
 		StringBuffer tagString = new StringBuffer();
+		fDblQuotesOpen = false;
+		fSnglQuotesOpen = false;
 		if (resume) {
 			
 			if (endSequenceDetected(scanner, tagString)) {
@@ -191,6 +193,13 @@ public class NamedTagRule implements IPredicateRule {
 				}
 				// Skip the escaped character.
 				//scanner.read();
+			} else if (c == '<' 
+			    && !fDblQuotesOpen
+			    && !fSnglQuotesOpen) {
+			    scanner.unread();
+			    tagString.deleteCharAt(tagString.length()-1);
+			    System.out.println(new String(tagString));
+			    return true;
 			} else if (fEndSequence.length > 0 
 								&& (c == fEndSequence[0] 
 										|| uc == fEndSequence[0])) {

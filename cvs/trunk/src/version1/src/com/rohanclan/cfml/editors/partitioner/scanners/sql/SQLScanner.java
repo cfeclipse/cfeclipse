@@ -29,23 +29,19 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.MultiLineRule;
-import org.eclipse.jface.text.rules.EndOfLineRule;
 import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.swt.SWT;
 
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
 import com.rohanclan.cfml.editors.ColorManager;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
-import com.rohanclan.cfml.editors.partitioner.scanners.rules.NamedTagRule;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
 import com.rohanclan.cfml.editors.partitioner.scanners.sql.SQLKeywordDetector;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
-import com.rohanclan.cfml.dictionary.Tag;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -91,18 +87,16 @@ public class SQLScanner extends RuleBasedScanner {
 				manager.getColor(
 					prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_SQL_KEYWORD)
 				)
+				,null
+				,SWT.BOLD
 			));
-			
-		IToken cfkeyword = new Token(new TextAttribute(
-			manager.getColor(
-				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFKEYWORD)
-			)
-		));
 		
 		IToken cffunction = new Token(new TextAttribute(
 			manager.getColor(
 				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_FUNCTION)
 			)
+			,null
+			,SWT.BOLD
 		));
 				
 		List rules = new ArrayList();

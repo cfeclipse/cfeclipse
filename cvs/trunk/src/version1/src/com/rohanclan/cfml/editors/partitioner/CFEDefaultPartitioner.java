@@ -1,7 +1,7 @@
 /*
- * $Id: CFEDefaultPartitioner.java,v 1.10 2005-01-19 05:27:48 smilligan Exp $
- * $Revision: 1.10 $
- * $Date: 2005-01-19 05:27:48 $
+ * $Id: CFEDefaultPartitioner.java,v 1.11 2005-01-19 07:11:59 smilligan Exp $
+ * $Revision: 1.11 $
+ * $Date: 2005-01-19 07:11:59 $
  * 
  * Created on Oct 17, 2004
  *
@@ -259,48 +259,50 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                                     + rawData);
                                     */
 	                    }
+                    }
 
-	                    Set keys = fPseudoPartitions.keySet();
-	                    Object[] tags = keys.toArray();
-	                    for (int i = 0; i < tags.length; i++)
-	                    {
-	                        String tag = "<" + tags[i].toString();
-	                        if (rawData.startsWith(tag)) {
-	                            fPseudoPartition = fPseudoPartitions.getProperty(tags[i].toString());
-	                            p.setNextPartitionType(fPseudoPartition);
-	                            fPseudoPartitionStart = fScanner.getTokenOffset() + fScanner.getTokenLength();
-	                            //System.out.println("Found start of new pseudo partition.");
-	                            break;
-	                        }
-	                    }
-	                    /*
-	                     * If the tag is embedded in a pseudo partition we want
-	                     * to create the pseudo partition up to the start of 
-	                     * this tag and update the pseudo partition start 
-	                     */
-	                    if (fPseudoPartition != null 
-	                            && !p.getNextPartitionType().equals(fPseudoPartition)) {
-	                        p.setNextPartitionType(fPseudoPartition);
-	                        //System.out.println("Found start tag " + rawData + " in pseudo partition.");
-	                        length =  fScanner.getTokenOffset() - fPseudoPartitionStart;
-                            p = new CFEPartition(fPseudoPartitionStart,
-                                    length, fPseudoPartition);
-                            if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
-                                fDocument.addPosition(fPositionCategory, p);
-                                /*
-    	                        System.out.println("Added position for pseudo partition of type "  
-                                        + fPseudoPartition
-                                        + " from " 
-                                        + p.getOffset() 
-                                        + " to " 
-                                        + Integer.toString(p.getOffset() + p.getLength())
-                                        + " "
-                                        + rawData);
-                                        */
-                            }
+
+                    Set keys = fPseudoPartitions.keySet();
+                    Object[] tags = keys.toArray();
+                    for (int i = 0; i < tags.length; i++)
+                    {
+                        String tag = "<" + tags[i].toString();
+                        if (rawData.startsWith(tag)) {
+                            fPseudoPartition = fPseudoPartitions.getProperty(tags[i].toString());
+                            p.setNextPartitionType(fPseudoPartition);
                             fPseudoPartitionStart = fScanner.getTokenOffset() + fScanner.getTokenLength();
-                            //System.out.println("Pseudo partition start set to " + fPseudoPartitionStart);
-	                    }
+                            //System.out.println("Found start of new pseudo partition.");
+                            break;
+                        }
+                    }
+                    
+                    /*
+                     * If the tag is embedded in a pseudo partition we want
+                     * to create the pseudo partition up to the start of 
+                     * this tag and update the pseudo partition start 
+                     */
+                    if (fPseudoPartition != null 
+                            && !p.getNextPartitionType().equals(fPseudoPartition)) {
+                        p.setNextPartitionType(fPseudoPartition);
+                        //System.out.println("Found start tag " + rawData + " in pseudo partition.");
+                        length =  fScanner.getTokenOffset() - fPseudoPartitionStart;
+                        p = new CFEPartition(fPseudoPartitionStart,
+                                length, fPseudoPartition);
+                        if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
+                            fDocument.addPosition(fPositionCategory, p);
+                            /*
+	                        System.out.println("Added position for pseudo partition of type "  
+                                    + fPseudoPartition
+                                    + " from " 
+                                    + p.getOffset() 
+                                    + " to " 
+                                    + Integer.toString(p.getOffset() + p.getLength())
+                                    + " "
+                                    + rawData);
+                                    */
+                        }
+                        fPseudoPartitionStart = fScanner.getTokenOffset() + fScanner.getTokenLength();
+                        //System.out.println("Pseudo partition start set to " + fPseudoPartitionStart);
                     }
                     
                     
@@ -485,7 +487,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             int first = d.computeIndexInCategory(fPositionCategory,
                     reparseStart);
             Position[] pos = d.getPositions(fPositionCategory);
-            
+            System.out.println("Got a doc change event at offset " + e.fOffset + " of length " + e.fLength + " with text " + e.fText);
             
             // Check if we are starting from somewhere in the middle of the document
             if (first > 0) {
@@ -499,6 +501,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
                 
                 // Set the content type to the type of the partition
                 contentType = partition.getType();
+                System.out.println("Partition is of type " + contentType + " from offset " + partition.offset);
                 /*
                  * Check if we're in one of the pseudo partition types.
                  * If so, we want to push it onto the scanner stack.
@@ -603,7 +606,7 @@ public class CFEDefaultPartitioner implements IDocumentPartitioner,
             while (!token.isEOF()) {
                 lastOffset = fScanner.getTokenOffset();
                 contentType = getTokenContentType(token);
-                //System.out.println("Found token of type " + contentType + " at offset " + fScanner.getTokenOffset() + " of length " + fScanner.getTokenLength());
+                System.out.println("Found token of type " + contentType + " at offset " + fScanner.getTokenOffset() + " of length " + fScanner.getTokenLength());
                 if (!isSupportedContentType(contentType)) {
                     token = fScanner.nextToken();
                     continue;
