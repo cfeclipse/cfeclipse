@@ -32,7 +32,12 @@ import org.tigris.cfeclipse.debugger.core.UnknownCommandException;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.HashMap;
 import java.net.SocketTimeoutException;
+import java.util.StringTokenizer;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * BlueDragon specific protocol
@@ -59,7 +64,7 @@ public class BlueDragonProtocol extends DebugProtocol {
      * @return the server response in cfe format
      * @throws UnknownCommandException
      */
-    public DebugResponse sendReceive(DebugCommand command) throws UnknownCommandException 
+    public List sendReceive(DebugCommand command) throws UnknownCommandException 
     {
     	String cfe_cmd = command.getCommand();
     	Map args = command.getArgs();
@@ -94,12 +99,12 @@ public class BlueDragonProtocol extends DebugProtocol {
     		if(args.containsKey(DebugProtocol.CFE_ARGUMENT_TOGGLE))
     		{
     			String stat = (String)args.get(DebugProtocol.CFE_ARGUMENT_TOGGLE);
-    			bdd_cmd = buildCommand(cfe_cmd+stat,null);
+    			bdd_cmd = buildCommand(cfe_cmd+stat,null,command);
     		}
     		else
     		{
     			//just do a step
-    			bdd_cmd = buildCommand(cfe_cmd,null);
+    			bdd_cmd = buildCommand(cfe_cmd,null,command);
     		}
     	}
     	
@@ -108,46 +113,170 @@ public class BlueDragonProtocol extends DebugProtocol {
     	String server_response = "";
     	try
 		{
-    		server_response = dc.sendRecieve(bdd_cmd);
+    		server_response = dc.sendRecieve(
+    			bdd_cmd,debugsession.getSessionId(),command.hashCode()
+			);
 		}
     	catch(Exception e)
 		{
 			e.printStackTrace(System.err);
 		}
-    	
-    	checkForServerError(server_response,bdd_cmd);
-    	
-    	
+    	  	
     	System.out.println(server_response);
     	
-    	DebugResponse dr = new DebugResponse();
-    	
-    	//TODO this should take the response and see if its xml
-    	//etc - make it into something the ide will care about
-    	dr.setResponse(server_response);
-    	
-    	return dr;
+    	return unPackMessage(server_response);
     }
     
-    private void checkForServerError(String possible,String cmd) throws UnknownCommandException
+    /* private void checkForServerError(String possible,String cmd) throws UnknownCommandException
     {
     	if(possible.indexOf("BAD") > 0)
     	{
     		throw new UnknownCommandException("Server does not know command: " + cmd);
     	}
-    }
+    } */
     
     
-    private String buildCommand(String cmd, String arg)
+    private String buildCommand(String cmd, String arg, DebugCommand command)
     {
     	if(arg == null)
     	{
-    		return "+" + "1" + ":" + cmd + ":" + debugsession.getSessionId();
+    		return "+" + command.hashCode() + ":" + cmd + ":" + debugsession.getSessionId();
     	}
     	else
     	{
-    		return "+" + "1" + ":" + cmd + ":" + debugsession.getSessionId() + ":" + arg;
+    		return "+" + command.hashCode() + ":" + cmd + ":" + debugsession.getSessionId() + ":" + arg;
     	}
+    }
+    
+    /**
+     * Turns a string of several server responses in to a list of DebugResponses
+     * @param messages
+     * @return
+     */
+    public List unPackMessage(String messages)
+    {
+    	StringTokenizer st = new StringTokenizer(messages,"\n");
+    	List allMessages = new ArrayList();
+    	StringBuffer singlemessage = new StringBuffer();
+    	
+    	while(st.hasMoreTokens())
+    	{
+    		String line = st.nextToken();
+    		
+    		System.out.println("going to append " + line);
+    		
+    		singlemessage.append(line + "\n");
+    		
+    		//single line message, often just a command
+    		if(line.startsWith("+") && !singlemessage.toString().startsWith("$"))
+    		{
+    			System.out.println("this is a single line command");
+    			//add in the command
+    			allMessages.add(breakOutSingleCommand(singlemessage.toString()));
+    			//zero out buffer
+    			singlemessage = new StringBuffer();
+    			
+    		//end of a multi line response
+    		}else if(line.startsWith("+") && singlemessage.toString().startsWith("$"))
+    		{
+    			System.out.println("this is a multi line commnad");
+    			StringTokenizer stok;
+    			
+    			//this can take a couple formats...
+    			if(singlemessage.toString().indexOf(":STARTSESSION") > 0
+    				|| singlemessage.toString().indexOf(":ENDSESSION") > 0
+    			)
+    			//{
+    				//begining of a session
+    			//}
+    			//else if(singlemessage.toString().startsWith("ENDSESSION"))
+    			{
+    				//end session
+    				stok = new StringTokenizer(singlemessage.toString(),"\n");
+    				//this will create responses like TAGS[3] FUNCTIONS[2]
+    				//they will be listed as commands but I think that'll be
+    				//ok
+    				while(stok.hasMoreTokens())
+    				{
+    					allMessages.add(
+    						breakOutSingleCommand(stok.nextToken())
+						);
+    				}
+    				singlemessage = new StringBuffer();
+    			}
+    			else
+    			{
+    				//its probably a data dump. It'll take up several lines and
+    				//the xml data is on the second line
+    				stok = new StringTokenizer(singlemessage.toString(),"\n");
+    				DebugResponse dr = new DebugResponse();
+    				
+    				//skip the header info
+    				stok.nextToken();
+    				
+					//and the xml line is in the format -:1:<xmldata>...
+					StringTokenizer cmd = new StringTokenizer(stok.nextToken(),":");
+					//skip the first 2 tokends
+					cmd.nextToken(); cmd.nextToken();
+					
+					//grab the xml data
+					String xmldata = cmd.nextToken();
+					System.err.println(xmldata);
+    				
+					dr.setCommand(DebugProtocol.CFE_COMMAND_DATA);
+					
+					allMessages.add(dr);
+					singlemessage = new StringBuffer();
+    			}
+    		}
+    	}
+    	
+    	return allMessages;
+    }
+    
+    /**
+     * Turns a single +count:command[:arguments] into a DebugResponse object
+     * @param line
+     * @return
+     */
+    private DebugResponse breakOutSingleCommand(String line)
+    {
+    	System.out.println("** breaking out command " + line + " **");
+    	DebugResponse dr = new DebugResponse();
+    	StringTokenizer cmd = new StringTokenizer(line.toString(),":");
+		Map args = new HashMap();
+		
+		int i=0;
+		
+		while(cmd.hasMoreTokens())
+		{
+			String part = cmd.nextToken();
+			//System.out.println("part: " + part);
+			switch(i)
+			{
+				case 0: 
+					//the + part
+					break;
+				case 1: 
+					//the s0 session part
+					System.out.println("   session: " + part);
+					args.put("0",part);
+					break;
+				case 2:
+					//the command part
+					dr.setCommand(part);
+					System.out.println("   command: " + part);
+					break;
+				default:
+					//assume the rest are arguments
+					args.put(""+(i-2),part);
+					System.out.println("   arg" + (i-2) + ": " + part);
+			}
+			i++;
+		}
+		dr.setArgs(args);
+    	
+    	return dr;
     }
     
     
@@ -155,9 +284,16 @@ public class BlueDragonProtocol extends DebugProtocol {
 	{
 		try
 		{
-			String a = dc.sendRecieve(username + password);
-			System.out.println(a);
-			return a;
+			System.out.println("Sending login command");
+			
+			String rawdata = dc.sendRecieve("","",1);
+			List listback = unPackMessage(rawdata);
+			
+			//grab the second response after login because the first one will
+			//be the bd banner
+			DebugResponse dr = (DebugResponse)listback.get(1);
+			
+			return (String)dr.getArgs().get("0");
 		}
 		catch(SocketTimeoutException ste)
 		{ 

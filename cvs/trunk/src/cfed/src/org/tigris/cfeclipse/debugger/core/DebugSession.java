@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 import org.tigris.cfeclipse.debugger.protocol.DebugProtocol;
 import org.tigris.cfeclipse.debugger.protocol.DebugProtocolException;
 import java.io.IOException;
+import java.util.List;
 
 //this should be removed at some point
 import org.tigris.cfeclipse.debugger.protocol.BlueDragonProtocol;
@@ -58,13 +59,13 @@ public class DebugSession {
 	 */
     public DebugSession()
     {
-    	setServer("http://192.168.1.202:45000");	
+    	setServer("http://127.0.0.1:45000");	
     	setUsername("");
     	setPassword("");
     	try
 		{
     		setDebugProtocol(new BlueDragonProtocol(this));
-    		debugprotocol.doLogin(username,password);
+    		sessionid = debugprotocol.doLogin(username,password);
 		}
     	catch(IOException ioe)
 		{
@@ -82,7 +83,7 @@ public class DebugSession {
      * @param command the cfe debug command
      * @return the response from the server
      */
-    public DebugResponse issueCommand(DebugCommand command) throws UnknownCommandException
+    public List issueCommand(DebugCommand command) throws UnknownCommandException
     {
     	return debugprotocol.sendReceive(command);
     }

@@ -48,7 +48,7 @@ public class DebugConnection {
 	/** the end of message - if a line of text starts with this
 	 * character then it is the end of the message
 	 */
-	private static String EOM = "+";
+	//private static String EOM = "+";
 	
 	/**
 	 * Create a Debug Connection object using URL
@@ -73,7 +73,7 @@ public class DebugConnection {
 		s = new Socket(url.getHost(),url.getPort());
 		out = new PrintWriter(s.getOutputStream());
 		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-		s.setSoTimeout(TIMEOUT);
+		//s.setSoTimeout(TIMEOUT);
 	}
 	
 	/**
@@ -85,23 +85,77 @@ public class DebugConnection {
 	 * @throws IOException
 	 * @throws SocketTimeoutException
 	 */
-	public String sendRecieve(String send) throws IOException, SocketTimeoutException
+	public String sendRecieve(String send, String sessionid, int messageid)
+		throws IOException, SocketTimeoutException
 	{
 		StringBuffer resp = new StringBuffer();
 		String line;
 		
-		out.print(send + "\n");
+		if(send.length() > 0)
+		{
+			System.out.println("Sending: " + send);
+			
+			out.print(send + "\r\n");
+			out.flush();
+		}
+		
+		for(;;)
+		{
+			line = in.readLine();
+			
+			if(line == null) 
+				throw new IOException("Unexpected EOF");
+			
+			resp.append(line + "\n");
+			
+			//when in step mode...
+			if(line.indexOf("PAUSED") > 0) break;
+			
+			//the id sent (when asking for variables it will be a multi line
+			//message that ends with +123
+			if(line.equals("+:" + messageid)) break;
+			
+			//the current session id - for end of session calls
+			//this is going to be a problem in global non step mode as
+			//the buffer will clear right away
+			if(line.equals("+:" + sessionid + ":END")) break;
+			
+			if(line.equals("+0:BAD")) break;
+		}
+		
+		System.out.println("Full: " + resp.toString());
+		
+		return resp.toString();
+	}
+	
+	/* public String login(String send) throws IOException, SocketTimeoutException
+	{
+		StringBuffer resp = new StringBuffer();
+		String line;
+		
+		out.print(send + "\r\n");
 		out.flush();
 		
+		s.setSoTimeout(10000);
+		
+		boolean oktobreak = false;
 		while((line = in.readLine()) != null)
 		{
 			resp.append(line);
 			
-			if(line.startsWith(EOM)) break;
+			if(line.endsWith("STARTSESSION"))
+				oktobreak = true;
+			
+			if(oktobreak)
+				if(line.startsWith(EOM)) break;
+			
 		}
 		
+		s.setSoTimeout(TIMEOUT);
+		
 		return resp.toString();
-	}
+	} */
+	
 	
 	/**
 	 * Shuts down this connection. one can call the initConnection after this
@@ -118,15 +172,15 @@ public class DebugConnection {
 	/**
 	 * @return Returns the EOM string (End of message). 
 	 */
-	public static String getEOM() {
-		return EOM;
-	}
+	//public static String getEOM() {
+	//	return EOM;
+	//}
 	
 	/**
 	 * @param eom The EOM to set (end of message) if the a line of text
 	 * starts with this string then the message is complete.
 	 */
-	public static void setEOM(String eom) {
-		EOM = eom;
-	}
+	//public static void setEOM(String eom) {
+	//	EOM = eom;
+	//}
 }

@@ -26,11 +26,12 @@ package org.tigris.cfeclipse.debugger.protocol;
 
 import java.lang.String;
 import org.tigris.cfeclipse.debugger.core.DebugCommand;
-import org.tigris.cfeclipse.debugger.core.DebugResponse;
+//import org.tigris.cfeclipse.debugger.core.DebugResponse;
 import org.tigris.cfeclipse.debugger.core.DebugSession;
 import org.tigris.cfeclipse.debugger.core.UnknownCommandException;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * abstract class to create a protocol for a product that will need to interact
@@ -45,9 +46,9 @@ import java.io.IOException;
  */
 public abstract class DebugProtocol {
 	/** noop command */
-	public static final String CFE_COMMAND_NOOP = "NOOP";
+	public static final String CFE_COMMAND_NOOP 	= "NOOP";
 	/** If a file change is needed to be taken from the stack */
-	public static final String CFE_COMMAND_POPFILE = "POPFILE";
+	public static final String CFE_COMMAND_POPFILE 	= "POPFILE";
 	/** If a file change is needed to be pushed on the stack */
 	public static final String CFE_COMMAND_PUSHFILE = "PUSHFILE";
 	/** line number argument */
@@ -60,6 +61,8 @@ public abstract class DebugProtocol {
 	public static final String CFE_COMMAND_TRACE  	= "TRACE";
 	/** command to manipulate profiles */
 	public static final String CFE_COMMAND_PROFIE 	= "PROFILE";
+	/** get or show data */
+	public static final String CFE_COMMAND_DATA 	= "GETDATA";
 	
 	/** some command accept toggles (like step: could be on or off or
 	 * could just be a call to step) if the argument of toggle is there
@@ -99,7 +102,7 @@ public abstract class DebugProtocol {
      * @return the server response in cfe format
      * @throws UnknownCommandException
      */
-    abstract public DebugResponse sendReceive(DebugCommand command) throws UnknownCommandException;
+    abstract public List sendReceive(DebugCommand command) throws UnknownCommandException;
     
     /**
      * log into the server with username and password.
