@@ -538,6 +538,10 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
+			if (!",".equals(invoker) 
+			    && !"(".equals(invoker)) {
+			    return null;
+			}
 			IDocument document = viewer.getDocument();
 			int start = document.getPartition(documentOffset).getOffset();
 			String scanData =	document.get(start, documentOffset - start);

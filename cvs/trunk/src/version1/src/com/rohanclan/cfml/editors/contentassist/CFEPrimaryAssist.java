@@ -187,7 +187,6 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	    autoActivationString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	    autoActivationString += "0123456789";
 	    autoActivationString += "(,=._< ~\t\n\r\"'#";
-	    
 	    char[] chars = autoActivationString.toCharArray();
 	    
 	    this.autoActivationChars = chars;

@@ -100,6 +100,16 @@ public class CFMLFunctionAssist
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
         
+        /*
+         * Only show content assist if the trigger was ( or ,
+         * We should probably find a better way than this, but the 
+         * content assist is getting in the way right now.
+         */
+        if (state.getTriggerData() != ','
+            && state.getTriggerData() != '(') {
+            return null;
+        }
+        
         if (state.getTriggerData() == ' '
         	|| state.getTriggerData() == '\t') {
             return null;
