@@ -5,13 +5,16 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
-import org.eclipse.jface.text.TypedPosition;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
@@ -22,7 +25,6 @@ import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
-import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**
  * @author Christopher Bradford
@@ -71,7 +73,7 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
 			jumpAction.setActiveEditor(null, editor);
 		    jumpAction.run(null);
 	    }
-	    /*
+   	    /*
 	    else {
 	        String info = "No matching tag found";
 		    String[] labels = new String[1];
@@ -86,6 +88,17 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
 					0);
 		    msg.open();
 	    }*/
+ 
+	    Display.getDefault().asyncExec(new Runnable() {
+	       public void run() {
+	           try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+ 	           editor.getEditorSite().getActionBars().getStatusLineManager().setMessage(null);
+            }
+	           editor.getEditorSite().getActionBars().getStatusLineManager().setMessage(null);
+	       }
+	    });
     }
 
     /* (non-Javadoc)
@@ -145,6 +158,8 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
             if (closingPartitionLength == 2) {
                 // Self-closing tag
                 //System.out.println("This is a self-closing tag.");
+                IStatusLineManager statusLM = editor.getEditorSite().getActionBars().getStatusLineManager();
+                statusLM.setMessage("This is a self-closing tag.");
                 return null;
             }
             
@@ -171,6 +186,8 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
                     continue;
                 }
                 //System.out.println("Found match! Is it a start partition: " + checkMatchPartition.isStartPartition());
+                IStatusLineManager statusLM = editor.getEditorSite().getActionBars().getStatusLineManager();
+                statusLM.setMessage(null);
                 return checkMatchPartition;
             }
             //System.out.println("Looks like there's no match.");
@@ -207,6 +224,8 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
                 checkMatchPartition = this.partitioner.getPreviousPartition(checkMatchPartition.getOffset());
             }
             if (!matchFound) {
+                IStatusLineManager statusLM = editor.getEditorSite().getActionBars().getStatusLineManager();
+                statusLM.setMessage("No matching tag found.");
                 return null;
             }
             
@@ -220,11 +239,15 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
             }
             start = startPartitions[0].getOffset();
             end = startPartitions[startPartitions.length - 1].getOffset() + startPartitions[startPartitions.length - 1].getLength();
+            IStatusLineManager statusLM = editor.getEditorSite().getActionBars().getStatusLineManager();
+            statusLM.setMessage(null);
             return new Position(start, end - start);
         }
         
+        IStatusLineManager statusLM = editor.getEditorSite().getActionBars().getStatusLineManager();
+        statusLM.setMessage("No matching tag found.");
         return null;
     
-    }
-
+    };
+    
 }
