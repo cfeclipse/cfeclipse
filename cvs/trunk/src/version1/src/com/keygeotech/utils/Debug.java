@@ -8,7 +8,7 @@ package com.keygeotech.utils;
  * @author OLIVER
  * 
  * Debuging class - remove for final builds
- * @deprecated -r2- this is here to remind you to remove the class and any 
+ * deprecated -r2- this is here to remind you to remove the class and any 
  * refrences to it when you do a build
  */
 public class Debug {
