@@ -17,13 +17,13 @@
 	<!ATTLIST function
 		creator CDATA #REQUIRED
 		name CDATA #REQUIRED
-		returns ( String | Numeric | Object | Query | Array | boolean ) #REQUIRED
+		returns ( String | Numeric | Object | Query | Array | boolean | Struct ) #REQUIRED
 	>
 	<!-- //////////// all /////////////////// -->
 	<!ELEMENT parameter ( help, values?)>
 	<!ATTLIST parameter
 		name CDATA #REQUIRED
-		type ( String | Numeric | Object | Query | Array | boolean ) #REQUIRED
+		type ( String | Numeric | Object | Query | Array | boolean | Struct ) #REQUIRED
 		required ( true | false ) #REQUIRED
 	>
 	<!ELEMENT values (value*)>

@@ -69,6 +69,7 @@
 						<xs:enumeration value="Query"/>
 						<xs:enumeration value="Array"/>
 						<xs:enumeration value="boolean"/>
+						<xs:enumeration value="Struct"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
@@ -91,6 +92,7 @@
 						<xs:enumeration value="Query"/>
 						<xs:enumeration value="Array"/>
 						<xs:enumeration value="boolean"/>
+						<xs:enumeration value="Struct"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
