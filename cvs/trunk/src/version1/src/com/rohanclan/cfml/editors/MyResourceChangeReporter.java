@@ -42,15 +42,15 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 //					System.out.println(" is about to be deleted.");
 					break;
 				case IResourceChangeEvent.POST_CHANGE:
-//					System.out.println("Resources have changed.");
+					System.out.println("Resources have changed.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 				case IResourceChangeEvent.PRE_AUTO_BUILD:
-//					System.out.println("Auto build about to run.");
+					System.out.println("Auto build about to run.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 			 	case IResourceChangeEvent.POST_AUTO_BUILD:
-//					System.out.println("Auto build complete.");
+					System.out.println("Auto build complete.");
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 			}

@@ -30,6 +30,7 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.texteditor.TextOperationAction;
@@ -37,8 +38,6 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-//import java.util.ResourceBundle;
-//import org.eclipse.swt.SWT;
 
 
 /**
@@ -61,6 +60,16 @@ implements IPropertyChangeListener {
 	
 	protected GenericEncloserAction testAction;
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public void doSave(IProgressMonitor monitor) {
+		// 
+		// TODO: Once we get the document outline going, we can update it from here.
+		// On save parsing should apparently go into a builder.
+		
+		super.doSave(monitor);
+	}
 	public CFMLEditor() 
 	{
 		super();

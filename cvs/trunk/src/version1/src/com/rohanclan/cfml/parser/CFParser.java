@@ -234,6 +234,9 @@ public class CFParser implements IEditorActionDelegate {
 	 */
 	protected CFDocument parseResult = null;	// The end result of the parse.
 	
+	protected String data2Parse = null;
+	
+	
 	/*
 	 * 
 	 * @author Oliver Tupman
@@ -323,6 +326,7 @@ public class CFParser implements IEditorActionDelegate {
 	public CFParser() {
 		super();
 		parseDoc = null;
+		data2Parse = null;
 	}
 	
 	/**
@@ -334,9 +338,16 @@ public class CFParser implements IEditorActionDelegate {
 	public CFParser(IDocument doc2Parse, IResource newRes)
 	{
 		parseDoc = doc2Parse;
+		data2Parse = parseDoc.get();
 		res = newRes;
 	}
 
+	public CFParser(String inData, IResource dataRes)
+	{
+		data2Parse = inData;
+		res = dataRes;
+	}
+	
 	/**
 	 * <code>GetTagMatches</code> - Scans the document's data for tags.
 	 * 
@@ -617,18 +628,20 @@ public class CFParser implements IEditorActionDelegate {
 				System.err.println("ERROR: CFParser::" + method + "() - " + message + " for file \'" + docFilename.toOSString() + "\'");
 
 				IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
-				try {
-
-					Map attrs = new HashMap();
-					MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
-					MarkerUtilities.setMessage(attrs, message);
+			
+				Map attrs = new HashMap();
+				MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
+				MarkerUtilities.setMessage(attrs, message);
+				try {					
 					//
 					// Not sure what the start & end positions are good for!
 					//MarkerUtilities.setCharStart(attrs, match.startPos);
 					//MarkerUtilities.setCharEnd(attrs, match.endPos);
-					MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+					
+						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+					
 				}catch(CoreException excep) {
-					userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker");
+					userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 				}
 				break;
 			default:
@@ -1297,7 +1310,7 @@ public class CFParser implements IEditorActionDelegate {
 */
 				
 			}catch(CoreException excep) {
-				userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker");
+				userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 			}catch(Exception anyExcep) {
 				userMessage(0, "processParseResultMessage", "ERROR: Caught exception " + anyExcep.getMessage());
 			}
@@ -1305,26 +1318,34 @@ public class CFParser implements IEditorActionDelegate {
 		}
 	}
 	
-	public CFDocument parseDoc()
+	public CFDocument parseDoc(String inData)
 	{
 		CFDocument docTree = null;
 		try {
 			parserState = new CFParser.State("doesn\'t matter!");
-			calcLineNumbers(parseDoc.get());
-			MatchList matches = tagMatchingAttempts(parseDoc.get());
+			calcLineNumbers(inData);
+			MatchList matches = tagMatchingAttempts(inData);
 			docTree = createDocTree(parserState.getMatches());
-			//dumpMatches(parserState.getMatches());
 			processParseResultMessages();
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
 		}
-		return docTree;
+		return docTree;		
+	}
+	
+	public CFDocument parseDoc()
+	{
+		if(parseDoc == null)
+		{
+			return parseDoc(data2Parse);
+		}
+		else
+			return parseDoc(parseDoc.get());
 	}
 	
 	public CFDocument parseDoc(IDocument doc2Parse)
 	{
-		
-		return createDocTree(getTagMatches(doc2Parse));
+		return parseDoc(doc2Parse.get());
 	}
 }

@@ -24,23 +24,34 @@
  */
 package com.rohanclan.cfml.editors;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jface.text.IDocument;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 
+import com.rohanclan.cfml.parser.CFParser;
+import com.rohanclan.cfml.parser.Util;
+
+/**
+ * 
+ * @author Oliver Tupman
+ *
+ * This DeltaPrinter is a left over from the old method of obtaining an
+ * opened CF document's IResource. I've left this in in case we discover
+ * it could be useful elsewhere (like saving a file and then calling the
+ * parser)
+ */
 class DeltaPrinter implements IResourceDeltaVisitor 
 {
 	public boolean visit(IResourceDelta delta) 
 	{
 		IResource res = delta.getResource();
-	
-		if(res.getType() == IResource.FILE)
-		{
-			CFDocumentProvider.setLastFilename(res.getFullPath());
-			CFDocumentProvider.setLastResource(res);
-		}
-		
+
 		switch (delta.getKind()) 
 		{
 			case IResourceDelta.ADDED:
@@ -48,13 +59,39 @@ class DeltaPrinter implements IResourceDeltaVisitor
 			case IResourceDelta.REMOVED:
 				break;
 			case IResourceDelta.CHANGED:
+/*				
+ 				//
+ 				// This probably shouldn't all go here, but it's a good reference
+ 				// on how to get the data from a resource. 
+				System.out.println("Resource has been changed.");
 				if(res.getType() == IResource.FILE)
 				{
+					System.out.println("Resource is a file");
 					//
-					// Is a file! Somehow we need to get the IDocument for the changed
-					// resource and then run the parser over it.
-					IDocument tempDoc;
+					// Need to somehow get the data from the file!
+					IFile tempFile = (IFile)res;
+					IPath location = res.getLocation();
+					try {
+						System.out.println("Getting resource contents...");
+						BufferedInputStream inStr = new BufferedInputStream(tempFile.getContents(true));
+						System.out.println("Got contents");
+						try {
+							char [] inData;
+							inData = Util.getInputStreamAsCharArray(inStr, -1, null);
+							
+							String temp = new String(inData);
+							CFParser parser = new CFParser(temp, tempFile);
+							parser.parseDoc();
+						} catch(IOException ioExcep) {
+							System.err.println("Caught IO Exception: \'" + ioExcep.getMessage() + "\'");
+							System.out.println("Caught IO Exception: \'" + ioExcep.getMessage() + "\'");
+						}
+					} catch(CoreException excep) {
+						System.err.println("Caught core exception \'" + excep.getMessage() + "\'");
+					}
+					
 				}
+*/				
 				break;
 			case IResourceDelta.OPEN:
 				break;
