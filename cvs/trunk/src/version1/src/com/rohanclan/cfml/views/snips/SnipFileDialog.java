@@ -14,6 +14,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.swt.graphics.Color;
 //import org.eclipse.jface.dialogs.IInputValidator;
 /**
  * @author Stephen Milligan
@@ -179,12 +180,6 @@ public class SnipFileDialog extends Dialog {
 			}
 		);
 		snippetDescriptionText.setFont(parent.getFont());
-	
-		errorMessageLabel = new Label(composite, SWT.NONE);
-		errorMessageLabel.setLayoutData(new GridData(
-			GridData.GRAB_HORIZONTAL |
-			GridData.HORIZONTAL_ALIGN_FILL));
-		errorMessageLabel.setFont(parent.getFont());
 		
 	
 		//Snippet start block label
@@ -249,6 +244,13 @@ public class SnipFileDialog extends Dialog {
 		);
 		snippetEndText.setFont(parent.getFont());
 		
+		errorMessageLabel = new Label(composite, SWT.NONE);
+		errorMessageLabel.setLayoutData(new GridData(
+			GridData.GRAB_HORIZONTAL |
+			GridData.HORIZONTAL_ALIGN_FILL));
+		errorMessageLabel.setFont(parent.getFont());
+		Color color = new Color(Display.getCurrent(),255,0,0);
+		errorMessageLabel.setForeground(color);
 	 	return composite;
 
 	}
@@ -336,19 +338,21 @@ public class SnipFileDialog extends Dialog {
 	
 	protected void validateInput() {
 		
-		/*
+
 		String errorMessage = null;
-	
-		if (validator != null) {
-			errorMessage = validator.isValid(snippetNameText.getText());
+		
+		String test = snippetNameText.getText();
+		if (!snippetNameText.getText().matches("[0-9a-zA-Z _-]+")) {
+		    errorMessage = "The snippet name can only contain numbers, alphabetic characters, space underscore and dash.";
 		}
-	
-		// Bug 16256: important not to treat "" (blank error) the same as null (no error)
+		else if (snippetKeyComboText.getText().length() > 0 && !snippetKeyComboText.getText().matches("[0-9a-zA-Z _-]+")) {
+		    errorMessage = "The trigger text can only contain numbers, alphabetic characters, space underscore and dash.";
+		}
 		errorMessageLabel.setText(errorMessage == null ? "" : errorMessage); //$NON-NLS-1$
+	    
 		okButton.setEnabled(errorMessage == null);
 	
 		errorMessageLabel.getParent().update();
-		*/
 	}
 	
 }
