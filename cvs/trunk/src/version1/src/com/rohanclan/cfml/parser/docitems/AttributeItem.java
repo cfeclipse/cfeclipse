@@ -26,13 +26,19 @@ package com.rohanclan.cfml.parser.docitems;
 
 
 /**
+ * Represents an attribute within a document.
+ * An attribute simply has a name and a value.
+ * 
  * @author Oliver Tupman
- *
  */
 public class AttributeItem extends DocItem {
+	/**
+	 * The string-based value that this attribute has.
+	 */
 	protected String attrValue = "";
 	
 	/**
+	 * 
 	 * @param line
 	 * @param startDocPos
 	 * @param endDocPos
@@ -55,6 +61,11 @@ public class AttributeItem extends DocItem {
 		this.attrValue = value;
 	}
 	
+	/**
+	 * Returns the string-based value that this attribute has.
+	 * 
+	 * @return The attribute
+	 */
 	public String getValue() {
 		return this.attrValue;
 	}
