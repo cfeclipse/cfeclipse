@@ -49,17 +49,26 @@ public class LocalFileSystem implements IFileProvider {
 				if (name == null || name.length() < 1) {
 					name = "";
 				}
+				
+				
+				/*
 				int index = name.lastIndexOf(" (");
 				if (index > 0) {
 					name = name.substring(0, index);
 				}
+				*/
 				if (name.length() > 0) {
-					tmpRoots.add(new FileSystemRoot(name + " (" + systemroot[i].toString() + ")"));
-					
+					tmpRoots.add(new FileSystemRoot(name));
 				}
 				else {
-					tmpRoots.add(new FileSystemRoot(systemroot[i].toString()));
+					String driveLetter =  systemroot[i].toString();
+					int index =driveLetter.indexOf("\\"); 
+					if (index > 0) {
+						driveLetter = driveLetter.substring(0,index);
+					}
+					tmpRoots.add(new FileSystemRoot(view.getSystemTypeDescription(systemroot[i]) + " (" + driveLetter + ")"));
 				}
+				
     		}
 		}
     	
