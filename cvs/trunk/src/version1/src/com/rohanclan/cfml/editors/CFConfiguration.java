@@ -86,11 +86,11 @@ import com.rohanclan.cfml.preferences.ParserPreferenceConstants;
 public class CFConfiguration extends SourceViewerConfiguration implements IPropertyChangeListener {
 	
 	private CFDoubleClickStrategy doubleClickStrategy;
-	private ColorManager colorManager;
+	protected ColorManager colorManager;
 	private ContentAssistant assistant;
 	private TagIndentStrategy indentTagStrategy;
 	private CFScriptIndentStrategy indentCFScriptStrategy;
-	private CFMLPreferenceManager preferenceManager;
+	protected CFMLPreferenceManager preferenceManager;
 	private int tabWidth;
 	private CFMLEditor editor;
 	private CFEUndoManager undoManager;
