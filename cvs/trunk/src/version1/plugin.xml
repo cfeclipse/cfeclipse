@@ -45,7 +45,7 @@
          point="org.eclipse.ui.editors">
       <editor
             name="CFML Editor"
-            extensions="cfm,cfml,cfc,html,htm"
+            extensions="cfm,cfml,cfc,html,htm,xhtml"
             icon="icons/obj16/default.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="com.rohanclan.cfml.editors.CFMLEditor"
