@@ -54,17 +54,20 @@ import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
-
+import org.eclipse.ui.internal.EditorSite;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
@@ -81,6 +84,7 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
+import org.eclipse.swt.widgets.MessageBox;
 
 /**
  * @author Rob
@@ -132,8 +136,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	        trimAction.run(null);
 	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(true);
 	    }
-	    
+	    try {
+ 
 		super.doSave(monitor);
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
 
         foldingSetter.docChanged(false);
 		
@@ -179,7 +188,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 		
-
+		
 		
 	}
 
@@ -241,6 +250,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
         
         createDragAndDrop(projectionViewer);
 
+        if (isEditorInputReadOnly()) {
+            MessageBox msg = new MessageBox(this.getEditorSite().getShell());
+            msg.setText("Warning!");
+            msg.setMessage("You are opening a read only file. You will not be able to make or save any changes.");
+            msg.open();
+        }
+
 	}
 	
 	
@@ -251,6 +267,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
         //projectionViewer.getTextWidget().addMouseTrackListener(cursorListener);
         projectionViewer.addSelectionChangedListener(cursorListener);
         projectionViewer.getTextWidget().addMouseListener(cursorListener);
+        projectionViewer.getTextWidget().addKeyListener(cursorListener);
 		
 		//Allow data to be copied or moved from the drag source
 		int operations = DND.DROP_MOVE | DND.DROP_COPY;

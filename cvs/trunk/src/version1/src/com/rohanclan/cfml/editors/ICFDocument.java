@@ -269,7 +269,9 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		{
 			ce.printStackTrace(System.err);
 		}
-		
+		catch (Exception e) {
+		    //e.printStackTrace();
+		}
 	}
 	
 	/**

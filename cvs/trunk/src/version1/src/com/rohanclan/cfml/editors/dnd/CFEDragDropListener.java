@@ -24,6 +24,8 @@
  */
 package com.rohanclan.cfml.editors.dnd;
 
+import java.io.File;
+
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.swt.custom.StyledText;
@@ -35,7 +37,11 @@ import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
+import org.eclipse.ui.PartInitException;
 /**
  * @author Stephen Milligan
  *
@@ -127,7 +133,8 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 			}
 		}
 		*/
-	}
+        
+    }
 	
     /**
      * This event is fired when the mouse button is down and
@@ -279,11 +286,24 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 
 	
 	/**
-	 * Not currently implemented.
+	 * Opens a dropped file in the CFMLEditor
 	 * 
 	 * @param event
 	 */
 	private void handleFileDrop(DropTargetEvent event) { 
+	  
+	    Object result = fileTransfer.nativeToJava(event.currentDataType);
+	    String[] filenames = (String[])result;
+	    for (int i=0;i<filenames.length;i++) {
+	        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+	        JavaFileEditorInput input = new JavaFileEditorInput(new File(filenames[i]));
+	        try {
+	            page.openEditor(input,"com.rohanclan.cfml.editors.CFMLEditor");
+	        }
+	        catch (PartInitException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	    return;
 	    /*
 	    // TODO: Spike - This currently doesn't work as far as I know.
@@ -298,7 +318,6 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 		}
 		*/
 	}
-	
 	
 	
 	

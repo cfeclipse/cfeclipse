@@ -25,19 +25,25 @@
 package com.rohanclan.cfml.editors;
 
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.rohanclan.cfml.editors.partitioner.CFEDefaultPartitioner;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+
 
 /**
  * 
@@ -57,7 +63,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 				getEncoding(element))) {
 			setupDocument(element, document);
 		}
-
+		
 		if (document != null) {
 			IDocumentPartitioner partitioner = new CFEDefaultPartitioner(
 					new CFPartitionScanner(), new String[] {
@@ -105,6 +111,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 				e.printStackTrace();
 			}
 			setDocumentContent(document, contentStream, encoding);
+			return true;
 		}
 		return super.setDocumentContent(document, editorInput, encoding);
 	}
@@ -116,7 +123,48 @@ public class CFDocumentProvider extends FileDocumentProvider {
 			((ICFDocument) document).parseDocument();
 			
 		}
-		
+		if (element instanceof JavaFileEditorInput) {
+		   try {
+		       saveExternalFile((JavaFileEditorInput)element,document);
+		   }
+		   catch (IOException e) {
+		       Status status = new Status(IStatus.ERROR,"com.rohanclan.cfml",IStatus.OK,e.getMessage(),e);
+		       throw new CoreException(status);
+		   }
+		   
+		}
 		super.doSaveDocument(monitor, element, document, overwrite);
+
 	}
+	
+	private void saveExternalFile(JavaFileEditorInput input, IDocument doc) throws IOException {
+
+	    FileWriter writer = new FileWriter(input.getPath(input).toFile());
+	    writer.write(doc.get());
+	    writer.close();
+	}
+	
+	
+	public boolean isModifiable(Object element) {
+		if (!isStateValidated(element)) {
+			if (element instanceof IFileEditorInput) {
+				return true;
+			}
+		}
+		if (element instanceof JavaFileEditorInput) {
+		    JavaFileEditorInput input = (JavaFileEditorInput)element;
+	        return input.getPath(input).toFile().canWrite();
+		}
+		return super.isModifiable(element);
+	}
+	
+	public boolean isReadOnly(Object element) {
+	    if (element instanceof JavaFileEditorInput) {
+	        JavaFileEditorInput input = (JavaFileEditorInput)element;
+	        return !input.getPath(input).toFile().canWrite();
+		    
+		}
+	    return super.isReadOnly(element);
+	}
+	
 }

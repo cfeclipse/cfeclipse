@@ -816,11 +816,13 @@ public class CFEUndoManager implements IUndoManager {
 	 * @see org.eclipse.jface.text.IUndoManager#undo()
 	 */
 	public void undo() {
-		if (undoable()) {
-			fFoldingIntoCompoundChange= false;
-			commit();
-			internalUndo();
-		}
+	    
+			if (undoable()) {
+				fFoldingIntoCompoundChange= false;
+				commit();
+				internalUndo();
+			}
+	    
 	}
 	
 	/**

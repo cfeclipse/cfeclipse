@@ -38,10 +38,12 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -55,7 +57,7 @@ import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
  * This listener keeps track of where the mouse is relative to the currently selected text
  * and whether or not the mouse is currently down.
  */
-public class SelectionCursorListener implements MouseListener, MouseMoveListener, MouseTrackListener, ISelectionChangedListener {
+public class SelectionCursorListener implements KeyListener, MouseListener, MouseMoveListener, MouseTrackListener, ISelectionChangedListener {
     /**
      * The text editor that the selection listener is installed on
      */
@@ -474,5 +476,32 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
             return false;
         }
 	}
+	
+	
+	/*
+	 * TEMPORARY debugging stuff
+	 * 
+	 */
+
+	/**
+	 * Sent when a key is pressed on the system keyboard.
+	 *
+	 * @param e an event containing information about the key press
+	 */
+	public void keyPressed(KeyEvent e) {
+	    //System.out.println("Key Pressed " + e.keyCode);
+	}
+
+	/**
+	 * Sent when a key is released on the system keyboard.
+	 *
+	 * @param e an event containing information about the key release
+	 */
+	public void keyReleased(KeyEvent e) {
+
+	    //System.out.println("Key Released " + e.keyCode);
+	
+	}
+	
 	
 }
