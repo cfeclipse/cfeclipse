@@ -51,6 +51,7 @@ import com.rohanclan.cfml.parser.CommentParser;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 import com.rohanclan.cfml.util.ResourceUtils;
+import com.rohanclan.cfml.external.ExternalFile;
 
 /**
  * <p>
@@ -294,6 +295,9 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 * @see com.rohanclan.cfml.editors.ICFEFileDocument
 	 */
     public CFEContentAssistManager getContentAssistManager() {
+        if (this.getResource() instanceof ExternalFile) {
+            return CFMLPlugin.getDefault().getGlobalCAM();
+        }
 		if(this.lastRes == null)
 		    return CFMLPlugin.getDefault().getGlobalCAM();
 
@@ -304,11 +308,12 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		        return CFMLPlugin.getDefault().getGlobalCAM();
 		    
 		    nature = (CFENature)lastRes.getProject().getNature(CFMLPlugin.NATURE_ID);
+		    
 		    //returnManager = nature.getNatureCAM();
 		    returnManager = getCAM();
 		} catch(CoreException ex) {
-		    
 		    ex.printStackTrace();
+		    
 		}
 		return returnManager;
     }

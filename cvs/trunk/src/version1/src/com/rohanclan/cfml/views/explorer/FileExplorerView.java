@@ -213,6 +213,8 @@ public class FileExplorerView extends ViewPart {
 	        public void handleEvent(Event e) {
 	            try {
 		            FtpConnection.getInstance().disconnect();
+		            disconnectItem.setEnabled(false);
+		            connectItem.setEnabled(true);
 		            
 	            }
 	            catch (Exception ex) {
@@ -228,6 +230,8 @@ public class FileExplorerView extends ViewPart {
 	        public void handleEvent(Event e) {
 	            try {
 		            FtpConnection.getInstance().connect();
+		            disconnectItem.setEnabled(true);
+		            connectItem.setEnabled(false);
 	            }
 	            catch (Exception ex) {
 	                ex.printStackTrace();

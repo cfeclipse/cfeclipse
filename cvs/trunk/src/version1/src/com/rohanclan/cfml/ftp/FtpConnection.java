@@ -114,8 +114,11 @@ public class FtpConnection implements IFileProvider {
 
     public void disconnect() {
         try {
-            ftpClient.quit();
+            if (isConnected()) {
+                ftpClient.quit();
+            }
             connectFailed = false;
+            AlertUtils.showStatusMessage("Disconnected", viewPart);
         } catch (Exception e) {
             AlertUtils.alertUser(e);
         }
@@ -249,6 +252,7 @@ public class FtpConnection implements IFileProvider {
                 if (this.isConnected()) {
                     ftpClient.quit();
                     connectFailed = false;
+                    AlertUtils.showStatusMessage("Disconnected", viewPart);
                 }
 
             }

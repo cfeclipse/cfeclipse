@@ -705,7 +705,7 @@
       </command>
       <keyBinding
             string="F8"
-            scope="org.eclipse.ui.textEditorScope"
+            scope="org.eclipse.ui.contexts.dialogAndWindow"
             command="com.rohanclan.cfml.editors.actions.LoadScribblePad"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
