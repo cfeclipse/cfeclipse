@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>Author: Douglas Williams</name>
+<help>Strips all tag-based code from all form fields submitted to the action page.</help>
+<starttext><![CDATA[
+/**
+ * Strips HTML from all form fields.
+ * Version 1.1 by Raymond Camden
+ * 
+ * @param nostrip 	 List of form fields that should not be modified. 
+ * @return Returns true. 
+ * @author Douglas Williams (klenzade@avondale.com) 
+ * @version 1.1, December 19, 2001 
+ */
+function FormStripHTML() {
+	var nostrip = "";
+	if(arraylen(Arguments)) nostrip = Arguments[1];
+
+        if(structIsEmpty(form)) return;
+
+	for (field in form) {
+   		if(NOT listfindnocase(nostrip, field)) form[field] = ReReplaceNoCase(form[field], "<[^>]*>", "", "ALL");
+	}
+
+        return true;
+}]]></starttext>
+<endtext><![CDATA[ ]]></endtext>
+</snippet>
