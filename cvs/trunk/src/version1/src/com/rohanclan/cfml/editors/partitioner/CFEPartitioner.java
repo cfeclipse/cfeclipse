@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.6 2005-03-06 03:03:42 smilligan Exp $
- * $Revision: 1.6 $
- * $Date: 2005-03-06 03:03:42 $
+ * $Id: CFEPartitioner.java,v 1.7 2005-03-15 04:50:44 smilligan Exp $
+ * $Revision: 1.7 $
+ * $Date: 2005-03-15 04:50:44 $
  * 
  * Created on Oct 17, 2004
  *
@@ -874,6 +874,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
             || fInsertedText.indexOf('"') >= 0
             || fDeletedText.indexOf('\'') >= 0
             || fInsertedText.indexOf('\'') >= 0) {
+
             return true;
         }
         

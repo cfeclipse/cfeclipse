@@ -475,6 +475,20 @@
                class="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
                id="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction">
          </action>
+         
+         
+		<!-- external browser -->
+         <action
+               toolbarPath="flexer"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
+               label="&amp;Browse"
+               class="com.rohanclan.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="Open in external browser."
+               icon="icons/ctool16/globe.gif"
+               id="com.rohanclan.cfml.editors.actions.ExternalBrowserAction"
+               definitionId="com.rohanclan.cfml.editors.actions.ExternalBrowserActionID">
+         </action>
+
 
           <!-- Launch new file dialog -->
          <action
@@ -486,6 +500,7 @@
                class="com.rohanclan.cfml.editors.actions.NewFileAction"
                id="com.rohanclan.cfml.editors.actions.NewFileAction">
          </action>
+
           <!-- Highlight bracket pair 
          <action
          	   toolbarPath="BasicCFEditorCommand"
@@ -1030,6 +1045,22 @@
             commandId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+
+      <!-- Open in external browser -->
+      <command
+            name="Browse"
+            description="Open in external browser."
+            categoryId="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.ExternalBrowserActionID">
+      </command>
+      <keyBinding
+            keySequence="F12"
+            contextId="org.eclipse.ui.textEditorScope"
+            commandId="com.rohanclan.cfml.editors.actions.ExernalBrowserActionID"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+
+
       <command
             name="New file"
             description="Launch the new file dialog."
@@ -1043,6 +1074,7 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       
+
       <!-- Find a matching bracket pair
       <command
             name="Highlight matching bracket pair"
