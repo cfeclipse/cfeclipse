@@ -50,9 +50,9 @@ import com.rohanclan.cfml.parser.xpath.expressions.ComparisonType;
  */
 public abstract class DocItem implements Comparable {
 	/** The name of the item (i.e. &lt;cfscript&gt;) */
-	protected String itemName; 
+	protected String itemName = ""; 
 	/** The complete start-to-finish data for the item (i.e. &lt;cffunction name="asdf" ... &gt;)	 */
-	protected String itemData; 
+	protected String itemData = ""; 
 	
 	/** The line number for the start of the match */
 	protected int lineNumber;
