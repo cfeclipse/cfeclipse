@@ -142,7 +142,7 @@ public class GetHelpAction implements IEditorActionDelegate {
 
 		}
 		
-		if (theFullURL.length() == 0) {
+		if (theFullURL.length() == 0 || urldest.length() == theFullURL.length()) {
 		    theFullURL = "http://livedocs.macromedia.com";
 		}
 		
