@@ -29,15 +29,21 @@ import java.util.Iterator;
 //import org.eclipse.core.resources.IFile;
 //import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 //import org.eclipse.core.resources.IWorkspace;
 //import org.eclipse.core.resources.IWorkspaceRoot;
 //import org.eclipse.core.resources.ResourcesPlugin;
 //import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 //import org.eclipse.ui.IWorkbenchPage;
@@ -66,7 +72,9 @@ import com.rohanclan.cfml.parser.CfmlTagItem;
 public class GotoFileAction implements IEditorActionDelegate {
 
 	ITextEditor editor = null;
-	
+	protected Shell shell;
+    protected IPath newfilepath;
+    protected IPath currfilepath;
 	/**
 	 * 
 	 */
@@ -151,11 +159,35 @@ public class GotoFileAction implements IEditorActionDelegate {
 						currentpath += template;
 					}
 					
-					GenericOpenFileAction openFileAction;
+					System.out.println("about to open the file");
+						GenericOpenFileAction openFileAction;
+						openFileAction = new GenericOpenFileAction();
+						openFileAction.setFilename(currentpath);
+						openFileAction.run();
 					
-					openFileAction = new GenericOpenFileAction();
-					openFileAction.setFilename(currentpath);
-					openFileAction.run();						
+					if(!openFileAction.isSuccess()){
+					    
+					    String projectName = pth.replaceFirst("P/","");
+					    currentpath = currentpath.replaceFirst(projectName, "");
+					    currentpath = currentpath.replaceFirst("/", "");
+					    System.out.println(currentpath);
+					    
+					    InputDialog confirmDialog = new InputDialog(shell,"Create File","Filename:",currentpath,null);
+						
+					    if (confirmDialog.open() == org.eclipse.jface.window.Window.OK) {
+							String newname = confirmDialog.getValue(); 
+							GenericNewFileAction newFileAction = new GenericNewFileAction();
+							newFileAction.setFilename(projectName + newname);
+							newFileAction.run();
+							if(!newFileAction.isCreated()){ 
+							     MessageBox msg = new MessageBox(editor.getEditorSite().getShell());   
+							     msg.setText("Error!");  
+							     msg.setMessage( "There was a problem trying to create the file \"" + newname + "\" make sure all directories in the path exist and that the path you typed is correct");   
+							     msg.open();  
+							}
+					    }
+					}
+					
 					
 				//}
 		
@@ -168,6 +200,8 @@ public class GotoFileAction implements IEditorActionDelegate {
 		catch(BadLocationException e)
 		{
 			e.printStackTrace(System.err);
+			System.out.println("no file found" + System.err);
+		
 		}
 	}
 

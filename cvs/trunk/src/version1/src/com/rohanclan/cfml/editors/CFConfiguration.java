@@ -48,7 +48,7 @@ import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-
+import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.swt.graphics.RGB;
 
 import com.rohanclan.cfml.CFMLPlugin;
@@ -111,6 +111,12 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	public int getTabWidth(ISourceViewer sourceViewer) {
 		return tabWidth;
 	}
+	
+	
+	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
+	    return new CFAnnotationHover();
+	}
+	
 	
 	/**
 	 * This defines what sections (partitions) are valid for the document

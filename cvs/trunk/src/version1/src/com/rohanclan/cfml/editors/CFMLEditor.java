@@ -24,6 +24,8 @@
  */
 package com.rohanclan.cfml.editors;
 
+import java.util.Iterator;
+
 import org.eclipse.swt.widgets.Composite;
 
 import com.rohanclan.cfml.CFMLPlugin;
@@ -31,7 +33,11 @@ import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.JumpToDocPos;
 
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -98,6 +104,7 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 		//TODO: Once we get the document outline going, we can update it from
 		// here.
 		//On save parsing should apparently go into a builder.
+	    
 		super.doSave(monitor);
 	}
 
@@ -353,13 +360,18 @@ public class CFMLEditor extends TextEditor implements IPropertyChangeListener {
 				// action
 				//in the xml file then just call it here...
 				//TODO
-				gfa
-						.setActiveEditor(null, getSite().getPage()
-								.getActiveEditor());
-				Action ack = new Action("Open File", CFPluginImages
-						.getImageRegistry().getDescriptor(
-								CFPluginImages.ICON_IMPORT)) {
-					public void run() {
+
+				gfa.setActiveEditor(null,getSite().getPage().getActiveEditor());
+			
+				
+							
+				Action ack = new Action(
+					"Open/Create File",
+					CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)
+				){
+					public void run()
+					{
+
 						gfa.run(null);
 					}
 				};

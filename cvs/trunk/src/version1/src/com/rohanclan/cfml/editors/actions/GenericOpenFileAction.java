@@ -30,6 +30,8 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -56,6 +58,8 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 	protected ITextEditor editor = null;
 	protected String filename = "untitled.cfm";
 	protected IFile file;
+	protected boolean success = true;
+	protected Shell shell;
 	
 	public GenericOpenFileAction()
 	{
@@ -122,13 +126,12 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		if(!root.exists(file.getFullPath())) {
 			System.err.println("File \'" + filename + "\' does not exist. Stupid user.");
-			/*
-			 	TODO: Ask the user whether they wish to create the file. If so, call the
-			 	NewCfmlWizard to handle it for us 
-						NewCfmlWizard newFile = new NewCfmlWizard();
-			*/
+			this.success = false;
 			return;
+		}else{
+		    this.success = true;
 		}
+		
 		
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
@@ -138,9 +141,16 @@ public class GenericOpenFileAction implements IEditorActionDelegate {
 		}
 		catch (PartInitException e) 
 		{
+		  
 			e.printStackTrace(System.err);
 		}
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){;}
+    /**
+     * @return Returns the success.
+     */
+    public boolean isSuccess() {
+        return this.success;
+    }
 }

@@ -291,17 +291,22 @@ public class CFParser {
 				if(this.reportErrors) {
 					IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
 					
-					Map attrs = new HashMap();
-					MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
-					MarkerUtilities.setMessage(attrs, message);
+					
 					try {					
 						//
 						// Not sure what the start & end positions are good for!
 						//MarkerUtilities.setCharStart(attrs, match.startPos);
 						//MarkerUtilities.setCharEnd(attrs, match.endPos);
 						
-						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+						//MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+						IMarker marker = this.res.createMarker(IMarker.PROBLEM);
+						Map attrs = new HashMap();
+						MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
+						MarkerUtilities.setMessage(attrs, message);
+						marker.setAttributes(attrs);
+						marker.setAttribute(IMarker.MESSAGE,message);
 						
+
 					}catch(CoreException excep) {
 						userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 						}
