@@ -106,6 +106,16 @@ public class CFPluginImages {
 	public static final String ICON_FOLDER = "dir.gif";
 	/** a closed folder with a little arrow */
 	public static final String ICON_IMPORT = "import.gif";
+	/** coffee bean icon */
+	public static final String ICON_BEAN = "bean.gif";
+	/** red circle with an X. use for Bad bad things  */
+	public static final String ICON_ERROR = "error.gif";
+	/** yellow triangle with an ! "Could be bad things" */
+	public static final String ICON_WARNING = "warning.gif";
+	/** yellow diamond with an ! "This really shouldnt be but will work anyway" 
+	 * errors */
+	public static final String ICON_ALERT = "alert.gif";
+	
 	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
@@ -147,6 +157,10 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_SERVER);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FILE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER);
+			addImageToRegistry(MODEL_OBJECTS,ICON_BEAN);
+			addImageToRegistry(MODEL_OBJECTS,ICON_ERROR);
+			addImageToRegistry(MODEL_OBJECTS,ICON_WARNING);
+			addImageToRegistry(MODEL_OBJECTS,ICON_ALERT);
 			
 			addImageToRegistry(TOOLBAR,ICON_ADD);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);

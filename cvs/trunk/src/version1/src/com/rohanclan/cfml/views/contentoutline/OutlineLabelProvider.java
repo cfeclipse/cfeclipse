@@ -71,6 +71,10 @@ public class OutlineLabelProvider extends LabelProvider {
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_CLASS);
 			}
+			if(tname.equals("object"))
+			{
+				return CFPluginImages.get(CFPluginImages.ICON_BEAN);
+			}
 			else if(tname.equals("function"))
 			{
 				return CFPluginImages.get(CFPluginImages.ICON_FUNC);
@@ -133,7 +137,8 @@ public class OutlineLabelProvider extends LabelProvider {
 				return CFPluginImages.get(CFPluginImages.ICON_TAG);
 			}
 		}
-		return null;
+		
+		return CFPluginImages.get(CFPluginImages.ICON_ALERT);
 	}
 
 	
@@ -186,7 +191,7 @@ public class OutlineLabelProvider extends LabelProvider {
 			return sb.toString();
 		}
 		
-		return "unknown";
+		return "unknown (add to user.xml if custom)";
 	}
 	
 	/**
@@ -201,7 +206,7 @@ public class OutlineLabelProvider extends LabelProvider {
 		if(
 			item.equals("if") || item.equals("set") || item.equals("loop")
 			|| item.equals("else") || item.equals("elseif") || item.equals("break")
-			|| item.equals("return")
+			|| item.equals("return") || item.equals("defaultcase") || item.equals("try")
 		)
 		{
 			return true;
