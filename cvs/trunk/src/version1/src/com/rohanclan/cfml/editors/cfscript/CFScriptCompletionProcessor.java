@@ -87,13 +87,20 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	private static final short TAGTYPE = 0;
 	private static final short ATTRTYPE = 1;
 	private String className = "CFScriptCompletionProcessor";
+
+	//
+	// Define the characters that make up the activation set.
+	// There are three parts to the activation set:
 	
-	protected static final String completionChars = ".(;~\"#";
+	// 1) The standard completion chars. These are some activation characters that non-opener/closer characters
+	protected static final String completionChars = ".(;~\"#[";
 
-	protected static final String closerChars = ")#";
-	protected static final String openerChars = "({#";
+	// 2) The opener/closer characters. This assists with the opening & closing of things such as brackets
+	protected static final String closerChars = ")#]";
+	protected static final String openerChars = "({#[";
 
-	protected static final String close2openMatchChars = ")(}{##\"\""; 
+	// This is a simple map between the character that closes a pair to the character that does the opening.
+	protected static final String close2openMatchChars = ")(}{##\"\"]["; 
 	
 	/**
 	 * What characters cause us to wake up (for tags and attributes)
@@ -426,6 +433,9 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				break;
 			case '(':
 				extraData = ")";
+				break;
+			case '[':
+				extraData = "]";
 				break;
 			default:
 				break;
