@@ -112,7 +112,8 @@ public class SnipTreeView extends ViewPart
 	 */
 	public SnipTreeView() {
 		super();
-
+		
+		
 		propertyManager = new CFMLPropertyManager();
 		// By default we want to use cfeclipse style snippets
 		snippetType = CFECLIPSE_SNIP_TYPE;
@@ -230,6 +231,8 @@ public class SnipTreeView extends ViewPart
 				}
 			}
 		});
+
+		treeViewer.addDoubleClickListener(new SnipDoubleClickListener(this));
 	}
 	
 	/**
@@ -276,7 +279,6 @@ public class SnipTreeView extends ViewPart
 			
 		};
 		
-		//TODO: Need to add a deleteSnippetAction and deleteFolderAction
 		
 	}
 	
@@ -363,7 +365,7 @@ public class SnipTreeView extends ViewPart
 	 * Gets the selected item parses it, and adds the defined stuff to the
 	 * editor
 	 */
-	private void insertItem() 
+	protected void insertItem() 
 	{
 		//get a handle to the current editor and assign it to our temp action
 		IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
