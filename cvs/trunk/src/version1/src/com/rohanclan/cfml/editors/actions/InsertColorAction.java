@@ -39,11 +39,15 @@ import org.eclipse.ui.texteditor.ITextEditor;
 /**
  * @author Rob
  *
- * Inserts a color
+ * Inserts a color using the systems color control
  */
 public class InsertColorAction extends WordManipulator implements IEditorActionDelegate {
 	
-	ITextEditor editor = null;
+	protected ITextEditor editor = null;
+	/** the actual color control, this might not be good as static on all OSs
+	 * but works pretty well on the Mac... keep an eye...
+	 */
+	protected static ColorDialog colordialog = null;
 	
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
 	{
@@ -69,7 +73,9 @@ public class InsertColorAction extends WordManipulator implements IEditorActionD
 	}
 	
 	/**
-	 * override manipulate, just return the string to lower case
+	 * Tries to use the input as a hex color triplet and set the color control 
+	 * to the passed in color, and will return any color selection made with the 
+	 * color control in a hex triplet (no hashes included)
 	 */
 	public String manipulate(String highlighted)
 	{
@@ -81,22 +87,80 @@ public class InsertColorAction extends WordManipulator implements IEditorActionD
 		
 		if(shell != null)
 		{
-			ColorDialog colordialog = new ColorDialog(shell);
+			if(colordialog == null){
+				colordialog = new ColorDialog(shell);
+			}
 			
-			colordialog.open();
+			RGB startrgb = guessRGBColor(highlighted);
+			
+			if(startrgb != null){
+				colordialog.setRGB(startrgb);
+			}
 						
-			RGB selectedcolor = colordialog.getRGB();
+			colordialog.open();
 			
+			RGB selectedcolor = colordialog.getRGB();
 			if(selectedcolor != null)
 			{
-				hexstr = Integer.toHexString(selectedcolor.red) 
-					+ Integer.toHexString(selectedcolor.green) 
-					+ Integer.toHexString(selectedcolor.blue);
+				hexstr = ensureTwoDigits(Integer.toHexString(selectedcolor.red)) 
+					+ ensureTwoDigits(Integer.toHexString(selectedcolor.green))
+					+ ensureTwoDigits(Integer.toHexString(selectedcolor.blue));
 			}
 		}else{
-			System.err.println("Shell is null for some stupid reason");
+			System.err.println("Shell is null for some reason");
 		}
 		return hexstr;
+	}
+	
+	/**
+	 * Tries to make an RGB object out of a hex string. Retruns null if it fails
+	 * @param input
+	 * @return
+	 */
+	private RGB guessRGBColor(String input){
+		try{
+			//only try this if it looks somewhat like a color
+			if(input.length() >= 6)
+			{
+				String red 	= input.substring(0,2);
+				String green = input.substring(2,4);
+				String blue 	= input.substring(4,6);
+				
+				RGB rgb = new RGB(
+					Integer.parseInt(red,16),
+					Integer.parseInt(green,16),
+					Integer.parseInt(blue,16)
+				);
+				
+				return rgb;
+			}
+		}catch(Exception e){
+			//we failed some how just return null
+			e.printStackTrace(System.err);
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Simple method to make sure we get stuff like "0f" instead of just "f". Used
+	 * in color hex string making
+	 * @param str
+	 * @return
+	 */
+	private String ensureTwoDigits(String str){
+		if(str.length() == 0)
+		{
+			return "00";
+		}
+		else if(str.length() == 1)
+		{
+			return "0" + str;
+		}
+		else
+		{
+			return str;
+		}
 	}
 	
 	public void selectionChanged(IAction action, ISelection selection) {;}
