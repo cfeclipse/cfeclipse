@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<dictionary 
+	xmlns="http://www.cfeclipse.org/version1/dictionary"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://www.cfeclipse.org/version1/dictionary/dictionary.xsd"
+>
+	<tags>
+		<tag name="canvas" single="false" xmlstyle="false" creator="1">
+			<help />
+			<parameter name="id" type="String" required="false">
+				<help />
+				<values/>
+			</parameter>
+			<parameter name="oninit" type="Function" required="false">
+				<help />
+				<values/>
+			</parameter>
+			<parameter name="width" type="String" required="false">
+				<help />
+				<values/>
+			</parameter>
+			<parameter name="height" type="String" required="false">
+				<help />
+				<values/>
+			</parameter>
+			<parameter name="bgcolor" type="String" required="false">
+				<help />
+				<values/>
+			</parameter>
+			<parameter name="title" type="String" required="false">
+				<help />
+				<values/>
+			</parameter>
+			<parameter name="fontstyle" type="String" required="false">
+				<help />
+				<values>
+				  <value option="bold"/>
+				  <value option="italic"/>
+				  <value option="bold italic"/>
+				  <value option="plain"/>
+				</values>
+			</parameter>
+			<parameter name="debug" type="boolean" required="false">
+   				<help />
+				<values/>
+			</parameter>
+			<parameter name="maxtextwidth" type="Numeric" required="false">
+				<help />
+			   <values/>
+			</parameter>
+			<parameter name="maxtextheight" type="Numeric" required="false">
+				<help />
+			   <values/>
+			</parameter>
+			<parameter name="version" type="String" required="false">
+				<help />
+			   <values/>
+			</parameter>
+		</tag>
+	</tags>
+</dictionary>
