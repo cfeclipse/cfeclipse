@@ -129,6 +129,7 @@ public class ICFDocument extends Document {
 		if(docParser == null)
 		{
 			docParser = new CFParser(this, lastRes);
+			docParser.setCFScriptParsing(false);
 		}
 		else
 		{

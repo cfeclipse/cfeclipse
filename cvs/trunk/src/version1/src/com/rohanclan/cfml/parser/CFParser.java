@@ -121,6 +121,12 @@ public class CFParser {
 	
 	protected IResource res = null;
 
+	protected boolean parseCFScript = false;
+	
+	
+	public void setCFScriptParsing(boolean enable) {
+		this.parseCFScript = enable;
+	}
 	
 	/**
 	 * <code>parseDoc</code> - the document to parse. Could just use a string, but IDocument provides line number capabilities.
@@ -463,7 +469,11 @@ public class CFParser {
 		mainData = mainData.substring("<cfscript>".length());
 		StringReader tempRdr =new StringReader(mainData);
 		SimpleNode rootElement = null;
-		/*
+		
+		if(!this.parseCFScript) {
+			return;
+		}
+		
 		if(parser == null) {
 			parser = new SPLParser(tempRdr);
 		}
@@ -488,6 +498,7 @@ public class CFParser {
 			// when it encountered the error, then it goes through the tokens it was expecting.
 			// Finally we create a temp TagMatch that we ajust it's document positions so that the line
 			// number isn't the start of the CFScript block but the actual line of the error.
+			
 			String errMsg = "Encountered \"" + ex.currentToken.next.image + "\". Was expecting one of: ";
 			for(int i = 0; i < ex.expectedTokenSequences.length; i++) {
 				String expToken =ex.tokenImage[ex.expectedTokenSequences[i][0]]; 
@@ -498,12 +509,18 @@ public class CFParser {
 			tempMatch.lineNumber+= ex.currentToken.beginLine-1;
 			tempMatch.startPos += ex.currentToken.beginColumn;
 			tempMatch.endPos += ex.currentToken.endColumn;
-			userMessage(matchStack.size(), "handleCFScriptBlock()", errMsg, CFParser.USRMSG_ERROR, tempMatch);
+			try {
+				userMessage(matchStack.size(), "handleCFScriptBlock()", errMsg, CFParser.USRMSG_ERROR, tempMatch);
+			} catch(Exception innerEx) {
+				System.err.println("CFParser::handleCFScriptBlock() - Caught exception whilst creating markers!");
+				innerEx.printStackTrace();
+			}
+			ex.printStackTrace();
 		} catch(Exception ex) {
 			System.err.println("CFParser::handleCFScriptBlock() - Caught exception \'" + ex.getMessage() + "\'");
 			ex.printStackTrace();
 		}
-		*/
+		
 	}
 	
 	/**

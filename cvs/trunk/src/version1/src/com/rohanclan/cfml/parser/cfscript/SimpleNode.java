@@ -29,7 +29,7 @@ public class SimpleNode extends DocItem implements Node {
 	protected Token aNodeToken = null;
 	
   protected Node parent;
-  protected Node[] children;
+  public Node[] children;
   protected int id;
 
   public SimpleNode(int i) {

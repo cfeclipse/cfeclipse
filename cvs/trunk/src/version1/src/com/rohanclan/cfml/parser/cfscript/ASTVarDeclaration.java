@@ -38,11 +38,4 @@ public class ASTVarDeclaration extends SimpleNode
   }
 
 
-  public void interpret()
-  {
-     if (type == BOOL)
-        symtab.put(name, new Boolean(false));
-     else
-        symtab.put(name, new Integer(0));
-  }
 }

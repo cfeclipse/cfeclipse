@@ -46,6 +46,8 @@ SKIP : /* WHITE SPACE */
 | "\n"
 | "\r"
 | "\f"
+|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
 }
 
 TOKEN: /* keywords */
@@ -57,6 +59,14 @@ TOKEN: /* keywords */
 	<WHILE: "while">
 	|
 	<DO: "do">
+	|
+	<VAR: "var">
+	|
+	<RETURN: "return">
+	|
+	<EQ: "eq">
+	|
+	<NEQ: "neq">
 }
 
 TOKEN : /* Types */
@@ -66,9 +76,10 @@ TOKEN : /* Types */
    < BOOL: "boolean" >
 }
 
+
 TOKEN : /* LITERALS */
 {
-  < INTEGER_LITERAL: (<DIGIT>)+ >
+  < INTEGER_LITERAL: ("-")? (<DIGIT>)+ >
 | 
  <STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\"">
 }
@@ -84,19 +95,25 @@ void CompilationUnit() :
 }
 {
    (
-   	FunctionDeclaration()
+   		FunctionDeclaration()
    	|
-       VarDeclaration() ";"
-     |
-       Statement()
+		VarDeclaration() 
+	|
+    	Statement()
    )*
    <EOF>
+}
+
+void ReturnStatement() :
+{}
+{
+	<RETURN> Expression()
 }
 
 void FunctionDeclaration()  :
 { Token t;}
 {
-	<FUNCTION> t = <IDENTIFIER> "(" (ParameterList())? ")" Block()
+	<FUNCTION> t = <IDENTIFIER> "(" (ParameterList())? ")" Statement()
 	{ 
 		jjtThis.name = t.image; 
 		jjtThis.aNodeToken = t;
@@ -106,13 +123,10 @@ void FunctionDeclaration()  :
 void VarDeclaration() : 
 { Token t; String name;}
 {
-  (
-    "boolean" { jjtThis.type = BOOL; }
-   |
-    "int" { jjtThis.type = INT; }
-  )
-  t = <IDENTIFIER> 
-  { jjtThis.name = t.image; }
+/*  <VAR> t = <IDENTIFIER> "=" Statement() ";" */
+	<VAR> Assignment()
+	
+/*  { jjtThis.name = t.image; } */
 }
 
 /*
@@ -122,16 +136,16 @@ void VarDeclaration() :
 void Expression() #void:
 {}
 {
-  LOOKAHEAD( PrimaryExpression() "=" )
-  Assignment()
-|
-  ConditionalOrExpression()
+		LOOKAHEAD( PrimaryExpression() "=" )
+		Assignment()
+	|
+		ConditionalOrExpression()
 }
 
 void Assignment() #Assignment(2) :
 {}
 {
-  PrimaryExpression() "=" Expression()
+  PrimaryExpression() "="  Expression()
 }
 
 void ConditionalOrExpression() #void :
@@ -172,12 +186,23 @@ void AndExpression() #void :
 void EqualityExpression() #void :
 {}
 {
-  RelationalExpression()
+  StrEQExpression()
   (
      <ISNOT> RelationalExpression() #NENode(2) 
     |
      "is" RelationalExpression() #EQNode(2)
   )*
+}
+
+void StrEQExpression() #void :
+{}
+{
+	RelationalExpression()
+	(
+			<EQ> RelationalExpression() #StrEQNode(2)
+		|
+			<NEQ> RelationalExpression() #StrNEQNode(2)
+	)*
 }
 
 void RelationalExpression() #void :
@@ -224,20 +249,20 @@ void UnaryExpression() #void :{}{  PrimaryExpression()}
 void PrimaryExpression() #void :
 { String name; }
 {  
-	LOOKAHEAD(CFCMethodCall())
-	CFCMethodCall()
+		LOOKAHEAD(CFCMethodCall())
+		CFCMethodCall()
 	|
-	LOOKAHEAD(2)
-	StructRef()
+		LOOKAHEAD(2)
+		StructRef()
 	|
-	LOOKAHEAD(2)
-	FunctionCall()
+		LOOKAHEAD(2)
+		FunctionCall()
 	|
-	Literal() 
+		Literal() 
 	| 
-	Id() 
+		Id() 
 	| 
-	"(" Expression() ")" 
+		"(" Expression() ")" 
 }
 
 void StructRef() #StructRefNode :
@@ -263,28 +288,33 @@ void CFCMethodCall() #CFCMethodCallNode :
 void Id() :
 {   Token t;   }
 { 
-	t = <IDENTIFIER>  
+	t = <IDENTIFIER> 
 	{ jjtThis.name = t.image; } 
 }
 
+void StringLiteral() :
+{ Token t; }
+{
+	t = <STRING_LITERAL>
+	{ jjtThis.val = t.image; }
+}
+
+void IntLiteral() :
+{ Token t; }
+{
+		t = <INTEGER_LITERAL>
+		{ jjtThis.val = t.image;
+		  jjtThis.aNodeToken = getToken(0); 
+		}
+}
 void Literal() #void :
 {   Token t;   }
 {
- (
- t = <STRING_LITERAL>
- {
-   jjtThis.val = t.image;
- }
- |
-  t=<INTEGER_LITERAL>
-    {
-/*       jjtThis.val = Integer.parseInt(t.image);&*/
-	jjtThis.val = t.image;
-		jjtThis.aNodeToken = getToken(0);
-    }
- )#IntConstNode
-|
-  BooleanLiteral()
+		StringLiteral()
+	|
+		IntLiteral()
+	|
+		BooleanLiteral()
 }
 
 void BooleanLiteral() #void :
@@ -298,37 +328,49 @@ void BooleanLiteral() #void :
 void Statement() #void :
 {}
 {
-  ";"
-|
-  LOOKAHEAD(2)
-  FunctionCall()
-|
-  Block()
-| (
+		";"
+	|
+		LOOKAHEAD(2)
+  		FunctionCall()
+	|
+	 	Block()
+	| (
 	/* TODO: The below LOOKAHEAD uses very poor syntax - it should really be expanded out
 			 to the tokens in CFCMethodCall(). But we'll leave it for the moment as it aids
 			 readability and maintainability
 	*/
-	LOOKAHEAD(CFCMethodCall())
-   CFCMethodCall()
-   |
-      StatementExpression()
+			LOOKAHEAD(CFCMethodCall())
+   			CFCMethodCall()
+   		|
+      		StatementExpression()
   
- )
-|
-  IfStatement()
-|
-  WhileStatement()
-|
-  ForStatement()
-|
-  DoStatement()
+	)
+	|
+		ReturnStatement()
+	|
+  		IfStatement()
+	|
+  		WhileStatement()
+	|	(
+				LOOKAHEAD(3)
+				ForInStatement()
+			|
+  				ForStatement()
+  		)
+	|
+  		DoStatement()
 }
 
 void ExpressionList() #void :
 {}
 {
 	[Expression()] ("," Expression())*
+}
+
+void ForInStatement() :
+{}
+{
+	<FOR> "(" Id() "in" Expression() ")" Statement()
 }
 
 void ForStatement() #ForStatementNode :
@@ -388,7 +430,7 @@ void DoStatement() :
 
 TOKEN : /* IDENTIFIERS */
 {
-  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+  < IDENTIFIER: (<LETTER>|"_") (<LETTER>|<DIGIT>|"_")* >
 |
   < #LETTER: [ "a"-"z", "A"-"Z" ] >
 |

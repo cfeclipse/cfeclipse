@@ -49,6 +49,8 @@ SKIP : /* WHITE SPACE */
 | "\n"
 | "\r"
 | "\f"
+|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
 }
 
 TOKEN: /* keywords */
@@ -60,6 +62,14 @@ TOKEN: /* keywords */
 	<WHILE: "while">
 	|
 	<DO: "do">
+	|
+	<VAR: "var">
+	|
+	<RETURN: "return">
+	|
+	<EQ: "eq">
+	|
+	<NEQ: "neq">
 }
 
 TOKEN : /* Types */
@@ -69,9 +79,10 @@ TOKEN : /* Types */
    < BOOL: "boolean" >
 }
 
+
 TOKEN : /* LITERALS */
 {
-  < INTEGER_LITERAL: (<DIGIT>)+ >
+  < INTEGER_LITERAL: ("-")? (<DIGIT>)+ >
 | 
  <STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\"">
 }
@@ -93,11 +104,11 @@ void CompilationUnit() :
    try {
 /*@egen*/
    (
-   	FunctionDeclaration()
+   		FunctionDeclaration()
    	|
-       VarDeclaration() ";"
-     |
-       Statement()
+		VarDeclaration() 
+	|
+    	Statement()
    )*
    <EOF>/*@bgen(jjtree)*/
    } catch (Throwable jjte000) {
@@ -122,6 +133,38 @@ void CompilationUnit() :
 /*@egen*/
 }
 
+void ReturnStatement() :
+{/*@bgen(jjtree) ReturnStatement */
+  ASTReturnStatement jjtn000 = new ASTReturnStatement(JJTRETURNSTATEMENT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) ReturnStatement */
+        try {
+/*@egen*/
+	<RETURN> Expression()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
 void FunctionDeclaration()  :
 {/*@bgen(jjtree) FunctionDeclaration */
   ASTFunctionDeclaration jjtn000 = new ASTFunctionDeclaration(JJTFUNCTIONDECLARATION);
@@ -131,7 +174,7 @@ void FunctionDeclaration()  :
 {/*@bgen(jjtree) FunctionDeclaration */
         try {
 /*@egen*/
-	<FUNCTION> t = <IDENTIFIER> "(" (ParameterList())? ")" Block()/*@bgen(jjtree)*/
+	<FUNCTION> t = <IDENTIFIER> "(" (ParameterList())? ")" Statement()/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -170,26 +213,32 @@ void VarDeclaration() :
   jjtree.openNodeScope(jjtn000);
 /*@egen*/ Token t; String name;}
 {/*@bgen(jjtree) VarDeclaration */
-  try {
+        try {
 /*@egen*/
-  (
-    "boolean" { jjtn000.type = BOOL; }
-   |
-    "int" { jjtn000.type = INT; }
-  )
-  t = <IDENTIFIER>/*@bgen(jjtree)*/
-  {
-    jjtree.closeNodeScope(jjtn000, true);
-    jjtc000 = false;
-  }
-/*@egen*/ 
-  { jjtn000.name = t.image; }/*@bgen(jjtree)*/
-  } finally {
-    if (jjtc000) {
-      jjtree.closeNodeScope(jjtn000, true);
-    }
-  }
+/*  <VAR> t = <IDENTIFIER> "=" Statement() ";" */
+	<VAR> Assignment()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
 /*@egen*/
+	
+/*  { jjtThis.name = t.image; } */
 }
 
 /*
@@ -199,10 +248,10 @@ void VarDeclaration() :
 void Expression()      :
 {}
 {
-  LOOKAHEAD( PrimaryExpression() "=" )
-  Assignment()
-|
-  ConditionalOrExpression()
+		LOOKAHEAD( PrimaryExpression() "=" )
+		Assignment()
+	|
+		ConditionalOrExpression()
 }
 
 void Assignment()                :
@@ -214,7 +263,7 @@ void Assignment()                :
 {/*@bgen(jjtree) #Assignment( 2) */
   try {
 /*@egen*/
-  PrimaryExpression() "=" Expression()/*@bgen(jjtree)*/
+  PrimaryExpression() "="  Expression()/*@bgen(jjtree)*/
   } catch (Throwable jjte000) {
     if (jjtc000) {
       jjtree.clearNodeScope(jjtn000);
@@ -410,7 +459,7 @@ void AndExpression()       :
 void EqualityExpression()       :
 {}
 {
-  RelationalExpression()
+  StrEQExpression()
   (
      <ISNOT>/*@bgen(jjtree) #NENode( 2) */
              {
@@ -470,6 +519,71 @@ void EqualityExpression()       :
           }
 /*@egen*/
   )*
+}
+
+void StrEQExpression()       :
+{}
+{
+	RelationalExpression()
+	(
+			<EQ>/*@bgen(jjtree) #StrEQNode( 2) */
+                             {
+                               ASTStrEQNode jjtn001 = new ASTStrEQNode(JJTSTREQNODE);
+                               boolean jjtc001 = true;
+                               jjtree.openNodeScope(jjtn001);
+                             }
+                             try {
+/*@egen*/ RelationalExpression()/*@bgen(jjtree)*/
+                             } catch (Throwable jjte001) {
+                               if (jjtc001) {
+                                 jjtree.clearNodeScope(jjtn001);
+                                 jjtc001 = false;
+                               } else {
+                                 jjtree.popNode();
+                               }
+                               if (jjte001 instanceof RuntimeException) {
+                                 throw (RuntimeException)jjte001;
+                               }
+                               if (jjte001 instanceof ParseException) {
+                                 throw (ParseException)jjte001;
+                               }
+                               throw (Error)jjte001;
+                             } finally {
+                               if (jjtc001) {
+                                 jjtree.closeNodeScope(jjtn001,  2);
+                               }
+                             }
+/*@egen*/
+		|
+			<NEQ>/*@bgen(jjtree) #StrNEQNode( 2) */
+                              {
+                                ASTStrNEQNode jjtn002 = new ASTStrNEQNode(JJTSTRNEQNODE);
+                                boolean jjtc002 = true;
+                                jjtree.openNodeScope(jjtn002);
+                              }
+                              try {
+/*@egen*/ RelationalExpression()/*@bgen(jjtree)*/
+                              } catch (Throwable jjte002) {
+                                if (jjtc002) {
+                                  jjtree.clearNodeScope(jjtn002);
+                                  jjtc002 = false;
+                                } else {
+                                  jjtree.popNode();
+                                }
+                                if (jjte002 instanceof RuntimeException) {
+                                  throw (RuntimeException)jjte002;
+                                }
+                                if (jjte002 instanceof ParseException) {
+                                  throw (ParseException)jjte002;
+                                }
+                                throw (Error)jjte002;
+                              } finally {
+                                if (jjtc002) {
+                                  jjtree.closeNodeScope(jjtn002,  2);
+                                }
+                              }
+/*@egen*/
+	)*
 }
 
 void RelationalExpression()       :
@@ -759,20 +873,20 @@ void UnaryExpression()       :{}{  PrimaryExpression()}
 void PrimaryExpression()       :
 { String name; }
 {  
-	LOOKAHEAD(CFCMethodCall())
-	CFCMethodCall()
+		LOOKAHEAD(CFCMethodCall())
+		CFCMethodCall()
 	|
-	LOOKAHEAD(2)
-	StructRef()
+		LOOKAHEAD(2)
+		StructRef()
 	|
-	LOOKAHEAD(2)
-	FunctionCall()
+		LOOKAHEAD(2)
+		FunctionCall()
 	|
-	Literal() 
+		Literal() 
 	| 
-	Id() 
+		Id() 
 	| 
-	"(" Expression() ")" 
+		"(" Expression() ")" 
 }
 
 void StructRef()                :
@@ -871,7 +985,7 @@ void Id() :
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
         }
-/*@egen*/  
+/*@egen*/ 
 	{ jjtn000.name = t.image; }/*@bgen(jjtree)*/
         } finally {
           if (jjtc000) {
@@ -881,47 +995,63 @@ void Id() :
 /*@egen*/ 
 }
 
+void StringLiteral() :
+{/*@bgen(jjtree) StringLiteral */
+  ASTStringLiteral jjtn000 = new ASTStringLiteral(JJTSTRINGLITERAL);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/ Token t; }
+{/*@bgen(jjtree) StringLiteral */
+        try {
+/*@egen*/
+	t = <STRING_LITERAL>/*@bgen(jjtree)*/
+        {
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+        }
+/*@egen*/
+	{ jjtn000.val = t.image; }/*@bgen(jjtree)*/
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+void IntLiteral() :
+{/*@bgen(jjtree) IntLiteral */
+  ASTIntLiteral jjtn000 = new ASTIntLiteral(JJTINTLITERAL);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/ Token t; }
+{/*@bgen(jjtree) IntLiteral */
+                try {
+/*@egen*/
+		t = <INTEGER_LITERAL>/*@bgen(jjtree)*/
+                {
+                  jjtree.closeNodeScope(jjtn000, true);
+                  jjtc000 = false;
+                }
+/*@egen*/
+		{ jjtn000.val = t.image;
+		  jjtn000.aNodeToken = getToken(0); 
+		}/*@bgen(jjtree)*/
+                } finally {
+                  if (jjtc000) {
+                    jjtree.closeNodeScope(jjtn000, true);
+                  }
+                }
+/*@egen*/
+}
 void Literal()       :
 {   Token t;   }
-{/*@bgen(jjtree) IntConstNode */
- {
-   ASTIntConstNode jjtn001 = new ASTIntConstNode(JJTINTCONSTNODE);
-   boolean jjtc001 = true;
-   jjtree.openNodeScope(jjtn001);
- }
- try {
-/*@egen*/
- (
- t = <STRING_LITERAL>/*@bgen(jjtree)*/
- {
-   jjtree.closeNodeScope(jjtn001, true);
-   jjtc001 = false;
- }
-/*@egen*/
- {
-   jjtn001.val = t.image;
- }
- |
-  t=<INTEGER_LITERAL>/*@bgen(jjtree)*/
-    {
-      jjtree.closeNodeScope(jjtn001, true);
-      jjtc001 = false;
-    }
-/*@egen*/
-    {
-/*       jjtThis.val = Integer.parseInt(t.image);&*/
-	jjtn001.val = t.image;
-		jjtn001.aNodeToken = getToken(0);
-    }
- )/*@bgen(jjtree)*/
- } finally {
-   if (jjtc001) {
-     jjtree.closeNodeScope(jjtn001, true);
-   }
- }
-/*@egen*/
-|
-  BooleanLiteral()
+{
+		StringLiteral()
+	|
+		IntLiteral()
+	|
+		BooleanLiteral()
 }
 
 void BooleanLiteral()       :
@@ -961,37 +1091,75 @@ void BooleanLiteral()       :
 void Statement()       :
 {}
 {
-  ";"
-|
-  LOOKAHEAD(2)
-  FunctionCall()
-|
-  Block()
-| (
+		";"
+	|
+		LOOKAHEAD(2)
+  		FunctionCall()
+	|
+	 	Block()
+	| (
 	/* TODO: The below LOOKAHEAD uses very poor syntax - it should really be expanded out
 			 to the tokens in CFCMethodCall(). But we'll leave it for the moment as it aids
 			 readability and maintainability
 	*/
-	LOOKAHEAD(CFCMethodCall())
-   CFCMethodCall()
-   |
-      StatementExpression()
+			LOOKAHEAD(CFCMethodCall())
+   			CFCMethodCall()
+   		|
+      		StatementExpression()
   
- )
-|
-  IfStatement()
-|
-  WhileStatement()
-|
-  ForStatement()
-|
-  DoStatement()
+	)
+	|
+		ReturnStatement()
+	|
+  		IfStatement()
+	|
+  		WhileStatement()
+	|	(
+				LOOKAHEAD(3)
+				ForInStatement()
+			|
+  				ForStatement()
+  		)
+	|
+  		DoStatement()
 }
 
 void ExpressionList()       :
 {}
 {
 	[Expression()] ("," Expression())*
+}
+
+void ForInStatement() :
+{/*@bgen(jjtree) ForInStatement */
+  ASTForInStatement jjtn000 = new ASTForInStatement(JJTFORINSTATEMENT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) ForInStatement */
+        try {
+/*@egen*/
+	<FOR> "(" Id() "in" Expression() ")" Statement()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
 }
 
 void ForStatement()                   :
@@ -1264,7 +1432,7 @@ void DoStatement() :
 
 TOKEN : /* IDENTIFIERS */
 {
-  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+  < IDENTIFIER: (<LETTER>|"_") (<LETTER>|<DIGIT>|"_")* >
 |
   < #LETTER: [ "a"-"z", "A"-"Z" ] >
 |

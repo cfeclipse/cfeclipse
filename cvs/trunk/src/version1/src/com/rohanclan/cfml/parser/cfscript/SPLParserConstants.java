@@ -4,18 +4,22 @@ package com.rohanclan.cfml.parser.cfscript;
 public interface SPLParserConstants {
 
   int EOF = 0;
-  int FUNCTION = 6;
-  int FOR = 7;
-  int WHILE = 8;
-  int DO = 9;
-  int INT = 10;
-  int BOOL = 11;
-  int INTEGER_LITERAL = 12;
-  int STRING_LITERAL = 13;
-  int IDENTIFIER = 43;
-  int LETTER = 44;
-  int DIGIT = 45;
-  int ISNOT = 46;
+  int FUNCTION = 8;
+  int FOR = 9;
+  int WHILE = 10;
+  int DO = 11;
+  int VAR = 12;
+  int RETURN = 13;
+  int EQ = 14;
+  int NEQ = 15;
+  int INT = 16;
+  int BOOL = 17;
+  int INTEGER_LITERAL = 18;
+  int STRING_LITERAL = 19;
+  int IDENTIFIER = 50;
+  int LETTER = 51;
+  int DIGIT = 52;
+  int ISNOT = 53;
 
   int DEFAULT = 0;
 
@@ -26,15 +30,20 @@ public interface SPLParserConstants {
     "\"\\n\"",
     "\"\\r\"",
     "\"\\f\"",
+    "<token of kind 6>",
+    "<token of kind 7>",
     "\"function\"",
     "\"for\"",
     "\"while\"",
     "\"do\"",
+    "\"var\"",
+    "\"return\"",
+    "\"eq\"",
+    "\"neq\"",
     "\"int\"",
     "\"boolean\"",
     "<INTEGER_LITERAL>",
     "<STRING_LITERAL>",
-    "\";\"",
     "\"(\"",
     "\")\"",
     "\"=\"",
@@ -58,7 +67,9 @@ public interface SPLParserConstants {
     "\"]\"",
     "\"true\"",
     "\"false\"",
+    "\";\"",
     "\",\"",
+    "\"in\"",
     "\"{\"",
     "\"}\"",
     "\"if\"",
