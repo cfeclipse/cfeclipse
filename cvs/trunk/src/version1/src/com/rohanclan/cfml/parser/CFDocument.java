@@ -27,7 +27,8 @@ package com.rohanclan.cfml.parser;
 //import java.util.List;
 import java.util.ArrayList;
 import java.util.Stack;
-import com.rohanclan.cfml.parser.DocItem;
+
+import com.rohanclan.cfml.parser.docitems.DocItem;
 //import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 
 import org.eclipse.jface.text.IDocument;

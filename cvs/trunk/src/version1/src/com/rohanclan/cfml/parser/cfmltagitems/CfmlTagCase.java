@@ -24,8 +24,8 @@
  */
 package com.rohanclan.cfml.parser.cfmltagitems;
 
-import com.rohanclan.cfml.parser.CfmlTagItem;
-import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
 
 /**
  * @author Oliver Tupman
@@ -35,7 +35,7 @@ import com.rohanclan.cfml.parser.DocItem;
 public class CfmlTagCase extends CfmlTagItem {
 	/**
 	 * A case tag may only be a child of a &lt;cfswitch&gt; tag. 
-	 * @see com.rohanclan.cfml.parser.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
+	 * @see com.rohanclan.cfml.parser.docitems.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
 		return parentItem.getName().compareToIgnoreCase("switch") == 0;

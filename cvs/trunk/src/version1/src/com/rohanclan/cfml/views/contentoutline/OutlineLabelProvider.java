@@ -47,6 +47,8 @@ import java.util.Set;
 import java.util.Iterator;
 
 import com.rohanclan.cfml.parser.*;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 public class OutlineLabelProvider extends LabelProvider {
 	
@@ -193,6 +195,12 @@ public class OutlineLabelProvider extends LabelProvider {
 			//sb.append( ((CfmlTagItem)element).getItemData() );
 						
 			return sb.toString();
+		}
+		else if(element instanceof CfmlComment)
+		{
+			String commentData = ((CfmlComment)element).getItemData();
+			
+			return "<!--- " + commentData +  "--->";
 		}
 		
 		return "unknown (add to user.xml if custom)";

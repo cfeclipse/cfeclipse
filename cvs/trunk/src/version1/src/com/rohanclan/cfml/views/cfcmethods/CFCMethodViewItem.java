@@ -7,6 +7,8 @@
 package com.rohanclan.cfml.views.cfcmethods;
 
 import com.rohanclan.cfml.parser.*;
+import com.rohanclan.cfml.parser.docitems.TagItem;
+
 import java.util.Iterator;
 import org.eclipse.ui.texteditor.ITextEditor;
 

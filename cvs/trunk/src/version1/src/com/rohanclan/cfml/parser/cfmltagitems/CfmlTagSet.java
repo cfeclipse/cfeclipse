@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.parser.cfmltagitems;
 
-import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 /**
  * @author OLIVER
@@ -46,7 +46,7 @@ public class CfmlTagSet extends CfmlTagItem {
 	 * A cfset tag can appear to have attributes due to this syntax:
 	 * <cfset fred = "myString"/>
 	 * This isn't an attribute really, but CFScript.
-	 * @see com.rohanclan.cfml.parser.TagItem#addAttribute(java.lang.String, java.lang.String)
+	 * @see com.rohanclan.cfml.parser.docitems.TagItem#addAttribute(java.lang.String, java.lang.String)
 	 * @return true - at all times.
 	 */
 	public boolean addAttribute(String attrName, String attrValue) {

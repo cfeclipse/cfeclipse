@@ -17,6 +17,8 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
+
+import com.rohanclan.cfml.parser.docitems.CFCommentItem;
 /**
  * @author Stephen Milligan
  *

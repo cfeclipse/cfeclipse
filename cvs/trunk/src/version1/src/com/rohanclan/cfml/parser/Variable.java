@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.parser;
 
-import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
 /** Represents a variable within a document. Derived from DocItem to enable standard document creation to find it.
  *  
  *  In theory it should be stored separately from the document tree.

@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import com.rohanclan.cfml.parser.docitems.DocItem;
+
 //import net.sourceforge.phpdt.core.compiler.CharOperation;
 
 public class Util {
@@ -494,7 +496,7 @@ public class Util {
 		System.out.println("Dumping the matches:");
 		for(int i = 0; i < matches.size(); i++)
 		{
-		System.out.println("Match: \'" + ((TagMatch)matches.get(i)).match + "\'");
+		System.out.println("Match: \'" + ((ParseItemMatch)matches.get(i)).match + "\'");
 		}
 	}
 	

@@ -75,7 +75,7 @@ import org.eclipse.swt.SWT;
 
 //import java.util.Iterator;
 
-import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 import org.eclipse.swt.dnd.*;
 

@@ -1,6 +1,6 @@
 package com.rohanclan.cfml.parser.cfscript;
 
-import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
 
 /*
  * Copyright © 2002 Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,

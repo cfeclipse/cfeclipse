@@ -24,9 +24,9 @@
  */
 package com.rohanclan.cfml.parser.cfmltagitems;
 
-import com.rohanclan.cfml.parser.CfmlTagItem;
-import com.rohanclan.cfml.parser.DocItem;
 import com.rohanclan.cfml.parser.ParseMessage;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
 //import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 
 public class CfmlTagIf extends CfmlTagItem {
@@ -34,7 +34,7 @@ public class CfmlTagIf extends CfmlTagItem {
 	 * Adds a child item. Unlike other tags, the &lt;cfif&gt; tag it first checks to see
 	 * whether there are any cfelseif's or a cfelse.
 	 * 
-	 * @see com.rohanclan.cfml.parser.DocItem#addChild(com.rohanclan.cfml.parser.DocItem)
+	 * @see com.rohanclan.cfml.parser.docitems.DocItem#addChild(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean addChild(DocItem newItem) 
 	{

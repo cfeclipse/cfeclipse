@@ -11,6 +11,9 @@ import com.rohanclan.cfml.editors.CFDocumentProvider;
 import com.rohanclan.cfml.editors.ICFDocument;
 import org.eclipse.jface.viewers.*;
 import com.rohanclan.cfml.parser.*;
+import com.rohanclan.cfml.parser.docitems.DocItem;
+import com.rohanclan.cfml.parser.docitems.TagItem;
+
 import java.util.Iterator;
 import java.util.Collections;
 /**

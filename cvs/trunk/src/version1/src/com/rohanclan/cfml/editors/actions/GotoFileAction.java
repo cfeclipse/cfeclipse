@@ -59,7 +59,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
-import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 //import com.rohanclan.cfml.parser.DocItem;
 //import com.rohanclan.cfml.parser.TagItem;
 

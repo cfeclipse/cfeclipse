@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.parser.cfmltagitems;
 
-import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 /**
  * @author Oliver Tupman
@@ -43,7 +43,7 @@ public class CfmlTagModule extends CfmlTagItem {
 		super(line, startDocPos, endDocPos, name);
 	}
 	/** (non-Javadoc)
-	 * @see com.rohanclan.cfml.parser.TagItem#addAttribute(java.lang.String, java.lang.String)
+	 * @see com.rohanclan.cfml.parser.docitems.TagItem#addAttribute(java.lang.String, java.lang.String)
 	 * @return true apart from duplicate attributes.
 	 */
 	public boolean addAttribute(String attrName, String attrValue) {

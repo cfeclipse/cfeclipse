@@ -1,5 +1,5 @@
 /*
- * Created on Mar 28, 2004
+ * Created on Mar 21, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Oliver Tupman
@@ -22,23 +22,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.parser.cfmltagitems;
-
-import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-import com.rohanclan.cfml.parser.docitems.DocItem;
+package com.rohanclan.cfml.parser.docitems;
 
 /**
  * @author Oliver Tupman
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * 
+ * Represents a HTML item in a CF document.
+ *  
  */
-public class CfmlTagQueryParam extends CfmlTagItem {
+public class HtmlTagItem extends TagItem {
 	/**
+	 * An HTML item doesn't care about whether it's a valid child or not. At least not yet.
 	 * @see com.rohanclan.cfml.parser.docitems.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
-		return parentItem.getName().compareToIgnoreCase("query") == 0;
+		return true;
 	}
 	/**
 	 * @param line
@@ -46,8 +44,7 @@ public class CfmlTagQueryParam extends CfmlTagItem {
 	 * @param endDocPos
 	 * @param name
 	 */
-	public CfmlTagQueryParam(int line, int startDocPos, int endDocPos,
-			String name) {
+	public HtmlTagItem(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
 	}
 }

@@ -53,6 +53,11 @@ import com.rohanclan.cfml.parser.cfscript.ParseException;
 import com.rohanclan.cfml.parser.cfscript.SPLParser;
 import com.rohanclan.cfml.parser.cfscript.SimpleNode;
 import com.rohanclan.cfml.parser.cfscript.TokenMgrError;
+import com.rohanclan.cfml.parser.docitems.AttributeItem;
+import com.rohanclan.cfml.parser.docitems.CfmlCustomTag;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
+import com.rohanclan.cfml.parser.docitems.TagItem;
 
 //import com.rohanclan.cfml.util.Debug;
 
@@ -280,7 +285,7 @@ public class CFParser {
 	 * @param message - the message
 	 * @param msgType - the type of message. CFParser.USERMSG_* (i.e. CFParser.USERMSG_ERROR is an error to the user)
 	 */
-	protected void userMessage(int indent, String method, String message, int msgType, TagMatch match)
+	protected void userMessage(int indent, String method, String message, int msgType, ParseItemMatch match)
 	{
 		switch(msgType)
 		{
@@ -369,7 +374,7 @@ public class CFParser {
 	 * @param match the match that's a closer
 	 * @param matchStack - the stack of matched items
 	 */
-	protected boolean handleClosingTag(TagMatch match, Stack matchStack)
+	protected boolean handleClosingTag(ParseItemMatch match, Stack matchStack)
 	{
 	/*
  	 * Quite simply it works out what the item is. Then it grabs the top-most item
@@ -405,7 +410,7 @@ public class CFParser {
 				}
 			}
 			//SPIKE: Made this case insensitive
-			if(topItem.itemName.compareToIgnoreCase(closerName) == 0)
+			if(topItem.getName().compareToIgnoreCase(closerName) == 0)
 			{
 				DocItem parentItem = (DocItem)matchStack.pop();
 				try {
@@ -428,11 +433,13 @@ public class CFParser {
 				// If we're here that means that the top item of the match stack isn't the
 				// opener of the current closer. Therefore we report this as an error
 				// and finish parsing as we can't easily make sense of the rest of the document.
-				TagMatch tempMatch = new TagMatch(match.match, match.startPos, match.endPos, 
-													getLineNumber(match.startPos));
+				
+				ParseItemMatch tempMatch = new ParseItemMatch(match.match, match.startPos, match.endPos, 
+													getLineNumber(match.startPos), MATCHER_NOTHING);
+													
 				userMessage(matchStack.size(), 
 							"handleClosingTag", "Closing tag \'" + match.match + 
-							"\' does not match the current parent item: \'" + topItem.itemName + "\'", 
+							"\' does not match the current parent item: \'" + topItem.getName() + "\'", 
 							USRMSG_ERROR, tempMatch);
 /*
 				while(matchStack.size() > 0)
@@ -464,7 +471,7 @@ public class CFParser {
 	 * @param match - the match
 	 * @param matchStack - the stack of tag items. This will have all of the new Script items added to it.
 	 */
-	protected void handleCFScriptBlock(TagMatch match, Stack matchStack)
+	protected void handleCFScriptBlock(ParseItemMatch match, Stack matchStack)
 	{
 		//
 		// CFScript parsing is broken completely at the moment, so the following line
@@ -512,7 +519,7 @@ public class CFParser {
 				errMsg+= expToken.substring(1, expToken.length()-1);
 				if(i > 0) errMsg += ",";
 			}
-			TagMatch tempMatch = match;
+			ParseItemMatch tempMatch = match;
 			tempMatch.lineNumber+= ex.currentToken.beginLine-1;
 			tempMatch.startPos += ex.currentToken.beginColumn;
 			tempMatch.endPos += ex.currentToken.endColumn;
@@ -539,7 +546,7 @@ public class CFParser {
 	 * @param attrMap - map of attributes for this item
 	 * @param isACloser - whether the tag is a closer or not (or has been closed by the user)
 	 */
-	protected void handleHTMLTag(String tagName, TagMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
+	protected void handleHTMLTag(String tagName, ParseItemMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
 	{
 		//System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
 	}
@@ -555,7 +562,7 @@ public class CFParser {
 	 * @return An instance of the matched tag.
 	 */
 	// TODO: Make a class factory for CfmlTagItems...
-	protected CfmlTagItem getNameBasedCfmlTag(String tagName, TagMatch match, int lineNum)
+	protected CfmlTagItem getNameBasedCfmlTag(String tagName, ParseItemMatch match, int lineNum)
 	{
 		//
 		// There _so_ must be a better way of doing this, but what it is I'm not sure!
@@ -594,7 +601,7 @@ public class CFParser {
 	 * @param attrList - map of attributes that are for this tag
 	 * @param isACloser - whether it's a self-closer
 	 */
-	protected void handleCFTag(String tagName, TagMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
+	protected void handleCFTag(String tagName, ParseItemMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
 	{
 		//
 		// If a CF tag then we get it's CF tag name (i.e. <cffunction, CF tag name is 'function')
@@ -606,34 +613,36 @@ public class CFParser {
 	    
 		tagName = tagName.substring(3, tagName.length());
 		TagItem newItem;
-		if(tagName.toLowerCase().startsWith("script")) {
-			newItem = getNameBasedCfmlTag(tagName.substring(0, "script".length()), match, getLineNumber(match.startPos));
+
+		//
+		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
+		// Also tests to make sure it catches CFX tags.
+		if(tagName.charAt(0) == '_' || (tagName.charAt(0) == 'x' && tagName.charAt(1) == '_'))
+		{
+			newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);
+			newItem.setItemData(match.match);
+		}
+		else
+		{
+			newItem = getNameBasedCfmlTag(tagName, match, getLineNumber(match.startPos));
 			newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
-			newItem.setItemData("");
-			addTagItemToTree(match, matchStack, isACloser, newItem);
-			handleCFScriptBlock(match, matchStack);
-			
-		} else {
-				
-			//
-			// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
-			// Also tests to make sure it catches CFX tags.
-			if(tagName.charAt(0) == '_' || (tagName.charAt(0) == 'x' && tagName.charAt(1) == '_'))
-			{
-				newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);
-				newItem.setItemData(match.match);
-			}
-			else
-			{
-				newItem = getNameBasedCfmlTag(tagName, match, getLineNumber(match.startPos));
-				newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
-				newItem.setItemData(match.match);
-			}
-			
-			newItem.addAttributes(attrList);
-			addTagItemToTree(match, matchStack, isACloser, newItem);
+			newItem.setItemData(match.match);
 		}
 		
+		newItem.addAttributes(attrList);
+		addTagItemToTree(match, matchStack, isACloser, newItem);
+	}
+	
+	private void addDocItemToTree(ParseItemMatch match, Stack matchStack, DocItem newItem)
+	{
+		if(newItem instanceof TagItem) {
+			addTagItemToTree(match, matchStack, false, (TagItem)newItem);
+			System.err.println("CFParser::addDocItemToTree() - A tag item has been passed. This is wrong but I\'ve passed it to addTagItemToTree as a non-closer");
+			return;
+		}
+		DocItem topItem = (DocItem)matchStack.pop();
+		topItem.addChild(newItem);
+		matchStack.push(topItem);
 	}
 	
 	/**
@@ -642,7 +651,7 @@ public class CFParser {
 	 * @param isACloser
 	 * @param newItem
 	 */
-	private void addTagItemToTree(TagMatch match, Stack matchStack, boolean isACloser, TagItem newItem) {
+	private void addTagItemToTree(ParseItemMatch match, Stack matchStack, boolean isACloser, TagItem newItem) {
 		//
 		//	Either the syntax dictionary says it closes itself or the user has specified it will
 		try {
@@ -679,7 +688,7 @@ public class CFParser {
 	{
 		if(tagName.compareToIgnoreCase("<cfinvoke") == 0)
 		{
-			if(((TagMatch)matches.get(matchPos+1)).match.indexOf("invokeargument") == -1)
+			if(((ParseItemMatch)matches.get(matchPos+1)).match.indexOf("invokeargument") == -1)
 			{
 				isACloser = true;
 			}
@@ -735,19 +744,15 @@ public class CFParser {
 			
 			for(; matchPos < matches.size(); matchPos++)
 			{
-				TagMatch match = (TagMatch)matches.get(matchPos);
+				ParseItemMatch match = (ParseItemMatch)matches.get(matchPos);
 				
 				String matchStr = match.match;
-				System.out.println("CFParser::createDocTree() - Processing match \'" + match.match + "\'");
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
-					// Is a tag
 					if(matchStr.charAt(1) == '/') {
 						if(!handleClosingTag(match, matchStack)) {
-							//System.out..println("CFParser::createDocTree() - handleClosingTag returned null!");
 							return null;
 						}
-							
 					}
 					else {
 						int tagEnd = matchStr.indexOf(" ");	// Look for the first space
@@ -783,29 +788,34 @@ public class CFParser {
 						else
 							attributes = match.match.substring(tagEnd, match.match.length()-1); // minus one to strip the closing '>'
 
-						
-						
-						// Get the attributes from the tag.
-						////System.out..println("CFParser::createDocTree() - Handling cftag \'" + tagName + "\'");
-						if(Util.IsCFTag(tagName))
-						{  
-							// Anything within a CFScript block should really be placed at the current level of the
-							// doc tree. So send it off to the CFScript block hanlder
-							// TODO: CFScript blocks are ignored at present! Sort it! Should there be a specialised cfscript tag that does it?
-
-							handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);							
-/*							
-							if(tagName.startsWith("<cfscript>")) {
-//							if(tagName.compareTo("script") == 0) {
-								handleCFScriptBlock(match, matchStack);
-							} else {
-								handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
-							}
-*/							
-						}
-						else {	// Anything else is an HTML tag
-						
-							handleHTMLTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
+						switch(match.getMatchType())
+						{
+							case MATCHER_CFMLTAG:
+								handleCFTag(tagName, match, matchStack,
+											stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
+								break;
+							case MATCHER_CFMLCOMMENT:
+								//System.out.println("CFParser::createDocTree() - Got a CFML comment!");
+								DocItem newComment = new CfmlComment(
+										match.getLineNumber(),
+										match.getStartPos(),
+										match.getEndPos(),
+										match.getMatch()
+								);
+								addDocItemToTree(match, matchStack, newComment);
+								
+								break;
+							case MATCHER_CFSCRIPT:
+								tagName = tagName.substring(3, tagName.length());
+								TagItem newItem;								
+								newItem = getNameBasedCfmlTag(tagName.substring(0, "script".length()), match, getLineNumber(match.startPos));
+								newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
+								newItem.setItemData("");
+								addTagItemToTree(match, matchStack, isACloser, newItem);
+								handleCFScriptBlock(match, matchStack);								
+								break;
+							default:
+								break;
 						}
 					}
 				}
@@ -830,15 +840,15 @@ public class CFParser {
 		return newDoc;
 	}
 	
-	protected final int MATCHER_NOTHING = 		0x00;
-	protected final int MATCHER_COMMENT = 		0x01;
-	protected final int MATCHER_HTMLTAG =		0x02;
-	protected final int MATCHER_ATTRIBUTE = 	0x04;
-	protected final int MATCHER_CFSCRIPT = 		0x08;
-	protected final int MATCHER_CFMLCOMMENT = 	0x16;
-	protected final int MATCHER_CFSCRCOMMENT = 	0x32;
-	protected final int MATCHER_STRING = 		0x64;
-	protected final int MATCHER_CFMLTAG = 		0x128;
+	public final int MATCHER_NOTHING = 		0x00;
+	public final int MATCHER_COMMENT = 		0x01;
+	public final int MATCHER_HTMLTAG =		0x02;
+	public final int MATCHER_ATTRIBUTE = 	0x04;
+	public final int MATCHER_CFSCRIPT = 	0x08;
+	public final int MATCHER_CFMLCOMMENT = 	0x16;
+	public final int MATCHER_CFSCRCOMMENT = 0x32;
+	public final int MATCHER_STRING = 		0x64;
+	public final int MATCHER_CFMLTAG = 		0x128;
 	
 	protected final int INDEX_NOTFOUND =	-1;	// For String::indexOf(), make it nicer to read!
 	
@@ -846,7 +856,7 @@ public class CFParser {
 	{
 		int finalOffset = currDocOffset;
 		int currPos = currDocOffset + 1;
-		TagMatch embeddedMatch = null;
+		ParseItemMatch embeddedMatch = null;
 		int cfTagCount = 0;
 		int quoteCount = 0;
 		
@@ -871,7 +881,7 @@ public class CFParser {
 			else if(!inQuotes && currChar == '>')
 			{
 				////System.out..println("CFParser::matchingHTML() - FOUND!: an HTML tag!: " + inData.substring(currDocOffset, currPos+1));				
-				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 0), 
+				parseState.addMatch(new ParseItemMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 0, MATCHER_HTMLTAG), 
 									State.ADD_BEFORE, cfTagCount);
 				finalOffset = currPos;
 				break;
@@ -937,7 +947,7 @@ public class CFParser {
 			// so we trimmed the data and now we compare with <cfscript>. If it doesn't equal it (
 			// and therefore it's got CFScript data in) we add the match.
 			//if(cfScriptData.toLowerCase().startsWith("<cfscript>")) {
-				TagMatch scriptMatch = new TagMatch(cfScriptData, scriptStart, finalOffset, getLineNumber(scriptStart));
+				ParseItemMatch scriptMatch = new ParseItemMatch(cfScriptData, scriptStart, finalOffset, getLineNumber(scriptStart), MATCHER_CFSCRIPT);
 				parseState.addMatch(scriptMatch);
 				/*
 				TagMatch endScriptTag = new TagMatch("</cfscript>", finalOffset, 
@@ -1015,8 +1025,8 @@ public class CFParser {
 			{
 				finalOffset = currPos;
 				
-				parseState.addMatch(new TagMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
-												getLineNumber(currDocOffset)));
+				parseState.addMatch(new ParseItemMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
+												getLineNumber(currDocOffset), MATCHER_CFMLTAG));
 				break;
 			}
 			else if(currChar == '\"')
@@ -1036,6 +1046,14 @@ public class CFParser {
 		return finalOffset;
 	}
 	
+	/**
+	 * This function goes through the incoming stream of characters that represents the document to parse.
+	 * It processes the document scanning for patterns within the data. Once a pattern has been found it
+	 * is added to a list of matches. This match list will be used later on by the document tree creator.
+	 * 
+	 * @param inData
+	 * @return
+	 */
 	protected ArrayList tagMatchingAttempts(String inData)
 	{
 		//String data = inData;
@@ -1044,6 +1062,7 @@ public class CFParser {
 		int currPos = 0;
 		int currState = 0;
 		Stack stateStack = new Stack();
+		Stack statePositionStack = new Stack();
 		
 		ArrayList matches = new ArrayList();
 		try {
@@ -1056,80 +1075,73 @@ public class CFParser {
 				
 				// Make sure we haven't had any fatal errors during parsing.
 				if(parserState.hadFatal())
-				{
-					//System.err.println("Parser encountered a fatal parse error");
 					break;
-				}
+				//
+				// Get some next data that will make our life easier in the code ahead
+				next2Chars = (data.length() - currPos > 2) ? data.substring(currPos + 1, currPos + 3) : ""; 
+				next3Chars = (data.length() - currPos > 3) ? next2Chars + data.charAt(currPos + 3) : "";
 				
-				if(data.length() - currPos > 2)	// For CF stuff we get the next two chars as well.
-					next2Chars = data.substring(currPos + 1, currPos + 3);
+				around = getSurroundingData(data, currPos);
 				
-				if(data.length() - currPos > 3)
-					next3Chars = next2Chars + data.charAt(currPos + 3);
-				
-				if(data.length() - currPos > 10 && currPos > 10)
-					around = data.substring(currPos - 10, currPos) + data.substring(currPos, currPos + 10);
-				else if(data.length() - currPos > 10)
-					around = data.substring(currPos, currPos + 10);
-				
-				if(currState == MATCHER_NOTHING)
+				if(currState == MATCHER_NOTHING && currChar == '<')
 				{	
-					switch(currChar) 
+					if(next2Chars.compareTo("!-") == 0)
+					{	// Testing for comment: <!--
+						// TODO: Find out whether comments can occur in tags
+						if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
+						{
+							stateStack.push(new Integer(currState));
+							statePositionStack.push(new Integer(currPos));
+							currState = MATCHER_CFMLCOMMENT;
+							lastMatch = currPos;
+						} 
+						else 
+						{
+							currState = MATCHER_COMMENT;
+							lastMatch = currPos;
+						}
+					}
+					else if(next2Chars.compareTo("cf") == 0)
 					{
-						case '<': 
-							if(next2Chars.compareTo("!-") == 0)
-							{	// Testing for comment: <!--
-								// TODO: Find out whether comments can occur in tags
-								if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
-								{
-									stateStack.push(new Integer(currState));
-									currState = MATCHER_CFMLCOMMENT;
-									lastMatch = currPos;
-								}
-								else
-								{
-									currState = MATCHER_COMMENT;
-									lastMatch = currPos;
-								}
-							}
-							else if(next2Chars.compareTo("cf") == 0)
-							{
-////System.out..println("CFParser::tagMatchingAttempts() - Found the beginnings of a CF tag");
-								//
-								// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
-								// container *only* for things to go in the document tree.
-								if(data.length() - currPos > "<cfscript>".length() && 
-								   data.substring(currPos, currPos + "<cfscript>".length()).compareTo("<cfscript>") == 0)
-								{
-									// 
-									// It's a CFScript tag
-									currPos = matchingCFScript(parserState, inData, currPos);
-								}
-								else	// Not a CFScript tag. 
-									currPos = matchingCFML(parserState, inData, currPos);
-							}
-							else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
-							{
-								////System.out..println("CFParser::tagMatchingAttempts() - Found the beginnings of an HTML tag.");
-								currPos = matchingHTML(parserState, inData, currPos);
-							}
-							break;
-						default:
-							// Not a char we care about.
-							break;
+						//
+						// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
+						// container *only* for things to go in the document tree.
+						if(data.length() - currPos > "<cfscript>".length() && 
+						   data.substring(currPos, currPos + "<cfscript>".length()).compareTo("<cfscript>") == 0)
+						{
+							currPos = matchingCFScript(parserState, inData, currPos);
+						}
+						else 
+							currPos = matchingCFML(parserState, inData, currPos);
+					}
+					else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
+					{
+						currPos = matchingHTML(parserState, inData, currPos);
+					}
+					
+				}
+				else if(currState == MATCHER_CFMLCOMMENT 
+						&& currChar == '-' 
+						&& next2Chars.compareTo("--") == 0 
+						&& inData.charAt(currPos+3) == '>')
+				{
+					currState = ((Integer)stateStack.pop()).intValue();
+					int lastStatePos = ((Integer)statePositionStack.pop()).intValue();
+					if(currState == MATCHER_NOTHING)
+					{
+						
+						ParseItemMatch commentMatch = new ParseItemMatch(
+							inData.substring(lastStatePos, currPos + 4), lastStatePos, currPos + 4, 
+							getLineNumber(lastStatePos), MATCHER_CFMLCOMMENT
+						);
+						parserState.addMatch(commentMatch);
+						
 					}
 				}
-				else if(currState == MATCHER_CFMLCOMMENT && currChar == '-' && 
-						next2Chars.compareTo("--") == 0 && 
-						inData.charAt(currPos+3) == '>')
+				else if(currState == MATCHER_COMMENT 
+						&& currChar == '-' 
+						&& next2Chars.compareTo("->") == 0)
 				{
-////System.out..println("CFParser::tagMatchingAttempts() - Found the end of a CFML comment");
-					//currState = MATCHER_NOTHING;
-					currState = ((Integer)stateStack.pop()).intValue();
-				}
-				else if(currState == MATCHER_COMMENT && currChar == '-' && next2Chars.compareTo("->") == 0)
-				{
-////System.out..println("CFParser::tagMatchingAttempts() - Found the end of an HTML comment");
 					currState = MATCHER_NOTHING;
 				}
 			}
@@ -1139,6 +1151,23 @@ public class CFParser {
 		return matches;
 	}
 	
+	/**
+	 * Gets some surrounding data that is around the current cursor position.
+	 * 
+	 * @param data The data currently being scanned
+	 * @param currPos The current position in the document
+	 * @return The +/- 10 characters around the current position in the document 
+	 */
+	private String getSurroundingData(String data, int currPos) {
+		String around = "";
+		if(data.length() - currPos > 10 && currPos > 10)
+			around = data.substring(currPos - 10, currPos) + data.substring(currPos, currPos + 10);
+		else if(data.length() - currPos > 10)
+			around = data.substring(currPos, currPos + 10);
+		
+		return around;
+	}
+
 	protected void processParseResultMessages()
 	{
 		ArrayList messages = parserState.getMessages();
@@ -1210,14 +1239,15 @@ public class CFParser {
 	
 	public CFDocument parseDoc(String inData)
 	{
-		CFDocument docTree = null;
+		CFDocument docTree = null; 
 		try {
 			parserState = new State("doesn\'t matter!");
 			lineOffsets = Util.calcLineNumbers(inData);
+			
 			this.setData2Parse(inData);
 			ArrayList matches = tagMatchingAttempts(inData);
 			//System.out..println("=============> Beginning match dump");
-			Util.dumpMatches(parserState.getMatches());
+			//Util.dumpMatches(parserState.getMatches());
 			//System.out..println("=============> Finishing match dump");
 			docTree = createDocTree(parserState.getMatches());
 			parserState.addMessages(finalDocTreeTraversal(docTree. getDocumentRoot()));

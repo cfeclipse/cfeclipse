@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.rohanclan.cfml.parser.docitems.TagItem;
+
 /**
  * 
  * @author Oliver Tupman
@@ -49,7 +51,7 @@ public class State
 	
 	static public final int ADD_BEFORE = 0x01;
 	static public final int ADD_AFTER =  0x02;
-	
+	/*
 	public void addFunction(TagItem newFunction)
 	{
 		String funcName = newFunction.getAttribute("name");
@@ -62,7 +64,7 @@ public class State
 		else
 			functionNames.put(funcName, funcName);
 	}
-	
+	*/
 	public ArrayList getMatches()
 	{
 		return matches;
@@ -78,7 +80,7 @@ public class State
 		return messages;
 	}
 	
-	public void addMatch(TagMatch newMatch, int position, int numIndicies)
+	public void addMatch(ParseItemMatch newMatch, int position, int numIndicies)
 	{
 		switch(position)
 		{
@@ -94,7 +96,7 @@ public class State
 		}
 	}
 	
-	public void addMatch(TagMatch newMatch)
+	public void addMatch(ParseItemMatch newMatch)
 	{
 		matches.add(newMatch);
 	}

@@ -1,6 +1,6 @@
 /*
- * Created on Mar 28, 2004
- *
+ * Created on 09-Sep-2004
+ * 
  * The MIT License
  * Copyright (c) 2004 Oliver Tupman
  *
@@ -24,30 +24,32 @@
  */
 package com.rohanclan.cfml.parser.cfmltagitems;
 
-import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 
 /**
+ * Represents a CFML comment, ala &lt;!--- Comment here ---&gt;.
+ * 
  * @author Oliver Tupman
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class CfmlTagQueryParam extends CfmlTagItem {
-	/**
-	 * @see com.rohanclan.cfml.parser.docitems.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
-	 */
-	public boolean validChildAddition(DocItem parentItem) {
-		return parentItem.getName().compareToIgnoreCase("query") == 0;
-	}
+public class CfmlComment extends DocItem {
+
 	/**
 	 * @param line
 	 * @param startDocPos
 	 * @param endDocPos
 	 * @param name
 	 */
-	public CfmlTagQueryParam(int line, int startDocPos, int endDocPos,
-			String name) {
+	public CfmlComment(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
+		// TODO Auto-generated constructor stub
 	}
+
+	/**
+	 * 
+	 */
+	public CfmlComment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }

@@ -6,7 +6,8 @@
  */
 package com.rohanclan.cfml.views.cfcmethods;
 import java.util.Comparator;
-import com.rohanclan.cfml.parser.TagItem;
+
+import com.rohanclan.cfml.parser.docitems.TagItem;
 /**
  * @author Stephen Milligan
  *

@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.QualifiedName;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
-import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
 
 
 /**

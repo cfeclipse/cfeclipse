@@ -1,5 +1,5 @@
 /*
- * Created on Mar 28, 2004
+ * Created on Mar 21, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Oliver Tupman
@@ -22,32 +22,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.parser.cfmltagitems;
+package com.rohanclan.cfml.parser.docitems;
 
-import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 
-/**
- * @author Oliver Tupman
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
-public class CfmlTagQueryParam extends CfmlTagItem {
-	/**
-	 * @see com.rohanclan.cfml.parser.docitems.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
-	 */
-	public boolean validChildAddition(DocItem parentItem) {
-		return parentItem.getName().compareToIgnoreCase("query") == 0;
-	}
-	/**
-	 * @param line
-	 * @param startDocPos
-	 * @param endDocPos
-	 * @param name
-	 */
-	public CfmlTagQueryParam(int line, int startDocPos, int endDocPos,
-			String name) {
+public class ScriptItem extends DocItem 
+{
+	
+	public ScriptItem(int line, int startDocPos, int endDocPos, String name)
+	{
 		super(line, startDocPos, endDocPos, name);
 	}
 }

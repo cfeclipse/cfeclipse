@@ -24,8 +24,8 @@
  */
 package com.rohanclan.cfml.parser.cfmltagitems;
 
-import com.rohanclan.cfml.parser.CfmlTagItem;
-import com.rohanclan.cfml.parser.DocItem;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.DocItem;
 
 /**
  * @author Oliver Tupman
@@ -37,7 +37,7 @@ public class CfmlTagElse extends CfmlTagItem {
 	 * Else tags must reside within an if tag. This just performs the check to make sure of this.
 	 *  
 	 * @param parentItem - the parent item to add this item to.
-	 * @see com.rohanclan.cfml.parser.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
+	 * @see com.rohanclan.cfml.parser.docitems.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
 	 */
 	public boolean validChildAddition(DocItem parentItem) {
 		 return parentItem.getName().compareToIgnoreCase("if") == 0;

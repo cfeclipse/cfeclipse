@@ -1,5 +1,5 @@
 /*
- * Created on Mar 28, 2004
+ * Created on Aug 9, 2004
  *
  * The MIT License
  * Copyright (c) 2004 Oliver Tupman
@@ -22,32 +22,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package com.rohanclan.cfml.parser.cfmltagitems;
+package com.rohanclan.cfml.parser.docitems;
 
-import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-import com.rohanclan.cfml.parser.docitems.DocItem;
 
 /**
  * @author Oliver Tupman
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class CfmlTagQueryParam extends CfmlTagItem {
-	/**
-	 * @see com.rohanclan.cfml.parser.docitems.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
-	 */
-	public boolean validChildAddition(DocItem parentItem) {
-		return parentItem.getName().compareToIgnoreCase("query") == 0;
-	}
+public class AttributeItem extends DocItem {
+	protected String attrValue = "";
+	
 	/**
 	 * @param line
 	 * @param startDocPos
 	 * @param endDocPos
 	 * @param name
 	 */
-	public CfmlTagQueryParam(int line, int startDocPos, int endDocPos,
-			String name) {
+	public AttributeItem(int line, int startDocPos, int endDocPos, String name) {
 		super(line, startDocPos, endDocPos, name);
+	}
+
+	/**
+	 * 
+	 * @param line - line at which this item was found
+	 * @param startDocPos - start position in the document for this item
+	 * @param endDocPos - end position in the document for this item
+	 * @param name - the 'name' of this item
+	 * @param value - the value of this attribute
+	 */
+	public AttributeItem(int line, int startDocPos, int endDocPos, String name, String value) {
+		super(line, startDocPos, endDocPos, name);
+		this.attrValue = value;
+	}
+	
+	public String getValue() {
+		return this.attrValue;
 	}
 }

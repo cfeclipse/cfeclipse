@@ -33,7 +33,7 @@ import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.parser.CommentParser;
-import com.rohanclan.cfml.parser.CfmlTagItem;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.preferences.ICFMLPreferenceConstants;
 //import com.rohanclan.cfml.parser.DocItem;
 
