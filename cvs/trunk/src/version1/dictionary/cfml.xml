@@ -8436,9 +8436,12 @@
 				with square brackets: [ ].
 				CFML arrays expand dynamically as data is added.
 			]]></help>
-			<parameter name="dimension" type="Numeric" required="true" default="1">
+			<parameter name="dimension" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="1" />
+				</values>
 			</parameter>
 		</function>
 
@@ -8612,6 +8615,7 @@
 			<parameter name="delimiter" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+					<value option="','" />
 			</parameter>
 		</function>
 
@@ -8933,14 +8937,17 @@
 			<parameter name="year" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="year(Now())" />
 			</parameter>
 			<parameter name="month" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="month(Now())" />
 			</parameter>
 			<parameter name="day" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="day(Now())" />
 			</parameter>
 		</function>
 
@@ -8954,28 +8961,37 @@
 			<parameter name="year" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="year(Now())" />
+				</values>
 			</parameter>
 			<parameter name="month" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="month(Now())" />
 			</parameter>
 			<parameter name="day" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="day(Now())" />
 			</parameter>
 			<parameter name="hour" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="hour(Now())" />
 			</parameter>
 			<parameter name="minute" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="minute(Now())" />
 			</parameter>
 			<parameter name="second" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+					<value option="second(Now())" />
 			</parameter>
 		</function>
+
 
 		<!--
 			CreateObject(type, class, context, serverName)
@@ -8984,77 +9000,17 @@
 			CreateObject(type, class)
 			CreateObject(type, urltowsdl)
 		-->
-		<function creator="3" name="createobjecT" returns="COMObject">
-			<help><![CDATA[
-				Create a COM object (not available on Unix)
-
-				To create a COM object, you must provide this information:
-				 * The object's program ID or filename
-				 * The methods and properties available to the object through
-					the IDispatch interface
-				 * The arguments and return types of the object's methods
-				 * For most objects, you can get this information from the
-					OLEView utility.
-			]]></help>
-			<parameter name="type" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="class" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="context" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="servername" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
-
-		<!--
-			CreateObject(type, class, context, serverName)
-			CreateObject(type, component-name)
-			CreateObject(type, context, class, locale)
-			CreateObject(type, class)
-			CreateObject(type, urltowsdl)
-			Creates a CFML object, of a specified type.
-				================================================
-				COMobject   CreateObject(type, class, context, serverName)
-    			CFCobject   CreateObject(type, component-name)
-    			CORBAobject CreateObject(type, context, class, locale)
-    			JAVAobject  CreateObject(type, class)
-    			WEBSERVICE  CreateObject(type, urltowsdl)
-		-->
-		<function creator="3" name="createoBject" returns="CFCObject">
-			<help><![CDATA[
-				The CreateObject function can create a CFML component
-				(CFC) object.
-
-				type : "component"
-				component_name : name of the cfc to create
-			]]></help>
-			<parameter name="type" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="component_name" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
-
-		<!--
-			CreateObject(type, class, context, serverName)
-			CreateObject(type, component-name)
-			CreateObject(type, context, class, locale)
-			CreateObject(type, class)
-			CreateObject(type, urltowsdl)
-		-->
-		<function creator="3" name="createobJect" returns="CORBAObject">
-			<help><![CDATA[
+		<function creator="3" name="createobject" returns="CORBAObject">
+		<help><![CDATA[
+				The CreateObject function takes different arguments depending on the value of the first argument:
+				
+				CreateObject('com', class, context, serverName)
+				CreateObject('component', component-name)
+				CreateObject('corba', context, class, locale)
+				CreateObject('java', class)
+				CreateObject('webservice', urltowsdl)
+				******************************************
+			
 				The CreateObject function can call a method on a CORBA object.
 				The object must be defined and registered for use.
 
@@ -9073,34 +9029,21 @@
                         For example Allaire//Doc/empobject
 				locale :
                     The name of the Java config that holds the properties file.
-			]]></help>
-			<parameter name="type" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="context" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="class" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="locale" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+                ********************************************
+                
+                Create a COM object (not available on Unix)
 
-		<!--
-			CreateObject(type, class, context, serverName)
-			CreateObject(type, component-name)
-			CreateObject(type, context, class, locale)
-			CreateObject(type, class)
-			CreateObject(type, urltowsdl)
-		-->
-		<function creator="3" name="createobjEct" returns="JAVAObject">
-			<help><![CDATA[
+				To create a COM object, you must provide this information:
+				 * The object's program ID or filename
+				 * The methods and properties available to the object through
+					the IDispatch interface
+				 * The arguments and return types of the object's methods
+				 * For most objects, you can get this information from the
+					OLEView utility.    
+					
+				********************************************
+
+
 				The CreateObject function can create a Java object, and, by
 				extension, an EJB object.
 				type : "java"
@@ -9115,39 +9058,72 @@
 				values can be any Java type (simple, array, object). If strings
 				are passed as arguments, CFML does the conversions; if
 				strings are received as return values, CFML does no conversion.
-			]]></help>
-			<parameter name="type" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="class" type="String" required="true">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
 
-		<!--
-			CreateObject(type, class, context, serverName)
-			CreateObject(type, component-name)
-			CreateObject(type, context, class, locale)
-			CreateObject(type, class)
-			CreateObject(type, urltowsdl)
-		-->
-		<function creator="3" name="createobjeCt" returns="WEBObject">
-			<help><![CDATA[
+				********************************************************
+
 				This function can create a web service object.
 
 				type : "webservice"
 				urltowsdl : WSDL file URL; location of web service. Note: this
 					URL almost always ends with "?WSDL"
+                    
 			]]></help>
+			
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="component" />
+					<value option="corba" />
+					<value option="com" />
+					<value option="java" />
+					<value option="webservice" />
+				</values>
+			</parameter>
+			<parameter name="context" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="corba" required="true" index="1"/>
+					<selectedValue attributeName="type" value="com" required="true" index="2"/>
+				</triggers>
+			</parameter>
+			<parameter name="class" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="com" required="true" index="1"/>
+					<selectedValue attributeName="type" value="corba" required="true" index="2"/>
+					<selectedValue attributeName="type" value="java" required="true" index="1"/>
+				</triggers>
+			</parameter>
+			<parameter name="locale" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="corba" required="true" index="3"/>
+				</triggers>
+			</parameter>
+			<parameter name="servername" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="com" required="true" index="3"/>
+				</triggers>
+			</parameter>
+			<parameter name="component_name" type="String" required="true">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="component" required="true" index="1"/>
+				</triggers>
 			</parameter>
 			<parameter name="urltowsdl" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="webservice" required="true" index="1"/>
+				</triggers>
 			</parameter>
 		</function>
 
@@ -9161,6 +9137,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9174,6 +9153,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9187,6 +9169,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9200,14 +9185,23 @@
 			<parameter name="hour" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="hour(Now())" />
+				</values>
 			</parameter>
 			<parameter name="minute" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="minute(Now())" />
+				</values>
 			</parameter>
 			<parameter name="second" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="second(Now())" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9263,6 +9257,19 @@
 			<parameter name="datepart" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="yyyy" />
+					<value option="q" />
+					<value option="m" />
+					<value option="y" />
+					<value option="d" />
+					<value option="w" />
+					<value option="ww" />
+					<value option="h" />
+					<value option="n" />
+					<value option="s" />
+					<value option="l" />
+				</values>
 			</parameter>
 			<parameter name="number" type="Numeric" required="true">
 				<help><![CDATA[
@@ -9271,6 +9278,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9291,14 +9301,33 @@
 			<parameter name="date1" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 			<parameter name="date2" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 			<parameter name="datePart" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="yyyy" />
+					<value option="q" />
+					<value option="m" />
+					<value option="y" />
+					<value option="d" />
+					<value option="w" />
+					<value option="ww" />
+					<value option="h" />
+					<value option="n" />
+					<value option="s" />
+					<value option="l" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9318,10 +9347,17 @@
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="local2Utc" />
+					<value option="utc2Local" />
+				</values>
 			</parameter>
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9340,14 +9376,33 @@
 			<parameter name="datepart" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="yyyy" />
+					<value option="q" />
+					<value option="m" />
+					<value option="y" />
+					<value option="d" />
+					<value option="w" />
+					<value option="ww" />
+					<value option="h" />
+					<value option="n" />
+					<value option="s" />
+					<value option="l" />
+				</values>
 			</parameter>
 			<parameter name="date1" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 			<parameter name="date2" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9366,10 +9421,19 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="short" />
+					<value option="medium" />
+					<value option="long" />
+					<value option="full" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9387,10 +9451,26 @@
 			<parameter name="datepart" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="yyyy" />
+					<value option="q" />
+					<value option="m" />
+					<value option="y" />
+					<value option="d" />
+					<value option="w" />
+					<value option="ww" />
+					<value option="h" />
+					<value option="n" />
+					<value option="s" />
+					<value option="l" />
+				</values>
 			</parameter>
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9405,6 +9485,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9418,6 +9501,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9444,6 +9530,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9457,6 +9546,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9470,6 +9562,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9698,6 +9793,9 @@
 			<parameter name="start" type="Numeric" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="1" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9721,6 +9819,9 @@
 			<parameter name="start" type="Numeric" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="1" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9744,6 +9845,9 @@
 			<parameter name="start" type="Numeric" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="1" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9758,6 +9862,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9880,6 +9987,10 @@
 			<parameter name="scope_name" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="form" />
+					<value option="url" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9941,6 +10052,9 @@
 			<parameter name="datetime" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -10021,6 +10135,12 @@
 			<parameter name="mode" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="perf_monitor" />
+					<value option="simple_load" />
+					<value option="prev_req_time" />
+					<value option="avg_req_time" />
+				</values>
 			</parameter>
 		</function>
 
@@ -10165,6 +10285,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10195,6 +10318,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -10219,6 +10345,11 @@
 			<parameter name="version" type="Numeric" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="-1" />
+					<value option="2.0" />
+					<value option="3.2" />
+				</values>
 			</parameter>
 		</function>
 
@@ -10242,6 +10373,11 @@
 			<parameter name="version" type="Numeric" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="-1" />
+					<value option="2.0" />
+					<value option="3.2" />
+				</values>
 			</parameter>
 		</function>
 
@@ -10658,6 +10794,14 @@
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="boolean" />
+					<value option="double" />
+					<value option="float" />
+					<value option="int" />
+					<value option="long" />
+					<value option="string" />
+				</values>
 			</parameter>
 			<parameter name="variable" type="String" required="true">
 				<help><![CDATA[
@@ -10742,6 +10886,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10765,6 +10912,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10789,6 +10939,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10811,6 +10964,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10833,6 +10989,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10855,6 +11014,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10877,6 +11039,9 @@
 			<parameter name="delimiters" type="String" required="false" default=",">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10895,6 +11060,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10917,6 +11085,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10942,6 +11113,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10959,6 +11133,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10976,6 +11153,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -10997,6 +11177,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11018,10 +11201,17 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 			<parameter name="elements" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="all" />
+					<value option="char" />
+				</values>
 			</parameter>
 		</function>
 
@@ -11039,6 +11229,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11064,6 +11257,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11098,6 +11294,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11115,6 +11314,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11137,6 +11339,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11159,6 +11364,9 @@
 			<parameter name="delimiters" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11227,6 +11435,11 @@
 			<parameter name="type" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="local" />
+					<value option="international" />
+					<value option="none" />
+				</values>
 			</parameter>
 		</function>
 
@@ -11245,10 +11458,20 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
+			
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="short" />
+					<value option="medium" />
+					<value option="long" />
+					<value option="full" />
+				</values>
 			</parameter>
 		</function>
 
@@ -11270,6 +11493,13 @@
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="local" />
+					<value option="international" />
+					<value option="none" />
+					
+					
+				</values>
 			</parameter>
 		</function>
 
@@ -11417,10 +11647,18 @@
 			<parameter name="time" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="short" />
+					<value option="medium" />
+					<value option="long" />
+				</values>
 			</parameter>
 		</function>
 
@@ -11505,6 +11743,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -11645,13 +11886,16 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
 		<!--
 			Numeric QueryAddColumn(query, column-name, array-name)
 		-->
-		<function creator="3" name="writeoutput" returns="Numeric">
+		<function creator="3" name="queryaddcolumn" returns="Numeric">
 			<help><![CDATA[
 				Adds a column to a query and populates its rows with the
 				contents of a one-dimensional array. Pads query columns,
@@ -11745,6 +11989,9 @@
 			<parameter name="delimiter" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -11829,6 +12076,9 @@
 			<parameter name="start" type="Numeric" required="false">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="1" />
+				</values>
 			</parameter>
 			<parameter name="returnsubexpressions" type="boolean" required="false">
 				<help><![CDATA[
@@ -11865,6 +12115,9 @@
 					A string or a variable that contains one. String in which
 					to search.
 				]]></help>
+				<values>
+					<value option="1" />
+				</values>
 			</parameter>
 			<parameter name="start" type="Numeric" required="false">
 				<help><![CDATA[
@@ -11964,6 +12217,10 @@
 					* one: replace the first occurrence (default)
 					* all: replace all occurrences
 				]]></help>
+				<values>
+					<value option="one" />
+					<value option="all" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12017,6 +12274,10 @@
 					* one: Replace the first occurrence (default)
 					* all: Replace all occurrences
 				]]></help>
+				<values>
+					<value option="one" />
+					<value option="all" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12051,6 +12312,10 @@
 						expression. Default.
 					* all: Replace all occurrences of the regular expression.
 				]]></help>
+				<values>
+					<value option="one" />
+					<value option="all" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12085,6 +12350,10 @@
 						expression. Default.
 					* all: Replace all occurrences of the regular expression.
 				]]></help>
+				<values>
+					<value option="one" />
+					<value option="all" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12179,6 +12448,9 @@
 				<help><![CDATA[
 					A date/time object
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12201,6 +12473,19 @@
 					The character encoding in which text in the scope
 					variables is encoded.
 				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12219,6 +12504,36 @@
 				<help><![CDATA[
 					The name of a locale; for example, "English (US)"
 				]]></help>
+				<values>	
+					<value option="Chinese (China)" />
+					<value option="Chinese (Hong Kong)" />
+					<value option="Chinese (Taiwan)" />
+					<value option="Dutch (Belgian)" />
+					<value option="Dutch (Standard)" />
+					<value option="English (Australian)" />
+					<value option="English (Canadian)" />
+					<value option="English (New Zealand)" />
+					<value option="English (US)" />
+					<value option="English (UK)" />
+					<value option="French (Belgian)" />
+					<value option="French (Canadian)" />
+					<value option="French (Standard)" />
+					<value option="French (Swiss)" />
+					<value option="German (Austrian)" />
+					<value option="German (Standard)" />
+					<value option="German (Swiss)" />
+					<value option="Italian (Standard)" />
+					<value option="Italian (Swiss)" />
+					<value option="Japanese" />
+					<value option="Korean" />
+					<value option="Norwegian (Bokmal)" />
+					<value option="Norwegian (Nynorsk)" />
+					<value option="Portuguese (Brazilian)" />
+					<value option="Portuguese (Standard)" />
+					<value option="Spanish (Modern)" />
+					<value option="Spanish (Standard)" />
+					<value option="Swedish" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12517,6 +12832,10 @@
 					* one: returns one matching key. Default.
 					* all: returns all matching keys
 				]]></help>
+				<values>
+					<value option="one" />
+					<value option="all" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12548,6 +12867,10 @@
 					one: function returns one matching key (default)
 					all: function returns all matching keys
 				]]></help>
+				<values>
+					<value option="one" />
+					<value option="all" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12660,6 +12983,9 @@
 				<help><![CDATA[
 					Character that separates keys in list. Default: comma.
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -12691,6 +13017,11 @@
 					* text: case sensitive Default.
 					* textnocase
 				]]></help>
+				<values>
+					<value option="numeric" />
+					<value option="text" />
+					<value option="textnocase" />
+				</values>
 			</parameter>
 			<parameter name="sortorder" type="String" required="true">
 				<help><![CDATA[
@@ -12761,11 +13092,20 @@
 				<help><![CDATA[
 					A date/time value or string to convert
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
 					Masking characters that determine the format
 				]]></help>
+				<values>
+					<value option="short" />
+					<value option="medium" />
+					<value option="long" />
+					<value option="full" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12789,6 +13129,19 @@
 					For a string, defines how characters are represented in a
 					byte array.
 				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12824,6 +13177,19 @@
 				<help><![CDATA[
 					The character encoding (character set) of the string.
 				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12870,6 +13236,19 @@
 				<help><![CDATA[
 					The character encoding in which the string is encoded.
 				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12893,6 +13272,19 @@
 				<help><![CDATA[
 					The character encoding in which the string is encoded.
 				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12911,6 +13303,9 @@
 				<help><![CDATA[
 					URL of a CFML page
 				]]></help>
+				<values>
+					<value option="cgi.script_name" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12952,6 +13347,9 @@
 					A delimiter character to separate column data items.
 					Default: comma (,).
 				]]></help>
+				<values>
+					<value option="," />
+				</values>
 			</parameter>
 		</function>
 
@@ -12969,6 +13367,9 @@
 				<help><![CDATA[
 					A date/time object in the range 100 AD-9999 AD.
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -13168,6 +13569,9 @@
 			<parameter name="date" type="DateTime" required="true">
 				<help><![CDATA[
 				]]></help>
+				<values>
+					<value option="Now()" />
+				</values>
 			</parameter>
 		</function>
 
@@ -13178,7 +13582,7 @@
 			<help><![CDATA[
 				Yes, for a non-zero value; No, otherwise.
 			]]></help>
-			<parameter name="value" type="Numeric" required="true">
+			<parameter name="value" type="Boolean" required="true">
 				<help><![CDATA[
 					A number or Boolean value
 				]]></help>
