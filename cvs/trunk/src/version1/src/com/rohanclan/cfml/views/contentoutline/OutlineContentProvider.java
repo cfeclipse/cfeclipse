@@ -74,9 +74,9 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		//System.err.println("Doing input changed " + oldInput + " " + newInput);
 		this.viewer = (TreeViewer)viewer;
-		/* if(newInput instanceof TagMatch)
-			rootdir = (TagMatch)newInput;
-		*/
+		
+		if(newInput instanceof DocItem)
+			rootdir = (DocItem)newInput;
 	}
 	
 	/**

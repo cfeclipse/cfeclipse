@@ -18,11 +18,11 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent; */
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.SWT;
+//import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
+//import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.viewers.LabelProvider;
 /* import org.eclipse.jface.action.GroupMarker;
@@ -37,11 +37,24 @@ import java.io.File;
 */
 
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.part.FileEditorInput;
+//import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.*;
 import java.util.*;
+
+import org.eclipse.jface.viewers.IStructuredSelection;
+//import org.eclipse.ui.IFileEditorInput;
+//import org.eclipse.jface.text.IDocument;
+//import org.eclipse.ui.texteditor.ITextEditor;
+
+import com.rohanclan.cfml.util.CFPluginImages;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.swt.widgets.Menu;
+//import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
 
 /**
  * @author Rob
@@ -54,7 +67,7 @@ public class CFContentOutlineView extends ViewPart {
 	
 	/** the treeviewer control */
 	protected TreeViewer treeViewer;
-	protected Text text;
+	//protected Text text;
 	protected LabelProvider labelProvider;
 		
 	/** the path to the icons. i.e. file://C/blah/plugin/icons/ */
@@ -66,7 +79,9 @@ public class CFContentOutlineView extends ViewPart {
 	 */
 	//private static XMLConfigFile xmlconfile;
 	
-	//protected Action insertAction; //addItemAction; //, deleteItemAction, selectAllAction;
+	protected Action jumpAction; //addItemAction; //, deleteItemAction, selectAllAction;
+	
+	protected MenuManager menuMgr;
 	
 	/** the root directory */
 	//protected File root;
@@ -84,12 +99,12 @@ public class CFContentOutlineView extends ViewPart {
 		//Create a "label" to display information in. I'm
 		//using a text field instead of a lable so you can
 		//copy-paste out of it.
-		text = new Text(parent, SWT.READ_ONLY | SWT.SINGLE | SWT.BORDER);
+		//text = new Text(parent, SWT.READ_ONLY | SWT.SINGLE | SWT.BORDER);
 		// layout the text field above the treeviewer
 		GridData layoutData = new GridData();
 		layoutData.grabExcessHorizontalSpace = true;
 		layoutData.horizontalAlignment = GridData.FILL;
-		text.setLayoutData(layoutData);
+		//text.setLayoutData(layoutData);
 		
 		//Create the tree viewer as a child of the composite parent
 		treeViewer = new TreeViewer(parent);
@@ -121,12 +136,34 @@ public class CFContentOutlineView extends ViewPart {
 	}
 	
 	protected void hookListeners(){;}
-	protected void createActions(){;}
 	protected void createMenus(){
 		//IMenuManager rootMenuManager = getViewSite().getActionBars().getMenuManager();
 		//rootMenuManager.add(refreshSnippetsAction);
 	}
-	private void createContextMenu(){;}
+	
+	private void createContextMenu(){
+		//Create menu manager.
+		menuMgr = new MenuManager();
+		menuMgr.setRemoveAllWhenShown(true);
+		menuMgr.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager mgr) {
+				fillContextMenu(mgr);
+			}
+		});
+		
+		// Create menu.
+		Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
+		treeViewer.getControl().setMenu(menu);
+		
+		// Register menu for extension.
+		getSite().registerContextMenu(menuMgr, treeViewer);
+	}
+	
+	private void fillContextMenu(IMenuManager mgr) {
+		mgr.add(jumpAction);
+	}
+	
+	
 	protected void createToolbar(){;}
 	
 	/**
@@ -189,6 +226,60 @@ public class CFContentOutlineView extends ViewPart {
 		}
 		
 		return null; //new TagMatch("/",0,0,1);
+	}
+	
+	
+	/**
+	 * Gets the selected item parses it, and adds the defined stuff to the
+	 * editor
+	 */
+	protected void jumpToItem() 
+	{
+		//get a handle to the current editor and assign it to our temp action
+		IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+		//tmpAction.setActiveEditor(null,iep);
+		//File selectedfile = null;
+		DocItem selecteditem = null;
+		
+		//can't do much if nothing is selected
+		if(treeViewer.getSelection().isEmpty()) 
+		{
+			return;
+		}
+		else 
+		{
+			IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+			//selectedfile = (File)selection.getFirstElement();
+			selecteditem = (DocItem)selection.getFirstElement();
+		}
+		
+		if(selecteditem == null)
+			return;
+		
+		try
+		{
+			ITextEditor editor = (ITextEditor)iep;
+			//IDocument doc = editor.getDocumentProvider().getDocument(iep.getEditorInput());
+			editor.setHighlightRange(selecteditem.getStartPosition(),0,true);
+		}catch(Exception e)
+		{
+			e.printStackTrace(System.err);
+		}
+	}
+	
+	/**
+	 * creates all the default actions
+	 */
+	protected void createActions() 
+	{
+		jumpAction = new Action(
+			"Jump",
+			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SNIP)
+		){
+			public void run() { 
+				jumpToItem();
+			}
+		};
 	}
 	
 	public void setFocus(){;}

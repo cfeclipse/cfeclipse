@@ -98,7 +98,13 @@ public class OutlineLabelProvider extends LabelProvider {
 		
 		if(element instanceof DocItem)
 		{
-			return ((DocItem)element).toString();
+			//return ((DocItem)element).toString();
+			StringBuffer sb = new StringBuffer();
+			
+			sb.append( ((DocItem)element).getName() );
+			sb.append( ((DocItem)element).getItemData() );
+			
+			return sb.toString();
 		}
 		
 		return "test test";
