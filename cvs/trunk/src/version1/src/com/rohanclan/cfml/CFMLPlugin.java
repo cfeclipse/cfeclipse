@@ -113,12 +113,12 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		plugin = this;
 		try 
 		{
-			resourceBundle = ResourceBundle.getBundle("plugin");	
+			this.resourceBundle = ResourceBundle.getBundle("plugin");	
 		} 
 		catch (MissingResourceException x) 
 		{
 			x.printStackTrace(System.err);
-			resourceBundle = null;
+			this.resourceBundle = null;
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			+ "/properties.ini"
 		); */
 		
-		propertyStore = new PreferenceStore(
+		this.propertyStore = new PreferenceStore(
 			CFMLPlugin.getDefault().getStateLocation().toString()
 			+ "/properties.ini"
 		);
@@ -213,6 +213,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	
 	protected void initializeDefaultPluginPreferences() 
 	{
+	    
         //super.initializeDefaultPluginPreferences();
         CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
@@ -222,7 +223,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
         	propertyManager.initializeDefaultValues();
 		}
 		catch (Exception e) {
-			
+			// do nothing
 		}
     }
 	
@@ -235,7 +236,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	}
 	
 	public PreferenceStore getPropertyStore() {
-		return propertyStore;
+		return this.propertyStore;
 	}
 	
 
@@ -269,6 +270,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public ResourceBundle getResourceBundle() 
 	{
-		return resourceBundle;
+		return this.resourceBundle;
 	}
 }

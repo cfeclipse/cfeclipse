@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.3 2005-03-01 23:32:47 smilligan Exp $
- * $Revision: 1.3 $
- * $Date: 2005-03-01 23:32:47 $
+ * $Id: CFEPartitioner.java,v 1.4 2005-03-03 03:12:59 smilligan Exp $
+ * $Revision: 1.4 $
+ * $Date: 2005-03-03 03:12:59 $
  * 
  * Created on Oct 17, 2004
  *
@@ -54,7 +54,11 @@ import org.eclipse.jface.text.TypedRegion;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import com.rohanclan.cfml.plugindebug.DebugSettings;
+import com.rohanclan.cfml.plugindebug.DebugUtils;
+
 import org.eclipse.jface.text.rules.DefaultPartitioner;
+
 /**
  * @author Stephen Milligan
  * 
@@ -70,6 +74,9 @@ public class CFEPartitioner implements IDocumentPartitioner,
 
     private final static String CONTENT_TYPES_CATEGORY = "__content_types_category";
 
+    /** The debug flag for this class */
+    private final boolean DEBUG = DebugSettings.PARTITIONER;
+    
     /** The partitioner's scanner */
     protected CFPartitionScanner fScanner;
 
@@ -1604,7 +1611,12 @@ public class CFEPartitioner implements IDocumentPartitioner,
 	 */
 	public ITypedRegion[] computePartitioning(int offset, int length, boolean includeZeroLengthPartitions) {
 		List list= new ArrayList();
-		
+		if (DEBUG) {
+		    DebugUtils.printMessage(getClass(),"Computing partitioning from " 
+		            + offset 
+		            + " to " 
+		            + Integer.toString(offset + length));
+		}
 		try {
 			
 			int endOffset= offset + length;

@@ -49,7 +49,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.ICFDocument;
-import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 
 /**
@@ -62,7 +61,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     /**
      * The text editor that the selection listener is installed on
      */
-    private ITextEditor editor = null;
+    //private ITextEditor editor = null;
     /**
      * The StyledText that belongs to the viewer
      */
@@ -70,7 +69,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     /**
      * The projection viewer for this editor
      */
-    private ProjectionViewer viewer = null;
+    private ProjectionViewer fViewer = null;
     
     /**
      * This allows us to figure out where a point is in widget co-ordinate space.
@@ -123,12 +122,12 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      * and keeps track of whether or not the mouse is currently over a selection.
      */
     public SelectionCursorListener(ITextEditor editor, ProjectionViewer viewer) {
-        this.editor = editor;
+        //this.editor = editor;
         this.textWidget = viewer.getTextWidget();
-        this.viewer = viewer;
-        arrowCursor = new Cursor(textWidget.getDisplay(),SWT.CURSOR_ARROW);
-        textCursor = new Cursor(textWidget.getDisplay(),SWT.CURSOR_IBEAM);
-        widgetOffsetTracker = new WidgetPositionTracker(textWidget);
+        this.fViewer = viewer;
+        this.arrowCursor = new Cursor(this.textWidget.getDisplay(),SWT.CURSOR_ARROW);
+        this.textCursor = new Cursor(this.textWidget.getDisplay(),SWT.CURSOR_IBEAM);
+        this.widgetOffsetTracker = new WidgetPositionTracker(this.textWidget);
     }
     
     /**
@@ -136,11 +135,11 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      *
      */
     public void reset() {
-        hovering = false;
-        selectionStart = -1;
-        selection = "";
-        textWidget.setCursor(textCursor);
-        mouseDown = false;
+        this.hovering = false;
+        this.selectionStart = -1;
+        this.selection = "";
+        this.textWidget.setCursor(this.textCursor);
+        this.mouseDown = false;
         //System.out.println("Listener reset");
     }
     
@@ -150,7 +149,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      * @return
      */
     public boolean doDrag() {
-        if (hovering && mouseDown) {
+        if (this.hovering && this.mouseDown) {
             return true;
         }
         return false;
@@ -198,21 +197,21 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     public void mouseMove(MouseEvent e) {
         // If the selection is draggable we want to ignore this event.
         
-        if (!mouseDown) {
+        if (!this.mouseDown) {
         	
 	        Point pt = new Point(e.x,e.y);
 	        
 	        if (pointOnSelection(pt)) {
-	            textWidget.setCursor(arrowCursor);
-                hovering = true;
+	            this.textWidget.setCursor(this.arrowCursor);
+	            this.hovering = true;
 	        }
 	        else {
-	            textWidget.setCursor(textCursor);
-	            hovering = false;
+	            this.textWidget.setCursor(this.textCursor);
+	            this.hovering = false;
 	        }
         }
         else {
-            downUp = false;
+            this.downUp = false;
         }
     }
     
@@ -225,10 +224,10 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      */
     
     public void selectionChanged(SelectionChangedEvent event) {
-        if (!hovering) {
-	        ITextSelection sel = (ITextSelection)viewer.getSelection();
-	        selectionStart = sel.getOffset();
-	        selection = sel.getText();
+        if (!this.hovering) {
+	        ITextSelection sel = (ITextSelection)this.fViewer.getSelection();
+	        this.selectionStart = sel.getOffset();
+	        this.selection = sel.getText();
         }
     }
 
@@ -241,9 +240,9 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      * 
      */
     private void checkFolding() {
-        int widgetOffset = viewer.modelOffset2WidgetOffset(selectionStart);
-        String[] lines = selection.split(textWidget.getLineDelimiter());
-        int widgetLine = textWidget.getContent().getLineAtOffset(widgetOffset);
+        int widgetOffset = this.fViewer.modelOffset2WidgetOffset(this.selectionStart);
+        String[] lines = this.selection.split(this.textWidget.getLineDelimiter());
+        int widgetLine = this.textWidget.getContent().getLineAtOffset(widgetOffset);
         int lineCount = 0;
         
         if (lines.length > 0) {
@@ -252,19 +251,19 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
         
         // If we've already grabbed the text inside a fold we 
         // could end up with more lines than the widget knows about.
-        if (widgetLine+lineCount > textWidget.getLineCount()) {
+        if (widgetLine+lineCount > this.textWidget.getLineCount()) {
             return;
         }
 
-        String line = textWidget.getContent().getLine(widgetLine+lineCount);
+        String line = this.textWidget.getContent().getLine(widgetLine+lineCount);
         
         if (lines.length > 0 
                 && line.equals(lines[lines.length-1])) {
             // Figure out the viewer offset for the start of the line.
-            int widgetLineStart = textWidget.getContent().getOffsetAtLine(widgetLine + lineCount);
-            int viewerLineStart = viewer.widgetOffset2ModelOffset(widgetLineStart);
+            int widgetLineStart = this.textWidget.getContent().getOffsetAtLine(widgetLine + lineCount);
+            int viewerLineStart = this.fViewer.widgetOffset2ModelOffset(widgetLineStart);
            
-            ProjectionAnnotationModel model = viewer.getProjectionAnnotationModel();
+            ProjectionAnnotationModel model = this.fViewer.getProjectionAnnotationModel();
             Iterator i = model.getAnnotationIterator();
             while (i.hasNext()) {
                 ProjectionAnnotation annotation = (ProjectionAnnotation)i.next();
@@ -274,15 +273,15 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
                  */
                 if (pos.offset == viewerLineStart 
                         && annotation.isCollapsed()) {
-                    int selectionLength = viewerLineStart - selectionStart + pos.length;
+                    int selectionLength = viewerLineStart - this.selectionStart + pos.length;
                     // Grab the current caret position so we can put it back after changing the selection
-                    Point oldCaret = textWidget.getCaret().getLocation();
-                    TextSelection sel = new TextSelection(viewer.getDocument(),selectionStart,selectionLength);
-                    viewer.setSelection(sel,false);
+                    Point oldCaret = this.textWidget.getCaret().getLocation();
+                    TextSelection sel = new TextSelection(this.fViewer.getDocument(),this.selectionStart,selectionLength);
+                    this.fViewer.setSelection(sel,false);
                     /* Restore the caret. Using this rather than textWidget.setCaretOffset()
                      * because setCaretOffset() clears the selection
                      */ 
-                    textWidget.getCaret().setLocation(oldCaret);
+                    this.textWidget.getCaret().setLocation(oldCaret);
                 }
             }
         }
@@ -301,7 +300,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     public void mouseDoubleClick(MouseEvent e) {
         
 
-        TextSelection sel = (TextSelection)viewer.getSelection();
+        TextSelection sel = (TextSelection)this.fViewer.getSelection();
         
         int startpos = sel.getOffset() + sel.getLength();
         
@@ -310,7 +309,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
                 //|| (e.stateMask & SWT.CONTROL) != 0) {
                 
         //if ((e.stateMask & SWT.CONTROL) != 0 ) {
-            ICFDocument cfd = (ICFDocument) viewer.getDocument();
+            ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
     		CfmlTagItem cti = cfd.getTagAt(startpos, startpos, true);
     		
     		
@@ -345,13 +344,13 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	            }
 
 	            TextSelection newSel = new TextSelection(cfd,start,length);
-	            viewer.setSelection(newSel);
+	            this.fViewer.setSelection(newSel);
                 
     		}
         }
         else {
 
-            startpos = viewer.getSelectedRange().x;
+            startpos = this.fViewer.getSelectedRange().x;
             selectWord(startpos);
         }
         
@@ -362,7 +361,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     protected boolean selectWord(int caretPos) 
 	{
 
-		IDocument doc = viewer.getDocument();
+		IDocument doc = this.fViewer.getDocument();
 		int startPos, endPos;
 		
 		try 
@@ -408,7 +407,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	{
 		int offset = startPos + 1;
 		int length = stopPos - offset;
-		viewer.setSelectedRange(offset, length);
+		this.fViewer.setSelectedRange(offset, length);
 	}
 
     
@@ -423,8 +422,8 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      */
     public void mouseDown(MouseEvent e) {
         if ((e.stateMask & SWT.CONTROL) == 0) {
-	        mouseDown = true;
-	        downUp = true;
+            this.mouseDown = true;
+            this.downUp = true;
         }
     }
 
@@ -436,11 +435,11 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     public void mouseUp(MouseEvent e) {
         
         if ((e.stateMask & SWT.CONTROL) == 0) {
-	        mouseDown = false;
-	        if (downUp) {
+            this.mouseDown = false;
+	        if (this.downUp) {
 	            reset();
 	        }
-	        if (selectionStart >= 0) {
+	        if (this.selectionStart >= 0) {
 	            checkFolding();
 	        }
 	        
@@ -456,26 +455,21 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	 */
 	private boolean pointOnSelection(Point pt) {
 	    try {
-	        if (selectionStart >= 0) {
-	            int offset = widgetOffsetTracker.getWidgetOffset(pt);
+	        if (this.selectionStart >= 0) {
+	            int offset = this.widgetOffsetTracker.getWidgetOffset(pt);
 	            // Convert to viewer co-ordinates
-	            offset = viewer.widgetOffset2ModelOffset(offset);
+	            offset = this.fViewer.widgetOffset2ModelOffset(offset);
 	            
-	            if(selectionStart <= offset 
-	                    && selectionStart + selection.length() > offset) {
+	            if(this.selectionStart <= offset 
+	                    && this.selectionStart + this.selection.length() > offset) {
 	                 return true;
 	            }
-	            else {
-	                return false;
-	            }
-	        }
-	        else {
-	            return false;
 	        }
 	    }
         catch (Exception ex) {
-            return false;
+            // do nothing
         }
+        return false;
 	}
 	
 	

@@ -171,8 +171,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer,
 		String contentType) 
 	{
-		if (doubleClickStrategy == null)
-			doubleClickStrategy = new CFDoubleClickStrategy();
+		if (this.doubleClickStrategy == null)
+			this.doubleClickStrategy = new CFDoubleClickStrategy();
 		
 		//return doubleClickStrategy;
 		// Spike::

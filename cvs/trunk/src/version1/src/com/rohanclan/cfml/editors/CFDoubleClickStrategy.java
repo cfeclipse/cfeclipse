@@ -40,7 +40,7 @@ public class CFDoubleClickStrategy implements ITextDoubleClickStrategy {
 
 		if (pos < 0) return;
 		
-		fText = part;
+		this.fText = part;
 
 		//if(!selectComment(pos)) 
 		//{
@@ -109,7 +109,7 @@ public class CFDoubleClickStrategy implements ITextDoubleClickStrategy {
 	protected boolean selectWord(int caretPos) 
 	{
 
-		IDocument doc = fText.getDocument();
+		IDocument doc = this.fText.getDocument();
 		int startPos, endPos;
 		
 		try 
@@ -155,6 +155,6 @@ public class CFDoubleClickStrategy implements ITextDoubleClickStrategy {
 	{
 		int offset = startPos + 1;
 		int length = stopPos - offset;
-		fText.setSelectedRange(offset, length);
+		this.fText.setSelectedRange(offset, length);
 	}
 }

@@ -26,15 +26,14 @@ package com.rohanclan.cfml.editors;
 
 //import java.util.Iterator;
 import java.text.MessageFormat;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-
+import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.window.Window;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
@@ -43,22 +42,22 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.dialogs.IMessageProvider;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.ITypedRegion;
-import org.eclipse.jface.text.source.CompositeRuler;
-import org.eclipse.jface.text.source.IChangeRulerColumn;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
-import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
@@ -71,17 +70,21 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
-//import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
+import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
+
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
@@ -94,22 +97,16 @@ import com.rohanclan.cfml.editors.dnd.CFEDragDropListener;
 import com.rohanclan.cfml.editors.dnd.SelectionCursorListener;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
+import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
+import com.rohanclan.cfml.plugindebug.DebugSettings;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
-
-import org.eclipse.jface.dialogs.IMessageProvider;
-import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.jface.dialogs.MessageDialog;
-import java.util.Iterator;
-import org.eclipse.ui.texteditor.AnnotationPreference;
-import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
-import com.rohanclan.cfml.editors.partitioner.CFEPartition;
-import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
-import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
-
 
 /**
  * @author Rob
@@ -120,6 +117,8 @@ import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		IPropertyChangeListener {
 
+    private final boolean DEBUG = DebugSettings.EDITORS;
+    
 	protected ColorManager colorManager;
 
 	protected CFConfiguration configuration;
@@ -130,7 +129,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 	final GotoFileAction gfa = new GotoFileAction();
 
-	private final JumpToDocPos jumpAction = new JumpToDocPos();
+	final JumpToDocPos jumpAction = new JumpToDocPos();
 
 	private CodeFoldingSetter foldingSetter;
 
@@ -139,7 +138,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	/**
 	 * The change ruler column.
 	 */
-	private IChangeRulerColumn fChangeRulerColumn;
 
 	boolean fIsChangeInformationShown;
 
@@ -147,7 +145,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 	private DragSource dragsource;
 
-	private SourceViewer viewer;
 
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
@@ -157,12 +154,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		if (getPreferenceStore().getBoolean(
 				EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
 
-			((CFEUndoManager) configuration.getUndoManager(this.getSourceViewer()))
+			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer()))
 					.listenToTextChanges(false);
 			RTrimAction trimAction = new RTrimAction();
 			trimAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
 			trimAction.run(null);
-			((CFEUndoManager) configuration.getUndoManager(this.getSourceViewer()))
+			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer()))
 					.listenToTextChanges(true);
 		}
 		try {
@@ -172,7 +169,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			e.printStackTrace();
 		}
 
-		foldingSetter.docChanged(false);
+		this.foldingSetter.docChanged(false);
 
 	}
 
@@ -196,14 +193,14 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		brackets.add(squareBraces);
 
 		//create the CFMLPairMatcher
-		cfmlBracketMatcher = new CFMLPairMatcher(brackets);
+		this.cfmlBracketMatcher = new CFMLPairMatcher(brackets);
 		//end bracket matching stuff
 
-		colorManager = new ColorManager();
+		this.colorManager = new ColorManager();
 		//setup color coding and the damage repair stuff
 
-		configuration = new CFConfiguration(colorManager, this);
-		setSourceViewerConfiguration(configuration);
+		this.configuration = new CFConfiguration(this.colorManager, this);
+		setSourceViewerConfiguration(this.configuration);
 		//assign the cfml document provider which does the partitioning
 		//and connects it to this Edtior
 
@@ -226,7 +223,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 * 
 	 * This method configures the editor but does not define a
 	 * <code>SourceViewerConfiguration</code>. When only interested in
-	 * providing a custom source viewer configuration, subclasses may extend this
+	 * providing a custom source fViewer configuration, subclasses may extend this
 	 * method.
 	 */
 	protected void initializeEditor() {
@@ -243,36 +240,35 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		//this.parent = parent;
 		super.createPartControl(parent);
 		this.setBackgroundColor();
-
-		fSourceViewerDecorationSupport.install(getPreferenceStore());
+		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
 
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
 
-		fProjectionSupport = new ProjectionSupport(projectionViewer,
+		this.fProjectionSupport = new ProjectionSupport(projectionViewer,
 				getAnnotationAccess(), getSharedColors());
-		fProjectionSupport
+		this.fProjectionSupport
 				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error");
-		fProjectionSupport
+		this.fProjectionSupport
 				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
-		fProjectionSupport
+		this.fProjectionSupport
 				.addSummarizableAnnotationType("com.rohanclan.cfml.parserProblemAnnotation");
-		fProjectionSupport
+		this.fProjectionSupport
 				.addSummarizableAnnotationType("com.rohanclan.cfml.parserWarningAnnotation");
-		fProjectionSupport
+		this.fProjectionSupport
 				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning");
-		fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
+		this.fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
 			public IInformationControl createInformationControl(Shell shell) {
 				return new DefaultInformationControl(shell);
 			}
 		});
-		fProjectionSupport.install();
+		this.fProjectionSupport.install();
 
 		projectionViewer.doOperation(ProjectionViewer.TOGGLE);
 
-		foldingSetter = new CodeFoldingSetter(this);
-		foldingSetter.docChanged(true);
+		this.foldingSetter = new CodeFoldingSetter(this);
+		this.foldingSetter.docChanged(true);
 
-		// TODO: If we set this directly the projection viewer loses track of the
+		// TODO: If we set this directly the projection fViewer loses track of the
 		// line numbers.
 		// Need to create a class that extends projectionViewer so we can implement
 		// wrapped
@@ -306,6 +302,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					}
 				}
 			}
+			/*
+			if (this.DEBUG) {
+			    IWorkbenchPage p = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			    System.out.println(p);
+			}
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -329,7 +331,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 		//Allow data to be copied or moved from the drag source
 		int operations = DND.DROP_MOVE | DND.DROP_COPY;
-		dragsource = new DragSource(this.getSourceViewer().getTextWidget(),
+		this.dragsource = new DragSource(this.getSourceViewer().getTextWidget(),
 				operations);
 
 		//Allow data to be copied or moved to the drop target
@@ -338,12 +340,11 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				operations);
 
 		Transfer[] types = new Transfer[] { TextTransfer.getInstance() };
-		dragsource.setTransfer(types);
+		this.dragsource.setTransfer(types);
 
 		//Receive data in Text or File format
 		final TextTransfer textTransfer = TextTransfer.getInstance();
 		final FileTransfer fileTransfer = FileTransfer.getInstance();
-		final CFMLEditor thistxt = this;
 
 		types = new Transfer[] { fileTransfer, textTransfer };
 		target.setTransfer(types);
@@ -351,7 +352,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		CFEDragDropListener ddListener = new CFEDragDropListener(this,
 				(ProjectionViewer) this.getSourceViewer(), cursorListener);
 
-		dragsource.addDragListener(ddListener);
+		this.dragsource.addDragListener(ddListener);
 
 		target.addDropListener(ddListener);
 
@@ -384,25 +385,27 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		//all this mess is really just to get the offset and a handle to the
 		//CFDocument object attached to the Document...
 		try {
-			IEditorPart iep = getSite().getPage().getActiveEditor();
-			ITextEditor editor = (ITextEditor) iep;
-			IDocument doc = editor.getDocumentProvider().getDocument(
+			final IEditorPart iep = getSite().getPage().getActiveEditor();
+			final ITextEditor editor = (ITextEditor) iep;
+			final IDocument doc = editor.getDocumentProvider().getDocument(
 					editor.getEditorInput());
 
-			ICFDocument cfd = (ICFDocument) doc;
-			ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
+			final ICFDocument cfd = (ICFDocument) doc;
+			final ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
 					.getSelection();
 
 
 			Action act = new Action("Refresh syntax highlighting", null) {
 				public void run() {
 				   try {
+				       /*
 				  IEditorPart iep = getSite().getPage().getActiveEditor();
 					ITextEditor editor = (ITextEditor) iep;
 					
 					ISelection sel = editor.getSelectionProvider().getSelection();
 					IDocument doc = editor.getDocumentProvider().getDocument(
 							editor.getEditorInput());
+					*/
 					CFEPartitioner partitioner = new CFEPartitioner(
 							new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
 					partitioner.connect(doc);
@@ -418,7 +421,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 			act = new Action("Show partition info", null) {
 				public void run() {
-				    
+				    /*
 				    IEditorPart iep = getSite().getPage().getActiveEditor();
 					ITextEditor editor = (ITextEditor) iep;
 					IDocument doc = editor.getDocumentProvider().getDocument(
@@ -427,7 +430,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					ICFDocument cfd = (ICFDocument) doc;
 					ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
 							.getSelection();
-
+							*/
 					int startpos = sel.getOffset();
 					int len = Math.max(sel.getLength(),1);
 					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
@@ -477,9 +480,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			 * Start the logic to see if we are in a cfinclude or a cfmodule. get the tag.
 			 */
 			int startpos = sel.getOffset();
-			int len = Math.max(sel.getLength(),1);
-			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-			CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
 			
 			CfmlTagItem cti = null; 
 		    try {
@@ -492,13 +492,14 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			if (cti != null) {
 
 				if (cti.matchingItem != null) {
-					jumpAction.setDocPos(cti.matchingItem.getEndPosition());
-					jumpAction.setActiveEditor(null, getSite().getPage()
+
+					this.jumpAction.setDocPos(cti.matchingItem.getEndPosition());
+					this.jumpAction.setActiveEditor(null, getSite().getPage()
 							.getActiveEditor());
 					Action jumpNow = new Action("Jump to end tag", CFPluginImages
 							.getImageRegistry().getDescriptor(CFPluginImages.ICON_FORWARD)) {
 						public void run() {
-							jumpAction.run(null);
+						    CFMLEditor.this.jumpAction.run(null);
 						}
 					};
 					menu.add(jumpNow);
@@ -508,13 +509,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				if (n.equalsIgnoreCase("cfinclude") || n.equalsIgnoreCase("cfmodule")) {
 					//this is a bit hokey - there has to be a way to load the
 					//action in the xml file then just call it here...
-					gfa.setActiveEditor(null, getSite().getPage().getActiveEditor());
+				    this.gfa.setActiveEditor(null, getSite().getPage().getActiveEditor());
 
 					Action ack = new Action("Open/Create File", CFPluginImages
 							.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)) {
 						public void run() {
 
-							gfa.run(null);
+						    CFMLEditor.this.gfa.run(null);
 						}
 					};
 					menu.add(ack);
@@ -533,8 +534,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 */
 	public Object getAdapter(Class required) {
 
-		if (fProjectionSupport != null) {
-			Object adapter = fProjectionSupport.getAdapter(getSourceViewer(),
+		if (this.fProjectionSupport != null) {
+			Object adapter = this.fProjectionSupport.getAdapter(getSourceViewer(),
 					required);
 			if (adapter != null)
 				return adapter;
@@ -551,10 +552,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			return super.getAdapter(required);
 			//return super.getAdapter(adapter);
 		}
-		//otherwise just send our supers
-		else {
-			return super.getAdapter(required);
-		}
+		
+		return super.getAdapter(required);
+		
 	}
 
 	public void createActions() {
@@ -674,7 +674,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	
 	
 	public void dispose() {
-		colorManager.dispose();
+	    this.colorManager.dispose();
 		if (this.cfmlBracketMatcher != null) {
 			this.cfmlBracketMatcher.dispose();
 		}
@@ -695,7 +695,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			ISourceViewer sourceViewer = getSourceViewer();
 			if (sourceViewer != null) {
 				sourceViewer.getTextWidget().setTabs(
-						configuration.getTabWidth(sourceViewer));
+				        this.configuration.getTabWidth(sourceViewer));
 			}
 		}
 		setBackgroundColor();
@@ -704,62 +704,11 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	}
 
 	/**
-	 * Shows the line number ruler column.
-	 */
-	private void showLineNumberRuler() {
-		showChangeRuler(false);
-		if (fLineNumberRulerColumn == null) {
-			IVerticalRuler v = getVerticalRuler();
-			if (v instanceof CompositeRuler) {
-				CompositeRuler c = (CompositeRuler) v;
-				c.addDecorator(1, createLineNumberRulerColumn());
-			}
-		}
-	}
-
-	/**
-	 * Hides the line number ruler column.
-	 */
-	private void hideLineNumberRuler() {
-		if (fLineNumberRulerColumn != null) {
-			IVerticalRuler v = getVerticalRuler();
-			if (v instanceof CompositeRuler) {
-				CompositeRuler c = (CompositeRuler) v;
-				c.removeDecorator(fLineNumberRulerColumn);
-			}
-			fLineNumberRulerColumn = null;
-		}
-		if (fIsChangeInformationShown)
-			showChangeRuler(true);
-	}
-
-	/**
-	 * Sets the display state of the separate change ruler column (not the quick
-	 * diff display on the line number ruler column) to <code>show</code>.
-	 * 
-	 * @param show
-	 *          <code>true</code> if the change ruler column should be shown,
-	 *          <code>false</code> if it should be hidden
-	 */
-	private void showChangeRuler(boolean show) {
-		IVerticalRuler v = getVerticalRuler();
-		if (v instanceof CompositeRuler) {
-			CompositeRuler c = (CompositeRuler) v;
-			if (show && fChangeRulerColumn == null)
-				c.addDecorator(1, createChangeRulerColumn());
-			else if (!show && fChangeRulerColumn != null) {
-				c.removeDecorator(fChangeRulerColumn);
-				fChangeRulerColumn = null;
-			}
-		}
-	}
-
-	/**
 	 * Set the background color of the editor window based on the user's
 	 * preferences
 	 */
 	private void setBackgroundColor() {
-		// Only try to set the background color when the source viewer is
+		// Only try to set the background color when the source fViewer is
 		// available
 		if (this.getSourceViewer() != null
 				&& this.getSourceViewer().getTextWidget() != null) {
@@ -780,7 +729,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			SourceViewerDecorationSupport support) {
 
 		//register the pair matcher
-		support.setCharacterPairMatcher(cfmlBracketMatcher);
+		support.setCharacterPairMatcher(this.cfmlBracketMatcher);
 
 		//register the brackets and colors
 		support.setMatchingCharacterPainterPreferenceKeys(
@@ -813,26 +762,28 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				getOverviewRuler(), isOverviewRulerVisible(), styles);
 		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(viewer);
+		
+		
 		return viewer;
 
 	}
 
 	/**
-	 * Returns the source viewer decoration support.
+	 * Returns the source fViewer decoration support.
 	 * 
-	 * @param viewer
-	 *          the viewer for which to return a decoration support
-	 * @return the source viewer decoration support
+	 * @param fViewer
+	 *          the fViewer for which to return a decoration support
+	 * @return the source fViewer decoration support
 	 */
 	protected SourceViewerDecorationSupport getSourceViewerDecorationSupport(
 			ISourceViewer viewer) {
 
-		if (fSourceViewerDecorationSupport == null) {
-			fSourceViewerDecorationSupport = new DecorationSupport(viewer,
+		if (this.fSourceViewerDecorationSupport == null) {
+			this.fSourceViewerDecorationSupport = new DecorationSupport(viewer,
 					getOverviewRuler(), getAnnotationAccess(), getSharedColors());
-			configureSourceViewerDecorationSupport(fSourceViewerDecorationSupport);
+			configureSourceViewerDecorationSupport(this.fSourceViewerDecorationSupport);
 		}
-		return fSourceViewerDecorationSupport;
+		return this.fSourceViewerDecorationSupport;
 	}
 
 }
