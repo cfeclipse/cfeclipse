@@ -10,16 +10,31 @@ public interface SPLParserConstants {
   int DO = 11;
   int VAR = 12;
   int RETURN = 13;
-  int EQ = 14;
-  int NEQ = 15;
-  int INT = 16;
-  int BOOL = 17;
-  int INTEGER_LITERAL = 18;
-  int STRING_LITERAL = 19;
-  int IDENTIFIER = 50;
-  int LETTER = 51;
-  int DIGIT = 52;
-  int ISNOT = 53;
+  int CONTINUE = 14;
+  int BREAK = 15;
+  int SWITCH = 16;
+  int CASE = 17;
+  int _DEFAULT = 18;
+  int TRY = 19;
+  int CATCH = 20;
+  int OR = 21;
+  int AND = 22;
+  int EQ = 23;
+  int NEQ = 24;
+  int GT = 25;
+  int GTE = 26;
+  int GE = 27;
+  int LT = 28;
+  int LTE = 29;
+  int LE = 30;
+  int INTEGER_LITERAL = 31;
+  int STRING_LITERAL = 32;
+  int FLOATING_POINT_LITERAL = 33;
+  int IDENTIFIER = 58;
+  int LETTER = 59;
+  int DIGIT = 60;
+  int ISNOT = 61;
+  int SEMICOLON = 62;
 
   int DEFAULT = 0;
 
@@ -38,46 +53,55 @@ public interface SPLParserConstants {
     "\"do\"",
     "\"var\"",
     "\"return\"",
+    "\"continue\"",
+    "\"break\"",
+    "\"switch\"",
+    "\"case\"",
+    "\"default\"",
+    "\"try\"",
+    "\"catch\"",
+    "\"or\"",
+    "\"and\"",
     "\"eq\"",
     "\"neq\"",
-    "\"int\"",
-    "\"boolean\"",
+    "\"gt\"",
+    "\"gte\"",
+    "\"ge\"",
+    "\"lt\"",
+    "\"lte\"",
+    "\"le\"",
     "<INTEGER_LITERAL>",
     "<STRING_LITERAL>",
+    "<FLOATING_POINT_LITERAL>",
     "\"(\"",
     "\")\"",
     "\"=\"",
-    "\"or\"",
-    "\"and\"",
     "\"|\"",
     "\"^\"",
     "\"&\"",
     "\"is\"",
-    "\"lt\"",
-    "\"gt\"",
-    "\"lte\"",
-    "\"gte\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",
-    "\"/\"",
     "\"%\"",
+    "\"/\"",
     "\".\"",
     "\"[\"",
     "\"]\"",
     "\"true\"",
     "\"false\"",
-    "\";\"",
     "\",\"",
     "\"in\"",
     "\"{\"",
     "\"}\"",
     "\"if\"",
     "\"else\"",
+    "\":\"",
     "<IDENTIFIER>",
     "<LETTER>",
     "<DIGIT>",
     "\"is not\"",
+    "\";\"",
   };
 
 }

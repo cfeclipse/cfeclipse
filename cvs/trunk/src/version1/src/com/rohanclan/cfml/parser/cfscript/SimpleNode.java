@@ -1,5 +1,8 @@
 package com.rohanclan.cfml.parser.cfscript;
 
+import java.util.ArrayList;
+
+import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 
 /*
@@ -26,6 +29,7 @@ import com.rohanclan.cfml.parser.docitems.DocItem;
 
 
 public class SimpleNode extends DocItem implements Node {
+
 	protected Token aNodeToken = null;
 	
   protected Node parent;
@@ -77,7 +81,7 @@ public class SimpleNode extends DocItem implements Node {
      toString(String), otherwise overriding toString() is probably all
      you need to do. */
 
-  public String toString() { return SPLParserTreeConstants.jjtNodeName[id]; }
+  //public String toString() { return SPLParserTreeConstants.jjtNodeName[id]; }
   public String toString(String prefix) { return prefix + toString(); }
 
   /* Override this method if you want to customize how the node dumps
@@ -109,8 +113,55 @@ public class SimpleNode extends DocItem implements Node {
      throw new Error(); // It better not come here.
   }
   
+    public DocItem getFirstChild() {
+        if(this.children.length > 0)
+        {
+            return (SimpleNode)this.children[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public DocItem getLastChild() {
+        if(this.children.length > 0)
+        {
+            return (SimpleNode)this.children[this.children.length-1];
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public boolean hasChildren() {
+        if(this.children == null)
+        {
+            return false;
+        }
+        return this.children.length > 0;
+    }
   /***** Added by Oliver Tupman ******/
   public SimpleNode(SPLParser p, int id) {
   }
+    public CFNodeList getChildNodes() {
+        CFNodeList list = new CFNodeList();
+        for(int childIndex = 0; childIndex < this.children.length; childIndex++)
+        {
+            list.add(this.children[childIndex]);
+        }
+        
+        return list;
+    }
+    
+    public ArrayList getChildren() {
+        return this.getChildNodes();
+    }
+    public DocItem getParent() {
+        return (SimpleNode)this.parent;
+    }
+    public String toString()
+    {
+        return "CFScript: " + this.getName();
+    }
 }
 
