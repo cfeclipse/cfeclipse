@@ -76,6 +76,7 @@ import com.rohanclan.cfml.editors.actions.RTrimAction;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
 
+
 import org.eclipse.jface.action.Action;
 
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
@@ -129,9 +130,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		// here.
 		//On save parsing should apparently go into a builder.
 	    if (getPreferenceStore().getBoolean("rTrimOnSave")) {
+	        
+	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(false);
 	        RTrimAction trimAction = new RTrimAction();
 	        trimAction.setActiveEditor(null,getSite().getPage().getActiveEditor());
 	        trimAction.run(null);
+	        ((CFEUndoManager)configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(true);
 	    }
 		super.doSave(monitor);
 	}
@@ -630,6 +634,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	{
 		ISourceViewer viewer = super.createSourceViewer(parent, ruler, styles);
 		getSourceViewerDecorationSupport(viewer);
+		
 		return viewer;
 	}
 	

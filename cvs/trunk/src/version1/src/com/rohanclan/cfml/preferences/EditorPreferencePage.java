@@ -34,7 +34,7 @@ public class EditorPreferencePage extends PreferencePage
 		}, {
 			"Current line highlight", "currentLineColor", "AbstractTextEditor.Color.SelectionForeground.SystemDefault"
 		}, {
-			"Bracket highlighting", "bracketMatchingColor", "AbstractTextEditor.Color.SelectionForeground.SystemDefault"
+			"Bracket highlighting", ICFMLPreferenceConstants.P_BRACKET_MATCHING_COLOR, "AbstractTextEditor.Color.SelectionForeground.SystemDefault"
 		}, {
 			"Print margin", "printMarginColor", "AbstractTextEditor.Color.SelectionBackground.SystemDefault"
 		}, {
@@ -103,6 +103,7 @@ public class EditorPreferencePage extends PreferencePage
 	{
 		ArrayList overlayKeys = new ArrayList();
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, "currentLineColor"));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, ICFMLPreferenceConstants.P_MAX_UNDO_STEPS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "currentLine"));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "bracketMatchingEnabled"));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, "rTrimOnSave"));
@@ -177,6 +178,8 @@ public class EditorPreferencePage extends PreferencePage
 		addTextField(appearanceComposite, label, "tabWidth", 3, 0, true);
 		label = "Insight Delay:";
 		addTextField(appearanceComposite, label, "insightDelay", 4, 0, true);
+		label = "Undo steps:";
+		addTextField(appearanceComposite, label, ICFMLPreferenceConstants.P_MAX_UNDO_STEPS, 4, 0, true);
 		label = "Use spaces for tabs";
 		addCheckBox(appearanceComposite, label, "tabsAsSpaces", 0);
 		label = "Trim trailing spaces before saving";

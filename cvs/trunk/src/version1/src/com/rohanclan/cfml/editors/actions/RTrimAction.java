@@ -49,16 +49,38 @@ public class RTrimAction  implements IEditorActionDelegate {
 		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
 		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();
 		int currentLine = 0;
-		TextSelection selection = new TextSelection(doc,sel.getOffset(),sel.getLength());
+		int originalCursorOffset = sel.getOffset();
+		int cursorOffset = originalCursorOffset;
+		int originalSelectionLength = sel.getLength();
+		int selectionLength = originalSelectionLength;
+		StringBuffer newDoc = new StringBuffer();
 		try {
 			while (currentLine < doc.getNumberOfLines()) {
 			    int offset = doc.getLineOffset(currentLine);
 			    int length = doc.getLineLength(currentLine);
 			    String oldText = doc.get(offset,length);
 			    String newText = oldText.replaceAll("[\\t ]+$","");
-			    doc.replace(offset,length,newText);
+
+			    newDoc.append(newText);
+			    if (offset + length <= originalCursorOffset) {
+			        if(oldText.length() != newText.length()) {
+				        cursorOffset -= oldText.length() - newText.length();
+			        }
+			    }
+			    else if (offset <= originalCursorOffset + originalSelectionLength 
+			            && originalSelectionLength > 0) {
+			        selectionLength -= oldText.length() - newText.length();
+			        
+			    }
+			    // Check if the cursor is at the end of the line.
+			    else if (offset + length == originalCursorOffset+2) {
+			        cursorOffset -= 2;
+			    }
+			    
 			    currentLine++;
 			}
+			doc.set(newDoc.toString());
+			TextSelection selection = new TextSelection(doc,cursorOffset,selectionLength);
 			editor.getSelectionProvider().setSelection(selection);
 		}
 		catch (BadLocationException blx) {

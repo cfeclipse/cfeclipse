@@ -28,6 +28,8 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 	private static final int DEFAULT_TAB_WIDTH = 4;
 	private static final int DEFAULT_INSIGHT_DELAY = 500;
 	
+	private static final int DEFAULT_MAX_UNDO_STEPS = 25;
+	
 	private static final boolean DEFAULT_INSERT_SPACES_FOR_TABS 	= false;
 	private static final boolean DEFAULT_ENABLE_HS_COMPATIBILITY 	= false;
 	private static final boolean DEFAULT_ENABLE_DW_COMPATIBILITY 	= false;
@@ -149,6 +151,7 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		
         store.setDefault(P_INSIGHT_DELAY, DEFAULT_INSIGHT_DELAY); 
         store.setDefault(P_TAB_WIDTH, DEFAULT_TAB_WIDTH);
+        store.setDefault(P_MAX_UNDO_STEPS, DEFAULT_MAX_UNDO_STEPS);
         store.setDefault(P_INSERT_SPACES_FOR_TABS, DEFAULT_INSERT_SPACES_FOR_TABS);
         store.setDefault(P_ENABLE_HS_COMPATIBILITY, DEFAULT_ENABLE_HS_COMPATIBILITY);
         store.setDefault(P_ENABLE_DW_COMPATIBILITY, DEFAULT_ENABLE_DW_COMPATIBILITY);
@@ -287,10 +290,15 @@ public class CFMLPreferenceManager implements ICFMLPreferenceConstants {
 		return DEFAULT_ENABLE_DW_COMPATIBILITY;
 	}
 	
-	
+
 	
 	public String snippetsPath() {
 		return store.getString(ICFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
+	}
+
+	
+	public int maxUndoSteps() {
+		return Integer.parseInt(store.getString(ICFMLPreferenceConstants.P_MAX_UNDO_STEPS).trim());
 	}
 	
 	public String defaultSnippetsPath() {

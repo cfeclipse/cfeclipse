@@ -28,10 +28,12 @@ package com.rohanclan.cfml.editors;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.DefaultInformationControl;
+import org.eclipse.jface.text.DefaultUndoManager;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
+import org.eclipse.jface.text.IUndoManager;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
@@ -84,7 +86,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	private CFScriptIndentStrategy indentCFScriptStrategy;
 	private CFMLPreferenceManager preferenceManager;
 	private int tabWidth;
-	
+	private CFMLEditor editor;
+	private CFEUndoManager undoManager;
 	
 	/**
 	 * Need a color manager to get partition colors
@@ -109,8 +112,9 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	public CFConfiguration(ColorManager colorManager, CFMLEditor editor) 
 	{
 		this.colorManager = colorManager;
-		
+		this.editor = editor;
 		preferenceManager = new CFMLPreferenceManager();
+		this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
 		this.indentTagStrategy = new TagIndentStrategy(editor);
 		
@@ -128,6 +132,9 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		return tabWidth;
 	}
 	
+	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
+		return this.undoManager;
+	}
 	
 	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
 	    return new CFAnnotationHover();
@@ -658,8 +665,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         		indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
-	        	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
-	        	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
+        	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
+        	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
         }
         else if(prop.equals(ICFMLPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
 	        	boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
