@@ -6,7 +6,6 @@
  */
 package com.rohanclan.cfml.views.explorer;
 
-import java.io.File;
 import java.io.FileFilter;
 /**
  * @author Stephen Milligan
@@ -19,9 +18,9 @@ public interface IFileProvider {
     public static String INVALID_FILESYSTEM = "Invalid file system.";
     
 
-    public File[] getRoots();
+    public Object[] getRoots();
     
-    public File[] getChildren(File parent, FileFilter filter);
+    public Object[] getChildren(String parent, FileFilter filter);
     
     public void dispose();
     

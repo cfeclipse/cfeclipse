@@ -27,13 +27,14 @@ public class LocalFileSystem implements IFileProvider {
         // TODO Auto-generated constructor stub
     }
 
-    public File[] getRoots() {
+    public Object[] getRoots() {
         return systemroot;
     }
     
     
-    public File[] getChildren(File parent, FileFilter filter) {
-        File[] children = parent.listFiles(filter);
+    public Object[] getChildren(String parent, FileFilter filter) {
+    	
+        File[] children = new File(parent).listFiles(filter);
         if (children == null) {
             return new File[0];
         }

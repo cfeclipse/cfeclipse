@@ -10,6 +10,7 @@ import java.io.File;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPage;
@@ -22,6 +23,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.custom.SashForm;
@@ -29,6 +31,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseEvent;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 
@@ -48,7 +52,11 @@ public class FileExplorerView extends ViewPart {
     public void createPartControl(Composite parent) {
     	
         Composite container = new Composite(parent, SWT.NONE);
-        container.setLayout(new GridLayout());
+        GridLayout containerLayout = new GridLayout();
+        containerLayout.numColumns = 2;
+        container.setLayout(containerLayout);
+        
+        
         // Combo viewer
         comboViewer = new ComboViewer(container, SWT.READ_ONLY);
         comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -66,12 +74,43 @@ public class FileExplorerView extends ViewPart {
         comboViewer.setContentProvider(new ComboContentProvider());
         final Combo combo = comboViewer.getCombo();
         final GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		
+        
         combo.setLayoutData(gridData);
         comboViewer.setInput(new LocalFileSystem());
 
+        Button addButton = new Button(container,SWT.PUSH);
+        addButton.addMouseListener(new MouseListener() {
+            public void mouseUp(MouseEvent e) {
+            	try {
+	            	FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),null);
+	            	if (dialog.open() == IDialogConstants.OK_ID) {
+	            		comboViewer.setInput(dialog.connectionProperties);
+	            		
+	            	}
+            	}
+            	catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
+            }
+            
+            public void mouseDown(MouseEvent e) {
+            	
+            }
+            
+            public void mouseDoubleClick(MouseEvent e) {
+            	
+            }
+        });
+        addButton.setText("New...");
+        
+        
+        
         // This is what makes the controls resizable
         SashForm sash = new SashForm(container,SWT.VERTICAL);
-        sash.setLayoutData(new GridData(GridData.FILL_BOTH));
+        GridData sashData = new GridData(GridData.FILL_BOTH);
+        sashData.horizontalSpan = 2;
+        sash.setLayoutData(sashData);
         
         // Directory tree
         directoryTreeViewer = new TreeViewer(sash, SWT.BORDER);
@@ -132,5 +171,14 @@ public class FileExplorerView extends ViewPart {
     }
 
     public void setFocus() {
+    
     }
+    
+    public void dispose() {
+    	comboViewer.getContentProvider().dispose();
+    	directoryTreeViewer.getContentProvider().dispose();
+    	fileViewer.getContentProvider().dispose();
+    	super.dispose();
+    }
+    
 }
