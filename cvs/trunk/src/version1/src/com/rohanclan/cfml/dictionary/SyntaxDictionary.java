@@ -306,8 +306,7 @@ public abstract class SyntaxDictionary {
 						"The passed set must have only Strings, Procedures, or Parameters"
 					);
 				}
-				
-				if(possible.startsWith(start) || possible.toUpperCase().startsWith(start))
+				if(possible.toUpperCase().startsWith(start.toUpperCase()))
 				{
 					System.out.println(possible);
 					filterset.add(item);
