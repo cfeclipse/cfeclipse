@@ -4,9 +4,13 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-package com.rohanclan.cfml.util;
+package com.rohanclan.cfml.views.snips;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.io.File;
 
 /**
  * @author Stephen Milligan
@@ -53,8 +57,19 @@ public class SnippetVarParser {
 		 * 
 		 */
 		
+		Calendar calendar = new GregorianCalendar();
+		Date currentTime = new Date();
+		calendar.setTime(currentTime);
+		String newStr = str.replaceAll("\\$\\$\\{DATE\\}",currentTime.toLocaleString());
 		
-		String newStr = str.replaceAll("\\$\\$\\{DATE\\}",new Date().toLocaleString());
+		SimpleDateFormat formatter = new SimpleDateFormat("MMMM");
+		String formattedMonth = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{MONTH\\}",formattedMonth);
+		
+		formatter = new SimpleDateFormat("kk:mm:ss");
+		String formattedTime = formatter.format(currentTime);
+		newStr = newStr.replaceAll("\\$\\$\\{TIME\\}",formattedTime);
+		
 		
 		
 		return newStr;

@@ -9,7 +9,6 @@ package com.rohanclan.cfml.views.snips;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 /**
  * @author Stephen Milligan
  *
@@ -35,25 +34,11 @@ public class SnipWriter {
 	}
 	
 	
-	public void writeSnippet(String snippetName, String startText, String endText) {
+	public void writeSnippet(String snippetName, String snippetDescription, String startText, String endText) {
 		
-		
-		//TODO: Need to find out how the cfeclipse snippet file format works.
-		if (snippetType != SnipTreeView.DREAMWEAVER_SNIP_TYPE) {
-			return;
-		}
 		
 		File snippetFile = new File(parentFolder.toString() + File.separator + snippetName + fileExtension);
-		String snippetContents = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-		snippetContents += "<snippet name = \""+snippetName+"\" description = \"\" preview=\"html\" type=\"block\">\n";
-		snippetContents += "<insertText location=\"beforeSelection\">\n";
-		snippetContents += "<![CDATA["+startText+"]]>\n";
-		snippetContents += "</insertText>\n";
-		snippetContents += "<insertText location=\"afterSelection\">\n";
-		snippetContents += "<![CDATA["+endText+"]]>\n";
-		snippetContents += "</insertText>\n";
-		snippetContents += "</snippet>\n";
-		System.out.println(snippetFile.getAbsolutePath());
+		String snippetContents = createFormattedSnip(snippetName,snippetDescription, startText,endText);
 		try {
 			if (!snippetFile.isFile()) {
 				snippetFile.createNewFile();
@@ -63,8 +48,32 @@ public class SnipWriter {
 			writer.close();
 		}
 		catch (IOException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace(System.err);
 		}
+	}
+	
+	
+	
+	private String createFormattedSnip(String snippetName, String snippetDescription, String startText, String endText) {
+		String snippetContents;
+		if (snippetType == SnipTreeView.CFECLIPSE_SNIP_TYPE) {
+			snippetContents = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+			snippetContents += "<snippet>\n";
+			snippetContents += "<name>"+snippetName+"</name>\n";
+			snippetContents += "<help>"+snippetDescription+"</help>\n"; 
+			snippetContents += "<starttext><![CDATA["+startText+"]]></starttext>\n";
+			snippetContents += "<endtext><![CDATA["+endText+"]]></endtext>\n";
+			snippetContents += "</snippet>";
+		}
+		else {
+			snippetContents = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+			snippetContents += "<snippet name = \""+snippetName+"\" description = \""+snippetDescription+"\" preview=\"html\" type=\"block\">\n";
+			snippetContents += "<insertText location=\"beforeSelection\"><![CDATA["+startText+"]]></insertText>\n";
+			snippetContents += "<insertText location=\"afterSelection\"><![CDATA["+endText+"]]></insertText>\n";
+			snippetContents += "</snippet>\n";
+
+		}
+		return snippetContents;
 	}
 	
 	

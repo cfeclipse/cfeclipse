@@ -30,6 +30,12 @@ public class CFMLPropertyManager {
 	public CFMLPropertyManager() {
 		super();
 		this.store = CFMLPlugin.getDefault().getPropertyStore();
+		try {
+			store.load();
+		}
+		catch (Exception e) {
+			System.err.println("Couldn't load property store");
+		}
 		this.preferenceManager = new CFMLPreferenceManager();
 	}
 	
@@ -40,7 +46,6 @@ public class CFMLPropertyManager {
 	
 	
 	public String snippetsPath() {
-		System.out.println("Snippet path retrieved from property manager " + store.getString(store.getString(ICFMLPreferenceConstants.P_SNIPPETS_PATH).trim()));
 		return store.getString(ICFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
 	}
 	

@@ -238,7 +238,9 @@ public class XMLConfigFile {
 				//System.out.println(cds.getNodeValue());
 				val = cds.getNodeValue();
 			}
-			
+			else {
+				val = "";
+			}
 			//System.err.println(val);
 			return val; 
 		}

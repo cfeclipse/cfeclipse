@@ -75,6 +75,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		
 		propertyStore = new PreferenceStore(CFMLPlugin.getDefault().getStateLocation().toString()+"/properties.ini");
 		
+		
 		try 
 		{
 			resourceBundle = ResourceBundle.getBundle(

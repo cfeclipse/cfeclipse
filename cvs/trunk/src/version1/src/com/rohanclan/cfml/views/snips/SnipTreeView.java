@@ -38,13 +38,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IEditorPart;
-import com.rohanclan.cfml.util.XMLConfigFile;
+//import com.rohanclan.cfml.util.XMLConfigFile;
 import org.eclipse.core.runtime.IPath;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.properties.CFMLPropertyManager;
@@ -53,7 +54,6 @@ import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import java.io.File;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import com.rohanclan.cfml.util.SnippetVarParser;
 
 
 import org.eclipse.core.runtime.Path;
@@ -74,8 +74,9 @@ import org.eclipse.core.runtime.Path;
 public class SnipTreeView extends ViewPart 
 	implements IPropertyChangeListener {
 	public static final String ID_SNIPVIEWTREE = "com.rohanclan.cfml.views.snips.sniptreeview";
-	
+
 	public static final String DREAMWEAVER_SNIP_TYPE = "Dreamweaver";
+	public static final String HOMESITE_SNIP_TYPE = "Homesite";
 	public static final String CFECLIPSE_SNIP_TYPE = "CFEclipse";
 	public static final String UNKNOWN_SNIP_TYPE = "Unknown";
 	
@@ -91,12 +92,13 @@ public class SnipTreeView extends ViewPart
 	/** Config file is used to load simple xml documents and get to
 	 * simple items via DOM - not recommended for large documents
 	 */
-	private static XMLConfigFile xmlconfile;
+	//private static XMLConfigFile xmlconfile;
+	private static SnipReader snipReader;
 	private String snippetType;
 	
 	MenuManager menuMgr;
 	
-	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction, refreshSnippetsAction; //, deleteItemAction, selectAllAction;
+	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction, refreshSnippetsAction, deleteSnippetAction, deleteFolderAction;
 	
 	/** the root directory */
 	protected File root;
@@ -110,6 +112,8 @@ public class SnipTreeView extends ViewPart
 		super();
 
 		propertyManager = new CFMLPropertyManager();
+		// By default we want to use cfeclipse style snippets
+		snippetType = CFECLIPSE_SNIP_TYPE;
 
 		// This ensures that we are notified when the properties are saved
 		CFMLPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
@@ -117,7 +121,6 @@ public class SnipTreeView extends ViewPart
 		try 
 		{
 			//snipBase = CFMLPlugin.getDefault().getStateLocation();
-
 			snipBase = new Path(propertyManager.snippetsPath());
 			
 		} 
@@ -128,8 +131,10 @@ public class SnipTreeView extends ViewPart
 
 		if(tmpAction == null)
 			tmpAction = new GenericEncloserAction();
-		if(xmlconfile == null)
-			xmlconfile = new XMLConfigFile();
+		//if(xmlconfile == null)
+		//	xmlconfile = new XMLConfigFile();
+		if(snipReader == null)
+			snipReader = new SnipReader();
 	}
 
 	/*
@@ -211,27 +216,10 @@ public class SnipTreeView extends ViewPart
 					
 					try
 					{
-						//try to load up the xml file
-						xmlconfile.setFileName(f);
-						xmlconfile.openFile();
 						
-						//figure out if this is a DWimport or a normal cfeclipse snip
-						//and set the encloser accordingly
-						if(f.endsWith(".xml") || f.endsWith(".XML"))
-						{
-							snippetType=CFECLIPSE_SNIP_TYPE;
-							toShow.append(xmlconfile.getValue("help"));
-						}
-						else if(f.endsWith(".csn") || f.endsWith(".CSN"))
-						{	
-							snippetType = DREAMWEAVER_SNIP_TYPE;
-							toShow.append("Dreamweaver Import");
-						}
-						else
-						{
-							snippetType = UNKNOWN_SNIP_TYPE;
-							toShow.append("Unknown Snip Type");
-						}
+						snipReader.read(f);
+						toShow.append(snipReader.getSnipDescription());
+						
 					}
 					catch(Exception e)
 					{
@@ -274,6 +262,18 @@ public class SnipTreeView extends ViewPart
 			}
 			
 		};
+		deleteSnippetAction = new Action("Delete Snippet") {
+			public void run() {
+				deleteSnippet();
+			}
+			
+		};
+		deleteFolderAction = new Action("Delete Folder") {
+			public void run() {
+				deleteSnipFolder();
+			}
+			
+		};
 		
 		//TODO: Need to add a deleteSnippetAction and deleteFolderAction
 		
@@ -312,26 +312,27 @@ public class SnipTreeView extends ViewPart
 		getSite().registerContextMenu(menuMgr, treeViewer);
 	}
 	
+	
+	
 	private void fillContextMenu(IMenuManager mgr) {
 		
 		
 		File selectedFile = getSelectedFile();
-		
-		System.out.println("Is it a directory : " + selectedFile.isDirectory());
+
 		
 		if (selectedFile.isDirectory()) {
 			mgr.add(createFolderAction);
-			// TODO: Need to modify this once non-dreamweaver file writing has been figured out.
-			if (snippetType == DREAMWEAVER_SNIP_TYPE) {
-				mgr.add(createSnippetAction);
+			mgr.add(createSnippetAction);
+			String[] files = selectedFile.list();
+			if (files.length == 0) {
+				mgr.add(deleteFolderAction);
 			}
+			
 		}
 		else {
 			mgr.add(insertAction);
-			// TODO: Need to modify this once non-dreamweaver file writing has been figured out.
-			if (snippetType == DREAMWEAVER_SNIP_TYPE) {
-				mgr.add(editSnippetAction);
-			}
+			mgr.add(editSnippetAction);
+			mgr.add(deleteSnippetAction);
 		}
 		mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 		//mgr.add(deleteItemAction);
@@ -384,30 +385,20 @@ public class SnipTreeView extends ViewPart
 		//get the full path to the file
 		String f = selectedfile.getAbsolutePath();
 		
+		snipReader.read(f);
 		//System.out.println(f);
 		
 		try
 		{
 			//try to load up the xml file
-			xmlconfile.setFileName(f);
-			xmlconfile.openFile();
+			//xmlconfile.setFileName(f);
+			//xmlconfile.openFile();
 			
-			//figure out if this is a DWimport or a normal cfeclipse snip
-			//and set the encloser accordingly
-			if(snippetType == CFECLIPSE_SNIP_TYPE)
-			{
-				tmpAction.setEnclosingStrings(
-						SnippetVarParser.parse(xmlconfile.getValue("starttext")),
-						SnippetVarParser.parse(xmlconfile.getValue("endtext"))	
-				);
-			}
-			else if(snippetType == DREAMWEAVER_SNIP_TYPE)
-			{	
-				tmpAction.setEnclosingStrings(
-						SnippetVarParser.parse(xmlconfile.getValue("insertText",0)),
-						SnippetVarParser.parse(xmlconfile.getValue("insertText",1))	
-				);
-			}
+			tmpAction.setEnclosingStrings(
+					SnippetVarParser.parse(snipReader.getSnipStartBlock()),
+					SnippetVarParser.parse(snipReader.getSnipEndBlock())	
+			);
+			
 			
 			tmpAction.run(null);
 			
@@ -466,6 +457,23 @@ public class SnipTreeView extends ViewPart
 
 	}
 	
+	protected void deleteSnipFolder() {
+		File selectedfile = getSelectedFile();
+		
+		if(!selectedfile.isDirectory())  {
+			selectedfile = selectedfile.getParentFile();
+		}
+
+		SnipWriter writer = new SnipWriter(selectedfile,snippetType);
+		MessageBox deleteDialog = new MessageBox(this.getViewSite().getShell(),SWT.YES | SWT.NO);
+		deleteDialog.setMessage("Are you sure you want to delete this folder?");
+		if (deleteDialog.open() == SWT.YES) {
+			selectedfile.delete();
+			reloadSnippets();
+		}
+
+	}
+	
 	
 	
 	protected void createSnippet() {
@@ -474,11 +482,27 @@ public class SnipTreeView extends ViewPart
 		if(!selectedfile.isDirectory())  {
 			selectedfile = selectedfile.getParentFile();
 		}
-		
-		
+		snippetType = CFECLIPSE_SNIP_TYPE;
 		SnipWriter writer = new SnipWriter(selectedfile,snippetType);
-		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,"","","");
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,"","","","");
 		snippetDialog.open();
+
+	}
+	
+	
+	
+	protected void deleteSnippet() {
+		File selectedfile = getSelectedFile();
+
+		if(selectedfile.isDirectory())  {
+			return;
+		}
+		MessageBox deleteDialog = new MessageBox(this.getViewSite().getShell(),SWT.YES | SWT.NO);
+		deleteDialog.setMessage("Are you sure you want to delete this snippet?");
+		if (deleteDialog.open() == SWT.YES) {
+			selectedfile.delete();
+			reloadSnippets();
+		}
 
 	}
 	
@@ -493,42 +517,23 @@ public class SnipTreeView extends ViewPart
 		File parentDirectory = selectedfile.getParentFile();
 
 		String f = selectedfile.getAbsolutePath();
-		String snippetName = selectedfile.getName().substring(0,selectedfile.getName().length()-4);
-		String snippetStartText = "";
-		String snippetEndText = "";
-		try
-		{
-			//try to load up the xml file
-			xmlconfile.setFileName(f);
-			xmlconfile.openFile();
-			
-			//figure out if this is a DWimport or a normal cfeclipse snip
-			//and set the encloser accordingly
-			if(snippetType == CFECLIPSE_SNIP_TYPE)
-			{
-				snippetStartText = xmlconfile.getValue("starttext");
-				snippetEndText = xmlconfile.getValue("endtext");
-				
-			}
-			else if(snippetType == DREAMWEAVER_SNIP_TYPE)
-			{
-				// For some reason this is sticking an extra line break in front of the string.
-				snippetStartText = xmlconfile.getValue("insertText",0);
-				snippetEndText = xmlconfile.getValue("insertText",1);	
-				snippetStartText = snippetStartText.substring(1,snippetStartText.length()-1);
-				snippetEndText = snippetEndText.substring(1,snippetEndText.length()-1);
-			}
-			
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace(System.err);
+
+		if (f.endsWith(".csn") || f.endsWith(".CSN")){
+			snippetType = DREAMWEAVER_SNIP_TYPE;
+		}
+		else {
+			snippetType = CFECLIPSE_SNIP_TYPE;
 		}
 		
+		snipReader.read(f);
 		
+		String snippetName = selectedfile.getName().substring(0,selectedfile.getName().length()-4);
+		String snippetDescription = snipReader.getSnipDescription();
+		String snippetStartText = snipReader.getSnipStartBlock();
+		String snippetEndText = snipReader.getSnipEndBlock();
 		
 		SnipWriter writer = new SnipWriter(parentDirectory,snippetType);
-		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,snippetName,snippetStartText,snippetEndText);
+		SnipFileDialog snippetDialog = new SnipFileDialog(this.getViewSite().getShell(),writer,this.treeViewer,snippetName,snippetDescription,snippetStartText,snippetEndText);
 		snippetDialog.open();
 		
 	}
