@@ -33,12 +33,15 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
-import org.eclipse.jface.text.Position;
+//
+// Need the following for inserting & deleting text (duh).
+// Not sure where to pass the resulting UndoEdits though.
 import org.eclipse.text.edits.InsertEdit;
 import org.eclipse.text.edits.DeleteEdit;
+import org.eclipse.text.edits.UndoEdit;
 
 import org.eclipse.jface.text.*;
-
+import java.util.StringTokenizer;
 import com.rohanclan.coldfusionmx.util.*;
 import com.rohanclan.coldfusionmx.dictionary.*;
 
@@ -49,12 +52,6 @@ import java.util.HashSet;
 import java.lang.Character;
 import com.keygeotech.utils.Debug;
 
-/**
- * @author ollie
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 /**
  * @author ollie
  *
@@ -91,12 +88,12 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	private static final short ATTRTYPE = 1;
 	private String className = "CFScriptCompletionProcessor";
 	
-	protected static final String completionChars = ".(;";
-	// TODO: Add '#' to the list, once I've decided how to cope with it.
-	protected static final String closerChars = ")}";
-	protected static final String openerChars = "({";
+	protected static final String completionChars = ".(;~\"#";
 
-	protected static final String close2openMatchChars = ")(}{##"; 
+	protected static final String closerChars = ")\"#";
+	protected static final String openerChars = "({\"#";
+
+	protected static final String close2openMatchChars = ")(}{##\"\""; 
 	
 	/**
 	 * What characters cause us to wake up (for tags and attributes)
@@ -125,6 +122,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	}
 
 	/*
+	 * @author Oliver
+	 * 
 	 * SpacerCharacter
 	 * 
 	 * Returns whether the character passed is a 'spacer character' (see comment for 
@@ -137,6 +136,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	}
 	
 	/*
+	 * @author Oliver
+	 * 
 	 * FindItemStart
 	 * 
 	 * Searches backwards through inString looking for a 'spacer character'. A spacer character
@@ -171,6 +172,8 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	}
 	
 	/*
+	 * @author Oliver
+	 * 
 	 * BalanceScan
 	 * 
 	 * Balance scan travels through a string attempting to find balance between
@@ -210,18 +213,242 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				if(balanceCount == 0)
 					break;
 			}
-		}		
+		}	
+		
 		
 		return searchPos;
 	}
 	
+	/*
+	 * @author Oliver
+	 * 
+	 * DeleteText
+	 */
+	protected UndoEdit  DeleteText(IDocument doc2Alter, int offset, int length)
+	{
+		DeleteEdit charRemoval = new DeleteEdit(offset, length);
+		UndoEdit removal = null;
+		try {
+			removal = charRemoval.apply(doc2Alter);
+		} catch (BadLocationException e) {
+			// Doing nowt right now. The Java editor doesn't, so should we?
+		}
+		return removal;
+	}
+	
+	protected UndoEdit  InsertText(IDocument doc2Alter, int offset, String newText)
+	{
+		UndoEdit insertion = null;
+		InsertEdit newEdit = new InsertEdit(offset, newText);
+		try {
+			newEdit.apply(doc2Alter);
+		} catch(BadLocationException e) { // And context for the worst variable names goes to me!
+			// Still doing nowt...
+		}
+		return insertion;
+	}
+	
+	
+	private void DebugFunction(ITextViewer viewer, int documentOffset)
+	{
+		String mName = "DebugFunction";
+		IDocument doc = viewer.getDocument();
+		try {
+			int start = doc.getPartition(documentOffset).getOffset(); // Not sure what this does!
+			
+			String prefix =	doc.get(start, documentOffset - start); 
+			StringTokenizer	tokeniser = new StringTokenizer(prefix, ";");
+			
+			prefix = prefix.replace('\n',' ');	// Eliminate any non-character characters
+			prefix = prefix.replace('\r',' ');	// as this allows us to treat the buffer as
+			prefix = prefix.replace('\t',' ');	// one long string
+			
+			
+			Debug.println(mName, this, "Partition start: " + start);
+			Debug.println(mName, this, "Prefix is: '" + prefix + "'");
+			int tokenCount = 0;
+			String output = "";
+			while(tokeniser.hasMoreTokens())
+			{
+				output+= "[" + tokenCount + "] Got this token: '" + tokeniser.nextToken() + "'\n";
+				tokenCount++;
+			}
+			Debug.println(mName, this, "Tokeniser output:\n" + output);
+		} catch(BadLocationException e) {
+			Debug.println(mName, this, "Caught a BadLocationException");
+		} catch(Exception anyE)	{
+			Debug.println(mName, this, "Caught a random exception. Message is: " + anyE.getMessage());
+			
+		}
+		
+	}
+	
+	/**
+	 * <b>HandleCloser</b> - Helper function for computeCompletionProposals()
+	 * 
+	 * The calling function must establish that a character is to be closed 
+	 * (generally a ')'). For example:
+	 * <pre>
+	 * ArrayAppend(myArray, ArrayLen())
+	 *                               ^
+	 * </pre>
+	 * 
+	 * Now the CFScript completion processor automatically adds the closing bracket when
+	 * the user opens one. Therefore to save the keypress count of the user the completer
+	 * attempts to match the closing brackets typed by the user with the close brackets
+	 * already existing.   
+	 * 
+	 * @author Oliver
+	 * @param document The document to work upon
+	 * @param scanData	The post-processing, pre-completion text of the document
+	 * @param currentChar The character that is the closer
+	 * @param matchPos The position that the match has been found at
+	 * @param triggerPos The completion trigger position
+	 * @param documentOffset Offset within the document (surely the same as the triggerPos?)
+	 * @return A instance of an UndoEdit if the deletion took place, otherwise null.
+	 */
+	protected UndoEdit HandleCloser(IDocument document, String scanData, char currentChar, 
+									int matchPos, int triggerPos, int documentOffset)
+	{
+		// TODO: Get closing character scan working on 0 starting partitions (i.e. # blocks)
+		char closer = currentChar;
+		char opener = openerChars.charAt(matchPos);
+		if(documentOffset + 1 >= document.getLength())	// Don't want to go out of bounds
+		{
+			return null;
+		}
+		try {
+			// First make sure that the next char is a closing char.
+			// TODO: Do some funky forward closer matching so it doesn't have to be the next char
+			char nextChar = document.getChar(documentOffset);
+			if(nextChar == closer)
+			{
+				if(BalanceScan(scanData, opener, closer, triggerPos-1, true) > 0)
+				{
+					// TODO: Test to see whether this will fail at the end of the document partition
+					// Should this really live here, and is there a better way of doing it?
+					if(documentOffset + 1 < document.getLength())
+					{
+						return DeleteText(document, documentOffset, 1);
+					}
+				}
+				else
+					Debug.println("Not a closing bracket. Is this not one?: '" + currentChar + "'");
+			}
+		} catch(BadLocationException excep) {
+			Debug.println("HandleCloser", this, "Caught BadLocationException when getting a char");
+		}
+		return null;
+	}
+	
+	protected int findAndCountTabs(IDocument document, int startPos)
+	{
+		int tabCount = 0;
+		int strPos = startPos;
+		try {
+			for(; strPos > 0 && document.getChar(strPos) != '\t'; strPos--);
+			{;}
+			for(; strPos > 0 && document.getChar(strPos) == '\t'; strPos--)
+			{ tabCount++; }
+		} catch(BadLocationException excep) {
+			Debug.println("findAndCountTabs", this, "Caught a BadLocationException whilst counting tabs.");
+		}
+		return tabCount;
+	}
+	
+	/**
+	 * <b>HandleOpener</b> - Performs the document operations when the user triggers an 'opener' character.
+	 * 
+	 * HandleOpener() takes the opener character and in general it inserts a matching closing item. Therefore
+	 * in the case of '(' it sticks in a ')'. 
+	 * 
+	 * Life is slightly more complicated for '{' because these follow a tab strategy. Ours is to simply 
+	 * count the tabs of the line where the opener was entered and then	insert a carriage return and 
+	 * then the tabs and then the closer. Life is made even more complicated by the fact that really the
+	 * routine should not enter a closer if one exists at the current tab level with &lt;x&gt; lines...
+	 * at least it shouldn't. Not implemented yet.
+	 *
+	 * Note that characters such as '#' and '"' are not handled because there is no way of distinguishing
+	 * between the user entering a closing character or performing the necessary double character ('##')
+	 * for CF to insert that character in a string.
+	 * 
+	 * Doh, there's a solution sat somewhere in my brain but it's not popping out :( Ah well, someone brainier
+	 * can sort it!
+	 * 
+	 * @param document - The document that the user is editing. 
+	 * @param currentChar - The character that we are trying to opener (probably at documentOffset) 
+	 * @param documentOffset - Offset at the document that the trigger was caused.
+	 * @return UndoEdit - The undo actions to perform to undo the operation.
+	 * @author Oliver
+	 */
+		
+	protected UndoEdit handleOpener(IDocument document, char currentChar, int documentOffset)
+	{
+		String extraData = "";
+		String mName = "HandlerOpener";
+		switch(currentChar)
+		{
+			case '{':
+				int tabCount = findAndCountTabs(document, documentOffset);
+				extraData += "\n";
+				for(int tabCnt = 0; tabCnt < tabCount; tabCnt++)
+					extraData += "\t";
+				/*
+				 * Doesn't work very nicely. Not in at the moment.
+				int maxCheckLength = 100;	// Closer in 100 chars?
+				int tempPos = documentOffset;
+				for(; tempPos < document.getLength() && tempPos - documentOffset < maxCheckLength; tempPos++)
+				{
+					try {
+						if(document.getChar(tempPos) == '}')
+						{
+							//
+							// Check to see whether the tab count for the matching } is the same as the line it
+							// was entered on.
+							
+
+							return null;	// Doing nothing more, so cop out of the function completely.
+						}
+					} catch(BadLocationException excep) {
+						Debug.println(mName, this, "Caught a bad location exception during { opener.");
+						return null;
+					}
+				}
+				*/
+
+				extraData+= "}";
+				break;
+			case '#':
+				extraData = "#";
+				break;
+			case '\"':
+				extraData = "\"";
+				break;
+			case '(':
+				extraData = ")";
+				break;
+			default:
+				break;
+		}
+		return InsertText(document, documentOffset, extraData);		
+	}
+	
+	/*
+	 * Welcome to the horror that is the computeCompletionProposals() method.
+	 * 
+	 * @author Oliver
+	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
+	 * 
+	 * 
+	 */
 	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
 		int documentOffset) {
 		String mName = "computeCompletionProposals";
 		HashSet proposals = new HashSet();
 		String messages = "";
 		int length = 40;
-		
+		// TODO: Use the tokeniser!
+
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
 			IDocument document = viewer.getDocument();
@@ -233,37 +460,27 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			scanData = scanData.replace('\r',' ');	// as this allows us to treat the buffer as
 			scanData = scanData.replace('\t',' ');	// one long string
 
-			String needle = "cfcatch";
 			char lastChar = scanData.charAt(scanData.length()-1);
+			
+			// Gonna allow debug by entering the tilde character. Entering this will cause
+			// my debug function to run...
+
+			if(lastChar == '~')
+			{
+				DebugFunction(viewer, documentOffset);
+			}
+
 			int triggerPos = scanData.length()-1;
 			int closerCharMatch = closerChars.indexOf(lastChar);
-			if(closerCharMatch != -1)
+			boolean treatAsOpener = true;
+			
+			if((lastChar == '\"' && document.getChar(documentOffset) == '\"') ||
+				(lastChar == '#' && document.getChar(documentOffset) == '#'))
+				treatAsOpener = false;
+			
+			if(closerCharMatch != -1 && !treatAsOpener)
 			{
-				// Closing bracket scan will fail if the start of the function string is at the
-				// start of the document partition.
-				// TODO: Get closing character scan working on 0 starting partitions (i.e. # blocks)
-				char closer = lastChar;
-				//char opener = close2openMatchChars.charAt(close2openMatchChars.indexOf(lastChar) + 1);
-				char opener = openerChars.charAt(closerCharMatch);
-				
-				if(BalanceScan(scanData, opener, closer, triggerPos-1, true) > 0)
-				{
-					// TODO: Test to see whether this will fail at the end of the document partition
-					// Should this really live here, and is there a better way of doing it?
-					// Something pre-display?
-					if(documentOffset + 1 < document.getLength())
-					{
-					//	String restOfDocument = document.get(documentOffset + 1, 
-					//										document.getLength() - documentOffset-1);
-					//	document.replace(documentOffset, restOfDocument.length()-1, restOfDocument);
-						//InsertEdit newEdit = new InsertEdit(documentOffset+1, ")");
-						DeleteEdit charRemoval = new DeleteEdit(documentOffset, 1);
-						charRemoval.apply(document);
-
-					}
-				}
-				else
-					Debug.println("Not a closing bracket. Is this not one?: '" + lastChar + "'");
+				HandleCloser(document, scanData, lastChar, closerCharMatch, triggerPos, documentOffset);
 				return null;
 			}
 			//
@@ -283,42 +500,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			}
 			else
 			{
-				String restOfDocument = document.get(documentOffset, document.getLength() - documentOffset);
-				String docBefore = document.get(0, documentOffset);
-				String extraData = "";
-				switch(lastChar)
-				{
-					case '{':
-						//
-						// Opening a parenthesis causes an closing one to be inserted, but
-						// it really should follow the tab count the user is on. So we back-track
-						// through the document looking for the start of tabs. Once we have found
-						// them we simply add a tab for every tab we find.
-						int strPos = documentOffset-1;
-						for(; strPos > 0 && docBefore.charAt(strPos) != '\t'; strPos--);
-						{;}
-						for(; strPos > 0 && docBefore.charAt(strPos) == '\t'; strPos--)
-						{
-							extraData+= "\t";
-						}
-						
-						extraData+= "\n}";
-						break;
-					case '\"':
-						extraData = "\"";
-						break;
-					case '(':
-						extraData = ")";
-						Debug.println(mName, this, "Inserting closing bracket");
-						break;
-					default:
-						break;
-				}
-
-				InsertEdit newEdit = new InsertEdit(documentOffset, extraData);
-				newEdit.apply(document);
-				
-				Debug.println(mName, this, "NOT: '" + scanData + "'");
+				handleOpener(document, lastChar, documentOffset);
 				
 				if(lastChar != '(')
 					return null;
@@ -355,7 +537,6 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						String usage = 
 							((SyntaxDictionaryInterface)DictionaryManager.getDictionary(DictionaryManager.CFDIC)).getFunctionUsage(toBeMatched);
 						
-						//String usage = CFSyntaxDictionary.getFunctionUsage(toBeMatched);
 						if(usage == null)
 						{
 							Debug.println(mName, this, "Cannot found a match for '" + toBeMatched + "'");
@@ -363,20 +544,10 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						}
 						proposals.add(usage);
 						messages = usage;
-						//
-						// Has the user just opened a bracket?
-						// If so we stick a closing one in for them
-						/*
-						if(triggerPos == originalData.length()-1)
-						{
-							// TODO: This routine grabs the rest of the doc partition... must be slow?
-							String restOfDocument = document.get(documentOffset, document.getLength() - documentOffset-1);
-							restOfDocument = ")" + restOfDocument;
-							
-							document.replace(documentOffset, restOfDocument.length()-1, restOfDocument);
-						}
-						*/
 					}
+					break;
+				case ';':
+					DeleteText(document, triggerPos-1, 1);
 					break;
 				default:
 					messages = "Received the character " + lastChar;
