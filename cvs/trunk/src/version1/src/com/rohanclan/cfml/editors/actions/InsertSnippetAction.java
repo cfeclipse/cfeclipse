@@ -40,6 +40,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.TextSelection;
 
 
 /**
@@ -130,6 +131,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    
 			    String snippet = "";
 			    
+			    
 			    for (int i=0; i < loopcount; i++) {
 			        start = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.editor.getSite().getShell());
 			        end = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.editor.getSite().getShell());
@@ -138,25 +140,28 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			            break;
 			        }
 			        else {
-			            snippet += start+end;
+			            snippet = start+end;
 			        }
-			    }
-			    
-			    if (snippet != null && snippet.length() > 0 ) {
-			    
-					this.enclose(doc,(ITextSelection)sel,snippet,"");
-					
-					//move the cursor to before the end of the new insert
-					int offset = ((ITextSelection)sel).getOffset();
-					offset += ((ITextSelection)sel).getLength();
-					offset += start.length();
-					editor.setHighlightRange(offset,0,true);
-					try {
-					    doc.replace(lastSpaceOffset,sequence.length(),"");
-					}
-					catch (Exception e) {
-					    e.printStackTrace();
-					}
+			        if (snippet != null && snippet.length() > 0 ) {
+					    
+						this.enclose(doc,(ITextSelection)sel,snippet,"");
+						//move the cursor to before the end of the new insert
+						int offset = ((ITextSelection)sel).getOffset();
+						offset += ((ITextSelection)sel).getLength();
+						offset += snippet.length();
+						System.out.println("Offset: " + ((ITextSelection)sel).getOffset());
+					    if (i==0) {
+							try {
+							    doc.replace(lastSpaceOffset,sequence.length(),"");
+							    sel = new TextSelection(doc,offset-sequence.length(),0);
+							}	
+							catch (Exception e) {
+							    e.printStackTrace();
+							}
+					    }
+
+						editor.setHighlightRange(offset,0,true);
+				    }
 			    }
 			}
 		}
