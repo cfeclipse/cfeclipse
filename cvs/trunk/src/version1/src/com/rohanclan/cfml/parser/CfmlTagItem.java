@@ -24,17 +24,38 @@
  */
 package com.rohanclan.cfml.parser;
 
+import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.parser.exception.*;
 
 //import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.Map;
+import java.util.Iterator;
 import java.util.Set;
 /**
  * @author Oliver Tupman
  *
  */
 public class CfmlTagItem extends TagItem {
+	/**
+	 * 
+	 * @see com.rohanclan.cfml.parser.DocItem#IsSane()
+	 */
+	public boolean IsSane() {
+		Set attributes = syntax.getElementAttributes(this.itemName);
+		
+		Object[] params = attributes.toArray();
+		for(int i = 0; i < params.length; i++)
+		{
+			Parameter currParam = (Parameter)params[i];
+			if(currParam.isRequired() && !itemAttributes.containsKey(currParam.getName()))
+			{
+				parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <cf" + itemName + "> tag."));
+			}
+		}
+		return super.IsSane();
+	}
 	/**
 	 * Determines whether the child is valid or not.
 	 * <b>NB:</b> At present the default is <b>true</b>. Classes that derive from this class may 
