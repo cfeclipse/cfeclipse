@@ -43,7 +43,7 @@ import org.eclipse.core.runtime.CoreException;
 //import org.eclipse.jface.text.IDocument; 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Document;
-import org.eclipse.ui.texteditor.MarkerRulerAction;
+
 //import org.eclipse.ui.IEditorPart;
 
 /**

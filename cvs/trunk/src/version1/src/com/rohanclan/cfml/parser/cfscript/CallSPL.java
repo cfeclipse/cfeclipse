@@ -37,7 +37,9 @@ public class CallSPL {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	/*
+	 * This isn't currently called from anywhere and it's raising warnings when building, commenting out for now.
+	 
 	public static void CallSPL(String argument) {
 		SPLParser parser;
 		  try {
@@ -61,5 +63,5 @@ public class CallSPL {
 	        e1.printStackTrace();
 	      }	      
 	}
-	
+	*/
 }

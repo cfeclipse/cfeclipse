@@ -24,9 +24,9 @@
  */
 package com.rohanclan.cfml.parser.tests;
 
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+//import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 

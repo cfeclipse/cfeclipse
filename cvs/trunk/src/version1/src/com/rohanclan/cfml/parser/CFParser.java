@@ -385,7 +385,7 @@ public class CFParser {
 			    attributeValue = matcher.group(2).trim();
 			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
 				attributes.put(attributeName, attributeValue);
-				System.out.println("CFParser::stripAttributes() - Got \'" + attributeName + "\'=\"" + attributeValue + "\" with " + matcher.groupCount() + " matches");
+				//System.out.println("CFParser::stripAttributes() - Got \'" + attributeName + "\'=\"" + attributeValue + "\" with " + matcher.groupCount() + " matches");
 		    }
 		    else {
 		        System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");

@@ -208,22 +208,10 @@ public class CommentParser {
                 
                 if (matcher.find()) {
                     try {
-                        /*
-	        	        IMarker[] taskMarkers =  resource.findMarkers(IMarker.TASK, true, IResource.DEPTH_ONE);
-	        			
-	        	        taskLine = comment.getLineNumber() + line + 1;
-	        	        
-	        			for (int j=0; j<taskMarkers.length;j++) {
-	        			    if (!taskMarkers[j].exists()) {
-	        			        taskMarkers[j].delete();
-	        			        System.out.println("Invalid marker deleted");
-	        			    }
-	        			}
-	        			*/
 	                    Map attrs = new HashMap();
 	                    MarkerUtilities.setLineNumber(attrs, comment.getLineNumber()+line + 1);
                     
-                        String message = lines[line].substring(matcher.end(),lines[line].length()-1);
+                        String message = lines[line].substring(matcher.start(),lines[line].length()-1);
 	                    MarkerUtilities.setMessage(attrs, message);
 	                    MarkerUtilities.createMarker(resource,attrs,IMarker.TASK);
                     
