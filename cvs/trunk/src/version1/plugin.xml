@@ -98,7 +98,7 @@
                definitionId="com.rohanclan.cfml.editors.actions.CFVariable"
                label="&amp;Variable"
                icon="icons/ctool16/hash.gif"
-               tooltip="Surround with pound/number signs"
+               tooltip="Surround with hash/number signs"
                class="com.rohanclan.cfml.editors.actions.CFVariableAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorText"
@@ -189,6 +189,16 @@
                class="com.rohanclan.cfml.editors.actions.InsertDateAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.InsertDateAction">
+         </action>
+         <!-- insert color -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.InsertColor"
+               label="Insert Color"
+     		  icon="icons/ctool16/time.gif"
+               tooltip="Insert a color"
+               class="com.rohanclan.cfml.editors.actions.InsertColorAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="com.rohanclan.cfml.editors.actions.InsertColorAction">
          </action>
          <!-- insert an html br action (for Brian Sadler) -->
          <action
@@ -611,6 +621,20 @@
             command="com.rohanclan.cfml.editors.actions.ToUpperCase"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+      <!-- Insert Color -->
+      <command
+            name="Insert Color"
+            description="Insert a color"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.InsertColor">
+      </command>
+      <keyBinding
+            string="Ctrl+Shift+Z"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.InsertColor"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
 	<!-- insert date -->
       <command
             name="Insert Date"
