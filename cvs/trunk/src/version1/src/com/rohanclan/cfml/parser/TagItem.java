@@ -86,6 +86,11 @@ public class TagItem extends DocItem {
 		}
 	}
 	
+	public String getAttribute(String attrName)
+	{
+		return (String)attributes.get(attrName);
+	}
+	
 	public DocItem getMatchingItem() {
 		return matchingItem;
 	}

@@ -133,8 +133,27 @@ public class CFParser implements IEditorActionDelegate {
 		protected boolean hadFatal = false;
 		protected MatchList matches = new MatchList();
 		
+		//
+		// The following is to keep track of function & variable names
+		// TODO: I think the following should be a map so we can store the doc items against name for type recognition, etc.
+		protected HashMap functionNames = new HashMap();
+		protected HashMap variableNames = new HashMap();
+		
 		static public final int ADD_BEFORE = 0x01;
 		static public final int ADD_AFTER =  0x02;
+		
+		public void addFunction(TagItem newFunction)
+		{
+			String funcName = newFunction.getAttribute("name");
+			if(functionNames.containsKey(funcName))
+			{
+				addMessage(new ParseError(newFunction.lineNumber, newFunction.startPosition,
+												newFunction.endPosition, newFunction.getItemData(), 
+												"Duplicate function \'" + funcName + "\' found."));
+			}
+			else
+				functionNames.put(funcName, funcName);
+		}
 		
 		public MatchList getMatches()
 		{
@@ -784,6 +803,8 @@ public class CFParser implements IEditorActionDelegate {
 			return new CfmlTagQueryParam(lineNum, match.startPos, match.endPos, tagName);
 		else if(tagName.compareToIgnoreCase("invokeargument") == 0)
 			return new CfmlTagInvokeArgument(lineNum, match.startPos, match.endPos, tagName);
+		else if(tagName.compareToIgnoreCase("function") == 0)
+			return new CfmlTagFunction(lineNum, match.startPos, match.endPos, tagName);
 		else
 			return new CfmlTagItem(lineNum, match.startPos, match.endPos, tagName);
 	}
@@ -808,12 +829,22 @@ public class CFParser implements IEditorActionDelegate {
 		// of the stack.
 		
 		tagName = tagName.substring(3, tagName.length());
+		TagItem newItem;
+		//
+		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
+		// Also tests to make sure it catches CFX tags.
+		if(tagName.charAt(0) == '_' || (tagName.charAt(0) == 'x' && tagName.charAt(1) == '_'))
+		{
+			newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);
+			newItem.setItemData(match.match);
+		}
+		else
+		{
+			newItem = getNameBasedCfmlTag(tagName, match, getLineNumber(match.startPos));
+			newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
+			newItem.setItemData(match.match);
+		}
 		
-		//CfmlTagItem newItem = new CfmlTagItem(-1, match.startPos, match.endPos, tagName);
-		CfmlTagItem newItem = getNameBasedCfmlTag(tagName, match, getLineNumber(match.startPos));
-		newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
-		newItem.setItemData(match.match);
-
 		try {
 			newItem.addAttributes(attrMap);
 		} catch(DuplicateAttributeException excep) {
@@ -822,6 +853,8 @@ public class CFParser implements IEditorActionDelegate {
 			parserState.addMessage(new ParseError(getLineNumber(match.startPos), match.startPos, match.endPos, match.match, "The attribute " + excep.getName() + " is not valid for the tag " + tagName));			
 		}
 
+		if(newItem instanceof CfmlTagFunction)
+			parserState.addFunction(newItem);
 		
 		//
 		//	Either the syntax dictionary says it closes itself or the user has specified it will
