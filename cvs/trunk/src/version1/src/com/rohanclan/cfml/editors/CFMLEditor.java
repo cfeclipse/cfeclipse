@@ -435,9 +435,17 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			};
 			menu.add(act);
 			
+			/*
+			 * Start the logic to see if we are in a cfinclude or a cfmodule. get the tag.
+			 */
+			int startpos = sel.getOffset();
+			int len = Math.max(sel.getLength(),1);
+			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+			CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
+			
 			CfmlTagItem cti = null; 
 		    try {
-		        //cti = cfd.getTagAt(startpos, startpos);
+		        cti = cfd.getTagAt(startpos, startpos);
 		    }
 			catch (Exception e) {
 			    // do nothing.
