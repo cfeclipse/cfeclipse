@@ -253,7 +253,7 @@ public class NamedTagRule implements IPredicateRule {
 		int tmp = scanner.read();
 		scanner.unread();
 		if (tmp == ICharacterScanner.EOF) {
-		    return false;
+		    return true;
 		}
 		char next = (char)tmp;
 		Matcher m = p.matcher(String.valueOf(next));
@@ -264,7 +264,7 @@ public class NamedTagRule implements IPredicateRule {
 			return false;
 		}
 		else {
-			///System.out.println("Found tag " + new String(sequence) + " with next char " + next);
+			//System.out.println("Found tag " + new String(sequence) + " with next char " + next);
 		}
 		return true;
 	}

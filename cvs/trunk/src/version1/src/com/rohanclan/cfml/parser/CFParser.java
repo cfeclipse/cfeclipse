@@ -1316,7 +1316,7 @@ public class CFParser {
 			int endOffset = 0;
 			if (currMsg.docEndOffset > currMsg.docStartOffset) {
 				endOffset = currMsg.docEndOffset;
-				System.out.println("End offset is: " + endOffset + " start is " + currMsg.docStartOffset);
+				//System.out.println("End offset is: " + endOffset + " start is " + currMsg.docStartOffset);
 			}
 			else {
 				endOffset = currMsg.docStartOffset+currMsg.docData.length();

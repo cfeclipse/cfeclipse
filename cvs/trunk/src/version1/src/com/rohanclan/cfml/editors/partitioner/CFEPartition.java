@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.2 2005-01-21 08:25:15 smilligan Exp $
- * $Revision: 1.2 $
- * $Date: 2005-01-21 08:25:15 $
+ * $Id: CFEPartition.java,v 1.3 2005-01-24 23:36:35 smilligan Exp $
+ * $Revision: 1.3 $
+ * $Date: 2005-01-24 23:36:35 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -31,16 +31,22 @@ package com.rohanclan.cfml.editors.partitioner;
 
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.TypedPosition;
-import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.Assert;
 /**
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class CFEPartition extends TypedPosition {
+public final class CFEPartition extends TypedPosition {
 
+    /** The type that the next partition should be */
     private String fNextPartitionType = null;
+    /** The type of partition that this partition opens */
+    private String fOpensPseudoPartition = null;
+    /** The type of partition that this partition closes */
+    private String fClosesPseudoPartition = null;
+    
     /**
      * @param offset
      * @param length
@@ -48,22 +54,49 @@ public class CFEPartition extends TypedPosition {
      */
     public CFEPartition(int offset, int length, String type) {
         super(offset, length, type);
-      
+        Assert.isNotNull(type,"Null partition type passed to CFEPartition constructor.");
+        //System.out.println("Partition of type " + type + " created from " + offset + " to " + Integer.toString(offset+length));
     }
 
-    /**
-     * @param region
-     */
-    public CFEPartition(ITypedRegion region) {
-        super(region);
-    }
-    
-    public void setNextPartitionType(String type) { 
+    /** 
+     * Sets the type of partition that should come after this one 
+     * @param type - The type of partition that should come next.
+     */ 
+    public final void setNextPartitionType(String type) { 
         fNextPartitionType = type;
     }
     
+    /**
+     * 
+     * @return The type of partition that should come next 
+     * or null if none specified.
+     */
     public String getNextPartitionType() { 
         return fNextPartitionType;
+    }
+    
+    /**
+     * 
+     * @param type - The type of partition that this partition opens.
+     */
+    public final void setOpensPartition(String type) {
+        fOpensPseudoPartition = type;
+    }
+    
+    public final String getOpensPartitionType() {
+        return fOpensPseudoPartition;
+    }
+    
+    /**
+     * 
+     * @param type - The type of partition that this partition closes.
+     */
+    public final void setClosesPartition(String type) {
+        fClosesPseudoPartition = type;
+    }
+    
+    public final String getClosesPartitionType() {
+        return fClosesPseudoPartition;
     }
 
 }
@@ -74,6 +107,9 @@ public class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/01/21 08:25:15  smilligan
+ * Re-implemented the partitioning in a slightly more robust way.
+ *
  * Revision 1.1  2005/01/19 02:50:11  smilligan
  * Second commit of (now hopefully working) rewritten partitioner.
  *

@@ -34,6 +34,8 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 
@@ -153,6 +155,21 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	    return getTagAt(startpos,endpos,false);
 	}
 
+	
+	public void addPosition(String category, Position position) throws BadLocationException, BadPositionCategoryException  {
+	    if (category.startsWith("__content_types_category")) {
+	        //System.out.println("Adding position " + position.offset + ":" + Integer.toString(position.offset + position.length));
+	    }
+	    super.addPosition(category,position);
+	}
+	
+	public void removePosition(String category, Position position) throws BadPositionCategoryException {
+	    if (category.startsWith("__content_types_category")
+	            && position instanceof CFEPartition) {
+	        //System.out.println("Removing position " + position.offset + ":" + Integer.toString(position.offset + position.length) + ((CFEPartition)position).getType());
+	    }
+	    super.removePosition(category,position);
+	}
 	
 	/**
 	 * Gets a tag object given a starting and ending position
