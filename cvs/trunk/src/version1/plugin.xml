@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.16.3"
+   version="1.1.16.4"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -216,7 +216,7 @@
          <!-- Fold the selected text -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection"
-               label="Collapse the selected text"
+               label="Add folding markers"
                tooltip="Add folding markers and collapse the selected text"
                class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
@@ -228,6 +228,30 @@
                tooltip="Clear folding markers from the selected text"
                class="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection">
+         </action>
+         <!-- Collapse the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
+               label="Collapse the selected text."
+               tooltip="Collapse any folding markers in and around the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection">
+         </action>
+         <!-- Expand the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection"
+               label="Expand the selected text."
+               tooltip="Expand any folding markers in and around the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
+         </action>
+         <!-- Toggle the expand/collapse state of the selected text -->
+         <action
+               definitionId="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
+               label="Expand/collapse the selected text"
+               tooltip="Expand or collapse any folding markers in and around the selected text"
+               class="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelectionAction"
+               id="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection">
          </action>
          <!-- Reload the syntax dictionaries -->
          <action
@@ -365,7 +389,7 @@
                id="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection">
          </action>
          <action
-               label="Collapse selection"
+               label="Add folding markers"
                class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
@@ -628,6 +652,46 @@
             command="com.rohanclan.cfml.editors.actions.LoadScribblePad"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+	<!-- this will toggle the expand/collapse state of  the selected block -->
+      <command
+            name="Toggle selection"
+            description="Toggle the collapse/expand state of the selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection">
+      </command>
+      <keyBinding
+            string="Ctrl+\"
+            scope="org.eclipse.ui.textEditorScope"
+            command="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
+            configuration="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- This will expand selected block -->
+      <command
+            name="Expand selection"
+            description="Expand the selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
+      </command>
+      <keyBinding
+            keySequence="Ctrl++"
+            contextId="org.eclipse.ui.textEditorScope"
+            commandId="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+	<!-- This will collapse selected block -->
+      <command
+            name="Collapse selection"
+            description="Collapse the selected text"
+            category="com.rohanclan.cfml.commandCategory"
+            id="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection">
+      </command>
+      <keyBinding
+            keySequence="Ctrl+-"
+            contextId="org.eclipse.ui.textEditorScope"
+            commandId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
+      
       <!-- Find a matching bracket pair
       <command
             name="Highlight matching bracket pair"

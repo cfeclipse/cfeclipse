@@ -34,7 +34,6 @@ import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.CFSyntaxDictionary;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 import java.util.Iterator;

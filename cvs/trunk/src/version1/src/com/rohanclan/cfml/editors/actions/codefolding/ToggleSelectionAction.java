@@ -12,7 +12,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
-
+import com.rohanclan.cfml.editors.CFMLEditor;
 
 /**
  * @author Stephen Milligan
@@ -20,15 +20,15 @@ import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class FoldSelectionAction  implements IEditorActionDelegate {
+public class ToggleSelectionAction  implements IEditorActionDelegate {
     
-    ITextEditor editor = null;
+    CFMLEditor editor = null;
     CodeFoldingSetter foldingSetter = null;
     
     /**
      * 
      */
-    public FoldSelectionAction() {
+    public ToggleSelectionAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +36,7 @@ public class FoldSelectionAction  implements IEditorActionDelegate {
 	{
 		if( targetEditor instanceof ITextEditor )
 		{
-			editor = (ITextEditor)targetEditor;
+			editor = (CFMLEditor)targetEditor;
 			foldingSetter = new CodeFoldingSetter(editor);
 			
 		}
@@ -47,7 +47,7 @@ public class FoldSelectionAction  implements IEditorActionDelegate {
 	 */
 	public void run(IAction action) 
 	{
-	    foldingSetter.addFoldToSelection(true);
+	    foldingSetter.toggleSelection();
 		
 	}
 	

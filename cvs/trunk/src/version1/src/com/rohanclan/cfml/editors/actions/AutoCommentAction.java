@@ -31,7 +31,9 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
+
 import com.rohanclan.cfml.editors.CFPartitionScanner;
+
 import org.eclipse.jface.text.BadLocationException;
 //import org.eclipse.ui.IFileEditorInput;
 //import org.eclipse.jface.text.source.ISourceViewer;

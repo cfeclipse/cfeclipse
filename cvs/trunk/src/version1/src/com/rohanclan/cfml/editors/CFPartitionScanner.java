@@ -132,10 +132,10 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		//these are not really handled in the dictionary because you can call 
 		//normal pages as cf_'s
-		rules.add(new MultiLineRule("<_",">", cftag));
-		rules.add(new MultiLineRule("</_",">", cfendtag));
-		rules.add(new MultiLineRule("<_",">", cftag));
-		rules.add(new MultiLineRule("</_",">", cfendtag));
+		rules.add(new MultiLineRule("<cf_",">", cftag));
+		rules.add(new MultiLineRule("</cf_",">", cfendtag));
+		rules.add(new MultiLineRule("<CF_",">", cftag));
+		rules.add(new MultiLineRule("</CF_",">", cfendtag));
 		
 		//do the html tags now
 		sd = DictionaryManager.getDictionary(DictionaryManager.HTDIC);

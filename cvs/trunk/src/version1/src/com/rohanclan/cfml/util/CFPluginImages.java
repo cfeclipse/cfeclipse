@@ -131,6 +131,12 @@ public class CFPluginImages {
 
 	/** Pinning stuff icon */
 	public static final String ICON_PIN = "pin.gif";
+
+	/** Expand collapsed code icon */
+	public static final String ICON_EXPAND = "expanded.gif";
+
+	/** Collapse code icon */
+	public static final String ICON_COLLAPSE = "collapsed.gif";
 	
 	public static final String ICON_PVIEW_FOLDER_WWW = "folder-www.png";
 	public static final String ICON_PVIEW_FOLDER_CFC = "folder-cfc.png";
@@ -203,6 +209,8 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_LIBRARY);
 			addImageToRegistry(TOOLBAR,ICON_SORTAZ);
 			addImageToRegistry(TOOLBAR,ICON_PIN);
+			addImageToRegistry(TOOLBAR,ICON_EXPAND);
+			addImageToRegistry(TOOLBAR,ICON_COLLAPSE);
 			addImageToRegistry(TOOLBAR,ICON_INSERT_SNIP);
 			
 			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_WWW);

@@ -20,7 +20,7 @@ import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class FoldSelectionAction  implements IEditorActionDelegate {
+public class CollapseSelectionAction  implements IEditorActionDelegate {
     
     ITextEditor editor = null;
     CodeFoldingSetter foldingSetter = null;
@@ -28,7 +28,7 @@ public class FoldSelectionAction  implements IEditorActionDelegate {
     /**
      * 
      */
-    public FoldSelectionAction() {
+    public CollapseSelectionAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,7 +47,7 @@ public class FoldSelectionAction  implements IEditorActionDelegate {
 	 */
 	public void run(IAction action) 
 	{
-	    foldingSetter.addFoldToSelection(true);
+	    foldingSetter.collapseSelection();
 		
 	}
 	

@@ -25,9 +25,10 @@
 package com.rohanclan.cfml.editors;
 
 import java.util.Set;
-//import java.util.HashSet;
+
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+//import java.util.HashSet;
 
 /**
  * @author Rob

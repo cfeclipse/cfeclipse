@@ -240,7 +240,6 @@ public class CFMLPreferencePage
  */
     protected void performDefaults() {
         super.performDefaults();
-        insightDelayField.setText(Integer.toString(preferenceManager.defaultInsightDelay()));
         dreamweaverCompatibilityCheckBox.setSelection(preferenceManager.defaultDreamweaverCompatibility());
         homesiteCompatibilityCheckBox.setSelection(preferenceManager.defaultHomesiteCompatibility());
         snippetsPathField.setStringValue(preferenceManager.defaultSnippetsPath());
@@ -249,7 +248,6 @@ public class CFMLPreferencePage
 
     public boolean performOk() {
         IPreferenceStore store = getPreferenceStore();
-        store.setValue(ICFMLPreferenceConstants.P_INSIGHT_DELAY, insightDelayField.getText());
         store.setValue(ICFMLPreferenceConstants.P_ENABLE_DW_COMPATIBILITY, String.valueOf(dreamweaverCompatibilityCheckBox.getSelection()));
         store.setValue(ICFMLPreferenceConstants.P_ENABLE_HS_COMPATIBILITY, String.valueOf(homesiteCompatibilityCheckBox.getSelection()));
         store.setValue(ICFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());

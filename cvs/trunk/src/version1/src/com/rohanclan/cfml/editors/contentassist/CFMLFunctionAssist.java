@@ -119,30 +119,28 @@ public class CFMLFunctionAssist
 				String usage = "";
 				Parameter activeParam = null;
 				
-				int paramCount = 0;
+				int paramCount = filteredParams.length;
 				
-				while(x < filteredParams.length)
-				{
-				  if (filteredParams[x] instanceof Parameter) {  
-				  	Parameter p = filteredParams[x];
-				    paramCount++;
-						String delimiter = "";
-						if (x < filteredParams.length) {
-						    delimiter = " ,";
-						}
-						extraInfo += paramIndent + paramIndent;
-						if (x == this.paramsSoFar) {
-						    activeParam = p;
-							extraInfo += "<b>";
-						}
-						extraInfo += p.toString() + delimiter;
-						
-						if (x == this.paramsSoFar) {
-							extraInfo += "</b>";
-						}
-						extraInfo += "\n";
-						
-				  }
+				while(x < paramCount)
+				{ 
+			  	Parameter p = filteredParams[x];
+			  		
+					String delimiter = "";
+					if (x+1 < paramCount) {
+					    delimiter = " ,";
+					}
+					extraInfo += paramIndent + paramIndent;
+					if (x == this.paramsSoFar) {
+					    activeParam = p;
+						extraInfo += "<b>";
+					}
+					extraInfo += p.toString() + delimiter;
+					
+					if (x == this.paramsSoFar) {
+						extraInfo += "</b>";
+					}
+					extraInfo += "\n";
+					
 				  x++;
 				}
 				
@@ -211,8 +209,16 @@ public class CFMLFunctionAssist
 			    }
 			    
 			}
-
-    	return sortingArray;
+		
+		Parameter[] resizedArray = new Parameter[x];
+		x = 0;
+		
+		while(x<resizedArray.length) {
+		    resizedArray[x] = sortingArray[x];
+		    x++;
+		}
+			
+    	return resizedArray;
     }
     
     

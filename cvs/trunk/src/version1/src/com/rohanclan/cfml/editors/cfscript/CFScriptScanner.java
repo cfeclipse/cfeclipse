@@ -35,10 +35,10 @@ import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.TextAttribute;
 
 import com.rohanclan.cfml.editors.CFKeywordDetector;
+import com.rohanclan.cfml.editors.CFSyntaxDictionary;
 import com.rohanclan.cfml.editors.ColorManager;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
 import com.rohanclan.cfml.editors.PredicateWordRule;
-import com.rohanclan.cfml.editors.CFSyntaxDictionary;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 

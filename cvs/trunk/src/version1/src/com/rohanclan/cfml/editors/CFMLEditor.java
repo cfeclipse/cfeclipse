@@ -60,6 +60,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IChangeRulerColumn;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -81,7 +82,7 @@ import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import com.rohanclan.cfml.editors.actions.RTrimAction;
 import com.rohanclan.cfml.editors.pairs.CFMLPairMatcher;
 import com.rohanclan.cfml.editors.pairs.Pair;
-
+import com.rohanclan.cfml.parser.*;
 
 import org.eclipse.jface.action.Action;
 
@@ -92,6 +93,8 @@ import com.rohanclan.cfml.util.CFPluginImages;
 //import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.swt.SWT;
+
+import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 
 //import java.util.Iterator;
 
@@ -118,6 +121,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	final GotoFileAction gfa = new GotoFileAction();
 
 	private final JumpToDocPos jumpAction = new JumpToDocPos();
+	
+	private CodeFoldingSetter foldingSetter;
 
 
 	protected LineNumberRulerColumn fLineNumberRulerColumn;
@@ -153,6 +158,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	    }
 	    
 		super.doSave(monitor);
+
+        foldingSetter.docChanged(false);
 		
 	}
 
@@ -179,7 +186,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		
 		colorManager = new ColorManager();
 		//setup color coding and the damage repair stuff
-
+		
+		
 		configuration = new CFConfiguration(colorManager, this);
 		setSourceViewerConfiguration(configuration);
 		//assign the cfml document provider which does the partitioning
@@ -223,9 +231,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		super.createPartControl(parent);
 		this.setBackgroundColor();
 		
-		//Allow data to be copied or moved from the drag source
-		int operations = DND.DROP_MOVE | DND.DROP_COPY;
-		dragsource = new DragSource(this.getSourceViewer().getTextWidget(), operations);
 		
 
         ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
@@ -246,8 +251,18 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
         fProjectionSupport.install();
 
         projectionViewer.doOperation(ProjectionViewer.TOGGLE);
-        
+
+		foldingSetter = new CodeFoldingSetter(this);
+        foldingSetter.docChanged(true);
+
 		
+		/*
+		 * 
+		 * DRAG AND DROP stuff below here.
+		 */
+		//Allow data to be copied or moved from the drag source
+		int operations = DND.DROP_MOVE | DND.DROP_COPY;
+		dragsource = new DragSource(this.getSourceViewer().getTextWidget(), operations);
 		//Allow data to be copied or moved to the drop target
 		operations  = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
 		DropTarget  target = new DropTarget(this.getSourceViewer().getTextWidget(), operations);
@@ -414,7 +429,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	protected void editorContextMenuAboutToShow(IMenuManager menu) {
 
 		addTagSpecificMenuItems(menu);
-		addFoldingSpecificMenuItems(menu);
 		super.editorContextMenuAboutToShow(menu);
 
 		//addAction(menu, ITextEditorActionConstants.FIND);
@@ -424,6 +438,41 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 		//addAction(menu,ITextEditorActionConstants.LOWER_CASE);
 	}
 
+	
+	/*
+	public void createFolding() {
+	    ICFDocument doc = (ICFDocument)this.getDocumentProvider().getDocument(this.getEditorInput());
+		
+	    CFParser parser = doc.getParser();
+	    IDocumentPartitioner partitioner = doc.getDocumentPartitioner();
+		ITypedRegion[] regionArray  = partitioner.computePartitioning(0,doc.getLength());
+
+        ProjectionAnnotationModel model= (ProjectionAnnotationModel) getAdapter(ProjectionAnnotationModel.class);
+		
+		
+		for (int i = 0;i<regionArray.length;i++) {
+		    ITypedRegion region = regionArray[i];
+		    System.out.println(region.getType());
+		    if (region.getType() == CFPartitionScanner.CF_COMMENT) {
+		        Position position= new Position(region.getOffset(), region.getLength());
+				model.addAnnotation(new ProjectionAnnotation(true), position);
+		        
+		    }
+		}
+		
+        
+
+	}
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Add menu items based on the tag that was right clicked on... doesnt work
 	 * as I have no idea how to find out what tag was just clicked on :) seems
@@ -432,68 +481,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements IProperty
 	 * @param menu
 	 */
 	protected void addTagSpecificMenuItems(IMenuManager menu) {
-		//all this mess is really just to get the offset and a handle to the
-		//CFDocument object attached to the Document...
-		IEditorPart iep = getSite().getPage().getActiveEditor();
-		ITextEditor editor = (ITextEditor) iep;
-		IDocument doc = editor.getDocumentProvider().getDocument(
-				editor.getEditorInput());
-		ICFDocument cfd = (ICFDocument) doc;
-		ISelection sel = editor.getSelectionProvider().getSelection();
-
-		//ok got our tag (or null)
-		int startpos = ((ITextSelection) sel).getOffset();
-
-		CfmlTagItem cti = cfd.getTagAt(startpos, startpos);
-
-		if (cti != null) {
-			if (cti.matchingItem != null) {
-				jumpAction.setDocPos(cti.matchingItem.getEndPosition());
-				jumpAction.setActiveEditor(null, getSite().getPage()
-						.getActiveEditor());
-				Action jumpNow = new Action("Jump to end tag", CFPluginImages
-						.getImageRegistry().getDescriptor(
-								CFPluginImages.ICON_FORWARD)) {
-					public void run() {
-						jumpAction.run(null);
-					}
-				};
-				menu.add(jumpNow);
-			}
-
-			String n = cti.getName();
-			if (n.equalsIgnoreCase("include") || n.equalsIgnoreCase("module")) {
-				//this is a bit hokey - there has to be a way to load the
-				// action
-				//in the xml file then just call it here...
-				//TODO
-
-				gfa.setActiveEditor(null,getSite().getPage().getActiveEditor());
-			
-				
-							
-				Action ack = new Action(
-					"Open/Create File",
-					CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)
-				){
-					public void run()
-					{
-
-						gfa.run(null);
-					}
-				};
-				menu.add(ack);
-			}
-		}
-	}
-
-
-	/**
-	 * Add menu items based whether or not the current line is on a folding region
-	 * 
-	 * @param menu
-	 */
-	protected void addFoldingSpecificMenuItems(IMenuManager menu) {
 		//all this mess is really just to get the offset and a handle to the
 		//CFDocument object attached to the Document...
 		IEditorPart iep = getSite().getPage().getActiveEditor();

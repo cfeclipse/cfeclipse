@@ -5524,8 +5524,8 @@
 				]]></help>
 				<values>
 					<value option="com" />
-					<value option="java" />
 					<value option="corba" />
+					<value option="java" />
 				</values>
 			</parameter>
 			<parameter name="action" type="String" required="true">
@@ -9003,49 +9003,26 @@
 		<function creator="3" name="createobject" returns="CORBAObject">
 		<help><![CDATA[
 				The CreateObject function takes different arguments depending on the value of the first argument:
-				
+
 				CreateObject('com', class, context, serverName)
 				CreateObject('component', component-name)
 				CreateObject('corba', context, class, locale)
 				CreateObject('java', class)
 				CreateObject('webservice', urltowsdl)
-				******************************************
-			
-				The CreateObject function can call a method on a CORBA object.
-				The object must be defined and registered for use.
+        ********************************************
 
-				type : "corba"
-				context :
-				    * IOR to access CORBA server
-				    * NameService: naming service to access server.
-						Valid only with the InitialContext of a VisiBroker ORB.
-				class :
-				    If context = "ior": absolute path of file that contains
-				        string version of the Interoperable Object Reference
-				        (IOR). CFML must be able to read file; it should
-						be local to CFML server or accessible on network
-				    If context = "nameservice:" forward slash-delimited naming
-				        context for naming service.
-                        For example Allaire//Doc/empobject
-				locale :
-                    The name of the Java config that holds the properties file.
-                ********************************************
-                
-                Create a COM object (not available on Unix)
+        type : "com"
 
-				To create a COM object, you must provide this information:
+				To create a COM object, you must know this information:
 				 * The object's program ID or filename
 				 * The methods and properties available to the object through
 					the IDispatch interface
 				 * The arguments and return types of the object's methods
 				 * For most objects, you can get this information from the
-					OLEView utility.    
-					
+					OLEView utility.
+
 				********************************************
 
-
-				The CreateObject function can create a Java object, and, by
-				extension, an EJB object.
 				type : "java"
 				class : A Java class name
 
@@ -9061,14 +9038,33 @@
 
 				********************************************************
 
-				This function can create a web service object.
-
 				type : "webservice"
 				urltowsdl : WSDL file URL; location of web service. Note: this
-					URL almost always ends with "?WSDL"
-                    
+
+				URL almost always ends with "?WSDL"
+
+				******************************************
+
+				type : "corba"
+				context :
+				    * IOR to access CORBA server
+				    * NameService: naming service to access server.
+						Valid only with the InitialContext of a VisiBroker ORB.
+				class :
+				    If context = "ior": absolute path of file that contains
+				        string version of the Interoperable Object Reference
+				        (IOR). CFML must be able to read file; it should
+						be local to CFML server or accessible on network
+				    If context = "nameservice:" forward slash-delimited naming
+				        context for naming service.
+                        For example Allaire//Doc/empobject
+				locale :	The name of the Java config that holds the properties file.
+
+				The object must be defined and registered for use.
+
+
 			]]></help>
-			
+
 			<parameter name="type" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
@@ -11462,7 +11458,7 @@
 					<value option="Now()" />
 				</values>
 			</parameter>
-			
+
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
 				]]></help>
@@ -11497,8 +11493,8 @@
 					<value option="local" />
 					<value option="international" />
 					<value option="none" />
-					
-					
+
+
 				</values>
 			</parameter>
 		</function>
@@ -12504,7 +12500,7 @@
 				<help><![CDATA[
 					The name of a locale; for example, "English (US)"
 				]]></help>
-				<values>	
+				<values>
 					<value option="Chinese (China)" />
 					<value option="Chinese (Hong Kong)" />
 					<value option="Chinese (Taiwan)" />

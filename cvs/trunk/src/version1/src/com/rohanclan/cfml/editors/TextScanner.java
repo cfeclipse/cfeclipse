@@ -25,6 +25,7 @@
 package com.rohanclan.cfml.editors;
 
 import org.eclipse.jface.text.rules.RuleBasedScanner;
+
 //import org.eclipse.jface.text.rules.IRule;
 
 /**

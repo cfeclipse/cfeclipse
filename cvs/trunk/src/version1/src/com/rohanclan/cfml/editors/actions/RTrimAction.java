@@ -15,6 +15,7 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
+import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 
 /**
  * @author Stephen Milligan
@@ -25,6 +26,7 @@ import org.eclipse.jface.text.BadLocationException;
 public class RTrimAction  implements IEditorActionDelegate {
     
     ITextEditor editor = null;
+    CodeFoldingSetter foldingSetter = null;
     
     /**
      * 
@@ -35,9 +37,11 @@ public class RTrimAction  implements IEditorActionDelegate {
     }
     public void setActiveEditor(IAction action, IEditorPart targetEditor) 
 	{
+        
 		if( targetEditor instanceof ITextEditor )
 		{
 			editor = (ITextEditor)targetEditor;
+			foldingSetter = new CodeFoldingSetter(editor);
 		}
 	}
 	
@@ -55,6 +59,7 @@ public class RTrimAction  implements IEditorActionDelegate {
 		int selectionLength = originalSelectionLength;
 		StringBuffer newDoc = new StringBuffer();
 		try {
+		    foldingSetter.takeSnapshot();
 			while (currentLine < doc.getNumberOfLines()) {
 			    int offset = doc.getLineOffset(currentLine);
 			    int length = doc.getLineLength(currentLine);
@@ -82,8 +87,9 @@ public class RTrimAction  implements IEditorActionDelegate {
 
 			TextSelection selection = new TextSelection(doc,cursorOffset,selectionLength);
 			editor.getSelectionProvider().setSelection(selection);
+			foldingSetter.restoreSnapshot();
 		}
-		catch (BadLocationException blx) {
+		catch (Exception blx) {
 		    blx.printStackTrace();
 		}
 	}

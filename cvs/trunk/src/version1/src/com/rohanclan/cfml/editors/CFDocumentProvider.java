@@ -38,6 +38,8 @@ import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
+import com.rohanclan.cfml.editors.partition.*;
+
 /**
  * 
  * This document handles the opening and closing of CF documents.
@@ -50,7 +52,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 
 	protected IDocument createDocument(Object element) throws CoreException {
 		ICFDocument document = null;
-
+		System.out.println(element.getClass().getName());
 		document = new ICFDocument();
 		if (setDocumentContent(document, (IEditorInput) element,
 				getEncoding(element))) {
@@ -58,7 +60,7 @@ public class CFDocumentProvider extends FileDocumentProvider {
 		}
 
 		if (document != null) {
-			IDocumentPartitioner partitioner = new DefaultPartitioner(
+			IDocumentPartitioner partitioner = new CFEDefaultPartitioner(
 					new CFPartitionScanner(), new String[] {
 							CFPartitionScanner.ALL_TAG,
 							CFPartitionScanner.CF_COMMENT,

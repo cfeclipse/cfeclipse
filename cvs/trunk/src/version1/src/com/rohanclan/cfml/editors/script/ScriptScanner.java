@@ -34,9 +34,11 @@ import org.eclipse.jface.text.rules.EndOfLineRule;
 import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.TextAttribute;
+
+import com.rohanclan.cfml.editors.CFKeywordDetector;
+import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ColorManager;
 //import com.rohanclan.cfml.editors.ICFColorConstants;
-import com.rohanclan.cfml.editors.CFKeywordDetector;
 import com.rohanclan.cfml.editors.PredicateWordRule;
 
 import java.util.Iterator;
@@ -45,7 +47,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.editors.CFPartitionScanner;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 /**
