@@ -26,7 +26,6 @@
 package com.rohanclan.cfml.parser;
 
 import java.io.StringReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,38 +34,37 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.xpath.compiler.Compiler;
-import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-//import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.parser.cfmltagitems.*;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagCase;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagCatch;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagDefaultCase;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagElse;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagElseIf;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagFunction;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagIf;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagInvokeArgument;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagProperty;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagQueryParam;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagSet;
 import com.rohanclan.cfml.parser.cfscript.ParseException;
 import com.rohanclan.cfml.parser.cfscript.SPLParser;
 import com.rohanclan.cfml.parser.cfscript.SimpleNode;
-import com.rohanclan.cfml.parser.cfscript.TokenMgrError;
 import com.rohanclan.cfml.parser.docitems.AttributeItem;
 import com.rohanclan.cfml.parser.docitems.CfmlCustomTag;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 import com.rohanclan.cfml.parser.docitems.TagItem;
-
-//import com.rohanclan.cfml.util.Debug;
-
-import com.rohanclan.cfml.parser.ParseError;
-import com.rohanclan.cfml.parser.ParseMessage;
+import com.rohanclan.cfml.parser.docitems.TextNode;
 
 /*
  Nasty, bastard test data for the parser:
@@ -529,6 +527,8 @@ public class CFParser {
 	static {
 		parser = new SPLParser(new StringReader(""));
 	}
+	
+//	private SPLParser parser = new SPLParser(new StringReader(""));
 	/**
 	 * <code>handleCFScriptBlock</code> - handles a CFScript'd block (at the moment it does nothing)
 	 * @param match - the match
@@ -556,14 +556,19 @@ public class CFParser {
 			parser = new SPLParser(tempRdr);
 		}
 		else
-			SPLParser.ReInit(tempRdr);
+		{
+		    SPLParser.resetExceptions();
+		    SPLParser.ReInit(tempRdr);
+		    //this.parser.ReInit(tempRdr);
+		}
 		
 		try {
 			SPLParser.CompilationUnit();
+		    //this.parser.CompilationUnit();
 			rootElement = (SimpleNode)parser.getDocumentRoot();
 			
 			if(rootElement != null) {
-				
+				addDocItemToTree(match, matchStack, rootElement);
 			}
 			
 		}  catch(ParseException ex) {
@@ -819,9 +824,10 @@ public class CFParser {
 		ArrayList rootElements = new ArrayList();
 		TagItem rootItem = new TagItem(0, 0, 0, "Doc Root");
 		int matchPos = 0;
+		StringBuffer nonParsedTextBuffer = new StringBuffer();
 
 		matchStack.push(rootItem);
-	
+		ParseItemMatch lastMatch = null;
 		try {
 			
 			for(; matchPos < matches.size(); matchPos++)
@@ -829,6 +835,20 @@ public class CFParser {
 				ParseItemMatch match = (ParseItemMatch)matches.get(matchPos);
 				
 				String matchStr = match.match;
+				/*
+				if(lastMatch != null)
+				{
+				    int difference = match.getStartPos() - lastMatch.getEndPos();
+				    System.out.println(lastMatch.getMatch() + " -> " + match.getMatch() + ": diff of : "+ difference);
+				    String nonParsedText = this.data2Parse.substring(lastMatch.getEndPos()+1, difference + lastMatch.getEndPos());
+				    System.out.println("-> Thinks this is non matched: \'" + nonParsedText + "\'");
+				    TextNode textNode = new TextNode(match.getLineNumber(), match.getStartPos(), match.getEndPos(), "#TEXT");
+				    textNode.setNodeText(nonParsedText);
+				    addDocItemToTree(match, matchStack, textNode);
+				}
+				*/
+				lastMatch = match;
+				
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					if(matchStr.charAt(1) == '/') {
