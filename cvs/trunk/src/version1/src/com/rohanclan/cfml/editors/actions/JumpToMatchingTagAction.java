@@ -89,14 +89,9 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
 		    msg.open();
 	    }*/
  
-	    Display.getDefault().asyncExec(new Runnable() {
+	    Display.getDefault().timerExec(2000, new Runnable() {
 	       public void run() {
-	           try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
  	           editor.getEditorSite().getActionBars().getStatusLineManager().setMessage(null);
-            }
-	           editor.getEditorSite().getActionBars().getStatusLineManager().setMessage(null);
 	       }
 	    });
     }
