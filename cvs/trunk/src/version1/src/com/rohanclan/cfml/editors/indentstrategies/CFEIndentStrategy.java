@@ -68,6 +68,26 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 		}
 	}
 	
+	/**
+	 * Steps through one character. Essentially a alias to stepThrough(command, 1)
+	 * 
+	 * @param docCommand
+	 */
+	protected void stepThrough(DocumentCommand docCommand) {
+		stepThrough(docCommand, 1);
+	}
+	
+	/**
+	 * Steps through a number of characters
+	 * 
+	 * @param docCommand - the doc command to work upon
+	 * @param chars2StepThru - number of characters to step through
+	 */
+	protected void stepThrough(DocumentCommand docCommand, int chars2StepThru) {
+		docCommand.text = "";
+		docCommand.shiftsCaret = false;
+		docCommand.caretOffset = docCommand.offset += chars2StepThru;
+	}
 	
 	private String getSelectedText(){
         ISelection selection = editor.getSelectionProvider().getSelection();

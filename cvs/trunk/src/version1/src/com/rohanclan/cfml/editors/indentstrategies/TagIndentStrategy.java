@@ -227,6 +227,50 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		return docCommand;
 	}
 	
+	/*
+	 * <cffunction name="fred>				: true
+	 * <cffunction name="fred"
+	 * 			   returntype="boolean">	: true
+	 * 
+	 * </cfoutput>							: false (1)
+	 * <cfoutput>
+	 * </cfoutput>
+	 * >									: false (2)
+	 */
+	private static final int AFTEROPENTAG_AFTER 	= 0;
+	private static final int AFTEROPENTAG_CLOSER 	= 1;
+	private static final int AFTEROPENTAG_NOTAFTER 	= 2;
+	
+	private int afterOpenTag(IDocument doc, int offset) {
+		int pos = offset - 1;
+		try {
+			for(; pos > 0; pos--) {
+				char currChar = doc.getChar(pos);
+				if(currChar == '>')					// Condition (2)
+					return AFTEROPENTAG_NOTAFTER;
+				else if(currChar == '/') {
+					if(doc.getChar(pos-1) == '<')	// Condition (1)
+						return AFTEROPENTAG_CLOSER;
+				}
+				else if(currChar =='<') 
+					return AFTEROPENTAG_AFTER;
+			}
+		}catch(BadLocationException ex) {
+			ex.printStackTrace();
+		}
+		return AFTEROPENTAG_AFTER;
+	}
+	
+	/**
+	 * Handles the case where the user has pressed <! and the strategy has
+	 * auto-inserted a closing '>'. This deletes the next '>'
+	 * @param doc
+	 * @param docCommand
+	 */
+	private void handleHTMLComment(IDocument doc, DocumentCommand docCommand) {
+		docCommand.offset++;
+	}
+	
 	/**
 	 * The method called by the editor.
 	 */
@@ -270,15 +314,15 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 						break;
 				}
 				return;
-			case '>':
-				if(beforeLastChar == '<')
-					return;
-				else if(beforeLastChar == '/')	{
-					docCommand = singleTagTakeAction(doc, docCommand);
+			case '!':
+				if(doc.getChar(docCommand.offset) == '<'
+					&& doc.getChar(docCommand.offset+1) == '>')
+				{
+					handleHTMLComment(doc, docCommand);
 				}
-				else {
-					docCommand = doCloser(doc, docCommand);
-				}			
+				return;
+			case '>':
+				handleClosingChevron(doc, docCommand, beforeLastChar);
 				return;
 			case '<':
 				handleOpenChevron(docCommand);
@@ -320,6 +364,35 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
     }
 	
+	/**
+	 * @param doc
+	 * @param docCommand
+	 * @param beforeLastChar
+	 * @throws BadLocationException
+	 */
+	private void handleClosingChevron(IDocument doc, DocumentCommand docCommand, char beforeLastChar) throws BadLocationException {
+		if(beforeLastChar == '<')	// Have we not got a tag name
+			return;
+		else if(beforeLastChar == '/')	{	// A self-closer, i.e. : <br/>
+			singleTagTakeAction(doc, docCommand);
+		}
+		else {	
+			// Got a '>', make sure that it's not a random closer and if not close the tag.
+			switch(afterOpenTag(doc, docCommand.offset)) {
+			case AFTEROPENTAG_AFTER:
+				doCloser(doc, docCommand);
+				break;
+			case AFTEROPENTAG_CLOSER:
+				stepThrough(docCommand);
+				break;
+			case AFTEROPENTAG_NOTAFTER:
+			default:
+				break;
+			}
+				
+		}			
+		return;
+	}
 	/**
 	 * Performs the required operations to provide indenting when the user presses enter
 	 * inside a tag.

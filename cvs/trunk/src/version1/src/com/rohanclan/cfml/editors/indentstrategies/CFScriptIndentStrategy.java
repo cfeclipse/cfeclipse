@@ -52,26 +52,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 		return;
 	}
 
-	/**
-	 * Steps through one character. Essentially a alias to stepThrough(command, 1)
-	 * 
-	 * @param docCommand
-	 */
-	private void stepThrough(DocumentCommand docCommand) {
-		stepThrough(docCommand, 1);
-	}
 	
-	/**
-	 * Steps through a number of characters
-	 * 
-	 * @param docCommand - the doc command to work upon
-	 * @param chars2StepThru - number of characters to step through
-	 */
-	private void stepThrough(DocumentCommand docCommand, int chars2StepThru) {
-		docCommand.text = "";
-		docCommand.shiftsCaret = false;
-		docCommand.caretOffset = docCommand.offset += chars2StepThru;
-	}
 	
 	/**
 	 * Inserts one character and steps over the character (make sense?)
