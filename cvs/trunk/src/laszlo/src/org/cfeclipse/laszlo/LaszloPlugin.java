@@ -82,6 +82,7 @@ public class LaszloPlugin extends AbstractUIPlugin {
 			laszlodic.setDictionaryBaseURL(new URL(
 				LaszloPlugin.getDefault().getBundle().getEntry("/"), "dictionary/"
 			));
+			laszlodic.loadDictionary("laszlo_base.xml");
 			laszlodic.loadDictionary("laszlo.xml");
 			
 			DictionaryManager.addDictionary(
