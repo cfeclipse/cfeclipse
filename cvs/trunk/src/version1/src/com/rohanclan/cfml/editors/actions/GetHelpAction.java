@@ -72,6 +72,12 @@ public class GetHelpAction implements IEditorActionDelegate {
 	{
 		//The site thatwe are using to search
 		//String urldest = "http://www.google.com/search?q=";
+		/*
+		 * These are the new URL's to use
+		 * http://cfdocs.cfeclipse.org/index.cfm?item=cfabort
+		 * http://cfdocs.cfeclipse.org/index.cfm?item=cfabort&version=5.0
+		 * 
+		 */
 		String urldest = "http://www.cfdocs.org/";
 		String theFullURL = ""; //this is where we go
 		String keyword = "";
