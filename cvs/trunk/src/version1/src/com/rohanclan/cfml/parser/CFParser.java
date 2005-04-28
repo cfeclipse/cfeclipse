@@ -684,30 +684,40 @@ public class CFParser {
 		TagItem newItem;
 		//System.out.println("CFParser::handleCFTag found " + tagName);
 		
-		// Tokenize the tag and check for invalid contents
-		String[] tokens = match.getMatch().split("\\s");
 		
-		if (tokens.length > 1) {
-			for (int i=1;i<tokens.length;i++) {
-				if (tokens[i].length() > 0 
-						&& tokens[i].charAt(0) == '<') {
+		boolean singleQuoted = false;
+		boolean doubleQuoted = false;
+		char c;
+		for (int i=0;i<tagName.length();i++) {
+			c = tagName.charAt(i);
+			if (c == '\'' && !doubleQuoted) {
+				singleQuoted = !singleQuoted;
+			}
+			if (c == '\"' && !singleQuoted) {
+				doubleQuoted = !doubleQuoted;
+			}
+			if (c == '<' && !singleQuoted && !doubleQuoted) {
 					parserState.addMessage(new ParseError(
 							getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
-							"Invalid token \"" + tokens[i].charAt(0) + "\" found in opening <b>"  + tagName + "</b> tag. The tag is probably missing a closing \">\""
+							"Invalid token \"" + c + "\" found in opening <b>"  + tagName + "</b> tag. The tag is probably missing a closing \">\""
 						));
 					
 					throw new FatalException("Fatal parser error. Unable to continue parsing past line " + getLineNumber(match.getStartPos()));
-				}
-				
 			}
 		}
+		//		}
+				
+		//	}
+		//}
 		//
 		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
 		// Also tests to make sure it catches CFX tags.
 		if(tagName.charAt(2) == '_' || ((tagName.charAt(2) == 'x' || (tagName.charAt(2) == 'X')) && tagName.charAt(3) == '_'))
 		{
+			
 			newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);
 			newItem.setItemData(match.match);
+			
 		}
 		else
 		{

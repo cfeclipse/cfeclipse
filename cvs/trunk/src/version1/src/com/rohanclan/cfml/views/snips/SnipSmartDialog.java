@@ -70,12 +70,9 @@ public class SnipSmartDialog {
 			        Iterator i = list.iterator();
 			        while (i.hasNext()) {
 			            SnipVarItem item = (SnipVarItem)i.next();
-			            String original = item.getOriginal();
+			            String original = "$${" + item.getOriginal() + "}";
 			            String replacement = item.getReplacement();
-			            
-				        String deregexpression = original.replaceAll("\\|","\\\\|");
-				        String pattern = "\\$\\$\\{"+deregexpression+"\\}";
-				        newStr = newStr.replaceAll(pattern,replacement);
+			            newStr = doReplacement(newStr,original,replacement);
 			        }
 		        }
 		        catch(Exception e) {
@@ -95,4 +92,19 @@ public class SnipSmartDialog {
         return newStr;
     }
 
+    private static String doReplacement(String oldStr,String original,String replacement) {
+    	StringBuffer buffer = new StringBuffer(oldStr);
+    	int fromOffset = 0;
+    	while(true) {
+    		fromOffset = buffer.indexOf(original,fromOffset); 
+    		if (fromOffset >= 0) {
+	    		buffer.replace(fromOffset,fromOffset+original.length(),replacement);
+	    		fromOffset = fromOffset + replacement.length();
+    		} else {
+    			break;
+    		}
+    	}
+    	
+    	return buffer.toString();
+    }
 }

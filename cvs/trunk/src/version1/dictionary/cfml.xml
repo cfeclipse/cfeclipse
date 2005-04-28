@@ -254,7 +254,7 @@
 				displayname="descriptive name"
 				hint="extended description"
 		-->
-		<tag name="cfargument" creator="3" single="true" xmlstyle="false">
+		<tag name="cfargument" creator="3" single="true" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Creates a parameter definition within a component definition.
 				Defines a function argument. Used within a cffunction tag.
@@ -1129,7 +1129,7 @@
 			    [variable declarations cffunction ...]
 			/cfcomponent
 		-->
-		<tag name="cfcomponent" creator="3" single="false" xmlstyle="false">
+		<tag name="cfcomponent" creator="3" single="false" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Creates and defines a component object; encloses functionality
 				that you build in CFML and enclose within cffunction tags.
@@ -2236,7 +2236,7 @@
 				displayName = "name"
 				Hint = "hint text"
 		-->
-		<tag name="cffunction" creator="3" single="false" xmlstyle="false">
+		<tag name="cffunction" creator="3" single="false" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Defines a function that you can call in CFML. Required to
 				defined CFML component methods.
@@ -4683,7 +4683,7 @@
 				type = "message type"
 				application = "application name yes or no"
 		-->
-		<tag name="cflog" creator="3" single="false" xmlstyle="false">
+		<tag name="cflog" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Writes a message to a log file.
 			]]></help>
@@ -4880,7 +4880,7 @@
 				[query] [condition] [index + from + to ] [index + list]
 				[collection + item ]
 			]]></help>
-			<parameter name="index" type="String" required="true">
+			<parameter name="index" type="String" required="false">
 				<help><![CDATA[
 					Index value. CFML sets it to from value and
 					increments or decrements by step value, until it equals to
@@ -4888,13 +4888,13 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="to" type="Numeric" required="true">
+			<parameter name="to" type="Numeric" required="false">
 				<help><![CDATA[
 					Beginning value of index.
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="from" type="Numeric" required="true">
+			<parameter name="from" type="Numeric" required="false">
 				<help><![CDATA[
 					Ending value of index.
 				]]></help>
@@ -4906,13 +4906,13 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="condition" type="boolean" required="true">
+			<parameter name="condition" type="boolean" required="false">
 				<help><![CDATA[
 					Condition that controls the loop.
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="query" type="String" required="true">
+			<parameter name="query" type="String" required="false">
 				<help><![CDATA[
 					Query that controls the loop.
 				]]></help>
@@ -4930,7 +4930,7 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="list" type="String" required="true">
+			<parameter name="list" type="String" required="false">
 				<help><![CDATA[
 					A list, variable, or filename; contains a list
 				]]></help>
@@ -4942,14 +4942,14 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="collection" type="Object" required="true">
+			<parameter name="collection" type="Object" required="false">
 				<help><![CDATA[
 					The collection attribute is used with the item attribute.
 					often to loop over a structure
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="item" type="String" required="true">
+			<parameter name="item" type="String" required="false">
 				<help><![CDATA[
 					The item attribute is used with the collection attribute.
 					often to loop over a structure

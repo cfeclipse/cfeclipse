@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.8 2005-03-29 19:19:49 smilligan Exp $
- * $Revision: 1.8 $
- * $Date: 2005-03-29 19:19:49 $
+ * $Id: CFEPartitioner.java,v 1.9 2005-04-28 00:42:49 smilligan Exp $
+ * $Revision: 1.9 $
+ * $Date: 2005-04-28 00:42:49 $
  * 
  * Created on Oct 17, 2004
  *
@@ -144,7 +144,6 @@ public class CFEPartitioner implements IDocumentPartitioner,
     /**
      * Creates a new partitioner that uses the given scanner and may return
      * partitions of the given legal content types.
-     * 
      * @param scanner
      *            the scanner this partitioner is supposed to use
      * @param legalContentTypes
@@ -904,6 +903,9 @@ public class CFEPartitioner implements IDocumentPartitioner,
         }
         
         for (int i = e.fOffset + changeDelta;i<doc.length();i++) {
+        	if (i >= doc.length() || i < 0) {
+        		break;
+        	}
             char c = doc.charAt(i);
             if (!isValidPartitionEndChar(c)) {
                 break;

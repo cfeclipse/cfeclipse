@@ -44,6 +44,12 @@ public class CfmlCustomTag extends TagItem {
 	public boolean hasClosingTag() throws NullPointerException {
 		return true;
 	}
+	/* (non-Javadoc)
+	 * @see com.rohanclan.cfml.parser.TagItem#hasClosingTag()
+	 */
+	public boolean isHybrid() throws NullPointerException {
+		return true;
+	}
 	/**
 	 * @param line
 	 * @param startDocPos
