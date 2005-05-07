@@ -16,8 +16,10 @@
     Single is if the tag lacks a closing tag
     XMLStyle is: if a single tag, does it close thusly /&gt;
 
-    You can put cfx or cf_ tags in here - leave off the cf portion. so for
-   	example cfx_RohanCrypt becomes x_rohancrypt (needs to be lowercase too). You
+    You can put cfx or cf_ tags in here - the tag name needs to be lowercase. 
+    Previous user.xml files suggested that you should miss the cf part of the tag
+    name off but in practice it only works if you include it.  The cfx_rohancrypt
+    example below illustrates the correct way to define custom tags.  You
    	can also put functions in here, but that is only a hack - cfeclipse will be
    	able to find your functions at a later date
  -->
@@ -27,7 +29,7 @@
 >
 	<tags>
 		<!--
-		<tag creator="8" name="x_rohancrypt" single="true" xmlstyle="false">
+		<tag creator="8" name="cfx_rohancrypt" single="true" xmlstyle="false">
 			<help><![CDATA[
 				cfx_RohanCrypt is an encryption tag that supports 3des, des and
 				others. It will return the variable rohancrypt.response when
