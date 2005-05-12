@@ -32,7 +32,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.eclipse.core.internal.resources.Workspace;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -90,18 +94,19 @@ public class CFDocumentProvider extends FileDocumentProvider{
 			try {
 			    if (element instanceof FileEditorInput) 
 				{
-			        
 					document.setParserResource(((FileEditorInput)element).getFile());
 					document.clearAllMarkers();
 					document.parseDocument();
 				}
 			    else if (element instanceof JavaFileEditorInput) 
 				{
+				
 			        String filepath = ((JavaFileEditorInput)element).getPath(element).toString();
-			        Path path = new Path(filepath);
+			        IPath path = new Path(filepath);
 			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
-			        ExternalFile file = new ExternalFile(path,workspace);
-			        model = file.getAnnotationModel();
+			        IFile file = new ExternalFile(path,workspace);
+			        model = ((ExternalFile)file).getAnnotationModel();
+				
 					document.setParserResource(file);
 					document.clearAllMarkers();
 					document.parseDocument();

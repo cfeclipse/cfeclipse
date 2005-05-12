@@ -6,19 +6,24 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorActionDelegate;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.views.navigator.GotoResourceAction;
 import org.eclipse.ui.views.navigator.ResourceNavigator;
-import org.eclipse.ui.*;
+
 import com.rohanclan.cfml.util.AlertUtils;
 
 /**
@@ -55,13 +60,25 @@ public class LocateInTreeAction implements IEditorActionDelegate {
 		if(editor != null)
 		{	
 			try {
-				IResource currentFile = (IResource) ((FileEditorInput)editor.getEditorInput()).getFile();
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				ResourceNavigator navigator = (ResourceNavigator)page.showView("org.eclipse.ui.views.ResourceNavigator");
-				navigator.getViewer().setSelection(new StructuredSelection(currentFile),true);
-			}
-			catch(ClassCastException e) {
-				AlertUtils.alertUser("The current file is not part of a project in the project tree.");
+				IEditorInput input = editor.getEditorInput();
+				IPath path = null;
+				if (input instanceof JavaFileEditorInput) {
+					JavaFileEditorInput jInput = (JavaFileEditorInput)input;
+					path = jInput.getPath(input);
+				} else if (input instanceof FileEditorInput){
+					FileEditorInput fInput = (FileEditorInput)input;
+					path = fInput.getPath();
+				}
+				
+				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+				IFile workspaceFile = root.getFileForLocation(path);
+				if (workspaceFile != null) {
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					ResourceNavigator navigator = (ResourceNavigator)page.showView("org.eclipse.ui.views.ResourceNavigator");
+					navigator.getViewer().setSelection(new StructuredSelection(workspaceFile),true);
+				} else {
+					AlertUtils.alertUser("The current file is not part of a project in the project tree.");
+				}
 			}
 			catch(Exception e) {
 				e.printStackTrace();

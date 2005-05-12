@@ -27,9 +27,7 @@ package com.rohanclan.cfml.util;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.SWT;
-import com.rohanclan.cfml.CFMLPlugin;
 
-import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.ui.*;
 import org.eclipse.jface.action.IStatusLineManager;
 

@@ -36,9 +36,9 @@ import org.eclipse.jface.viewers.StructuredSelection;
 
 
 import com.rohanclan.cfml.net.FTPConnectionProperties;
-import com.rohanclan.cfml.util.AlertUtils;
 import com.rohanclan.cfml.views.explorer.ftp.FtpConnectionDialog;
 
+import com.rohanclan.cfml.util.AlertUtils;
 
 
 /**

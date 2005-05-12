@@ -1,7 +1,7 @@
 /* 
- * $Id: ExternalBrowserAction.java,v 1.1 2005-03-15 04:50:44 smilligan Exp $
- * $Revision: 1.1 $
- * $Date: 2005-03-15 04:50:44 $
+ * $Id: ExternalBrowserAction.java,v 1.2 2005-05-12 22:34:06 smilligan Exp $
+ * $Revision: 1.2 $
+ * $Date: 2005-05-12 22:34:06 $
  * 
  * Created Mar 5, 2005 1:45:48 AM
  *
@@ -21,12 +21,13 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.FileEditorInput;
+
 import com.rohanclan.cfml.util.AlertUtils;
 /**
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ExternalBrowserAction implements IEditorActionDelegate {
     
@@ -114,6 +115,9 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/03/15 04:50:44  smilligan
+ * Added open in external browser action.
+ *
  * Revision 1.2  2005/03/08 04:32:57  smilligan
  * *** empty log message ***
  *
