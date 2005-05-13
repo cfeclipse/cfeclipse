@@ -153,6 +153,7 @@
 				sessionTimeout = #CreateTimeSpan(days, hours, minutes, seconds)#
 				applicationTimeout = #CreateTimeSpan(days, hours, minutes, seconds)#
 				setDomainCookies = "Yes" or "No"
+				scriptProtect = "all", "none" or a list of scopes
 		-->
 		<tag name="cfapplication" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -243,6 +244,24 @@
 					&value_boolean;
 				</values>
 			</parameter>
+			<parameter name="scriptprotect" type="string" required="false">
+				<help><![CDATA[
+					Specifies whether to protect variables from cross-site scripting attacks.
+					 - none: do not protect variables
+					 - all: protect Form, URL, CGI, and Cookie variables
+					 - comma-delimited list of ColdFusion scopes: protect variables in the specified scopes
+				]]></help>
+				<values>
+					<value option="none" />
+					<value option="all" />
+					<value option="form" />
+					<value option="url" />
+					<value option="cookie" />
+					<value option="cgi" />
+					<value option="form,url" />
+					<value option="form,url,cookie" />
+				</values>
+			</parameter>
 		</tag>
 
 		<!--
@@ -281,6 +300,7 @@
 					<value option="string" />
 					<value option="struct" />
 					<value option="uuid" />
+					<value option="xml" />
 				</values>
 			</parameter>
 			<parameter name="required" type="boolean" required="false">
@@ -438,6 +458,161 @@
 		</tag>
 
 		<!--
+			cfcalendar
+				name = "name of calendar"
+				height = "height"
+				width = "width"
+				selectedDate = "date"
+				mask = "returned date format"
+				startRange = "first disabled date"
+				endRange = "last disabled date"
+				disabled = "true, false, or no attribute value"
+				mask = "character pattern"
+				dayNames = "days-of-the-week labels"
+				monthNames = "month labels"
+				onChange = "actionscript to invoke"
+		-->
+		<tag name="cfcalendar" creator="1" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Puts an interactive Macromedia Flash format calendar in an HTML
+				or Flash form. Not supported in XML format forms. The calendar
+				lets a user select a date for submission as a form variable.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					The name of the calendar.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="height" type="Numeric" required="false">
+				<help><![CDATA[
+					The vertical dimension of the calendar specified in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					The horizontal dimension of the calendar specified in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="selecteddate" type="String" required="false">
+				<help><![CDATA[
+					The date that is initially selected. It is highlighted in a
+					color determined by the form skin. Must be in mm/dd/yyyy
+					or dd/mm/yyyy format, depending on the current locale.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="startrange" type="String" required="false">
+				<help><![CDATA[
+					The start of a range of dates that are disabled. Users
+					cannot select dates from this date through the date
+					specified by the endRange attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="endrange" type="String" required="false">
+				<help><![CDATA[
+					The end of a range of dates that are disabled. Users
+					cannot select dates from the date specified by the
+					startRange attribute through this date.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="disabled" type="boolean" required="false">
+				<help><![CDATA[
+					Disables all user input, making the control read only.
+					To disable input, specify disabled without an attribute
+					or disabled="true". To enable input, omit the attribute
+					or specify disabled="false".
+					Default is: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="mask" type="String" required="false">
+				<help><![CDATA[
+					A pattern that specifies the format of the submitted date.
+					Mask characters are:
+					 - D = day, can use 0-2 mask characters
+					 - M = month, can use 0-4 mask characters
+					 - Y = year, can use 0, 2, or 4 characters
+					 - E = day in week, can use 0-4 characters
+					 - Any other character = put the character in the specified location
+					Default is: MM/DD/YYYY
+				]]></help>
+				<values>
+					<value option="MM/DD/YYYY" />
+					<value option="DD/MM/YYYY" />
+					<value option="MM/YYYY" />
+					<value option="MM/YY" />
+					<value option="YYYY-MM-DD" />
+					<value option="EEE DD. MMM YYYY" />
+				</values>
+			</parameter>
+			<parameter name="firstdayofweek" type="Numeric" required="false">
+				<help><![CDATA[
+					Integer in the range 0-6 specifying the first day of the
+					week in the calendar, 0 indicates Sunday, 6 indicates Saturday.
+					Default is: 0
+				]]></help>
+				<values>
+					<value option="0" />
+					<value option="1" />
+					<value option="2" />
+					<value option="3" />
+					<value option="4" />
+					<value option="5" />
+					<value option="6" />
+				</values>
+			</parameter>
+			<parameter name="daynames" type="String" required="false">
+				<help><![CDATA[
+					A comma-delimited list that sets the names of the
+					weekdays displayed in the calendar. Sunday is the
+					first day and the rest of the weekday names follow in
+					the normal order.
+					Default is: S,M,T,W,Th,F,S
+				]]></help>
+				<values>
+					<value option="S,M,T,W,Th,F,S" />
+					<value option="Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday" />
+					<value option="Sun,Mon,Tue,Wed,Thu,Fri,Sat" />
+				</values>
+			</parameter>
+			<parameter name="monthnames" type="String" required="false">
+				<help><![CDATA[
+					A comma-delimited list of the month names that are
+					displayed at the top of the calendar.
+				]]></help>
+				<values>
+					<value option="January,February,March,April,May,June,July,August,September,October,November,December" />
+					<value option="Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec" />
+				</values>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					Flash Actionscript style or styles to apply to the calendar.
+					Default is: haloGreen
+				]]></help>
+				<values>
+					<value option="haloBlue" />
+					<value option="haloGreen" />
+					<value option="haloOrange" />
+					<value option="haloSilver" />
+				</values>
+			</parameter>
+			<parameter name="onchange" type="String" required="false">
+				<help><![CDATA[
+					ActionScript that runs when the user selects a date.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!--
 			cfcase
 				value = "value or delimited set of values"
 				delimiters = "delimiter characters"
@@ -515,6 +690,7 @@
 				gridlines = "integer number of lines"
 				seriesPlacement = "default, cluster, stacked, percent"
 				foregroundColor = "Hex value or Web color"
+				backgroundColor = "Hex value or Web color"
 				dataBackgroundColor = "Hex value or Web color"
 				showBorder = "yes" or "no"
 				font = "font name"
@@ -539,6 +715,8 @@
 				pieSliceStyle = "solid, sliced"
 				url = "onClick destination page"
 				name = "String"
+				title = "title of chart"
+				style = "Style of chart"
 			/cfchart
 		-->
 		<tag name="cfchart" creator="1" single="false" xmlstyle="false">
@@ -616,6 +794,28 @@
 			<parameter name="foregroundcolor" type="String" required="false">
 				<help><![CDATA[
 					color for control. For a hex value, use the form:
+					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+					signs or none.
+				]]></help>
+				<values>
+					<value option="black" />
+					<value option="red" />
+					<value option="blue" />
+					<value option="magenta" />
+					<value option="cyan" />
+					<value option="orange" />
+					<value option="darkgray" />
+					<value option="pink" />
+					<value option="white" />
+					<value option="lightgray" />
+					<value option="yellow" />
+				</values>
+			</parameter>
+			<parameter name="backgroundcolor" type="String" required="false">
+				<help><![CDATA[
+					Color of the area between the data background and the chart
+					border, around labels and around the legend. Hexadecimal
+					value or supported named color. For a hex value, use the form:
 					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
 					signs or none.
 				]]></help>
@@ -762,6 +962,8 @@
 				<help><![CDATA[
 					yes: rotate chart 90 degrees. For a horizontal bar chart,
 					use this option.
+					
+					Note: removed in CF7.
 				]]></help>
 				<values>
 					&value_boolean;
@@ -851,6 +1053,25 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					XML file or string to use to specify the style of the chart.
+				]]></help>
+				<values>
+					<value option="beige" />
+					<value option="blue" />
+					<value option="default" />
+					<value option="red" />
+					<value option="silver" />
+					<value option="yellow" />
+				</values>
+			</parameter>
+			<parameter name="title" type="String" required="false">
+				<help><![CDATA[
+					Title of the chart.
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
 
 		<!--
@@ -889,6 +1110,7 @@
 				paintStyle="plain, raise, shade, light"
 				markerStyle="style"
 				colorlist = "list"
+				dataLabelStyle = "style"
 			/cfchartseries
 		-->
 		<tag name="cfchartseries" creator="1" single="false" xmlstyle="false">
@@ -905,6 +1127,7 @@
 					<value option="line" />
 					<value option="pyramid" />
 					<value option="area" />
+					<value option="horizontalbar" />
 					<value option="cone" />
 					<value option="curve" />
 					<value option="cylinder" />
@@ -992,8 +1215,25 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="datalabelstyle" type="String" required="false">
+				<help><![CDATA[
+					Specifies the way in which the color is applied to the
+					item in the series:
+					 - None = nothing is printed (default)
+					 - Value = the value of the datapoint
+					 - Rowlabel = the row's label
+					 - Columnlabel = the column's label
+					 - Pattern
+				]]></help>
+				<values>
+					<value option="none" />
+					<value option="value" />
+					<value option="rowlabel" />
+					<value option="columnlabel" />
+					<value option="pattern" />
+				</values>
+			</parameter>
 		</tag>
-
 
 		<!--
 			cfcol
@@ -1049,6 +1289,7 @@
 				path = "path_to_verity_collection"
 				language = "language"
 				name = "queryname"
+				categories = "true" or "false"
 		-->
 		<tag name="cfcollection" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -1065,10 +1306,17 @@
 			]]></help>
 			<parameter name="action" type="String" required="true">
 				<help><![CDATA[
+					categorylist: retrieves categories from the collection and
+						indicates how many documents are in each one. Returns
+						a structure of structures in which the category
+						representing each substructure is associated with a
+						number of documents. For a category in a category tree,
+						the number of documents is the number at or below that
+						level in the tree.
 					create: registers the collection with CFML.
 						- If the collection is present: creates a map to it
 						- If the collection is not present: creates it
-					repair: fixes data corruption in a collection.
+					repair: fixes data corruption in a collection. Deprecated in CF7.
 					delete: unregisters a collection.
 						- If the collection was registered with action = create:
 							deletes its directories
@@ -1076,14 +1324,17 @@
 							delete collection directories
 					map: creates a map to the collection. It is not necessary
 						to specify this value. (CFML maps collections
-						automatically.)
+						automatically.) Deprecated in CF7.
 					optimize: optimizes the structure and contents of the
 						collection for searching; recovers space.
 					list: returns a query result set, named from the name
 						attribute value, of the attributes of the collections
 						that are registered by CFML and K2 Server.
+					
+					Note: "map" and "repair" are deprecated in CF7.
 				]]></help>
 				<values>
+					<value option="categorylist" />
 					<value option="create" />
 					<value option="repair" />
 					<value option="delete" />
@@ -1118,6 +1369,16 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="categories" type="boolean" required="false">
+				<help><![CDATA[
+					Used only for creating a collection:
+					 - true: This collection includes support for categories.
+					 - false: This collection does not support categories. Default.
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
 		</tag>
 
 		<!--
@@ -1125,7 +1386,14 @@
 				extends ="anotherComponent"
 				output = "yes" or "no"
 				displayname = "text string"
-				hint = "text string">
+				hint = "text string"
+				style = "rpc" or "document"
+				namespace = "default service namespace"
+				serviceportname = "port element name"
+				porttypename = "porttype element name"
+				bindingname = "binding element name"
+				wsdlfile = "path to hard-coded wsdl file">
+				
 			    [variable declarations cffunction ...]
 			/cfcomponent
 		-->
@@ -1160,6 +1428,9 @@
 					A string to be displayed when using introspection to show
 					information about the CFC. The information appears on the
 					heading, following the component name.
+					If the style attribute is set to document, ColdFusion MX
+					uses the displayname attribute as the name of the service
+					element in the WSDL.
 				]]></help>
 				<values/>
 			</parameter>
@@ -1169,12 +1440,68 @@
 					information about the CFC. The hint attribute value
 					appears below the component name heading. This attribute
 					can be useful for describing the purpose of the parameter.
+					If the style attribute is set to document, ColdFusion MX
+					uses the hint attribute as the document element of the
+					service in the WSDL.
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
 					Name for the component
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					Specifies whether a CFC used for web services uses
+					RPC-encoded style or document-literal style:
+					 - rpc: RPC-encoded style, default
+					 - document: Document-literal style
+					If you specify document, you must also specify the namespace,
+					serviceportname, porttypename, and bindingname attributes.
+				]]></help>
+				<values>
+					<value option="rpc" />
+					<value option="document" />
+				</values>
+			</parameter>
+			<parameter name="namespace" type="String" required="false">
+				<help><![CDATA[
+					Specifies the namespace used in the WSDL when
+					using the CFC as a document-literal style web service.
+					If you don't specify this attribute, ColdFusion MX
+					derives the namespace from the CFC class name.
+					This attribute applies only when style="document".
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="serviceportname" type="String" required="false">
+				<help><![CDATA[
+					Specifies the name of the port element in the WSDL.
+					This attribute applies only when style="document".
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="porttypename" type="String" required="false">
+				<help><![CDATA[
+					Specifies the name of the porttype element in the WSDL.
+					This attribute applies only when style="document".
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="bindingname" type="String" required="false">
+				<help><![CDATA[
+					Specifies the name of the binding element in the WSDL.
+					This attribute applies only when style="document".
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="wsdlfile" type="String" required="false">
+				<help><![CDATA[
+					A properly formatted WSDL file to be used instead of
+					WSDL generated by ColdFusion MX.
+					This attribute applies only when style="document".
 				]]></help>
 				<values/>
 			</parameter>
@@ -1348,6 +1675,7 @@
 				mode = "permission"
 				sort = "sort specification"
 				newDirectory = "new directory name"
+				recurse = "true" or "false"
 		-->
 		<tag name="cfdirectory" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -1409,8 +1737,354 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="recurse" type="boolean" required="false">
+				<help><![CDATA[
+					Controls whether ColdFusion performs the action on
+					subdirectories. Specify true or false. Valid for
+					action="list" and action="delete".
+					Default is: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
 		</tag>
 
+		<!--
+			cfdocument
+				format = "PDF or FlashPaper"
+				filename = "file name"
+				overwrite = "true" or "false"
+				name = "output variable name"
+				pagetype = "page type"
+				pageheight = "page height in inches"
+				pagewidth = "page width in inches"
+				orientation = "portrait/landscape"
+				margintop = "number"
+				marginbottom = "number"
+				marginleft = "number"
+				marginright = "number"
+				unit = "in" or "cm"
+				encryption = "128-bit" or "40-bit" or "none"
+				ownerpassword = "password"
+				userpassword = "password"
+				permissions = "permission list"
+				fontembed = "true" or "false"
+				backgroundvisible = "true" or "false"
+				scale = "percentage less than 100">
+				...HTML and CFML code...
+			/cfdocument
+		-->
+		<tag name="cfdocument" creator="1" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Creates PDF or FlashPaper output from a text block containing CFML and HTML.
+			]]></help>
+			<parameter name="format" type="String" required="true">
+				<help><![CDATA[
+					Specifies the report format.
+				]]></help>
+				<values>
+					<value option="PDF" />
+					<value option="FlashPaper" />
+				</values>
+			</parameter>
+			<parameter name="filename" type="String" required="false">
+				<help><![CDATA[
+					Specifies the fully qualified path name of a file to
+					contain the PDF or FlashPaper output. If you omit the
+					filename attribute, ColdFusion MX streams output to
+					the browser.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="overwrite" type="boolean" required="false">
+				<help><![CDATA[
+					Specifies whether ColdFusion MX overwrites an
+					existing file. Used in conjunction with filename.
+					Default is: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help><![CDATA[
+					Specifies the name of an existing variable into which
+					the tag stores the PDF or FlashPaper output.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pagetype" type="String" required="false">
+				<help><![CDATA[
+					Specifies the page size into which ColdFusion
+					generates the report.
+					 - legal: 8.5 inches x 14 inches
+					 - letter: 8.5 inches x 11 inches
+					 - A4: 8.27 inches x 11.69 inches
+					 - A5: 5.81 inches x 8.25 inches
+					 - B5: 9.81 inches x 13.88 inches
+					 - Custom: Custom height and width.
+					If you specify custom, you must also specify the pageheight
+					and pagewidth attributes, can optionally specify margin
+					attributes, and can optionally specify whether the units
+					are inches or centimeters.
+				]]></help>
+				<values>
+					<value option="legal" />
+					<value option="letter" />
+					<value option="A4" />
+					<value option="A5" />
+					<value option="B5" />
+					<value option="custom" />
+				</values>
+			</parameter>
+			<parameter name="pageheight" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the page height in inches (default) or
+					centimeters. This attribute is only valid if
+					pagetype=custom. To specify page height in
+					centimeters, include the unit=cm attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pagewidth" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the page width in inches (default) or
+					centimeters. This attribute is only valid if
+					pagetype=custom. To specify page width in
+					centimeters, include the unit=cm attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="orientation" type="String" required="false">
+				<help><![CDATA[
+					Specifies the page orientation. Specify either of the
+					following:
+					 - portrait (default)
+					 - landscape
+				]]></help>
+				<values>
+					<value option="portrait" />
+					<value option="landscape" />
+				</values>
+			</parameter>
+			<parameter name="margintop" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the top margin in inches (default) or
+					centimeters. To specify top margin in centimeters,
+					include the unit=cm attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="marginbottom" type="String" required="false">
+				<help><![CDATA[
+					Specifies the bottom margin in inches (default) or
+					centimeters. To specify bottom margin in
+					centimeters, include the unit=cm attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="marginleft" type="String" required="false">
+				<help><![CDATA[
+					Specifies the left margin in inches (default) or
+					centimeters. To specify left margin in centimeters,
+					include the unit=cm attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="marginright" type="String" required="false">
+				<help><![CDATA[
+					Specifies the right margin in inches (default) or
+					centimeters. To specify right margin in centimeters,
+					include the unit=cm attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="unit" type="String" required="false">
+				<help><![CDATA[
+					Specifies the default unit (inches or centimeters) for
+					pageheight, pagewidth, and margin attributes.
+				]]></help>
+				<values>
+					<value option="in" />
+					<value option="cm" />
+				</values>
+			</parameter>
+			<parameter name="encryption" type="String" required="false">
+				<help><![CDATA[
+					Specifies whether the output is encrypted (format="PDF" only).
+					Default is: none
+				]]></help>
+				<values>
+					<value option="128-bit" />
+					<value option="40-bit" />
+					<value option="none" />
+				</values>
+			</parameter>
+			<parameter name="ownerpassword" type="String" required="false">
+				<help><![CDATA[
+					Specifies an owner password (format="PDF" only).
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="userpassword" type="String" required="false">
+				<help><![CDATA[
+					Specifies a user password (format="PDF" only).
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="permissions" type="String" required="false">
+				<help><![CDATA[
+					Specifies one or more permissions (format="PDF" only).
+					Separate multiple permissions with a comma.
+				]]></help>
+				<values>
+					<value option="AllowPrinting,AllowCopy,AllowScreenReaders" />
+					<value option="AllowPrinting" />
+					<value option="AllowModifyContents" />
+					<value option="AllowCopy" />
+					<value option="AllowModifyAnnotations" />
+					<value option="AllowFillIn" />
+					<value option="AllowScreenReaders" />
+					<value option="AllowAssembly" />
+					<value option="AllowDegradedPrinting" />
+					<value option="AllowPrinting,AllowModifyContents,AllowCopy,AllowModifyAnnotations,AllowFillIn,AllowScreenReaders,AllowAssembly,AllowDegradedPrinting" />
+				</values>
+			</parameter>
+			<parameter name="fontembed" type="boolean" required="false">
+				<help><![CDATA[
+					Specifies whether ColdFusion embeds fonts in the output.
+					Specify one of the following:
+					 - true: Embed fonts
+					 - false: Do not embed fonts.
+					Selective: Embed all fonts except Java fonts and core fonts.
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="backgroundvisible" type="boolean" required="false">
+				<help><![CDATA[
+					Specifies whether the background prints when the
+					user prints the document:
+					 - yes: include the background when printing.
+					 - no: do not include the background when printing.
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="scale" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies a scale factor as a percentage. Use this
+					option to reduce the size of the HTML output so that
+					it fits on that paper. Specify a number less than 100.
+				]]></help>
+				<values>
+					<value option="100" />
+					<value option="90" />
+					<value option="80" />
+					<value option="70" />
+					<value option="60" />
+					<value option="50" />
+					<value option="40" />
+					<value option="30" />
+					<value option="20" />
+					<value option="10" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!--
+		<cfdocument ...>
+			Syntax 1
+			<cfdocumentitem type = "pagebreak"/>
+			
+			Syntax 2
+			<cfdocumentitem
+				type = "header" or "footer">
+			header/footer text
+			</cfdocumentitem>
+		</cfdocument>
+		-->
+		<tag name="cfdocumentitem" creator="1" single="false" xmlstyle="true">
+			<help><![CDATA[
+				Specifies action items for a PDF or FlashPaper document
+				created by the cfdocument tag.
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+					Specifies the action:
+					 - pagebreak: start a new page at the location of the tag.
+					 - header: use the text between the <cfdocumentitem>
+					   and </cfdocumentitem> tags as the running header.
+					 - footer: use the text between the <cfdocumentitem>
+					   and </cfdocumentitem> tags as the running footer.
+				]]></help>
+				<values>
+					<value option="pagebreak" />
+					<value option="header" />
+					<value option="footer" />
+				</values>
+			</parameter>
+		</tag>
+
+		<!--
+		<cfdocument ...>
+			<cfdocumentsection
+				margintop = "number"
+				marginbottom = "number"
+				marginleft = "number"
+				marginright = "number">
+			HTML, CFML, and cfdocumentitem tags
+			</cfdocumentsection>
+		</cfdocument>
+		-->
+		<tag name="cfdocumentsection" creator="1" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Divides a PDF or FlashPaper document into sections.
+				By using this tag in conjunction with a cfdocumentitem
+				tag, each section can have unique headers, footers,
+				and page numbers.
+			]]></help>
+			<parameter name="margintop" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the top margin in inches (default) or
+					centimeters. To specify the top margin in centimeters,
+					include the unit="cm" attribute in the parent cfdocument
+					tag.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="marginbottom" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the bottom margin in inches (default) or
+					centimeters. To specify the bottom margin in
+					centimeters, include the unit="cm" attribute in the
+					parent cfdocument tag.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="marginleft" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the left margin in inches (default) or
+					centimeters. To specify the left margin in centimeters,
+					include the unit="cm" attribute in the parent cfdocument
+					tag.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="marginright" type="Numeric" required="false">
+				<help><![CDATA[
+					Specifies the right margin in inches (default) or
+					centimeters. To specify the right margin in centimeters,
+					include the unit="cm" attribute in the parent cfdocument
+					tag.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
 		<!--
 			cfdump
 				var = "#variable#"
@@ -1656,6 +2330,7 @@
     		 file = "full_path_name">
     		 variable = "var_name">
     		 output = "content"
+			 result = "result name"
     		 addNewLine = "Yes" or "No"
 		-->
 		<tag name="cffile" creator="3" single="true" xmlstyle="false">
@@ -1849,6 +2524,17 @@
 					<selectedValue attributeName="action" value="upload" required="false"/>
 				</triggers>
 			</parameter>
+			<parameter name="result" type="String" required="true">
+				<help><![CDATA[
+					Allows you to specify a name for the variable in which cffile
+					returns the result (or status) parameters. If you do not specify
+					a value for this attribute, cffile uses the prefix "cffile".
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" value="upload" required="false"/>
+				</triggers>
+			</parameter>
 		</tag>
 
 		<!--
@@ -1871,20 +2557,36 @@
 		</tag>
 
 		<!--
-			cfform
+			<cfform
 				name = "name"
 				action = "form_action"
-				preserveData = "Yes" or "No"
+				method = "POST" or "GET"
+				format = "HTML" or "Flash" or "XML"
+				skin = "Flash or XSL skin"
+				style = "style specification"
+				preserveData = "yes" or "no"
 				onSubmit = "javascript"
-				target = "window_name"
-				encType = "type"
-				passThrough = "HTML_attribute(s)"
+				scriptSrc = "path"
 				codeBase = "URL"
 				archive = "URL"
-				scriptSrc = "path"
-				standard HTML attributes>
+			The following attributes are supported in Flash and XML only
+				width = "pixels or percent"
+				height = "pixels or percent"
+				The following attributes are supported in Flash only
+				onError = "ActionScript code"
+				wMode = "window", "transparent", or "opaque"
+				accessible = "yes" or "no"
+				preloader = "yes" or "no"
+				timeout = "seconds"
+			The following attributes are supported in HTML and XML only
+				class = "form class"
+				enctype = "Internet media type"
+				id = "HTML id"
+				onload = "load event script"
+				onreset = "reset event script"
+				target = "target window or frame">
 				...
-			/cfform
+			</cfform>
 		-->
 		<tag name="cfform" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
@@ -1893,7 +2595,14 @@
 			]]></help>
 			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
-					A name for the form.
+					In HTML format, if you omit this attribute and specify
+					an id attribute, ColdFusion does not include a name
+					attribute in the HTML sent to the browser; this
+					behavior lets you use the cfform tag to create
+					XHTML-compliant forms. If you omit the name
+					attribute and the id attribute, ColdFusion generates
+					a name of the form CFForm_n where n is a number
+					that assigned serially to the forms on a page.
 				]]></help>
 				<values/>
 			</parameter>
@@ -1904,10 +2613,81 @@
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="scriptsrc" type="String" required="false">
+			<parameter name="method" type="String" required="false">
 				<help><![CDATA[
-					Lets the user control the URL of the script file; useful
-					if you do not keep the file in the /cfide directory.
+					The method the browser uses to send the form data
+					to the server:
+					- post: Send the data using the HTTP post method,
+					This method sends the data in a separate message
+					to the server.
+					- get: Send the data using the HTTP get method,
+					which puts the form field contents in the URL
+					query string.
+				]]></help>
+				<values>
+					<value option="post" />
+					<value option="get" />
+				</values>
+			</parameter>
+			<parameter name="format" type="String" required="false">
+				<help><![CDATA[
+					- HTML: Generate an HTML form and send it to the
+					client. cfgrid and cftree child controls can be in
+					Flash or applet format.
+					- Flash: Generate a Flash form and send it to the
+					client. All controls are in Flash format.
+					- XML: Generate XForms-compliant XML and save
+					the results in a variable specified by the name
+					attribute. By default, ColdFusion also applies an
+					XSL skin and displays the result. For more
+					information, see the skin attribute
+				]]></help>
+				<values>
+					<value option="html" />
+					<value option="flash" />
+					<value option="xml" />
+				</values>
+			</parameter>
+			<parameter name="skin" type="String" required="false">
+				<help><![CDATA[
+					Flash: Use a Macromedia halo color to stylize the output.
+					XML: Specfies whether to apply an XSL skin and
+					display the resulting HTML to the client. Can be any
+					of the following:
+					 - ColdFusion MX skin name: Apply the specified skin.
+					 - XSL file name: Apply the skin located in the specified path.
+					 - "none": Do not apply an XSL skin. You must use XForms XML then.
+					 - (omitted) or "default": Use the ColdFusion MX default skin.
+				]]></help>
+				<values>
+					<value option="-- Flash skins --" />
+					<value option="haloSilver"/>
+					<value option="haloBlue"/>
+					<value option="haloGreen"/>
+					<value option="haloOrange"/>
+					<value option="-- CF skins --" />
+					<value option="beige"/>
+					<value option="blue"/>
+					<value option="bluegray"/>
+					<value option="lightgray"/>
+					<value option="red"/>
+					<value option="silver"/>
+					<value option="-- XSLT skins --" />
+					<value option="skin.xsl"/>
+					<value option="/path/to.xsl"/>
+					<value option="http://path/to.xsl"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="format" value="flash" required="false"/>
+					<selectedValue attributeName="format" value="xml" required="false"/>
+				</triggers>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					Styles to apply to the form. In HTML or XML format,
+					ColdFusion passes the style attribute to the browser
+					or XML. In Flash format, must be a style specification
+					in CSS format.
 				]]></help>
 				<values/>
 			</parameter>
@@ -1916,19 +2696,161 @@
 					When the cfform action attribute posts back to the same
 					page as the form, this determines whether to override the
 					control values with the submitted values.
-
-            		false: values specified in the control tag attributes are
-            			used
-		            true: corresponding submitted values are used
+					 - false: values specified in the control tag attributes are used
+					 - true: corresponding submitted values are used
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+				<triggers>
+					<selectedValue attributeName="format" value="html" required="false"/>
+					<selectedValue attributeName="format" value="xml" required="false"/>
+				</triggers>
+			</parameter>
+			<parameter name="onload" type="String" required="false">
+				<help><![CDATA[
+					JavaScript to execute when the form loads.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onreset" type="String" required="false">
+				<help><![CDATA[
+					JavaScript to execute when the user clicks a reset button.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onsubmit" type="String" required="false">
+				<help><![CDATA[
+					JavaScript or Actionscript function to execute to
+					preprocess data before form is submitted. If any
+					child tags specify onSubmit field validation, ColdFusion
+					does the validation before executing this JavaScript.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="codebase" type="String" required="false">
+				<help><![CDATA[
+					URL of downloadable JRE plug-in (for Internet Explorer only).
+					Default: /CFIDE/classes/cf-j2re-win.cab
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="archive" type="String" required="false">
+				<help><![CDATA[
+					URL of downloadable Java classes for CFML controls.
+					Default: /CFIDE/classes/cfapplets.jar
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="height" type="String" required="false">
+				<help><![CDATA[
+					The height of the form. Use a number to specify
+					pixels, In Flash, you can use a percentage value to
+					specify a percentage of the available width. The
+					displayed height might be less than the specified size.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="String" required="false">
+				<help><![CDATA[
+					The width of the form. Use a number to specify
+					pixels, In Flash, you can use a percentage value to
+					specify a percentage of the available width.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" type="String" required="false">
+				<help><![CDATA[
+					Applies only for onSubmit or onBlur validation; has
+					no effect for onServer validation. An ActionScript
+					expression or expressions to execute if the user
+					submits a form with one or more validation errors.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="wmode" type="String" required="false">
+				<help><![CDATA[
+					Specifies how the Flash form appears relative to
+					other displayable content that occupies the same
+					space on an HTML page.
+					 - window: The Flash form is the topmost layer on the
+					page and obscures anything that would share the
+					space, such as drop-down dynamic HTML lists.
+					 - transparent: The Flash form honors the z-index of
+					dhtml so you can float items above it. If the Flash
+					form is above any item, transparent regions in the
+					form show the content that is below it.
+					 - opaque: The Flash form honors the z-index of
+					dhtml so you can float items above it. If the Flash
+					form is above any item, it blocks any content that is
+					below it.
+					Default is: window.
+				]]></help>
+				<values>
+					<value option="window" />
+					<value option="transparent" />
+					<value option="opaque" />
+				</values>
+			</parameter>
+			<parameter name="accessible" type="boolean" required="false">
+				<help><![CDATA[
+					Specifies whether to include support screen readers
+					in the Flash form. Screen reader support adds
+					approximately 80KB to the SWF file sent to the
+					client. Default is: false.
 				]]></help>
 				<values>
 					&value_boolean;
 				</values>
 			</parameter>
-			<parameter name="onsubmit" type="String" required="false">
+			<parameter name="preloader" type="boolean" required="false">
 				<help><![CDATA[
-					JavaScript function to execute after input validation. Use
-					for preprocessing data before form is submitted
+					Specifies whether to display a progress bar when
+					loading the Flash form. Default is: true.
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="timeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Integer number of seconds for which to keep the
+					form data in the Flash cache on the server. A value of
+					0 prevents the data from being cached.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="enctype" type="String" required="false">
+				<help><![CDATA[
+					MIME type.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="false">
+				<help><![CDATA[
+					HTML id.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="scriptsrc" type="String" required="false">
+				<help><![CDATA[
+					Specifies the URL, relative to the web root, of the
+					directory that contains the cfform.js file with the
+					client-side JavaScript used by this tag and its child
+					tags. For XML format forms, this directory is also the
+					default directory for XSLT skins.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="target" type="String" required="false">
+				<help><![CDATA[
+					Target window or frame.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="class" type="String" required="false">
+				<help><![CDATA[
+					Form CSS class.
 				]]></help>
 				<values/>
 			</parameter>
@@ -1940,68 +2862,306 @@
 
 					passthrough="title=""myTitle"""
 					passthrough='title="mytitle"'
+					
+					Note: deprecated in CF7.
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="codebase" type="String" required="false">
-				<help><![CDATA[
-					URL of downloadable JRE plug-in (for Internet Explorer
-					only).
+		</tag>
 
-					Default: /CFIDE/classes/cf-j2re-win.cab
+		<!--
+			<cfformgroup
+				type = "group type"
+				label = "label"
+				style = "style specification"
+				selectedIndex = "page number">
+				width = "pixels"
+				height = "pixels"
+				enabled = "Yes" or "No"
+				visible = "Yes" or "No"
+				OnChange = "ActionScript expression"
+				toolTip = "Tip text"
+			...ColdFusion forms controls
+			</cfformgroup>
+			or
+			<cfformgroup
+				type = "repeater"
+				query = "query object"
+				startrow = "row number"
+				maxrows = "integer">
+			...ColdFusion forms controls
+			</cfformgroup>
+		-->
+		<tag name="cfformgroup" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Creates a container control for multiple form controls.
+				Used in the cfform tag body of Macromedia Flash and XML
+				forms. Ignored in HTML forms.
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+					For XML forms can be any XForms group type defined in the XSLT.
+					For Flash see the value options and docs for more information.
+				]]></help>
+				<values>
+					<value option="-- XML --" />
+					<value option="horizontal" />
+					<value option="vertical" />
+					<value option="fieldset" />
+					<value option="-- Flash --" />
+					<value option="repeater" />
+					<value option="horizontal" />
+					<value option="vertical" />
+					<value option="hbox" />
+					<value option="vbox" />
+					<value option="hdividedbox" />
+					<value option="vdividedbox" />
+					<value option="panel" />
+					<value option="tile" />
+					<value option="accordion" />
+					<value option="tabnavigator" />
+					<value option="page" />
+				</values>
+			</parameter>
+			<parameter name="query" type="String" required="false">
+				<help><![CDATA[
+					The query to use with the repeater. Flash creates an
+					instance of each of the cfformgroup tag's child tags for
+					each row in the query. You can use the bind attribute in
+					the child tags to use data from the query row for the
+					instance.
 				]]></help>
 				<values/>
+				<triggers>
+					<selectedValue attributeName="type" value="repeater" required="true"/>
+				</triggers>
 			</parameter>
-			<parameter name="archive" type="String" required="false">
+			<parameter name="startrow" type="Numeric" required="false">
 				<help><![CDATA[
-					URL of downloadable Java classes for CFML controls.
-
-					Default: /CFIDE/classes/CFJava2.jar
+					Used only for the repeater type; ignored otherwise.
+					Specifies the row number of the first row of the query to
+					use in the Flash form repeater. This attribute is zerobased:
+					the first row is row 0, not row 1 (as in most ColdFusion tags).
+					Default: 0
 				]]></help>
 				<values/>
+				<triggers>
+					<selectedValue attributeName="type" value="repeater" required="false"/>
+				</triggers>
 			</parameter>
-			<parameter name="class" type="String" required="false">
+			<parameter name="maxrows" type="Numeric" required="false">
 				<help><![CDATA[
+					Used only for for the repeater type; ignored otherwise.
+					Specifies the maximum number of query rows to use in
+					the Flash form repeater. If the query has more rows than
+					the sum of the startrow attribute and this value, the
+					repeater does not use the remaining rows.
 				]]></help>
 				<values/>
+				<triggers>
+					<selectedValue attributeName="type" value="repeater" required="false"/>
+				</triggers>
 			</parameter>
-			<parameter name="enctype" type="String" required="false">
+			<parameter name="label" type="String" required="false">
 				<help><![CDATA[
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="id" type="String" required="false">
-				<help><![CDATA[
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="onreset" type="String" required="false">
-				<help><![CDATA[
+					Label to apply to the form group. In Flash, does the following:
+					- For a page or panel form group, determines the label to
+					put on the corresponding accordion pleat, the tabnavigator tab,
+					or the panel title bar. For a Flash horizontal or vertical form
+					group, specifies the label to put to the left of the group.
+					- Ignored in Flash for repeater, hbox, hdividedbox, vbox,
+					vdividedbox, tile, accordion, and tabnavigator types.
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="style" type="String" required="false">
 				<help><![CDATA[
+					Flash: A Flash style specification in CSS format.
+					XML: An inline CSS style specification.
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="target" type="String" required="false">
+			<parameter name="selectedindex" type="Numeric" required="false">
 				<help><![CDATA[
+					Used only for accordion and tabnavigator types; ignored
+					otherwise. Specifies the page control to display as open,
+					where 0 (not 1) specifies the first page control defined in
+					the group.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="type" value="accordion" required="false"/>
+					<selectedValue attributeName="type" value="tabnavigator" required="false"/>
+				</triggers>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					Width of the group container, in pixels. If you omit this
+					attribute, Flash automatically sizes the container width.
+					Ignored for Flash repeater type.
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter required="false" type="String" name="method">
+			<parameter name="height" type="Numeric" required="false">
 				<help><![CDATA[
-					 The HTTP method for sending data to the action URL.
-					 Default is get.
+					Height of the group container, in pixels. If you omit this
+					attribute, Flash automatically sizes the container height.
+					Ignored for Flash repeater type.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="enabled" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether the controls in the
+					form group are enabled. Disabled controls appear in
+					light gray.
+					Default: true
 				]]></help>
 				<values>
-					<value option="get"/>
-					<value option="post"/>
+					&value_boolean;
 				</values>
 			</parameter>
+			<parameter name="visible" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether the controls in the
+					form group are visible. If the controls are invisible, the
+					space that would be occupied by visible controls is blank.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="onchange" type="String" required="false">
+				<help><![CDATA[
+					tabnavigator and accordion types only: ActionScript
+					expression or expressions to execute when a new tab or
+					accordion page is selected. Note: The onChange event
+					occurs when the form first displays.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="type" value="accordion" required="false"/>
+					<selectedValue attributeName="type" value="tabnavigator" required="false"/>
+				</triggers>
+			</parameter>
+			<parameter name="tooltip" type="String" required="false">
+				<help><![CDATA[
+					Text to display when the mouse pointer hovers in the
+					form group area. If a control in the form group also
+					specifies a tooltip, Flash displays the control's tolltip
+					when the mouse pointer hovers over the control.
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
-
+		
+		<!--
+			<cfformitem
+				type = "hrule, vrule, or spacer"
+				style = "style specification"
+				width = "pixels"
+				height = "pixels"
+				visible = "Yes" or "No"/>
+			or
+			<cfformitem
+				type= "html or text"
+				style = "style specification"
+				width = "pixels"
+				height = "pixels"
+				visible = "Yes" or "No"
+				enabled = "Yes" or "No"
+				tooltip = "Tip text"
+				bind = "bind expresion">
+			...text
+			</cfformitem>
+		-->
+		<tag name="cfformitem" single="false" xmlstyle="true">
+			<help><![CDATA[
+				Inserts a horizontal line, a vertical line, a spacer,
+				or text in a Flash form. Used in the cfform or cfformgroup
+				tag body for Flash and XML forms. Ignored in HTML forms.
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+					Form item type. See docs for more details.
+				]]></help>
+				<values>
+					<value option="html" />
+					<value option="text" />
+					<value option="spacer" />
+					<value option="hrule" />
+					<value option="vrule" />
+				</values>
+			</parameter>
+			<parameter name="style" type="String" required="true">
+				<help><![CDATA[
+					Flash: Must be a style specification in CSS format.
+					Ignored if the type attribute is html or text.
+					XML: ColdFusion passes the style attribute to the XML.
+					ColdFusion skins include the style attribute to the
+					generated HTML.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					Width of the item, in pixels. If you omit this attribute, Flash
+					automatically sizes the width. In ColdFusion XSL skins,
+					use the style attribute, instead.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="height" type="Numeric" required="false">
+				<help><![CDATA[
+					Height of the item, in pixels. If you omit this attribute,
+					Flash automatically sizes the width. In ColdFusion XSL
+					skins, use the style attribute, instead.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="enabled" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether the control is enabled.
+					Disabled text appear in light gray. Has no effect on
+					spacers and rules.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="visible" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether to show the control.
+					Space that would be occupied by an invisible control is
+					blank. Has no effect on spacers.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="tooltip" type="String" required="false">
+				<help><![CDATA[
+					Text to display when the mouse pointer hovers over the
+					control. Has no effect on spacers.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="bind" type="String" required="false">
+				<help><![CDATA[
+					A Flash bind expression that populates the field with
+					information from other form fields. If you use this
+					attribute, ColdFusion MX ignores any text that you
+					specify in the body of the cftextitem tag. This attribute
+					can be useful if the cfformitem tag is in a cfformgroup
+					type="repeater" tag.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
 		<!--
 			cfftp
 				action = "action"
@@ -2033,6 +3193,7 @@
 				new = "file or directory name"
 				proxyServer = "proxy server"
 				passive = "Yes" or "No"
+				result = "result name"
 			============================================
 			cfftp
 				action = "action"
@@ -2224,6 +3385,15 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="result" type="String" required="false">
+				<help><![CDATA[
+					Specifies a name for the structure in which cfftp
+					stores the returnValue variable. If set, this value
+					replaces cfftp as the prefix to use when accessing
+					returnVariable.
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
 
 		<!--
@@ -2234,7 +3404,8 @@
 				access = "methodAccess"
 				output = "yes" or "no"
 				displayName = "name"
-				Hint = "hint text"
+				hint = "hint text"
+				description = "function description"
 		-->
 		<tag name="cffunction" creator="3" single="false" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
@@ -2328,61 +3499,76 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="description" type="String" required="false">
+				<help><![CDATA[
+					Supplies a short text description of the function.
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
 
 		<!--
-			cfgrid
+			<cfgrid
 				name = "name"
+				format = "applet" or "Flash" or "xml"
 				height = "integer"
 				width = "integer"
-				autoWidth = "Yes" or "No"
+				query = "query_name"
+				selectMode = "mode"
+				insert = "yes" or "no"
+				delete = "yes" or "no"
+				font = "column_font"
+				fontSize = "size"
+				italic = "yes" or "no"
+				bold = "yes" or "no"
+				textColor = "web color"
+				gridLines = "yes" or "no"
+				rowHeight = "pixels"
+				colHeaders = "yes" or "no"
+				colHeaderFont = "font_name"
+				colHeaderFontSize = "size"
+				colHeaderItalic = "yes" or "no"
+				colHeaderBold = "yes" or "no"
+				colHeaderTextColor = "web color"
+				bgColor = "web color"
+				maxRows = "number"
+			The following works in Flash format only
+				style= "style specification"
+				enabled = "Yes" or "No"
+				visible = "Yes" or "No"
+				toolTip = "Tip text"
+				onChange = "ActionScript"
+			The following work in applet and XML format only
+				autoWidth = "yes" or "no"
 				vSpace = "integer"
 				hSpace = "integer"
 				align = "value"
-				query = "query_name"
-				insert = "Yes" or "No"
-				delete = "Yes" or "No"
-				sort = "Yes" or "No"
-				font = "column_font"
-				fontSize = "size"
-				italic = "Yes" or "No"
-				bold = "Yes" or "No"
-				textColor = "web color"
+				sort = "yes" or "no"
 				href = "URL"
 				hrefKey = "column_name"
 				target = "URL_target"
-				appendKey = "Yes" or "No"
-				highlightHref = "Yes" or "No"
+				appendKey = "yes" or "no"
+				highlightHref = "yes" or "no"
 				onValidate = "javascript_function"
 				onError = "text"
 				gridDataAlign = "position"
-				gridLines = "Yes" or "No"
-				rowHeight = "pixels"
-				rowHeaders = "Yes" or "No"
+				rowHeaders = "yes" or "no"
 				rowHeaderAlign = "position"
 				rowHeaderFont = "font_name"
 				rowHeaderFontSize = "size"
-				rowHeaderItalic = "Yes" or "No"
-				rowHeaderBold = "Yes" or "No"
+				rowHeaderItalic = "yes" or "no"
+				rowHeaderBold = "yes" or "no"
 				rowHeaderTextColor = "web color"
-				colHeaders = "Yes" or "No"
 				colHeaderAlign = "position"
-				colHeaderFont = "font_name"
-				colHeaderFontSize = "size"
-				colHeaderItalic = "Yes" or "No"
-				colHeaderBold = "Yes" or "No"
-				colHeaderTextColor = "web color"
-				bgColor = "web color"
 				selectColor = "web color"
-				selectMode = "mode"
-				maxRows = "number"
 				notSupported = "text"
-				pictureBar = "Yes" or "No"
+				pictureBar = "yes" or "no"
 				insertButton = "text"
 				deleteButton = "text"
 				sortAscendingButton = "text"
-				sortDescendingButton = "text"
-			/cfgrid
+				sortDescendingButton = "text">
+			zero or more cfgridcolumn and cfgridrow tags
+			</cfgrid>
 		-->
 		<tag name="cfgrid" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
@@ -2397,15 +3583,33 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="format" type="String" required="false">
+				<help><![CDATA[
+					- applet: generates a Java applet.
+					- Flash: generates a Flash grid control.
+					- xml: generates an XMLrepresentation of the grid.
+					In XML format forms, includes the generated XML in the form.
+					In HTML format forms, puts the XML in a string variable
+					with the name specified by the name attribute.
+					Default: applet
+				]]></help>
+				<values>
+					<value option="applet" />
+					<value option="flash" />
+					<value option="xml" />
+				</values>
+			</parameter>
 			<parameter name="height" type="Numeric" required="false">
 				<help><![CDATA[
 					Control's height, in pixels.
+					Default for applet: 300
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="width" type="Numeric" required="false">
 				<help><![CDATA[
 					Control's width, in pixels.
+					Default for applet: 300
 				]]></help>
 				<values/>
 			</parameter>
@@ -2795,16 +3999,17 @@
 			</parameter>
 			<parameter name="selectmode" type="String" required="false">
 				<help><![CDATA[
-					Selection mode for items in grid control.
-
-					Edit: user can edit grid data. Selecting a cell opens the
-						editor for the cell type.
-					Single: user selections are limited to selected cell.
-					Row: user selections automatically extend to the row that
-						contains selected cell.
-					Column: user selections automatically extend to column
-						that contains selected cell.
-					Browse: user can only browse grid data
+					Selection mode for items in the control.
+					- Edit: user can edit grid data. Selecting a cell
+					  opens the editor for the cell type.
+					- Row: user selections automatically extend to
+					  the row that contains selected cell.
+					The following are used in applet format only;
+					Flash interprets these as Row:
+					- Single: user selections are limited to selected cell.
+					- Column: user selections automatically extend
+					  to column that contains selected cell.
+					- Browse: user can only browse grid data.
 				]]></help>
 				<values>
 					<value option="edit" />
@@ -2870,36 +4075,82 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					Must be a style specification in CSS format.
+					Ignored for type="text".
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="enabled" type="boolean" required="false">
+				<help><![CDATA[
+					Flash format only: Boolean value specifying
+					whether the control is enabled. A disabled
+					control appears in light gray.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="visible" type="boolean" required="false">
+				<help><![CDATA[
+					Flash format only: Boolean value specifying
+					whether to show the control. Space that would
+					be occupied by an invisible control is blank.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="tooltip" type="String" required="false">
+				<help><![CDATA[
+					Flash format only: text to display when the
+					mouse pointer hovers over the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onchange" type="String" required="false">
+				<help><![CDATA[
+					ActionScript to run when the control changes
+					due to user action in the control.
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
 
 		<!--
-			cfgridcolumn
+			<cfgridcolumn
 				name = "column_name"
 				header = "header"
 				width = "column_width"
+				type = "type"
+				display = "yes" or "no"
+				select = "yes" or "no"
 				font = "column_font"
 				fontSize = "size"
-				italic = "Yes" or "No"
-				bold = "Yes" or "No"
+				italic = "yes" or "no"
+				bold = "yes" or "no"
 				textColor = "web color" or "expression"
 				bgColor = "web color" or "expression"
+				dataAlign = "position"
+			The following attribute applies to Flash format only
+				mask= "format mask"
+			The following attribute applies to appliet format only
 				href = "URL"
 				hrefKey = "column_name"
 				target = "URL_target"
-				select = "Yes" or "No"
-				display = "Yes" or "No"
-				type = "type"
 				headerFont = "font_name"
 				headerFontSize = "size"
-				headerItalic = "Yes" or "No"
-				headerBold = "Yes" or "No"
+				headerItalic = "yes" or "no"
+				headerBold = "yes" or "no"
 				headerTextColor = "web color"
-				dataAlign = "position"
 				headerAlign = "position"
 				numberFormat = "format"
-				values = "Comma separated strings and/or numeric range"
-				valuesDisplay = "Comma separated strings and/or numeric range"
-				valuesDelimiter = "delimiter character"
+				values = "Comma-separated strings and/or numeric range"
+				valuesDisplay = "Comma-separated strings and/or numeric range"
+				valuesDelimiter = "delimiter character">
 		-->
 		<tag name="cfgridcolumn" creator="1" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -3044,6 +4295,7 @@
 				<values>
 					<value option="cd" />
 					<value option="computer" />
+					<value option="currency" />
 					<value option="document" />
 					<value option="element" />
 					<value option="folder" />
@@ -3146,6 +4398,22 @@
 				<help><![CDATA[
 					Maps elements in values attribute to string to display in
 					drop-down list. Delimited strings and/or numeric range(s).
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="mask" type="String" required="false">
+				<help><![CDATA[
+					A mask pattern that controls the character pattern
+					that the form displays or allows users to input and
+					sends to ColdFusion.
+					For currency type data, use currency symbol.
+					For text or numeric type data use:
+					 - A = [A-Za-z]
+					 - X = [A-Za-z0-9]
+					 - 9 = [0-9]
+					 - ? = Any character
+					 - all other = the literal character
+					For date type data use datetime masks.
 				]]></help>
 				<values/>
 			</parameter>
@@ -3364,6 +4632,7 @@
 				firstrowasheaders = "yes" or "no"
 				delimiter = "character"
 				textQualifier = "character"
+				result = "result name"
 			   [cfhttpparam tags - optional for some methods]
 		   /cfhttp
 		-->
@@ -3565,6 +4834,14 @@
 					<value option="yes" />
 				</values>
 			</parameter>
+			<parameter name="result" type="String" required="false">
+				<help><![CDATA[
+					Specifies the name of the variable in which you want
+					the result returned.
+					Default: CFHTTP
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
 
 		<!--
@@ -3759,6 +5036,10 @@
 				body = "body"
 				custom1 = "custom_value"
 				custom2 = "custom_value"
+				custom3 = "custom_value"
+				custom4 = "custom_value"
+				category = "category name"
+				categoryTree = "category tree"
 				URLpath = "URL"
 				extensions = "file_extensions"
 				query = "query_name"
@@ -3784,12 +5065,14 @@
 			</parameter>
 			<parameter name="action" type="String" required="false">
 				<help><![CDATA[
-					update: updates a collection and adds key to the index. Do
-						not use the cflock tag with this option.
-					delete: deletes data in the entities specified by the type
-						attribute
-					purge: deletes all keys from a collection
-					refresh: purges all keys from a collection, then updates it.
+					- update: updates a collection and adds key to the index.
+					- delete: removes collection documents as specified by
+					the key attribute.
+					- purge: deletes all of the documents in a collection.
+					Causes the collection to be taken offline, preventing
+					searches.
+					- refresh: deletes all of the documents in a collection,
+					and then performs an update.
 				]]></help>
 				<values>
 					<value option="update" />
@@ -3862,6 +5145,22 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="custom3" type="String" required="false">
+				<help><![CDATA[
+					Custom field in which you can store data during an indexing
+					operation. Specify a query column name for type, and a
+					query name.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="custom4" type="String" required="false">
+				<help><![CDATA[
+					Custom field in which you can store data during an indexing
+					operation. Specify a query column name for type, and a
+					query name.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="urlpath" type="URL" required="false">
 				<help><![CDATA[
 					If type="file" or "path", specifies the URL path. When the
@@ -3900,28 +5199,57 @@
 			<parameter name="language" type="String" required="false">
 				<help><![CDATA[
 					For options, see cfcollection. Requires the appropriate
-					(European or Asian) Verity Locales language pack.
+					Verity Locales language pack (Western Europe, Asia,
+					Multilanguage, Eastern Europe/Middle Eastern).
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="status" type="String" required="false">
+				<help><![CDATA[
+					The name of the structure into which ColdFusion MX
+					returns status information.
 				]]></help>
 				<values/>
 			</parameter>
 		</tag>
 
 		<!--
-			cfinput
-				type = "input_type"
+			<cfinput
 				name = "name"
-				value = "initial_value"
-				required = "Yes" or "No"
+				type = "input type"
+				label = "text"
+				style = "style specification"
+				required = "yes" or "no"
+				mask = "masking pattern"
+				validate = "data type"
+				validateAt= one or more of "onBlur", "onServer", "onSubmit"
+				message = "text"
 				range = "min_value, max_value"
-				validate = "data_type"
-				onValidate = "javascript_function"
+				maxlength = "number"
 				pattern = "regexp"
-				message = "validation_msg"
-				onError = "text"
+				onValidate = "script name"
+				onError = "script name"
 				size = "integer"
-				maxLength = "integer"
+				value = "initial value"
+				bind = "bind expression"
 				checked
-				passThrough = "HTML_attributes"
+				disabled = "true" or "false" or "no attribute value"
+				src = "image URL"
+				onKeyUp = "JavaScript or ActionScript"
+				onKeyDown = "JavaScript or ActionScript"
+				onMouseUp = "JavaScript or ActionScript"
+				onMouseDown = "JavaScript or ActionScript"
+				onChange = "JavaScript or ActionScript"
+				onClick = "JavaScript or ActionScript"
+				firstDayOfWeek = "day name"
+				dayNames = "days-of-the-week labels"
+				monthNames = "month labels"
+				enabled = "Yes" or "No"
+				visible = "Yes" or "No"
+				toolTip = "Tip text"
+				height = "number of pixels"
+				width = "number of pixels"
+				>
 		-->
 		<tag name="cfinput" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -3929,29 +5257,54 @@
 				or text boxes on a form. Provides input validation for the
 				specified control type.
 			]]></help>
-			<parameter name="type" type="String" required="false">
-				<help><![CDATA[
-					text: creates a text entry box control
-                    radio: creates a radio button control
-                    checkbox: creates a check box control
-                    password: creates a password entry control
-				]]></help>
-				<values>
-					<value option="text" />
-					<value option="radio" />
-					<value option="checkbox" />
-					<value option="password" />
-				</values>
-			</parameter>
 			<parameter name="name" type="String" required="true">
 				<help><![CDATA[
 					Name for form input element.
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="value" type="String" required="false">
+			<parameter name="type" type="String" required="false">
 				<help><![CDATA[
-					Initial value for form input element.
+					The input control type to create:
+					- button: push button.
+					- checkbox: check box.
+					- file: file selector; not supported in Flash.
+					- hidden: invisible control.
+					- image: clickable button with an image.
+					- password: password entry control; hides input values.
+					- radio: radio button.
+					- reset: form reset button.
+					- submit: form submission button.
+					- text: text entry box.
+					- datefield: Flash only; date entry field with an
+					  expanding calendar for selecting dates.
+				]]></help>
+				<values>
+					<value option="button" />
+					<value option="checkbox" />
+					<value option="file" />
+					<value option="hidden" />
+					<value option="image" />
+					<value option="password" />
+					<value option="radio" />
+					<value option="reset" />
+					<value option="submit" />
+					<value option="text" />
+					<value option="datefield" />
+				</values>
+			</parameter>
+			<parameter name="label" type="String" required="false">
+				<help><![CDATA[
+					Label to put next to the control on a Flash or XML form.
+					Not used for button, hidden, image, reset, or submit types.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					In HTML or XML format, ColdFusion passes the style attribute
+					to the browser or XML.
+					In Flash format, must be a style specification in CSS format.
 				]]></help>
 				<values/>
 			</parameter>
@@ -3962,11 +5315,21 @@
 					&value_boolean;
 				</values>
 			</parameter>
-			<parameter name="range" type="String" required="false">
+			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
-					Minimum and maximum value range, separated by a comma. If
-					type = "text" or "password", this applies only to numeric
-					data.
+					A mask pattern that controls the character pattern that
+					users can enter, or that the form sends to ColdFusion.
+					In HTML and Flash for type=text use:
+					 - A = [A-Za-z]
+					 - X = [A-Za-z0-9]
+					 - 9 = [0-9]
+					 - ? = Any character
+					 - all other = the literal character
+					In Flash for type=datefield use:
+					 - D = day; can use 0-2 mask characters.
+					 - M = month; can use 0-4 mask characters.
+					 - Y = year; can use 0, 2, or 4 characters.
+					 - E = day in week; can use 0-4 characters.
 				]]></help>
 				<values/>
 			</parameter>
@@ -4002,6 +5365,48 @@
 					<value option="regular_expression" />
 				</values>
 			</parameter>
+			<parameter name="validateat" type="String" required="false">
+				<help><![CDATA[
+					How to do the validation; one or more of the following:
+					onSubmit, onServer or onBlur.
+					onBlur and onSubmit are identical in Flash forms. For
+					multiple values, use a comma-delimited list.
+					Default: onSubmit
+				]]></help>
+				<values>
+					<value option="onSubmit" />
+					<value option="onServer" />
+					<value option="onBlur" />
+				</values>
+			</parameter>
+			<parameter name="message" type="String" required="false">
+				<help><![CDATA[
+					Message text to display if validation fails
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="range" type="String" required="false">
+				<help><![CDATA[
+					Minimum and maximum value range, separated by a comma. If
+					type = "text" or "password", this applies only to numeric
+					data.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxlength" type="Numeric" required="false">
+				<help><![CDATA[
+					Maximum length of text entered, if type=text or password.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pattern" type="Regex" required="false">
+				<help><![CDATA[
+					JavaScript regular expression pattern to validate input.
+					ColdFusion uses this attribute only if you specify regex
+					in the validate attribute. Omit leading and trailing slashes.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="onvalidate" type="String" required="false">
 				<help><![CDATA[
 					Custom JavaScript function to validate user input. The form
@@ -4009,19 +5414,6 @@
 					 to the routine, which should return True if validation
 					 succeeds, and False otherwise. If used, the validate
 					 attribute is ignored.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="pattern" type="Regex" required="false">
-				<help><![CDATA[
-					JavaScript regular expression pattern to validate input.
-					Omit leading and trailing slashes.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="message" type="String" required="false">
-				<help><![CDATA[
-					Message text to display if validation fails
 				]]></help>
 				<values/>
 			</parameter>
@@ -4033,27 +5425,187 @@
 			</parameter>
 			<parameter name="size" type="Numeric" required="false">
 				<help><![CDATA[
-					Size of input control. Ignored, if type = "radio" or
-					"checkbox".
+					Size of input control. Ignored, if type=radio or checkbox.
+					If specified in a Flash form, ColdFusion sets the control
+					width pixel value to 10 times the specified size and
+					ignores the width attribute.
 				]]></help>
 				<values/>
 			</parameter>
-			<parameter name="maxlength" type="Numeric" required="false">
+			<parameter name="value" type="String" required="false">
 				<help><![CDATA[
-					Maximum length of text entered, if type = "Text" or
-					"password".
+					HTML: corresponds to the HTML value attribute. Its use
+					depends on control type.
+					Flash: optional; specifies text for button type inputs:
+					button, submit, and image.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="bind" type="String" required="false">
+				<help><![CDATA[
+					A Flash bind expression that populates the field with
+					information from other form fields.
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="checked" type="boolean" required="false">
 				<help><![CDATA[
-					Selects a control. No value is required.
-
-					Applies if type = "radio" or "checkbox".
+					Selects a control. No value is required. Applies if
+					type=radio or checkbox.
+					Default: false
 				]]></help>
 				<values>
 					&value_boolean;
 				</values>
+			</parameter>
+			<parameter name="disabled" type="boolean" required="false">
+				<help><![CDATA[
+					Disables user input, making the control read-only. To
+					disable input, specify disabled without an attribute or
+					disabled="true". To enable input, omit the attribute
+					or specify disabled="false".
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="src" type="String" required="false">
+				<help><![CDATA[
+					Applies to Flash button, reset, submit, and image types,
+					and the HTML image type. URL of an image to use on
+					the button. Flash does not support GIF images.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onkeyup" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user releases a keyboard key in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onkeydown" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash)
+					ActionScript to run when the user presses a keyboard
+					key in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onmouseup" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user presses a mouse button in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onmousedown" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user releases a mouse button in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onchange" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the control changes due to user action. In Flash,
+					applies to datefield, password, and text types only.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onclick" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user clicks the control. In Flash, applies to
+					button, checkbox, image, radio, reset, and submit types
+					only.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="daynames" type="String" required="false">
+				<help><![CDATA[
+					A comma-delimited list that sets the names of the
+					weekdays displayed in the calendar. Sunday is the
+					first day and the rest of the weekday names follow in
+					the normal order.
+					Default is: S,M,T,W,Th,F,S
+				]]></help>
+				<values>
+					<value option="S,M,T,W,Th,F,S" />
+					<value option="Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday" />
+					<value option="Sun,Mon,Tue,Wed,Thu,Fri,Sat" />
+				</values>
+			</parameter>
+			<parameter name="firstdayofweek" type="Numeric" required="false">
+				<help><![CDATA[
+					Integer in the range 0-6 specifying the first day of the
+					week in the calendar, 0 indicates Sunday, 6 indicates Saturday.
+					Default is: 0
+				]]></help>
+				<values>
+					<value option="0" />
+					<value option="1" />
+					<value option="2" />
+					<value option="3" />
+					<value option="4" />
+					<value option="5" />
+					<value option="6" />
+				</values>
+			</parameter>
+			<parameter name="monthnames" type="String" required="false">
+				<help><![CDATA[
+					A comma-delimited list of the month names that are
+					displayed at the top of the calendar.
+				]]></help>
+				<values>
+					<value option="January,February,March,April,May,June,July,August,September,October,November,December" />
+					<value option="Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec" />
+				</values>
+			</parameter>
+			<parameter name="enabled" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether the control is
+					enabled. A disabled control appears in light gray. The
+					inverse of the disabled attribute. Flash only.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="visible" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether to show the control. Space
+					that would be occupied by an invisible control is blank.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="tooltip" type="String" required="false">
+				<help><![CDATA[
+					Text to display when the mouse pointer hovers over the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					Applies to most Flash types, HTML image type on
+					some browsers. The width of the control, in pixels. For
+					Flash forms, ColdFusion ignores this attribute if you also
+					specify a size attribute value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="height" type="Numeric" required="false">
+				<help><![CDATA[
+					Applies to most Flash types, HTML image type on
+					some browsers. The height of the control, in pixels. The
+					displayed height might be less than the specified size.
+				]]></help>
+				<values/>
 			</parameter>
 			<parameter name="passthrough" type="String" required="false">
 				<help><![CDATA[
@@ -4069,6 +5621,8 @@
 					pairs to be passed through in single quotation marks is
 					clearer, particularly when you pass multiple HTML
 					attributes.
+					
+					Note: deprecated in CF7.
 				]]></help>
 				<values/>
 			</parameter>
@@ -4173,6 +5727,7 @@
 				proxyPort = "port on proxy server"
 				proxyUser = "user id for proxy server"
 				proxyPassword = "password for proxy server"
+				servicePort = "WSDL port name"
 				inputParam1 = "value1"
 				inputParam2 = "value2"
 				...
@@ -4293,12 +5848,23 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="serviceport" type="String" required="false">
+				<help><![CDATA[
+					The port name for the web service. This value is
+					case-sensitive and corresponds to the port element's
+					name attribute under the service element. Specify this
+					attribute if the web service contains multiple ports.
+					Default: first port found in the WSDL.
+				]]></help>
+				<values/>
+			</parameter>
 		</tag>
 
 		<!--
 			cfinvokeargument
 				name="argument name"
 				value="argument value"
+				omit = "yes" or "no"
 		-->
 		<tag name="cfinvokeargument" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -4317,6 +5883,18 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="omit" type="boolean" required="false">
+				<help><![CDATA[
+					Enables you to omit a parameter when invoking a web service.
+					It is an error to specify omit="true" if the cfinvoke
+					webservice attribute is not specified.
+					 - true: omit this parameter when invoking a web service.
+					 - false: do not omit this parameter when invoking a web service.
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
 		</tag>
 
 		<!--
@@ -4332,6 +5910,7 @@
 			   start = "distinguished_name"
 			   scope = "scope"
 			   attributes = "attribute, attribute"
+				returnAsBinary = "column_name, column_name"
 			   filter = "filter"
 			   sort = "attribute[, attribute]..."
 			   sortControl = "nocase" and/or "desc" or "asc"
@@ -4450,6 +6029,13 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="returnasbinary" type="String" required="false">
+				<help><![CDATA[
+					A comma-delimited list of columns that are to
+					be returned as binary values.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="filter" type="String" required="false">
 				<help><![CDATA[
 					Search criteria for action = "query".
@@ -4524,8 +6110,7 @@
 					* No: referred connections are anonymous
 				]]></help>
 				<values>
-					<value option="true"/>
-					<value option="false"/>
+					&value_boolean;
 				</values>
 			</parameter>
 			<parameter name="referral" type="Numeric" required="false">
@@ -4580,7 +6165,6 @@
 				<values/>
 			</parameter>
 		</tag>
-
 
 		<!--
 			cflocation
@@ -5193,6 +6777,8 @@
 			cfmailparam
 				file = "file-name"
 				type ="media type"
+				contentID = "content ID"
+				disposition = "disposition type"
 		   	or
 		   	cfmailparam
 		   		name = "header-name"
@@ -5302,6 +6888,27 @@
 					Value of the header.
 				]]></help>
 				<values/>
+			</parameter>
+			<parameter name="contentID" type="String" required="false">
+				<help><![CDATA[
+					The Identifier for the attached file. This ID should
+					be globally unique and is used to identify the file in
+					an IMG or other tag in the mail body that references
+					the file content.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="disposition" type="String" required="false">
+				<help><![CDATA[
+					How the attached file is to be handled. Can be one
+					of the following:
+					 - attachment: present the file as an attachment
+					 - inline: display the file contents in the message
+				]]></help>
+				<values>
+					<value option="attachment" />
+					<value option="inline" />
+				</values>
 			</parameter>
 		</tag>
 
@@ -5416,6 +7023,73 @@
 			</parameter>
 		</tag>
 
+		<!--
+			<cfNTauthenticate
+				username="username"
+				password="password"
+				domain="nt_domain"
+				result="result variable"
+				listGroups = "yes" or "no"
+				throwOnError = "yes" or "no">
+		-->
+		<tag name="cfNTauthenticate" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Authenticates a user name and password against the
+				NT domain on which ColdFusion server is running,
+				and optionally retrieves the user's groups.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					User's login name.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="password" type="String" required="true">
+				<help><![CDATA[
+					User's login name.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="domain" type="String" required="true">
+				<help><![CDATA[
+					Domain against which to authenticate the user. The
+					ColdFusion J2EE server must be running on this domain.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="result" type="String" required="false">
+				<help><![CDATA[
+					Name of the variable in which to return the results.
+					Default: cfntauthenticate
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="listgroups" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether to Include a
+					comma-delimited list of the user's groups in the
+					result structure.
+					Default: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="throwonerror" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether to throw an
+					exception if the validation fails. If this attribute is true,
+					ColdFusion throws an error if the user name or password is
+					invalid; the application must handle such errors in a
+					try/catch block or ColdFusion error handler page.
+					Default: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+		</tag>
+		
 		<!--
 			cfobject
 				type = "com"
@@ -5611,6 +7285,9 @@
 				name = "param_name"
 				type = "data_type"
 				default = "value"
+				max = "value"
+				min = "value"
+				pattern = "regular expression"
 		-->
 		<tag name="cfparam" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -5619,34 +7296,73 @@
 			]]></help>
 			<parameter name="name" type="String" required="true">
 				<help><![CDATA[
-					Name of parameter to test (such as "Client.Email " or
-					"Cookie.BackgroundColor "). If omitted, and if the
+					Name of parameter to test (such as "client.email" or
+					"cookie.backgroundColor"). If omitted, and if the
 					parameter does not exist, an error is thrown.
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="type" type="String" required="false">
 				<help><![CDATA[
-					The parameter data type
+					The valid format for the data.
 				]]></help>
 				<values>
 					<value option="any" />
 					<value option="array" />
 					<value option="binary" />
 					<value option="boolean" />
+					<value option="creditcard" />
 					<value option="date" />
-					<value option="guid" />
+					<value option="time" />
+					<value option="email" />
+					<value option="eurodate" />
+					<value option="float" />
 					<value option="numeric" />
+					<value option="guid" />
+					<value option="integer" />
 					<value option="query" />
+					<value option="range" />
+					<value option="regex" />
+					<value option="regular_expression" />
+					<value option="ssn" />
+					<value option="social_security_number" />
 					<value option="string" />
 					<value option="struct" />
+					<value option="telephone" />
+					<value option="url" />
 					<value option="uuid" />
-					<value option="variable_name" />
+					<value option="USdate" />
+					<value option="variablename" />
+					<value option="xml" />
+					<value option="zipcode" />
 				</values>
 			</parameter>
 			<parameter name="default" type="Object" required="false">
 				<help><![CDATA[
-					Value to set parameter to if it does not exist.
+					Value to set parameter to if it does not exist. Any
+					expression used for the default attribute is evaluated,
+					even if the parameter exists.
+					The result is not assigned if the parameter exists,
+					but if the expression has side effects, they still occur.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="max" type="Numeric" required="false">
+				<help><![CDATA[
+					The maximum valid value; used only for range validation.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="min" type="Numeric" required="false">
+				<help><![CDATA[
+					The minimum valid value; used only for range validation.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pattern" type="String" required="false">
+				<help><![CDATA[
+					A regular experession that the parameter must match;
+					used only for regex or regular_expression validation.
 				]]></help>
 				<values/>
 			</parameter>
@@ -6056,7 +7772,7 @@
 		</tag>
 
 		<!--
-			cfquery
+			<cfquery
 				name = "query_name"
 				dataSource = "ds_name"
 				dbtype = "query"
@@ -6067,10 +7783,14 @@
 				timeout = "seconds"
 				cachedAfter = "date"
 				cachedWithin = "timespan"
-				Either of the following:
+				result = "result_name"
+			Either of the following:
 				debug = "Yes" or "No"
+			or
+				debug
+			>
 				[SQL statement(s)]
-			/cfquery
+			</cfquery>
 		-->
 		<tag name="cfquery" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
@@ -6176,6 +7896,14 @@
 				<values>
 					&value_boolean;
 				</values>
+			</parameter>
+			<parameter name="result" type="String" required="false">
+				<help><![CDATA[
+					Specifies a name for the structure in which cfquery returns
+					the result variables. See the Usage section for more
+					information.
+				]]></help>
+				<values/>
 			</parameter>
 		</tag>
 
@@ -6285,7 +8013,23 @@
 		</tag>
 
 		<!--
-			cfreport
+			Syntax 1 - Use this syntax with the ColdFusion Report Builder.
+			<cfreport
+				template = "report definition filename"
+				format = "PDF or FlashPaper" or "excel"
+				name = "cf variable"
+				filename = "output filename"
+				query = "query variable"
+				overwrite = "yes" or "no"
+				encryption = "128-bit" or "40-bit" or "none"
+				ownerpassword = "password"
+				userpassword = "password"
+				permissions = "permission list">
+			cfreportparam tags [optional]
+			</cfreport>
+			
+			OR Syntax 2 - Use this syntax with Crystal Reports
+			<cfreport
 				report = "report_path"
 				dataSource = "ds_name"
 				type = "type"
@@ -6293,16 +8037,113 @@
 				orderBy = "result_order"
 				username = "username"
 				password = "password"
-				formula = "formula"
-			/cfreport
+				formula = "formula">
+			</cfreport>
 		-->
 		<tag name="cfreport" creator="1" single="false" xmlstyle="false">
 			<help><![CDATA[
-				Runs a predefined Crystal Reports report. Applies only to
+				Used to do either of the following:
+				- Execute a report definition created with the ColdFusion
+				  Report Builder, displaying it in PDF, FlashPaper, or Excel
+				  format. You can optionally save this report to a file.
+				- Run a predefined Crystal Reports report. Applies only to
 				Windows systems. Uses the CFCRYSTAL.exe file to generate
 				reports. Sets parameters in the Crystal Reports engine
 				according to its attribute values.
 			]]></help>
+			<parameter name="template" type="String" required="true">
+				<help><![CDATA[
+					Specifies the path to the report definition file,
+					relative to the web root.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="format" type="String" required="true">
+				<help><![CDATA[
+					Specifies the output format.
+				]]></help>
+				<values>
+					<value option="PDF" />
+					<value option="FlashPaper" />
+					<value option="Excel" />
+				</values>
+			</parameter>
+			<parameter name="name" type="String" required="false">
+				<help><![CDATA[
+					The name of the ColdFusion variable that will hold
+					the report output. You cannot specify both name and
+					filename.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="filename" type="String" required="false">
+				<help><![CDATA[
+					The filename to contain the report. You cannot
+					specify both name and filename.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="query" type="String" required="false">
+				<help><![CDATA[
+					The name of the query that contains input data for
+					the report. If you omit this parameter, the report
+					definition obtains data from the internal SQL or from
+					cfreportparam items.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="overwrite" type="boolean" required="false">
+				<help><![CDATA[
+					Specifies whether to overwrite files that have the
+					same name as that specified in the filename attribute.
+					Default: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="encryption" type="String" required="false">
+				<help><![CDATA[
+					Specifies whether the output is encrypted. PDF format only.
+					Default: none
+				]]></help>
+				<values>
+					<value option="128-bit" />
+					<value option="40-bit" />
+					<value option="none" />
+				</values>
+			</parameter>
+			<parameter name="ownerpassword" type="String" required="false">
+				<help><![CDATA[
+					Specifies an owner password. PDF format only.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="userpassword" type="String" required="false">
+				<help><![CDATA[
+					Specifies a user password. PDF format only.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="permissions" type="String" required="false">
+				<help><![CDATA[
+					Specifies one or more permissions. PDF format only.
+					Separate multiple permissions with a comma.
+				]]></help>
+				<values>
+					<value option="AllowPrinting,AllowCopy,AllowScreenReaders" />
+					<value option="AllowPrinting" />
+					<value option="AllowModifyContents" />
+					<value option="AllowCopy" />
+					<value option="AllowModifyAnnotations" />
+					<value option="AllowFillIn" />
+					<value option="AllowScreenReaders" />
+					<value option="AllowAssembly" />
+					<value option="AllowDegradedPrinting" />
+					<value option="AllowPrinting,AllowModifyContents,AllowCopy,AllowModifyAnnotations,AllowFillIn,AllowScreenReaders,AllowAssembly,AllowDegradedPrinting" />
+				</values>
+			</parameter>
+			
 			<parameter name="datasource" type="String" required="false">
 				<help><![CDATA[
 					Name of registered or native data source.
@@ -6368,6 +8209,32 @@
 					typing it twice (;;). For example:
 
 					formula = "Name1 = 'Val_1a;;Val_1b';Name2 = 'Val2';"
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+
+		<!--
+			<cfreportparam
+				name = "data name"
+				value = "data value">
+		-->
+		<tag name="cfreportparam" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Passes input parameters to a ColdFusion Report Builder
+				report definition. Allowed inside cfreport tag bodies only.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Variable name for data that is passed. The ColdFusion
+					Report Builder report definition must include an input
+					parameter that matches this name.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+					Value of the data that is sent.
 				]]></help>
 				<values/>
 			</parameter>
@@ -6626,14 +8493,23 @@
 		</tag>
 
 		<!--
-			cfsearch
+			<cfsearch
 				name = "search_name"
 				collection = "collection_name"
+				category = "category[,category2,...]"
+				categoryTree = "tree_location"
+				status = ""
 				type = "criteria"
 				criteria = "search_expression"
 				maxRows = "number"
 				startRow = "row_number"
-				language = "language"
+				suggestions = "suggestion_option"
+				contextPassages = "number_of_passages"
+				contextBytes = "number_of_bytes"
+				contextHighlightBegin = "html_string"
+				contextHighlightEnd = "html_string"
+				previousCriteria = "criteria"
+				language = "language">
 		-->
 		<tag name="cfsearch" creator="3" single="true" xmlstyle="false">
 			<help><![CDATA[
@@ -6653,7 +8529,11 @@
 			</parameter>
 			<parameter name="collection" type="String" required="true">
 				<help><![CDATA[
-					One or more path(s) and/or registered collection name(s).
+					One or more collection names. You can specify more
+					than one collection unless you are performing a
+					category search (that is, specifying category or
+					categoryTree).
+					
 					For a registered collection, specify the collection name.
 					For an unregistered collection, specify an absolute path.
 					Registered names are listed in the CFML Administrator,
@@ -6668,16 +8548,54 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="category" type="String" required="false">
+				<help><![CDATA[
+					A list of categories, separated by commas, to which
+					the search is limited. If specified, and the collection
+					does not have categories enabled, ColdFusion
+					throws an exception.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="categorytree" type="String" required="false">
+				<help><![CDATA[
+					The location in a hierarchical category tree at which
+					to start the search. ColdFusion searches at and
+					below this level. If specified, and the collection does
+					not have categories enabled, ColdFusion throws an
+					exception. Can be used in addition to category
+					attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="status" type="String" required="false">
+				<help><![CDATA[
+					Specifies the name of the structure variable into
+					which ColdFusion places search information, including
+					alternative criteria suggestions (spelling corrections).
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="type" type="String" required="false">
 				<help><![CDATA[
-					simple: STEM and MANY operators are implicitly used. See
-						Using Verity Search Expressions in Developing
-						CFML MX Applications.
-					explicit: operators must be invoked explicitly
+					Used to specify the parser that Verity uses to process
+					the criteria.
+					- simple: STEM and MANY operators are implicitly used.
+					- explicit: operators must be invoked explicitly. Also
+					known as Bool_Plus)
+					- internet: for documents that are mostly WYSIWIG
+					(what-you-see-is-what-you-get) documents. Also
+					known as Internet_advanced.
+					- internet_basic: minimizes search time.
+					- natural: specifies the Query By Example (QBE)
+					parser. Also known as FreeText.
 				]]></help>
 				<values>
 					<value option="simple" />
 					<value option="explicit" />
+					<value option="internet" />
+					<value option="internet_basic" />
+					<value option="natural" />
 				</values>
 			</parameter>
 			<parameter name="criteria" type="String" required="false">
@@ -6694,14 +8612,91 @@
 			</parameter>
 			<parameter name="maxrows" type="Numeric" required="false">
 				<help><![CDATA[
-					Maximum number of rows to return in query results. Use
-					double or single quotation marks.
+					Maximum number of rows to return in query results.
+					Default: all
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="startrow" type="Numeric" required="false">
 				<help><![CDATA[
 					First row number to get.
+					Default: 1
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="suggestions" type="String" required="false">
+				<help><![CDATA[
+					Specifies whether Verity returns spelling suggestions
+					for possibly misspelled words. Use one of the
+					following options:
+					 - always: Verity always returns spelling suggestions.
+					 - never: Verity never returns spelling suggestions.
+					 - positive integer: Verity returns spelling suggestions
+					   if the number of documents retrieved by the search
+					   is less than or equal to the number specified.
+					There is a small performance penalty for retrieving
+					suggestion data.
+					Default: never
+				]]></help>
+				<values>
+					<value option="always" />
+					<value option="never" />
+					<value option="5" />
+					<value option="10" />
+				</values>
+			</parameter>
+			<parameter name="contextpassages" type="Numeric" required="false">
+				<help><![CDATA[
+					The number of passages/sentences Verity returns in
+					the context summary (that is, the context column of
+					the results).
+					Default: 3
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="contextbytes" type="Numeric" required="false">
+				<help><![CDATA[
+					The maximum number of bytes Verity returns in the
+					context summary.
+					Default: 300
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="contexthighlightbegin" type="String" required="false">
+				<help><![CDATA[
+					The HTML to prepend to search terms in the context
+					summary. Use this attribute in conjunction with
+					contextHighlightEnd to highlight search terms in the
+					context summary.
+					Default: <b>
+				]]></help>
+				<values>
+					<value option="&lt;b&gt;" />
+					<value option="&lt;strong&gt;" />
+					<value option="&lt;span class=&quot;highlight&quot;&gt;" />
+				</values>
+			</parameter>
+			<parameter name="contexthighlightend" type="String" required="false">
+				<help><![CDATA[
+					The HTML to prepend to search terms in the context
+					summary. Use this attribute in conjunction with
+					contextHighlightEnd to highlight search terms in the
+					context summary.
+					Default: </b>
+				]]></help>
+				<values>
+					<value option="&lt;/b&gt;" />
+					<value option="&lt;/strong&gt;" />
+					<value option="&lt;/span&gt;" />
+				</values>
+			</parameter>
+			<parameter name="previouscriteria" type="String" required="false">
+				<help><![CDATA[
+					The name of a result set from an existing set of search
+					results. Verity searches the result set for criteria
+					without regard to the previous search score or rank.
+					Use this attribute to implement searching within result
+					sets.
 				]]></help>
 				<values/>
 			</parameter>
@@ -6709,25 +8704,43 @@
 				<help><![CDATA[
 					For options, see cfcollection. Requires the CFML
 					International Search Pack.
+					Default: english
+					Deprecated in CF7.
 				]]></help>
 				<values/>
 			</parameter>
 		</tag>
 
 		<!--
-			cfselect
+			<cfselect
 				name = "name"
-				required = "Yes" or "No"
+				label = "label"
+				style = "style specification"
+				size = "integer"
+				required = "yes" or "no"
 				message = "text"
 				onError = "text"
-				size = "integer"
-				multiple = "Yes" or "No"
+				multiple = "yes" or "no"
 				query = "queryname"
-				selected = "column_value"
 				value = "text"
-				display = "text"
-				passThrough = "HTML_attributes"
-			/cfselect
+				display = "text">
+				group = "query column name
+				queryPosition = "above" or "below"
+				selected = "value or list"
+				onKeyUp = "JavaScript or ActionScript"
+				onKeyDown = "JavaScript or ActionScript"
+				onMouseUp = "JavaScript or ActionScript"
+				onMouseDown = "JavaScript or ActionScript"
+				onChange = "JavaScript or ActionScript"
+				onClick = "JavaScript or ActionScript"
+				visible = "Yes" or "No"
+				enabled = "Yes" or "No"
+				tooltip = "Tip text"
+				height = "number of pixels" Flash only
+				width = "number of pixels" Flash only
+			>
+			zero or more HTML option tags
+			</cfselect>
 		-->
 		<tag name="cfselect" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
@@ -6743,6 +8756,23 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="label" type="String" required="false">
+				<help><![CDATA[
+					Label to put next to the control on a Flash or XML-format form.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					In HTML or XML format forms, ColdFusion passes the
+					style attribute to the browser or XML.
+					In Flash format, must be a style specification in CSS
+					format, with the same syntax and contents as used in
+					Macromedia Flex for the corresponding Flash element.
+					Post alpha we will document specifics.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="size" type="Numeric" required="false">
 				<help><![CDATA[
 					Number of entries to display at one time. The default, 1,
@@ -6753,12 +8783,13 @@
 			</parameter>
 			<parameter name="required" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: a list element must be selected when form is submitted.
-					No:
-
+					If true a list element must be selected when form is submitted.
 					Note: This attribute has no effect if you omit the size
-						attribute or set it to 1 because the browser always
-						submits the displayed item.
+					attribute or set it to 1 because the browser always submits
+					the displayed item. You can work around this issue format
+					forms by having an initial option tag with value=" " (note the
+					space character between the quotation marks).
+					Default: false
 				]]></help>
 				<values>
 					&value_boolean;
@@ -6766,21 +8797,21 @@
 			</parameter>
 			<parameter name="message" type="String" required="false">
 				<help><![CDATA[
-					Message to display if required = "Yes" and no selection is
-					made.
+					Message to display if required="true" and no selection is made.
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="onerror" type="String" required="false">
 				<help><![CDATA[
-					Custom JavaScript function to execute if validation fails
+					Custom JavaScript function to execute if validation fails.
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="multiple" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: allow selecting multiple elements in drop-down list
-					No: does not
+					- true: allow selecting multiple elements in drop-down list
+					- false: don't allow selecting multiple elements
+					Default: false
 				]]></help>
 				<values>
 					&value_boolean;
@@ -6789,15 +8820,6 @@
 			<parameter name="query" type="String" required="false">
 				<help><![CDATA[
 					Name of query to populate drop-down list.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="selected" type="String" required="false">
-				<help><![CDATA[
-					A list of option values to preselect in the selection list.
-					This attribute applies only if list items are generated
-					from a query. The cfform preservedata attribute value can
-					override this value.
 				]]></help>
 				<values/>
 			</parameter>
@@ -6815,6 +8837,120 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="group" type="String" required="false">
+				<help><![CDATA[
+					Query column to use to group the items in the drop-down
+					list into a two-level hierarchical list..
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="queryposition" type="String" required="false">
+				<help><![CDATA[
+					If you populate the options list with a query and use HTML
+					option child tags to specify additional entries, determines
+					the location of the items from the query relative to the items
+					from the option tags:
+					 - above: Put the query items above the options items.
+					 - below: Put the query items below the options items.
+					Default: above
+				]]></help>
+				<values>
+					<value option="above" />
+					<value option="below" />
+				</values>
+			</parameter>
+			<parameter name="selected" type="String" required="false">
+				<help><![CDATA[
+					One or more option values to preselect in the selection list.
+					To specify multiple values, use a comma-delimited list. This
+					attribute applies only if selection list items are generated
+					from a query. The cfform preservedata attribute value can
+					override this value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onkeyup" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user releases a keyboard key in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onkeydown" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash)
+					ActionScript to run when the user depresses a keyboard
+					key in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onmouseup" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user presses a mouse button in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onmousedown" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user releases a mouse button in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onchange" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the control changes due to user action.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onclick" type="String" required="false">
+				<help><![CDATA[
+					JavaScript to run when the user clicks the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="enabled" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether to show the control.
+					Space that would be occupied by an invisible control is
+					blank.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="visible" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether to show the control.
+					Space that would be occupied by an invisible control is
+					blank.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="tooltip" type="String" required="false">
+				<help><![CDATA[
+					Text to display when the mouse pointer hovers over the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="height" type="Numeric" required="false">
+				<help><![CDATA[
+					The height of the control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					The width of the control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="passthrough" type="String" required="false">
 				<help><![CDATA[
 					Passes one or more arbitrary attribute-value pairs to the
@@ -6829,6 +8965,8 @@
 					pairs to be passed through in single quotation marks is
 					clearer, particularly when you pass multiple HTML
 					attributes.
+					
+					Note: deprecated in CF7.
 				]]></help>
 				<values/>
 			</parameter>
@@ -6907,6 +9045,7 @@
 				blockFactor = "blocksize"
 				debug = "Yes" or "No"
 				returnCode = "Yes" or "No"
+				result = "result_name"
 		-->
 		<tag name="cfstoredproc" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
@@ -6964,6 +9103,15 @@
 				<values>
 					&value_boolean;
 				</values>
+			</parameter>
+			<parameter name="result" type="String" required="false">
+				<help><![CDATA[
+					Specifies a name for the structure in which cfstoredproc
+					returns the statusCode and ExecutionTime variables. If
+					set, this value replaces cfstoredproc as the prefix to
+					use when accessing those variables.
+				]]></help>
+				<values/>
 			</parameter>
 		</tag>
 
@@ -7085,6 +9233,254 @@
 		</tag>
 
 		<!--
+			<cftextarea
+				name = "name"
+				label = "text"
+				required = "yes" or "no"
+				style = "style specification"
+				validate = "data type"
+				validateAt= one or more of "onBlur", "onServer", "onSubmit"
+				message = "text"
+				range = "min_value, max_value"
+				maxlength = "number"
+				pattern = "regexp"
+				onValidate = "script name"
+				onError = "script name"
+				disabled = "true, false, or no attribute value"
+				value = "text"
+				onKeyUp = "JavaScript or ActionScript"
+				onKeyDown = "JavaScript or ActionScript"
+				onMouseUp = "JavaScript or ActionScript"
+				onMouseDown = "JavaScript or ActionScript"
+				onChange = "JavaScript or ActionScript"
+				onClick = "JavaScript or ActionScript"
+				visible = "Yes" or "No"
+				enabled = "Yes" or "No"
+				tooltip = "Tip text"
+				height = "number of pixels" Flash only
+				width = "number of pixels" Flash only
+			>
+			text
+			</cftextarea>
+		-->
+		<tag name="cftextarea" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Puts a multiline text entry box in a cfform tag and
+				controls its display characteristics.
+			]]></help>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+					Name of the cftextinput control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="label" type="String" required="false">
+				<help><![CDATA[
+					Label to put beside the control on a form.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					In HTML or XML format forms, ColdFusion passes the
+					style attribute to the browser or XML.
+					In Flash format forms, must be a style specification in
+					CSS format, with the same syntax and contents as used
+					in Macromedia Flex for the corresponding Flash element.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="required" type="boolean" required="false">
+				<help><![CDATA[
+					- true: the field must contain text.
+					- false: the field can be empty.
+					Default: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="validate" type="String" required="false">
+				<help><![CDATA[
+					The type or types of validation to do. Available validation
+					types and algorithms depend on the format. For details,
+					see the Usage section of the cfinput tag reference.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="validateat" type="String" required="false">
+				<help><![CDATA[
+					How to do the validation. For Flash format forms, onSubmit
+					and onBlur are identical; validation is done on submit.
+					For multiple values, use a comma-delimited list.
+					For details, see the Usage section of the cfinput tag
+					reference.
+					Default: onSubmit
+				]]></help>
+				<values>
+					<value option="onSubmit" />
+					<value option="onServer" />
+					<value option="onBlur" />
+				</values>
+			</parameter>
+			<parameter name="message" type="String" required="false">
+				<help><![CDATA[
+					Message text to display if validation fails.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="range" type="String" required="false">
+				<help><![CDATA[
+					Minimum and maximum numeric allowed values. ColdFusion
+					uses this attribute only if you specify range in the
+					validate attribute.
+					If you specify a single number or a single number a
+					followed by a comma, it is treated as a minimum, with no
+					maximum. If you specify a comma followed by a number,
+					the maximum is set to the specified number, with no
+					minimum.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxlength" type="Numeric" required="false">
+				<help><![CDATA[
+					The maximum length of text that can be entered.
+					ColdFusion uses this attribute only if you specify
+					maxlength in the validate attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="pattern" type="String" required="false">
+				<help><![CDATA[
+					JavaScript regular expression pattern to validate input.
+					Omit leading and trailing slashes. ColdFusion uses this
+					attribute only if you specify regex in the validate attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onvalidate" type="String" required="false">
+				<help><![CDATA[
+					Custom JavaScript function to validate user input. The
+					JavaScript DOM form object, input object, and input
+					object value are passed to routine, which should return
+					True if validation succeeds, False otherwise. If you specify
+					this attribute, ColdFusion ignores the validate attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" type="String" required="false">
+				<help><![CDATA[
+					Custom JavaScript function to execute if validation fails.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="disabled" type="boolean" required="false">
+				<help><![CDATA[
+					Disables user input, making the control read-only. To
+					disable input, specify disabled without an attribute, or
+					disabled="true". To enable input, omit the attribute or
+					specify disabled="false".
+					Default: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="value" type="String" required="false">
+				<help><![CDATA[
+					Initial value to display in text control. You can specify an
+					initial value as an attribute or in the tag body, but not in
+					both places. If you specify the value as an attribute, you
+					must put the closing cftextarea tag immediately after the
+					opening cftextarea tag, with no spaces or line feeds between,
+					or place a closing slash at the end of the opening cftextarea
+					tag. For example:
+					<cftextarea name="description" value="Enter a description." />
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="bind" type="String" required="false">
+				<help><![CDATA[
+					A Flex bind expression that populates the field with
+					information from other form fields.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onkeyup" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user releases a keyboard key in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onkeydown" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash)
+					ActionScript to run when the user presses a keyboard
+					key in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onmouseup" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user presses a mouse button in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onmousedown" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the user releases a mouse button in the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onchange" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) or ActionScript (Flash) to run
+					when the control changes due to user action.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onclick" type="String" required="false">
+				<help><![CDATA[
+					JavaScript (HTML/XML) to run when the user clicks the
+					control. Not supported for Flash forms.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="enabled" type="boolean" required="false">
+				<help><![CDATA[
+					Boolean value specifying whether the control is enabled.
+					A disabled control appears in light gray. The inverse of the
+					diabled attribute.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="tooltip" type="String" required="false">
+				<help><![CDATA[
+					Text to display when the mouse pointer hovers over the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="height" type="Numeric" required="false">
+				<help><![CDATA[
+					The height of the control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="width" type="Numeric" required="false">
+				<help><![CDATA[
+					The width of the control, in pixels.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
+		
+		<!--
 			cftextinput
 				name = "name"
 				value = "text"
@@ -7114,6 +9510,8 @@
 			<help><![CDATA[
 				Puts a single-line text entry box in a cfform tag and controls
 				its display characteristics.
+				
+				Note: tag is deprecated in CF7.
 			]]></help>
 			<parameter name="name" type="String" required="true">
 				<help><![CDATA[
@@ -7421,6 +9819,49 @@
 		</tag>
 
 		<!--
+			<cftimer
+				label= "text"
+				type = "inline" or "outline" or "comment" or "debug" >
+			CFML statement(s)
+			</cftimer>
+		-->
+		<tag name="cftimer" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Displays execution time for a specified section of
+				CFML code. ColdFusion MX displays the timing information
+				along with any output produced by the timed code.
+			]]></help>
+			<parameter name="label" type="String" required="false">
+				<help><![CDATA[
+					Label to display with timing information.
+					Default: " "
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="type" type="String" required="false">
+				<help><![CDATA[
+					- inline: displays timing information inline, following the
+					  resulting HTML.
+					- outline: displays timing information and also displays a line
+					  around the output produced by the timed code. The browser
+					  must support the FIELDSET tag to display the outline.
+					- comment: displays timing information in an HTML comment
+					  in the format <!-- label: elapsed-time ms -->. The default label
+					  is cftimer.
+					- debug: displays timing information in the debug output
+					  under the heading CFTimer Times.
+					Default: debug
+				]]></help>
+				<values>
+					<value option="inline" />
+					<value option="outline" />
+					<value option="comment" />
+					<value option="debug" />
+				</values>
+			</parameter>
+		</tag>
+		
+		<!--
 			cftrace
 				abort = "Yes or No"
 				category = "string"
@@ -7546,31 +9987,36 @@
 		</tag>
 
 		<!--
-			cftree
-				name = "name"
-				required = "Yes" or "No"
+			<cftree name = "name"
+				format="applet" "flash", xml, or "object"
+				required = "yes" or "no"
 				delimiter = "delimiter"
-				completePath = "Yes" or "No"
-				appendKey = "Yes" or "No"
-				highlightHref = "Yes" or "No"
+				completePath = "yes" or "no"
+				appendKey = "yes" or "no"
+				highlightHref = "yes" or "no"
 				onValidate = "script_name"
 				message = "text"
 				onError = "text"
 				lookAndFeel = "motif" or "windows" or "metal"
 				font = "font"
 				fontSize = "size"
-				italic = "Yes" or "No"
-				bold = "Yes" or "No"
+				italic = "yes" or "no"
+				bold = "yes" or "no"
 				height = "integer"
 				width = "integer"
 				vSpace = "integer"
 				hSpace = "integer"
 				align = "alignment"
-				border = "Yes" or "No"
-				hScroll = "Yes" or "No"
-				vScroll = "Yes" or "No"
-				notSupported = "text"
-			/cftree
+				border = "yes" or "no"
+				hScroll = "yes" or "no"
+				vScroll = "yes" or "no"
+				style= "style specification"
+				enabled = "Yes" or "No"
+				visible = "Yes" or "No"
+				tooltip = "Tip text"
+				onChange = "ActionScript"
+				notSupported = "text">
+			</cftree>
 		-->
 		<tag name="cftree" creator="3" single="false" xmlstyle="false">
 			<help><![CDATA[
@@ -7584,10 +10030,32 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="format" type="String" required="false">
+				<help><![CDATA[
+					- applet: displays the tree using a Java applet in the
+					  browser,
+					- flash: displays the tree using a Flash control
+					- object: returns the tree as a ColdFusion structure with the
+					  name specified by the name attribute, For details of the
+					  structure contents, see "object format", below.
+					- xml: Generates an XMLrepresentation of the tree.
+					  In XML format forms, includes the generated XML in the
+					  form. and puts the XML in a string variable with the name
+					  specified by the name attribute.
+					Default: applet
+				]]></help>
+				<values>
+					<value option="applet" />
+					<value option="flash" />
+					<value option="object" />
+					<value option="xml" />
+				</values>
+			</parameter>
 			<parameter name="required" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: user must select an item in tree control
-					No: they do not
+					- true: user must select an item in tree control
+					- false: they do not
+					Default: false
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7596,22 +10064,24 @@
 			<parameter name="delimiter" type="String" required="false">
 				<help><![CDATA[
 					Character to separate elements in form variable path.
+					Default: \\
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="completepath" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: passes the root part of treename.path form variable
-						when cftree is submitted
-					No, or omitted: root level of form variable is not passed;
-						path value starts with the first node
-
+					- true: start the Form.treename.path variable with the root
+					  of the tree path when cftree is submitted.
+					- false: omit the root level from the Form.treename.path
+					  variable; the value starts with the first child node in the
+					  tree.
 					For the preserveData attribute of cfform to work with the
 					tree, you must set this attribute to Yes.
-
-					If you specify a root name for a tree item with cftreeitem
-					queryasroot, that value is returned. If you do not specify
-					a root name, CFML returns the query name as the root.
+					For tree items populated by a query, if you use the
+					cftreeitem queryasroot attribute to specify a root name,
+					that value is returned. If you do not specify a root name,
+					ColdFusion returns the query name.
+					Default: false
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7619,11 +10089,11 @@
 			</parameter>
 			<parameter name="appendkey" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: when used with href, passes CFTREEITEMKEY variable
-						with the value of the selected tree item in URL to the
-						application page specified in the cfform action
-						attribute
-					No
+					- true: if you use cftreeitem href attributes, ColdFusion
+					  appends a CFTREEITEMKEY query string variable with
+					  the value of the selected tree item to the cfform action URL.
+					- false: do not append the tree item value to the URL.
+					Default: true
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7631,9 +10101,10 @@
 			</parameter>
 			<parameter name="highlighthref" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: highlights links that are associated with a cftreeitem
-						with a URL attribute value
-					No: disables highlight
+					- true: highlights as a link the displayed value for any
+					  cftreeitem tag that specifies a href attribute.
+					- false: disables highlighting.
+					Default: true
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7662,12 +10133,12 @@
 			</parameter>
 			<parameter name="lookandfeel" type="String" required="false">
 				<help><![CDATA[
-					motif: renders slider in Motif style
-					windows: renders slider in Windows style
-					metal: renders slider in Java Swing style
-
+					- motif: renders slider in Motif style
+					- windows: renders slider in Windows style
+					- metal: renders slider in Java Swing style
 					If platform does not support style option, tag defaults to
 					platform default style.
+					Default: windows
 				]]></help>
 				<values>
 					<value option="motif" />
@@ -7689,8 +10160,9 @@
 			</parameter>
 			<parameter name="italic" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: displays tree control text in italics
-					No: it does not
+					- true: displays tree control text in italics
+					- false: it does not
+					Default: false
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7698,8 +10170,9 @@
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: displays tree control text in bold
-					No: it does not
+					- true: displays tree control text in bold
+					- false: it does not
+					Default: false
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7707,13 +10180,17 @@
 			</parameter>
 			<parameter name="height" type="Numeric" required="false">
 				<help><![CDATA[
-					Tree control height, in pixels.
+					Tree control height, in pixels. If you omit this attribute in
+					Flash format, Flash automatically sizes the tree.
+					Default: 320 (applet only)
 				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="width" type="Numeric" required="false">
 				<help><![CDATA[
-					Tree control width, in pixels.
+					Tree control width, in pixels. If you omit this attribute in
+					Flash format, Flash automatically sizes the tree.
+					Default: 200 (applet only)
 				]]></help>
 				<values/>
 			</parameter>
@@ -7731,15 +10208,7 @@
 			</parameter>
 			<parameter name="align" type="String" required="false">
 				<help><![CDATA[
-					* top
-                    * left
-                    * bottom
-                    * baseline
-                    * texttop
-                    * absbottom
-                    * middle
-                    * absmiddle
-                    * right
+					Alignment of the tree control applet object.
 				]]></help>
 				<values>
 					<value option="top" />
@@ -7755,8 +10224,9 @@
 			</parameter>
 			<parameter name="border" type="boolean" required="false">
 				<help><![CDATA[
-					* Yes
-					* No
+					- true: display a border around the tree control.
+					- false: no border
+					Default: true
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7764,8 +10234,9 @@
 			</parameter>
 			<parameter name="hscroll" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: permits horizontal scrolling
-					No
+					- true: permits horizontal scrolling
+					- false: no horizontal scrolling
+					Default: true
 				]]></help>
 				<values>
 					&value_boolean;
@@ -7773,26 +10244,70 @@
 			</parameter>
 			<parameter name="vscroll" type="boolean" required="false">
 				<help><![CDATA[
-					Yes: permits vertical scrolling
-					No
+					- true: permits vertical scrolling
+					- false: no vertical scrolling
+					Default: true
 				]]></help>
 				<values>
 					&value_boolean;
 				</values>
 			</parameter>
+			<parameter name="style" type="String" required="false">
+				<help><![CDATA[
+					Must be a style specification in CSS format, with the same
+					syntax and contents as used in Macromedia Flex for the
+					corresponding Flash element.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="enabled" type="boolean" required="false">
+				<help><![CDATA[
+					Flash format only: Boolean value specifying whether the
+					control is enabled. A disabled control appears in light gray.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="visible" type="boolean" required="false">
+				<help><![CDATA[
+					Flash format only: Boolean value specifying whether to
+					show the control. Space that would be occupied by an
+					invisible control is blank.
+					Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="tooltip" type="String" required="false">
+				<help><![CDATA[
+					Flash format only: Text to display when the mouse pointer
+					hovers over the control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onchange" type="String" required="false">
+				<help><![CDATA[
+					ActionScript to run when the control changes due to user action.
+					If you specify an onChange event handler, the Form scope of
+					the ColdFusion action page does not automatically get
+					information about selected items. The ActionScript onChange
+					event handler must handle all changes and selections.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="notsupported" type="String" required="false">
 				<help><![CDATA[
-					Message to display if page that contains Java applet-based
-					form control is opened by browser that does not support
-					Java, or has Java support disabled. For example:
-
-					notSupported = "<b> Browser must support Java to view
-					CFML Java Applets</b>"
-
-					If no message is specified, this message displays:
-
-					<b>Browser must support Java to <br> view CFML Java
-					Applets!</b>
+					Text to display if a page that contains a Java applet-based
+					cfform control is opened by a browser that does not
+					support Java or has Java support disabled. For example:
+					"<strong>Browser must support Java to view ColdFusion
+					Java Applets</strong>"
+					Default:
+					"<b>Browser must support Java to <br>view ColdFusion Java
+					Applets!</b>"
 				]]></help>
 				<values/>
 			</parameter>
@@ -8573,6 +11088,66 @@
 		</function>
 
 		<!--
+			Binary BinaryDecode(string, binaryencoding)
+		-->
+		<function creator="1" name="binarydecode" returns="Binary">
+			<help><![CDATA[
+				Converts a string to a binary object. Used to convert
+				binary data that has been encoded into string format
+				back into binary data.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+					A string containing encoded binary data.
+				]]></help>
+			</parameter>
+			<parameter name="binaryencoding" type="String" required="true">
+				<help><![CDATA[
+					A string specifying the algorithm used to encode the original
+					binary data into a string; must be one of the following:
+					- hex: characters 0-9 and A-F represent the hexadecimal value
+					  of each byte; for example, 3A.
+					- UU: data is encoded using the UNIX UUencode algorithm.
+					- base64: data is encoded using the Base64 algorithm.
+				]]></help>
+				<values>
+					<value option="hex"/>
+					<value option="uu"/>
+					<value option="base64"/>
+				</values>
+			</parameter>
+		</function>
+
+		<!--
+			Binary BinaryEncode(binarydata, encoding)
+		-->
+		<function creator="1" name="binaryencode" returns="String">
+			<help><![CDATA[
+				Converts binary data to a string.
+			]]></help>
+			<parameter name="binarydata" type="Binary" required="true">
+				<help><![CDATA[
+					A string containing encoded binary data.
+				]]></help>
+			</parameter>
+			<parameter name="encoding" type="String" required="true">
+				<help><![CDATA[
+					A string specifying the encoding method to use to represent
+					the data; one of the following:
+					- hex: use characters 0-9 and A-F represent the hexadecimal value
+					  of each byte; for example, 3A.
+					- UU: use the UNIX UUencode algorithm to convert the data.
+					- base64: use the Base64 algorithm to convert the data.
+				]]></help>
+				<values>
+					<value option="hex"/>
+					<value option="uu"/>
+					<value option="base64"/>
+				</values>
+			</parameter>
+		</function>
+
+		<!--
 			Numeric BitAnd(number1, number2)
 		-->
 		<function creator="3" name="bitand" returns="Numeric">
@@ -8754,6 +11329,70 @@
 		</function>
 
 		<!--
+			Binary CharsetDecode(string, encoding)
+		-->
+		<function creator="1" name="charsetdecode" returns="Binary">
+			<help><![CDATA[
+				Converts as string to a binary representation.
+			]]></help>
+			<parameter name="string" type="String" required="true">
+				<help><![CDATA[
+					A string containing data to encode in binary format.
+				]]></help>
+			</parameter>
+			<parameter name="encoding" type="String" required="true">
+				<help><![CDATA[
+					A string specifying encoding of the input data.
+				]]></help>
+				<values>
+					<value option="utf-8"/>
+					<value option="iso-8859-1"/>
+					<value option="windows-1252"/>
+					<value option="us-ascii"/>
+					<value option="shift_jis"/>
+					<value option="iso-2022-jp"/>
+					<value option="euc-jp"/>
+					<value option="euc-kr"/>
+					<value option="big5"/>
+					<value option="euc-cn"/>
+					<value option="utf-16"/>
+				</values>
+			</parameter>
+		</function>
+
+		<!--
+			String CharsetEncode(binaryobject, encoding)
+		-->
+		<function creator="1" name="charsetencode" returns="Binary">
+			<help><![CDATA[
+				Uses the specified encoding to convert binary data to a string.
+			]]></help>
+			<parameter name="binaryobject" type="Binary" required="true">
+				<help><![CDATA[
+					A variable containing binary data to decode into text.
+				]]></help>
+			</parameter>
+			<parameter name="encoding" type="String" required="true">
+				<help><![CDATA[
+					The character encoding that was used to encode the string into binary format.
+				]]></help>
+				<values>
+					<value option="utf-8"/>
+					<value option="iso-8859-1"/>
+					<value option="windows-1252"/>
+					<value option="us-ascii"/>
+					<value option="shift_jis"/>
+					<value option="iso-2022-jp"/>
+					<value option="euc-jp"/>
+					<value option="euc-kr"/>
+					<value option="big5"/>
+					<value option="euc-cn"/>
+					<value option="utf-16"/>
+				</values>
+			</parameter>
+		</function>
+
+		<!--
 			Character Chr(number)
 		-->
 		<function creator="3" name="chr" returns="char">
@@ -8926,7 +11565,7 @@
 			CreateObject(type, component-name)
 			CreateObject(type, context, class, locale)
 			CreateObject(type, class)
-			CreateObject(type, urltowsdl)
+			CreateObject(type, urltowsdl [, portname])
 		-->
 		<function creator="3" name="createobject" returns="Object">
 		<help><![CDATA[
@@ -8936,7 +11575,7 @@
 				CreateObject('component', component-name)
 				CreateObject('corba', context, class, locale)
 				CreateObject('java', class)
-				CreateObject('webservice', urltowsdl)
+				CreateObject('webservice', urltowsdl, [, portname])
 			]]></help>
 
 			<parameter name="type" type="String" required="true">
@@ -8990,6 +11629,20 @@
 			</parameter>
 			<parameter name="urltowsdl" type="String" required="true">
 				<help><![CDATA[
+					WSDL file URL; location of web service
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="webservice" required="true" index="1"/>
+				</triggers>
+			</parameter>
+			<parameter name="portname" type="String" required="false">
+				<help><![CDATA[
+				The port name for the web service. This value is case-sensitive
+				and corresponds to the port element's name attribute under the
+				service element.
+				Specify this parameter if the web service contains multiple ports.
+				If no port name is specified, ColdFusion uses the first port found
+				in the WSDL.
 				]]></help>
 				<triggers>
 					<selectedValue attributeName="type" value="webservice" required="true" index="1"/>
@@ -9554,7 +12207,7 @@
 		</function>
 
 		<!--
-			String Encrypt(string, seed)
+			String Encrypt(string, key[, algorithm[, encoding]]))
 		-->
 		<function creator="3" name="encrypt" returns="String">
 			<help><![CDATA[
@@ -9569,9 +12222,29 @@
 				<help><![CDATA[
 				]]></help>
 			</parameter>
-			<parameter name="seed" type="String" required="true">
+			<parameter name="key" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+			</parameter>
+			<parameter name="algorithm" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="CFMX_COMPAT" />
+					<value option="AES" />
+					<value option="BLOWFISH" />
+					<value option="DES" />
+					<value option="DESEDE" />
+				</values>
+			</parameter>
+			<parameter name="encoding" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="hex" />
+					<value option="uu" />
+					<value option="base64" />
+				</values>
 			</parameter>
 		</function>
 
@@ -9770,6 +12443,26 @@
 		</function>
 
 		<!--
+			String GenerateSecretKey(algorithm)
+		-->
+		<function creator="1" name="generatesecretkey" returns="String">
+			<help><![CDATA[
+				Gets a secure key value for use in the encrypt function.
+			]]></help>
+			<parameter name="algorithm" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="CFMX_COMPAT" />
+					<value option="AES" />
+					<value option="BLOWFISH" />
+					<value option="DES" />
+					<value option="DESEDE" />
+				</values>
+			</parameter>
+		</function>
+
+		<!--
 			String GetAuthUser()
 		-->
 		<function creator="3" name="getauthuser" returns="String">
@@ -9821,6 +12514,15 @@
 			<help><![CDATA[
 				Finds the client variables to which a page has write access.
 				Comma-delimited list of non-read-only client variables
+			]]></help>
+		</function>
+
+		<!--
+			String GetContextRoot()
+		-->
+		<function creator="1" name="getcontextroot" returns="String">
+			<help><![CDATA[
+				Returns path to the J2EE server context root for the current request.
 			]]></help>
 		</function>
 
@@ -9902,6 +12604,21 @@
 		</function>
 
 		<!--
+			Object GetGatewayHelper(gatewayID)
+		-->
+		<function creator="1" name="getgatewayhelper" returns="Object">
+			<help><![CDATA[
+				Gets a Java GatewayHelper object that provides methods
+				and properties for use with a ColdFusion event gateway.
+			]]></help>
+			<parameter name="gatewayID" type="String" required="true">
+				<help><![CDATA[
+                Identifier of the gateway that provides the GatewayHelper object.
+				]]></help>
+			</parameter>
+		</function>
+
+		<!--
 			Struct GetHttpRequestData()
 		-->
 		<function creator="3" name="gethttprequestdata" returns="Struct">
@@ -9966,6 +12683,17 @@
 				To set the default display format of date, time, number, and
 				currency values in a CFML application session, you use
 				the SetLocale function.
+			]]></help>
+		</function>
+
+		<!--
+			String GetLocaleDisplayName([locale[, inLocale]])
+		-->
+		<function creator="1" name="getlocaledisplayname" returns="String">
+			<help><![CDATA[
+				Gets a locale value and displays the name in a manner
+				that is appropriate to a specific locale. By default,
+				gets the current locale in the current locale's language.
 			]]></help>
 		</function>
 
@@ -10082,6 +12810,98 @@
 		</function>
 
 		<!--
+			Object GetSOAPRequest()
+		-->
+		<function creator="1" name="getsoaprequest" returns="Object">
+			<help><![CDATA[
+				Returns an XML object that contains the entire SOAP
+				request. Usually called from within a web service CFC.
+			]]></help>
+		</function>
+
+		<!--
+			Object GetSOAPRequestHeader(namespace, name [, asXML])
+		-->
+		<function creator="1" name="getsoaprequestheader" returns="Object">
+			<help><![CDATA[
+				Obtains a SOAP request header. Call only from within
+				a CFC web service function that is processing a request
+				as a SOAP web service.
+			]]></help>
+			<parameter name="namespace" type="String" required="true">
+				<help><![CDATA[
+				A String that is the namespace for the header
+				]]></help>
+			</parameter>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+				A String that is the name of the header
+				]]></help>
+			</parameter>
+			<parameter name="asXML" type="boolean" required="false">
+				<help><![CDATA[
+				If True, the header is returned as a CFML XML object;
+				if false (default), the header is returned as a Java object.
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+		</function>
+
+		<!--
+			Object GetSOAPResponse(webservice)
+		-->
+		<function creator="1" name="getsoapresponse" returns="Object">
+			<help><![CDATA[
+				Returns an XML object that contains the entire
+				SOAP response after invoking a web service.
+			]]></help>
+			<parameter name="webservice" type="String" required="true">
+				<help><![CDATA[
+				A webservice object as returned from the cfobject
+				tag or the CreateObject function.
+				]]></help>
+			</parameter>
+		</function>
+
+		<!--
+			Object GetSOAPResponseHeader(webservice, namespace, name [, asXML])
+		-->
+		<function creator="1" name="getsoapresponseheader" returns="Object">
+			<help><![CDATA[
+				Returns a SOAP response header. Call this function
+				from within code that is invoking a web service after
+				making a web service request.
+			]]></help>
+			<parameter name="webservice" type="Object" required="true">
+				<help><![CDATA[
+				A webservice object as returned from the cfobject tag
+				or the Createobject function.
+				]]></help>
+			</parameter>
+			<parameter name="namespace" type="String" required="true">
+				<help><![CDATA[
+				A String that is the namespace for the header.
+				]]></help>
+			</parameter>
+			<parameter name="name" type="String" required="true">
+				<help><![CDATA[
+				A String that is the name of the SOAP header.
+				]]></help>
+			</parameter>
+			<parameter name="asXML" type="boolean" required="false">
+				<help><![CDATA[
+				If True, the header is returned as a CFML XML object;
+				if false (default), the header is returned as a Java object.
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+		</function>
+
+		<!--
 			String GetTempFile(dir, prefix)
 		-->
 		<function creator="3" name="gettempfile" returns="String">
@@ -10162,7 +12982,7 @@
 		</function>
 
 		<!--
-			String Hash(string)
+			String Hash(string[, algorithm[, encoding]] )
 		-->
 		<function creator="3" name="hash" returns="String">
 			<help><![CDATA[
@@ -10174,6 +12994,39 @@
 			<parameter name="string" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+			</parameter>
+			<parameter name="algorithm" type="String" required="false">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="CFMX_COMPAT" />
+					<value option="MD5" />
+					<value option="SHA" />
+					<value option="SHA-256" />
+					<value option="SHA-384" />
+					<value option="SHA-512" />
+				</values>
+			</parameter>
+			<parameter name="encoding" type="String" required="false">
+				<help><![CDATA[
+				A string specifying the encoding to use when converting
+				the string to byte data used by the hash algorithm.
+				Must be a character encoding name recognized by the
+				Java runtime.
+				]]></help>
+				<values>
+					<value option="utf-8" />
+					<value option="iso-8859-1" />
+					<value option="windows-1252" />
+					<value option="us-ascii" />
+					<value option="shift_jis" />
+					<value option="iso-2022-jp" />
+					<value option="euc-jp" />
+					<value option="euc-kr" />
+					<value option="big5" />
+					<value option="euc-cn" />
+					<value option="utf-16" />
+				</values>
 			</parameter>
 		</function>
 
@@ -10508,7 +13361,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			boolean IsNumericDate(number)
 		-->
@@ -10566,6 +13418,15 @@
 		</function>
 
 		<!--
+			boolean IsSOAPRequest()
+		-->
+		<function creator="1" name="issoaprequest" returns="boolean">
+			<help><![CDATA[
+				Determines whether a CFC is being called as a web service.
+			]]></help>
+		</function>
+
+		<!--
 			boolean IsStruct(variable)
 		-->
 		<function creator="3" name="isstruct" returns="boolean">
@@ -10596,6 +13457,83 @@
 		</function>
 
 		<!--
+			boolean IsValid(type, value)
+			boolean IsValid("range", value, min, max)
+			boolean IsValid("regex" or "regular_expression", value, pattern)
+		-->
+		<function creator="1" name="isvalid" returns="boolean">
+			<help><![CDATA[
+				Tests whether a value meets a validation or data type rule.
+			]]></help>
+			<parameter name="type" type="String" required="true">
+				<help><![CDATA[
+				The valid format for the data.
+				]]></help>
+				<values>
+					<value option="any" />
+					<value option="array" />
+					<value option="binary" />
+					<value option="boolean" />
+					<value option="creditcard" />
+					<value option="date" />
+					<value option="time" />
+					<value option="email" />
+					<value option="eurodate" />
+					<value option="float" />
+					<value option="numeric" />
+					<value option="guid" />
+					<value option="integer" />
+					<value option="query" />
+					<value option="range" />
+					<value option="regex" />
+					<value option="regular_expression" />
+					<value option="ssn" />
+					<value option="social_security_number" />
+					<value option="string" />
+					<value option="struct" />
+					<value option="telephone" />
+					<value option="url" />
+					<value option="uuid" />
+					<value option="usdate" />
+					<value option="variablename" />
+					<value option="xml" />
+					<value option="zipcode" />
+				</values>
+			</parameter>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				The value to test.
+				]]></help>
+			</parameter>
+			<parameter name="min" type="Numeric" required="true">
+				<help><![CDATA[
+				The minimum valid value; used only for range validation.
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="range" required="true" index="1"/>
+				</triggers>
+			</parameter>
+			<parameter name="max" type="Numeric" required="true">
+				<help><![CDATA[
+				The maximum valid value; used only for range validation.
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="range" required="true" index="1"/>
+				</triggers>
+			</parameter>
+			<parameter name="pattern" type="String" required="true">
+				<help><![CDATA[
+				A regular expression that the parameter must match;
+				used only for regex or regular_expression validation.
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" value="regex" required="true" index="1"/>
+					<selectedValue attributeName="type" value="regular_expression" required="true" index="2"/>
+				</triggers>
+			</parameter>
+		</function>
+
+		<!--
 			boolean IsWDDX(value)
 		-->
 		<function creator="3" name="iswddx" returns="boolean">
@@ -10604,6 +13542,35 @@
 			]]></help>
 			<parameter name="value" type="Object" required="true">
 				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+
+		<!--
+			boolean IsXML(value)
+		-->
+		<function creator="1" name="isxml" returns="boolean">
+			<help><![CDATA[
+				Determines whether a string is well-formed XML text.
+			]]></help>
+			<parameter name="value" type="String" required="true">
+				<help><![CDATA[
+				A string containing the XML document text.
+				]]></help>
+			</parameter>
+		</function>
+
+		<!--
+			boolean IsXmlAttribute(value)
+		-->
+		<function creator="1" name="isxmlattribute" returns="boolean">
+			<help><![CDATA[
+				Determines whether the function parameter is an
+				XML Document Object Model (DOM) attribute node.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				Name of an XML attribute.
 				]]></help>
 			</parameter>
 		</function>
@@ -10632,6 +13599,21 @@
 			]]></help>
 			<parameter name="value" type="Object" required="true">
 				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>
+
+		<!--
+			boolean IsXmlNode(value)
+		-->
+		<function creator="1" name="isxmlnode" returns="boolean">
+			<help><![CDATA[
+				Determines whether the function parameter is
+				an XML document object node.
+			]]></help>
+			<parameter name="value" type="Object" required="true">
+				<help><![CDATA[
+				Name of an XML document object node.
 				]]></help>
 			</parameter>
 		</function>
@@ -10692,7 +13674,6 @@
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			String LCase(string)
@@ -10906,7 +13887,7 @@
 				<help><![CDATA[
 				]]></help>
 			</parameter>
-			<parameter name="delimiters" type="String" required="false">
+			<parameter name="delimiters" type="String" required="false" default=",">
 				<help><![CDATA[
 				]]></help>
 				<values>
@@ -10914,7 +13895,6 @@
 				</values>
 			</parameter>
 		</function>
-
 
 		<!--
 			String ListFirst(list [, delimiters ])
@@ -10935,7 +13915,6 @@
 				</values>
 			</parameter>
 		</function>
-
 
 		<!--
 			String ListGetAt(list, position [, delimiters ])
@@ -11367,8 +14346,6 @@
 					<value option="local" />
 					<value option="international" />
 					<value option="none" />
-
-
 				</values>
 			</parameter>
 		</function>
@@ -11400,7 +14377,6 @@
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			boolean LSIsNumeric(string)
@@ -11777,7 +14753,7 @@
 		</function>
 
 		<!--
-			Numeric QueryAddColumn(query, column-name, array-name)
+			Numeric QueryAddColumn(query, column-name[, datatype], array-name)
 		-->
 		<function creator="3" name="queryaddcolumn" returns="Numeric">
 			<help><![CDATA[
@@ -11793,6 +14769,22 @@
 			<parameter name="column-name" type="String" required="true">
 				<help><![CDATA[
 				]]></help>
+			</parameter>
+			<parameter name="datatype" type="String" required="false">
+				<help><![CDATA[
+				Column data type.
+				]]></help>
+				<values>
+					<value option="Integer" />
+					<value option="BigInt" />
+					<value option="Double" />
+					<value option="Decimal" />
+					<value option="VarChar" />
+					<value option="Binary" />
+					<value option="Bit" />
+					<value option="Time" />
+					<value option="Data" />
+				</values>
 			</parameter>
 			<parameter name="array-name" type="Array" required="true">
 				<help><![CDATA[
@@ -11818,7 +14810,7 @@
 		</function>
 
 		<!--
-			Query QueryNew(columnlist)
+			Query QueryNew(columnlist [, columntypelist])
 		-->
 		<function creator="3" name="querynew" returns="Query">
 			<help><![CDATA[
@@ -11829,6 +14821,22 @@
 					A string or a variable that contains one. Delimited list
 					of column names, or an empty string.
 				]]></help>
+			</parameter>
+			<parameter name="columntypelist" type="String" required="false">
+				<help><![CDATA[
+					Comma-delimited list specifying column data types.
+				]]></help>
+				<values>
+					<value option="Integer" />
+					<value option="BigInt" />
+					<value option="Double" />
+					<value option="Decimal" />
+					<value option="VarChar" />
+					<value option="Binary" />
+					<value option="Bit" />
+					<value option="Time" />
+					<value option="Data" />
+				</values>
 			</parameter>
 		</function>
 
@@ -11880,44 +14888,45 @@
 		</function>
 
 		<!--
-			Numeric Rand()
+			Numeric Rand([algorithm])
 		-->
 		<function creator="3" name="rand" returns="Numeric">
 			<help><![CDATA[
-				Generates a random number in the range 0 - 1.
+				Generates a pseudo-random number in the range 0 - 1.
 			]]></help>
+			<parameter name="algorithm" type="String" required="false">
+				<help><![CDATA[
+				The algorithm to use to generated the random number.
+			]]></help>
+				<values>
+					<value option="CFMX_COMPAT" />
+					<value option="SHA1PRNG" />
+					<value option="IBMSecureRandom" />
+				</values>
+			</parameter>
 		</function>
 
 		<!--
-			Numeric Randomize(number)
+			Numeric Randomize(number[, algorithm])
 		-->
 		<function creator="3" name="randomize" returns="Numeric">
 			<help><![CDATA[
-				Seeds the CFML random number generator with an integer
-				number. Seeding the generator helps ensure that the Rand
-				function generates highly random numbers.
-
-				Note: Although this function returns a decimal number,
-				it is not a random number.
+				Seeds the pseudo-random number generator with an
+				integer number, ensuring repeatable number patterns.
 			]]></help>
 			<parameter name="number" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
 			</parameter>
-		</function>
-
-		<!--
-			Numeric Randomize(number)
-		-->
-		<function creator="3" name="randomize" returns="Numeric">
-			<help><![CDATA[
-				Seeds the CFML random number generator with an integer
-				number. Seeding the generator helps ensure that the Rand
-				function generates highly random numbers.
-			]]></help>
-			<parameter name="number" type="Numeric" required="true">
+			<parameter name="algorithm" type="String" required="false">
 				<help><![CDATA[
+				The algorithm to use to generated the random number.
 				]]></help>
+				<values>
+					<value option="CFMX_COMPAT" />
+					<value option="SHA1PRNG" />
+					<value option="IBMSecureRandom" />
+				</values>
 			</parameter>
 		</function>
 
@@ -11938,6 +14947,16 @@
 			<parameter name="number2" type="Numeric" required="true">
 				<help><![CDATA[
 				]]></help>
+			</parameter>
+			<parameter name="algorithm" type="String" required="false">
+				<help><![CDATA[
+				The algorithm to use to generated the random number.
+				]]></help>
+				<values>
+					<value option="CFMX_COMPAT" />
+					<value option="SHA1PRNG" />
+					<value option="IBMSecureRandom" />
+				</values>
 			</parameter>
 		</function>
 
@@ -12306,7 +15325,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			String RTrim(string)
 		-->
@@ -12335,6 +15353,25 @@
 				<values>
 					<value option="Now()" />
 				</values>
+			</parameter>
+		</function>
+
+		<!--
+			String SendGatewayMessage(gatewayID, data)
+		-->
+		<function creator="1" name="sendgatewaymessage" returns="String">
+			<help><![CDATA[
+				Sends an outgoing message through a ColdFusion MX event gateway.
+			]]></help>
+			<parameter name="gatewayID" type="String" required="true">
+				<help><![CDATA[
+					Identifier of the gateway to send the message.
+				]]></help>
+			</parameter>
+			<parameter name="data" type="Struct" required="true">
+				<help><![CDATA[
+                     A ColdFusion structure.
+				]]></help>
 			</parameter>
 		</function>
 
@@ -12421,7 +15458,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			String SetProfileString(iniPath, section, entry, value)
 		-->
@@ -12452,7 +15488,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			void SetVariable(name, value)
 		-->
@@ -12474,7 +15509,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			Numeric Sgn(number)
 		-->
@@ -12487,7 +15521,6 @@
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			Numeric Sin(number)
@@ -12522,7 +15555,6 @@
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			String SpanIncluding(string, set)
@@ -12645,7 +15677,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			boolean StructDelete(structure, key [, indicatenotexisting ])
 		-->
@@ -12688,7 +15719,6 @@
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			Array StructFindKey(top, value, scope)
@@ -12772,7 +15802,6 @@
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			boolean StructInsert(structure, key, value [, allowoverwrite ])
@@ -13046,6 +16075,53 @@
 		</function>
 
 		<!--
+			Binary ToScript(cfvar, javascriptvar, outputformat, ASFormat)
+		-->
+		<function creator="1" name="tobinary" returns="Binary">
+			<help><![CDATA[
+				Creates a JavaScript or ActionScript expression that
+				assigns the value of a ColdFusion variable to a JavaScript
+				or ActionScript variable. This function can convert
+				ColdFusion strings, numbers, arrays, structures, and
+				queries to JavaScript or ActionScript syntax that defines
+				equivalent variables and values.
+			]]></help>
+			<parameter name="cfvar" type="Object" required="true">
+				<help><![CDATA[
+				A ColdFusion variable. This can contain one of the following:
+				String, Number, Array, Structure or Query.
+				]]></help>
+			</parameter>
+			<parameter name="javascriptvar" type="String" required="true">
+				<help><![CDATA[
+				A string that specifies the name of the JavaScript variable
+				that the ToScript function creates.
+				]]></help>
+			</parameter>
+			<parameter name="outputformat" type="boolean" required="false">
+				<help><![CDATA[
+				A Boolean value that determines whether to create
+				WDDX (JavaScript) or ActionScript style output for
+				structures and queries.
+				Default: true
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="ASFormat" type="boolean" required="false">
+				<help><![CDATA[
+				A Boolean value that specifies whether to use
+				ActionScript shortcuts in the script.
+				Default: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+		</function>
+
+		<!--
 			String ToString(any_value[, encoding])
 		-->
 		<function creator="3" name="tostring" returns="String">
@@ -13136,7 +16212,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			String URLEncodedFormat(string [, charset ])
 		-->
@@ -13193,7 +16268,6 @@
 			</parameter>
 		</function>
 
-
 		<!--
 			Numeric Val(string)
 		-->
@@ -13208,7 +16282,6 @@
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			String ValueList(query.column [, delimiter ])
@@ -13236,7 +16309,6 @@
 				</values>
 			</parameter>
 		</function>
-
 
 		<!--
 			Numeric Week(date)
@@ -13328,9 +16400,8 @@
 			</parameter>
 		</function>
 
-
 		<!--
-			Object XmlElemNew(xmlObj, childName)
+			Object XmlElemNew(xmlObj[, namespace], childName)
 		-->
 		<function creator="3" name="xmlelemnew" returns="Object">
 			<help><![CDATA[
@@ -13341,10 +16412,15 @@
 					The name of an XML object. An XML document or an element.
 				]]></help>
 			</parameter>
+			<parameter name="namespace" type="String" required="false">
+				<help><![CDATA[
+					URI of the namespace to which this element belongs.
+				]]></help>
+			</parameter>
 			<parameter name="childname" type="String" required="true">
 				<help><![CDATA[
 					The name of the element to create. This element becomes a
-					child element of xmlObj in the tree
+					child element of xmlObj in the tree.
 				]]></help>
 			</parameter>
 		</function>
@@ -13363,6 +16439,19 @@
 			</parameter>
 		</function>
 
+		<!--
+			String XmlGetNodeType(xmlNode)
+		-->
+		<function creator="1" name="xmlgetnodetype" returns="String">
+			<help><![CDATA[
+				Determines the type of an XML document object node.
+			]]></help>
+			<parameter name="xmlNode" type="Object" required="true">
+				<help><![CDATA[
+				An XML DOM object node.
+				]]></help>
+			</parameter>
+		</function>
 
 		<!--
 			Object XmlNew([caseSensitive])
@@ -13380,7 +16469,7 @@
 		</function>
 
 		<!--
-			Object XmlParse(xmlString [, caseSensitive ] )
+			Object XmlParse(xmlText [[, caseSensitive ], validator])
 		-->
 		<function creator="3" name="xmlparse" returns="Object">
 			<help><![CDATA[
@@ -13389,16 +16478,36 @@
 			]]></help>
 			<parameter name="xmlstring" type="String" required="true">
 				<help><![CDATA[
-					An XML document object string
+					Any of the following:
+					 - A string containing XML text.
+					 - The name of an XML file.
+					 - The URL of an XML file; valid protocol identifiers
+					   include http, https, ftp, and file.
 				]]></help>
 			</parameter>
 			<parameter name="casesensitive" type="boolean" required="false">
 				<help><![CDATA[
-					maintains the case of document elements and attributes
+					Maintains the case of document elements and attributes.
+					Default: false
+				]]></help>
+				<values>
+					&value_boolean;
+				</values>
+			</parameter>
+			<parameter name="validator" type="String" required="false">
+				<help><![CDATA[
+					Any of the following:
+					 - The name of a Document Type Definition (DTD) or
+					   XML Schema file.
+					 - The URL of a DTD or Schema file; valid protocol
+					   identifiers include http, https, ftp, and file.
+					 - A string representation of a DTD or Schema.
+					 - An empty string; in this case, the XML file must
+					   contain an embedded DTD or Schema identifier, which
+					   is used to validate the document.
 				]]></help>
 			</parameter>
 		</function>
-
 
 		<!--
 			Array XmlSearch(xmlDoc, xPathString)
@@ -13419,7 +16528,7 @@
 		</function>
 
 		<!--
-			String XmlTransform(xmlString | xmlObj, xslString)
+			String XmlTransform(xml, xsl[, parameters])
 		-->
 		<function creator="3" name="xmltransform" returns="String">
 			<help><![CDATA[
@@ -13429,19 +16538,61 @@
 				or representation by applying an Extensible Stylesheet
 				Language (XSL) stylesheet to it.
 			]]></help>
-			<parameter name="xmlstring" type="String" required="true">
+			<parameter name="xml" type="String" required="true">
 				<help><![CDATA[
-					A string that represents the XML document, or a parsed
-					object representation of it.
+				An XML document in string format, or an XML document object.
 				]]></help>
 			</parameter>
-			<parameter name="xslstring" type="String" required="true">
+			<parameter name="xsl" type="String" required="true">
 				<help><![CDATA[
-					XSLT transformation to apply.
+				XSLT transformation to apply; can be any of the following:
+				 - A string containing XSL text.
+				 - The name of an XSTLT file. Relative paths start at
+				   the directory containing the current CFML page.
+				 - The URL of an XSLT file; valid protocol identifiers
+				   include http, https, ftp, and file. Relative paths start
+				   at the directory containing the current CFML page.
+				]]></help>
+			</parameter>
+			<parameter name="parameters" type="Struct" required="false">
+				<help><![CDATA[
+				A structure containing XSL template parameter name-value
+				pairs to use in transforming the document. The XSL transform
+				defined in the xslString parameter uses these parameter values
+				in processing the xml.
 				]]></help>
 			</parameter>
 		</function>
 
+		<!--
+			Struct XmlValidate(xmlDoc[, validator])
+		-->
+		<function creator="1" name="xmlvalidate" returns="Struct">
+			<help><![CDATA[
+				Uses a Document Type Definition (DTD) or XML Schema
+				to validate an XML text document or an XML document object.
+			]]></help>
+			<parameter name="xmlDoc" type="Object" required="true">
+				<help><![CDATA[
+				Any of the following:
+				 - A string containing an XML document.
+				 - The name of an XML file.
+				 - The URL of an XML file; valid protocol identifiers
+				   include http, https, ftp, and file.
+				 - An XML document object, such as one generated by
+				   the XmlParse function.
+				]]></help>
+			</parameter>
+			<parameter name="validator" type="String" required="false">
+				<help><![CDATA[
+				Any of the following:
+				 - A string containing a DTD or Schema.
+				 - The name of a DTD or Schema file.
+				 - The URL of a DTD or Schema file; valid protocol
+				   identifiers include http, https, ftp, and file.
+				]]></help>
+			</parameter>
+		</function>
 
 		<!--
 			Numeric Year(date)
