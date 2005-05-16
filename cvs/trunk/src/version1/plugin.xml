@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.18.11"
+   version="1.1.18.12"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -836,7 +836,7 @@
             command="com.rohanclan.cfml.editors.actions.InsertBR"
             scope="org.eclipse.ui.textEditorScope"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Enter">
+            keySequence="Ctrl+Shift+space">
       </keyBinding>
       <!-- insert an html nbsp action (for Michael Wolfe) -->
       <command
@@ -849,7 +849,7 @@
             command="com.rohanclan.cfml.editors.actions.InsertNBSP"
             scope="org.eclipse.ui.textEditorScope"
             configuration="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+Space">
+            keySequence="Ctrl+Enter">
       </keyBinding>
       <!-- insert an html p action (for Michael Wolfe) -->
       <command

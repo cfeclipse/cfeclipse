@@ -7702,7 +7702,7 @@
 				displayname="descriptive name"
 				hint="extended description"
 		-->
-		<tag name="cfproperty" creator="3" single="true" xmlstyle="false">
+		<tag name="cfproperty" creator="3" single="true" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Defines properties of a CFML component (CFC). Used to
 				create complex data types for web services. The attributes of

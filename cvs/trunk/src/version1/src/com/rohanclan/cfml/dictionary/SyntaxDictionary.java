@@ -109,6 +109,7 @@ public abstract class SyntaxDictionary {
 				CFMLPlugin.getDefault().getBundle().getEntry("/"),
 				"dictionary/"
 			);
+			
 		} 
 		catch (MalformedURLException e) 
 		{
