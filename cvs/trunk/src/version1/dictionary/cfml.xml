@@ -6312,7 +6312,7 @@
 					<value option="information" />
 					<value option="warning" />
 					<value option="error" />
-					<value option="fatal information" />
+					<value option="fatal" />
 				</values>
 			</parameter>
 			<parameter name="application" type="boolean" required="false">
