@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.8 2005-02-25 23:24:22 chrisbradford Exp $
- * $Revision: 1.8 $
- * $Date: 2005-02-25 23:24:22 $
+ * $Id: CFEPartition.java,v 1.9 2005-06-14 21:36:11 smilligan Exp $
+ * $Revision: 1.9 $
+ * $Date: 2005-06-14 21:36:11 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -35,7 +35,7 @@ import org.eclipse.jface.text.Assert;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public final class CFEPartition extends TypedPosition {
 
@@ -169,6 +169,23 @@ public final class CFEPartition extends TypedPosition {
         return this.fIsCloser;
     }
 
+    /**
+     * @return a meningful string representation of this partition
+     */
+    public String toString() {
+    	String info = "";
+    	info += getType(); 
+	    info += " starting at ";
+	    info += getOffset();
+	    info += " ending at "; 
+	    info += Integer.toString(getOffset() + getLength());
+	    if (getTagName() != null) {
+	        info += " (";
+	        info += getTagName();
+	        info += ") ";
+	    };
+	    return info;
+    }
 }
 
 
@@ -177,6 +194,9 @@ public final class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2005/02/25 23:24:22  chrisbradford
+ * Added field and methods for whether the partition is a closer tag
+ *
  * Revision 1.7  2005/02/01 01:52:49  smilligan
  * Fixed a couple of issues with the partitioner.
  *

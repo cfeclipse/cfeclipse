@@ -76,11 +76,11 @@ public class AlertUtils {
      * 
      * @param message The message to display.
      */
-    public static void alertUser(String message) {
+    public static int alertUser(String message) {
         MessageBox msg = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_INFORMATION);
         msg.setText("Error!");
         msg.setMessage(message);
-        msg.open();
+        return msg.open();
     }
     
     /**

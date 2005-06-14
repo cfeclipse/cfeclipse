@@ -183,12 +183,15 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			getSite().getPage().addPartListener(this);
 			
 			ITextEditor ite = (ITextEditor)iep;
-			ICFDocument icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
-			
+			ICFDocument icfd = null;
+			CFDocument cfd = null;
+			if (ite.getDocumentProvider().getDocument(iep.getEditorInput()) instanceof ICFDocument) {
+				icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
+				cfd = icfd.getCFDocument();
+			}
 			//icfd.clearAllMarkers();
 			//icfd.parseDocument();
 			
-			CFDocument cfd = icfd.getCFDocument();
 			if(cfd != null)
 			{
 				docRoot = cfd.getDocumentRoot();

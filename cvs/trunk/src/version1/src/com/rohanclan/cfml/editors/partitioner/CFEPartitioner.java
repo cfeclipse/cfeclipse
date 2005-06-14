@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.9 2005-04-28 00:42:49 smilligan Exp $
- * $Revision: 1.9 $
- * $Date: 2005-04-28 00:42:49 $
+ * $Id: CFEPartitioner.java,v 1.10 2005-06-14 21:36:11 smilligan Exp $
+ * $Revision: 1.10 $
+ * $Date: 2005-06-14 21:36:11 $
  * 
  * Created on Oct 17, 2004
  *
@@ -712,6 +712,15 @@ public class CFEPartitioner implements IDocumentPartitioner,
                     CFEPartition tmp = (CFEPartition)partitions[i+1];
                     tmp.offset = p.offset;
                         
+                } else if (p.isPseudoPartition()) {
+                	if (fInsertedText.indexOf('*') >= 0
+                			|| fDeletedText.indexOf('*') >= 0
+                			|| fInsertedText.indexOf('/') >= 0
+                			|| fDeletedText.indexOf('/') >= 0) {
+                		fReparseStart = Math.min(p.offset,fReparseStart);
+                		fReparseEnd = Math.max(p.offset+p.length,fReparseEnd);
+                	}
+                		
                 }
             }
 
@@ -873,6 +882,10 @@ public class CFEPartitioner implements IDocumentPartitioner,
             || fInsertedText.indexOf('"') >= 0
             || fDeletedText.indexOf('\'') >= 0
             || fInsertedText.indexOf('\'') >= 0
+            || fInsertedText.indexOf('*') >= 0
+            || fDeletedText.indexOf('*') >=0
+            || fInsertedText.indexOf('/') >= 0
+            || fDeletedText.indexOf('/') >= 0
             || fInsertedText.indexOf(10) >= 0) {
 
             return true;
@@ -1005,7 +1018,6 @@ public class CFEPartitioner implements IDocumentPartitioner,
             if (!updateCouldChangePartitions(e)) {
                 return updatePartitionOffsets(e);
             }
-            
             
             // Grab all the positions in the document
             Position[] category = d.getPositions(fPositionCategory);

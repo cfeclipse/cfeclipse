@@ -35,6 +35,7 @@ import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 
 /**
+ * 
  * @author Stephen Milligan
  *
  * Tracks and rebuilds annotations that are affected
