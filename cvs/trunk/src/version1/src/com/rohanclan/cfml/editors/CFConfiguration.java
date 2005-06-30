@@ -29,7 +29,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
-import org.eclipse.jface.text.IAutoIndentStrategy;
+//import org.eclipse.jface.text.IAutoIndentStrategy;
+import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
@@ -735,18 +736,22 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 * two separate indent strategies: CFScript & everything else. This is because
 	 * the auto-completion & character step-through are now implemented within the
 	 * auto-indentors. The auto-indentors differ for the two languages.
+	 * r2: just happened upon the fix for this so I just made it non-deprecated, 
+	 *  	could probably use some rework now that it can give back an array in 3.1
 	 */
-	public IAutoIndentStrategy getAutoIndentStrategy(ISourceViewer arg0, String partitionType) 
+	public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer, String partitionType) 
 	{
-	    
-		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) {
-			return indentCFScriptStrategy;
-		} else if(partitionType.compareTo(CFPartitionScanner.J_SCRIPT) == 0) {
-			return indentCFScriptStrategy;
+		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) 
+		{
+			return new IAutoEditStrategy[] { indentCFScriptStrategy };
+		} else if(partitionType.compareTo(CFPartitionScanner.J_SCRIPT) == 0) 
+		{
+			return new IAutoEditStrategy[] { indentCFScriptStrategy };
 		}
-        return indentTagStrategy;
-    }
-
+		
+		return new IAutoEditStrategy[] { indentTagStrategy };
+	}
+	
 	// This method gets called when the preference page is saved.
 	public void propertyChange(PropertyChangeEvent event)
     {
