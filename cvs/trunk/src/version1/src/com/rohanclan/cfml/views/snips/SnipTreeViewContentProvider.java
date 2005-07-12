@@ -48,7 +48,7 @@ class SnippetFileFilter implements FileFilter {
 		String sflower = f.getAbsoluteFile().toString().toLowerCase(); 
 		if(sflower.endsWith(SnipTreeView.DW_SNIP_EXT)
 			|| sflower.endsWith(SnipTreeView.CFE_SNIP_EXT)
-			|| f.isDirectory())	
+			||  (f.isDirectory() && !f.getName().startsWith(".")))
 		{
 			return true;
 		}
