@@ -489,8 +489,7 @@ public class SnipTreeView extends ViewPart
 		//System.out.println(f);
 		
 		try
-		{
-			
+		{	
 			IFile activeFile = null;
 			if (iep.getEditorInput() instanceof IFileEditorInput) {
 				activeFile = ((IFileEditorInput) iep.getEditorInput()).getFile();
@@ -503,6 +502,10 @@ public class SnipTreeView extends ViewPart
 			    tmpAction.setEnclosingStrings(startBlock,endBlock);
 			    tmpAction.run(null);
 			}
+			
+			//after the addition, they'll probably want to start typing
+			iep.setFocus();
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace(System.err);
@@ -566,7 +569,7 @@ public class SnipTreeView extends ViewPart
 			selectedfile = selectedfile.getParentFile();
 		}
 
-		SnipWriter writer = new SnipWriter(selectedfile,snippetType,snipBase);
+		//SnipWriter writer = new SnipWriter(selectedfile,snippetType,snipBase);
 		MessageBox deleteDialog = new MessageBox(this.getViewSite().getShell(),SWT.YES | SWT.NO);
 		deleteDialog.setMessage("Are you sure you want to delete this folder?");
 		if (deleteDialog.open() == SWT.YES) {
