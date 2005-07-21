@@ -640,7 +640,12 @@
 					delimiter characters, you can use any of them to separate
 					the values to be matched.
 				]]></help>
-				<values/>
+				<values>
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
+				</values>
 			</parameter>
 		</tag>
 
@@ -4399,7 +4404,12 @@
 					Maps elements in values attribute to string to display in
 					drop-down list. Delimited strings and/or numeric range(s).
 				]]></help>
-				<values/>
+				<values>
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
+				</values>
 			</parameter>
 			<parameter name="mask" type="String" required="false">
 				<help><![CDATA[
@@ -4842,6 +4852,22 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="delimiter" type="String" required="false">
+				<help><![CDATA[
+					Sepcifies a character that separates quiery columns.
+				]]></help>
+				<values>
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
+				</values>
+			</parameter>
+			
+			
+			
+			
+			
 		</tag>
 
 		<!--
@@ -6144,7 +6170,12 @@
 					objectclass is top, and the second value is person. This avoids
 					confusion if values include commas.
 				]]></help>
-				<values/>
+				<values>
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
+				</values>
 			</parameter>
 			<parameter name="delimiter" type="String" required="false">
 				<help><![CDATA[
@@ -6162,7 +6193,12 @@
 					"cn = Double Tree Inn$street = 1111 Elm; Suite 100 where the
 					semicolon is part of the street value.
 				]]></help>
-				<values/>
+				<values>
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
+				</values>
 			</parameter>
 		</tag>
 
@@ -6524,7 +6560,12 @@
 				<help><![CDATA[
 					Character(s) that separates items in list
 				]]></help>
-				<values/>
+				<values>
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
+				</values>
 			</parameter>
 			<parameter name="collection" type="Object" required="false">
 				<help><![CDATA[
@@ -8007,7 +8048,10 @@
 					Character that separates values in list, in value attribute.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
 				</values>
 			</parameter>
 		</tag>
@@ -10066,7 +10110,13 @@
 					Character to separate elements in form variable path.
 					Default: \\
 				]]></help>
-				<values/>
+				<values>
+					<value option="\\" />
+					<value option="," />
+					<value option=";" />
+					<value option="|" />
+					<value option=":" />
+				</values>
 			</parameter>
 			<parameter name="completepath" type="boolean" required="false">
 				<help><![CDATA[
@@ -11042,6 +11092,8 @@
 					<value option="','" />
 					<value option="'|'" />
 					<value option="'_'" />
+					<value option="';'" />
+					<value option="':'" />
 				</values>
 			</parameter>
 		</function>
@@ -12976,7 +13028,11 @@
 				<help><![CDATA[
 				]]></help>
 				<values>
-					<value option="," />
+					<value option="','" />
+					<value option="'|'" />
+					<value option="'_'" />
+					<value option="';'" />
+					<value option="':'" />
 				</values>
 			</parameter>
 		</function>
@@ -13738,7 +13794,11 @@
 				<help><![CDATA[
 				]]></help>
 				<values>
-					<value option="," />
+					<value option="','" />
+					<value option="'|'" />
+					<value option="'_'" />
+					<value option="';'" />
+					<value option="':'" />
 				</values>
 			</parameter>
 		</function>
