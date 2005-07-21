@@ -66,7 +66,14 @@ public class AutoCommentAction extends Encloser implements IEditorActionDelegate
 	{ 
 		try
 		{
-			if(editor != null)
+			/*
+			 * Adding checks to make sure that we can acutally edit the document
+			 * Althought the method editor.isEditable() is not actually reliable. 
+			 * Using the isDrity method to see if there lies the discrepancy
+			 * 
+			 */
+				
+			if(editor != null && editor.isEditable())			
 			{	
 				IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
 				ISelection sel = editor.getSelectionProvider().getSelection();

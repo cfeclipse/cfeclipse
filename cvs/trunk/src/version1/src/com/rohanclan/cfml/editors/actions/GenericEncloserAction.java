@@ -26,6 +26,7 @@ package com.rohanclan.cfml.editors.actions;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -80,8 +81,18 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 		
 	public void run(IAction action) 
 	{
-		if(editor != null)
+		
+		
+		if(editor != null  && editor.isEditable())
 		{
+			/*
+			 * to fix the fact that you can run this function on readonly files, we are going to check the document here
+			 * The resutlts of editor.isEditable() dont seem to tally up with the method definition
+			 * System.out.println("you may edit this? But I shouldnt be able to save you: " + editor.isEditable());
+			 */
+			
+			
+			
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
 			this.enclose(doc,(ITextSelection)sel,start,end);

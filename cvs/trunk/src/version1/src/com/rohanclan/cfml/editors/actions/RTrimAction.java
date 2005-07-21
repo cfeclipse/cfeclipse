@@ -74,6 +74,8 @@ public class RTrimAction implements IEditorActionDelegate {
 		String oldText;
 		int	lineEnd;
 		
+		//We only try this if we can!
+		if(editor != null && editor.isEditable()){
 		try {
 			//foldingSetter.takeSnapshot();
 
@@ -114,6 +116,7 @@ public class RTrimAction implements IEditorActionDelegate {
 		} catch (Exception blx) {
 			blx.printStackTrace();
 		}
+	 }
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {

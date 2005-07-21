@@ -62,7 +62,7 @@ public class InsertColorAction extends WordManipulator implements IEditorActionD
 	 */
 	public void run(IAction action) 
 	{
-		if(editor != null)
+		if(editor != null  && editor.isEditable())
 		{
 			//get the document and selection and pass it to the word manipulator
 			//so it can extract and rewrite what we want (super class)

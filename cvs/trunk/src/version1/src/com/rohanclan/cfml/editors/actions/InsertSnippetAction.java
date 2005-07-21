@@ -68,8 +68,8 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 		
 	public void run(IAction action) 
 	{
-	    System.out.println("YEP");
-		if(editor != null)
+	    //System.out.println("YEP");
+		if(editor != null && editor.isEditable())
 		{
 		    SnipKeyCombos keyCombos = new SnipKeyCombos();
 		    String sequence = "";

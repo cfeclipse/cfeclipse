@@ -69,7 +69,12 @@ public class ToLowerCaseAction extends WordManipulator implements IEditorActionD
 	 */
 	public String manipulate(String highlighted)
 	{
+		if(editor != null && editor.isEditable()) {
 		return highlighted.toLowerCase();
+		}
+		else {
+			return highlighted;
+		}
 	}
 	
 	public void selectionChanged(IAction action, ISelection selection) {;}

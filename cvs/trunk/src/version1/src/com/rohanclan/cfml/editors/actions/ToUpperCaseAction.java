@@ -66,7 +66,13 @@ public class ToUpperCaseAction extends WordManipulator implements IEditorActionD
 	 */
 	public String manipulate(String highlighted)
 	{
-		return highlighted.toUpperCase();
+
+		if(editor != null && editor.isEditable()){
+			return highlighted.toUpperCase();
+		}
+		else{
+			return highlighted;
+		}
 	}
 	public void selectionChanged(IAction action, ISelection selection) {;}
 }
