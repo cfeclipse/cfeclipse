@@ -27,7 +27,7 @@ package com.rohanclan.cfml.editors.partitioner.scanners.rules;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ICharacterScanner;
-import java.util.regex.*;
+//import java.util.regex.*;
 
 /**
  * 

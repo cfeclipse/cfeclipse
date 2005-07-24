@@ -139,10 +139,10 @@ public class CustomTagRule implements IPredicateRule {
 	 */
 	protected boolean endSequenceDetected(ICharacterScanner scanner, StringBuffer tagString) {
 		int c;
-		char[][] delimiters= scanner.getLegalLineDelimiters();
+		//char[][] delimiters= scanner.getLegalLineDelimiters();
 		//System.out.println("Looking for end sequence for tagString " + tagString);
 		while ((c = scanner.read()) != ICharacterScanner.EOF) {
-			boolean isEscapeChar = false;
+			//boolean isEscapeChar = false;
 			int uc = c;
 			tagString.append((char)c);
 			if (c > 96 && c <= 122) {

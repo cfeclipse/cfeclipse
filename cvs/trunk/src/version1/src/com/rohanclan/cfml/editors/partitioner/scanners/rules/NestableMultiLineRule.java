@@ -28,7 +28,7 @@ import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.Token;
-import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+//import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 
 /**
@@ -55,7 +55,7 @@ public class NestableMultiLineRule extends MultiLineRule {
 		int c;
 		char[][] delimiters= scanner.getLegalLineDelimiters();
 		boolean previousWasEscapeCharacter = false;
-		int nextChar = scanner.read();
+		//int nextChar = scanner.read();
 		scanner.unread();
 		int nestedLevel = 1;
 		while ((c = scanner.read()) != ICharacterScanner.EOF) {

@@ -17,7 +17,7 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.Assert;
 
 import com.rohanclan.cfml.editors.partitioner.TagData;
-import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+//import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
 /**
  * @author Stephen Milligan
@@ -171,10 +171,10 @@ public class NamedTagRule implements IPredicateRule {
 	 */
 	protected boolean endSequenceDetected(ICharacterScanner scanner, StringBuffer tagString) {
 		int c;
-		char[][] delimiters= scanner.getLegalLineDelimiters();
+		//char[][] delimiters= scanner.getLegalLineDelimiters();
 		//System.out.println("Looking for end sequence for tagString " + tagString);
 		while ((c = scanner.read()) != ICharacterScanner.EOF) {
-			boolean isEscapeChar = false;
+			//boolean isEscapeChar = false;
 			int uc = c;
 			tagString.append((char)c);
 			if (c > 96 && c <= 122) {
