@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class DictionaryContentHandler implements ContentHandler {
 	//keep track of the location
-	private Locator locator;
+	//private Locator locator;
 	//private Map namespaceMappings;
 	
 	private Map dtags;
@@ -66,7 +66,7 @@ public class DictionaryContentHandler implements ContentHandler {
 	 */	
 	public void setDocumentLocator(Locator locator) 
 	{
-		this.locator = locator;
+		//this.locator = locator;
 	}
 	
 	/**

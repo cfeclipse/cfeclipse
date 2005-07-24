@@ -25,12 +25,12 @@
 package com.rohanclan.cfml;
 
 import java.io.File;
-import java.net.URL;
+//import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.PropertyConfigurator;
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.preference.PreferenceStore;
@@ -89,7 +89,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public CFEContentAssistManager getGlobalCAM()
 	{
-	    Assert.isNotNull(this.camInstance,"CFMLPlugin::getGlobalCAM()");
+		if(this.camInstance == null)
+		{
+			throw new IllegalArgumentException("CFMLPlugin::getGlobalCAM() camInstance is null");
+		}
 	    return this.camInstance;
 	}
 	
@@ -102,7 +105,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public LastActionManager getLastActionManager()
 	{
-	    Assert.isNotNull(this.lastEncMgrInstance,"CFMLPlugin::getLastEncloserManager()");
+		if(this.camInstance == null)
+		{
+			throw new IllegalArgumentException("CFMLPlugin::getGlobalCAM() camInstance is null");
+		}
 	    return this.lastEncMgrInstance;
 	}
 	

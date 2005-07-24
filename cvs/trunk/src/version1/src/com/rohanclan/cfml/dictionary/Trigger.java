@@ -104,7 +104,7 @@ public class Trigger {
 	 * @return true/false if they're equal or not
 	 */
 	private boolean mapsEqual(Map m1, Map m2) {
-		boolean retVal = false;
+		//boolean retVal = false;
 		
 		if(!m1.keySet().equals(m2.keySet()))
 		{

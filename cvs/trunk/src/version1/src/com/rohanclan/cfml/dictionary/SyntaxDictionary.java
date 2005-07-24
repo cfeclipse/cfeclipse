@@ -34,7 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import com.rohanclan.cfml.CFMLPlugin;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.xml.sax.SAXException;
 //import java.util.Enumeration;
 import java.io.IOException;
@@ -310,9 +310,13 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getFilteredAttributeValues(String tag, String attribute, String start)
 	{
-		Assert.isNotNull(tag, "Tag supplied is null!");
-		Assert.isNotNull(attribute, "Attribute supplied is null!");
-		Assert.isNotNull(start, "Start supplied is null!");
+		if(tag == null || attribute == null || start == null)
+		{
+			throw new IllegalArgumentException("tag, attribute, or start is null");
+		}
+		//Assert.isNotNull(tag, "Tag supplied is null!");
+		//Assert.isNotNull(attribute, "Attribute supplied is null!");
+		//Assert.isNotNull(start, "Start supplied is null!");
 
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 		 	       && !tag.toLowerCase().startsWith("cf"))
@@ -332,7 +336,7 @@ public abstract class SyntaxDictionary {
 		for(int i = 0; i < tempArray.length; i++)
 		{
 			Parameter currParam = (Parameter)tempArray[i];
-			String currName = currParam.getName();
+			//String currName = currParam.getName();
 			if(currParam.getName().compareToIgnoreCase(attribute) == 0)
 				return limitSet(currParam.getValues(), start);
 		}
@@ -348,8 +352,12 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getFilteredAttributes(String tag, String start)
 	{
-		Assert.isNotNull(tag, "Tag supplied is null!");
-		Assert.isNotNull(tag, "Supplied start variable is null!");
+		if(tag == null)
+		{
+			throw new IllegalArgumentException("tag is null");
+		}
+		//Assert.isNotNull(tag, "Tag supplied is null!");
+		//Assert.isNotNull(tag, "Supplied start variable is null!");
 		
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 		 	       && !tag.toLowerCase().startsWith("cf"))
@@ -370,8 +378,7 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getFunctions()
 	{
-		Assert.isNotNull(functions, "Private member functions is null");
-		
+		//Assert.isNotNull(functions, "Private member functions is null");
 		return functions.keySet();
 	}
 	
@@ -382,9 +389,8 @@ public abstract class SyntaxDictionary {
 	 */
 	public String getFunctionUsage(String functionname)
 	{
-		Assert.isNotNull(functions, "Private member functions is null");
-		Assert.isNotNull(functionname, "Functionname parameter is null");
-		
+		//Assert.isNotNull(functions, "Private member functions is null");
+		//Assert.isNotNull(functionname, "Functionname parameter is null");
 		return (String)functions.get(functionname.toLowerCase());
 	}
 	
@@ -395,8 +401,8 @@ public abstract class SyntaxDictionary {
 	 */
 	public String getFunctionHelp(String functionname)
 	{
-		Assert.isNotNull(functions, "Private member functions is null");
-		Assert.isNotNull(functionname, "Functionname parameter is null");
+		//Assert.isNotNull(functions, "Private member functions is null");
+		//Assert.isNotNull(functionname, "Functionname parameter is null");
 		String helpText = "";
 		Object o = functions.get(functionname.toLowerCase());
 		
@@ -503,7 +509,7 @@ public abstract class SyntaxDictionary {
 				{
 				    Iterator i =((Component)item).getScopes().iterator(); 
 				    ScopeVar val;
-				    Component c;
+				    //Component c;
 				    while (i.hasNext()) {
 				        
 				        possible = (String)i.next();
@@ -550,8 +556,8 @@ public abstract class SyntaxDictionary {
 	 */
 	public Set getElementAttributes(String elementname)
 	{
-		Assert.isNotNull(this.syntaxelements, "Private member syntaxelements is null. Has this dictionary been loaded?");
-		Assert.isNotNull(elementname, "Parameter elementname supplied is null");
+		//Assert.isNotNull(this.syntaxelements, "Private member syntaxelements is null. Has this dictionary been loaded?");
+		//Assert.isNotNull(elementname, "Parameter elementname supplied is null");
 
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 		 	       && !elementname.toLowerCase().startsWith("cf"))
