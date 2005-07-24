@@ -30,22 +30,26 @@ package com.rohanclan.cfml.editors.partitioner.scanners;
  * This scans the overall document and slices it into partitions. Then the
  * partition scanners are applied to those partitions
  */
-import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
-import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.text.rules.MultiLineRule;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import org.eclipse.jface.text.rules.IPredicateRule;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.MultiLineRule;
+import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
+import org.eclipse.jface.text.rules.Token;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
 import com.rohanclan.cfml.dictionary.Tag;
-import com.rohanclan.cfml.editors.partitioner.scanners.rules.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.Iterator;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.CustomTagRule;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.NamedTagRule;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.NestableMultiLineRule;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.TagRule;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.TaglibRule;
 
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
@@ -83,8 +87,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String TABLE_START_TAG_BEGIN		= "__table_start_tag_begin";
 	public final static String TABLE_TAG_ATTRIBS		= "__table_tag_attribs";
 	public final static String TABLE_START_TAG_END		= "__table_start_tag_end";
-	
-	
 	
 	
 	public CFPartitionScanner() {
@@ -225,6 +227,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		//a different color
 		rules.add(new TagRule(unktag));
 		
+		//rules.add(new WhitespaceRule(new CFWhitespaceDetector()));
+		
 		IPredicateRule[] rulearry = new IPredicateRule[rules.size()];
 		rules.toArray(rulearry);
 		
@@ -234,8 +238,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public int getOffset() {
 	    return this.fOffset;
 	}
-
-	
 	
 	/**
 	 * Runs all configured rules at the current document offset and returns a token

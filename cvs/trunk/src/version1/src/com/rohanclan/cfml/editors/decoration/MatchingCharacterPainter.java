@@ -20,8 +20,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
+//import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.SWT;
+//TODO: I think this is breaking the Eclipse API calls
 import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 
 import org.eclipse.jface.text.BadLocationException;
@@ -29,7 +30,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IPaintPositionManager;
 import org.eclipse.jface.text.IPainter;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.ITextViewerExtension2;
+//import org.eclipse.jface.text.ITextViewerExtension2;
 import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;

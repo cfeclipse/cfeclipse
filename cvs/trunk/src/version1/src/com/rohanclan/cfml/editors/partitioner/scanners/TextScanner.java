@@ -24,9 +24,13 @@
  */
 package com.rohanclan.cfml.editors.partitioner.scanners;
 
+//import org.eclipse.jface.text.rules.IPredicateRule;
+import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 
+import com.rohanclan.cfml.editors.CFWhitespaceDetector;
 import com.rohanclan.cfml.editors.ColorManager;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.ShowWhitespaceRule;
 
 //import org.eclipse.jface.text.rules.IRule;
 
@@ -47,8 +51,10 @@ public class TextScanner extends RuleBasedScanner {
 		 manager.getColor(ICFColorConstants.CFVARIABLE))
 		 );
 		*/
-		//IRule[] rules = new IRule[0];
-		//setRules(rules);
+		
+		IRule[] rules = new IRule[1];
+		rules[0] = new ShowWhitespaceRule(new CFWhitespaceDetector());
+		setRules(rules);
 	}
 }
 

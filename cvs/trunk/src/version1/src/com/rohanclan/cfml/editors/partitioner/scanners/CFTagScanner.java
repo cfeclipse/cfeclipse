@@ -63,11 +63,11 @@ public class CFTagScanner extends RuleBasedScanner {
 			)
 		));
 		
-		IToken taglibtag = new Token(new TextAttribute(
+		/* IToken taglibtag = new Token(new TextAttribute(
 			manager.getColor(
 				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_TAGLIB_TAG)
 			)
-		));
+		)); */
 		
 		IToken string =	new Token(new TextAttribute(
 			manager.getColor(
@@ -87,11 +87,11 @@ public class CFTagScanner extends RuleBasedScanner {
 			)
 		));
 		
-		IToken cfdefault = new Token(new TextAttribute(
+		/* IToken cfdefault = new Token(new TextAttribute(
 			manager.getColor(
 				prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT)
 			)
-		));
+		)); */
 		
 		///////////////////////////////////////////////////////////////////////
 		

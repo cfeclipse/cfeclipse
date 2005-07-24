@@ -72,7 +72,6 @@ public class HTMTagScanner extends RuleBasedScanner {
 		// Add generic whitespace rule.
 		rules[2] = new WhitespaceRule(new CFWhitespaceDetector());
 		
-		
 		setRules(rules);
 	}
 }
