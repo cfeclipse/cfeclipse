@@ -157,7 +157,7 @@ public class XPathSearch {
 		Matcher matcher = charStrRegEx.matcher(inStr);
 		if(matcher.find()) {
 			int retval = matcher.group(0).length();
-			int groupCount = matcher.groupCount();
+			//int groupCount = matcher.groupCount();
 			return retval;
 		}
 		return -1;

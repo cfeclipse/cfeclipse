@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
@@ -63,7 +63,7 @@ public class ProjectPropertyStore implements IPreferenceStore {
     private HashMap props;
     
     /** Stores the default values for various items */
-    private HashMap defaults;
+    //private HashMap defaults;
     
     private IPreferenceStore globalPrefs;
     
@@ -74,11 +74,14 @@ public class ProjectPropertyStore implements IPreferenceStore {
      */
     public ProjectPropertyStore(IProject srcProject) {
         this();
-        Assert.isNotNull(srcProject,"ProjectPropertyStore::ProjectPropertyStore()");
+        //Assert.isNotNull(srcProject,"ProjectPropertyStore::ProjectPropertyStore()");
+        if(srcProject == null)
+        		throw new IllegalArgumentException("ProjectPropertyStore::ProjectPropertyStore()");
+        
         this.project = srcProject;
         this.listeners = new ArrayList();
         this.props = new HashMap();
-        this.defaults = new HashMap();
+        //this.defaults = new HashMap();
         //this.defaults.put(ICFMLPreferenceConstants.P_CFML_DICTIONARY, CFMLPreferenceManager.)
         this.globalPrefs = CFMLPlugin.getDefault().getPreferenceStore();
     }

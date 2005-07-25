@@ -57,7 +57,7 @@ public class InformationPresenter implements IInformationPresenter {
         
 	        boolean searching = true;
 	        
-	        StyleRange defaultStyle = presentation.getDefaultStyleRange();
+	        //StyleRange defaultStyle = presentation.getDefaultStyleRange();
 	        
 	        while(searching) {
 	            if (newText.indexOf("<b>") > -1

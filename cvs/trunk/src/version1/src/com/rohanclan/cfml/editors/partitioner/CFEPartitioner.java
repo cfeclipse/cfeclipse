@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.10 2005-06-14 21:36:11 smilligan Exp $
- * $Revision: 1.10 $
- * $Date: 2005-06-14 21:36:11 $
+ * $Id: CFEPartitioner.java,v 1.11 2005-07-25 01:29:38 rohanr2 Exp $
+ * $Revision: 1.11 $
+ * $Date: 2005-07-25 01:29:38 $
  * 
  * Created on Oct 17, 2004
  *
@@ -107,7 +107,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
     private int fReparseEnd = -1;
 
     /** The position index of the first partition affected by a document change */
-    private int fReparseStartIndex;
+    //private int fReparseStartIndex;
 
     /** The position index of the last partition affected by a document change */
     private int fReparseEndIndex;
@@ -417,7 +417,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
              * bit. Otherwise they will both span the whole token that was
              * found by the scanner.
              */
-            CFEPartition firstPartition = (CFEPartition)category[index];
+            //CFEPartition firstPartition = (CFEPartition)category[index];
             CFEPartition endPartition = (CFEPartition)category[index+indexOffset];
             //System.out.println("End partition set to " + endPartition.getType() + " indexOffset is " + indexOffset);
             /*
@@ -536,9 +536,9 @@ public class CFEPartitioner implements IDocumentPartitioner,
      * @param offset
      *            the offset
      */
-    private void rememberDeletedOffset(int offset) {
+    /* private void rememberDeletedOffset(int offset) {
         fDeleteOffset = offset;
-    }
+    } */
 
     /**
      * Creates the minimal region containing all partition changes using the
@@ -572,7 +572,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
         try {
 	        Position[] partitions = fDocument.getPositions(fPositionCategory);
 	        
-	        fReparseStartIndex = partitions.length-1;
+	        //fReparseStartIndex = partitions.length-1;
 	        fReparseEndIndex = 0;
 	        
 	        fPositionUpdater.update(e);
@@ -1074,12 +1074,12 @@ public class CFEPartitioner implements IDocumentPartitioner,
             int lastScannedPosition = fReparseStart;
             IToken token = fScanner.nextToken();
             
-            int lastOffset = -1;
+            //int lastOffset = -1;
 
             String contentType = null;
  
             while (!token.isEOF()) {
-                lastOffset = fScanner.getTokenOffset();
+                //lastOffset = fScanner.getTokenOffset();
                 contentType = getTokenContentType(token);
 
                 /*
@@ -1140,7 +1140,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
 	                        
                         } else {
                             if (p.offset+p.length > start) {
-                                int oldLength = p.length;
+                                //int oldLength = p.length;
                                 p.length = start - p.offset;
                             } else if (p.offset + p.length < start) {
                                 p.length = start - p.offset;
@@ -1249,7 +1249,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
      */
     public CFEPartition[] getStartTagPartitions(int offset) {
         ArrayList partitionList =  new ArrayList();
-        Position[] category;
+        //Position[] category;
         CFEPartition firstPart = getCFEPartition(offset);
         
         if (firstPart.isCloser()) {
@@ -1537,7 +1537,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
 	        if (cfp == null) {
 	            return null;
 	        }
-	        String tagName = cfp.getTagName();
+	        //String tagName = cfp.getTagName();
             firstPartition = getStartPartitionName(cfp.getType());
             lastPartition = getEndPartitionName(cfp.getType());
 	        if (firstPartition == null || lastPartition == null) {

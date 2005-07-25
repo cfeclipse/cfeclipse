@@ -25,26 +25,27 @@
 package com.rohanclan.cfml.editors.indentstrategies;
 
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.DefaultAutoIndentStrategy;
+//import org.eclipse.jface.text.DefaultAutoIndentStrategy;
+import org.eclipse.jface.text.DefaultIndentLineAutoEditStrategy;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.ISelection;
+//import org.eclipse.jface.viewers.ISelection;
 
-import com.rohanclan.cfml.editors.CFConfiguration;
+//import com.rohanclan.cfml.editors.CFConfiguration;
 import com.rohanclan.cfml.editors.CFMLEditor;
 
 /**
  * @author Oliver Tupman
  *
  */
-public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
+public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 
 	private boolean tabIndentSingleLine = false;
 	protected String indentString = "\t";
 	
 	protected CFMLEditor editor;
-	private CFConfiguration configuration;
+	//private CFConfiguration configuration;
 	
 	public CFEIndentStrategy(CFMLEditor editor) {
 		this.editor = editor;
@@ -88,7 +89,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 		docCommand.caretOffset = docCommand.offset += chars2StepThru;
 	}
 	
-	private String getSelectedText(){
+	/* private String getSelectedText(){
         ISelection selection = editor.getSelectionProvider().getSelection();
         String text = null;       
         if(selection != null && selection instanceof ITextSelection){
@@ -96,7 +97,7 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
             text = textSelection.getText();
         }
         return text;
-    }	
+    } */
 	
 	public void setTabIndentSingleLine(boolean state) {
 		tabIndentSingleLine = state;

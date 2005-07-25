@@ -23,7 +23,7 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 public class ProjectPropertyPage extends PropertyPage {
     
 	private static final String PATH_TITLE = "Path:";
-	private static final String SNIPPETS_PATH_TITLE = "&Snippets Path:";
+	//private static final String SNIPPETS_PATH_TITLE = "&Snippets Path:";
 	private static final String SNIPPETS_PATH_PROPERTY = "snippetsPath";
 	private static String DEFAULT_SNIPPETS_PATH = "";
 	private static final String PROJECT_URL_TITLE = "Project URL:";
@@ -32,7 +32,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	
 	private static final String CFML_DICTIONARY_TITLE = "&CFML Language Version";
 
-	private static final int TEXT_FIELD_WIDTH = 50;
+	//private static final int TEXT_FIELD_WIDTH = 50;
 
 	
 	private DirectoryFieldEditor snippetsPathField;

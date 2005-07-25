@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.editors.contentassist;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 
 /**
  * @author Oliver Tupman
@@ -95,7 +95,9 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      */
     public void setAttribute(String attributeText)
     {
-        Assert.isNotNull(attributeText,"DefaultAssistAttributeState::setAttribute()");
+        //Assert.isNotNull(attributeText,"DefaultAssistAttributeState::setAttribute()");
+        if(attributeText == null)
+        		throw new IllegalArgumentException("DefaultAssistAttributeState::setAttribute()");
         this.attribute = attributeText;
     }
     
@@ -106,7 +108,9 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      */
     public void setValueSoFar(String valueSoFar)
     {
-        Assert.isNotNull(valueSoFar,"DefaultAssistAttributeState::setValueSoFar()");
+        //Assert.isNotNull(valueSoFar,"DefaultAssistAttributeState::setValueSoFar()");
+        if(valueSoFar == null)
+    			throw new IllegalArgumentException("DefaultAssistAttributeState::setValueSoFar()");
         this.valueSoFar = valueSoFar;
     }
     
@@ -114,7 +118,9 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagAttributeState#getAttribute()
      */
     public String getAttribute() {
-        Assert.isNotNull(this.attribute,"DefaultAssistAttributeState::getAttribute()");
+        //Assert.isNotNull(this.attribute,"DefaultAssistAttributeState::getAttribute()");
+        if(this.attribute == null)
+			throw new IllegalArgumentException("DefaultAssistAttributeState::getAttribute()");
         return this.attribute;
     }
 
@@ -122,8 +128,9 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
      * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagAttributeState#getValueSoFar()
      */
     public String getValueSoFar() {
-        Assert.isNotNull(this.valueSoFar,"DefaultAssistAttributeState::getValueSoFar()");
-        
+        //Assert.isNotNull(this.valueSoFar,"DefaultAssistAttributeState::getValueSoFar()");
+        if(this.valueSoFar == null)
+			throw new IllegalArgumentException("DefaultAssistAttributeState::getValueSoFar()");
         return this.valueSoFar;
     }
 

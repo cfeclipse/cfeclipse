@@ -27,7 +27,7 @@ package com.rohanclan.cfml.util;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -117,7 +117,10 @@ public class ResourceUtils {
      */
     public static IProjectNature[] getProjectNatures(IProject srcProject) throws CoreException
     {
-        Assert.isNotNull(srcProject,"ResourceUtils::getProjectNatures()");
+        //Assert.isNotNull(srcProject,"ResourceUtils::getProjectNatures()");
+        if(srcProject == null)
+        		throw new IllegalArgumentException("ResourceUtils::getProjectNatures()");
+        
         IProjectDescription prjDesc = srcProject.getDescription();
         String [] natures = prjDesc.getNatureIds();
         IProjectNature [] natureArray = new IProjectNature[natures.length];

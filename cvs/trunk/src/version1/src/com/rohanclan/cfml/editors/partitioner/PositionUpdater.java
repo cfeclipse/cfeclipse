@@ -1,7 +1,7 @@
 /* 
- * $Id: PositionUpdater.java,v 1.2 2005-02-01 01:52:49 smilligan Exp $
- * $Revision: 1.2 $
- * $Date: 2005-02-01 01:52:49 $
+ * $Id: PositionUpdater.java,v 1.3 2005-07-25 01:29:38 rohanr2 Exp $
+ * $Revision: 1.3 $
+ * $Date: 2005-07-25 01:29:38 $
  * 
  * Created Jan 30, 2005 11:33:08 AM
  *
@@ -32,13 +32,13 @@ package com.rohanclan.cfml.editors.partitioner;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
 import org.eclipse.jface.text.DocumentEvent;
-import org.eclipse.jface.text.Position;
+//import org.eclipse.jface.text.Position;
 /**
  * This class takes care of updating all document partitions when changes
  * occur such as keystrokes or and cut, paste operations.
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PositionUpdater extends DefaultPositionUpdater {
     private String fCategory;
@@ -91,6 +91,9 @@ protected boolean notDeleted() {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/02/01 01:52:49  smilligan
+ * Fixed a couple of issues with the partitioner.
+ *
  * Revision 1.1  2005/01/31 08:01:13  smilligan
  * Refactored a lot of the partitioner so it is more manageable. This should be the final refactor I think. From here on in it ought to be performance tweaks and bug fixes.
  *

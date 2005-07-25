@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import java.util.regex.Pattern;
+//import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -79,11 +79,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	/** scope type */
 	private static final short SCOPETYPE = 3;
 	
-	private Pattern pattern = Pattern.compile("[^a-z.]$",Pattern.CASE_INSENSITIVE);
+	//private Pattern pattern = Pattern.compile("[^a-z.]$",Pattern.CASE_INSENSITIVE);
 	
 	
 	
-	private ContentAssistant assistant;
+	//private ContentAssistant assistant;
 	
 	protected IContextInformationValidator validator = new Validator();
 		
@@ -91,7 +91,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * Startup the completer
 	 */
 	public CFCompletionProcessor(ContentAssistant assistant){
-		this.assistant = assistant;
+		//this.assistant = assistant;
 	}
 
 	
@@ -188,13 +188,13 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		try
 		{
 			String limiting = "";			// attributes typed text (if it exists)
-			String tagnamespace = ""; 		// often 'cf' for cf tags
+			//String tagnamespace = ""; 		// often 'cf' for cf tags
 			boolean cftag = false;			// assume its not a cftag
 			boolean httag = false;			// assume it's not an HTML tag
 			String invoker = "";
 			IDocument document = viewer.getDocument();
 			String currPartitionType = document.getPartition(documentOffset).getType();
-			String prevPartitionType = document.getPartition(documentOffset -1).getType();
+			//String prevPartitionType = document.getPartition(documentOffset -1).getType();
 			String tagname = "";
 			int start = 0;
 			
@@ -280,7 +280,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				if(prefix.trim().substring(0,3).equalsIgnoreCase("<cf"))
 				{
 					cftag = true;
-					tagnamespace = "cf";
+					//tagnamespace = "cf";
 					//should now have just the lookup key : "abort" for example
 					tagname = tagname.trim().substring(3);
 				}

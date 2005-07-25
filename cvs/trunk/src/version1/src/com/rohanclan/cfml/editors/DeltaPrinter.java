@@ -26,7 +26,7 @@ package com.rohanclan.cfml.editors;
 
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResource;
+//import org.eclipse.core.resources.IResource;
 
 /**
  * 
@@ -41,7 +41,7 @@ class DeltaPrinter implements IResourceDeltaVisitor
 {
 	public boolean visit(IResourceDelta delta) 
 	{
-		IResource res = delta.getResource();
+		//IResource res = delta.getResource();
 
 		switch (delta.getKind()) 
 		{

@@ -279,11 +279,13 @@ public class FTPConnection implements IFileProvider {
     }
 
     public void addLogListener(FTPMessageListener listener) {
-        this.listener.addListener(listener);
+        FTPConnection.listener.addListener(listener);
+    		//this.listener.addListener(listener);
     }
 
     public void removeLogListener(FTPMessageListener listener) {
-        this.listener.removeListener(listener);
+    		FTPConnection.listener.removeListener(listener);
+        //this.listener.removeListener(listener);
     }
 
     public String getLog() {

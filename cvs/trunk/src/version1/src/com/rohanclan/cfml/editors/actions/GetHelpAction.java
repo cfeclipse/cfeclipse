@@ -32,7 +32,7 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IViewReference;
+//import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 //import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
@@ -155,7 +155,7 @@ public class GetHelpAction implements IEditorActionDelegate {
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
 		
-		IViewReference ref[] = page.getViewReferences();
+		//IViewReference ref[] = page.getViewReferences();
 		
 		try {
 		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);

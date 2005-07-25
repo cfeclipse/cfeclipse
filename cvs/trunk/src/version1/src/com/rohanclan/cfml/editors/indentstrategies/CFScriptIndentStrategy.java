@@ -65,11 +65,11 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 		docCommand.shiftsCaret = false;
 	}
 	
-	private void handleOpeningParen(char nextChar,char prevChar, char trigChar, 
+	/* private void handleOpeningParen(char nextChar,char prevChar, char trigChar, 
 									IDocument doc, DocumentCommand docCommand)
 	{
 		
-	}
+	} */
 	
 	private void handleClosingBracket(char nextChar,char prevChar, char trigChar, 
 										IDocument doc, DocumentCommand docCommand)
@@ -87,7 +87,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	private void codeInsertion(IDocument doc, DocumentCommand docCommand) {
 		char nextChar = ' ';
 		char prevChar = ' ';
-		char currChar = ' ';
+		//char currChar = ' ';
 		char trigChar = ' ';
 		
 		//
@@ -106,7 +106,8 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			if(docCommand.offset < doc.getLength()) {
 				nextChar = doc.getChar(docCommand.offset);
 			}
-			currChar = doc.getChar(docCommand.offset-1);
+			//currChar = doc.getChar(docCommand.offset-1);
+			doc.getChar(docCommand.offset-1);
 			if(docCommand.offset > 0) {
 				prevChar = doc.getChar(docCommand.offset-2);
 			}

@@ -81,8 +81,8 @@ import org.eclipse.swt.graphics.Image;
  */
 public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	private static final short TAGTYPE = 0;
-	private static final short ATTRTYPE = 1;
-	private String className = "CFScriptCompletionProcessor";
+	//private static final short ATTRTYPE = 1;
+	//private String className = "CFScriptCompletionProcessor";
 	
 	private String DictionaryToUse = DictionaryManager.CFDIC;
 	
@@ -296,7 +296,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	
 	private void DebugFunction(ITextViewer viewer, int documentOffset)
 	{
-		String mName = "DebugFunction";
+		//String mName = "DebugFunction";
 		IDocument doc = viewer.getDocument();
 		try {
 			int start = doc.getPartition(documentOffset).getOffset(); // Not sure what this does!
@@ -430,7 +430,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	protected UndoEdit handleOpener(IDocument document, char currentChar, int documentOffset)
 	{
 		String extraData = "";
-		String mName = "HandlerOpener";
+		//String mName = "HandlerOpener";
 		switch(currentChar)
 		{
 			case '{':
@@ -524,10 +524,10 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	 */
 	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
 		int documentOffset) {
-		String mName = "computeCompletionProposals";
+		//String mName = "computeCompletionProposals";
 		HashSet proposals = new HashSet();
-		String messages = "";
-		int length = 40;
+		//String messages = "";
+		//int length = 40;
 		// TODO: Use the tokeniser!
 
 		//System.err.println("runnin!!!!");
@@ -545,7 +545,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			IDocument document = viewer.getDocument();
 			int start = document.getPartition(documentOffset).getOffset();
 			String scanData =	document.get(start, documentOffset - start);
-			String originalData = scanData;	// This should never be changed.
+			//String originalData = scanData;	// This should never be changed.
 
 			scanData = scanData.replace('\n',' ');	// Eliminate any non-character characters
 			scanData = scanData.replace('\r',' ');	// as this allows us to treat the buffer as
@@ -562,7 +562,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			}
 
 			int triggerPos = scanData.length()-1;
-			int closerCharMatch = closerChars.indexOf(lastChar);
+			//int closerCharMatch = closerChars.indexOf(lastChar);
 
 			// First test to see whether the last two characters are "it"...  if so then we'll
 			// quit out of this
@@ -578,7 +578,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				//System.out.println("hit this other part");
 				
 				int searchPos = triggerPos;
-				int bracketCount = 1;
+				//int bracketCount = 1;
 				searchPos = BracketScan(scanData, triggerPos);
 				//
 				// Cut off the part that is nothing to do with the function
@@ -603,7 +603,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				case '.':
 					// Period for a struct or CFC
 					// TODO: Implement variable insight (just hard code if for the moment).
-					messages = " - I this it\'s a period.";
+					//messages = " - I this it\'s a period.";
 					break;
 				case ',':
 					
@@ -620,13 +620,13 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					triggerPos = FindFuncStartFromInside(scanData, triggerPos) + 1;
 					//System.out.println("CFScriptCompletionProcessor - substring result: "+ triggerPos + "scanData: \'" + scanData.substring(0, triggerPos) + "\'\n");
 				case '(':
-					messages = " - In a function... maybe";
+					//messages = " - In a function... maybe";
 					//Debug.println(mName, this, messages);
 					int strPos = FindItemStart(scanData, triggerPos - 1); 
 					
 					if(strPos == 0)
 					{
-						messages = "Reached start of string.";
+						//messages = "Reached start of string.";
 					}
 					else
 					{
@@ -662,7 +662,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 				case '\"':
 					break;
 				default:
-					messages = "Received the character " + lastChar;
+					//messages = "Received the character " + lastChar;
 					//
 					// Think some sort of combined bracket + spacer character search needs to
 					// occur here. Not sure how though. Basically it wants to try and match

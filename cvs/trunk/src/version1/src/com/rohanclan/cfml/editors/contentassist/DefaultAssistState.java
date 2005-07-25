@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.editors.contentassist;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
@@ -47,13 +47,18 @@ public class DefaultAssistState implements IAssistState {
     private CFEPartition[] fPartitions = null; 
     
     public ITextViewer getITextView() {
-        Assert.isNotNull(this.textViewer,"DefaultAssistState::getITextView()");
+        //Assert.isNotNull(this.textViewer,"DefaultAssistState::getITextView()");
+        if(this.textViewer == null)
+        		throw new IllegalArgumentException("DefaultAssistState::getITextView()");
+        
         return this.textViewer;
     }
     
     public void setTextViewer(ITextViewer newViewer)
     {
-        Assert.isNotNull(newViewer,"DefaultAssistState::setTextViewer()");
+        //Assert.isNotNull(newViewer,"DefaultAssistState::setTextViewer()");
+        if(newViewer == null)
+    			throw new IllegalArgumentException("DefaultAssistState::setTextViewer()");
         this.textViewer = newViewer;
     }
 	/**
@@ -93,7 +98,9 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getDocument()
 	 */
 	public IDocument getIDocument() {
-		Assert.isNotNull(this.doc,"DefaultAssistState::getIDocument()");
+		//Assert.isNotNull(this.doc,"DefaultAssistState::getIDocument()");
+		if(this.doc == null)
+			throw new IllegalArgumentException("DefaultAssistState::getIDocument()");
 		return this.doc;
 	}
 
@@ -101,7 +108,10 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getOffset()
 	 */
 	public int getOffset() {
-		Assert.isTrue(this.offset >= 0,"DefaultAssistState::getOffset()");
+		//Assert.isTrue(this.offset >= 0,"DefaultAssistState::getOffset()");
+		if(!(this.offset >= 0))
+			throw new IllegalArgumentException("DefaultAssistState::getOffset()");
+		
 		return this.offset;
 	}
 
@@ -116,7 +126,9 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getDataSoFar()
 	 */
 	public String getDataSoFar() {
-		Assert.isNotNull(this.dataSoFar,"DefaultAssistState::getDataSoFar()");
+		//Assert.isNotNull(this.dataSoFar,"DefaultAssistState::getDataSoFar()");
+		if(this.dataSoFar == null)
+			throw new IllegalArgumentException("DefaultAssistState::getDataSoFar()");
 		return this.dataSoFar;
 	}
 
@@ -124,18 +136,24 @@ public class DefaultAssistState implements IAssistState {
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistState#getPreviousDelimiterPosition()
 	 */
 	public int getPreviousDelimiterPosition() {
-		Assert.isTrue(this.prevDelim >= 0,"DefaultAssistState::getPreviousDelimiterPosition()");
+		//Assert.isTrue(this.prevDelim >= 0,"DefaultAssistState::getPreviousDelimiterPosition()");
+		if(!(this.prevDelim >= 0))
+			throw new IllegalArgumentException("DefaultAssistState::getPreviousDelimiterPosition()");
 		return this.prevDelim;
 	}
 	
 	
 	public void setDoc(IDocument doc) {
-		Assert.isNotNull(doc,"DefaultAssistState::setDoc()");
+		//Assert.isNotNull(doc,"DefaultAssistState::setDoc()");
+		if(doc == null)
+			throw new IllegalArgumentException("DefaultAssistState::setDoc()");
 		this.doc = doc;
 	}
 
 	public void setPrevDelim(int prevDelim) {
-		Assert.isTrue(prevDelim >= 0,"DefaultAssistState::setPrevDelim()");
+		//Assert.isTrue(prevDelim >= 0,"DefaultAssistState::setPrevDelim()");
+		if(!(prevDelim >= 0))
+			throw new IllegalArgumentException("DefaultAssistState::setPrevDelim()");
 		this.prevDelim = prevDelim;
 	}
 
@@ -143,12 +161,16 @@ public class DefaultAssistState implements IAssistState {
 		this.triggerChar = triggerChar;
 	}
 	public void setDataSoFar(String dataSoFar) {
-		Assert.isNotNull(dataSoFar,"DefaultAssistState::setDataSoFar()");
+		//Assert.isNotNull(dataSoFar,"DefaultAssistState::setDataSoFar()");
+		if(dataSoFar == null)
+			throw new IllegalArgumentException("DefaultAssistState::setDataSoFar()");
 		this.dataSoFar = dataSoFar;
 	}
 	
 	public void setOffset(int offset) {
-		Assert.isTrue(offset >= 0,"DefaultAssistState::setOffset()");
+		//Assert.isTrue(offset >= 0,"DefaultAssistState::setOffset()");
+		if(!(offset >= 0))
+			throw new IllegalArgumentException("DefaultAssistState::setPrevDelim()");
 		this.offset = offset;
 	}
 	

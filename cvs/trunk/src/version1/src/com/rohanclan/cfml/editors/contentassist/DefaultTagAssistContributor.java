@@ -28,7 +28,7 @@ package com.rohanclan.cfml.editors.contentassist;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -66,8 +66,9 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	 * @param sourceDictionary The dictionary that the tag assist will base itself on.
 	 */
 	public DefaultTagAssistContributor(SyntaxDictionary sourceDictionary) {
-		Assert.isNotNull(sourceDictionary,"DefaultTagAssistContributor::DefaultTagAssistContributor()");
-		
+		//Assert.isNotNull(sourceDictionary,"DefaultTagAssistContributor::DefaultTagAssistContributor()");
+		if(sourceDictionary == null)
+			throw new IllegalArgumentException("DefaultTagAssistContributor::DefaultTagAssistContributor()");
 		this.sourceDict = sourceDictionary;
 	}
 
@@ -78,8 +79,12 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	    //
 	    // This method mainly just filters the source dictionaries tag
 	    // library by the current data entered by the user.
-		Assert.isNotNull(state,"DefaultTagAssistContributor::getTagProposals()");
-		Assert.isNotNull(this.sourceDict,"DefaultTagAssistContributor::getTagProposals()");
+		//Assert.isNotNull(state,"DefaultTagAssistContributor::getTagProposals()");
+		//Assert.isNotNull(this.sourceDict,"DefaultTagAssistContributor::getTagProposals()");
+		
+		if(state == null || this.sourceDict == null)
+			throw new IllegalArgumentException("DefaultTagAssistContributor::getTagProposals()");
+		
 		
 		int offset = state.getOffset();
 		IDocument doc = state.getIDocument();
@@ -154,8 +159,11 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	    // Filters the attribute library by tagname and then attribute
 	    // data so far. It must then convert the Set returned by the
 	    // syntax dictionary to be an array of Parameter's.
-		Assert.isNotNull(this.sourceDict,"DefaultTagAssistContributor::getAttributeProposals()");
-		Assert.isNotNull(state,"DefaultTagAssistContributor::getAttributeProposals()");
+		//Assert.isNotNull(this.sourceDict,"DefaultTagAssistContributor::getAttributeProposals()");
+		//Assert.isNotNull(state,"DefaultTagAssistContributor::getAttributeProposals()");
+		
+		if(state == null || this.sourceDict == null)
+			throw new IllegalArgumentException("DefaultTagAssistContributor::getAttributeProposals()");
 		
 		Set filteredAttrs = this.sourceDict.getFilteredAttributes(
 				state.getTagName().toLowerCase(), 
@@ -179,8 +187,11 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 	    while(attrIter.hasNext())
 	    {
 	        Object tempAttr = attrIter.next();
-	        Assert.isTrue(tempAttr instanceof Value,"DefaultTagAssistContributor::getAttributeValueProposals()");
-	            
+	        //Assert.isTrue(tempAttr instanceof Value,"DefaultTagAssistContributor::getAttributeValueProposals()");
+	        
+	        if(!(tempAttr instanceof Value))
+	        		throw new IllegalArgumentException("DefaultTagAssistContributor::getAttributeValueProposals()");
+	        
 	        retArray[i] = (Value)tempAttr;
 	        i++;
 	    }	    

@@ -8,7 +8,7 @@ package com.rohanclan.cfml.util;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jface.text.IDocument;
+//import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPage;
@@ -38,7 +38,7 @@ public class WorkspaceUtils {
 	 * @param site - the site to obtain the document of
 	 * @return The document belonging to the editor otherwise null.
 	 */
-	private IDocument getRootInput(IViewSite site) {
+	/* private IDocument getRootInput(IViewSite site) {
 
 		
 		try {
@@ -51,7 +51,7 @@ public class WorkspaceUtils {
 		catch (Exception e) {
 			return null;
 		}
-	}	
+	}	*/
 	
 	/**
 	 * Returns the project that the file open in the editor part belongs

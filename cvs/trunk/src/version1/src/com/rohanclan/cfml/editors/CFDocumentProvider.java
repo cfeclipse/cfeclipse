@@ -33,8 +33,8 @@ import java.io.IOException;
 
 import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
+//import org.eclipse.core.resources.IWorkspaceRoot;
+//import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;

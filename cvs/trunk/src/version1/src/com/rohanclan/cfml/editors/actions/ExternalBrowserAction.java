@@ -1,7 +1,7 @@
 /* 
- * $Id: ExternalBrowserAction.java,v 1.3 2005-06-14 21:36:11 smilligan Exp $
- * $Revision: 1.3 $
- * $Date: 2005-06-14 21:36:11 $
+ * $Id: ExternalBrowserAction.java,v 1.4 2005-07-25 01:29:38 rohanr2 Exp $
+ * $Revision: 1.4 $
+ * $Date: 2005-07-25 01:29:38 $
  * 
  * Created Mar 5, 2005 1:45:48 AM
  *
@@ -34,7 +34,7 @@ import com.rohanclan.cfml.util.AlertUtils;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ExternalBrowserAction implements IEditorActionDelegate {
     
@@ -112,7 +112,8 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
                 ,rootURL+filePath
             }; 
             
-           Process p =  Runtime.getRuntime().exec(cmd);
+           //Process p =  Runtime.getRuntime().exec(cmd);
+        	  Runtime.getRuntime().exec(cmd);
            
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,6 +150,11 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/06/14 21:36:11  smilligan
+ * Added external browser action.
+ *
+ * Fixed partitioner bug with multi-line comments in script, cfscript and cfquery blocks.
+ *
  * Revision 1.2  2005/05/12 22:34:06  smilligan
  * Made a few changes so that external files are now opened in their project context if they are part of a project.
  *

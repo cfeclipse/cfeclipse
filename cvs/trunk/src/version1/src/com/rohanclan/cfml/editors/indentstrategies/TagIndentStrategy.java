@@ -84,7 +84,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param position - the start position
 	 * @return - the position of the previous chevron, or -1 on failure
 	 */
-	private int findPreviousChevron(String docData, int position) {
+	/* private int findPreviousChevron(String docData, int position) {
 		int retval = -1;
 		for(int i = position; i >= 0; i--)
 		{
@@ -95,9 +95,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 
 		return retval;
-	}
+	} */
 
-	private String getIntRep(String data) {
+	/* private String getIntRep(String data) {
 		String retval = "";
 
 		for(int i = 0; i < data.length(); i++)
@@ -106,11 +106,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 
 		return retval;
-	}
+	} */
 
 	private String getWhiteSpace(String data, char stopChar) {
 		String retval = "";
-		boolean found = false;
+		//boolean found = false;
 		int pos;
 
 		for(pos = 0; pos < data.length(); pos++) {
@@ -207,8 +207,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
 	}
 
-	private String getTagName(IDocument doc, int startPos) throws BadLocationException {
-		String retStr = "";
+	/* private String getTagName(IDocument doc, int startPos) throws BadLocationException {
+		//String retStr = "";
 		int i = 0;
 		for(i = startPos; i < doc.getLength(); i++) {
 			if(isWhitespace(doc.getChar(i))) {
@@ -217,10 +217,10 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 
 		return doc.get(startPos, i - startPos);
-	}
+	} */
 
 	private boolean tagIsSingle(IDocument doc, DocumentCommand docCommand, String tagName) {
-		boolean retval = true;
+		//boolean retval = true;
 
 		boolean cftag = tagName.toLowerCase().startsWith("cf");
 		//
@@ -305,12 +305,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private void doInBetweenTagIndent(IDocument doc, DocumentCommand docCommand, char lastChar) throws BadLocationException {
 		// Testing find start tag code
-		int startOfTag = findStartofTag(doc, docCommand.offset-1);
-		if(startOfTag == -1) {
+		//int startOfTag = findStartofTag(doc, docCommand.offset-1);
+		/* if(startOfTag == -1) {
 		}
 		else {
 			String tagName = getTagName(doc, startOfTag);
-		}
+		} */
 		// end of test
 
 		int openChevron = doc.get(0, docCommand.offset).lastIndexOf('<');
@@ -585,15 +585,15 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param docCommand - the document command to work up.
 	 */
 	private void handleEnterInTag(IDocument doc, DocumentCommand docCommand) {
-		String thisLineWhitespace = "";
+		//String thisLineWhitespace = "";
 		try {
 			int currLine = doc.getLineOfOffset(docCommand.offset);
-			int nextLineOffset = doc.getLineOffset(currLine+1);
+			//int nextLineOffset = doc.getLineOffset(currLine+1);
 
 			String lineDelim = doc.getLineDelimiter(currLine);
 			if(lineDelim == null) lineDelim = "\r\n";
 
-			int colPosition = doc.getLineLength(currLine) - 1 - lineDelim.length();
+			//int colPosition = doc.getLineLength(currLine) - 1 - lineDelim.length();
 			
 			//
 			// Now we just need to work out how much indentation to do...

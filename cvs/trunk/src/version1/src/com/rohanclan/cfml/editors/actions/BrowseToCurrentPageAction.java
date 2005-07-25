@@ -27,7 +27,7 @@ package com.rohanclan.cfml.editors.actions;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
 //import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.preference.IPreferenceStore;
+//import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
@@ -78,7 +78,7 @@ public class BrowseToCurrentPageAction implements IEditorActionDelegate {
 	        //IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			//ISelection sel = editor.getSelectionProvider().getSelection();
 			String currentpath = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getProjectRelativePath().toString();
-			String currentfile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
+			//String currentfile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
 			String URLpath = propertyManager.projectURL();
 			// System.out.println("currentpath: " + currentpath + "; currentfile: " + currentfile + "; URLpath: " + URLpath);
 			

@@ -1,7 +1,7 @@
 /* 
- * $Id: TagData.java,v 1.4 2005-01-27 01:37:25 smilligan Exp $
- * $Revision: 1.4 $
- * $Date: 2005-01-27 01:37:25 $
+ * $Id: TagData.java,v 1.5 2005-07-25 01:29:38 rohanr2 Exp $
+ * $Revision: 1.5 $
+ * $Date: 2005-07-25 01:29:38 $
  * 
  * Created Jan 4, 2005 10:51:03 PM
  *
@@ -34,7 +34,7 @@ package com.rohanclan.cfml.editors.partitioner;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class TagData {
 
@@ -207,7 +207,7 @@ public class TagData {
         }
     }
 
-    private final void describeMe() {
+    /* private final void describeMe() {
         System.out.println("TagData class contains following data:");
         System.out.println("First Partition Type: " + fStartPartitionType); 
         System.out.println("MidPartition Type: " + fMidPartitionType); 
@@ -215,7 +215,7 @@ public class TagData {
         System.out.println("First Partition ends at: " + fStartPartitionEnd);
         System.out.println("Mid Partition ends at: " + fMidPartitionEnd);
         System.out.println("Total length: " + fData.length());
-    } 
+    } */
 
 }
 
@@ -223,6 +223,9 @@ public class TagData {
  * CVS LOG ====================================================================
  * 
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/01/27 01:37:25  smilligan
+ * put a band aid on the content assist for attributes and tags. It will need to be properly sorted out another time, but it basically works for now.
+ *
  * Revision 1.3  2005/01/21 08:25:15  smilligan
  * Re-implemented the partitioning in a slightly more robust way.
  *

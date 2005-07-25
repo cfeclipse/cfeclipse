@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.IActionDelegate;
-import org.eclipse.ui.IEditorActionDelegate;
+//import org.eclipse.ui.IEditorActionDelegate;
 
 /**
  * @author Christopher Bradford

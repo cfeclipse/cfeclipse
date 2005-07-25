@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
-import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
+//import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import com.rohanclan.cfml.preferences.ScribblePadPreferenceConstants;
 import com.rohanclan.cfml.views.browser.BrowserView;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -96,7 +96,7 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
     	            msg.open();
                 }
                 else { 
-                    FileEditorInput input = new FileEditorInput(scribbleFile);
+                    //FileEditorInput input = new FileEditorInput(scribbleFile);
                 	IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 	               
                 	
@@ -110,7 +110,9 @@ public class LoadScribblePadAction implements IEditorActionDelegate {
 		         		browser.setFocus();
                 	}
                 	else {
-		                IEditorPart editorPart = IDE.openEditor(page,scribbleFile,true);
+		                //IEditorPart editorPart = IDE.openEditor(page,scribbleFile,true);
+		                IDE.openEditor(page,scribbleFile,true);
+		                
 		                if (clearOnLoad) {
 		                    editor.getDocumentProvider().getDocument(editor.getEditorInput()).set("");
 		                }

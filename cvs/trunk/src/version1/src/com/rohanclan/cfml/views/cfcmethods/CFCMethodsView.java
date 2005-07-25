@@ -1,27 +1,48 @@
 package com.rohanclan.cfml.views.cfcmethods;
 
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.part.*;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.SWT;
-import com.rohanclan.cfml.editors.ICFDocument;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.texteditor.ITextEditor;
-import com.rohanclan.cfml.util.CFPluginImages;
+
+import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.editors.actions.Encloser;
+import com.rohanclan.cfml.util.CFPluginImages;
 //import org.eclipse.swt.events.MouseTrackListener;
 //import org.eclipse.swt.events.MouseEvent;
 
@@ -61,7 +82,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	private Action togglePackageAction;
 	private Action toggleRemoteAction;
 	private boolean autoRefresh = true;
-	private boolean visible = false;
+	//private boolean visible = false;
 	private boolean sortItems = false;
 	private boolean showRemote = true;
 	private boolean showPublic = true;
@@ -426,7 +447,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	
 	
 	private void sortMethods() {
-		CFCMethodViewItem selectedMethod;
+		//CFCMethodViewItem selectedMethod;
 		if(this.sortItems) {
 		    this.sortItems = false;
 		    sortMethodsAction.setChecked(false);
@@ -510,8 +531,8 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			IDocument doc =  ((ITextEditor)iep).getDocumentProvider().getDocument(iep.getEditorInput());
 			ITextEditor ite = (ITextEditor)iep;
 			ISelection sel = ite.getSelectionProvider().getSelection();
-			int cursorOffset = ((ITextSelection)sel).getOffset();
-			int selectionLength = ((ITextSelection)sel).getLength();
+			//int cursorOffset = ((ITextSelection)sel).getOffset();
+			//int selectionLength = ((ITextSelection)sel).getLength();
 			Encloser encloser = new Encloser();
 			encloser.enclose(doc,(ITextSelection)sel,selectedMethod.getInsertString(),"");
 			
@@ -519,7 +540,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 	}
 	
 	private void createInsightXML() {
-	    CFCMethodViewItem selectedMethod;
+	    //CFCMethodViewItem selectedMethod;
 	    int i = 0;
 		try {
 	    String insight = "";
@@ -561,14 +582,14 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			insight += "\t</component>\n";
 		    
 		    
-		    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
-			selectedMethod = (CFCMethodViewItem)selection.getFirstElement();
+		    //IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+			//selectedMethod = (CFCMethodViewItem)selection.getFirstElement();
 			IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 			IDocument doc =  ((ITextEditor)iep).getDocumentProvider().getDocument(iep.getEditorInput());
 			ITextEditor ite = (ITextEditor)iep;
 			ISelection sel = ite.getSelectionProvider().getSelection();
-			int cursorOffset = ((ITextSelection)sel).getOffset();
-			int selectionLength = ((ITextSelection)sel).getLength();
+			//int cursorOffset = ((ITextSelection)sel).getOffset();
+			//int selectionLength = ((ITextSelection)sel).getLength();
 			Encloser encloser = new Encloser();
 			encloser.enclose(doc,(ITextSelection)sel,insight,"");
 		}
@@ -577,12 +598,12 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		}
 	}
 	
-	private void showMessage(String message) {
+	/* private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
 			"CFC Methods View",
 			message);
-	}
+	} */
 
 	/**
 	 * Passing the focus request to the viewer's control.

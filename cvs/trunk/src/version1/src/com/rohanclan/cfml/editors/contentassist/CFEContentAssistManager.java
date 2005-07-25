@@ -26,7 +26,7 @@ package com.rohanclan.cfml.editors.contentassist;
 
 import java.util.ArrayList;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 
 /**
@@ -106,8 +106,10 @@ public class CFEContentAssistManager {
      */
     private void registerAssistor(ArrayList list, Object newAssistor)
     {
-        Assert.isNotNull(list,"CFEContentAssist::registerAssistor()");
-        Assert.isNotNull(newAssistor,"CFEContentAssist::registerAssistor()");
+        //Assert.isNotNull(list,"CFEContentAssist::registerAssistor()");
+        //Assert.isNotNull(newAssistor,"CFEContentAssist::registerAssistor()");
+        if(list == null || newAssistor == null)
+        		throw new IllegalArgumentException("CFEContentAssist::registerAssistor()");
         
         int cPos = list.indexOf(newAssistor);
         
@@ -126,7 +128,9 @@ public class CFEContentAssistManager {
      */
     public ArrayList getTagAssistors()
     {
-        Assert.isNotNull(this.tagAssistors,"CFEContentAssist::getTagAssistors()");
+        //Assert.isNotNull(this.tagAssistors,"CFEContentAssist::getTagAssistors()");
+        if(this.tagAssistors == null)
+    			throw new IllegalArgumentException("CFEContentAssist::getTagAssistors()");
         return this.tagAssistors;
     }
     
@@ -136,7 +140,9 @@ public class CFEContentAssistManager {
      */
     public ArrayList getAttributeAssistors()
     {
-        Assert.isNotNull(this.attrAssistors,"CFEContentAssist::getAttributeAssistors()");
+        //Assert.isNotNull(this.attrAssistors,"CFEContentAssist::getAttributeAssistors()");
+        if(this.tagAssistors == null)
+			throw new IllegalArgumentException("CFEContentAssist::getTagAssistors()");
         return this.attrAssistors;
     }
     
@@ -146,7 +152,9 @@ public class CFEContentAssistManager {
      */
     public ArrayList getValueAssistors()
     {
-        Assert.isNotNull(this.valueAssistors,"CFEContentAssist::getValueAssistors()");
+        //Assert.isNotNull(this.valueAssistors,"CFEContentAssist::getValueAssistors()");
+        if(this.valueAssistors == null)
+			throw new IllegalArgumentException("CFEContentAssist::getValueAssistors()");
         return this.valueAssistors;
     }
     /**
@@ -165,7 +173,9 @@ public class CFEContentAssistManager {
      */
     public ArrayList getRootAssistors()
     {
-        Assert.isNotNull(this.rootAssistors,"CFEContentAssist::getRootAssistors()");
+        //Assert.isNotNull(this.rootAssistors,"CFEContentAssist::getRootAssistors()");
+        if(this.rootAssistors == null)
+			throw new IllegalArgumentException("CFEContentAssist::getRootAssistors()");
         return this.rootAssistors;
     }
     

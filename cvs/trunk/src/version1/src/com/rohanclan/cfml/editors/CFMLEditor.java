@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.editors;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 
 //import java.util.Iterator;
@@ -32,7 +32,7 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-import org.eclipse.ui.internal.WorkbenchPage;
+//import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspace;
@@ -73,12 +73,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
+//import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.contexts.EnabledSubmission;
-import org.eclipse.ui.contexts.IWorkbenchContextSupport;
+//import org.eclipse.ui.IWorkbenchPage;
+//import org.eclipse.ui.PlatformUI;
+//import org.eclipse.ui.contexts.EnabledSubmission;
+//import org.eclipse.ui.contexts.IWorkbenchContextSupport;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.part.FileEditorInput;
@@ -107,7 +107,7 @@ import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-import com.rohanclan.cfml.plugindebug.DebugSettings;
+//import com.rohanclan.cfml.plugindebug.DebugSettings;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 import com.rohanclan.cfml.util.CFPluginImages;
@@ -124,10 +124,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
     /**
      * Logger for this class
      */
-    private static final Logger logger = Logger.getLogger(CFMLEditor.class);
-    
-
-    private final boolean DEBUG = DebugSettings.EDITORS;
+    //private static final Logger logger = Logger.getLogger(CFMLEditor.class);
+    //private final boolean DEBUG = DebugSettings.EDITORS;
     
 	protected ColorManager colorManager;
 

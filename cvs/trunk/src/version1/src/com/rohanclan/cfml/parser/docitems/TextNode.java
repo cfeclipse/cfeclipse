@@ -24,7 +24,7 @@
  */
 package com.rohanclan.cfml.parser.docitems;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 
 /**
  * A text node within a document. This will consist of purely no text
@@ -43,7 +43,9 @@ public class TextNode extends DocItem {
      */
     public void setNodeText(String nodeText)
     {
-        Assert.isNotNull(nodeText);
+        //Assert.isNotNull(nodeText);
+        if(nodeText == null)
+        		throw new IllegalArgumentException("nodeText is null");
         this.nodeText = nodeText;
     }
 

@@ -24,16 +24,16 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
-import org.eclipse.core.resources.IResource;
+//import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
 //import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.preference.IPreferenceStore;
+//import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
+//import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.CFMLEditor;

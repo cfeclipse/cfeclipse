@@ -5,13 +5,13 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
-import java.util.Timer;
-import java.util.TimerTask;
+//import java.util.Timer;
+//import java.util.TimerTask;
 
-import org.eclipse.jface.action.Action;
+//import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.jface.action.SubStatusLineManager;
+//import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;

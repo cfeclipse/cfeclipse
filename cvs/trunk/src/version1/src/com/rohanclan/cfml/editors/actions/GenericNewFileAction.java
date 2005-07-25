@@ -26,7 +26,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.core.runtime.IPath;
+//import org.eclipse.core.runtime.IPath;
 
 
 import com.rohanclan.cfml.editors.CFMLEditor;
@@ -114,7 +114,7 @@ public class GenericNewFileAction  implements IEditorActionDelegate{
     private void createFile(String filename){
         //I try to create a file
 // System.out.println("I shall create a file called " + this.filename);
-        IPath path = new Path("untitled.cfm");
+        //IPath path = new Path("untitled.cfm");
 // System.out.println("Path is valid?" + path.isValidPath("untitled.cfm"));
        
 		try {

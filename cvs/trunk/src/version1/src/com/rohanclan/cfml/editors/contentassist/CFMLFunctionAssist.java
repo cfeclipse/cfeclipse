@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.*;
 import java.util.regex.*;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.*;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
@@ -86,13 +86,16 @@ public class CFMLFunctionAssist
      * The positions of any parameters that have explicitly declared index values in the dictionary
      *
      */
-    private HashMap paramPositions = new HashMap();
+    //private HashMap paramPositions = new HashMap();
+    
     /**
      * 
      */
     public CFMLFunctionAssist() {
         this.sourceDict = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
-        Assert.isNotNull(this.sourceDict,"CFMLFunctionAssist::CFMLFunctionAssist()");
+        //Assert.isNotNull(this.sourceDict,"CFMLFunctionAssist::CFMLFunctionAssist()");
+        if(this.sourceDict == null)
+        		throw new IllegalArgumentException("CFMLFunctionAssist::CFMLFunctionAssist()");
     }
 
     /* (non-Javadoc)
@@ -118,7 +121,7 @@ public class CFMLFunctionAssist
         	return null;
 
         else {
-            int length = this.functionName.length();
+            //int length = this.functionName.length();
             
     		Set params = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionParams(this.functionName);
     		String helpText = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionHelp(this.functionName);
@@ -134,8 +137,8 @@ public class CFMLFunctionAssist
     		
 				int x = 0;
 				String extraInfo = paramIndent + "<b>" + functionName + "</b> (\n";
-				CompletionProposal proposal = null;
-				String usage = "";
+				//CompletionProposal proposal = null;
+				//String usage = "";
 				Parameter activeParam = null;
 				
 				int paramCount = filteredParams.length;
@@ -179,7 +182,7 @@ public class CFMLFunctionAssist
     
     
     private Parameter[] getFilteredParams(Set params) {
-    	HashSet s = new HashSet();
+    	//HashSet s = new HashSet();
     	Parameter[] sortingArray = new Parameter[params.size()];
     	//Build the triggers map
   		HashMap paramMap = new HashMap();
@@ -337,7 +340,7 @@ public class CFMLFunctionAssist
   }
   
     private ICompletionProposal[] getValueProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
-      String value = "";
+      //String value = "";
       String suffix = ",";
       Set values = activeParam.getValues();
       ICompletionProposal[] tmpResult = new ICompletionProposal[values.size()];
@@ -431,7 +434,7 @@ public class CFMLFunctionAssist
     private boolean checkContext(IAssistState state) {
         this.paramsSoFar = 0;
         this.paramList = new ArrayList();
-        this.paramPositions = new HashMap();
+        //this.paramPositions = new HashMap();
         String docText = state.getIDocument().get();
         this.paramText = "";
         int offset = state.getOffset();

@@ -44,14 +44,14 @@ import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
 import com.rohanclan.cfml.editors.contentassist.IAssistAttrValueContributor;
 import com.rohanclan.cfml.editors.contentassist.IAssistContributor;
 import com.rohanclan.cfml.editors.contentassist.IAssistTagContributor;
-import com.rohanclan.cfml.natures.CFENature;
+//import com.rohanclan.cfml.natures.CFENature;
 import com.rohanclan.cfml.natures.IContentAssistContributorNature;
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
 import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.parser.CommentParser;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
+//import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import com.rohanclan.cfml.preferences.ParserPreferenceConstants;
 import com.rohanclan.cfml.util.ResourceUtils;
 import com.rohanclan.cfml.external.ExternalFile;
@@ -88,7 +88,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	/** Comment parser - parses the TODOs. Will one day be put into the CFParser */
 	private CommentParser commentParser = new CommentParser();
 	/** ?? */
-	private static Thread t;
+	//private static Thread t;
 	/** The parse result of the document. NB: can be null if there were errors */
 	private CFDocument docStructure = null;
 	
@@ -212,7 +212,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 */
 	public String getTagNameAt(int startpos, int endpos)
 	{
-		String str = null;
+		//String str = null;
 		CfmlTagItem cti = getTagAt(startpos,endpos);
 		
 		if(cti != null)
@@ -323,12 +323,12 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		    return CFMLPlugin.getDefault().getGlobalCAM();
 
 		CFEContentAssistManager returnManager = null;
-		CFENature nature;		    
+		//CFENature nature;		    
 		try {
 		    if(!ResourceUtils.hasNature(this.lastRes.getProject(), CFMLPlugin.NATURE_ID))
 		        return CFMLPlugin.getDefault().getGlobalCAM();
 		    
-		    nature = (CFENature)lastRes.getProject().getNature(CFMLPlugin.NATURE_ID);
+		    //nature = (CFENature)lastRes.getProject().getNature(CFMLPlugin.NATURE_ID);
 		    
 		    //returnManager = nature.getNatureCAM();
 		    returnManager = getCAM();

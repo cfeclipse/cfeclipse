@@ -79,7 +79,7 @@ public class AssistUtils {
     public static DefaultAssistState initialiseDefaultAssistState(ITextViewer viewer, int offset) {
         DefaultAssistState assistState = new DefaultAssistState();
         IDocument document = viewer.getDocument();
-		char invokerChar = ' ';
+		//char invokerChar = ' ';
 		
 		try {
 		    assistState.setTriggerChar((offset > 0) ? document.getChar(offset-1) : ' ');

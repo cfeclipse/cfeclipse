@@ -78,7 +78,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			
 			int cursorOffset = ((ITextSelection)sel).getOffset();
 			int lastSpaceOffset = -1;
-			int nextSpaceOffset = -1;
+			//int nextSpaceOffset = -1;
 			FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
 			try {
 			    IRegion lastSpace = finder.find(cursorOffset-1,"[^\\*0-9a-zA-Z_-]",false,false,false,true);

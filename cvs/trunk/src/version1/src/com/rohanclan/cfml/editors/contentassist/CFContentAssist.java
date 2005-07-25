@@ -34,7 +34,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
@@ -45,8 +45,8 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.editors.ICFEFileDocument;
-import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
-import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+//import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
+//import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.util.CFDocUtils;
 
@@ -88,9 +88,10 @@ public class CFContentAssist extends CFEContentAssist{
 	 * Provides a standarised user console message for debugging. 
 	 * @param message The message to output to the console
 	 */
-	private void UserMsg(String message) {
- //System.out.println("CFContentAssist - " + message);
-	}
+	/* private void UserMsg(String message) {
+		//System.out.println("CFContentAssist - " + message);
+	} */
+	
 	/**
 	 * Provides a standarised user console message for debugging.
 	 * @param method The method logging a message
@@ -104,9 +105,10 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @param method The method logging a message
 	 * @param message The message to output to the error console
 	 */
-	private void ErrMsg(String method, String message) {
+	/* private void ErrMsg(String method, String message) {
 		System.err.println("CFContentAssist::" + method + "() - " + message);
 	}
+	*/
 	
 	/**
 	 * Helper function. Returns the value proposals for an attribute.
@@ -117,7 +119,9 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	ICompletionProposal[] getAttributeValueProposals(IAssistTagState assistState)
 	{
-	    Assert.isNotNull(assistState,"CFContentAssist::getAttributeValueProposals()");
+	    //Assert.isNotNull(assistState,"CFContentAssist::getAttributeValueProposals()");
+	    if(assistState == null)
+	    		throw new IllegalArgumentException("CFContentAssist::getAttributeValueProposals()");
 	    
 	    DefaultAssistAttributeState attrState = prepareForValueAssist(assistState);
 	    ArrayList valueContributors = ((ICFEFileDocument)assistState.getIDocument()).getContentAssistManager().getValueAssistors();
@@ -181,7 +185,7 @@ public class CFContentAssist extends CFEContentAssist{
         String inputText = assistState.getDataSoFar();
         //System.out.println("Input text: " + inputText);
 	    int quotes = inputText.lastIndexOf("\"");
-	    int lastSpace = inputText.substring(0, quotes).lastIndexOf(" ");
+	    //int lastSpace = inputText.substring(0, quotes).lastIndexOf(" ");
 		String valueSoFar = "";
 		
 		if(quotes != -1)
@@ -221,10 +225,12 @@ public class CFContentAssist extends CFEContentAssist{
      * 
      * @return True - the string represents a tag, false - not a tag 
      */
-    private int lastOpenChevronPos = 0;
-    private  boolean checkActuallyInTag(String cursorPrefix)
+    //private int lastOpenChevronPos = 0;
+    /* private  boolean checkActuallyInTag(String cursorPrefix)
     {
-        Assert.isNotNull(cursorPrefix,"Cursor prefix is null!");
+        //Assert.isNotNull(cursorPrefix,"Cursor prefix is null!");
+        if(cursorPrefix == null)
+    			throw new IllegalArgumentException("Cursor prefix is null!");
         
         int chevronCount = 0;
         int quoteCount = 0;
@@ -280,7 +286,7 @@ public class CFContentAssist extends CFEContentAssist{
         }
             
         return inTag;
-    }
+    } */
     
     /**
      * Dumps some state info to a string.
@@ -288,7 +294,7 @@ public class CFContentAssist extends CFEContentAssist{
      * @param state The state to dump
      * @return The string containing the info dump
      */
-    private static String getIAssistStateDescription(IAssistState state)
+    /*private static String getIAssistStateDescription(IAssistState state)
     {
         String retStr = "";
         retStr+= "# State dump follows:\n";
@@ -300,7 +306,7 @@ public class CFContentAssist extends CFEContentAssist{
         retStr+= "# End of state dump\n";
         
         return retStr;
-    }
+    } */
     
     /* (non-Javadoc)
 	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
@@ -359,10 +365,10 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	public ICompletionProposal[] getTagProposals(IAssistState assistState) {
         String mName = "computeCompletionProposal";
-	    IDocument document = assistState.getIDocument();
+	    //IDocument document = assistState.getIDocument();
 	    String attrText = "";
 		String prefix = "";
-		DefaultAssistState defaultAssistState = (DefaultAssistState)assistState;
+		//DefaultAssistState defaultAssistState = (DefaultAssistState)assistState;
 		if(!inValidPartitionType(assistState))
 		{
 		    
@@ -401,7 +407,7 @@ public class CFContentAssist extends CFEContentAssist{
 		boolean invokerIsTab = invokerChar == '\t';
 		boolean invokerIsCloseChevron = invokerChar == '>';
 		boolean prefixHasOddQuotes = countQuotes(prefix) % 2 == 1;
-		int prefixLength = prefix.length();
+		//int prefixLength = prefix.length();
 		//
 		// if it looks like they have started typing the contents of an
 		// attribtue (or they are done) set limiting to nothing
@@ -471,10 +477,14 @@ public class CFContentAssist extends CFEContentAssist{
 	private DefaultAssistTagState prepareForAttributeAssist(IAssistState assistState, 
 														String attrText, String prefix, ArrayList partItems) 
 	{
-		Assert.isNotNull(assistState,"CFContentAssist::prepareForAttributeAssist()");
-		Assert.isNotNull(attrText,"CFContentAssist::prepareForAttributeAssist()");
-		Assert.isNotNull(prefix,"CFContentAssist::prepareForAttributeAssist()");
-		Assert.isNotNull(partItems,"CFContentAssist::prepareForAttributeAssist()");
+		//Assert.isNotNull(assistState,"CFContentAssist::prepareForAttributeAssist()");
+		//Assert.isNotNull(attrText,"CFContentAssist::prepareForAttributeAssist()");
+		//Assert.isNotNull(prefix,"CFContentAssist::prepareForAttributeAssist()");
+		//Assert.isNotNull(partItems,"CFContentAssist::prepareForAttributeAssist()");
+		if(assistState == null || attrText == null || prefix == null || partItems == null)
+			throw new IllegalArgumentException("CFContentAssist::prepareForAttributeAssist()");
+		
+		
 		
 		String tagName = ((String)partItems.get(0)).substring(1).trim();
 		
@@ -491,7 +501,9 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @return The number of quotes in the string
 	 */
 	private int countQuotes(String string2Scan) {
-		Assert.isNotNull(string2Scan, "The parameter string2Scan is null");
+		//Assert.isNotNull(string2Scan, "The parameter string2Scan is null");
+		if(string2Scan == null)
+			throw new IllegalArgumentException("The parameter string2Scan is null");
 		
 		int quoteCount = 0;
 		for(int i = string2Scan.length() -1; i >= 0; i--) {
@@ -514,7 +526,10 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	private Set getAttribsFromContributors(IAssistTagState state)
 	{
-		Assert.isNotNull(state,"CFContentAssist::getAttribsFromContributors()");
+		//Assert.isNotNull(state,"CFContentAssist::getAttribsFromContributors()");
+		if(state == null)
+    			throw new IllegalArgumentException("CFContentAssist::getAttribsFromContributors()");
+		
 		
 		ArrayList attrValCACors = ((ICFEFileDocument)state.getIDocument()).getContentAssistManager().getAttributeAssistors();
 		HashSet retSet = new HashSet();
@@ -555,8 +570,10 @@ public class CFContentAssist extends CFEContentAssist{
 	private ICompletionProposal[] getAttributeProposals(IAssistTagState state, 
 														Map currAttribs)
 	{
-		Assert.isNotNull(state,"CFContentAssist::getAttributeProposals()");
-		Assert.isNotNull(currAttribs,"CFContentAssist::getAttributeProposals()");
+		//Assert.isNotNull(state,"CFContentAssist::getAttributeProposals()");
+		//Assert.isNotNull(currAttribs,"CFContentAssist::getAttributeProposals()");
+		if(state == null || currAttribs == null)
+			throw new IllegalArgumentException("CFContentAssist::getAttributeProposals()");
 		
 		String prefix = state.getDataSoFar();
 		String attrText = state.getAttributeText().trim();
@@ -590,7 +607,10 @@ public class CFContentAssist extends CFEContentAssist{
 				
 				while(attrIter.hasNext()) {
 					Object attrObj = attrIter.next();
-					Assert.isTrue(attrObj instanceof Parameter, "A parameter proposal from a tag attribute contributor is not of type Parameter");
+					//Assert.isTrue(attrObj instanceof Parameter, "A parameter proposal from a tag attribute contributor is not of type Parameter");
+					
+					if(!(attrObj instanceof Parameter))
+		    				throw new IllegalArgumentException("A parameter proposal from a tag attribute contributor is not of type Parameter");
 					
 					Parameter currParam = (Parameter)attrObj;
 					//System.out.println("Testing \'" + currParam.getName() + "\'");
@@ -598,7 +618,7 @@ public class CFContentAssist extends CFEContentAssist{
 						attribs2Remove.add(currParam);
 					}
 					else if((currParam.isTriggered((HashMap)currAttribs) == Parameter.PARAM_NOTTRIGGERED)) {
-// System.out.println("Adding to the remove list.");
+						// System.out.println("Adding to the remove list.");
 						attribs2Remove.add(currParam);
 					}
 					//System.out.println("");
@@ -637,7 +657,10 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	private ICompletionProposal[] getTagProposalsFromCACors(IAssistState assistState) throws BadLocationException 
 	{
-		Assert.isNotNull(assistState,"CFContentAssist::getTagProposalsFromCACors()");
+		//Assert.isNotNull(assistState,"CFContentAssist::getTagProposalsFromCACors()");
+		if(assistState == null)
+			throw new IllegalArgumentException("CFContentAssist::getTagProposalsFromCACors()");
+	
 		
 		ArrayList proposals = new ArrayList();
 		ArrayList tagAssists = ((ICFEFileDocument)assistState.getIDocument()).getContentAssistManager().getTagAssistors();

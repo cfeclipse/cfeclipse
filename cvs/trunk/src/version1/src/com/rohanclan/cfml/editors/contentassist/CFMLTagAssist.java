@@ -25,7 +25,7 @@
 package com.rohanclan.cfml.editors.contentassist;
 
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
@@ -43,7 +43,7 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionary;
  * @author Oliver Tupman
  */
 public class CFMLTagAssist extends DefaultTagAssistContributor implements IAssistContributor {
-	private SyntaxDictionary sourceDict = null;
+	//private SyntaxDictionary sourceDict = null;
 	/**
 	 * Setups up the assistor. You must supply the CFML dictionary when creating
 	 * this.
@@ -59,7 +59,9 @@ public class CFMLTagAssist extends DefaultTagAssistContributor implements IAssis
 	 */
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
 	    
-		Assert.isNotNull(state,"CFMLTagAssist::getTagProposals()");
+		//Assert.isNotNull(state,"CFMLTagAssist::getTagProposals()");
+		if(state == null)
+			throw new IllegalArgumentException("CFMLTagAssist::getTagProposals()");
 		//
 		// We're only going to provide CFML insight when the user has entered "<cf"
 		if(state.getDataSoFar().length() > 0 

@@ -26,14 +26,12 @@ package com.rohanclan.cfml.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-
-import org.eclipse.core.internal.utils.Assert;
-
+//import org.eclipse.core.internal.utils.Assert;
 import com.rohanclan.cfml.dictionary.Parameter;
 
 /**
@@ -60,13 +58,16 @@ public class CFDocUtils {
 		 * Having created the list of parameters to remove we run through
 		 * it removing the relevant parameters from set1.
 		 */
-		Set returnAttribs = new HashSet();
+		//Set returnAttribs = new HashSet();
 		Iterator currAttrIter = set1.iterator();
 		ArrayList params2Remove = new ArrayList();
 		
 		while(currAttrIter.hasNext()) {
 			Object paramObj = currAttrIter.next();
-			Assert.isTrue(paramObj instanceof Parameter, "A parameter proposal from a tag attribute contributor is not of type Parameter");
+			//Assert.isTrue(paramObj instanceof Parameter, "A parameter proposal from a tag attribute contributor is not of type Parameter");
+			
+			if(!(paramObj instanceof Parameter))
+				throw new IllegalArgumentException("A parameter proposal from a tag attribute contributor is not of type Parameter");
 			
 			Parameter currParam = (Parameter)paramObj;
 			Iterator set1Iter = set2.iterator();

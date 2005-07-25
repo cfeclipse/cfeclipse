@@ -6,9 +6,7 @@
  */
 package com.rohanclan.cfml.preferences;
 
-import org.eclipse.swt.graphics.RGB;
-
-
+//import org.eclipse.swt.graphics.RGB;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 

@@ -27,7 +27,7 @@ package com.rohanclan.cfml.natures;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IAction;
@@ -84,7 +84,10 @@ public abstract class AbstractApplyNatureAction   implements IObjectActionDelega
      * @param associateText The text to display to the user if the project is not associated with the nature
      */
     public void setAssociateText(String associateText) {
-        Assert.isNotNull(associateText,"AbstractApplyNatureAction::setAssociateText()");
+        //Assert.isNotNull(associateText,"AbstractApplyNatureAction::setAssociateText()");
+        if(associateText == null)
+        		throw new IllegalArgumentException("AbstractApplyNatureAction::setAssociateText()");
+        
         this.associateText = associateText;
     }
     
@@ -102,7 +105,9 @@ public abstract class AbstractApplyNatureAction   implements IObjectActionDelega
      * @param disassociateText Text to display if no association is present
      */
     public void setDisassociateText(String disassociateText) {
-        Assert.isNotNull(disassociateText,"AbstractApplyNatureAction::setDisassociateText()");
+        //Assert.isNotNull(disassociateText,"AbstractApplyNatureAction::setDisassociateText()");
+    	 	if(disassociateText == null)
+     		throw new IllegalArgumentException("AbstractApplyNatureAction::setDisassociateText()");
         this.disassociateText = disassociateText;
     }
     
@@ -123,7 +128,9 @@ public abstract class AbstractApplyNatureAction   implements IObjectActionDelega
      */
     public void setNatureID(String natureID)
     {
-        Assert.isNotNull(natureID, "Nature ID supplied to setNatureID() is null");
+        //Assert.isNotNull(natureID, "Nature ID supplied to setNatureID() is null");
+        if(natureID == null)
+     		throw new IllegalArgumentException("Nature ID supplied to setNatureID() is null");
         this.natureID = natureID;
     }
     

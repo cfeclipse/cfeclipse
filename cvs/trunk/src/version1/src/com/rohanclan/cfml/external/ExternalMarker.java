@@ -8,7 +8,7 @@ package com.rohanclan.cfml.external;
 
 import java.util.Map;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -37,7 +37,10 @@ public class ExternalMarker implements IMarker {
     
     
     ExternalMarker(IResource resource, long id) {
-		Assert.isLegal(resource != null,"ExternalMarker::ExternalMarker()");
+		//Assert.isLegal(resource != null,"ExternalMarker::ExternalMarker()");
+		if(resource == null)
+			throw new IllegalArgumentException("ExternalMarker::ExternalMarker()");
+		
 		this.resource = resource;
 		this.id = id;
 	}

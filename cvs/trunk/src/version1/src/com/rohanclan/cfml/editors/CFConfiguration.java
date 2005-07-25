@@ -27,7 +27,7 @@ package com.rohanclan.cfml.editors;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jface.preference.IPreferenceStore;
+//import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
 //import org.eclipse.jface.text.IAutoIndentStrategy;
 import org.eclipse.jface.text.IAutoEditStrategy;
@@ -93,7 +93,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	private CFScriptIndentStrategy indentCFScriptStrategy;
 	protected CFMLPreferenceManager preferenceManager;
 	private int tabWidth;
-	private CFMLEditor editor;
+	//private CFMLEditor editor;
 	private CFEUndoManager undoManager;
 	
 	/**
@@ -117,7 +117,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	public CFConfiguration(ColorManager colorManager, CFMLEditor editor) 
 	{
 		this.colorManager = colorManager;
-		this.editor = editor;
+		//this.editor = editor;
 		preferenceManager = new CFMLPreferenceManager();
 		this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
@@ -616,7 +616,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		*/
 		
 		
-		IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
+		//IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
 		
 		int delay = preferenceManager.insightDelay();
 		
@@ -795,7 +795,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         	indentCFScriptStrategy.setTabIndentSingleLine(state);
         }
         else if(prop.equals(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
-	        	boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
+	        	//boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
 	        	try {
 	        		CFMLPlugin.getWorkspace().getRoot().deleteMarkers(null, true, IResource.DEPTH_INFINITE);
 	        	}catch(CoreException ex) {

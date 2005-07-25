@@ -30,7 +30,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.text.BadLocationException;
+//import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
@@ -80,16 +80,16 @@ public class GotoFileAction implements IEditorActionDelegate {
 	 */
 	public void run(IAction action) 
 	{
-		try
-		{
+		//try
+		//{
 			if(editor != null)
 			{	
 				IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
 				ISelection sel = editor.getSelectionProvider().getSelection();
 				
 				int docOffset = ((ITextSelection)sel).getOffset();
-				String parttype = doc.getPartition(((ITextSelection)sel).getOffset()).getType();
-				String start="";
+				//String parttype = doc.getPartition(((ITextSelection)sel).getOffset()).getType();
+				//String start="";
 				
 				//if(doc instanceof ICFDocument)
 				//{
@@ -178,13 +178,12 @@ public class GotoFileAction implements IEditorActionDelegate {
 					//System.out.println("10 before & after: \'"+ doc.get(docOffset - 10, docOffset) + "\'");
 				//}
 			}
-		}
-		catch(BadLocationException e)
-		{
-			e.printStackTrace(System.err);
-// System.out.println("no file found" + System.err);
-		
-		}
+		//}
+		//catch(BadLocationException e)
+		//{
+			//e.printStackTrace(System.err);
+			// System.out.println("no file found" + System.err);
+		//}
 	}
 
 	/* (non-Javadoc)

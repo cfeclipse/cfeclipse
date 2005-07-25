@@ -36,16 +36,16 @@ public class FoldingPreferencePage extends PreferencePage
 	private ModifyListener fTextFieldListener = null;
 	private ArrayList fNumberFields = null;
 	private ModifyListener fNumberFieldListener = null;
-	private List fAppearanceColorList = null;
-	private ColorEditor fAppearanceColorEditor = null;
-	private Button fAppearanceColorDefault = null;
+	//private List fAppearanceColorList = null;
+	//private ColorEditor fAppearanceColorEditor = null;
+	//private Button fAppearanceColorDefault = null;
 	private boolean fFieldsInitialized = false;
 	private ArrayList fMasterSlaveListeners = null;
-	private CFMLPreferenceManager preferenceManager = null;
+	//private CFMLPreferenceManager preferenceManager = null;
 
 	public FoldingPreferencePage()
 	{
-	    preferenceManager = new CFMLPreferenceManager();
+	    //preferenceManager = new CFMLPreferenceManager();
 		fCheckBoxes = new HashMap();
 		fCheckBoxListener = new SelectionListener() {
 
@@ -132,10 +132,8 @@ public class FoldingPreferencePage extends PreferencePage
 
 	public void createControl(Composite parent)
 	{
-	   
 		super.createControl(parent);
 		WorkbenchHelp.setHelp(getControl(), "org.eclipse.ui.text_editor_preference_page_context");
-	   
 	}
 	
 	
@@ -390,7 +388,7 @@ public class FoldingPreferencePage extends PreferencePage
 		return textControl;
 	}
 
-	private Control addLabel(Composite composite, String label, int indentation)
+	/* private Control addLabel(Composite composite, String label, int indentation)
 	{
 		Label labelControl = new Label(composite, 0);
 		labelControl.setText(label);
@@ -399,9 +397,9 @@ public class FoldingPreferencePage extends PreferencePage
 		labelControl.setLayoutData(gd);
 		
 		return labelControl;
-	}
+	} */
 
-	private void createDependency(final Button master, String masterKey, final Control slave)
+	/* private void createDependency(final Button master, String masterKey, final Control slave)
 	{
 		indent(slave);
 		boolean masterState = fOverlayStore.getBoolean(masterKey);
@@ -420,14 +418,14 @@ public class FoldingPreferencePage extends PreferencePage
 		};
 		master.addSelectionListener(listener);
 		fMasterSlaveListeners.add(listener);
-	}
+	} */
 
-	private static void indent(Control control)
+	/* private static void indent(Control control)
 	{
 		GridData gridData = new GridData();
 		gridData.horizontalIndent = 20;
 		control.setLayoutData(gridData);
-	}
+	} */
 
 	private void numberFieldChanged(Text textControl)
 	{

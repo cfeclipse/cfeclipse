@@ -32,7 +32,7 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 	
 	public void resourceChanged(IResourceChangeEvent event) 
 	{
-		IResource res = event.getResource();
+		//IResource res = event.getResource();
 		try {
 			switch (event.getType()) {
 				case IResourceChangeEvent.PRE_CLOSE:

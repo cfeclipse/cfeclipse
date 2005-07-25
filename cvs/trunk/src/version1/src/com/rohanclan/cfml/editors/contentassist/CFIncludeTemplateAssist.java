@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.text.IDocument;
@@ -60,7 +60,9 @@ public class CFIncludeTemplateAssist implements IAssistAttrValueContributor {
      */
     private boolean trigger(IAssistTagAttributeState state)
     {
-        Assert.isNotNull(state,"CFIncludeTemplateAssist::trigger()");
+        //Assert.isNotNull(state,"CFIncludeTemplateAssist::trigger()");
+        if(state == null)
+        		throw new IllegalArgumentException("CFIncludeTemplateAssist::trigger()");
         
         if(state.getTagName().compareToIgnoreCase("cfinclude") != 0)
             return false;
@@ -75,8 +77,10 @@ public class CFIncludeTemplateAssist implements IAssistAttrValueContributor {
      * @see com.rohanclan.cfml.editors.contentassistors.IAssistAttrValueContributor#getProposals(com.rohanclan.cfml.editors.contentassistors.IAssistTagAttributeState)
      */
     public Value[] getAttributeValueProposals(IAssistTagAttributeState state) {
-        Assert.isNotNull(state, "Parameter state is null");
-
+        //Assert.isNotNull(state, "Parameter state is null");
+        if(state == null)
+    			throw new IllegalArgumentException("Parameter state is null");
+        
         if(!trigger(state))
             return null;
         
@@ -116,7 +120,9 @@ public class CFIncludeTemplateAssist implements IAssistAttrValueContributor {
      */
     private Value[] valueArrayFromSet(Set sourceSet)
     {
-        Assert.isNotNull(sourceSet, "Parameter sourceSet is null");
+        //Assert.isNotNull(sourceSet, "Parameter sourceSet is null");
+        if(sourceSet == null)
+			throw new IllegalArgumentException("Parameter sourceSet is null");
         
         Value retArray [] = new Value[sourceSet.size()];
         Iterator sourceIter = sourceSet.iterator();
@@ -124,7 +130,9 @@ public class CFIncludeTemplateAssist implements IAssistAttrValueContributor {
         {
             Object tempObj = sourceIter.next();
             
-            Assert.isTrue(tempObj instanceof Value,"CFIncludeTemplateAssist::valueArrayFromSet()");
+            //Assert.isTrue(tempObj instanceof Value,"CFIncludeTemplateAssist::valueArrayFromSet()");
+            if(!(tempObj instanceof Value))
+    				throw new IllegalArgumentException("CFIncludeTemplateAssist::valueArrayFromSet()");
             
             retArray[i] = (Value)tempObj;
         }

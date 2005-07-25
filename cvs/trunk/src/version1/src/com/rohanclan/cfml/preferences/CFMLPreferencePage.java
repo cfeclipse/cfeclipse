@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
+//import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -180,8 +180,7 @@ public class CFMLPreferencePage
         gridData.horizontalAlignment = GridData.FILL;
 
         // default width is 'client screen width/2'
-
-        int screenwidth = parent.getDisplay().getBounds().width;
+        //int screenwidth = parent.getDisplay().getBounds().width;
 
         gridData.widthHint = 250;
 
@@ -199,12 +198,7 @@ public class CFMLPreferencePage
 
     }
     
-    
-    
-    
-    
-    
-    private Text createLabeledText(String labelText, String value, Composite defPanel) {
+    /* private Text createLabeledText(String labelText, String value, Composite defPanel) {
         GridData gridData;
         Label label = new Label(defPanel, SWT.WRAP);
         gridData = new GridData();
@@ -218,10 +212,10 @@ public class CFMLPreferencePage
         fText.setText(value);
         fText.setToolTipText(labelText);
         return fText;
-    }
+    } */
     
     
-    private Text createLabeledInt(String labelText, int value, Composite defPanel) {
+    /* private Text createLabeledInt(String labelText, int value, Composite defPanel) {
         GridData gridData;
         Label label = new Label(defPanel, SWT.WRAP);
         gridData = new GridData();
@@ -235,7 +229,7 @@ public class CFMLPreferencePage
         fText.setText(Integer.toString(value));
         fText.setToolTipText(labelText);
         return fText;
-    }
+    } */
 
     private Button createLabeledCheck(String labelText, boolean value, Composite defPanel) {
         GridData gridData;

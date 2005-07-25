@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
@@ -64,7 +64,9 @@ public class CFMLScopeAssist
      */
     public CFMLScopeAssist() {
         this.sourceDict = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
-        Assert.isNotNull(this.sourceDict,"CFMLScopeAssist()::CFMLScopeAssist()");
+       // Assert.isNotNull(this.sourceDict,"CFMLScopeAssist()::CFMLScopeAssist()");
+        if(this.sourceDict == null)
+        		throw new IllegalArgumentException("CFMLScopeAssist()::CFMLScopeAssist()");
     }
 
     /* (non-Javadoc)

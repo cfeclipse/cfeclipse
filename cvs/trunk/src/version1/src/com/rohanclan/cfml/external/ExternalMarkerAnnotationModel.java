@@ -52,7 +52,7 @@ public class ExternalMarkerAnnotationModel extends
 	/** The resource change listener. */
 	private IResourceChangeListener fResourceChangeListener= new ResourceChangeListener();
 
-	private ExternalMarkerAnnotationModel model = null;
+	//private ExternalMarkerAnnotationModel model = null;
 	
 	/**
 	 * Creates a marker annotation model with the given resource as the source

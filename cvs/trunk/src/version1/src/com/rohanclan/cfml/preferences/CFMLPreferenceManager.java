@@ -49,9 +49,9 @@ public class CFMLPreferenceManager {
 
 
 	
-	private String getColorString(RGB color) {
+	/* private String getColorString(RGB color) {
 	    return color.red + "," + color.green + "," + color.blue;
-	}
+	} */
 	
 	public void initializeDefaultValues() {
 		

@@ -182,7 +182,7 @@ public class CodeFoldingSetter {
         for (int i = 0;i<regionArray.length;i++) {
 		    ITypedRegion region = regionArray[i];
 		    if (region.getType() == partitionType) {
-		        Position position= new Position(region.getOffset(), region.getLength());
+		        //Position position= new Position(region.getOffset(), region.getLength());
 				regions.add(region);
 		        
 		    }
@@ -576,11 +576,11 @@ public class CodeFoldingSetter {
     }
     
     
-    private void setSelection(int offset,int length) {
+    /* private void setSelection(int offset,int length) {
         TextSelection selection = new TextSelection(offset,length);
 		editor.getSelectionProvider().setSelection(selection);
 		
-    }
+    } */
     
     
     public void takeSnapshot() {

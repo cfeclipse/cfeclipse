@@ -25,7 +25,7 @@
 package com.rohanclan.cfml.editors.contentassist;
 
 
-import org.eclipse.ui.internal.misc.Assert;
+//import org.eclipse.ui.internal.misc.Assert;
 
 /**
  * Default implementation of the content assist tag state.
@@ -52,7 +52,9 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 */
 	public void setTagName(String tag)
 	{
-		Assert.isNotNull(tag,"DefaultAssistTagState::setTagName()");
+		//Assert.isNotNull(tag,"DefaultAssistTagState::setTagName()");
+		if(tag == null)
+			throw new IllegalArgumentException("DefaultAssistTagState::setTagName()");
 		this.tagName = tag;
 	}
 	
@@ -62,7 +64,9 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 */
 	public void setAttrText(String attrText)
 	{
-		Assert.isNotNull(attrText,"DefaultAssistTagState::setAttrText()");
+		//Assert.isNotNull(attrText,"DefaultAssistTagState::setAttrText()");
+		if(attrText == null)
+			throw new IllegalArgumentException("DefaultAssistTagState::setAttrText()");
 		this.attrText = attrText;
 	}
 	
@@ -110,8 +114,10 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	{
 		super();
 		
-		Assert.isNotNull(baseState,"DefaultAssistTagState::DefaultAssistTagState()");
-				
+		//Assert.isNotNull(baseState,"DefaultAssistTagState::DefaultAssistTagState()");
+		if(baseState == null)
+			throw new IllegalArgumentException("DefaultAssistTagState::DefaultAssistTagState()");
+		
 		this.setDataSoFar(baseState.getDataSoFar());
 		this.setDoc(baseState.getIDocument());
 		this.setOffset(baseState.getOffset());
@@ -124,7 +130,9 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagState#getTagName()
 	 */
 	public String getTagName() {
-		Assert.isNotNull(this.tagName,"DefaultAssistTagState::getTagName()");
+		//Assert.isNotNull(this.tagName,"DefaultAssistTagState::getTagName()");
+		if(this.tagName == null)
+			throw new IllegalArgumentException("DefaultAssistTagState::getTagName()");
 		return this.tagName;
 	}
 
@@ -132,7 +140,10 @@ public class DefaultAssistTagState extends DefaultAssistState implements
 	 * @see com.rohanclan.cfml.editors.contentassistors.IAssistTagState#getAttributeText()
 	 */
 	public String getAttributeText() {
-		Assert.isNotNull(this.attrText,"DefaultAssistTagState::getAttributeText()");
+		//Assert.isNotNull(this.attrText,"DefaultAssistTagState::getAttributeText()");
+		if(this.attrText == null)
+			throw new IllegalArgumentException("DefaultAssistTagState::getAttributeText()");
+		
 		return this.attrText;
 	}
 

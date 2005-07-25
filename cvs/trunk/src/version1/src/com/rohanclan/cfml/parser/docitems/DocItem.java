@@ -385,7 +385,7 @@ public abstract class DocItem implements Comparable {
 	
 	public CFNodeList selectNodes(String searchString, boolean includeEndTags)// throws Exception 
 	{
-		CFNodeList result = new CFNodeList();
+		//CFNodeList result = new CFNodeList();
 		XPathSearch search = new XPathSearch();
 		search.searchForEndTag = includeEndTags;
 		if(!search.parseXPath(searchString)) {

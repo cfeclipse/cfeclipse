@@ -29,7 +29,7 @@ package com.rohanclan.cfml.natures;
 
 import java.util.Date;
 
-import org.eclipse.core.internal.utils.Assert;
+//import org.eclipse.core.internal.utils.Assert;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 
@@ -48,7 +48,10 @@ import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompleti
 public class CFENature implements IContentAssistContributorNature {
 
     public Date getLastUpdateDate() {
-        Assert.isNotNull(this.lastUpdate,"CFENature::getLastUpdateDate()");
+        //Assert.isNotNull(this.lastUpdate,"CFENature::getLastUpdateDate()");
+        if(this.lastUpdate == null)
+        		throw new IllegalArgumentException("CFENature::getLastUpdateDate()");
+        
         return this.lastUpdate;
     }
     /** The project that this nature is associated with */
