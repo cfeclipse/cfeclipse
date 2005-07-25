@@ -36,7 +36,7 @@ package com.rohanclan.cfml.views.contentoutline;
  * May 5, 2002
  */
 
-import org.eclipse.core.internal.runtime.Assert;
+//import org.eclipse.core.internal.runtime.Assert;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -127,7 +127,10 @@ public class OutlineContentProvider implements ITreeContentProvider { //, IDelta
 		    {
 		        return null;
 		    }
-		    Assert.isNotNull(item.getParent().getName());
+		    //Assert.isNotNull(item.getParent().getName());
+		    if(item.getParent().getName() == null)
+		    		throw new IllegalArgumentException("item parent getname is null");
+		    
 			return item.getParent().getName();
 		}
 		

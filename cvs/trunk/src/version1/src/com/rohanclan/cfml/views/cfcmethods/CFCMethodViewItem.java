@@ -127,7 +127,7 @@ public class CFCMethodViewItem  {
 	}
 	
 	public String getReturnType() {
-		String returnType;
+		//String returnType;
 
 		try {
 			return functionTag.getAttributeValue("returntype");

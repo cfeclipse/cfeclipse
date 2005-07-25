@@ -1,6 +1,6 @@
 package com.rohanclan.cfml.views.dictionary;
 
-import java.io.File;
+//import java.io.File;
 import java.util.Properties;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,7 +29,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
-import org.eclipse.core.runtime.IAdaptable;
+//import org.eclipse.core.runtime.IAdaptable;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.Function;
 import com.rohanclan.cfml.dictionary.ScopeVar;
@@ -37,17 +37,17 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.browser.BrowserView;
-import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
-import com.rohanclan.cfml.views.packageview.FolderNode;
+//import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
+//import com.rohanclan.cfml.views.packageview.FolderNode;
 import com.rohanclan.cfml.views.packageview.FolderTypes;
-import com.rohanclan.cfml.views.snips.SnipDialog;
-import com.rohanclan.cfml.views.snips.SnipDoubleClickListener;
-import com.rohanclan.cfml.views.snips.SnipTreeViewContentProvider;
-import com.rohanclan.cfml.views.snips.SnipTreeViewLabelProvider;
-import com.rohanclan.cfml.views.snips.SnipVarItem;
+//import com.rohanclan.cfml.views.snips.SnipDialog;
+//import com.rohanclan.cfml.views.snips.SnipDoubleClickListener;
+//import com.rohanclan.cfml.views.snips.SnipTreeViewContentProvider;
+//import com.rohanclan.cfml.views.snips.SnipTreeViewLabelProvider;
+//import com.rohanclan.cfml.views.snips.SnipVarItem;
 import com.rohanclan.cfml.editors.actions.Encloser;
-import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
-import com.rohanclan.cfml.editors.actions.GetHelpAction;
+//import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
+//import com.rohanclan.cfml.editors.actions.GetHelpAction;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
