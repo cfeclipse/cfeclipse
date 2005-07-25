@@ -130,7 +130,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		layoutData.horizontalAlignment = GridData.FILL;
 		FontData labelFontData = new FontData();
 		labelFontData.setStyle(SWT.BOLD);
-		labelFontData.setHeight(8);
+		//labelFontData.setHeight(8);
 		Font labelFont = new Font(parent.getDisplay(),labelFontData);
 		fileLabel.setFont(labelFont);
 		fileLabel.setLayoutData(layoutData);
