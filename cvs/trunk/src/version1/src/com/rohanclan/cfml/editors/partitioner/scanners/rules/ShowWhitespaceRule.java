@@ -16,7 +16,7 @@ import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
 public class ShowWhitespaceRule implements IPredicateRule // implements IRule 
 {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	/** The whitespace detector used by this rule */
 	protected IWhitespaceDetector fDetector;
