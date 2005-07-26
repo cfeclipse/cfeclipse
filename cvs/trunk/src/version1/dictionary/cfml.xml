@@ -5289,6 +5289,12 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="id" type="String" required="true">
+				<help><![CDATA[
+					ID for form input element.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="type" type="String" required="false">
 				<help><![CDATA[
 					The input control type to create:
@@ -8800,6 +8806,12 @@
 				]]></help>
 				<values/>
 			</parameter>
+			<parameter name="id" type="String" required="true">
+				<help><![CDATA[
+					ID for form input element.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="label" type="String" required="false">
 				<help><![CDATA[
 					Label to put next to the control on a Flash or XML-format form.
@@ -9034,7 +9046,7 @@
 				showDebugOutput = "Yes" or "No"
 				requestTimeOut = "value in seconds"
 		-->
-		<tag name="cfsetting" creator="3" single="true" xmlstyle="false">
+		<tag name="cfsetting" creator="3" single="false" hybrid="true" xmlstyle="false">
 			<help><![CDATA[
 				Controls aspects of page processing, such as the output of
 				HTML code in pages.
@@ -9315,6 +9327,12 @@
 			<parameter name="name" type="String" required="true">
 				<help><![CDATA[
 					Name of the cftextinput control.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="id" type="String" required="true">
+				<help><![CDATA[
+					ID for form input element.
 				]]></help>
 				<values/>
 			</parameter>
