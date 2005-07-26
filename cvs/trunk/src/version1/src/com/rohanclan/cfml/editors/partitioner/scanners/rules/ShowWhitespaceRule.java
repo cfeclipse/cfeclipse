@@ -8,6 +8,7 @@ import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.IWhitespaceDetector;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.swt.graphics.RGB;
 
 import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
@@ -26,6 +27,9 @@ public class ShowWhitespaceRule implements IPredicateRule // implements IRule
 	private IToken tab;
 	private IToken enter;
 	
+	private RGB spacecolor = new RGB(91,91,91);
+	private RGB tabcolor = new RGB(230,230,230);
+	
 	/**
 	 * Creates a rule which, with the help of an
 	 * whitespace detector, will return a whitespace
@@ -43,26 +47,33 @@ public class ShowWhitespaceRule implements IPredicateRule // implements IRule
 		
 		if(DEBUG)
 		{
+			ColorManager cm = new ColorManager();
+						
 			manager = new ColorManager();
 			prefManager = new CFMLPreferenceManager();
 			
 			space = new Token(new TextAttribute(
-				manager.getColor(
+				cm.getColor(spacecolor),
+				null,
+				/* manager.getColor(
 					prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT)
 				),
+				
 				manager.getColor(
 					prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFNUMBER)
-				),
+				), */
 				TextAttribute.STRIKETHROUGH
 			));
 			
 			tab = new Token(new TextAttribute(
-				manager.getColor(
+				cm.getColor(tabcolor),
+				null,
+				/*manager.getColor(
 					prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT)
 				),
 				manager.getColor(
 					prefManager.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_STRING)
-				),
+				), */
 				TextAttribute.STRIKETHROUGH
 			));
 			
