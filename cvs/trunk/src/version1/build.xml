@@ -15,4 +15,5 @@
 			includes="snippets/**/*.xml,snippets/keyCombos.properties"
 		/>
 	</target>	
+
 </project>

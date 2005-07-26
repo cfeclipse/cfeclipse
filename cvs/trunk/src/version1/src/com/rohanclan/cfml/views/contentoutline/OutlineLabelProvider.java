@@ -53,6 +53,7 @@ import com.rohanclan.cfml.parser.cfscript.ASTFunctionDeclaration;
 import com.rohanclan.cfml.parser.cfscript.ASTId;
 import com.rohanclan.cfml.parser.cfscript.ASTParameterList;
 import com.rohanclan.cfml.parser.cfscript.SimpleNode;
+import com.rohanclan.cfml.parser.docitems.CfmlCustomTag;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 import com.rohanclan.cfml.parser.docitems.TagItem;

@@ -31,6 +31,8 @@ package com.rohanclan.cfml.parser.docitems;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class CfmlCustomTag extends TagItem {
+	
+	public boolean hasCloser = true;
 	/**
 	 * 
 	 * @see com.rohanclan.cfml.parser.docitems.DocItem#validChildAddition(com.rohanclan.cfml.parser.DocItem)
@@ -42,7 +44,7 @@ public class CfmlCustomTag extends TagItem {
 	 * @see com.rohanclan.cfml.parser.TagItem#hasClosingTag()
 	 */
 	public boolean hasClosingTag() throws NullPointerException {
-		return true;
+		return hasCloser;
 	}
 	/* (non-Javadoc)
 	 * @see com.rohanclan.cfml.parser.TagItem#hasClosingTag()

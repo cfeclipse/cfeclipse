@@ -421,7 +421,6 @@ public class CFParser {
 			        	    foundCloser = true;
 			        	    break;
 			        	} else if (item.isHybrid()) {
-			        	    //System.out.println("Found hybrid. Adding it to the removals list.");
 			        	    removals.add(item);
 			        	}
 			        }
@@ -429,20 +428,32 @@ public class CFParser {
 			    
 			    // If we found a closer, we want to remove any unclosed hybrids.
 			    if (foundCloser) {
+			
 			        items = removals.toArray();
 		            DocItem parent = (DocItem)matchStack.get(items.length);
 			        for (int i=0;i<items.length;i++) {
 			            TagItem item = (TagItem)items[i];
 			            //System.out.println(item.getChildNodes().size() + " children need to be moved to " + parent.getName());
 			            Object[] orphans = item.getChildNodes().toArray();
+			            if (item instanceof CfmlCustomTag) {
+			            	((CfmlCustomTag)item).hasCloser = false;
+			            	parent.addChild(item);
+			            	item.setParent(parent);
+			            }
 			            for (int j=0;j<orphans.length;j++) {
 			                DocItem orphan = (DocItem)orphans[j];
 			                //System.out.println("Moving " + orphan.getName() + " under " + parent.getName());
 			                parent.addChild(orphan);
 			                item.removeChild(orphan);
 			            }
-			            //System.out.println("Removing " + item.getName() + " from the stack.");
+			            //System.out.println("Removing " + ((TagItem)items[i]).getName() + " from the stack." + " Current parent is " + parent.getName());
 			            matchStack.remove(items[i]);
+			        }
+			        
+			        Iterator iter = parent.getChildNodes().iterator();
+			        while (iter.hasNext()) {
+			        	DocItem di = (DocItem)iter.next();
+			        	//System.out.println("Child: " + di.getName());
 			        }
 			    }
 			    else {
@@ -712,9 +723,12 @@ public class CFParser {
 		//
 		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
 		// Also tests to make sure it catches CFX tags.
-		if(tagName.charAt(2) == '_' || ((tagName.charAt(2) == 'x' || (tagName.charAt(2) == 'X')) && tagName.charAt(3) == '_'))
+		if(tagName.charAt(2) == '_' 
+			|| ((tagName.charAt(2) == 'x' 
+				|| (tagName.charAt(2) == 'X')) 
+				&& tagName.charAt(3) == '_'))
 		{
-			
+
 			newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);
 			newItem.setItemData(match.match);
 			
@@ -759,10 +773,9 @@ public class CFParser {
 			else
 			{ 	// It's a closing item, so we get the parent item and add this item to it's children.
 				DocItem top = (DocItem)matchStack.pop();
-
+				
 				top.addChild(newItem);
 				matchStack.push(top);
-				////System.out..println("CFParser::handleCFTag() - " + Util.GetTabs(matchStack) + "Parser: Item is a single tag and is now the child of " + top.itemName);
 			}	
 		} catch(Exception anExcep) {
 			parserState.addMessage(new ParseError(getLineNumber(match.startPos), match.startPos, match.endPos, match.match, "An unknown error occurred during parsing."));
@@ -975,11 +988,60 @@ public class CFParser {
 			anyException.printStackTrace();
 			////System.out..println(anyException.hashCode());
 		}
-		
-		//System.out.println(rootItem.getFirstChild().getChildNodes().size() + " first grandchild");
+		handleUnclosedCustomTags(matchStack,rootItem);
 		
 		newDoc.setDocumentRoot(rootItem);
 		return newDoc;
+	}
+	
+	
+	private void handleUnclosedCustomTags(Stack matchStack, DocItem defaultParent) {
+		try {
+			// If we've got more than one item left on the stack check if any of the remaining items are unclosed custom tags
+			if (matchStack.size() > 1) {
+				for (int i=0;i<matchStack.size();i++) {
+					TagItem t = (TagItem)matchStack.peek();
+					String tagName = t.getName();
+					System.out.println("Looking at " + tagName);
+					// Look for either cfml or cfx custom tags that got left over.
+					if (tagName.toLowerCase().startsWith("cf_") 
+							|| tagName.toLowerCase().startsWith("cfx_")) {
+						// Mark them as being self closers.
+						((CfmlCustomTag)t).hasCloser= false;
+						// Get the current parent of the tag.
+						DocItem parent = t.getParent();
+						if (parent == null) {
+							parent = defaultParent;
+						}
+						// Don't make the thing a child of itself. 
+						if (!parent.equals(t)) {
+							parent.addChild(t);
+	
+							CFNodeList childNodes = t.getChildNodes();
+							Iterator iter = childNodes.iterator();
+							ArrayList deletedChildren = new ArrayList();
+							while (iter.hasNext()) {
+								Object o = iter.next();
+								if (o instanceof DocItem) {
+									DocItem d = (DocItem)o;
+									d.setParent(parent);
+									parent.addChild(d);
+									deletedChildren.add(d);
+									System.out.println("Added " + d.getClass().getName() + " as child of " + parent.getName() + ". Was child of " + tagName);
+								}
+							}
+							iter = deletedChildren.iterator();
+							while(iter.hasNext()) {
+								t.removeChild((DocItem)iter.next());
+							}
+						}
+					}
+				}
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public final int MATCHER_NOTHING = 		0x00;
