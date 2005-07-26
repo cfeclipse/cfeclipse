@@ -719,7 +719,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					return false;	// Found closing chevron, die now.	
 									// TODO: Will kill if closing chevron is in quotes!
 
-				if(docData.charAt(i) == '<') {
+				if(docData.charAt(i) == '<' && Character.isLetter(docData.charAt(i+1))) {
 					openerFound = true;
 					break;
 				}
