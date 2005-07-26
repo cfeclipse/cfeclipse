@@ -39,6 +39,7 @@ import com.rohanclan.cfml.editors.CFWhitespaceDetector;
 import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.CFKeywordDetector;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.ShowWhitespaceRule;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 
@@ -123,7 +124,7 @@ public class CFTagScanner extends RuleBasedScanner {
 		rules[3] = words;
 		
 		// Add generic whitespace rule.
-		rules[4] = new WhitespaceRule(new CFWhitespaceDetector());
+		rules[4] = new ShowWhitespaceRule(new CFWhitespaceDetector());
 		
 		setRules(rules);
 	}

@@ -29,6 +29,7 @@ import org.eclipse.jface.text.rules.*;
 
 import com.rohanclan.cfml.editors.CFWhitespaceDetector;
 import com.rohanclan.cfml.editors.ColorManager;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.ShowWhitespaceRule;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.HTMLColorsPreferenceConstants;
 /**
@@ -70,7 +71,7 @@ public class HTMTagScanner extends RuleBasedScanner {
 		// Add a rule for single quotes
 		rules[1] = new SingleLineRule("'", "'", string);
 		// Add generic whitespace rule.
-		rules[2] = new WhitespaceRule(new CFWhitespaceDetector());
+		rules[2] = new ShowWhitespaceRule(new CFWhitespaceDetector());
 		
 		setRules(rules);
 	}
