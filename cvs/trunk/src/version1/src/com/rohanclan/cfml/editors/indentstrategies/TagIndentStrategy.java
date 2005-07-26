@@ -187,7 +187,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		return command;
 	}
 
-	private int findStartofTag(IDocument doc, int offset) throws BadLocationException {
+	/* private int findStartofTag(IDocument doc, int offset) throws BadLocationException {
 		int retval = -1;
 
 		for(int i = offset; i >= 0; i--) {
@@ -201,11 +201,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 
 		return retval;
-	}
+	} */
 
-	private boolean isWhitespace(char c) {
+	/* private boolean isWhitespace(char c) {
 		return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
-	}
+	} */
 
 	/* private String getTagName(IDocument doc, int startPos) throws BadLocationException {
 		//String retStr = "";
@@ -697,7 +697,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @return - the position of the character <strong>after</strong> the end of tag.
 	 */
 	//private int findEndOfTag(String data, int offset) {
-	private int findEndOfTag(IDocument data, int offset) {
+	/* private int findEndOfTag(IDocument data, int offset) {
 		int pos = offset;
 		int startOfTag = 0;
 
@@ -723,7 +723,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			return 0;
 		}
 		return pos;
-	}
+	} */
 
 	/**
 	 * Has the user pressed enter from within a tag (i.e. they were editing the attributes)?
