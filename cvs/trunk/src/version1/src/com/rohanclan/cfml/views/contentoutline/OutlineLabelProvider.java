@@ -178,6 +178,7 @@ public class OutlineLabelProvider extends LabelProvider {
 			{
 				String data = ((TagItem)element).getItemData();
 				data = data.replaceAll("<"+tname,"");
+				data = data.replaceAll("/>","");
 				data = data.replaceAll(">","");
 				sb.append( data );
 			}
