@@ -36,6 +36,8 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 /**
  * This represents a tag-based auto-indent strategy. It not only
@@ -314,11 +316,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		// end of test
 
 		int openChevron = doc.get(0, docCommand.offset).lastIndexOf('<');
-		if(openChevron == -1)
+		if(openChevron == -1) {
 			return;
-
+		}
+		
 		String whiteSpace = getPrevLineWhiteSpace(doc,openChevron);
-		docCommand.caretOffset = docCommand.offset + 3 + whiteSpace.length();
+		docCommand.caretOffset = docCommand.offset + indentString.length() + 2  + whiteSpace.length();
 
 
 		if(lastChar == '>')
@@ -327,14 +330,14 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			docCommand.offset++;
 		}
 
-		if(whiteSpace.length() == 0)
-			docCommand.caretOffset--;
+		//if(whiteSpace.length() == 0)
+		//	docCommand.caretOffset--;
 
 		docCommand.shiftsCaret = false;
-
+		
 		docCommand.text += "\n";	// End the current line the user is on.
-		if(lastChar == '>') docCommand.text+="\t";
-		docCommand.text += whiteSpace + "\t" + "\n";	// Create the whitespace for the next line (the user will end up on this one)
+		if(lastChar == '>') docCommand.text+=indentString;
+		docCommand.text += whiteSpace + indentString + "\n";	// Create the whitespace for the next line (the user will end up on this one)
 		docCommand.text += whiteSpace;
 	}
 
@@ -497,8 +500,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				handleEnterInTag(doc, docCommand);
 			}
 			else {
-				String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
-				docCommand.text+= prevLineWhitespace;
+				handleEnterBetweenTags(doc, docCommand);
 			}
 		} catch(BadLocationException ex) {
 			System.err.println("TagIndentStategy::customizeDocumentCommand() - Caught BadLocationException");
@@ -525,12 +527,14 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @throws BadLocationException doh
 	 */
 	private void handleDelete(IDocument doc, DocumentCommand docCommand) throws BadLocationException {
-		char prevChar = doc.getChar(docCommand.offset);
+		return;
+		/*
+		char prevChar = doc.getChar(docCommand.offset-1);
 		// Initialize nextChar to an ASCII null
 		char nextChar = (char)0;
 		// If we're not at the end of the document reassign nextChar
-		if (doc.getLength() > docCommand.offset + 1) {
-		 nextChar = doc.getChar(docCommand.offset + 1);
+		if (doc.getLength() > docCommand.offset) {
+		 nextChar = doc.getChar(docCommand.offset);
 		}
 
 		switch(prevChar) {
@@ -551,6 +555,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				break;
 		}
 		return;
+		*/
 	}
 	/**
 	 * Handles the user typing in a closing chevron.
@@ -591,6 +596,44 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 		return;
 	}
+	
+	private void handleEnterBetweenTags(IDocument doc, DocumentCommand docCommand) {
+		if (doc instanceof ICFDocument) {
+			ICFDocument cfd = (ICFDocument)doc;
+			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+			CFEPartition[] partitions = partitioner.getCFEPartitions(docCommand.offset-1,docCommand.offset);
+			
+			if (partitions.length > 0) {
+				if (partitions[0].getType().endsWith("start_tag_end")) {
+					try {
+						char c = doc.getChar(docCommand.offset-2);
+						if (c != '/') {
+							boolean doIndent = true;
+							if (partitions.length > 1 && partitions[1].getType().endsWith("end_tag")) {
+								doIndent = false;
+							}
+							if (doIndent) {
+								String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+								docCommand.text+= prevLineWhitespace + indentString;
+								return;
+							}
+						
+						}
+					} catch (BadLocationException e) {
+						//
+					}
+				}
+			}
+			
+		}
+		try {
+			String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+			docCommand.text+= prevLineWhitespace;
+		} catch (BadLocationException e) {
+			//
+		}
+	}
+	
 	/**
 	 * Performs the required operations to provide indenting when the user presses enter
 	 * inside a tag.

@@ -43,6 +43,7 @@ public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 
 	private boolean tabIndentSingleLine = false;
 	protected String indentString = "\t";
+	protected int indentSize = 4;
 	
 	protected CFMLEditor editor;
 	//private CFConfiguration configuration;
@@ -54,6 +55,7 @@ public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 	protected String getIndentString() { return this.indentString; }
 	
 	public void setIndentString(int tabWidth, boolean tabsAsSpaces) {
+		indentSize = tabWidth;
 		if(tabsAsSpaces) {
 			//System.err.println("Indent string set to "+tabWidth+" spaces.");
 			String s = new String();
