@@ -764,7 +764,16 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		catch (BadLocationException bex) {
 			// do nothing
 		}
-		if (prevChar == quoteChar) {
+		if (prevChar == '"') {
+			return;
+		}
+		if (prevChar == '\'') {
+			return;
+		}
+		if (nextChar == '"') {
+			return;
+		}
+		if (nextChar == '\'') {
 			return;
 		}
 		if (prevChar == '#') {
