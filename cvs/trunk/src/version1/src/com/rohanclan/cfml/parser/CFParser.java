@@ -1002,7 +1002,7 @@ public class CFParser {
 				for (int i=0;i<matchStack.size();i++) {
 					TagItem t = (TagItem)matchStack.peek();
 					String tagName = t.getName();
-					System.out.println("Looking at " + tagName);
+					//System.out.println("Looking at " + tagName);
 					// Look for either cfml or cfx custom tags that got left over.
 					if (tagName.toLowerCase().startsWith("cf_") 
 							|| tagName.toLowerCase().startsWith("cfx_")) {

@@ -189,7 +189,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		return command;
 	}
 
-	private int findStartofTag(IDocument doc, int offset) throws BadLocationException {
+	/* private int findStartofTag(IDocument doc, int offset) throws BadLocationException {
 		int retval = -1;
 
 		for(int i = offset; i >= 0; i--) {
@@ -203,11 +203,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 
 		return retval;
-	}
+	} */
 
-	private boolean isWhitespace(char c) {
+	/* private boolean isWhitespace(char c) {
 		return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
-	}
+	} */
 
 	/* private String getTagName(IDocument doc, int startPos) throws BadLocationException {
 		//String retStr = "";
@@ -300,6 +300,68 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	}
 
 	/**
+	 * Handles the case where a user has <tr>|<td> and presses enter.
+	 * <tr>|</tr> will not indent.
+	 * <tr>|<td> will indent.
+	 * 
+	 * @param doc
+	 * @param docCommand
+	 */
+	private void handleEnterBetweenTags(IDocument doc, DocumentCommand docCommand) {
+		if (doc instanceof ICFDocument) {
+			ICFDocument cfd = (ICFDocument)doc;
+			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+			CFEPartition[] partitions = partitioner.getCFEPartitions(docCommand.offset-1,docCommand.offset);
+			
+			if (partitions.length > 0) {
+				if (partitions[0].getType().endsWith("start_tag_end")) {
+					try {
+						char c = doc.getChar(docCommand.offset-2);
+						if (c != '/') {
+							boolean doIndent = true;
+							if (partitions.length > 1 && partitions[1].getType().endsWith("end_tag")) {
+								doIndent = false;
+							}
+							if (doIndent) {
+								String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+								docCommand.text+= indentString + guessNewIndentWhitespace(prevLineWhitespace);
+								return;
+							}
+						
+						}
+					} catch (BadLocationException e) {
+						//
+					}
+				} else if (partitions[0].getType().endsWith("end_tag")) {
+					try {
+						boolean doUnIndent = true;
+						if (partitions.length > 1 && partitions[1].getType().endsWith("end_tag")) {
+							doUnIndent = false;
+						}
+						if (doUnIndent) {
+							String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+							String thisLineWhitespace = prevLineWhitespace;
+							if (thisLineWhitespace.length() >= indentString.length()) {
+								thisLineWhitespace = thisLineWhitespace.substring(0,thisLineWhitespace.length()-indentString.length());
+							}
+							docCommand.text+= guessNewIndentWhitespace(thisLineWhitespace);;
+							return;
+						}
+					} catch (BadLocationException e) {
+						//
+					}
+				}
+			}
+			
+		}
+		try {
+			String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+			docCommand.text+= guessNewIndentWhitespace(prevLineWhitespace);
+		} catch (BadLocationException e) {
+			//
+		}
+	}
+	/**
 	 * @param doc
 	 * @param docCommand
 	 * @param lastChar
@@ -315,14 +377,15 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		} */
 		// end of test
 
+		//get the position of the < of this tag (so we can get it's indet level
 		int openChevron = doc.get(0, docCommand.offset).lastIndexOf('<');
-		if(openChevron == -1) {
+		if(openChevron == -1)
 			return;
-		}
-		
-		String whiteSpace = getPrevLineWhiteSpace(doc,openChevron);
-		docCommand.caretOffset = docCommand.offset + indentString.length() + 2  + whiteSpace.length();
 
+		//get the the space of the previous line useing the < as an anchor
+		String whiteSpace = getPrevLineWhiteSpace(doc,openChevron);
+		
+		docCommand.caretOffset = docCommand.offset + indentString.length() + 2 + whiteSpace.length();
 
 		if(lastChar == '>')
 		{
@@ -334,9 +397,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		//	docCommand.caretOffset--;
 
 		docCommand.shiftsCaret = false;
-		
+
 		docCommand.text += "\n";	// End the current line the user is on.
-		if(lastChar == '>') docCommand.text+=indentString;
+		if(lastChar == '>') 
+			docCommand.text+=indentString;
+		
 		docCommand.text += whiteSpace + indentString + "\n";	// Create the whitespace for the next line (the user will end up on this one)
 		docCommand.text += whiteSpace;
 	}
@@ -390,128 +455,194 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void customizeDocumentCommand(IDocument doc, DocumentCommand docCommand)
     {
-	    
-		try {
-			//
-			// We're only interested in the insertion of single characters, so catch the user pasting
-			// something (making sure that it's not going to be a carriage return)
-			
-			
-			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) {
+		try 
+		{
+			// We're only interested in the insertion of single characters, so catch 
+			// the user pasting something (making sure that it's not going to be a 
+			// carriage return)
+			if(docCommand.text.length() > 1 && docCommand.text.compareTo("\r\n") != 0) 
+			{
 				return;
 			}
 			
-
 			//int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';
-			char firstCommandChar; 
-			if (docCommand.text.length() > 0) { 
-					firstCommandChar = docCommand.text.charAt(0);
-			} else {
-				// SPIKE:: um... So the command doesn't have any text
-				// not sure why this is setting it to a space 
-				// needs some more investigation
-				firstCommandChar = ' ';
-			}
+			char firstCommandChar = (docCommand.text.length() > 0) ? docCommand.text.charAt(0) : ' ';
 
-			if(docCommand.offset - 1 >= 0) {
+			if(docCommand.offset - 1 >= 0) 
+			{
 				beforeLastChar = doc.getChar(docCommand.offset-1);
 			}
-			//System.out.println("TagIndentStrategy::customizeDocumentCommand() - Got a \'" + firstCommandChar + "\'");
-			//
+			
 			// Handle a backspace or delete
-			if(docCommand.length > 0 && docCommand.text.length() == 0) {
+			if(docCommand.length > 0 && docCommand.text.length() == 0) 
+			{
 				firstCommandChar = '\b';
 			}
-			
-			
 
-			switch(firstCommandChar) {
-			case '\b':	// User wishes to delete something
-				handleDelete(doc, docCommand);
-				return;
-			case '!':
-				if(doc.getChar(docCommand.offset-1) == '<'
-					&& doc.getLength() > docCommand.offset+1
-					&& doc.getChar(docCommand.offset+1) == '>')
-				{
-						handleHTMLComment(doc, docCommand);
-				}
-				return;
-			case '>':
-			    
-				if(!this.autoInsert_CloseTags)
-				{
-					if(doc.getLength() > docCommand.offset 
-					        && doc.getChar(docCommand.offset+1) == '>')
-						stepThrough(docCommand);
+			switch(firstCommandChar) 
+			{
+				//User wishes to delete something
+				case '\b':	
+					//handleDelete(doc, docCommand);
 					return;
-				}
-
-				handleClosingChevron(doc, docCommand, beforeLastChar);
-				return;
-			case '<':
-				if(!this.autoClose_Tags) return;
-
-				handleOpenChevron(docCommand);
-				return;
-			case '\"':
-				if(!this.autoClose_DoubleQuotes) {
-				    return; // User doesn't want us to do this
-				}
-				handleQuotes(doc, docCommand, firstCommandChar);
-				return;
-			case '#':
-				if(!this.autoClose_Hashes) {
-				    return; // User doesn't want us to do this
-				}
-				handleHashes(doc, docCommand);
-				return;
-			case '\'':	// Handle opening/closing quotes
-				if(!this.autoClose_SingleQuotes) return;
-				handleQuotes(doc, docCommand, firstCommandChar);
-				return;
-			case '\t': // handle tabs
-			    singleLineIndent(doc,docCommand);
-			    return;
-			default:
-				//
-				// Check to make sure that the text entered isn't a CF/CRLF and that
-				// there is actually data in the command. Otherwise cop out.
-				if((docCommand.text.compareTo("\r\n") != 0
-						&& docCommand.text.compareTo("\n") != 0)
-						|| docCommand.length != 0) {
-				//System.out..println("TagIndentStrategy::customizeDocument() - In fall out");
-					//attempt to register a default behavior
-					super.customizeDocumentCommand(doc,docCommand);
-					
-
+				case '!':
+					if(doc.getChar(docCommand.offset-1) == '<'
+						&& doc.getLength() > docCommand.offset+1
+						&& doc.getChar(docCommand.offset+1) == '>')
+					{
+							handleHTMLComment(doc, docCommand);
+					}
 					return;
-				}
+				case '>':
+					if(!this.autoInsert_CloseTags)
+					{
+						if(doc.getLength() > docCommand.offset 
+						        && doc.getChar(docCommand.offset+1) == '>')
+							stepThrough(docCommand);
+						return;
+					}
+	
+					handleClosingChevron(doc, docCommand, beforeLastChar);
+					return;
+				case '<':
+					if(!this.autoClose_Tags) return;
+	
+					handleOpenChevron(docCommand);
+					return;
+				case '\"':
+					if(!this.autoClose_DoubleQuotes) 
+					{
+						//User doesn't want us to do this
+						return; 
+					}
+					handleQuotes(doc, docCommand, firstCommandChar);
+					return;
+				//Handle opening/closing quotes
+				case '\'':	
+					if(!this.autoClose_SingleQuotes) return;
+					handleQuotes(doc, docCommand, firstCommandChar);
+					return;
+				//Handle opening/closing quotes
+				case '#':	
+					if(!this.autoClose_Hashes) return;
+					handleHashes(doc, docCommand);
+					return;
+				//handle tabs
+				case '\t': 
+				    singleLineIndent(doc,docCommand);
+				    return;
+				default:
+					// Check to make sure that the text entered isn't a LF/CRLF and that
+					// there is actually data in the command. Otherwise cop out.
+					if((docCommand.text.compareTo("\r\n") != 0
+							&& docCommand.text.compareTo("\n") != 0)
+							|| docCommand.length != 0) 
+					{
+						//attempt to register a default behavior
+						super.customizeDocumentCommand(doc,docCommand);
+						return;
+					}
 				break;
 			}
-			//
+			
 			// Here the user must've pressed enter to go to a new line.
 			// So we have two options:
 			// 1) They're just pressing in between two tags OR
 			// 2) They've pressed enter WITHIN a tag (i.e. <cffred name="blah" [ENTER]>
-
-			if(isEnterInTag(doc, docCommand)) {
+			if(isEnterInTag(doc, docCommand)) 
+			{
 				handleEnterInTag(doc, docCommand);
 			}
-			else {
-				handleEnterBetweenTags(doc, docCommand);
+			else 
+			{
+				handleEnterBetweenTags(doc,docCommand);
+				//String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+				//docCommand.text += guessNewIndentWhitespace(prevLineWhitespace); //prevLineWhitespace
 			}
-		} catch(BadLocationException ex) {
+		} 
+		catch(BadLocationException ex) 
+		{
 			System.err.println("TagIndentStategy::customizeDocumentCommand() - Caught BadLocationException");
 			ex.printStackTrace();
 			return;
 		}
-		catch (Exception e) {
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
     }
 
+	/**
+	 * When a client hits enter between tags the previous line is looked at to get the
+	 * indent depth - if the file was made with "tabs as spaces" and the new person
+	 * editing uses proper tabs then the new indents should be tabs not spaces (or
+	 * so the bug report goes :)
+	 * 
+	 * This looks at the preferences and switches the tab/space indent as best it can.
+	 * you run into trouble with things like is 6 spaces one tab or 2.
+	 * @param guessInfo
+	 * @return
+	 */
+	private String guessNewIndentWhitespace(String previousWhitespace)
+	{
+		if (previousWhitespace.length() == 0) {
+			return "";
+		}
+		//if we are now set to "tabs for tabs"..
+		if(this.getIndentString().compareTo("\t") == 0) 
+		{
+			//if the last whitespace is a tab too assume we are all good
+			if(previousWhitespace.charAt(0) == '\t')
+			{
+				return previousWhitespace;
+			}
+			//last indent line was spaces so time to guess how many tabs that is
+			else if(previousWhitespace.charAt(0) == ' ')
+			{
+				//use the tab width setting as a guide
+				int numtabs = previousWhitespace.length() / indentSize;
+				StringBuffer sb = new StringBuffer();
+				for(int x=0; x<numtabs;x++)
+				{
+					sb.append('\t');
+				}
+				return sb.toString();
+			}
+			else
+			{
+				throw new IllegalArgumentException(
+					"whitespaces guesser got non whitespace: ]" + previousWhitespace + "["
+				);
+			}
+		}
+		//we are set to spaces for tabs
+		else 
+		{
+			//if the last whitespace is a space too assume we are all good
+			if(previousWhitespace.charAt(0) == ' ')
+			{
+				return previousWhitespace;
+			}
+			else if(previousWhitespace.charAt(0) == '\t')
+			{
+				int spacelen = previousWhitespace.length() * indentSize;
+				StringBuffer sb = new StringBuffer();
+				for(int x=0; x<spacelen;x++)
+				{
+					sb.append(' ');
+				}
+				return sb.toString();
+			}
+			else
+			{
+				throw new IllegalArgumentException(
+					"whitespaces guesser got non whitespace: ]" + previousWhitespace + "["
+				);
+			}
+		}
+	}
+	
 	/**
 	 * Handles the event when a user presses 'delete'.
 	 * Basically it's here to try and remove any auto-inserted characters.
@@ -525,16 +656,14 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param doc document to work upon
 	 * @param docCommand command to change
 	 * @throws BadLocationException doh
-	 */
+	 
 	private void handleDelete(IDocument doc, DocumentCommand docCommand) throws BadLocationException {
-		return;
-		/*
-		char prevChar = doc.getChar(docCommand.offset-1);
+		char prevChar = doc.getChar(docCommand.offset);
 		// Initialize nextChar to an ASCII null
 		char nextChar = (char)0;
 		// If we're not at the end of the document reassign nextChar
-		if (doc.getLength() > docCommand.offset) {
-		 nextChar = doc.getChar(docCommand.offset);
+		if (doc.getLength() > docCommand.offset + 1) {
+		 nextChar = doc.getChar(docCommand.offset + 1);
 		}
 
 		switch(prevChar) {
@@ -555,8 +684,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				break;
 		}
 		return;
-		*/
 	}
+	*/
 	/**
 	 * Handles the user typing in a closing chevron.
 	 * s
@@ -596,113 +725,97 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		}
 		return;
 	}
-	
-	private void handleEnterBetweenTags(IDocument doc, DocumentCommand docCommand) {
-		if (doc instanceof ICFDocument) {
-			ICFDocument cfd = (ICFDocument)doc;
-			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-			CFEPartition[] partitions = partitioner.getCFEPartitions(docCommand.offset-1,docCommand.offset);
-			
-			if (partitions.length > 0) {
-				if (partitions[0].getType().endsWith("start_tag_end")) {
-					try {
-						char c = doc.getChar(docCommand.offset-2);
-						if (c != '/') {
-							boolean doIndent = true;
-							if (partitions.length > 1 && partitions[1].getType().endsWith("end_tag")) {
-								doIndent = false;
-							}
-							if (doIndent) {
-								String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
-								docCommand.text+= prevLineWhitespace + indentString;
-								return;
-							}
-						
-						}
-					} catch (BadLocationException e) {
-						//
-					}
-				}
-			}
-			
-		}
-		try {
-			String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
-			docCommand.text+= prevLineWhitespace;
-		} catch (BadLocationException e) {
-			//
-		}
-	}
-	
 	/**
 	 * Performs the required operations to provide indenting when the user presses enter
 	 * inside a tag.
 	 *
 	 * @param docCommand - the document command to work up.
 	 */
-	private void handleEnterInTag(IDocument doc, DocumentCommand docCommand) {
+	private void handleEnterInTag(IDocument doc, DocumentCommand docCommand) 
+	{
 		//String thisLineWhitespace = "";
-		try {
+		try 
+		{
 			int currLine = doc.getLineOfOffset(docCommand.offset);
 			//int nextLineOffset = doc.getLineOffset(currLine+1);
 
 			String lineDelim = doc.getLineDelimiter(currLine);
+			//windows :-p
 			if(lineDelim == null) lineDelim = "\r\n";
-
-			//int colPosition = doc.getLineLength(currLine) - 1 - lineDelim.length();
-			
-			//
-			// Now we just need to work out how much indentation to do...
-			//int posForIndent = findEndOfTagNameOrStartOfAttribute(doc.get(), docCommand.offset-1);
-			int posForIndent = findEndOfTag(doc, docCommand.offset);
-			int numIndents = 0;
-			int indentWidth = 0;
-			int spaceRemainder = 0;
-			
-			
+						
 			String prefix = getPrevLineWhiteSpace(doc,docCommand.offset);
-			String newPrefix = "";
 			
-			//
-			// Work out our indent. If it's a tab we just use 4 (editor default), otherwise the length of the indent string
-			// Then we work out the indents required to get us to the column position. Then we work out
-			// what the remainder is that cannot be made up of full indents. This will be made up of spaces.
-			// Then we simply append the required indents in, then the required number of spaces.
-			if(this.getIndentString().compareTo("\t") == 0) {
-				indentWidth = Integer.parseInt(CFMLPlugin.getDefault().getPreferenceStore().getString(EditorPreferenceConstants.P_TAB_WIDTH)) ;	// TODO: Work out how to get the texteditor tab width
-				newPrefix = prefix.replaceAll(" ","");
+			int extraIndentSize = 0;
+			
+			for(int i=docCommand.offset-1; i > 0; i--) {
+				char c = doc.getChar(i);
+				extraIndentSize++;
+				if(c == '\r' || c == '\n')
+					break; // Got to the start of the line. 
+				if (c == '\t' || c == ' ') {
+					extraIndentSize=1;
+				}
+				if(doc.getChar(i) == '<') {
+					break;
+				}
 			}
-			else {
-				indentWidth = this.getIndentString().length();
-				 newPrefix = prefix.replaceAll("\\t","");
+			
+			int cnt = (int)Math.round(new Float(extraIndentSize).floatValue() / new Float(indentSize).floatValue());
+			
+			for (int i=0;i<cnt;i++) {
+				prefix+=indentString;
 			}
 			
-			docCommand.text += newPrefix;
-
-			
-			int indentChars = posForIndent - doc.getLineOffset(currLine) - newPrefix.length() + 1;
-			
-			numIndents = indentChars / indentWidth;
-			spaceRemainder = indentChars - (indentWidth * numIndents);
-
-			
-			for(int i = 0; i < numIndents; i++ ) {
-				docCommand.text += this.getIndentString();
-			}
-
-			for(int i = 0; i < spaceRemainder; i++) {
-				docCommand.text += " ";
-			}
-
-		} catch(BadLocationException ex) {
+			//figure out what the indent level is and take into account the tab/space
+			//setting
+			docCommand.text += guessNewIndentWhitespace(prefix);
+		} 
+		catch(BadLocationException ex) 
+		{
 			ex.printStackTrace();
 			return;
-		} catch(Exception e) {	// Catch-all. One would hope we never reach here!
+		} 
+		catch(Exception e) 
+		{	
+			// Catch-all. One would hope we never reach here!
 			e.printStackTrace();
 			return;
 		}
 	}
 
+	/**
+	 * Figures out if the document command occurred inside a tag that starts on the current line.
+	 * 
+	 * @param doc
+	 * @param docCommand
+	 * @return
+	 */
+	private boolean isTagStartOnLine(IDocument doc,DocumentCommand command) {
+		int position = command.offset - 1;
+		String docData = doc.get();
+		boolean openerFound = false;
+		//
+		// First, search backwards. We should hit a '<' before we hit a '>'.
+		int i = position;
+		try {
+			for(; i > 0; i--) {
+				char c = docData.charAt(i);
+				if(c == '\r' || c == '\n')
+					return false; // Got to the start of the line. 
+				if(docData.charAt(i) == '<') {
+					return true;
+				}
+			}
+		} catch(Exception e) {
+			System.err.println("TagIndentStrategy::isEnterInTag() - Caught exception \'" + e.getMessage() +"\'. Dumping.");
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		return false;
+	}
+	
 	/**
 	 * Finds the end of the tag. Really just looks until it hits non-whitespace.
 	 *
@@ -711,7 +824,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @return - the position of the character <strong>after</strong> the end of tag.
 	 */
 	//private int findEndOfTag(String data, int offset) {
-	private int findEndOfTag(IDocument data, int offset) {
+	/* private int findEndOfTag(IDocument data, int offset) {
 		int pos = offset;
 		int startOfTag = 0;
 
@@ -737,7 +850,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			return 0;
 		}
 		return pos;
-	}
+	} */
 
 	/**
 	 * Has the user pressed enter from within a tag (i.e. they were editing the attributes)?
@@ -757,12 +870,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		// First, search backwards. We should hit a '<' before we hit a '>'.
 		int i = position;
 		try {
-			for(; i > 0; i--) {
+			for(; i >= 0; i--) {
 				if(docData.charAt(i) == '>')
 					return false;	// Found closing chevron, die now.	
 									// TODO: Will kill if closing chevron is in quotes!
 
-				if(docData.charAt(i) == '<' && Character.isLetter(docData.charAt(i+1))) {
+				if(docData.charAt(i) == '<') {
 					openerFound = true;
 					break;
 				}
@@ -807,24 +920,24 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		catch (BadLocationException bex) {
 			// do nothing
 		}
-		if (prevChar == '"') {
+		if (prevChar == quoteChar
+				|| nextChar == '#'
+				|| prevChar == '#') {
 			return;
 		}
-		if (prevChar == '\'') {
-			return;
+		
+		if (quoteChar == '\'') {
+			if (prevChar == '"' || nextChar == '"') {
+				return;
+			}
 		}
-		if (nextChar == '"') {
-			return;
+		
+		if (quoteChar == '"') {
+			if (prevChar == '\'' || nextChar == '\'') {
+				return;
+			}
 		}
-		if (nextChar == '\'') {
-			return;
-		}
-		if (prevChar == '#') {
-			return;
-		}
-		if (nextChar == '#') {
-			return;
-		}
+		
 		if(nextChar == quoteChar)
 		{
 			docCommand.text = "";
@@ -840,9 +953,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	}
 
 	/**
-	 * Handles the insertion of hashes by the user. If the user has opened hashes then
-	 * it inserts a second hash after the opened hash and does not move the caret.
-	 * If the user is closing some hashes it steps through the existing hash.
+	 * Handles the insertion of quotes by the user. If the user has opened quotes then
+	 * it inserts a closing quote after the opened quote and does not move the caret.
+	 * If the user is closing some quotes it steps through the existing quote.
 	 *
 	 * @param doc - The document that the command is being performed in
 	 * @param docCommand - the command to modify

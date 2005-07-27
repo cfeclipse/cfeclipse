@@ -706,8 +706,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	}
 
 	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {
-		if (event.getProperty().equals("tabsAsSpaces")
-				|| event.getProperty().equals("tabWidth")) {
+		if (event.getProperty().equals(EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS)
+				|| event.getProperty().equals(EditorPreferenceConstants.P_TAB_WIDTH)) {
 
 			ISourceViewer sourceViewer = getSourceViewer();
 			if (sourceViewer != null) {

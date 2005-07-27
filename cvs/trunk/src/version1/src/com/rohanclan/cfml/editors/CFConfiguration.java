@@ -769,6 +769,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	    		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
 	        	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
 	        	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
+	        	
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES)) {
         		indentTagStrategy.setAutoClose_DoubleQuotes(((Boolean)event.getNewValue()).booleanValue());
