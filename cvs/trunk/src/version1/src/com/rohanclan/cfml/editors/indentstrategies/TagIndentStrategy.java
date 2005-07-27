@@ -756,11 +756,22 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private void handleQuotes(IDocument doc, DocumentCommand docCommand, char quoteChar) throws BadLocationException {
 		char nextChar = (char)0;
+		char prevChar = (char)0;
 		try {
 			nextChar = doc.getChar(docCommand.offset);
+			prevChar = doc.getChar(docCommand.offset-1);
 		}
 		catch (BadLocationException bex) {
 			// do nothing
+		}
+		if (prevChar == quoteChar) {
+			return;
+		}
+		if (prevChar == '#') {
+			return;
+		}
+		if (nextChar == '#') {
+			return;
 		}
 		if(nextChar == quoteChar)
 		{
