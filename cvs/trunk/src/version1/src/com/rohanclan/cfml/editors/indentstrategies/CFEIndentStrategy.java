@@ -25,8 +25,8 @@
 package com.rohanclan.cfml.editors.indentstrategies;
 
 import org.eclipse.jface.text.BadLocationException;
-//import org.eclipse.jface.text.DefaultAutoIndentStrategy;
-import org.eclipse.jface.text.DefaultIndentLineAutoEditStrategy;
+import org.eclipse.jface.text.DefaultAutoIndentStrategy;
+//import org.eclipse.jface.text.DefaultIndentLineAutoEditStrategy;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -39,7 +39,7 @@ import com.rohanclan.cfml.editors.CFMLEditor;
  * @author Oliver Tupman
  *
  */
-public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
+public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 
 	private boolean tabIndentSingleLine = false;
 	protected String indentString = "\t";

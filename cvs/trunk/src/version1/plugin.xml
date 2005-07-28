@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.1.18.13"
+   version="1.1.18.14"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -1049,7 +1049,7 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
 
-      <!-- Open in external browser 
+      <!-- Open in external browser
       <command
             name="Browse"
             description="Open in external browser."
@@ -1061,8 +1061,8 @@
             contextId="org.eclipse.ui.textEditorScope"
             commandId="com.rohanclan.cfml.editors.actions.ExternalBrowserActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding> -->
-
+      </keyBinding> 
+	 -->
 
       <command
             name="New file"
