@@ -1049,7 +1049,7 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
 
-      <!-- Open in external browser
+      <!-- Open in external browser -->
       <command
             name="Browse"
             description="Open in external browser."
@@ -1062,7 +1062,7 @@
             commandId="com.rohanclan.cfml.editors.actions.ExternalBrowserActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding> 
-	 -->
+	
 
       <command
             name="New file"
