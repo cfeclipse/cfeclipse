@@ -17,8 +17,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -43,8 +41,6 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.editors.actions.Encloser;
 import com.rohanclan.cfml.util.CFPluginImages;
-//import org.eclipse.swt.events.MouseTrackListener;
-//import org.eclipse.swt.events.MouseEvent;
 
 /**
  * This sample class demonstrates how to plug-in a new
@@ -128,11 +124,6 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 		GridData layoutData = new GridData();
 		layoutData.grabExcessHorizontalSpace = true;
 		layoutData.horizontalAlignment = GridData.FILL;
-		FontData labelFontData = new FontData();
-		labelFontData.setStyle(SWT.BOLD);
-		//labelFontData.setHeight(8);
-		Font labelFont = new Font(parent.getDisplay(),labelFontData);
-		fileLabel.setFont(labelFont);
 		fileLabel.setLayoutData(layoutData);
 
 		lastInput = getRootInput();
