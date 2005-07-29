@@ -4646,7 +4646,7 @@
 			   [cfhttpparam tags - optional for some methods]
 		   /cfhttp
 		-->
-		<tag name="cfhttp" creator="3" single="false" xmlstyle="false">
+		<tag name="cfhttp" creator="3" single="false" xmlstyle="false" hybrid="true">
 			<help><![CDATA[
 				Generates an HTTP request and handles the response from the
 				server.
@@ -7026,7 +7026,7 @@
 				attribute_name1 = "valuea"
 				attribute_name2 = "valueb" ...
 		-->
-		<tag name="cfmodule" creator="3" single="true" xmlstyle="false"
+		<tag name="cfmodule" creator="3" single="false" xmlstyle="false"
 			hybrid="true" allowanyattribute="true"
 		>
 			<help><![CDATA[

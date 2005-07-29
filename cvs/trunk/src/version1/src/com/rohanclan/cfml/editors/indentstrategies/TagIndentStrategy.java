@@ -315,22 +315,31 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			ICFDocument cfd = (ICFDocument)doc;
 			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 			CFEPartition prevPartition = partitioner.getPreviousPartition(docCommand.offset);
-			CFEPartition nextPartition = partitioner.getNextPartition(prevPartition.offset);
+			CFEPartition nextPartition = null;
+			if(prevPartition != null) {
+				nextPartition = partitioner.getNextPartition(prevPartition.offset);
+			}
 			//System.out.println(prevPartition);
 			//System.out.println(nextPartition);
 			if (nextPartition != null && prevPartition != null) {
-				if (prevPartition.getType().endsWith("start_tag_end") && !nextPartition.getType().endsWith("end_tag")) {
-					try {
-						CFEPartition closer = partitioner.getCloser(prevPartition);
-						if (closer != null) {
+				if (prevPartition.getType().endsWith("start_tag_end")) {
+					boolean doIndent = true;
+					if (nextPartition.getType().endsWith("end_tag") && nextPartition.offset == docCommand.offset) {
+						doIndent = false;
+					}
+					if (doIndent) {
+						try {
+							CFEPartition closer = partitioner.getCloser(prevPartition);
+							if (closer != null) {
+								
+								String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+								docCommand.text+= indentString + guessNewIndentWhitespace(prevLineWhitespace);
+								return;
 							
-							String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
-							docCommand.text+= indentString + guessNewIndentWhitespace(prevLineWhitespace);
-							return;
-						
+							}
+						} catch (BadLocationException e) {
+							//
 						}
-					} catch (BadLocationException e) {
-						//
 					}
 				} else if (nextPartition.getType().endsWith("end_tag")) {
 					try {
