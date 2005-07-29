@@ -29,6 +29,9 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for inserting a closing tag */
 	public static final String P_AUTOINSERT_CLOSE_TAGS = "__autoInsertCloseTags";
 
+	/** Preference key identifier for inserting a closing tag */
+	public static final String P_USE_SMART_INDENT = "__useSmartIndent";
+
 	/**
 	 * Preference key identifier for auto-indenting tags. 
 	 * That is, inserting the closing tag on a new line and putting the cursor below the opening tag indented one unit.
@@ -54,6 +57,7 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_AUTOCLOSE_HASHES, true);
 		store.setDefault(P_AUTOINSERT_CLOSE_TAGS, true);
 		store.setDefault(P_AUTOINDENT_ONTAGCLOSE,false);
+		store.setDefault(P_USE_SMART_INDENT,true);
 	}
 
 

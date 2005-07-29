@@ -65,6 +65,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private boolean autoClose_Hashes = true;
 	/** Auto-insert a closing tag */
 	private boolean autoInsert_CloseTags = true;
+	/** Use smart indent */
+	private boolean useSmartIndent = true;
 	/** When to trigger the auto-indent strategy when the user is in a tag */
 	private int autoIndent_OnTagClose = INDENT_ONCLOSEDTAGENTER;
 
@@ -308,47 +310,57 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param docCommand
 	 */
 	private void handleEnterBetweenTags(IDocument doc, DocumentCommand docCommand) {
-		if (doc instanceof ICFDocument) {
+		
+		if (doc instanceof ICFDocument && useSmartIndent) {
 			ICFDocument cfd = (ICFDocument)doc;
 			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-			CFEPartition[] partitions = partitioner.getCFEPartitions(docCommand.offset-1,docCommand.offset);
-			
-			if (partitions.length > 0) {
-				if (partitions[0].getType().endsWith("start_tag_end")) {
+			CFEPartition prevPartition = partitioner.getPreviousPartition(docCommand.offset);
+			CFEPartition nextPartition = partitioner.getNextPartition(prevPartition.offset);
+			//System.out.println(prevPartition);
+			//System.out.println(nextPartition);
+			if (nextPartition != null && prevPartition != null) {
+				if (prevPartition.getType().endsWith("start_tag_end") && !nextPartition.getType().endsWith("end_tag")) {
 					try {
-						char c = doc.getChar(docCommand.offset-2);
-						if (c != '/') {
-							boolean doIndent = true;
-							if (partitions.length > 1 && partitions[1].getType().endsWith("end_tag")) {
-								doIndent = false;
-							}
-							if (doIndent) {
-								String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
-								docCommand.text+= indentString + guessNewIndentWhitespace(prevLineWhitespace);
-								return;
-							}
+						CFEPartition closer = partitioner.getCloser(prevPartition);
+						if (closer != null) {
+							
+							String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
+							docCommand.text+= indentString + guessNewIndentWhitespace(prevLineWhitespace);
+							return;
 						
 						}
 					} catch (BadLocationException e) {
 						//
 					}
-				} else if (partitions[0].getType().endsWith("end_tag")) {
+				} else if (nextPartition.getType().endsWith("end_tag")) {
 					try {
-						boolean doUnIndent = true;
-						if (partitions.length > 1 && partitions[1].getType().endsWith("end_tag")) {
-							doUnIndent = false;
-						}
-						if (doUnIndent) {
-							String prevLineWhitespace = getPrevLineWhiteSpace(doc, docCommand.offset);
-							String thisLineWhitespace = prevLineWhitespace;
-							if (thisLineWhitespace.length() >= indentString.length()) {
-								thisLineWhitespace = thisLineWhitespace.substring(0,thisLineWhitespace.length()-indentString.length());
-							}
-							docCommand.text+= guessNewIndentWhitespace(thisLineWhitespace);;
+						CFEPartition opener = partitioner.getOpener(nextPartition);
+						
+						if (opener == null) {
 							return;
 						}
+						int openerLine = doc.getLineOfOffset(opener.offset);
+						int lineStart = doc.getLineOffset(openerLine);
+						String prefix = doc.get(lineStart,opener.offset-lineStart);
+						String tagStart = "<";
+						int indent = prefix.indexOf(tagStart);
+						
+						for (int i=0;i<prefix.length();i++) {
+							char c = prefix.charAt(i);
+							if (c == '\t') {
+								indent += indentSize-1;
+							}
+						}
+						int cnt = (int)Math.round(new Float(indent).floatValue() / new Float(indentSize).floatValue());
+						prefix = "";
+						for (int i=0;i<cnt;i++) {
+							prefix+=indentString;
+						}
+						docCommand.text+= prefix;
+						return;
+					
 					} catch (BadLocationException e) {
-						//
+						e.printStackTrace();
 					}
 				}
 			}
@@ -1072,5 +1084,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void setAutoInsert_CloseTags(boolean autoInsert_CloseTags) {
 		this.autoInsert_CloseTags = autoInsert_CloseTags;
+	}
+	/**
+	 * @param useSmartIndent The useSmartIndent value.
+	 */
+	public void setUseSmartIndent(boolean useSmartIndent) {
+		this.useSmartIndent = useSmartIndent;
 	}
 }

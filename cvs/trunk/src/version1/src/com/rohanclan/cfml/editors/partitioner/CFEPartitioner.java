@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.11 2005-07-25 01:29:38 rohanr2 Exp $
- * $Revision: 1.11 $
- * $Date: 2005-07-25 01:29:38 $
+ * $Id: CFEPartitioner.java,v 1.12 2005-07-29 00:16:15 smilligan Exp $
+ * $Revision: 1.12 $
+ * $Date: 2005-07-29 00:16:15 $
  * 
  * Created on Oct 17, 2004
  *
@@ -1352,9 +1352,89 @@ public class CFEPartitioner implements IDocumentPartitioner,
         try {
             int index = fDocument.computeIndexInCategory(fPositionCategory, offset);
             Position[] category = fDocument.getPositions(fPositionCategory);
+            
             if (index < (category.length - 1)) {
                 //System.out.println("Next partition found at index " + (index + 1));
                 return (CFEPartition) category[index + 1];
+            }
+            return null;
+        } catch (BadLocationException e) {
+            return null;
+        } catch (BadPositionCategoryException e) {
+            return null;
+        }
+    }
+    
+    /**
+     * Looks back in the document trying to find the matching tag for the given partition.
+     * 
+     * Returns the start_tag_end partition if one is found, null otherwise.
+     * 
+     * @param closer
+     * @return
+     */
+    public CFEPartition getOpener(CFEPartition closer) {
+    	if (!closer.getType().endsWith("end_tag")) {
+
+    		return null;
+    	}
+        try {
+            Position[] category = fDocument.getPositions(fPositionCategory);
+            int i = fDocument.computeIndexInCategory(fPositionCategory, closer.offset);
+            i--;
+            while (i>=0) {
+            	CFEPartition p = (CFEPartition)category[i];
+            	if (p.getTagName() == null) {
+            		i--;
+            		continue;
+            	}
+            	if (p.getTagName().compareTo(closer.getTagName()) == 0) {
+            		if (p.getType().endsWith("start_tag_end")) {
+            			
+            			return p;
+            		}
+            		return null;
+            	}
+            	i--;
+            }
+            return null;
+        } catch (BadLocationException e) {
+            return null;
+        } catch (BadPositionCategoryException e) {
+            return null;
+        }
+    }
+    
+    /**
+     * Looks ahead in the document trying to find the closing tag for the given partition
+     * 
+     * Returns the end_tag partition if one is found, null otherwise.
+     * 
+     * @param opener
+     * @return
+     */
+    public CFEPartition getCloser(CFEPartition opener) {
+    	if (!opener.getType().endsWith("start_tag_end")) {
+    		
+    		return null;
+    	}
+        try {
+            Position[] category = fDocument.getPositions(fPositionCategory);
+            int i = fDocument.computeIndexInCategory(fPositionCategory, opener.offset);
+            i++;
+            while (i<category.length) {
+            	CFEPartition p = (CFEPartition)category[i];
+            	if (p.getTagName() == null) {
+            		i++;
+            		continue;
+            	}
+            	if (p.getTagName().compareTo(opener.getTagName()) == 0) {
+            		if (p.getType().endsWith("end_tag")) {
+            			return p;
+            		}
+            		return null;
+            	}
+            	i++;
             }
             return null;
         } catch (BadLocationException e) {

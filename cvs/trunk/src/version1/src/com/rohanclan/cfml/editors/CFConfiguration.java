@@ -107,6 +107,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		indentTagStrategy.setAutoClose_Hashes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES));
 		indentTagStrategy.setAutoClose_Tags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS));
 		indentTagStrategy.setAutoInsert_CloseTags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS));
+		indentTagStrategy.setUseSmartIndent(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_USE_SMART_INDENT));
 		//indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
 	}
 	
@@ -784,8 +785,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         		indentTagStrategy.setAutoClose_Tags(((Boolean)event.getNewValue()).booleanValue());
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
-        		indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
-        }
+    		indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
+    }
+        else if(prop.equals(AutoIndentPreferenceConstants.P_USE_SMART_INDENT)) {
+    		indentTagStrategy.setUseSmartIndent(((Boolean)event.getNewValue()).booleanValue());
+    }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
         	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
         	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
