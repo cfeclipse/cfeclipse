@@ -119,8 +119,9 @@ public class ProjectPropertyPage extends PropertyPage {
 	{
 	    Composite composite = createDefaultComposite(parent);
 	    String [][] options = new String[][] {
-	            {"CFML 6.0 (CFMX)", ProjectPropertyStore.P_CFML_DICTIONARY_DEFAULT},
-	            {"CFML 5.0", "cfml-5.0.xml"}
+	    		{"CFML 7.0 (CFMX)", ProjectPropertyStore.P_CFML_DICTIONARY_DEFAULT},   
+	    		{"CFML 6.1 (CFMX)", "cfml-6.0.xml"},
+	    		{"CFML 5.0", "cfml-5.0.xml"}
 	    };
 	    
 	    this.cfmlSyntaxField = new RadioGroupFieldEditor(
@@ -132,6 +133,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	            true
 	    );
 	    this.cfmlSyntaxField.setPreferencePage(this);
+	    this.cfmlSyntaxField.setEnabled(false,parent);
 	    this.cfmlSyntaxField.setPreferenceStore(this.propStore/*this.getPreferenceStore()*/);
 	    this.cfmlSyntaxField.load();
 	    

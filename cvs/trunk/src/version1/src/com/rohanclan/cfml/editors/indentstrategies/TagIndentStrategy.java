@@ -39,7 +39,6 @@ import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
-import com.sun.rsasign.d;
 
 /**
  * This represents a tag-based auto-indent strategy. It not only does the
