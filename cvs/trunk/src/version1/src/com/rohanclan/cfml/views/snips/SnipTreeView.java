@@ -260,7 +260,12 @@ public class SnipTreeView extends ViewPart
 					//IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 					File selectedfile = (File)selection.getFirstElement();
 					
-					if(selectedfile.isDirectory()) return;
+					if(selectedfile.isDirectory())
+					{
+						text.setText("");
+						preview.setText("");
+						return;
+					}
 						
 					//get the full path to the file
 					String f = selectedfile.getAbsolutePath();
