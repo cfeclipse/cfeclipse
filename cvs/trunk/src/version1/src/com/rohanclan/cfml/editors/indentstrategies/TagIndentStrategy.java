@@ -337,7 +337,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	private void handleEnterBetweenTags(IDocument doc,
 			DocumentCommand docCommand) {
 
-		if (doc instanceof ICFDocument && useSmartIndent) {
+		if (doc instanceof ICFDocument 
+				&& useSmartIndent) {
 			ICFDocument cfd = (ICFDocument) doc;
 			CFEPartitioner partitioner = (CFEPartitioner) cfd
 					.getDocumentPartitioner();
@@ -348,9 +349,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				nextPartition = partitioner
 						.getNextPartition(prevPartition.offset);
 			}
-			// System.out.println(prevPartition);
-			// System.out.println(nextPartition);
-			if (nextPartition != null && prevPartition != null) {
+			//System.out.println("Command at offset: " + docCommand.offset);
+			//System.out.println(prevPartition);
+			//System.out.println(nextPartition);
+			if (nextPartition != null 
+					&& prevPartition != null) {
 				if (prevPartition.getType().endsWith("start_tag_end")) {
 					try {
 						boolean doIndent = true;
@@ -378,11 +381,16 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					} catch (BadLocationException e) {
 						//
 					}
-				} else if (nextPartition.getType().endsWith("end_tag")) {
+				} 
+				
+				if (nextPartition.getType().endsWith("end_tag") 
+						&& nextPartition.offset == docCommand.offset) {
+					
 					try {
 						CFEPartition opener = partitioner
 								.getOpener(nextPartition);
 
+						
 						if (opener == null) {
 							return;
 						}
@@ -967,6 +975,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		} catch (BadLocationException bex) {
 			// do nothing
 		}
+		
+		if (nextChar == prevChar) {
+			stepThrough(docCommand);
+			return;
+		}
+		
 		if (prevChar == quoteChar || nextChar == '#' || prevChar == '#') {
 			return;
 		}
@@ -982,14 +996,13 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				return;
 			}
 		}
-
+		
+		
 		if (nextChar == quoteChar) {
-			docCommand.text = "";
-			docCommand.shiftsCaret = false;
-			docCommand.caretOffset = docCommand.offset + 1;
+			//stepThrough(docCommand);
 			return;
 		}
-
+		
 		docCommand.text += quoteChar;
 		docCommand.caretOffset = docCommand.offset + 1;
 		docCommand.shiftsCaret = false;

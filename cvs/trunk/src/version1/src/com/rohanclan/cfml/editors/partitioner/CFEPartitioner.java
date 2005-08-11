@@ -1,7 +1,7 @@
 /*
- * $Id: CFEPartitioner.java,v 1.12 2005-07-29 00:16:15 smilligan Exp $
- * $Revision: 1.12 $
- * $Date: 2005-07-29 00:16:15 $
+ * $Id: CFEPartitioner.java,v 1.13 2005-08-11 03:03:33 smilligan Exp $
+ * $Revision: 1.13 $
+ * $Date: 2005-08-11 03:03:33 $
  * 
  * Created on Oct 17, 2004
  *
@@ -1375,25 +1375,36 @@ public class CFEPartitioner implements IDocumentPartitioner,
      */
     public CFEPartition getOpener(CFEPartition closer) {
     	if (!closer.getType().endsWith("end_tag")) {
-
     		return null;
     	}
+
         try {
             Position[] category = fDocument.getPositions(fPositionCategory);
             int i = fDocument.computeIndexInCategory(fPositionCategory, closer.offset);
+            int nestingLevel = 0;
             i--;
             while (i>=0) {
             	CFEPartition p = (CFEPartition)category[i];
-            	if (p.getTagName() == null) {
+            	if (p.getTagName() == null) 
+            	{
             		i--;
             		continue;
             	}
-            	if (p.getTagName().compareTo(closer.getTagName()) == 0) {
-            		if (p.getType().endsWith("start_tag_end")) {
-            			
-            			return p;
+            	if (p.getTagName().compareTo(closer.getTagName()) == 0) 
+            	{
+            		if (p.getType().endsWith("start_tag_end")) 
+            		{
+            			if (nestingLevel == 0) 
+            			{
+            				return p;
+            			} else 
+            			{
+            				nestingLevel--;
+            			}
+            		} else if (p.getType().endsWith("end_tag")) 
+            		{
+            			nestingLevel++;
             		}
-            		return null;
             	}
             	i--;
             }
