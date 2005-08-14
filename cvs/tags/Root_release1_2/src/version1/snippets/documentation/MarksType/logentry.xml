@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>logentry</name>
+<help>A log entry</help>
+<starttext><![CDATA[$${Name}		$${DAYOFMONTH}/$${MONTHNUMBER}/$${YEAR}		$${Description}]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

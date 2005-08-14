@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="arraytolist" returns="String">
+			<help><![CDATA[
+				Converts a one-dimensional array to a list.
+			]]></help>
+			<parameter name="array" required="true" type="Array">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="delimiter" required="false" type="String">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="','"/>
+					<value option="'|'"/>
+					<value option="'_'"/>
+				</values>
+			</parameter>
+		</function>

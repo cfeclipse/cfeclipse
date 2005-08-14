@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="structinsert" returns="boolean">
+			<help><![CDATA[
+				Inserts a key-value pair into a structure.
+			]]></help>
+			<parameter name="structure" required="true" type="Struct">
+				<help><![CDATA[
+					Structure to contain the new key-value pair.
+				]]></help>
+			</parameter>
+			<parameter name="key" required="true" type="String">
+				<help><![CDATA[
+					Key that contains the inserted value.
+				]]></help>
+			</parameter>
+			<parameter name="value" required="true" type="Object">
+				<help><![CDATA[
+					Value to add.
+				]]></help>
+			</parameter>
+			<parameter name="allowoverwrite" required="false" type="boolean">
+				<help><![CDATA[
+					Whether to allow overwriting a key. Default: False.
+				]]></help>
+			</parameter>
+		</function>

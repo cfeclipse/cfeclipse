@@ -1,0 +1,555 @@
+
+/*
+ * Copyright © 2002 Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+ * California 95054, U.S.A. All rights reserved.  Sun Microsystems, Inc. has
+ * intellectual property rights relating to technology embodied in the product
+ * that is described in this document. In particular, and without limitation,
+ * these intellectual property rights may include one or more of the U.S.
+ * patents listed at http://www.sun.com/patents and one or more additional
+ * patents or pending patent applications in the U.S. and in other countries.
+ * U.S. Government Rights - Commercial software. Government users are subject
+ * to the Sun Microsystems, Inc. standard license agreement and applicable
+ * provisions of the FAR and its supplements.  Use is subject to license terms.
+ * Sun,  Sun Microsystems,  the Sun logo and  Java are trademarks or registered
+ * trademarks of Sun Microsystems, Inc. in the U.S. and other countries.  This
+ * product is covered and controlled by U.S. Export Control laws and may be
+ * subject to the export or import laws in other countries.  Nuclear, missile,
+ * chemical biological weapons or nuclear maritime end uses or end users,
+ * whether direct or indirect, are strictly prohibited.  Export or reexport
+ * to countries subject to U.S. embargo or to entities identified on U.S.
+ * export exclusion lists, including, but not limited to, the denied persons
+ * and specially designated nationals lists is strictly prohibited.
+ */
+
+
+options {
+   MULTI = true;
+   STATIC = true;
+   DEBUG_PARSER = false;
+   OPTIMIZE_TOKEN_MANAGER = true;
+   IGNORE_CASE = true;
+   VISITOR = true;
+}
+
+PARSER_BEGIN(SPLParser)
+package com.rohanclan.cfml.parser.cfscript;
+import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
+
+public class SPLParser {
+
+    private static List exceptions = new ArrayList();
+    public Node getDocumentRoot() { return this.jjtree.rootNode(); }
+    public List getExceptions() { return this.exceptions; }
+    public void resetExceptions() { this.exceptions.clear(); }
+
+    private static void error_skipto(int kind) {
+        ParseException e = generateParseException();
+        exceptions.add(new CFScriptErrorItem(e));
+        Token t;
+        do {
+            t = getNextToken();
+        } while (t.kind != kind && t.kind != EOF);
+    }
+
+    public static void main(String[] args) throws ParseException, FileNotFoundException {
+        SPLParser p = null;
+
+        if (args.length < 1 ) {
+            System.out.println("Reading from stdin") ;
+            p = new SPLParser(System.in) ;
+        } else {
+            p = new SPLParser(new FileInputStream(args[0])) ;
+        }
+
+        SimpleNode node = p.CompilationUnit();
+        node.dump("");
+
+        List ex = p.getExceptions();
+        if (ex.size() > 0) {
+            java.util.Iterator i = ex.iterator();
+            while (i.hasNext()) {
+                System.out.println(((CFScriptErrorItem) i.next()).toString());
+            }
+        }
+    }
+}
+
+PARSER_END(SPLParser)
+
+
+SKIP : /* WHITE SPACE */
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+}
+
+TOKEN: /* keywords */
+{
+    <FUNCTION: "function">
+    |
+    <FOR: "for">
+    |
+    <WHILE: "while">
+    |
+    <DO: "do">
+    |
+    <VAR: "var">
+    |
+    <RETURN: "return">
+    |
+    <CONTINUE: "continue">
+    |
+    <BREAK: "break">
+    |
+    <SWITCH: "switch">
+    |
+    <CASE: "case">
+    |
+    <_DEFAULT: "default">
+    |
+    <TRY: "try">
+    |
+    <CATCH: "catch">
+    |
+    <OR: "or"> | <AND: "and">
+    |
+    <EQ: "eq"> | <NEQ: "neq">
+    |
+    <GT: "gt">	| <GTE: "gte"> | <GE: "ge">
+    |
+    <LT: "lt"> | <LTE: "lte"> | <LE: "le">
+
+}
+
+TOKEN : /* LITERALS */
+{
+    < INTEGER_LITERAL: ("-")? (<DIGIT>)+ >
+|
+    < STRING_LITERAL:
+        "\"" (~["\""])* ( ("\"\"") (~["\""])* )* "\""  // single quoted strings
+        |
+        "'" (~["'"])* ( ("''") (~["'"])* )* "'"  // double quoted strings
+    >
+|
+    < FLOATING_POINT_LITERAL: (["0"-"9"])+ "." (["0"-"9"])+ >
+}
+
+
+/*
+ * Program structuring syntax follows.
+ */
+
+ASTCompilationUnit CompilationUnit() :
+{
+   String name;
+}
+{
+    (FunctionDeclaration() | VarDeclaration() | Statement())* <EOF>
+    { return jjtThis; }
+}
+
+void ReturnStatement() :
+{}
+{
+    <RETURN> Expression()
+}
+
+void FunctionDeclaration()  :
+{ Token t;}
+{
+    try {
+        <FUNCTION> t = <IDENTIFIER> "(" (ParameterList())? ")" Statement()
+        {
+            jjtThis.name = t.image;
+            jjtThis.aNodeToken = t;
+        }
+    } catch (ParseException e) {
+        error_skipto(SEMICOLON);
+    }
+}
+
+void VarDeclaration() :
+{ Token t; String name;}
+{
+/*  <VAR> t = <IDENTIFIER> "=" Statement() ";" */
+    try {
+        <VAR> Assignment()
+    } catch (ParseException e) {
+        error_skipto(SEMICOLON);
+    }
+
+/*  { jjtThis.name = t.image; } */
+}
+
+/*
+ * Expression syntax follows.
+ */
+
+void Expression() #void:
+{}
+{
+        LOOKAHEAD( PrimaryExpression() "=" )
+        Assignment()
+    |
+        ConditionalOrExpression()
+}
+
+void Assignment() #Assignment(2) : {}
+{
+  PrimaryExpression() "="  Expression()
+}
+
+void ConditionalOrExpression() #void : {}
+{
+  ConditionalAndExpression()
+  ( <OR> ConditionalAndExpression() #OrNode(2) )*
+}
+
+void ConditionalAndExpression() #void : {}
+{
+  InclusiveOrExpression()
+  ( <AND> InclusiveOrExpression() #AndNode(2) )*
+}
+
+void InclusiveOrExpression() #void : {}
+{
+  ExclusiveOrExpression()
+  ( "|" ExclusiveOrExpression() #BitwiseOrNode(2) )*
+}
+
+void ExclusiveOrExpression() #void : {}
+{
+  AndExpression()
+  ( "^" AndExpression() #BitwiseXorNode(2) )*
+}
+
+void AndExpression() #void : {}
+{
+  EqualityExpression()
+  ( "&" EqualityExpression() #BitwiseAndNode(2) )*
+}
+
+void EqualityExpression() #void : {}
+{
+  StrEQExpression()
+  (
+     <ISNOT> RelationalExpression() #NENode(2)
+    |
+     "is" RelationalExpression() #EQNode(2)
+  )*
+}
+
+void StrEQExpression() #void : {}
+{
+    RelationalExpression()
+    (
+            <EQ> RelationalExpression() #StrEQNode(2)
+        |
+            <NEQ> RelationalExpression() #StrNEQNode(2)
+    )*
+}
+
+void RelationalExpression() #void : {}
+{
+  AdditiveExpression()
+  (
+    <LT> AdditiveExpression() #LTNode(2)
+   |
+    <GT> AdditiveExpression() #GTNode(2)
+   |
+    (<LTE> | <LE>) AdditiveExpression() #LENode(2)
+   |
+    (<GTE> | <GE>) AdditiveExpression() #GENode(2)
+  )*
+}
+
+// for future
+void BinaryOp() #void : {}
+{
+    <LE> | <LT> | <GE> | <GT> | <GTE> | <LTE> | "+" | "-" | "*" | "%" | "/" | "^" | "|" | "&"
+}
+
+void AdditiveExpression() #void :
+{}
+{
+  MultiplicativeExpression()
+  (
+    "+" MultiplicativeExpression() #AddNode(2)
+   |
+    "-" MultiplicativeExpression() #SubtractNode(2)
+  )*
+}
+
+void MultiplicativeExpression() #void :
+{}
+{
+  UnaryExpression()
+  (
+    "*"  UnaryExpression() #MulNode(2)
+   |
+    "/"  UnaryExpression() #DivNode(2)
+   |
+    "%"  UnaryExpression() #ModNode(2)
+  )*
+}
+
+void UnaryExpression() #void :{}
+{
+        ("+" | "-") UnaryExpression()
+     |
+        PrimaryExpression()
+}
+
+void PrimaryExpression() #void :
+{ String name; }
+{
+        LOOKAHEAD(CFCMethodCall())
+        CFCMethodCall()
+    |
+        LOOKAHEAD(2)
+        StructRef()
+    |
+        LOOKAHEAD(2)
+        FunctionCall()
+    |
+        Literal()
+    |
+        Id()
+    |
+        "(" Expression() ")"
+}
+
+void StructRef() #StructRefNode :
+{ Token t; String name;}
+{
+    // <IDENTIFIER> "(" [ ParameterList() ] ")"
+    t = <IDENTIFIER> ("." Id() | "[" Expression() "]")+
+    { jjtThis.name = t.image; }
+}
+
+void CFCMethodCall() #CFCMethodCallNode :
+{ Token t; String name;}
+{
+    t = <IDENTIFIER> "." FunctionCall()
+    { jjtThis.name = t.image; }
+}
+
+
+/* Think this is the def for variables */
+void Id() :
+{   Token t;   }
+{
+    t = <IDENTIFIER>
+    { jjtThis.name = t.image; }
+}
+
+void StringLiteral() :
+{ Token t; }
+{
+    t = <STRING_LITERAL>
+    {
+        jjtThis.val = t.image;
+        jjtThis.aNodeToken = getToken(0);
+    }
+}
+
+void IntLiteral() :
+{ Token t; }
+{
+    t = <INTEGER_LITERAL>
+    {
+        jjtThis.val = t.image;
+        jjtThis.aNodeToken = getToken(0);
+    }
+}
+
+void FloatingPointLiteral():
+{ Token t; }
+{
+    t = <FLOATING_POINT_LITERAL>
+    {   jjtThis.val = t.image;
+        jjtThis.aNodeToken = getToken(0);
+    }
+}
+
+void Literal() #void : { }
+{
+    StringLiteral()	| IntLiteral() | BooleanLiteral() | FloatingPointLiteral()
+}
+
+void BooleanLiteral() #void : { }
+{
+    "true" #TrueNode | "false" #FalseNode
+}
+
+/*
+ * Statement syntax follows.
+ */
+
+void Statement() #void : { }
+{
+    try {
+        <SEMICOLON>
+    |
+        LOOKAHEAD(2)
+        FunctionCall()
+    |
+        Block()
+    | (
+    /* TODO: The below LOOKAHEAD uses very poor syntax - it should really be expanded out
+             to the tokens in CFCMethodCall(). But we'll leave it for the moment as it aids
+             readability and maintainability
+    */
+            LOOKAHEAD(CFCMethodCall())
+            CFCMethodCall()
+        |
+            StatementExpression()
+
+    )
+    |
+        ReturnStatement()
+    |
+        IfStatement()
+    |
+        WhileStatement()
+    |
+        (LOOKAHEAD(4) ForInStatement() | ForStatement())
+    |
+        DoStatement()
+    |
+        ContinueStatement()
+    |
+        BreakStatement()
+    |
+        SwitchStatement()
+    |
+        TryStatement()
+
+    } catch (ParseException e) {
+        error_skipto(SEMICOLON);
+    }
+
+}
+
+void ExpressionList() #void :
+{}
+{
+    [Expression()] ("," Expression())*
+}
+
+void ForInStatement() :
+{}
+{
+    <FOR> "(" Id() "in" Expression() ")" Statement()
+}
+
+void ForStatement() #ForStatementNode :
+{}
+{
+    <FOR> "(" ExpressionList() <SEMICOLON> [ Expression() ] <SEMICOLON> ExpressionList() ")"
+        Statement()
+}
+
+void FunctionCall() #FunctionCallNode :
+{ String name; Token t;}
+{
+    t = <IDENTIFIER> "(" [ ParameterList() ] ")"
+    {
+        jjtThis.name = t.image;
+        jjtThis.aNodeToken = t;
+
+    }
+}
+
+void ParameterList()  :
+{  }
+{
+    Expression() ("," Expression())*
+}
+
+void Block() :
+{}
+{ "{" ( Statement() )* "}" }
+
+void StatementExpression() :
+/*
+ * The last expansion of this production accepts more than the legal
+ * SPL expansions for StatementExpression.
+ */
+{}
+{ Assignment() <SEMICOLON> }
+
+void IfStatement() :
+/*
+ * The disambiguating algorithm of JavaCC automatically binds dangling
+ * else's to the innermost if statement.  The LOOKAHEAD specification
+ * is to tell JavaCC that we know what we are doing.
+ */
+{}
+{	"if" "(" Expression() ")" Statement() [ LOOKAHEAD(1) "else" Statement() ]	}
+
+void WhileStatement() :
+{}
+{	<WHILE> "(" Expression() ")" Statement()	}
+
+
+void DoStatement() :
+{}
+{
+    <DO> Block() <WHILE> "(" Expression() ")" <SEMICOLON>
+}
+
+/**
+switch (expression) {
+  case constant: [case constant:]... statement(s) break;
+  [case constant: [case constant:]... statement(s) break;]...
+  [default: statement(s)] }
+- 'constant' must be really a constant: It can't be a variable, a function
+  or any other expression.
+- break  statement into case blocks is not required, so this production will
+  not consider it
+- The default statement is not required
+- The default statement does not have to follow all the case statements
+*/
+void SwitchStatement(): {}
+{
+    <SWITCH> "(" Expression() ")"
+    "{"
+        ( SwitchLabel() (Statement())* )*
+    "}"
+}
+
+void SwitchLabel(): {}
+{
+  <CASE> Literal() ":" |  <_DEFAULT> ":"
+}
+
+
+void TryStatement() : {}
+{
+  <TRY> Block()
+  ( <CATCH> "(" Id() Id() ")" Block() )+
+}
+
+void ContinueStatement() #void: {} { <CONTINUE> <SEMICOLON> }
+void BreakStatement() #void: {} { <BREAK> <SEMICOLON> }
+
+TOKEN : /* IDENTIFIERS */
+{
+  < IDENTIFIER: (<LETTER>|"_") (<LETTER>|<DIGIT>|"_")* >
+|
+  < #LETTER: [ "a"-"z", "A"-"Z" ] >
+|
+  < #DIGIT: [ "0"-"9"] >
+|
+  <ISNOT: "is not">
+|
+  <SEMICOLON: ";" >
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="getencoding" returns="String">
+			<help><![CDATA[
+				Returns the encoding (character set) of the Form or URL scope.
+			]]></help>
+			<parameter name="scope_name" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="form"/>
+					<value option="url"/>
+				</values>
+			</parameter>
+		</function>

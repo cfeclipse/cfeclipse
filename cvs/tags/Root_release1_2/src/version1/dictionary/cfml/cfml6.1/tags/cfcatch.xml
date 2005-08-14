@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfcatch" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Used inside a cftry tag. Together, they catch and process
+				exceptions in CFML pages. Exceptions are events that
+				disrupt the normal flow of instructions in a CFML page,
+				such as failed database operations, missing include files, and
+				developer-specified events.
+			]]></help>
+			<parameter name="type" required="false" type="String">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="application"/>
+					<value option="database"/>
+					<value option="template"/>
+					<value option="security"/>
+					<value option="object"/>
+					<value option="missingInclude"/>
+					<value option="expression"/>
+					<value option="lock"/>
+					<value option="custom_type"/>
+					<value option="searchengine"/>
+					<value option="any"/>
+				</values>
+			</parameter>
+		</tag>

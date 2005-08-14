@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="getbasetemplatepath" returns="String">
+			<help><![CDATA[
+				Gets the absolute path of an application's base page.
+			]]></help>
+		</function>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="inputbasen" returns="Numeric">
+			<help><![CDATA[
+				Converts string, using the base specified by radix, to an
+				integer. For example: #InputBaseN("3ff",16)#
+			]]></help>
+			<parameter name="string" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="radix" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>

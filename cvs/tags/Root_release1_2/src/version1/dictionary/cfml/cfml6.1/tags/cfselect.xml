@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfselect" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Constructs a drop-down list box form control. Used within a
+				cfform tag.
+
+				You can populate the list from a query, or by using the HTML
+				option tag.
+			]]></help>
+			<parameter name="name" required="true" type="String">
+				<help><![CDATA[
+					Name of the select form element
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="size" required="false" type="Numeric">
+				<help><![CDATA[
+					Number of entries to display at one time. The default, 1,
+					displays a drop-down list. Any other value displays a list
+					box with size number of entries visible at one time.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="required" required="false" type="boolean">
+				<help><![CDATA[
+					Yes: a list element must be selected when form is submitted.
+					No:
+
+					Note: This attribute has no effect if you omit the size
+						attribute or set it to 1 because the browser always
+						submits the displayed item.
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="message" required="false" type="String">
+				<help><![CDATA[
+					Message to display if required = "Yes" and no selection is
+					made.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="onerror" required="false" type="String">
+				<help><![CDATA[
+					Custom JavaScript function to execute if validation fails
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="multiple" required="false" type="boolean">
+				<help><![CDATA[
+					Yes: allow selecting multiple elements in drop-down list
+					No: does not
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="query" required="false" type="String">
+				<help><![CDATA[
+					Name of query to populate drop-down list.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="selected" required="false" type="String">
+				<help><![CDATA[
+					A list of option values to preselect in the selection list.
+					This attribute applies only if list items are generated
+					from a query. The cfform preservedata attribute value can
+					override this value.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="value" required="false" type="String">
+				<help><![CDATA[
+					Query column to use for the value of each list element.
+					Used with query attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="display" required="false" type="String">
+				<help><![CDATA[
+					Query column to use for the display label of each list
+					element. Used with query attribute.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="passthrough" required="false" type="String">
+				<help><![CDATA[
+					Passes one or more arbitrary attribute-value pairs to the
+					HTML code that is generated for the tag. You can use either
+					of the following formats to include the quotation marks
+					around the attribute value:
+
+					passthrough="ID=""myID"""
+					passthrough='ID="myID"'
+
+					The second format, which surrounds all the attribute-value
+					pairs to be passed through in single quotation marks is
+					clearer, particularly when you pass multiple HTML
+					attributes.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>

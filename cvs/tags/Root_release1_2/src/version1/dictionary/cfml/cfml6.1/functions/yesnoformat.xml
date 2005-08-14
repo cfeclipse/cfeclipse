@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="yesnoformat" returns="String">
+			<help><![CDATA[
+				Yes, for a non-zero value; No, otherwise.
+			]]></help>
+			<parameter name="value" required="true" type="boolean">
+				<help><![CDATA[
+					A number or Boolean value
+				]]></help>
+			</parameter>
+		</function>
