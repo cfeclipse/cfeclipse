@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="structkeyexists" returns="boolean">
+			<help><![CDATA[
+				Determines whether a specific key is present in a structure.
+			]]></help>
+			<parameter name="structure" required="true" type="Struct">
+				<help><![CDATA[
+					Name of structure to test
+				]]></help>
+			</parameter>
+			<parameter name="key" required="true" type="String">
+				<help><![CDATA[
+					Key to test
+				]]></help>
+			</parameter>
+		</function>

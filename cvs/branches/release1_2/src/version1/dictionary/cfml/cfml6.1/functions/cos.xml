@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cos" returns="Numeric">
+			<help><![CDATA[
+				Calculates the cosine of an angle that is entered
+				in radians.
+				A number; the cosine of the angle.
+			]]></help>
+			<parameter name="number" required="true" type="Numeric">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>

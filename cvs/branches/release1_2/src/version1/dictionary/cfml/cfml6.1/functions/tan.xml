@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="tan" returns="Numeric">
+			<help><![CDATA[
+				Calculates the tangent of an angle that is entered in radians.
+			]]></help>
+			<parameter name="number" required="true" type="Numeric">
+				<help><![CDATA[
+					Angle, in radians, for which to calculate the tangent
+				]]></help>
+			</parameter>
+		</function>

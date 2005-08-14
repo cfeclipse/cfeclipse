@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>table_row</name>
+<help>Table row with one cell</help>
+<starttext><![CDATA[<tr>
+	<td>]]></starttext>
+<endtext><![CDATA[</td>
+</tr>]]></endtext>
+</snippet>

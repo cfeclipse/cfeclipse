@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="getk2serverdoccount" returns="Numeric">
+			<help><![CDATA[
+				** CFML MX 6.1: This function is deprecated. **
+				Determines the number of documents that can be searched by the
+				CFML registered K2 Server. This function is used
+				primarily by the CFML Verity and K2Server Administrator
+				pages, and requires significant processing time. Avoid using
+				it in production applications. This function uses Verity
+				K2Server Release K2.2.0.
+			]]></help>
+		</function>

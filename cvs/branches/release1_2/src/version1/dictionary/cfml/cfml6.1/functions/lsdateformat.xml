@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="lsdateformat" returns="String">
+			<help><![CDATA[
+				Formats the date part of a date/time value in a locale-specific
+				format.
+				[mask - quicky]
+				d,dd,ddd,dddd: Day of month / week
+				m,mm,mmm,mmmm: Month; y,yy,yyyy: Year; gg: Period/era string
+				short / medium / long / full
+			]]></help>
+			<parameter name="date" required="true" type="DateTime">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="Now()"/>
+				</values>
+			</parameter>
+
+			<parameter name="mask" required="false" type="String">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="short"/>
+					<value option="medium"/>
+					<value option="long"/>
+					<value option="full"/>
+				</values>
+			</parameter>
+		</function>

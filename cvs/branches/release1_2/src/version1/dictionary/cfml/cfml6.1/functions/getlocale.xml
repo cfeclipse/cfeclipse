@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="getlocale" returns="String">
+			<help><![CDATA[
+				Gets the current geographic/language locale value.
+				To set the default display format of date, time, number, and
+				currency values in a CFML application session, you use
+				the SetLocale function.
+			]]></help>
+		</function>

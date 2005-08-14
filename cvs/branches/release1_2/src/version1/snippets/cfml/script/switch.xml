@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>switch</name>
+<help>script version of a switch block</help>
+<starttext><![CDATA[switch($${expression}){
+	case $${case1}:
+		]]></starttext>
+<endtext><![CDATA[		break;
+}]]></endtext>
+</snippet>

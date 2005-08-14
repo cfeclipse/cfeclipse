@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>cfcase</name>
+<help>Simple case statement</help>
+<starttext><![CDATA[
+<cfcase value="]]></starttext>
+<endtext><![CDATA[">
+
+</cfcase>
+]]></endtext>
+</snippet>

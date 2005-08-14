@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="year" returns="Numeric">
+			<help><![CDATA[
+				From a date/time object, gets the year value.
+			]]></help>
+			<parameter name="date" required="true" type="DateTime">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="Now()"/>
+				</values>
+			</parameter>
+		</function>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cffile" single="true" xmlstyle="false">
+			<help><![CDATA[
+				Manages interactions with server files.
+				Different combonations cause different attributes to be
+				required.
+			]]></help>
+			<parameter name="action" required="true" type="String">
+				<help><![CDATA[Type of file manipulation that the tag performs.]]></help>
+				<values>
+					<value option="append"/>
+					<value option="copy"/>
+					<value option="delete"/>
+					<value option="move"/>
+					<value option="read"/>
+					<value option="readbinary"/>
+					<value option="rename"/>
+					<value option="upload"/>
+					<value option="write"/>
+				</values>
+			</parameter>
+			<parameter name="file" required="true" type="String">
+				<help><![CDATA[Pathname of the file]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="delete"/>
+					<selectedValue attributeName="action" required="true" value="read"/>
+					<selectedValue attributeName="action" required="true" value="readBinary"/>
+					<selectedValue attributeName="action" required="true" value="write"/>
+					<selectedValue attributeName="action" required="true" value="append"/>
+				</triggers>
+			</parameter>
+			<parameter name="mode" required="false" type="String">
+				<help><![CDATA[
+					Applies only to UNIX and Linux. Permissions. Octal values
+					of Unix chmod command. Assigned to owner, group, and
+					other, respectively.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="append"/>
+					<selectedValue attributeName="action" required="false" value="copy"/>
+					<selectedValue attributeName="action" required="false" value="move"/>
+					<selectedValue attributeName="action" required="false" value="rename"/>
+					<selectedValue attributeName="action" required="false" value="write"/>
+					<selectedValue attributeName="action" required="false" value="upload"/>
+				</triggers>
+			</parameter>
+			<parameter name="output" required="true" type="String">
+				<help><![CDATA[
+					String to add to the file
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="append"/>
+					<selectedValue attributeName="action" required="true" value="write"/>
+				</triggers>
+			</parameter>
+			<parameter name="addnewline" required="false" type="boolean">
+				<help><![CDATA[
+					Yes: appends newline character to text written to file
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="append"/>
+					<selectedValue attributeName="action" required="false" value="write"/>
+					<!-- <selectedValue attributeName="action" value="" required="false"/> -->
+				</triggers>
+			</parameter>
+			<parameter name="attributes" required="false" type="String">
+				<help><![CDATA[
+					Applies to Windows. A comma-delimited list of attributes
+					to set on the file.
+
+					If omitted, the file's attributes are maintained.
+				]]></help>
+				<values>
+					<value option="readonly"/>
+					<value option="hidden"/>
+					<value option="normal"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="append"/>
+					<selectedValue attributeName="action" required="false" value="copy"/>
+					<selectedValue attributeName="action" required="false" value="move"/>
+					<selectedValue attributeName="action" required="false" value="rename"/>
+					<selectedValue attributeName="action" required="false" value="write"/>
+					<selectedValue attributeName="action" required="false" value="upload"/>
+				</triggers>
+			</parameter>
+			<parameter name="charset" required="false" type="String">
+				<help><![CDATA[
+					The character encoding in which the file contents is
+					encoded.
+
+					For more information on character encodings, see:
+					www.w3.org/International/O-charset.html.
+				]]></help>
+				<values>
+					<value option="utf-8"/>
+					<value option="iso-8859-1"/>
+					<value option="windows-1252"/>
+					<value option="us-ascii"/>
+					<value option="shift_jis"/>
+					<value option="iso-2022-jp"/>
+					<value option="euc-jp"/>
+					<value option="euc-kr"/>
+					<value option="big5"/>
+					<value option="euc-cn"/>
+					<value option="utf-16"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="append"/>
+					<selectedValue attributeName="action" required="false" value="move"/>
+					<selectedValue attributeName="action" required="false" value="read"/>
+					<selectedValue attributeName="action" required="false" value="write"/>
+				</triggers>
+			</parameter>
+			<parameter name="source" required="true" type="String">
+				<help><![CDATA[
+					Pathname of the file (durring copy).
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="copy"/>
+					<selectedValue attributeName="action" required="true" value="move"/>
+					<selectedValue attributeName="action" required="true" value="rename"/>
+				</triggers>
+			</parameter>
+			<parameter name="destination" required="true" type="String">
+				<help><![CDATA[
+					Pathname of a directory or file on web server
+					(durring copy).
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="copy"/>
+					<selectedValue attributeName="action" required="true" value="move"/>
+					<selectedValue attributeName="action" required="true" value="rename"/>
+					<selectedValue attributeName="action" required="true" value="upload"/>
+				</triggers>
+			</parameter>
+			<parameter name="variable" required="true" type="String">
+				<help><![CDATA[
+					Name of variable to contain contents of text file.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="read"/>
+					<selectedValue attributeName="action" required="true" value="readBinary"/>
+				</triggers>
+			</parameter>
+			<parameter name="filefield" required="true" type="String">
+				<help><![CDATA[
+					Name of form field used to select the file.
+
+					Do not use pound signs (#) to specify the field name.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="upload"/>
+				</triggers>
+			</parameter>
+			<parameter name="nameconflict" required="false" type="String">
+				<help><![CDATA[
+					Action to take if filename is the same as that of a file
+					in the directory.
+				]]></help>
+				<values>
+					<value option="error"/>
+					<value option="skip"/>
+					<value option="overwrite"/>
+					<value option="makeunique"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="upload"/>
+				</triggers>
+			</parameter>
+			<parameter name="accept" required="true" type="String">
+				<help><![CDATA[
+					Limits the MIME types to accept. Comma-delimited list. For
+					example, to permit JPG and Microsoft Word file uploads:
+
+					accept = "image/jpg, application/msword"
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="upload"/>
+				</triggers>
+			</parameter>
+		</tag>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="createobject" returns="Object">
+		<help><![CDATA[
+				The CreateObject function takes different arguments depending on the value of the first argument:
+
+				CreateObject('com', class, context, serverName)
+				CreateObject('component', component-name)
+				CreateObject('corba', context, class, locale)
+				CreateObject('java', class)
+				CreateObject('webservice', urltowsdl)
+			]]></help>
+
+			<parameter name="type" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="component"/>
+					<value option="corba"/>
+					<value option="com"/>
+					<value option="java"/>
+					<value option="webservice"/>
+				</values>
+			</parameter>
+			<parameter name="context" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" index="1" required="true" value="corba"/>
+					<selectedValue attributeName="type" index="2" required="true" value="com"/>
+				</triggers>
+			</parameter>
+			<parameter name="class" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" index="1" required="true" value="com"/>
+					<selectedValue attributeName="type" index="2" required="true" value="corba"/>
+					<selectedValue attributeName="type" index="1" required="true" value="java"/>
+				</triggers>
+			</parameter>
+			<parameter name="locale" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" index="3" required="true" value="corba"/>
+				</triggers>
+			</parameter>
+			<parameter name="servername" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" index="3" required="true" value="com"/>
+				</triggers>
+			</parameter>
+			<parameter name="component_name" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" index="1" required="true" value="component"/>
+				</triggers>
+			</parameter>
+			<parameter name="urltowsdl" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<triggers>
+					<selectedValue attributeName="type" index="1" required="true" value="webservice"/>
+				</triggers>
+			</parameter>
+		</function>

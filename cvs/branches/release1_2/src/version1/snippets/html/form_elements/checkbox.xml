@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>checkbox</name>
+<help>Creates a simple checkbox input</help>
+<starttext><![CDATA[<input type="checkbox" name="$${Name}" value="$${Value}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

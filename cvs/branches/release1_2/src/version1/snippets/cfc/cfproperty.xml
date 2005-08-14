@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>cfproperty</name>
+<help>Creates a cfc property</help>
+<starttext><![CDATA[<cfproperty name="$${Name}" type="$${Type}" />]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

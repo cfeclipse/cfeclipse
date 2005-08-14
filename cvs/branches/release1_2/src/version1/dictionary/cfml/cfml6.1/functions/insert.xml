@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="insert" returns="String">
+			<help><![CDATA[
+				Inserts a substring in a string after a specified character
+				position. If position = 0, prefixes the substring to the
+				string.
+			]]></help>
+			<parameter name="substring" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="string" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+			<parameter name="position" required="true" type="Numeric">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>

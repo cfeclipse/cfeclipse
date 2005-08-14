@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>cfswitch</name>
+<help>simple cfswitch statement</help>
+<starttext><![CDATA[<cfswitch expression="#$${expression}#">
+	<cfcase value="]]></starttext>
+<endtext><![CDATA[">
+	
+	</cfcase>
+</cfswitch>]]></endtext>
+</snippet>

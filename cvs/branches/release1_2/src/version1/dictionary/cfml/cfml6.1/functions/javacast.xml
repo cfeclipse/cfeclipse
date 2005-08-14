@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="javacast" returns="Object">
+			<help><![CDATA[
+				Converts the data type of a CFML variable to pass as an
+				argument to an overloaded method of a Java object. Use only
+				for scalar and string arguments.
+				[type - quicky]
+				boolean,int,long,float,double,string
+			]]></help>
+			<parameter name="type" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+				<values>
+					<value option="boolean"/>
+					<value option="double"/>
+					<value option="float"/>
+					<value option="int"/>
+					<value option="long"/>
+					<value option="string"/>
+				</values>
+			</parameter>
+			<parameter name="variable" required="true" type="String">
+				<help><![CDATA[
+				]]></help>
+			</parameter>
+		</function>

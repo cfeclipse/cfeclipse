@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfoutput" single="false" xmlstyle="false">
+			<help><![CDATA[
+				Displays output that can contain the results of processing
+				CFML variables and functions. Can loop over the results
+				of a database query.
+			]]></help>
+			<parameter name="query" required="false" type="String">
+				<help><![CDATA[
+					Name of cfquery from which to draw data for output section.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="group" required="false" type="String">
+				<help><![CDATA[
+					Query column to use to group sets of records. Eliminates
+					adjacent duplicate rows when data is sorted. Use if you
+					retrieved a record set ordered on one or more a query
+					columns. For example, if a record set is ordered on
+					"Customer_ID" in the cfquery tag, you can group the output
+					on "Customer_ID."
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="groupcasesensitive" required="false" type="boolean">
+				<help><![CDATA[
+					Whether to consider the case in grouping rows.
+				]]></help>
+				<values>
+					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
+				</values>
+			</parameter>
+			<parameter name="startrow" required="false" type="Numeric">
+				<help><![CDATA[
+					Row from which to start output.
+				]]></help>
+				<values/>
+			</parameter>
+			<parameter name="maxrows" required="false" type="Numeric">
+				<help><![CDATA[
+					Maximum number of rows to display.
+				]]></help>
+				<values/>
+			</parameter>
+		</tag>
