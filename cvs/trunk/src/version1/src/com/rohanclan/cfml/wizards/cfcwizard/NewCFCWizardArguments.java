@@ -152,7 +152,25 @@ public class NewCFCWizardArguments extends WizardPage {
 		layout.marginWidth = 2;
 		
 		
-		////////////////////////////////////////////////////////// FUNCTION DROPDOWN
+		Composite buttons = createFunctionDropdown(container);
+		
+		createAddButton(buttons);
+		createRemoveButton(buttons);
+		createArgumentLIst(container);
+		createNameTextbox(container);
+		createDisplayNameTextbox(container);
+		createHintTextbox(container);
+		createTypeDropDown(container);
+		createRequiredCheckbox(container);
+		createDefaultTextbox(container);
+
+		//initialize();
+		
+		dialogChanged();
+		setControl(container);
+	}
+
+	private Composite createFunctionDropdown(Composite container) {
 		Label availFuncsLabel = new Label(container, SWT.NULL);
 		availFuncsLabel.setText("&Functions");
 		GridData data = new GridData();
@@ -192,8 +210,11 @@ public class NewCFCWizardArguments extends WizardPage {
 		GridLayout buttonLayout = new GridLayout(2, true);
 		buttonLayout.marginWidth = 0;
 		buttons.setLayout(buttonLayout);
-		
-		///////////////////////////////////////////////////////////////// ADD BUTTON
+		return buttons;
+	}
+
+	private void createAddButton(Composite buttons) {
+		GridData data;
 		plus = new Button(buttons, SWT.PUSH);
 		plus.setText(" + ");
 		//plus.setFont(new Font(plus.getDisplay(),"arial", 12, java.awt.Font.BOLD));
@@ -206,133 +227,72 @@ public class NewCFCWizardArguments extends WizardPage {
 				handleAdd();
 			}
 		});
+	}
+
+	private void createDefaultTextbox(Composite container) {
+		GridData data;
+		Label defaultLabel = new Label (container, SWT.NONE);
+		defaultLabel.setText ("&Default");
+		data = new GridData();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.END;
+		defaultLabel.setLayoutData(data);
 		
-		
-		//////////////////////////////////////////////////////////////REMOVE BUTTON
-		minus = new Button(buttons, SWT.PUSH);
-		minus.setText(" - ");
-		//minus.setFont(new Font(plus.getDisplay(),"arial", 12, java.awt.Font.BOLD));
+		argumentDefault = new Text(container, SWT.BORDER);
+		argumentDefault.setText ("");
 		data = new GridData ();
+		data.horizontalIndent = 5;
 		data.horizontalAlignment = GridData.BEGINNING;
-		minus.setEnabled(false);
-		minus.setLayoutData(data);		
-		minus.addMouseListener(new MouseListener(){
-			public void mouseDoubleClick(MouseEvent e) {;}
-			public void mouseDown(MouseEvent e) {
-				handleMinus();
+		data.verticalAlignment = GridData.BEGINNING;
+		data.widthHint = 295;
+		argumentDefault.setLayoutData(data);
+		argumentDefault.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e){	;}
+			public void focusLost(FocusEvent e){
+				propertyChanged();
 			}
-			public void mouseUp(MouseEvent e) {;}
 		});
 		
-		//////////////////////////////////////////////////////////////ARGUMENT LIST
-		Label propLabel = new Label(container, SWT.NULL);
-		propLabel.setText("&Arguments");
-		propLabel.setAlignment(SWT.BEGINNING);
-		data = new GridData();
-		data.horizontalAlignment = GridData.END;
-		data.verticalAlignment = GridData.BEGINNING;
-		propLabel.setLayoutData(data);
-		
-		argumentList = new List (container, SWT.BORDER | SWT.V_SCROLL);
-		// argumentList.setItems (new String [] {"ArgOne", "ArgTwo", "ArgThree"});
+		argumentName.addFocusListener(fListener);
+		argumentDisplayName.addFocusListener(fListener);
+		argumentHint.addFocusListener(fListener);
+		argumentDefault.addFocusListener(fListener);
 
-		data = new GridData ();
-		data.horizontalAlignment = GridData.BEGINNING;
+		argumentName.addMouseListener(mListener);
+		argumentDisplayName.addMouseListener(mListener);
+		argumentHint.addMouseListener(mListener);
+		argumentDefault.addMouseListener(mListener);
+	}
+
+	private void createRequiredCheckbox(Composite container) {
+		GridData data;
+		Label requiredLabel = new Label (container, SWT.NONE);
+		requiredLabel.setText ("&Required");
+		data = new GridData();
 		data.horizontalIndent = 5;
-		data.widthHint = 300;
-		argumentList.setLayoutData(data);	
-		argumentList.addSelectionListener(new SelectionListener(){
-			public void widgetSelected(SelectionEvent e) {
-				selectionChanged();
+		data.horizontalAlignment = GridData.END;
+		requiredLabel.setLayoutData(data);
+		
+		argumentIsRequired = new Button(container, SWT.CHECK);
+		
+		data = new GridData ();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.verticalAlignment = GridData.BEGINNING;
+		data.widthHint = 295;
+		argumentIsRequired.setLayoutData(data);
+		argumentIsRequired.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e){
+				propertyChanged();
 			}
 			public void widgetDefaultSelected(SelectionEvent e){
-				//selectionChanged();
-			}
-		});
-		
-		////////////////////////////////////////////////////////////// NAME TEXTBOX
-		Label nameLabel = new Label (container, SWT.NONE);
-		nameLabel.setText ("&Name");
-		data = new GridData();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.END;
-		nameLabel.setLayoutData(data);
-		
-		argumentName = new Text(container, SWT.BORDER);
-		argumentName.setText ("");
-		data = new GridData ();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.BEGINNING;
-		data.verticalAlignment = GridData.BEGINNING;
-		data.widthHint = 295;
-		argumentName.setLayoutData(data);
-		argumentName.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				updatePropertyNameInList();
-				checkForDuplicateProperty();
-			}
-
-		});
-		//but only update the bean we we lose focus
-		argumentName.addFocusListener(new FocusListener(){
-			public void focusGained(FocusEvent e){	;}
-			public void focusLost(FocusEvent e){
-				propertyChanged();	
-			}
-		});
-		/* argumentName.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				dialogChanged();
-			}
-		}); */
-
-		/////////////////////////////////////////////////////// DISPLAY NAME TEXTBOX
-		Label displayLabel = new Label (container, SWT.NONE);
-		displayLabel.setText ("&Display Name");
-		data = new GridData();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.END;
-		displayLabel.setLayoutData(data);
-		
-		argumentDisplayName = new Text(container, SWT.BORDER);
-		argumentDisplayName.setText ("");
-		data = new GridData ();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.BEGINNING;
-		data.verticalAlignment = GridData.BEGINNING;
-		data.widthHint = 295;
-		argumentDisplayName.setLayoutData(data);
-		argumentDisplayName.addFocusListener(new FocusListener(){
-			public void focusGained(FocusEvent e){	;}
-			public void focusLost(FocusEvent e){
 				propertyChanged();
 			}
 		});
-		
-		////////////////////////////////////////////////////////////// HINT TEXTBOX
-		Label hintLabel = new Label (container, SWT.NONE);
-		hintLabel.setText ("&Hint");
-		data = new GridData();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.END;
-		hintLabel.setLayoutData(data);
-		
-		argumentHint = new Text(container, SWT.BORDER);
-		argumentHint.setText ("");
-		data = new GridData ();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.BEGINNING;
-		data.verticalAlignment = GridData.BEGINNING;
-		data.widthHint = 295;
-		argumentHint.setLayoutData(data);
-		argumentHint.addFocusListener(new FocusListener(){
-			public void focusGained(FocusEvent e){	;}
-			public void focusLost(FocusEvent e){
-				propertyChanged();
-			}
-		});
-		
-		////////////////////////////////////////////////////////////// TYPE DROPDOWN
+	}
+
+	private void createTypeDropDown(Composite container) {
+		GridData data;
 		Label accessLabel = new Label (container, SWT.NONE);
 		accessLabel.setText ("&Type");
 		data = new GridData();
@@ -377,70 +337,140 @@ public class NewCFCWizardArguments extends WizardPage {
 				propertyChanged();
 			}
 		});
-		
-		
-		////////////////////////////////////////////////////////// REQUIRED CHECKBOX
-		Label requiredLabel = new Label (container, SWT.NONE);
-		requiredLabel.setText ("&Required");
+	}
+
+	private void createHintTextbox(Composite container) {
+		GridData data;
+		Label hintLabel = new Label (container, SWT.NONE);
+		hintLabel.setText ("&Hint");
 		data = new GridData();
 		data.horizontalIndent = 5;
 		data.horizontalAlignment = GridData.END;
-		requiredLabel.setLayoutData(data);
+		hintLabel.setLayoutData(data);
 		
-		argumentIsRequired = new Button(container, SWT.CHECK);
-		
+		argumentHint = new Text(container, SWT.BORDER);
+		argumentHint.setText ("");
 		data = new GridData ();
 		data.horizontalIndent = 5;
 		data.horizontalAlignment = GridData.BEGINNING;
 		data.verticalAlignment = GridData.BEGINNING;
 		data.widthHint = 295;
-		argumentIsRequired.setLayoutData(data);
-		argumentIsRequired.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e){
-				propertyChanged();
-			}
-			public void widgetDefaultSelected(SelectionEvent e){
-				propertyChanged();
-			}
-		});
-		
-		////////////////////////////////////////////////////////// DEFAULT TEXTBOX
-		Label defaultLabel = new Label (container, SWT.NONE);
-		defaultLabel.setText ("&Default");
-		data = new GridData();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.END;
-		defaultLabel.setLayoutData(data);
-		
-		argumentDefault = new Text(container, SWT.BORDER);
-		argumentDefault.setText ("");
-		data = new GridData ();
-		data.horizontalIndent = 5;
-		data.horizontalAlignment = GridData.BEGINNING;
-		data.verticalAlignment = GridData.BEGINNING;
-		data.widthHint = 295;
-		argumentDefault.setLayoutData(data);
-		argumentDefault.addFocusListener(new FocusListener(){
+		argumentHint.setLayoutData(data);
+		argumentHint.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent e){	;}
 			public void focusLost(FocusEvent e){
 				propertyChanged();
 			}
 		});
-		
-		argumentName.addFocusListener(fListener);
-		argumentDisplayName.addFocusListener(fListener);
-		argumentHint.addFocusListener(fListener);
-		argumentDefault.addFocusListener(fListener);
+	}
 
-		argumentName.addMouseListener(mListener);
-		argumentDisplayName.addMouseListener(mListener);
-		argumentHint.addMouseListener(mListener);
-		argumentDefault.addMouseListener(mListener);
-
-		//initialize();
+	private void createDisplayNameTextbox(Composite container) {
+		GridData data;
+		Label displayLabel = new Label (container, SWT.NONE);
+		displayLabel.setText ("&Display Name");
+		data = new GridData();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.END;
+		displayLabel.setLayoutData(data);
 		
-		dialogChanged();
-		setControl(container);
+		argumentDisplayName = new Text(container, SWT.BORDER);
+		argumentDisplayName.setText ("");
+		data = new GridData ();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.verticalAlignment = GridData.BEGINNING;
+		data.widthHint = 295;
+		argumentDisplayName.setLayoutData(data);
+		argumentDisplayName.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e){	;}
+			public void focusLost(FocusEvent e){
+				propertyChanged();
+			}
+		});
+	}
+
+	private void createNameTextbox(Composite container) {
+		GridData data;
+		Label nameLabel = new Label (container, SWT.NONE);
+		nameLabel.setText ("&Name");
+		data = new GridData();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.END;
+		nameLabel.setLayoutData(data);
+		
+		argumentName = new Text(container, SWT.BORDER);
+		argumentName.setText ("");
+		data = new GridData ();
+		data.horizontalIndent = 5;
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.verticalAlignment = GridData.BEGINNING;
+		data.widthHint = 295;
+		argumentName.setLayoutData(data);
+		argumentName.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				updatePropertyNameInList();
+				checkForDuplicateProperty();
+			}
+
+		});
+		//but only update the bean we we lose focus
+		argumentName.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e){	;}
+			public void focusLost(FocusEvent e){
+				propertyChanged();	
+			}
+		});
+		/* argumentName.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				dialogChanged();
+			}
+		}); */
+	}
+
+	private void createArgumentLIst(Composite container) {
+		GridData data;
+		Label propLabel = new Label(container, SWT.NULL);
+		propLabel.setText("&Arguments");
+		propLabel.setAlignment(SWT.BEGINNING);
+		data = new GridData();
+		data.horizontalAlignment = GridData.END;
+		data.verticalAlignment = GridData.BEGINNING;
+		propLabel.setLayoutData(data);
+		
+		argumentList = new List (container, SWT.BORDER | SWT.V_SCROLL);
+		// argumentList.setItems (new String [] {"ArgOne", "ArgTwo", "ArgThree"});
+
+		data = new GridData ();
+		data.horizontalAlignment = GridData.BEGINNING;
+		data.horizontalIndent = 5;
+		data.widthHint = 300;
+		argumentList.setLayoutData(data);	
+		argumentList.addSelectionListener(new SelectionListener(){
+			public void widgetSelected(SelectionEvent e) {
+				selectionChanged();
+			}
+			public void widgetDefaultSelected(SelectionEvent e){
+				//selectionChanged();
+			}
+		});
+	}
+
+	private void createRemoveButton(Composite buttons) {
+		GridData data;
+		minus = new Button(buttons, SWT.PUSH);
+		minus.setText(" - ");
+		//minus.setFont(new Font(plus.getDisplay(),"arial", 12, java.awt.Font.BOLD));
+		data = new GridData ();
+		data.horizontalAlignment = GridData.BEGINNING;
+		minus.setEnabled(false);
+		minus.setLayoutData(data);		
+		minus.addMouseListener(new MouseListener(){
+			public void mouseDoubleClick(MouseEvent e) {;}
+			public void mouseDown(MouseEvent e) {
+				handleMinus();
+			}
+			public void mouseUp(MouseEvent e) {;}
+		});
 	}
 	
 	/**
