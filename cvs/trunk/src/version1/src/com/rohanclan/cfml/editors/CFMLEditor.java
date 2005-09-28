@@ -495,9 +495,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			
 			/*
 			 * Start the logic to see if we are in a cfinclude or a cfmodule. get the tag.
+			 * Added the lines below to check the partition type and thus get the cfincluded file
 			 */
 			int startpos = sel.getOffset();
-			
+			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+		    CFEPartition part = partitioner.findClosestPartition(startpos);
+		   
+		    
 			CfmlTagItem cti = null; 
 		    try {
 		        cti = cfd.getTagAt(startpos, startpos);
@@ -523,7 +527,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				}
 
 				String n = cti.getName();
-				if (n.equalsIgnoreCase("cfinclude") || n.equalsIgnoreCase("cfmodule")) {
+				if (part.getTagName().equals("cfinclude") || part.getTagName().equals("cfmodule")) {
 					//this is a bit hokey - there has to be a way to load the
 					//action in the xml file then just call it here...
 				    this.gfa.setActiveEditor(null, getSite().getPage().getActiveEditor());
