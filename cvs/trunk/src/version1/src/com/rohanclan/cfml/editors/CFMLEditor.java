@@ -526,7 +526,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					menu.add(jumpNow);
 				}
 
-				String n = cti.getName();
+				
 				if (part.getTagName().equals("cfinclude") || part.getTagName().equals("cfmodule")) {
 					//this is a bit hokey - there has to be a way to load the
 					//action in the xml file then just call it here...
