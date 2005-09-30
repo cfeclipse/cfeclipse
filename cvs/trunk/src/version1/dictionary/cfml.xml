@@ -16836,7 +16836,7 @@
 		<scope value="ERROR.diagnostics"/>
 		<scope value="ERROR.mailTo"/>
 		<scope value="ERROR.dateTime"/>
-		<scope value="ERROR..browser"/>
+		<scope value="ERROR.browser"/>
 		<scope value="ERROR.remoteAddress"/>
 		<scope value="ERROR.HTTPReferer"/>
 		<scope value="ERROR.template"/>

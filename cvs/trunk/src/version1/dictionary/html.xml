@@ -544,9 +544,9 @@
 					Define scroll bars
 				]]></help>
             <values>
-               <value option="yes"/>
+               <value option="true"/>
                <value option="no"/>
-               <value option="auto"/>
+               <value option="false"/>
             </values>
          </parameter>
          <parameter name="src" type="URL" required="false">
@@ -761,8 +761,8 @@
 					Define scroll bars
 				]]></help>
             <values>
-               <value option="yes"/>
-               <value option="no"/>
+               <value option="true"/>
+               <value option="false"/>
                <value option="auto"/>
             </values>
          </parameter>
