@@ -967,6 +967,19 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private void handleQuotes(IDocument doc, DocumentCommand docCommand,
 			char quoteChar) throws BadLocationException {
+		//@Jared: added this to allow quote characters at the end
+		// of a document. Without it, entering quote characters at the
+		// very end of a document would fail due to the attempt to close
+		// the quotes.
+		//System.err.println(docCommand.offset);
+		//System.err.println(doc.getLength());
+		//System.err.println(doc.getPartition(docCommand.offset).getType());
+		if (doc.getLength() == docCommand.offset) {
+			String qChar = quoteChar + "";
+			doc.set(doc.get() + qChar + qChar);
+			docCommand.offset = doc.getLength();
+			return;
+		}
 		char nextChar = (char) 0;
 		char prevChar = (char) 0;
 		try {

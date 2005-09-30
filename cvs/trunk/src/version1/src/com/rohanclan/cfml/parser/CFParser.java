@@ -723,10 +723,11 @@ public class CFParser {
 		//
 		// First test to see whether we've found a custom tag. If so we do nothing fancy (yet).
 		// Also tests to make sure it catches CFX tags.
-		if(tagName.charAt(2) == '_' 
-			|| ((tagName.charAt(2) == 'x' 
-				|| (tagName.charAt(2) == 'X')) 
-				&& tagName.charAt(3) == '_'))
+		if(tagName.length() >= 3 && (tagName.charAt(2) == '_' 
+			|| (
+					(tagName.charAt(2) == 'x' || (tagName.charAt(2) == 'X')) 
+					&& tagName.charAt(3) == '_')
+				))
 		{
 
 			newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);

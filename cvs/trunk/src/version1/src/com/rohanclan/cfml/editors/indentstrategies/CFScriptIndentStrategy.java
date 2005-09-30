@@ -40,7 +40,8 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	 * @param quoteChar - the quote character that triggered this. This allows us to handle " and ' quotes.
 	 * @throws BadLocationException - ack.
 	 */
-	private void handleQuotes(IDocument doc, DocumentCommand docCommand, char quoteChar) throws BadLocationException {
+	private void handlePotentialClosingChar(IDocument doc, DocumentCommand docCommand, char quoteChar)
+	throws BadLocationException {
 		char nextChar = doc.getChar(docCommand.offset);
 		if(nextChar == quoteChar)
 		{
@@ -48,7 +49,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			return;
 		}
 
-		insertSingleChar(docCommand, '"');
+		insertSingleChar(docCommand, quoteChar);
 		return;
 	}
 
@@ -74,7 +75,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	private void handleClosingBracket(char nextChar,char prevChar, char trigChar, 
 										IDocument doc, DocumentCommand docCommand)
 	{
-		if(nextChar == ')')
+		if(nextChar == trigChar)
 			stepThrough(docCommand);
 	}
 	
@@ -139,24 +140,32 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 					default:
 						break;
 				}
-				return;			
+				return;
+	// The following are for closed chars that have the same
+	// opening and closing character.
+			case '\'':
+				handlePotentialClosingChar(doc, docCommand, '\'');
+				break;
+			case '\"':
+				handlePotentialClosingChar(doc, docCommand, '\"');
+				break;
+			case '#':
+				handlePotentialClosingChar(doc, docCommand, '#');
+				break;
+	// The following is for braces...
 			case '[':
 				insertSingleChar(docCommand, ']');
 				break;
-			case '\"':
-				handleQuotes(doc, docCommand, '"');
+			case '{':
+				insertSingleChar(docCommand, '}');
 				break;
 			case '(':
 				insertSingleChar(docCommand, ')');
 				break;
 			case ')':
-				handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
-				break;
+			case '}':
 			case ']':
-				if(nextChar == ']')
-					stepThrough(docCommand);
-				break;
-			case '{':
+				handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
 				break;
 			}
 		} catch(BadLocationException ex) {

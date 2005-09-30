@@ -1,7 +1,7 @@
 /* 
- * $Id: TagData.java,v 1.5 2005-07-25 01:29:38 rohanr2 Exp $
- * $Revision: 1.5 $
- * $Date: 2005-07-25 01:29:38 $
+ * $Id: TagData.java,v 1.6 2005-09-30 06:20:45 rohanr2 Exp $
+ * $Revision: 1.6 $
+ * $Date: 2005-09-30 06:20:45 $
  * 
  * Created Jan 4, 2005 10:51:03 PM
  *
@@ -34,7 +34,7 @@ package com.rohanclan.cfml.editors.partitioner;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TagData {
 
@@ -166,9 +166,9 @@ public class TagData {
      */
     private void parseData() {
         try {
+        		//TODO: this seems to gack on the <a tag
             if (fData.length() < 3) {
-                throw new Exception(
-                        "Data length less than 3 characters for tag: " + fData);
+                throw new Exception("Data length less than 3 characters for tag: " + fData);
             }
             if (fData.charAt(1) == '/') {
                 isCloser = true;
@@ -223,6 +223,9 @@ public class TagData {
  * CVS LOG ====================================================================
  * 
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/07/25 01:29:38  rohanr2
+ * trying to clean up the asserts and the unused variable warnings... I just commented out the parts that had unused variables and replaced all asserts with IllegalArgumentExceptions. I only got through about half the code base.
+ *
  * Revision 1.4  2005/01/27 01:37:25  smilligan
  * put a band aid on the content assist for attributes and tags. It will need to be properly sorted out another time, but it basically works for now.
  *

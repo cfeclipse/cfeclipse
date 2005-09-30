@@ -583,12 +583,16 @@ public class CFContentAssist extends CFEContentAssist{
 		// odd number of " in the string prior to this invoke before 
 		// showing attribute insight. (to keep it from showing attributes
 		// inside of attributes)
-		String quote_parts[] = prefix.substring(1, state.getTagName().length()).split("\"");
+		int tagNameLen = state.getTagName().length();
+		String quote_parts[] = null;
 		
-		if(quote_parts.length % 2 != 0)				
+		if(tagNameLen > 1)
 		{
-		    
-			// 
+			quote_parts = prefix.substring(1, tagNameLen).split("\"");
+		}
+		
+		if(quote_parts != null && quote_parts.length % 2 != 0)				
+		{
 			// Return out best guess as to what attributes are available for the tag that the user
 			// is working upon and the attributes they have already defined. Also filters out any
 			// attributes that are already defined for the attribute.
