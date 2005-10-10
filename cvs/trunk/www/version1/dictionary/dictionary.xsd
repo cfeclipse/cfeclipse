@@ -3,7 +3,6 @@
 	targetNamespace="http://www.cfeclipse.org/version1/dictionary"
 	xmlns="http://www.cfeclipse.org/version1/dictionary"
 >
-	
 	<!-- root element -->
 	<xs:element name="dictionary">
 		<xs:complexType>
@@ -48,8 +47,7 @@
 				<xs:element ref="help"/>
 				<xs:element ref="parameter" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
-			
-			<xs:attribute name="creator" type="xs:string" use="required" />			
+				
 			<xs:attribute name="name" type="xs:string" use="required"/>
 			<xs:attribute name="single" use="required">
 				<xs:simpleType>
@@ -97,7 +95,6 @@
 				<xs:element ref="parameter" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
 			
-			<xs:attribute name="creator" type="xs:string" use="required"/>
 			<xs:attribute name="name" type="xs:string" use="required"/>
 			
 			<xs:attribute name="returns" use="required">
