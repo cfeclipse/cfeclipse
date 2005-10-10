@@ -27,7 +27,7 @@ package com.rohanclan.cfml.editors;
 import java.util.Set;
 
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 //import java.util.HashSet;
 
 /**
@@ -35,7 +35,7 @@ import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
  *
  * In charge of the HTML dictionary
  */
-public class HTMLSyntaxDictionary extends SyntaxDictionary implements SyntaxDictionaryInterface {
+public class HTMLSyntaxDictionary extends SyntaxDictionary implements ISyntaxDictionary {
 	
 	/**
 	 * gets any operators (eq, or, and) (lowercase only)

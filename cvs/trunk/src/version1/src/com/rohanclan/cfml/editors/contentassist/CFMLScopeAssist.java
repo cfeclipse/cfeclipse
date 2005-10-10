@@ -37,7 +37,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.ScopeVar;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
@@ -121,7 +121,7 @@ public class CFMLScopeAssist
         
         
         // Get an initial set of possibilities.
-		Set proposals = ((SyntaxDictionaryInterface)this.sourceDict).getFilteredScopeVars(prefix);
+		Set proposals = ((ISyntaxDictionary)this.sourceDict).getFilteredScopeVars(prefix);
 		
 		
 		

@@ -28,14 +28,17 @@ import java.util.Set;
 import java.util.HashSet;
 
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 
 /**
  * @author Rob
  *
- * Extension of the SyntaxDictionary. Has a few cf specific items
+ * Extension of the SyntaxDictionary. Has cf specific items. This class is not used
+ * directly in cfe. There is one more level in the SQLSyntaxDictionary
+ * 
+ * @see SQLSyntaxDictionary
  */
-public class CFSyntaxDictionary extends SyntaxDictionary implements SyntaxDictionaryInterface {
+public class CFSyntaxDictionary extends SyntaxDictionary implements ISyntaxDictionary {
 	protected static Set operators;
 	protected static Set scriptkeywords;
 	

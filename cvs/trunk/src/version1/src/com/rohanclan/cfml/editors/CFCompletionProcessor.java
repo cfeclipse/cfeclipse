@@ -56,7 +56,7 @@ import com.rohanclan.cfml.dictionary.Function;
 import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.ScopeVar;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
@@ -126,7 +126,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		//System.err.println("I think I need to be looking up: " + attribute);
 		//System.err.println("Tag I think I have is \'" + tag + "\'");
 
-		Set attrProps = ((SyntaxDictionaryInterface)syntax).getFilteredAttributeValues(tag, attribute, valueSoFar);
+		Set attrProps = ((ISyntaxDictionary)syntax).getFilteredAttributeValues(tag, attribute, valueSoFar);
 		if(attribute.compareToIgnoreCase("template") == 0) {
 			TreeSet suggestions = new TreeSet();
 			if(doc instanceof ICFDocument) {
@@ -464,7 +464,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		/*////////////////////////// copy from above dup code! //////*/	
 			
 			return makeSetToProposal(
-				((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
+				((ISyntaxDictionary)syntax).getFilteredElements(taglimiting),
 				documentOffset,
 				TAGTYPE,
 				taglimiting.length()
@@ -481,7 +481,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		int length = prefix.length();
 		// If the taglimiting has a space in we're assuming that the user
 		// is intending to input or has inputted some attributes.
-		Set proposals = ((SyntaxDictionaryInterface)syntax).getFilteredScopeVars(prefix);
+		Set proposals = ((ISyntaxDictionary)syntax).getFilteredScopeVars(prefix);
 		
 		Iterator i = proposals.iterator();
 		
@@ -579,7 +579,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		else
 		{
 			return makeSetToProposal(
-				((SyntaxDictionaryInterface)syntax).getFilteredElements(taglimiting),
+				((ISyntaxDictionary)syntax).getFilteredElements(taglimiting),
 				documentOffset,
 				TAGTYPE,
 				taglimiting.length()

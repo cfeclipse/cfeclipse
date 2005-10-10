@@ -43,7 +43,7 @@ import org.eclipse.jface.text.rules.Token;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.CustomTagRule;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.NamedTagRule;
@@ -141,7 +141,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		Tag tg = null;
 		try
 		{
-			Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
+			Set elements = ((ISyntaxDictionary)sd).getAllElements();
 			
 			Iterator it = elements.iterator();
 			while(it.hasNext())
@@ -173,7 +173,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		try
 		{
-			Set elements = ((SyntaxDictionaryInterface)sd).getAllElements();
+			Set elements = ((ISyntaxDictionary)sd).getAllElements();
 			
 			//this is going to be used to tell if we need to add a form, table,
 			//or normal tag for the html tags

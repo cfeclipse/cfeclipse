@@ -77,26 +77,6 @@ public abstract class SyntaxDictionary {
 	 */
 	protected URL dictionaryBaseURL;
 	
-	/** get a handle to the dictionary base */
-	/* static
-	{
-		if(dictionaryBaseURL == null)
-		{
-			try 
-			{
-				dictionaryBaseURL = new URL(
-					CFMLPlugin.getDefault().getBundle().getEntry("/"),
-					"dictionary/"
-				);
-				
-			} 
-			catch (MalformedURLException e) 
-			{
-				e.printStackTrace(System.err);
-			}
-		}
-	} */
-	
 	public SyntaxDictionary()
 	{
 		syntaxelements = new HashMap();

@@ -19,25 +19,30 @@ import java.util.List;
 import java.util.Set;
 
 import com.rohanclan.cfml.editors.CFSyntaxDictionary;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 
 /**
  * @author Christopher Bradford
  * The dictionary for SQL keywords to be used in CFQuery tags.
  * Extends CFSyntaxDicionary for now because CF operators should be color coded.
  * The keywords are loaded from an external file by calling loadKeywords
- *
+ * 
+ * RR - I took this a step further and just made this the default dictionary for 
+ * all coldfusion syntax. Instead of using CFSyntaxDictionary for the document
+ * and an instance of SQLSyntaxDictionary for only the sql partitions, this class
+ * is used for the document and sql partitions now.
  */
-public class SQLSyntaxDictionary extends CFSyntaxDictionary {
-
+public class SQLSyntaxDictionary extends CFSyntaxDictionary implements ISyntaxDictionary
+{
 	protected static Set sqlkeywords;
 
 	/**
      * 
      */
-    public SQLSyntaxDictionary() {
+    public SQLSyntaxDictionary() 
+    {
         super();
 		sqlkeywords = new HashSet();
-
 		operators = new HashSet();
 		buildOperatorSyntax();
     }
@@ -56,21 +61,26 @@ public class SQLSyntaxDictionary extends CFSyntaxDictionary {
 	 * @param keywordFilename The file to read from
 	 */
 	public void loadKeywords(String keywordFilename) {
-	    try {
-			if(filename == null) throw new IOException("Keyword file name cannot be null!");
+	    try 
+	    {
+			if(keywordFilename == null) 
+				throw new IOException("Keyword file name cannot be null!");
 			
 			URL url = new URL(dictionaryBaseURL + "/" + keywordFilename);
 			InputStream iStream = url.openStream();
 			BufferedReader fileReader = new BufferedReader(new InputStreamReader(iStream));
 			String line = fileReader.readLine();
 			List keywords = new ArrayList();
-			while (line != null) {
+			
+			while (line != null) 
+			{
 			    keywords.add(line.toLowerCase().trim());
 			    line = fileReader.readLine();
 			}
 			buildSQLKeywordSyntax(keywords);
 	    }
-	    catch (IOException e) {
+	    catch (IOException e) 
+	    {
 	        e.printStackTrace();
 	    }
 	}
@@ -87,5 +97,4 @@ public class SQLSyntaxDictionary extends CFSyntaxDictionary {
 	        sqlkeywords.add(word);
 	    }
 	}
-
 }

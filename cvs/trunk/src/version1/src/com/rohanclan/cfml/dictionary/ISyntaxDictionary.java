@@ -33,7 +33,7 @@ import java.util.Set;
  * by making them all have common methods
  * perhaps this should be in the base class...
  */
-public interface SyntaxDictionaryInterface {
+public interface ISyntaxDictionary {
 	
 	/**
 	 * Get all the dictionaries elements (meaning

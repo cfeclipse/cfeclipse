@@ -28,14 +28,14 @@ import java.util.Set;
 import java.util.HashSet;
 
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 
 /**
  * @author Rob
  *
  * This is the javascript specific syntax dictionary dictionary
  */
-public class JSSyntaxDictionary extends SyntaxDictionary implements SyntaxDictionaryInterface {
+public class JSSyntaxDictionary extends SyntaxDictionary implements ISyntaxDictionary {
 	//protected static Map functions;
 	protected static Set operators;
 	protected static Set scriptkeywords;

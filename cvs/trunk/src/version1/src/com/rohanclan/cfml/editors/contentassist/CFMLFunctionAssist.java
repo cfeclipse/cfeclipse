@@ -36,7 +36,7 @@ import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.dictionary.Trigger;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
@@ -123,8 +123,8 @@ public class CFMLFunctionAssist
         else {
             //int length = this.functionName.length();
             
-    		Set params = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionParams(this.functionName);
-    		String helpText = ((SyntaxDictionaryInterface)this.sourceDict).getFunctionHelp(this.functionName);
+    		Set params = ((ISyntaxDictionary)this.sourceDict).getFunctionParams(this.functionName);
+    		String helpText = ((ISyntaxDictionary)this.sourceDict).getFunctionHelp(this.functionName);
     		
     		
     		    		

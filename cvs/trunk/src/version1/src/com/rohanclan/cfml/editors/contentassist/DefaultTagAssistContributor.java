@@ -35,7 +35,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.SyntaxDictionaryInterface;
+import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Value;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 
@@ -133,7 +133,7 @@ public class DefaultTagAssistContributor extends CFEContentAssist
 		}				
 		
 		return makeSetToProposal(
-			((SyntaxDictionaryInterface)this.sourceDict).getFilteredElements(tagLimiting),
+			((ISyntaxDictionary)this.sourceDict).getFilteredElements(tagLimiting),
 			offset,
 			CFEContentAssist.TAGTYPE,
 			tagLimiting.length()
