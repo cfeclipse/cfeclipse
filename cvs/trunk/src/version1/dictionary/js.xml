@@ -4,19 +4,13 @@
 	this file will be over written when you upgrade the plugin, but the file 
 	spec shouldn't change without notice so you can just over write this file 
 	if you wish.
-	
-	Creator values are:
-    	MX          = 0x1;
-    	BlueDragon  = 0x2;
-    	W3C         = 0x4;
-    	UserDefined = 0x8;
 -->
 <dictionary xmlns="http://www.cfeclipse.org/version1/dictionary"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://cfeclipse.tigris.org/version1/dictionary/dictionary.xsd"
 >
 	<functions>
-		<function creator="4" name="eval" returns="Object">
+		<function name="eval" returns="Object">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="codeString" type="String" required="true">
@@ -25,7 +19,7 @@
 			</parameter>
 		</function>
 
-		<function creator="4" name="isFinite" returns="boolean">
+		<function name="isFinite" returns="boolean">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="testnumber" type="Numeric" required="true">
@@ -34,7 +28,7 @@
 			</parameter>
 		</function>
 
-		<function creator="4" name="isNaN" returns="boolean">
+		<function name="isNaN" returns="boolean">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="testvalue" type="Object" required="true">
@@ -43,7 +37,7 @@
 			</parameter>
 		</function>
 	
-		<function creator="4" name="Number" returns="Numeric">
+		<function name="Number" returns="Numeric">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="obj" type="Object" required="true">
@@ -52,7 +46,7 @@
 			</parameter>
 		</function>
 	
-		<function creator="4" name="parseFloat" returns="Numeric">
+		<function name="parseFloat" returns="Numeric">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="str" type="String" required="true">
@@ -61,7 +55,7 @@
 			</parameter>
 		</function>
 	
-		<function creator="4" name="parseInt" returns="Numeric">
+		<function name="parseInt" returns="Numeric">
 			<help><![CDATA[
 				parses a string and returns a javascript integer
 			]]></help>
@@ -77,7 +71,7 @@
 			</parameter>
 		</function>
 	
-		<function creator="4" name="String" returns="boolean">
+		<function name="String" returns="boolean">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="obj" type="Object" required="true">
@@ -86,7 +80,7 @@
 			</parameter>
 		</function>
 
-		<function creator="4" name="alert" returns="void">
+		<function name="alert" returns="void">
 			<help><![CDATA[
 				Alert box
 			]]></help>
@@ -97,7 +91,7 @@
 			</parameter>
 		</function>
 	
-		<function creator="4" name="confirm" returns="boolean">
+		<function name="confirm" returns="boolean">
 			<help><![CDATA[
 				Confirm dialog box
 			]]></help>
@@ -108,7 +102,7 @@
 			</parameter>
 		</function>
 
-		<function creator="4" name="unescape" returns="String">
+		<function name="unescape" returns="String">
 			<help><![CDATA[
 				Unescapes the passed string so that is can be passed in a url
 			]]></help>
@@ -119,7 +113,7 @@
 			</parameter>
 		</function>
 
-		<function creator="4" name="escape" returns="String">
+		<function name="escape" returns="String">
 			<help><![CDATA[
 				Escapes the passed string so that is can be passed in a url
 			]]></help>
@@ -130,7 +124,7 @@
 			</parameter>
 		</function>
 		
-		<function creator="4" name="typeof" returns="String">
+		<function name="typeof" returns="String">
 			<help><![CDATA[
 				returns one of the following strings:
 				* number

@@ -16,29 +16,29 @@
 -->
 <!DOCTYPE dictionary [
 
-	<!ENTITY value_boolean   SYSTEM "inc/value_boolean.xml">
+	<!ENTITY value_boolean   SYSTEM "inc/value_boolean.ixml">
 	<!-- class, id, style, title -->
-	<!ENTITY core            SYSTEM "inc/parameter_html_core.xml">
+	<!ENTITY core            SYSTEM "inc/parameter_html_core.ixml">
 	<!-- dir, lang -->
-	<!ENTITY lang            SYSTEM "inc/parameter_html_language.xml">
+	<!ENTITY lang            SYSTEM "inc/parameter_html_language.ixml">
 	<!-- accesskey, tabindex -->
-	<!ENTITY keyboard        SYSTEM "inc/parameter_html_keyboard.xml">
+	<!ENTITY keyboard        SYSTEM "inc/parameter_html_keyboard.ixml">
 	<!-- onload, onunload -->
-	<!ENTITY event_window    SYSTEM "inc/parameter_html_event_window.xml">
+	<!ENTITY event_window    SYSTEM "inc/parameter_html_event_window.ixml">
 	<!-- onchange, onsubmit, onreset, onselect -->
-	<!ENTITY event_form      SYSTEM "inc/parameter_html_event_form.xml">
+	<!ENTITY event_form      SYSTEM "inc/parameter_html_event_form.ixml">
 	<!-- onfocus, onblur -->
-	<!ENTITY event_focus     SYSTEM "inc/parameter_html_event_focus.xml">
+	<!ENTITY event_focus     SYSTEM "inc/parameter_html_event_focus.ixml">
 	<!-- onkeydown, onkeyup, onkeypress -->
-	<!ENTITY event_keyboard  SYSTEM "inc/parameter_html_event_keyboard.xml">
+	<!ENTITY event_keyboard  SYSTEM "inc/parameter_html_event_keyboard.ixml">
 	<!-- onclick, onmousedown, etc -->
-	<!ENTITY event_mouse     SYSTEM "inc/parameter_html_event_mouse.xml">
+	<!ENTITY event_mouse     SYSTEM "inc/parameter_html_event_mouse.ixml">
 	<!-- align -->
-	<!ENTITY align           SYSTEM "inc/parameter_html_align.xml">
+	<!ENTITY align           SYSTEM "inc/parameter_html_align.ixml">
 	<!-- valign -->
-	<!ENTITY valign          SYSTEM "inc/parameter_html_valign.xml">
+	<!ENTITY valign          SYSTEM "inc/parameter_html_valign.ixml">
 	<!-- height, width -->
-	<!ENTITY size            SYSTEM "inc/parameter_html_size.xml">
+	<!ENTITY size            SYSTEM "inc/parameter_html_size.ixml">
 
 	<!-- you can use these to mark colors if you wish -->
 	<!ENTITY color_w3c   '4' >

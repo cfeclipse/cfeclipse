@@ -1,16 +1,5 @@
 <?xml version="1.0" ?>
 <!--
-	Creator is who made / supports the tag. Values are:
-    	MX          = 0x1;
-    	BlueDragon  = 0x2;
-    	W3C         = 0x4;
-    	UserDefined = 0x8;
-
-    	If support exists between two you can add them together.
-    	for example 3 means MX and BlueDragon.
-    Single is if the tag lacks a closing tag
-    XMLStyle is if a single tag does it close thusly /&gt;
-
     Note: you can not put cfx or cf_ tags in here ... well you can
     but this is the dictionary for the cfxxxxx tags only (system tags)
 
@@ -18,20 +7,21 @@
 
 	::NOTES::
     Missing: cfslider, cfregistry, cfinput
+    
+    <!DOCTYPE dictionary [
+  		<!ENTITY value_boolean SYSTEM "inc/value_boolean.xml">
+	]>
  -->
-<!DOCTYPE dictionary [
-  <!ENTITY value_boolean SYSTEM "inc/value_boolean.xml">
-]>
 <dictionary xmlns="http://www.cfeclipse.org/version1/dictionary"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://www.cfeclipse.org/version1/dictionary/dictionary.xsd"
+  xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://cfeclipse.tigris.org/version1/dictionary/dictionary.xsd"
 >
 	<tags>
 		<!--
 			cfabort
 				showError = "error_message"
 		-->
-		<tag name="cfabort" creator="3" single="true" xmlstyle="false">
+		<tag name="cfabort" single="true" xmlstyle="false">
 			<help><![CDATA[
 				Stops the processing of a CFML page at the tag location.
 				CFML returns everything that was processed before the
@@ -155,7 +145,7 @@
 				setDomainCookies = "Yes" or "No"
 				scriptProtect = "all", "none" or a list of scopes
 		-->
-		<tag name="cfapplication" creator="3" single="true" xmlstyle="false">
+		<tag name="cfapplication"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines the scope of a CFML application; enables and
 				disables storage of Client variables; specifies the Client
@@ -181,7 +171,8 @@
 					enables client variables
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="clientstorage" type="String" required="false">
@@ -208,7 +199,8 @@
 					Client variables
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="sessionmanagement" type="boolean" required="false">
@@ -216,7 +208,8 @@
 					enables session variables
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="sessiontimeout" type="Timespan" required="false">
@@ -241,10 +234,11 @@
 					Required, for applications running on clusters.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
-			<parameter name="scriptprotect" type="string" required="false">
+			<parameter name="scriptprotect" type="String" required="false">
 				<help><![CDATA[
 					Specifies whether to protect variables from cross-site scripting attacks.
 					 - none: do not protect variables
@@ -273,7 +267,7 @@
 				displayname="descriptive name"
 				hint="extended description"
 		-->
-		<tag name="cfargument" creator="3" single="true" xmlstyle="false" allowanyattribute="true">
+		<tag name="cfargument"  single="true" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Creates a parameter definition within a component definition.
 				Defines a function argument. Used within a cffunction tag.
@@ -309,7 +303,8 @@
 					method.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="default" type="String" required="false">
@@ -345,7 +340,7 @@
 				baseTag = "base_tag_name"
 				dataCollection = "collection_name"
 		-->
-		<tag name="cfassociate" creator="3" single="true" xmlstyle="false">
+		<tag name="cfassociate"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Allows subtag data to be saved with a base tag. Applies only
 				to custom tags.
@@ -367,7 +362,7 @@
 		<!--
 			cfbreak
 		-->
-		<tag name="cfbreak" creator="3" single="true" xmlstyle="false">
+		<tag name="cfbreak"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used within a cfloop tag. Breaks out of a loop.
 			]]></help>
@@ -384,7 +379,7 @@
 				port = "port_number"
 				protocol = "protocol"
 		-->
-		<tag name="cfcache" creator="3" single="true" xmlstyle="false">
+		<tag name="cfcache"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Stores a copy of a page on the server and/or client computer,
 				to improve page rendering performance. To do this, the tag
@@ -529,7 +524,8 @@
 					Default is: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="mask" type="String" required="false">
@@ -617,7 +613,7 @@
 				value = "value or delimited set of values"
 				delimiters = "delimiter characters"
 		-->
-		<tag name="cfcase" creator="3" single="false" xmlstyle="false">
+		<tag name="cfcase"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used only inside the cfswitch tag body. Contains code to
 				execute when the expression specified in the cfswitch tag has
@@ -656,7 +652,7 @@
 			/cfcatch
 
 		-->
-		<tag name="cfcatch" creator="3" single="false" xmlstyle="false">
+		<tag name="cfcatch"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used inside a cftry tag. Together, they catch and process
 				exceptions in CFML pages. Exceptions are events that
@@ -767,7 +763,8 @@
 					yes: display X-axis gridlines
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="showygridlines" type="boolean" required="false">
@@ -775,7 +772,8 @@
 					yes: display Y-axis gridlines
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="gridlines" type="Numeric" required="false">
@@ -862,7 +860,8 @@
 				<help><![CDATA[
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="font" type="String" required="false">
@@ -882,7 +881,8 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="fontbold" type="boolean" required="false">
@@ -890,7 +890,8 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="labelformat" type="String" required="false">
@@ -938,7 +939,8 @@
 					yes: display column labels in alphabetic order along X-axis
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="show3d" type="boolean" required="false">
@@ -946,7 +948,8 @@
 					yes: display chart with three-dimensional appearance
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="xoffset" type="Numeric" required="false">
@@ -971,7 +974,8 @@
 					Note: removed in CF7.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="showlegend" type="boolean" required="false">
@@ -980,7 +984,8 @@
 					legend
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="tipstyle" type="String" required="false">
@@ -1021,7 +1026,8 @@
 					yes: display markers at data points
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="markersize" type="Numeric" required="false">
@@ -1247,7 +1253,7 @@
 				align = "Left" or "Right" or "Center"
 				text = "column_text"
 		-->
-		<tag name="cfcol" creator="3" single="true" xmlstyle="false">
+		<tag name="cfcol"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines table column header, width, alignment, and text. Used
 				within a cftable tag.
@@ -1296,7 +1302,7 @@
 				name = "queryname"
 				categories = "true" or "false"
 		-->
-		<tag name="cfcollection" creator="3" single="true" xmlstyle="false">
+		<tag name="cfcollection"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Creates, registers, and administers Verity search engine
 				collections.
@@ -1381,7 +1387,8 @@
 					 - false: This collection does not support categories. Default.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -1402,7 +1409,7 @@
 			    [variable declarations cffunction ...]
 			/cfcomponent
 		-->
-		<tag name="cfcomponent" creator="3" single="false" xmlstyle="false" allowanyattribute="true">
+		<tag name="cfcomponent"  single="false" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Creates and defines a component object; encloses functionality
 				that you build in CFML and enclose within cffunction tags.
@@ -1425,7 +1432,8 @@
 					of cffunction tags in the component.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="displayname" type="String" required="false">
@@ -1521,7 +1529,7 @@
 			[starting with a drive letter and a colon, or a forward
 			or backward slash]
 		-->
-		<tag name="cfcontent" creator="3" single="true" xmlstyle="false">
+		<tag name="cfcontent"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Does either or both of the following:
 				* Sets the MIME content encoding header for the current page
@@ -1546,7 +1554,8 @@
 					No: leaves the file on the server.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="file" type="String" required="false">
@@ -1570,7 +1579,8 @@
 					this case all output is sent with the specified type.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -1584,7 +1594,7 @@
 				path = "url"
 				domain = ".domain"
 		-->
-		<tag name="cfcookie" creator="3" single="true" xmlstyle="false">
+		<tag name="cfcookie"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines web browser cookie variables, including expiration and
 				security options.
@@ -1628,7 +1638,8 @@
 					page must be accessed using the https protocol.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="path" type="String" required="false">
@@ -1663,7 +1674,7 @@
 			...
 			/cfdefaultcase
 		-->
-		<tag name="cfdefaultcase" creator="3" single="false" xmlstyle="false">
+		<tag name="cfdefaultcase"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used only inside the cfswitch tag body. Contains code to
 				execute when the expression specified in the cfswitch tag does
@@ -1682,7 +1693,7 @@
 				newDirectory = "new directory name"
 				recurse = "true" or "false"
 		-->
-		<tag name="cfdirectory" creator="3" single="true" xmlstyle="false">
+		<tag name="cfdirectory"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Manages interactions with directories.
 				Different combos cause different attributes to be
@@ -1750,7 +1761,8 @@
 					Default is: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -1809,7 +1821,8 @@
 					Default is: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="name" type="String" required="false">
@@ -1965,7 +1978,8 @@
 					Selective: Embed all fonts except Java fonts and core fonts.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="backgroundvisible" type="boolean" required="false">
@@ -1976,7 +1990,8 @@
 					 - no: do not include the background when printing.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="scale" type="Numeric" required="false">
@@ -2096,7 +2111,7 @@
 				expand = "Yes or No"
 				label = "text"
 		-->
-		<tag name="cfdump" creator="3" single="true" xmlstyle="false">
+		<tag name="cfdump"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Outputs the elements, variables and values of most kinds of
 				CFML objects. Useful for debugging. You can display the
@@ -2115,7 +2130,8 @@
 					Yes: In Internet Explorer and Mozilla, expands views
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="label" type="String" required="false">
@@ -2129,7 +2145,7 @@
 		<!--
 			<cfelse>
 		-->
-		<tag name="cfelse" creator="3" single="true" xmlstyle="false">
+		<tag name="cfelse"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used as the last control block in a cfif tag block to handle
 				any case not identified by the cfif tag or a cfelseif tag.
@@ -2140,7 +2156,7 @@
 			cfelseif
 				expression
 		-->
-		<tag name="cfelseif" creator="3" single="true" xmlstyle="false">
+		<tag name="cfelseif"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used as a control block in a cfif tag block to handle any case
 				not identified by the cfif tag or a cfelseif tag.
@@ -2154,7 +2170,7 @@
 				mailTo = "email_address"
 				exception = "exception_type"
 		-->
-		<tag name="cferror" creator="3" single="true" xmlstyle="false">
+		<tag name="cferror"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Displays a custom HTML page when an error occurs. This lets
 				you maintain a consistent look and feel among an application's
@@ -2235,7 +2251,7 @@
 			   	...
 			/cfexecute
 		-->
-		<tag name="cfexecute" creator="3" single="false" xmlstyle="false">
+		<tag name="cfexecute"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Executes a CFML developer-specified process on a server
 				computer.
@@ -2300,7 +2316,7 @@
 			cfexit
 				method = "method"
 		-->
-		<tag name="cfexit" creator="3" single="true" xmlstyle="false">
+		<tag name="cfexit"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				This tag aborts processing of the currently executing CFML
 				custom tag, exits the page within the currently executing CFML
@@ -2338,7 +2354,7 @@
 			 result = "result name"
     		 addNewLine = "Yes" or "No"
 		-->
-		<tag name="cffile" creator="3" single="true" xmlstyle="false">
+		<tag name="cffile"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Manages interactions with server files.
 				Different combonations cause different attributes to be
@@ -2400,7 +2416,8 @@
 					Yes: appends newline character to text written to file
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 				<triggers>
 					<selectedValue attributeName="action" value="append" required="true"/>
@@ -2546,7 +2563,7 @@
 			cfflush
 				interval = "integer number of bytes"
 		-->
-		<tag name="cfflush" creator="3" single="true" xmlstyle="false">
+		<tag name="cfflush"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Flushes currently available data to the client.
 			]]></help>
@@ -2593,7 +2610,7 @@
 				...
 			</cfform>
 		-->
-		<tag name="cfform" creator="3" single="false" xmlstyle="false">
+		<tag name="cfform"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Builds a form with CFML custom control tags; these provide
 				more functionality than standard HTML form input elements.
@@ -2705,7 +2722,8 @@
 					 - true: corresponding submitted values are used
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 				<triggers>
 					<selectedValue attributeName="format" value="html" required="false"/>
@@ -2805,7 +2823,8 @@
 					client. Default is: false.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="preloader" type="boolean" required="false">
@@ -2814,7 +2833,8 @@
 					loading the Flash form. Default is: true.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="timeout" type="Numeric" required="false">
@@ -3023,7 +3043,8 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="visible" type="boolean" required="false">
@@ -3034,7 +3055,8 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="onchange" type="String" required="false">
@@ -3133,7 +3155,8 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="visible" type="boolean" required="false">
@@ -3144,7 +3167,8 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="tooltip" type="String" required="false">
@@ -3223,7 +3247,7 @@
 				retryCount = "number"
 				stopOnError = "Yes" or "No"
 		-->
-		<tag name="cfftp" creator="3" single="true" xmlstyle="false">
+		<tag name="cfftp"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Lets users implement File Transfer Protocol (FTP) operations.
 			]]></help>
@@ -3310,7 +3334,8 @@
 					No: populates the error	variables
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="passive" type="boolean" required="false">
@@ -3318,7 +3343,8 @@
 					Yes: enable passive mode
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="asciiextensionist" type="String" required="false">
@@ -3345,7 +3371,8 @@
 					Yes: if a local file with same name exists, getFile fails
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="directory" type="String" required="false">
@@ -3412,7 +3439,7 @@
 				hint = "hint text"
 				description = "function description"
 		-->
-		<tag name="cffunction" creator="3" single="false" xmlstyle="false" allowanyattribute="true">
+		<tag name="cffunction"  single="false" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Defines a function that you can call in CFML. Required to
 				defined CFML component methods.
@@ -3484,7 +3511,8 @@
 					HTML output.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="displayname" type="String" required="false">
@@ -3628,7 +3656,8 @@
 						CFML sets to this width, if possible
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="vspace" type="Numeric" required="false">
@@ -3671,7 +3700,8 @@
 					selectmode="edit"
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="delete" type="boolean" required="false">
@@ -3680,7 +3710,8 @@
 					if selectmode="edit"
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="sort" type="boolean" required="false">
@@ -3692,7 +3723,8 @@
 					Yes: sort buttons display on grid control
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="font" type="String" required="false">
@@ -3712,7 +3744,8 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -3720,7 +3753,8 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="textcolor" type="String" required="false">
@@ -3772,7 +3806,8 @@
 					No
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="highlighthref" type="boolean" required="false">
@@ -3782,7 +3817,8 @@
 					No: disables highlight
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="onvalidate" type="String" required="false">
@@ -3817,7 +3853,8 @@
 					Yes: enables row and column rules in grid control
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="rowheight" type="Numeric" required="false">
@@ -3834,7 +3871,8 @@
 					control
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="rowheaderalign" type="String" required="false">
@@ -3866,7 +3904,8 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="rowheaderbold" type="boolean" required="false">
@@ -3874,7 +3913,8 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="rowheadertextcolor" type="String" required="false">
@@ -3903,7 +3943,8 @@
 					control
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="colheaderalign" type="String" required="false">
@@ -3935,7 +3976,8 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="colheaderbold" type="boolean" required="false">
@@ -3943,7 +3985,8 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="colheadertextcolor" type="String" required="false">
@@ -4051,7 +4094,8 @@
 					Yes: images for Insert, Delete, Sort buttons
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="insertbutton" type="String" required="false">
@@ -4095,7 +4139,8 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="visible" type="boolean" required="false">
@@ -4106,7 +4151,8 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="tooltip" type="String" required="false">
@@ -4176,7 +4222,8 @@
 					Column header text. Used only if cfgrid colHeaders = "Yes".
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="width" type="Numeric" required="false">
@@ -4202,7 +4249,8 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -4210,7 +4258,8 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="bgcolor" type="String" required="false">
@@ -4278,7 +4327,8 @@
 					Yes: user can select the column in grid control.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="display" type="boolean" required="false">
@@ -4286,7 +4336,8 @@
 					No: hides column
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="type" type="String" required="false">
@@ -4326,7 +4377,8 @@
 					Yes: displays grid control text in italics
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="headerbold" type="boolean" required="false">
@@ -4334,7 +4386,8 @@
 					Yes: displays grid control text in bold
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="headertextcolor" type="String" required="false">
@@ -4529,7 +4582,8 @@
 						values of changed fields
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" />
+					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -4544,7 +4598,7 @@
 				statusCode = "status_code"
 				statusText = "status_text"
 		-->
-		<tag name="cfheader" creator="3" single="true" xmlstyle="false">
+		<tag name="cfheader"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Generates custom HTTP response headers to return to the client.
 			]]></help>
@@ -4601,7 +4655,7 @@
 			cfhtmlhead
 				text = "text"
 		-->
-		<tag name="cfhtmlhead" creator="3" single="true" xmlstyle="false">
+		<tag name="cfhtmlhead"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Writes text to the head section of a generated HTML page. It is
 				useful for embedding JavaScript code, or putting other HTML
@@ -4646,7 +4700,7 @@
 			   [cfhttpparam tags - optional for some methods]
 		   /cfhttp
 		-->
-		<tag name="cfhttp" creator="3" single="false" xmlstyle="false" hybrid="true">
+		<tag name="cfhttp"  single="false" xmlstyle="false" hybrid="true">
 			<help><![CDATA[
 				Generates an HTTP request and handles the response from the
 				server.
@@ -4793,7 +4847,7 @@
 						page remain functional.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="throwonerror" type="boolean" required="false">
@@ -4807,7 +4861,7 @@
 						an error and its cause.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="redirect" type="boolean" required="false">
@@ -4817,7 +4871,7 @@
 					specified in the field.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="timeout" type="Numeric" required="false">
@@ -4879,7 +4933,7 @@
 				encoded = "Yes or No"
 				mimeType = "MIME type designator"
 		-->
-		<tag name="cfhttpparam" creator="3" single="true" xmlstyle="false">
+		<tag name="cfhttpparam"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Allowed inside cfhttp tag bodies only. Required for cfhttp POST
 				operations. Optional for all others. Specifies parameters to
@@ -4952,7 +5006,7 @@
 					header.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="mimetype" type="String" required="false">
@@ -4976,7 +5030,7 @@
 			   [HTML and CFML tags]
 			/cfif
 		-->
-		<tag name="cfif" creator="3" single="false" xmlstyle="false">
+		<tag name="cfif"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Creates simple and compound conditional statements in CFML.
 				Tests an expression, variable, function return value, or
@@ -4989,7 +5043,7 @@
 				taglib = "taglib-location"
 				prefix = "custom"
 		-->
-		<tag name="cfimport" creator="3" single="true" xmlstyle="false">
+		<tag name="cfimport"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				You can use the cfimport tag to import either of the following:
 
@@ -5037,7 +5091,7 @@
 			cfinclude
 				template = "template_name"
 		-->
-		<tag name="cfinclude" creator="3" single="true" xmlstyle="false">
+		<tag name="cfinclude"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Embeds references to CFML pages in CFML. You can embed
 				cfinclude tags recursively. For another way to encapsulate
@@ -5072,7 +5126,7 @@
 				recurse = "Yes" or "No"
 				language = "language"
 		-->
-		<tag name="cfindex" creator="3" single="true" xmlstyle="false">
+		<tag name="cfindex"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Populates a Verity search engine collection with an index of
 				documents on a file system or of CFML query result sets.
@@ -5219,7 +5273,7 @@
 						specified in key are included in indexing operation
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="language" type="String" required="false">
@@ -5277,7 +5331,7 @@
 				width = "number of pixels"
 				>
 		-->
-		<tag name="cfinput" creator="3" single="true" xmlstyle="false">
+		<tag name="cfinput"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Used within the cfform tag, to place radio buttons, check boxes,
 				or text boxes on a form. Provides input validation for the
@@ -5344,7 +5398,7 @@
 				<help><![CDATA[
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="mask" type="String" required="false">
@@ -5487,7 +5541,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="disabled" type="boolean" required="false">
@@ -5498,7 +5552,7 @@
 					or specify disabled="false".
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="src" type="String" required="false">
@@ -5603,7 +5657,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="visible" type="boolean" required="false">
@@ -5613,7 +5667,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="tooltip" type="String" required="false">
@@ -5670,7 +5724,7 @@
 				password = "password"
 				formFields = "formfield1, formfield2, ..."
 		-->
-		<tag name="cfinsert" creator="3" single="true" xmlstyle="false">
+		<tag name="cfinsert"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Inserts records in data sources from data in a CFML form
 				or form Scope.
@@ -5793,7 +5847,7 @@
 				component = "component name or reference"
 				argumentCollection = "argument collection"
 		-->
-		<tag name="cfinvoke" creator="3" single="false" xmlstyle="false"
+		<tag name="cfinvoke"  single="false" xmlstyle="false"
 			hybrid="true" allowanyattribute="true"
 		>
 			<help><![CDATA[
@@ -5898,7 +5952,7 @@
 				value="argument value"
 				omit = "yes" or "no"
 		-->
-		<tag name="cfinvokeargument" creator="3" single="true" xmlstyle="false">
+		<tag name="cfinvokeargument"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Passes the name and value of a parameter to a component method
 				or a web service. This tag is used within the cfinvoke tag.
@@ -5924,7 +5978,7 @@
 					 - false: do not omit this parameter when invoking a web service.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -5955,7 +6009,7 @@
 			   separator = "separator_character"
 			   delimiter = "delimiter_character"
 		-->
-		<tag name="cfldap" creator="3" single="true" xmlstyle="false">
+		<tag name="cfldap"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Provides an interface to a Lightweight Directory Access Protocol
 				(LDAP) directory server, such as the Netscape Directory Server.
@@ -6142,7 +6196,7 @@
 					* No: referred connections are anonymous
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="referral" type="Numeric" required="false">
@@ -6213,7 +6267,7 @@
 				url = "url"
 				addToken = "Yes" or "No"
 		-->
-		<tag name="cflocation" creator="3" single="true" xmlstyle="false">
+		<tag name="cflocation"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Stops execution of the current page and opens a CFML page or HTML file.
 			]]></help>
@@ -6228,7 +6282,7 @@
 					clientManagement must be enabled (see cfapplication).
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -6243,7 +6297,7 @@
 				[...CFML to be synchronized...]
 			/cflock
 		-->
-		<tag name="cflock" creator="3" single="false" xmlstyle="false">
+		<tag name="cflock"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Ensures the integrity of shared data. Instantiates the
 				following kinds of locks:
@@ -6286,7 +6340,7 @@
 					How timeout conditions are handled.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="type" type="String" required="false">
@@ -6309,7 +6363,7 @@
 				type = "message type"
 				application = "application name yes or no"
 		-->
-		<tag name="cflog" creator="3" single="true" xmlstyle="false">
+		<tag name="cflog"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Writes a message to a log file.
 			]]></help>
@@ -6363,7 +6417,7 @@
 					tag.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -6498,7 +6552,7 @@
 				... HTML or CFML code ...
 			/cfloop
 		-->
-		<tag name="cfloop" creator="3" single="false" xmlstyle="false">
+		<tag name="cfloop"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Different items are required based on loop type. Items listed
 				as required may not be depending on your loop type.
@@ -6618,7 +6672,7 @@
 			[(Optional) Mail message body and/or cfhttpparam tags]
 			/cfmail
 		-->
-		<tag name="cfmail" creator="3" single="false" xmlstyle="false">
+		<tag name="cfmail"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Sends an e-mail message that optionally contains query output,
 				using an SMTP server.
@@ -6759,7 +6813,7 @@
 					group on case-sensitive records, set this attribute to Yes.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="startrow" type="Numeric" required="false">
@@ -6815,7 +6869,7 @@
 					Spool mail messages to disk for delivery setting.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -6831,7 +6885,7 @@
 		   		name = "header-name"
 		   		value = "header-value"
 		-->
-		<tag name="cfmailparam" creator="3" single="true" xmlstyle="false">
+		<tag name="cfmailparam"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Attaches a file or adds a header to an e-mail message. Can only
 				be used in the cfmail tag. You can use more than one
@@ -7026,7 +7080,7 @@
 				attribute_name1 = "valuea"
 				attribute_name2 = "valueb" ...
 		-->
-		<tag name="cfmodule" creator="3" single="false" xmlstyle="false"
+		<tag name="cfmodule"  single="false" xmlstyle="false"
 			hybrid="true" allowanyattribute="true"
 		>
 			<help><![CDATA[
@@ -7119,7 +7173,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="throwonerror" type="boolean" required="false">
@@ -7132,7 +7186,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -7178,7 +7232,7 @@
 				locale = "type-value arguments"
 				webservice= "http://....?wsdl" or "name set in Administrator"
 		-->
-		<tag name="cfobject" creator="3" single="true" xmlstyle="false">
+		<tag name="cfobject"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Creates a CFML object, of a specified type.
 
@@ -7258,7 +7312,7 @@
 			cfobjectcache
 				action = "clear"
 		-->
-		<tag name="cfobjectcache" creator="3" single="false" xmlstyle="false">
+		<tag name="cfobjectcache"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Flushes the query cache.
 			]]></help>
@@ -7282,7 +7336,7 @@
 				maxRows = "max_rows_output"
 			/cfoutput
 		-->
-		<tag name="cfoutput" creator="3" single="false" xmlstyle="false">
+		<tag name="cfoutput"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Displays output that can contain the results of processing
 				CFML variables and functions. Can loop over the results
@@ -7310,7 +7364,7 @@
 					Whether to consider the case in grouping rows.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="startrow" type="Numeric" required="false">
@@ -7336,7 +7390,7 @@
 				min = "value"
 				pattern = "regular expression"
 		-->
-		<tag name="cfparam" creator="3" single="true" xmlstyle="false">
+		<tag name="cfparam"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Tests for a parameter's existence, tests its data type, and, if
 				a default value is not assigned, optionally provides one.
@@ -7431,7 +7485,7 @@
 				startRow = "number"
 				generateUniqueFilenames = "boolean"
 		-->
-		<tag name="cfpop" creator="3" single="true" xmlstyle="false">
+		<tag name="cfpop"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Retrieves or deletes e-mail messages from a POP mail server.
 			]]></help>
@@ -7537,7 +7591,7 @@
 					saved
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -7553,7 +7607,7 @@
 		    [CFML tags]
 		    /cfprocessingdirective
 		-->
-		<tag name="cfprocessingdirective" creator="3" single="false" xmlstyle="true">
+		<tag name="cfprocessingdirective"  single="false" xmlstyle="true">
 			<help><![CDATA[
 				Provides the following insformation to CFML on how to
 				process the current page:
@@ -7571,7 +7625,7 @@
 					affect any white space in HTML code.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="pageencoding" type="String" required="false">
@@ -7611,7 +7665,7 @@
 				scale = "decimal places"
 				null = "Yes" or "No"
 		-->
-		<tag name="cfprocparam" creator="3" single="true" xmlstyle="false">
+		<tag name="cfprocparam"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Defines stored procedure parameters. This tag is nested within
 				a cfstoredproc tag.
@@ -7701,7 +7755,7 @@
 					used with OUT type parameters.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -7712,7 +7766,7 @@
 				resultSet = "1-n"
 				maxRows = "maxrows"
 		-->
-		<tag name="cfprocresult" creator="3" single="true" xmlstyle="false">
+		<tag name="cfprocresult"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Associates a query object with a result set returned by a
 				stored procedure. Other CFML tags, such as cfoutput and
@@ -7749,7 +7803,7 @@
 				displayname="descriptive name"
 				hint="extended description"
 		-->
-		<tag name="cfproperty" creator="3" single="true" xmlstyle="false" allowanyattribute="true">
+		<tag name="cfproperty"  single="true" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
 				Defines properties of a CFML component (CFC). Used to
 				create complex data types for web services. The attributes of
@@ -7785,7 +7839,7 @@
 					Whether the parameter is required
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="default" type="Object" required="false">
@@ -7797,7 +7851,7 @@
 					be set to "no" or not specified.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="displayname" type="String" required="false">
@@ -7839,7 +7893,7 @@
 				[SQL statement(s)]
 			</cfquery>
 		-->
-		<tag name="cfquery" creator="3" single="false" xmlstyle="false">
+		<tag name="cfquery"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Passes queries or SQL statements to a data source.
 				It is recommended that you use the cfqueryparam tag within
@@ -7941,7 +7995,7 @@
 						enabled, suppresses display.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="result" type="String" required="false">
@@ -7964,7 +8018,7 @@
 				list = "Yes" or "No"
 				separator = "separator character"
 		-->
-		<tag name="cfqueryparam" creator="3" single="true" xmlstyle="false">
+		<tag name="cfqueryparam"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Verifies the data type of a query parameter and, for DBMSs that
 				support bind variables, enables CFML to use bind variables
@@ -8037,7 +8091,7 @@
                     No: does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="list" type="boolean" required="false">
@@ -8046,7 +8100,7 @@
 					No: it is not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="separator" type="char" required="false">
@@ -8149,7 +8203,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="encryption" type="String" required="false">
@@ -8293,7 +8347,7 @@
 		<!--
 			cfrethrow
 		-->
-		<tag name="cfrethrow" creator="3" single="true" xmlstyle="false">
+		<tag name="cfrethrow"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Rethrows the currently active exception. Preserves the
 				exception's cfcatch.type and cfcatch.tagContext variable
@@ -8305,7 +8359,7 @@
 			cfreturn
 				expr
 		-->
-		<tag name="cfreturn" creator="3" single="true" xmlstyle="false">
+		<tag name="cfreturn"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Returns result values from a component method. Contains an
 				expression returned as result of the function.
@@ -8320,7 +8374,7 @@
 				[the content]
 			/cfsavecontent
 		-->
-		<tag name="cfsavecontent" creator="3" single="false" xmlstyle="false">
+		<tag name="cfsavecontent"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Saves the generated content of the cfsavecontent tag, including
 				the results of evaluating expressions and executing custom tags,
@@ -8359,7 +8413,7 @@
 				proxyPassword = "password"
 				resolveURL = "Yes" or "No"
 		-->
-		<tag name="cfschedule" creator="3" single="true" xmlstyle="false">
+		<tag name="cfschedule"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Provides a programmatic interface to the CFML scheduling
 				engine. Can run a CFML page at scheduled intervals, with the
@@ -8441,7 +8495,7 @@
 					No: does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="enddate" type="String" required="false">
@@ -8521,7 +8575,7 @@
 					No: does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -8531,7 +8585,7 @@
 				[cfscript code here]
 			/cfscript
 		-->
-		<tag name="cfscript" creator="3" single="false" xmlstyle="false">
+		<tag name="cfscript"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Encloses a code block that contains cfscript statements.
 
@@ -8561,7 +8615,7 @@
 				previousCriteria = "criteria"
 				language = "language">
 		-->
-		<tag name="cfsearch" creator="3" single="true" xmlstyle="false">
+		<tag name="cfsearch"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Searches Verity collections using CFML or K2Server,
 				whichever search engine a collection is registered by.
@@ -8792,7 +8846,7 @@
 			zero or more HTML option tags
 			</cfselect>
 		-->
-		<tag name="cfselect" creator="3" single="false" xmlstyle="false">
+		<tag name="cfselect"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Constructs a drop-down list box form control. Used within a
 				cfform tag.
@@ -8848,7 +8902,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="message" type="String" required="false">
@@ -8870,7 +8924,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="query" type="String" required="false">
@@ -8975,7 +9029,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="visible" type="boolean" required="false">
@@ -8986,7 +9040,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="tooltip" type="String" required="false">
@@ -9032,7 +9086,7 @@
 			cfset
 				var variable_name = expression
 		-->
-		<tag name="cfset" creator="3" single="true" xmlstyle="false">
+		<tag name="cfset"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Sets a value in CFML. Used to create a variable, if it
 				does not exist, and assign it a value. Also used to call
@@ -9046,7 +9100,7 @@
 				showDebugOutput = "Yes" or "No"
 				requestTimeOut = "value in seconds"
 		-->
-		<tag name="cfsetting" creator="3" single="false" hybrid="true" xmlstyle="false">
+		<tag name="cfsetting"  single="false" hybrid="true" xmlstyle="false">
 			<help><![CDATA[
 				Controls aspects of page processing, such as the output of
 				HTML code in pages.
@@ -9057,7 +9111,7 @@
 					No: displays HTML that is outside cfoutput tags.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="showdebugoutput" type="boolean" required="false">
@@ -9068,7 +9122,7 @@
 						display at end of generated page.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="requesttimeout" type="Numeric" required="false">
@@ -9086,7 +9140,7 @@
 			...
 			/cfsilent
 		-->
-		<tag name="cfsilent" creator="3" single="false" xmlstyle="false">
+		<tag name="cfsilent"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Suppresses output produced by CFML within a tag's scope.
 			]]></help>
@@ -9103,7 +9157,7 @@
 				returnCode = "Yes" or "No"
 				result = "result_name"
 		-->
-		<tag name="cfstoredproc" creator="3" single="false" xmlstyle="false">
+		<tag name="cfstoredproc"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Executes a stored procedure in a server database. It
 				specifies database connection information and identifies
@@ -9147,7 +9201,7 @@
 					No: does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="returncode" type="boolean" required="false">
@@ -9157,7 +9211,7 @@
 					No: does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="result" type="String" required="false">
@@ -9178,7 +9232,7 @@
 				zero or one cfdefaultcase tags]
 			/cfswitch
 		-->
-		<tag name="cfswitch" creator="3" single="false" xmlstyle="false">
+		<tag name="cfswitch"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Evaluates a passed expression and passes control to the cfcase
 				tag that matches the expression result. You can, optionally,
@@ -9209,7 +9263,7 @@
 			/cftable
 
 		-->
-		<tag name="cftable" creator="3" single="false" xmlstyle="false">
+		<tag name="cftable"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Builds a table in a CFML page. This tag renders data as
 				preformatted text, or, with the HTMLTable attribute, in an
@@ -9359,7 +9413,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="validate" type="String" required="false">
@@ -9445,7 +9499,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="value" type="String" required="false">
@@ -9519,7 +9573,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="tooltip" type="String" required="false">
@@ -9568,7 +9622,7 @@
 				maxLength = "integer"
 				notSupported = "text"
 		-->
-		<tag name="cftextinput" creator="3" single="true" xmlstyle="false">
+		<tag name="cftextinput"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Puts a single-line text entry box in a cfform tag and controls
 				its display characteristics.
@@ -9593,7 +9647,7 @@
 					No
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="range" type="String" required="false">
@@ -9688,7 +9742,7 @@
 					No: it does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -9697,7 +9751,7 @@
 					No: it does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="height" type="Numeric" required="false">
@@ -9821,7 +9875,7 @@
 				extendedInfo = "additional_information"
 			 	object = "java_except_object"
 		-->
-		<tag name="cfthrow" creator="3" single="true" xmlstyle="false">
+		<tag name="cfthrow"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Throws a developer-specified exception, which can be caught
 				with a cfcatch tag that has any of the following type attribute
@@ -9954,7 +10008,7 @@
 					No
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="category" type="String" required="false">
@@ -9971,7 +10025,7 @@
 					No: does not
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="text" type="String" required="false">
@@ -10016,7 +10070,7 @@
 				isolation = "read_uncommitted" or "read_committed" or "repeatable_read"
 			/cftransaction
 		-->
-		<tag name="cftransaction" creator="3" single="false" xmlstyle="false">
+		<tag name="cftransaction"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Instructs the database management system to treat multiple
 				database operations as a single transaction. Provides database
@@ -10080,7 +10134,7 @@
 				notSupported = "text">
 			</cftree>
 		-->
-		<tag name="cftree" creator="3" single="false" xmlstyle="false">
+		<tag name="cftree"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Inserts a tree control in a form. Validates user selections.
 				Used within a cftree tag block. You can use a CFML query
@@ -10120,7 +10174,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="delimiter" type="String" required="false">
@@ -10152,7 +10206,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="appendkey" type="boolean" required="false">
@@ -10164,7 +10218,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="highlighthref" type="boolean" required="false">
@@ -10175,7 +10229,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="onvalidate" type="String" required="false">
@@ -10233,7 +10287,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="bold" type="boolean" required="false">
@@ -10243,7 +10297,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="height" type="Numeric" required="false">
@@ -10297,7 +10351,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="hscroll" type="boolean" required="false">
@@ -10307,7 +10361,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="vscroll" type="boolean" required="false">
@@ -10317,7 +10371,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="style" type="String" required="false">
@@ -10335,7 +10389,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="visible" type="boolean" required="false">
@@ -10346,7 +10400,7 @@
 					Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="tooltip" type="String" required="false">
@@ -10394,7 +10448,7 @@
 				queryAsRoot = "Yes" or "No"
 				expand = "Yes" or "No"
 		-->
-		<tag name="cftreeitem" creator="3" single="true" xmlstyle="false">
+		<tag name="cftreeitem"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Populates a form tree control, created with the cftree tag,
 				with elements. To display icons, you can use the img values
@@ -10506,7 +10560,7 @@
 					No: keeps tree item collapsed
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -10517,7 +10571,7 @@
 			   One or more cfcatch blocks
 			/cftry
 		-->
-		<tag name="cftry" creator="3" single="false" xmlstyle="false">
+		<tag name="cftry"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Used with one or more cfcatch tags. Together, they catch and
 				process exceptions in CFML pages. Exceptions are events
@@ -10537,7 +10591,7 @@
 				password = "password"
 				formFields = "field_names"
 		-->
-		<tag name="cfupdate" creator="3" single="true" xmlstyle="false">
+		<tag name="cfupdate"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Updates records in a data source from data in a CFML form
 				or form Scope.
@@ -10610,7 +10664,7 @@
 				useTimeZoneInfo = "Yes" or "No"
 				validate = "Yes" or "No"
 		-->
-		<tag name="cfwddx" creator="3" single="true" xmlstyle="false">
+		<tag name="cfwddx"  single="true" xmlstyle="false">
 			<help><![CDATA[
 				Serializes and deserializes CFML data structures to the
 				XML-based WDDX format. The WDDX is an XML vocabulary for
@@ -10668,7 +10722,7 @@
 						- No: the local time is output.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="validate" type="boolean" required="false">
@@ -10681,7 +10735,7 @@
 						- No: no input validation
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -10692,7 +10746,7 @@
 				caseSensitive="yes" or "no"
 			/cfxml
 		-->
-		<tag name="cfxml" creator="3" single="false" xmlstyle="false">
+		<tag name="cfxml"  single="false" xmlstyle="false">
 			<help><![CDATA[
 				Creates a CFML XML document object that contains the
 				markup in the tag body. This tag can include XML and CFML tags.
@@ -10711,7 +10765,7 @@
 					no
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</tag>
@@ -10723,7 +10777,7 @@
 	<functions>
 		<!-- function template -->
 		<!--
-		<function creator="3" name="writeoutput" returns="String">
+		<function  name="writeoutput" returns="String">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="text" type="String" required="true">
@@ -10735,7 +10789,7 @@
 		<!--
 			Numeric Abs(number)
 		-->
-		<function creator="3" name="abs" returns="Numeric">
+		<function  name="abs" returns="Numeric">
 			<help><![CDATA[
 				Absolute-value function. The absolute value of a number is
 				the number without its sign.
@@ -10749,7 +10803,7 @@
 		<!--
 			Numeric ACos(number)
 		-->
-		<function creator="3" name="acos" returns="Numeric">
+		<function  name="acos" returns="Numeric">
 			<help><![CDATA[
 				Returns the angle whose cosine is the value passed as the argument.
 			]]></help>
@@ -10763,7 +10817,7 @@
 		<!--
 			boolean ArrayAppend(array, value)
 		-->
-		<function creator="3" name="arrayappend" returns="boolean">
+		<function  name="arrayappend" returns="boolean">
 			<help><![CDATA[
 				Appends an array element to an array.
 			]]></help>
@@ -10782,7 +10836,7 @@
 		<!--
 			Numeric ArrayAvg(array)
 		-->
-		<function creator="3" name="arrayavg" returns="Numeric">
+		<function  name="arrayavg" returns="Numeric">
 			<help><![CDATA[
 				Calculates the average of the values in an array.
 				All elements in the array must contain values that can be
@@ -10797,7 +10851,7 @@
 		<!--
 			boolean ArrayClear(array)
 		-->
-		<function creator="3" name="arrayclear" returns="boolean">
+		<function  name="arrayclear" returns="boolean">
 			<help><![CDATA[
 				Removes all elements from an array.
 			]]></help>
@@ -10810,7 +10864,7 @@
 		<!--
 			boolean ArrayDeleteAt(array, position)
 		-->
-		<function creator="3" name="arraydeleteat" returns="boolean">
+		<function  name="arraydeleteat" returns="boolean">
 			<help><![CDATA[
 				Deletes an element from an array and resizes the array
 				so that the deleted element doesn't leave a gap.
@@ -10831,7 +10885,7 @@
 		<!--
 			boolean ArrayInsertAt(array, position, value)
 		-->
-		<function creator="3" name="arrayinsertat" returns="boolean">
+		<function  name="arrayinsertat" returns="boolean">
 			<help><![CDATA[
 				Inserts a value at the specified position in the array. If
 				the element is inserted before the end of the array, ColdFusion
@@ -10859,7 +10913,7 @@
 		<!--
 			boolean ArrayIsEmpty(array)
 		-->
-		<function creator="3" name="arrayisempty" returns="boolean">
+		<function  name="arrayisempty" returns="boolean">
 			<help><![CDATA[
 				Determines whether an array is empty. Equivalent to arrayLen().
 				Calling this function on an array with 10 undefined elements
@@ -10875,7 +10929,7 @@
 		<!--
 			Numeric ArrayLen(array)
 		-->
-		<function creator="3" name="arraylen" returns="Numeric">
+		<function  name="arraylen" returns="Numeric">
 			<help><![CDATA[
 				Determines the number of elements in an array.
 				CFML MX: this function can be used on child XML objects.
@@ -10889,7 +10943,7 @@
 		<!--
 			Numeric ArrayMax(array)
 		-->
-		<function creator="3" name="arraymax" returns="Numeric">
+		<function  name="arraymax" returns="Numeric">
 			<help><![CDATA[
 				Returns the largest numeric value in an array. If the array
 				parameter value is an empty array, returns zero.
@@ -10905,7 +10959,7 @@
 		<!--
 			Numeric ArrayMin(array)
 		-->
-		<function creator="3" name="arraymin" returns="Numeric">
+		<function  name="arraymin" returns="Numeric">
 			<help><![CDATA[
 				Returns the smallest numeric value in an array. If the array
 				parameter value is an empty array, returns zero.
@@ -10921,7 +10975,7 @@
 		<!--
 			Array ArrayNew(dimension)
 		-->
-		<function creator="3" name="arraynew" returns="Array">
+		<function  name="arraynew" returns="Array">
 			<help><![CDATA[
 				Creates an array of 1-3 dimensions. Index array elements
 				with square brackets: [ ].
@@ -10939,7 +10993,7 @@
 		<!--
 			boolean ArrayPrepend(array, value)
 		-->
-		<function creator="3" name="arrayprepend" returns="boolean">
+		<function  name="arrayprepend" returns="boolean">
 			<help><![CDATA[
 				Inserts an array element at the beginning of an array
 				and shifts the positions of the existing elements to
@@ -10958,7 +11012,7 @@
 		<!--
 			boolean ArrayResize(array, minimum_size)
 		-->
-		<function creator="3" name="arrayresize" returns="boolean">
+		<function  name="arrayresize" returns="boolean">
 			<help><![CDATA[
 				Resets an array to a specified minimum number of elements.
 				This can improve performance, if used to size an array to its
@@ -10978,7 +11032,7 @@
 		<!--
 			boolean ArraySet(array, start_pos, end_pos, value)
 		-->
-		<function creator="3" name="arrayset" returns="boolean">
+		<function  name="arrayset" returns="boolean">
 			<help><![CDATA[
 				In a one-dimensional array, sets the elements in a specified
 				index range to a value. Useful for initializing an array after
@@ -11005,7 +11059,7 @@
 		<!--
 			boolean ArraySort(array, sort_type [, sort_order ])
 		-->
-		<function creator="3" name="arraysort" returns="boolean">
+		<function  name="arraysort" returns="boolean">
 			<help><![CDATA[
 				Sorts array elements numerically or alphanumerically.
 			]]></help>
@@ -11059,7 +11113,7 @@
 		<!--
 			Numeric ArraySum(array)
 		-->
-		<function creator="3" name="arraysum" returns="Numeric">
+		<function  name="arraysum" returns="Numeric">
 			<help><![CDATA[
 				The sum of values in an array. If the array parameter value is
 				an empty array, returns zero.
@@ -11073,7 +11127,7 @@
 		<!--
 			boolean ArraySwap(array, position1, position2)
 		-->
-		<function creator="3" name="arrayswap" returns="boolean">
+		<function  name="arrayswap" returns="boolean">
 			<help><![CDATA[
 				Swaps array values of an array at specified positions. This
 				function is more efficient than multiple cfset tags
@@ -11095,7 +11149,7 @@
 		<!--
 			String ArrayToList(array [, delimiter ])
 		-->
-		<function creator="3" name="arraytolist" returns="String">
+		<function  name="arraytolist" returns="String">
 			<help><![CDATA[
 				Converts a one-dimensional array to a list.
 			]]></help>
@@ -11119,7 +11173,7 @@
 		<!--
 			Numeric Asc(string)
 		-->
-		<function creator="3" name="asc" returns="Numeric">
+		<function  name="asc" returns="Numeric">
 			<help><![CDATA[
 				Determines the value of a character.
 			]]></help>
@@ -11132,7 +11186,7 @@
 		<!--
 			Numeric ASin(number)
 		-->
-		<function creator="3" name="asin" returns="Numeric">
+		<function  name="asin" returns="Numeric">
 			<help><![CDATA[
 				Determines the arcsine of a number. The arcsine is the angle
 				whose sine is number.
@@ -11146,7 +11200,7 @@
 		<!--
 			Numeric Atn(number)
 		-->
-		<function creator="3" name="atn" returns="Numeric">
+		<function  name="atn" returns="Numeric">
 			<help><![CDATA[
 				Arctangent function. The arctangent is the angle whose tangent
 				is number.
@@ -11220,7 +11274,7 @@
 		<!--
 			Numeric BitAnd(number1, number2)
 		-->
-		<function creator="3" name="bitand" returns="Numeric">
+		<function  name="bitand" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise logical AND operation.
 			]]></help>
@@ -11237,7 +11291,7 @@
 		<!--
 			Numeric BitMaskClear(number, start, length)
 		-->
-		<function creator="3" name="bitmaskclear" returns="Numeric">
+		<function  name="bitmaskclear" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise mask clear operation.
 			]]></help>
@@ -11258,7 +11312,7 @@
 		<!--
 			Numeric BitMaskRead(number, start, length)
 		-->
-		<function creator="3" name="bitmaskread" returns="Numeric">
+		<function  name="bitmaskread" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise mask read operation.
 				Returns an integer, created from length bits of number,
@@ -11281,7 +11335,7 @@
 		<!--
 			Numeric BitMaskSet(number, mask, start, length)
 		-->
-		<function creator="3" name="bitmaskset" returns="Numeric">
+		<function  name="bitmaskset" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise mask set operation.
 			]]></help>
@@ -11306,7 +11360,7 @@
 		<!--
 			Numeric BitNot(number)
 		-->
-		<function creator="3" name="bitnot" returns="Numeric">
+		<function  name="bitnot" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise logical NOT operation.
 			]]></help>
@@ -11319,7 +11373,7 @@
 		<!--
 			Numeric Bitor(number1, number2)
 		-->
-		<function creator="3" name="bitor" returns="Numeric">
+		<function  name="bitor" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise logical OR operation.
 			]]></help>
@@ -11336,7 +11390,7 @@
 		<!--
 			Numeric BitSHLN(number, count)
 		-->
-		<function creator="3" name="bitshln" returns="Numeric">
+		<function  name="bitshln" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise shift-left, no-rotation operation.
 			]]></help>
@@ -11353,7 +11407,7 @@
 		<!--
 			Numeric BitSHRN(number, count)
 		-->
-		<function creator="3" name="bitshrn" returns="Numeric">
+		<function  name="bitshrn" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise shift-right, no-rotation operation.
 			]]></help>
@@ -11370,7 +11424,7 @@
 		<!--
 			Numeric BitXor(number1, number2)
 		-->
-		<function creator="3" name="bitxor" returns="Numeric">
+		<function  name="bitxor" returns="Numeric">
 			<help><![CDATA[
 				Performs a bitwise logical XOR operation.
 			]]></help>
@@ -11387,7 +11441,7 @@
 		<!--
 			Numeric Ceiling(number)
 		-->
-		<function creator="3" name="ceiling" returns="Numeric">
+		<function  name="ceiling" returns="Numeric">
 			<help><![CDATA[
 				Determines the closest integer that is greater than a
 				specified number.
@@ -11465,7 +11519,7 @@
 		<!--
 			Character Chr(number)
 		-->
-		<function creator="3" name="chr" returns="char">
+		<function  name="chr" returns="char">
 			<help><![CDATA[
 				Converts a numeric value to a UCS-2 character.
 			]]></help>
@@ -11478,7 +11532,7 @@
 		<!--
 			String Cjustify(string, length)
 		-->
-		<function creator="3" name="cjustify" returns="String">
+		<function  name="cjustify" returns="String">
 			<help><![CDATA[
 				Centers a string in a field length.
 			]]></help>
@@ -11495,7 +11549,7 @@
 		<!--
 			Numeric Compare(string1, string2)
 		-->
-		<function creator="3" name="compare" returns="Numeric">
+		<function  name="compare" returns="Numeric">
 			<help><![CDATA[
 				Performs a case-sensitive comparison of two strings.
 					-1, if string1 is less than string2
@@ -11515,7 +11569,7 @@
 		<!--
 			Numeric CompareNoCase(string1, string2)
 		-->
-		<function creator="3" name="comparenocase" returns="Numeric">
+		<function  name="comparenocase" returns="Numeric">
 			<help><![CDATA[
 				Performs a case-insensitive comparison of two strings.
 		        An indicator of the difference:
@@ -11536,7 +11590,7 @@
 		<!--
 			Numeric Cos(number)
 		-->
-		<function creator="3" name="cos" returns="Numeric">
+		<function  name="cos" returns="Numeric">
 			<help><![CDATA[
 				Calculates the cosine of an angle that is entered
 				in radians.
@@ -11551,7 +11605,7 @@
 		<!--
 			DateTime CreateDate(year, month, day)
 		-->
-		<function creator="3" name="createdate" returns="DateTime">
+		<function  name="createdate" returns="DateTime">
 			<help><![CDATA[
 				Creates a date/time object
 			]]></help>
@@ -11581,7 +11635,7 @@
 		<!--
 			DateTime CreateDateTime(year, month, day, hour, minute, second)
 		-->
-		<function creator="3" name="createdatetime" returns="DateTime">
+		<function  name="createdatetime" returns="DateTime">
 			<help><![CDATA[
 				Creates a date-time object.
 			]]></help>
@@ -11637,7 +11691,7 @@
 			CreateObject(type, class)
 			CreateObject(type, urltowsdl [, portname])
 		-->
-		<function creator="3" name="createobject" returns="Object">
+		<function  name="createobject" returns="Object">
 		<help><![CDATA[
 				The CreateObject function takes different arguments depending on the value of the first argument:
 
@@ -11723,7 +11777,7 @@
 		<!--
 			ODBCDate CreateODBCDate(date)
 		-->
-		<function creator="3" name="createodbcdate" returns="ODBCDate">
+		<function  name="createodbcdate" returns="ODBCDate">
 			<help><![CDATA[
 				Creates an ODBC date object.
 			]]></help>
@@ -11739,7 +11793,7 @@
 		<!--
 			ODBCDateTime CreateODBCDateTime(date)
 		-->
-		<function creator="3" name="createodbcdatetime" returns="ODBCDateTime">
+		<function  name="createodbcdatetime" returns="ODBCDateTime">
 			<help><![CDATA[
 				Creates an ODBC date-time object.
 			]]></help>
@@ -11755,7 +11809,7 @@
 		<!--
 			ODBCTime CreateODBCTime(date)
 		-->
-		<function creator="3" name="createodbctime" returns="ODBCTime">
+		<function  name="createodbctime" returns="ODBCTime">
 			<help><![CDATA[
 				Creates an ODBC time object.
 			]]></help>
@@ -11771,7 +11825,7 @@
 		<!--
 			DateTime CreateTime(hour, minute, second)
 		-->
-		<function creator="3" name="createtime" returns="DateTime">
+		<function  name="createtime" returns="DateTime">
 			<help><![CDATA[
 				Creates a time variable.
 			]]></help>
@@ -11801,7 +11855,7 @@
 		<!--
 			DateTime CreateTimeSpan(days, hours, minutes, seconds)
 		-->
-		<function creator="3" name="createtimespan" returns="DateTime">
+		<function  name="createtimespan" returns="DateTime">
 			<help><![CDATA[
 				Creates a date/time object that defines a time period. You
 				can add or subtract it from other date/time objects and use
@@ -11828,7 +11882,7 @@
 		<!--
 			UUID CreateUUID()
 		-->
-		<function creator="3" name="createuuid" returns="UUID">
+		<function  name="createuuid" returns="UUID">
 			<help><![CDATA[
 				Creates a Universally Unique Identifier (UUID). A UUID is a
 				35-character string representation of a unique 128-bit integer
@@ -11839,7 +11893,7 @@
 		<!--
 			DateTime DateAdd("datepart", number, "date")
 		-->
-		<function creator="3" name="dateadd" returns="DateTime">
+		<function  name="dateadd" returns="DateTime">
 			<help><![CDATA[
 				Adds units of time to a date.
 				[datepart - quicky]
@@ -11880,7 +11934,7 @@
 		<!--
 			Numeric DateCompare("date1", "date2" [, "datePart"])
 		-->
-		<function creator="3" name="datecompare" returns="Numeric">
+		<function  name="datecompare" returns="Numeric">
 			<help><![CDATA[
 				Performs a full date/time comparison of two dates.
 					-1, if date1 is less than date2
@@ -11927,7 +11981,7 @@
 		<!--
 			DateTime DateConvert("conversion-type", "date")
 		-->
-		<function creator="3" name="dateconvert" returns="DateTime">
+		<function  name="dateconvert" returns="DateTime">
 			<help><![CDATA[
 				Converts local time to Coordinated Universal Time (UTC), or UTC
 				to local time. The function uses the daylight savings settings
@@ -11957,7 +12011,7 @@
 		<!--
 			Numeric DateDiff("datepart", "date1", "date2")
 		-->
-		<function creator="3" name="datediff" returns="Numeric">
+		<function  name="datediff" returns="Numeric">
 			<help><![CDATA[
 				Determines the integer number of units by which date1 is less
 				than date2.
@@ -12002,7 +12056,7 @@
 		<!--
 			String DateFormat("date" [, "mask" ])
 		-->
-		<function creator="3" name="dateformat" returns="String">
+		<function  name="dateformat" returns="String">
 			<help><![CDATA[
 				Formats a date value using U.S. date formats. For
 				international date support, use LSDateFormat.
@@ -12033,7 +12087,7 @@
 		<!--
 			Numeric DatePart("datepart", "date")
 		-->
-		<function creator="3" name="datepart" returns="Numeric">
+		<function  name="datepart" returns="Numeric">
 			<help><![CDATA[
 				Extracts a part from a date value as a numeric.
 				[datepart - quicky]
@@ -12070,7 +12124,7 @@
 		<!--
 			Numeric Day("date")
 		-->
-		<function creator="3" name="day" returns="Numeric">
+		<function  name="day" returns="Numeric">
 			<help><![CDATA[
 				Determines the day of the month, in a date.
 				The ordinal for the day of the month, ranging from 1 to 31.
@@ -12087,7 +12141,7 @@
 		<!--
 			Numeric DayOfWeek("date")
 		-->
-		<function creator="3" name="dayofweek" returns="Numeric">
+		<function  name="dayofweek" returns="Numeric">
 			<help><![CDATA[
 				Determines the day of the week, in a date.
 			]]></help>
@@ -12103,7 +12157,7 @@
 		<!--
 			String DayOfWeekAsString(day_of_week)
 		-->
-		<function creator="3" name="dayofweekasstring" returns="String">
+		<function  name="dayofweekasstring" returns="String">
 			<help><![CDATA[
 				Determines the day of the week as a string from 1-7
 			]]></help>
@@ -12116,7 +12170,7 @@
 		<!--
 			Numeric DayOfYear("date")
 		-->
-		<function creator="3" name="dayofyear" returns="Numeric">
+		<function  name="dayofyear" returns="Numeric">
 			<help><![CDATA[
 				Determines the day of the year, in a date.
 			]]></help>
@@ -12132,7 +12186,7 @@
 		<!--
 			Numeric DaysInMonth("date")
 		-->
-		<function creator="3" name="daysinmonth" returns="Numeric">
+		<function  name="daysinmonth" returns="Numeric">
 			<help><![CDATA[
 				Determines the number of days in a month.
 			]]></help>
@@ -12148,7 +12202,7 @@
 		<!--
 			Numeric DaysInYear("date")
 		-->
-		<function creator="3" name="daysinyear" returns="Numeric">
+		<function  name="daysinyear" returns="Numeric">
 			<help><![CDATA[
 				Determines the number of days in a year.
 			]]></help>
@@ -12164,7 +12218,7 @@
 		<!--
 			Object DE(string)
 		-->
-		<function creator="3" name="de" returns="Object">
+		<function  name="de" returns="Object">
 			<help><![CDATA[
 				Postpones evaluation of a string as an expression, when it is
 				passed as a parameter to the IIf or Evaluate functions. Escapes
@@ -12180,7 +12234,7 @@
 		<!--
 			String DecimalFormat(number)
 		-->
-		<function creator="3" name="decimalformat" returns="String">
+		<function  name="decimalformat" returns="String">
 			<help><![CDATA[
 				Converts a number to a decimal-formatted string.
 			]]></help>
@@ -12193,7 +12247,7 @@
 		<!--
 			Numeric DecrementValue(number)
 		-->
-		<function creator="3" name="decrementvalue" returns="Numeric">
+		<function  name="decrementvalue" returns="Numeric">
 			<help><![CDATA[
 				Decrements the integer part of a number.
 			]]></help>
@@ -12206,7 +12260,7 @@
 		<!--
 			String Decrypt(encrypted_string, seed)
 		-->
-		<function creator="3" name="decrypt" returns="String">
+		<function  name="decrypt" returns="String">
 			<help><![CDATA[
 				Decrypts a string that is encrypted with the Encrypt function.
 			]]></help>
@@ -12223,7 +12277,7 @@
 		<!--
 			boolean DeleteClientVariable("name")
 		-->
-		<function creator="3" name="deleteclientvariable" returns="boolean">
+		<function  name="deleteclientvariable" returns="boolean">
 			<help><![CDATA[
 				Deletes a client variable. (To test for the existence of a
 				variable, use IsDefined.)
@@ -12237,7 +12291,7 @@
 		<!--
 			boolean DirectoryExists(absolute_path)
 		-->
-		<function creator="3" name="directoryexists" returns="boolean">
+		<function  name="directoryexists" returns="boolean">
 			<help><![CDATA[
 				Determines whether a directory exists.
 			]]></help>
@@ -12250,7 +12304,7 @@
 		<!--
 			String DollarFormat(number)
 		-->
-		<function creator="3" name="dollarformat" returns="String">
+		<function  name="dollarformat" returns="String">
 			<help><![CDATA[
 				Formats a string in U.S. format. (For other currencies, use
 				LSCurrencyFormat or LSEuroCurrencyFormat.)
@@ -12264,7 +12318,7 @@
 		<!--
 			Object Duplicate(variable_name)
 		-->
-		<function creator="3" name="duplicate" returns="Object">
+		<function  name="duplicate" returns="Object">
 			<help><![CDATA[
 				Returns a clone, also known as a deep copy, of a variable.
 				There is no reference to the original variable
@@ -12279,7 +12333,7 @@
 		<!--
 			String Encrypt(string, key[, algorithm[, encoding]]))
 		-->
-		<function creator="3" name="encrypt" returns="String">
+		<function  name="encrypt" returns="String">
 			<help><![CDATA[
 				Encrypts a string. Uses a symmetric key-based algorithm, in
 				which the same key is used to encrypt and decrypt a string.
@@ -12321,7 +12375,7 @@
 		<!--
 			Object Evaluate(string_expression1 [, string_expression2 [, ... ] ] )
 		-->
-		<function creator="3" name="evaluate" returns="Object">
+		<function  name="evaluate" returns="Object">
 			<help><![CDATA[
 				Evaluates one or more string expressions, dynamically, from
 				left to right. (The results of an evaluation on the left can
@@ -12345,7 +12399,7 @@
 		<!--
 			Numeric Exp(number)
 		-->
-		<function creator="3" name="exp" returns="Numeric">
+		<function  name="exp" returns="Numeric">
 			<help><![CDATA[
 				Calculates the exponent whose base is e that represents number.
 				The constant e equals 2.71828182845904, the base of the natural
@@ -12361,7 +12415,7 @@
 		<!--
 			String ExpandPath(relative_path)
 		-->
-		<function creator="3" name="expandpath" returns="String">
+		<function  name="expandpath" returns="String">
 			<help><![CDATA[
 				Creates an absolute, platform-appropriate path that is
 				equivalent to the value of relative_path, appended to the base
@@ -12377,7 +12431,7 @@
 		<!--
 			boolean FileExists(absolute_path)
 		-->
-		<function creator="3" name="fileexists" returns="boolean">
+		<function  name="fileexists" returns="boolean">
 			<help><![CDATA[
 				Determines whether a file exists
 			]]></help>
@@ -12390,7 +12444,7 @@
 		<!--
 			Numeric Find(substring, string [, start ])
 		-->
-		<function creator="3" name="find" returns="Numeric">
+		<function  name="find" returns="Numeric">
 			<help><![CDATA[
 				Finds the first occurrence of a substring in a string, from a
 				specified start position. The search is case-sensitive.
@@ -12415,7 +12469,7 @@
 		<!--
 			Numeric FindNoCase(substring, string [, start ])
 		-->
-		<function creator="3" name="findnocase" returns="Numeric">
+		<function  name="findnocase" returns="Numeric">
 			<help><![CDATA[
 				Finds the first occurrence of a substring in a string, from a
 				specified start position. If substring is not in string,
@@ -12441,7 +12495,7 @@
 		<!--
 			Numeric FindOneOf(set, string [, start ])
 		-->
-		<function creator="3" name="findoneof" returns="Numeric">
+		<function  name="findoneof" returns="Numeric">
 			<help><![CDATA[
 				Finds the first occurrence of any one of a set of characters
 				in a string, from a specified start position. The search is
@@ -12467,7 +12521,7 @@
 		<!--
 			Numeric FirstDayOfMonth(date)
 		-->
-		<function creator="3" name="firstdayofmonth" returns="Numeric">
+		<function  name="firstdayofmonth" returns="Numeric">
 			<help><![CDATA[
 				Determines the ordinal (day number, in the year) of the first
 				day of the month in which a given date falls.
@@ -12484,7 +12538,7 @@
 		<!--
 			Numeric Fix(number)
 		-->
-		<function creator="3" name="fix" returns="Numeric">
+		<function  name="fix" returns="Numeric">
 			<help><![CDATA[
 				Converts a real number to an integer.
 			]]></help>
@@ -12497,7 +12551,7 @@
 		<!--
 			String FormatBaseN(number, radix)
 		-->
-		<function creator="3" name="formatbasen" returns="String">
+		<function  name="formatbasen" returns="String">
 			<help><![CDATA[
 				String Converts number to a string, in the base specified by
 				radix. For example: #FormatBaseN(1024,16)#
@@ -12535,7 +12589,7 @@
 		<!--
 			String GetAuthUser()
 		-->
-		<function creator="3" name="getauthuser" returns="String">
+		<function  name="getauthuser" returns="String">
 			<help><![CDATA[
 				Gets the name of an authenticated user.
 			]]></help>
@@ -12544,7 +12598,7 @@
 		<!--
 			Object GetBaseTagData(tagname [, instancenumber ] )
 		-->
-		<function creator="3" name="getbasetagdata" returns="Object">
+		<function  name="getbasetagdata" returns="Object">
 			<help><![CDATA[
 				Used within a custom tag. Finds calling (ancestor) tag by
 				name and accesses its data.
@@ -12562,7 +12616,7 @@
 		<!--
 			String GetBaseTagList()
 		-->
-		<function creator="3" name="getbasetaglist" returns="String">
+		<function  name="getbasetaglist" returns="String">
 			<help><![CDATA[
 				Gets ancestor tag names, starting with the parent tag.
 			]]></help>
@@ -12571,7 +12625,7 @@
 		<!--
 			String GetBaseTemplatePath()
 		-->
-		<function creator="3" name="getbasetemplatepath" returns="String">
+		<function  name="getbasetemplatepath" returns="String">
 			<help><![CDATA[
 				Gets the absolute path of an application's base page.
 			]]></help>
@@ -12580,7 +12634,7 @@
 		<!--
 			String GetClientVariablesList()
 		-->
-		<function creator="3" name="getclientvariableslist" returns="String">
+		<function  name="getclientvariableslist" returns="String">
 			<help><![CDATA[
 				Finds the client variables to which a page has write access.
 				Comma-delimited list of non-read-only client variables
@@ -12599,7 +12653,7 @@
 		<!--
 			String GetCurrentTemplatePath()
 		-->
-		<function creator="3" name="getcurrenttemplatepath" returns="String">
+		<function  name="getcurrenttemplatepath" returns="String">
 			<help><![CDATA[
 				Gets the absolute path of the page that calls this function.
 			]]></help>
@@ -12608,7 +12662,7 @@
 		<!--
 			String GetDirectoryFromPath(path)
 		-->
-		<function creator="3" name="getdirectoryfrompath" returns="String">
+		<function  name="getdirectoryfrompath" returns="String">
 			<help><![CDATA[
 				Extracts a directory from an absolute path.
 				Returns the absolute path, without the filename.
@@ -12622,7 +12676,7 @@
 		<!--
 			String GetEncoding(scope_name)
 		-->
-		<function creator="3" name="getencoding" returns="String">
+		<function  name="getencoding" returns="String">
 			<help><![CDATA[
 				Returns the encoding (character set) of the Form or URL scope.
 			]]></help>
@@ -12639,7 +12693,7 @@
 		<!--
 			Object getException(object)
 		-->
-		<function creator="3" name="getexception" returns="Object">
+		<function  name="getexception" returns="Object">
 			<help><![CDATA[
 				Used with the cftry and cfcatch tags. Retrieves a Java
 				exception object from a Java object.
@@ -12653,7 +12707,7 @@
 		<!--
 			String GetFileFromPath(path)
 		-->
-		<function creator="3" name="getfilefrompath" returns="String">
+		<function  name="getfilefrompath" returns="String">
 			<help><![CDATA[
 				Extracts a filename from an absolute path.
 			]]></help>
@@ -12666,7 +12720,7 @@
 		<!--
 			Struct GetFunctionList()
 		-->
-		<function creator="3" name="getfunctionlist" returns="Struct">
+		<function  name="getfunctionlist" returns="Struct">
 			<help><![CDATA[
 				Displays a list of the functions that are available in
 				CFML.
@@ -12691,7 +12745,7 @@
 		<!--
 			Struct GetHttpRequestData()
 		-->
-		<function creator="3" name="gethttprequestdata" returns="Struct">
+		<function  name="gethttprequestdata" returns="Struct">
 			<help><![CDATA[
 				Makes HTTP request headers and body available to CFML pages.
 				Useful for capturing SOAP request data, which can be delivered
@@ -12702,7 +12756,7 @@
 		<!--
 			String GetHttpTimeString(date_time_object)
 		-->
-		<function creator="3" name="gethttptimestring" returns="String">
+		<function  name="gethttptimestring" returns="String">
 			<help><![CDATA[
 				Gets the current time, in the Universal Time code (UTC).
 			]]></help>
@@ -12718,7 +12772,7 @@
 		<!--
 			Numeric GetK2ServerDocCount()
 		-->
-		<function creator="3" name="getk2serverdoccount" returns="Numeric">
+		<function  name="getk2serverdoccount" returns="Numeric">
 			<help><![CDATA[
 				** CFML MX 6.1: This function is deprecated. **
 				Determines the number of documents that can be searched by the
@@ -12733,7 +12787,7 @@
 		<!--
 			Numeric GetK2ServerDocCountLimit()
 		-->
-		<function creator="3" name="getk2serverdoccountlimit" returns="Numeric">
+		<function  name="getk2serverdoccountlimit" returns="Numeric">
 			<help><![CDATA[
 				** CFML MX 6.1: This function is deprecated. **
 				Gets the maximum number of documents that the CFML
@@ -12747,7 +12801,7 @@
 		<!--
 			String GetLocale()
 		-->
-		<function creator="3" name="getlocale" returns="String">
+		<function  name="getlocale" returns="String">
 			<help><![CDATA[
 				Gets the current geographic/language locale value.
 				To set the default display format of date, time, number, and
@@ -12770,7 +12824,7 @@
 		<!--
 			Object GetMetaData(object)
 		-->
-		<function creator="3" name="getmetadata" returns="Object">
+		<function  name="getmetadata" returns="Object">
 			<help><![CDATA[
 				Gets metadata (the methods, properties, and parameters of a
 				component) associated with an object that is deployed on the
@@ -12785,7 +12839,7 @@
 		<!--
 			Object GetMetricData(mode)
 		-->
-		<function creator="3" name="getmetricdata" returns="Object">
+		<function  name="getmetricdata" returns="Object">
 			<help><![CDATA[
 				Gets server performance metrics
 				[mode - quicky]
@@ -12815,7 +12869,7 @@
 		<!--
 			Object GetPageContext()
 		-->
-		<function creator="3" name="getpagecontext" returns="Object">
+		<function  name="getpagecontext" returns="Object">
 			<help><![CDATA[
 				Gets the current CFML MX PageContext object that
 				provides access to page attributes and configuration, request
@@ -12826,7 +12880,7 @@
 		<!--
 			Struct GetProfileSections(iniFile)
 		-->
-		<function creator="3" name="getprofilesections" returns="Struct">
+		<function  name="getprofilesections" returns="Struct">
 			<help><![CDATA[
 				Gets all the sections of an initialization file.
 				An initialization file, as a struct whose format is as follows:
@@ -12844,7 +12898,7 @@
 		<!--
 			String GetProfileString(iniPath, section, entry)
 		-->
-		<function creator="3" name="getprofilestring" returns="String">
+		<function  name="getprofilestring" returns="String">
 			<help><![CDATA[
 				Gets an initialization file entry.
 				An initialization file assigns values to configuration
@@ -12869,7 +12923,7 @@
 		<!--
 			String GetTempDirectory()
 		-->
-		<function creator="3" name="gettempdirectory" returns="String">
+		<function  name="gettempdirectory" returns="String">
 			<help><![CDATA[
 				Gets the path of the directory that CFML uses for
 				temporary files. Before using this function in an application,
@@ -12914,7 +12968,7 @@
 				if false (default), the header is returned as a Java object.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</function>
@@ -12966,7 +13020,7 @@
 				if false (default), the header is returned as a Java object.
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</function>
@@ -12974,7 +13028,7 @@
 		<!--
 			String GetTempFile(dir, prefix)
 		-->
-		<function creator="3" name="gettempfile" returns="String">
+		<function  name="gettempfile" returns="String">
 			<help><![CDATA[
 				Creates a temporary file in a directory whose name starts with
 				(at most) the first three characters of prefix.
@@ -12992,7 +13046,7 @@
 		<!--
 			GetTemplatePath
 		-->
-		<function creator="3" name="gettemplatepath" returns="String">
+		<function  name="gettemplatepath" returns="String">
 			<help><![CDATA[
 				** CFML MX: This function is deprecated. **
 				Use the GetBaseTemplatePath function instead.
@@ -13002,7 +13056,7 @@
 		<!--
 			Numeric GetTickCount()
 		-->
-		<function creator="3" name="gettickcount" returns="Numeric">
+		<function  name="gettickcount" returns="Numeric">
 			<help><![CDATA[
 				Returns the current value of an internal millisecond timer.
 			]]></help>
@@ -13011,7 +13065,7 @@
 		<!--
 			Object GetTimeZoneInfo()
 		-->
-		<function creator="3" name="gettimezoneinfo" returns="Object">
+		<function  name="gettimezoneinfo" returns="Object">
 			<help><![CDATA[
 				Gets local time zone information for the computer on which it
 				is called, relative to Universal Time Coordinated (UTC). UTC is
@@ -13026,7 +13080,7 @@
 		<!--
 			String GetToken(string, index [, delimiters ])
 		-->
-		<function creator="3" name="gettoken" returns="String">
+		<function  name="gettoken" returns="String">
 			<help><![CDATA[
 				Determines whether a token of the list in the delimiters
 				parameter is present in a string.
@@ -13058,7 +13112,7 @@
 		<!--
 			String Hash(string[, algorithm[, encoding]] )
 		-->
-		<function creator="3" name="hash" returns="String">
+		<function  name="hash" returns="String">
 			<help><![CDATA[
 				Converts a variable-length string to a 32-byte, hexadecimal
 				string, using the MD5 algorithm. (It is not possible to convert
@@ -13107,7 +13161,7 @@
 		<!--
 			Numeric Hour(date)
 		-->
-		<function creator="3" name="hour" returns="Numeric">
+		<function  name="hour" returns="Numeric">
 			<help><![CDATA[
 				Gets the current hour of the day.
 				Ordinal value of the hour, in the range 0 - 23.
@@ -13124,7 +13178,7 @@
 		<!--
 			String HTMLCodeFormat(string [, version ])
 		-->
-		<function creator="3" name="htmlcodeformat" returns="String">
+		<function  name="htmlcodeformat" returns="String">
 			<help><![CDATA[
 				Replaces special characters in a string with their HTML-escaped
 				equivalents and inserts <pre> and </pre> tags at the beginning
@@ -13153,7 +13207,7 @@
 		<!--
 			String HTMLEditFormat(string [, version ])
 		-->
-		<function creator="3" name="htmleditformat" returns="String">
+		<function  name="htmleditformat" returns="String">
 			<help><![CDATA[
 				Replaces special characters in a string with their
 				HTML-escaped equivalents.
@@ -13181,7 +13235,7 @@
 		<!--
 			String IIf(condition, string_expression1, string_expression2)
 		-->
-		<function creator="3" name="iif" returns="String">
+		<function  name="iif" returns="String">
 			<help><![CDATA[
 				Evaluates a Boolean conditional dynamic expression. Depending
 				on whether the expression is true or false, dynamically
@@ -13204,7 +13258,7 @@
 		<!--
 			Numeric IncrementValue(number)
 		-->
-		<function creator="3" name="incrementvalue" returns="Numeric">
+		<function  name="incrementvalue" returns="Numeric">
 			<help><![CDATA[
 				Adds one to an integer. same as x=x+1
 				Why bother?
@@ -13218,7 +13272,7 @@
 		<!--
 			Numeric InputBaseN(string, radix)
 		-->
-		<function creator="3" name="inputbasen" returns="Numeric">
+		<function  name="inputbasen" returns="Numeric">
 			<help><![CDATA[
 				Converts string, using the base specified by radix, to an
 				integer. For example: #InputBaseN("3ff",16)#
@@ -13236,7 +13290,7 @@
 		<!--
 			String Insert(substring, string, position)
 		-->
-		<function creator="3" name="insert" returns="String">
+		<function  name="insert" returns="String">
 			<help><![CDATA[
 				Inserts a substring in a string after a specified character
 				position. If position = 0, prefixes the substring to the
@@ -13259,7 +13313,7 @@
 		<!--
 			Numeric Int(number)
 		-->
-		<function creator="3" name="int" returns="Numeric">
+		<function  name="int" returns="Numeric">
 			<help><![CDATA[
 				Calculates the closest integer that is smaller than number.
 			]]></help>
@@ -13272,7 +13326,7 @@
 		<!--
 			boolean IsArray(value [, number ])
 		-->
-		<function creator="3" name="isarray" returns="boolean">
+		<function  name="isarray" returns="boolean">
 			<help><![CDATA[
 				Determines whether a value is an array.
 				True, if value is an array, a query column object, or xml.
@@ -13292,7 +13346,7 @@
 		<!--
 			boolean IsBinary(value)
 		-->
-		<function creator="3" name="isbinary" returns="boolean">
+		<function  name="isbinary" returns="boolean">
 			<help><![CDATA[
 				Determines whether a value is stored as binary data.
 			]]></help>
@@ -13305,7 +13359,7 @@
 		<!--
 			boolean IsBoolean(value)
 		-->
-		<function creator="3" name="isboolean" returns="boolean">
+		<function  name="isboolean" returns="boolean">
 			<help><![CDATA[
 				Determines whether a value can be converted to Boolean
 			]]></help>
@@ -13318,7 +13372,7 @@
 		<!--
 			boolean IsCustomFunction(name)
 		-->
-		<function creator="3" name="iscustomfunction" returns="boolean">
+		<function  name="iscustomfunction" returns="boolean">
 			<help><![CDATA[
 				Determines whether a name represents a custom function
 			]]></help>
@@ -13331,7 +13385,7 @@
 		<!--
 			boolean IsDate(string)
 		-->
-		<function creator="3" name="isdate" returns="boolean">
+		<function  name="isdate" returns="boolean">
 			<help><![CDATA[
 				Determines whether a string or Java object can be converted
 				to a date/time value.
@@ -13345,7 +13399,7 @@
 		<!--
 			boolean IsDebugMode()
 		-->
-		<function creator="3" name="isdebugmode" returns="boolean">
+		<function  name="isdebugmode" returns="boolean">
 			<help><![CDATA[
 				Determines whether debugging output is enabled.
 			]]></help>
@@ -13354,7 +13408,7 @@
 		<!--
 			boolean IsDefined("variable_name")
 		-->
-		<function creator="3" name="isdefined" returns="boolean">
+		<function  name="isdefined" returns="boolean">
 			<help><![CDATA[
 				Evaluates a string value to determine whether the variable
 				named in it exists.
@@ -13370,7 +13424,7 @@
 		<!--
 			boolean IsK2ServerABroker()
 		-->
-		<function creator="3" name="isk2serverabroker" returns="boolean">
+		<function  name="isk2serverabroker" returns="boolean">
 			<help><![CDATA[
 				** CFML MX 6.1: This function is deprecated. **
 				Determines whether the K2Server version is K2 Broker. For more
@@ -13384,7 +13438,7 @@
 		<!--
 			boolean IsK2ServerDocCountExceeded()
 		-->
-		<function creator="3" name="isk2serverdoccountexceeded" returns="boolean">
+		<function  name="isk2serverdoccountexceeded" returns="boolean">
 			<help><![CDATA[
 				** CFML MX 6.1: This function is deprecated. **
 				Determines whether the number of documents that can be searched
@@ -13397,7 +13451,7 @@
 		<!--
 			boolean IsK2ServerOnline()
 		-->
-		<function creator="3" name="isk2serveronline" returns="boolean">
+		<function  name="isk2serveronline" returns="boolean">
 			<help><![CDATA[
 				** CFML MX 6.1: This function is deprecated. **
 				Determines whether the K2Server is running and available to
@@ -13410,7 +13464,7 @@
 		<!--
 			boolean IsLeapYear(year)
 		-->
-		<function creator="3" name="isleapyear" returns="boolean">
+		<function  name="isleapyear" returns="boolean">
 			<help><![CDATA[
 				Determines whether a year is a leap year.
 			]]></help>
@@ -13423,7 +13477,7 @@
 		<!--
 			boolean IsNumeric(string)
 		-->
-		<function creator="3" name="isnumeric" returns="boolean">
+		<function  name="isnumeric" returns="boolean">
 			<help><![CDATA[
 				Determines whether a string can be converted to a numeric value.
 				Supports numbers in U.S. number format. For other number support
@@ -13438,7 +13492,7 @@
 		<!--
 			boolean IsNumericDate(number)
 		-->
-		<function creator="3" name="isnumericdate" returns="boolean">
+		<function  name="isnumericdate" returns="boolean">
 			<help><![CDATA[
 				Evaluates whether a real number is a valid representation of a
 				date (date/time object).
@@ -13452,7 +13506,7 @@
 		<!--
 			boolean IsObject(value)
 		-->
-		<function creator="3" name="isobject" returns="boolean">
+		<function  name="isobject" returns="boolean">
 			<help><![CDATA[
 				Determines whether a value is an object.
 				True, if the value represents a CFML object. False if
@@ -13468,7 +13522,7 @@
 		<!--
 			boolean IsQuery(value)
 		-->
-		<function creator="3" name="isquery" returns="boolean">
+		<function  name="isquery" returns="boolean">
 			<help><![CDATA[
 				Determines whether value is a query.
 			]]></help>
@@ -13481,7 +13535,7 @@
 		<!--
 			boolean IsSimpleValue(value)
 		-->
-		<function creator="3" name="issimplevalue" returns="boolean">
+		<function  name="issimplevalue" returns="boolean">
 			<help><![CDATA[
 				Determines the type of a value.
 			]]></help>
@@ -13503,7 +13557,7 @@
 		<!--
 			boolean IsStruct(variable)
 		-->
-		<function creator="3" name="isstruct" returns="boolean">
+		<function  name="isstruct" returns="boolean">
 			<help><![CDATA[
 			Determines whether a variable is a structure.
 			True, if variable is a CFML structure or is a Java object
@@ -13519,7 +13573,7 @@
 		<!--
 			boolean IsUserInRole("role_name")
 		-->
-		<function creator="3" name="isuserinrole" returns="String">
+		<function  name="isuserinrole" returns="String">
 			<help><![CDATA[
 				Determines whether an authenticated user belongs to the
 				specified Role.
@@ -13610,7 +13664,7 @@
 		<!--
 			boolean IsWDDX(value)
 		-->
-		<function creator="3" name="iswddx" returns="boolean">
+		<function  name="iswddx" returns="boolean">
 			<help><![CDATA[
 				Determines whether a value is a well-formed WDDX packet.
 			]]></help>
@@ -13652,7 +13706,7 @@
 		<!--
 			boolean IsXmlDoc(value)
 		-->
-		<function creator="3" name="isxmldoc" returns="boolean">
+		<function  name="isxmldoc" returns="boolean">
 			<help><![CDATA[
 				Determines whether a function parameter is an Extended Markup
 				language (XML) document object.
@@ -13666,7 +13720,7 @@
 		<!--
 			boolean IsXmlElem(value)
 		-->
-		<function creator="3" name="isxmlelem" returns="boolean">
+		<function  name="isxmlelem" returns="boolean">
 			<help><![CDATA[
 				Determines whether a function parameter is an Extended Markup
 				language (XML) document object element.
@@ -13695,7 +13749,7 @@
 		<!--
 			boolean IsXmlRoot(value)
 		-->
-		<function creator="3" name="isxmlroot" returns="boolean">
+		<function  name="isxmlroot" returns="boolean">
 			<help><![CDATA[
 				Determines whether a function parameter is the root element of
 				an Extended Markup language (XML) document object.
@@ -13709,7 +13763,7 @@
 		<!--
 			Object JavaCast(type, variable)
 		-->
-		<function creator="3" name="javacast" returns="Object">
+		<function  name="javacast" returns="Object">
 			<help><![CDATA[
 				Converts the data type of a CFML variable to pass as an
 				argument to an overloaded method of a Java object. Use only
@@ -13738,7 +13792,7 @@
 		<!--
 			String JSStringFormat(string)
 		-->
-		<function creator="3" name="jsstringformat" returns="String">
+		<function  name="jsstringformat" returns="String">
 			<help><![CDATA[
 				Escapes special JavaScript characters, such as single quotation
 				mark, double quotation mark, and newline
@@ -13752,7 +13806,7 @@
 		<!--
 			String LCase(string)
 		-->
-		<function creator="3" name="lcase" returns="String">
+		<function  name="lcase" returns="String">
 			<help><![CDATA[
 				Converts the alphabetic characters in a string to lowercase.
 			]]></help>
@@ -13765,7 +13819,7 @@
 		<!--
 			String Left(string, count)
 		-->
-		<function creator="3" name="left" returns="String">
+		<function  name="left" returns="String">
 			<help><![CDATA[
 				Returns the leftmost count characters in a string.
 			]]></help>
@@ -13782,7 +13836,7 @@
 		<!--
 			Numeric Len(string or binary object)
 		-->
-		<function creator="3" name="len" returns="Numeric">
+		<function  name="len" returns="Numeric">
 			<help><![CDATA[
 				Determines the length of a string or binary object
 			]]></help>
@@ -13795,7 +13849,7 @@
 		<!--
 			String ListAppend(list, value [, delimiters ])
 		-->
-		<function creator="3" name="listappend" returns="String">
+		<function  name="listappend" returns="String">
 			<help><![CDATA[
 				Concatenates a list or element to a list.
 			]]></help>
@@ -13824,7 +13878,7 @@
 		<!--
 			String ListChangeDelims(list, new_delimiter [, delimiters ])
 		-->
-		<function creator="3" name="listchangedelims" returns="String">
+		<function  name="listchangedelims" returns="String">
 			<help><![CDATA[
 				Changes a list delimiter.
 				Returns a copy of the list, with each delimiter character
@@ -13850,7 +13904,7 @@
 		<!--
 			Numeric ListContains(list, substring [, delimiters ])
 		-->
-		<function creator="3" name="listcontains" returns="Numeric">
+		<function  name="listcontains" returns="Numeric">
 			<help><![CDATA[
 				Determines the index of the first list element that contains a
 				specified substring.
@@ -13877,7 +13931,7 @@
 		<!--
 			Numeric ListContainsNoCase(list, substring [, delimiters ])
 		-->
-		<function creator="3" name="listcontainsnocase" returns="Numeric">
+		<function  name="listcontainsnocase" returns="Numeric">
 			<help><![CDATA[
 				Determines the index of the first list element that contains a
 				specified substring.
@@ -13902,7 +13956,7 @@
 		<!--
 			String ListDeleteAt(list, position [, delimiters ])
 		-->
-		<function creator="3" name="listdeleteat" returns="String">
+		<function  name="listdeleteat" returns="String">
 			<help><![CDATA[
 				Deletes an element from a list.
 				Returns a copy of the list, without the specified element.
@@ -13927,7 +13981,7 @@
 		<!--
 			Numeric ListFind(list, value [, delimiters ])
 		-->
-		<function creator="3" name="listfind" returns="Numeric">
+		<function  name="listfind" returns="Numeric">
 			<help><![CDATA[
 				Determines the index of the first list element in which a
 				specified value occurs. Case-sensitive
@@ -13952,7 +14006,7 @@
 		<!--
 			Numeric ListFindNoCase(list, value [, delimiters ])
 		-->
-		<function creator="3" name="listfindnocase" returns="Numeric">
+		<function name="listfindnocase" returns="Numeric">
 			<help><![CDATA[
 				Determines the index of the first list element in which a
 				specified value occurs
@@ -13977,7 +14031,7 @@
 		<!--
 			String ListFirst(list [, delimiters ])
 		-->
-		<function creator="3" name="listfirst" returns="String">
+		<function  name="listfirst" returns="String">
 			<help><![CDATA[
 				Gets the first element of a list.
 			]]></help>
@@ -13997,7 +14051,7 @@
 		<!--
 			String ListGetAt(list, position [, delimiters ])
 		-->
-		<function creator="3" name="listgetat" returns="String">
+		<function  name="listgetat" returns="String">
 			<help><![CDATA[
 				Gets a list element at a specified position.
 			]]></help>
@@ -14021,7 +14075,7 @@
 		<!--
 			String ListInsertAt(list, position, value [, delimiters ])
 		-->
-		<function creator="3" name="listinsertat" returns="String">
+		<function  name="listinsertat" returns="String">
 			<help><![CDATA[
 				Inserts an element in a list.
 			]]></help>
@@ -14049,7 +14103,7 @@
 		<!--
 			String ListLast(list [, delimiters ])
 		-->
-		<function creator="3" name="listlast" returns="String">
+		<function  name="listlast" returns="String">
 			<help><![CDATA[
 				Gets the last element of a list.
 			]]></help>
@@ -14069,7 +14123,7 @@
 		<!--
 			Numeric ListLen(list [, delimiters ])
 		-->
-		<function creator="3" name="listlen" returns="Numeric">
+		<function  name="listlen" returns="Numeric">
 			<help><![CDATA[
 				Determines the number of elements in a list.
 			]]></help>
@@ -14089,7 +14143,7 @@
 		<!--
 			String ListPrepend(list, value [, delimiters ])
 		-->
-		<function creator="3" name="listprepend" returns="String">
+		<function  name="listprepend" returns="String">
 			<help><![CDATA[
 				Inserts an element at the beginning of a list.
 			]]></help>
@@ -14113,7 +14167,7 @@
 		<!--
 			String ListQualify(list, qualifier [, delimiters ] [, elements ])
 		-->
-		<function creator="3" name="listqualify" returns="String">
+		<function  name="listqualify" returns="String">
 			<help><![CDATA[
 				Inserts a string at the beginning and end of list elements.
 			]]></help>
@@ -14145,7 +14199,7 @@
 		<!--
 			String ListRest(list [, delimiters ])
 		-->
-		<function creator="3" name="listrest" returns="String">
+		<function  name="listrest" returns="String">
 			<help><![CDATA[
 				Gets a list, without its first element.
 			]]></help>
@@ -14165,7 +14219,7 @@
 		<!--
 			String ListSetAt(list, position, value [, delimiters ])
 		-->
-		<function creator="3" name="listsetat" returns="String">
+		<function  name="listsetat" returns="String">
 			<help><![CDATA[
 				Replaces the contents of a list element.
 			]]></help>
@@ -14193,7 +14247,7 @@
 		<!--
 			String ListSort(list, sort_type [, sort_order] [, delimiters ])
 		-->
-		<function creator="3" name="listsort" returns="String">
+		<function  name="listsort" returns="String">
 			<help><![CDATA[
 				Sorts list elements according to a sort type and sort order.
 				Returns a sorted copy of the list.
@@ -14230,7 +14284,7 @@
 		<!--
 			Array ListToArray(list [, delimiters ])
 		-->
-		<function creator="3" name="listtoarray" returns="Array">
+		<function  name="listtoarray" returns="Array">
 			<help><![CDATA[
 				Copies the elements of a list to an array.
 			]]></help>
@@ -14250,7 +14304,7 @@
 		<!--
 			Numeric ListValueCount(list, value [, delimiters ])
 		-->
-		<function creator="3" name="listvaluecount" returns="Numeric">
+		<function  name="listvaluecount" returns="Numeric">
 			<help><![CDATA[
 				Counts instances of a specified value in a list. The search is
 				case-sensitive.
@@ -14275,7 +14329,7 @@
 		<!--
 			Numeric ListValueCountNoCase(list, value [, delimiters ])
 		-->
-		<function creator="3" name="listvaluecountnocase" returns="Numeric">
+		<function  name="listvaluecountnocase" returns="Numeric">
 			<help><![CDATA[
 				Counts instances of a specified value in a list. The search is
 				case-insensitive.
@@ -14300,7 +14354,7 @@
 		<!--
 			String LJustify(string, length)
 		-->
-		<function creator="3" name="ljustify" returns="String">
+		<function  name="ljustify" returns="String">
 			<help><![CDATA[
 				Left justifies characters in a string of a specified length.
 			]]></help>
@@ -14317,7 +14371,7 @@
 		<!--
 			Numeric Log(number)
 		-->
-		<function creator="3" name="log" returns="Numeric">
+		<function  name="log" returns="Numeric">
 			<help><![CDATA[
 				Calculates the natural logarithm of a number. Natural
 				logarithms are based on the constant e (2.71828182845904).
@@ -14331,7 +14385,7 @@
 		<!--
 			Numeric Log10(number)
 		-->
-		<function creator="3" name="log10" returns="Numeric">
+		<function  name="log10" returns="Numeric">
 			<help><![CDATA[
 				Calculates the logarithm of number, to base 10.
 			]]></help>
@@ -14344,7 +14398,7 @@
 		<!--
 			String LSCurrencyFormat(number [, type ])
 		-->
-		<function creator="3" name="lscurrencyformat" returns="String">
+		<function  name="lscurrencyformat" returns="String">
 			<help><![CDATA[
 				Formats a number in a locale-specific currency format. For
 				countries that use the euro, the result depends on the JVM.
@@ -14373,7 +14427,7 @@
 		<!--
 			String LSDateFormat(date [, mask ])
 		-->
-		<function creator="3" name="lsdateformat" returns="String">
+		<function  name="lsdateformat" returns="String">
 			<help><![CDATA[
 				Formats the date part of a date/time value in a locale-specific
 				format.
@@ -14405,7 +14459,7 @@
 		<!--
 			String LSEuroCurrencyFormat(currency-number [, type ])
 		-->
-		<function creator="3" name="lseurocurrencyformat" returns="String">
+		<function  name="lseurocurrencyformat" returns="String">
 			<help><![CDATA[
 				Formats a number in a locale-specific currency format.
 				[type - quicky]
@@ -14431,7 +14485,7 @@
 		<!--
 			boolean LSIsCurrency(string)
 		-->
-		<function creator="3" name="lsiscurrency" returns="boolean">
+		<function  name="lsiscurrency" returns="boolean">
 			<help><![CDATA[
 				Determines whether a string is a valid representation of a
 				currency amount in the current locale.
@@ -14445,7 +14499,7 @@
 		<!--
 			boolean LSIsDate(string)
 		-->
-		<function creator="3" name="lsisdate" returns="boolean">
+		<function  name="lsisdate" returns="boolean">
 			<help><![CDATA[
 				Determines whether a string is a valid representation of a
 				date/time value in the current locale.
@@ -14459,7 +14513,7 @@
 		<!--
 			boolean LSIsNumeric(string)
 		-->
-		<function creator="3" name="lsisnumeric" returns="boolean">
+		<function  name="lsisnumeric" returns="boolean">
 			<help><![CDATA[
 				Determines whether a string is a valid representation of a
 				number in the current locale.
@@ -14473,7 +14527,7 @@
 		<!--
 			String LSNumberFormat(number [, mask ])
 		-->
-		<function creator="3" name="lsnumberformat" returns="String">
+		<function  name="lsnumberformat" returns="String">
 			<help><![CDATA[
 				Formats a number in a locale-specific format.
 				[mask - quicky]
@@ -14499,7 +14553,7 @@
 		<!--
 			String LSParseCurrency(string)
 		-->
-		<function creator="3" name="lsparsecurrency" returns="String">
+		<function  name="lsparsecurrency" returns="String">
 			<help><![CDATA[
 				Converts a locale-specific currency string into a formatted
 				number. Attempts conversion by comparing the string with each
@@ -14515,7 +14569,7 @@
 		<!--
 			DateTime LSParseDateTime(date/time-string)
 		-->
-		<function creator="3" name="lsparsedatetime" returns="DateTime">
+		<function  name="lsparsedatetime" returns="DateTime">
 			<help><![CDATA[
 				Converts a string that is a valid date/time representation in
 				the current locale into a date/time object.
@@ -14529,7 +14583,7 @@
 		<!--
 			Numeric LSParseEuroCurrency(currency-string)
 		-->
-		<function creator="3" name="lsparseeurocurrency" returns="Numeric">
+		<function  name="lsparseeurocurrency" returns="Numeric">
 			<help><![CDATA[
 				Formats a locale-specific currency string as a number.
 				Attempts conversion through each of the default currency
@@ -14545,7 +14599,7 @@
 		<!--
 			Numeric LSParseNumber(string)
 		-->
-		<function creator="3" name="lsparsenumber" returns="Numeric">
+		<function  name="lsparsenumber" returns="Numeric">
 			<help><![CDATA[
 				Converts a string that is a valid numeric representation in
 				the current locale into a formatted number.
@@ -14559,7 +14613,7 @@
 		<!--
 			String LSTimeFormat(time [, mask ])
 		-->
-		<function creator="3" name="lstimeformat" returns="String">
+		<function  name="lstimeformat" returns="String">
 			<help><![CDATA[
 				Formats the time part of a date/time string into a string in a
 				locale-specific format.
@@ -14589,7 +14643,7 @@
 		<!--
 			String LTrim(string)
 		-->
-		<function creator="3" name="ltrim" returns="String">
+		<function  name="ltrim" returns="String">
 			<help><![CDATA[
 				Removes leading spaces from a string.
 			]]></help>
@@ -14602,7 +14656,7 @@
 		<!--
 			Numeric Max(number1, number2)
 		-->
-		<function creator="3" name="max" returns="Numeric">
+		<function  name="max" returns="Numeric">
 			<help><![CDATA[
 				Determines the greater of two numbers.
 			]]></help>
@@ -14619,7 +14673,7 @@
 		<!--
 			String Mid(string, start, count)
 		-->
-		<function creator="3" name="mid" returns="String">
+		<function  name="mid" returns="String">
 			<help><![CDATA[
 				Extracts a substring from a string.
 			]]></help>
@@ -14643,7 +14697,7 @@
 		<!--
 			Numeric Min(number1, number2)
 		-->
-		<function creator="3" name="min" returns="Numeric">
+		<function  name="min" returns="Numeric">
 			<help><![CDATA[
 				Determines the lesser of two numbers.
 			]]></help>
@@ -14660,7 +14714,7 @@
 		<!--
 			Numeric Minute(date)
 		-->
-		<function creator="3" name="minute" returns="Numeric">
+		<function  name="minute" returns="Numeric">
 			<help><![CDATA[
 				Extracts the minute value from a date/time object.
 			]]></help>
@@ -14676,7 +14730,7 @@
 		<!--
 			Numeric Month(date)
 		-->
-		<function creator="3" name="writeoutput" returns="Numeric">
+		<function  name="writeoutput" returns="Numeric">
 			<help><![CDATA[
 				Extracts the month value from a date/time object
 			]]></help>
@@ -14689,7 +14743,7 @@
 		<!--
 			String MonthAsString(month_number)
 		-->
-		<function creator="3" name="monthasstring" returns="String">
+		<function  name="monthasstring" returns="String">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="month_number" type="Numeric" required="true">
@@ -14701,7 +14755,7 @@
 		<!--
 			DateTime Now()
 		-->
-		<function creator="3" name="now" returns="DateTime">
+		<function  name="now" returns="DateTime">
 			<help><![CDATA[
 				Gets the current date and time of the computer running the
 				CFML server.
@@ -14711,7 +14765,7 @@
 		<!--
 			String NumberFormat(number [, mask ])
 		-->
-		<function creator="3" name="numberformat" returns="String">
+		<function  name="numberformat" returns="String">
 			<help><![CDATA[
 				Creates a custom-formatted number value. For international
 				number formatting use LSNumberFormat.
@@ -14737,7 +14791,7 @@
 <!--
 			Numeric Month(date)
 		-->
-		<function creator="3" name="month" returns="Numeric">
+		<function  name="month" returns="Numeric">
 			<help><![CDATA[
 				Extracts the month value from a date/time object.
 			]]></help>
@@ -14752,7 +14806,7 @@
 		<!--
 			String ParagraphFormat(string)
 		-->
-		<function creator="3" name="paragraphformat" returns="String">
+		<function  name="paragraphformat" returns="String">
 			<help><![CDATA[
 				Replaces characters in a string:
 				 * Single newline characters (CR/LF sequences) with spaces
@@ -14767,7 +14821,7 @@
 		<!--
 			DateTime ParseDateTime(date/time-string [, pop-conversion ] )
 		-->
-		<function creator="3" name="parsedatetime" returns="DateTime">
+		<function  name="parsedatetime" returns="DateTime">
 			<help><![CDATA[
 				Parses a date/time string according to the English (U.S.)
 				locale conventions. (To format a date/time string for other
@@ -14786,7 +14840,7 @@
 		<!--
 			Numeric Pi()
 		-->
-		<function creator="3" name="pi" returns="Numeric">
+		<function  name="pi" returns="Numeric">
 			<help><![CDATA[
 				Gets the mathematical constant p, accurate to 15 digits.
 				The number 3.14159265358979.
@@ -14796,7 +14850,7 @@
 		<!--
 			void PreserveSingleQuotes(variable)
 		-->
-		<function creator="3" name="preservesinglequotes" returns="void">
+		<function  name="preservesinglequotes" returns="void">
 			<help><![CDATA[
 				Prevents CFML from automatically escaping single
 				quotation mark characters that are contained in a variable.
@@ -14817,7 +14871,7 @@
 		<!--
 			Numeric Quarter(date)
 		-->
-		<function creator="3" name="quarter" returns="Numeric">
+		<function  name="quarter" returns="Numeric">
 			<help><![CDATA[
 				Calculates the quarter of the year in which a date falls.
 			]]></help>
@@ -14833,7 +14887,7 @@
 		<!--
 			Numeric QueryAddColumn(query, column-name[, datatype], array-name)
 		-->
-		<function creator="3" name="queryaddcolumn" returns="Numeric">
+		<function  name="queryaddcolumn" returns="Numeric">
 			<help><![CDATA[
 				Adds a column to a query and populates its rows with the
 				contents of a one-dimensional array. Pads query columns,
@@ -14873,7 +14927,7 @@
 		<!--
 			Numeric QueryAddRow(query [, number ])
 		-->
-		<function creator="3" name="queryaddrow" returns="Numeric">
+		<function  name="queryaddrow" returns="Numeric">
 			<help><![CDATA[
 				Adds a specified number of empty rows to a query.
 			]]></help>
@@ -14890,7 +14944,7 @@
 		<!--
 			Query QueryNew(columnlist [, columntypelist])
 		-->
-		<function creator="3" name="querynew" returns="Query">
+		<function  name="querynew" returns="Query">
 			<help><![CDATA[
 				Creates an empty query (query object).
 			]]></help>
@@ -14921,7 +14975,7 @@
 		<!--
 			boolean QuerySetCell(query, column_name, value [, row_number ])
 		-->
-		<function creator="3" name="querysetcell" returns="boolean">
+		<function  name="querysetcell" returns="boolean">
 			<help><![CDATA[
 				Sets a cell to a value. If no row number is specified,
 				the cell on the last row is set.
@@ -14947,7 +15001,7 @@
 		<!--
 			String QuotedValueList(query.column [, delimiter ])
 		-->
-		<function creator="3" name="quotedvaluelist" returns="String">
+		<function  name="quotedvaluelist" returns="String">
 			<help><![CDATA[
 				Gets the values of each record returned from an executed query.
 				CFML does not evaluate the arguments
@@ -14968,7 +15022,7 @@
 		<!--
 			Numeric Rand([algorithm])
 		-->
-		<function creator="3" name="rand" returns="Numeric">
+		<function  name="rand" returns="Numeric">
 			<help><![CDATA[
 				Generates a pseudo-random number in the range 0 - 1.
 			]]></help>
@@ -14987,7 +15041,7 @@
 		<!--
 			Numeric Randomize(number[, algorithm])
 		-->
-		<function creator="3" name="randomize" returns="Numeric">
+		<function  name="randomize" returns="Numeric">
 			<help><![CDATA[
 				Seeds the pseudo-random number generator with an
 				integer number, ensuring repeatable number patterns.
@@ -15011,7 +15065,7 @@
 		<!--
 			Numeric RandRange(number1, number2)
 		-->
-		<function creator="3" name="randrange" returns="Numeric">
+		<function  name="randrange" returns="Numeric">
 			<help><![CDATA[
 				Generates a random integer between two specified numbers.
 				Requests for random integers that are greater than 100,000,000
@@ -15041,7 +15095,7 @@
 		<!--
 			Object REFind(reg_expression, string [, start ][, returnsubexpressions ])
 		-->
-		<function creator="3" name="refind" returns="Object">
+		<function  name="refind" returns="Object">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="reg_expression" type="Regex" required="true">
@@ -15081,7 +15135,7 @@
 		<!--
 			Object REFindNoCase(reg_expression, string [, start] [, returnsubexpressions] )
 		-->
-		<function creator="3" name="refindnocase" returns="Object">
+		<function  name="refindnocase" returns="Object">
 			<help><![CDATA[
 				Uses a regular expression (RE) to search a string for a pattern,
 				 starting from a specified position. The search is
@@ -15124,7 +15178,7 @@
 		<!--
 			void ReleaseComObject(objectName)
 		-->
-		<function creator="3" name="releasecomobject" returns="void">
+		<function  name="releasecomobject" returns="void">
 			<help><![CDATA[
 				Releases a COM Object and frees up resources that it used.
 			]]></help>
@@ -15137,7 +15191,7 @@
 		<!--
 			String RemoveChars(string, start, count)
 		-->
-		<function creator="3" name="removechars" returns="String">
+		<function  name="removechars" returns="String">
 			<help><![CDATA[
 				Removes characters from a string.
 			]]></help>
@@ -15158,7 +15212,7 @@
 		<!--
 			String RepeatString(string, count)
 		-->
-		<function creator="3" name="repeatstring" returns="String">
+		<function  name="repeatstring" returns="String">
 			<help><![CDATA[
 				Creates a string that contains a specified number of
 				repetitions of the specified string.
@@ -15176,7 +15230,7 @@
 		<!--
 			String Replace(string, substring1, substring2 [, scope ])
 		-->
-		<function creator="3" name="replace" returns="String">
+		<function  name="replace" returns="String">
 			<help><![CDATA[
 				Replaces occurrences of substring1 in a string with substring2,
 				in a specified scope. The search is case-sensitive.
@@ -15208,7 +15262,7 @@
 		<!--
 			String ReplaceList(string, list1, list2)
 		-->
-		<function creator="3" name="replacelist" returns="String">
+		<function  name="replacelist" returns="String">
 			<help><![CDATA[
 				Replaces occurrences of the elements from a delimited list
 				in a string with corresponding elements from another delimited
@@ -15231,7 +15285,7 @@
 		<!--
 			String ReplaceNoCase(string, substring1, substring2 [, scope ])
 		-->
-		<function creator="3" name="replacenocase" returns="String">
+		<function  name="replacenocase" returns="String">
 			<help><![CDATA[
 				Replaces occurrences of substring1 with substring2, in the
 				specified scope. The search is case-insensitive.
@@ -15265,7 +15319,7 @@
 		<!--
 			String REReplace(string, reg_expression, substring [, scope ])
 		-->
-		<function creator="3" name="rereplace" returns="String">
+		<function  name="rereplace" returns="String">
 			<help><![CDATA[
 				Uses a regular expression (RE) to search a string for a string
 				pattern and replace it with another. The search is
@@ -15303,7 +15357,7 @@
 		<!--
 			String REReplaceNoCase(string, reg_expression, substring [, scope ])
 		-->
-		<function creator="3" name="rereplacenocase" returns="String">
+		<function  name="rereplacenocase" returns="String">
 			<help><![CDATA[
 				Uses a regular expression to search a string for a string
 				pattern and replace it with another. The search is
@@ -15341,7 +15395,7 @@
 		<!--
 			String Reverse(string)
 		-->
-		<function creator="3" name="reverse" returns="String">
+		<function  name="reverse" returns="String">
 			<help><![CDATA[
 				Reverses the order of items, such as the characters in a
 				string, the digits in a number, or the elements in an array.
@@ -15356,7 +15410,7 @@
 		<!--
 			String Right(string, count)
 		-->
-		<function creator="3" name="right" returns="String">
+		<function  name="right" returns="String">
 			<help><![CDATA[
 				Gets a specified number of characters from a string,
 				beginning at the right.
@@ -15376,7 +15430,7 @@
 		<!--
 			String RJustify(string, length)
 		-->
-		<function creator="3" name="rjustify" returns="String">
+		<function  name="rjustify" returns="String">
 			<help><![CDATA[
 				Right justifies characters of a string.
 			]]></help>
@@ -15393,7 +15447,7 @@
 		<!--
 			Numeric Round(number)
 		-->
-		<function creator="3" name="round" returns="Numeric">
+		<function  name="round" returns="Numeric">
 			<help><![CDATA[
 				Rounds a number to the closest integer.
 			]]></help>
@@ -15406,7 +15460,7 @@
 		<!--
 			String RTrim(string)
 		-->
-		<function creator="3" name="rtrim" returns="String">
+		<function  name="rtrim" returns="String">
 			<help><![CDATA[
 				Removes spaces from the end of a string.
 			]]></help>
@@ -15420,7 +15474,7 @@
 		<!--
 			Numeric Second(date)
 		-->
-		<function creator="3" name="second" returns="Numeric">
+		<function  name="second" returns="Numeric">
 			<help><![CDATA[
 				Extracts the ordinal for the second from a date/time object.
 			]]></help>
@@ -15456,7 +15510,7 @@
 		<!--
 			void SetEncoding(scope_name,charset)
 		-->
-		<function creator="3" name="setencoding" returns="void">
+		<function  name="setencoding" returns="void">
 			<help><![CDATA[
 				Sets the character encoding (character set) of Form and URL
 				scope variable values; used when the character encoding of
@@ -15491,7 +15545,7 @@
 		<!--
 			String SetLocale(new_locale)
 		-->
-		<function creator="3" name="setlocale" returns="String">
+		<function  name="setlocale" returns="String">
 			<help><![CDATA[
 				Sets the country/language locale for CFML processing
 				and the page returned to the client. The locale value
@@ -15539,7 +15593,7 @@
 		<!--
 			String SetProfileString(iniPath, section, entry, value)
 		-->
-		<function creator="3" name="setprofilestring" returns="String">
+		<function  name="setprofilestring" returns="String">
 			<help><![CDATA[
 				Sets the value of a profile entry in an initialization file.
 			]]></help>
@@ -15569,7 +15623,7 @@
 		<!--
 			void SetVariable(name, value)
 		-->
-		<function creator="3" name="setvariable" returns="void">
+		<function  name="setvariable" returns="void">
 			<help><![CDATA[
 				This function is no longer required in well-formed CFML
 				pages. Sets a variable in the name parameter to the value of the
@@ -15590,7 +15644,7 @@
 		<!--
 			Numeric Sgn(number)
 		-->
-		<function creator="3" name="sgn" returns="Numeric">
+		<function  name="sgn" returns="Numeric">
 			<help><![CDATA[
 				Determines the sign of a number.
 			]]></help>
@@ -15603,7 +15657,7 @@
 		<!--
 			Numeric Sin(number)
 		-->
-		<function creator="3" name="sin" returns="Numeric">
+		<function  name="sin" returns="Numeric">
 			<help><![CDATA[
 				Calculates the sine of an angle that is entered in radians.
 			]]></help>
@@ -15616,7 +15670,7 @@
 		<!--
 			String SpanExcluding(string, set)
 		-->
-		<function creator="3" name="spanexcluding" returns="String">
+		<function  name="spanexcluding" returns="String">
 			<help><![CDATA[
 				Gets characters from a string, from the beginning to a
 				character that is in a specified set of characters. The
@@ -15637,7 +15691,7 @@
 		<!--
 			String SpanIncluding(string, set)
 		-->
-		<function creator="3" name="spanincluding" returns="String">
+		<function  name="spanincluding" returns="String">
 			<help><![CDATA[
 				Gets characters from a string, from the beginning to a
 				character that is not in a specified set of characters. The
@@ -15658,7 +15712,7 @@
 		<!--
 			Numeric Sqr(number)
 		-->
-		<function creator="3" name="sqr" returns="Numeric">
+		<function  name="sqr" returns="Numeric">
 			<help><![CDATA[
 				Calculates the square root of a number.
 			]]></help>
@@ -15673,7 +15727,7 @@
 		<!--
 			String StripCR(string)
 		-->
-		<function creator="3" name="stripcr" returns="String">
+		<function  name="stripcr" returns="String">
 			<help><![CDATA[
 				Deletes return characters from a string.
 			]]></help>
@@ -15687,7 +15741,7 @@
 		<!--
 			boolean StructAppend(struct1, struct2, overwriteFlag)
 		-->
-		<function creator="3" name="structappend" returns="boolean">
+		<function  name="structappend" returns="boolean">
 			<help><![CDATA[
 				Appends one structure to another.
 				CFML MX: Changed behavior: this function can be used on
@@ -15714,7 +15768,7 @@
 		<!--
 			boolean StructClear(structure)
 		-->
-		<function creator="3" name="structclear" returns="boolean">
+		<function  name="structclear" returns="boolean">
 			<help><![CDATA[
 				Removes all data from a structure.
 			]]></help>
@@ -15728,7 +15782,7 @@
 		<!--
 			Struct StructCopy(structure)
 		-->
-		<function creator="3" name="structcopy" returns="Struct">
+		<function  name="structcopy" returns="Struct">
 			<help><![CDATA[
 				Copies a structure. Copies top-level keys, values, and arrays
 				in the structure by value; copies nested structures by
@@ -15744,7 +15798,7 @@
 		<!--
 			Numeric StructCount(structure)
 		-->
-		<function creator="3" name="structcount" returns="Numeric">
+		<function  name="structcount" returns="Numeric">
 			<help><![CDATA[
 				Counts the keys in a structure.
 			]]></help>
@@ -15758,7 +15812,7 @@
 		<!--
 			boolean StructDelete(structure, key [, indicatenotexisting ])
 		-->
-		<function creator="3" name="structdelete" returns="boolean">
+		<function  name="structdelete" returns="boolean">
 			<help><![CDATA[
 				Removes an element from a structure.
 			]]></help>
@@ -15782,7 +15836,7 @@
 		<!--
 			Object StructFind(structure, key)
 		-->
-		<function creator="3" name="structfind" returns="Object">
+		<function  name="structfind" returns="Object">
 			<help><![CDATA[
 				Determines the value associated with a key in a structure.
 			]]></help>
@@ -15801,7 +15855,7 @@
 		<!--
 			Array StructFindKey(top, value, scope)
 		-->
-		<function creator="3" name="structfindkey" returns="Array">
+		<function  name="structfindkey" returns="Array">
 			<help><![CDATA[
 				Searches recursively through a substructure of nested arrays,
 				structures, and other elements, for structures whose values
@@ -15834,7 +15888,7 @@
 		<!--
 			Array StructFindValue( top, value [, scope])
 		-->
-		<function creator="3" name="structfindvalue" returns="Array">
+		<function  name="structfindvalue" returns="Array">
 			<help><![CDATA[
 				Searches recursively through a substructure of nested arrays,
 				structures, and other elements for structures with values that
@@ -15869,7 +15923,7 @@
 		<!--
 			Struct StructGet(pathDesired)
 		-->
-		<function creator="3" name="structget" returns="Struct">
+		<function  name="structget" returns="Struct">
 			<help><![CDATA[
 				Gets a structure(s) from a specified path.
 			]]></help>
@@ -15884,7 +15938,7 @@
 		<!--
 			boolean StructInsert(structure, key, value [, allowoverwrite ])
 		-->
-		<function creator="3" name="structinsert" returns="boolean">
+		<function  name="structinsert" returns="boolean">
 			<help><![CDATA[
 				Inserts a key-value pair into a structure.
 			]]></help>
@@ -15913,7 +15967,7 @@
 		<!--
 			boolean StructIsEmpty(structure)
 		-->
-		<function creator="3" name="structisempty" returns="boolean">
+		<function  name="structisempty" returns="boolean">
 			<help><![CDATA[
 				Determines whether a structure contains data.
 			]]></help>
@@ -15927,7 +15981,7 @@
 		<!--
 			Array StructKeyArray(structure)
 		-->
-		<function creator="3" name="structkeyarray" returns="Array">
+		<function  name="structkeyarray" returns="Array">
 			<help><![CDATA[
 				Finds the keys in a CFML structure.
 				An array of keys; if structure does not exist, CFML
@@ -15942,7 +15996,7 @@
 		<!--
 			boolean StructKeyExists(structure, "key")
 		-->
-		<function creator="3" name="structkeyexists" returns="boolean">
+		<function  name="structkeyexists" returns="boolean">
 			<help><![CDATA[
 				Determines whether a specific key is present in a structure.
 			]]></help>
@@ -15961,7 +16015,7 @@
 		<!--
 			String StructKeyList(structure [, delimiter])
 		-->
-		<function creator="3" name="structkeylist" returns="String">
+		<function  name="structkeylist" returns="String">
 			<help><![CDATA[
 				Extracts keys from a CFML structure.
 			]]></help>
@@ -15983,7 +16037,7 @@
 		<!--
 			Struct StructNew()
 		-->
-		<function creator="3" name="structnew" returns="Struct">
+		<function  name="structnew" returns="Struct">
 			<help><![CDATA[
 				Creates a structure.
 			]]></help>
@@ -15992,7 +16046,7 @@
 		<!--
 			Array StructSort(base, sortType, sortOrder, pathToSubElement)
 		-->
-		<function creator="3" name="structsort" returns="Array">
+		<function  name="structsort" returns="Array">
 			<help><![CDATA[
 				Returns a sorted array of the top level keys in a structure.
 				Sorts using alphabetic or numeric sorting, and can sort based
@@ -16030,7 +16084,7 @@
 		<!--
 			boolean StructUpdate(structure, key, value)
 		-->
-		<function creator="3" name="structupdate" returns="boolean">
+		<function  name="structupdate" returns="boolean">
 			<help><![CDATA[
 				Updates a key with a value.
 			]]></help>
@@ -16054,7 +16108,7 @@
 		<!--
 			Numeric Tan(number)
 		-->
-		<function creator="3" name="tan" returns="Numeric">
+		<function  name="tan" returns="Numeric">
 			<help><![CDATA[
 				Calculates the tangent of an angle that is entered in radians.
 			]]></help>
@@ -16068,7 +16122,7 @@
 		<!--
 			String TimeFormat(time [, mask ])
 		-->
-		<function creator="3" name="timeformat" returns="String">
+		<function  name="timeformat" returns="String">
 			<help><![CDATA[
 				Formats a time value using US English time formatting
 				conventions. If no mask is specified, returns a time value
@@ -16103,7 +16157,7 @@
 		<!--
 			String ToBase64(string_or_object[, encoding])
 		-->
-		<function creator="3" name="tobase64" returns="String">
+		<function  name="tobase64" returns="String">
 			<help><![CDATA[
 				Calculates the Base64 representation of a string or binary
 				object. The Base64 format uses printable characters, allowing
@@ -16139,7 +16193,7 @@
 		<!--
 			Binary ToBinary(string_in_Base64 or binary_value)
 		-->
-		<function creator="3" name="tobinary" returns="Binary">
+		<function  name="tobinary" returns="Binary">
 			<help><![CDATA[
 				Calculates the binary representation of Base64-encoded data.
 			]]></help>
@@ -16184,7 +16238,7 @@
 				Default: true
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="ASFormat" type="boolean" required="false">
@@ -16194,7 +16248,7 @@
 				Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 		</function>
@@ -16202,7 +16256,7 @@
 		<!--
 			String ToString(any_value[, encoding])
 		-->
-		<function creator="3" name="tostring" returns="String">
+		<function  name="tostring" returns="String">
 			<help><![CDATA[
 				Converts a value to a string.
 			]]></help>
@@ -16234,7 +16288,7 @@
 		<!--
 			String Trim(string)
 		-->
-		<function creator="3" name="trim" returns="String">
+		<function  name="trim" returns="String">
 			<help><![CDATA[
 				Removes leading and trailing spaces from a string.
 			]]></help>
@@ -16248,7 +16302,7 @@
 		<!--
 			String UCase(string)
 		-->
-		<function creator="3" name="ucase" returns="String">
+		<function  name="ucase" returns="String">
 			<help><![CDATA[
 				Converts the alphabetic characters in a string to uppercase.
 			]]></help>
@@ -16262,7 +16316,7 @@
 		<!--
 			String URLDecode(urlEncodedString[, charset])
 		-->
-		<function creator="3" name="urldecode" returns="String">
+		<function  name="urldecode" returns="String">
 			<help><![CDATA[
 				Decodes a URL-encoded string.
 			]]></help>
@@ -16293,7 +16347,7 @@
 		<!--
 			String URLEncodedFormat(string [, charset ])
 		-->
-		<function creator="3" name="urlencodedformat" returns="String">
+		<function  name="urlencodedformat" returns="String">
 			<help><![CDATA[
 				Generates a URL-encoded string. For example, it replaces spaces
 				with %20, and non-alphanumeric characters with equivalent
@@ -16328,7 +16382,7 @@
 		<!--
 			URL URLSessionFormat(request_URL)
 		-->
-		<function creator="3" name="urlsessionformat" returns="URL">
+		<function  name="urlsessionformat" returns="URL">
 			<help><![CDATA[
 				Depending on whether a client computer accepts cookies, this
 				function does the following:
@@ -16349,7 +16403,7 @@
 		<!--
 			Numeric Val(string)
 		-->
-		<function creator="3" name="val" returns="Numeric">
+		<function  name="val" returns="Numeric">
 			<help><![CDATA[
 				Converts numeric characters that occur at the beginning of a
 				string to a number. If conversion fails, returns zero.
@@ -16364,7 +16418,7 @@
 		<!--
 			String ValueList(query.column [, delimiter ])
 		-->
-		<function creator="3" name="valuelist" returns="String">
+		<function  name="valuelist" returns="String">
 			<help><![CDATA[
 				Inserts a delimiter between each value in an executed query.
 				CFML does not evaluate the arguments.
@@ -16391,7 +16445,7 @@
 		<!--
 			Numeric Week(date)
 		-->
-		<function creator="3" name="week" returns="Numeric">
+		<function  name="week" returns="Numeric">
 			<help><![CDATA[
 				From a date/time object, determines the week number within
 				the year. An integer in the range 1-53; the ordinal of the
@@ -16410,7 +16464,7 @@
 		<!--
 			String Wrap(string, limit[, strip])
 		-->
-		<function creator="3" name="wrap" returns="String">
+		<function  name="wrap" returns="String">
 			<help><![CDATA[
 				Wraps text so that each line has a specified maximum number
 				of characters.
@@ -16438,7 +16492,7 @@
 		<!--
 			String WriteOutput(string)
 		-->
-		<function creator="3" name="writeoutput" returns="String">
+		<function  name="writeoutput" returns="String">
 			<help><![CDATA[
 				Appends text to the page-output stream.
 				This function writes to the page-output stream regardless of
@@ -16454,7 +16508,7 @@
 		<!--
 			Numeric XmlChildPos(elem, childName, N)
 		-->
-		<function creator="3" name="xmlchildpos" returns="Numeric">
+		<function  name="xmlchildpos" returns="Numeric">
 			<help><![CDATA[
 				Gets the position of a child element within an XML document
 				object.
@@ -16481,7 +16535,7 @@
 		<!--
 			Object XmlElemNew(xmlObj[, namespace], childName)
 		-->
-		<function creator="3" name="xmlelemnew" returns="Object">
+		<function  name="xmlelemnew" returns="Object">
 			<help><![CDATA[
 				Creates an XML document object element
 			]]></help>
@@ -16506,7 +16560,7 @@
 		<!--
 			String XmlFormat(string)
 		-->
-		<function creator="3" name="xmlformat" returns="String">
+		<function  name="xmlformat" returns="String">
 			<help><![CDATA[
 				Escapes special XML characters in a string, so that the
 				string is safe to use with XML.
@@ -16534,7 +16588,7 @@
 		<!--
 			Object XmlNew([caseSensitive])
 		-->
-		<function creator="3" name="xmlnew" returns="Object">
+		<function  name="xmlnew" returns="Object">
 			<help><![CDATA[
 				Creates an XML document object.
 			]]></help>
@@ -16549,7 +16603,7 @@
 		<!--
 			Object XmlParse(xmlText [[, caseSensitive ], validator])
 		-->
-		<function creator="3" name="xmlparse" returns="Object">
+		<function  name="xmlparse" returns="Object">
 			<help><![CDATA[
 				Converts an XML document that is represented as a string
 				variable into an XML document object.
@@ -16569,7 +16623,7 @@
 					Default: false
 				]]></help>
 				<values>
-					&value_boolean;
+					<value option="true" /> 					<value option="false" />
 				</values>
 			</parameter>
 			<parameter name="validator" type="String" required="false">
@@ -16590,7 +16644,7 @@
 		<!--
 			Array XmlSearch(xmlDoc, xPathString)
 		-->
-		<function creator="3" name="xmlsearch" returns="Array">
+		<function  name="xmlsearch" returns="Array">
 			<help><![CDATA[
 			]]></help>
 			<parameter name="xmldoc" type="Object" required="true">
@@ -16608,7 +16662,7 @@
 		<!--
 			String XmlTransform(xml, xsl[, parameters])
 		-->
-		<function creator="3" name="xmltransform" returns="String">
+		<function  name="xmltransform" returns="String">
 			<help><![CDATA[
 				Applies an Extensible Stylesheet Language Transformation (XSLT)
 				to an XML document object that is represented as a string
@@ -16675,7 +16729,7 @@
 		<!--
 			Numeric Year(date)
 		-->
-		<function creator="3" name="year" returns="Numeric">
+		<function  name="year" returns="Numeric">
 			<help><![CDATA[
 				From a date/time object, gets the year value.
 			]]></help>
@@ -16691,7 +16745,7 @@
 		<!--
 			String YesNoFormat(value)
 		-->
-		<function creator="3" name="yesnoformat" returns="String">
+		<function name="yesnoformat" returns="String">
 			<help><![CDATA[
 				Yes, for a non-zero value; No, otherwise.
 			]]></help>
