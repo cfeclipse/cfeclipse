@@ -244,6 +244,13 @@ public class DictionaryManager
 		{
 			dictionaries.put(livekey, dictionariesCache.get(cachekey));
 		}
+		else if(!dictionariesCache.containsKey(cachekey))
+		{
+			//the dictionary is not in the cache, lets try to load it...
+			loadDictionaryByVersion(cachekey);
+			//try again..
+			loadDictionaryFromCache(cachekey, livekey);
+		}
 		else
 		{
 			throw new IllegalArgumentException("Cache key: " + cachekey +" is not in the cache" + dictionariesCache.keySet().toString());

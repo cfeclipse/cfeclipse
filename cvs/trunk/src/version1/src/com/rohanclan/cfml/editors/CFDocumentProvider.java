@@ -52,6 +52,7 @@ import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
 import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
@@ -85,11 +86,13 @@ public class CFDocumentProvider extends FileDocumentProvider
 		
 		if(document != null) 
 		{
-			//ProjectPropertyStore pps = new ProjectPropertyStore();
-			//System.err.println("]]" + pps.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY) + "[[");
-			
-			CFMLPropertyManager pm = new CFMLPropertyManager();
-			System.err.println("]]" + pm.getCurrentDictionary() + "[[");
+			//try to load the proper dictionary syntax for this document
+			CFMLPropertyManager pm = new CFMLPropertyManager();			
+			DictionaryManager.loadDictionaryFromCache(
+				pm.getCurrentDictionary(),
+				DictionaryManager.CFDIC
+			);
+			/////
 			
 			IDocumentPartitioner partitioner = new CFEPartitioner(
 				new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES
