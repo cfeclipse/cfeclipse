@@ -37,32 +37,40 @@ import java.io.IOException;
  * This controls the properies for the per project settings
  */
 public class CFMLPropertyManager {
-	/**
-	 * 
-	 */
-	
 	private PreferenceStore store;
-	private CFMLPreferenceManager  preferenceManager;
+	private CFMLPreferenceManager preferenceManager;
 	
-	public CFMLPropertyManager() {
+	public CFMLPropertyManager() 
+	{
 		super();
 		this.store = CFMLPlugin.getDefault().getPropertyStore();
-		try {
+	
+		try 
+		{
 			store.load();
 		}
-		catch (Exception e) {
-			//System.err.println("CFMLPropertyManager::CFMLPropertyManager() - Couldn't load property store");
-			//e.printStackTrace();
+		catch (Exception e) 
+		{
+			System.err.println("CFMLPropertyManager::CFMLPropertyManager() - Couldn't load property store");
+			e.printStackTrace();
 		} 
 		this.preferenceManager = new CFMLPreferenceManager();
 	}
 	
+	public PreferenceStore getStore()
+	{
+		return store;
+	}
 	
 	public void initializeDefaultValues() {
         store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
         store.setDefault(CFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.defaultProjectURL());
 	}
 	
+	public String getCurrentDictionary()
+	{
+		return store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
+	}
 	
 	public String snippetsPath() {
 		return store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
@@ -82,7 +90,6 @@ public class CFMLPropertyManager {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	public String projectURL() {
 		return store.getString(CFMLPreferenceConstants.P_PROJECT_URL).trim();

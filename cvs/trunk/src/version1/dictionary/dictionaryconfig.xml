@@ -37,7 +37,7 @@
 			<grammer location="user.xml" />
 		</version>
 		<version key="bd61" label="BlueDragon 6.1">
-			<grammer location="cfmlBD.xml" />
+			<grammer location="cfmlBD61.xml" />
 			<grammer location="user.xml" />
 		</version>
 	</dictionary>

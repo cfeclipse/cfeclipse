@@ -28,10 +28,13 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for tabbed browsing */
 	public static final String P_TABBED_BROWSER			= "tabbedBrowsing";
 	
-	
-	/** Not currently used. */
-	public static final String P_CFML_DICTIONARY = "__cfmlDictionary";
-
+	/** this is the per project setting for their dictionary selection */
+    public static final String P_CFML_DICTIONARY = "cfmlDictionary";
+    
+    /** the default key to the dictionary to use in this project.
+     * @see DictionaryManager 
+     */
+    public static final String P_CFML_DICTIONARY_DEFAULT = "cfmx701";
 
 	/**
 	 * this is public because the browser uses it on errors 

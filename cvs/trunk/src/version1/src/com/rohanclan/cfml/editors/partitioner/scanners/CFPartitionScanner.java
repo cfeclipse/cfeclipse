@@ -89,7 +89,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String TABLE_START_TAG_END		= "__table_start_tag_end";
 	
 	
-	public CFPartitionScanner() {
+	public CFPartitionScanner() 
+	{
 		IToken doctype	 	= new Token(DOCTYPE);
 		IToken cfComment 	= new Token(CF_COMMENT);
 		IToken htmComment 	= new Token(HTM_COMMENT);

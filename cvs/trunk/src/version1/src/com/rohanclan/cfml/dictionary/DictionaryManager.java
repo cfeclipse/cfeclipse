@@ -116,18 +116,50 @@ public class DictionaryManager
 		if(dictionaryConfig == null)
 			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml");
 		
-		//load the dictionaries into the cache
-		loadDictionaryByVersion("cfmx701");
-		loadDictionaryByVersion("xhtml");
-		loadDictionaryByVersion("ecma");
+		//load the default dictionaries into the cache
+		//this is kind of weak but it'll do pig... it'll do...
+		String cfdictversion = dictionaryConfig.getElementById(CFDIC).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
+		String htdictversion = dictionaryConfig.getElementById(HTDIC).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
+		String jsdictversion = dictionaryConfig.getElementById(JSDIC).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
+		
+		//load the dictionary into the cache
+		loadDictionaryByVersion(cfdictversion);
+		loadDictionaryByVersion(htdictversion);
+		loadDictionaryByVersion(jsdictversion);
 		
 		//load from the cache to the live
-		loadDictionaryFromCache("cfmx701",CFDIC);
-		loadDictionaryFromCache("cfmx701",SQLDIC);
-		loadDictionaryFromCache("xhtml",HTDIC);
-		loadDictionaryFromCache("ecma",JSDIC);
+		loadDictionaryFromCache(cfdictversion,CFDIC);
+		loadDictionaryFromCache(cfdictversion,SQLDIC);
+		loadDictionaryFromCache(htdictversion,HTDIC);
+		loadDictionaryFromCache(jsdictversion,JSDIC);
 				
 		System.out.println("Dictionaries initialized in " + (System.currentTimeMillis() - time) + " ms");
+	}
+	
+	/**
+	 * This gets a string array of supported types. This is mostly used in the radio
+	 * display on the project settings. It builds a string array from the key and
+	 * label attributes in the dictionary config file
+	 * @return {key, label} array
+	 */
+	public static String[][] getConfiguredDictionaries()
+	{
+		NodeList cfmltypes = dictionaryConfig.getElementById(CFDIC).getChildNodes();
+		
+		byte typeslen = (byte)cfmltypes.getLength();
+		
+		String[][] options = new String[typeslen][2];
+		
+		for(byte z=0; z<typeslen; z++)
+		{
+			String key = cfmltypes.item(z).getAttributes().getNamedItem("key").getNodeValue();
+			String label = cfmltypes.item(z).getAttributes().getNamedItem("label").getNodeValue();
+			
+			options[z][0] = label;
+			options[z][1] = key;
+		}
+				
+		return options;
 	}
 	
 	/**

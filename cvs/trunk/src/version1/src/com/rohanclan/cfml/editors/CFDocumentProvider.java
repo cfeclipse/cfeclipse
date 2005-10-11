@@ -59,48 +59,55 @@ import com.rohanclan.cfml.external.ExternalFile;
 import com.rohanclan.cfml.external.ExternalMarkerAnnotationModel;
 import com.rohanclan.cfml.net.RemoteFileEditorInput;
 import com.rohanclan.cfml.net.ftp.FTPConnection;
+import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
+import com.rohanclan.cfml.properties.CFMLPropertyManager;
+import com.rohanclan.cfml.properties.ProjectPropertyStore;
 
 /**
- * 
  * This document handles the opening and closing of CF documents.
- * It assigns and runs a the parser over a document.
+ * It assigns and runs a parser over a document.
  * 
  * @author Rob
- * 
  */
-public class CFDocumentProvider extends FileDocumentProvider{
-
-    
-
+public class CFDocumentProvider extends FileDocumentProvider
+{
 	private ExternalMarkerAnnotationModel model = null;
     
-	protected IDocument createDocument(Object element) throws CoreException {
+	protected IDocument createDocument(Object element) throws CoreException 
+	{
 		ICFDocument document = null;
 		
 		document = new ICFDocument();
-		if (setDocumentContent(document, (IEditorInput) element,
-				getEncoding(element))) {
+		if(setDocumentContent(document, (IEditorInput) element, getEncoding(element))) 
+		{
 			setupDocument(element, document);
 		}
 		
-		if (document != null) {
+		if(document != null) 
+		{
+			//ProjectPropertyStore pps = new ProjectPropertyStore();
+			//System.err.println("]]" + pps.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY) + "[[");
+			
+			CFMLPropertyManager pm = new CFMLPropertyManager();
+			System.err.println("]]" + pm.getCurrentDictionary() + "[[");
+			
 			IDocumentPartitioner partitioner = new CFEPartitioner(
-					new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
+				new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES
+			);
 
 			partitioner.connect(document);
 			
-			
 			//returns an IFile which is a subclass of IResource
-			try {
-			    if (element instanceof FileEditorInput) 
+			try 
+			{
+			    if(element instanceof FileEditorInput) 
 				{
 					document.setParserResource(((FileEditorInput)element).getFile());
 					document.clearAllMarkers();
 					document.parseDocument();
 				}
-			    else if (element instanceof JavaFileEditorInput) 
+			    else if(element instanceof JavaFileEditorInput) 
 				{
-				
 			        String filepath = ((JavaFileEditorInput)element).getPath(element).toString();
 			        IPath path = new Path(filepath);
 			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
@@ -119,10 +126,12 @@ public class CFDocumentProvider extends FileDocumentProvider{
 			        ExternalFile file = new ExternalFile(path,workspace);
 			        model = file.getAnnotationModel();
 			        document.setParserResource(file);
-					document.clearAllMarkers();
-					document.parseDocument();
+			        document.clearAllMarkers();
+			        document.parseDocument();
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace(System.err);
 			}
 
@@ -132,20 +141,26 @@ public class CFDocumentProvider extends FileDocumentProvider{
 		return document;
 	}
 
-	protected boolean setDocumentContent(IDocument document,
-			IEditorInput editorInput, String encoding) throws CoreException {
-		if (editorInput instanceof JavaFileEditorInput) {
+	protected boolean setDocumentContent(IDocument document, IEditorInput editorInput, String encoding) throws CoreException 
+	{
+		if(editorInput instanceof JavaFileEditorInput) 
+		{
 			JavaFileEditorInput input = (JavaFileEditorInput) editorInput;
 			FileInputStream contentStream = null;
-			try {
-				contentStream = new FileInputStream(input.getPath(editorInput)
-						.toFile());
-			} catch (FileNotFoundException e) {
+			
+			try 
+			{
+				contentStream = new FileInputStream(input.getPath(editorInput).toFile());
+			}
+			catch (FileNotFoundException e)
+			{
 				e.printStackTrace();
 			}
 			setDocumentContent(document, contentStream, encoding);
 		}
-		if (editorInput instanceof RemoteFileEditorInput) {
+		
+		if(editorInput instanceof RemoteFileEditorInput) 
+		{
 			RemoteFileEditorInput input = (RemoteFileEditorInput) editorInput;
 			FTPConnection connection = new FTPConnection();
 			BufferedInputStream contentStream = null;
@@ -153,98 +168,109 @@ public class CFDocumentProvider extends FileDocumentProvider{
 			
 			setDocumentContent(document, contentStream, encoding);
 		}
-		return super.setDocumentContent(document, editorInput, encoding);
 		
+		return super.setDocumentContent(document, editorInput, encoding);
 	}
 
 	protected void doSaveDocument(IProgressMonitor monitor, Object element,
-			IDocument document, boolean overwrite) throws CoreException {
-		if (document instanceof ICFDocument) {
+			IDocument document, boolean overwrite) throws CoreException 
+	{
+		if(document instanceof ICFDocument) 
+		{
 			((ICFDocument) document).clearAllMarkers();
-			((ICFDocument) document).parseDocument();
-			
+			((ICFDocument) document).parseDocument();	
 		}
-		if (element instanceof JavaFileEditorInput) {
-		   try {
-		       saveExternalFile((JavaFileEditorInput)element,document);
-		   }
-		   catch (IOException e) {
-		       Status status = new Status(IStatus.ERROR,"com.rohanclan.cfml",IStatus.OK,e.getMessage(),e);
-		       throw new CoreException(status);
-		   }
-		   
+		
+		if(element instanceof JavaFileEditorInput) 
+		{
+			try 
+			{
+				saveExternalFile((JavaFileEditorInput)element,document);
+			}
+			catch (IOException e) 
+			{
+				Status status = new Status(IStatus.ERROR,"com.rohanclan.cfml",IStatus.OK,e.getMessage(),e);
+				throw new CoreException(status);
+			}
 		}
-		if (element instanceof RemoteFileEditorInput)  {
-		    try {
-		    saveExternalFile((RemoteFileEditorInput)element,document);
-		    }
-		   catch (IOException e) {
-		       Status status = new Status(IStatus.ERROR,"com.rohanclan.cfml",IStatus.OK,e.getMessage(),e);
-		       throw new CoreException(status);
-		   }
-		    
+		
+		if(element instanceof RemoteFileEditorInput)  
+		{
+			try 
+			{
+				saveExternalFile((RemoteFileEditorInput)element,document);
+			}
+			catch (IOException e) 
+			{
+				Status status = new Status(IStatus.ERROR,"com.rohanclan.cfml",IStatus.OK,e.getMessage(),e);
+				throw new CoreException(status);
+			}
 		}
 		super.doSaveDocument(monitor, element, document, overwrite);
-
 	}
 	
-	private void saveExternalFile(JavaFileEditorInput input, IDocument doc) throws IOException {
-
-	    FileWriter writer = new FileWriter(input.getPath(input).toFile());
-	    writer.write(doc.get());
-	    writer.close();
-	    
+	private void saveExternalFile(JavaFileEditorInput input, IDocument doc) throws IOException 
+	{
+		FileWriter writer = new FileWriter(input.getPath(input).toFile());
+		writer.write(doc.get());
+		writer.close();
 	}
 	
-	private void saveExternalFile(RemoteFileEditorInput input, IDocument doc) throws IOException {
-
-	    BufferedOutputStream contentStream = null;
+	private void saveExternalFile(RemoteFileEditorInput input, IDocument doc) throws IOException 
+	{
+		BufferedOutputStream contentStream = null;
 		FTPConnection connection = new FTPConnection();
 		connection.saveFile(doc.get().getBytes(),input.getPath(input).toString());
-		
 	}
 	
-	public IAnnotationModel getAnnotationModel(Object element) {
-	    if (element instanceof FileEditorInput) {
-	        return super.getAnnotationModel(element);
-	    }
+	public IAnnotationModel getAnnotationModel(Object element) 
+	{
+		if(element instanceof FileEditorInput) 
+		{
+			return super.getAnnotationModel(element);
+		}
 	    
-	    return model;
-
-	    
+		return model;
 	}
 	
-	
-	public boolean isModifiable(Object element) {
-		if (!isStateValidated(element)) {
-			if (element instanceof IFileEditorInput) {
+	public boolean isModifiable(Object element) 
+	{
+		if(!isStateValidated(element)) 
+		{
+			if (element instanceof IFileEditorInput) 
+			{
 				return true;
 			}
 		}
-		if (element instanceof JavaFileEditorInput) {
+		
+		if(element instanceof JavaFileEditorInput) 
+		{
 		    JavaFileEditorInput input = (JavaFileEditorInput)element;
 	        return input.getPath(input).toFile().canWrite();
 		}
-		if (element instanceof RemoteFileEditorInput) {
-		    RemoteFileEditorInput input = (RemoteFileEditorInput)element;
-		    
+		
+		if(element instanceof RemoteFileEditorInput) 
+		{
+		    RemoteFileEditorInput input = (RemoteFileEditorInput)element;    
 		    return input.canWrite();
 		}
+		
 		return super.isModifiable(element);
 	}
 	
-	public boolean isReadOnly(Object element) {
-	    if (element instanceof JavaFileEditorInput) {
-	        JavaFileEditorInput input = (JavaFileEditorInput)element;
-	        return !input.getPath(input).toFile().canWrite();
-		    
-		}
-		if (element instanceof RemoteFileEditorInput) {
-		    RemoteFileEditorInput input = (RemoteFileEditorInput)element;
-		    
-		    return !input.canWrite();
-		}
+	public boolean isReadOnly(Object element) 
+	{
+	    if(element instanceof JavaFileEditorInput) 
+	    {
+	    		JavaFileEditorInput input = (JavaFileEditorInput)element;
+	    		return !input.getPath(input).toFile().canWrite();
+	    }
+	    
+	    if(element instanceof RemoteFileEditorInput) 
+	    {
+	    		RemoteFileEditorInput input = (RemoteFileEditorInput)element;
+	    		return !input.canWrite();
+	    }
 	    return super.isReadOnly(element);
 	}
-	
 }

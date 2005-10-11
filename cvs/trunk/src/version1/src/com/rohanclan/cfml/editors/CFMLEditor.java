@@ -73,6 +73,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 //import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IFileEditorInput;
 //import org.eclipse.ui.IWorkbenchPage;
@@ -317,12 +319,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					}
 				}
 			}
-			/*
-			if (this.DEBUG) {
-			    IWorkbenchPage p = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			    System.out.println(p);
-			}
-			*/
+			
+			//if (this.DEBUG) {
+			    //IWorkbenchPage p = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			    //System.out.println(p);
+			//}
+			
 		} catch (Exception e) {
             
 

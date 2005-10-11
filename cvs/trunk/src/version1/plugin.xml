@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.2"
+   version="1.2.1"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -642,26 +642,29 @@
                id="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
          </action>
       </viewerContribution>
-      <objectContribution
-            objectClass="org.eclipse.core.resources.IProject"
-            nameFilter="*"
-            id="com.rohanclan.cfml.contribution1">
-		 <action
-         enablesFor="1"
-         label="Apply CFE Nature"
-         class="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"
-         tooltip="Associated the project with CFEclipse"
-         menubarPath="com.rohanclan.cfml.menu1"
-         id="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"/>
-         <menu
-               label="New Submenu"
-               path="additions"
-               id="com.rohanclan.cfml.menu1">
-            <separator name="group1"/>
-         </menu>
-        
-      </objectContribution>
-   </extension>
+      
+		<objectContribution
+			objectClass="org.eclipse.core.resources.IProject"
+			nameFilter="*"
+			id="com.rohanclan.cfml.contribution1"
+		>
+			<action
+				enablesFor="1"
+				label="Apply CFE Nature"
+				class="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"
+				tooltip="Associated the project with CFEclipse"
+				menubarPath="com.rohanclan.cfml.menu1"
+				id="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"
+			/>
+			<menu
+				label="New Submenu"
+				path="additions"
+				id="com.rohanclan.cfml.menu1"
+			>
+				<separator name="group1"/>
+			</menu>
+		</objectContribution>
+	</extension>
    
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Commands -->
@@ -1213,6 +1216,7 @@
             name="Code Folding"
             id="com.rohanclan.cfml.preferences.FoldingPreferencePage"/>
    </extension>
+   
    <extension
          point="org.eclipse.ui.propertyPages">
       <page

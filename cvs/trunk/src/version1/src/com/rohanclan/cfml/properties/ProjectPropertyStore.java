@@ -48,10 +48,15 @@ import com.rohanclan.cfml.CFMLPlugin;
  *
  * @author Oliver Tupman
  */
-public class ProjectPropertyStore implements IPreferenceStore {
-
-    public static final String P_CFML_DICTIONARY = "cfmlDictionary";
-    public static final String P_CFML_DICTIONARY_DEFAULT = "com.rohanclan.cfml.dictionary.CFMLMX";
+public class ProjectPropertyStore implements IPreferenceStore 
+{
+	/** this is the per project setting for their dictionary selection */
+    //public static final String P_CFML_DICTIONARY = "cfmlDictionary";
+    
+    /** the default key to the dictionary to use in this project.
+     * @see DictionaryManager 
+     */
+    //public static final String P_CFML_DICTIONARY_DEFAULT = "cfmx701";
     
     /** The project that this store wraps to provide the pref store */
     private IProject project;
@@ -72,7 +77,8 @@ public class ProjectPropertyStore implements IPreferenceStore {
      * 
      * @param srcProject The project that will store the preferences
      */
-    public ProjectPropertyStore(IProject srcProject) {
+    public ProjectPropertyStore(IProject srcProject) 
+    {
         this();
         //Assert.isNotNull(srcProject,"ProjectPropertyStore::ProjectPropertyStore()");
         if(srcProject == null)
@@ -90,7 +96,6 @@ public class ProjectPropertyStore implements IPreferenceStore {
      * Constructs a property store without a project.
      * This class will then store the set properties in a temporary variable
      * until the project is set. 
-     *
      */
     public ProjectPropertyStore()
     {
@@ -165,16 +170,16 @@ public class ProjectPropertyStore implements IPreferenceStore {
     /* (non-Javadoc)
      * @see org.eclipse.jface.preference.IPreferenceStore#firePropertyChangeEvent(java.lang.String, java.lang.Object, java.lang.Object)
      */
-    public void firePropertyChangeEvent(String name, Object oldValue,
-            Object newValue) {
+    public void firePropertyChangeEvent(String name, Object oldValue, Object newValue) 
+    {
         Object srcObj = (this.project != null) ? (Object)project : (Object)this.props;
         PropertyChangeEvent event = new PropertyChangeEvent(srcObj, name, oldValue, newValue);
         
         Iterator listenerIter = this.listeners.iterator();
+        
         while(listenerIter.hasNext())
         {
-            IPropertyChangeListener listener = (IPropertyChangeListener)listenerIter.next();
-            
+            IPropertyChangeListener listener = (IPropertyChangeListener)listenerIter.next();    
             listener.propertyChange(event);
         }
     }
@@ -321,6 +326,7 @@ public class ProjectPropertyStore implements IPreferenceStore {
      */
     public String getString(String name) {
         String retVal = "";
+        System.err.println("lookin: " + name);
         if(this.contains(name))
         {
             retVal = getProperty(getQName(name));
