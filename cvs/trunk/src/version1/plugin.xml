@@ -842,7 +842,7 @@
             commandId="com.rohanclan.cfml.editors.actions.InsertBR"
             contextId="org.eclipse.ui.textEditorScope"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+space">
+            keySequence="Ctrl+Enter">
       </keyBinding>
       <!-- insert an html nbsp action (for Michael Wolfe) -->
       <command
@@ -855,7 +855,7 @@
             commandId="com.rohanclan.cfml.editors.actions.InsertNBSP"
             contextId="org.eclipse.ui.textEditorScope"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Enter">
+            keySequence="Ctrl+Shift+space">
       </keyBinding>
       <!-- insert an html p action (for Michael Wolfe) -->
       <command
