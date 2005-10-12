@@ -45,9 +45,11 @@ import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
+import com.rohanclan.cfml.editors.CFWhitespaceDetector;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.CustomTagRule;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.NamedTagRule;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.NestableMultiLineRule;
+import com.rohanclan.cfml.editors.partitioner.scanners.rules.ShowWhitespaceRule;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.TagRule;
 import com.rohanclan.cfml.editors.partitioner.scanners.rules.TaglibRule;
 
@@ -228,7 +230,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		//a different color
 		rules.add(new TagRule(unktag));
 		
-		//rules.add(new WhitespaceRule(new CFWhitespaceDetector()));
+		//for debuggin
+		//rules.add(new ShowWhitespaceRule(new CFWhitespaceDetector()));
 		
 		IPredicateRule[] rulearry = new IPredicateRule[rules.size()];
 		rules.toArray(rulearry);
