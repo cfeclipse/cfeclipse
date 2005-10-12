@@ -42,8 +42,8 @@ import com.rohanclan.cfml.editors.CFMLEditor;
  * This is the base class for actions that enclose stuff. Like auto adding ##
  * or quotes etc - it is also used for what other products call snippets 
  */
-public class GenericEncloserAction extends Encloser implements IEditorActionDelegate {
-	
+public class GenericEncloserAction extends Encloser implements IEditorActionDelegate 
+{	
 	protected ITextEditor editor = null;
 	protected String start = "";
 	protected String end = "";
@@ -81,18 +81,15 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 		
 	public void run(IAction action) 
 	{
-		
-		
 		if(editor != null  && editor.isEditable())
 		{
 			/*
-			 * to fix the fact that you can run this function on readonly files, we are going to check the document here
-			 * The resutlts of editor.isEditable() dont seem to tally up with the method definition
-			 * System.out.println("you may edit this? But I shouldnt be able to save you: " + editor.isEditable());
+			 * to fix the fact that you can run this function on readonly files, we 
+			 * are going to check the document here The resutlts of editor.isEditable() 
+			 * dont seem to tally up with the method definition
+			 * System.out.println("you may edit this? But I shouldnt be able to 
+			 * save you: " + editor.isEditable());
 			 */
-			
-			
-			
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
 			this.enclose(doc,(ITextSelection)sel,start,end);
@@ -104,8 +101,7 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 			editor.setHighlightRange(offset,0,true);
 
 			// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
-			CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);
-			
+			CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);		
 		}
 	}
 

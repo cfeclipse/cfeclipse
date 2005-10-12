@@ -34,7 +34,8 @@ import org.eclipse.jface.text.BadLocationException;
  * This is mostly used as a class to wrap text with something (like a comment,
  * or a cf variable, etc). This class is often extended not used directly
  */
-public class Encloser {
+public class Encloser 
+{
 	/** 
 	 * Wraps the selection with the start and end string
 	 * @param doc the document this belongs to
@@ -53,9 +54,15 @@ public class Encloser {
 				int offset = sel.getOffset();
 				int len  = sel.getLength();
 				
+				if(start.length() <= 0 || end.length() <= 0)
+				{
+					len++;
+				}
+				
 				cmtpart.append(start);
 				cmtpart.append(doc.get(offset,len));
 				cmtpart.append(end);
+				
 				doc.replace(offset, len, cmtpart.toString());
 			}
 		}
