@@ -164,7 +164,9 @@ public class JSSyntaxDictionary extends SyntaxDictionary implements ISyntaxDicti
 		operators.add("=");
 		operators.add("!");
 		operators.add(">");
+		operators.add(">=");
 		operators.add("<");
+		operators.add("<=");
 		operators.add("&");
 		operators.add("&&");
 		operators.add("|");
