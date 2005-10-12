@@ -34,8 +34,6 @@ public class InsertNBSPAction extends GenericEncloserAction {
 	public InsertNBSPAction()
 	{
 		super("","");
-		//this will be ok till we figure out how to add snips to key strokes
-		//this adds extra white space which sucks
 		super.setEnclosingStrings("&nbsp;","");
 	}
 }
