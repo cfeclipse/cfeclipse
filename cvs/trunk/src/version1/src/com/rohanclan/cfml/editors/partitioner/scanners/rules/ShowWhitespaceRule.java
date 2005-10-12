@@ -14,6 +14,11 @@ import com.rohanclan.cfml.editors.ColorManager;
 import com.rohanclan.cfml.preferences.CFMLColorsPreferenceConstants;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 
+/**
+ * Used to try to debug, shouldn't be used in live distro
+ * @author robrohan
+ * @deprecated
+ */
 public class ShowWhitespaceRule implements IPredicateRule // implements IRule 
 {
 	private static final boolean DEBUG = false;
