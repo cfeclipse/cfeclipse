@@ -200,7 +200,16 @@ public class DictionaryManager
 		Node versionNode = dictionaryConfig.getElementById(versionkey);
 		
 		if(versionNode == null)
-			throw new IllegalArgumentException("Problem loading version node "+versionkey+" from dictionaryconfig.xml");
+		{
+			//TODO: remove this after a couple releases 
+			//this is a hack but it's only here for upgrades. New versions will not
+			//have any dictinoary set so when they open a file it'll pass null. Only
+			//cfml dictionaries call this at present. Once we get past a few releases
+			//this should go back to throwing an exception
+			versionkey = getFirstVersion(CFDIC);
+			versionNode = dictionaryConfig.getElementById(versionkey);
+			//throw new IllegalArgumentException("Problem loading version node "+versionkey+" from dictionaryconfig.xml");
+		}
 		
 		//get the dictype from the parent node
 		String dicttype = versionNode.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
