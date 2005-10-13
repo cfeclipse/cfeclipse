@@ -270,7 +270,7 @@ public class DictionaryManager
 			//try again..
 			loadDictionaryFromCache(cachekey, livekey);
 		}
-		else if(cachekey != null && cachekey.length() > 0)
+		else if(cachekey != null || cachekey.length() > 0)
 		{
 			return;
 		}
