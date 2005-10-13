@@ -86,8 +86,12 @@ public class CFDocumentProvider extends FileDocumentProvider
 		
 		if(document != null) 
 		{
-			//try to load the proper dictionary syntax for this document
-			CFMLPropertyManager pm = new CFMLPropertyManager();			
+			//try to load the proper dictionary syntax for this document			
+			CFMLPropertyManager pm = new CFMLPropertyManager();
+			String currentDict = pm.getCurrentDictionary();
+			if(currentDict == null || currentDict == "") 
+				currentDict = DictionaryManager.getFirstVersion(DictionaryManager.CFDIC);
+			
 			DictionaryManager.loadDictionaryFromCache(
 				pm.getCurrentDictionary(),
 				DictionaryManager.CFDIC

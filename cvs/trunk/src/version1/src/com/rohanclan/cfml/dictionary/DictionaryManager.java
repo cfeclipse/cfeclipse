@@ -118,9 +118,9 @@ public class DictionaryManager
 		
 		//load the default dictionaries into the cache
 		//this is kind of weak but it'll do pig... it'll do...
-		String cfdictversion = dictionaryConfig.getElementById(CFDIC).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
-		String htdictversion = dictionaryConfig.getElementById(HTDIC).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
-		String jsdictversion = dictionaryConfig.getElementById(JSDIC).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
+		String cfdictversion = getFirstVersion(CFDIC);
+		String htdictversion = getFirstVersion(HTDIC);
+		String jsdictversion = getFirstVersion(JSDIC);
 		
 		//load the dictionary into the cache
 		loadDictionaryByVersion(cfdictversion);
@@ -134,6 +134,19 @@ public class DictionaryManager
 		loadDictionaryFromCache(jsdictversion,JSDIC);
 				
 		System.out.println("Dictionaries initialized in " + (System.currentTimeMillis() - time) + " ms");
+	}
+	
+	/**
+	 * Gets the first version set in the dictionaryconfig file for the given dictionary.
+	 * This is useful when hitting an error and wanting to get a fall back dictionary.
+	 * This might error if there are no versions defined for the given dictionary
+	 * (or if the document is not valid)
+	 * @param forDictionary
+	 * @return
+	 */
+	public static String getFirstVersion(String forDictionary)
+	{
+		return dictionaryConfig.getElementById(forDictionary).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
 	}
 	
 	/**
@@ -185,7 +198,10 @@ public class DictionaryManager
 		//grab the cfml dictionary
 		//Node n = dictionaryConfig.getElementById(CFDIC).getFirstChild();
 		Node versionNode = dictionaryConfig.getElementById(versionkey);
-				
+		
+		if(versionNode == null)
+			throw new IllegalArgumentException("Problem loading version node "+versionkey+" from dictionaryconfig.xml");
+		
 		//get the dictype from the parent node
 		String dicttype = versionNode.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
 		
