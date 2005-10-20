@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using character classes</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000987.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000989.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using character classes</h1>
+<p>In character sets within regular expressions, you can include a character class. You enclose the character class inside square brackets, as the following example shows:</p>
+<pre>REReplace (&quot;Macromedia Web Site&quot;,&quot;[<strong>[:space:]</strong>]&quot;,&quot;*&quot;,&quot;ALL&quot;)
+</pre><p>This code replaces all the spaces with *, producing this string:</p>
+<pre>Macromedia*Web*Site
+</pre><p>You can combine character classes with other expressions within a character set. For example, the regular expression [[:space:]123] searches for a space, 1, 2, or 3. The following example also uses a character class in a regular expression: </p>
+<pre>&lt;cfset IndexOfOccurrence=<strong>REFind</strong>(&quot;<strong>[[:space:]][A-Z]+[[:space:]]</strong>&quot;, 
+   &quot;Some BIG string&quot;)&gt;
+&lt;!--- The value of IndexOfOccurrence is 5 ---&gt;
+</pre><p>The following table shows the character classes that ColdFusion supports. Regular expressions using these classes match any Unicode character in the class, not just ASCII or ISO-8859 characters.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Character class
+    </th>
+    <th>
+Matches
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>:alpha:</p>
+    </td>
+    <td>
+<p>Any alphabetic character.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>:upper:</p>
+    </td>
+    <td>
+<p>Any uppercase alphabetic character.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>:lower:</p>
+    </td>
+    <td>
+<p>Any lowercase alphabetic character</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>:digit:</p>
+    </td>
+    <td>
+<p>Any digit. Same as \d.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>:alnum:</p>
+    </td>
+    <td>
+<p>Any alphanumeric character. Same as \w.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>:xdigit:</p>
+    </td>
+    <td>
+<p>Any hexadecimal digit. Same as [0-9A-Fa-f].</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>:blank:</p>
+    </td>
+    <td>
+<p>Space or a tab.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>:space:</p>
+    </td>
+    <td>
+<p>Any whitespace character. Same as \s.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>:print:</p>
+    </td>
+    <td>
+<p>Any alphanumeric, punctuation, or space character.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>:punct:</p>
+    </td>
+    <td>
+<p>Any punctuation character</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>:graph:</p>
+    </td>
+    <td>
+<p>Any alphanumeric or punctuation character.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>:cntrl:</p>
+    </td>
+    <td>
+<p>Any character not part of the character classes [:upper:], [:lower:], [:alpha:], [:digit:], [:punct:], [:graph:], [:print:], or [:xdigit:].</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>:word:</p>
+    </td>
+    <td>
+<p>Any alphanumeric character, plus the underscore (_)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>:ascii:</p>
+    </td>
+    <td>
+<p>The ASCII characters, in the Hexadecimal range 0 - 7F</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000987.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000989.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000988.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

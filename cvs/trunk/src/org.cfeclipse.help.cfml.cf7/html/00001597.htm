@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Sending form-based e-mail</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001596.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001598.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Sending form-based e-mail</h1>
+<p>In the following example, the contents of a customer inquiry form submittal are forwarded to the marketing department. You could also use the same application page to insert the customer inquiry into the database. You include the following code on your form so that it executes when users enter their information and submit the form:</p>
+<pre>&lt;cfmail
+   from=&quot;#Form.EMailAddress#&quot;
+   to=&quot;marketing@MyCompany.com,sales@MyCompany.com&quot;
+   subject=&quot;Customer Inquiry&quot;&gt;
+
+A customer inquiry was posted to our web site:
+
+Name: #Form.FirstName# #Form.LastName#
+Subject: #Form.Subject#
+
+#Form.InquiryText#
+&lt;/cfmail&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001596.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001598.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001597.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

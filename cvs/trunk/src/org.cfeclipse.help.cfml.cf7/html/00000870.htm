@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Functions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000869.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000871.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Functions</h1>
+<p><i>Functions</i> typically manipulate data and return a result. CFML includes over 280 built-in functions. You can also create user-defined functions (UDFs), sometimes referred to as custom functions.</p>
+<p>Functions have the following general form:</p>
+<pre>functionName([argument1[, argument2]]...)
+</pre><p>Some functions, such as the <code>Now</code> function take no arguments. Other functions require one or more comma-separated arguments and can have additional optional arguments. All ColdFusion functions return a value. For example, <code>Round(3.14159)</code> returns the value 3.</p>
+<h2><a name="wp2723121"></a>Built-in functions</h2>
+<p>ColdFusion built-in functions perform a variety of tasks, including, but not limited to, the following:</p>
+<ul>
+<li>
+   Creating and manipulating complex data variables, such as arrays, lists, and structures
+</li>
+<li>
+   Creating and manipulating queries
+</li>
+<li>
+   Creating, analyzing, manipulating, and formatting strings and date and time values
+</li>
+<li>
+   Evaluating the values of dynamic data 
+</li>
+<li>
+   Determining the type of a variable value
+</li>
+<li>
+   Converting data between formats
+</li>
+<li>
+   Performing mathematical operations
+</li>
+<li>
+   Getting system information and resources
+</li>
+</ul>
+<p>For alphabetical and categorized lists of ColdFusion functions, see <a href="00000353.htm#3082862">ColdFusion Functions</a> in <i>CFML Reference</i>.</p>
+<p>You use built-in functions throughout ColdFusion pages. Built-in functions are frequently used in a <a href="00000334.htm#1103445"><code>cfset</code></a> or <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag to prepare data for display or further use. For example, the following line displays today's date in the format October 12, 2001:</p>
+<pre>&lt;cfoutput&gt;#DateFormat(Now(), &quot;mmmm d, yyyy&quot;)#&lt;/cfoutput&gt;
+</pre><p>Note that this code uses two <i>nested</i> functions. The <a href="00000590.htm#134078"><code>Now</code></a> function returns a ColdFusion date-time value representing the current date and time. The <a href="00000441.htm#1103264"><code>DateFormat</code></a> function takes the value returned by the <code>Now</code> function and converts it to the desired string representation.</p>
+<p>Functions are also valuable in CFScript scripts. ColdFusion does not support ColdFusion tags in CFScript, so you must use functions to access ColdFusion functionality in scripts.</p>
+<h2><a name="wp2719668"></a>User-defined functions</h2>
+<p>You can write your own functions, <i>user-defined functions</i> (UDFs). You can use these functions in ColdFusion expressions or in CFScript. You can call a user-defined function anywhere you can use a built-in CFML function. You create UDFs using the <code>cffunction</code> tag or the CFScript <code>function</code> statement. UDFs that you create using the <code>cffunction</code> tag can include ColdFusion tags and functions. UDFs that you create in CFScript can only include functions. You can create stand-alone UDFs or encapsulate them in a ColdFusion component.</p>
+<p>User-defined functions let you encapsulate logic and operations that you use frequently in a single unit. This way, you can write the code once and use it multiple times. UDFs ensure consistency of coding and enable you to structure your CFML more efficiently.</p>
+<p>Typical user-defined functions include mathematical routines, such as a function to calculate the logarithm of a number; string manipulation routines, such as a function to convert a numeric monetary value to a string such as &quot;two dollars and three cents&quot;; and can even include encryption and decryption routines.</p>
+<p><strong>Note: </strong>The Common Function Library Project at <a href="http://www.cflib.org" target="mm_window">www.cflib.org</a> includes a number of free libraries of user-defined functions. </p><p>For more information on user-defined functions, see <a href="00001001.htm#1167055">Writing and Calling User-Defined Functions</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000869.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000871.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000870.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

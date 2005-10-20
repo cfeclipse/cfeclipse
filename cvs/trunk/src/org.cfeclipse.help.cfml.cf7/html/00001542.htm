@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Handling inout and out parameters</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001541.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001543.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Handling inout and out parameters</h1>
+<p>Some web services define inout and out parameters. You use <i>out</i> parameters to pass a placeholder for a return value to a web service. The web service then returns its result by writing it to the out parameter. <i>Inout</i> parameters let you pass a value to a web service and lets the web service return its result by overwriting the parameter value. </p>
+<p>The following example shows a web service that takes as input an inout parameter containing a string and writes its results back to the string: </p>
+<pre>&lt;cfset S=&quot;foo&quot;&gt;
+&lt;cfscript&gt;
+   ws=createobject(&quot;webservice&quot;, &quot;<code><i>URLtoWSDL</i></code>&quot;)
+   ws.modifyString(&quot;S&quot;);
+&lt;cfscript&gt;
+&lt;cfoutput&gt;#S#&lt;/cfoutput&gt;
+</pre><p>Even though this web service takes as input the value of S, because you pass it as an inout parameter, you do not enclose it in number signs. </p>
+<p><strong>Note: </strong>ColdFusion&#160;MX supports the use of inout and out parameters to consume web services. However, ColdFusion&#160;MX does not support inout and out parameters when creating web services for publication. </p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001541.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001543.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001542.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

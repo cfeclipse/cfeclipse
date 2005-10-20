@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>REReplace</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000613.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000615.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>REReplace</h1>
+<h4><a name="wp135743"></a>Description</h4>
+<p>Uses a regular expression (RE) to search a string for a string pattern and replace it with another. The search is case-sensitive.</p>
+<h4><a name="wp135745"></a>Returns</h4>
+<p>If the <code><i>scope</i></code> parameter is set to <code>one</code>, returns a string with the first occurrence of the regular expression replaced by the value of <i>substring</i>.</p>
+<p>If the <code><i>scope</i></code> parameter is set to <code>all</code>, returns a string with all occurrences of the regular expression replaced by the value of <i>substring</i>. </p>
+<p>If the function finds no matches, it returns a copy of the string unchanged. </p>
+<h4><a name="wp135749"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp135754"></a>Function syntax</h4>
+<pre><code><strong>REReplace</strong></code>(<i>string</i>, <i>reg_expression</i>, <i>substring</i> [, <i>scope</i> ])
+</pre><h4><a name="wp135756"></a>See also</h4>
+<p><a href="00000606.htm#135102">REFind</a>, <a href="00000611.htm#135527">Replace</a>, <a href="00000612.htm#135597">ReplaceList</a>, <a href="00000615.htm#135829">REReplaceNoCase</a></p>
+<h4><a name="wp135770"></a>History</h4>
+<p>ColdFusion&#160;MX: Added supports for the following special codes in a replacement substring, to control case conversion: </p>
+<ul>
+<li>
+   \u - uppercase the next character
+</li>
+<li>
+   \l - lowercase the next character
+</li>
+<li>
+   \U - uppercase until \E 
+</li>
+<li>
+   \L - lowercase until \E 
+</li>
+<li>
+   \E - end \U or \L
+</li>
+</ul>
+<p>For more information on new features, see <a href="00000606.htm#135102"><code>REFind</code></a>.</p>
+<h4><a name="wp135784"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. String within which to search. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>reg_expression</p>
+    </td>
+    <td>
+<p>Regular expression to replace. The search is case-sensitive. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>substring</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Replaces <code>reg_expression</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>scope</p>
+    </td>
+    <td>
+<ul>
+<li>
+   one: replaces the first occurrence (default).
+</li>
+<li>
+   all: replaces all occurrences.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp135808"></a>Usage</h4>
+<p>For details on using regular expressions, see <a href="00000980.htm#1100400">Using Regular Expressions in Functions</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp135816"></a>Example</h4>
+<pre>&lt;p&gt;The REReplace function returns &lt;i&gt;string&lt;/i&gt; with a regular expression replaced<br />with &lt;i&gt;substring&lt;/i&gt; in the specified scope. Case-sensitive search.
+&lt;p&gt;REReplace(&quot;CABARET&quot;,&quot;C|B&quot;,&quot;G&quot;,&quot;ALL&quot;):   
+&lt;cfoutput&gt;#REReplace(&quot;CABARET&quot;,&quot;C|B&quot;,&quot;G&quot;,&quot;ALL&quot;)#&lt;/cfoutput&gt;
+&lt;p&gt;REReplace(&quot;CABARET&quot;,&quot;[A-Z]&quot;,&quot;G&quot;,&quot;ALL&quot;):   
+&lt;cfoutput&gt;#REReplace(&quot;CABARET&quot;,&quot;[A-Z]&quot;,&quot;G&quot;,&quot;ALL&quot;)#&lt;/cfoutput&gt;
+&lt;p&gt;REReplace(&quot;I love jellies&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;):
+&lt;cfoutput&gt;#REReplace(&quot;I love jellies&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;)#
+ &lt;/cfoutput&gt;
+&lt;p&gt;REReplace(&quot;I love jelly&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;):
+&lt;cfoutput&gt;#REReplace(&quot;I love jelly&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;)#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000613.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000615.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000614.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

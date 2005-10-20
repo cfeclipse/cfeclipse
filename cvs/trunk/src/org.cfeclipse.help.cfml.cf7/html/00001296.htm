@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Advanced topics</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001295.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001297.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Advanced topics</h1>
+<p>The following sections present advanced topics that enable you to use LDAP directories more effectively.</p>
+<ul>
+<li>
+   <a href="00001296.htm#1117928">Specifying an attribute that includes a comma or semicolon</a>
+</li>
+<li>
+   <a href="00001297.htm#1128042">Using cfldap output</a>
+</li>
+<li>
+   <a href="00001298.htm#1111623">Viewing a directory schema</a>
+</li>
+<li>
+   <a href="00001299.htm#1111869">Referrals</a>
+</li>
+<li>
+   <a href="00001300.htm#1196426">Managing LDAP security</a>
+</li>
+</ul>
+<h2><a name="wp1117928"></a>Specifying an attribute that includes a comma or semicolon</h2>
+<p>LDAP attribute values can contain commas. The <a href="00000283.htm#1100581"><code>cfldap</code></a> tag normally uses commas to separate attribute values in a value list. Similarly, an attribute can contain a semicolon, which <code>cfldap</code> normally uses to delimit (separate) attributes in an attribute list. To override the default separator and delimiter characters, you use the <code>cfldap</code> tag <code>separator</code> and <code>delimiter</code> attributes. </p>
+<p>For example, assume you want to add the following attributes to an LDAP entry:</p>
+<pre>cn=Proctor, Goodman, and Jones
+description=Friends of the company; Rationalists
+</pre><p>Use the <code>cfldap</code> tag in the following way:</p>
+<pre>&lt;cfldap action=&quot;modify&quot;
+   modifyType=&quot;add&quot;
+   attributes=&quot;cn=Proctor, Goodman, and Jones: description=Friends<br />of the company; Rationalists&quot;
+   dn=&quot;uid=goodco, ou=People, o=Airius.com&quot;
+   separator=&quot;&amp;&quot;
+   delimiter=&quot;:&quot;
+   server=#myServer#
+   username=#myUserName#
+   password=#myPassword#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001295.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001297.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001296.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using multiple database tables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001231.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001233.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using multiple database tables</h1>
+<p>In many database designs, information is distributed to multiple tables. The following figure shows two tables, one for employee information and one for employee addresses: </p>
+<p>d<br />
+<img src="images/sqla4.jpg" alt="Employee information and employee address tables" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>In this example, each table contains a column named EmpID. This column associates a row of the employees table with a row in the addresses table. </p>
+<p>For example, to obtain all information about an employee, you request a row from the employees table and the row from the addresses table with the same value for EmpID. </p>
+<p>One advantage of using multiple tables is that you can add tables containing new information without modifying the structure of your existing tables. For example, to add payroll information, you add a new table to the database where the first column contains the employee's ID and the columns contain current salary, previous salary, bonus payment, and 401(k) percent.</p>
+<p>Also, an access to a small table is more efficient than an access to a large table. Therefore, if you update the street address of an employee, you update only the addresses table, without having to access any other table in the database.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001231.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001233.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001232.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

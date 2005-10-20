@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Custom tag example with attributes</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001075.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001077.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Custom tag example with attributes</h1>
+<p>The example in this section creates a custom tag that uses an attribute that is passed to it to set the value of a variable called Doctor on the calling page.</p>
+<h4>To create a custom tag:</h4>
+<ol>
+<li>
+   Create a new ColdFusion page (the calling page) with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Enter Name&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!--- Enter a name, which could also be done in a form ---&gt;
+&lt;!--- This example simply uses a cfset ---&gt;
+&lt;cfset NameYouEntered=&quot;Smith&quot;&gt;
+
+&lt;!--- Display the current name ---&gt;
+&lt;cfoutput&gt;
+Before you leave this page, you&#39;re #Variables.NameYouEntered#.&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;!--- go to the custom tag ---&gt;
+&lt;cf_getmd Name=&quot;#NameYouEntered#&quot;&gt;
+&lt;!--- Come back from the Custom tag ---&gt;
+
+&lt;!--- display the results of the custom tag ---&gt;
+&lt;cfoutput&gt;
+You are now #Variables.Doctor#.&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as <code>callingpage.cfm</code>.
+</li>
+<li>
+   Create another new page (the custom tag) with the following content:
+<pre>
+&lt;!--- The value of the variable Attributes.Name comes from the calling page.
+&#160;&#160;&#160;&#160;&#160;&#160;If the calling page does not set it, make it &quot;Who&quot;. ---&gt;
+&lt;cfparam name=&quot;Attributes.Name&quot; default=&quot;Who&quot;&gt;
+
+&lt;!--- Create a variable called Doctor, make its value &quot;Doctor &quot; 
+		 followed by the value of the variable Attributes.Name.
+		 Make its scope Caller so it is passed back to the calling page
+---&gt;
+&lt;cfset Caller.Doctor=&quot;Doctor &quot; &amp; Attributes.Name&gt;
+</pre>
+</li>
+<li>
+   Save the page as <code>getmd.cfm</code>.
+</li>
+<li>
+   Open the file <code>callingpage.cfm</code> in your browser.
+</li>
+</ol>
+<p>The calling page uses the <code>getmd</code> custom tag and displays the results.</p>
+<h4><a name="wp1123680"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset NameYouEntered=&quot;Smith&quot;&gt;
+</pre>    </td>
+    <td>
+<p>In the calling page, create a variable NameYouEntered and assign it the value &quot;Smith.&quot;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+Before you leave this page, you&#39;re<br />   #Variables.NameYouEntered#.&lt;br&gt;
+&lt;/cfoutput&gt;
+
+</pre>    </td>
+    <td>
+<p>In the calling page, display the value of the NameYouEntered variable before calling the custom tag.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cf_getmd Name=&quot;#NameYouEntered#&quot;&gt;
+</pre>    </td>
+    <td>
+<p>In the calling page, call the getmd custom tag and pass it the <code>Name</code> attribute whose value is the value of the local variable NameYouEntered.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfparam name=&quot;Attributes.Name&quot; default=&quot;Who&quot;&gt;
+</pre>    </td>
+    <td>
+<p>The custom tag page normally gets the Name variable in the Attributes scope from the calling page. Assign it the value &quot;Who&quot; if the calling page did not pass an attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset Caller.Doctor=&quot;Doctor &quot; &amp; Attributes.Name&gt;
+</pre>    </td>
+    <td>
+<p>In the custom tag page, create a variable called Doctor in the Caller scope so it will exist in the calling page as a local variable.</p>
+<p>Set its value to the concatenation of the string &quot;Doctor&quot; and the value of the Attributes.Name variable.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+You are now #Variables.Doctor#.&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>In the calling page, display the value of the Doctor variable returned by the custom tag page. (This example uses the Variables scope prefix to emphasize the fact that the variable is returned as a local variable.)</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001075.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001077.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001076.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

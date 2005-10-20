@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Attaching to a collection using the rcvdk utility</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001814.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001816.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Attaching to a collection using the rcvdk utility</h1>
+<p>To search a collection, you first must attach to it using the <code>attach</code> <code>(a)</code> command. This command must include the pathname to a collection directory as an argument. After you press Return, the rcvdk utility reports whether the <code>attach</code> command was successful; for example:</p>
+<pre>RC&gt;a /z/doc1/c/public/Collection/file_walking/collbldg/html
+Attaching to collection:
+/z/doc1/c/public/Collection/file_walking/collbldg/html
+Successfully attached to 1 collection.
+RC&gt;
+</pre><p>The rcvdk utility lets you attach to one or more collections. The specified collections remain attached until you detach from one or more collections using the <code>detach</code> <code>(d)</code> command.</p>
+<h3><a name="wp1017932"></a>Basic searching</h3>
+<p>To retrieve all documents, use the <code>search</code> <code>(s)</code> command without arguments. After you press Return, a search update message is produced, as follows:</p>
+<pre>RC&gt;s
+Search update: finished (100%). Retrieved: 85(85)/85.
+RC&gt;
+</pre><p>The search results indicate that 85 of the total 85 documents in the collection were retrieved. If you specify a query argument, such as &quot;universal filter,&quot; a subset of the total documents in the collection that contain the specified string is retrieved; for example:</p>
+<pre>RC&gt;s universal filter
+Search update: finished (100%). Retrieved: 18(18)/85.
+RC&gt;
+</pre><p>In the message returned for the preceding search, the rcvdk utility indicates that 18 documents matched the query. You can perform more elaborate queries using the Verity query language, as shown in the following example:</p>
+<pre>RC&gt;s universal filter &lt;OR&gt; filter.Troubleshooting and Maintenance Tools
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001814.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001816.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001815.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

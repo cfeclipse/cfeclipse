@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>QueryAddColumn</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000597.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000599.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>QueryAddColumn</h1>
+<h4><a name="wp134611"></a>Description</h4>
+<p>Adds a column to a query and populates its rows with the contents of a one-dimensional array. Pads query columns, if necessary, to ensure that all columns have the same number of rows.</p>
+<h4><a name="wp134613"></a>Returns</h4>
+<p>The number of the column that was added.</p>
+<h4><a name="wp134615"></a>Category</h4>
+<p><a href="00000367.htm#1099653">Query functions</a></p>
+<h4><a name="wp134620"></a>Function syntax</h4>
+<pre><code><strong>QueryAddColumn</strong></code>(<code><i>query</i></code>, <i>column-name</i>[, <code><i>datatype</i></code>], array-name)
+</pre><h4><a name="wp134622"></a>See also</h4>
+<p><a href="00000600.htm#134773"><code>QueryNew</code></a>, <a href="00000599.htm#134706"><code>QueryAddRow</code></a>, <a href="00000601.htm#134832"><code>QuerySetCell</code></a>; <a href="00001270.htm#1182700">Managing data types for columns</a> in <a href="00001263.htm#1181595">Using Query of Queries</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp134633"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code>datatype</code> parameter.</p>
+<p>ColdFusion MX: Changed behavior: if a user attempts to add a column whose name is invalid, ColdFusion throws an error. (In earlier releases, ColdFusion permitted the add operation, but the user could not reference the column after adding it.) </p>
+<h4><a name="wp134635"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Name of a query object.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>column-name</p>
+    </td>
+    <td>
+<p>Name of the new column.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>datatype</p>
+    </td>
+    <td>
+<p>(Optional) Column data type. ColdFusion generates an error if data you add to the column is not of this type, or if it cannot convert the data to this type. The following data types are valid:</p>
+<ul>
+<li>
+   Integer: 32-bit integer
+</li>
+<li>
+   BigInt: 64-bit integer
+</li>
+<li>
+   Double: 64-bit decimal number
+</li>
+<li>
+   Decimal: Variable length decimal, as specified by java.math.BigDecimal
+</li>
+<li>
+   VarChar: String
+</li>
+<li>
+   Binary: Byte array
+</li>
+<li>
+   Bit: Boolean (1=True, 0=False)
+</li>
+<li>
+   Time: Time
+</li>
+<li>
+   Data: Date (can include time information)
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>array-name</p>
+    </td>
+    <td>
+<p>Name of an array whose elements populate the new column.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp134654"></a>Usage</h4>
+<p>You can add columns to query objects, such as queries retrieved with the <code>cfquery</code> tag or queries created with the <code>QueryNew</code> function. You cannot use the <code>QueryAddColumn</code> function on a cached query. This function is useful for generating a query object from the arrays of output parameters that Oracle stored procedures can generate.</p>
+<p>Macromedia recommends that you use the optional <code><i>datatype</i></code> parameter. Without this parameter, ColdFusion must try to determine the column's data type when it uses the query object in a query of queries. Determining the data type requires additional processing, and can result in errors if ColdFusion does not guess the type correctly.</p>
+<h4><a name="wp134657"></a>Example</h4>
+<p>The following example creates a new query object, uses the <code>QueryAddColumn</code> function to add three columns to the object, and displays the results. Because two of the arrays that provide the data are shorter than the third, QueryAddColumn adds padding to the corresponding columns in the query.</p>
+<pre>&lt;!--- Make a query. ---&gt;
+&lt;cfset myQuery = QueryNew(&quot;&quot;)&gt;
+
+&lt;!--- Create an array. ---&gt;
+&lt;cfset FastFoodArray = ArrayNew(1)&gt;
+&lt;cfset FastFoodArray[1] = &quot;French Fries&quot;&gt;
+&lt;cfset FastFoodArray[2] = &quot;Hot Dogs&quot;&gt;
+&lt;cfset FastFoodArray[3] = &quot;Fried Clams&quot;&gt;
+&lt;cfset FastFoodArray[4] = &quot;Thick Shakes&quot;&gt;
+&lt;!--- Use the array to add a column to the query. ---&gt;
+&lt;cfset nColumnNumber =<code><strong> QueryAddColumn(myQuery, &quot;FastFood&quot;, &quot;VarChar&quot;,<br />      FastFoodArray)&gt;</strong></code>
+
+&lt;!--- Create a second array. ---&gt;
+&lt;cfset FineCuisineArray = ArrayNew(1)&gt;
+&lt;cfset FineCuisineArray[1] = &quot;Lobster&quot;&gt;
+&lt;cfset FineCuisineArray[2] = &quot;Flambe&quot;&gt;
+&lt;!--- Use the array to add a second column to the query. ---&gt;
+&lt;cfset nColumnNumber2 = <code><strong>QueryAddColumn(myQuery, &quot;FineCuisine&quot;, &quot;VarChar&quot;,<br />       FineCuisineArray)&gt;</strong></code>
+
+&lt;!--- Create a third array. ---&gt;
+&lt;cfset HealthFoodArray = ArrayNew(1)&gt;
+&lt;cfset HealthFoodArray[1] = &quot;Bean Curd&quot;&gt;
+&lt;cfset HealthFoodArray[2] = &quot;Yogurt&quot;&gt;
+&lt;cfset HealthFoodArray[3] = &quot;Tofu&quot;&gt;
+&lt;!--- Use the array to add a third column to the query. ---&gt;
+&lt;cfset nColumnNumber3 = <code><strong>QueryAddColumn(myQuery, &quot;HealthFood&quot;, &quot;VarChar&quot;,<br />       HealthFoodArray)&gt;</strong></code>
+
+&lt;!--- Display the results. ---&gt;
+&lt;table cellspacing = &quot;2&quot; cellpadding = &quot;2&quot; border = &quot;0&quot;&gt;
+&lt;tr&gt;
+  &lt;th align = &quot;left&quot;&gt;Fast Food&lt;/th&gt;
+  &lt;th align = &quot;left&quot;&gt;Fine Cuisine&lt;/th&gt;
+  &lt;th align = &quot;left&quot;&gt;Health Food&lt;/th&gt;
+&lt;/tr&gt;
+&lt;cfoutput query = &quot;myQuery&quot;&gt;
+&lt;tr&gt;
+  &lt;td&gt;#FastFood#&lt;/td&gt;
+  &lt;td&gt;#FineCuisine#&lt;/td&gt;
+  &lt;td&gt;#HealthFood#&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/cfoutput&gt;
+&lt;/table&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000597.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000599.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000598.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

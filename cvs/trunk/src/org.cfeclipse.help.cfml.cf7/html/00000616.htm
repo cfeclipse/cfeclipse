@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Reverse</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000615.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000617.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Reverse</h1>
+<h4><a name="wp135914"></a>Description</h4>
+<p>Reverses the order of items, such as the characters in a string, the digits in a number, or the elements in an array. </p>
+<h4><a name="wp135916"></a>Returns</h4>
+<p>A copy of <i>string, </i>with the characters in reverse order.</p>
+<h4><a name="wp135918"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp135923"></a>Function syntax</h4>
+<pre><code><strong>Reverse</strong></code>(<i>string</i>)
+</pre><h4><a name="wp135925"></a>See also</h4>
+<p><a href="00000545.htm#130173">Left</a>, <a href="00000585.htm#133799">Mid</a>, <a href="00000617.htm#135972">Right</a></p>
+<h4><a name="wp135936"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp135947"></a>Usage</h4>
+<p>You can call this function on a number with code such as the following:</p>
+<pre>
+&lt;cfoutput&gt;reverse(6*2) equals #reverse(6*2)#&lt;cfoutput&gt;
+</pre>
+<p>This code outputs the following:</p>
+<pre>
+reverse(6*2) equals 21
+</pre>
+<h4><a name="wp135952"></a>Example</h4>
+<pre>&lt;h3&gt;Reverse Example&lt;/h3&gt;
+
+&lt;p&gt;Reverse returns your string with the positions of the characters reversed.
+&lt;cfif IsDefined(&quot;FORM.myString&quot;)&gt;
+   &lt;cfif FORM.myString is not &quot;&quot;&gt;
+      &lt;p&gt;Reverse returned:
+      &lt;cfoutput&gt;#<strong>Reverse(FORM.myString)</strong>#&lt;/cfoutput&gt;
+   &lt;cfelse&gt;
+      &lt;p&gt;Please enter a string to be reversed.
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action = &quot;reverse.cfm&quot;&gt;
+&lt;p&gt;Enter a string to be reversed:
+&lt;input type = &quot;Text&quot; name = &quot;MyString&quot;&gt;
+&lt;p&gt;&lt;input type = &quot;Submit&quot; name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000615.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000617.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000616.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

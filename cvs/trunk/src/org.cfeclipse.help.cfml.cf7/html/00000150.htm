@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Adding navigation buttons to browse the database</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000149.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000151.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Adding navigation buttons to browse the database</h1>
+<p>The drill-down search function developed in <a href="00000140.htm#1181359">Lesson 5: Creating a Trip Detail Page</a> is very useful when the user knows some search criteria to enter. Flipping back and forth between the results page and the detail page to navigate through a record set can be tedious. Moreover, on occasion the trip coordinator might want to browse the Trips database just to check for anomalies or to become familiar with its contents. In these cases, the trip coordinator does not know the criteria to search for in advance. </p>
+<p>The following figure shows the navigation buttons. The label below each button does not appear in the application; it describes which row to display relative to the currently displayed row.</p>
+<p><br />
+<img src="images/navbutt2.jpg" alt="This image shows a picture of the Trip Detail page navigation buttons." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<h4>To add navigation buttons to the Trip Detail page:</h4>
+<ol>
+<li>
+   Open the tripdetail.cfm file in the my_app directory.
+</li>
+<li>
+   Insert the following code between the <code>&lt;/table&gt;</code> and <code>&lt;/cfoutput&gt;</code> tags:
+<pre>
+&lt;form action=&quot;navigationaction.cfm&quot; method=&quot;post&quot;&gt;
+	&lt;input type=&quot;hidden&quot; name=&quot;RecordID&quot; value=&quot;#tripID#&quot;&gt;
+	&lt;!--- graphical navigation buttons ---&gt;
+	&lt;input type=&quot;image&quot; name=&quot;btnFirst&quot; src=&quot;images/first.gif&quot;&gt;
+	&lt;input type=&quot;image&quot; name=&quot;btnPrev&quot; src=&quot;images/prev.gif&quot;&gt;
+	&lt;input type=&quot;image&quot; name=&quot;btnNext&quot; src=&quot;images/next.gif&quot;&gt;
+	&lt;input type=&quot;image&quot; name=&quot;btnLast&quot; src=&quot;images/last.gif&quot;&gt;
+&lt;/form&gt;
+</pre>
+<p><strong>Note: </strong>The current trip record ID (<code>tripID</code>) is in a hidden field in the form code. This field provides the action page with current record ID that it must have in order to build the query to access the appropriate record in the Trips database table.</p></li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To test the updated application:</h4>
+<ol>
+<li>
+   View the updated tripdetail.cfm page in a browser.
+<p>The Trip Search Results page appears:</p>
+<p><br />
+<img src="images/trip_de3.jpg" alt="This image shows a picture of the Trip Search Results page." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+<li>
+   Test the buttons by clicking any navigation button. 
+<p>An error occurs because the navigation action page (navigationaction.cfm) does not exist. The navigation action page processes the navigation button requests. You will build the navigation action page in <a href="00000154.htm#1141005">Lesson 7: Validating Data to Enforce Business&#160;Rules</a>.</p>
+</li>
+</ol>
+<h4><a name="wp1153413"></a>Reviewing the code </h4>
+<p>The following table describes the navigation code for the Trip Detail page:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;form action=&quot;navigationaction.cfm&quot; method=&quot;post&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Form tag that identifies the navigationaction.cfm file to handle record navigation.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;INPUT type=&quot;hidden&quot; name=&quot;RecordID&quot; value=&quot;#tripID#&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Hidden <code>RecordID</code> field with the value of the current <code>tripID</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;input type=&quot;image&quot; name=&quot;btnFirst&quot; src=&quot;images/first.gif&quot;&gt;
+&lt;input type=&quot;image&quot; name=&quot;btnPrev&quot; src=&quot;images/prev.gif&quot;&gt;
+&lt;input type=&quot;image&quot; name=&quot;btnNext&quot; src=&quot;images/next.gif&quot;&gt;
+&lt;input type=&quot;image&quot; name=&quot;btnLast&quot; src=&quot;images/last.gif&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Navigation buttons that are image type HTML input tags. </p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000149.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000151.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000150.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

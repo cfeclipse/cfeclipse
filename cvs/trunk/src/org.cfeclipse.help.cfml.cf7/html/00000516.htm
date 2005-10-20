@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsBoolean</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000515.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000517.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsBoolean</h1>
+<h4><a name="wp1225248"></a>Description</h4>
+<p>Determines whether a value can be converted to Boolean</p>
+<h4><a name="wp3399630"></a>Returns</h4>
+<p>True, if the parameter can be converted to Boolean; False, otherwise.</p>
+<h4><a name="wp2494593"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a></p>
+<h4><a name="wp1106353"></a>Function syntax</h4>
+<pre><code><strong>IsBoolean</strong></code>(<i>value</i>)
+</pre><h4><a name="wp2494613"></a>See also</h4>
+<p><a href="00000525.htm#1106573">IsNumeric</a>, <a href="00000534.htm#4996076">IsValid</a>, <a href="00000676.htm#140465">YesNoFormat</a></p>
+<h4><a name="wp1324154"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Number or string</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1106357"></a>Example</h4>
+<pre>&lt;h3&gt;IsBoolean Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;FORM.theTestValue&quot;)&gt;
+   &lt;cfif <strong>IsBoolean(FORM.theTestValue)</strong>&gt;
+      &lt;h3&gt;The expression &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; is <br />Boolean&lt;/h3&gt;
+   &lt;cfelse&gt;
+      &lt;h3&gt;The expression &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; is not Boolean&lt;/h3&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action = &quot;isBoolean.cfm&quot;&gt;
+&lt;p&gt;Enter an expression, and discover whether it can be evaluated to a<br />Boolean value.
+
+&lt;input type = &quot;Text&quot; name = &quot;TheTestValue&quot; value = &quot;1&quot;&gt;
+&lt;input type = &quot;Submit&quot; value = &quot;Is it Boolean?&quot; name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000515.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000517.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000516.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

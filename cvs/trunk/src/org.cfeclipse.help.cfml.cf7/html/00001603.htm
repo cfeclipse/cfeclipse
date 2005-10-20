@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Retrieving message headers</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001602.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001604.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Retrieving message headers</h1>
+<p>To retrieve message headers without getting the messages, specify <code>action=&quot;GetHeaderOnly&quot;</code> in the <a href="00000311.htm#1101854"><code>cfpop</code></a> tag. Whether you use <code>cfpop</code> to retrieve the header or the entire message, ColdFusion returns a query object that contains one row for each message in the specified mailbox. you specify the query object name in the <code>cfpop</code> tag <code>name</code> attribute. The query has the following fields:</p>
+<ul>
+<li>
+   date
+</li>
+<li>
+   from
+</li>
+<li>
+   header (A string with all the mail header fields, including those that have separate fields in the query object)
+</li>
+<li>
+   messageNumber (The sequential number of the message in the POP server; identical to the row number of the entry in the query object)
+</li>
+<li>
+   messageID (The mail header Message-ID field)
+</li>
+<li>
+   replyTo
+</li>
+<li>
+   subject
+</li>
+<li>
+   cc
+</li>
+<li>
+   to
+</li>
+<li>
+   UID (The mail header X-UID field)
+</li>
+</ul>
+<p>The <code>cfpop</code> tag with the <code>getHeaderOnly</code> attribute retrieves any file attachments if you specify an <code>attachmentPath</code> attribute; otherwise, it does not get the attachments, and the attachmentfiles column contains empty strings.</p>
+<h4>To retrieve only the message header:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;POP Mail Message Header Example&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h2&gt;This example retrieves message header information:&lt;/h2&gt;
+
+&lt;cfpop server=&quot;mail.company.com&quot;
+	username=#myusername#
+	password=#mypassword#
+	action=&quot;GetHeaderOnly&quot;
+	name=&quot;Sample&quot;&gt;
+
+&lt;cfoutput query=&quot;Sample&quot;&gt;
+	MessageNumber: #HTMLEditFormat(Sample.messageNumber)# &lt;br&gt;
+	To: #HTMLEditFormat(Sample.to)# &lt;br&gt;
+	From: #HTMLEditFormat(Sample.from)# &lt;br&gt;
+	Subject: #HTMLEditFormat(Sample.subject)# &lt;br&gt;
+	Date: #HTMLEditFormat(Sample.date)#&lt;br&gt;
+ 	Cc: #HTMLEditFormat(Sample.cc)# &lt;br&gt;
+	ReplyTo: #HTMLEditFormat(Sample.replyTo)# &lt;br&gt;&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Edit the following lines so that they refer to valid values for your POP mail server, username, and password:
+<pre>
+&lt;cfpop server=&quot;mail.company.com&quot;
+	username=#myusername#
+	password=#mypassword#
+</pre>
+</li>
+<li>
+   Save the file as header_only.cfm in the myapps directory under your <i>web_root</i> and view it in your web browser:
+<p>This code retrieves the message headers and stores them in a <code>cfpop</code> record set called Sample. For more information about working with record set data, see <a href="00001263.htm#1181595">Using Query of Queries</a>.</p>
+</li>
+</ol>
+<p>The ColdFusion function <a href="00000506.htm#4744272"><code>HTMLEditFormat</code></a> replaces characters that have meaning in HTML, such as the less than (&lt;) and greater than (&gt;) signs that can surround detailed e-mail address information, with escaped characters such as <code>&amp;lt;</code> and <code>&amp;gt;</code>.</p>
+<p>In addition, you can process the date returned by <a href="00000311.htm#1101854"><code>cfpop</code></a> with <a href="00000594.htm#134381"><code>ParseDateTime</code></a>, which accepts an argument for converting POP date/time objects into a CFML date-time object.</p>
+<p>You can reference any of these columns in a <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag, as the following example shows:</p>
+<pre>&lt;<code>cfoutput</code>&gt;
+   #ParseDateTime(<strong>queryname</strong>.date, &quot;POP&quot;)#
+   #HTMLCodeFormat(<strong>queryname</strong>.from)#
+   #HTMLCodeFormat(<strong>queryname</strong>.messageNumber)#
+&lt;/<code>cfoutput</code>&gt;
+</pre><p>For information on these ColdFusion functions, see <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001602.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001604.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001603.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

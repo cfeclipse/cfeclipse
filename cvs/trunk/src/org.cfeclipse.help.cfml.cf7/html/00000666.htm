@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XmlChildPos</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000665.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000667.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XmlChildPos</h1>
+<h4><a name="wp139382"></a>Description</h4>
+<p>Gets the position of a child element within an XML document object.</p>
+<h4><a name="wp139384"></a>Returns</h4>
+<p>The position, in an XmlChildren array, of the <i>N</i>th child that has the specified name.</p>
+<h4><a name="wp139386"></a>Category</h4>
+<p><a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp139394"></a>Function syntax</h4>
+<pre><code><strong>XmlChildPos</strong></code>(<i>elem, childName, N</i>) 
+</pre><h4><a name="wp139396"></a>See also</h4>
+<p><a href="00000539.htm#4979134"><code>IsXmlElem</code></a>, <a href="00000667.htm#139471"><code>XmlElemNew</code></a>, <a href="00000672.htm#141075"><code>XmlSearch</code></a>, <a href="00000673.htm#140093"><code>XmlTransform</code></a>; <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp139416"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp139421"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>elem</p>
+    </td>
+    <td>
+<p>XML element within which to search.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>childName</p>
+    </td>
+    <td>
+<p>XML child element for which to search. Must be an immediate child of the <code>elem</code> parameter. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>N</p>
+    </td>
+    <td>
+<p>Index of XMLchild element for which to search.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139440"></a>Usage</h4>
+<p>You can use the returned index in the <code>ArrayInsertAt</code> and <code>ArrayDeleteAt</code> functions to change XML document objects. If the specified child is not found, the function returns -1.</p>
+<h4><a name="wp139442"></a>Example</h4>
+<p>The following example searches XML document element, <code>xmlobject.employee.name[1]</code>, for its second <code>Status</code> element child and uses the position in an <code>ArrayDeleteAt</code> function to remove the element:</p>
+<pre><code>&lt;!--- Create an XML document object ---&gt;</code>
+<code>&lt;cfxml variable=&quot;xmlobject&quot;&gt;</code>
+<code>&lt;employee&gt;</code>
+<code>   &lt;!-- A list of employees --&gt;</code>
+<code>   &lt;name EmpType=&quot;Regular&quot;&gt;</code>
+<code>      &lt;first&gt;Almanzo&lt;/first&gt;</code>
+<code>      &lt;last&gt;Wilder&lt;/last&gt;</code>
+<code>      &lt;Status&gt;Medical Absence&lt;/Status&gt;</code>
+<code>      &lt;Status&gt;Extended Leave&lt;/Status&gt;</code>
+<code>   &lt;/name&gt;</code>
+<code>   &lt;name EmpType=&quot;Contract&quot;&gt;</code>
+<code>      &lt;first&gt;Laura&lt;/first&gt;</code>
+<code>      &lt;last&gt;Ingalls&lt;/last&gt;</code>
+<code>   &lt;/name&gt;</code>
+<code>&lt;/employee&gt;</code>
+<code>&lt;/cfxml&gt;</code>
+
+<code>&lt;!--- Find the second Status child of the first employee.name element ---&gt;</code>
+<code>&lt;cfscript&gt;</code>
+elempos=<code><strong>XMLChildPos(xmlobject.employee.name[1], &quot;Status&quot;, 2)</strong></code>;
+<code>ArrayDeleteAt(xmlobject.employee.name[1].XmlChildren, elempos);</code>
+<code>&lt;/cfscript&gt;</code>
+
+<code>&lt;!--- Dump the resulting document object to confirm the deletion ---&gt;</code>
+<code>&lt;cfdump var=&quot;#xmlobject#&quot;&gt;</code>
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000665.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000667.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000666.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

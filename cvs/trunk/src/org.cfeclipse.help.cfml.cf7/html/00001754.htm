@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Web server configuration</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001753.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001755.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Web server configuration</h1>
+<p>ColdFusion&#160;MX uses the Web Server Configuration Tool to configure an external web server with the modules and settings that the connector needs to connect to ColdFusion&#160;MX. You can run the Web Server Configuration Tool through either the command-line interface or the graphical user interface (GUI). In either case, the Web Server Configuration Tool configures your external web server to interact with a ColdFusion&#160;MX server.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001754.htm#107455">Using GUI mode</a>
+</li>
+<li>
+   <a href="00001755.htm#121511">Using the command-line interface</a>
+</li>
+<li>
+   <a href="00001756.htm#102754">Configuration files</a>
+</li>
+</ul>
+<h2><a name="wp107455"></a>Using GUI mode</h2>
+<p>The Web Server Configuration Tool includes a GUI mode, which you can use to specify external web server configuration settings through a graphical interface. </p>
+<p><strong>Note: </strong>When you use the Web Server Configuration Tool in GUI mode, you must select the Configure Web Server for ColdFusion&#160;MX Applications check box. </p><h4>To run the Web Server Configuration Tool in GUI mode:</h4>
+<ol>
+<li>
+   Open a console window.
+<p><strong>Tip: </strong>In Windows, you can start the Web Server Configuration Tool by selecting Start &gt; Programs &gt; Macromedia &gt; ColdFusion&#160;MX 7 &gt; Web Server Configuration Tool.</p></li>
+<li>
+   Change to the <i>cf_root</i>/runtime/bin (server configuration) or <i>jrun_root</i>/bin (multiserver configuration) directory. 
+</li>
+<li>
+   Start the Web Server Configuration Tool using the wsconfig.exe (Windows) or wsconfig (UNIX) command.
+<p>The Web Server Configuration Tool window appears.</p>
+</li>
+<li>
+   Click the Add button.
+</li>
+<li>
+   Select the Configure Web Server for ColdFusion&#160;MX Applications check box.
+</li>
+<li>
+   In the Server drop-down list box, select the server or cluster name that you want to configure. (Individual server names in a cluster do not appear. Clustering support is only available on the multiserver configuration.)
+<p><strong>Note: </strong>The server or cluster does not have to reside on the web server computer. In this case, enter the IP address or server name of the remote computer in the JRun Host field.</p></li>
+<li>
+   In the Web Server Properties area, enter web-server-specific information, and click OK.
+</li>
+<li>
+   (Optional) Move the CFIDE directory and other directories (such as cfdocs) from the built-in web server's web root to your web server root directory. In addition, you can copy your application's CFM pages from the built-in web server's web root to your web server root directory.
+<p><strong>Note: </strong>When a page is requested, the web server connector first looks for the ColdFusion page in the <i>cf_root</i>/wwwroot (server configuration) or <i>jrun_root</i>/servers/cfusion/cfusion-ear/cfusion-war (multiserver configuration) directory, and then looks under the web server root. Alternatively, you can use the command-line interface and specify the -cfwebroot option.</p></li>
+<li>
+   (Optional) The web server connector does not serve static content (such as HTML files and images) from the built-in web server's root directory. If your ColdFusion web application has an empty context root (/) and you want to serve pages from the built-in web server's root directory, you can create a web server mapping to the corresponding directory under the built-in web server.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001753.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001755.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001754.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

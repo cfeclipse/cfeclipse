@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Referencing caller variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001009.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001011.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Referencing caller variables</h1>
+<p>A function can use and change any variable that is available in the calling page, including variables in the caller's Variables (local) scope, as if the function was part of the calling page. For example, if you know that the calling page has a local variable called Customer_name (and there is no function scope variable named Customer_name) the function can read and change the variable by referring to it as Customer_name or (using better coding practice) Variables.Customer_name. Similarly, you can create a local variable inside a function and then refer to it anywhere in the calling page <i>after</i> the function call. You cannot refer to the variable before you call the function.</p>
+<p>However, you should generally avoid using the caller's variables directly inside a function. Using the caller's variables creates a dependency on the caller. You must always ensure that the code outside the function uses the same variable names as the function. This can become difficult if you call the function from many pages.</p>
+<p>You can avoid these problems by using only the function arguments and the return value to pass data between the caller and the function. Do not reference calling page variables directly in the function. As a result, you can use the function anywhere in an application (or even in multiple applications), without concern for the calling code's variables.</p>
+<p>As with many programming practice, there are valid exceptions to this recommendation. For example you might do any of the following:</p>
+<ul>
+<li>
+   Use a shared scope variable, such as an Application or Session scope counter variable.
+</li>
+<li>
+   Use the Request scope to store variables used in the function, as shown in <a href="00001016.htm#1126076">Using the Request scope for static variables and constants</a>.).
+</li>
+<li>
+   Create context-specific functions that work directly with caller data if you <i>always</i> synchronize variable names.
+</li>
+</ul>
+<p><strong>Note: </strong>If your function must directly change a simple variable in the caller (one that is not passed to the function by reference), you can place the variable inside a structure argument.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001009.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001011.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001010.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

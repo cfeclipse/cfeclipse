@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using group by and having expressions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001272.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001274.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using group by and having expressions</h1>
+<p>ColdFusion supports the use of any arbitrary arithmetic expression, as long as it is referenced by an alias.</p>
+<h4><a name="wp1150175"></a>Examples</h4>
+<p>The following code is correct:</p>
+<pre><code><strong>SELECT (lorange + hirange)/2 AS midrange,</strong></code>
+COUNT(*)
+FROM roysched
+<code><strong>GROUP BY midrange;</strong></code>
+</pre><p>The following code is correct:</p>
+<pre>SELECT (lorange+hirange)/2 <code><strong>AS x</strong></code>, 
+<code><strong>COUNT(*)</strong></code>
+FROM    roysched <code><strong>GROUP BY x </strong></code>
+HAVING x &gt; 10000;
+</pre><p>The following code is not supported in Query of Queries:</p>
+<pre><code><strong>SELECT (lorange + hirange)/2 AS midrange,</strong></code>
+COUNT(*)
+FROM roysched
+<code><strong>GROUP BY (lorange + hirange)/2;</strong></code>
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001272.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001274.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001273.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the cflock tag with write-once variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001167.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001169.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the cflock tag with write-once variables</h1>
+<p>You do not need to use <code>cflock</code> when you read a variable or call a user-defined function name in the Session, Application, or Server scope if it is set in <i>only one place</i> in the application, and is only read (or called, for a UDF) everywhere else. Such data is called <i>write-once</i>. If you set an Application or Session scope variable in Application.cfm and never set it on any other pages, you must lock the code that sets the variable, but do not have to lock code on other pages that reads the variable's value. If you set the variable in the corresponding start method in Application.cfc (for example, <code>onApplicationStart</code> for Application scope variables), you do not have to lock the code that sets the variable.</p>
+<p>However, although leaving code that uses write-once data unlocked can improve application performance, it also has risks. You must ensure that the variables are truly written only once. For example, you must ensure that the variable is not rewritten if the user refreshes the browser or clicks a back button. Also, it can be difficult to ensure that you, or future developers, do not later set the variable in more than one place in the application.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001167.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001169.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001168.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

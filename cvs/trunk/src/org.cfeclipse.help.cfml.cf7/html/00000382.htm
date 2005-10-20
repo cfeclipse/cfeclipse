@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ArrayAvg</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000381.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000383.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ArrayAvg</h1>
+<h4><a name="wp1224257"></a>Description</h4>
+<p>Calculates the average of the values in an array. </p>
+<h4><a name="wp3303211"></a>Returns</h4>
+<p>Number. If the <code>array</code> parameter value is an empty array, returns zero. </p>
+<h4><a name="wp2618175"></a>Category</h4>
+<p><a href="00000355.htm#3473387">Array functions</a>, <a href="00000365.htm#1099613">Mathematical functions</a></p>
+<h4><a name="wp1100282"></a>Function syntax</h4>
+<pre><code><strong>ArrayAvg</strong></code>(<i>array</i>)
+</pre><h4><a name="wp4972090"></a>See also</h4>
+<p><a href="00000395.htm#1100909"><code>ArraySum</code></a>; <a href="00000952.htm#1121128">Basic array techniques</a> in <a href="00000950.htm#1101236">Using Arrays and Structures</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1234918"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>Name of an array</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1100286"></a>Usage</h4>
+<p>The following example uses the ColdFusion built-in variable <code>Form.fieldNames</code>, which is available on the action page of a form. It contains a comma-delimited list of the names of the fields on the form. </p>
+<h4><a name="wp3615938"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of ArrayAvg ---&gt;
+&lt;!-- The following lines of code keep track of the form fields that can 
+be dynamically generated on the screen. It uses the Fieldnames variable
+with the ListLen function to determine the number of fields on the form. ---&gt;
+&lt;cfset FormElem = 2&gt;
+   &lt;cfif Isdefined(&quot;Form.Submit&quot;)&gt;
+      &lt;cfif Form.Submit is &quot;More&quot;&gt;
+         &lt;cfset FormElem = ListLen(Form.Fieldnames)&gt;
+      &lt;/cfif&gt;
+   &lt;/cfif&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;ArrayAvg Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h3&gt;ArrayAvg Example&lt;/h3&gt;
+&lt;p&gt; This example uses ArrayAvg to find the average of the numbers that you enter<br />into an array.&lt;br&gt; 
+To enter more than two numbers press the &lt;b&gt;more&lt;/b&gt; button.
+&lt;/p&gt;
+&lt;form action = &quot;arrayavg.cfm&quot;&gt;
+&lt;!--- The following code initially creates two fields. It adds fields if the<br />user presses MORE. FormElem is initialized to two at the beginning of this<br />code to show that the form has two fields. -----&gt;
+&lt;input type = &quot;submit&quot; name = &quot;submit&quot; value = &quot;more&quot;&gt;
+&lt;table cellspacing = &quot;2&quot; cellpadding = &quot;2&quot; border = &quot;0&quot;&gt;
+&lt;cfloop index = &quot;LoopItem&quot; from = &quot;1&quot; to = &quot;#FormElem#&quot;&gt;
+   &lt;tr&gt;
+      &lt;cfoutput&gt;
+        &lt;th align = &quot;left&quot;&gt;Number #LoopItem#&lt;/th&gt;
+        &lt;td&gt;&lt;input type = &quot;text&quot; name = &quot;number#LoopItem#&quot;&gt;&lt;/td&gt;
+      &lt;/cfoutput&gt;
+   &lt;/tr&gt;
+&lt;/cfloop&gt;
+&lt;/table&gt;
+&lt;input type = &quot;submit&quot; name = &quot;submit&quot; value = &quot;get the average&quot;&gt;
+&lt;/form&gt;
+
+&lt;!--- create an array ---&gt;
+&lt;cfif IsDefined(&quot;FORM.submit&quot;)&gt;
+   &lt;cfset myNumberArray = ArrayNew(1)&gt;
+   &lt;cfset Count = 1&gt;
+   &lt;cfloop index = &quot;ListItem&quot; list = &quot;#Form.Fieldnames#&quot;&gt;
+       &lt;cfif Left(ListItem,3) is &quot;Num&quot;&gt;
+         &lt;cfset myNumberArray[Count] = Val(&quot;number#Count#&quot;)&gt;
+         &lt;cfset count = IncrementValue(Count)&gt;
+      &lt;/cfif&gt; 
+   &lt;/cfloop&gt;
+      
+   &lt;cfif Form.Submit is &quot;get the average&quot;&gt;   
+      &lt;!--- use ArrayAvg to get the average of the two numbers ---&gt;
+      &lt;p&gt;The average of the numbers that you entered is
+      &lt;cfoutput&gt;#ArrayAvg(myNumberArray)#.&lt;/cfoutput&gt;
+   &lt;cfelse&gt;
+      &lt;cfoutput&gt;Try again. You must enter at least two numeric values.
+      &lt;/cfoutput&gt;
+   &lt;/cfif&gt;   
+&lt;/cfif&gt;   
+&lt;/body&gt;
+&lt;/html&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000381.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000383.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000382.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

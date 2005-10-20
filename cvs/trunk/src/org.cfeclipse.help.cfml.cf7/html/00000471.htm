@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetBaseTagList</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000470.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000472.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetBaseTagList</h1>
+<h4><a name="wp1224761"></a>Description</h4>
+<p>Gets ancestor tag names, starting with the parent tag.</p>
+<h4><a name="wp4459675"></a>Returns</h4>
+<p>A comma-delimited list of uppercase ancestor tag names, as a string. The first list element is the current tag. If the current tag is nested, the next element is the parent tag. If the function is called for a top-level tag, it returns an empty string. If an ancestor does not expose data (see <a href="00000470.htm#1104755"><code>GetBaseTagData</code></a>), its name might not be returned.</p>
+<h4><a name="wp2571503"></a>Category</h4>
+<p><a href="00000366.htm#3493621">Other functions</a></p>
+<h4><a name="wp1104796"></a>Function syntax</h4>
+<pre><code><strong>GetBaseTagList</strong></code>()
+</pre><h4><a name="wp2546136"></a>See also</h4>
+<p><a href="00000470.htm#1104755"><code>GetBaseTagData</code></a>; <a href="00001086.htm#1096367">High-level data exchange</a> in <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4391030"></a>Usage</h4>
+<p>This function does not display the following tags or end tags in the ancestor tag list:</p>
+<ul>
+<li>
+   <code>cfif</code>, <code>cfelseif</code>, <code>cfelse</code>
+</li>
+<li>
+   <code>cfswitch</code>, <code>cfcase</code>, <code>cfdefaultcase</code>
+</li>
+<li>
+   <code>cftry</code>, <code>cfcatch</code>
+</li>
+</ul>
+<p>This function displays the following tags only under the following conditions:</p>
+<ul>
+<li>
+   <code>cfloop</code>: if it uses a <code>query</code> attribute
+</li>
+<li>
+   <code>cfoutput</code>: if at least one of its children is a complex expression
+</li>
+<li>
+   <code>cfprocessingdirective</code>: if it has at least one other attribute besides <code>pageencoding</code>
+</li>
+</ul>
+<h4><a name="wp3922656"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of GetBaseTagList function. 
+Typically used in custom tags. ---&gt;
+&lt;cfif thisTag.executionMode is &quot;start&quot;&gt;
+   &lt;!--- Get the tag context stack 
+   The list will look something like &quot;CFIF,MYTAGNAME...&quot; ---&gt;
+   &lt;cfset ancestorList = GetBaseTagList()&gt;
+    &lt;br&gt;&lt;br&gt;Dump of GetBaseTagList output:&lt;br&gt;
+   &lt;cfdump var=&quot;#ancestorList#&quot;&gt;&lt;br&gt;&lt;br&gt;
+   &lt;!--- Output current tag name ---&gt;
+   &lt;cfoutput&gt;This is custom tag  #ListGetAt(ancestorList,1)#&lt;/cfoutput&gt;&lt;br&gt;
+   &lt;!--- Determine whether this is nested inside a loop ---&gt;
+   &lt;cfset inLoop = ListFindNoCase(ancestorList, &quot;cfloop&quot;)&gt;
+   &lt;cfif inLoop&gt;
+      Running in the context of a cfloop tag.&lt;br&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000470.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000472.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000471.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

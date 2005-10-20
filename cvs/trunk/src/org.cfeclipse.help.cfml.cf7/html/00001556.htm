@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Troubleshooting SOAP requests and responses</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001555.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001557.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Troubleshooting SOAP requests and responses</h1>
+<p>ColdFusion&#160;MX provides the following facilities for troubleshooting SOAP requests and responses:</p>
+<ul>
+<li>
+   The <code>getSOAPRequest</code> and <code>getSOAPResponse</code> functions.
+</li>
+<li>
+   The TCP monitor.
+</li>
+</ul>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001556.htm#1222070">Viewing SOAP requests and responses</a>
+</li>
+<li>
+   <a href="00001556.htm#1222082">Using the TCP monitor</a>
+</li>
+</ul>
+<h2><a name="wp1222070"></a>Viewing SOAP requests and responses</h2>
+<p>You can use the <code>getSOAPRequest</code> and <code>getSOAPResponse</code> functions to retrieve and display the XML passed to and from a web service. Although advanced users may use this information for custom functionality, you typically use these functions for debugging.</p>
+<p>Use these functions in the following places:</p>
+<ul>
+<li>
+   <code>GetSOAPRequest</code>&#160;Clients call this function after the web service request; web service CFCs call this function in the web service CFC method.
+</li>
+<li>
+   <code>GetSOAPResponse</code>&#160;Clients call this function after the web service request completes; web service CFCs cannot use this method.
+</li>
+</ul>
+<p>The following example uses the <code>GetSOAPRequest</code> and <code>GetSOAPResponse</code> functions in a web service client:</p>
+<pre>&lt;cfscript&gt;
+ ws = CreateObject(&quot;webservice&quot;, &quot;http://localhost:8500/soapexamples/tester.cfc?WSDL&quot;);
+ addSOAPRequestHeader(ws, &quot;http://mynamespace/&quot;, &quot;username&quot;, &quot;randy&quot;);
+ ret = ws.echo_me(&quot;value&quot;);
+&lt;/cfscript&gt;
+
+&lt;cfset soapreq = GetSOAPRequest(ws)&gt; 
+&lt;h2&gt;SOAP Request&lt;/h2&gt;
+&lt;cfdump var=&quot;#soapreq#&quot;&gt;
+
+&lt;cfset soapresp = GetSOAPResponse(ws)&gt;
+&lt;h2&gt;SOAP Response&lt;/h2&gt;
+&lt;cfdump var=&quot;#soapresp#&quot;&gt;
+...
+</pre><p>The following example uses the <code>GetSOAPRequest</code> function in a web service CFC method:</p>
+<pre>&lt;cfcomponent displayName=&quot;testerdebug&quot; hint=&quot;Test for underscores&quot;&gt;
+
+&lt;cffunction access=&quot;remote&quot; name=&quot;echo_me&quot; output=&quot;false&quot; returntype=&quot;string&quot; 
+  displayname=&quot;Echo Test&quot; hint=&quot;Header test&quot;&gt;
+  &lt;cfargument name=&quot;in_here&quot; required=&quot;true&quot; type=&quot;string&quot;&gt;
+&#160;&#160;&lt;cfset var soapreq = &quot;&quot;&gt;
+
+  &lt;cfif IsSOAPRequest()&gt;
+    &lt;cfset soapreq = GetSOAPRequest()&gt;
+   &lt;cflog text=&quot;#soapreq#&quot;
+           log=&quot;APPLICATION&quot;
+           type=&quot;Information&quot;&gt; 
+...
+</pre><h2><a name="wp1222082"></a>Using the TCP monitor</h2>
+<p>TCPMonitor is a swing-based application that lets you watch the request and response flow of HTTP traffic. You can also watch the request and response flow of SOAP traffic. TCPMonitor replaces the Sniffer service formerly used in Macromedia JRun.</p>
+<h4>To run TCPMonitor:</h4>
+<ul>
+<li>
+   On Windows and Unix platforms, you can execute the TCPMonitor by launching the sniffer utility in the jrun_root/bin directory.
+<p>The TCP Monitor main window appears.</p>
+</li>
+</ul>
+<p>TCPMonitor is a swing-based application that lets you watch the request and response flow of HTTP traffic. However, you can also use it to watch the request and response flow of SOAP traffic. </p>
+<h4>To run TCPMonitor:</h4>
+<ol>
+<li>
+   On Windows and Unix platforms, you can execute the TCPMonitor by launching the sniffer utility in the <i>cf_root</i>/bin (server configuration) or <i>jrun_root</i>/bin (multiserver configuration) directory.
+<p>The TCP Monitor main window appears.</p>
+<p><strong>Note: </strong>In the J2EE configuration, run the utility directly out of the JAR file by using the following command:</p><pre>
+java -cp cf_webapp_root/WEB-INF/cfusion/lib/axis.jar java 
+org.apache.axis.utils.tcpmon [listening_port] [target_host] [target_port]
+</pre>
+</li>
+<li>
+   Enter the values in the main window as described in the following table:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Listen Port#</p>
+    </td>
+    <td>
+<p>Enter a local port number, such as 8123, to monitor for incoming connections. Instead of requesting the usual port on which your server runs, you request this port. TCPMonitor intercepts the request and forwards it to the Target Port.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Listener</p>
+    </td>
+    <td>
+<p>Select Listener to use TCPMonitor as a sniffer service in JRun.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Proxy</p>
+    </td>
+    <td>
+<p>Select Proxy to enable proxy support for TCPMonitor.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Target Hostname</p>
+    </td>
+    <td>
+<p>Enter the target host to which incoming connections are forwarded.</p>
+<p>For example, if you are monitoring a service running on a local server, the hostname is localhost.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Target Port#</p>
+    </td>
+    <td>
+<p>Enter the port number on the target machine to which TCPMonitor connects. For example, if you are monitoring a service running on your local ColdFusion server in the server configuration, the default port number is 8500.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>HTTP Proxy Support</p>
+    </td>
+    <td>
+<p>Select this check box only to configure proxy support for TCPMonitor.</p>
+    </td>
+  </tr>
+</table>
+
+<p>You can optionally specify the Listen Port#, Target Hostname and Target Port# values when invoking TCPMonitor on the command line. The following is the syntax for TCPMonitor:</p>
+<pre>
+java org.apache.axis.utils.tcpmon [listening_port] [target_host] 
+[target_port]
+</pre>
+</li>
+<li>
+   To add this profile to your TCPMonitor session, click Add.
+<p>A tab appears for your new tunneled connection.</p>
+</li>
+<li>
+   Select the new tab. If there are port conflicts, TCPMonitor alerts you in the Request panel.
+</li>
+<li>
+   Request a page using the Listen Port defined in this TCPMonitor session. For example, if you entered 8123 for the Listen Port, enter the following URL in your browser:
+<pre>
+http://localhost:8123/
+</pre>
+<p>TCPMonitor displays the current request and response information:</p>
+<p>For each connection, the request appears in the Request panel and the response appears in the Response panel. TCPMonitor keeps a log of all request-response pairs and lets you view any particular pair by selecting an entry in the top panel.</p>
+</li>
+<li>
+   To save results to a file for later viewing, click Save. To clear the top panel of older requests that you do not want to save, click Remove Selected and Remove All.
+</li>
+<li>
+   To resend the request that you are currently viewing and view a new response, click Resend. You can edit the request in the Request panel before resending, and test the effects of different requests.
+</li>
+<li>
+   To change the ports, click Stop, change the port numbers, and click Start.
+</li>
+<li>
+   To add another listener, click the Admin tab and enter the values as described previously.
+</li>
+<li>
+   To end this TCPMonitor session, click Close.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001555.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001557.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001556.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

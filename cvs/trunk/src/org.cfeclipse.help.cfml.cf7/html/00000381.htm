@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ArrayAppend</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000380.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000382.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ArrayAppend</h1>
+<h4><a name="wp1224251"></a>Description</h4>
+<p>Appends an array element to an array. </p>
+<h4><a name="wp3295747"></a>Returns</h4>
+<p>True, on successful completion.</p>
+<h4><a name="wp2618185"></a>Category</h4>
+<p><a href="00000355.htm#3473387">Array functions</a></p>
+<h4><a name="wp2032597"></a>Function syntax</h4>
+<pre><code><strong>ArrayAppend</strong></code>(<i>array</i>, <i>value</i>)
+</pre><h4><a name="wp2628822"></a>See also</h4>
+<p><a href="00000391.htm#1100739"><code>ArrayPrepend</code></a>; <a href="00000953.htm#1096208">Adding elements to an array</a> in <a href="00000950.htm#1101236">Using Arrays and Structures</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4530386"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: this function can be used on XML objects.</p>
+<h4><a name="wp4530391"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>Name of an array </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Value to add at end of array</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4530406"></a>Example</h4>
+<pre>&lt;h3&gt;ArrayAppend Example&lt;/h3&gt;
+&lt;cfquery name = &quot;GetEmployeeNames&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT FirstName, LastName FROM Employees
+&lt;/cfquery&gt;
+&lt;!--- create an array ---&gt;
+&lt;cfset myArray = ArrayNew(1)&gt;
+&lt;!--- set element one to show where we are ---&gt;
+&lt;cfset myArray[1] = &quot;Test Value&quot;&gt;
+&lt;!--- loop through the query; append these names successively to the last <br />element ---&gt;
+&lt;cfloop query = &quot;GetEmployeeNames&quot;&gt;
+   &lt;cfoutput&gt;#ArrayAppend(myArray, &quot;#FirstName# #LastName#&quot;)#
+   &lt;/cfoutput&gt;, Array was appended&lt;br&gt;
+&lt;/cfloop&gt;
+&lt;!--- show the resulting array as a list ---&gt;
+&lt;cfset myList = ArrayToList(myArray, &quot;,&quot;)&gt;
+&lt;!--- output the array as a list ---&gt;
+&lt;cfoutput&gt;
+   &lt;p&gt;The contents of the array are as follows:
+   &lt;p&gt;#myList#
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000380.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000382.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000381.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

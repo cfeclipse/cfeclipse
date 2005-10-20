@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The Arguments scope</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001055.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001057.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The Arguments scope</h1>
+<p>The Arguments scope exists only in a method, and is not available outside the method. The scope contains the variables that you passed into the method, including variables that you passed in the following ways:</p>
+<ul>
+<li>
+   As named attributes to the <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag
+</li>
+<li>
+   In the <code>cfargumentcollection</code> attribute of the <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag 
+</li>
+<li>
+   In <a href="00000282.htm#3014048"><code>cfinvokeargument</code></a> tags
+</li>
+<li>
+   As attributes or parameters passed into the method when the method is invoked as a web service, by Flash Remoting, as a direct URL, or by submitting a form
+</li>
+</ul>
+<p>You can access variables in the Arguments scope using structure notation (<code>Arguments.variablename</code>), or array notation (<code>Arguments[1]</code> or <code>Arguments[</code>&quot;<code>variablename</code>&quot;<code>]</code>).</p>
+<p>The Arguments scope does not persist between calls to CFC methods.</p>
+<p>Variables in the Arguments scope are available to pages included by the method.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001055.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001057.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001056.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

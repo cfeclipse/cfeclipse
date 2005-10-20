@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About SMS application development and deployment</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001668.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001670.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About SMS application development and deployment</h1>
+<p>The following sections introduce the ColdFusion SMS application development tools and process, and discuss SMS messaging providers:</p>
+<ul>
+<li>
+   <a href="00001669.htm#133761">ColdFusion MX SMS application tools</a>
+</li>
+<li>
+   <a href="00001669.htm#144497">Application development and deployment process</a>
+</li>
+<li>
+   <a href="00001669.htm#135097">About SMS providers</a>
+</li>
+</ul>
+<h3><a name="wp133761"></a>ColdFusion MX SMS application tools</h3>
+<p>ColdFusion provides the following tools for developing SMS applications:</p>
+<p><strong>SMSGateway</strong>&#160;The class for the SMS event gateway type</p>
+<p><strong>SMS test server</strong>&#160;A lightweight SMSC simulator</p>
+<p><strong>SMS client simulator</strong>&#160;A graphical interface for sending and receiving SMS messages with the SMS test server</p>
+<p>You implement your SMS application by creating a ColdFusion application that uses an instance of the SMSGateway class to communicate with one or more SMSCs. You can use the SMS testing server and client simulator to test your application without requiring an outside SMS service provider. </p>
+<h3><a name="wp144497"></a>Application development and deployment process</h3>
+<p>The following is a typical process for developing and deploying an SMS application::</p>
+<ol>
+<li>
+   Design your application.
+</li>
+<li>
+   Configure an SMS event gateway instance to use the ColdFusion MX SMS test server.
+</li>
+<li>
+   Write your ColdFusion CFCs, CFM pages, and any other application elements.
+</li>
+<li>
+   Test your application using the test server and client simulator.
+</li>
+<li>
+   Establish an SMPP account with a telecommunications provider.
+</li>
+<li>
+   Reconfigure your event gateway, or create a new event gateway instance, to use your telecommunications provider's SMSC. Configure the gateway using the information supplied by your provider.
+</li>
+<li>
+   Test your application using the telecommunications provider's SMSC and target mobile devices.
+</li>
+<li>
+   Make the application publicly available.
+</li>
+</ol>
+<h3><a name="wp135097"></a>About SMS providers</h3>
+<p>Before you can deploy an SMS application, you must establish an account with a provider that supports SMPP 3.4 over TCP/IP.  There are generally two kinds of providers:</p>
+<ul>
+<li>
+   Telecommunications carriers such as nation-wide cellular phone providers
+</li>
+<li>
+   Third-party SMPP aggregators
+</li>
+</ul>
+<p>The type of provider and specific provider you use should depend on your needs and provider capabilities and price structures. Less expensive providers may have slower response times. Telecommunications carriers might be more expensive but might provide more throughput and faster SMPP response times.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001668.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001670.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001669.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

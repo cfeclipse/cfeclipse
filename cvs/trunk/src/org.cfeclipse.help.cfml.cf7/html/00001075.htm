@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using tag attributes summary</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001074.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001076.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using tag attributes summary</h1>
+<p>Custom tag attribute values are passed from the calling page to the custom tag page as name-value pairs. CFML custom tags support required and optional attributes. Custom tag attributes conform to the following CFML coding standards:</p>
+<ul>
+<li>
+   ColdFusion passes any attributes in the Attributes scope.
+</li>
+<li>
+   Use the <code>Attributes.</code><code><i>attribute_name</i></code> syntax when referring to passed attributes to distinguish them from custom tag page local variables.
+</li>
+<li>
+   Attributes are case-insensitive.
+</li>
+<li>
+   Attributes can be listed in any order within a tag.
+</li>
+<li>
+   Attribute name-value pairs for a tag must be separated by a space in the tag invocation.
+</li>
+<li>
+   Passed values that contain spaces must be enclosed in double-quotation marks.
+</li>
+<li>
+   Use the <a href="00000310.htm#1101730"><code>cfparam</code></a> tag with a <code>default</code> attribute at the top of a custom tag to test for and assign defaults for optional attributes that are passed from a calling page. For example: 
+<pre>
+&lt;!--- The value of the variable Attributes.Name comes from the calling page. 
+If <br />
+the calling page does not set it, make it &quot;Who&quot;. ---&gt;
+&lt;cfparam name=&quot;Attributes.Name&quot; default=&quot;Who&quot;&gt;
+</pre>
+</li>
+<li>
+   Use the <code>cfparam</code> tag or a <a href="00000274.htm#1100123"><code>cfif</code></a> tag with an <a href="00000520.htm#1106482"><code>IsDefined</code></a> function at the top of a custom tag to test for required attributes that must be passed from a calling page; for example, the following code issues an abort if the user does not specify the Name attribute to the custom tag:
+<pre>
+&lt;cfif not IsDefined(&quot;Attributes.Name&quot;)&gt;
+	&lt;cfabort showError=&quot;The Name attribute is required.&quot;&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001074.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001076.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001075.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

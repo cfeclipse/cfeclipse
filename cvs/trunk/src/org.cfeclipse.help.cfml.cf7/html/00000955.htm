@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Copying arrays</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000954.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000956.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Copying arrays</h1>
+<p>You can copy arrays of simple variables (numbers, strings, Boolean values, and date-time values) by assigning the original array to a new variable name. You do not have to use <a href="00000390.htm#1100696"><code>ArrayNew</code></a> to create the new array first. When you assign the existing array to a new variable, ColdFusion creates a new array and copies the old array's contents to the new array. The following example creates and populates a two-element array. It then copies the original array, changes one element of the copied array and dumps both arrays. As you can see, the original array is unchanged and the copy has a new second element.</p>
+<pre>&lt;cfset myArray=ArrayNew(1)&gt;
+&lt;cfset myArray[1]=&quot;First Array Element&quot;&gt;
+&lt;cfset myArray[2]=&quot;Second Array Element&quot;&gt;
+&lt;cfset newArray=myArray&gt;
+&lt;cfset newArray[2]=&quot;New Array Element 2&quot;&gt;
+&lt;cfdump var=#myArray#&gt;&lt;br&gt;
+&lt;cfdump var=#newArray#&gt;
+</pre><p>If your array contains complex variables (structures, query objects, or external objects such as COM objects) assigning the original array to a new variable does not make a complete copy of the original array. The array structure is copied; however, the new array does not get its own copy of the complex data, only references to it. To demonstrate this behavior, run the following code:</p>
+<pre>Create an array that contains a structure.&lt;br&gt;
+&lt;cfset myStruct=StructNew()&gt;
+&lt;cfset myStruct.key1=&quot;Structure key 1&quot;&gt;
+&lt;cfset myStruct.key2=&quot;Structure key 2&quot;&gt;
+&lt;cfset myArray=ArrayNew(1)&gt;
+&lt;cfset myArray[1]=myStruct&gt;
+&lt;cfset myArray[2]=&quot;Second array element&quot;&gt;
+&lt;cfdump var=#myArray#&gt;&lt;br&gt;
+&lt;br&gt;
+Copy the array and dump it.&lt;br&gt;
+&lt;cfset myNewArray=myArray&gt;
+&lt;cfdump var=#myNewArray#&gt;&lt;br&gt;
+&lt;br&gt;
+Change the values in the new array.&lt;br&gt;
+&lt;cfset myNewArray[1].key1=&quot;New first array element&quot;&gt;
+&lt;cfset myNewArray[2]=&quot;New second array element&quot;&gt;
+&lt;br&gt;
+Contents of the original array after the changes:&lt;br&gt;
+&lt;cfdump var=#myArray#&gt;&lt;br&gt;
+Contents of the new array after the changes:&lt;br&gt;
+&lt;cfdump var=#myNewArray#&gt;
+</pre><p>The change to the new array also changes the contents of the structure in the original array.</p>
+<p>To make a complete copy of an array that contains complex variables, use the <a href="00000456.htm#1104156"><code>Duplicate</code></a> function.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000954.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000956.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000955.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

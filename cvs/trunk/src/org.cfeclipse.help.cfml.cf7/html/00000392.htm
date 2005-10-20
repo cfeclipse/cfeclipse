@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ArrayResize</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000391.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000393.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ArrayResize</h1>
+<h4><a name="wp1224317"></a>Description</h4>
+<p>Resets an array to a specified minimum number of elements. This can improve performance, if used to size an array to its expected maximum. For more than 500 elements, use <code>ArrayResize</code> immediately after using the <a href="00000390.htm#1100696"><code>ArrayNew</code></a> tag.</p>
+<p>ColdFusion arrays expand dynamically as data is added.</p>
+<h4><a name="wp3318093"></a>Returns</h4>
+<p>True, on successful completion.</p>
+<h4><a name="wp2615583"></a>Category</h4>
+<p><a href="00000355.htm#3473387">Array functions</a></p>
+<h4><a name="wp2121114"></a>Function syntax</h4>
+<pre><code><strong>ArrayResize</strong></code>(<i>array</i>, <i>minimum_size</i>)
+</pre><h4><a name="wp1250526"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>Name of an array </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>minimum_size</p>
+    </td>
+    <td>
+<p>Minimum array size </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1100797"></a>Example</h4>
+<pre>&lt;h3&gt;ArrayResize Example&lt;/h3&gt;
+&lt;!--- perform a query to get the list ---&gt;
+&lt;cfquery name = &quot;GetCourses&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT * FROM Courses
+&lt;/cfquery&gt;
+&lt;!--- make a new array ---&gt;
+&lt;cfset MyArray = ArrayNew(1)&gt;
+&lt;!--- resize that array to the number of records
+in the query ---&gt;
+&lt;cfset temp = ArrayResize(MyArray, GetCourses.RecordCount)&gt;
+&lt;cfoutput&gt;
+The array is now #ArrayLen(MyArray)# elements, to match
+the query of #GetCourses.RecordCount# records.
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000391.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000393.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000392.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

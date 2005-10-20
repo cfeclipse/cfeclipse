@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Displaying reports</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001465.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001467.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Displaying reports</h1>
+<p>Your application can invoke a report by displaying the CFR file in a browser or by displaying a CFM page whose <a href="00000323.htm#1102863"><code>cfreport</code></a> tag invokes the report.</p>
+<p>You can optionally use the <code>cfreport</code> tag to save the report to a file.</p>
+<p>The <code>cfreport</code> tag supports advanced PDF encryption options. For more information, see <i>CFML Reference</i> and <a href="00001447.htm#120412">Using advanced PDF options</a>.</p>
+<p>For information on report preview, see <a href="00001461.htm#122130">Previewing reports</a>.</p>
+<h4>To display a report using the cfreport tag:</h4>
+<ol>
+<li>
+   Create a report, with or without an internal query.
+</li>
+<li>
+   Create a CFM page and add a <code>cfreport</code> tag that invokes the report. If the report does not use an internal query, you must also populate a query and pass it using the <code>query</code> attribute. If the report uses an internal query and you use the <code>query</code> attribute, the passed query overrides the internal query.
+<pre>
+&lt;cfquery name=&quot;northwindemployees&quot; datasource=&quot;localnorthwind&quot;&gt;
+	SELECT EmployeeID, LastName, FirstName, Title, City, Region, Country
+	    FROM Employees
+	    ORDER BY Country, City
+&lt;/cfquery&gt;
+
+&lt;CFREPORT format=&quot;PDF&quot; template=&quot;EmpReport.cfr&quot; 
+   query=&quot;#northwindemployees#&quot; /&gt;
+</pre>
+</li>
+<li>
+   Open a browser and display the CFM page.
+<p>ColdFusion&#160;MX generates the report.</p>
+<p><strong>Tip: </strong>ColdFusion&#160;MX does not render text that occurs before or after the <code>cfreport</code> tag.</p></li>
+</ol>
+<h4>To display a CFR file in a browser:</h4>
+<ol>
+<li>
+   Create a report that uses an internal query and does not use input parameters.
+</li>
+<li>
+   Open a browser and display the CFR file.
+<p>ColdFusion&#160;MX generates the report.</p>
+</li>
+</ol>
+<h4>To save a report to a file:</h4>
+<ol>
+<li>
+   Create a report, with or without an internal query.
+</li>
+<li>
+   Create a CFM page and add a <code>cfreport</code> tag that invokes the report. Optionally pass a <code>query</code> attribute, as described in the previous procedure. Include a <code>filename</code> attribute that specifies the fully qualified name of the file to be created, as the following example shows:
+<pre>
+&lt;CFREPORT format=&quot;PDF&quot; template=&quot;emppicture.cfr&quot; 
+&#160;&#160;filename=&quot;#GetDirectoryFromPath(GetTemplatePath())#/emppicture.pdf&quot;
+&#160;&#160;overwrite=&quot;yes&quot;/&gt;
+</pre>
+<p><strong>Tip: </strong>Use the .pdf extension for PDF output format, the .swf extension for FlashPaper output format, and the .xls extension for Excel format.</p></li>
+<li>
+   Open a browser and display the CFM page.
+<p>ColdFusion&#160;MX generates the report, saves the file, and displays an empty page.</p>
+</li>
+</ol>
+<h4>To disable browser display of the CFR file:</h4>
+<ol>
+<li>
+   Open the Report Properties dialog box by selecting Report &gt; Report Properties from the menu bar.
+</li>
+<li>
+   Clear the Allow Direct .cfr Browser Invocation check box.
+</li>
+<li>
+   Click OK.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001465.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001467.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001466.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

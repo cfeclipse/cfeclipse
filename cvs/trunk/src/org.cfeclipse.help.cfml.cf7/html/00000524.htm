@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsLeapYear</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000523.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000525.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsLeapYear</h1>
+<h4><a name="wp4556369"></a>Description</h4>
+<p>Determines whether a year is a leap year.</p>
+<h4><a name="wp3401657"></a>Returns</h4>
+<p>True, if <i>year</i> is a leap year; False, otherwise.</p>
+<h4><a name="wp2492015"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000358.htm#3485787">Decision functions</a></p>
+<h4><a name="wp1106533"></a>Function syntax</h4>
+<pre><code><strong>IsLeapYear</strong></code>(<i>year</i>)
+</pre><h4><a name="wp2492032"></a>See also</h4>
+<p><a href="00000448.htm#1103759"><code>DaysInYear</code></a></p>
+<h4><a name="wp1326580"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>year</p>
+    </td>
+    <td>
+<p>Number representing a year</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1106537"></a>Example</h4>
+<pre>&lt;h3&gt;IsLeapYear Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;FORM.theTestValue&quot;)&gt;
+   &lt;cfif <strong>IsLeapYear(FORM.theTestValue)</strong>&gt;
+      &lt;h3&gt;The year value &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; is a Leap Year&lt;/h3&gt;
+   &lt;cfelse&gt;
+      &lt;h3&gt;The year value &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; is not a Leap Year&lt;/h3&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action = &quot;isLeapYear.cfm&quot;&gt;
+&lt;p&gt;Enter a year value, and find out whether it is a Leap Year.
+&lt;p&gt;&lt;input type = &quot;Text&quot; name = &quot;TheTestValue&quot; value = &quot;<br />&lt;cfoutput&gt;#Year(Now())#&lt;/cfoutput&gt;&quot;&gt;
+&lt;input type = &quot;Submit&quot; value = &quot;Is it a Leap Year?&quot; name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000523.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000525.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000524.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

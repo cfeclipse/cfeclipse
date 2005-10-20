@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GatewayHelper example</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001664.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001666.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GatewayHelper example</h1>
+<p>This example lets you use the XMPP or SameTime GatewayHelper class to get and set status and other information, including managing buddy lists and view permissions lists.</p>
+<pre>&lt;cfapplication name=&quot;gateway_tool&quot; sessionmanagement=&quot;yes&quot;&gt;
+
+&lt;!--- Set the gateway buddy name to default values.---&gt;
+&lt;cfparam name=&quot;session.gwid&quot; default=&quot;XMPP Buddy Manager&quot;&gt;
+&lt;cfparam name=&quot;session.buddyid&quot; default=&quot;hlichtin2@mousemail&quot;&gt;
+
+&lt;!--- Reset gateway and buddy ID if form was submitted. ---&gt;
+&lt;cfif isdefined(&quot;form.submitbuddy&quot;)&gt;
+   &lt;cfset session.buddyid=form.buddyid&gt;
+   &lt;cfset session.gwid=form.gwid&gt;
+&lt;/cfif&gt;
+
+&lt;!--- Display the current gateway and buddy ID. ---&gt;
+&lt;h3&gt;Using the GatewayHelper&lt;/h3&gt;
+&lt;!--- Form to display and reset gateway and Buddy ID. ---&gt;
+&lt;cfform action=&quot;#cgi.script_name#&quot; method=&quot;post&quot; name=&quot;changeIDs&quot;&gt;
+   Current buddy ID: &lt;cfinput type=&quot;text&quot; name=&quot;buddyid&quot; value=&quot;#session.buddyid#&quot;&gt;&lt;br&gt;
+   Current gateway ID: &lt;cfinput type=&quot;text&quot; name=&quot;gwid&quot; value=&quot;#session.gwid#&quot;&gt;&lt;br&gt;
+   &lt;cfinput name=&quot;submitbuddy&quot; value=&quot;Change gateway/buddy&quot; type=&quot;submit&quot;&gt;
+&lt;/cfform&gt;
+
+&lt;!--- When a buddy is set, display the links and forms to get and set
+      information etc. Where form input is required, the form uses a GET method
+      so all selections are represented by a url.cmd variable. ---&gt;
+   
+&lt;cfoutput&gt;
+&lt;h3&gt;Select one of the following to get or set.&lt;/h3&gt;
+&lt;ul&gt;
+   &lt;li&gt;&lt;a href=&quot;#cgi.script_name#?cmd=buddyinfo&quot;&gt;buddyinfo&lt;/a&gt;
+   &lt;li&gt;LIST: &lt;a href=&quot;#cgi.script_name#?cmd=buddylist&quot;&gt;buddylist&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=permitlist&quot;&gt;permitlist&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=denylist&quot;&gt;denylist&lt;/a&gt;
+   &lt;li&gt;ADD: &lt;a href=&quot;#cgi.script_name#?cmd=addbuddy&quot;&gt;addbuddy&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=addpermit&quot;&gt;addpermit&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=adddeny&quot;&gt;adddeny&lt;/a&gt;
+   &lt;li&gt;REMOVE: &lt;a href=&quot;#cgi.script_name#?cmd=removebuddy&quot;&gt;removebuddy&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=removepermit&quot;&gt;removepermit&lt;/a&gt; | 
+         &lt;a href=&quot;#cgi.script_name#?cmd=removedeny&quot;&gt;removedeny&lt;/a&gt;
+   &lt;!--- NOTE: This list does not include OFFLINE because the gateway resets itself to online. ---&gt;
+   &lt;li&gt;setStatus (XMPP): 
+      &lt;cfloop list=&quot;ONLINE,AWAY,DND,NA,FREE_TO_CHAT&quot; index=&quot;e&quot;&gt;
+         &lt;a href=&quot;#cgi.script_name#?cmd=setstatus&amp;status=#e#&quot;&gt;#e#&lt;/a&gt; | 
+      &lt;/cfloop&gt;
+   &lt;li&gt;setStatus (Sametime): 
+      &lt;cfloop list=&quot;ONLINE,AWAY,DND,IDLE&quot; index=&quot;e&quot;&gt;
+         &lt;a href=&quot;#cgi.script_name#?cmd=setstatus&amp;status=#e#&quot;&gt;#e#&lt;/a&gt; | 
+      &lt;/cfloop&gt;
+   &lt;li&gt;
+      &lt;form action=&quot;#cgi.script_name#&quot; method=&quot;get&quot;&gt;
+         setStatus with CustomAwayMessage: 
+         &lt;input type=&quot;hidden&quot; name=&quot;cmd&quot; value=&quot;setstatus2&quot;&gt;
+         &lt;select name=&quot;status&quot;&gt;
+            &lt;cfloop list=&quot;ONLINE,OFFLINE,AWAY,DND,IDLE,INVISIBLE,NA,OCCUPIED,FREE_TO_CHAT,ONPHONE,ATLUNCH,BUSY,NOT_AT_HOME,NOT_AT_DESK,NOT_IN_OFFICE,ON_VACATION,STEPPED_OUT,CUSTOM_AWAY&quot; index=&quot;e&quot;&gt;
+               &lt;option value=&quot;#e#&quot;&gt;#e#&lt;/option&gt;
+            &lt;/cfloop&gt;
+         &lt;/select&gt;
+         &lt;input type=&quot;text&quot; name=&quot;custommsg&quot; value=&quot;(custom away massage)&quot; size=&quot;30&quot;/&gt;
+         &lt;input type=&quot;submit&quot;/&gt;
+      &lt;/form&gt;
+   &lt;li&gt;
+      &lt;form action=&quot;#cgi.script_name#&quot; method=&quot;get&quot;&gt;
+         setNickName: 
+         &lt;input type=&quot;hidden&quot; name=&quot;cmd&quot; value=&quot;setnickname&quot;&gt;
+         &lt;input type=&quot;text&quot; name=&quot;nickname&quot; value=&quot;(enter nickname)&quot;&gt;
+         &lt;input type=&quot;submit&quot;&gt;
+      &lt;/form&gt;
+---&gt;
+   &lt;li&gt;INFO: &lt;a href=&quot;#cgi.script_name#?cmd=getname&quot;&gt;getname&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=getnickname&quot;&gt;getnickname&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=getcustomawaymessage&quot;&gt;getcustomawaymessage&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=getprotocolname&quot;&gt;getprotocolname&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=getstatusasstring&quot;&gt;getstatusasstring&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=isonline&quot;&gt;isonline&lt;/a&gt;
+   &lt;li&gt;MESSAGE COUNT: 
+      &lt;a href=&quot;#cgi.script_name#?cmd=numberofmessagesreceived&quot;&gt;numberofmessagesreceived&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=numberofmessagessent&quot;&gt;numberofmessagessent&lt;/a&gt;
+   &lt;li&gt;RUNNING TIME: &lt;a href=&quot;#cgi.script_name#?cmd=getsignontimestamp&quot;&gt;getsignontimestamp&lt;/a&gt; | 
+      &lt;a href=&quot;#cgi.script_name#?cmd=getstatustimestamp&quot;&gt;getstatustimestamp&lt;/a&gt;
+   &lt;li&gt;setPermitMode: 
+      &lt;cfloop list=&quot;PERMIT_ALL,DENY_ALL,PERMIT_SOME,DENY_SOME,IGNORE_IN_LIST,IGNORE_NOT_IN_LIST&quot;
+            index=&quot;e&quot;&gt;&lt;a href=&quot;#cgi.script_name#?cmd=setpermitmode&amp;mode=#e#&quot;&gt;#e#&lt;/a&gt; | 
+      &lt;/cfloop&gt; &lt;span class=&quot;note&quot;&gt;doesn&#39;t work for XMPP&lt;/span&gt;
+   &lt;li&gt;&lt;a href=&quot;#cgi.script_name#?cmd=getpermitmode&quot;&gt;getpermitmode&lt;/a&gt;
+   &lt;li&gt;setPlainTextMode: 
+      &lt;cfloop list=&quot;PLAIN_TEXT,RICH_TEXT&quot; index=&quot;e&quot;&gt;
+         &lt;a href=&quot;#cgi.script_name#?cmd=setplaintextmode&amp;mode=#e#&quot;&gt;#e#&lt;/a&gt; | 
+      &lt;/cfloop&gt;
+   &lt;li&gt;&lt;a href=&quot;#cgi.script_name#?cmd=getplaintextmode&quot;&gt;getplaintextmode&lt;/a&gt;
+&lt;/ul&gt;
+&lt;/cfoutput&gt;
+
+&lt;!--- The url.cmd value exists if one of the previous links or forms has been submitted, and identifies the type of request. ---&gt;
+&lt;cfoutput&gt;
+&lt;cfif isdefined(&quot;url.cmd&quot;)&gt;
+   &lt;!--- Get the GatewayHelper for the gateway. ---&gt;
+   &lt;cfset helper = getGatewayHelper(session.gwid)&gt;
+   &lt;!--- Need to get the buddy list if requested the list or full buddy information. ---&gt;
+   &lt;cfswitch expression=&quot;#LCase(url.cmd)#&quot;&gt;
+      &lt;cfcase value=&quot;buddylist,buddyinfo&quot;&gt;
+         &lt;cfset ret=helper.getBuddyList()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;denylist&quot;&gt;
+         &lt;cfset ret=helper.getDenyList()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;permitlist&quot;&gt;
+         &lt;cfset ret=helper.getPermitList()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;addbuddy&quot;&gt;
+         &lt;cfset ret=helper.addBuddy(&quot;#session.buddyid#&quot;, 
+            &quot;#session.buddyid#&quot;, &quot;&quot;)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;addpermit&quot;&gt;
+         &lt;cfset ret=helper.addPermit(&quot;#session.buddyid#&quot;, 
+            &quot;#session.buddyid#&quot;, &quot;&quot;)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;adddeny&quot;&gt;
+         &lt;cfset ret=helper.addDeny(&quot;#session.buddyid#&quot;, 
+            &quot;#session.buddyid#&quot;, &quot;&quot;)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;removebuddy&quot;&gt;
+         &lt;cfset ret=helper.removeBuddy(&quot;#session.buddyid#&quot;, &quot;&quot;)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;removepermit&quot;&gt;
+         &lt;cfset ret=helper.removePermit(&quot;#session.buddyid#&quot;, &quot;&quot;)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;removedeny&quot;&gt;
+         &lt;cfset ret=helper.removeDeny(&quot;#session.buddyid#&quot;, &quot;&quot;)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;setstatus&quot;&gt;
+         &lt;cfset ret=helper.setStatus(url.status, &quot;&quot;)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;setstatus2&quot;&gt;
+         &lt;cfset ret=helper.setStatus(url.status, url.custommsg)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getcustomawaymessage&quot;&gt;
+         &lt;cfset ret=helper.getCustomAwayMessage()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getname&quot;&gt;
+         &lt;cfset ret=helper.getName()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getnickname&quot;&gt;
+         &lt;cfset ret=helper.getNickname()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getprotocolname&quot;&gt;
+         &lt;cfset ret=helper.getProtocolName()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getsignontimestamp&quot;&gt;
+         &lt;cfset ret=helper.getSignOnTimeStamp()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getstatusasstring&quot;&gt;
+         &lt;cfset ret=helper.getStatusAsString()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getstatustimestamp&quot;&gt;
+         &lt;cfset ret=helper.getStatusTimeStamp()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;isonline&quot;&gt;
+         &lt;cfset ret=helper.isOnline()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;numberofmessagesreceived&quot;&gt;
+         &lt;cfset ret=helper.numberOfMessagesReceived()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;numberofmessagessent&quot;&gt;
+         &lt;cfset ret=helper.numberOfMessagesSent()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;setnickname&quot;&gt;
+         &lt;cfset ret=helper.setNickName(url.nickname)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;setpermitmode&quot;&gt;
+         &lt;cfset ret=helper.setPermitMode(url.mode)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getpermitmode&quot;&gt;
+         &lt;cfset ret=helper.getPermitMode()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;setplaintextmode&quot;&gt;
+         &lt;cfset ret=helper.setPlainTextMode(url.mode)&gt;
+      &lt;/cfcase&gt;
+      &lt;cfcase value=&quot;getplaintextmode&quot;&gt;
+         &lt;cfset ret=helper.getPlainTextMode()&gt;
+      &lt;/cfcase&gt;
+      &lt;cfdefaultcase&gt;
+         &lt;cfset ret[1]=&quot;Error; Invalid command. You shouldn&#39;t get this.&quot;&gt;
+      &lt;/cfdefaultcase&gt;
+   &lt;/cfswitch&gt;
+   &lt;br&gt;
+   &lt;!--- Display the results returned by the called GatewayHelper method. ---&gt;
+   &lt;strong&gt;#url.cmd#&lt;/strong&gt;&lt;br&gt;
+   &lt;cfdump var=&quot;#ret#&quot;&gt;
+   &lt;br&gt;
+   &lt;!--- If buddy information was requested, loop through buddy list to get 
+        information for each buddy and display it. ---&gt;
+   &lt;cfif comparenocase(url.cmd, &quot;buddyinfo&quot;) is 0 and arraylen(ret) gt 0&gt;
+   &lt;b&gt;Buddy info for all buddies&lt;/b&gt;&lt;br&gt;
+      &lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;#arraylen(ret)#&quot;&gt;
+         &lt;cfdump var=&quot;#helper.getBuddyInfo(ret[i])#&quot; label=&quot;#ret[i]#&quot;&gt;&lt;/cfloop&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001664.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001666.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001665.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

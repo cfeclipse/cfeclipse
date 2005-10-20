@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>SetLocale</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000623.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000625.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>SetLocale</h1>
+<h4><a name="wp136341"></a>Description</h4>
+<p>Sets the country/language locale for ColdFusion processing and the page returned to the client. The locale value determines the default format of date, time, number, and currency values, according to language and regional conventions. </p>
+<h4><a name="wp136343"></a>Returns</h4>
+<p>The locale value prior to setting the new locale, as a string.</p>
+<h4><a name="wp136345"></a>Category</h4>
+<p><a href="00000363.htm#1099325">International functions</a>, <a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp136353"></a>Function syntax</h4>
+<pre><code><strong>SetLocale</strong></code>(<i>new_locale)</i>
+</pre><h4><a name="wp136355"></a>See also</h4>
+<p><a href="00000483.htm#1953353"><code>GetHttpTimeString</code></a>, <a href="00000486.htm#4552309"><code>GetLocale</code></a>, <a href="00000487.htm#5046249"><code>GetLocaleDisplayName</code></a>; <a href="00001202.htm#1219089">Locales</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp187411"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added support for all locales supported by the ColdFusion MX Java runtime.</p>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Changed formatting behavior: this function might return a different value than in earlier releases. This function uses Java standard locale determination and formatting rules on all platforms. 
+</li>
+<li>
+   Deprecated the Spanish (Mexican) locale option. It might not work, and it might cause an error, in later releases.
+</li>
+<li>
+   Changed the Spanish (Modern) option: it now sets the locale to Spanish (Standard). 
+</li>
+</ul>
+<h4><a name="wp136371"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>new_locale</p>
+    </td>
+    <td>
+<p>The name of a locale; for example, &quot;English (US)&quot;</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp136382"></a>Usage</h4>
+<p>You can specify any locale name that is listed in the Server.Coldfusion.SupportedLocales variable. This variable is a comma-delimited list of all locale names supported by the JVM, plus the locale names that were required by ColdFusion MX prior to ColdFusion&#160;MX&#160;7.</p>
+<p>The following locale names were used in ColdFusion releases through ColdFusion MX&#160;6.1, and continue to be supported. If you use any of these values in the <code>SetLocale</code> function, the <a href="00000486.htm#4552309"><code>GetLocale</code></a> function returns the name you set, not the corresponding Java locale name.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Chinese (China)</p>
+    </td>
+    <td>
+<p>French (Belgian)</p>
+    </td>
+    <td>
+<p>Korean</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Chinese (Hong Kong)</p>
+    </td>
+    <td>
+<p>French (Canadian)</p>
+    </td>
+    <td>
+<p>Norwegian (Bokmal)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Chinese (Taiwan)</p>
+    </td>
+    <td>
+<p>French (Standard)</p>
+    </td>
+    <td>
+<p>Norwegian (Nynorsk)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Dutch (Belgian)</p>
+    </td>
+    <td>
+<p>French (Swiss)</p>
+    </td>
+    <td>
+<p>Portuguese (Brazilian)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Dutch (Standard)</p>
+    </td>
+    <td>
+<p>German (Austrian)</p>
+    </td>
+    <td>
+<p>Portuguese (Standard)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>English (Australian)</p>
+    </td>
+    <td>
+<p>German (Standard)</p>
+    </td>
+    <td>
+<p>Spanish (Modern)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>English (Canadian)</p>
+    </td>
+    <td>
+<p>German (Swiss)</p>
+    </td>
+    <td>
+<p>Spanish (Standard)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>English (New Zealand)</p>
+    </td>
+    <td>
+<p>Italian (Standard)</p>
+    </td>
+    <td>
+<p>Swedish</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>English (UK)</p>
+    </td>
+    <td>
+<p>Italian (Swiss)</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>English (US)</p>
+    </td>
+    <td>
+<p>Japanese</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<p>ColdFusion determines the locale value as follows: </p>
+<ul>
+<li>
+   By default, ColdFusion uses the JVM locale, and the default JVM locale is the operating system locale. You can set JVM locale value explicitly in ColdFusion MX in the ColdFusion Administrator Java and JVM Settings page JVM Arguments field; for example: <br />-Duser.language=de -Duser.region=DE.
+</li>
+<li>
+   A locale set using the <code>SetLocale</code> function persists for the current request or until it is reset by another <code>SetLocale</code> function in the request.
+</li>
+<li>
+   If a request has multiple <code>SetLocale</code> functions, the current locale setting affects how locale-sensitive ColdFusion tags and functions, such as the functions that start with LS format data. The last <code>SetLocale</code> function that ColdFusion processes before sending a response to the requestor (typically the client browser) determines the value of the response <code>Content-Language</code> HTTP header. The browser that requested the page displays the response according to the rules for the language specified by the <code>Content-Language</code> header.
+</li>
+<li>
+   ColdFusion ignores any <code>SetLocale</code> functions that follow a <code>cfflush</code> tag.
+</li>
+</ul>
+<p>Because this function returns the previous locale setting, you can save the original locale value. You can restore the original locale by calling <code>SetLocale</code> again with the saved variable. For example, the following line saves the original locale ins a Session variable: </p>
+<pre>&lt;cfset Session.oldlocale = SetLocale(newLocale)&gt;
+</pre><p>The variable <code>server.ColdFusion.SupportedLocales</code> is initialized at startup with a comma-delimited list of the locales that ColdFusion and the operating system support. If you call <code>SetLocale</code> with a locale that is not in the list, the call generates an error.</p>
+<p><strong>Note: </strong>ColdFusion uses the Spanish (Standard) formats for Spanish (Modern) and Spanish (Standard).</p><h4><a name="wp136455"></a>Example</h4>
+<pre>&lt;h3&gt;SetLocale Example&lt;/h3&gt;
+&lt;p&gt;SetLocale sets the locale to the specified new locale for the current session.
+&lt;p&gt;A locale encapsulates the set of attributes that govern the display and<br />formatting of date, time, number, and currency values.
+&lt;p&gt;The locale for this system is &lt;cfoutput&gt;#GetLocale()#&lt;/cfoutput&gt;
+&lt;p&gt;&lt;cfoutput&gt;&lt;I&gt;the old locale was #SetLocale(&quot;English (UK)&quot;)#&lt;/I&gt;
+&lt;p&gt;The locale is now #GetLocale()#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000623.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000625.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000624.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

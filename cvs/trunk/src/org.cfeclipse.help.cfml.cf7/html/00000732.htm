@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setCFCMethod</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000731.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000733.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setCFCMethod</h1>
+<h4><a name="wp1176557"></a>Description</h4>
+<p>Sets the name of the CFC method that will processes an incoming message.</p>
+<h4><a name="wp1176559"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1176561"></a>Syntax</h4>
+<pre>void setCFCMethod(String <i>method</i>)
+</pre><h4><a name="wp1176563"></a>See also</h4>
+<p><a href="00000725.htm#1174437">getCFCMethod</a>, <a href="00000733.htm#1176657">setCFCPath</a>, <a href="00000734.htm#1176676">setCFCTimeout</a>, <a href="00000744.htm#1182144">CFML CFEvent structure</a>, <a href="00001688.htm#117767">CFEvent class</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1176938"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>method</p>
+    </td>
+    <td>
+<p>The method in the listener CFC that ColdFusion will call to process this event. If you do not use this method in your gateway, ColdFusion invokes the <code>onIncomingMessage</code> method, </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1176567"></a>Usage</h4>
+<p>Gateways that use a single CFC listener method do not need to use this method if the listener CFC method is named <code>onIncomingMessage</code>. For the sake of consistency, Macromedia recommends that any event gateway with a single listener not override this default. </p>
+<p>A gateway, such as the ColdFusion MX XMPP gateway, that uses different listener methods for different message types uses this method to identify the destination method.</p>
+<h4><a name="wp1176571"></a>Example</h4>
+<p>The following example code comes from the ColdFusion XMPP gateway incoming message handler. It creates a CFEvent object and sets the method that will handle tests based on the message type.</p>
+<pre>CFEvent cfmsg = new CFEvent(gatewayID);
+cfmsg.setOriginatorID(sender);
+cfmsg.setGatewayType(gatewayType);
+<strong>if(messageType == IMessage.IM)</strong>
+<strong>   {</strong>
+<strong>   // default for normal messages</strong>
+<strong>   cfmsg.setCfcMethod(onIncomingMessageFunction);</strong>
+<strong>   }</strong>
+<strong>   //if the message is an authorization request</strong>
+<strong>else if(messageType == IMessage.AUTH_REQUEST)</strong>
+<strong>   {</strong>
+<strong>   cfmsg.setCfcMethod(onAddBuddyRequestFunction);</strong>
+   message = &quot;Requesting authorization to add &#39;&quot; + recipient + &quot;&#39; to &#39;&quot;
+   + sender + &quot;&#39; buddy list and view &#39;&quot; + recipient + &quot;&#39; presence.&quot;;
+   } // Code snipped here for brevity.
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000731.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000733.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000732.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Managing the ColdFusion&#160;MX&#160;7 process on UNIX </title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000047.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000049.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Managing the ColdFusion&#160;MX&#160;7 process on UNIX </h1>
+<p>This section describes the ColdFusion&#160;MX&#160;7 process and explains how to manage it.</p>
+<p><strong>Note: </strong>This discussion applies to the ColdFusion&#160;MX&#160;7 server configuration only. With the multiserver or J2EE configuration, you start and stop ColdFusion&#160;MX&#160;7 by starting the application server.</p><h3><a name="wp1129016"></a>Overview of the ColdFusion&#160;MX&#160;7 process</h3>
+<p>The ColdFusion&#160;MX&#160;7 installation creates a single process on UNIX called <code>cfusion</code>. To check whether it is running, use the following command:</p>
+<pre>ps -eaf | grep cfusion
+</pre><p>If it is running, your computer returns something similar to the following line:</p>
+<pre>nobody 4528 1 10 12:44 pts/0 00:00:07 /opt/coldfusionmx/bin/cfusion -start default
+</pre><h3><a name="wp1118725"></a>Managing the process</h3>
+<p>The ColdFusion&#160;MX&#160;7 process starts automatically when you start your computer and shuts down automatically when you shut down your computer.</p>
+<p>In the ColdFusion&#160;MX Administrator, if you enable or disable security or change any option in the Java and JVM Settings page, you must stop and restart the ColdFusion&#160;MX&#160;7 process for your changes to take effect. This applies to the server configuration only; in the multiserver and J2EE configurations, you use application-server-specific methods to update Java settings.</p>
+<h4>To manage the ColdFusion&#160;MX&#160;7 process on UNIX:</h4>
+<ol>
+<li>
+   Log in as root, if you have not already done so.
+</li>
+<li>
+   Enter the following command:
+<pre>
+cd cf_root/bin
+</pre>
+</li>
+<li>
+   Enter the appropriate command for what you need to do, as the following table describes:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Task
+    </th>
+    <th>
+Command to enter
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Start ColdFusion&#160;MX&#160;7</p>
+    </td>
+    <td>
+<pre>coldfusion start
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Stop ColdFusion&#160;MX&#160;7</p>
+    </td>
+    <td>
+<pre>coldfusion stop
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Restart ColdFusion&#160;MX&#160;7</p>
+    </td>
+    <td>
+<pre>coldfusion restart
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>View performance information for ColdFusion&#160;MX&#160;7</p>
+    </td>
+    <td>
+<pre>coldfusion status
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Run Web Server Configuration Tool</p>
+    </td>
+    <td>
+<pre>coldfusion wsconfig
+</pre>    </td>
+  </tr>
+</table>
+
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000047.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000049.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000048.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

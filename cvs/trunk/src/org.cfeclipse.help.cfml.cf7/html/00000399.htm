@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ASin</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000398.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000400.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ASin</h1>
+<h4><a name="wp1224359"></a>Description</h4>
+<p>Determines the arcsine of a number. The arcsine is the angle whose sine is number.</p>
+<h4><a name="wp3325736"></a>Returns</h4>
+<p>The arcsine, in radians, of a number.</p>
+<h4><a name="wp2501229"></a>Category</h4>
+<p><a href="00000365.htm#1099613">Mathematical functions</a></p>
+<h4><a name="wp2123545"></a>Function syntax</h4>
+<pre><code><strong>ASin</strong></code>(<i>number</i>)
+</pre><h4><a name="wp2603670"></a>See also</h4>
+<p><a href="00000628.htm#136681"><code>Sin</code></a><code>, </code><a href="00000421.htm#1101937"><code>Cos</code></a><code>, </code><a href="00000378.htm#1100157"><code>ACos</code></a><code>, </code><a href="00000650.htm#138346"><code>Tan</code></a><code>, </code><a href="00000400.htm#1101161"><code>Atn</code></a><code>, </code><a href="00000595.htm#134457"><code>Pi</code></a></p>
+<h4><a name="wp1260158"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>number</p>
+    </td>
+    <td>
+<p>Sine of an angle. The value must be between -1 and 1, inclusive.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1101112"></a>Usage</h4>
+<p>The range of the result is -p/2 to p/2 radians. To convert degrees to radians, multiply degrees by p/180. To convert radians to degrees, multiply radians by 180/p.</p>
+<h4><a name="wp1101114"></a>Example</h4>
+<pre>&lt;h3&gt;ASin Example&lt;/h3&gt;
+&lt;!--- output its arcsine value ---&gt;
+&lt;cfif IsDefined(&quot;FORM.SinNum&quot;)&gt;
+   &lt;cfif IsNumeric(FORM.SinNum)&gt;
+      &lt;cfif FORM.SinNum LESS THAN OR EQUAL TO 1&gt;
+         &lt;cfif FORM.SinNum GREATER THAN OR EQUAL TO -1&gt;
+            ASin(&lt;cfoutput&gt;#FORM.SinNum#&lt;/cfoutput&gt;) = 
+             &lt;cfoutput&gt;#ASin(FORM.sinNum)# Radians&lt;/cfoutput&gt;
+             &lt;br&gt; or &lt;br&gt;ASin(&lt;cfoutput&gt;#FORM.SinNum#&lt;/cfoutput&gt;) = 
+            &lt;cfoutput&gt;
+               #ASin(FORM.sinNum) * 180/Pi()# Degrees
+            &lt;/cfoutput&gt;
+         &lt;cfelse&gt;
+&lt;!--- if it is less than negative one, output an error message ---&gt;
+            &lt;h4&gt;Enter the sine of the angle to calculate, in degrees and radians. 
+            The value must be between 1 and -1, inclusive.&lt;/h4&gt;
+         &lt;/cfif&gt;
+      &lt;cfelse&gt;
+&lt;!--- if it is greater than one, output an error message ---&gt;
+      &lt;h4&gt;Enter the sine of the angle to calculate, in degrees and radians. The
+value must be between 1 and -1, inclusive.&lt;/h4&gt;
+      &lt;/cfif&gt;      
+   &lt;cfelse&gt;
+&lt;!--- if it is empty, output an error message ---&gt;
+      &lt;h4&gt;Enter the sine of the angle to calculate, in degrees and radians. The
+value must be between 1 and -1,inclusive.&lt;/h4&gt;
+   &lt;/cfif&gt;   
+&lt;/cfif&gt;
+&lt;form action = &quot;./evaltest.cfm&quot; method=&quot;post&quot;&gt;
+&lt;p&gt;Enter a number to get its arcsine in Radians and Degrees.
+&lt;br&gt;&lt;input type = &quot;Text&quot; name = &quot;SinNum&quot; size = &quot;25&quot;&gt;
+&lt;p&gt;&lt;input type = &quot;Submit&quot; name = &quot;&quot;&gt; &lt;input type = &quot;RESET&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000398.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000400.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000399.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Managing the client state</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001148.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001150.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Managing the client state</h1>
+<p>Because the web is a stateless system, each connection that a browser makes to a web server is unique to the web server. However, many applications must keep track of users as they move through the pages within the application. This is the definition of <i>client state management</i>.</p>
+<p>ColdFusion provides tools to maintain the client state by seamlessly tracking variables associated with a browser as the user moves from page to page within the application. You can use these variables in place of other methods for tracking client state, such as URL parameters, hidden form fields, and HTTP cookies. </p>
+<h2><a name="wp1154463"></a>About client and session variables</h2>
+<p>ColdFusion provides two tools for managing the client state: client variables and session variables. Both types of variables are associated with a specific client, but you manage and use them differently, as described in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Variable type
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Client </p>
+    </td>
+    <td>
+<p>Data is saved as cookies, database entries, or Registry entries. Data is saved between server restarts, but is initially accessed and saved more slowly than data stored in memory.</p>
+<p>Each type of data storage has its own time-out period. You can specify the database and Registry data time-outs in ColdFusion&#160;MX Administrator. ColdFusion sets Cookie client variables to expire after approximately 10 years.</p>
+<p>Data is stored on a per-user and per-application basis. For example, if you store client variables as cookies, the user has a separate cookie for each ColdFusion application provided by a server.</p>
+<p>Client variables must be simple variables, such as numbers, dates, or strings. They cannot be arrays, structures, query objects, or other objects.</p>
+<p>Client variable names can include periods. For example, My.ClientVar is a valid name for a simple client variable. Avoid such names, however, to ensure code clarity.</p>
+<p>You do not have to prefix client variables with the scope name when you reference them, However, if you do not use the Client prefix, you might unintentionally refer to a variable with the same name in another scope. Using the prefix also optimizes performance and increases program clarity.</p>
+<p>You do not lock code that uses client variables.</p>
+<p>You can use client variables that are stored in cookies or a common database in clustered systems.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Session </p>
+    </td>
+    <td>
+<p>Data is stored in memory so it is accessed quickly.</p>
+<p>Data is lost when the client browser is inactive for a time-out period. You specify the time-out in the ColdFusion&#160;MX Administrator, the Application.cfc initialization code, or Application.cfm.</p>
+<p>As with client variables, data is available to a single client and application only.</p>
+<p>Variables can store any ColdFusion data type.</p>
+<p>You must prefix all variable names with the Session scope name.</p>
+<p>Lock code that uses session variables to prevent race conditions.</p>
+<p>You can use session variables in clustered systems only if the systems support &quot;sticky&quot; sessions, where a session is limited to a single server.</p>
+    </td>
+  </tr>
+</table>
+
+<p>Session variables are normally better than client variables for values that need to exist for only a single browser session. You should reserve client variables for client-specific data, such as client preferences that you want available for multiple browser sessions.</p>
+<h2><a name="wp1167090"></a>Maintaining client identity</h2>
+<p>Because the web is a stateless system, client management requires some method for maintaining knowledge of the client between requests. Normally you do this using cookies, but you can also do it by passing information between application pages. The following sections describe how ColdFusion maintains client identity in a variety of configurations and environments, and discuss issues that can arise with client state management.</p>
+<ul>
+<li>
+   <a href="00001150.htm#1180466">About client identifiers</a>
+</li>
+<li>
+   <a href="00001151.htm#1162514">Using client and session variables without cookies</a>
+</li>
+<li>
+   <a href="00001152.htm#1172592">Client identifiers and security</a>
+</li>
+<li>
+   <a href="00001153.htm#1167915">Managing client identity information in a clustered environment</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001148.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001150.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001149.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

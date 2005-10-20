@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>SQL example</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001236.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001238.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>SQL example</h1>
+<p>The most commonly used SQL statement in ColdFusion is the SELECT statement. The SELECT statement reads data from a database and returns it to ColdFusion. For example, the following SQL statement reads all the records from the employees table:</p>
+<pre>SELECT * FROM employees
+</pre><p>You interpret this statement as &quot;Select all rows from the table employees&quot; where the wildcard symbol (*) corresponds to all columns.</p>
+<p><strong>Tip: </strong>If you are using Macromedia Dreamweaver MX 2004 or Macromedia HomeSite+, you can use the built-in query builder to build SQL statements graphically by selecting the tables and records to retrieve. For more information, see <a href="00001251.htm#1116069">Writing queries using an editor</a>.</p><p>In many cases, you do not want all rows from a table, but only a subset of rows. The next example returns all rows from the employees table, where the value of the DeptID column for the row is 3:</p>
+<pre>SELECT * FROM employees WHERE DeptID=3
+</pre><p>You interpret this statement as &quot;Select all rows from the table employees where the DeptID is 3&quot;.</p>
+<p>SQL also lets you specify the table columns to return. For example, instead of returning all columns in the table, you can return a subset of columns:</p>
+<pre>SELECT LastName, FirstName FROM employees WHERE DeptID=3
+</pre><p>You interpret this statement as &quot;Select the columns FirstName and LastName from the table employees where the DeptID is 3&quot;.</p>
+<p>In addition to with reading data from a table, you can write data to a table using the SQL INSERT statement. The following statement adds a new row to the employees table:</p>
+<pre>INSERT INTO employees(EmpID, LastName, Firstname) <br />VALUES(51, &#39;Doe&#39;, &#39;John&#39;)
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001236.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001238.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001237.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

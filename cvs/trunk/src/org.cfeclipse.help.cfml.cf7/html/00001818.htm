@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the browse utility</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001817.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001819.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the browse utility</h1>
+<p>A documents table is built for each partition in a collection. The documents table is used for field searching and for sorting search results. The fields within the documents table are defined by the following collection style files:</p>
+<p><strong>style.ddd</strong>&#160;Defines fields used internally by the Verity engine, identified by an initial underscore character (_).</p>
+<p><strong>style.sfl</strong>&#160;Defines standard fields (many of which are commented out to limit the size of the documents table).</p>
+<p><strong>style.ufl</strong>&#160;Defines custom fields that are not included in the style.sfl file.</p>
+<p>The value of each field can be filled in from source documents or can be provided explicitly. If a field is blank, it has not been populated.</p>
+<p>The browse utility executable, which starts the browse utility application, is located in the <i>platform</i>/bin directory. For more information on the specific location of this directory, see <a href="00001799.htm#1026491">Location of Verity utilities</a>.</p>
+<p>For example:</p>
+<pre>c:\cfusionmx7\verity\k2\_nti40\bin\browse /common = c:\cfusionmx7\verity\k2\common<br />c:\my_collection\parts\0000001.ddd
+</pre><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001818.htm#1019217">Using menu options with the browse utility</a>
+</li>
+<li>
+   <a href="00001818.htm#1000483">Displaying fields</a>
+</li>
+</ul>
+<h2><a name="wp1019217"></a>Using menu options with the browse utility</h2>
+<p>Use the following browse command to start the utility and display a set of menu options:</p>
+<pre>browse 00000003.ddd
+</pre><p>The system displays the following menu of options available for the browse utility:</p>
+<pre>D:\VERITY\colltest\parts&gt;browse 00000003.ddd
+BROWSE OPTIONS
+?) help
+q) quit
+c) Number of entries in field
+_) Toggle viewing fields beginning with &#39;_&#39;
+v) Toggle viewing selected fields
+##) Display all fields in specified record number
+Dispatch/Compound field options:
+n) No dispatch
+d) Dispatch
+s) Dispatch as stream
+Action (? for help):
+</pre><h2><a name="wp1000483"></a>Displaying fields</h2>
+<p>You can use several options to control the display of field information. </p>
+<h4>To display all the document fields:</h4>
+<ol>
+<li>
+   At the Action prompt, enter ##
+</li>
+<li>
+   Press Return twice to display the fields for the first document record.
+</li>
+<li>
+   Press Return to view the document fields for the next sequential record.
+</li>
+</ol>
+<p>The following partial display of the results of the browse command includes internal fields, used by the Verity search engine. An internal field name starts with an underscore character (_).</p>
+<pre>50 Created              FIX-date ( 4) = 12-Jan-1998 01:52:27 pm
+51 Modified             FIX-date ( 4) = 24-Sep-1997 02:40:26 pm
+52 Size                 FIX-unsg ( 4) = 5381
+53 DOC_OF               FIX-unsg ( 4) = 0
+54 DOC_SZ               FIX-unsg ( 4) = 4294967295
+55 DOC_FN_OF            FIX-unsg ( 4) = 436
+56 DOC_FN_SZ            FIX-unsg ( 2) = 58
+57 _CACHE_FN_OF         FIX-unsg ( 4) = 2922
+58 _CACHE_FN_SZ         FIX-unsg ( 2) = 0
+59 _ParentID_OF         FIX-unsg ( 4) = 354
+60 _ParentID_SZ         FIX-unsg ( 2) = 46
+61 Title_OF             FIX-unsg ( 4) = 2481
+62 Title_SZ             FIX-unsg ( 2) = 15
+</pre><p>You can eliminate the internal fields. To do this, type the underscore character, then press Return. If you enter an underscore character again, then press return, the internal fields are displayed.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001817.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001819.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001818.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

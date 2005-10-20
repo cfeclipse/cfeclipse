@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The mkvdk utility syntax</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001800.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001802.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The mkvdk utility syntax</h1>
+<p>The following is the basic syntax of the mkvdk command:</p>
+<pre>mkvdk -collection path [option] [dockey]
+</pre><p>Multiple options and dockeys can be included, as needed. If dockey is a list of files, it should consist of an at sign (@) followed by the filename that contains a simple list of files (for example, @filelist). For more information about the options for the mkvdk utility, see <a href="00001802.htm#1018301">Getting started with the Verity mkvdk utility</a>.</p>
+<p>The following operations occur when you use the mkvdk utility to create a new collection:</p>
+<ol>
+<li>
+   New collection directories are created and the specified style files are copied to the style subdirectory.
+</li>
+<li>
+   The style file settings are read and the required information is passed to the Verity search engine.
+</li>
+<li>
+   The gateway is used to open the document files, which are parsed according to the settings in various style files.
+</li>
+<li>
+   A new partition is created, which includes an index and an attribute table.
+</li>
+<li>
+   Assist data is generated, which might include a spanning word list.
+</li>
+</ol>
+<p>When problems occur during an operation, the mkvdk utility writes error messages to the system log file (sysinfo.log). You can direct error and other messages to the console by using the mkvdk command with the <code>-outlevel</code> option. You can direct messages to a file of your choice by using the <code>-loglevel</code> and <code>-logfile</code> options.</p>
+<p>The log file contains the following fields:</p>
+<ul>
+<li>
+   Date
+</li>
+<li>
+   Time
+</li>
+<li>
+   Level
+</li>
+<li>
+   Code
+</li>
+<li>
+   Component
+</li>
+<li>
+   Description
+</li>
+</ul>
+<p>You can use the log file to view details about what happens during the collection creation process. Use the mkvdk <code>-loglevel</code> command and specify the numeric identifier for the message level you want, as summarized in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type
+    </th>
+    <th>
+Number
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Fatal</p>
+    </td>
+    <td>
+<p>1</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Error</p>
+    </td>
+    <td>
+<p>2</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Warning</p>
+    </td>
+    <td>
+<p>4</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Status</p>
+    </td>
+    <td>
+<p>8</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Info</p>
+    </td>
+    <td>
+<p>16</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Verbose</p>
+    </td>
+    <td>
+<p>32</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Debug</p>
+    </td>
+    <td>
+<p>64</p>
+    </td>
+  </tr>
+</table>
+
+<p>To calculate the numeric parameter, add the numbers for the message types you want to include. The default for both <code>-outlevel</code> and <code>-loglevel</code> is 15, which selects fatal, error, warning, and status messages (1+2+4+8).</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001800.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001802.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001801.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Function argument evaluation considerations</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000943.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000945.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Function argument evaluation considerations</h1>
+<p>It is important to remember that ColdFusion always evaluates function arguments <i>before</i> the argument values are passed to a function:</p>
+<p>For example, consider the following <a href="00000449.htm#1103833"><code>DE</code></a> function:</p>
+<pre>&lt;cfoutput&gt;#DE(&quot;1&quot; &amp; &quot;2&quot;)#&lt;/cfoutput&gt;
+</pre><p>You might expect this line to display &quot;&quot;&quot;1&quot;&quot; &amp; &quot;&quot;2&quot;&quot;&quot;. Instead, it displays &quot;12&quot;, because ColdFusion processes the line as follows:</p>
+<ol>
+<li>
+   Evaluates the expression &quot;1&quot; &amp; &quot;2&quot; as the string &quot;12&quot;. 
+</li>
+<li>
+   Passes the string &quot;12&quot; (without the quotation marks) to the <code>DE</code> function.
+</li>
+<li>
+   Calls the <code>DE</code> function, which adds literal quotation marks around the 12. 
+</li>
+</ol>
+<p>Similarly, if you use the expression DE(1 + 2), ColdFusion evaluates 1 + 2 as the integer 3 and passes it to the function. The function converts it to a string and surrounds the string in literal quotation marks: &quot;3&quot;.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000943.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000945.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000944.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

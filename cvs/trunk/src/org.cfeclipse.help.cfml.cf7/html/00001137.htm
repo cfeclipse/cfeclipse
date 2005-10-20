@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Determining error-handling strategies</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001136.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001138.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Determining error-handling strategies</h1>
+<p>ColdFusion provides you with many options for handling errors, particularly exceptions, as described in the section <a href="00001135.htm#1123436">How ColdFusion handles errors</a>. This section describes considerations for determining which forms of error handling to use.</p>
+<h2><a name="wp1128967"></a>Handling missing template errors</h2>
+<p>Missing template errors occur when ColdFusion receives an HTTP request for a page ending in .cfm that it cannot find. You can create your own missing template error page to present application-specific information or provide an application-specific appearance. You specify the missing template error page on the Administrator Settings page.</p>
+<p>The missing error page can use CFML tags and variables. In particular, you can use the CGI.script_name variable in text such as the following to identify the requested page:</p>
+<pre>&lt;cfoutput&gt;The page #Replace(CGI.script_name, &quot;/&quot;, &quot;&quot;)# is not available.&lt;br&gt;
+Make sure that you entered the page correctly.&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><p>(In this code, the <code>Replace</code> function removes the leading slash sign from the script name to make the display more friendly.)</p>
+<h2><a name="wp1126367"></a>Handling form field validation errors</h2>
+<p>When you use server-side form field validation, the default validation error message describes the error cause plainly and clearly. However, you might want to give the error message a custom look or provide additional information such as service contact phone numbers and addresses. In this case, use the <a href="00000242.htm#2022557"><code>cferror</code></a> tag with the <code>Validation</code> attribute in the Application.cfc initialization code or on the Application.cfm page to specify your own validation error handler. The section <a href="00001138.htm#1096234">Example of a validation error page</a> provides an example of such a page. You can also put form field validation error handling code in the Application.cfc <code>onError</code> method.</p>
+<h2><a name="wp1139370"></a>Handling compiler exceptions</h2>
+<p>You cannot handle compiler exceptions directly on the page where they occur, because the exception is caught before ColdFusion starts running the page code. You should fix all compiler exceptions as part of the development process. Use the reported error message and the code debugging techniques discussed in <a href="00001208.htm#1096654">Debugging and Troubleshooting Applications</a> to identify and correct the cause of the error.</p>
+<p>Compiler exceptions that occur on pages you access by using the <a href="00000277.htm#1100248"><code>cfinclude</code></a> or <a href="00000300.htm#1810047"><code>cfmodule</code></a> tags can actually be handled as runtime errors by surrounding the <code>cfinclude</code> or <code>cfmodule</code> tag in a <a href="00000349.htm#1104557"><code>cftry</code></a> block. The compiler exception on the accessed page gets caught as a runtime error on the base page. However, you should avoid this &quot;solution&quot; to the problem, as the correct method for handling compiler errors is to remove them before you deploy the application.</p>
+<h2><a name="wp1149062"></a>Handling runtime exceptions</h2>
+<p>You have many choices for handling exceptions, and the exact path you take depends on your application and its needs. The following table provides a guide to selecting an appropriate technique:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Technique
+    </th>
+    <th>
+Use
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000349.htm#1104557"><code>cftry</code></a></p>
+    </td>
+    <td>
+<p>Place <code>cftry</code> blocks around specific code sections where exceptions can be expected and you want to handle those exceptions in a context-specific manner; for example, if you want to display an error message that is specific to that code. </p>
+<p>Use <code>cftry</code> blocks where you can recover from an exception. For example, you can retry an operation that times out, or access an alternate resource. You can also use the <code>cftry</code> tag to continue processing where a specific exception will not harm your application; for example, if a missing resource is not required. </p>
+<p>For more information, see <a href="00001140.htm#1153612">Handling runtime exceptions with ColdFusion tags</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Application.cfc <a href="00000697.htm#1188543"><code>onError</code></a> method</p>
+    </td>
+    <td>
+<p>Implement the <code>onError</code> method in your Application.cfc to consistently handle application-specific exceptions that might be generated by multiple code sections in the application. For more information on error handling using Application.cfc, see <a href="00001121.htm#1191865">Handling errors in Application.cfc</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000242.htm#2022557"><code>cferror</code></a> <code>with</code> exception- specific error handler pages</p>
+    </td>
+    <td>
+<p>Use the <code>cferror</code> tag to specify error pages for specific exception types. These pages cannot recover from errors, but they can provide the user with information about the error's cause and steps that they can take to prevent the problem.</p>
+<p>For more information, see <a href="00001138.htm#1211975">Specifying custom error messages with the cferror tag</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>cferror</code> with a Request error page</p>
+    </td>
+    <td>
+<p>Use the <code>cferror</code> tag to specify a Request error handler that provides a customized, application-specific message for unrecoverable exceptions. Put the tag in the Application.cfc initialization code or on the Application.cfm page to make it apply to all pages in an application.</p>
+<p>A Request error page cannot use CFML tags, but it can display error variables. As a result, you can use it to display common error information, but you cannot provide error-specific instructions. Typically, Request pages display error variable values and application-specific information, including support contact information.</p>
+<p>For example code, see <a href="00001138.htm#1096230">Example of a request error page</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Site-wide error handler page</p>
+    </td>
+    <td>
+<p>Specify a site-wide error handler in the Administrator to provide consistent appearance and contents for all otherwise-unhandled exceptions in <i>all</i> applications on your server. </p>
+<p>Like the Request page, the site-wide error handler cannot perform error recovery. However, it can include CFML tags in addition to the error variables. </p>
+<p>Because a site-wide error handler prevents ColdFusion from displaying the default error message, it allows you to limit the information reported to users. It also lets you provide all users with default contact information or other instructions.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001136.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001138.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001137.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

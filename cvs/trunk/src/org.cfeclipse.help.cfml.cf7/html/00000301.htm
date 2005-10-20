@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfNTauthenticate</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000300.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000302.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfNTauthenticate</h1>
+<h4><a name="wp2821455"></a>Description</h4>
+<p>Authenticates a user name and password against the Windows NT domain on which the ColdFusion server is running, and optionally retrieves the user's groups.</p>
+<h4><a name="wp2812380"></a>Category</h4>
+<p><a href="00000208.htm#2487583">Security tags</a></p>
+<h4><a name="wp2812385"></a>Syntax</h4>
+<pre>&lt;cfNTauthenticate <br />username=&quot;username&quot; <br />password=&quot;password&quot; <br />domain=&quot;nt_domain&quot; <br />result=&quot;result variable&quot;<br />listGroups = &quot;yes&quot; or &quot;no&quot;<br />throwOnError = &quot;yes&quot; or &quot;no&quot;&gt;
+</pre><h4><a name="wp2820573"></a>See also</h4>
+<p><a href="00000287.htm#2991147">cflogin</a>, <a href="00000288.htm#2873089">cfloginuser</a>, <a href="00000533.htm#4047189">IsUserInRole</a>, <a href="00000469.htm#4046631">GetAuthUser</a></p>
+<h4><a name="wp2812404"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this tag.</p>
+<h4><a name="wp2812409"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>User's login name.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>User's password.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>domain</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Domain against which to authenticate the user. The ColdFusion J2EE server must be running on this domain.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>result</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>cfntauthenticate</p>
+    </td>
+    <td>
+<p>Name of the variable in which to return the results.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>listGroups</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<p>Boolean value specifying whether to include a comma-delimited list of the user's groups in the result structure.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>throwOnError</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<p>Boolean value specifying whether to throw an exception if the validation fails. If this attribute is Yes, ColdFusion throws an error if the user name or password is invalid; the application must handle such errors in a try/catch block or ColdFusion error handler page.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2812457"></a>Usage</h4>
+<p>Use this function to authenticate a user against a Windows NT domain and optionally get the user's groups. This function does not work with the Microsoft Active Directory directory service, and does nothing on UNIX and Linux systems. You typically use this tag inside a <code>cflogin</code> tag to authenticate the user for a <code>cfloginuser</code> tag, as shown in the example. </p>
+<p><strong>Note: </strong>ColdFusion must run as a user that has the privilege to authenticate other users in the specified domain.</p><p>The structure specified in the <code>result</code> attribute contains the following information:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Value
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>auth</p>
+    </td>
+    <td>
+<p>Whether the user is authenticated:</p>
+<ul>
+<li>
+   Yes
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>groups</p>
+    </td>
+    <td>
+<p>A comma-delimited list of the user's groups in the specified domain. The structure includes this field only if the <code>listGroups</code> attribute is Yes.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>The user name; equals the tag's <code>name</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>status</p>
+    </td>
+    <td>
+<p>The authentication status. One of the following:</p>
+<ul>
+<li>
+   success
+</li>
+<li>
+   UserNotInDirFailure: the user is not listed in the directory.
+</li>
+<li>
+   AuthenticationFailure: the user is in the directory, but the password is not valid.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<p>This tag provides two models for handling authentication: status checking and exception handling. If the <code>throwOnError</code> attribute is No, use the result variable's auth and status fields to determine whether the user was authenticated and, if not, the reason for the failure. If the <code>throwOnError</code> attribute is Yes, ColdFusion throws an exception error if the user is not valid. In this case, use try/catch error handling. The catch block must handle any authentication failure.</p>
+<h4><a name="wp2812463"></a>Example</h4>
+<p>The following example uses the auth and status fields to determine whether the user is authenticated and the failure cause. It consists of three files that you put in the same directory:</p>
+<ul>
+<li>
+   A main cfntauthexample.cfm page that displays the name if the user is authenticated and contains a logout link.
+</li>
+<li>
+   A login form page that is displayed if the user is not logged in.
+</li>
+<li>
+   The Application.cfm page, which contains all the login, authentication, and logout processing code.
+</li>
+</ul>
+<p>For a full description of login processing, see <i>ColdFusion MX Developer's Guide</i>. For information on how this example works, see the comments in the code.</p>
+<p>Save the following page as cfntauthenticateexample.cfm. To run the example, request this page in your browser or IDE.</p>
+<pre>&lt;!--- The Application.cfm page, which is processed each time a user
+   requests this page, ensures that you log in first. ---&gt;
+&lt;cfoutput&gt;
+   &lt;h3&gt;Welcome #GetAuthUser()#&lt;/h3&gt;
+   &lt;!--- A link to log out the user. ---&gt;
+   &lt;a href=&quot;#CGI.script_name#?logout=Yes&quot;&gt;Log Out&lt;/a&gt; 
+&lt;/cfoutput&gt;
+</pre><p>Save the following page as loginform.cfm:</p>
+<pre>&lt;!--- A simple login form that posts back to the page whose request initiated
+   the login. ---&gt;
+&lt;H2&gt;Please Log In&lt;/H2&gt;
+&lt;cfform action=&quot;#CGI.script_name#&quot;&gt;
+   &lt;!--- j_username and j_password are special names that populate cflogin tag
+      variables. ---&gt;
+   User Name: &lt;cfinput type=&quot;text&quot; name=&quot;j_username&quot; value=&quot;cfqa_user1&quot;
+      required=&quot;Yes&quot;&gt;&lt;br&gt;
+   Password: &lt;cfinput type=&quot;password&quot; name=&quot;j_password&quot; value=&quot;cfqa_user1&quot;
+      required=&quot;Yes&quot;&gt;&lt;br&gt;
+   Domain: &lt;cfinput type=&quot;text&quot; name=&quot;domain&quot; value=&quot;rnd&quot; required=&quot;Yes&quot;&gt;&lt;br&gt;
+   &lt;input type=&quot;submit&quot; value=&quot;Log In&quot;&gt;
+&lt;/cfform&gt;
+</pre><p>Save the following page as Application.cfm:</p>
+<pre>&lt;!--- If this page is executing in response to the user clicking a logout link,
+      log out the user. The cflogin tag code will then run. ---&gt;
+&lt;cfif IsDefined(&quot;URL.logout&quot;) AND URL.logout&gt;
+   &lt;cflogout&gt;
+&lt;/cfif&gt;
+
+&lt;!--- The cflogin body code runs only if a user is not logged in. ---&gt;
+&lt;cflogin&gt;
+   &lt;!--- cflogin variable exists only if login credentials are available. ---&gt;
+   &lt;cfif NOT IsDefined(&quot;cflogin&quot;)&gt;
+      &lt;!--- Show a login form that posts back to the page whose request
+      initiated the login, and do not process the rest of this page. ---&gt;
+      &lt;cfinclude template=&quot;loginform.cfm&quot;&gt;
+      &lt;cfabort&gt;
+   &lt;cfelse&gt;
+      &lt;!--- Trim any leading or trailing spaces from the username and password 
+      submitted by the form. ---&gt;
+      &lt;cfset theusername=trim(form.j_username)&gt;
+      &lt;cfset thepassword=trim(form.j_password)&gt;
+      &lt;cfset thedomain=trim(form.domain)&gt;
+      &lt;cfntauthenticate username=&quot;#theusername#&quot; password=&quot;#thepassword#&quot;
+         domain=&quot;#thedomain#&quot; result=&quot;authresult&quot; listgroups=&quot;yes&quot;&gt;
+      &lt;!--- authresult.auth is True if the user is authenticated. ---&gt;
+      &lt;cfif authresult.auth&gt;
+         &lt;!--- Log user in to ColdFusion and set roles to the user&#39;s Groups. ---&gt;
+         &lt;cfloginuser name=&quot;#theusername#&quot; password=&quot;#thepassword#&quot;
+            roles=&quot;authresult.groups&quot;&gt;
+      &lt;cfelse&gt;
+         &lt;!--- The user was not authenticated. 
+               Display an error message and the login form. ---&gt;
+         &lt;cfoutput&gt;
+            &lt;cfif authresult.status IS &quot;AuthenticationFailure&quot;&gt;
+               &lt;!--- The user is valid, but not the password. ---&gt;
+               &lt;H2&gt;The password for #theusername# is not correct&lt;br&gt;
+                  Please Try again&lt;/H2&gt;
+            &lt;cfelse&gt;
+               &lt;!--- There is one other status value, invalid user name. ---&gt;
+               &lt;H2&gt;The user name #theusername# is not valid&lt;br&gt;
+                  Please Try again&lt;/H2&gt;
+            &lt;/cfif&gt;
+         &lt;/cfoutput&gt;
+         &lt;cfinclude template=&quot;loginform.cfm&quot;&gt;
+         &lt;cfabort&gt;
+      &lt;/cfif&gt;
+   &lt;/cfif&gt;
+&lt;/cflogin&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000300.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000302.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000301.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

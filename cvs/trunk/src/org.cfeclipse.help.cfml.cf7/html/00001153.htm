@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Managing client identity information in a clustered environment</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001152.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001154.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Managing client identity information in a clustered environment</h1>
+<p>To maintain your application's client identity information in a clustered server environment, you must specify This.setdomaincookies=&quot;True&quot; in the Application.cfc initialization code, or use the <a href="00000217.htm#1097308"><code>cfapplication</code></a> <code>setdomaincookies</code> attribute in your Application.cfm page.</p>
+<p>The <code>setdomaincookies</code> attribute specifies that the server-side copies of the <code>CFID</code> and <code>CFToken</code> variables used to identify the client to ColdFusion are stored at the domain level (for example, .macromedia.com). If <code>CFID</code> and <code>CFToken</code> variable combinations already exist on each host in the cluster, ColdFusion migrates the host-level variables on each cluster member to the single, common domain-level variable. Following the setting or migration of host-level cookie variables to domain-level variables, ColdFusion creates a new cookie variable (<code>CFMagic</code>) that tells ColdFusion that domain-level cookies have been set.</p>
+<p>If you use client variables in a clustered system, you must also use a database or cookies to store the variables.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001152.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001154.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001153.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

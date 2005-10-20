@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Nested number signs</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000935.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000937.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Nested number signs</h1>
+<p>In a few cases, you can nest number signs in an expression. The following example uses nested number signs:</p>
+<pre>&lt;cfset Sentence = &quot;The length of the full name is<br />#Len(&quot;#FirstName# #LastName#&quot;)#&quot;&gt;
+</pre><p>In this example, number signs are nested so that the values of the variables FirstName and LastName are inserted in the string whose length the <a href="00000546.htm#130247"><code>Len</code></a> function calculates. </p>
+<p>Nested number signs imply a complex expression that can typically be written more clearly and efficiently without the nesting. For example, you can rewrite the preceding code example without the nested number signs, as follows:</p>
+<pre>&lt;cfset Sentence2 = &quot;The length of the full name is #Len(FirstName &amp; &quot; &quot;<br />&amp; LastName)#&quot;&gt;
+</pre><p>The following achieves the same results and can further improve readability:</p>
+<pre>&lt;cfset FullName = &quot;#FirstName# #LastName#&quot;&gt;
+&lt;cfset Sentence = &quot;The length of the full name 
+   is #Len(FullName)#&quot;&gt;
+</pre><p>A common mistake is to put number signs around the arguments of functions, as in:</p>
+<pre>&lt;cfset ResultText = &quot;#Len(#TheText#)#&quot;&gt;
+&lt;cfset ResultText = &quot;#Min(#ThisVariable#, 5 + #ThatVariable#)#&quot;&gt;
+&lt;cfset ResultText = &quot;#Len(#Left(&quot;Some text&quot;, 4)#)#&quot;&gt;
+</pre><p>These statements result in errors. As a general rule, <i>never</i> put number signs around function arguments.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000935.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000937.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000936.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

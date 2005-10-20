@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfloginuser</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000287.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000289.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfloginuser</h1>
+<h4><a name="wp2873175"></a>Description</h4>
+<p>Identifies an authenticated user to ColdFusion. Specifies the user ID and roles. Used within a <code>cflogin</code> tag.</p>
+<h4><a name="wp2873179"></a>Category</h4>
+<p><a href="00000208.htm#2487583">Security tags</a></p>
+<h4><a name="wp2873184"></a>Syntax</h4>
+<pre>&lt;cfloginuser<br />   name = &quot;name&quot;<br />   password = &quot;password-string&quot;<br />   roles = &quot;roles&quot;&gt;
+</pre><h4><a name="wp2874116"></a>See also</h4>
+<p><a href="00000287.htm#2991147"><code>cflogin</code></a><code>, </code><a href="00000289.htm#2871521"><code>cflogout</code></a><code>, </code><a href="00000469.htm#4046631">GetAuthUser</a><code>, </code><a href="00000533.htm#4047189">IsUserInRole</a><code>, </code><a href="00000217.htm#1097308">cfapplication</a><code>, </code><a href="00001175.htm#1100022">Securing Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp3509179"></a>History</h4>
+<p>ColdFusion MX&#160;6.1: Changed behavior: if the Session scope is enabled, and the <code>cfapplication</code> tag <code>loginStorage</code> attribute is set to Session, the login remains in effect until the session expires or the user is logged out by the <code>cflogout</code> tag.</p>
+<p>ColdFusion&#160;MX: Added this tag.</p>
+<h4><a name="wp2873956"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A username.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A user password.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>roles</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A comma-delimited list of role identifiers.</p>
+<p>ColdFusion processes spaces in a list element as part of the element. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2873192"></a>Usage</h4>
+<p>Used inside the <code>cflogin</code> tag to identify the authenticated user to ColdFusion. After you call this function, the <code>GetAuthUser</code> and <code>IsUserInRoles</code> return the user name and role information.</p>
+<p><strong>Note: </strong>By default, the user information is stored as memory-only cookies. The <a href="00000217.htm#1097308">cfapplication</a> tag or the Application.cfc This.loginStorage variable can specify that login information be stored in the Session scope.</p><h4><a name="wp3265637"></a>Example</h4>
+<p>See <a href="00000287.htm#2991147">cflogin</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000287.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000289.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000288.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

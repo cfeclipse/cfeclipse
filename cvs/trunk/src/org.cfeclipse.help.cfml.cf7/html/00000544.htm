@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LCase</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000543.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000545.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LCase</h1>
+<h4><a name="wp130125"></a>Description</h4>
+<p>Converts the alphabetic characters in a string to lowercase.</p>
+<h4><a name="wp130127"></a>Returns</h4>
+<p>A string, converted to lowercase.</p>
+<h4><a name="wp130129"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp130134"></a>Function syntax</h4>
+<pre><code><strong>LCase</strong></code>(<i>string</i>)
+</pre><h4><a name="wp130136"></a>See also</h4>
+<p><a href="00000657.htm#138852"><code>UCase</code></a></p>
+<h4><a name="wp130141"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp130152"></a>Example</h4>
+<pre>&lt;h3&gt;LCase Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;FORM.sampleText&quot;)&gt;
+   &lt;cfif FORM.sampleText is not &quot;&quot;&gt;
+      &lt;cfoutput&gt;
+      &lt;p&gt;Your text, &lt;b&gt;#FORM.sampleText#&lt;/b&gt;, returned in lowercase is 
+      &lt;b&gt;#LCase(FORM.sampleText)#&lt;/b&gt;.&lt;/p&gt;
+   &lt;   /cfoutput&gt; 
+   &lt;cfelse&gt;
+      &lt;   p&gt;&lt;b&gt;&lt;i&gt;Please enter some text.&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;p&gt;Enter your text. Press &quot;submit&quot; to see it returned in lowercase: &lt;/p&gt;
+
+&lt;form method=&quot;post&quot; action = &quot;&lt;cfoutput&gt;#cgi.script_name#&lt;/cfoutput&gt;&quot; name=&quot;lcaseForm&quot;&gt;
+&lt;input type = &quot;Text&quot; name = &quot;SampleText&quot; value = &quot;SAMPLE&quot;&gt;
+&lt;input type = &quot;Submit&quot; name = &quot;&quot; value = &quot;submit&quot;&gt;
+&lt;/form&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000543.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000545.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000544.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

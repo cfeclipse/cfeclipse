@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Reading, writing, and appending to a text file</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001621.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001623.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Reading, writing, and appending to a text file</h1>
+<p>In addition to managing files on the server, you can use <a href="00000245.htm#1098395"><code>cffile</code></a> to read, create, and modify text files. As a result, you can do the following things:</p>
+<ul>
+<li>
+   Create log files. (You can also use <code>cflog</code> to create and write to log files.)
+</li>
+<li>
+   Generate static HTML documents.
+</li>
+<li>
+   Use text files to store information that can be incorporated into web pages.
+</li>
+</ul>
+<h3><a name="wp1117891"></a>Reading a text file</h3>
+<p>You can use <code>cffile</code> to read an existing text file. The file is read into a local variable that you can use anywhere in the application page. For example, you could read a text file and then insert its contents into a database, or you could read a text file and then use one of the string replacement functions to modify the contents.</p>
+<h4>To read a text file:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Read a Text File&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+Ready to read the file:&lt;br&gt;
+&lt;cffile action=&quot;read&quot;
+	file=&quot;C:\inetpub\wwwroot\mine\message.txt&quot;
+	variable=&quot;Message&quot;&gt;
+
+&lt;cfoutput&gt;
+	#Message#
+&lt;/cfoutput&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Replace C:\inetpub\wwwroot\mine\message.txt with the location and name of a text file on the server.
+</li>
+<li>
+   Save the file as readtext.cfm in the myapps directory under your <i>web_root</i> and view it in the&#160;browser.
+</li>
+</ol>
+<h3><a name="wp1096475"></a>Writing a text file on the server</h3>
+<p>You can use <a href="00000245.htm#1098395"><code>cffile</code></a> to write a text file based on dynamic content. For example, you could create static HTML files or log actions in a text file.</p>
+<h4>To create a form in to capture data for a text file:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Put Information into a Text File&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h2&gt;Put Information into a Text File&lt;/h2&gt;
+
+&lt;form action=&quot;writetextfileaction.cfm&quot; method=&quot;Post&quot;&gt;
+	&lt;p&gt;Enter your name: &lt;input type=&quot;text&quot; name=&quot;Name&quot; size=&quot;25&quot;&gt;&lt;/p&gt;
+	&lt;p&gt;Enter the name of the file: &lt;input type=&quot;text&quot; name=&quot;FileName&quot; 
+size=&quot;25&quot;&gt;.txt&lt;/p&gt;
+	&lt;p&gt;Enter your message:
+	&lt;textarea name=&quot;message&quot;cols=45 rows=6&gt;&lt;/textarea&gt;
+	&lt;/p&gt;
+	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot;&gt; 
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file as writetextfileform.cfm in the myapps directory under your <i>web_root</i><code>.</code>
+</li>
+</ol>
+<p><strong>Note: </strong>The form will not work until you write an action page for it (see the next procedure).</p><h4>To write a text file:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Write a Text File&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;cffile action=&quot;write&quot;
+	file=&quot;C:\inetpub\wwwroot\mine\#Form.FileName#.txt&quot;
+	output=&quot;Created By: #Form.Name#
+#Form.Message# &quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Modify the path C:\inetpub\wwwroot\mine\ to point to a path on your server.
+</li>
+<li>
+   Save the file as writetextfileaction.cfm in the myapps directory under your <i>web_root</i>.
+</li>
+<li>
+   View the file writetextfileform.cfm in the browser, enter values, and submit the form.
+<p>The text file is written to the location you specified. If the file already exists, it is replaced.</p>
+</li>
+</ol>
+<h3><a name="wp1106559"></a>Appending a text file</h3>
+<p>You can use <a href="00000245.htm#1098395"><code>cffile</code></a> to append additional text to the end of a text file; for example, when you create log files. </p>
+<h4>To append a text file:</h4>
+<ol>
+<li>
+   Open the writetextfileaction.cfm file.
+</li>
+<li>
+   Change the value for the <code>action</code> attribute from <code>write</code> to <code>append</code> so that the file appears as follows:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Append a Text File&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;cffile action=&quot;append&quot;
+	file=&quot;C:\inetpub\wwwroot\mine\message.txt&quot;
+	output=&quot;Appended By: #Form.Name#&quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file as writetextfileaction.cfm in the myapps directory under your <i>web_root</i>.
+</li>
+<li>
+   View the file in the browser, enter values, and submit the form.
+<p>The appended information displays at the end of the text file.</p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001621.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001623.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001622.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

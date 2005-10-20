@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example: querying an LDAP directory</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001288.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001290.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example: querying an LDAP directory</h1>
+<p>The following example uses the <code>cfldap</code> tag to get information about the people in the Airius corporation's Santa Clara office. Users can enter all or part of a person's name and get a list of matching names with their departments, e-mail addresses, and telephone numbers. </p>
+<p>This example uses the sample Airius corporate directory that is distributed with the Netscape Directory Server. If you do not have access to this directory, modify the code to work with your LDAP directory.</p>
+<h4>To query an LDAP directory:</h4>
+<ol>
+<li>
+   Create a file that looks like the following:
+<pre>
+&lt;!--- This example shows the use of CFLDAP ---&gt;
+&lt;html&gt;
+&lt;head&gt; &lt;title&gt;cfldap Query Example&lt;/title&gt; &lt;/head&gt;
+
+&lt;h3&gt;cfldap Query Example&lt;/h3&gt;
+
+&lt;body&gt;
+&lt;p&gt;This tool queries the Airius.com database to locate all people in<br />
+the company&#39;s Santa Clara office whose common names contain the<br />
+text entered in the form.&lt;/p&gt;
+
+&lt;p&gt;Enter a full name, first name, last name, or name fragment.&lt;/p&gt;
+
+&lt;form action=&quot;cfldap.cfm&quot; method=&quot;POST&quot;&gt;
+	&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;&lt;br&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;Search&quot;&gt;
+&lt;/form&gt;
+
+&lt;!--- make the LDAP query ---&gt;
+&lt;!-- Note that some search text is required.<br />
+A search filter of cn=** would cause an error --&gt;
+&lt;cfif (isdefined(&quot;form.name&quot;) AND (form.name IS NOT &quot;&quot;))&gt;
+	&lt;cfldap
+		server=&quot;ldap.airius.com&quot;
+		action=&quot;query&quot;
+		name=&quot;results&quot;
+		start=&quot;ou=People, o=Airius.com&quot;
+		scope=&quot;onelevel&quot;
+		filter=&quot;(&amp;(cn=*#form.Name#*)(l=Santa Clara))&quot;
+		attributes=&quot;cn,sn,ou,mail,telephonenumber&quot;
+		sort=&quot;ou,sn&quot;
+		maxrows=100
+		timeout=20000
+	&gt;
+
+&lt;!--- Display results ---&gt;
+	&lt;table border=0 cellspacing=2 cellpadding=2&gt;
+	 &lt;tr&gt;
+			&lt;th colspan=4&gt;&lt;cfoutput&gt;#results.RecordCount# matches found&lt;/
+cfoutput&gt;
+			&lt;/th&gt;
+	 &lt;/tr&gt;
+	 &lt;tr&gt;
+			&lt;th&gt;Name&lt;/th&gt;
+			&lt;th&gt;Department&lt;/th&gt;
+			&lt;th&gt;E-Mail&lt;/th&gt;
+			&lt;th&gt;Phone&lt;/th&gt;
+	 &lt;/tr&gt;
+	&lt;cfoutput query=&quot;results&quot;&gt;
+	 &lt;tr&gt;
+			&lt;td&gt;#cn#&lt;/td&gt;
+			&lt;td&gt;#listFirst(ou)#&lt;/td&gt;
+			&lt;td&gt;&lt;a href=&quot;mailto:#mail#&quot;&gt;#mail#&lt;/a&gt;&lt;/td&gt;
+			&lt;td&gt;#telephonenumber#&lt;/td&gt;
+	 &lt;/tr&gt;
+	&lt;/cfoutput&gt;
+	&lt;/table&gt;
+&lt;/cfif&gt;
+	
+&lt;/body&gt;
+&lt;/html&gt; 
+</pre>
+</li>
+<li>
+   Change the <code>server</code> attribute from ldap.airius.com to the name of your installation of the Airius database.
+</li>
+<li>
+   Save the page as <code>cfldap.cfm</code> and run it in your browser.
+</li>
+</ol>
+<h4><a name="wp1114516"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre><code>&lt;form action=&quot;cfldap.cfm&quot; method=&quot;POST&quot;&gt;</code>
+<code>&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;<br />&lt;br&gt;&lt;br&gt;</code>
+<code>&lt;input type=&quot;submit&quot; value=&quot;Search&quot;&gt;</code>
+<code>&lt;/form&gt;</code>
+</pre>    </td>
+    <td>
+<p>Uses a form to get the name or name fragment to search for.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><code>&lt;cfif (isdefined(&quot;form.name&quot;) <br />    AND (form.name IS NOT &quot;&quot;))&gt;</code>
+</pre>    </td>
+    <td>
+<p>Ensures that the user has submitted the form. This is necessary because the form page is also the action page. Ensures that the user entered search text.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><code>&lt;cfldap</code>
+<code>  server=&quot;ldap.airius.com&quot;</code>
+<code>  action=&quot;query&quot;</code>
+<code>  name=&quot;results&quot;</code>
+<code>  start=&quot;ou=People, o=Airius.com&quot;</code>
+<code>   scope=&quot;onelevel&quot;</code>
+<code><br /><br />  filter=&quot;(&amp;(cn=*#form.Name#*)<br />    (l=Santa Clara))&quot;</code>
+<code><br />  attributes=&quot;cn,sn,ou,mail,<br />    telephonenumber&quot;</code>
+<code><br />  sort=&quot;ou,sn&quot;</code>
+<code><br /></code>
+<code><br />  maxrows=100</code>
+<code>  timeout=20000</code>
+<code>&gt;</code>
+</pre>    </td>
+    <td>
+<p>Connects anonymously to LDAP server ldap.airius.com, query the directory, and return the results to a query object named results. </p>
+<p>Starts the query at the directory entry that has the distinguished name ou=People, o=Airius.com, and searches the directory level immediately below this entry.</p>
+<p>Requests records for entries that contain the location (l) attribute value &quot;Santa Clara&quot; and the entered text in the common name attribute.</p>
+<p>Gets the common name, surname, organizational unit, e-mail address, and telephone number for each entry.</p>
+<p>Sorts the results first by organization name, then by surname. Sorts in the default sorting order.</p>
+<p>Limit the request to 100 entries. If the server does not return the data in 20 seconds, generates an error indicating that LDAP timed out.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><code>&lt;table&#160;border=0&#160;cellspacing=2<br />&#160;&#160;&#160;&#160;cellpadding=2&gt;</code>
+<code>&#160;&#160;&lt;tr&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;th&#160;colspan=4&gt;</code>
+<code>&#160;&#160;&#160;&#160;&#160;&#160;&lt;cfoutput&gt;#results.RecordCount#<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;matches&#160;found&lt;/cfoutput&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;/th&gt;</code>
+<code>&#160;&#160;&lt;/tr&gt;</code>
+<code>&#160;&#160;&lt;tr&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;th&gt;Name&lt;/th&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;th&gt;Department&lt;/th&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;th&gt;E-Mail&lt;/th&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;th&gt;Phone&lt;/th&gt;</code>
+<code>&#160;&#160;&lt;/tr&gt;</code>
+<code>&#160;&#160;&lt;cfoutput&#160;query=&quot;results&quot;&gt;</code>
+<code>&#160;&#160;&lt;tr&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;td&gt;#cn#&lt;/td&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;td&gt;#ListFirst(ou)#&lt;/td&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;td&gt;&lt;a&#160;href=&quot;mailto:#mail#&quot;&gt;#mail#<br />&#160;&#160;&#160;&#160;&lt;/a&gt;&lt;/td&gt;</code>
+<code>&#160;&#160;&#160;&#160;&lt;td&gt;#telephonenumber#&lt;/td&gt;</code>
+<code>&#160;&#160;&lt;/tr&gt;</code>
+<code>&#160;&#160;&lt;/cfoutput&gt;</code>
+<code>&#160;&lt;/table&gt;</code>
+<code>&lt;/cfif&gt;</code>
+</pre>    </td>
+    <td>
+<p>Starts a table to display the output</p>
+<p>&#160;</p>
+<p>Displays the number of records returned.</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>Displays the common name, department, e-mail address, and telephone number of each entry.</p>
+<p>Displays only the first entry in the list of organizational unit values. (For more information, see the description that follows this table.)</p>
+    </td>
+  </tr>
+</table>
+
+<p>This search shows the use of a logical AND statement in a filter. It returns one attribute, the surname, that is used only for sorting the results.</p>
+<p>In this query, the <code>ou</code> attribute value consists of two values in a comma-delimited list. One is the department name. The other is People. This is because the Airius database uses the <code>ou</code> attribute type twice:</p>
+<ul>
+<li>
+   In the distinguished names, at the second level of the directory tree, where it differentiates between organizational units such as people, groups, and directory servers
+</li>
+<li>
+   As the department identifier in each person's entry
+</li>
+</ul>
+<p>Because the attribute values are returned in order from the person entry to the directory tree root, the <a href="00000554.htm#130862"><code>ListFirst</code></a> function extracts the person's department name.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001288.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001290.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001289.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

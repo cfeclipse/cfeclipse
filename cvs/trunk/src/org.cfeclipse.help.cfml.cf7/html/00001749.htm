@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Connecting to JNDI data sources</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001748.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001750.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Connecting to JNDI data sources</h1>
+<p>Use the settings in the following table to connect ColdFusion&#160;MX to JNDI data sources that have been defined for a J2EE application server (multiserver and J2EE configurations only):</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Setting
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>CF Data Source Name</p>
+    </td>
+    <td>
+<p>The data source name (DSN) used by ColdFusion&#160;MX to connect to the data source.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>JNDI Name</p>
+    </td>
+    <td>
+<p>The JNDI location in which the J2EE application server stores the data source.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Username</p>
+    </td>
+    <td>
+<p>The user name that ColdFusion&#160;MX passes to JNDI to connect to JNDI if a ColdFusion application does not supply a user name (for example, in a <code>cfquery</code> tag).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Password</p>
+    </td>
+    <td>
+<p>The password that ColdFusion&#160;MX passes to JNDI to connect to the data source if a ColdFusion application does not supply a password (for example, in a <code>cfquery</code> tag).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Description</p>
+    </td>
+    <td>
+<p>(Optional) A description for this connection.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>JNDI Environment Settings</p>
+    </td>
+    <td>
+<p>Specifies additional JNDI environment settings, if required by the JNDI data source. Use comma separated list of name/value pair. For example if you must specify a username and password to connect to JNDI, specify the following: </p>
+<p><code>SECURITY_PRINCIPAL=&quot;myusername&quot;,SECURITY_CREDENTIALS=&quot;mypassword&quot;</code></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>CLOB</p>
+    </td>
+    <td>
+<p>Select to return the entire contents of any CLOB/Text columns in the database for this data source. If not selected, ColdFusion&#160;MX retrieves the number of characters specified in the Long Text Buffer setting.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BLOB </p>
+    </td>
+    <td>
+<p>Select to return the entire contents of any BLOB/Image columns in the database for this data source. If not selected, ColdFusion&#160;MX retrieves the number of characters specified in the BLOB Buffer setting.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>LongText Buffer</p>
+    </td>
+    <td>
+<p>The default buffer size; used if Enable Long Text Retrieval (CLOB) is not selected. The default value is <code>64000</code> bytes.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BLOB Buffer</p>
+    </td>
+    <td>
+<p>The default buffer size; used if the BLOB option is not selected. The default value is <code>64000</code> bytes.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Allowed SQL</p>
+    </td>
+    <td>
+<p>The SQL operations that can interact with the current data source.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>The ColdFusion&#160;MX Administrator does not display the JNDI data source option when running in the server configuration.</p><p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001748.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001750.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001749.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

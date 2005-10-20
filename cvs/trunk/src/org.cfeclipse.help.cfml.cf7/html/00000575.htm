@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSIsDate</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000574.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000576.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSIsDate</h1>
+<h4><a name="wp132885"></a>Description</h4>
+<p>Determines whether a string is a valid representation of a date/time value in the current locale. </p>
+<h4><a name="wp132887"></a>Returns</h4>
+<p>True, if the string can be formatted as a date/time value in the current locale; False, otherwise.</p>
+<h4><a name="wp132889"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000359.htm#1099219">Display and formatting functions</a>, <a href="00000363.htm#1099325">International functions</a></p>
+<h4><a name="wp132900"></a>Function syntax</h4>
+<pre><code><strong>LSIsDate</strong></code>(<i>string</i>)
+</pre><h4><a name="wp132902"></a>See also</h4>
+<p><a href="00000423.htm#1224498"><code>CreateDateTime</code></a>, <a href="00000486.htm#4552309"><code>GetLocale</code></a>, <a href="00000526.htm#1106623"><code>IsNumericDate</code></a>, <a href="00000571.htm#132367"><code>LSDateFormat</code></a>, <a href="00000594.htm#134381">ParseDateTime</a>, <a href="00000624.htm#136340"><code>SetLocale</code></a>; <a href="00001207.htm#1202017">Handling data in ColdFusion&#160;MX</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp132922"></a>History</h4>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Changed formatting behavior: this function might return a different result than in earlier releases. This function uses Java standard locale formatting rules on all platforms. 
+</li>
+<li>
+   Changed behavior: this function accepts a dash or hyphen character only in the Dutch(Standard) and Portuguese (Standard) locales. If called this way (for example, LsIsDate(&quot;3-1-2002&quot;) in any other locale, this function returns False. (Earlier releases returned True.)
+</li>
+<li>
+   Changed behavior: when using the SUN JRE 1.3.1 on an English(UK) locale, this function returns False for a date that has a one-digit month or day (for example, 1/1/01). To work around this, insert a zero in a one-digit month or day (for example, 01/01/01).
+</li>
+</ul>
+<h4><a name="wp132930"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp132941"></a>Usage</h4>
+<p>A date/time object is in the range 100 AD-9999 AD.</p>
+<p>To set the default display format of date, time, number, and currency values, use the <a href="00000624.htm#136340"><code>SetLocale</code></a> function. </p>
+<h4><a name="wp132947"></a>Example</h4>
+<pre>&lt;h3&gt;LSIsDate Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.locale&quot;)&gt;
+   &lt;!--- if locale is defined, set locale to that entry ---&gt;
+   &lt;cfset NewLocale = SetLocale(FORM.locale)&gt;
+   &lt;p&gt;Is the value &quot;&lt;cfoutput&gt;#FORM.myValue#&lt;/cFOUTPUT&gt;&quot; a proper date <br />value for &lt;cfoutput&gt;#GetLocale()#&lt;/cfoutput&gt;?
+   &lt;p&gt;Answer: &lt;cfoutput&gt;#LSIsDate(FORM.myValue)#&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+&lt;p&gt;&lt;form action = &quot;LSIsDate.cfm&quot;&gt;
+&lt;p&gt;Select a locale for which you would like to check a date value:
+&lt;!--- check the current locale for server ---&gt;
+&lt;cfset serverLocale = GetLocale()&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000574.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000576.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000575.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

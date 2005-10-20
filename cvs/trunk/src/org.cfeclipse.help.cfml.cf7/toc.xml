@@ -1,0 +1,2118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<toc label="ColdFusion Documentation">
+ <topic label="Installing and Using ColdFusion MX" href="html/part_ins.htm">
+  <topic label="Preparing to Install ColdFusion MX 7" href="html/00000001.htm">
+   <topic label="About the ColdFusion MX 7 installation" href="html/00000002.htm" />
+   <topic label="ColdFusion MX 7 product editions" href="html/00000003.htm" />
+   <topic label="System requirements" href="html/00000004.htm" />
+   <topic label="Installation considerations" href="html/00000005.htm" />
+   <topic label="Gathering information necessary to install ColdFusion MX 7" href="html/00000006.htm" />
+  </topic>
+  <topic label="Installing the Server Configuration" href="html/00000007.htm">
+   <topic label="Installing ColdFusion MX 7 using the server configuration" href="html/00000008.htm">
+    <topic label="Installing ColdFusion MX 7 server configuration on Windows" href="html/00000009.htm">
+     <topic label="Migrating Windows settings manually" href="html/00000010.htm" />
+    </topic>
+    <topic label="Installing the ColdFusion MX 7 server configuration on UNIX" href="00000011.htm">
+     <topic label="Migrating UNIX settings manually" href="html/00000012.htm" />
+    </topic>
+   </topic>
+   <topic label="Installing the ColdFusion Report Builder" href="html/00000013.htm" />
+   <topic label="Installing the Verity search server separately" href="html/00000014.htm" />
+   <topic label="ColdFusion MX 7 server configuration directory structure" href="html/00000015.htm" />
+   <topic label="Using the built-in web server" href="html/00000016.htm">
+    <topic label="Switching the port for the built-in web server" href="html/00000017.htm" />
+    <topic label="Switching from another web server" href="html/00000018.htm" />
+   </topic>
+   <topic label="Uninstalling ColdFusion MX 7" href="html/00000019.htm" />
+  </topic>
+  <topic label="Installing the Multiserver Configuration" href="html/00000020.htm">
+   <topic label="About multiserver configuration" href="html/00000021.htm" />
+   <topic label="Installing ColdFusion MX 7 using the multiserver configuration" href="html/00000022.htm">
+    <topic label="Installing the multiserver configuration in Windows" href="html/00000023.htm" />
+    <topic label="Installing the multiserver configuration on UNIX" href="html/00000024.htm" />
+   </topic>
+   <topic label="Configuration" href="html/00000025.htm" />
+   <topic label="Installing the ColdFusion Report Builder" href="html/00000026.htm" />
+   <topic label="Installing the Verity search server separately" href="html/00000027.htm" />
+   <topic label="Uninstalling ColdFusion MX 7" href="html/00000028.htm" />
+  </topic>
+  <topic label="Installing the J2EE Configuration" href="html/00000029.htm">
+   <topic label="J2EE application servers" href="html/00000030.htm">
+    <topic label="Platforms" href="html/00000031.htm" />
+   </topic>
+   <topic label="Preparing to install using the J2EE configuration" href="html/00000032.htm" />
+   <topic label="Installing an EAR file or WAR files" href="html/00000033.htm">
+    <topic label="Installing an EAR file or WAR files in Windows" href="html/00000034.htm" />
+    <topic label="Installing an EAR file or WAR files on UNIX" href="html/00000035.htm" />
+    <topic label="Updating from ColdFusion MX or ColdFusion MX 6.1 for J2EE" href="html/00000036.htm" />
+   </topic>
+   <topic label="Installing the ColdFusion Report Builder" href="html/00000037.htm" />
+   <topic label="Installing the Verity search server separately" href="html/00000038.htm" />
+   <topic label="ColdFusion MX 7 J2EE deployment and configuration" href="html/00000039.htm">
+    <topic label="Deployment" href="html/00000040.htm" />
+    <topic label="Configuration" href="html/00000041.htm" />
+    <topic label="ColdFusion MX 7 J2EE configuration directory structure" href="html/00000042.htm" />
+   </topic>
+   <topic label="Undeploying ColdFusion MX 7" href="html/00000043.htm" />
+  </topic>
+  <topic label="Configuring Your System" href="html/00000044.htm">
+   <topic label="Overview of configuration tasks" href="html/00000045.htm" />
+   <topic label="Managing ColdFusion MX 7" href="html/00000046.htm">
+    <topic label="Managing ColdFusion MX 7 services in Windows" href="html/00000047.htm" />
+    <topic label="Managing the ColdFusion MX 7 process on UNIX" href="html/00000048.htm" />
+   </topic>
+   <topic label="Configuring web servers" href="html/00000049.htm">
+    <topic label="Configuring web servers on UNIX" href="html/00000050.htm" />
+   </topic>
+   <topic label="Installing Verity Locales" href="html/00000051.htm" />
+   <topic label="Enabling CORBA support" href="html/00000052.htm" />
+   <topic label="Disabling Remote Development Services" href="html/00000053.htm" />
+   <topic label="Disabling JSP functionality (server configuration only)" href="html/00000054.htm" />
+   <topic label="Changing the ColdFusion MX 7 user account in Windows" href="html/00000055.htm" />
+   <topic label="Connecting to an external JDBC Type 4 data source" href="html/00000056.htm" />
+  </topic>
+  <topic label="Troubleshooting" href="html/00000057.htm">
+   <topic label="Common installation problems" href="html/00000058.htm" />
+   <topic label="Data source problems" href="html/00000059.htm" />
+   <topic label="Migration problems" href="html/00000060.htm" />
+   <topic label="J2EE configuration problems" href="html/00000061.htm" />
+   <topic label="Post-install problems" href="html/00000062.htm" />
+   <topic label="Uninstall problems" href="html/00000063.htm" />
+  </topic>
+ </topic>
+ <topic label="Getting Started Building ColdFusion MX Applications" href="html/part_get.htm">
+  <topic label="Introducing ColdFusion MX" href="html/00000064.htm">
+   <topic label="About ColdFusion MX" href="html/00000065.htm">
+    <topic label="The ColdFusion application server" href="html/00000066.htm" />
+    <topic label="The ColdFusion Markup Language" href="html/00000067.htm" />
+    <topic label="The ColdFusion MX Administrator" href="html/00000068.htm" />
+   </topic>
+   <topic label="How ColdFusion processes pages" href="html/00000069.htm" />
+   <topic label="Building applications with CFML" href="html/00000070.htm" />
+  </topic>
+  <topic label="CFML Basics" href="html/00000071.htm">
+   <topic label="Working with ColdFusion pages" href="html/00000072.htm">
+    <topic label="Creating a ColdFusion page" href="html/00000073.htm">
+     <topic label="Saving your ColdFusion page" href="html/00000074.htm" />
+     <topic label="Browsing your code" href="html/00000075.htm" />
+    </topic>
+   </topic>
+   <topic label="About CFML elements" href="html/00000076.htm">
+    <topic label="Tags" href="html/00000077.htm" />
+    <topic label="Functions" href="html/00000078.htm" />
+    <topic label="Variables" href="html/00000079.htm">
+     <topic label="Naming variables" href="html/00000080.htm" />
+     <topic label="Ways to use variables" href="html/00000081.htm" />
+    </topic>
+    <topic label="Creating variables with the cfset tag" href="html/00000082.htm" />
+    <topic label="Displaying variable output" href="html/00000083.htm" />
+   </topic>
+   <topic label="Working with CFML expressions" href="html/00000084.htm">
+    <topic label="Building expressions" href="html/00000085.htm">
+     <topic label="Specifying a consistent character case" href="html/00000086.htm" />
+     <topic label="Specifying number signs to denote functions or variables" href="html/00000087.htm" />
+     <topic label="Specifying quotation marks around values" href="html/00000088.htm" />
+     <topic label="Specifying operators in expressions" href="html/00000089.htm" />
+    </topic>
+   </topic>
+   <topic label="About conditional processing" href="html/00000090.htm" />
+   <topic label="Processing form data" href="html/00000091.htm" />
+   <topic label="Commenting your code" href="html/00000092.htm" />
+  </topic>
+  <topic label="Database Fundamentals" href="html/00000093.htm">
+   <topic label="About database basics" href="html/00000094.htm">
+    <topic label="What is a relational database?" href="html/00000095.htm" />
+    <topic label="About relational tables" href="html/00000096.htm" />
+   </topic>
+   <topic label="About SQL" href="html/00000097.htm" />
+   <topic label="Using SQL with ColdFusion" href="html/00000098.htm">
+    <topic label="About data sources" href="html/00000099.htm" />
+    <topic label="Writing SQL and CFML statements to interact with a data source" href="html/00000100.htm" />
+    <topic label="CFML tags that interact with a database" href="html/00000101.htm" />
+   </topic>
+  </topic>
+  <topic label="Lesson 1: Preparing to Build the Sample Application" href="html/00000102.htm">
+   <topic label="Application development steps" href="html/00000103.htm" />
+   <topic label="Exercise 1: Determining the application functional requirements" href="html/00000104.htm" />
+   <topic label="Exercise 2: Determining the data requirements" href="html/00000105.htm" />
+   <topic label="Exercise 3: Designing the database for your application" href="html/00000106.htm" />
+   <topic label="Exercise 4: Developing the sample application" href="html/00000107.htm">
+    <topic label="How to proceed" href="html/00000108.htm">
+     <topic label="Working directories" href="html/00000109.htm" />
+     <topic label="Requirements" href="html/00000110.htm" />
+    </topic>
+   </topic>
+  </topic>
+  <topic label="Lesson 2: Configuring Your Development Environment" href="html/00000111.htm">
+   <topic label="Exercise 1: Verifying the tutorial file structure" href="html/00000112.htm" />
+   <topic label="Exercise 2: Setting up your development environment" href="html/00000113.htm">
+    <topic label="Features for ColdFusion developers" href="html/00000114.htm" />
+   </topic>
+   <topic label="Exercise 3: Configuring a database connection" href="html/00000115.htm" />
+   <topic label="Exercise 4: Configuring debugging options" href="html/00000116.htm">
+    <topic label="Sending debugging information to remote clients" href="html/00000117.htm" />
+   </topic>
+   <topic label="Summary" href="html/00000118.htm" />
+  </topic>
+  <topic label="Lesson 3: Retrieving Data" href="html/00000119.htm">
+   <topic label="Exercise 1: About the trip list" href="html/00000120.htm" />
+   <topic label="Exercise 2: Retrieving the information for the trip list" href="html/00000121.htm" />
+   <topic label="Exercise 3: Displaying the query result using the cfoutput tag" href="html/00000122.htm" />
+   <topic label="Exercise 4: Writing structured, reusable code" href="html/00000123.htm" />
+   <topic label="Exercise 5: Creating additional queries" href="html/00000124.htm" />
+   <topic label="Summary" href="html/00000125.htm">
+    <topic label="In the next lesson" href="html/00000126.htm" />
+   </topic>
+  </topic>
+  <topic label="Lesson 4: Building Dynamic Queries" href="html/00000127.htm">
+   <topic label="Exercise 1: Creating the trip search form" href="html/00000128.htm">
+    <topic label="About the trip search form" href="html/00000129.htm" />
+    <topic label="Designing the search criteria page" href="html/00000130.htm">
+     <topic label="Understanding search query operators" href="html/00000131.htm" />
+    </topic>
+   </topic>
+   <topic label="Exercise 2: Building a query that uses dynamic SQL" href="html/00000132.htm">
+    <topic label="Creating the CFC query" href="html/00000133.htm" />
+   </topic>
+   <topic label="Exercise 3: Constructing the initial Trip Search Results page" href="html/00000134.htm" />
+   <topic label="Exercise 4: Testing the Trip Search Results page" href="html/00000135.htm" />
+   <topic label="Exercise 5: Enabling the departure and price criteria on the Trip Search form" href="html/00000136.htm" />
+   <topic label="Exercise 6: Testing the revised Trip Search Results page" href="html/00000137.htm" />
+   <topic label="Summary" href="html/00000138.htm">
+    <topic label="In the next lesson" href="html/00000139.htm" />
+   </topic>
+  </topic>
+  <topic label="Lesson 5: Creating a Trip Detail Page" href="html/00000140.htm">
+   <topic label="Exercise 1: Creating a Trip Detail page" href="html/00000141.htm">
+    <topic label="Building the Trip Detail page" href="html/00000142.htm" />
+   </topic>
+   <topic label="Exercise 2: Avoiding the potential security risk when using dynamic SQL" href="html/00000143.htm" />
+   <topic label="Exercise 3: Linking the Trip Search Results page with the Trip Detail page" href="html/00000144.htm" />
+   <topic label="Exercise 4: Enhancing the look of the Trip Search Results and Trip Detail pages" href="html/00000145.htm" />
+   <topic label="Summary" href="html/00000146.htm">
+    <topic label="In the next lesson" href="html/00000147.htm" />
+   </topic>
+  </topic>
+  <topic label="Lesson 6: Creating a Main Application Page" href="html/00000148.htm">
+   <topic label="Exercise 1: Creating the main application page from the Trip Detail page" href="html/00000149.htm">
+    <topic label="Adding navigation buttons to browse the database" href="html/00000150.htm" />
+   </topic>
+   <topic label="Exercise 2: Adding database maintenance buttons" href="html/00000151.htm" />
+   <topic label="Summary" href="html/00000152.htm">
+    <topic label="In the next lesson" href="html/00000153.htm" />
+   </topic>
+  </topic>
+  <topic label="Lesson 7: Validating Data to Enforce Business Rules" href="html/00000154.htm">
+   <topic label="Exercise 1: Using an HTML form to collect data" href="html/00000155.htm" />
+   <topic label="Exercise 2: Creating a simple action page" href="html/00000156.htm" />
+   <topic label="Exercise 3: About data validation" href="html/00000157.htm" />
+   <topic label="Exercise 4: Providing server-side validation" href="html/00000158.htm">
+    <topic label="Creating a local variable" href="html/00000159.htm" />
+    <topic label="Ensuring that a value was entered" href="html/00000160.htm" />
+   </topic>
+   <topic label="Exercise 5: Validating data on the client using ColdFusion form tags" href="html/00000161.htm" />
+   <topic label="Exercise 6: Dynamically populating the list of event types" href="html/00000162.htm" />
+   <topic label="Exercise 7: Validating the existence of the trip photo file" href="html/00000163.htm" />
+   <topic label="Summary" href="html/00000164.htm">
+    <topic label="In the next lesson" href="html/00000165.htm" />
+   </topic>
+  </topic>
+  <topic label="Lesson 8: Implementing Browsing and Searching" href="html/00000166.htm">
+   <topic label="Exercise 1: Enabling users to browse trip details" href="html/00000167.htm" />
+   <topic label="Exercise 2: Determining actions based on which button a user clicks" href="html/00000168.htm" />
+   <topic label="Exercise 3: Enabling searching from the Trip Detail page" href="html/00000169.htm" />
+   <topic label="Summary" href="html/00000170.htm">
+    <topic label="In the next lesson" href="html/00000171.htm" />
+   </topic>
+  </topic>
+  <topic label="Lesson 9: Enabling Database Maintenance" href="html/00000172.htm">
+   <topic label="Exercise 1: Deleting the current trip record shown on the Trip Detail page" href="html/00000173.htm" />
+   <topic label="Exercise 2: Adding trips with SQL INSERT statements" href="html/00000174.htm" />
+   <topic label="Exercise 3: Adding data using the cfinsert tag" href="html/00000175.htm" />
+   <topic label="Exercise 4: Updating a SQL row using the cfupdate tag" href="html/00000176.htm" />
+   <topic label="Exercise 5: Linking the Trip Edit page to the main page" href="html/00000177.htm" />
+   <topic label="Exercise 6: Inserting values in the edit form" href="html/00000178.htm" />
+  </topic>
+  <topic label="Lesson 10: Restricting Access to ColdFusion Applications" href="html/00000179.htm">
+   <topic label="Exercise 1: About the Login Wizard" href="html/00000180.htm">
+    <topic label="Creating a login using simple authentication" href="html/00000181.htm" />
+    <topic label="Creating a login using LDAP authentication" href="html/00000182.htm" />
+    <topic label="Creating a login using Windows NT authentication" href="html/00000183.htm" />
+   </topic>
+   <topic label="Exercise 2: Requiring users to log in to the Compass Travel application" href="html/00000184.htm" />
+   <topic label="Summary" href="html/00000185.htm" />
+  </topic>
+ </topic>
+ <topic label="CFML Reference" href="html/part_cfm.htm">
+  <topic label="Reserved Words and Variables" href="html/00000186.htm">
+   <topic label="Reserved words" href="html/00000187.htm">
+    <topic label="Reserved words in forms" href="html/00000188.htm" />
+    <topic label="Reserved words in queries" href="html/00000189.htm" />
+   </topic>
+   <topic label="Scope-specific built-in variables" href="html/00000190.htm" />
+   <topic label="Custom tag variables" href="html/00000191.htm" />
+   <topic label="ColdFusion tag-specific variables" href="html/00000192.htm" />
+   <topic label="Standard CGI variables" href="html/00000193.htm" />
+   <topic label="CGI environment variables" href="html/00000194.htm" />
+  </topic>
+  <topic label="ColdFusion Tags" href="html/00000195.htm">
+   <topic label="Tags by function" href="html/00000196.htm">
+    <topic label="Application framework tags" href="html/00000197.htm" />
+    <topic label="Database manipulation tags" href="html/00000198.htm" />
+    <topic label="Data output tags" href="html/00000199.htm" />
+    <topic label="Debugging tags" href="html/00000200.htm" />
+    <topic label="Exception handling tags" href="html/00000201.htm" />
+    <topic label="Extensibility tags" href="html/00000202.htm" />
+    <topic label="File management tags" href="html/00000203.htm" />
+    <topic label="Flow-control tags" href="html/00000204.htm" />
+    <topic label="Forms tags" href="html/00000205.htm" />
+    <topic label="Internet Protocol tags" href="html/00000206.htm" />
+    <topic label="Page processing tags" href="html/00000207.htm" />
+    <topic label="Security tags" href="html/00000208.htm" />
+    <topic label="Variable manipulation tags" href="html/00000209.htm" />
+    <topic label="Other tags" href="html/00000210.htm" />
+   </topic>
+   <topic label="Tag changes since ColdFusion 5" href="html/00000211.htm">
+    <topic label="New tags, attributes, and values" href="html/00000212.htm" />
+    <topic label="Deprecated tags, attributes, and values" href="html/00000213.htm" />
+    <topic label="Obsolete tags, attributes, and values" href="html/00000214.htm" />
+   </topic>
+   <topic label="cfabort" href="html/00000215.htm" />
+   <topic label="cfapplet" href="html/00000216.htm" />
+   <topic label="cfapplication" href="html/00000217.htm" />
+   <topic label="cfargument" href="html/00000218.htm" />
+   <topic label="cfassociate" href="html/00000219.htm" />
+   <topic label="cfauthenticate" href="html/00000220.htm" />
+   <topic label="cfbreak" href="html/00000221.htm" />
+   <topic label="cfcache" href="html/00000222.htm" />
+   <topic label="cfcalendar" href="html/00000223.htm" />
+   <topic label="cfcase" href="html/00000224.htm" />
+   <topic label="cfcatch" href="html/00000225.htm" />
+   <topic label="cfchart" href="html/00000226.htm" />
+   <topic label="cfchartdata" href="html/00000227.htm" />
+   <topic label="cfchartseries" href="html/00000228.htm" />
+   <topic label="cfcol" href="html/00000229.htm" />
+   <topic label="cfcollection" href="html/00000230.htm" />
+   <topic label="cfcomponent" href="html/00000231.htm" />
+   <topic label="cfcontent" href="html/00000232.htm" />
+   <topic label="cfcookie" href="html/00000233.htm" />
+   <topic label="cfdefaultcase" href="html/00000234.htm" />
+   <topic label="cfdirectory" href="html/00000235.htm" />
+   <topic label="cfdocument" href="html/00000236.htm" />
+   <topic label="cfdocumentitem" href="html/00000237.htm" />
+   <topic label="cfdocumentsection" href="html/00000238.htm" />
+   <topic label="cfdump" href="html/00000239.htm" />
+   <topic label="cfelse" href="html/00000240.htm" />
+   <topic label="cfelseif" href="html/00000241.htm" />
+   <topic label="cferror" href="html/00000242.htm" />
+   <topic label="cfexecute" href="html/00000243.htm" />
+   <topic label="cfexit" href="html/00000244.htm" />
+   <topic label="cffile" href="html/00000245.htm" />
+   <topic label="cffile action = &quot;append&quot;" href="html/00000246.htm" />
+   <topic label="cffile action = &quot;copy&quot;" href="html/00000247.htm" />
+   <topic label="cffile action = &quot;delete&quot;" href="html/00000248.htm" />
+   <topic label="cffile action = &quot;move&quot;" href="html/00000249.htm" />
+   <topic label="cffile action = &quot;read&quot;" href="html/00000250.htm" />
+   <topic label="cffile action = &quot;readBinary&quot;" href="html/00000251.htm" />
+   <topic label="cffile action = &quot;rename&quot;" href="html/00000252.htm" />
+   <topic label="cffile action = &quot;upload&quot;" href="html/00000253.htm" />
+   <topic label="cffile action = &quot;write&quot;" href="html/00000254.htm" />
+   <topic label="cfflush" href="html/00000255.htm" />
+   <topic label="cfform" href="html/00000256.htm" />
+   <topic label="cfformgroup" href="html/00000257.htm" />
+   <topic label="cfformitem" href="html/00000258.htm" />
+   <topic label="cfftp" href="html/00000259.htm" />
+   <topic label="cfftp: Opening and closing FTP server connections" href="html/00000260.htm" />
+   <topic label="cfftp: Connection: File and directory operations" href="html/00000261.htm" />
+   <topic label="cfftp action = &quot;listDir&quot;" href="html/00000262.htm" />
+   <topic label="cffunction" href="html/00000263.htm" />
+   <topic label="cfgraph" href="html/00000264.htm" />
+   <topic label="cfgraphdata" href="html/00000265.htm" />
+   <topic label="cfgrid" href="html/00000266.htm" />
+   <topic label="cfgridcolumn" href="html/00000267.htm" />
+   <topic label="cfgridrow" href="html/00000268.htm" />
+   <topic label="cfgridupdate" href="html/00000269.htm" />
+   <topic label="cfheader" href="html/00000270.htm" />
+   <topic label="cfhtmlhead" href="html/00000271.htm" />
+   <topic label="cfhttp" href="html/00000272.htm" />
+   <topic label="cfhttpparam" href="html/00000273.htm" />
+   <topic label="cfif" href="html/00000274.htm" />
+   <topic label="cfimpersonate" href="html/00000275.htm" />
+   <topic label="cfimport" href="html/00000276.htm" />
+   <topic label="cfinclude" href="html/00000277.htm" />
+   <topic label="cfindex" href="html/00000278.htm" />
+   <topic label="cfinput" href="html/00000279.htm" />
+   <topic label="cfinsert" href="html/00000280.htm" />
+   <topic label="cfinvoke" href="html/00000281.htm" />
+   <topic label="cfinvokeargument" href="html/00000282.htm" />
+   <topic label="cfldap" href="html/00000283.htm" />
+   <topic label="cflocation" href="html/00000284.htm" />
+   <topic label="cflock" href="html/00000285.htm" />
+   <topic label="cflog" href="html/00000286.htm" />
+   <topic label="cflogin" href="html/00000287.htm" />
+   <topic label="cfloginuser" href="html/00000288.htm" />
+   <topic label="cflogout" href="html/00000289.htm" />
+   <topic label="cfloop" href="html/00000290.htm" />
+   <topic label="cfloop: index loop" href="html/00000291.htm" />
+   <topic label="cfloop: conditional loop" href="html/00000292.htm" />
+   <topic label="cfloop: looping over a date or time range" href="html/00000293.htm" />
+   <topic label="cfloop: looping over a query" href="html/00000294.htm" />
+   <topic label="cfloop: looping over a list or file" href="html/00000295.htm" />
+   <topic label="cfloop: looping over a COM collection or structure" href="html/00000296.htm" />
+   <topic label="cfmail" href="html/00000297.htm" />
+   <topic label="cfmailparam" href="html/00000298.htm" />
+   <topic label="cfmailpart" href="html/00000299.htm" />
+   <topic label="cfmodule" href="html/00000300.htm" />
+   <topic label="cfNTauthenticate" href="html/00000301.htm" />
+   <topic label="cfobject" href="html/00000302.htm" />
+   <topic label="cfobject: COM object" href="html/00000303.htm" />
+   <topic label="cfobject: component object" href="html/00000304.htm" />
+   <topic label="cfobject: CORBA object" href="html/00000305.htm" />
+   <topic label="cfobject: Java or EJB object" href="html/00000306.htm" />
+   <topic label="cfobject: web service object" href="html/00000307.htm" />
+   <topic label="cfobjectcache" href="html/00000308.htm" />
+   <topic label="cfoutput" href="html/00000309.htm" />
+   <topic label="cfparam" href="html/00000310.htm" />
+   <topic label="cfpop" href="html/00000311.htm" />
+   <topic label="cfprocessingdirective" href="html/00000312.htm" />
+   <topic label="cfprocparam" href="html/00000313.htm" />
+   <topic label="cfprocresult" href="html/00000314.htm" />
+   <topic label="cfproperty" href="html/00000315.htm" />
+   <topic label="cfquery" href="html/00000316.htm" />
+   <topic label="cfqueryparam" href="html/00000317.htm" />
+   <topic label="cfregistry" href="html/00000318.htm" />
+   <topic label="cfregistry action = &quot;getAll&quot;" href="html/00000319.htm" />
+   <topic label="cfregistry action = &quot;get&quot;" href="html/00000320.htm" />
+   <topic label="cfregistry action = &quot;set&quot;" href="html/00000321.htm" />
+   <topic label="cfregistry action = &quot;delete&quot;" href="html/00000322.htm" />
+   <topic label="cfreport" href="html/00000323.htm" />
+   <topic label="cfreportparam" href="html/00000324.htm" />
+   <topic label="cfrethrow" href="html/00000325.htm" />
+   <topic label="cfreturn" href="html/00000326.htm" />
+   <topic label="cfsavecontent" href="html/00000327.htm" />
+   <topic label="cfschedule" href="html/00000328.htm" />
+   <topic label="cfscript" href="html/00000329.htm" />
+   <topic label="cfsearch" href="html/00000330.htm" />
+   <topic label="cfselect" href="html/00000331.htm" />
+   <topic label="cfservlet" href="html/00000332.htm" />
+   <topic label="cfservletparam" href="html/00000333.htm" />
+   <topic label="cfset" href="html/00000334.htm" />
+   <topic label="cfsetting" href="html/00000335.htm" />
+   <topic label="cfsilent" href="html/00000336.htm" />
+   <topic label="cfslider" href="html/00000337.htm" />
+   <topic label="cfstoredproc" href="html/00000338.htm" />
+   <topic label="cfswitch" href="html/00000339.htm" />
+   <topic label="cftable" href="html/00000340.htm" />
+   <topic label="cftextarea" href="html/00000341.htm" />
+   <topic label="cftextinput" href="html/00000342.htm" />
+   <topic label="cfthrow" href="html/00000343.htm" />
+   <topic label="cftimer" href="html/00000344.htm" />
+   <topic label="cftrace" href="html/00000345.htm" />
+   <topic label="cftransaction" href="html/00000346.htm" />
+   <topic label="cftree" href="html/00000347.htm" />
+   <topic label="cftreeitem" href="html/00000348.htm" />
+   <topic label="cftry" href="html/00000349.htm" />
+   <topic label="cfupdate" href="html/00000350.htm" />
+   <topic label="cfwddx" href="html/00000351.htm" />
+   <topic label="cfxml" href="html/00000352.htm" />
+  </topic>
+  <topic label="ColdFusion Functions" href="html/00000353.htm">
+   <topic label="Functions by category" href="html/00000354.htm">
+    <topic label="Array functions" href="html/00000355.htm" />
+    <topic label="Conversion functions" href="html/00000356.htm" />
+    <topic label="Date and time functions" href="html/00000357.htm" />
+    <topic label="Decision functions" href="html/00000358.htm" />
+    <topic label="Display and formatting functions" href="html/00000359.htm" />
+    <topic label="Dynamic evaluation functions" href="html/00000360.htm" />
+    <topic label="Extensibility functions" href="html/00000361.htm" />
+    <topic label="Full-text search functions" href="html/00000362.htm" />
+    <topic label="International functions" href="html/00000363.htm" />
+    <topic label="List functions" href="html/00000364.htm" />
+    <topic label="Mathematical functions" href="html/00000365.htm" />
+    <topic label="Other functions" href="html/00000366.htm" />
+    <topic label="Query functions" href="html/00000367.htm" />
+    <topic label="Security functions" href="html/00000368.htm" />
+    <topic label="String functions" href="html/00000369.htm" />
+    <topic label="Structure functions" href="html/00000370.htm" />
+    <topic label="System functions" href="html/00000371.htm" />
+    <topic label="XML functions" href="html/00000372.htm" />
+   </topic>
+   <topic label="Function changes since ColdFusion 5" href="html/00000373.htm">
+    <topic label="New functions, parameters, and values" href="html/00000374.htm" />
+    <topic label="Deprecated functions, parameters, and values" href="html/00000375.htm" />
+    <topic label="Obsolete functions, parameters, and values" href="html/00000376.htm" />
+   </topic>
+   <topic label="Abs" href="html/00000377.htm" />
+   <topic label="ACos" href="html/00000378.htm" />
+   <topic label="AddSOAPRequestHeader" href="html/00000379.htm" />
+   <topic label="AddSOAPResponseHeader" href="html/00000380.htm" />
+   <topic label="ArrayAppend" href="html/00000381.htm" />
+   <topic label="ArrayAvg" href="html/00000382.htm" />
+   <topic label="ArrayClear" href="html/00000383.htm" />
+   <topic label="ArrayDeleteAt" href="html/00000384.htm" />
+   <topic label="ArrayInsertAt" href="html/00000385.htm" />
+   <topic label="ArrayIsEmpty" href="html/00000386.htm" />
+   <topic label="ArrayLen" href="html/00000387.htm" />
+   <topic label="ArrayMax" href="html/00000388.htm" />
+   <topic label="ArrayMin" href="html/00000389.htm" />
+   <topic label="ArrayNew" href="html/00000390.htm" />
+   <topic label="ArrayPrepend" href="html/00000391.htm" />
+   <topic label="ArrayResize" href="html/00000392.htm" />
+   <topic label="ArraySet" href="html/00000393.htm" />
+   <topic label="ArraySort" href="html/00000394.htm" />
+   <topic label="ArraySum" href="html/00000395.htm" />
+   <topic label="ArraySwap" href="html/00000396.htm" />
+   <topic label="ArrayToList" href="html/00000397.htm" />
+   <topic label="Asc" href="html/00000398.htm" />
+   <topic label="ASin" href="html/00000399.htm" />
+   <topic label="Atn" href="html/00000400.htm" />
+   <topic label="AuthenticatedContext" href="html/00000401.htm" />
+   <topic label="AuthenticatedUser" href="html/00000402.htm" />
+   <topic label="BinaryDecode" href="html/00000403.htm" />
+   <topic label="BinaryEncode" href="html/00000404.htm" />
+   <topic label="BitAnd" href="html/00000405.htm" />
+   <topic label="BitMaskClear" href="html/00000406.htm" />
+   <topic label="BitMaskRead" href="html/00000407.htm" />
+   <topic label="BitMaskSet" href="html/00000408.htm" />
+   <topic label="BitNot" href="html/00000409.htm" />
+   <topic label="BitOr" href="html/00000410.htm" />
+   <topic label="BitSHLN" href="html/00000411.htm" />
+   <topic label="BitSHRN" href="html/00000412.htm" />
+   <topic label="BitXor" href="html/00000413.htm" />
+   <topic label="Ceiling" href="html/00000414.htm" />
+   <topic label="CharsetDecode" href="html/00000415.htm" />
+   <topic label="CharsetEncode" href="html/00000416.htm" />
+   <topic label="Chr" href="html/00000417.htm" />
+   <topic label="CJustify" href="html/00000418.htm" />
+   <topic label="Compare" href="html/00000419.htm" />
+   <topic label="CompareNoCase" href="html/00000420.htm" />
+   <topic label="Cos" href="html/00000421.htm" />
+   <topic label="CreateDate" href="html/00000422.htm" />
+   <topic label="CreateDateTime" href="html/00000423.htm" />
+   <topic label="CreateObject" href="html/00000424.htm">
+    <topic label="CreateObject object types" href="html/00000425.htm" />
+   </topic>
+   <topic label="CreateObject: COM object" href="html/00000426.htm" />
+   <topic label="CreateObject: component object" href="html/00000427.htm" />
+   <topic label="CreateObject: CORBA object" href="html/00000428.htm" />
+   <topic label="CreateObject: Java or EJB object" href="html/00000429.htm" />
+   <topic label="CreateObject: web service object" href="html/00000430.htm" />
+   <topic label="CreateODBCDate" href="html/00000431.htm" />
+   <topic label="CreateODBCDateTime" href="html/00000432.htm" />
+   <topic label="CreateODBCTime" href="html/00000433.htm" />
+   <topic label="CreateTime" href="html/00000434.htm" />
+   <topic label="CreateTimeSpan" href="html/00000435.htm" />
+   <topic label="CreateUUID" href="html/00000436.htm" />
+   <topic label="DateAdd" href="html/00000437.htm" />
+   <topic label="DateCompare" href="html/00000438.htm" />
+   <topic label="DateConvert" href="html/00000439.htm" />
+   <topic label="DateDiff" href="html/00000440.htm" />
+   <topic label="DateFormat" href="html/00000441.htm" />
+   <topic label="DatePart" href="html/00000442.htm" />
+   <topic label="Day" href="html/00000443.htm" />
+   <topic label="DayOfWeek" href="html/00000444.htm" />
+   <topic label="DayOfWeekAsString" href="html/00000445.htm" />
+   <topic label="DayOfYear" href="html/00000446.htm" />
+   <topic label="DaysInMonth" href="html/00000447.htm" />
+   <topic label="DaysInYear" href="html/00000448.htm" />
+   <topic label="DE" href="html/00000449.htm" />
+   <topic label="DecimalFormat" href="html/00000450.htm" />
+   <topic label="DecrementValue" href="html/00000451.htm" />
+   <topic label="Decrypt" href="html/00000452.htm" />
+   <topic label="DeleteClientVariable" href="html/00000453.htm" />
+   <topic label="DirectoryExists" href="html/00000454.htm" />
+   <topic label="DollarFormat" href="html/00000455.htm" />
+   <topic label="Duplicate" href="html/00000456.htm" />
+   <topic label="Encrypt" href="html/00000457.htm" />
+   <topic label="Evaluate" href="html/00000458.htm" />
+   <topic label="Exp" href="html/00000459.htm" />
+   <topic label="ExpandPath" href="html/00000460.htm" />
+   <topic label="FileExists" href="html/00000461.htm" />
+   <topic label="Find" href="html/00000462.htm" />
+   <topic label="FindNoCase" href="html/00000463.htm" />
+   <topic label="FindOneOf" href="html/00000464.htm" />
+   <topic label="FirstDayOfMonth" href="html/00000465.htm" />
+   <topic label="Fix" href="html/00000466.htm" />
+   <topic label="FormatBaseN" href="html/00000467.htm" />
+   <topic label="GenerateSecretKey" href="html/00000468.htm" />
+   <topic label="GetAuthUser" href="html/00000469.htm" />
+   <topic label="GetBaseTagData" href="html/00000470.htm" />
+   <topic label="GetBaseTagList" href="html/00000471.htm" />
+   <topic label="GetBaseTemplatePath" href="html/00000472.htm" />
+   <topic label="GetClientVariablesList" href="html/00000473.htm" />
+   <topic label="GetContextRoot" href="html/00000474.htm" />
+   <topic label="GetCurrentTemplatePath" href="html/00000475.htm" />
+   <topic label="GetDirectoryFromPath" href="html/00000476.htm" />
+   <topic label="GetEncoding" href="html/00000477.htm" />
+   <topic label="GetException" href="html/00000478.htm" />
+   <topic label="GetFileFromPath" href="html/00000479.htm" />
+   <topic label="GetFunctionList" href="html/00000480.htm" />
+   <topic label="GetGatewayHelper" href="html/00000481.htm" />
+   <topic label="GetHttpRequestData" href="html/00000482.htm" />
+   <topic label="GetHttpTimeString" href="html/00000483.htm" />
+   <topic label="GetK2ServerDocCount" href="html/00000484.htm" />
+   <topic label="GetK2ServerDocCountLimit" href="html/00000485.htm" />
+   <topic label="GetLocale" href="html/00000486.htm" />
+   <topic label="GetLocaleDisplayName" href="html/00000487.htm" />
+   <topic label="GetMetaData" href="html/00000488.htm" />
+   <topic label="GetMetricData" href="html/00000489.htm" />
+   <topic label="GetPageContext" href="html/00000490.htm" />
+   <topic label="GetProfileSections" href="html/00000491.htm" />
+   <topic label="GetProfileString" href="html/00000492.htm" />
+   <topic label="GetSOAPRequest" href="html/00000493.htm" />
+   <topic label="GetSOAPRequestHeader" href="html/00000494.htm" />
+   <topic label="GetSOAPResponse" href="html/00000495.htm" />
+   <topic label="GetSOAPResponseHeader" href="html/00000496.htm" />
+   <topic label="GetTempDirectory" href="html/00000497.htm" />
+   <topic label="GetTempFile" href="html/00000498.htm" />
+   <topic label="GetTemplatePath" href="html/00000499.htm" />
+   <topic label="GetTickCount" href="html/00000500.htm" />
+   <topic label="GetTimeZoneInfo" href="html/00000501.htm" />
+   <topic label="GetToken" href="html/00000502.htm" />
+   <topic label="Hash" href="html/00000503.htm" />
+   <topic label="Hour" href="html/00000504.htm" />
+   <topic label="HTMLCodeFormat" href="html/00000505.htm" />
+   <topic label="HTMLEditFormat" href="html/00000506.htm" />
+   <topic label="IIf" href="html/00000507.htm" />
+   <topic label="IncrementValue" href="html/00000508.htm" />
+   <topic label="InputBaseN" href="html/00000509.htm" />
+   <topic label="Insert" href="html/00000510.htm" />
+   <topic label="Int" href="html/00000511.htm" />
+   <topic label="IsArray" href="html/00000512.htm" />
+   <topic label="IsAuthenticated" href="html/00000513.htm" />
+   <topic label="IsAuthorized" href="html/00000514.htm" />
+   <topic label="IsBinary" href="html/00000515.htm" />
+   <topic label="IsBoolean" href="html/00000516.htm" />
+   <topic label="IsCustomFunction" href="html/00000517.htm" />
+   <topic label="IsDate" href="html/00000518.htm" />
+   <topic label="IsDebugMode" href="html/00000519.htm" />
+   <topic label="IsDefined" href="html/00000520.htm" />
+   <topic label="IsK2ServerABroker" href="html/00000521.htm" />
+   <topic label="IsK2ServerDocCountExceeded" href="html/00000522.htm" />
+   <topic label="IsK2ServerOnline" href="html/00000523.htm" />
+   <topic label="IsLeapYear" href="html/00000524.htm" />
+   <topic label="IsNumeric" href="html/00000525.htm" />
+   <topic label="IsNumericDate" href="html/00000526.htm" />
+   <topic label="IsObject" href="html/00000527.htm" />
+   <topic label="IsProtected" href="html/00000528.htm" />
+   <topic label="IsQuery" href="html/00000529.htm" />
+   <topic label="IsSimpleValue" href="html/00000530.htm" />
+   <topic label="IsSOAPRequest" href="html/00000531.htm" />
+   <topic label="IsStruct" href="html/00000532.htm" />
+   <topic label="IsUserInRole" href="html/00000533.htm" />
+   <topic label="IsValid" href="html/00000534.htm" />
+   <topic label="IsWDDX" href="html/00000535.htm" />
+   <topic label="IsXML" href="html/00000536.htm" />
+   <topic label="IsXmlAttribute" href="html/00000537.htm" />
+   <topic label="IsXmlDoc" href="html/00000538.htm" />
+   <topic label="IsXmlElem" href="html/00000539.htm" />
+   <topic label="IsXmlNode" href="html/00000540.htm" />
+   <topic label="IsXmlRoot" href="html/00000541.htm" />
+   <topic label="JavaCast" href="html/00000542.htm" />
+   <topic label="JSStringFormat" href="html/00000543.htm" />
+   <topic label="LCase" href="html/00000544.htm" />
+   <topic label="Left" href="html/00000545.htm" />
+   <topic label="Len" href="html/00000546.htm" />
+   <topic label="ListAppend" href="html/00000547.htm" />
+   <topic label="ListChangeDelims" href="html/00000548.htm" />
+   <topic label="ListContains" href="html/00000549.htm" />
+   <topic label="ListContainsNoCase" href="html/00000550.htm" />
+   <topic label="ListDeleteAt" href="html/00000551.htm" />
+   <topic label="ListFind" href="html/00000552.htm" />
+   <topic label="ListFindNoCase" href="html/00000553.htm" />
+   <topic label="ListFirst" href="html/00000554.htm" />
+   <topic label="ListGetAt" href="html/00000555.htm" />
+   <topic label="ListInsertAt" href="html/00000556.htm" />
+   <topic label="ListLast" href="html/00000557.htm" />
+   <topic label="ListLen" href="html/00000558.htm" />
+   <topic label="ListPrepend" href="html/00000559.htm" />
+   <topic label="ListQualify" href="html/00000560.htm" />
+   <topic label="ListRest" href="html/00000561.htm" />
+   <topic label="ListSetAt" href="html/00000562.htm" />
+   <topic label="ListSort" href="html/00000563.htm" />
+   <topic label="ListToArray" href="html/00000564.htm" />
+   <topic label="ListValueCount" href="html/00000565.htm" />
+   <topic label="ListValueCountNoCase" href="html/00000566.htm" />
+   <topic label="LJustify" href="html/00000567.htm" />
+   <topic label="Log" href="html/00000568.htm" />
+   <topic label="Log10" href="html/00000569.htm" />
+   <topic label="LSCurrencyFormat" href="html/00000570.htm" />
+   <topic label="LSDateFormat" href="html/00000571.htm" />
+   <topic label="LSEuroCurrencyFormat" href="html/00000572.htm">
+    <topic label="Currency output" href="html/00000573.htm" />
+   </topic>
+   <topic label="LSIsCurrency" href="html/00000574.htm" />
+   <topic label="LSIsDate" href="html/00000575.htm" />
+   <topic label="LSIsNumeric" href="html/00000576.htm" />
+   <topic label="LSNumberFormat" href="html/00000577.htm" />
+   <topic label="LSParseCurrency" href="html/00000578.htm" />
+   <topic label="LSParseDateTime" href="html/00000579.htm" />
+   <topic label="LSParseEuroCurrency" href="html/00000580.htm" />
+   <topic label="LSParseNumber" href="html/00000581.htm" />
+   <topic label="LSTimeFormat" href="html/00000582.htm" />
+   <topic label="LTrim" href="html/00000583.htm" />
+   <topic label="Max" href="html/00000584.htm" />
+   <topic label="Mid" href="html/00000585.htm" />
+   <topic label="Min" href="html/00000586.htm" />
+   <topic label="Minute" href="html/00000587.htm" />
+   <topic label="Month" href="html/00000588.htm" />
+   <topic label="MonthAsString" href="html/00000589.htm" />
+   <topic label="Now" href="html/00000590.htm" />
+   <topic label="NumberFormat" href="html/00000591.htm" />
+   <topic label="ParagraphFormat" href="html/00000592.htm" />
+   <topic label="ParameterExists" href="html/00000593.htm" />
+   <topic label="ParseDateTime" href="html/00000594.htm" />
+   <topic label="Pi" href="html/00000595.htm" />
+   <topic label="PreserveSingleQuotes" href="html/00000596.htm" />
+   <topic label="Quarter" href="html/00000597.htm" />
+   <topic label="QueryAddColumn" href="html/00000598.htm" />
+   <topic label="QueryAddRow" href="html/00000599.htm" />
+   <topic label="QueryNew" href="html/00000600.htm" />
+   <topic label="QuerySetCell" href="html/00000601.htm" />
+   <topic label="QuotedValueList" href="html/00000602.htm" />
+   <topic label="Rand" href="html/00000603.htm" />
+   <topic label="Randomize" href="html/00000604.htm" />
+   <topic label="RandRange" href="html/00000605.htm" />
+   <topic label="REFind" href="html/00000606.htm" />
+   <topic label="REFindNoCase" href="html/00000607.htm" />
+   <topic label="ReleaseComObject" href="html/00000608.htm" />
+   <topic label="RemoveChars" href="html/00000609.htm" />
+   <topic label="RepeatString" href="html/00000610.htm" />
+   <topic label="Replace" href="html/00000611.htm" />
+   <topic label="ReplaceList" href="html/00000612.htm" />
+   <topic label="ReplaceNoCase" href="html/00000613.htm" />
+   <topic label="REReplace" href="html/00000614.htm" />
+   <topic label="REReplaceNoCase" href="html/00000615.htm" />
+   <topic label="Reverse" href="html/00000616.htm" />
+   <topic label="Right" href="html/00000617.htm" />
+   <topic label="RJustify" href="html/00000618.htm" />
+   <topic label="Round" href="html/00000619.htm" />
+   <topic label="RTrim" href="html/00000620.htm" />
+   <topic label="Second" href="html/00000621.htm" />
+   <topic label="SendGatewayMessage" href="html/00000622.htm" />
+   <topic label="SetEncoding" href="html/00000623.htm" />
+   <topic label="SetLocale" href="html/00000624.htm" />
+   <topic label="SetProfileString" href="html/00000625.htm" />
+   <topic label="SetVariable" href="html/00000626.htm" />
+   <topic label="Sgn" href="html/00000627.htm" />
+   <topic label="Sin" href="html/00000628.htm" />
+   <topic label="SpanExcluding" href="html/00000629.htm" />
+   <topic label="SpanIncluding" href="html/00000630.htm" />
+   <topic label="Sqr" href="html/00000631.htm" />
+   <topic label="StripCR" href="html/00000632.htm" />
+   <topic label="StructAppend" href="html/00000633.htm" />
+   <topic label="StructClear" href="html/00000634.htm" />
+   <topic label="StructCopy" href="html/00000635.htm" />
+   <topic label="StructCount" href="html/00000636.htm" />
+   <topic label="StructDelete" href="html/00000637.htm" />
+   <topic label="StructFind" href="html/00000638.htm" />
+   <topic label="StructFindKey" href="html/00000639.htm" />
+   <topic label="StructFindValue" href="html/00000640.htm" />
+   <topic label="StructGet" href="html/00000641.htm" />
+   <topic label="StructInsert" href="html/00000642.htm" />
+   <topic label="StructIsEmpty" href="html/00000643.htm" />
+   <topic label="StructKeyArray" href="html/00000644.htm" />
+   <topic label="StructKeyExists" href="html/00000645.htm" />
+   <topic label="StructKeyList" href="html/00000646.htm" />
+   <topic label="StructNew" href="html/00000647.htm" />
+   <topic label="StructSort" href="html/00000648.htm" />
+   <topic label="StructUpdate" href="html/00000649.htm" />
+   <topic label="Tan" href="html/00000650.htm" />
+   <topic label="TimeFormat" href="html/00000651.htm" />
+   <topic label="ToBase64" href="html/00000652.htm" />
+   <topic label="ToBinary" href="html/00000653.htm" />
+   <topic label="ToScript" href="html/00000654.htm" />
+   <topic label="ToString" href="html/00000655.htm" />
+   <topic label="Trim" href="html/00000656.htm" />
+   <topic label="UCase" href="html/00000657.htm" />
+   <topic label="URLDecode" href="html/00000658.htm" />
+   <topic label="URLEncodedFormat" href="html/00000659.htm" />
+   <topic label="URLSessionFormat" href="html/00000660.htm" />
+   <topic label="Val" href="html/00000661.htm" />
+   <topic label="ValueList" href="html/00000662.htm" />
+   <topic label="Week" href="html/00000663.htm" />
+   <topic label="Wrap" href="html/00000664.htm" />
+   <topic label="WriteOutput" href="html/00000665.htm" />
+   <topic label="XmlChildPos" href="html/00000666.htm" />
+   <topic label="XmlElemNew" href="html/00000667.htm" />
+   <topic label="XmlFormat" href="html/00000668.htm" />
+   <topic label="XmlGetNodeType" href="html/00000669.htm" />
+   <topic label="XmlNew" href="html/00000670.htm" />
+   <topic label="XmlParse" href="html/00000671.htm" />
+   <topic label="XmlSearch" href="html/00000672.htm" />
+   <topic label="XmlTransform" href="html/00000673.htm" />
+   <topic label="XmlValidate" href="html/00000674.htm" />
+   <topic label="Year" href="html/00000675.htm" />
+   <topic label="YesNoFormat" href="html/00000676.htm" />
+  </topic>
+  <topic label="ColdFusion MX Flash Form Style Reference" href="html/00000677.htm">
+   <topic label="Styles valid for all controls" href="html/00000678.htm" />
+   <topic label="Styles for cfform" href="html/00000679.htm" />
+   <topic label="Styles for cfformgroup with horizontal or vertical type atributes" href="html/00000680.htm" />
+   <topic label="Styles for box-style cfformgroup elements" href="html/00000681.htm" />
+   <topic label="Styles for cfformgroup with accordion type attribute" href="html/00000682.htm" />
+   <topic label="Styles for cfformgroup with tabnavigator type attribute" href="html/00000683.htm" />
+   <topic label="Styles for cfformitem with hrule or vrule type attributes" href="html/00000684.htm" />
+   <topic label="Styles for cfinput with radioButton, checkbox, button, image, or submit type attributes" href="html/00000685.htm" />
+   <topic label="Styles for cftextarea tag and cfinput with text, password, or hidden type attributes" href="html/00000686.htm" />
+   <topic label="Styles for cfselect with size attribute value of 1" href="html/00000687.htm" />
+   <topic label="Styles for cfselect with size attribute value greater than 1" href="html/00000688.htm" />
+   <topic label="Styles for cfcalendar tag and cfinput with dateField type attribute" href="html/00000689.htm" />
+   <topic label="Styles for the cfgrid tag" href="html/00000690.htm" />
+   <topic label="Styles for the cftree tag" href="html/00000691.htm" />
+  </topic>
+  <topic label="Application.CFC Reference" href="html/00000692.htm">
+   <topic label="Application variables" href="html/00000693.htm" />
+   <topic label="Method summary" href="html/00000694.htm" />
+   <topic label="onApplicationEnd" href="html/00000695.htm" />
+   <topic label="onApplicationStart" href="html/00000696.htm" />
+   <topic label="onError" href="html/00000697.htm" />
+   <topic label="onRequest" href="html/00000698.htm" />
+   <topic label="onRequestEnd" href="html/00000699.htm" />
+   <topic label="onRequestStart" href="html/00000700.htm" />
+   <topic label="onSessionEnd" href="html/00000701.htm" />
+   <topic label="onSessionStart" href="html/00000702.htm" />
+  </topic>
+  <topic label="ColdFusion MX Event Gateway Reference" href="html/00000703.htm">
+   <topic label="Gateway development interfaces and classes" href="html/00000704.htm" />
+   <topic label="Gateway interface" href="html/00000705.htm" />
+   <topic label="Constructor" href="html/00000706.htm" />
+   <topic label="getGatewayID" href="html/00000707.htm" />
+   <topic label="getHelper" href="html/00000708.htm" />
+   <topic label="getStatus" href="html/00000709.htm" />
+   <topic label="outgoingMessage" href="html/00000710.htm" />
+   <topic label="restart" href="html/00000711.htm" />
+   <topic label="setCFCListeners" href="html/00000712.htm" />
+   <topic label="setGatewayID" href="html/00000713.htm" />
+   <topic label="start" href="html/00000714.htm" />
+   <topic label="stop" href="html/00000715.htm" />
+   <topic label="GatewayHelper interface" href="html/00000716.htm" />
+   <topic label="GatewayServices class" href="html/00000717.htm" />
+   <topic label="getGatewayServices" href="html/00000718.htm" />
+   <topic label="addEvent" href="html/00000719.htm" />
+   <topic label="getLogger" href="html/00000720.htm" />
+   <topic label="getMaxQueueSize" href="html/00000721.htm" />
+   <topic label="getQueueSize" href="html/00000722.htm" />
+   <topic label="CFEvent class" href="html/00000723.htm" />
+   <topic label="CFEvent" href="html/00000724.htm" />
+   <topic label="getCFCMethod" href="html/00000725.htm" />
+   <topic label="getCFCPath" href="html/00000726.htm" />
+   <topic label="getCFCTimeout" href="html/00000727.htm" />
+   <topic label="getData" href="html/00000728.htm" />
+   <topic label="getGatewayID" href="html/00000729.htm" />
+   <topic label="getGatewayType" href="html/00000730.htm" />
+   <topic label="getOriginatorID" href="html/00000731.htm" />
+   <topic label="setCFCMethod" href="html/00000732.htm" />
+   <topic label="setCFCPath" href="html/00000733.htm" />
+   <topic label="setCFCTimeout" href="html/00000734.htm" />
+   <topic label="setData" href="html/00000735.htm" />
+   <topic label="setGatewayType" href="html/00000736.htm" />
+   <topic label="setOriginatorID" href="html/00000737.htm" />
+   <topic label="Logger class" href="html/00000738.htm" />
+   <topic label="debug" href="html/00000739.htm" />
+   <topic label="error" href="html/00000740.htm" />
+   <topic label="fatal" href="html/00000741.htm" />
+   <topic label="info" href="html/00000742.htm" />
+   <topic label="warn" href="html/00000743.htm" />
+   <topic label="CFML CFEvent structure" href="html/00000744.htm" />
+   <topic label="IM gateway methods and commands" href="html/00000745.htm" />
+   <topic label="IM Gateway CFC incoming message methods" href="html/00000746.htm" />
+   <topic label="onAddBuddyRequest" href="html/00000747.htm" />
+   <topic label="onAddBuddyResponse" href="html/00000748.htm" />
+   <topic label="onBuddyStatus" href="html/00000749.htm" />
+   <topic label="onIMServerMessage" href="html/00000750.htm" />
+   <topic label="onIncomingMessage" href="html/00000751.htm" />
+   <topic label="IM gateway message sending commands" href="html/00000752.htm" />
+   <topic label="IM Gateway GatewayHelper class methods" href="html/00000753.htm" />
+   <topic label="addBuddy" href="html/00000754.htm" />
+   <topic label="addDeny" href="html/00000755.htm" />
+   <topic label="addPermit" href="html/00000756.htm" />
+   <topic label="getBuddyInfo" href="html/00000757.htm" />
+   <topic label="getBuddyList" href="html/00000758.htm" />
+   <topic label="getCustomAwayMessage" href="html/00000759.htm" />
+   <topic label="getDenyList" href="html/00000760.htm" />
+   <topic label="getName" href="html/00000761.htm" />
+   <topic label="getNickName" href="html/00000762.htm" />
+   <topic label="getPermitList" href="html/00000763.htm" />
+   <topic label="getPermitMode" href="html/00000764.htm" />
+   <topic label="getProtocolName" href="html/00000765.htm" />
+   <topic label="getStatusAsString" href="html/00000766.htm" />
+   <topic label="getStatusTimeStamp" href="html/00000767.htm" />
+   <topic label="isOnline" href="html/00000768.htm" />
+   <topic label="numberOfMessagesReceived" href="html/00000769.htm" />
+   <topic label="numberOfMessagesSent" href="html/00000770.htm" />
+   <topic label="removeBuddy" href="html/00000771.htm" />
+   <topic label="removeDeny" href="html/00000772.htm" />
+   <topic label="removePermit" href="html/00000773.htm" />
+   <topic label="setNickName" href="html/00000774.htm" />
+   <topic label="setPermitMode" href="html/00000775.htm" />
+   <topic label="setStatus" href="html/00000776.htm" />
+   <topic label="SMS Gateway CFEvent structure and commands" href="html/00000777.htm" />
+   <topic label="SMS Gateway incoming message CFEvent structure" href="html/00000778.htm" />
+   <topic label="SMS gateway message sending commands" href="html/00000779.htm" />
+   <topic label="submit command" href="html/00000780.htm" />
+   <topic label="submitMulti command" href="html/00000781.htm" />
+   <topic label="data command" href="html/00000782.htm" />
+   <topic label="CFML event gateway SendGatewayMessage data parameter" href="html/00000783.htm" />
+  </topic>
+  <topic label="ColdFusion C++ CFX Reference" href="html/00000784.htm">
+   <topic label="C++ class overview" href="html/00000785.htm" />
+   <topic label="Deprecated class methods" href="html/00000786.htm" />
+   <topic label="CCFXException class" href="html/00000787.htm" />
+   <topic label="CCFXQuery class" href="html/00000788.htm">
+    <topic label="CCFXQuery::AddRow" href="html/00000789.htm" />
+    <topic label="CCFXQuery::GetColumns" href="html/00000790.htm" />
+    <topic label="CCFXQuery::GetData" href="html/00000791.htm" />
+    <topic label="CCFXQuery::GetName" href="html/00000792.htm" />
+    <topic label="CCFXQuery::GetRowCount" href="html/00000793.htm" />
+    <topic label="CCFXQuery::SetData" href="html/00000794.htm" />
+   </topic>
+   <topic label="CCFXRequest class" href="html/00000795.htm">
+    <topic label="CCFXRequest::AddQuery" href="html/00000796.htm" />
+    <topic label="CCFXRequest::AttributeExists" href="html/00000797.htm" />
+    <topic label="CCFXRequest::CreateStringSet" href="html/00000798.htm" />
+    <topic label="CCFXRequest::Debug" href="html/00000799.htm" />
+    <topic label="CCFXRequest::GetAttribute" href="html/00000800.htm" />
+    <topic label="CCFXRequest::GetAttributeList" href="html/00000801.htm" />
+    <topic label="CCFXRequest::GetCustomData" href="html/00000802.htm" />
+    <topic label="CCFXRequest::GetQuery" href="html/00000803.htm" />
+    <topic label="CCFXRequest::ReThrowException" href="html/00000804.htm" />
+    <topic label="CCFXRequest::SetCustomData" href="html/00000805.htm" />
+    <topic label="CCFXRequest::SetVariable" href="html/00000806.htm" />
+    <topic label="CCFXRequest::ThrowException" href="html/00000807.htm" />
+    <topic label="CCFXRequest::Write" href="html/00000808.htm" />
+    <topic label="CCFXRequest::WriteDebug" href="html/00000809.htm" />
+   </topic>
+   <topic label="CCFXStringSet class" href="html/00000810.htm">
+    <topic label="CCFXStringSet::AddString" href="html/00000811.htm" />
+    <topic label="CCFXStringSet::GetCount" href="html/00000812.htm" />
+    <topic label="CCFXStringSet::GetIndexForString" href="html/00000813.htm" />
+    <topic label="CCFXStringSet::GetString" href="html/00000814.htm" />
+   </topic>
+  </topic>
+  <topic label="ColdFusion Java CFX Reference" href="html/00000815.htm">
+   <topic label="Class libraries overview" href="html/00000816.htm" />
+   <topic label="Custom tag interface" href="html/00000817.htm">
+    <topic label="processRequest" href="html/00000818.htm" />
+   </topic>
+   <topic label="Query interface" href="html/00000819.htm">
+    <topic label="addRow" href="html/00000820.htm" />
+    <topic label="getColumnIndex" href="html/00000821.htm" />
+    <topic label="getColumns" href="html/00000822.htm" />
+    <topic label="getData" href="html/00000823.htm" />
+    <topic label="getName" href="html/00000824.htm" />
+    <topic label="getRowCount" href="html/00000825.htm" />
+    <topic label="setData" href="html/00000826.htm" />
+   </topic>
+   <topic label="Request interface" href="html/00000827.htm">
+    <topic label="attributeExists" href="html/00000828.htm" />
+    <topic label="debug" href="html/00000829.htm" />
+    <topic label="getAttribute" href="html/00000830.htm" />
+    <topic label="getAttributeList" href="html/00000831.htm" />
+    <topic label="getIntAttribute" href="html/00000832.htm" />
+    <topic label="getQuery" href="html/00000833.htm" />
+    <topic label="getSetting" href="html/00000834.htm" />
+   </topic>
+   <topic label="Response interface" href="html/00000835.htm">
+    <topic label="addQuery" href="html/00000836.htm" />
+    <topic label="setVariable" href="html/00000837.htm" />
+    <topic label="write" href="html/00000838.htm" />
+    <topic label="writeDebug" href="html/00000839.htm" />
+   </topic>
+   <topic label="Debugging classes reference" href="html/00000840.htm">
+    <topic label="DebugResponse" href="html/00000841.htm" />
+   </topic>
+  </topic>
+  <topic label="WDDX JavaScript Objects" href="html/00000842.htm">
+   <topic label="JavaScript object overview" href="html/00000843.htm" />
+   <topic label="WddxSerializer object" href="html/00000844.htm">
+    <topic label="serialize" href="html/00000845.htm" />
+    <topic label="serializeVariable" href="html/00000846.htm" />
+    <topic label="serializeValue" href="html/00000847.htm" />
+    <topic label="write" href="html/00000848.htm" />
+   </topic>
+   <topic label="WddxRecordset object" href="html/00000849.htm">
+    <topic label="addColumn" href="html/00000850.htm" />
+    <topic label="addRows" href="html/00000851.htm" />
+    <topic label="getField" href="html/00000852.htm" />
+    <topic label="getRowCount" href="html/00000853.htm" />
+    <topic label="setField" href="html/00000854.htm" />
+    <topic label="wddxSerialize" href="html/00000855.htm" />
+   </topic>
+  </topic>
+  <topic label="ColdFusion ActionScript Functions" href="html/00000856.htm">
+   <topic label="CF.query" href="html/00000857.htm" />
+   <topic label="CF.http" href="html/00000858.htm" />
+  </topic>
+ </topic>
+ <topic label="ColdFusion MX Developer's Guide" href="html/part_dev.htm">
+  <topic label="About ColdFusion MX Documentation" href="html/00000859.htm">
+   <topic label="Using this manual" href="html/00000860.htm">
+    <topic label="ColdFusion features described in this manual" href="html/00000861.htm" />
+   </topic>
+  </topic>
+  <topic label="Introducing ColdFusion MX" href="html/00000862.htm">
+   <topic label="About Internet applications and web application servers" href="html/00000863.htm" />
+   <topic label="About ColdFusion MX" href="html/00000864.htm" />
+   <topic label="About J2EE and the ColdFusion architecture" href="html/00000865.htm" />
+  </topic>
+  <topic label="Elements of CFML" href="html/00000866.htm">
+   <topic label="CFML Basics" href="html/00000867.htm" />
+   <topic label="Comments" href="html/00000868.htm" />
+   <topic label="Tags" href="html/00000869.htm" />
+   <topic label="Functions" href="html/00000870.htm" />
+   <topic label="ColdFusion components" href="html/00000871.htm" />
+   <topic label="Constants" href="html/00000872.htm" />
+   <topic label="Variables" href="html/00000873.htm" />
+   <topic label="Expressions" href="html/00000874.htm" />
+   <topic label="Data types" href="html/00000875.htm" />
+   <topic label="Flow control" href="html/00000876.htm" />
+   <topic label="Character case" href="html/00000877.htm" />
+   <topic label="Special characters" href="html/00000878.htm" />
+   <topic label="Reserved words" href="html/00000879.htm" />
+   <topic label="CFScript" href="html/00000880.htm" />
+  </topic>
+  <topic label="Using ColdFusion Variables" href="html/00000881.htm">
+   <topic label="Creating variables" href="html/00000882.htm">
+    <topic label="Variable naming rules" href="html/00000883.htm" />
+   </topic>
+   <topic label="Variable characteristics" href="html/00000884.htm" />
+   <topic label="Data types" href="html/00000885.htm">
+    <topic label="Numbers" href="html/00000886.htm">
+     <topic label="Integers" href="html/00000887.htm" />
+     <topic label="Real numbers" href="html/00000888.htm" />
+    </topic>
+   </topic>
+   <topic label="Strings" href="html/00000889.htm">
+    <topic label="Boolean values" href="html/00000890.htm" />
+    <topic label="Date-Time values" href="html/00000891.htm">
+     <topic label="Date and time formats" href="html/00000892.htm" />
+     <topic label="Locale-specific dates and times" href="html/00000893.htm" />
+     <topic label="How ColdFusion stores dates and times" href="html/00000894.htm" />
+    </topic>
+    <topic label="Binary data type and binary encoding" href="html/00000895.htm" />
+    <topic label="Complex data types" href="html/00000896.htm">
+     <topic label="Arrays" href="html/00000897.htm" />
+     <topic label="Structures" href="html/00000898.htm" />
+     <topic label="Queries" href="html/00000899.htm" />
+     <topic label="Working with structures and queries" href="html/00000900.htm" />
+    </topic>
+   </topic>
+   <topic label="Using periods in variable references" href="html/00000901.htm">
+    <topic label="Understanding variables and periods" href="html/00000902.htm">
+     <topic label="Getting a variable" href="html/00000903.htm" />
+     <topic label="Setting a variable" href="html/00000904.htm" />
+    </topic>
+    <topic label="Creating variables with periods" href="html/00000905.htm" />
+   </topic>
+   <topic label="Data type conversion" href="html/00000906.htm">
+    <topic label="Operation-driven evaluation" href="html/00000907.htm" />
+    <topic label="Conversion between types" href="html/00000908.htm" />
+    <topic label="Evaluation and type conversion issues" href="html/00000909.htm" />
+    <topic label="Examples of type conversion in expression evaluation" href="html/00000910.htm" />
+   </topic>
+   <topic label="About scopes" href="html/00000911.htm">
+    <topic label="Scope types" href="html/00000912.htm" />
+    <topic label="Creating and using variables in scopes" href="html/00000913.htm" />
+    <topic label="Using scopes" href="html/00000914.htm" />
+   </topic>
+   <topic label="Ensuring variable existence" href="html/00000915.htm">
+    <topic label="Testing for a variable's existence" href="html/00000916.htm" />
+    <topic label="Using the cfparam tag" href="html/00000917.htm">
+     <topic label="Example: testing for variables" href="html/00000918.htm" />
+     <topic label="Example: setting default values" href="html/00000919.htm" />
+    </topic>
+   </topic>
+   <topic label="Validating data" href="html/00000920.htm" />
+   <topic label="Passing variables to custom tags and UDFs" href="html/00000921.htm">
+    <topic label="Passing variables to CFML tags and UDFs" href="html/00000922.htm" />
+    <topic label="Passing variables to CFX tags" href="html/00000923.htm" />
+   </topic>
+  </topic>
+  <topic label="Using Expressions and Number Signs" href="html/00000924.htm">
+   <topic label="Expressions" href="html/00000925.htm">
+    <topic label="Operator types" href="html/00000926.htm">
+     <topic label="Boolean operators" href="html/00000927.htm" />
+     <topic label="Decision operators" href="html/00000928.htm" />
+     <topic label="String operators" href="html/00000929.htm" />
+    </topic>
+    <topic label="Operator precedence and evaluation ordering" href="html/00000930.htm" />
+    <topic label="Using functions as operators" href="html/00000931.htm" />
+   </topic>
+   <topic label="Using number signs" href="html/00000932.htm">
+    <topic label="Using number signs in ColdFusion tag attribute values" href="html/00000933.htm" />
+    <topic label="Using number signs in tag bodies" href="html/00000934.htm" />
+    <topic label="Using number signs in strings" href="html/00000935.htm" />
+    <topic label="Nested number signs" href="html/00000936.htm" />
+    <topic label="Using number signs in expressions" href="html/00000937.htm" />
+   </topic>
+   <topic label="Dynamic expressions and dynamic variables" href="html/00000938.htm">
+    <topic label="About dynamic variables" href="html/00000939.htm" />
+    <topic label="About dynamic expressions and dynamic evaluation" href="html/00000940.htm" />
+    <topic label="Dynamic variable naming without dynamic evaluation" href="html/00000941.htm" />
+    <topic label="Using dynamic evaluation" href="html/00000942.htm">
+     <topic label="ColdFusion dynamic evaluation functions" href="html/00000943.htm" />
+     <topic label="Function argument evaluation considerations" href="html/00000944.htm" />
+     <topic label="About the Evaluate function" href="html/00000945.htm" />
+     <topic label="Avoiding the Evaluate function" href="html/00000946.htm" />
+     <topic label="SetVariable function considerations" href="html/00000947.htm" />
+    </topic>
+    <topic label="Using the IIF function" href="html/00000948.htm" />
+    <topic label="Example: a dynamic shopping cart" href="html/00000949.htm" />
+   </topic>
+  </topic>
+  <topic label="Using Arrays and Structures" href="html/00000950.htm">
+   <topic label="About arrays" href="html/00000951.htm" />
+   <topic label="Basic array techniques" href="html/00000952.htm">
+    <topic label="Adding elements to an array" href="html/00000953.htm" />
+    <topic label="Deleting elements from an array" href="html/00000954.htm" />
+    <topic label="Copying arrays" href="html/00000955.htm" />
+   </topic>
+   <topic label="Populating arrays with data" href="html/00000956.htm">
+    <topic label="Populating an array from a query" href="html/00000957.htm" />
+   </topic>
+   <topic label="Array functions" href="html/00000958.htm" />
+   <topic label="About structures" href="html/00000959.htm">
+    <topic label="Referencing complex structures" href="html/00000960.htm" />
+   </topic>
+   <topic label="Creating and using structures" href="html/00000961.htm">
+    <topic label="Getting information about structures and keys" href="html/00000962.htm" />
+    <topic label="Copying structures" href="html/00000963.htm" />
+    <topic label="Deleting structure elements and structures" href="html/00000964.htm" />
+    <topic label="Looping through structures" href="html/00000965.htm" />
+   </topic>
+   <topic label="Structure examples" href="html/00000966.htm" />
+   <topic label="Structure functions" href="html/00000967.htm" />
+  </topic>
+  <topic label="Extending ColdFusion Pages with CFML Scripting" href="html/00000968.htm">
+   <topic label="About CFScript" href="html/00000969.htm" />
+   <topic label="The CFScript language" href="html/00000970.htm" />
+   <topic label="Using CFScript statements" href="html/00000971.htm">
+    <topic label="Using looping statements" href="html/00000972.htm">
+     <topic label="Using for loops" href="html/00000973.htm" />
+     <topic label="Using while loops" href="html/00000974.htm" />
+     <topic label="Using do-while loops" href="html/00000975.htm" />
+     <topic label="Using for-in loops" href="html/00000976.htm" />
+     <topic label="Using continue and break statements" href="html/00000977.htm" />
+    </topic>
+   </topic>
+   <topic label="Handling exceptions" href="html/00000978.htm" />
+   <topic label="CFScript example" href="html/00000979.htm" />
+  </topic>
+  <topic label="Using Regular Expressions in Functions" href="html/00000980.htm">
+   <topic label="About regular expressions" href="html/00000981.htm" />
+   <topic label="Regular expression syntax" href="html/00000982.htm">
+    <topic label="Finding repeating characters" href="html/00000983.htm" />
+    <topic label="Case sensitivity in regular expressions" href="html/00000984.htm" />
+    <topic label="Using subexpressions" href="html/00000985.htm" />
+    <topic label="Using special characters" href="html/00000986.htm" />
+    <topic label="Using escape sequences" href="html/00000987.htm" />
+    <topic label="Using character classes" href="html/00000988.htm" />
+   </topic>
+   <topic label="Using backreferences" href="html/00000989.htm" />
+   <topic label="Returning matched subexpressions" href="html/00000990.htm" />
+   <topic label="Regular expression examples" href="html/00000991.htm" />
+   <topic label="Types of regular expression technologies" href="html/00000992.htm" />
+  </topic>
+  <topic label="Creating ColdFusion Elements" href="html/00000993.htm">
+   <topic label="About CFML elements you create" href="html/00000994.htm" />
+   <topic label="Including pages with the cfinclude tag" href="html/00000995.htm" />
+   <topic label="About user-defined functions" href="html/00000996.htm" />
+   <topic label="Using ColdFusion components" href="html/00000997.htm" />
+   <topic label="Using custom CFML tags" href="html/00000998.htm" />
+   <topic label="Using CFX tags" href="html/00000999.htm" />
+   <topic label="Selecting among ColdFusion code reuse methods" href="html/00001000.htm" />
+  </topic>
+  <topic label="Writing and Calling User-Defined Functions" href="html/00001001.htm">
+   <topic label="About user-defined functions" href="html/00001002.htm" />
+   <topic label="Creating user-defined functions" href="html/00001003.htm">
+    <topic label="About creating functions using tags" href="html/00001004.htm" />
+    <topic label="Defining functions using the cffunction tag" href="html/00001005.htm" />
+    <topic label="Rules for function definitions" href="html/00001006.htm" />
+   </topic>
+   <topic label="Calling user-defined functions" href="html/00001007.htm" />
+   <topic label="Working with arguments and variables in functions" href="html/00001008.htm">
+    <topic label="Function-only variables" href="html/00001009.htm" />
+    <topic label="Referencing caller variables" href="html/00001010.htm" />
+    <topic label="Using arguments" href="html/00001011.htm" />
+   </topic>
+   <topic label="Handling errors in UDFs" href="html/00001012.htm">
+    <topic label="Using exceptions" href="html/00001013.htm" />
+   </topic>
+   <topic label="A user-defined function example" href="html/00001014.htm" />
+   <topic label="Using UDFs effectively" href="html/00001015.htm">
+    <topic label="Specifying the scope of a function" href="html/00001016.htm" />
+    <topic label="Using function names as function arguments" href="html/00001017.htm" />
+    <topic label="Handling query results using UDFs" href="html/00001018.htm" />
+    <topic label="Identifying and checking for UDFs" href="html/00001019.htm" />
+    <topic label="Using the Evaluate function" href="html/00001020.htm" />
+    <topic label="Using recursion" href="html/00001021.htm" />
+   </topic>
+  </topic>
+  <topic label="Building and Using ColdFusion Components" href="html/00001022.htm">
+   <topic label="About ColdFusion components" href="html/00001023.htm">
+    <topic label="CFCs and object-oriented programming" href="html/00001024.htm" />
+    <topic label="When to use CFCs" href="html/00001025.htm" />
+   </topic>
+   <topic label="Creating ColdFusion components" href="html/00001026.htm">
+    <topic label="Defining component methods" href="html/00001027.htm" />
+    <topic label="Defining CFCs with related methods" href="html/00001028.htm" />
+    <topic label="Putting executable code in a separate file" href="html/00001029.htm">
+     <topic label="Initializing instance data" href="html/00001030.htm" />
+    </topic>
+    <topic label="Defining and using method parameters" href="html/00001031.htm" />
+    <topic label="Providing results" href="html/00001032.htm">
+     <topic label="Displaying output" href="html/00001033.htm" />
+     <topic label="Returning a results variable" href="html/00001034.htm" />
+     <topic label="Documenting CFCs" href="html/00001035.htm" />
+     <topic label="Saving and naming ColdFusion components" href="html/00001036.htm" />
+    </topic>
+   </topic>
+   <topic label="Using ColdFusion components" href="html/00001037.htm">
+    <topic label="Tags for using CFCs" href="html/00001038.htm" />
+    <topic label="CFC invocation techniques" href="html/00001039.htm" />
+    <topic label="Instantiating CFCs" href="html/00001040.htm" />
+    <topic label="Invoking CFC methods with the cfinvoke tag" href="html/00001041.htm">
+     <topic label="Invoking component methods transiently using the cfinvoke tag" href="html/00001042.htm" />
+     <topic label="Using the cfinvoke tag within the CFC definition" href="html/00001043.htm" />
+     <topic label="Invoking methods using dynamic method names" href="html/00001044.htm" />
+    </topic>
+    <topic label="Using components directly in CFScript and CFML" href="html/00001045.htm" />
+    <topic label="Invoking CFC methods using forms and URLs" href="html/00001046.htm">
+     <topic label="Invoking component methods using a form" href="html/00001047.htm" />
+    </topic>
+    <topic label="Accessing CFCs from outside ColdFusion and basic HTML" href="html/00001048.htm" />
+    <topic label="Specifying the CFC location" href="html/00001049.htm" />
+   </topic>
+   <topic label="Passing parameters to methods" href="html/00001050.htm">
+    <topic label="Passing parameters to methods using the cfinvoke tag" href="html/00001051.htm" />
+    <topic label="Passing parameters in direct method invocations" href="html/00001052.htm" />
+    <topic label="Passing parameters in a URL" href="html/00001053.htm" />
+   </topic>
+   <topic label="CFC variables and scope" href="html/00001054.htm">
+    <topic label="The Variables scope" href="html/00001055.htm" />
+    <topic label="The Arguments scope" href="html/00001056.htm" />
+    <topic label="Other variable scopes" href="html/00001057.htm" />
+    <topic label="Function local variables" href="html/00001058.htm" />
+   </topic>
+   <topic label="Using CFCs effectively" href="html/00001060.htm">
+    <topic label="Using component packages" href="html/00001061.htm" />
+    <topic label="Using CFCs in persistent scopes" href="html/00001062.htm" />
+    <topic label="Building secure ColdFusion components" href="html/00001063.htm" />
+    <topic label="Using introspection to get information about components" href="html/00001064.htm">
+     <topic label="Using the ColdFusion component browser" href="html/00001065.htm" />
+     <topic label="Using the Dreamweaver MX 2004 component panel" href="html/00001066.htm" />
+     <topic label="Using the GetMetaData function" href="html/00001067.htm" />
+    </topic>
+   </topic>
+   <topic label="ColdFusion component example" href="html/00001068.htm" />
+  </topic>
+  <topic label="Creating and Using Custom CFML Tags" href="html/00001069.htm">
+   <topic label="Creating custom tags" href="html/00001070.htm">
+    <topic label="Creating and calling custom tags" href="html/00001071.htm" />
+    <topic label="Securing custom tags" href="html/00001072.htm" />
+    <topic label="Accessing existing custom tags" href="html/00001073.htm" />
+   </topic>
+   <topic label="Passing data to custom tags" href="html/00001074.htm">
+    <topic label="Using tag attributes summary" href="html/00001075.htm" />
+    <topic label="Custom tag example with attributes" href="html/00001076.htm" />
+    <topic label="Passing custom tag attributes using CFML structures" href="html/00001077.htm" />
+   </topic>
+   <topic label="Managing custom tags" href="html/00001078.htm" />
+   <topic label="Executing custom tags" href="html/00001079.htm">
+    <topic label="Handling end tags" href="html/00001080.htm" />
+    <topic label="Processing body text" href="html/00001081.htm" />
+    <topic label="Terminating tag execution" href="html/00001082.htm" />
+   </topic>
+   <topic label="Nesting custom tags" href="html/00001083.htm">
+    <topic label="Passing data between nested custom tags" href="html/00001084.htm" />
+    <topic label="Variable scopes and special variables" href="html/00001085.htm" />
+    <topic label="High-level data exchange" href="html/00001086.htm" />
+   </topic>
+  </topic>
+  <topic label="Building Custom CFXAPI Tags" href="html/00001087.htm">
+   <topic label="What are CFX tags?" href="html/00001088.htm" />
+   <topic label="Before you begin developing CFX tags in Java" href="html/00001089.htm">
+    <topic label="Setting up your development environment to develop CFX tags in Java" href="html/00001090.htm" />
+    <topic label="Customizing and configuring Java" href="html/00001091.htm" />
+   </topic>
+   <topic label="Writing a Java CFX tag" href="html/00001092.htm">
+    <topic label="Calling the CFX tag from a ColdFusion page" href="html/00001093.htm" />
+    <topic label="Processing requests" href="html/00001094.htm" />
+    <topic label="Life cycle of Java CFX tags" href="html/00001095.htm" />
+   </topic>
+   <topic label="ZipBrowser example" href="html/00001096.htm" />
+   <topic label="Approaches to debugging Java CFX tags" href="html/00001097.htm">
+    <topic label="Outputting debugging information" href="html/00001098.htm" />
+    <topic label="Debugging in a Java IDE" href="html/00001099.htm" />
+    <topic label="Using the debugging classes" href="html/00001100.htm" />
+   </topic>
+   <topic label="Developing CFX tags in C++" href="html/00001101.htm" />
+  </topic>
+  <topic label="Designing and Optimizing a ColdFusion Application" href="html/00001102.htm">
+   <topic label="About applications" href="html/00001103.htm" />
+   <topic label="Elements of a ColdFusion application" href="html/00001104.htm">
+    <topic label="The application framework" href="html/00001105.htm" />
+    <topic label="Reusable application elements" href="html/00001106.htm" />
+    <topic label="Shared variables" href="html/00001107.htm" />
+    <topic label="Application events and the Application.cfc file." href="html/00001108.htm" />
+    <topic label="Other application-level settings and functions" href="html/00001109.htm" />
+    <topic label="Application security and user identification" href="html/00001110.htm" />
+   </topic>
+   <topic label="Structuring an application" href="html/00001111.htm" />
+   <topic label="Defining the application and its event handlers in Application.cfc" href="html/00001112.htm">
+    <topic label="Defining application-level settings and variables" href="html/00001113.htm">
+     <topic label="Naming the application" href="html/00001114.htm" />
+     <topic label="Setting application properties" href="html/00001115.htm" />
+     <topic label="Setting page processing options" href="html/00001116.htm" />
+    </topic>
+    <topic label="Using application event handlers" href="html/00001117.htm" />
+    <topic label="Managing the application with Application.cfc" href="html/00001118.htm" />
+    <topic label="Managing sessions in Application.cfc" href="html/00001119.htm" />
+    <topic label="Managing requests in Application.cfc" href="html/00001120.htm" />
+    <topic label="Handling errors in Application.cfc" href="html/00001121.htm" />
+    <topic label="Example: a complete Application.cfc" href="html/00001122.htm" />
+   </topic>
+   <topic label="Migrating from Application.cfm to Application.cfc" href="html/00001123.htm" />
+   <topic label="Using an Application.cfm page" href="html/00001124.htm" />
+   <topic label="Optimizing ColdFusion applications" href="html/00001125.htm">
+    <topic label="Caching ColdFusion pages that change infrequently" href="html/00001126.htm" />
+    <topic label="Caching parts of ColdFusion pages" href="html/00001127.htm" />
+    <topic label="Optimizing database use" href="html/00001128.htm" />
+    <topic label="Providing visual feedback to the user" href="html/00001129.htm" />
+   </topic>
+  </topic>
+  <topic label="Handling Errors" href="html/00001130.htm">
+   <topic label="About error handling in ColdFusion" href="html/00001131.htm" />
+   <topic label="Understanding errors" href="html/00001132.htm">
+    <topic label="ColdFusion error types" href="html/00001133.htm" />
+    <topic label="About ColdFusion exceptions" href="html/00001134.htm" />
+    <topic label="How ColdFusion handles errors" href="html/00001135.htm" />
+   </topic>
+   <topic label="Error messages and the standard error format" href="html/00001136.htm" />
+   <topic label="Determining error-handling strategies" href="html/00001137.htm" />
+   <topic label="Specifying custom error messages with the cferror tag" href="html/00001138.htm" />
+   <topic label="Logging errors with the cflog tag" href="html/00001139.htm" />
+   <topic label="Handling runtime exceptions with ColdFusion tags" href="html/00001140.htm">
+    <topic label="Exception-handling tags" href="html/00001141.htm" />
+    <topic label="Using cftry and cfcatch tags" href="html/00001142.htm" />
+    <topic label="Using the cftry tag: an example" href="html/00001143.htm" />
+    <topic label="Using the cfthrow tag" href="html/00001144.htm" />
+    <topic label="Using the cfrethrow tag" href="html/00001145.htm" />
+    <topic label="Example: using nested tags, cfthrow, and cfrethrow" href="html/00001146.htm" />
+   </topic>
+  </topic>
+  <topic label="Using Persistent Data and Locking" href="html/00001147.htm">
+   <topic label="About persistent scope variables" href="html/00001148.htm" />
+   <topic label="Managing the client state" href="html/00001149.htm">
+    <topic label="About client identifiers" href="html/00001150.htm" />
+    <topic label="Using client and session variables without cookies" href="html/00001151.htm" />
+    <topic label="Client identifiers and security" href="html/00001152.htm" />
+    <topic label="Managing client identity information in a clustered environment" href="html/00001153.htm" />
+   </topic>
+   <topic label="Configuring and using client variables" href="html/00001154.htm">
+    <topic label="Using client variables" href="html/00001155.htm" />
+   </topic>
+   <topic label="Configuring and using session variables" href="html/00001156.htm">
+    <topic label="Configuring and enabling session variables" href="html/00001157.htm" />
+    <topic label="Storing session data in session variables" href="html/00001158.htm" />
+    <topic label="Standard session variables" href="html/00001159.htm" />
+    <topic label="Getting a list of session variables" href="html/00001160.htm" />
+    <topic label="Creating and deleting session variables" href="html/00001161.htm" />
+    <topic label="Accessing and changing session variables" href="html/00001162.htm" />
+    <topic label="Ending a session" href="html/00001163.htm" />
+   </topic>
+   <topic label="Configuring and using application variables" href="html/00001164.htm" />
+   <topic label="Using server variables" href="html/00001165.htm" />
+   <topic label="Locking code with cflock" href="html/00001166.htm">
+    <topic label="Sample locking scenarios" href="html/00001167.htm" />
+    <topic label="Using the cflock tag with write-once variables" href="html/00001168.htm" />
+    <topic label="Using the cflock tag" href="html/00001169.htm" />
+    <topic label="Considering lock granularity" href="html/00001170.htm" />
+    <topic label="Nesting locks and avoiding deadlocks" href="html/00001171.htm" />
+   </topic>
+   <topic label="Examples of cflock" href="html/00001172.htm">
+    <topic label="Example of synchronizing access to a file system" href="html/00001173.htm" />
+    <topic label="Example of protecting ColdFusion extensions" href="html/00001174.htm" />
+   </topic>
+  </topic>
+  <topic label="Securing Applications" href="html/00001175.htm">
+   <topic label="ColdFusion security features" href="html/00001176.htm" />
+   <topic label="About resource and sandbox security" href="html/00001177.htm" />
+   <topic label="About user security" href="html/00001178.htm" />
+   <topic label="Using ColdFusion security tags and functions" href="html/00001179.htm">
+    <topic label="Using the cflogin tag" href="html/00001180.htm" />
+    <topic label="Getting the user ID and password" href="html/00001181.htm" />
+    <topic label="Logging out users" href="html/00001182.htm" />
+   </topic>
+   <topic label="Security scenarios" href="html/00001183.htm" />
+   <topic label="Implementing user security" href="html/00001184.htm">
+    <topic label="Using the Dreamweaver Login Wizard" href="html/00001185.htm">
+     <topic label="Structure code generated by the Login Wizard" href="html/00001186.htm" />
+     <topic label="Modifying the login code for your application" href="html/00001187.htm" />
+     <topic label="Example: Application.cfc" href="html/00001188.htm" />
+     <topic label="Example: securitytest.cfm" href="html/00001189.htm" />
+    </topic>
+    <topic label="Application-based user security example" href="html/00001190.htm">
+     <topic label="Example: Application.cfc" href="html/00001191.htm" />
+     <topic label="Example: loginform.cfm" href="html/00001192.htm" />
+     <topic label="Example: securitytest.cfm" href="html/00001193.htm" />
+    </topic>
+    <topic label="Using an LDAP directory for security information" href="html/00001194.htm" />
+   </topic>
+  </topic>
+  <topic label="Developing Globalized Applications" href="html/00001195.htm">
+   <topic label="Introduction to globalization" href="html/00001196.htm">
+    <topic label="Defining globalization" href="html/00001197.htm" />
+    <topic label="Importance of globalization in ColdFusion applications" href="html/00001198.htm" />
+    <topic label="How ColdFusion MX supports globalization" href="html/00001199.htm" />
+    <topic label="Character sets, character encodings, and locales" href="html/00001200.htm" />
+   </topic>
+   <topic label="About character encodings" href="html/00001201.htm" />
+   <topic label="Locales" href="html/00001202.htm" />
+   <topic label="Processing a request in ColdFusion" href="html/00001203.htm">
+    <topic label="Determining the character encoding of a ColdFusion page" href="html/00001204.htm" />
+    <topic label="Determining the page encoding of server output" href="html/00001205.htm" />
+   </topic>
+   <topic label="Tags and functions for globalizing" href="html/00001206.htm" />
+   <topic label="Handling data in ColdFusion MX" href="html/00001207.htm" />
+  </topic>
+  <topic label="Debugging and Troubleshooting Applications" href="html/00001208.htm">
+   <topic label="Configuring debugging in the ColdFusion MX Administrator" href="html/00001209.htm" />
+   <topic label="Using debugging information from browser pages" href="html/00001210.htm">
+    <topic label="General debugging information" href="html/00001211.htm" />
+    <topic label="Execution Time" href="html/00001212.htm" />
+    <topic label="Database Activity" href="html/00001213.htm" />
+    <topic label="Exceptions" href="html/00001214.htm" />
+    <topic label="Trace points" href="html/00001215.htm" />
+    <topic label="Scope variables" href="html/00001216.htm" />
+    <topic label="Using the dockable.cfm output format" href="html/00001217.htm" />
+   </topic>
+   <topic label="Controlling debugging information in CFML" href="html/00001218.htm">
+    <topic label="Controlling debugging output with the cfsetting tag" href="html/00001219.htm" />
+    <topic label="Using the IsDebugMode function to run code selectively" href="html/00001220.htm" />
+   </topic>
+   <topic label="Using the cftrace tag to trace execution" href="html/00001221.htm">
+    <topic label="Using tracing" href="html/00001222.htm" />
+    <topic label="Calling the cftrace tag" href="html/00001223.htm" />
+   </topic>
+   <topic label="Using the cftimer tag to time blocks of code" href="html/00001224.htm" />
+   <topic label="Using the Code Compatibility Analyzer" href="html/00001225.htm" />
+   <topic label="Troubleshooting common problems" href="html/00001226.htm">
+    <topic label="CFML syntax errors" href="html/00001227.htm" />
+    <topic label="Data source access and queries" href="html/00001228.htm" />
+    <topic label="HTTP/URL" href="html/00001229.htm" />
+   </topic>
+  </topic>
+  <topic label="Introduction to Databases and SQL" href="html/00001230.htm">
+   <topic label="What is a database?" href="html/00001231.htm">
+    <topic label="Using multiple database tables" href="html/00001232.htm" />
+    <topic label="Database permissions" href="html/00001233.htm" />
+    <topic label="Commits, rollbacks, and transactions" href="html/00001234.htm" />
+    <topic label="Database design guidelines" href="html/00001235.htm" />
+   </topic>
+   <topic label="Using SQL" href="html/00001236.htm">
+    <topic label="SQL example" href="html/00001237.htm" />
+    <topic label="Basic SQL syntax elements" href="html/00001238.htm" />
+    <topic label="Reading data from a database" href="html/00001239.htm">
+     <topic label="Results of a SELECT statement" href="html/00001240.htm" />
+     <topic label="Filtering results" href="html/00001241.htm" />
+     <topic label="Sorting results" href="html/00001242.htm" />
+     <topic label="Returning a subset of columns" href="html/00001243.htm" />
+     <topic label="Using column aliases" href="html/00001244.htm" />
+     <topic label="Accessing multiple tables" href="html/00001245.htm" />
+    </topic>
+    <topic label="Modifying a database" href="html/00001246.htm">
+     <topic label="Inserting data into a database" href="html/00001247.htm" />
+     <topic label="Updating data in a database" href="html/00001248.htm" />
+     <topic label="Deleting data from a database" href="html/00001249.htm" />
+     <topic label="Updating multiple tables" href="html/00001250.htm" />
+    </topic>
+   </topic>
+   <topic label="Writing queries using an editor" href="html/00001251.htm" />
+  </topic>
+  <topic label="Accessing and Retrieving Data" href="html/00001252.htm">
+   <topic label="Working with dynamic data" href="html/00001253.htm" />
+   <topic label="Retrieving data" href="html/00001254.htm" />
+   <topic label="Outputting query data" href="html/00001255.htm" />
+   <topic label="Getting information about query results" href="html/00001256.htm" />
+   <topic label="Enhancing security with cfqueryparam" href="html/00001257.htm" />
+  </topic>
+  <topic label="Updating Your Database" href="html/00001258.htm">
+   <topic label="About updating your database" href="html/00001259.htm" />
+   <topic label="Inserting data" href="html/00001260.htm" />
+   <topic label="Updating data" href="html/00001261.htm" />
+   <topic label="Deleting data" href="html/00001262.htm" />
+  </topic>
+  <topic label="Using Query of Queries" href="html/00001263.htm">
+   <topic label="About record sets" href="html/00001264.htm" />
+   <topic label="About Query of Queries" href="html/00001265.htm" />
+   <topic label="Query of Queries user guide" href="html/00001266.htm">
+    <topic label="Using joins" href="html/00001267.htm" />
+    <topic label="Using unions" href="html/00001268.htm" />
+    <topic label="Using conditional operators" href="html/00001269.htm" />
+    <topic label="Managing data types for columns" href="html/00001270.htm" />
+    <topic label="Using the CAST function" href="html/00001271.htm" />
+    <topic label="Using aggregate functions" href="html/00001272.htm" />
+    <topic label="Using group by and having expressions" href="html/00001273.htm" />
+    <topic label="Using ORDER BY clauses" href="html/00001274.htm" />
+    <topic label="Using aliases" href="html/00001275.htm" />
+    <topic label="Handling null values" href="html/00001276.htm" />
+    <topic label="Concatenating strings" href="html/00001277.htm" />
+    <topic label="Escaping reserved keywords" href="html/00001278.htm" />
+    <topic label="Using Queries of Queries with dates" href="html/00001279.htm" />
+    <topic label="Understanding Query of Queries performance" href="html/00001280.htm" />
+    <topic label="Understanding Query of Queries processing" href="html/00001281.htm" />
+   </topic>
+  </topic>
+  <topic label="Managing LDAP Directories" href="html/00001282.htm">
+   <topic label="About LDAP" href="html/00001283.htm" />
+   <topic label="The LDAP information structure" href="html/00001284.htm" />
+   <topic label="Using LDAP with ColdFusion" href="html/00001285.htm" />
+   <topic label="Querying an LDAP directory" href="html/00001286.htm">
+    <topic label="Search filter" href="html/00001287.htm" />
+    <topic label="Getting all the attributes of an entry" href="html/00001288.htm" />
+    <topic label="Example: querying an LDAP directory" href="html/00001289.htm" />
+   </topic>
+   <topic label="Updating an LDAP directory" href="html/00001290.htm">
+    <topic label="Adding a directory entry" href="html/00001291.htm" />
+    <topic label="Deleting a directory entry" href="html/00001292.htm" />
+    <topic label="Updating a directory entry" href="html/00001293.htm" />
+    <topic label="Adding and deleting attributes of a directory entry" href="html/00001294.htm" />
+    <topic label="Changing a directory entry's DN" href="html/00001295.htm" />
+   </topic>
+   <topic label="Advanced topics" href="html/00001296.htm">
+    <topic label="Using cfldap output" href="html/00001297.htm" />
+    <topic label="Viewing a directory schema" href="html/00001298.htm" />
+    <topic label="Referrals" href="html/00001299.htm" />
+    <topic label="Managing LDAP security" href="html/00001300.htm" />
+   </topic>
+  </topic>
+  <topic label="Building a Search Interface" href="html/00001301.htm">
+   <topic label="About Verity" href="html/00001302.htm">
+    <topic label="Using Verity with ColdFusion" href="html/00001303.htm" />
+    <topic label="Advantages of using Verity" href="html/00001304.htm" />
+    <topic label="Supported file types" href="html/00001305.htm" />
+    <topic label="Specifying a language" href="html/00001306.htm" />
+   </topic>
+   <topic label="Creating a search tool for ColdFusion applications" href="html/00001307.htm" />
+   <topic label="Creating a search page" href="html/00001308.htm" />
+   <topic label="Enhancing search results" href="html/00001309.htm">
+    <topic label="Providing alternative spelling suggestions" href="html/00001310.htm" />
+    <topic label="Narrowing searches using categories" href="html/00001311.htm">
+     <topic label="Creating collections with support for categories" href="html/00001312.htm" />
+     <topic label="Indexing collections that contain categories" href="html/00001313.htm" />
+     <topic label="Searching collections that contain categories" href="html/00001314.htm" />
+     <topic label="Retrieving information about the categories contained in a collection" href="html/00001315.htm" />
+    </topic>
+   </topic>
+   <topic label="Working with data returned from a query" href="html/00001316.htm">
+    <topic label="Indexing data returned by a query" href="html/00001317.htm" />
+    <topic label="Indexing a file returned using a query" href="html/00001318.htm" />
+    <topic label="Indexing a path returned using a query" href="html/00001319.htm" />
+    <topic label="Indexing query results obtained from an LDAP directory" href="html/00001320.htm" />
+    <topic label="Indexing cfpop query results" href="html/00001321.htm" />
+   </topic>
+  </topic>
+  <topic label="Using Verity Search Expressions" href="html/00001322.htm">
+   <topic label="About Verity query types" href="html/00001323.htm" />
+   <topic label="Using simple queries" href="html/00001324.htm" />
+   <topic label="Using explicit queries" href="html/00001325.htm" />
+   <topic label="Using natural queries" href="html/00001326.htm" />
+   <topic label="Using Internet queries" href="html/00001327.htm" />
+   <topic label="Composing search expressions" href="html/00001328.htm" />
+   <topic label="Refining your searches with zones and fields" href="html/00001329.htm" />
+  </topic>
+  <topic label="Introduction to Retrieving and Formatting Data" href="html/00001330.htm">
+   <topic label="Using forms in ColdFusion MX" href="html/00001331.htm">
+    <topic label="ColdFusion Form tag features" href="html/00001332.htm" />
+    <topic label="Creating a basic form" href="html/00001333.htm" />
+    <topic label="Forms guidelines" href="html/00001334.htm" />
+   </topic>
+   <topic label="Working with action pages" href="html/00001335.htm">
+    <topic label="Using form data to generate SQL statements" href="html/00001336.htm" />
+    <topic label="Creating action pages" href="html/00001337.htm" />
+    <topic label="Testing for a variable's existence" href="html/00001338.htm" />
+    <topic label="Requiring users to enter values in form fields" href="html/00001339.htm" />
+    <topic label="Form variable notes and considerations" href="html/00001340.htm" />
+   </topic>
+   <topic label="Working with queries and data" href="html/00001341.htm">
+    <topic label="Formatting individual data items" href="html/00001342.htm" />
+    <topic label="Building flexible search interfaces" href="html/00001343.htm" />
+   </topic>
+   <topic label="Returning results to the user" href="html/00001344.htm" />
+   <topic label="Dynamically populating list boxes" href="html/00001345.htm" />
+   <topic label="Creating dynamic check boxes and multiple-selection list boxes" href="html/00001346.htm">
+    <topic label="Check boxes" href="html/00001347.htm" />
+    <topic label="Multiple selection lists" href="html/00001348.htm" />
+   </topic>
+  </topic>
+  <topic label="Building Dynamic Forms with cfform Tags" href="html/00001349.htm">
+   <topic label="Creating custom forms with the cfform tag" href="html/00001350.htm">
+    <topic label="The cfform controls" href="html/00001351.htm" />
+    <topic label="Preserving input data with the preservedata attribute" href="html/00001352.htm" />
+    <topic label="Browser considerations" href="html/00001353.htm" />
+   </topic>
+   <topic label="Building tree controls with the cftree tag" href="html/00001354.htm">
+    <topic label="Grouping output from a query" href="html/00001355.htm" />
+    <topic label="The cftree form variables" href="html/00001356.htm" />
+    <topic label="Input validation" href="html/00001357.htm" />
+    <topic label="Structuring tree controls" href="html/00001358.htm" />
+    <topic label="Image names in a cftree tag" href="html/00001359.htm" />
+    <topic label="Embedding URLs in a cftree tag" href="html/00001360.htm" />
+    <topic label="Specifying the tree item in the URL" href="html/00001361.htm" />
+   </topic>
+   <topic label="Building drop-down list boxes" href="html/00001362.htm" />
+   <topic label="Building slider bar controls" href="html/00001363.htm" />
+   <topic label="Creating data grids with the cfgrid tag" href="html/00001364.htm">
+    <topic label="Working with a data grid and entering data" href="html/00001365.htm" />
+    <topic label="Creating an editable grid" href="html/00001366.htm">
+     <topic label="Controlling cell contents" href="html/00001367.htm" />
+     <topic label="How user edits are returned" href="html/00001368.htm" />
+     <topic label="Example: editing data in a grid" href="html/00001369.htm" />
+     <topic label="Updating the database with the cfgridupdate tag" href="html/00001370.htm" />
+     <topic label="Updating the database with the cfquery tag" href="html/00001371.htm" />
+    </topic>
+   </topic>
+   <topic label="Embedding Java applets" href="html/00001372.htm">
+    <topic label="Registering a Java applet" href="html/00001373.htm" />
+    <topic label="Using the cfapplet tag to embed an applet" href="html/00001374.htm" />
+    <topic label="Handling form variables from an applet" href="html/00001375.htm" />
+   </topic>
+  </topic>
+  <topic label="Validating Data" href="html/00001376.htm">
+   <topic label="About ColdFusion MX validation" href="html/00001377.htm">
+    <topic label="Validation techniques" href="html/00001378.htm" />
+    <topic label="Selecting a validation technique" href="html/00001379.htm" />
+    <topic label="Data validation types" href="html/00001380.htm" />
+   </topic>
+   <topic label="Validating form fields" href="html/00001381.htm" />
+   <topic label="Handling invalid data" href="html/00001382.htm" />
+   <topic label="Masking form input values" href="html/00001383.htm" />
+   <topic label="Validating form data with regular expressions" href="html/00001384.htm" />
+   <topic label="Validating form data using hidden fields" href="html/00001385.htm" />
+   <topic label="Validating form input and handling errors with JavaScript" href="html/00001386.htm" />
+   <topic label="Validating data with the IsValid function and the cfparam tag" href="html/00001387.htm" />
+  </topic>
+  <topic label="Creating Forms in Macromedia Flash" href="html/00001388.htm">
+   <topic label="About Flash forms" href="html/00001389.htm" />
+   <topic label="Building Flash forms" href="html/00001390.htm">
+    <topic label="Adding text, images, rules, and space with the cfformitem tag" href="html/00001391.htm" />
+    <topic label="Using the cfformgroup tag to structure forms" href="html/00001392.htm" />
+    <topic label="Controlling sizes in Flash forms" href="html/00001393.htm" />
+    <topic label="Repeating Flash form elements based on query data" href="html/00001394.htm" />
+    <topic label="Creating complex forms with accordion and tab navigator containers" href="html/00001395.htm" />
+   </topic>
+   <topic label="Binding data in Flash forms" href="html/00001396.htm" />
+   <topic label="Setting styles and skins in Flash forms" href="html/00001397.htm">
+    <topic label="Controlling form appearance with Flash skins" href="html/00001398.htm" />
+    <topic label="About Flash form styles" href="html/00001399.htm" />
+    <topic label="Flash form style specification syntax" href="html/00001400.htm" />
+    <topic label="About Flash form style value formats" href="html/00001401.htm" />
+    <topic label="About Flash form style applicability and inheritance" href="html/00001402.htm" />
+    <topic label="Example: applying styles to a Flash form" href="html/00001403.htm" />
+   </topic>
+   <topic label="Using ActionScript in Flash forms" href="html/00001404.htm">
+    <topic label="Using ActionScript code in CFML" href="html/00001405.htm" />
+    <topic label="Restricted ActionScript keywords" href="html/00001406.htm" />
+    <topic label="Custom ActionScript functions" href="html/00001407.htm" />
+   </topic>
+   <topic label="Best practices for Flash forms" href="html/00001408.htm" />
+  </topic>
+  <topic label="Creating Skinnable XML Forms" href="html/00001409.htm">
+   <topic label="About XML skinnable forms" href="html/00001410.htm" />
+   <topic label="Building XML skinnable forms" href="html/00001411.htm">
+    <topic label="Using standard ColdFusion MX form tags" href="html/00001412.htm" />
+    <topic label="Using cfformitem tags" href="html/00001413.htm" />
+    <topic label="Using cfformgroup tags" href="html/00001414.htm" />
+    <topic label="Example: CFML for a skinnable XML form" href="html/00001415.htm" />
+   </topic>
+   <topic label="ColdFusion XML format" href="html/00001416.htm">
+    <topic label="XML structure" href="html/00001417.htm" />
+    <topic label="Data model" href="html/00001418.htm" />
+    <topic label="Control elements" href="html/00001419.htm" />
+   </topic>
+   <topic label="Creating XSLT skins" href="html/00001420.htm" />
+  </topic>
+  <topic label="Creating Charts and Graphs" href="html/00001421.htm">
+   <topic label="About charts" href="html/00001422.htm" />
+   <topic label="Creating a basic chart" href="html/00001423.htm" />
+   <topic label="Charting data" href="html/00001424.htm">
+    <topic label="Charting a query" href="html/00001425.htm" />
+    <topic label="Charting a query of queries" href="html/00001426.htm" />
+    <topic label="Combining a query and data points" href="html/00001427.htm" />
+    <topic label="Charting multiple data collections" href="html/00001428.htm" />
+   </topic>
+   <topic label="Controlling chart appearance" href="html/00001429.htm">
+    <topic label="Using the attributes of the cfchart and cfchartseries tags" href="html/00001430.htm" />
+    <topic label="Creating your own chart styles" href="html/00001431.htm" />
+   </topic>
+   <topic label="Creating charts: examples" href="html/00001432.htm">
+    <topic label="Creating an area chart" href="html/00001433.htm" />
+    <topic label="Setting curve chart characteristics" href="html/00001434.htm" />
+   </topic>
+   <topic label="Administering charts" href="html/00001435.htm" />
+   <topic label="Writing a chart to a variable" href="html/00001436.htm" />
+   <topic label="Linking charts to URLs" href="html/00001437.htm">
+    <topic label="Dynamically linking from a pie chart" href="html/00001438.htm" />
+    <topic label="Linking to JavaScript from a pie chart" href="html/00001439.htm" />
+   </topic>
+  </topic>
+  <topic label="Creating Reports for Printing" href="html/00001440.htm">
+   <topic label="About printable output" href="html/00001441.htm" />
+   <topic label="Creating PDF and FlashPaper output with the cfdocument tag" href="html/00001442.htm">
+    <topic label="Creating basic reports from HTML and CFML" href="html/00001443.htm" />
+    <topic label="Creating sections, headers, and footers" href="html/00001444.htm" />
+    <topic label="Using the cfdocument scope" href="html/00001445.htm" />
+    <topic label="Using cfhttp to display web pages" href="html/00001446.htm" />
+    <topic label="Using advanced PDF options" href="html/00001447.htm" />
+    <topic label="Saving printable reports in files" href="html/00001448.htm" />
+   </topic>
+   <topic label="Creating reports with the ColdFusion MX 7 reporting" href="html/00001449.htm">
+    <topic label="Reporting features" href="html/00001450.htm" />
+    <topic label="Reporting architecture" href="html/00001451.htm" />
+    <topic label="Getting started" href="html/00001452.htm" />
+    <topic label="Basic steps for creating reports" href="html/00001453.htm" />
+    <topic label="Report definition guidelines" href="html/00001454.htm" />
+    <topic label="Common reporting tasks and techniques" href="html/00001455.htm">
+     <topic label="Grouping and group breaks" href="html/00001456.htm" />
+     <topic label="Defining, modifying, and using fields and input parameters" href="html/00001457.htm" />
+     <topic label="Using toolbox elements on report bands" href="html/00001458.htm" />
+     <topic label="Aligning elements" href="html/00001459.htm" />
+     <topic label="Using text styles" href="html/00001460.htm" />
+     <topic label="Previewing reports" href="html/00001461.htm" />
+     <topic label="Displaying page numbers" href="html/00001462.htm" />
+     <topic label="Using layered controls" href="html/00001463.htm" />
+     <topic label="Using links" href="html/00001464.htm" />
+     <topic label="Using the Properties sheet" href="html/00001465.htm" />
+     <topic label="Displaying reports" href="html/00001466.htm" />
+     <topic label="Using input parameters to pass variables and other data at runtime" href="html/00001467.htm" />
+     <topic label="Configuring RDS" href="html/00001468.htm" />
+    </topic>
+    <topic label="Using the Report Creation Wizard" href="html/00001469.htm" />
+    <topic label="Using the Query Builder" href="html/00001470.htm" />
+    <topic label="Using CFML in reports" href="html/00001471.htm">
+     <topic label="Report functions" href="html/00001472.htm" />
+    </topic>
+    <topic label="Using charts" href="html/00001473.htm" />
+    <topic label="Using subreports" href="html/00001474.htm" />
+   </topic>
+   <topic label="Font management with printable reports" href="html/00001475.htm" />
+   <topic label="Creating reports with Crystal Reports (Windows only)" href="html/00001476.htm" />
+  </topic>
+  <topic label="Using the Flash Remoting Service" href="html/00001477.htm">
+   <topic label="About using the Flash Remoting service with ColdFusion" href="html/00001478.htm" />
+   <topic label="Configuring the Flash Remoting Gateway" href="html/00001479.htm" />
+   <topic label="Using the Flash Remoting service with ColdFusion pages" href="html/00001480.htm" />
+   <topic label="Using Flash with CFCs" href="html/00001481.htm" />
+   <topic label="Using the Flash Remoting service with ColdFusion Java objects" href="html/00001482.htm" />
+   <topic label="Handling errors with ColdFusion and Flash" href="html/00001483.htm" />
+  </topic>
+  <topic label="Using Server-Side ActionScript" href="html/00001484.htm">
+   <topic label="About server-side ActionScript" href="html/00001485.htm">
+    <topic label="Client-side ActionScript requirements" href="html/00001486.htm" />
+    <topic label="Server-side requirements" href="html/00001487.htm" />
+    <topic label="Software requirements" href="html/00001488.htm" />
+    <topic label="Location of server-side ActionScript files" href="html/00001489.htm" />
+    <topic label="Benefits" href="html/00001490.htm" />
+    <topic label="What to do next" href="html/00001491.htm" />
+   </topic>
+   <topic label="Connecting to the Flash Remoting service" href="html/00001492.htm" />
+   <topic label="Using server-side ActionScript functions" href="html/00001493.htm" />
+   <topic label="Global and request scope objects" href="html/00001494.htm" />
+   <topic label="About the CF.query function and data sources" href="html/00001495.htm" />
+   <topic label="Using the CF.query function" href="html/00001496.htm" />
+   <topic label="Building a simple application" href="html/00001497.htm">
+    <topic label="Writing the server-side ActionScript function" href="html/00001498.htm" />
+    <topic label="Creating the Flash movie interface" href="html/00001499.htm" />
+    <topic label="Submitting user data to the Flash Remoting service" href="html/00001500.htm" />
+    <topic label="Capturing Flash Remoting service results" href="html/00001501.htm" />
+    <topic label="Checking for a Flash Remoting service connection" href="html/00001502.htm" />
+   </topic>
+   <topic label="About the CF.http function" href="html/00001503.htm" />
+   <topic label="Using the CF.http function" href="html/00001504.htm" />
+  </topic>
+  <topic label="Using XML and WDDX" href="html/00001505.htm">
+   <topic label="About XML and ColdFusion" href="html/00001506.htm" />
+   <topic label="The XML document object" href="html/00001507.htm">
+    <topic label="Basic view" href="html/00001508.htm" />
+    <topic label="DOM node view" href="html/00001509.htm" />
+    <topic label="XML document structures" href="html/00001510.htm" />
+   </topic>
+   <topic label="ColdFusion XML tag and functions" href="html/00001511.htm" />
+   <topic label="Using an XML object" href="html/00001512.htm" />
+   <topic label="Creating and saving an XML document object" href="html/00001513.htm" />
+   <topic label="Modifying a ColdFusion XML object" href="html/00001514.htm">
+    <topic label="Treating elements with the same name as an array" href="html/00001515.htm" />
+    <topic label="XML document object management reference" href="html/00001516.htm" />
+    <topic label="Adding, deleting, and modifying XML elements" href="html/00001517.htm" />
+    <topic label="Using XML and ColdFusion queries" href="html/00001518.htm" />
+   </topic>
+   <topic label="Validating XML documents" href="html/00001519.htm" />
+   <topic label="Transforming documents with XSLT" href="html/00001520.htm" />
+   <topic label="Extracting data with XPath" href="html/00001521.htm" />
+   <topic label="Example: using XML in a ColdFusion application" href="html/00001522.htm" />
+   <topic label="Moving complex data across the web with WDDX" href="html/00001523.htm" />
+   <topic label="Using WDDX" href="html/00001524.htm">
+    <topic label="Validating WDDX data" href="html/00001525.htm" />
+    <topic label="Using JavaScript objects" href="html/00001526.htm" />
+    <topic label="Converting CFML data to a JavaScript object" href="html/00001527.htm" />
+    <topic label="Transferring data from the browser to the server" href="html/00001528.htm" />
+    <topic label="Storing complex data in a string" href="html/00001529.htm" />
+   </topic>
+  </topic>
+  <topic label="Using Web Services" href="html/00001530.htm">
+   <topic label="Web services" href="html/00001531.htm" />
+   <topic label="Working with WSDL files" href="html/00001532.htm" />
+   <topic label="Consuming web services" href="html/00001533.htm">
+    <topic label="About the examples in this section" href="html/00001534.htm" />
+    <topic label="Passing parameters to a web service" href="html/00001535.htm" />
+    <topic label="Handling return values from a web service" href="html/00001536.htm" />
+    <topic label="Using cfinvoke to consume a web service" href="html/00001537.htm" />
+    <topic label="Using CFScript to consume a web service" href="html/00001538.htm" />
+    <topic label="Consuming web services that are not generated by Macromedia ColdFusion MX" href="html/00001539.htm" />
+    <topic label="Calling web services from a Macromedia Flash client" href="html/00001540.htm" />
+    <topic label="Catching errors when consuming web services" href="html/00001541.htm" />
+    <topic label="Handling inout and out parameters" href="html/00001542.htm" />
+    <topic label="Configuring web services in the ColdFusion MX Administrator" href="html/00001543.htm" />
+    <topic label="Data conversions between ColdFusion and WSDL data types" href="html/00001544.htm" />
+    <topic label="Consuming ColdFusion web services" href="html/00001545.htm" />
+   </topic>
+   <topic label="Publishing web services" href="html/00001546.htm">
+    <topic label="Specifying data types of function arguments and return values" href="html/00001547.htm" />
+    <topic label="Producing WSDL files" href="html/00001548.htm" />
+    <topic label="Using ColdFusion components to define data types for web services" href="html/00001549.htm" />
+    <topic label="Publishing document-literal style web services" href="html/00001550.htm" />
+    <topic label="Securing your web services" href="html/00001551.htm" />
+    <topic label="Best practices for publishing web services" href="html/00001552.htm" />
+   </topic>
+   <topic label="Using request and response headers" href="html/00001553.htm" />
+   <topic label="Handling complex data types" href="html/00001554.htm">
+    <topic label="Publishing web services that use complex data types" href="html/00001555.htm" />
+   </topic>
+   <topic label="Troubleshooting SOAP requests and responses" href="html/00001556.htm" />
+  </topic>
+  <topic label="Integrating J2EE and Java Elements in  CFML Applications" href="html/00001557.htm">
+   <topic label="About ColdFusion, Java, and J2EE" href="html/00001558.htm">
+    <topic label="About ColdFusion and JSP" href="html/00001559.htm" />
+    <topic label="About ColdFusion and servlets" href="html/00001560.htm" />
+    <topic label="About ColdFusion and Java objects" href="html/00001561.htm" />
+    <topic label="About CFML variables and Java variables" href="html/00001562.htm" />
+   </topic>
+   <topic label="Using JSP tags and tag libraries" href="html/00001563.htm" />
+   <topic label="Interoperating with JSP pages and servlets" href="html/00001564.htm">
+    <topic label="Examples: using JSP with CFML" href="html/00001565.htm" />
+   </topic>
+   <topic label="Using Java objects" href="html/00001566.htm">
+    <topic label="Creating and using a simple Java class" href="html/00001567.htm" />
+    <topic label="Java and ColdFusion data type conversions" href="html/00001568.htm" />
+    <topic label="Handling Java exceptions" href="html/00001569.htm" />
+    <topic label="Examples: using Java with CFML" href="html/00001570.htm" />
+   </topic>
+  </topic>
+  <topic label="Integrating COM and CORBA Objects in  CFML Applications" href="html/00001571.htm">
+   <topic label="About COM and CORBA" href="html/00001572.htm" />
+   <topic label="Creating and using objects" href="html/00001573.htm" />
+   <topic label="Getting started with COM and DCOM" href="html/00001574.htm">
+    <topic label="COM requirements" href="html/00001575.htm" />
+    <topic label="Registering the object" href="html/00001576.htm" />
+    <topic label="Finding the component ProgID and methods" href="html/00001577.htm" />
+   </topic>
+   <topic label="Creating and using COM objects" href="html/00001578.htm">
+    <topic label="Connecting to COM objects" href="html/00001579.htm" />
+    <topic label="Setting properties and invoking methods" href="html/00001580.htm" />
+    <topic label="General COM object considerations" href="html/00001581.htm" />
+    <topic label="Accessing Complex COM Objects using Java proxies" href="html/00001582.htm" />
+    <topic label="Using the Application Scope to improve COM performance" href="html/00001583.htm">
+     <topic label="Example 1: Using the FileSystem object" href="html/00001584.htm" />
+     <topic label="Example 2: Using the Microsoft Word application object" href="html/00001585.htm" />
+    </topic>
+   </topic>
+   <topic label="Getting started with CORBA" href="html/00001586.htm" />
+   <topic label="Creating and using CORBA objects" href="html/00001587.htm">
+    <topic label="Using CORBA objects in ColdFusion" href="html/00001588.htm">
+     <topic label="Using IDL types with ColdFusion variables" href="html/00001589.htm" />
+    </topic>
+    <topic label="Handling exceptions" href="html/00001590.htm" />
+   </topic>
+   <topic label="CORBA example" href="html/00001591.htm" />
+  </topic>
+  <topic label="Sending and Receiving E-Mail" href="html/00001592.htm">
+   <topic label="Using ColdFusion with mail servers" href="html/00001593.htm">
+    <topic label="How ColdFusion sends mail" href="html/00001594.htm" />
+   </topic>
+   <topic label="Sending e-mail messages" href="html/00001595.htm" />
+   <topic label="Sample uses of the cfmail tag" href="html/00001596.htm">
+    <topic label="Sending form-based e-mail" href="html/00001597.htm" />
+    <topic label="Sending query-based e-mail" href="html/00001598.htm" />
+    <topic label="Sending e-mail to multiple recipients" href="html/00001599.htm" />
+   </topic>
+   <topic label="Using the cfmailparam tag" href="html/00001600.htm" />
+   <topic label="Receiving e-mail messages" href="html/00001601.htm" />
+   <topic label="Handling POP mail" href="html/00001602.htm">
+    <topic label="Retrieving message headers" href="html/00001603.htm" />
+    <topic label="Retrieving messages" href="html/00001604.htm" />
+    <topic label="Retrieving messages and attachments" href="html/00001605.htm" />
+    <topic label="Deleting messages" href="html/00001606.htm" />
+   </topic>
+  </topic>
+  <topic label="Interacting with Remote Servers" href="html/00001607.htm">
+   <topic label="About interacting with remote servers" href="html/00001608.htm" />
+   <topic label="Using cfhttp to interact with the web" href="html/00001609.htm" />
+   <topic label="Creating a query object from a text file" href="html/00001610.htm" />
+   <topic label="Using the cfhttp Post method" href="html/00001611.htm" />
+   <topic label="Performing file operations with cfftp" href="html/00001612.htm" />
+  </topic>
+  <topic label="Managing Files on the Server" href="html/00001613.htm">
+   <topic label="About file management" href="html/00001614.htm" />
+   <topic label="Using cffile" href="html/00001615.htm">
+    <topic label="Uploading files" href="html/00001616.htm">
+     <topic label="Resolving conflicting filenames" href="html/00001617.htm" />
+     <topic label="Controlling the type of file uploaded" href="html/00001618.htm" />
+     <topic label="Setting file and directory attributes" href="html/00001619.htm" />
+     <topic label="Evaluating the results of a file upload" href="html/00001620.htm" />
+    </topic>
+    <topic label="Moving, renaming, copying, and deleting server files" href="html/00001621.htm" />
+    <topic label="Reading, writing, and appending to a text file" href="html/00001622.htm" />
+   </topic>
+   <topic label="Using cfdirectory" href="html/00001623.htm" />
+   <topic label="Using cfcontent" href="html/00001624.htm" />
+  </topic>
+  <topic label="Using Event Gateways" href="html/00001625.htm">
+   <topic label="About event gateways" href="html/00001626.htm">
+    <topic label="Using event gateways" href="html/00001627.htm" />
+    <topic label="Event gateway terms and concepts" href="html/00001628.htm" />
+    <topic label="How event gateway applications work" href="html/00001629.htm" />
+    <topic label="About developing event gateway applications" href="html/00001630.htm" />
+   </topic>
+   <topic label="Event gateway facilities and tools" href="html/00001631.htm">
+    <topic label="Standard event gateways" href="html/00001632.htm" />
+    <topic label="Development tools and example code" href="html/00001633.htm" />
+    <topic label="The ColdFusion gateway directory" href="html/00001634.htm" />
+    <topic label="The eventgateway.log file" href="html/00001635.htm" />
+    <topic label="ColdFusion MX Administrator event gateway pages" href="html/00001636.htm" />
+   </topic>
+   <topic label="Structure of an event gateway application" href="html/00001637.htm" />
+   <topic label="Configuring an event gateway instance" href="html/00001638.htm" />
+   <topic label="Developing an event gateway application" href="html/00001639.htm">
+    <topic label="Event gateway application models" href="html/00001640.htm" />
+    <topic label="Sending information to the event gateway" href="html/00001641.htm" />
+    <topic label="Developing event gateway listener CFCs" href="html/00001642.htm" />
+    <topic label="Sending a message using the SendGatewayMessage function" href="html/00001643.htm" />
+    <topic label="Using the GatewayHelper object" href="html/00001644.htm" />
+    <topic label="Using the event gateway error log file" href="html/00001645.htm" />
+   </topic>
+   <topic label="Deploying event gateways and applications" href="html/00001646.htm" />
+   <topic label="Using the CFML event gateway for asynchronous CFCs" href="html/00001647.htm" />
+   <topic label="Using the example event gateways and gateway applications" href="html/00001648.htm">
+    <topic label="Example event gateways" href="html/00001649.htm" />
+    <topic label="Menu example application" href="html/00001650.htm" />
+   </topic>
+  </topic>
+  <topic label="Using the Instant Messaging Event Gateways" href="html/00001651.htm">
+   <topic label="About ColdFusion and instant messages" href="html/00001652.htm">
+    <topic label="Incoming message handling" href="html/00001653.htm" />
+   </topic>
+   <topic label="Configuring an IM event gateway" href="html/00001654.htm" />
+   <topic label="Handling incoming messages" href="html/00001655.htm" />
+   <topic label="Sending outgoing messages" href="html/00001656.htm" />
+   <topic label="Sample IM message handling application" href="html/00001657.htm">
+    <topic label="Phone directory lookup CFC" href="html/00001658.htm" />
+    <topic label="Status and request-handling CFC" href="html/00001659.htm" />
+   </topic>
+   <topic label="Using the GatewayHelper object" href="html/00001660.htm">
+    <topic label="Gateway configuration information and statistics methods" href="html/00001661.htm" />
+    <topic label="Gateway online status methods" href="html/00001662.htm" />
+    <topic label="Gateway buddy management methods" href="html/00001663.htm" />
+    <topic label="Gateway permission management methods" href="html/00001664.htm" />
+    <topic label="GatewayHelper example" href="html/00001665.htm" />
+   </topic>
+  </topic>
+  <topic label="Using the SMS Event Gateway" href="html/00001666.htm">
+   <topic label="About SMS and ColdFusion" href="html/00001667.htm">
+    <topic label="About SMS" href="html/00001668.htm" />
+    <topic label="About SMS application development and deployment" href="html/00001669.htm" />
+    <topic label="How the SMS event gateway and provider SMSC interact" href="html/00001670.htm" />
+   </topic>
+   <topic label="Configuring an SMS event gateway" href="html/00001671.htm" />
+   <topic label="Handling incoming messages" href="html/00001672.htm" />
+   <topic label="Sending outgoing messages" href="html/00001673.htm">
+    <topic label="The submit command" href="html/00001674.htm" />
+    <topic label="The submitMulti command" href="html/00001675.htm" />
+    <topic label="The data command" href="html/00001676.htm" />
+    <topic label="Controlling SMS message sending and response" href="html/00001677.htm">
+     <topic label="Synchronization mode" href="html/00001678.htm" />
+     <topic label="Message disposition notification" href="html/00001679.htm" />
+     <topic label="Validity period" href="html/00001680.htm" />
+    </topic>
+   </topic>
+   <topic label="ColdFusion MX SMS development tools" href="html/00001681.htm">
+    <topic label="SMS client simulator" href="html/00001682.htm" />
+   </topic>
+   <topic label="Sample SMS application" href="html/00001683.htm" />
+  </topic>
+  <topic label="Creating Custom Event Gateways" href="html/00001684.htm">
+   <topic label="Event gateway architecture" href="html/00001685.htm" />
+   <topic label="Event gateway elements" href="html/00001686.htm">
+    <topic label="GatewayServices class" href="html/00001687.htm" />
+    <topic label="CFEvent class" href="html/00001688.htm" />
+    <topic label="GatewayHelper class" href="html/00001689.htm" />
+    <topic label="Gateway configuration file" href="html/00001690.htm" />
+    <topic label="Gateway development classes" href="html/00001691.htm" />
+   </topic>
+   <topic label="Building an event gateway" href="html/00001692.htm">
+    <topic label="Providing Gateway class service and information routines" href="html/00001693.htm" />
+    <topic label="Starting, stopping, and restarting the event gateway" href="html/00001694.htm" />
+    <topic label="Responding to incoming messages" href="html/00001695.htm" />
+    <topic label="Responding to a ColdFusion function or listener CFC" href="html/00001696.htm" />
+    <topic label="Logging events and using log files" href="html/00001697.htm" />
+   </topic>
+   <topic label="Deploying an event gateway" href="html/00001698.htm" />
+  </topic>
+ </topic>
+ <topic label="Configuring and Administering ColdFusion MX" href="html/part_adm.htm">
+  <topic label="Administering ColdFusion MX" href="html/00001699.htm">
+   <topic label="About the ColdFusion MX Administrator" href="html/00001700.htm" />
+  </topic>
+  <topic label="Using the ColdFusion MX Administrator" href="html/00001701.htm">
+   <topic label="Initial administration tasks" href="html/00001702.htm" />
+   <topic label="Accessing user assistance" href="html/00001703.htm" />
+   <topic label="Server Settings section" href="html/00001704.htm">
+    <topic label="Settings page" href="html/00001705.htm" />
+    <topic label="Caching page" href="html/00001706.htm" />
+    <topic label="Client Variables page" href="html/00001707.htm" />
+    <topic label="Memory Variables page" href="html/00001708.htm" />
+    <topic label="Mappings page" href="html/00001709.htm" />
+    <topic label="Mail Server page" href="html/00001710.htm" />
+    <topic label="Charting Settings page" href="html/00001711.htm" />
+    <topic label="Font Management page" href="html/00001712.htm" />
+    <topic label="Java and JVM Settings page" href="html/00001713.htm" />
+    <topic label="Settings Summary page" href="html/00001714.htm" />
+   </topic>
+   <topic label="Data &amp; Services section" href="html/00001715.htm" />
+   <topic label="Debugging &amp; Logging section" href="html/00001716.htm">
+    <topic label="Debugging Settings and Debugging IPs pages" href="html/00001717.htm" />
+    <topic label="Logging Settings page" href="html/00001718.htm" />
+    <topic label="Log Files page" href="html/00001719.htm" />
+    <topic label="Scheduled Tasks page" href="html/00001720.htm" />
+    <topic label="System Probes page" href="html/00001721.htm" />
+    <topic label="Code Compatibility Analyzer page" href="html/00001722.htm" />
+    <topic label="License Scanner page" href="html/00001723.htm" />
+   </topic>
+   <topic label="Extensions section" href="html/00001724.htm">
+    <topic label="Java Applets page" href="html/00001725.htm" />
+    <topic label="CFX Tags page" href="html/00001726.htm" />
+    <topic label="Custom Tag Paths page" href="html/00001727.htm" />
+    <topic label="CORBA Connectors page" href="html/00001728.htm" />
+   </topic>
+   <topic label="Event Gateways section" href="html/00001729.htm" />
+   <topic label="Security section" href="html/00001730.htm" />
+   <topic label="Packaging and Deployment section" href="html/00001731.htm" />
+   <topic label="Enterprise Manager section" href="html/00001732.htm" />
+   <topic label="Custom Extensions section" href="html/00001733.htm" />
+   <topic label="Administrator API" href="html/00001734.htm" />
+  </topic>
+  <topic label="Data Source Management" href="html/00001735.htm">
+   <topic label="About JDBC" href="html/00001736.htm" />
+   <topic label="Adding data sources" href="html/00001737.htm">
+    <topic label="Adding data sources in the Administrator" href="html/00001738.htm" />
+   </topic>
+   <topic label="Connecting to DB2 Universal Database" href="html/00001739.htm" />
+   <topic label="Connecting to Informix" href="html/00001740.htm" />
+   <topic label="Connecting to Microsoft Access" href="html/00001741.htm" />
+   <topic label="Connecting to Microsoft Access with Unicode" href="html/00001742.htm" />
+   <topic label="Connecting to Microsoft SQL Server" href="html/00001743.htm" />
+   <topic label="Connecting to MySQL" href="html/00001744.htm" />
+   <topic label="Connecting to ODBC Socket" href="html/00001745.htm" />
+   <topic label="Connecting to Oracle" href="html/00001746.htm" />
+   <topic label="Connecting to other data sources" href="html/00001747.htm" />
+   <topic label="Connecting to Sybase" href="html/00001748.htm" />
+   <topic label="Connecting to JNDI data sources" href="html/00001749.htm" />
+  </topic>
+  <topic label="Web Server Management" href="html/00001750.htm">
+   <topic label="About web servers in ColdFusion MX" href="html/00001751.htm" />
+   <topic label="Using the built-in web server" href="html/00001752.htm" />
+   <topic label="Using an external web server" href="html/00001753.htm" />
+   <topic label="Web server configuration" href="html/00001754.htm">
+    <topic label="Using the command-line interface" href="html/00001755.htm" />
+    <topic label="Configuration files" href="html/00001756.htm" />
+   </topic>
+   <topic label="Multihoming" href="html/00001757.htm" />
+  </topic>
+  <topic label="Deploying ColdFusion Applications" href="html/00001758.htm">
+   <topic label="Archive and deployment options" href="html/00001759.htm" />
+   <topic label="Packaging applications in CAR files" href="html/00001760.htm" />
+   <topic label="Packaging applications in J2EE archive files" href="html/00001761.htm" />
+   <topic label="Using the cfcompile utility" href="html/00001762.htm" />
+  </topic>
+  <topic label="Administering Security" href="html/00001763.htm">
+   <topic label="About ColdFusion MX security" href="html/00001764.htm" />
+   <topic label="Using password protection" href="html/00001765.htm" />
+   <topic label="Using sandbox security" href="html/00001766.htm">
+    <topic label="Adding a sandbox (Enterprise Edition only)" href="html/00001767.htm" />
+    <topic label="Configuring a sandbox" href="html/00001768.htm" />
+   </topic>
+  </topic>
+  <topic label="Using Multiple Server Instances" href="html/00001769.htm">
+   <topic label="About multiple server instances" href="html/00001770.htm" />
+   <topic label="Defining additional server instances" href="html/00001771.htm" />
+   <topic label="Enabling application isolation" href="html/00001772.htm">
+    <topic label="Web server configuration for application isolation" href="html/00001773.htm" />
+   </topic>
+   <topic label="Enabling clustering for load balancing and failover" href="html/00001774.htm" />
+   <topic label="Defining remote server instances to the ColdFusion MX Administrator" href="html/00001775.htm" />
+  </topic>
+  <topic label="Introducing Verity and Verity Tools" href="html/00001776.htm">
+   <topic label="Collections and the ColdFusion MX Verity architecture" href="html/00001777.htm" />
+   <topic label="About Verity Spider (vspider)" href="html/00001778.htm" />
+   <topic label="About the Verity utilities" href="html/00001779.htm" />
+  </topic>
+  <topic label="Indexing Collections with Verity Spider" href="html/00001780.htm">
+   <topic label="About Verity Spider" href="html/00001781.htm" />
+   <topic label="About Verity Spider syntax" href="html/00001782.htm">
+    <topic label="The Verity Spider command" href="html/00001783.htm" />
+    <topic label="Using a command file" href="html/00001784.htm" />
+    <topic label="Command-line option reference" href="html/00001785.htm" />
+   </topic>
+   <topic label="Core options" href="html/00001786.htm" />
+   <topic label="Processing options" href="html/00001787.htm" />
+   <topic label="Networking options" href="html/00001788.htm" />
+   <topic label="Path and URL options" href="html/00001790.htm" />
+   <topic label="Content options" href="html/00001791.htm" />
+   <topic label="Locale options" href="html/00001792.htm" />
+   <topic label="Logging options" href="html/00001793.htm" />
+   <topic label="Maintenance options" href="html/00001794.htm" />
+   <topic label="Setting MIME types" href="html/00001795.htm">
+    <topic label="MIME types and web crawling" href="html/00001796.htm" />
+    <topic label="MIME types and file system indexing" href="html/00001797.htm" />
+   </topic>
+  </topic>
+  <topic label="Using Verity Utilities" href="html/00001798.htm">
+   <topic label="Overview of Verity utilities" href="html/00001799.htm" />
+   <topic label="Using the mkvdk utility" href="html/00001800.htm">
+    <topic label="The mkvdk utility syntax" href="html/00001801.htm" />
+    <topic label="Getting started with the Verity mkvdk utility" href="html/00001802.htm" />
+    <topic label="Collection setup options" href="html/00001803.htm" />
+    <topic label="General processing options" href="html/00001804.htm" />
+    <topic label="Date format options" href="html/00001805.htm" />
+    <topic label="Service-level keyword options" href="html/00001806.htm" />
+    <topic label="Message options" href="html/00001807.htm" />
+    <topic label="Document processing options" href="html/00001808.htm" />
+    <topic label="Bulk submit options" href="html/00001809.htm" />
+    <topic label="Collection maintenance options" href="html/00001810.htm" />
+    <topic label="Performance tuning options" href="html/00001811.htm" />
+   </topic>
+   <topic label="Using the rck2 utility" href="html/00001812.htm" />
+   <topic label="Using the rcvdk utility" href="html/00001813.htm">
+    <topic label="Starting rcvdk" href="html/00001814.htm" />
+    <topic label="Attaching to a collection using the rcvdk utility" href="html/00001815.htm" />
+    <topic label="Viewing results of the rcvdk utility" href="html/00001816.htm" />
+   </topic>
+   <topic label="Using the didump utility" href="html/00001817.htm" />
+   <topic label="Using the browse utility" href="html/00001818.htm" />
+   <topic label="Using the merge utility" href="html/00001819.htm" />
+  </topic>
+ </topic>
+</toc>
+

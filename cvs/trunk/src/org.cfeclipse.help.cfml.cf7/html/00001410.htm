@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About XML skinnable forms</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001409.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001411.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About XML skinnable forms</h1>
+<p>A ColdFusion MX form with a <code>format=&quot;XML&quot;</code> attribute is an <i>XML skinnable form</i>. When ColdFusion MX processes an XML skinnable form, it generates the form as XML. By default, it applies an XML Stylesheet Language Transform (XSLT) skin to the XML and generates a formatted HTML page for display on the user's browser. Optionally, you can specify an XSLT file, or you can process the raw XML in your ColdFusion page.</p>
+<p>By using XML skinnable forms, you can control the type and appearance of the forms that ColdFusion&#160;MX generates and displays. ColdFusion&#160;MX provides a set of standard skins, including a default skin that it uses if you do not specify another skin (or tell it not to apply a skin). You can also create your own XSLT skin and have ColdFusion use it to give your forms a specific style or appearance.</p>
+<h2><a name="wp134782"></a>ColdFusion forms and XForms</h2>
+<p>ColdFusion skinnable forms conform to and extend the W3C XForms specification. This specification provides an XML syntax for defining interactive forms using a syntax that is independent of form appearance. ColdFusion&#160;MX forms tags include attributes that provide information that does not correspond directly to the XForms model, such as appearance information, validation rules, and standard HTML attributes. ColdFusion skinnable forms retain this information in XForms extensions so that an XSL transformation can use the values to determine appearance or do other processing.</p>
+<p>For more information on XML structure of ColdFusion skinnable forms, see <a href="00001416.htm#131107">ColdFusion XML format</a>.</p>
+<h2><a name="wp134788"></a>The role of the XSLT skin</h2>
+<p>An XSLT skin and associated cascading style sheet (CSS) determine how an XML skinnable form is processed and displayed, as follows:</p>
+<ul>
+<li>
+   The XSLT skin tells ColdFusion MX how to process the XML, and typically converts it to HTML for display. The skin specifies the CSS style sheet to use to format the output.
+</li>
+<li>
+   The CSS style sheet specifies style definitions that determine the appearance of the generated output.
+</li>
+</ul>
+<p>XSLT skins give you extensive freedom in the generated output. They let you create a custom appearance for your forms, or even different appearances for different purposes. For example, you could use the same form in an intranet and on the Internet, and change only the skin to give a different appearance (or even select different subsets of the form for display). You can also create skins that process your form for devices, such as wireless mobile devices.</p>
+<h2><a name="wp131000"></a>How ColdFusion processes XML skinnable forms</h2>
+<p>When ColdFusion processes a <code>cfform</code> tag that specifies XML format and an XSLT skin, it does the following to the form:</p>
+<ol>
+<li>
+   Converts the CFML form tags into an XForms-compliant XML text format and makes it available in a variable with the same name as the form. ColdFusion ignores in-line text or HTML tags in the form, and does not pass them to the XML. (It does process HTML <code>option</code> tags that are children of a <code>cfselect</code> tag.)
+</li>
+<li>
+   Applies an XSLT skin to the XML; for example, to convert the form into HTML. The XSLT file specifies the CSS style sheet.
+</li>
+<li>
+   Returns the resulting, styled, form to the client, such as a user's browser.
+</li>
+</ol>
+<p>If you omit the <code>cfform</code> tag <code>skin</code> attribute, ColdFusion&#160;MX uses a default skin.</p>
+<p>If you specify <code>skin=&quot;none&quot;</code>, ColdFusion MX performs the first step, but omits the remaining steps. Your application must handle the XML version of the form as needed. This technique lets you specify your own XSL engine, or incorporate the form as part of a larger form.</p>
+<h2><a name="wp136279"></a>ColdFusion MX XSL skins</h2>
+<p>ColdFusion MX provides the following XSLT skins:</p>
+<ul>
+<li>
+   basic
+</li>
+<li>
+   basiccss
+</li>
+<li>
+   basiccss_top
+</li>
+<li>
+   beige
+</li>
+<li>
+   blue
+</li>
+<li>
+   bluegray
+</li>
+<li>
+   default
+</li>
+<li>
+   lightgray
+</li>
+<li>
+   red
+</li>
+<li>
+   silver
+</li>
+</ul>
+<p>The XSLT skin files are located in the cf_webroot\CFIDE\scripts\xsl directory, and the CSS files that they use for style definitions are located in the cf_webroot\CFIDE\scripts\css directory.</p>
+<p>The default skin and the basic skin format forms identically. ColdFusion uses the default skin if you do not specify a <code>skin</code> attribute in the <code>cfform</code> tag. The default and basic skins are simple skins that use tables for arranging the form contents. The basic skin uses <code>div</code> and <code>span</code> tags to arrange the elements. The skins with names of colors are similar to the basic skin, but make more use of color.</p>
+<h2><a name="wp135199"></a>Example: a simple skinnable form</h2>
+<p>The following figure shows a simple XML skinnable form that uses the default skin to format the output:</p>
+<p><br />
+<img src="images/xmlforma.jpg" alt="A simple XML skinnable form that uses the default skin to format output" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>Later sections in this chapter use this form in their examples and description.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001409.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001411.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001410.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

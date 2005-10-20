@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example of synchronizing access to a file system</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001172.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001174.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example of synchronizing access to a file system</h1>
+<p>The following example shows how to use a <a href="00000285.htm#1100787"><code>cflock</code></a> block to synchronize access to a file system. The <code>cflock</code> tag protects a <a href="00000245.htm#1098395"><code>cffile</code></a> tag from attempting to append data to a file already open for writing by the same tag executing on another request.</p>
+<p>If an append operation takes more than 30 seconds, a request waiting to obtain an exclusive lock to this code might time out. Also, this example uses a dynamic value for the <code>name</code> attribute so that a different lock controls access to each file. As a result, locking access to one file does not delay access to any other file.</p>
+<pre><code>&lt;cflock name=#filename# timeout=30 type=&quot;Exclusive&quot;&gt;</code>
+<code>   &lt;cffile action=&quot;Append&quot;</code>
+<code>      file=#fileName#</code>
+<code>      output=#textToAppend#&gt;</code>
+<code>&lt;/cflock&gt;</code>
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001172.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001174.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001173.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

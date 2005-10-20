@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>General COM object considerations</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001580.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001582.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>General COM object considerations</h1>
+<p>When you use COM objects, consider the following to prevent and resolve errors:</p>
+<ul>
+<li>
+   <a href="00001581.htm#1136186">Ensuring correct threading</a>
+</li>
+<li>
+   <a href="00001581.htm#1139298">Using input and output arguments</a>
+</li>
+<li>
+   <a href="00001581.htm#1136219">Understanding common COM-related error messages</a>
+</li>
+</ul>
+<p>The following sections describe these issues.</p>
+<h3><a name="wp1136186"></a>Ensuring correct threading</h3>
+<p>Improper threading can cause serious problems when using a COM object in ColdFusion. Make sure that the object is <i>thread-safe</i>. An object is thread-safe if it can be called from many programming threads simultaneously, without causing errors. </p>
+<p>Visual Basic ActiveX DLLs are typically not thread-safe. If you use such a DLL in ColdFusion, you can make it thread-safe by using the OLE/COM Object Viewer to change the object's threading model to the Apartment model. </p>
+<p>If you are planning to store a reference to the COM object in the Application, Session, or Server scope, do not use the Apartment threading model. This threading model is intended to service only a single request. If your application requires you to store the object in any of these scopes, keep the object in the Both threading model, and lock all code that accesses the object, as described in <a href="00001166.htm#1154837">Locking code with cflock</a>.</p>
+<h4>To change the threading model of a COM Object:</h4>
+<ol>
+<li>
+   Open the OLE/COM Object Viewer. 
+</li>
+<li>
+   Select All Objects under Object Classes in the left pane.
+</li>
+<li>
+   Locate your COM object. The left pane lists these by name. 
+</li>
+<li>
+   Select your object. 
+</li>
+<li>
+   Select the Implementation tab in the right pane. 
+</li>
+<li>
+   Select the Inproc Server tab, below the App ID field.
+</li>
+<li>
+   Select the Threading Model drop down menu and select Apartment or Both, as appropriate. 
+</li>
+</ol>
+<h3><a name="wp1139298"></a>Using input and output arguments</h3>
+<p>COM object method in arguments are passed by value. The COM object gets a copy of the variable value, so you can specify a ColdFusion variable without surrounding it with quotation marks. </p>
+<p>COM object out method arguments are passed by reference. The COM object modifies the contents of the variable on the calling page, so the calling page can use the resulting value. To pass a variable by reference, surround the name of an existing ColdFusion variable with quotation marks. If the argument is a numeric type, assign the variable a valid number before you make the call. For example:</p>
+<pre>&lt;cfset inStringArg=&quot;Hello Object&quot;&gt;
+&lt;cfset outNumericArg=0&gt;
+&lt;cfset result=myCOMObject.calculate(inStringArg, &quot;outNumericArg&quot;)&gt;
+</pre><p>The string &quot;Hello Object&quot; is passed to the object&#39;s calculate method as an input argument. The value of outNumericArg is set by the method to a numeric value.</p>
+<h3><a name="wp1136219"></a>Understanding common COM-related error messages</h3>
+<p>The following table described some error messages you might encounter when using COM objects:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Error
+    </th>
+    <th>
+Cause
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Error Diagnostic Information</p>
+<p>Error trying to create object specified in the tag. </p>
+<p>COM error 0x800401F3. Invalid class string.</p>
+    </td>
+    <td>
+<p>The COM object is not registered or does not exist.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Error Diagnostic Information</p>
+<p>Error trying to create object specified in the tag. </p>
+<p>COM error 0x80040154. Class not registered.</p>
+    </td>
+    <td>
+<p>The COM object is not registered or does not exist. This error usually occurs when an object existed previously, but was uninstalled.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Error Diagnostic Information</p>
+<p>Failed attempting to find &quot;SOMEMETHOD&quot; <br />property/method on the object COM error 0x80020006.</p>
+<p>Unknown name. </p>
+    </td>
+    <td>
+<p>The COM object was instantiated correctly, but the method you specified does not exist.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001580.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001582.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001581.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Defining remote server instances to the ColdFusion&#160;MX Administrator</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001774.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001776.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Defining remote server instances to the ColdFusion&#160;MX Administrator</h1>
+<p>You can use the Cluster Manager to add ColdFusion&#160;MX server instances running on other computers; however, you must first define them to the ColdFusion&#160;MX Administrator through the Add Remote Server Instance area of the Instance Manager page.</p>
+<p><strong>Note: </strong>To define a remote server instance, it must be running. You cannot start or stop servers remotely.</p><h4>To define a remote server instance to ColdFusion:</h4>
+<ol>
+<li>
+   Open the ColdFusion&#160;MX Administrator for the cfusion server in a browser (http://hostname:8300/CFIDE/administrator).
+</li>
+<li>
+   Select Enterprise Manager &gt; Instance Manager.
+</li>
+<li>
+   Specify the following in the Add Remote ColdFusion Instance area:
+<ul><li>Server name</li>
+<li>The IP address or DNS name of the remote host.</li>
+<li>The remote port of the remote server. To determine the remote port, open the <i>jrun_root</i>/servers/<i>servername</i>/SERVER-INF/jndi.properties file and note the port number in the <code>java.naming.provider.url</code> property.</li>
+</ul></li>
+<li>
+   Click Add Remote ColdFusion Server.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001774.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001776.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001775.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

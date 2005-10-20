@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfupdate</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000349.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000351.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfupdate</h1>
+<h4><a name="wp1355963"></a>Description</h4>
+<p>Updates records in a data source from data in a ColdFusion form or form Scope.</p>
+<h4><a name="wp1963168"></a>Category</h4>
+<p><a href="00000198.htm#2459589">Database manipulation tags</a></p>
+<h4><a name="wp1104664"></a>Syntax</h4>
+<pre>&lt;cfupdate <br />   dataSource = &quot;ds_name&quot;<br />   tableName = &quot;table_name&quot;<br />   tableOwner = &quot;name&quot;<br />   tableQualifier = &quot;qualifier&quot;<br />   username = &quot;username&quot;<br />   password = &quot;password&quot;<br />   formFields = &quot;field_names&quot;&gt;
+</pre><h4><a name="wp1963175"></a>See also</h4>
+<p><a href="00000280.htm#1100472">cfinsert</a>, <a href="00000313.htm#1102102">cfprocparam</a>, <a href="00000314.htm#1102246">cfprocresult</a>, <a href="00000316.htm#1102316">cfquery</a>, <a href="00000317.htm#1102474">cfqueryparam</a>, <a href="00000338.htm#2607555">cfstoredproc</a>, <a href="00000346.htm#1104164">cftransaction</a>; <a href="00001261.htm#1110949">Creating an update action page with cfupdate</a> in <a href="00001258.htm#1106574">Updating Your Database</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2365967"></a>History</h4>
+<p>ColdFusion&#160;MX: Deprecated the <code>connectString</code>, <code>dbName</code>, <code>dbServer</code>, <code>dbtype</code>, <code>provider</code>, and <code>providerDSN</code> attributes. They do not work, and might cause an error, in releases later than ColdFusion 5. </p>
+<h4><a name="wp1429508"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>dataSource</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the data source that contains the table.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tableName</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of table to update. </p>
+<ul>
+<li>
+   For ORACLE drivers, must be uppercase.
+</li>
+<li>
+   For Sybase driver, case-sensitive; must be in same case as used when the table was created.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>tableOwner</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>For data sources that support table ownership (for example, SQL Server, Oracle, Sybase SQL Anywhere), the table owner.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tableQualifier</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>For data sources that support table qualifiers. The purpose of table qualifiers is as follows:</p>
+<ul>
+<li>
+   SQL Server and Oracle: name of the database that contains the table
+</li>
+<li>
+   Intersolv dBASE driver: directory of DBF files
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>username</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Overrides <code>username</code> value specified in ODBC setup.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Overrides the <code>password</code> value specified in ODBC setup.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>formFields</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>(all on form, except keys)</p>
+    </td>
+    <td>
+<p>Comma-delimited list of form fields to update.</p>
+<p>If a form field is not matched by a column name in the database, ColdFusion throws an error. </p>
+<p>The formFields lies must include the database table primary key field, which must be present in the form. It can be hidden. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2343445"></a>Example</h4>
+<pre>&lt;!--- This example allows you to update a person&#39;s telephone number in the employee table. ---&gt;
+&lt;cfif isDefined(&quot;form.phone&quot;)&gt;
+   &lt;cfupdate datasource=&quot;cfdocexamples&quot; tablename=&quot;Employees&quot;&gt;
+&lt;/cfif&gt;
+
+&lt;cfquery name=&quot;empTable&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   select * from employees
+&lt;/cfquery&gt;
+
+&lt;!--- This code shows the contents of the employee table and allows you to choose a row for updating. ---&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;cfoutput query=&quot;empTable&quot;&gt;
+   &lt;tr&gt;
+      &lt;td&gt;#firstName#&lt;/td&gt;
+      &lt;td&gt;#lastName#&lt;/td&gt;
+      &lt;td&gt;#phone#&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;cfupdate.cfm?id=#emp_id#&quot;&gt;Edit&lt;/a&gt;&lt;/td&gt;
+   &lt;/tr&gt;
+&lt;/cfoutput&gt;
+&lt;/table&gt;
+
+&lt;cfif isDefined(&quot;url.id&quot;)&gt;
+   &lt;cfquery name=&quot;phoneQuery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+      select * from employees where emp_id=#url.id#
+   &lt;/cfquery&gt;
+&lt;!--- This code displays the row to edit for update. ---&gt;
+   &lt;cfoutput query=&quot;phoneQuery&quot;&gt;
+      &lt;form action=&quot;cfupdate.cfm&quot; method=&quot;post&quot;&gt;
+      #phoneQuery.firstName# #phoneQuery.lastName# 
+      &lt;input name=&quot;phone&quot; type=&quot;text&quot; value=&quot;#phone#&quot; size=&quot;12&quot;&gt; 
+      &lt;input type=&quot;submit&quot; value=&quot;Update&quot;&gt;
+      &lt;input name=&quot;emp_id&quot; type=&quot;hidden&quot; value=&quot;#emp_id#&quot;&gt;
+      &lt;!--- The emp_id is passed as a hidden field to be used as a primary key in    the CFUPDATE. ---&gt;
+      &lt;/form&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000349.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000351.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000350.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

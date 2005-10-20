@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Setting page processing options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001115.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001117.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Setting page processing options</h1>
+<p>The <a href="00000335.htm#1103514"><code>cfsetting</code></a> tag lets you specify the following page processing attributes that you might want to apply to all pages in your application:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Use
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>showDebugOutput</p>
+    </td>
+    <td>
+<p>Specifies whether to show debugging output. This setting cannot enable debugging if it is disabled in the ColdFusion&#160;MX Administrator. However, this option can ensure that debugging output is not displayed, even if the Administrator enables it.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>requestTimeout</p>
+    </td>
+    <td>
+<p>Specifies the page request time-out. If ColdFusion cannot complete processing a page within the time-out period, it generates an error. This setting overrides the setting in the ColdFusion&#160;MX Administrator. You can use this setting to increase the page time-out if your application or page frequently accesses external resources that might be particularly slow, such as external LDAP servers or web services providers.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>enableCFOutputOnly</p>
+    </td>
+    <td>
+<p>Disables output of text that is not included inside <code>cfoutput</code> tags. This setting can help ensure that extraneous text that might be in your ColdFusion pages does not get displayed.</p>
+    </td>
+  </tr>
+</table>
+
+<p>Often, you use the <code>cfsetting</code> tag on individual pages, but you can also use it in your Application.cfc file. For example, you might use it in multi-application environment to override the ColdFusion&#160;MX Administrator settings in one application.</p>
+<p>You can put an application-wide <code>cfsetting</code> tag in the component initialization code, normally following the This scope application property settings, as the following example shows:</p>
+<pre>&lt;cfcomponent&gt;
+&lt;cfscript&gt;
+   This.name=&quot;MyAppl&quot;;
+   This.clientmanagement=&quot;True&quot;;
+   This.loginstorage=&quot;Session&quot; ;
+   This.sessionmanagement=&quot;True&quot; ;
+   This.sessiontimeout=CreateTimeSpan(0,0,1,0);
+&lt;/cfscript&gt;
+&lt;cfsetting showdebugoutput=&quot;No&quot; enablecfoutputonly=&quot;No&quot;&gt;
+</pre><p>The <code>cfsetting</code> tag in this example affects all pages in an application. You can override the application-wide settings in the event methods, such as <code>onRequestStart</code>, or on individual ColdFusion pages.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001115.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001117.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001116.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetTickCount</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000499.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000501.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetTickCount</h1>
+<h4><a name="wp1224845"></a>Description</h4>
+<p>Returns the current value of an internal millisecond timer.</p>
+<h4><a name="wp4563996"></a>Returns</h4>
+<p>A string representation of the system time, in milliseconds.</p>
+<h4><a name="wp4563998"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp1105417"></a>Function syntax</h4>
+<pre><code><strong>GetTickCount</strong></code>()
+</pre><h4><a name="wp4975733"></a>Usage</h4>
+<p>This function is useful for timing CFML code segments or other page processing elements. The value of the counter has no meaning. To generate useful timing values, take the difference between the results of two <code>GetTickCount</code> calls.</p>
+<h4><a name="wp4749401"></a>Example</h4>
+<pre>&lt;!--- Setup timing test ---&gt;
+&lt;cfset iterationCount = 1000&gt;
+&lt;!--- Time an empty loop with this many iterations ---&gt;
+&lt;cfset tickBegin = GetTickCount()&gt;
+&lt;cfloop Index = i From = 1 To = #iterationCount#&gt;&lt;/cfloop&gt;
+&lt;cfset tickEnd = GetTickCount()&gt;
+&lt;cfset loopTime = tickEnd - tickBegin&gt;
+
+&lt;!--- Report ---&gt;
+&lt;cfoutput&gt;Loop time (#iterationCount# iterations) was: #loopTime#
+    milliseconds&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000499.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000501.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000500.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

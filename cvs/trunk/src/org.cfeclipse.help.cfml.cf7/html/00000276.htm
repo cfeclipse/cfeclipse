@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfimport</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000275.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000277.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfimport</h1>
+<h4><a name="wp2693768"></a>Description</h4>
+<p>You can use the <code>cfimport</code> tag to import either of the following:</p>
+<ul>
+<li>
+   All ColdFusion pages in a directory, as a tag custom tag library.
+</li>
+<li>
+   A Java Server Page (JSP) tag library. A JSP tag library is a packaged set of tag handlers that conform to the JSP 1.1 tag extension API. 
+</li>
+</ul>
+<h4><a name="wp2693771"></a>Category</h4>
+<p><a href="00000197.htm#2463072">Application framework tags</a></p>
+<h4><a name="wp2693776"></a>Syntax</h4>
+<pre>&lt;cfimport <br />   taglib = &quot;taglib-location&quot;<br />   prefix = &quot;custom&quot;&gt;
+</pre><h4><a name="wp2693778"></a>See also</h4>
+<p><a href="00000217.htm#1097308"><code>cfapplication</code></a><code> </code></p>
+<h4><a name="wp2693783"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this tag.</p>
+<h4><a name="wp2693785"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>taglib</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Tag library URI. The path must be relative to the web root (and start with /), the current page location, or a directory specified in the Administrator ColdFusion mappings page.</p>
+<ul>
+<li>
+   A directory in which custom ColdFusion tags are stored. In this case, all the cfm pages in this directory are treated as custom tags in a tag library.
+</li>
+<li>
+   A path to a JAR in a web-application; for example, &quot;/WEB-INF/lib/sometags.jar&quot;
+</li>
+<li>
+   A path to a tag library descriptor; for example, <br />&quot;/sometags.tld&quot;
+</li>
+</ul>
+<p><strong>Note:	</strong>You must put JSP custom tag libraries in the<br />/WEB-IN/lib directory. This limitation does not apply to ColdFusion pages.</p>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>prefix</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Prefix by which to access the imported custom CFML tags JSP tags. </p>
+<p>If you import a CFML custom tag directory and specify an empty value, <code>&quot;&quot;</code>, for this attribute, you can call the custom tags without using a prefix. You must specify and use a prefix for a JSP tag library.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2693828"></a>Usage</h4>
+<p>The following example imports the tags from the directory myCustomTags:</p>
+<pre>&lt;cfimport 
+   prefix=&quot;mytags&quot; 
+   taglib=&quot;myCustomTags&quot;&gt;
+</pre><p>You can import multiple tag libraries using one prefix. If there are duplicate tags in a library, the first one takes precedence.</p>
+<p>JSP tags have fixed attributes; however, if the tag supports runtime attribute expressions, most tag libraries support the use of the syntax <code>#expressions#</code>. </p>
+<p>To reference a JSP tag in a CFML page, use the syntax <code>&lt;prefix:tagname&gt;</code>. Set the prefix value in the <code>prefix</code> attribute. </p>
+<h4>To use JSP custom tags in a ColdFusion page:</h4>
+<ol>
+<li>
+   Put a JSP tag library JAR file (for example, myjsptags.jar) into the ColdFusion server directory wwwroot/WEB-INF/lib. If the tag library has a separate TLD file, put it in the same directory as the JAR file.
+</li>
+<li>
+   At the top of a CFML page, insert code such as the following:
+<pre>
+&lt;cfimport
+	prefix=&quot;mytags&quot; 
+	taglib=&quot;/WEB-INF/lib/myjsptags.jar&quot;&gt;
+</pre>
+</li>
+</ol>
+<p>To reference a JSP tag from a JAR file, use the following syntax:</p>
+<pre>&lt;cfoutput&gt;
+   &lt;mytags:helloTag message=&quot;#mymessage#&quot; /&gt;
+&lt;cfoutput&gt;
+</pre><p>The <code>cfimport</code> tag must be on the page that uses the imported tags. For example, if you use a <code>cfimport</code> tag on a page that you include with the <code>cfinclude</code> call, you cannot use the imported tags on the page that has the <code>cfinclude</code> tag. Similarly, if you have a <code>cfimport</code> tag on your Application.cfm page, the imported tags are available on the Application.cfm page only, not on the other pages in the application. ColdFusion does not throw an error in these situations, but the imported tags do not run. </p>
+<p>You cannot use the <code>cfimport</code> tag to suppress output from a tag library.</p>
+<p>For more information, see the Java Server Page 1.1 specification. </p>
+<h4><a name="wp3283837"></a>Example</h4>
+<pre>&lt;h3&gt;cfimport example&lt;/h3&gt;
+&lt;p&gt;This example uses the random JSP tag library that is available from the
+Jakarta Taglibs project, at http://jakarta.apache.org/taglibs/
+
+&lt;cfimport taglib=&quot;/WEB-INF/lib/taglibs-random.jar&quot; prefix=&quot;randomnum&quot;&gt;
+
+&lt;randomnum:number id=&quot;randPass&quot; range=&quot;000000-999999&quot; algorithm=&quot;SHA1PRNG&quot; provider=&quot;SUN&quot; /&gt;
+&lt;cfset myPassword = randPass.random&gt;
+&lt;cfoutput&gt;
+  Your password is #myPassword#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000275.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000277.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000276.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CFML syntax errors</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001226.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001228.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CFML syntax errors</h1>
+<p><strong>Problem</strong>: You get an error message such as the following:</p>
+<pre>Encountered &quot;<i>function or tag name</i>&quot; at line 12, column 1.
+Encountered &quot;\&quot;&quot; at line 37, column 20. 
+Encountered &quot;,&quot; at line 24, column 61. 
+Unable to scan the character &#39;\&quot;&#39; which follows &quot;&quot; at line 38, column 53. 
+</pre><p>These errors typically indicate that you have unbalanced &lt;, &quot;, or # characters. One of the most common coding errors is to forget to close quoted code, number sign-delimited variable names, or opening tags. Make sure the code in the identified line and previous lines do not have missing characters.</p>
+<p>The line number in the error message often does <strong>not</strong> identify the line that causes the error. Instead, it identifies the first line where the ColdFusion compiler encountered code that it could not handle as a result of the error.</p>
+<p><strong>Problem</strong>: You get an error message you do not understand.</p>
+<p>Make sure all your CFML tags have matching end tags where appropriate. It is a common error to omit the end tag for the <a href="00000316.htm#1102316"><code>cfquery</code></a>, <a href="00000309.htm#1101659"><code>cfoutput</code></a>, <a href="00000340.htm#1103885"><code>cftable</code></a>, or <a href="00000274.htm#1100123"><code>cfif</code></a> tag.</p>
+<p>As with the previous problem, the line number in the error message often does <strong>not</strong> identify the line that causes the error, but the first line where the ColdFusion compiler encounters code that it could not handle as a result of the error. Whenever you have an error message that does not appear to report a line with an error, check the code that precedes it for missing text.</p>
+<p><strong>Problem</strong>: Invalid attribute or value.</p>
+<p>If you use an invalid attribute or attribute values, ColdFusion returns an error message. To prevent such syntax errors, use the CFML Code Analyzer. Also see <a href="00001221.htm#1116956">Using the cftrace tag to trace execution</a>.</p>
+<p><strong>Problem</strong>: You suspect that there are problems with the structure or contents of a complex data variable, such as a structure, array, query object, or WDDX-encoded variable.</p>
+<p>Use the <a href="00000239.htm#3765824"><code>cfdump</code></a> tag to generate a table-formatted display of the variable's structure and contents. For example, to dump a structure named <code>relatives</code>, use the following line. You must surround the variable name with number signs (#).</p>
+<pre>&lt;cfdump var=#relatives#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001226.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001228.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001227.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>BitMaskRead</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000406.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000408.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>BitMaskRead</h1>
+<h4><a name="wp1224395"></a>Description</h4>
+<p>Performs a bitwise mask read operation. </p>
+<h4><a name="wp3332161"></a>Returns</h4>
+<p>An integer, created from <i>length </i>bits of<i> number,</i> beginning at <i>start</i>.</p>
+<h4><a name="wp2501280"></a>Category</h4>
+<p><a href="00000365.htm#1099613">Mathematical functions</a></p>
+<h4><a name="wp2125902"></a>Function syntax</h4>
+<pre><code><strong>BitMaskRead</strong></code>(<i>number</i>, <i>start</i>, <i>length</i>)
+</pre><h4><a name="wp2603575"></a>See also</h4>
+<p><a href="00000406.htm#1101362"><code>BitMaskClear</code></a><code>, </code><a href="00000408.htm#1101449"><code>BitMaskSet</code></a></p>
+<h4><a name="wp1263972"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>number</p>
+    </td>
+    <td>
+<p>32-bit signed integer to mask</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>start</p>
+    </td>
+    <td>
+<p>Integer, in the range 0-31, inclusive; start bit for read</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>length</p>
+    </td>
+    <td>
+<p>Integer, in the range 0-31, inclusive; length of mask</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1101424"></a>Usage</h4>
+<p>Bit functions operate on 32-bit signed integers, in the range -2147483648 - 2147483647. </p>
+<h4><a name="wp1858254"></a>Example</h4>
+<pre>&lt;h3&gt;BitMaskRead Example&lt;/h3&gt;
+&lt;p&gt;Returns integer created from &lt;em&gt;length&lt;/em&gt; bits of &lt;em&gt;number&lt;/em&gt;, beginning<br />with &lt;em&gt;start&lt;/em&gt;.
+
+&lt;p&gt;BitMaskRead(255, 4, 4): &lt;cfoutput&gt;#<strong>BitMaskRead(255, 4, 4)</strong>#
+&lt;/cfoutput&gt;
+&lt;p&gt;BitMaskRead(255, 0, 4): &lt;cfoutput&gt;#<strong>BitMaskRead(255, 0, 4)</strong>#
+&lt;/cfoutput&gt;
+&lt;p&gt;BitMaskRead(128, 0, 7): &lt;cfoutput&gt;#<strong>BitMaskRead(128, 0, 7)</strong>#
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000406.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000408.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000407.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

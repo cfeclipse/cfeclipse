@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>write</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000847.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000849.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>write</h1>
+<h4><a name="wp1042772"></a>Description</h4>
+<p>Appends data to a serialized data stream.</p>
+<h4><a name="wp1017045"></a>Syntax</h4>
+<pre><code><i>object</i></code>.write( <code><i>str</i></code> )
+</pre><h4><a name="wp1043391"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>object</p>
+    </td>
+    <td>
+<p>Instance name of the WddxSerializer object</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>str</p>
+    </td>
+    <td>
+<p>String to be copied to the serialized data stream</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1067375"></a>Return value</h4>
+<p>Returns an updated serialized data stream as a String.</p>
+<h4><a name="wp1015991"></a>Usage</h4>
+<p>This is an internal function; you do not typically call it.</p>
+<h4><a name="wp1015993"></a>Example</h4>
+<p>This example is from the WddxSerializer <code>serializeValue</code> function:</p>
+<pre>...
+else if (typeof(obj) == &quot;number&quot;)
+{
+   // Number value
+   this.write(&quot;&lt;number&gt;&quot; + obj + &quot;&lt;/number&gt;&quot;);
+}
+else if (typeof(obj) == &quot;boolean&quot;)
+{
+   // Boolean value
+   this.write(&quot;&lt;boolean value=&#39;&quot; + obj + &quot;&#39;/&gt;&quot;);
+}
+...
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000847.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000849.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000848.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

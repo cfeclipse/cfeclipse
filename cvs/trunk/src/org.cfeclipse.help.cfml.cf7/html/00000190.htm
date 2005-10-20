@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Scope-specific built-in variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000189.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000191.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Scope-specific built-in variables</h1>
+<p>ColdFusion returns variables, such as those returned in a <code>cfdirectory</code> or <code>cfftp</code> operation. A variable is usually referenced by <i>scoping</i> it according to its type: naming it according to the code context in which it is available; for example, Session.varname, or Application.varname. For more information on ColdFusion scopes, see <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<p>You use the <code>cflock</code> tag to limit the scope of CFML constructs that modify shared data structures, files, and CFXs, to ensure that modifications occur sequentially. For more information, see <a href="00000285.htm#1100787">cflock</a>, and <a href="00001147.htm#1159066">Using Persistent Data and Locking</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000190.htm#2737100">Variable scope</a>
+</li>
+<li>
+   <a href="00000190.htm#2719897">Caller scope</a>
+</li>
+<li>
+   <a href="00000190.htm#2712000">Client variables</a>
+</li>
+<li>
+   <a href="00000190.htm#2712008">Server variables</a>
+</li>
+<li>
+   <a href="00000190.htm#2712019">Application and session variables</a>
+</li>
+</ul>
+<h2><a name="wp2737100"></a>Variable scope</h2>
+<p>ColdFusion supports the Variables scope. Unscoped variables created with the <code>cfset</code> tag acquire the Variables scope by default. For example, the variable created by the statement <code>&lt;CFSET linguist = Chomsky&gt;</code> can be referenced as<code> #Variables.linguist#</code></p>
+<h2><a name="wp2719897"></a>Caller scope</h2>
+<h4><a name="wp2719887"></a>History</h4>
+<p>ColdFusion&#160;MX: The Caller scope is accessible as a structure. (In earlier releases, it was not.)</p>
+<h2><a name="wp2712000"></a>Client variables</h2>
+<p>The following client variables are reserved:</p>
+<pre>Client.CFID
+Client.CFToken
+Client.HitCount
+Client.LastVisit
+Client.TimeCreated
+Client.URLToken
+</pre><h2><a name="wp2712008"></a>Server variables</h2>
+<p>Use the Server prefix to reference server variables, as follows:</p>
+<pre>Server.ColdFusion.ProductName
+Server.ColdFusion.ProductVersion
+Server.ColdFusion.ProductLevel 
+Server.ColdFusion.SerialNumber 
+Server.ColdFusion.SupportedLocales
+Server.ColdFusion.AppServer
+Server.ColdFusion.Expiration
+Server.ColdFusion.RootDir
+Server.OS.Name 
+Server.OS.AdditionalInformation 
+Server.OS.Version 
+Server.OS.BuildNumber
+</pre><h2><a name="wp2712019"></a>Application and session variables</h2>
+<p>To enable application and session variables, use the <code>cfapplication</code> tag or Application.cfc. Reference them as follows:</p>
+<pre>Application.<code><i>myvariable</i></code>
+Session.<code><i>myvariable</i></code>
+</pre><p>To ensure that modifications to shared data occur in the intended sequence, use the <code>cflock</code> tag. For more information, see <a href="00000285.htm#1100787">cflock</a>.</p>
+<p>The predefined application and session variables are as follows:</p>
+<pre>Application.ApplicationName
+Session.CFID
+Session.CFToken
+Session.URLToken
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000189.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000191.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000190.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

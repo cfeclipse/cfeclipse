@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsXmlRoot</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000540.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000542.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsXmlRoot</h1>
+<h4><a name="wp4392057"></a>Description</h4>
+<p>Determines whether the function parameter is the root element of an XML document object.</p>
+<h4><a name="wp4392059"></a>Returns</h4>
+<p>True, if the function argument is the root object of an XML document object; False, otherwise.</p>
+<h4><a name="wp4392061"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a>, <a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp4392066"></a>Function syntax</h4>
+<pre><code><strong>IsXmlRoot</strong></code>(<code><i>value</i></code>)
+</pre><h4><a name="wp4392068"></a>See also</h4>
+<p><a href="00000536.htm#4979215"><code>IsXML</code></a>, <a href="00000537.htm#4979140"><code>IsXmlAttribute</code></a>, <a href="00000538.htm#4046340">IsXmlDoc</a>, <a href="00000539.htm#4979134"><code>IsXmlElem</code></a>, <a href="00000540.htm#4979002"><code>IsXmlNode</code></a>, <a href="00000669.htm#139655"><code>XmlGetNodeType</code></a>, <a href="00000674.htm#140217"><code>XmlValidate</code></a>; <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4392207"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp4392088"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Name of an XML document object</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4988424"></a>Example</h4>
+<p>The following example tests whether an XML document object, its root element, and a child element are XML root elements:</p>
+<pre>&lt;!--- Create an XML document object ---&gt;
+&lt;cfxml variable=&quot;xmlobject&quot;&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;order id=&quot;4323251&quot;&gt;
+   &lt;customer firstname=&quot;Philip&quot; lastname=&quot;Cramer&quot; accountNum=&quot;21&quot;/&gt;
+   &lt;items&gt;
+      &lt;item id=&quot;43&quot;&gt;
+         &lt;quantity&gt;1&lt;/quantity&gt;
+         &lt;unitprice&gt;15.95&lt;/unitprice&gt;
+      &lt;/item&gt;
+   &lt;/items&gt;
+&lt;/order&gt;
+&lt;/cfxml&gt;
+
+&lt;!--- Test objects to see if they are XML root elements ---&gt;
+&lt;cfoutput&gt;
+&lt;h3&gt;Are the following the XML Root?&lt;/h3&gt;
+xmlobject: #<code><strong>IsXmlRoot(xmlobject)</strong></code>#&lt;br&gt;
+xmlobject.order: #<code><strong>IsXmlRoot(xmlobject.order)</strong></code>#&lt;br&gt;
+&lt;!--- The order element id attribute ---&gt;
+xmlobject.order.XmlAttributes.id: 
+   #<code><strong>IsXmlRoot(xmlobject.order.XmlAttributes.id)</strong></code>#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000540.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000542.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000541.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

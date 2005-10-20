@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The cftree form variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001355.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001357.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The cftree form variables</h1>
+<p>The <a href="00000347.htm#1104271"><code>cftree</code></a> tag lets you force a user to select an item from the tree control by setting the <code>required</code> attribute to Yes. With or without the <code>required</code> attribute, ColdFusion passes two form variables to the application page specified in the <a href="00000256.htm#2433198"><code>cfform</code></a> <code>action</code> attribute:</p>
+<ul>
+<li>
+   Form.<i>treename</i>.path&#160;Returns the complete path of the user selection, in the form: <i>[root]\node1\node2\node_n\value</i>
+</li>
+<li>
+   Form.<i>treename</i>.node&#160;Returns the node of the user selection.
+</li>
+</ul>
+<p>To return the root part of the path, set the <code>completepath</code> attribute of the <code>cftree</code> tag to Yes; otherwise, the path value starts with the first node. If you specify a root name for a tree item using the <code>queryasroot</code> tag, that value is returned as the root. If you do not specify a root name, ColdFusion returns the query name as the root. If there is no query name, ColdFusion returns the tree name as the root. </p>
+<p>In the previous example, if the user selects the name &quot;John Allen&quot; in the tree, ColdFusion returns the following form variables:</p>
+<pre>Form.tree1.path = 3\John Allen
+Form.tree1.node = John Allen
+</pre><p>The deptquery root does not appear in the path, because the <code>cftree</code> tag does not specify <code>completePath=</code>&quot;<code>Yes</code>&quot;. You can specify the character used to delimit each element of the path form variable in the <code>cftree</code> <code>delimiter</code> attribute. The default is a backslash character (\).</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001355.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001357.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001356.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

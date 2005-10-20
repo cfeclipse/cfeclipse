@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Calling the CFX tag from a ColdFusion page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001092.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001094.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Calling the CFX tag from a ColdFusion page</h1>
+<p>You call Java CFX tags from within ColdFusion pages by using the name of the CFX tag that is registered on the ColdFusion&#160;MX Administrator CFX tags page. This name should be the prefix <code>cfx_</code> followed by the class name (without the .class extension). </p>
+<h4>To register a Java CFX tag in the ColdFusion&#160;MX Administrator:</h4>
+<ol>
+<li>
+   In the ColdFusion&#160;MX Administrator, select Extensions &gt; CFX Tags to open the CFX Tags page.
+</li>
+<li>
+   Click Register Java CFX.
+</li>
+<li>
+   Enter the tag name (for example, <code>cfx_MyHelloColdFusion</code>).
+</li>
+<li>
+   Enter the class name without the .class extension (for example, <code>MyHelloColdFusion</code>).
+</li>
+<li>
+   (Optional) Enter a description.
+</li>
+<li>
+   Click Submit.
+</li>
+</ol>
+<p>You can now call the tag from a ColdFusion page.</p>
+<h4>To call a CFX tag from a ColdFusion page:</h4>
+<ol>
+<li>
+   Create a ColdFusion page (.cfm) in your editor with the following content to call the HelloColdFusion custom tag:
+<pre>
+&lt;html&gt;
+&lt;body&gt;
+	&lt;cfx_MyHelloColdFusion NAME=&quot;Les&quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file in a directory configured to serve ColdFusion pages. For example, you can save the file as C:\inetpub\wwwroot\cfdocs\testjavacfx.cfm on Windows or /home/docroot/cfdocs/testjavacfx.cfm on UNIX.
+</li>
+<li>
+   If you have not already done so, register the CFX tag in the ColdFusion&#160;MX Administrator (see <a href="00001101.htm#1096674">Registering CFX tags</a>).
+</li>
+<li>
+   Request the page from your browser using the appropriate URL; for example:
+<p>http://localhost/cfdocs/testjavacfx.cfm</p>
+</li>
+</ol>
+<p>ColdFusion processes the page and returns a page that displays the text &quot;Hello, Les.&quot; If an error is returned instead, check the source code to make sure you have entered it correctly.</p>
+<h4>To delete a CFX tag in the ColdFusion&#160;MX Administrator:</h4>
+<ol>
+<li>
+   In the ColdFusion&#160;MX Administrator, select Extensions &gt; CFX Tag<strong>s</strong> to open the CFX Tags page.
+</li>
+<li>
+   For the tag you want to delete, click the Delete icon in the Controls column of the Registered CFX Tags list.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001092.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001094.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001093.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

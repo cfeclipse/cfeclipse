@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Integers</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000886.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000888.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Integers</h1>
+<p>ColdFusion supports integers between -2,147,483,648 and 2,147,483,647 (32-bit signed integers). You can assign a value outside this range to a variable, but ColdFusion initially stores the number as a string. If you use it in an arithmetic expression, ColdFusion converts it into a floating point value, preserving its value, but losing precision as the following example shows: </p>
+<pre>&lt;cfset mybignum=12345678901234567890&gt;
+&lt;cfset mybignumtimes10=(mybignum * 10)&gt;
+&lt;cfoutput&gt;mybignum is: #mybignum#&lt;/cfoutput&gt;&lt;br&gt;
+&lt;cfoutput&gt;mybignumtimes10 is: #mybignumtimes10# &lt;/cfoutput&gt;&lt;br&gt;
+</pre><p>This example generates the following output:</p>
+<p>mybignum is: 12345678901234567890<br />mybignumtimes10 is: 1.23456789012E+020 </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000886.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000888.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000887.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

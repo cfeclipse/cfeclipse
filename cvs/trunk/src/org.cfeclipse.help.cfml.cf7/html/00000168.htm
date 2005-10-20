@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 2: Determining actions based on which button a user&#160;clicks</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000167.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000169.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 2: Determining actions based on which button a user&#160;clicks</h1>
+<p>In <a href="00000148.htm#1181359">Lesson 6: Creating a Main Application Page</a>, you added buttons to the Trip Detail page to let users search and modify the trips database; however, because you had not yet written the code to implement these capabilities, ColdFusion displayed an error when you clicked the buttons. Clicking these button sends the user to the maintenanceaction.cfm page. In this exercise, you will create the Maintenance Action page (maintenanceaction.cfm).</p>
+<p>ColdFusion creates a variable only for the button that the user clicked. You use the <code>IsDefined</code> function to test for the existence of the variable, which determines which action the application takes.</p>
+<h4>To create the Maintenance Action page:</h4>
+<ol>
+<li>
+   Create a blank file.
+</li>
+<li>
+   Enter the following code in the blank file:
+<pre>
+&lt;cfif IsDefined(&quot;Form.btnSearch&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Search. ---&gt;
+&lt;cfelseif IsDefined(&quot;Form.btnDelete&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Delete. ---&gt;
+&lt;cfelseif IsDefined(&quot;Form.btnEdit&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Edit. ---&gt;
+&lt;cfelseif IsDefined(&quot;Form.btnAdd&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Add. ---&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Save the file as maintenanceaction.cfm in the my_app directory.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000167.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000169.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000168.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

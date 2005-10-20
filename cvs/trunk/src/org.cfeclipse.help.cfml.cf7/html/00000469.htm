@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetAuthUser</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000468.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000470.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetAuthUser</h1>
+<h4><a name="wp4046632"></a>Description</h4>
+<p>Gets the name of an authenticated user.</p>
+<h4><a name="wp4046635"></a>Returns</h4>
+<p>The name of an authenticated user. </p>
+<h4><a name="wp4046637"></a>Category</h4>
+<p><a href="00000368.htm#3542210">Security functions</a></p>
+<h4><a name="wp4046642"></a>Function syntax</h4>
+<pre><code><strong>GetAuthUser</strong></code>()
+</pre><h4><a name="wp4757922"></a>See also</h4>
+<p><a href="00000533.htm#4047189">IsUserInRole</a><code>, </code><a href="00000287.htm#2991147">cflogin</a>, <a href="00000288.htm#2873089">cfloginuser</a>; <a href="00001175.htm#1100022">Securing Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4467366"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp4739417"></a>Usage</h4>
+<p>This function works with <code>cflogin</code> authentication or web server authentication. It checks for a logged-in user as follows:</p>
+<ol>
+<li>
+   It checks for a login made with <code>cfloginuser.</code>
+</li>
+<li>
+   If no user was logged in with <code>cfloginuser</code>, it checks for a web server login (cgi.remote_user).
+</li>
+</ol>
+<h4><a name="wp4739419"></a>Example</h4>
+<pre>&lt;H3&gt;GetAuthUser Example&lt;/H3&gt;
+
+&lt;P&gt;Authenticated User: &lt;cfoutput&gt;#<strong>GetAuthUser()</strong>#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000468.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000470.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000469.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

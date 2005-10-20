@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsUserInRole</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000532.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000534.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsUserInRole</h1>
+<h4><a name="wp4047190"></a>Description</h4>
+<p>Determines whether an authenticated user belongs to the specified Role.</p>
+<h4><a name="wp4047193"></a>Returns</h4>
+<p>True, if the authenticated user, belongs to the specified Role; False, otherwise.</p>
+<h4><a name="wp4047195"></a>Category</h4>
+<p><a href="00000368.htm#3542210">Security functions</a>, <a href="00000358.htm#3485787">Decision functions</a></p>
+<h4><a name="wp4047200"></a>Function syntax</h4>
+<pre><code><strong>IsUserInRole</strong></code>(&quot;<i>role_name</i>&quot;)
+</pre><h4><a name="wp4047202"></a>See also</h4>
+<p><a href="00000469.htm#4046631">GetAuthUser</a>, <a href="00000287.htm#2991147">cflogin</a>, <a href="00000288.htm#2873089">cfloginuser</a>; <a href="00001175.htm#1100022">Securing Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4462196"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function. </p>
+<h4><a name="wp4047319"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>role_name</p>
+    </td>
+    <td>
+<p>Name of a security role</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4995773"></a>Usage</h4>
+<p>Role names are case-sensitive.</p>
+<p>To check if a user is in multiple roles, specify them in a comma-delimited list, such as &quot;Admin,HR&quot;. Lists with multiple roles cannot contain spaces as separators; for example, do not use &quot;Admin, HR&quot;.</p>
+<h4><a name="wp4995776"></a>Example</h4>
+<pre>&lt;cfif IsUserInRole(&quot;Admin&quot;) &gt; 
+   &lt;cfoutput&gt;Authenticated user is an administrator&lt;/cfoutput&gt; 
+&lt;cfelse IsUserInRole(&quot;User&quot;) &gt; 
+   &lt;cfoutput&gt;Authenticated user is a user&lt;/cfoutput&gt; 
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000532.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000534.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000533.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

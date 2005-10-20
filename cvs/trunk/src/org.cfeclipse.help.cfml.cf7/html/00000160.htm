@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Ensuring that a value was entered</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000159.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000161.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Ensuring that a value was entered</h1>
+<p>The first approach that you take to enforce Compass Travel business rules is to enhance the action page to validate the data collected on the data entry form. The action page receives a form variable for every field on the form that contains a value. You use the <code>cfif</code> tag to test the values of these fields to ensure that they adhere to Compass Travel business rules. </p>
+<p>You can use the <code>cfif</code> tag to create conditions that evaluate to either True or False. To use the <code>cfif</code> tag to test whether a trip name was entered (business rule 1) on the Trip Edit form, you add the following <code>cfif</code> statement:</p>
+<pre>&lt;cfif Form.tripName EQ &quot;&quot;&gt;
+   &lt;cfoutput&gt; Trip Name cannot be blank. &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre><p>In this example, the <code>cfif</code> statement tests to see if the value of the form variable <code>tripName</code> is blank. If the trip name condition evaluates to True, ColdFusion sends the message &quot;Trip name cannot be blank&quot; to the browser.</p>
+<p><strong>Note: </strong>The keyword <code>EQ</code> is an operator that tests for equality. For more information about the <code>cfif</code> tag and its operators, see <i>ColdFusion MX Developer's Guide</i>.</p><h4>To ensure that a Trip Name was entered:</h4>
+<ol>
+<li>
+   Open the tripeditaction.cfm file.
+</li>
+<li>
+   Enter the following code after the line <code>&lt;cfset isOk = &quot;Yes&quot;&gt;</code>.
+<pre>
+&lt;!--- Trip Name is required. ---&gt;
+&lt;cfif Form.tripName EQ &quot;&quot;&gt;
+	&lt;CFSET IsOk = &quot;No&quot;&gt;
+	&lt;cfoutput&gt;Trip name cannot be blank.&lt;br&gt;&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To test the data validation:</h4>
+<ol>
+<li>
+   Open the tripedit.cfm page in a browser.
+</li>
+<li>
+   Verify that there is no value in the Trip Name field.
+</li>
+<li>
+   Click Save.
+<p>The error message &quot;Trip name cannot be blank&quot; appears.</p>
+</li>
+</ol>
+<h2><a name="wp1188790"></a>Evaluating check box and radio button variables</h2>
+<p>Business rule 8 in the Compass Travel new trip policy requires you to test the value of the <code>depositRequired</code> check box form variable. Check box and radio button variables are only passed to the action page when the user selects these options on the form. An error occurs if the action page tries to use a variable that was not passed. </p>
+<p>To ensure that an error does not occur, you use the <code>IsDefined</code> function in a <code>cfif</code> statement to determine whether the user selected the Deposit Required check box on the form.</p>
+<p>The <code>cfif</code> statement and the <code>IsDefined</code> function evaluate the value of the form variable <code>depositRequired</code> to determine if a value exists. The statement <code>not</code> <code>IsDefined</code> returns True if the specified variable is not found, and the <code>cfset</code> statement sets the form variable to No. A value of No indicates that a deposit is not required; a value of Yes indicates that a deposit is required.</p>
+<h4>To set the value of the Deposit Required check box:</h4>
+<ol>
+<li>
+   Open the tripeditaction.cfm file.
+</li>
+<li>
+   Enter the following code after the first <code>cfif</code> code block.
+<pre>
+&lt;cfif not IsDefined(&quot;Form.depositRequired&quot;)&gt;
+	&lt;cfset form.depositRequired = &quot;No&quot;&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h2><a name="wp1188824"></a>Adding validation for all Compass Travel business rules</h2>
+<p>You add validation for all the form variables.</p>
+<h4>To validate all the data passed:</h4>
+<ol>
+<li>
+   Open the tripeditaction.cfm file in the my_app directory. 
+</li>
+<li>
+   Enter the validation code blocks in the following table after the <code>cfif</code> code blocks that you already entered.
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<p>The following table lists the Compass Travel business rules and shows the corresponding code that ensures that the data entered in the form follows the business rules.</p>
+<p><strong>Note: </strong>You have already entered validation code for business rule 1. Validation code for business rule 10 is described in more detail later in this lesson.</p><table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Rule
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Validation code
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>2</p>
+    </td>
+    <td>
+<p>All trips must be accompanied by a full description.</p>
+    </td>
+    <td>
+<pre>&lt;!--- Trip description is required. ---&gt;
+&lt;cfif Form.tripDescription EQ &quot;&quot;&gt;
+   &lt;cfset IsOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      Trip description cannot be blank.
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>3</p>
+    </td>
+    <td>
+<p>Each trip must be categorized by event type. Only valid event types (1-surfing, 2-mountain climbing, and so on) are permissible. </p>
+    </td>
+    <td>
+<p>Because event type 1 (surfing) is selected by default, there is always a value for event type.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>4</p>
+    </td>
+    <td>
+<p>Trip locations are required.</p>
+    </td>
+    <td>
+<pre>&lt;!--- Trip location is required. ---&gt;
+&lt;cfif Form.tripLocation EQ &quot;&quot;&gt;
+   &lt;cfset IsOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      Trip location cannot be blank.
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>5</p>
+    </td>
+    <td>
+<p>The maximum number of people permitted on the trip must be specified.</p>
+    </td>
+    <td>
+<pre>&lt;!--- Number of people is required and must be numeric. ---&gt;
+&lt;cfif Form.numberPeople EQ &quot;&quot; or
+   IsNumeric(Form.numberPeople) EQ False&gt;
+   &lt;cfset IsOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      The number of people must be a number and
+      cannot be blank.
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>6</p>
+    </td>
+    <td>
+<p>The trip departure and return dates must be specified for each trip.</p>
+<p>All trip dates must be valid future dates. Departure date must precede return date.</p>
+    </td>
+    <td>
+<pre>&lt;cfif form.departureDate GT form.returnDate&gt;
+   &lt;cfset isOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      Departure date cannot precede return date.
+      Please re-enter.
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>7</p>
+    </td>
+    <td>
+<p>The trip's price and base cost are required. Both values are positive numeric values. The trip price must have at least a 20% markup over base cost.</p>
+    </td>
+    <td>
+<pre>&lt;!--- Base Cost is required and must be numeric. ---&gt;
+&lt;cfif Form.baseCost EQ &quot;&quot; or
+   IsNumeric(Form.baseCost) EQ False&gt;
+   &lt;cfset IsOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      Base Cost must be a number and cannot be 
+      blank.
+   &lt;/cfoutput&gt;
+   &lt;cfelse&gt;
+   &lt;!--- Price must be 20% greater than Base Cost. ---&gt;
+   &lt;cfif Form.basecost * 1.2 GT  #Form.price#&gt;
+      &lt;cfset IsOk = &quot;No&quot;&gt;
+      &lt;cfoutput&gt;
+         Price must be marked up at least 20%
+         above cost.
+      &lt;/cfoutput&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>8</p>
+    </td>
+    <td>
+<p>Any trip priced over $750 requires a deposit. </p>
+    </td>
+    <td>
+<pre>&lt;!--- Price is required and must be numeric. ---&gt;
+&lt;cfif Form.price EQ &quot;&quot; or
+   IsNumeric(Form.baseCost) EQ False&gt;
+   &lt;cfset IsOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      Price must be a number and cannot be blank.
+   &lt;/cfoutput&gt;
+   &lt;cfelse&gt;
+   &lt;!--- A deposit is required when the price is &gt; $750. ---&gt;
+      &lt;cfif Form.price GT 750 AND
+         Form.depositRequired EQ &quot;No&quot;&gt;
+         &lt;cfset IsOk = &quot;No&quot;&gt;
+         &lt;cfoutput&gt;
+            Deposit is required for 
+            trips priced over $750.
+         &lt;/cfoutput&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>9</p>
+    </td>
+    <td>
+<p>A trip leader must be identified. </p>
+    </td>
+    <td>
+<pre>&lt;!--- Trip Leader is required. ---&gt;
+&lt;cfif Form.tripLeader EQ &quot;&quot;&gt;
+   &lt;cfset IsOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      A trip leader must be specified.
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>10</p>
+    </td>
+    <td>
+<p>A photo must accompany all new trips.</p>
+    </td>
+    <td>
+<pre>&lt;!--- Photo filename is required. ---&gt;
+&lt;cfif Form.photo EQ &quot;&quot;&gt;
+   &lt;cfset IsOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+      Photo filename must be specified.&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>The code for business rules 7 and 8 uses ColdFusion <code>cfif</code> and <code>cfelse</code> conditional processing tags. The code inside the <code>cfif</code> tags only executes when the condition evaluates to True. To perform other actions when the condition evaluates to False, the <code>cfelse</code> tag is used. For more information about using conditional processing tags, see <i>ColdFusion MX Developer's Guide</i>.</p><h4>To test the validation code:</h4>
+<ol>
+<li>
+   View the tripedit.cfm page in the browser. 
+</li>
+<li>
+   In the form, enter <strong>500</strong> in both the Price and Base Cost<strong> </strong>fields. 
+</li>
+<li>
+   Click the Save button. 
+<p>The trip price error message displays: &quot;Price must be marked up at least 20% above cost.&quot;</p>
+</li>
+<li>
+   Click the browser Back button to return to the tripedit.cfm page.
+</li>
+<li>
+   To avoid the error, enter <strong>800</strong> in the Price field, and click Save.
+</li>
+<li>
+   Test various combinations to ensure that all the Compass Travel business rules are enforced by filling out the fields on the form and clicking Save.
+<p>Testing recommendations:</p>
+<li>Leave out required fields, such as trip name or location.</li>
+<li>Enter a nonnumeric value in Number of People, such as <strong>one</strong>.</li>
+<li>Leave the entire form blank and click Save. The following messages appear:</li>
+<p>Trip name cannot be blank. A trip leader must be specified. Photo filename must be specified. The number of people must be a number and cannot be blank. Trip location cannot be blank. Base cost must be a number and cannot be blank. Price must be a number and cannot be blank. </p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000159.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000161.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000160.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

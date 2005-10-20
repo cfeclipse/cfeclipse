@@ -1,0 +1,594 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Control elements</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001418.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001420.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Control elements</h1>
+<p>The XML tags that follow the <code>xf:bind</code> element specify the form controls and their layout. The XML includes one element for each form control and <code>cfformitem</code> or <code>cfformgroup</code> tag.</p>
+<h3><a name="wp131889"></a>CFML to XML tag mapping</h3>
+<p>ColdFusion&#160;MX maps CFML tags to XForms elements and ColdFusion extensions as the following table shows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+CFML tag
+    </th>
+    <th>
+ XML tag 
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>cfinput type=&quot;text&quot;</p>
+    </td>
+    <td>
+<p>xf:input </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfinput type=&quot;password&quot;</p>
+    </td>
+    <td>
+<p>xf:secret</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfinput type=&quot;hidden&quot;</p>
+    </td>
+    <td>
+<p>None: instance data only </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfinput type=&quot;file&quot;</p>
+    </td>
+    <td>
+<p>xf:upload </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfinput type=&quot;radio&quot;</p>
+    </td>
+    <td>
+<p>xf:select1 </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfinput type=&quot;checkbox&quot;</p>
+    </td>
+    <td>
+<p>xf:select </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfinput type=&quot;button&quot;</p>
+    </td>
+    <td>
+<p>xf:trigger </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfinput type=&quot;image&quot;</p>
+    </td>
+    <td>
+<p>xf:submit </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfinput type=&quot;reset&quot;</p>
+    </td>
+    <td>
+<p>xf:submit </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfinput type=&quot;submit&quot;</p>
+    </td>
+    <td>
+<p>xf:submit</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfselect multiple=&quot;false&quot;</p>
+    </td>
+    <td>
+<p>xf:select1 </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfselect multiple=&quot;true&quot;</p>
+    </td>
+    <td>
+<p>xf:select </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cftextarea</p>
+    </td>
+    <td>
+<p>xf:textarea </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfslider</p>
+    </td>
+    <td>
+<p>xf:range </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfgrid</p>
+    </td>
+    <td>
+<p>cf:grid </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cftree</p>
+    </td>
+    <td>
+<p>cf:tree </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfformitem type=&quot;text&quot;</p>
+    </td>
+    <td>
+<p>xf:output</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfformitem type=&quot;html&quot;</p>
+    </td>
+    <td>
+<p>xf:output</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfformitem type=&quot;*&quot; (all but text, html)</p>
+    </td>
+    <td>
+<p>xf:group appearance=&quot;*&quot; </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfformgroup type=&quot;*&quot;</p>
+    </td>
+    <td>
+<p>xf:group appearance=&quot;*&quot; </p>
+    </td>
+  </tr>
+</table>
+
+<p>ColdFusion converts <code>cfformitem</code> tags with text and html <code>type</code> attributes to XForms <code>output</code> elements with the tag body in a &lt;![CDATA[ section. It converts all other <code>cfformitem</code> tags to XForms <code>group</code> elements, and sets each element's <code>appearance</code> attribute to the <code>cfformitem</code> tag's <code>type</code> attribute. The XSLT must process these elements to produce meaningful output. For example, the ColdFusion default skin transform displays the <code>xf:output</code> text blocks and processes the <code>xf:group</code> <code>appearance=&quot;hrule&quot;</code> element, but it ignores all other <code>xf:group</code> elements.</p>
+<h3><a name="wp133302"></a>General control element structure</h3>
+<p>Each control element that can be represented by a standard XForms control element has the following general structure. (For information on XML element structure for <code>cfformitem</code>, <code>cfformgroup</code>, <code>cfgrid</code>, and <code>cftree</code> tags, see the following sections.)</p>
+<pre>&lt;xf:<i>tagname</i> bind=&quot;<i>bindid</i>&quot; id=&quot;<i>bindid</i>&quot;&gt;
+   &lt;xf:label&gt;<i>label</i>&lt;/xf:label&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;type&quot;&gt;<i>controltype</i>&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;<i>attribname</i>&gt;<i>attribvalue</i>&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;<i>attribname</i>&gt;<i>attribvalue</i>&lt;/cf:attribute&gt;
+      .
+      .
+      .
+   &lt;/xf:extension&gt;
+&lt;/xf:<i>tagname</i>&gt;
+</pre><p>The following table describes the variable parts of this structure:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Part
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>tagname</p>
+    </td>
+    <td>
+<p>The xf or cf namespace element name, as identified in the table in <a href="00001419.htm#131889">CFML to XML tag mapping</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>bindid</p>
+    </td>
+    <td>
+<p>ID attribute of the model <code>xf:bind</code> element for this control. Specified by the control's CFML tag <code>name</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>label</p>
+    </td>
+    <td>
+<p>Control label text. Specified by one of the following:</p>
+<ul>
+<li>
+   The CFML tag <code>label</code> attribute
+</li>
+<li>
+   The <code>value</code> attribute of the <code>radiobutton</code>, <code>submit</code>, and <code>reset</code> <code>cfinput</code> tags
+</li>
+<li>
+   The tag body content of <code>cfselect</code> <code>option</code> subtags, 
+</li>
+<li>
+   Not used for <code>cfgrid</code> and <code>cftree</code> tags.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>controltype</p>
+    </td>
+    <td>
+<p>Type of control. One of the following:</p>
+<ul>
+<li>
+   The <code>cfinput</code> <code>type</code> attribute
+</li>
+<li>
+   <code>Select</code>, <code>slider</code>, or <code>textarea</code>, for the <code>cfselect</code>, <code>cfslider</code>, or <code>cftextarea</code> tags, respectively. 
+</li>
+<li>
+   Not used for <code>cfgrid</code> and <code>cftree</code> tags.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>attribname</p>
+    </td>
+    <td>
+<p>Name of a CFML tag attribute. There is a <code>cf:attribute</code> tag for each attribute specified in the CFML code that does not otherwise have an entry in the XML.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>attribvalue</p>
+    </td>
+    <td>
+<p>Value of a CFML tag attribute.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp134617"></a>Tag-specific element structure</h3>
+<p>The following sections describe tag-specific features of the XML for several types of input tags. It is not all-inclusive. For the specific structure of any ColdFusion form tag, see the XML generated from the tag by ColdFusion&#160;MX.</p>
+<h4><a name="wp133448"></a>Selection tags</h4>
+<p>Tags that are used for selection, <code>cfselect</code>, <code>cfinput</code> <code>type=&quot;radio&quot;</code>, and <code>cfinput</code> <code>type=&quot;checkbox&quot;</code> are converted to XForms <code>select</code> and <code>select1</code> elements. These elements include an <code>xf:choices</code> element, which in turn has an <code>xf:item</code> element for each item a user can choose. Each item normally has an <code>xf:label</code> element and an <code>xf:value</code> element. Check boxes have a single item; select and radio button controls have more than one. </p>
+<p>The following example shows the CFML code for a group of two radio buttons, followed by the generated XML control elements. This example also shows the use of a <code>cfformgroup</code> tag to arrange and label the radio button group.</p>
+<h4><a name="wp133674"></a>CFML</h4>
+<pre>&lt;cfformgroup type=&quot;horizontal&quot; label=&quot;Accept?&quot;&gt;
+   &lt;cfinput type = &quot;Radio&quot; name = &quot;YesNo&quot; value = &quot;Yes&quot; checked&gt;
+   &lt;cfinput type = &quot;Radio&quot; name = &quot;YesNo&quot; value = &quot;No&quot;&gt;
+&lt;/cfformgroup&gt;
+</pre><h4><a name="wp133627"></a>XML</h4>
+<pre>&lt;xf:group appearance=&quot;horizontal&quot;&gt;
+   &lt;xf:label&gt;Accept?&lt;/xf:label&gt;
+   &lt;xf:extension/&gt;
+   &lt;xf:select1 appearance=&quot;full&quot; bind=&quot;YesNo&quot; id=&quot;YesNo&quot;&gt;
+      &lt;xf:extension&gt;
+         &lt;cf:attribute name=&quot;type&quot;&gt;radio&lt;/cf:attribute&gt;
+      &lt;/xf:extension&gt;
+      &lt;xf:choices&gt;
+         &lt;xf:item&gt;
+            &lt;xf:label&gt;Yes&lt;/xf:label&gt;
+            &lt;xf:value&gt;Yes&lt;/xf:value&gt;
+            &lt;xf:extension&gt;
+               &lt;cf:attribute name=&quot;checked&quot;&gt;checked&lt;/cf:attribute&gt;
+            &lt;/xf:extension&gt;
+         &lt;/xf:item&gt;
+         &lt;xf:item&gt;
+            &lt;xf:label&gt;No&lt;/xf:label&gt;
+            &lt;xf:value&gt;No&lt;/xf:value&gt;
+            &lt;xf:extension/&gt;
+         &lt;/xf:item&gt;
+      &lt;/xf:choices&gt;
+   &lt;/xf:select1&gt;
+&lt;/xf:group&gt;
+</pre><h4><a name="wp133431"></a>cfgrid tags</h4>
+<p>ColdFusion&#160;MX represents a <code>cfgrid</code> tag using the <code>cf:grid</code> XML tag. This tag has four attributes: <code>format</code>, which can be Flash, Applet, or XML; and the <code>id</code>, <code>name</code>, and <code>bind</code> attributes, which all have the value of the <code>cfgrid</code> tag <code>name</code> attribute.</p>
+<p>For applet and Flash format grids, ColdFusion inserts <code>cfgrid</code> controls in the XML as HTML embed objects in &lt;![CDATA[ sections in the body of a <code>cf:grid</code> tag. The controls can be Java applets or in SWF file format.</p>
+<p>For XML format grids, ColdFusion converts the CFML to XML in the following format:</p>
+<pre>cf:grid bind=&quot;<i>gridname</i>&quot; name=&quot;<i>gridname</i>&quot; format=&quot;xml&quot; id=&quot;<i>gridname</i>&gt;
+   &lt;metadata&gt;
+      <i>&lt;cfgridAttribute1&gt;attributeValue&lt;/cfgridAttribute1&gt;</i>
+      ... 
+      (There are an entry for attributes with a specified or default value.)
+   &lt;/metadata&gt;
+   &lt;columns&gt;
+      &lt;column <i>cfgridcolumnAttribute1=&quot;value&quot; ... /&gt;</i>
+      ...
+   &lt;/columns&gt;
+   &lt;rows&gt;
+      &lt;row&gt;
+         &lt;<i>column1Name</i>&gt;<i>row1Column1Value</i>&lt;/<i>column1Name</i>&gt;
+         &lt;<i>column2Name</i>&gt;<i>row1Column2Value</i>&lt;/<i>column2Name&gt;</i>
+         ...
+      &lt;/row&gt;
+      &lt;row&gt;
+         &lt;<i>column1Name</i>&gt;<i>row2Column1Value</i>&lt;/<i>column1Name</i>&gt;
+         &lt;<i>column2Name</i>&gt;<i>row2Column2Value</i>&lt;/<i>column2Name</i>&gt;
+      &lt;/row&gt;
+      ...
+   &lt;/rows&gt;
+&lt;/cf:grid&gt;
+</pre><p>The following example shows a minimal grid with two nodes.</p>
+<h4><a name="wp137848"></a>CFML</h4>
+<pre>&lt;cfgrid name=&quot;mygrid&quot; Format=&quot;xml&quot; selectmode=&quot;Edit&quot; width=&quot;350   &quot;&gt;
+   &lt;cfgridcolumn name=&quot;CorName&quot; header=&quot;Course Name&quot; &gt;
+   &lt;cfgridcolumn name=&quot;Course_ID&quot; header=&quot;ID&quot;&gt;
+   &lt;cfgridrow data=&quot;one0,two0&quot;&gt;
+   &lt;cfgridrow data=&quot;one1,two1&quot;&gt;
+&lt;/cfgrid&gt;
+</pre><h4><a name="wp137878"></a>XML</h4>
+<p>Most metadata lines are omitted for brevity:</p>
+<pre>&lt;cf:grid bind=&quot;mygrid&quot; format=&quot;XML&quot; id=&quot;mygrid&quot; name=&quot;mygrid&quot;&gt;
+   &lt;metadata&gt;
+      &lt;autowidth&gt;false&lt;/autowidth&gt;
+      &lt;insert&gt;false&lt;/insert&gt;
+      &lt;delete&gt;false&lt;/delete&gt;
+      &lt;sort&gt;false&lt;/sort&gt;
+      &lt;italic&gt;false&lt;/italic&gt;
+      &lt;bold&gt;false&lt;/bold&gt;
+      &lt;appendkey&gt;true&lt;/appendkey&gt;
+      &lt;highlughthref&gt;true&lt;/highlughthref&gt;
+      &lt;griddatalines&gt;Left&lt;/griddatalines&gt;
+      &lt;gridlines&gt;true&lt;/gridlines&gt;
+      &lt;rowheaders&gt;true&lt;/rowheaders&gt;
+      &lt;rowheaderalign&gt;Left&lt;/rowheaderalign&gt;
+      &lt;rowheaderitalic&gt;false&lt;/rowheaderitalic&gt;
+      &lt;rowheaderbold&gt;false&lt;/rowheaderbold&gt;
+      &lt;colheaders&gt;true&lt;/colheaders&gt;
+      &lt;colheaderalign&gt;Left&lt;/colheaderalign&gt;
+      &lt;colheaderitalic&gt;false&lt;/colheaderitalic&gt;
+      &lt;colheaderbold&gt;false&lt;/colheaderbold&gt;
+      &lt;selectmode&gt;Edit&lt;/selectmode&gt;
+      &lt;notsupported&gt;&amp;lt;b&amp;gt; Browser must support Java to view ColdFusion Java
+Applets&amp;lt;/b&amp;gt;&lt;/notsupported&gt;
+      &lt;picturebar&gt;false&lt;/picturebar&gt;
+      &lt;insertbutton&gt;insert&lt;/insertbutton&gt;
+      &lt;deletebutton&gt;delete&lt;/deletebutton&gt;
+      &lt;sortAscendingButton&gt;SortAsc&lt;/sortAscendingButton&gt;
+      &lt;sortDescendingButton&gt;SortDesc&lt;/sortDescendingButton&gt;
+   &lt;/metadata&gt;
+   &lt;columns&gt;
+      &lt;column bold=&quot;false&quot; display=&quot;true&quot; header=&quot;Course Name&quot;
+         headerBold=&quot;false&quot; headerItalic=&quot;false&quot; italic=&quot;false&quot;
+         name=&quot;CorName&quot; select=&quot;true&quot;/&gt;
+      &lt;column bold=&quot;false&quot; display=&quot;true&quot; header=&quot;ID&quot;
+         headerBold=&quot;false&quot; headerItalic=&quot;false&quot; italic=&quot;false&quot;
+         name=&quot;Course_ID&quot; select=&quot;true&quot;/&gt;
+   &lt;/columns&gt;
+   &lt;rows&gt;
+      &lt;row&gt;
+         &lt;CorName&gt;one0&lt;/CorName&gt;
+         &lt;Course_ID&gt;two0&lt;/Course_ID&gt;
+      &lt;/row&gt;
+      &lt;row&gt;
+         &lt;CorName&gt;one1&lt;/CorName&gt;
+         &lt;Course_ID&gt;two1&lt;/Course_ID&gt;
+      &lt;/row&gt;
+   &lt;/rows&gt;
+&lt;/cf:grid&gt;
+</pre><h4><a name="wp137855"></a>The cftree tags</h4>
+<p>For applet and Flash format trees, ColdFusion inserts <code>cftree</code> controls in the XML as HTML embed objects in &lt;![CDATA[ sections in the tag body. The controls can be Java applets or in Flash SWF format. The <code>cf:tree</code> XML tag has two attributes: <code>format</code>, which can be Flash or Applet, and <code>id</code>.</p>
+<p>For XML format trees, ColdFusion converts the CFML to XML in the following format:</p>
+<pre>cf:tree format=&quot;XML&quot; id=&quot;<i>treename</i>&gt;
+   &lt;metadata&gt;
+      <i>&lt;cftreeAttribute1&gt;attributeValue&lt;/cftreeAttribute1&gt;</i>
+      ... 
+   &lt;/metadata&gt;
+   &lt;node <i>cfml tree item attributes</i>&gt;
+      &lt;node //nested node with no children
+      <i>   cfml tree item attributes /&gt;</i>
+      ...
+   &lt;/node&gt;
+   ...
+&lt;/cf:tree&gt;
+</pre><p>The following example shows a minimal tree with two nodes:</p>
+<h4><a name="wp137595"></a>CFML</h4>
+<pre>&lt;cfform name=&quot;form2&quot; Format=&quot;XML&quot; &gt;
+&lt;cftree name=&quot;tree1&quot; hscroll=&quot;No&quot; vscroll=&quot;No&quot; format=&quot;xml&quot; 
+   border=&quot;No&quot;&gt;
+   &lt;cftreeitem value=&quot;Divisions&quot;&gt;
+   &lt;cftreeitem value=&quot;Development&quot; 
+      parent=&quot;Divisions&quot; img=&quot;folder&quot;&gt;
+&lt;/cftree&gt;
+&lt;/cfform&gt;
+</pre><h4><a name="wp137604"></a>XML</h4>
+<p>The following code shows only the XML that is related to the tree appearance:</p>
+<pre>&lt;cf:tree format=&quot;xml&quot; id=&quot;tree1&quot;&gt;
+   &lt;metadata&gt;
+      &lt;fontWeight/&gt;
+      &lt;align/&gt;
+      &lt;lookAndFeel&gt;windows&lt;/lookAndFeel&gt;
+      &lt;delimiter&gt;\&lt;/delimiter&gt;
+      &lt;completePath&gt;false&lt;/completePath&gt;
+      &lt;border&gt;false&lt;/border&gt;
+      &lt;hScroll&gt;false&lt;/hScroll&gt;
+      &lt;vScroll&gt;false&lt;/vScroll&gt;
+      &lt;appendKey&gt;true&lt;/appendKey&gt;
+      &lt;highlightHref&gt;true&lt;/highlightHref&gt;
+      &lt;italic&gt;false&lt;/italic&gt;
+      &lt;bold&gt;false&lt;/bold&gt;
+   &lt;/metadata&gt;
+   &lt;node display=&quot;Divisions&quot; expand=&quot;true&quot; href=&quot;&quot; img=&quot;&quot;
+      imgOpen=&quot;&quot; parent=&quot;&quot; path=&quot;Divisions&quot; queryAsRoot=&quot;true&quot;
+               value=&quot;Divisions&quot;&gt;
+      &lt;node display=&quot;Development&quot; expand=&quot;true&quot; href=&quot;&quot;
+         img=&quot;folder&quot; imgOpen=&quot;&quot; parent=&quot;Divisions&quot;
+         path=&quot;Divisions\Development&quot; queryAsRoot=&quot;true&quot;
+                  value=&quot;Development&quot;/&gt;
+   &lt;/node&gt;
+&lt;/cf:tree&gt;
+</pre><h4><a name="wp133321"></a>The cfformgroup and cfformitem tags</h4>
+<p>All <code>cfformgroup</code> tags and all <code>cfformitem</code> tags, except <code>type=&quot;html&quot;</code> and <code>type=&quot;text&quot;,</code> generate <code>xf:group</code> elements. The following rules determine the element structure:</p>
+<ul>
+<li>
+   The CFML tag <code>type</code> attribute determines the <code>xf:group</code> <code>appearance</code> attribute.
+</li>
+<li>
+   ColdFusion MX converts <code>type</code> attribute values to all-lowercase characters.
+</li>
+<li>
+   For <code>cfformgroup</code> tags only, the CFML <code>label</code> attribute determines the <code>xf:group</code> <code>label</code> attribute. 
+</li>
+<li>
+   All other CFML attributes are put in <code>cf:attribute</code> elements in a <code>xf:extension</code> element.
+</li>
+<li>
+   The <code>cfformitem</code> tags generate an <code>xf:output</code> element with the body text in a &lt;![CDATA[ section. 
+</li>
+</ul>
+<p>The following example shows two <code>cformitem</code> tags, and the resulting XML: </p>
+<h4><a name="wp136106"></a>CFML</h4>
+<pre>&lt;cfformitem name=&quot;text1&quot; type=&quot;text&quot; style=&quot;color:green&quot;&gt;
+   Please tell us a little about yourself and your thoughts.
+&lt;/cfformitem&gt;
+&lt;cfformitem type=&quot;hrule&quot; height=&quot;3&quot; width=&quot;200&quot; testattribute=&quot;testvalue&quot; /&gt;
+</pre><h4><a name="wp139553"></a>XML</h4>
+<pre>&lt;xf:output&gt;&lt;![CDATA[Please tell us a little about yourself and your
+thoughts.]]&gt; 
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;style&quot;&gt;color:green&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:output&gt;
+&lt;xf:group appearance=&quot;hrule&quot;&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;width&quot;&gt;200&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;height&quot;&gt;3&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;testattribute&quot;&gt;testvalue&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:group&gt;
+</pre><h3><a name="wp133897"></a>Example: control element XML</h3>
+<p>The following code shows the XML for the input controls for the form shown in the figure in <a href="00001410.htm#116740">About XML skinnable forms</a>. This code immediately follows the end of the <code>xf:model</code> element.</p>
+<pre>&lt;xf:group appearance=&quot;horizontal&quot;&gt;
+   &lt;xf:label&gt;name&lt;/xf:label&gt;
+   &lt;xf:extension/&gt;
+   &lt;xf:input bind=&quot;firstname&quot; id=&quot;firstname&quot;&gt;
+      &lt;xf:label&gt;First&lt;/xf:label&gt;
+      &lt;xf:extension&gt;
+         &lt;cf:attribute name=&quot;type&quot;&gt;text&lt;/cf:attribute&gt;
+         &lt;cf:attribute name=&quot;size&quot;&gt;20&lt;/cf:attribute&gt;
+      &lt;/xf:extension&gt;
+   &lt;/xf:input&gt;
+   &lt;xf:input bind=&quot;lastname&quot; id=&quot;lastname&quot;&gt;
+      &lt;xf:label&gt;Last&lt;/xf:label&gt;
+      &lt;xf:extension&gt;
+         &lt;cf:attribute name=&quot;type&quot;&gt;text&lt;/cf:attribute&gt;
+         &lt;cf:attribute name=&quot;size&quot;&gt;25&lt;/cf:attribute&gt;
+      &lt;/xf:extension&gt;
+   &lt;/xf:input&gt;
+&lt;/xf:group&gt;
+&lt;xf:input bind=&quot;email&quot; id=&quot;email&quot;&gt;
+   &lt;xf:label&gt;Email&lt;/xf:label&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;type&quot;&gt;text&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;validation&quot;&gt;email&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:input&gt;
+&lt;xf:output&gt;&lt;![CDATA[&lt;b&gt;We value your input&lt;/b&gt;.&lt;br&gt;
+   &lt;em&gt;Please tell us a little about yourself and your thoughts.&lt;/em&gt;]]&gt;
+   &lt;xf:extension/&gt;
+&lt;/xf:output&gt;
+&lt;xf:group appearance=&quot;vertical&quot;&gt;
+   &lt;xf:extension/&gt;
+   &lt;xf:select1 appearance=&quot;minimal&quot; bind=&quot;satisfaction&quot; id=&quot;satisfaction&quot;&gt;
+      &lt;xf:label&gt;Satisfaction&lt;/xf:label&gt;
+      &lt;xf:extension&gt;
+         &lt;cf:attribute name=&quot;type&quot;&gt;select&lt;/cf:attribute&gt;
+         &lt;cf:attribute name=&quot;style&quot;&gt;width:200&lt;/cf:attribute&gt;
+      &lt;/xf:extension&gt;
+      &lt;xf:choices&gt;
+         &lt;xf:item&gt;
+            &lt;xf:label&gt;very satisfied&lt;/xf:label&gt;
+            &lt;xf:value&gt;very satisfied&lt;/xf:value&gt;
+         &lt;/xf:item&gt;
+         &lt;xf:item&gt;
+            &lt;xf:label&gt;somewhat satisfied&lt;/xf:label&gt;
+            &lt;xf:value&gt;somewhat satisfied&lt;/xf:value&gt;
+         &lt;/xf:item&gt;
+         &lt;xf:item&gt;
+            &lt;xf:label&gt;somewhat dissatisfied&lt;/xf:label&gt;
+            &lt;xf:value&gt;somewhat dissatisfied&lt;/xf:value&gt;
+         &lt;/xf:item&gt;
+         &lt;xf:item&gt;
+            &lt;xf:label&gt;very dissatisfied&lt;/xf:label&gt;
+            &lt;xf:value&gt;very dissatisfied&lt;/xf:value&gt;
+         &lt;/xf:item&gt;
+         &lt;xf:item&gt;
+            &lt;xf:label&gt;no opinion&lt;/xf:label&gt;
+            &lt;xf:value&gt;no opinion&lt;/xf:value&gt;
+         &lt;/xf:item&gt;
+      &lt;/xf:choices&gt;
+   &lt;/xf:select1&gt;
+   &lt;xf:textarea bind=&quot;thoughts&quot; id=&quot;thoughts&quot;&gt;
+      &lt;xf:label&gt;Additional Comments&lt;/xf:label&gt;
+      &lt;xf:extension&gt;
+         &lt;cf:attribute name=&quot;type&quot;&gt;textarea&lt;/cf:attribute&gt;
+         &lt;cf:attribute name=&quot;rows&quot;&gt;5&lt;/cf:attribute&gt;
+         &lt;cf:attribute name=&quot;cols&quot;&gt;40&lt;/cf:attribute&gt;
+      &lt;/xf:extension&gt;
+   &lt;/xf:textarea&gt;
+&lt;/xf:group&gt;
+&lt;xf:group appearance=&quot;horizontal&quot;&gt;
+   &lt;xf:extension/&gt;
+   &lt;xf:submit id=&quot;submit&quot; submission=&quot;comments&quot;&gt;
+      &lt;xf:label&gt;Tell Us&lt;/xf:label&gt;
+      &lt;xf:extension&gt;
+         &lt;cf:attribute name=&quot;type&quot;&gt;submit&lt;/cf:attribute&gt;
+         &lt;cf:attribute name=&quot;name&quot;&gt;submit&lt;/cf:attribute&gt;
+      &lt;/xf:extension&gt;
+   &lt;/xf:submit&gt;
+   &lt;xf:submit id=&quot;reset&quot;&gt;
+      &lt;xf:label&gt;Clear Fields&lt;/xf:label&gt;
+      &lt;reset ev:event=&quot;DOMActivate&quot;/&gt;
+      &lt;xf:extension&gt;
+         &lt;cf:attribute name=&quot;name&quot;&gt;reset&lt;/cf:attribute&gt;
+      &lt;/xf:extension&gt;
+   &lt;/xf:submit&gt;
+&lt;/xf:group&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001418.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001420.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001419.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

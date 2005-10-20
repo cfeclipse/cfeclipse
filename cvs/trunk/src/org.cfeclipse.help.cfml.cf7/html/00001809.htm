@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Bulk submit options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001808.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001810.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Bulk submit options</h1>
+<p>The mkvdk utility provides a variety of bulk submit options, as described in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Option
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>-bulk
+</pre>    </td>
+    <td>
+<p>Interprets filespec as a bulk submit file. You can use this option with the <code>-insert</code>, <code>-update</code>, and <code>-delete</code> options.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-offset num
+</pre>    </td>
+    <td>
+<p>Specifies the offset into a bulk submit file or files. If you specify multiple bulk submit files and use the <code>-offset</code> option, the offset is applied to all of the bulk submit files.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-numdocs num
+</pre>    </td>
+    <td>
+<p>Specifies the number of documents to insert or delete from the bulk insert file or files. If you specify multiple bulk insert or delete files and use the <code>-numdocs</code> option, the <code>-numdocs</code> setting is applied to all of the bulk insert or delete files.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-autodel
+</pre>    </td>
+    <td>
+<p>Deletes the bulk submit file or files when the bulk submission work is finished.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1018660"></a>Using bulk insert and delete options</h3>
+<p>The bulk submit feature supports the insertion of documents and related field values into collections. </p>
+<h4>To use the bulk submit feature to populate fields:</h4>
+<ol>
+<li>
+   Define the fields in the style.sfl and style.ufl file, as appropriate.
+</li>
+<li>
+   Create a bulk submit file that specifies the documents to insert and the field values for each document.
+</li>
+<li>
+   Run the mkvdk utility using the <code>-bulk</code> option and specifying the bulk submit file or files.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001808.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001810.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001809.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

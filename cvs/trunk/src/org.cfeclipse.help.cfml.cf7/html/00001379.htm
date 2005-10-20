@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Selecting a validation technique</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001378.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001380.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Selecting a validation technique</h1>
+<p>The following considerations affect the validation technique that you select:</p>
+<ul>
+<li>
+   If you are validating form data, the techniques you use can vary depending on whether you are using HTML, Flash, or XML forms; for example, different form types have different validation limitations.
+</li>
+<li>
+   Different validation techniques are appropriate for different form controls and data types.
+</li>
+<li>
+   Available techniques vary depending on when and where you want the data validated; on the client or the server, when the user enters data or submits a form, or when ColdFusion processes a variable or function argument.
+</li>
+<li>
+   Each technique has specific features and considerations, such as the form of user feedback, feature limitations, and so on.
+</li>
+<li>
+   Security issues or concerns that apply to your environment or application can affect the technique you select.
+</li>
+</ul>
+<p>The preceding table in the <a href="00001378.htm#1147020">Validation techniques</a> section described some of the considerations. The following table describes additional considerations for selecting a validation technique. For additional considerations that are specific to form fields, see <a href="00001381.htm#1153329">Validation type considerations</a>.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Validation technique
+    </th>
+    <th>
+Features
+    </th>
+    <th>
+Considerations
+    </th>
+    <th>
+Security issues
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>mask</p>
+<p>(<code>mask</code> attribute)</p>
+    </td>
+    <td>
+<p>Directly controls user input.</p>
+    </td>
+    <td>
+<p>Limited to <code>cfinput</code> tags. Provides limited control over user input patterns.</p>
+    </td>
+    <td>
+<p>In HTML and XML format, can be circumvented because JavaScript runs directly in the browser.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onBlur</p>
+<p>(<code>validateat=</code></p>
+<p><code>&quot;onBlur&quot;</code> attribute)</p>
+    </td>
+    <td>
+<p>Provides immediate feedback if a user enters invalid data.</p>
+    </td>
+    <td>
+<p>Limited to <code>cfinput</code> and <code>cftextarea</code> tags. In HTML or XML format, requires the browser to enable JavaScript.</p>
+    </td>
+    <td>
+<p>In HTML and XML format, can be circumvented because JavaScript runs directly in the browser. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>onSubmit</p>
+<p>(<code>validateat=</code></p>
+<p><code>&quot;onSubmit&quot;</code> attribute)</p>
+    </td>
+    <td>
+<p>All entered data is available to the user; only the invalid data needs reentering.</p>
+    </td>
+    <td>
+<p>Limited to <code>cfinput</code> and <code>cftextarea</code> tags. In Flash format, is identical to onBlur. In HTML or XML format, validates after all fields have been entered, and requires the browser to enable JavaScript. </p>
+    </td>
+    <td>
+<p>In HTML and XML format, can be circumvented because JavaScript runs directly in the browser.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onServer</p>
+<p>(<code>validateat=</code></p>
+<p><code>&quot;onServer&quot;</code> attribute)</p>
+    </td>
+    <td>
+<p>Does not require browser support.</p>
+    </td>
+    <td>
+<p>Limited to <code>cfinput</code> and <code>cftextarea</code> tags.</p>
+    </td>
+    <td>
+<p>Can be circumvented because validation rules are submitted with the form.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Hidden form field</p>
+    </td>
+    <td>
+<p>Does not require browser support. Can be used with HTML or CFML form elements. </p>
+    </td>
+    <td>
+<p>Limited to forms.</p>
+    </td>
+    <td>
+<p>Can be circumvented because validation rules are submitted with the form.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>JavaScript</p>
+<p>(<code>onValidate = &quot;</code><i>function</i><code>&quot;</code> attribute)</p>
+    </td>
+    <td>
+<p>Allows all on-client processing supported by the browser. Can be used with HTML or CFML form elements.</p>
+    </td>
+    <td>
+<p>Limited to specific ColdFusion form tags. Calls a single JavaScript function. JavaScript levels of support can vary among browsers, and users can disable JavaScript in their browsers.</p>
+    </td>
+    <td>
+<p>Can be circumvented because JavaScript runs directly in the browser. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>IsValid</code> function</p>
+    </td>
+    <td>
+<p>Can be used for any variable, not just form fields. Returns a Yes or No result that you use to determine further processing. </p>
+    </td>
+    <td>
+<p>When used with a form field, runs after the data is submitted. Must be used each time a variable needs to be validated. Provides some data type checks not available in forms validation techniques.</p>
+    </td>
+    <td>
+<p>None</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>cfparam</code> tag</p>
+    </td>
+    <td>
+<p>Can be used for any variable, not just form fields. The tag can set a default value in addition to validating data.</p>
+    </td>
+    <td>
+<p>When used with a form field, the tag runs after the data is submitted. You respond to validation failures using error-handling code.</p>
+    </td>
+    <td>
+<p>None</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>cfargument</code> tag</p>
+    </td>
+    <td>
+<p>Used for arguments to functions written using the <code>cffunction</code> tag. </p>
+    </td>
+    <td>
+<p>Runs when the function is called on the server. You respond to validation failures using error-handling code.</p>
+    </td>
+    <td>
+<p>None</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1151558"></a>Security considerations</h3>
+<p>Although form-specific validation techniques provide good methods for preventing users from submitting invalid or badly formatted data, they cannot prevent users from submitting maliciously formatted data from HTML forms. Malicious users can circumvent validation techniques that require validation on the browser using JavaScript or submission of validation rules in hidden fields. If you must use a technique for preventing malicious data submissions, consider using the following techniques:</p>
+<ul>
+<li>
+   The <code>onSubmit</code> or <code>OnBlur</code> validation in Flash forms, which use Flash built-in validation.
+</li>
+<li>
+   The <a href="00000534.htm#4996076"><code>IsValid</code></a> function and the<code> </code><a href="00000310.htm#1101730"><code>cfparam</code></a>, and <a href="00000218.htm#2855190"><code>cfargument</code></a> tags, which let you test variables and arguments in your CFML code.
+</li>
+<li>
+   The <code>cfqueryparam</code> tag in <code>cfquery</code> tags, described in <a href="00001257.htm#1142383">Enhancing security with cfqueryparam</a>, which can help protect databases from malicious query input.
+</li>
+<li>
+   The script protection option, which helps prevent cross-site scripting attacks. You can set this option on the ColdFusion MX Administrator Server Settings &gt; Settings page or by using the Application.cfc This.scriptProtect variable or the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag <code>scriptprotect</code> attribute. For more information on cross-site scripting attacks and this option, see the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag page in the <i>CFML Reference</i>.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001378.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001380.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001379.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

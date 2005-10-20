@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfproperty</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000314.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000316.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfproperty</h1>
+<h4><a name="wp2730136"></a>Description</h4>
+<p>Defines properties of a ColdFusion component (CFC). Used to create complex data types for web services. The attributes of this tag are exposed as component metadata and are subject to inheritance rules.</p>
+<h4><a name="wp2730138"></a>Category</h4>
+<p><a href="00000202.htm#2459750">Extensibility tags</a></p>
+<h4><a name="wp2730143"></a>Syntax</h4>
+<pre>&lt;cfproperty <br />   name=&quot;name&quot; <br />   type=&quot;type&quot;<br />   required=&quot;boolean&quot;<br />   default=&quot;default value&quot;<br />   displayname=&quot;descriptive name&quot;<br />   hint=&quot;extended description&quot;<br />   &gt;
+</pre><h4><a name="wp2863663"></a>See also</h4>
+<p><a href="00000218.htm#2855190">cfargument</a>, <a href="00000231.htm#3350776">cfcomponent</a>, <a href="00000263.htm#2852457">cffunction</a>, <a href="00000281.htm#2650065">cfinvoke</a>, <a href="00000282.htm#3014048">cfinvokeargument</a>, <a href="00000302.htm#2820239">cfobject</a>, <a href="00000326.htm#2498057">cfreturn</a>; <a href="00001035.htm#1216248">Documenting CFCs</a> in <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2730171"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this tag.</p>
+<h4><a name="wp2730177"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+<p>Req/Opt</p>
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A string; a property name. Must be a static value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type </p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>any</p>
+    </td>
+    <td>
+<p>A string; identifies the property data type:</p>
+<ul>
+<li>
+   any
+</li>
+<li>
+   array
+</li>
+<li>
+   binary
+</li>
+<li>
+   boolean
+</li>
+<li>
+   date
+</li>
+<li>
+   guid: the argument must be a UUID or GUID of the form <i>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</i> where each<i> x</i> is a character representing a hexadecimal number (0-9A-F).
+</li>
+<li>
+   numeric
+</li>
+<li>
+   query
+</li>
+<li>
+   string
+</li>
+<li>
+   struct
+</li>
+<li>
+   uuid: The argument must be a ColdFusion UUID of the form <i>xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx</i> where each<i> x</i> is a character representing a hexadecimal number (0-9A-F).
+</li>
+<li>
+   variableName: a string formatted according to ColdFusion variable naming conventions.
+</li>
+<li>
+   a component name: if the type attribute value is not one of the preceding items, ColdFusion treats it as the name of a ColdFusion component. When The function executes, it generates an error if the argument that is passed in is not a CFC with the specified name.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>required</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<p>Whether the parameter is required: </p>
+<ul>
+<li>
+   yes
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>default</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>If no property value is set when the component is used for a web service, specifies a default value. </p>
+<p>If this attribute is present, the <code>required</code> attribute must be set to <code>&quot;no&quot;</code> or not specified. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>displayname</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A value to be displayed when using introspection to show information about the CFC. The value appears in parentheses following the property name.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hint</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Text to be displayed when using introspection to show information about the CFC. This attribute can be useful for describing the purpose of the parameter.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2730252"></a>Usage</h4>
+<p>You must position <code>cfproperty</code> tags at the beginning of a component, above executable code and function definitions. </p>
+<p>If a component is not used as a web service, The <code>cfproperty</code> only provides metadata information when the component is viewed using introspection; for example, by opening the CFC file directly in the browser. It does not define variables or set values that you can then use in your component.</p>
+<p>For web services that you create in ColdFusion, the <code>cfproperty</code> tag defines complex variables used by the web service. </p>
+<h4><a name="wp2730289"></a>Example</h4>
+<p>The following code defines a component in the file address.cfc that contains properties that represent a street address:</p>
+<pre>&lt;cfcomponent&gt;
+   &lt;cfproperty name=&quot;Number&quot; type=&quot;numeric&quot;&gt;
+   &lt;cfproperty name=&quot;Street&quot; type=&quot;string&quot;&gt;
+   &lt;cfproperty name=&quot;City&quot; type=&quot;string&quot;&gt;
+   &lt;cfproperty name=&quot;State&quot; type=&quot;string&quot;&gt;
+   &lt;cfproperty name=&quot;Country&quot; type=&quot;string&quot;&gt;
+&lt;/cfcomponent&gt;
+</pre><p>This component represents a complex data type that can be used in a component that is exported as a web service, such as the following:</p>
+<pre>&lt;cfcomponent&gt;
+   &lt;cffunction name=&quot;echoAddress&quot; <strong>returnType=&quot;address&quot;</strong> access=&quot;remote&quot;&gt;
+         &lt;cfargument name=&quot;input&quot; <strong>type=&quot;address&quot;</strong>&gt;
+         &lt;cfreturn arguments.input&gt;
+   &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000314.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000316.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000315.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

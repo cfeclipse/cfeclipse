@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Custom tag variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000190.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000192.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Custom tag variables</h1>
+<p>A ColdFusion custom tag returns the following variables:</p>
+<pre><code><i>ThisTag</i></code>.ExecutionMode
+<code><i>ThisTag</i></code>.HasEndTag
+<code><i>ThisTag</i></code>.GeneratedContent
+<code><i>ThisTag</i></code>.AssocAttribs[<code><i>index</i></code>]
+</pre><p>A custom tag can set a Caller variable to provide information to the caller. The Caller variable is set as follows:</p>
+<pre>&lt;cfset Caller.<code><i>variable_name</i></code> = &quot;value&quot;&gt;
+</pre><p>The calling page can access the variable with the <code>cfoutput</code> tag, as follows:</p>
+<pre>&lt;cfoutput&gt;#<code><i>variable_name</i></code>#&lt;/cfoutput&gt;
+</pre><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000191.htm#2712039">Request variable</a>
+</li>
+<li>
+   <a href="00000191.htm#2712048">Form variable</a>
+</li>
+</ul>
+<h2><a name="wp2712039"></a>Request variable</h2>
+<p>Request variables store data about the processing of one page request. Request variables store data in a structure that can be passed to nested tags, such as custom tags, and processed once.</p>
+<p>To provide information to nested tags, set a Request variable, as follows:</p>
+<pre>&lt;CFSET Request.<code><i>field_name1</i></code> = &quot;value&quot;&gt;
+&lt;CFSET Request.<code><i>field_name2</i></code> = &quot;value&quot;&gt;
+&lt;CFSET Request.<code><i>field_name3</i></code> = &quot;value&quot;&gt;
+...
+</pre><p>Each nested tag can access the variable with the <code>cfoutput</code> tag, as follows:</p>
+<pre>&lt;CFOUTPUT&gt;#Request.<code><i>field_name1</i></code>#&lt;/CFOUTPUT&gt;
+</pre><h2><a name="wp2712048"></a>Form variable</h2>
+<p>ColdFusion supports the Form variable FieldNames. FieldNames returns the names of the fields on a form. You use it on the action page associated with a form, as follows:</p>
+<pre>Form.FieldNames
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000190.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000192.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000191.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

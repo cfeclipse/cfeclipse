@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Database Activity</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001212.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001214.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Database Activity</h1>
+<p>In the Administrator, when Database Activity is selected on the Debugging Settings page, the debugging output includes information about database access. </p>
+<h3><a name="wp1158400"></a>SQL Queries</h3>
+<p>The SQL Queries section provides information about tags that generate SQL queries or result in retrieving a cached database query: <code>cfquery</code>, <code>cfinsert</code>, <code>cfgridupdate</code>, and <code>cfupdate</code>. The section looks like the following figure in the dockable.cfm output format:</p>
+<p><br />
+<img src="images/dockabl7.jpg" alt="The SQL Queries section provides information about tags that generate SQL queries or result in retrieving a cached database query" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The output displays the following information: </p>
+<ul>
+<li>
+   Page on which the query is located.
+</li>
+<li>
+   The time when the query was made.
+</li>
+<li>
+   Query name.
+</li>
+<li>
+   An indicator if the result came from a cached query.
+</li>
+<li>
+   SQL statement, including the results of processing any dynamic elements such as CFML variables and <a href="00000317.htm#1102474"><code>cfqueryparam</code></a> tags. This information is particularly useful because it shows the results of all ColdFusion processing of the SQL statement.
+</li>
+<li>
+   Data source name.
+</li>
+<li>
+   Number of records returned; 0 indicates no match to the query.
+</li>
+<li>
+   Query execution time.
+</li>
+<li>
+   Any query parameters values from <code>cfqueryparam</code> tags.
+</li>
+</ul>
+<h3><a name="wp1151763"></a>Stored Procedures</h3>
+<p>The stored procedures section displays information about the results of using the <a href="00000338.htm#2607555"><code>cfstoredproc</code></a> tag to execute a stored procedure in a database management system.</p>
+<p>The Stored Procedures section looks as follows in the classic.cfm output format:</p>
+<p><br />
+<img src="images/classic8.jpg" alt="The stored procedures section displays information about the results of using the cfstoredproc tag" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The output displays the following information:</p>
+<ul>
+<li>
+   Stored procedure name
+</li>
+<li>
+   Data source name
+</li>
+<li>
+   Query execution time
+</li>
+<li>
+   Page on which the query is located.
+</li>
+<li>
+   The time when the query was made.
+</li>
+<li>
+   A table displaying the procedure parameters sent and received, as specified in the <a href="00000313.htm#1102102"><code>cfprocparam</code></a> tags, including the <code>ctype</code>, <code>CFSQLType</code>, <code>value</code> <code>variable</code>, and <code>dbVarName</code> attributes. The <code>variable</code> information for OUT and INOUT parameters includes the returned value.
+</li>
+<li>
+   A table listing the procedure result sets returned, as specified in the <a href="00000314.htm#1102246"><code>cfprocresult</code></a> tag.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001212.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001214.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001213.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

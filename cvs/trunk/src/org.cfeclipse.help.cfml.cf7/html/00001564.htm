@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Interoperating with JSP pages and servlets</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001563.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001565.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Interoperating with JSP pages and servlets</h1>
+<p>ColdFusion pages and JSP pages can interoperate in several ways:</p>
+<ul>
+<li>
+   ColdFusion pages can invoke JSP pages and servlets.
+</li>
+<li>
+   JSP pages can invoke ColdFusion pages.
+</li>
+<li>
+   ColdFusion pages, JSP pages, and servlets can share data in three scopes.
+</li>
+</ul>
+<p>The following sections show how you can use these techniques.</p>
+<ul>
+<li>
+   <a href="00001564.htm#1134319">Integrating JSP and servlets in a ColdFusion application</a>
+</li>
+<li>
+   <a href="00001565.htm#1140554">Examples: using JSP with CFML</a>
+</li>
+</ul>
+<h2><a name="wp1134319"></a>Integrating JSP and servlets in a ColdFusion application</h2>
+<p>You can integrate JSP pages and servlets in your ColdFusion application. For example, you can write some application pages in JSP and write others in CFML. ColdFusion pages can access JSP pages by using the JSP <code>include</code> and <code>forward</code> methods to call the page. As with any web application, you can use <code>href</code> links in ColdFusion pages to open JSP pages.</p>
+<p>The ability to use JSP lets you incorporate legacy JSP pages in your ColdFusion application, or conversely, use CFML to expand an existing JSP application using ColdFusion pages.</p>
+<p>If you have a JSP page that must call a ColdFusion page, you also use a <code>jsp:forward</code> or <code>jsp:include</code> tag to call the ColdFusion page. For an example of calling a ColdFusion page from a JSP page, see <a href="00001565.htm#1140616">Calling a JSP page from a ColdFusion page</a>.</p>
+<h3><a name="wp1176605"></a>Accessing a JSP page or servlet from a ColdFusion page</h3>
+<p>To access a JSP page or servlet from a ColdFusion page, you use the <a href="00000490.htm#4209678"><code>GetPageContext</code></a> function with the <code>forward</code> or the <code>include</code> method. For example, to include a JSP &quot;Hello World&quot; page in your ColdFusion application, use the following line:</p>
+<pre>GetPageContext().include(&quot;hello.jsp&quot;);
+</pre><p>To pass parameters to the JSP page, include the parameters in the page URL.</p>
+<p>For example, you might want to integrate an existing JSP customer response component into a new ColdFusion order processing application. The order processing application provides the order number, total cost, and expected shipping date, and the customer response component sends the response to the e-mail address on file for the particular customer number. The ColdFusion application might use the following CFScript code to call the response JSP page:</p>
+<pre>urlParams = &quot;UID=#order.uid#&amp;cost=#order.total#&amp;orderNo=#order.orderNo#<br />&amp;shipDate=#order.shipDateNo#&quot;
+getPageContext().forward(URLEncodedFormat(&quot;/responsegen/responsegen.jsp<br />?#urlParams#&quot;));
+</pre><p>To access a servlet that exposes the same functionality, you use the same code, although the URL would change. For example, to run a servlet called HelloWorldServlet, you put the servlet .java or .class file in the <i>serverroot/</i>WEB-INF/classes directory and refer to the servlet with the URL<br />/servlet/HelloWorldServlet.</p>
+<h3><a name="wp1141624"></a>Sharing data between ColdFusion pages and JSP pages or servlets</h3>
+<p>If an application includes ColdFusion pages and JSP pages or servlets, they can share data in the Request, Session and Application scopes. The following table lists the ways that you can access JSP pages with which you want to share the scope data:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Scope
+    </th>
+    <th>
+Can share data using
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Request</p>
+    </td>
+    <td>
+<p>forward, include</p>
+<p><strong>Note:</strong> Shared Request scope variable names in the JSP page or servlet must be all-lowercase.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Session</p>
+    </td>
+    <td>
+<p>href, cfhttp, forward, include</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Application</p>
+    </td>
+    <td>
+<p>href, cfhttp, forward, include</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>When you share data between ColdFusion pages and JSP pages, you must be careful about data type conversion issues. For more information, see <a href="00001568.htm#1160838">Java and ColdFusion data type conversions</a>.</p><p>To share session variables, you must specify J2EE session management in the ColdFusion&#160;MX Administrator. For more information on configuring and using J2EE Session scope management, see <a href="00001156.htm#1162204">ColdFusion and J2EE session management</a>.</p>
+<p>For example, you could put the customer order structure used in the previous example in the Session scope. Then, you would not have to pass the order values as a set of parameters. Instead, the JSP pages could access the Session scope variables directly, and the ColdFusion page would only require a line like the following to call the JSP page:</p>
+<pre>getPageContext().forward(URLEncodedFormat(&quot;/responsegen/responsegen.jsp&quot;));
+</pre><p>For examples of using the Request, Session, and Application scopes to share data between ColdFusion pages and JSP pages, including samples of the appropriate JSP code, see the following section, <a href="00001565.htm#1140554">Examples: using JSP with CFML</a>. </p>
+<p><strong>Note: </strong>When running in the server configuration, ColdFusion&#160;MX also shares the Form scope when calling a JSP or servlet. In the J2EE configuration, however, sharing the Form scope is dependant on the J2EE application server. For example, Macromedia JRun shares the Form scope, IBM WebSphere does not. ColdFusion always shares the Request, Session, and Application scopes.</p><h4><a name="wp1165652"></a>Accessing ColdFusion application and session variables in JSP pages</h4>
+<p>ColdFusion&#160;MX runs as a J2EE application on the J2EE application server. The J2EE application ServletContext is a data structure that stores objects as attributes. A ColdFusion Application scope is represented as an attribute named by the Application scope name. The attribute contains the scope values as a hash table. Therefore, you access ColdFusion Application scope variable in a JSP page or servlet using the following format:</p>
+<pre>((Map)application.getAttribute(&quot;<i>CFApplicationName</i>&quot;))).get(&quot;<i>appVarName</i>&quot;)
+</pre><p>Similarly, the ColdFusion Session scope is a structure within the J2EE session. Because ColdFusion&#160;MX identifies sessions by the application name. the session structure is contained in an attribute of the J2EE session that is identified by the application name. Therefore, you access ColdFusion session variables as follows:</p>
+<pre>((Map)(session.getAttribute(&quot;<i>CFApplicationName</i>&quot;))).get(&quot;<i>sessionVarName</i>&quot;)
+</pre><h4><a name="wp1165607"></a>Unnamed ColdFusion Application and Session scopes</h4>
+<p>If you do not specify an application name in the This.name variable in the Application.cfc initialization code or by using the ColdFusion <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag, the application is unnamed, and the Application scope corresponds to the ColdFusion MX J2EE servlet context. ColdFusion&#160;MX, therefore, supports only a single unnamed application. If multiple <code>cfapplication</code> tags and Application.cfc files do not specify an application name, all pages in these applications share the servlet context as their Application scope. </p>
+<p>All sessions of unnamed applications correspond directly to the J2EE application server's session object. (If you do not use J2EE session variables, ColdFusion&#160;MX ensures that the J2EE session lasts at least as long as the session time-out.)</p>
+<p>You access an Application scope variable from a ColdFusion unnamed application in a JSP page using the following format:</p>
+<pre>application.getAttribute(&quot;applicationV<i>ariableName</i>&quot;)
+</pre><p>You access Session scope variables in a ColdFusion unnamed application as follows:</p>
+<pre>session.getAttribute(&quot;<i>sessionVariableName</i>&quot;)
+</pre><p><strong>Note: </strong>When you use application and session variables for the unnamed ColdFusion application in JSP pages and servlets, the variable names must be case-correct. That is, the characters in the variable name must have the same case as you used when you created the variable in ColdFusion. You do not have to use case-correct application and session variable names for named ColdFusion applications.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001563.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001565.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001564.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

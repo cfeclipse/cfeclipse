@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Standard session variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001158.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001160.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Standard session variables</h1>
+<p>If you use ColdFusion session variables, the Session scope has four built-in, read-only variables that your application can use. If you use J2EE session management, the Session scope has two built-in variables. Generally, you use these variables in your ColdFusion pages only if your application supports browsers that do not allow cookies. For more information on supporting browsers that do not allow cookies, see <a href="00001151.htm#1162514">Using client and session variables without cookies</a>. The following table describes the built-in session variables.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Session.CFID</p>
+    </td>
+    <td>
+<p>ColdFusion session management only: the client ID, normally stored on the client system as a cookie.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Session.CFToken</p>
+    </td>
+    <td>
+<p>ColdFusion session management only: the client security token, normally stored on the client system as a cookie.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Session.URLToken</p>
+    </td>
+    <td>
+<p>ColdFusion session management:&#160;A combination of the <code>CFID</code> and <code>CFToken</code> values in the form <code>CFID=</code><code><i>IDNum</i></code><code>&amp;CFTOKEN=</code><code><i>tokenNum</i></code>. Use this variable if the client does not support cookies and you must pass the <code>CFID</code> and <code>CFToken</code> variables from page to page.</p>
+<p>J2EE session management:&#160;A combination of the <code>CFID</code> and <code>CFToken</code> cookies and the J2EE session ID, in the form <code>CFID=</code><code><i>IDNum</i></code><code>&amp;CFTOKEN=</code><code><i>tokenNum</i></code><code>&amp;jsessionid=</code><code><i>SessionID</i></code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Session.SessionID</p>
+    </td>
+    <td>
+<p>A unique identifier for the session.</p>
+<p>ColdFusion session management: a combination of the application name and <code>CFID</code> and <code>CFToken</code> values.</p>
+<p>J2EE session management: the <code>jsessionid</code> value.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>ColdFusion lets you delete or change the values of the built-in session variables. As a general rule, avoid doing so.</p><p>If you enable client variables and ColdFusion session management, ColdFusion uses the same values for the Client and Session scope <code>CFID</code>, <code>CFToken</code>, and <code>URLtoken</code> variables. ColdFusion gets the values for these variables from the same source, the client's <code>CFID</code> and <code>CFTOKEN</code> cookies.</p>
+<p>If you use J2EE session management, the Session scope does not include the <code>Session.CFID</code> or <code>Session.CFToken</code> variables, but does include the <code>Session.URLToken</code> and <code>Session.SessionID</code> variables. In this case, the <code>Session.SessionID</code> is the J2EE session ID and <code>Session.URLToken</code> consists of the string <code>jsessionid=</code> followed by the J2EE session ID.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001158.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001160.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001159.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

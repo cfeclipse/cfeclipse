@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About Verity Spider</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001780.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001782.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About Verity Spider</h1>
+<p>Verity Spider (vspider) enables you to index web-based and file system documents throughout your enterprise. Verity Spider lets you index more than two hundred of the most popular application document formats, including Microsoft Office, WordPerfect, ASCII text, HTML, SGML, XML and PDF (Adobe Acrobat) documents.</p>
+<p>Another advantage of this method, is that the index created by vspider includes dynamic content. The <code>cfindex</code> tag and indexing a collection through the Macromedia ColdFusion MX Administrator do not include dynamic content.</p>
+<p>The Verity Spider that is included with ColdFusion MX is licensed for websites that are defined and reside on the same machine on which ColdFusion MX is installed. Contact Verity Sales for licensing options regarding the use of Verity Spider for external websites.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001781.htm#1023011">Web standard support</a>
+</li>
+<li>
+   <a href="00001781.htm#999301">Restart capability</a>
+</li>
+<li>
+   <a href="00001781.htm#999306">State maintenance through a persistent store</a>
+</li>
+<li>
+   <a href="00001781.htm#999400">Performance</a>
+</li>
+</ul>
+<h2><a name="wp1023011"></a>Web standard support</h2>
+<p>Verity Spider supports key web standards used by Internet and intranet sites. Standard HREF links and frames pointers are recognized, so that navigation through them is supported. Redirected pages are followed so that the real underlying document is indexed. Verity Spider adheres to the robots exclusion standard specified in robots.txt files, so that administrators can maintain friendly visits to remote websites. HTTP Basic Authentication mechanism is supported so that password-protected sites can be indexed.</p>
+<h2><a name="wp999301"></a>Restart capability</h2>
+<p>When an indexing job fails, or for some reason Verity Spider cannot index a significant number or type of URLs, you can now restart the indexing job to update the collection. Only those URLs that were not successfully indexed previously are processed.</p>
+<h2><a name="wp999306"></a>State maintenance through a persistent store</h2>
+<p>Verity Spider stores the state of gathered and indexed URLs in a persistent store, which lets it track progress for the purposes of gracefully and efficiently restarting halted indexing jobs.</p>
+<h2><a name="wp999400"></a>Performance</h2>
+<p>Spidering performance is greatly improved over previous versions, because of low memory requirements, flow control, and the help of multithreading and efficient Domain Name System (DNS) lookups.</p>
+<h3><a name="wp999404"></a>Flow control</h3>
+<p>When indexing websites, Verity Spider distributes requests to web servers in a round-robin manner. This means that one URL is fetched from each web server in turn. With flow control, a faster website can finish before a slower one. The Verity Spider optimizes indexing on every web server.</p>
+<p>Verity Spider adjusts the number of connections per server depending on the download bandwidth. When the download bandwidth from a web server falls below a certain value, Verity Spider automatically scales back the number of connections to that web server. There will always be at least one connection to a web server. When the download bandwidth increases to an acceptable level, Verity Spider reallocates connections (per the value of the <code>-connections</code> option, which is 4 by default). You can turn off flow control with the <code>-noflowctrl</code> option.</p>
+<h3><a name="wp999416"></a>Multithreading</h3>
+<p>Verity Spider separates the gathering and indexing jobs into multiple threads for concurrence. Additionally, Verity Spider can create concurrent connections to web servers for fetching documents, and have concurrent indexing threads for maximum utilization. This translates to an overall improvement in throughput.</p>
+<h3><a name="wp999504"></a>Efficient DNS lookups</h3>
+<p>Verity Spider minimizes DNS lookups, which means great improvements to spidering throughput. If spidering is limited by domain or host, then no DNS lookups are made on hosts that fall outside of that range. In earlier versions, DNS lookups were made on all candidate URLs.</p>
+<h3><a name="wp999509"></a>Proxy handling efficiency</h3>
+<p>To allow for greater flexibility when dealing with indexing jobs that involve proxy servers and firewalls, use the following options:</p>
+<p><strong>-noproxy</strong>&#160;To reduce proxy checking for certain hosts</p>
+<p><strong>-proxyauth</strong>&#160;To authenticate on proxy servers</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001780.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001782.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001781.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

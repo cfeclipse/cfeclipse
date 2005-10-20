@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfobject: Java or EJB object</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000305.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000307.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfobject: Java or EJB object</h1>
+<h4><a name="wp1101605"></a>Description</h4>
+<p>Creates and manipulates a Java and Enterprise Java Bean (EJB) object. </p>
+<h4><a name="wp1101607"></a>Syntax</h4>
+<pre>&lt;cfobject <br />   type = &quot;Java&quot;<br />   action = &quot;Create&quot;<br />   class = &quot;Java class&quot;<br />   name = &quot;object name&quot;&gt;
+</pre><h4><a name="wp1956834"></a>See also</h4>
+<p><a href="00000230.htm#1097667">cfcollection</a>, <a href="00000243.htm#1098198">cfexecute</a>, <a href="00000278.htm#1100286">cfindex</a>, <a href="00000323.htm#1102863">cfreport</a>, <a href="00000330.htm#1103106">cfsearch</a>, <a href="00000351.htm#2682044">cfwddx</a>; <a href="00001566.htm#1177942">Using Java objects</a> in <a href="00001557.htm#1176234">Integrating J2EE and Java Elements in CFML Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1425486"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Object type:</p>
+<ul>
+<li>
+   com
+</li>
+<li>
+   corba
+</li>
+<li>
+   java
+</li>
+</ul>
+<p>(The other object types do not take the <code>type</code> attribute.)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Create: Creates a Java or WebLogic Environment object.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>class</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Java class.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>String; name for the instantiated component.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1101617"></a>Usage</h4>
+<p>To call Java CFXs or Java objects, ColdFusion uses a Java Virtual Machine (JVM) that is embedded in the process. You can configure JVM loading, location and settings in the ColdFusion Administrator.</p>
+<p>Any Java class available in the class path that is specified in the ColdFusion Administrator can be loaded and used from ColdFusion, using the <code>cfobject</code> tag.</p>
+<p>To access Java methods and fields, do the following steps:</p>
+<ol>
+<li>
+   Call the <code>cfobject</code> tag, to load the class. See the example code.
+</li>
+<li>
+   Use the <code>init</code> method with appropriate arguments, to call a constructor. For example:
+<pre>
+&lt;cfset ret = myObj.init(arg1, arg2)&gt;
+</pre>
+</li>
+</ol>
+<p>Calling a public method on the object without first calling the <code>init</code> method results in an implicit call to the default constructor. Arguments and return values can be any Java type (simple, array, object). ColdFusion makes the conversions if strings are passed as arguments, but not if they are received as return values.</p>
+<p>Overloaded methods are supported if the number of arguments is different. </p>
+<h4><a name="wp1101626"></a>Calling EJBs</h4>
+<p>To create and call EJB objects, use the <code>cfobject</code> tag. In the second example below, the WebLogic JNDI is used to register and find EJBHome instances.</p>
+<h4><a name="wp1101628"></a>Example</h4>
+<pre>&lt;!--- Example of a Java Object, this cfobject call loads the class MyClass <br />but does not create an instance object. Static methods and fields <br />are accessible after a call to cfobject. ---&gt;
+&lt;cfobject 
+   action = &quot;create&quot;
+   type = &quot;java&quot;
+   class = &quot;myclass&quot;
+   name = &quot;myobj&quot;&gt;
+
+
+&lt;!---- Example of an EJB - The cfobject tag creates the Weblogic Environment<br />object, which is used to get InitialContext. The context object is <br />used to look up the EJBHome interface. The call to Create() results<br />in getting an instance of stateless session EJB. ---&gt;
+
+&lt;cfobject 
+   action = &quot;create&quot;
+   type = &quot;java&quot;
+   class = &quot;weblogic/jndi/Environment&quot;
+   name = &quot;wlEnv&quot;&gt;
+
+&lt;cfset ctx = wlEnv.getInitialContext()&gt;
+&lt;cfset ejbHome = ctx.lookup(&quot;statelessSession.TraderHome&quot;)&gt;
+&lt;cfset trader = ejbHome.Create()&gt;                
+&lt;cfset value = trader.shareValue(20, 55.45)&gt;                   
+&lt;cfoutput&gt;
+    Share value = #value#
+&lt;/cfoutput&gt;
+&lt;cfset value = trader.remove()&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000305.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000307.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000306.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

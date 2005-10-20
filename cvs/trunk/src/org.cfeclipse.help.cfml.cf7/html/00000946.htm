@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Avoiding the Evaluate function</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000945.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000947.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Avoiding the Evaluate function</h1>
+<p>Using the <a href="00000458.htm#1104252"><code>Evaluate</code></a> function increases processing overhead, and in most cases it is not necessary. The following sections provide examples of cases where you might consider using the <code>Evaluate</code> function.</p>
+<h4><a name="wp2727818"></a>Example 1</h4>
+<p>You might be inclined to use the <code>Evaluate</code> function in code such as the following:</p>
+<pre>&lt;cfoutput&gt;1 + 1 is #Evaluate(1 + 1)#&lt;/cfoutput&gt;
+</pre><p>Although this code works, it is not as efficient as the following code:</p>
+<pre>&lt;cfset Result = 1 + 1&gt;
+&lt;cfoutput&gt;1 + 1 is #Result#&lt;/cfoutput&gt;
+</pre><h4><a name="wp2734833"></a>Example 2</h4>
+<p>This example shows how you can use an associative array reference in place of an <code>Evaluate</code> function. This technique is powerful because:</p>
+<ul>
+<li>
+   Most ColdFusion scopes are accessible as structures.
+</li>
+<li>
+   You can use ColdFusion expressions in the indexes of associative array structure references. (For&#160;more information on using associative array references for structures, see <a href="00000959.htm#1126503">Structure notation</a>.)
+</li>
+</ul>
+<p>The following example uses the <code>Evaluate</code> function to construct a variable name:</p>
+<pre>&lt;cfoutput&gt;
+Product Name: #Evaluate(&quot;Form.product_#i#&quot;)#
+&lt;/cfoutput&gt;
+</pre><p>This code comes from an example where a form has entries for an indeterminate number of items in a shopping cart. For each item in the shopping cart there is a product name field. The field name is of the form product_1, product_2, and so on, where the number corresponds to the product's entry in the shopping cart. In this example, ColdFusion does the following:</p>
+<ol>
+<li>
+   Replaces the variable i with its value, for example 1.
+</li>
+<li>
+   concatenates the variable value with &quot;Form.product_&quot;, and passes the result (for Form.product_1) to the <code>Evaluate</code> function, which does the remaining steps.
+</li>
+<li>
+   Parses the variable product_1 and generates an executable representation of the variable. Because ColdFusion must invoke its parser, this step requires substantial processing, even for a simple variable.
+</li>
+<li>
+   Evaluates the representation of the variable, for example as &quot;Air popper&quot;.
+</li>
+<li>
+   Returns the value of the variable.
+</li>
+</ol>
+<p>The following example has the same result as the preceding example and is more efficient:</p>
+<pre>&lt;cfoutput&gt;
+ProductName: #Form[&quot;product_&quot; &amp; i]#
+&lt;/cfoutput&gt;
+</pre><p>In this code, ColdFusion does the following:</p>
+<ol>
+<li>
+   Evaluates the expression in the associative array index brackets as the string &quot;product_&quot; concatenated with the value of the variable i.
+</li>
+<li>
+   Determines the value of the variable i; 1.
+</li>
+<li>
+   Concatenates the string and the variable value to get product_1.
+</li>
+<li>
+   Uses the result as the key value in the Form structure to get Form[product_1]. This associative array reference accesses the same value as the object.attribute format reference Form.product_1; in this case, Air popper.
+</li>
+</ol>
+<p>This code format does not use any dynamic evaluation, but it achieves the same effect, of dynamically creating a structure reference by using a string and a variable.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000945.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000947.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000946.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CORBA example</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001590.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001592.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CORBA example</h1>
+<p>The following code shows an example of using a LoanAnalyzer CORBA object. This simplified object determines whether an applicant is approved for a loan based on the information that is supplied.</p>
+<p>The LoanAnalyzer CORBA interface has one method, which takes the following two in arguments:</p>
+<ul>
+<li>
+   An Account struct that identifies the applicant's account. It includes a Person struct that represents the account holder, and the applicant's age and income. 
+</li>
+<li>
+   A CreditCards sequence, which corresponds to the set of credit cards the user currently has. The credit card type is represented by a member of the CardType enumerator. (This example assumes the applicant has no more than one of any type of card.)
+</li>
+</ul>
+<p>The object returns a Boolean value indicating whether the application is accepted or rejected.</p>
+<p>The CFML does the following:</p>
+<ol>
+<li>
+   Initializes the values of the ColdFusion variables that are used in the object method. In a more complete example, the information would come from a form, query, or both. 
+<p>The code for the Person and Account structs is straightforward. The cards variable, which represents the applicant's credit cards, is more complex. The interface IDL uses a sequence of enumerators to represent the cards. ColdFusion represents an IDL sequence as an array, and an enumerator as 0-indexed number indicating the position of the selected item among the items in the enumerator type definition.</p>
+<p>In this case, the applicant has a Master Card, a Visa card, and a Diners card. Because Master Card (MC) is the first entry in the enumerator type definition, it is represented in ColdFusion by the number 0. Visa is the third entry, so it is represented by 2. Diners is the fifth entry, so it is represented by 4. These numbers must be put in an array to represent the sequence, resulting in a three-element, one-dimensional array containing 0, 2, and 4.</p>
+</li>
+<li>
+   Instantiates the CORBA object. 
+</li>
+<li>
+   Calls the approve method of the CORBA object and gets the result in the return variable, ret.
+</li>
+<li>
+   Displays the value of the ret variable, Yes or No.
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>IDL</p>
+    </td>
+    <td>
+<pre>struct Person
+{
+   long pid;
+   string name;
+   string middle;
+   string last_name;
+}
+
+struct Account
+{
+   Person person;
+   short age;
+   double income;
+}
+
+double loanAmountl
+enum cardType {AMEX, VISA, MC, DISCOVER, DINERS};
+
+typedef sequence&lt;cardType&gt; CreditCards;
+
+interface LoanAnalyzer
+{
+   boolean approve( in Account, in CreditCards);
+}
+
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>CFML</p>
+    </td>
+    <td>
+<pre>&lt;!--- Declare a &quot;person&quot; struct ----&gt;
+&lt;cfset p = StructNew()&gt;
+&lt;cfif IsStruct(p)&gt;
+   &lt;cfset p.pid = 1003232&gt;
+   &lt;cfset p.name = &quot;Eduardo&quot;&gt;
+   &lt;cfset p.middle = &quot;R&quot;&gt;
+   &lt;cfset p.last_name = &quot;Doe&quot;&gt;
+&lt;/cfif&gt;
+
+&lt;!---- Declare an &quot;Account&quot; struct ---&gt;
+&lt;cfset a = StructNew()&gt;
+&lt;cfif IsStruct(a)&gt;
+   &lt;cfset a.person = p&gt;
+   &lt;cfset a.age = 34&gt;
+   &lt;cfset a.income = 150120.50&gt;
+&lt;/cfif&gt;
+
+&lt;!----- Declare a &quot;CreditCards&quot; sequence ---&gt;
+&lt;cfset cards = ArrayNew(1)&gt;
+&lt;cfset cards[1] = 0&gt;   &lt;!--- corresponds to Amex ---&gt;
+&lt;cfset cards[2] = 2&gt;   &lt;!--- corresponds to MC ---&gt;
+&lt;cfset cards[3] = 4&gt;   &lt;!--- corresponds to Diners ---&gt;
+
+&lt;!---- Creating a CORBA handle using the Naming Service----&gt;
+&lt;cfset handle = CreateObject(&quot;CORBA&quot;, &quot;FirstBostonBank/MA/Loans&quot;,
+&quot;NameService&quot;) &gt;
+
+&lt;cfset ret=handle.approve(a, cards)&gt;
+&lt;cfoutput&gt;Account approval: #ret#&lt;/cfoutput&gt;
+</pre>    </td>
+  </tr>
+</table>
+
+</li>
+</ol>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001590.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001592.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001591.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

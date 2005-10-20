@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CreateDate</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000421.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000423.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CreateDate</h1>
+<h4><a name="wp1224473"></a>Description</h4>
+<p>Creates a date/time object.</p>
+<h4><a name="wp3348771"></a>Returns</h4>
+<p>A date/time value.</p>
+<h4><a name="wp2501349"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a></p>
+<h4><a name="wp2130585"></a>Function syntax</h4>
+<pre><code><strong>CreateDate</strong></code>(<i>year</i>, <i>month</i>, <i>day</i>)
+</pre><h4><a name="wp2588120"></a>See also</h4>
+<p><a href="00000423.htm#1224498"><code>CreateDateTime</code></a><code>, </code><a href="00000431.htm#1102341"><code>CreateODBCDate</code></a>; <a href="00000909.htm#1134378">Date-time functions and queries when ODBC is not supported</a> in <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1279012"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>year</p>
+    </td>
+    <td>
+<p>Integer in the range 0-9999. Integers in the range 0-29 are converted to 2000-2029. Integers in the range 30-99 are converted to 1930-1999. You cannot specify dates before AD 100.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>month</p>
+    </td>
+    <td>
+<p>Integer in the range 1 (January)-12 (December)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>day</p>
+    </td>
+    <td>
+<p>Integer in the range 1-31</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102009"></a>Usage</h4>
+<p><code>CreateDate</code> is a subset of <a href="00000423.htm#1224498"><code>CreateDateTime</code></a>.</p>
+<p>The time in the returned object is set to 00:00:00.</p>
+<h4><a name="wp1102015"></a>Example</h4>
+<pre>&lt;h3&gt;CreateDate Example&lt;/h3&gt;
+&lt;CFIF IsDefined(&quot;form.year&quot;)&gt;
+&lt;p&gt;Your date value, generated with CreateDate:
+&lt;CFSET yourDate = CreateDate(form.year, form.month, form.day)&gt;
+&lt;cfoutput&gt;
+&lt;ul&gt;
+   &lt;li&gt;Formatted with CreateDate: #CreateDate(form.year, form.month, form.day)#
+   &lt;li&gt;Formatted with CreateDateTime: #CreateDateTime(form.year, form.month,<br />form.day, 12,13,0)#
+   &lt;li&gt;Formatted with CreateODBCDate: #CreateODBCDate(yourDate)#
+   &lt;li&gt;Formatted with CreateODBCDateTime: #CreateODBCDateTime(yourDate)#
+&lt;/ul&gt;
+
+&lt;p&gt;The same value can be formatted with DateFormat:
+&lt;ul&gt;
+   &lt;li&gt;Formatted with CreateDate and DateFormat: 
+         #DateFormat(CreateDate(form.year, form.month, form.day), &quot;mmm-dd-yyyy&quot;)#
+   &lt;li&gt;Formatted with CreateDateTime and DateFormat: 
+         #DateFormat(CreateDateTime(form.year, form.month, form.day, 12,13,0))#
+   &lt;li&gt;Formatted with CreateODBCDate and DateFormat: 
+         #DateFormat(CreateODBCDate(yourDate), &quot;mmmm d, yyyy&quot;)#
+   &lt;li&gt;Formatted with CreateODBCDateTime and DateFormat: 
+         #DateFormat(CreateODBCDateTime(yourDate), &quot;d/m/yy&quot;)#
+&lt;/ul&gt;
+&lt;/cfoutput&gt;
+&lt;/CFIF&gt;
+&lt;CFFORM ACTION=&quot;createdate.cfm&quot; METHOD=&quot;POST&quot;&gt;
+&lt;p&gt;Enter the year, month and day, as integers:
+&lt;PRE&gt;
+Year   &lt;CFINPUT TYPE=&quot;Text&quot; NAME=&quot;year&quot; VALUE=&quot;1998&quot; VALIDATE=&quot;integer&quot; 
+      REQUIRED=&quot;Yes&quot;&gt;
+Month   &lt;CFINPUT TYPE=&quot;Text&quot; NAME=&quot;month&quot; VALUE=&quot;6&quot; VALIDATE=&quot;integer&quot; 
+      REQUIRED=&quot;Yes&quot;&gt;
+Day   &lt;CFINPUT TYPE=&quot;Text&quot; NAME=&quot;day&quot; VALUE=&quot;8&quot; VALIDATE=&quot;integer&quot; 
+      REQUIRED=&quot;Yes&quot;&gt;
+&lt;/PRE&gt;
+&lt;p&gt;&lt;INPUT TYPE=&quot;Submit&quot; NAME=&quot;&quot;&gt; &lt;INPUT TYPE=&quot;RESET&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000421.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000423.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000422.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

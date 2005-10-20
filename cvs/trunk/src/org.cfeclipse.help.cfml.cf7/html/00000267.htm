@@ -1,0 +1,939 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfgridcolumn</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000266.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000268.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfgridcolumn</h1>
+<h4><a name="wp1824131"></a>Description</h4>
+<p>Used with the <a href="00000266.htm#1836171"><code>cfgrid</code></a> tag in a <a href="00000256.htm#2433198"><code>cfform</code></a>. Formats a columns and optionally populates the column from a query. The font and alignment attributes used in <code>cfgridcolumn</code> override global font or alignment settings defined in <code>cfgrid</code>.</p>
+<h4><a name="wp1884793"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a></p>
+<h4><a name="wp1099562"></a>Syntax</h4>
+<pre>&lt;cfgridcolumn <br />   name = &quot;column_name&quot;<br />   header = &quot;header&quot;<br />   width = &quot;column_width&quot;<br />   type = &quot;type&quot;<br />   display = &quot;yes&quot; or &quot;no&quot;<br />   select = &quot;yes&quot; or &quot;no&quot;<br />   font = &quot;column_font&quot;<br />   fontSize = &quot;size&quot;<br />   italic = &quot;yes&quot; or &quot;no&quot;<br />   bold = &quot;yes&quot; or &quot;no&quot;<br />   textColor = &quot;web color&quot; or &quot;expression&quot;<br />   bgColor = &quot;web color&quot; or &quot;expression&quot;<br />   dataAlign = &quot;position&quot;<br /><i>The following attribute applies to Flash format only<br /></i>   mask= &quot;format mask&quot;<br /><i>The following attribute applies to applet format only<br /></i>   href = &quot;URL&quot;<br />   hrefKey = &quot;column_name&quot;<br />   target = &quot;URL_target&quot;<br />   headerFont = &quot;font_name&quot;<br />   headerFontSize = &quot;size&quot;<br />   headerItalic = &quot;yes&quot; or &quot;no&quot;<br />   headerBold = &quot;yes&quot; or &quot;no&quot;<br />   headerTextColor = &quot;web color&quot;<br />   headerAlign = &quot;position&quot;<br />   numberFormat = &quot;format&quot;<br />   values = &quot;Comma-separated strings and/or numeric range&quot;<br />   valuesDisplay = &quot;Comma-separated strings and/or numeric range&quot;<br />   valuesDelimiter = &quot;delimiter character&quot;&gt;
+</pre><h4><a name="wp1887505"></a>See also</h4>
+<p><a href="00000266.htm#1836171"><code>cfgrid</code></a><code>, </code><a href="00000268.htm#3842572"><code>cfgridrow</code></a><code>, </code><a href="00000269.htm#1099751"><code>cfgridupdate</code></a><code>, </code><a href="00000256.htm#2433198"><code>cfform</code></a><code>, </code><a href="00000216.htm#1097239"><code>cfapplet</code></a><code>,</code> <a href="00000279.htm#1100379"><code>cfinput</code></a><code>, </code><a href="00000331.htm#2553073"><code>cfselect</code></a><code>, </code><a href="00000337.htm#2612389"><code>cfslider</code></a><code>, </code><a href="00000341.htm#2773598"><code>cftextarea</code></a><code>, </code><a href="00000347.htm#1104271"><code>cftree</code></a></p>
+<h4><a name="wp3136122"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code>mask</code> attribute, and the currency <code>type</code> attribute value.</p>
+<p>ColdFusion&#160;MX: Changed behavior if <code>select=&quot;no&quot;</code>: a user cannot select and edit the cell data, regardless of the <code>cfgrid selectmode</code> attribute value. When clicked, the cell border (and, depending on the <code>selectColor</code> value, the cell background) changes color, but the cell data cannot be edited.</p>
+<h4><a name="wp2097779"></a>Attributes</h4>
+<p><strong>Note: </strong>In XML format, ColdFusion MX passes all attributes to the XML. The supplied XSLT skins do not handle or display XML format grids, but do display applet and Flash format grids.</p><table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt;
+Formats
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the grid column element. If the grid uses a query, this attribute must be the name of the query column that populates the grid column.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>header</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>yes</p>
+    </td>
+    <td>
+<p>Column header text. Used only if the <code>cfgrid</code> <code>colHeaders</code> attribute is True (the default).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>width</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>Column head width</p>
+    </td>
+    <td>
+<p>Column width, in pixels.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;	</p>
+    </td>
+    <td>
+<p>You can specify the following values in all formats:</p>
+<ul>
+<li>
+   image: grid displays the image specified by the URL in the column. If you use a relative URL, the image must be in the CFIDE\classes directory or a subdirectory. If image is larger than column cell, it is clipped to fit. Flash images must be JPEG files. Applet images can be JPEG or GIF files. 
+</li>
+<li>
+   boolean: column displays as check box; if cell is editable, user can change the check mark.
+</li>
+<li>
+   numeric: user can sort grid data numerically.
+</li>
+<li>
+   string_noCase: user can sort grid data as case-insensitive text.<br />
+</li>
+</ul>
+<p>You can specify the following attribute in applet format; it does not work in Flash grids.</p>
+<ul>
+<li>
+   image: you can use the following built-in ColdFusion image names, in addition to paths to image files, in the column values: 
+</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;- &#160;cd</p>
+<p>&#160;&#160;&#160;&#160;- computer</p>
+<p>&#160;&#160;&#160;&#160;- document</p>
+<p>&#160;&#160;&#160;&#160;- element</p>
+<p>&#160;&#160;&#160;&#160;- folder</p>
+<p>&#160;&#160;&#160;&#160;- floppy</p>
+<p>&#160;&#160;&#160;&#160;- fixed</p>
+<p>&#160;&#160;&#160;&#160;- remote<br /></p>
+<p>You can specify the following attribute in Flash format; it does not work in applet grids:</p>
+<ul>
+<li>
+   currency: formats the column data as currency, aligning it around the decimal point. If users sort the grid using this column, it will sort correctly for the currency, Use the mask attribute to specify a currency symbol, which defaults to the dollar sign ($).
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>display</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>yes</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes
+</li>
+<li>
+   no: hides the column.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>select</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>yes</p>
+    </td>
+    <td>
+<p>Determines selection behavior if the <code>cfgrid</code> <code>selectmode</code> attribute value is column, edit, or single; ignored for row or browse values.</p>
+<ul>
+<li>
+   yes: users can select the column or select or edit cells in the column, as specified by the <code>selectmode</code> attribute. 
+</li>
+<li>
+   no: users cannot select the column or select or edit cells in the column.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>font</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>As specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<p>Font of data in column. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>fontSize</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>As specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<p>Size of text in column. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>italic</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>As specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: displays grid control text in italics.
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>bold</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>As specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: displays grid control text in bold.
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>textColor</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Color of grid element text in column as a hexadecimal number or text name.</p>
+<p>To enter a hexadecimal value, use the form <code>&quot;##</code><i>xxxxxx</i><code>&quot;,</code> where x = 0-9 or A-F; use two number signs or none. </p>
+<ul>
+<li>
+   Any color, in hexadecimal format
+</li>
+<li>
+   Black
+</li>
+<li>
+   Red
+</li>
+<li>
+   Blue
+</li>
+<li>
+   Magenta
+</li>
+<li>
+   Cyan
+</li>
+<li>
+   Orange
+</li>
+<li>
+   Darkgray
+</li>
+<li>
+   Pink
+</li>
+<li>
+   Gray
+</li>
+<li>
+   White
+</li>
+<li>
+   Lightgray
+</li>
+<li>
+   Yellow
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>bgColor</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Color of background of grid column.</p>
+<ul>
+<li>
+   Options: same as for the <code>textColor</code> attribute.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>dataAlign</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>as specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<p>Column data alignment: </p>
+<ul>
+<li>
+   Left 
+</li>
+<li>
+   Right 
+</li>
+<li>
+   Center 
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>mask</p>
+    </td>
+    <td>
+<p>optional;<br />Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A mask pattern that controls the character pattern that the form displays or allows users to input and sends to ColdFusion.</p>
+<p>For columns with the currency <code>type</code> attribute, the <code>mask</code> specifies the currency symbol. ColdFusion MX automatically inserts the character before the numeric value.</p>
+<p>For columns with text or numeric values, <code>mask</code> specifies the format to display or allow users to input, as follows:</p>
+<ul>
+<li>
+   A = [A-Za-z]
+</li>
+<li>
+   X = [A-Za-z0-9]
+</li>
+<li>
+   9 = [0-9]
+</li>
+<li>
+   ? = Any character
+</li>
+<li>
+   All other characters = ColdFusion inserts the literal character.
+</li>
+</ul>
+<p>If the column values are dates or timestamps, ColdFusion uses the mask pattern to format the selected date.</p>
+<p>For details of the date/time mask format, see <a href="00000267.htm#3842575">date/time formats in mask attribute</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>href</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>URL or query column name that contains a URL to hyperlink each grid column with. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hrefKey</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>The query column to use for the value appended to the <code>href</code> URL of each column, instead of the column's value.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>target</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Frame in which to open link specified in <code>href</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>headerFont</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>as specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<p>Column header font.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>headerFontSize</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>as specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<p>Column header text size, in pixels.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>headerItalic</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>as specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: displays column header in italics.
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>headerBold</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>as specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: displays header in bold.
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>headerTextColor</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Color of grid control column header text.</p>
+<ul>
+<li>
+   Options: same as for the <code>textColor</code> attribute.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>headerAlign</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>as specified by <code>cfgrid</code></p>
+    </td>
+    <td>
+<p>Column header text alignment:</p>
+<ul>
+<li>
+   Left 
+</li>
+<li>
+   Right 
+</li>
+<li>
+   Center 
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>numberFormat</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Format for displaying numeric data in the grid. See <a href="00000267.htm#2048675">numberFormat mask characters</a>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>values</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Formats cells in column as drop-down list boxes; specify items in drop-down list. For example:</p>
+<pre><code>values = &quot;arthur, scott, charles, 1-20, mabel&quot;</code>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>valuesDisplay</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Maps elements in the <code>values</code> attribute to string to display in the drop-down list. Delimited strings and/or numeric range(s). </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>valuesDelimiter</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>, [comma]</p>
+    </td>
+    <td>
+<p>Delimiter in <code>values</code> and <code>valuesDisplay</code> attributes.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2048675"></a>numberFormat mask characters</h4>
+<p>In applet format only, you can use the following <code>numberFormat</code> attribute mask characters to format output in U.S. numeric and currency styles. For more information on using these mask characters, see <a href="00000591.htm#134113">NumberFormat</a>. (The <code>cfgridcolumn</code> tag does not support international number formatting.) </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Character
+    </th>
+    <th>
+Meaning
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>_ </p>
+    </td>
+    <td>
+<p>(Underscore) Digit placeholder.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>9</p>
+    </td>
+    <td>
+<p> Digit placeholder. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>.</p>
+    </td>
+    <td>
+<p>(Period) Location of mandatory decimal point. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>0</p>
+    </td>
+    <td>
+<p>Located to left or right of mandatory decimal point; pads with zeros. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>( )</p>
+    </td>
+    <td>
+<p>Puts parentheses around mask if number is less than 0.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>+</p>
+    </td>
+    <td>
+<p>Puts plus sign before positive numbers, minus sign before negative numbers.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>-</p>
+    </td>
+    <td>
+<p>Puts space before positive numbers, minus sign before negative numbers. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>,</p>
+    </td>
+    <td>
+<p>(Comma) Separates every third decimal-place with a comma. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>L,C</p>
+    </td>
+    <td>
+<p>Left-justify or center-justify number within width of mask column. First character of mask must be L or C. Default: right-justified. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>$</p>
+    </td>
+    <td>
+<p>Puts dollar sign before formatted number. Must be the first character of mask.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>^</p>
+    </td>
+    <td>
+<p>(Caret) Separates left from right formatting.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3842575"></a>date/time formats in mask attribute</h4>
+<p>By default, Flash displays date/time values in grid columns using a format that shows values such as Oct 29 2004 11:03:21. Use the <code>mask</code> attribute to display the date or time in a different format, as described in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Pattern letter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Y</p>
+    </td>
+    <td>
+<p>Year. If the number of pattern letters is two, the year is truncated to two digits; otherwise, it appears as four digits. The year can be zero-padded, as the third example shows in the following set of examples: </p>
+<p>Examples:</p>
+<p>YY = 03</p>
+<p>YYYY = 2003</p>
+<p>YYYYY = 02003</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>M</p>
+    </td>
+    <td>
+<p>Month in year. The format depends on the following criteria:</p>
+<ul>
+<li>
+   If the number of pattern letters is one, the format is interpreted as numeric in one or two digits. 
+</li>
+<li>
+   If the number of pattern letters is two, the format is interpreted as numeric in two digits. 
+</li>
+<li>
+   If the number of pattern letters is three, the format is interpreted as short text. 
+</li>
+<li>
+   If the number of pattern letters is four, the format is interpreted as full text. 
+</li>
+</ul>
+<p>Examples:</p>
+<p>M = 7</p>
+<p>MM= 07</p>
+<p>MMM=Jul</p>
+<p>MMMM= July</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>D</p>
+    </td>
+    <td>
+<p>Day in month. </p>
+<p>Examples:</p>
+<p>D=4</p>
+<p>DD=04</p>
+<p>DD=10</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>E</p>
+    </td>
+    <td>
+<p>Day in week. The format depends on the following criteria:</p>
+<ul>
+<li>
+   If the number of pattern letters is one, the format is interpreted as numeric in one or two digits. 
+</li>
+<li>
+   If the number of pattern letters is two, the format is interpreted as numeric in two digits.
+</li>
+<li>
+   If the number of pattern letters is three, the format is interpreted as short text. 
+</li>
+<li>
+   If the number of pattern letters is four, the format is interpreted as full text. 
+</li>
+</ul>
+<p>Examples:</p>
+<p>E = 1</p>
+<p>EE = 01</p>
+<p>EEE = Mon</p>
+<p>EEEE = Monday</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>AM/PM indicator.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>J</p>
+    </td>
+    <td>
+<p>Hour in day (0-23).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>H</p>
+    </td>
+    <td>
+<p>Hour in day (1-24).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>K</p>
+    </td>
+    <td>
+<p>Hour in am/pm (0-11).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>L</p>
+    </td>
+    <td>
+<p>Hour in am/pm (1-12).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>N</p>
+    </td>
+    <td>
+<p>Minute in hour. </p>
+<p>Examples:</p>
+<p>N = 3</p>
+<p>NN = 03</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>S</p>
+    </td>
+    <td>
+<p>Second in minute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Other text</p>
+    </td>
+    <td>
+<p>You can add other text into the pattern string to further format the string. You can use punctuation, numbers, and all lowercase letters. You should avoid uppercase letters because they may be interpreted as pattern letters.</p>
+<p>Example:</p>
+<p>EEEE, MMM. D, YYYY at H:NN A = Tuesday, Sept. 8, 2003 at 1:26 PM</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3850003"></a>Example</h4>
+<p>The following example lets you update certain fields of the CourseList table in the cfdocexamples database. It uses <code>cfgridcolumn</code> tags to structure the table.</p>
+<pre>&lt;!--- If the gridEntered field exists, the form has been submitted.
+      Update the database. ---&gt;
+&lt;cfif IsDefined(&quot;form.gridEntered&quot;)&gt;
+   &lt;cfgridupdate grid = &quot;FirstGrid&quot; dataSource = &quot;cfdocexamples&quot; 
+   tableName = &quot;CourseList&quot; keyOnly = &quot;Yes&quot;&gt;
+&lt;/cfif&gt;
+
+&lt;!--- Query the database to fill up the grid. ---&gt;
+&lt;cfquery name = &quot;GetCourses&quot; dataSource = &quot;cfdocexamples&quot;&gt;
+ SELECT Course_ID, Dept_ID, CorNumber,
+     CorName, CorLevel, CorDesc
+FROM CourseList
+ORDER by Dept_ID ASC, CorNumber ASC
+&lt;/cfquery&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;cfgrid Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h3&gt;cfgrid Example&lt;/h3&gt;
+&lt;I&gt;You can update the Name, Level, and Description information for courses.&lt;/i&gt;
+&lt;!--- The cfform tag must surround a cfgrid control. ---&gt;
+&lt;cfform action = &quot;#CGI.SCRIPT_NAME#&quot;&gt;
+   &lt;cfgrid name = &quot;FirstGrid&quot; width = &quot;500&quot;
+         query = &quot;GetCourses&quot; colheaderbold=&quot;Yes&quot;
+         font = &quot;Tahoma&quot; rowHeaders = &quot;No&quot; 
+         selectColor = &quot;Red&quot; selectMode = &quot;Edit&quot; &gt;
+      &lt;!--- cfgridcolumn tags arrange the table and control the display. ---&gt;
+      &lt;!--- Hide the primary key, required for update ---&gt;
+      &lt;cfgridcolumn name = &quot;Course_ID&quot; display = &quot;No&quot;&gt;
+      &lt;!--- select=&quot;No&quot; does not seem to have any effect !!! ---&gt;
+      &lt;cfgridcolumn name = &quot;Dept_ID&quot; header = &quot;Department&quot; Select=&quot;No&quot;
+         width=&quot;75&quot; textcolor=&quot;blue&quot; bold=&quot;Yes&quot;&gt;
+      &lt;cfgridcolumn name = &quot;CorNumber&quot; header = &quot;Course ##&quot; Select=&quot;No&quot;
+         width=&quot;65&quot;&gt;
+      &lt;cfgridcolumn name = &quot;CorName&quot; header = &quot;Name&quot; width=&quot;125&quot;&gt;
+      &lt;cfgridcolumn name = &quot;CorLevel&quot; header = &quot;Level&quot; width=&quot;85&quot;&gt;
+      &lt;cfgridcolumn name = &quot;CorDesc&quot; header = &quot;Description&quot; width=&quot;125&quot;&gt;
+   &lt;/cfgrid&gt;
+   &lt;br&gt;
+   &lt;cfinput type=&quot;submit&quot; name=&quot;gridEntered&quot;&gt;
+&lt;/cfform&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000266.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000268.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000267.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Displaying variable output</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000082.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000084.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Displaying variable output</h1>
+<p>Output is what remains after the ColdFusion server processes the CFML tags on a page. Usually the output has two parts:</p>
+<ul>
+<li>
+   Information that the user sees (for example, a confirmation message)
+</li>
+<li>
+   Information that is stored by the server as a result of processing (for example, user input collected from a form)
+</li>
+</ul>
+<p>One of the tags that ColdFusion provides to display output is the <code>cfoutput</code> tag. The <code>cfoutput</code> tag instructs ColdFusion to process all the code between the <code>cfoutput</code> start and end tags. The syntax for the <code>cfoutput</code> tag looks like this:</p>
+<pre>&lt;cfoutput&gt;
+   {normal html, text, and ColdFusion processing instructions}
+&lt;/cfoutput&gt;
+</pre><p>To return the value of a variable, you must always surround the variable name with number signs (#) and place the variable name between the <code>cfoutput</code> start and end tags. For example, the following code creates a variable and instructs the ColdFusion server to return the value of the variable: </p>
+<pre>&lt;cfset my_first_name = &quot;Kaleigh&quot;&gt;
+&lt;cfset my_last_name = &quot;Smith&quot;&gt;
+&lt;cfset my_full_name = variables.my_first_name &amp; &quot; &quot; &amp; variables.my_last_name&gt;
+&lt;cfoutput&gt;
+   #variables.my_full_name# 
+&lt;/cfoutput&gt;
+</pre><p>The following text is the output: </p>
+<p>Kaleigh Smith </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000082.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000084.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000083.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

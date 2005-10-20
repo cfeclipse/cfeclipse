@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Data validation types</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001379.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001381.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Data validation types</h1>
+<p>The following table lists the types of data you can validate when you use most ColdFusion validation techniques. It does not include mask validation. Some validation types are not available for all techniques; in these cases the table indicates the limitations. The <code>onBlur</code> and <code>onSubmit</code> validation algorithms for Flash format forms might vary from those described in the following table, and most commonly have less functionality. For more detailed descriptions of the onServer validation algorithms, see the table in <a href="00001385.htm#1154690">Validating form data using hidden fields</a>.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>date</p>
+    </td>
+    <td>
+<p>When validating on the server, allows any date/time format that returns true in the <code>IsDate</code> function, including a time value. When validating on the client, same as USdate.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>USdate *</p>
+    </td>
+    <td>
+<p>A U.S. date of the format mm/dd/yy, with 1- or 2-digit days and months, and 1-through 4-digit years. The separators can be slash (/), hyphen (-), or period (.) characters </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>eurodate *</p>
+    </td>
+    <td>
+<p>A date of the format dd/mm/yy, with 1- or 2-digit days and months, and 1- through 4-digit years. The separators can be slash (/), hyphen (-), or period (.) characters.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>time *</p>
+    </td>
+    <td>
+<p>When validating on the server, allows any date/time format that returns True in the <code>IsDate</code> function, including a date value. When validating on the client, allows a time of format hh:mm[:ss] [A/PM].</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>float *</p>
+    </td>
+    <td>
+<p>A number; allows integers. When validating form fields on the server, integer values are converted to real numbers.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>numeric</p>
+    </td>
+    <td>
+<p>A number; allows integers. When validating form fields on the server, integer values are unchanged.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>integer *</p>
+    </td>
+    <td>
+<p>An integer.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>range *</p>
+    </td>
+    <td>
+<p>A numeric range specified by a <code>range</code> attribute or <code>max</code> and <code>min</code> attributes. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>boolean</p>
+    </td>
+    <td>
+<p>A value that can be converted to a Boolean value: Yes, No, True, or False, (all case-independent), or a number.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>telephone *</p>
+    </td>
+    <td>
+<p>Standard U.S. telephone formats. Allows an initial 1 long-distance designator and up to 5-digit extensions, optionally starting with x.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>zipcode *</p>
+    </td>
+    <td>
+<p>U.S. 5- or 9-digit ZIP code format #####-####. The separator can be a hyphen (-) or a space.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>creditcard *</p>
+    </td>
+    <td>
+<p>Strips blanks and dashes; verifies number using mod10 algorithm. The number must have 13-16 digits.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ssn * <i>or</i> social_security_<br />number *</p>
+    </td>
+    <td>
+<p>US. Social Security number format, ###-##-####. The separator can be a dash (-) or a space.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>email *</p>
+    </td>
+    <td>
+<p>A valid e-mail address of the form name@server.domain. ColdFusion validates the format only; it does not check that entry is a valid active e-mail address.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>URL *</p>
+    </td>
+    <td>
+<p>A valid URL pattern; supports http, https, ftp file, mailto, and news URLs.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>guid *</p>
+    </td>
+    <td>
+<p>A unique identifier that follows the Microsoft/DCE format, xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx, where x is a hexadecimal number.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>uuid *</p>
+    </td>
+    <td>
+<p>A universally unique identifier (UUID) that follows the ColdFusion format, xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx, where x is a hexadecimal number.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>regex * <i>or</i> regular_expression *</p>
+    </td>
+    <td>
+<p>Matches the value against a regular expression specified in a <code>pattern</code> attribute. Valid in HTML and XML format only; ignored in Flash format.</p>
+    </td>
+  </tr>
+</table>
+
+<p class="caption">* Indicates attribute values that are not valid for the <code>cfargument</code> tag. </p>
+<p><strong>Note: </strong>For more details on how ColdFusion handles data when it does onServer and hidden field validation, see <a href="00001385.htm#1154690">Validating form data using hidden fields</a></p><p>The following validation types can only be used in <code>cfinput</code> tags:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>maxlength</p>
+    </td>
+    <td>
+<p>Limits the input to a maximum number of characters specified by a <code>maxlength</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>noblanks</p>
+    </td>
+    <td>
+<p>Does not allow fields that consist only of blanks. ColdFusion uses this validation only if the <code>required</code> attribute is True.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SubmitOnce</p>
+    </td>
+    <td>
+<p>Used only with <code>cfform</code> <code>submit</code> and <code>image</code> types; prevents the user from submitting the same form multiple times before until the next page loads, Use this attribute, for example, to prevent a user from submitting an order form a second time before getting the confirmation for the initial order, and thereby making a duplicate order, Valid in HTML and XML format only; ignored in Flash format.</p>
+    </td>
+  </tr>
+</table>
+
+<p>You can use the following validation types in <code>cfparam</code> and <code>cfargument</code> tags and the <code>IsValid</code> function only:</p>
+:<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>any</p>
+    </td>
+    <td>
+<p>Any type of value</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>An array of values</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>binary</p>
+    </td>
+    <td>
+<p>A binary value</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>A query object</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string value or single character</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>struct</p>
+    </td>
+    <td>
+<p>A structure</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>variableName *</p>
+    </td>
+    <td>
+<p>A string formatted according to ColdFusion variable naming conventions.</p>
+    </td>
+  </tr>
+</table>
+
+<p class="caption">* This value is not valid for the <code>cfargument</code> tag <code>type</code> attribute. The <code>cfargument</code> tag does support component names as <code>type</code> attribute values. For more information, see <a href="00000218.htm#2855190"><code>cfargument</code></a> in <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001379.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001381.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001380.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

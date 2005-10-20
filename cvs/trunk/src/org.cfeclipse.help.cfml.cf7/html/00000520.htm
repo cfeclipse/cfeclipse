@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsDefined</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000519.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000521.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsDefined</h1>
+<h4><a name="wp1225280"></a>Description</h4>
+<p>Evaluates a string value to determine whether the variable named in it exists. </p>
+<p>This function is an alternative to the <a href="00000593.htm#134371"><code>ParameterExists</code></a> function, which is deprecated.</p>
+<h4><a name="wp3401035"></a>Returns</h4>
+<p>True, if the variable is found, or, for a structure, if the specified key is defined; False, otherwise. </p>
+<p>The return value is False for an array or structure element referenced using bracket notation. For example, <code>IsDefined(&quot;myArray[3]&quot;)</code> always returns False, even if the array element <i>myArray[3]</i> has a value. </p>
+<h4><a name="wp2492061"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a></p>
+<h4><a name="wp1106490"></a>Function syntax</h4>
+<pre><code><strong>IsDefined</strong></code>(&quot;<i>variable_name</i>&quot;)
+</pre><h4><a name="wp2492049"></a>See also</h4>
+<p><a href="00000458.htm#1104252"><code>Evaluate</code></a></p>
+<h4><a name="wp4390826"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: this function can process only the following constructs:</p>
+<ul>
+<li>
+   A simple variable 
+</li>
+<li>
+   A named variable with dot notation
+</li>
+<li>
+   A named structure with dot notation (for example: <code>mystruct.key</code>)
+</li>
+</ul>
+<h4><a name="wp1325401"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>variable_name</p>
+    </td>
+    <td>
+<p>String, enclosed in quotation marks. Name of variable to test for.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3615089"></a>Usage</h4>
+<p>When working with scopes that ColdFusion exposes as structures, the <code>StructKeyExists</code> function can sometimes replace this<code> </code>function. The following lines are equivalent: </p>
+<pre>if(isDefined(&quot;form.myVariable&quot;))
+if(structKeyExists(form,&quot;myVariable&quot;))
+</pre><h4><a name="wp3615079"></a>Example</h4>
+<pre>&lt;cfif IsDefined(&quot;form.myString&quot;)&gt;
+   &lt;p&gt;The variable form.myString has been defined, so show its contents.
+   This construction allows us to place a form and its resulting action code
+   on the same page and use IsDefined to control the flow of execution.&lt;/p&gt;
+   &lt;p&gt;The value of &quot;form.myString&quot; is &lt;b&gt;&lt;i&gt;
+   &lt;cfoutput&gt;#form.myString#&lt;/cfoutput&gt;&lt;/i&gt;&lt;/b&gt;
+&lt;cfelse&gt;
+   &lt;p&gt;During the first time through this template, the variable &quot;form.myString&quot; 
+   has not yet been defined, so we do not try to evaluate it.
+&lt;/cfif&gt;
+
+&lt;form action=&quot;#CGI.Script_Name&quot; method=&quot;POST&quot;&gt;
+&lt;input type=&quot;Text&quot; name=&quot;MyString&quot; value=&quot;My sample value&quot;&gt;
+&lt;input type=&quot;Submit&quot; name=&quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000519.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000521.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000520.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

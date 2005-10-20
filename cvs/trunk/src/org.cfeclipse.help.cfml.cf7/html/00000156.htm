@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 2: Creating a simple action page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000155.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000157.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 2: Creating a simple action page</h1>
+<p>In this exercise, you develop an action page that you will eventually use to insert or update trip data passed from the Trip Edit page into the trips table of the Compass Travel database. </p>
+<h4>To build the Trip Edit action page:</h4>
+<ol>
+<li>
+   Create a blank file.
+</li>
+<li>
+   Enter or copy and paste the following code into the file:
+<pre>
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Trip Maintenance Confirmation&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+			&lt;h1&gt;Trip Added&lt;/h1&gt;
+			&lt;!--- Database insert logic goes here. ---&gt;
+			&lt;cfoutput&gt;
+				You have added #Form.TripName# to the trips database.
+			&lt;/cfoutput&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as tripeditaction.cfm in the my_app directory.
+</li>
+</ol>
+<h4>To test the trip edit page:</h4>
+<ol>
+<li>
+   Open the tripedit.cfm page in the my_app directory in a browser.
+</li>
+<li>
+   In the Trip Name field, enter <strong>12345</strong>.
+</li>
+<li>
+   Click Save.
+<p>The message &quot;You have added 12345 to the trips database.&quot; appears. The tripeditaction.cfm page does not actually update the database yet; it simply displays a message saying that you added the trip to the database. Before you add the code to allow updates to the database, you must add the logic to validate the data entered in the form.</p>
+</li>
+</ol>
+<h4><a name="wp1188548"></a>Reviewing the code</h4>
+<p>The following table describes the code that you use to verify whether a file exists:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>   &lt;h1&gt;Trip Added&lt;/h1&gt;
+   &lt;!--- Database insert logic goes here. ---&gt;
+   &lt;cfoutput&gt;You have added #Form.TripName# to the trips database.
+   &lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Displays the heading &quot;Trip Added.&quot; Displays the message &quot;You have added <i>TripName</i> to the trips database,&quot; where TripName is the trip name you entered in the form's Trip Name field.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000155.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000157.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000156.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

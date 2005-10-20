@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Populating arrays with data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000955.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000957.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Populating arrays with data</h1>
+<p>Array elements can store any values, including queries, structures, and other arrays. You can use a number of functions to populate an array with data, including <a href="00000393.htm#1100826"><code>ArraySet</code></a>, <a href="00000381.htm#1100231"><code>ArrayAppend</code></a>, <a href="00000385.htm#1100451"><code>ArrayInsertAt</code></a>, and <a href="00000391.htm#1100739"><code>ArrayPrepend</code></a>. These functions are useful for adding data to an existing array. </p>
+<p>In particular, you should master the following basic techniques:</p>
+<ul>
+<li>
+   Populating an array with the <code>ArraySet</code> function
+</li>
+<li>
+   Populating an array with the <a href="00000290.htm#3301338"><code>cfloop</code></a> tag
+</li>
+<li>
+   Populating an array from a query
+</li>
+</ul>
+<p>The following sections describe these techniques:</p>
+<ul>
+<li>
+   <a href="00000956.htm#1096233">Populating an array with the ArraySet function</a>
+</li>
+<li>
+   <a href="00000956.htm#1096240">Populating an array with the cfloop tag</a>
+</li>
+<li>
+   <a href="00000957.htm#1107246">Populating an array from a query</a>
+</li>
+</ul>
+<h2><a name="wp1096233"></a>Populating an array with the ArraySet function</h2>
+<p>You can use the <a href="00000393.htm#1100826"><code>ArraySet</code></a> function to populate a 1D array, or one dimension of a multidimensional array, with some initial value, such as an empty string or zero. This can be useful if you need to create an array of a certain size, but do not need to add data to it right away. One reason to do this is so that you can refer to all the array indexes. If you refer to an array index that does not contain some value, such as an empty string, you get an error.</p>
+<p>The <code>ArraySet</code> function has the following form:</p>
+<pre>ArraySet (<i>arrayname</i>, <i>startrow</i>, <i>endrow</i>, <i>value</i>)
+</pre><p>The following example initializes the array myarray, indexes 1 to 100, with an empty string:</p>
+<pre>ArraySet (myarray, 1, 100, &quot;&quot;)
+</pre><h2><a name="wp1096240"></a>Populating an array with the cfloop tag</h2>
+<p>The <a href="00000290.htm#3301338"><code>cfloop</code></a> tag provides a common and very efficient method for populating an array. The following example uses a <code>cfloop</code> tag and the <a href="00000589.htm#134018"><code>MonthAsString</code></a> function to populate a simple 1D array with the names of the months. A second <code>cfloop</code> outputs data in the array to the browser.</p>
+<pre>&lt;cfset months=arraynew(1)&gt;
+
+&lt;cfloop index=&quot;loopcount&quot; from=1 to=12&gt;
+   &lt;cfset months[loopcount]=MonthAsString(loopcount)&gt;
+&lt;/cfloop&gt;
+
+&lt;cfloop index=&quot;loopcount&quot; from=1 to=12&gt;
+      &lt;cfoutput&gt;
+         #months[loopcount]#&lt;br&gt;
+      &lt;/cfoutput&gt;
+&lt;/cfloop&gt;
+</pre><h3><a name="wp1096243"></a>Using nested loops for 2D and 3D arrays</h3>
+<p>To output values from 2D and 3D arrays, you must employ nested loops to return array data. With a one-dimensional (1D) array, a single <a href="00000290.htm#3301338"><code>cfloop</code></a> is sufficient to output data, as in the previous example. With arrays of dimension greater than one, you need to maintain separate loop counters for each array level.</p>
+<h4><a name="wp1096247"></a>Nesting cfloop tags for a 2D array</h4>
+<p>The following example shows how to handle nested <code>cfloop</code> tags to output data from a 2D array. It also uses nested <code>cfloop</code> tags to populate the array:</p>
+<pre>&lt;cfset my2darray=arraynew(2)&gt;
+&lt;cfloop index=&quot;loopcount&quot; from=1 to=12&gt;
+   &lt;cfloop index=&quot;loopcount2&quot; from=1 to=2&gt;
+      &lt;cfset my2darray[loopcount][loopcount2]=(loopcount * loopcount2)&gt;
+   &lt;/cfloop&gt;
+&lt;/cfloop&gt;
+
+&lt;p&gt;The values in my2darray are currently:&lt;/p&gt;
+
+&lt;cfloop index=&quot;OuterCounter&quot; from=&quot;1&quot; to=&quot;#ArrayLen(my2darray)#&quot;&gt;
+   &lt;cfloop index=&quot;InnerCounter&quot; from=&quot;1&quot;<br />         to=&quot;#ArrayLen(my2darray[OuterCounter])#&quot;&gt;
+      &lt;cfoutput&gt;
+         &lt;b&gt;[#OuterCounter#][#InnerCounter#]&lt;/b&gt;:
+         #my2darray[OuterCounter][InnerCounter]#&lt;br&gt;
+      &lt;/cfoutput&gt;
+   &lt;/cfloop&gt;
+&lt;/cfloop&gt;
+</pre><h4><a name="wp1096250"></a>Nesting cfloop tags for a 3D array</h4>
+<p>For 3D arrays, you simply nest an additional <code>cfloop</code> tag. (This example does not set the array values first to keep the code short.)</p>
+<pre>&lt;cfloop index=&quot;Dim1&quot; from=&quot;1&quot; to=&quot;#ArrayLen(my3darray)#&quot;&gt;
+   &lt;cfloop index=&quot;Dim2&quot; from=&quot;1&quot; to=&quot;#ArrayLen(my3darray[Dim1])#&quot;&gt;
+      &lt;cfloop index=&quot;Dim3&quot; from=&quot;1&quot;<br />            to=&quot;#ArrayLen(my3darray[Dim1][Dim2])#&quot;&gt;
+         &lt;cfoutput&gt;
+            &lt;b&gt;[#Dim1#][#Dim2#][#Dim3#]&lt;/b&gt;:<br />            #my3darray[Dim1][Dim2][Dim3]#&lt;br&gt;
+         &lt;/cfoutput&gt;
+      &lt;/cfloop&gt;
+   &lt;/cfloop&gt;
+&lt;/cfloop&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000955.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000957.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000956.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

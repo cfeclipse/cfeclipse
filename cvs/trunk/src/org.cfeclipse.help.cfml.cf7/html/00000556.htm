@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ListInsertAt</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000555.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000557.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ListInsertAt</h1>
+<h4><a name="wp130995"></a>Description</h4>
+<p>Inserts an element in a list.</p>
+<h4><a name="wp130997"></a>Returns</h4>
+<p>A copy of the list<i>,</i> with <i>value</i> inserted at the specified position.</p>
+<h4><a name="wp130999"></a>Category</h4>
+<p><a href="00000364.htm#1099435">List functions</a></p>
+<h4><a name="wp131004"></a>Function syntax</h4>
+<pre><code><strong>ListInsertAt</strong></code>(<i>list</i>, <i>position</i>, <i>value</i> [, <i>delimiters</i> ])
+</pre><h4><a name="wp131006"></a>See also</h4>
+<p><a href="00000551.htm#130600">ListDeleteAt</a>, <a href="00000547.htm#130310">ListAppend</a>, <a href="00000559.htm#131224">ListPrepend</a>, <a href="00000562.htm#131443">ListSetAt</a>; <a href="00000889.htm#1100874">Lists</a> in <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i> </p>
+<h4><a name="wp131020"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>list</p>
+    </td>
+    <td>
+<p>A list or a variable that contains one.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>position</p>
+    </td>
+    <td>
+<p>A positive integer or a variable that contains one. Position at which to insert element. The first list position is 1.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>An element or a list of elements.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>delimiters</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Character(s) that separate list elements. The default value is comma. </p>
+<p>If this parameter contains more than one character, ColdFusion processes each occurrence of each character as a delimiter. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp131044"></a>Usage</h4>
+<p>When inserting an element, ColdFusion inserts a delimiter. If <code>delimiters</code> contains more than one delimiter, ColdFusion uses the first delimiter in the string; if <code>delimiters</code> is omitted, ColdFusion uses a comma. </p>
+<p>ColdFusion ignores empty list elements; thus, the list &quot;a,b,c,,,d&quot; has four elements.</p>
+<h4><a name="wp131047"></a>Example</h4>
+<pre>&lt;!--- This example shows ListInsertAt ---&gt;
+&lt;cfquery name = &quot;GetParkInfo&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT PARKNAME,CITY,STATE
+FROM PARKS
+WHERE PARKNAME LIKE 'DE%'
+&lt;/cfquery&gt;
+&lt;cfset temp = ValueList(GetParkInfo.ParkName)&gt;
+&lt;cfset insert_at_this_element = ListGetAt(temp, &quot;3&quot;, &quot;,&quot;)&gt;
+&lt;cfoutput&gt;
+&lt;p&gt;The original list: #temp#
+&lt;/cfoutput&gt;
+&lt;cfset temp2 = <strong>ListInsertAt(Temp, &quot;3&quot;, &quot;my Inserted Value&quot;)</strong>&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000555.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000557.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000556.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using do-while loops</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000974.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000976.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using do-while loops</h1>
+<p>The do-while loop is like a while loop, except that it tests the loop condition after executing the loop statement block. The do-while loop has the following format:</p>
+<pre>do <code><i>statement</i></code> while (<code><i>expression</i></code>);
+</pre><p>The <code>do</code> <code>while</code> statement does the following:</p>
+<ol>
+<li>
+   Executes the <i>statement</i>, which can be a single semicolon-terminated statement or a statement block in curly braces.
+</li>
+<li>
+   Evaluates the <i>expression.</i>
+</li>
+<li>
+   If the <i>expression</i> is true, it returns to step 1.
+</li>
+</ol>
+<p>If the <i>expression</i> is False, processing continues with the next statement.</p>
+<p>The following example, like the while loop example, populates a 10-element array with multiples of 5:</p>
+<pre>a = ArrayNew(1);
+loop = 1;
+do&#160;{
+  a[loop] = loop * 5;
+  loop = loop + 1;
+}
+while (loop LE 10);
+</pre><p>Because the loop index increment follows the array value assignment, the example initializes the loop variable to 1 and tests to make sure that it is less than or equal to 10. </p>
+<p>The following example generates the same results as the previous two examples, but it increments the index before assigning the array value. As a result, it initializes the index to 0, and the end condition tests that the index is less than 10.</p>
+<pre>a = ArrayNew(1);
+loop = 0;
+do {
+   loop = loop + 1; 
+   a[loop] = loop * 5;
+} 
+while (loop LT 10);
+</pre><p>The following example loops through a query:</p>
+<pre>&lt;cfquery ... name=&quot;myQuery&quot;&gt;
+... sql goes here...
+&lt;/cfquery&gt;
+&lt;cfscript&gt;
+if (myQuery.RecordCount gt 0) {
+&#160;&#160;currRow=1;
+&#160;&#160;do {
+&#160;&#160;&#160;&#160;theValue=myQuery.myField[CurrRow];
+&#160;&#160;&#160;&#160;currRow=currRow+1;
+&#160;&#160;} while (currRow LTE myQuery.RecordCount);
+}
+&lt;/cfscript&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000974.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000976.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000975.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

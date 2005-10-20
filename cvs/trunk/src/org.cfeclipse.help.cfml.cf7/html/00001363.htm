@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Building slider bar controls</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001362.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001364.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Building slider bar controls</h1>
+<p>You can use the <a href="00000337.htm#2612389"><code>cfslider</code></a> control in a <a href="00000256.htm#2433198"><code>cfform</code></a> tag to create a slider control and define a variety of characteristics, including label text, label font name, size, boldface, italics, and color, and slider range, positioning, and behavior. Slider bars are useful because they are highly visual and users can only enter valid values. The <code>cfslider</code> tag is not supported in Flash format forms.</p>
+<h4>To create a slider control:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content: 
+<pre>
+&lt;cfform name=&quot;Form1&quot; action=&quot;submit.cfm&quot;&gt;
+	&lt;cfslider name=&quot;myslider&quot;
+		bgcolor=&quot;cyan&quot;
+		bold=&quot;Yes&quot;
+		range=&quot;0,1000&quot;
+		scale=&quot;100&quot;
+		value=&quot;600&quot;
+		fontsize=&quot;14&quot;
+		label=&quot;Slider %value%&quot;
+		height=&quot;60&quot;
+		width=&quot;400&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+</li>
+<li>
+   Save the file as slider.cfm and view it in your browser. 
+<p>The following figure shows the output of this code:</p>
+<p><br />
+<img src="images/slider3.jpg" alt="Example slider control" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+</ol>
+<p>To get the value of the slider in the action page, use the variable Form.<i>slider_name</i>; in this case, Form.myslider.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001362.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001364.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001363.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

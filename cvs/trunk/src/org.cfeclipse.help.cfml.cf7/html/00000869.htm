@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000868.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000870.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Tags</h1>
+<p>ColdFusion <i>tags</i> tell the ColdFusion server that it must process information. The ColdFusion server only processes tag contents; it returns text outside of ColdFusion to the web server unchanged. Macromedia ColdFusion&#160;MX provides a wide variety of built-in tags and lets you create custom tags.</p>
+<h2><a name="wp2725289"></a>Tag syntax</h2>
+<p>ColdFusion tags have the same format as HTML tags. They are enclosed in angle brackets (&lt;&#160;and&#160;&gt;) and can have zero or more named attributes. Many ColdFusion tags have bodies; that is, they have beginning and end tags with text to be processed between them. For example:</p>
+<pre>&lt;cfoutput&gt;
+   Hello #YourName#! &lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><p>Other tags, such as <a href="00000334.htm#1103445"><code>cfset</code></a> and <a href="00000259.htm#1800554"><code>cfftp</code></a>, never have bodies; all the required information goes between the beginning (&lt;) character and the ending (&gt;) character, as in the following example: </p>
+<pre>&lt;cfset YourName=&quot;Bob&quot;&gt;
+</pre><p>Sometimes, although the tag can have a body, you do not need to put anything in it because the attributes specify all the required information. You can omit the end tag and put a forward slash character before the closing (&gt;) character, as in the following example:</p>
+<pre>&lt;cfexecute name=&quot;C:\winNT\System32\netstat.exe&quot; arguments = &quot;-e&quot;<br />outputfile=&quot;C:\Temp\out.txt&quot; timeout = &quot;1&quot; /&gt;
+</pre><p><strong>Note: </strong>The <code>cfset</code> tag differs from other tags in that it has neither a body nor arguments. Instead, the tag encloses an assignment statement that assigns a value to a variable. The <code>cfset</code> tag can also call a function without assigning a value to a result variable.</p><h2><a name="wp2725758"></a>Built-in tags</h2>
+<p>Over 110 built-in tags make up the heart of ColdFusion. These tags have many uses, including the following:</p>
+<ul>
+<li>
+   Manipulating variables
+</li>
+<li>
+   Creating interactive forms
+</li>
+<li>
+   Accessing and manipulating databases
+</li>
+<li>
+   Displaying data
+</li>
+<li>
+   Controlling the flow of execution on the ColdFusion page
+</li>
+<li>
+   Handling errors
+</li>
+<li>
+   Processing ColdFusion pages
+</li>
+<li>
+   Managing the CFML application framework
+</li>
+<li>
+   Manipulating files and directories
+</li>
+<li>
+   Using external tools and objects, including Verity collections, COM, Java, and CORBA objects, and executable programs
+</li>
+<li>
+   Using protocols, such as mail, http, ftp, and pop
+</li>
+</ul>
+<p>Much of this document describes how to use these tags effectively. <i>CFML Reference</i> documents each tag in detail.</p>
+<h2><a name="wp2718903"></a>Custom tags</h2>
+<p>ColdFusion lets you create custom tags. You can create two types of custom tags:</p>
+<ul>
+<li>
+   CFML custom tags that are ColdFusion pages 
+</li>
+<li>
+   CFX tags that you write in a programing language such as Java or C++ 
+</li>
+</ul>
+<p>Custom tags can encapsulate frequently used business logic or display code. These tags enable you to place frequently used code in one place and call it from many places. Custom tags also let you abstract complex logic into a single, simple interface. They provide an easy way to distribute your code to others; you can even distribute encrypted versions of the tags to prevent access to the tag logic.</p>
+<p>You can access a variety of free and commercial custom tags on the Macromedia developer's exchange (<a href="http://www.macromedia.com/cfusion/exchange/index.cfm" target="mm_window">www.macromedia.com/cfusion/exchange/index.cfm</a>). They perform tasks ranging from checking if Cookies and JavaScript are enabled on the client&#39;s browser to moving items from one list box to another. Many of these tags are free and include source code. </p>
+<h4><a name="wp2734879"></a>CFML custom tags</h4>
+<p>When you write a custom tag in CFML, you can take advantage of all the features of the ColdFusion language, including all built-in tags and even other custom tags. CFML custom tags can include body sections and end tags. Because they are written in CFML, you do not need to know a programming language such as Java. CFML custom tags provide more capabilities than user-defined functions, but are less efficient.</p>
+<p>For more information on CFML custom tags, see <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a>. For information about, and comparisons among, ways to reuse ColdFusion code, including CFML custom tags, user-defined functions, and CFX tags, see <a href="00000993.htm#1101532">Creating ColdFusion Elements</a>.</p>
+<h4><a name="wp2722707"></a>CFX Tags</h4>
+<p>CFX tags are ColdFusion custom tags that you write in a programming language such as Java or C++. These tags can take full advantage of all the tools and resources provided by these languages, including their access to runtime environments. CFX tags also generally execute faster than CFML custom tags because they are compiled. CFX tags can be cross-platform, but are often platform-specific, for example if they take advantage of COM objects or the Windows API.</p>
+<p>For more information on CFX tags, see <a href="00001087.htm#1140064">Building Custom CFXAPI Tags</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000868.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000870.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000869.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

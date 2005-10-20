@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Adding and deleting attributes of a directory entry</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001293.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001295.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Adding and deleting attributes of a directory entry</h1>
+<p>The following table lists the <a href="00000283.htm#1100581"><code>cfldap</code></a> tag attributes that you must specify to add and delete LDAP attributes in an entry:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Action
+    </th>
+    <th>
+cfldap syntax
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Add attribute to entry</p>
+    </td>
+    <td>
+<pre>dn = &quot;<strong>entry dn</strong>&quot;
+action = &quot;modify&quot;
+modifyType = &quot;add&quot;
+attributes = &quot;<strong>attribname=attribValue[;...]</strong>&quot;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Delete attribute from entry</p>
+    </td>
+    <td>
+<pre>dn = &quot;<strong>entry dn</strong>&quot;
+action = &quot;modify&quot;
+modifyType = &quot;delete&quot;
+attributes = &quot;<strong>attribName[;...]</strong>&quot;
+</pre>    </td>
+  </tr>
+</table>
+
+<p>You can add or delete multiple attributes in one statement. To do this, use semicolons to separate the attributes in the attribute string. </p>
+<p>The following example specifies the description and seealso LDAP attributes:</p>
+<pre>attributes=&quot;description=Senior Technical Writer;seealso=writers&quot;
+</pre><p>You can change the character that you use to separate values of multivalued attributes in an attribute string. You can also change the character that separates attributes when a string contains multiple attributes. For more information, see <a href="00001296.htm#1117928">Specifying an attribute that includes a comma or semicolon</a>.</p>
+<p>You can add or delete attributes only if the directory schema defines them as optional for the entry's object class.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001293.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001295.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001294.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

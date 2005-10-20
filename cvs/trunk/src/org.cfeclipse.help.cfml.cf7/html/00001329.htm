@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Refining your searches with zones and fields</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001328.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001330.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Refining your searches with zones and fields</h1>
+<p>One of the strengths of Verity is its ability to perform full-text searches on documents of many formats. However, there are often times when you want to restrict a search to certain portions of a document, to improve search relevance. If a Verity collection contains some documents about baseball and other documents about caves, a search for the word bat might retrieve several irrelevant results. </p>
+<p>If the documents are structured documents, you can take advantage of the ability to search zones and fields. The following are some examples of structured documents:</p>
+<ul>
+<li>
+   Documents created with markup languages (XML, SGML, HTML)
+</li>
+<li>
+   Internet Message Format documents
+</li>
+<li>
+   Documents created by many popular word-processing applications
+</li>
+</ul>
+<p><strong>Note: </strong>Although your word processor might open with what appears to be a blank page, the document has many regions such as title, subject, and author. Refer to your application's documentation or online help system for how to view a document's properties.</p><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001329.htm#1194792">Zone searches</a>
+</li>
+<li>
+   <a href="00001329.htm#1194837">Field searches</a>
+</li>
+</ul>
+<h2><a name="wp1194792"></a>Zone searches</h2>
+<p>You can perform zone searches on markup language documents. The Verity zone filter includes built-in support for HTML and several file formats; for a list of supported file formats, see <a href="00001301.htm#1164916">Building a Search Interface</a>. Verity searches XML files by treating the XML tags as zones. When you use the zone filter, the Verity engine builds zone information into the collection's full-word index. This index, enhanced with zone information, permits quick and efficient searches over zones. The zone filter can automatically define a zone, or you can define it yourself in the style.zon file. You can use zone searching to limit your search to a particular zone. This can produce more accurate, but not necessarily faster, search results than searching an entire file.</p>
+<p><strong>Note: </strong>The contents of a zone cannot be returned in the results list of an application.</p><h4><a name="wp1210877"></a>Examples</h4>
+<p>The following examples perform zone searching on XML files. In a list of rock bands, you could have XML files with tags for the instruments and for comments. In the following XML file, the word Pete appears in a comment field:</p>
+<pre>&lt;band.xml&gt;
+    &lt;Lead_Guitar&gt;Dan&lt;/Lead_Guitar&gt;
+    &lt;Rhythm_Guitar&gt;Jake&lt;/Rhythm_Guitar&gt;
+    &lt;Bass_Guitar&gt;Mike&lt;/Bass_Guitar&gt;
+    &lt;Drums&gt;Chris&lt;/Drums&gt;
+    &lt;COMMENT_A&gt;Dan plays guitar, better than Pete.&lt;/COMMENT_A&gt;
+    &lt;COMMENT_B&gt;Jake plays rhythm guitar.&lt;/COMMENT_B&gt;
+&lt;/band.xml&gt;
+</pre><p>The following CFML code shows a search for the word Pete:</p>
+<pre>&lt;cfsearch name = &quot;band_search&quot;
+   collection=&quot;my_collection&quot; 
+   type = &quot;simple&quot;
+criteria=&quot;Pete&quot;&gt;
+</pre><p>The above search for Pete returns this XML file because this search target is in the COMMENT_A field. In contrast, Pete is the lead guitarist in the following XML file:</p>
+<pre>&lt;band.xml&gt;
+    &lt;Lead_Guitar&gt;Pete&lt;/Lead_Guitar&gt;
+    &lt;Rhythm_Guitar&gt;Roger&lt;/Rhythm_Guitar&gt;
+   &lt;Bass_Guitar&gt;John&lt;/Bass_Guitar&gt;
+    &lt;Drums&gt;Kenny&lt;/Drums&gt;
+    &lt;COMMENT_A&gt;Who knows who&#39;s better than this band?&lt;/COMMENT_A&gt;
+    &lt;COMMENT_B&gt;Ticket prices correlated with decibels.&lt;/COMMENT_B&gt;
+&lt;/band.xml&gt;
+</pre><p>To retrieve only the files in which Pete is the lead guitarist, perform a zone search using the IN operator according to the following syntax:</p>
+<pre>(query) &lt;IN&gt; <i>(zone1, zone2, ...)</i>
+</pre><p><strong>Note: </strong>As with other operators, IN might be uppercase or lowercase. Unlike AND, OR, or NOT, you must enclose IN within brackets.</p><p>Thus, the following explicit search retrieves files in which Pete is the lead guitarist:</p>
+<pre>(Pete) &lt;in&gt; Lead_Guitar
+</pre><p>This is expressed in CFML as follows:</p>
+<pre>&lt;cfsearch name = &quot;band_search&quot;
+   collection=&quot;my_collection&quot; 
+   type = &quot;explicit&quot;
+   criteria=&quot;(Pete) &lt;in&gt; Lead_Guitar&quot;&gt;
+</pre><p>To retrieve files in which Pete plays either lead or rhythm guitar, use the following explicit search:</p>
+<pre>(Pete) &lt;in&gt; (Lead_Guitar,Rhythm_Guitar)
+</pre><p>This is expressed in CFML as follows:</p>
+<pre>&lt;cfsearch name = &quot;band_search&quot;
+   collection=&quot;bbb&quot; 
+   type = &quot;explicit&quot;
+   criteria=&quot;(Pete) &lt;in&gt; (Lead_Guitar,Rhythm_Guitar)&quot;&gt;
+</pre><h2><a name="wp1194837"></a>Field searches</h2>
+<p><i>Fields</i> are extracted from the document and stored in the collection for retrieval and searching, and can be returned on a results list. Zones, on the other hand, are merely the definitions of &quot;regions&quot; of a document for searching purposes, and are not physically extracted from the document in the same way that fields are extracted.</p>
+<p>You must define a region of text as a zone before it can be a field. Therefore, it can be only a zone, or it can be both a field and a zone. Whether you define a region of text as a zone only or as both a field and a zone depends on your particular requirements. </p>
+<p>A field must be defined in the style file, style.ufl, before you create the collection. To map zones to fields (to display field data), you must define and add these extra fields to style.ufl.</p>
+<p>You can specify the values for the <a href="00000278.htm#1100286"><code>cfindex</code></a> attributes TITLE, KEY, and URL as document fields for use with relational operators in the <code>criteria</code> attribute. (The SCORE and SUMMARY attributes are automatically returned by a <code>cfsearch</code>; these attributes are different for each record of a collection as the search criteria changes.) Text comparison operators can reference the following document fields:</p>
+<ul>
+<li>
+   cf_title
+</li>
+<li>
+   cf_key
+</li>
+<li>
+   cf_url
+</li>
+<li>
+   cf_custom1
+</li>
+<li>
+   cf_custom2
+</li>
+<li>
+   cf_custom3
+</li>
+<li>
+   cf_custom4
+</li>
+</ul>
+<p>Text comparison operators can also reference the following automatically populated document fields:</p>
+<ul>
+<li>
+   title
+</li>
+<li>
+   key
+</li>
+<li>
+   url
+</li>
+<li>
+   vdksummary
+</li>
+<li>
+   author
+</li>
+<li>
+   mime-type
+</li>
+</ul>
+<p>To explore how to use document fields to refine a search, consider the following database table, named Calls. This table has four columns and three records, as the following table shows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+call_ID
+    </th>
+    <th>
+Problem_Description
+    </th>
+    <th>
+Short_Description
+    </th>
+    <th>
+Product
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>Can't bold text properly under certain conditions</p>
+    </td>
+    <td>
+<p>Bold Problem</p>
+    </td>
+    <td>
+<p>HomeSite+</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>2</p>
+    </td>
+    <td>
+<p>Certain optional attributes are acting as required attributes</p>
+    </td>
+    <td>
+<p>Attributes Problem</p>
+    </td>
+    <td>
+<p>ColdFusion</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>3</p>
+    </td>
+    <td>
+<p>Can't do a File/Open in certain cases</p>
+    </td>
+    <td>
+<p>File Open Problem</p>
+    </td>
+    <td>
+<p>HomeSite+</p>
+    </td>
+  </tr>
+</table>
+
+<p>A Verity search for the word certain returns three records. However, you can use the document fields to restrict your search; for example, a search to retrieve HomeSite+ problems with the word certain in the problem description.</p>
+<p>These are the requirements to run this procedure:</p>
+<ul>
+<li>
+   Create and populate the Calls table in a database of your choice
+</li>
+<li>
+   Create a collection named Training (you can do this in CFML or in the ColdFusion&#160;MX Administrator).
+</li>
+</ul>
+<p>The following table shows the relationship between the database column and <code>cfindex</code> attribute: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Database column
+    </th>
+    <th>
+The cfindex<br />attribute
+    </th>
+    <th>
+Comment
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>call_ID</p>
+    </td>
+    <td>
+<p>key</p>
+    </td>
+    <td>
+<p>The primary key of a database table is often a key attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Problem_Description</p>
+    </td>
+    <td>
+<p>body</p>
+    </td>
+    <td>
+<p>This column is the information to be indexed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Short_Description</p>
+    </td>
+    <td>
+<p>title</p>
+    </td>
+    <td>
+<p>A short description is conceptually equivalent to a title, as in a running title of a journal article.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Product</p>
+    </td>
+    <td>
+<p>custom1</p>
+    </td>
+    <td>
+<p>This field refines the search.</p>
+    </td>
+  </tr>
+</table>
+
+<p>You begin by selecting all data in a query: </p>
+<pre><code>&lt;cfquery name = &quot;Calls&quot; datasource = &quot;MyDSN&quot;&gt;</code>
+<code>   Select * from Calls</code>
+<code>&lt;/cfquery&gt;</code>
+</pre><p>The following code shows the <code>cfindex</code> tag for indexing the collection (the <code>type</code> attribute is set to custom for tabular data):</p>
+<pre><code>&lt;cfindex</code>
+<code>   query = &quot;Calls&quot;</code>
+<code>   collection = &quot;training&quot;</code>
+<code>   action = &quot;UPDATE&quot;</code>
+<code>   type = &quot;CUSTOM&quot;</code>
+<code>   </code><code><strong>title = &quot;Short_Description&quot;</strong></code>
+<code><strong>   key = &quot;Call_ID&quot;</strong></code>
+<code><strong>   body = &quot;Problem_Description&quot;</strong></code>
+<code><strong>   custom1 = &quot;Product&quot;&gt;</strong></code>
+</pre><p>To perform the refined search for HomeSite+ problems with the word certain in the problem description, the <code>cfsearch</code> tag uses the CONTAINS operator in its <code>criteria</code> attribute:</p>
+<pre>&lt;cfsearch
+   collection = &quot;training&quot;
+   name = &quot;search_calls&quot;
+   <code><strong>criteria = &quot;certain and CF_CUSTOM1 &lt;CONTAINS&gt; HomeSite&quot;&gt;</strong></code>
+</pre><p>The following code displays the results of the refined search:</p>
+<pre>&lt;table border=&quot;1&quot; cellspacing=&quot;5&quot;&gt;
+&lt;tr&gt;
+   &lt;th align=&quot;LEFT&quot;&gt;KEY&lt;/th&gt;
+   &lt;th align=&quot;LEFT&quot;&gt;TITLE&lt;/th&gt;
+   &lt;th align=&quot;LEFT&quot;&gt;CUSTOM1&lt;/th&gt;
+&lt;/tr&gt;
+
+&lt;cfoutput query = &quot;search_calls&quot;&gt;
+&lt;tr&gt;
+   &lt;td&gt;#KEY#&lt;/td&gt;
+   &lt;td&gt;#TITLE#&lt;/td&gt;
+   &lt;td&gt;#CUSTOM1#&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/cfoutput&gt;
+&lt;/table&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001328.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001330.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001329.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

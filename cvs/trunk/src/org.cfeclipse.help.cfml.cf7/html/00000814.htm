@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXStringSet::GetString</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000813.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000815.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXStringSet::GetString</h1>
+<h4><a name="wp1099474"></a>Syntax</h4>
+<pre>LPCSTR CCFXStringSet::GetString(int iIndex)
+</pre><h4><a name="wp1102897"></a>Description</h4>
+<p>Retrieves the string located at the passed index (index values are 1-based).</p>
+<h4><a name="wp1145673"></a>Returns</h4>
+<p>Returns the string located at the passed index.</p>
+<h4><a name="wp1102589"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>iIndex</p>
+    </td>
+    <td>
+<p>Index of string to retrieve</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1098628"></a>Example</h4>
+<p>The following example demonstrates <code>GetString</code> with <a href="00000812.htm#1098588">CCFXStringSet::GetCount</a> to iterate over a string set and write the contents of a list back to the user:</p>
+<pre>int nNumItems = pStringSet-&gt;GetCount() ;<br />for ( int i=1; i&lt;=nNumItems; i++ )<br />{<br />               pRequest-&gt;Write( pStringSet-&gt;GetString( i ) ) ;<br />               pRequest-&gt;Write( &quot;&lt;BR&gt;&quot; ) ;<br />}
+</pre><p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000813.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000815.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000814.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

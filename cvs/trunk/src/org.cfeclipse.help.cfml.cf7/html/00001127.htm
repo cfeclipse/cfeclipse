@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Caching parts of ColdFusion pages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001126.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001128.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Caching parts of ColdFusion pages</h1>
+<p>In some cases, your ColdFusion page might contain a combination of dynamic information that ColdFusion must generate each time it displays the page, and information that it generates dynamically, but that change less frequently. In this case, you cannot use the <code>cfcache</code> tag to cache the entire page. Instead, use the <a href="00000327.htm#1844410"><code>cfsavecontent</code></a> tag to cache the infrequently changed content.</p>
+<p>The <code>cfsavecontent</code> tag saves the results of processing the tag body in a variable. For example, if the body of the <code>cfsavecontent</code> tag contains a <a href="00000243.htm#1098198"><code>cfexecute</code></a> tag that runs an executable program that displays data, the variable saves the output. </p>
+<p>You can use the <code>cfsavecontent</code> tag to cache infrequently changing output in a shared scope variable. If the information is used throughout the application, save the output in the Application scope. If the information is client-specific, use the Session scope. Because of the overhead of locking shared scope variables, use this technique only if the processing overhead of generating the output is substantial.</p>
+<p>Before you use this technique, also consider whether other techniques are more appropriate. For example, query caching eliminates the need to repeat a common query. However, if the effort of processing the data or formatting the output is substantial, using the <code>cfsavecontent</code> tag can save processing time.</p>
+<p>Using this technique, if the variable exists, the page uses the cached output. If the variable does not exist, the page gets the data, generates the output, and saves the results to the shared scope variable. </p>
+<p>The following example shows this technique. It has two parts. The first part welcomes the user and prints out a random lucky number. This part runs and produces a different number each time a user opens the page. The second part performs a database query to get information that changes infrequently; in this example, a listing of the current special sale items. It uses the <code>cfsavecontent</code> tag to get the data only when needed.</p>
+<p><strong>Tip: </strong>If you use this technique frequently, consider incorporating it in a custom CFML tag.</p><pre>&lt;!--- Greet the user. ---&gt;
+&lt;cfoutput&gt;
+   Welcome to our home page.&lt;br&gt;
+   The time is #TimeFormat(Now())#.&lt;br&gt;
+   Your lucky number is: #RandRange(1,1000)#&lt;br&gt;
+   &lt;hr&gt;&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;!--- Set a flag to indicate whether the Application scope variable exists.---&gt;
+&lt;cflock scope=&quot;application&quot; timeout=&quot;20&quot; type=&quot;readonly&quot;&gt;
+   &lt;cfset IsCached = Not IsDefined(&quot;Application.ProductCache&quot;)&gt;
+&lt;/cflock&gt;
+
+&lt;!--- If the flag is false, query the DB, and save an image of
+   the results output to a variable. ---&gt;
+&lt;cfif not IsCached&gt;
+   &lt;cfsavecontent variable=&quot;ProductCache&quot;&gt;
+   &lt;!--- Perform database query. ---&gt;
+      &lt;cfquery dataSource=&quot;ProductInfo&quot; name=&quot;specialQuery&quot;&gt;
+         SELECT ItemName, Item_link, Description, BasePrice
+         FROM SaleProducts
+      &lt;/cfquery&gt;
+&lt;!--- Calculate sale price and display the results. ---&gt;
+      &lt;h2&gt;Check out the following specials&lt;/h2&gt;
+      &lt;table&gt;
+      &lt;cfoutput query=&quot;specialQuery&quot;&gt;
+         &lt;cfset salePrice= BasePrice * .8&gt;
+         &lt;tr&gt;
+            &lt;td&gt;#ItemNAme#&lt;/td&gt;
+            &lt;td&gt;#Item_Link#&lt;/td&gt;
+            &lt;td&gt;#Description#&lt;/td&gt;
+            &lt;td&gt;#salePrice#&lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/cfoutput&gt;
+      &lt;/table&gt;
+   &lt;/cfsavecontent&gt;
+
+&lt;!--- Save the results in the Application scope. ---&gt;
+   &lt;cflock scope=&quot;Application&quot; type=&quot;Exclusive&quot; timeout=30&gt;
+      &lt;cfset Application.productCache = ProductCache&gt;
+   &lt;/cflock&gt;
+&lt;/cfif&gt;
+
+&lt;!--- Use the Application scope variable to display the sale items. ---&gt;
+&lt;cflock scope=&quot;application&quot; timeout=&quot;20&quot; type=&quot;readonly&quot;&gt;
+   &lt;cfoutput&gt;#Application.ProductCache#&lt;/cfoutput&gt;
+&lt;/cflock&gt;
+</pre><h4><a name="wp1174165"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput&gt;
+   Welcome to our home page.&lt;br&gt;
+   The time is #TimeFormat(Now())#.&lt;br&gt;
+   Your lucky number is:
+      #RandRange(1,1000)#&lt;br&gt;
+   &lt;hr&gt;&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Displays the part of the page that must change each time.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cflock scope=&quot;application&quot; timeout=&quot;20&quot;
+      type=&quot;readonly&quot;&gt;
+   &lt;cfset IsCached = IsDefined
+      (&quot;Application.ProductCache&quot;)&gt;
+&lt;/cflock&gt;
+</pre>    </td>
+    <td>
+<p>Inside a read-only lock, tests to see if the part of the page that changes infrequently is already cached in the Application scope, and sets a Boolean flag variable with the result.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif not IsCached&gt;
+   &lt;cfsavecontent variable=&quot;ProductCache&quot;&gt;
+</pre>    </td>
+    <td>
+<p>If the flag is False, uses a <code>cfsavecontent</code> tag to save output in a Variables scope variable. Using the Variables scope eliminates the need to do a query (which can take a long time) in an Application scope lock.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfquery dataSource=&quot;ProductInfo&quot; 
+      name=&quot;specialQuery&quot;&gt;
+   SELECT ItemName, Item_link, 
+      Description, BasePrice
+   FROM SaleProducts
+&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Queries the database to get the necessary information. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;h2&gt;Check out the following specials&lt;/h2&gt;
+&lt;table&gt;
+   &lt;cfoutput query=&quot;specialQuery&quot;&gt;
+      &lt;cfset salePrice = BasePrice * .8&gt;
+      &lt;tr&gt;
+         &lt;td&gt;#ItemNAme#&lt;/td&gt;
+         &lt;td&gt;#Item_Link#&lt;/td&gt;
+         &lt;td&gt;#Description#&lt;/td&gt;
+         &lt;td&gt;#salePrice#&lt;/td&gt;
+      &lt;/tr&gt;
+   &lt;/cfoutput&gt;
+   &lt;/table&gt;
+</pre>    </td>
+    <td>
+<p>Displays the sale items in a table. Inside a <code>cfoutput</code> tag, calculates each item's sale price and displays the item information in a table row.</p>
+<p>Because this code is inside a <code>cfsavecontent</code> tag, ColdFusion does not display the results of the <code>cfoutput</code> tag. Instead, it saves the formatted output as HTML and text in the ProductCache variable.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;/cfsavecontent&gt;
+</pre>    </td>
+    <td>
+<p>Ends the <code>cfsavecontent</code> tag block.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cflock scope=&quot;Application&quot; type=&quot;Exclusive&quot;
+      timeout=30&gt;
+   &lt;cfset Application.productCache =
+      productcache&gt;
+&lt;/cflock&gt;
+</pre>    </td>
+    <td>
+<p>Inside an Exclusive <code>cflock</code> tag, saves the contents of the local variable <code>ProductCache</code> in the Application scope variable Application.productCache.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>Ends the code that executes only if the Application.productCache variable does not exist.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cflock scope=&quot;application&quot; timeout=&quot;20&quot;<br />      type=&quot;readonly&quot;&gt;
+   &lt;cfoutput&gt;#Application.ProductCache#&lt;/cfoutput&gt;
+&lt;/cflock&gt;
+</pre>    </td>
+    <td>
+<p>Inside a <code>cflock</code> tag, displays the contents of the Application.productCache variable.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001126.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001128.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001127.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Viewing results of the rcvdk utility</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001815.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001817.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Viewing results of the rcvdk utility</h1>
+<p>After you have attached to a collection and issued a search command successfully, you can view the results list and look at the retrieved documents. You can use the options in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Option
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>r</p>
+    </td>
+    <td>
+<p>Displays the results list, starting with the first document. A maximum of 24 documents are displayed.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>r n</p>
+    </td>
+    <td>
+<p>Displays the results list, starting with the nth document. A maximum of 24 documents are displayed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>v</p>
+    </td>
+    <td>
+<p>Displays the first or next document in the results list. Highlights are indicated using reverse video, if possible. If not, double angle brackets are used, as in:</p>
+<p>&gt;&gt;universal&lt;&lt; &gt;&gt;filter&lt;&lt;</p>
+<p>&#160;</p>
+<p>To exit the document display, enter the letter q.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>v n</p>
+    </td>
+    <td>
+<p>Displays the nth document in the results list. To exit the document display, enter the letter q.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following is the results list for the &quot;universal filter&quot; search. For each document, these fields are displayed by default: Number, Score, and VdkVgwKey.</p>
+<pre>RC&gt; r
+Retrieved: 18(18)/85
+Number SCORE VdkVgwKey
+1: 1.00 d:\search97\s97is\locale\english\doc\collbldg\08_cbg3.htm
+2: 0.97 d:\search97\s97is\locale\english\doc\collbldg\11_cbg2.htm
+3: 0.97 d:\search97\s97is\locale\english\doc\collbldg\08_cbg7.htm
+4: 0.97 d:\search97\s97is\locale\english\doc\collbldg\08_cbg1.htm
+5: 0.95 d:\search97\s97is\locale\english\doc\collbldg\cbgtoc.htm
+6: 0.95 d:\search97\s97is\locale\english\doc\collbldg\08_cbg4.htm
+7: 0.93 d:\search97\s97is\locale\english\doc\collbldg\cbgix.htm
+8: 0.92 d:\search97\s97is\locale\english\doc\collbldg\08_cbg6.htm
+9: 0.90 d:\search97\s97is\locale\english\doc\collbldg\08_cbg.htm
+10: 0.90 d:\search97\s97is\locale\english\doc\collbldg\04_cbg1.htm
+11: 0.90 d:\search97\s97is\locale\english\doc\collbldg\01_cbg1.htm
+12: 0.87 d:\search97\s97is\locale\english\doc\collbldg\f_cbg.htm
+13: 0.87 d:\search97\s97is\locale\english\doc\collbldg\08_cbg2.htm
+14: 0.84 d:\search97\s97is\locale\english\doc\collbldg\06_cbg1.htm
+15: 0.80 d:\search97\s97is\locale\english\doc\collbldg\part4.htm
+16: 0.80 d:\search97\s97is\locale\english\doc\collbldg\f_cbg1.htm
+17: 0.80 d:\search97\s97is\locale\english\doc\collbldg\11_cbg5.htm
+18: 0.80 d:\search97\s97is\locale\english\doc\collbldg\08_cbg5.htm
+RC&gt;
+</pre><p>The following table describes each of the default fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field name
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Number</p>
+    </td>
+    <td>
+<p>The rank of the document in the results list. The document with the highest score is ranked number 1.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Score</p>
+    </td>
+    <td>
+<p>The score assigned to each retrieved document, based on its relevance to the query. For a NULL query, no scores are assigned, so the Score column in the results list is blank.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>VdkVgwKey</p>
+    </td>
+    <td>
+<p>The document key used by the Verity engine to manage the document. If the document is accessed through the file system, the primary key is a pathname. If the document is accessed through a web server, using HTTP, the primary key is a URL.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1018014"></a>Displaying more fields</h3>
+<p>You can tell the rcvdk utility to display certain fields in the results list using the <code>fields</code> command, which is available in the expert mode. To go to the expert mode, enter <code>x</code> or <code>expert</code> at the RC prompt, then press Return.</p>
+<p>All fields in a column are blank if the field is not defined for the collection's schema in the documents table (in style.ddd, style.sfl, or style.ufl). A field in a document's row is blank if the field was not populated by a gateway, bulk submit action, or filter.</p>
+<h4><a name="wp1018017"></a>Displaying a field</h4>
+<p>The <code>fields</code> command includes the field name and length to be displayed. When used, the <code>fields</code> command overrides the default Score and VdkVgwKey fields for the results list.</p>
+<p>The search engine returns fields for the results list, so if you do a search, then go to expert mode to use the <code>fields</code> command, you must run the search again in order to see the results list with the fields you requested. For example:</p>
+<pre>RC&gt; expert
+Expert mode enabled
+RC&gt; fields title 20
+RC&gt; s universal filter
+Search update: finished (100%). Retrieved: 18(18)/85.
+RC&gt; r
+Retrieved: 18(18)/85
+Number title
+1: Using the Universal Filter
+2: Using the Zone Filter
+3: The Zone Filter
+4: Overview
+5: Table of Contents
+6: Universal Filter Configuration Using the
+7: Index
+8: The PDF Filter
+9: Document Filters and Formatting
+10: Collection Style Summary
+11: Collection Basics
+12: Universal Filter Document Types
+13: Using the style.dft File
+14: Supported Field Types
+15:
+16: Recognized Document Types
+17: Custom Zone Definitions
+18: The KeyView Filter Kit
+RC&gt;
+</pre><h4><a name="wp1018048"></a>Displaying multiple fields</h4>
+<p>You can specify multiple fields with the <code>fields</code> command, as shown in the following example. The field order corresponds to the order of the columns, with the first field specified appearing in the second column. The first column is reserved for the rank order.</p>
+<p>Rerun the search before you display the results list with the fields specified. </p>
+<p>For example:</p>
+<pre>RC&gt; fields score 5 title 40
+RC&gt; s universal filter
+Search update: finished (100%). Retrieved: 18(18)/85.
+RC&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001815.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001817.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001816.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

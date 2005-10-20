@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Receiving e-mail messages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001600.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001602.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Receiving e-mail messages</h1>
+<p>You create ColdFusion pages to access a Post Office Protocol (POP) server to retrieve e-mail message information. ColdFusion can then display the messages (or just header information), write information to a database, or perform other actions. </p>
+<p>The <a href="00000311.htm#1101854"><code>cfpop</code></a> tag lets you add Internet mail client features and e-mail consolidation to applications. Although a conventional mail client provides an adequate interface for personal mail, there are many cases in which an alternative interface to some mailboxes is advantageous. You use <code>cfpop</code> to develop targeted mail clients to suit the specific needs of a wide range of applications. The <code>cfpop</code> tag does not work with the other major e-mail protocol, Internet Mail Access Protocol (IMAP). </p>
+<p>Here are three instances in which implementing POP mail makes sense:</p>
+<ul>
+<li>
+   If your site has generic mailboxes that are read by more than one person (sales@yourcompany.com), it can be more efficient to construct a ColdFusion mail front end to supplement individual user mail clients.
+</li>
+<li>
+   In many applications, you can automate mail processing when the mail is formatted to serve a particular purpose; for example, when subscribing to a list server.
+</li>
+<li>
+   If you want to save e-mail messages to a database.
+</li>
+</ul>
+<p>Using <code>cfpop</code> with your POP server is like running a query on your mailbox contents. You set its <code>action</code> attribute to retrieve either headers (using the <code>GetHeaderOnly</code> value) or entire messages (using the <code>GetAll</code> value) and assign it a <code>name</code> value. You use the name to refer to the record set that <code>cfpop</code> returns, for example, when using <a href="00000309.htm#1101659"><code>cfoutput</code></a>. To access a POP server, you also must define the <code>server</code>, <code>username</code>, and <code>password</code> attributes.</p>
+<p><strong>Note: </strong>If the <code>cfpop</code> tag encounters an error, such as an improperly formatted email message, when retrieving messages, it tries to ignore the error; it returns empty fields in the result structure and retrieves any available messages.</p><p>For more information on <a href="00000311.htm#1101854"><code>cfpop</code></a> syntax and variables, see <i>CFML Reference</i>.</p>
+<h2><a name="wp1096253"></a>Using the cfpop tag</h2>
+<p>Use the following steps to add POP mail to your application.</p>
+<h4>To implement the cfpop tag in your application:</h4>
+<ol>
+<li>
+   Choose the mailboxes to access within your ColdFusion application.
+</li>
+<li>
+   Determine which mail message components you must process: message header, message body, attachments, and so on.
+</li>
+<li>
+   Decide whether you must store the retrieved messages in a database.
+</li>
+<li>
+   Decide whether you must delete messages from the POP server after you retrieve them.
+</li>
+<li>
+   Incorporate the <a href="00000311.htm#1101854"><code>cfpop</code></a> tag in your application and create a user interface for accessing a mailbox.
+</li>
+<li>
+   Build an application page to handle the output. Retrieved messages can include characters that do not display properly in the browser.
+</li>
+</ol>
+<p>You use the <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag with the <a href="00000505.htm#1105634"><code>HTMLCodeFormat</code></a> and <a href="00000506.htm#4744272"><code>HTMLEditFormat</code></a> functions to control output to the browser. These functions convert characters with special meanings in HTML, such as the less than (&lt;), greater than (&gt;), and ampersand (&amp;) symbols, into HTML-escaped characters, such as &amp;lt;, &amp;gt;, and &amp;amp;. The <code>HTMLCodeFormat</code> tag also surrounds the text in a <code>pre</code> tag block. </p>
+<h2><a name="wp1096263"></a>The cfpop query variables</h2>
+<p>Like any ColdFusion query, each <a href="00000311.htm#1101854"><code>cfpop</code></a> query returns variables that provide information about the record:</p>
+<p><strong>RecordCount</strong>&#160;The total number of records returned by the query.</p>
+<p><strong>ColumnList</strong>&#160;A list of the headings of the columns that are returned by the query</p>
+<p><strong>CurrentRow</strong>&#160;The current row of the query being processed by <a href="00000309.htm#1101659"><code>cfoutput</code></a> or <a href="00000290.htm#3301338"><code>cfloop</code></a> in a query-driven loop.</p>
+<p>The query includes one variable that is not returned by the <code>cfquery</code> tag: the UID variable contains the unique identifier of the e-mail message file.</p>
+<p>You can reference these properties in a <code>cfoutput</code> tag by prefixing the query variable with the query name in the <code>name</code> attribute of <code>cfpop</code>:</p>
+<pre>&lt;<code>cfoutput</code>&gt;
+This operation returned #Sample.RecordCount# messages.
+&lt;/<code>cfoutput</code>&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001600.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001602.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001601.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

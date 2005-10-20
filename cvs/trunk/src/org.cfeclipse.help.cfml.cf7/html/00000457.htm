@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Encrypt</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000456.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000458.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Encrypt</h1>
+<h4><a name="wp1224689"></a>Description</h4>
+<p>Encrypts a string using a specific algorithm and encoding method.</p>
+<h4><a name="wp3366581"></a>Returns</h4>
+<p>String; can be much longer than the original string.</p>
+<h4><a name="wp2551536"></a>Category</h4>
+<p><a href="00000368.htm#3542210">Security functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp1104207"></a>Function syntax</h4>
+<pre><code><strong>Encrypt</strong></code>(<i>string</i>, <i>key</i>[, <code><i>algorithm</i></code>[, <code><i>encoding</i></code>]]))
+</pre><h4><a name="wp2568023"></a>See also</h4>
+<p><a href="00000452.htm#1103962"><code>Decrypt</code></a></p>
+<h4><a name="wp4991655"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code><i>algorithm</i></code> and <code><i>encoding</i></code> parameters.</p>
+<h4><a name="wp1293537"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>String to encrypt.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>key</p>
+    </td>
+    <td>
+<p>String. Key or seed used to encrypt the string. </p>
+<ul>
+<li>
+   For the CFMX_COMPAT algorithm, any combination of any number of characters; used as a seed used to generate a 32-bit encryption key. 
+</li>
+<li>
+   For all other algorithms, a key in the format used by the algorithm. For these algorithms, use the <a href="00000468.htm#4992278">GenerateSecretKey</a> function to generate the key.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>algorithm</p>
+    </td>
+    <td>
+<p>(Optional) The algorithm to use to decrypt the string.ColdFusion MX installs a cryptography library with the following algorithms:</p>
+<ul>
+<li>
+   CFMX_COMPAT: the algorithm used in ColdFusion MX and prior releases. This algorithm is the least secure option (default). 
+</li>
+<li>
+   AES: the Advanced Encryption Standard specified by the National Institute of Standards and Technology (NIST) FIPS-197.
+</li>
+<li>
+   BLOWFISH: the Blowfish algorithm defined by Bruce Schneier.
+</li>
+<li>
+   DES: the Data Encryption Standard algorithm defined by NIST FIPS-46-3.
+</li>
+<li>
+   DESEDE: the &quot;Triple DES&quot; algorithm defined by NIST FIPS-46-3.
+</li>
+</ul>
+<p>If you install a security provider with additional cryptography algorithms, you can also specify any of its string encryption and decryption algorithms.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>encoding</p>
+    </td>
+    <td>
+<p>(Optional; if you specify this parameter, you must also specify the <code><i>algorithm</i></code> parameter) The binary encoding in which to represent the data as a string. </p>
+<ul>
+<li>
+   Base64: the Base64 algorithm, as specified by IETF RFC 2045.
+</li>
+<li>
+   Hex: the characters !-F0-9 represent the hexadecimal byte values.
+</li>
+<li>
+   UU: the UUEncode algorithm (default).
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4991771"></a>Usage</h4>
+<p>This function uses a symmetric key-based algorithm, in which the same key is used to encrypt and decrypt a string. The security of the encrypted string depends on maintaining the secrecy of the key. </p>
+<p>For all algorithms except the default algorithm, ColdFusion&#160;MX&#160;7 uses the Java Cryptography Extension (JCE) and installs a Sun Java 1.4.2 runtime that includes the Sun JCE default security provider. This provider includes the algorithms listed in the Parameters section. The JCE framework includes facilities for using other provider implementations; however, Macromedia cannot provide technical support for third-party security providers.</p>
+<p>The default algorithm, which is the same as was used in ColdFusion 5 and ColdFusion MX, uses an XOR-based algorithm that uses a pseudo-random 32-bit key, based on a seed passed by the user as a function parameter. This algorithm is less secure than the other available algorithms.</p>
+<h4><a name="wp1104213"></a>Example</h4>
+<p>The following example encrypts and decrypts a text string. It lets you specify the encryption algorithm and encoding technique. It also has a field for a key seed to use with the CFMX_COMPAT algorithm. For all other algorithms, it generates a secret key.</p>
+<pre>&lt;h3&gt;Encrypt Example&lt;/h3&gt;
+&lt;!--- Do the following if the form has been submitted. ---&gt;
+&lt;cfif IsDefined(&quot;Form.myString&quot;)&gt;
+   &lt;cfscript&gt;
+      /* GenerateSecretKey does not generate key for the CFMX_COMPAT algorithm,
+        so use the key from the form.
+      */
+      if (Form.myAlgorithm EQ &quot;CFMX_COMPAT&quot;)
+         theKey=Form.MyKey;
+      // For all other encryption techniques, generate a secret key.
+      else
+         theKey=generateSecretKey(Form.myAlgorithm);
+      //Encrypt the string
+      encrypted=<code><strong>encrypt(Form.myString, theKey, Form.myAlgorithm,</strong></code>
+<code><strong>         Form.myEncoding);</strong></code>
+      //Decrypt it
+      decrypted=decrypt(encrypted, theKey, Form.myAlgorithm, Form.myEncoding);
+   &lt;/cfscript&gt;
+
+   &lt;!--- Display the values used for encryption and decryption, 
+         and the results. ---&gt;
+   &lt;cfoutput&gt;
+      &lt;b&gt;The algorithm:&lt;/b&gt; #Form.myAlgorithm#&lt;br&gt;
+      &lt;b&gt;The key:&lt;/B&gt; #theKey#&lt;br&gt;
+      &lt;br&gt;
+      &lt;b&gt;The string:&lt;/b&gt; #Form.myString# &lt;br&gt;
+      &lt;br&gt;
+      &lt;b&gt;Encrypted:&lt;/b&gt; #encrypted#&lt;br&gt;
+      &lt;br&gt;
+      &lt;b&gt;Decrypted:&lt;/b&gt; #decrypted#&lt;br&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;!--- The input form.  ---&gt;
+&lt;form action=&quot;#CGI.SCRIPT_NAME#&quot; method=&quot;post&quot;&gt;
+   &lt;b&gt;Select the encoding&lt;/b&gt;&lt;br&gt;
+   &lt;select size=&quot;1&quot; name=&quot;myEncoding&quot; &gt;
+      &lt;option selected&gt;UU&lt;/option&gt;
+      &lt;option&gt;Base64&lt;/option&gt;
+      &lt;option&gt;Hex&lt;/option&gt;
+   &lt;/select&gt;&lt;br&gt;
+   &lt;br&gt;
+   &lt;b&gt;Select the algorithm&lt;/b&gt;&lt;br&gt;
+   &lt;select size=&quot;1&quot; name=&quot;myAlgorithm&quot; &gt;
+      &lt;option selected&gt;CFMX_COMPAT&lt;/option&gt;
+      &lt;option&gt;AES&lt;/option&gt;
+      &lt;option&gt;DES&lt;/option&gt;
+      &lt;option&gt;DESEDE&lt;/option&gt;
+   &lt;/select&gt;&lt;br&gt;
+   &lt;br&gt;
+   &lt;b&gt;Input your key&lt;/b&gt; (used for CFMX_COMPAT encryption only)&lt;br&gt;
+   &lt;input type = &quot;Text&quot; name = &quot;myKey&quot; value = &quot;MyKey&quot;&gt;&lt;br&gt;
+   &lt;br&gt;
+   &lt;b&gt;Enter string to encrypt&lt;/b&gt;&lt;br&gt;
+   &lt;textArea name = &quot;myString&quot; cols = &quot;40&quot; rows = &quot;5&quot; WRAP = &quot;VIRTUAL&quot;&gt;This string will be encrypted (you can replace it with more typing).
+   &lt;/textArea&gt;&lt;br&gt;
+   &lt;input type = &quot;Submit&quot; value = &quot;Encrypt my String&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000456.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000458.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000457.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

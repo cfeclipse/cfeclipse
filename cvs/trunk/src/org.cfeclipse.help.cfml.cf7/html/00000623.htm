@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>SetEncoding</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000622.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000624.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>SetEncoding</h1>
+<h4><a name="wp136248"></a>Description</h4>
+<p>Sets the character encoding (character set) of Form and URL scope variable values; used when the character encoding of the input to a form, or the character encoding of a URL, is not in UTF-8 encoding.</p>
+<h4><a name="wp136250"></a>Returns</h4>
+<p>None</p>
+<h4><a name="wp136252"></a>Category</h4>
+<p><a href="00000363.htm#1099325">International functions</a>, <a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp136260"></a>Function syntax</h4>
+<pre><code><strong>SetEncoding</strong></code>(scope_name,charset)
+</pre><h4><a name="wp136262"></a>See also</h4>
+<p><a href="00000477.htm#4739516">GetEncoding</a>, <a href="00000232.htm#2850760">cfcontent</a>, <a href="00000312.htm#1102085">cfprocessingdirective</a>, <a href="00000658.htm#138899">URLDecode</a>, <a href="00000659.htm#138993">URLEncodedFormat</a>; <a href="00001202.htm#1219089">Locales</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp136279"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp136284"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>scope_name</p>
+    </td>
+    <td>
+<ul>
+<li>
+   url
+</li>
+<li>
+   form
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>charset</p>
+    </td>
+    <td>
+<p>The character encoding in which text in the scope variables is encoded. The following list includes commonly used values:</p>
+<ul>
+<li>
+   utf-8
+</li>
+<li>
+   iso-8859-1 
+</li>
+<li>
+   windows-1252
+</li>
+<li>
+   us-ascii
+</li>
+<li>
+   shift_jis
+</li>
+<li>
+   iso-2022-jp 
+</li>
+<li>
+   euc-jp
+</li>
+<li>
+   euc-kr
+</li>
+<li>
+   big5
+</li>
+<li>
+   euc-cn
+</li>
+<li>
+   utf-16
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp136311"></a>Usage</h4>
+<p>Use this function when the character encoding of the input to a form or the character encoding of a URL is not in UTF-8 encoding. For example, Traditional Chinese characters are often in Big5 encoding. This function resets URL and Form variables, so you should call it before using these variables (typically, in the Application.cfm page or Application.cfc file). Calling this function first also avoids interpreting the characters of the variables incorrectly. </p>
+<p>For more information on character encoding, see the following web pages:</p>
+<ul>
+<li>
+   <a href="http://www.w3.org/International/O-charset.html" target="mm_window">www.w3.org/International/O-charset.html</a> provides general information on character encoding and the web, and has several useful links.
+</li>
+<li>
+   <a href="http://www.iana.org/assignments/character-sets" target="mm_window">www.iana.org/assignments/character-sets</a> is a complete list of character sets names used on the Internet, maintained by the Internet Assigned Numbers Authority.
+</li>
+<li>
+   <a href="http://java.sun.com/j2se/1.4.1/docs/guide/intl/encoding.doc.html" target="mm_window">java.sun.com/j2se/1.4.1/docs/guide/intl/encoding.doc.html</a> lists the character encoding that Java 1.4.1, and therefore the default ColdFusion configuration, can interpret. If you use a JVM that does not conform to the Sun Java 2 Platform, Standard Edition, v 1.4.1, the supported locales may differ. The list uses Java internal names, not the IANA character encoding names that you normally use in the <code>SetEncoding</code> <code>charset</code> parameter and other ColdFusion attributes and parameters. Java automatically converts standard IANA names to its internal names as needed.
+</li>
+</ul>
+<h4><a name="wp136317"></a>Example</h4>
+<pre>&lt;!--- This example sends and interprets the contents of two fields as
+      big5 encoded text. Note that the form fields are received as URL variables
+      because the form uses the GET method. ---&gt;
+&lt;cfcontent type=&quot;text/html; charset=big5&quot;&gt;
+&lt;form action=&#39;#cgi.script_name#&#39; method=&#39;get&#39;&gt;
+&lt;input name=&#39;xxx&#39; type=&#39;text&#39;&gt;
+&lt;input name=&#39;yyy&#39; type=&#39;text&#39;&gt;
+&lt;input type=&quot;Submit&quot; value=&quot;Submit&quot;&gt;
+&lt;/form&gt;
+
+&lt;cfif IsDefined(&quot;URL.xxx&quot;)&gt;
+&lt;cfscript&gt;
+   SetEncoding(&quot;url&quot;, &quot;big5&quot;); 
+   WriteOutput(&quot;URL.XXX is &quot; &amp; URL.xxx &amp; &quot;&lt;br&gt;&quot;); 
+   WriteOutput(&quot;URL.YYY is &quot; &amp; URL.yyy &amp; &quot;&lt;br&gt;&quot;);
+    theEncoding = GetEncoding(&quot;URL&quot;);
+    WriteOutput(&quot;The URL variables were decoded using &#39;&quot; &amp;<br />theEncoding &amp; &quot;&#39; encoding.&quot;); 
+&lt;/cfscript&gt;
+&lt;/cfif&gt;
+
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000622.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000624.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000623.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfloop: looping over a COM collection or structure</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000295.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000297.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfloop: looping over a COM collection or structure</h1>
+<h4><a name="wp1101184"></a>Description</h4>
+<p>The <code>cfloop</code> <code>collection</code> attribute loops over every object within a COM/DCOM collection object, or every element in a structure: </p>
+<ul>
+<li>
+   A COM/DCOM collection object is a set of similar items referenced as a group. For example, the group of open documents in an application is a collection.
+</li>
+<li>
+   A structure contains a related set of items, or it can be used as an associative array. Looping is particularly useful when using a structure as an associative array.
+</li>
+</ul>
+<p>In the loop, each item is referenced by the variable name in the <code>item</code> attribute. The loop executes until all items have been accessed.</p>
+<p>The <code>collection</code> attribute is used with the <code>item</code> attribute. In the example that follows, <code>item</code> is assigned a variable called<code> file2</code><code>,</code> so that with each cycle in the <code>cfloop</code>, each item in the collection is referenced. In the <code>cfoutput</code> section, the <code>name</code> property of the <code>file2</code> item is referenced for display.</p>
+<p>For more information, see <a href="00001571.htm#1100380">Integrating COM and CORBA Objects in CFML Applications</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp1101189"></a>Example</h4>
+<p>This example uses a COM object to output a list of files. In this example, <code>FFunc</code> is a collection of <code>file2</code> objects.</p>
+<pre>&lt;cfobject 
+   class = FileFunctions.files 
+   name = FFunc 
+   action = Create&gt; 
+&lt;cfset FFunc.Path = &quot;c:\&quot;&gt; 
+&lt;cfset FFunc.Mask = &quot;*.*&quot; &gt; 
+&lt;cfset FFunc.attributes = 16 &gt; 
+&lt;cfset x = FFunc.GetFileList()&gt; 
+&lt;cfloop collection = #<code>FFUNC</code># item = &quot;file2&quot;&gt; 
+   &lt;cfoutput&gt;      #file2.name# &lt;br&gt;    &lt;/cfoutput&gt; 
+&lt;/cfloop&gt;
+&lt;!---Loop through a structure that is used as an associative array: ---&gt;
+...&lt;!--- Create a structure and loop through its contents. ---&gt;
+&lt;cfset Departments = StructNew()&gt;
+&lt;cfset val = StructInsert(Departments, &quot;John &quot;, &quot;Sales &quot;)&gt;
+&lt;cfset val = StructInsert(Departments, &quot;Tom &quot;, &quot;Finance &quot;)&gt;
+&lt;cfset val = StructInsert(Departments, &quot;Mike &quot;, &quot;Education &quot;)&gt;
+&lt;!--- Build a table to display the contents ---&gt;
+&lt;cfoutput&gt;
+&lt;table cellpadding = &quot;2 &quot; cellspacing = &quot;2 &quot;&gt;
+   &lt;tr&gt;
+      &lt;td&gt;&lt;b&gt;Employee&lt;/b&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;b&gt;Dept.&lt;/b&gt;&lt;/td&gt;
+   &lt;/tr&gt;
+&lt;!--- Use item to create the variable person to hold value of key <br />as loop runs. ---&gt;
+&lt;cfloop collection = #Departments# item = &quot;person &quot;&gt;
+   &lt;tr&gt;
+      &lt;td&gt;#person#&lt;/td&gt;
+      &lt;td&gt;#StructFind(Departments, person)#&lt;/td&gt;
+   &lt;/tr&gt;
+&lt;/cfloop&gt;
+&lt;/table&gt;
+&lt;/cfoutput&gt;
+</pre><p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000295.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000297.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000296.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

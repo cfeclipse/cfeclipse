@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetTempDirectory</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000496.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000498.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetTempDirectory</h1>
+<h4><a name="wp1224827"></a>Description</h4>
+<p>Gets the path of the directory that ColdFusion uses for temporary files. The directory depends on the account under which ColdFusion is running and other factors. Before using this function in an application, test to determine the directory it returns under your account.</p>
+<h4><a name="wp3382926"></a>Returns</h4>
+<p>The absolute pathname of a directory, including a trailing slash, as a string.</p>
+<h4><a name="wp2519940"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp1105308"></a>Function syntax</h4>
+<pre><code><strong>GetTempDirectory</strong></code>()
+</pre><h4><a name="wp2524087"></a>See also</h4>
+<p><a href="00000498.htm#1105336"><code>GetTempFile</code></a></p>
+<h4><a name="wp4506207"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: on Windows, this function now returns the temporary directory of the embedded Java application server. On other platforms, it returns the temporary directory of the operating system. </p>
+<h4><a name="wp1105310"></a>Example</h4>
+<pre>&lt;h3&gt;GetTempDirectory Example&lt;/h3&gt;
+
+&lt;p&gt;The temporary directory for this ColdFusion server is<br />&lt;cfoutput&gt;#<strong>GetTempDirectory()</strong>#&lt;/cfoutput&gt;.
+&lt;p&gt;We have created a temporary file called:
+&lt;cfoutput&gt;#GetTempFile(<strong>GetTempDirectory(),</strong>&quot;testFile&quot;)#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000496.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000498.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000497.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

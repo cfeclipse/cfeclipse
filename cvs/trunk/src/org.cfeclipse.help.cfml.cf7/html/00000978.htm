@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Handling exceptions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000977.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000979.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Handling exceptions</h1>
+<p>ColdFusion provides two statements for exception handling in CFScript: <code>try</code> and <code>catch</code>. These statements are equivalent to the CFML <a href="00000349.htm#1104557"><code>cftry</code></a> and <a href="00000225.htm#3395038"><code>cfcatch</code></a> tags.</p>
+<p><strong>Note: </strong>This section does not explain exception-handling concepts. For a discussion of exception handling in ColdFusion, see <a href="00001130.htm#1220254">Handling Errors</a>.</p><h2><a name="wp1118222"></a>Exception handling syntax and rules</h2>
+<p>Exception-handling code in CFScript has the following format:</p>
+<pre>try&#160;{
+   <code><i>Code where exceptions will be caught</i></code>
+}
+catch(<code><i>exceptionType</i></code><i> </i><code><i>exceptionVariable</i></code>)&#160;{
+   <code><i>Code to handle exceptions of type exceptionType </i></code>
+<code><i>   that occur in the try block</i></code>
+}
+... 
+catch(<code><i>exceptionTypeN</i></code><i> </i><code><i>exceptionVariableN</i></code>)&#160;{
+   <code><i>Code to handle exceptions of type </i></code>
+<code><i>   exceptionTypeN that occur in the try block</i></code>
+}
+</pre><p><strong>Note: </strong>In CFScript, <code>catch</code> statements follow the <code>try</code> block; you do not put them inside the <code>try</code> block. This structure differs from that of the <code>cftry</code> tag, which must include the <code>cfcatch</code> tags in its body.</p><p>When you have a <code>try</code> statement, you must have a <code>catch</code> statement. In the <code>catch</code> block, the <i>exceptionVariable</i> variable contains the exception type. This variable is the equivalent of the <code>cfcatch</code> tag <code>cfcatch.Type</code> built-in variable.</p>
+<h2><a name="wp1145836"></a>Exception handling example</h2>
+<p>The following code shows exception handling in CFScript. It uses a <a href="00000424.htm#1102241"><code>CreateObject</code></a> function to create a Java object. The catch statement executes only if the <code>CreateObject</code> function generates an exception. The displayed information includes the exception message; the except.Message variable is the equivalent of calling the Java <code>getMessage</code> method on the returned Java exception object.</p>
+<pre>&lt;cfscript&gt;
+   try&#160;{
+      emp = CreateObject(&quot;Java&quot;, &quot;Employees&quot;);
+   }
+   catch(Any excpt)&#160;{
+      WriteOutput(&quot;The application was unable to perform a required operation.&lt;br&gt;<br />Please try again later.&lt;br&gt;If this problem persists, contact<br />Customer Service and include the following information:&lt;br&gt;<br />         #excpt.Message#&lt;br&gt;&quot;);
+   }
+&lt;/cfscript&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000977.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000979.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000978.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

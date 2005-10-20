@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Evaluating the results of a file upload</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001619.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001621.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Evaluating the results of a file upload</h1>
+<p>After a file upload is completed, you can retrieve status information using file upload status variables. This status information includes data about the file, such as its name and the directory where it was saved. </p>
+<p>You can access file upload status variables using dot notation, using either file.varname or cffile.varname. Although you can use either the File or cffile prefix for file upload status variables, cffile is preferred; for example, cffile.ClientDirectory. The File prefix is retained for backward compatibility.</p>
+<p><strong>Note: </strong>File status variables are read-only. They are set to the results of the most recent <code>cffile</code> operation. If two <a href="00000245.htm#1098395"><code>cffile</code></a> tags execute, the results of the first are overwritten by the subsequent <code>cffile</code> operation.</p><p>The following table describes the file upload status variables that are available after an upload:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>attemptedServerFile</p>
+    </td>
+    <td>
+<p>Initial name that ColdFusion uses when attempting to save a file; for example, myfile.txt. (see <a href="00001617.htm#1125794">Resolving conflicting filenames</a>).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>clientDirectory</p>
+    </td>
+    <td>
+<p>Directory on the client's system from which the file was uploaded.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>clientFile</p>
+    </td>
+    <td>
+<p>Full name of the source file on the client's system with the file extension; for example, myfile.txt.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>clientFileExt</p>
+    </td>
+    <td>
+<p>Extension of the source file on the client's system without a period; for example, txt (not .txt).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>clientFileName</p>
+    </td>
+    <td>
+<p>Name of the source file on the client's system without an extension; for example, myfile.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>contentType</p>
+    </td>
+    <td>
+<p>MIME content type of the saved file; for example, <code>image</code> for <code>image/gif</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>contentSubType</p>
+    </td>
+    <td>
+<p>MIME content subtype of the saved file; for example, <code>gif</code> for <code>image/gif</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>dateLastAccessed</p>
+    </td>
+    <td>
+<p>Date that the uploaded file was last accessed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>fileExisted</p>
+    </td>
+    <td>
+<p>Indicates (Yes or No) whether the file already existed with the same path.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>fileSize</p>
+    </td>
+    <td>
+<p>Size of the uploaded file.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>fileWasAppended</p>
+    </td>
+    <td>
+<p>Indicates (Yes or No) whether ColdFusion appended the uploaded file to an existing file.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>fileWasOverwritten</p>
+    </td>
+    <td>
+<p>Indicates (Yes or No) whether ColdFusion overwrote a file. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>fileWasRenamed</p>
+    </td>
+    <td>
+<p>Indicates (Yes or No) whether the uploaded file was renamed to avoid a name conflict.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>fileWasSaved</p>
+    </td>
+    <td>
+<p>Indicates (Yes or No) whether ColdFusion saved the uploaded file. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>oldFileSize</p>
+    </td>
+    <td>
+<p>Size of the file that was overwritten in the file upload operation. Empty if no file was overwritten.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>serverDirectory</p>
+    </td>
+    <td>
+<p>Directory where the file was saved on the server.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>serverFile</p>
+    </td>
+    <td>
+<p>Full name of the file saved on the server with the file extension; for example, myfile.txt.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>serverFileExt</p>
+    </td>
+    <td>
+<p>Extension of the file saved on the server without a period; for example, txt (not .txt).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>serverFileName</p>
+    </td>
+    <td>
+<p>Name of the file saved on the server without an extension; for example, myfile.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>timeCreated</p>
+    </td>
+    <td>
+<p>Date and time the uploaded file was created.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>timeLastModified</p>
+    </td>
+    <td>
+<p>Date and time of the last modification to the uploaded file.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001619.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001621.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001620.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

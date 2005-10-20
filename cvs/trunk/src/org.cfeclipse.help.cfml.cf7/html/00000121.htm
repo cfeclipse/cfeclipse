@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 2: Retrieving the information for the trip list</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000120.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000122.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 2: Retrieving the information for the trip list</h1>
+<p>Relational database management systems process SQL instructions sent to them from various applications. ColdFusion sends SQL statements to database managers to manipulate data. ColdFusion needs a way to know to which database manager to send a specific SQL string for evaluation. In CFML, the <code>cfquery</code> tag serves this purpose. You will use the SQL SELECT statement and the <code>cfquery</code> tag to create a dynamic version of the Trip List page described earlier in this lesson. In this example, you use the <code>cfquery</code> tag to return all the trip names found in the tripName column in the Compass Travel Trips table. To use the SQL SELECT statement to dynamically retrieve this information, you must execute the SQL SELECT statement between the <code>cfquery</code> start and end tags.</p>
+<h4>To retrieve the trip list:</h4>
+<ol>
+<li>
+   If you are working in Dreamweaver, ensure that the site that you created in Lesson 1 is the current site. For more information, see <a href="00000114.htm#1174254">Configuring Dreamweaver MX for ColdFusion development</a>.
+</li>
+<li>
+   Open a new file and save it as triplisting.cfm in the my_app directory.
+<p><strong>Note: </strong>If you are working in Dreamweaver, ensure that you select ColdFusion Templates in the Save As Type list.</p></li>
+<li>
+   Enter the following code, or do the steps listed in the <a href="00000121.htm#1196070">Let Dreamweaver do it</a> section.
+<pre>
+&lt;cfquery name=&quot;TripList&quot; datasource=&quot;CompassTravel&quot;&gt;
+	SELECT trips.tripName FROM trips
+&lt;/cfquery&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4><a name="wp1196070"></a>Let Dreamweaver do it</h4>
+<p>Dreamweaver lets you create a query without having to enter the code. </p>
+<h4>To create a query in Dreamweaver:</h4>
+<ol>
+<li>
+   Click the Bindings tab in the application panel.
+</li>
+<li>
+   Click the + button.
+</li>
+<li>
+   Select Recordset (Query).
+</li>
+<li>
+   In the Name text box, enter <strong>TripList</strong>.
+</li>
+<li>
+   From the Data source list, select CompassTravel.
+</li>
+<li>
+   From the Tables list, select trips.
+</li>
+<li>
+   Next to Columns, click Selected.
+</li>
+<li>
+   Select tripName.
+</li>
+<li>
+   Click OK.
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<p>Your ColdFusion application page retrieves the information for the trip list. Next, you need to display the information.</p>
+<h4><a name="wp1195978"></a>Reviewing the code</h4>
+<p>The following table describes the code used to build the query:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery name=&quot;TripList&quot; datasource=&quot;CompassTravel&quot;&gt;
+</pre>    </td>
+    <td>
+<p>ColdFusion query named TripList. Submits any SQL statement between the <code>cfquery</code> start and end tags to the data source specified in the <code>datasource</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>SELECT trips.tripName FROM trips
+</pre>    </td>
+    <td>
+<p>SQL SELECT statement to retrieve all tripName(s) from the trips table.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000120.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000122.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000121.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

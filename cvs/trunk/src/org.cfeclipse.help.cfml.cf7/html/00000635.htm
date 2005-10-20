@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>StructCopy</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000634.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000636.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>StructCopy</h1>
+<h4><a name="wp137122"></a>Description</h4>
+<p>Copies a structure. Copies top-level keys, values, and arrays in the structure by value; copies nested structures by reference. </p>
+<h4><a name="wp137125"></a>Returns</h4>
+<p>A copy of a structure, with the same keys and values; if <i>structure</i> does not exist, throws an exception.</p>
+<h4><a name="wp137127"></a>Category</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a></p>
+<h4><a name="wp137132"></a>Function syntax</h4>
+<pre><code><strong>StructCopy</strong></code>(<i>structure</i>)
+</pre><h4><a name="wp137134"></a>See also</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a>; <a href="00000967.htm#1191258">Structure functions</a> in <a href="00000950.htm#1101236">Using Arrays and Structures</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp137139"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>structure</p>
+    </td>
+    <td>
+<p>Structure to copy</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp137150"></a>Usage</h4>
+<p>The following code shows how this function copies a structure that contains a string field, a number field, and a two-dimensional array at the top level: </p>
+<pre>&lt;cfoutput&gt;
+   &lt;cfset assignedCopy = StructNew()&gt;
+  &lt;cfset assignedCopy.string = #struct.string#&gt;
+   &lt;cfset assignedCopy.number = #struct.number#&gt;
+   &lt;cfset assignedCopy.array = ArrayNew(2)&gt;
+   &lt;cfset assignedCopy.array[1][1] = #struct.array[1][1]#&gt;
+   &lt;cfset assignedCopy.array[1][2] = #sruct.array[1][2]#&gt;
+&lt;/cfoutput&gt;
+</pre><p>The following code shows how <code>StructCopy</code> copies a nested structure:</p>
+<pre>&lt;cfoutput&gt;
+  &lt;cfset assignedCopy.nestedStruct = struct.nestedStruct&gt;
+&lt;/cfoutput&gt;
+</pre><p>To copy a structure entirely by value, use <a href="00000456.htm#1104156">Duplicate</a>.</p>
+<p>The following table shows how variables are assigned:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Variable type
+    </th>
+    <th>
+Assigned by
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>structure.any_simple_value</p>
+<p>Boolean</p>
+<p>Binary</p>
+<p>Base64</p>
+    </td>
+    <td>
+<p>Value</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>structure.array</p>
+    </td>
+    <td>
+<p>Value</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>structure.nested_structure</p>
+    </td>
+    <td>
+<p>Reference</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>structure.object</p>
+    </td>
+    <td>
+<p>Reference</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>structure.query</p>
+    </td>
+    <td>
+<p>Reference</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp137198"></a>Example</h4>
+<pre>&lt;!--- This code shows assignment by-value and by-reference. ---&gt;
+// This script creates a structure that StructCopy copies by value. &lt;br&gt; 
+&lt;cfscript&gt;
+   // Create elements.
+   s = StructNew();
+   s.array = ArrayNew(2);
+
+   // Assign simple values to original top-level structure fields.
+   s.number = 99;
+   s.string = &quot;hello tommy&quot;;
+
+   // Assign values to original top-level array.
+   s.array[1][1] = &quot;one one&quot;;
+   s.array[1][2] = &quot;one two&quot;;
+&lt;/cfscript&gt;
+
+&lt;!--- Output original structure ---&gt;
+&lt;hr&gt;
+&lt;b&gt;Original Values&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+   // Simple values &lt;br&gt;
+   s.number = #s.number#&lt;br&gt;
+   s.string = #s.string#&lt;br&gt;
+   // Array value &lt;br&gt;
+   s.array[1][1] = #s.array[1][1]#&lt;br&gt;
+   s.array[1][2] = #s.array[1][2]#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+// Copy this structure to a new structure. &lt;br&gt;
+&lt;cfset copied = StructCopy(s)&gt;
+
+&lt;cfscript&gt;
+// Change the values of the original structure. &lt;br&gt;
+   s.number = 100;
+   s.string = &quot;hello tommy (modified)&quot;;
+   s.array[1][1] = &quot;one one (modified)&quot;;
+   s.array[1][2] = &quot;one two (modified)&quot;;
+&lt;/cfscript&gt;
+&lt;hr&gt;
+&lt;b&gt;Modified Original Values&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+   // Simple values &lt;br&gt;
+   s.number = #s.number#&lt;br&gt;
+   s.string = #s.string#&lt;br&gt;
+   // Array value &lt;br&gt;
+   s.array[1][1] = #s.array[1][1]#&lt;br&gt;
+   s.array[1][2] = #s.array[1][2]#&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;hr&gt;
+&lt;b&gt;Copied structure values should be the same as the original.&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+   // Simple values &lt;br&gt;
+   copied.number = #copied.number#&lt;br&gt;
+   copied.string = #copied.string#&lt;br&gt;
+   // Array value &lt;br&gt;
+   copied.array[1][1] = #copied.array[1][1]#&lt;br&gt;
+   copied.array[1][2] = #copied.array[1][2]#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+// This script creates a structure that StructCopy copies by reference. 
+&lt;cfscript&gt;
+   // Create elements.
+   s = StructNew();
+   s.nested = StructNew();
+   s.nested.array = ArrayNew(2);
+   // Assign simple values to nested structure fields.
+   s.nested.number = 99;
+   s.nested.string = &quot;hello tommy&quot;;
+   // Assign values to nested array.
+   s.nested.array[1][1] = &quot;one one&quot;;
+   s.nested.array[1][2] = &quot;one two&quot;;
+&lt;/cfscript&gt;
+
+&lt;!--- Output original structure ---&gt;
+&lt;hr&gt;
+&lt;b&gt;Original Values&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+   // Simple values &lt;br&gt;
+   s.nested.number = #s.nested.number#&lt;br&gt;
+   s.nested.string = #s.nested.string#&lt;br&gt;
+
+   // Array values &lt;br&gt;
+   s.nested.array[1][1] = #s.nested.array[1][1]#&lt;br&gt;
+   s.nested.array[1][2] = #s.nested.array[1][2]#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+// Use StructCopy to copy this structure to a new structure. &lt;br&gt;
+&lt;cfset copied = StructCopy(s)&gt;
+// Use Duplicate to clone this structure to a new structure. &lt;br&gt;
+&lt;cfset duplicated = Duplicate(s)&gt;
+
+&lt;cfscript&gt;
+// Change the values of the original structure.
+   s.nested.number = 100;
+   s.nested.string = &quot;hello tommy (modified)&quot;;
+   s.nested.array[1][1] = &quot;one one (modified)&quot;;
+   s.nested.array[1][2] = &quot;one two (modified)&quot;;
+&lt;/cfscript&gt;
+&lt;hr&gt;
+&lt;b&gt;Modified Original Values&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+   // Simple values &lt;br&gt;
+   s.nested.number = #s.nested.number#&lt;br&gt;
+   s.nested.string = #s.nested.string#&lt;br&gt;
+
+   // Array value &lt;br&gt;
+   s.nested.array[1][1] = #s.nested.array[1][1]#&lt;br&gt;
+   s.nested.array[1][2] = #s.nested.array[1][2]#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;hr&gt;
+&lt;b&gt;Copied structure values should reflect changes to original.&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+   // Simple values &lt;br&gt;
+   copied.nested.number = #copied.nested.number#&lt;br&gt;
+   copied.nested.string = #copied.nested.string#&lt;br&gt;
+   // Array values &lt;br&gt;
+   copied.nested.array[1][1] = #copied.nested.array[1][1]#&lt;br&gt;
+   copied.nested.array[1][2] = #copied.nested.array[1][2]#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;hr&gt;
+&lt;b&gt;Duplicated structure values should remain unchanged.&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+   // Simple values &lt;br&gt;
+   duplicated.nested.number = #duplicated.nested.number#&lt;br&gt;
+   duplicated.nested.string = #duplicated.nested.string#&lt;br&gt;
+   // Array value &lt;br&gt;
+   duplicated.nested.array[1][1] = #duplicated.nested.array[1][1]#&lt;br&gt;
+   duplicated.nested.array[1][2] = #duplicated.nested.array[1][2]#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000634.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000636.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000635.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

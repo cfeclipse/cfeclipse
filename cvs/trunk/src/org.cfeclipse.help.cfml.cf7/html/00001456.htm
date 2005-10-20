@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Grouping and group breaks</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001455.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001457.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Grouping and group breaks</h1>
+<p>You can add clarity to a report's organization by grouping the information. You can define separate headings for each new group and can also display group-specific summary information, such as subtotals at the end of each group's area of the report. For example, you might create a report that displays departments, employees, and their salaries. Grouping the data by department lets users quickly understand department salary characteristics. When the department ID changes, the ColdFusion Report Builder triggers a group break, which completes the old group by displaying the group footer (which can contain calculated fields, such as total and average department salary) and starts the new group by displaying the group header.</p>
+<p>The ColdFusion Report Builder does not group data itself. You must ensure that the SQL used for retrieve the result set is already grouped in the appropriate order; typically you implement grouping by specifying an ORDER BY clause in the SQL SELECT statement used for the report. For example, you might use the following SQL SELECT statement:</p>
+<pre>SELECT EmployeeID, LastName, FirstName, Title, City, Region, Country
+FROM Employees
+ORDER BY Country, City
+</pre><p>For this example, you can define two groups: one that corresponds to Country, and a second group that corresponds to City. When you define more than one group, the Group Management dialog box appears Up Arrow and Down Arrow keys, which you can use to control group hierarchy. For example, country should be above city, because countries contain cities.</p>
+<h4>To define a group:</h4>
+<ol>
+<li>
+   Select Report &gt; Group Management from the menu bar.
+</li>
+<li>
+   Click Add.
+</li>
+<li>
+   Specify a group name.
+</li>
+<li>
+   Specify the value that controls grouping (also called a group expression). At runtime, ColdFusion triggers a group break when the result of this value changes. These values are often query field names. However, this value can also be a calculated field or other type of expression. Sample group expressions include the following:
+<p><strong>Query field</strong>&#160;Creates a group break when the associated column in the result set contains a different value. The field that you specify must be one of the sort criteria for the result set; for example, query.country.</p>
+<p><strong>Calculated field</strong>&#160;Creates a group break when a calculated field returns a different value. For example, if the expression calc.FirstLetter returns the first letter of a query column, you can group a report in alphabetical order.</p>
+<p><strong>Boolean expression</strong>&#160;Creates a group break when a Boolean expression returns a different value. For example, if your result set is sorted by the passpercentage column, you might use the Boolean expression query.passpercentage LT 50.</p>
+</li>
+<li>
+   Specify group break options:
+<p><strong>Start New Column</strong>&#160;Forces a new column on a group break.</p>
+<p><strong>Start New Page</strong>&#160;Forces a new page on a group break.</p>
+<p><strong>Reset Page Number</strong>&#160;Resets the page number to 1 on a group break.</p>
+</li>
+<li>
+   Specify band size and printing information:
+<p><strong>Min. height for group</strong>&#160;The minimum height that must remain on a page for ColdFusion to print the group band on that page.</p>
+<p><strong>Reprint Header on Each Page</strong>&#160;Displays the group header on each page.</p>
+</li>
+<li>
+   Click OK. 
+<p>The Report Builder adds the group to the report and creates header and footer bands for the group.</p>
+</li>
+<li>
+   Click OK.
+<p>The Group Management dialog box closes.</p>
+</li>
+<li>
+   Add headings, text, query fields, calculated fields, and other information to the group's header and footer.
+</li>
+</ol>
+<h4>To create group subtotals:</h4>
+<ol>
+<li>
+   Create a calculated field to contain the group subtotal. Create the calculated field using the following criteria:
+<ul><li>Specify a numeric data type.</li>
+<li>Select Sum in the Calculation field.</li>
+<li>Specify the field to sum on in the Perform Calculation On field. For example, on an employees by department report, you might sum on query.emp_salary.</li>
+<li>Specify that the field should be reset when the group changes.</li>
+</ul></li>
+<li>
+   Place the calculated field on the report.
+</li>
+</ol>
+<p>For more information on calculated fields, see <a href="00001457.htm#122109">Defining, modifying, and using fields and input parameters</a> or the Report Builder online Help.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001455.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001457.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001456.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

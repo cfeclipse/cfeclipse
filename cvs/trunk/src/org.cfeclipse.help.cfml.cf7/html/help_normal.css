@@ -1,0 +1,172 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: .7em;
+	margin: 5px 5px 5px 5px;
+	bgcolor: #FFFFFF;
+}
+
+a:link {
+	color: #006699;
+}
+
+a:visited {
+	color: #66AECC;
+}
+
+a:hover { 
+	color: #006699;
+	background-color: #DDEEFF;
+}
+
+a:visited:hover {
+	color: #006699;
+	background-color: #DDEEFF;
+}
+
+h4 a, .index a {
+	text-decoration: none;
+	color: #006699;
+}
+
+h4 a:visited, .index a:visited {
+	color: #006699;
+}
+
+h1 { 
+	font-size: 130%; 
+	margin-top: 0em;
+	margin-bottom: .7em;
+}
+
+h2 {   
+	font-size: 120%;
+	margin-top: 1.4em;
+	margin-bottom: .7em;
+}
+
+h3 {  
+	font-size: 110%;
+	margin-top: 1.2em;
+	margin-bottom: .7em; 
+}
+
+h4 { 
+	font-size: 100%; 
+	font-weight: bold;
+	margin-top: 1.2em;
+	margin-bottom: .6em; 
+}
+
+hr { 
+	color: #000000;
+	height: 1px;
+	margin-top: 0em;
+	margin-bottom: 0em; 	
+}
+
+p, table {  
+	margin-top: .6em;
+	margin-bottom: .6em;
+}
+
+p.index {
+	text-align: center;
+	margin-bottom: 0em;
+}
+
+table.index {
+	margin-top: 0em;
+}
+
+ol p, ul p {  
+	margin-top: .7em;
+	margin-bottom: 0;
+}
+
+ol {
+	font-size: 100%; 
+	margin-top: .5em; 
+	margin-bottom: 0em; 
+	margin-left: 4.5em;
+}
+
+ul {
+	font-size: 100%; 
+	margin-top: .5em; 
+	margin-bottom: 0em; 
+}
+
+ol ul, ul ul {
+	list-style: square; 
+	margin-top: .5em;
+}
+
+ol ol {
+	list-style: lower-alpha; 
+	margin-top: .5em;
+}
+
+li {
+	margin-bottom: .7em; 
+	margin-left: -2em;
+}
+
+.caption { 
+	font-style: italic;
+	margin-top: .9em;
+}
+
+li .caption { 
+	font-style: italic;
+	margin-top: .7em;
+}
+
+pre {  
+	font-family: "Courier New", Courier, mono; 
+	font-size: 100%;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+ol pre, ul pre {  
+	margin-top: .5em;
+	margin-bottom: 0em;
+}
+
+code {  
+	font-family: "Courier New", Courier, mono;
+	font-size: 100%;
+}
+
+table {
+	font-size: 100%;
+}
+
+th {
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #006699;
+	text-align: left;
+}
+
+img {
+	margin: 0px 5px 0px 0px;
+	border: none;
+}
+
+.nav {  
+	margin-top: -3px;
+	margin-bottom: -3px;
+}
+
+.nav img {
+	margin: 0px 0px 0px 0px;
+}
+
+div.procedure {
+	display:none;
+}
+
+.Footnote {
+	vertical-align: super;
+}

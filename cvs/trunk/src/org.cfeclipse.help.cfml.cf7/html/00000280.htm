@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfinsert</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000279.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000281.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfinsert</h1>
+<h4><a name="wp1355715"></a>Description</h4>
+<p>Inserts records in data sources from data in a ColdFusion form or form Scope. </p>
+<h4><a name="wp1953517"></a>Category</h4>
+<p><a href="00000198.htm#2459589">Database manipulation tags</a></p>
+<h4><a name="wp1100474"></a>Syntax</h4>
+<pre>&lt;cfinsert <br />   dataSource = &quot;ds_name&quot;<br />   tableName = &quot;tbl_name&quot;<br />   tableOwner = &quot;owner&quot;<br />   tableQualifier = &quot;tbl_qualifier&quot;<br />   username = &quot;username&quot;<br />   password = &quot;password&quot;<br />   formFields = &quot;formfield1, formfield2, ...&quot;&gt;
+</pre><h4><a name="wp1953547"></a>See also</h4>
+<p><a href="00000313.htm#1102102"><code>cfprocparam</code></a><code>, </code><a href="00000314.htm#1102246"><code>cfprocresult</code></a><code>, </code><a href="00000316.htm#1102316"><code>cfquery</code></a><code>, </code><a href="00000317.htm#1102474"><code>cfqueryparam</code></a><code>, </code><a href="00000338.htm#2607555"><code>cfstoredproc</code></a><code>, </code><a href="00000346.htm#1104164"><code>cftransaction</code></a><code>, </code><a href="00000350.htm#1104662"><code>cfupdate</code></a></p>
+<h4><a name="wp3221609"></a>History</h4>
+<p>ColdFusion&#160;MX: Deprecated the <code>connectString</code>, <code>dbName</code>, <code>dbServer</code>, <code>dbtype</code>, <code>provider</code>, and <code>providerDSN</code> attributes. They do not work, and might cause an error, in releases later than ColdFusion 5. </p>
+<h4><a name="wp2963325"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>dataSource</p>
+    </td>
+    <td>
+<p>Required </p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Data source; contains table.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tableName</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Table in which to insert form fields.</p>
+<p>ORACLE drivers: must be uppercase.</p>
+<p>Sybase driver: case-sensitive. Must be the same case used when table was created</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>tableOwner</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>For data sources that support table ownership (such as SQL Server, Oracle, and Sybase SQL Anywhere), use this field to specify the owner of the table.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tableQualifier</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>For data sources that support table qualifiers, use this field to specify qualifier for table. The purpose of table qualifiers varies among drivers. For SQL Server and Oracle, qualifier refers to name of database that contains table. For Intersolv dBASE driver, qualifier refers to directory where DBF files are located.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>username</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Overrides username specified in ODBC setup.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Overrides password specified in ODBC setup.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>formFields</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>(all on form, except keys)</p>
+    </td>
+    <td>
+<p>Comma-delimited list of form fields to insert. If not specified, all fields in the form are included.</p>
+<p>If a form field is not matched by a column name in the database, ColdFusion throws an error. </p>
+<p>The database table key field must be present in the form. It may be hidden.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2650781"></a>Example</h4>
+<pre>&lt;!--- This example shows how to use cfinsert instead of cfquery to put <br />data in a datasource. ---&gt;
+&lt;!--- If form.POSTED exists, we insert new record, so begin cfinsert tag. ---&gt;
+&lt;cfif IsDefined (&quot;form.posted&quot;)&gt;
+   &lt;cfinsert dataSource = &quot;cfdocexamples&quot;
+      tableName = &quot;Comments&quot;
+      formFields = &quot;Email,FromUser,Subject,MessText,Posted&quot;&gt;
+   &lt;h3&gt;&lt;I&gt;Your record was added to the database.&lt;/i&gt;&lt;/h3&gt;
+&lt;/cfif&gt;
+
+&lt;cfif IsDefined (&quot;form.posted&quot;)&gt; 
+   &lt;cfif Server.OS.Name IS &quot;Windows NT&quot;&gt; 
+      &lt;cfinsert datasource=&quot;cfdocexamples&quot; tablename=&quot;Comments&quot;
+         formfields=&quot;EMail,FromUser,Subject,MessText,Posted&quot;&gt; 
+   &lt;cfelse&gt; 
+      &lt;cfinsert datasource=&quot;cfdocexamples&quot; tablename=&quot;Comments&quot;
+         formfields=&quot;CommentID,EMail,FromUser,Subject,MessText,Posted&quot;&gt; 
+   &lt;/cfif&gt; 
+   &lt;h3&gt;&lt;i&gt;Your record was added to the database.&lt;/i&gt;&lt;/h3&gt; &lt;/cfif&gt; 
+
+&lt;!--- Use a query to show the existing state of the database. ---&gt;
+&lt;cfquery name = &quot;GetComments&quot; dataSource = &quot;cfdocexamples&quot;&gt;
+   SELECT 
+      CommentID, EMail, FromUser, Subject, CommtType, MessText, Posted, Processed
+   FROM 
+      Comments
+&lt;/cfquery&gt;
+
+&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;h3&gt;cfinsert Example&lt;/h3&gt;
+&lt;p&gt;First, show a list of the comments in the cfdocexamples datasource.
+&lt;!--- show all the comments in the db ---&gt;
+&lt;table&gt;
+   &lt;tr&gt;
+      &lt;td&gt;From User&lt;/td&gt;&lt;td&gt;Subject&lt;/td&gt;&lt;td&gt;Comment Type&lt;/td&gt;
+      &lt;td&gt;Message&lt;/td&gt;&lt;td&gt;Date Posted&lt;/td&gt;
+   &lt;/tr&gt;
+   &lt;cfoutput query = &quot;GetComments&quot;&gt;
+      &lt;tr&gt;
+         &lt;td valign = top&gt;&lt;a href = &quot;mailto:#Email#&quot;&gt;#FromUser#&lt;/A&gt;&lt;/td&gt;
+         &lt;td valign = top&gt;#Subject#&lt;/td&gt;
+         &lt;td valign = top&gt;#CommtType#&lt;/td&gt;
+         &lt;td valign = top&gt;&lt;font size = &quot;-2&quot;&gt;#Left(MessText, 125)#&lt;/font&gt;&lt;/td&gt;
+         &lt;td valign = top&gt;#Posted#&lt;/td&gt;
+      &lt;/tr&gt;
+   &lt;/cfoutput&gt;
+&lt;/table&gt;
+&lt;p&gt;Next, we'll offer the opportunity to enter a comment:
+&lt;!--- make a form for input ---&gt;
+&lt;form action = &quot;cfinsert.cfm&quot; method = &quot;post&quot;&gt;
+   &lt;pre&gt;
+   Email:    &lt;input type = &quot;Text&quot; name = &quot;email&quot;&gt;
+   From:    &lt;input type = &quot;Text&quot; name = &quot;fromUser&quot;&gt;
+   Subject:&lt;input type = &quot;Text&quot; name = &quot;subject&quot;&gt;
+   Message:&lt;textarea name = &quot;MessText&quot; COLS = &quot;40&quot; ROWS = &quot;6&quot;&gt;&lt;/textarea&gt;
+   Date Posted:    &lt;cfoutput&gt;#DateFormat(Now())#&lt;/cfoutput&gt;
+   &lt;!--- dynamically determine today's date ---&gt;
+   &lt;input type = &quot;hidden&quot; 
+      name = &quot;posted&quot; value = &quot;&lt;cfoutput&gt;#Now()#&lt;/cfoutput&gt;&quot;&gt;
+   &lt;/pre&gt;
+   &lt;input type = &quot;Submit&quot; 
+      name = &quot;&quot; value = &quot;insert my comment&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000279.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000281.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000280.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Client-side ActionScript requirements</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001485.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001487.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Client-side ActionScript requirements</h1>
+<p>On the client side, you only need a small piece of code that establishes a connection to the Flash Remoting service and references the server-side ActionScript you want to use.</p>
+<p>For example (notice the embedded comments):</p>
+<pre>// This #include is needed to connect to the Flash Remoting service
+#include &quot;NetServices.as&quot;
+
+// This line determines where Flash MX should look for the Flash Remoting service.
+// Ordinarily, you enter the URL to your ColdFusion server.
+// Port 8500 is the Flash Remoting service default.
+<code><strong>NetServices.setDefaultGatewayUrl(&quot;http://mycfserver:8500&quot;);</strong></code> 
+
+// With the Flash Remoting service URL defined, you can create a connection.
+<code><strong>gatewayConnnection = NetServices.createGatewayConnection();</strong></code> 
+
+// Reference the server-side ActionScript.
+// In this case, the stockquotes script file lives in the web root of the 
+// ColdFusion server identified previously. If it lived in a subdirectory
+// of the web root called &quot;mydir,&quot; you would reference it 
+// as &quot;mydir.stockquotes&quot;.
+<code><strong>stockService = gatewayConnnection.getService(&quot;stockquotes&quot;, this);</strong></code> 
+
+// This line invokes the getQuotes() method defined in the stockquotes
+// server-side ActionScript.
+<code><strong>stockService.getQuotes(&quot;macr&quot;);</strong></code> 
+
+// Once the record set is returned, you handle the results.
+// This part is up to you.
+<code><strong>function getQuotes_Result ( result )</strong></code> 
+<code><strong>{</strong></code> 
+<code><strong>   // Do something with results</strong></code> 
+<code><strong>}</strong></code> 
+</pre><p><strong>Note: </strong>Client-side ActionScript does not support the two new server-side ActionScript functions, <code>CF.query</code> and <code>CF.http</code>.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001485.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001487.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001486.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

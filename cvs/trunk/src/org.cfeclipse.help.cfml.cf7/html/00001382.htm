@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Handling invalid data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001381.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001383.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Handling invalid data</h1>
+<p>How you handle invalid data depends on the validation type. This section describes validation error-handling rules and considerations. For detailed information on error handling in ColdFusion, including invalid data handling, see <a href="00001130.htm#1220254">Handling Errors</a>.</p>
+<ul>
+<li>
+   For onBlur, onSubmit, or onServer validation, you can use the <code>cfinput</code> or <code>cftextarea</code> tag's <code>message</code> attribute to specify a text-only error message to display. Otherwise, ColdFusion MX uses a default message that includes the name of the form field that was invalid. (For OnServer validation, you can customize this message, as described in <a href="00001137.htm#1126367">Handling form field validation errors</a>.) The following example displays an error message when the user enters an invalid e-mail address:
+<pre>
+	E-mail: &lt;cfinput type=&quot;text&quot; size=&quot;25&quot; name=&quot;email&quot;
+		validate=&quot;email&quot; message=&quot;You must enter a valid e-mail address.&quot;&gt;
+</pre>
+</li>
+<li>
+   For hidden form validation, you can specify a text-only error message in the hidden field's <code>value</code> attribute. Otherwise, ColdFusion MX uses a default message that includes the name of the form field that was invalid. (You can customize this message, as described in <a href="00001137.htm#1126367">Handling form field validation errors</a>.) The following <code>cfinput</code> tag, for example, uses a hidden field validation to display an error message if the user enters an invalid address. (It uses onServer validation to display a different error message if the user fails to enter a number.)
+<pre>
+Telephone: &lt;cfinput type=&quot;text&quot; size=&quot;20&quot; name=&quot;telephone&quot;
+	validateat=&quot;onServer&quot; required=&quot;Yes&quot; 
+	message=&quot;You must enter a telephone number&quot;&gt;
+	&lt;cfinput type=&quot;hidden&quot; name=&quot;telephone_cfformtelephone&quot; 
+	value=&quot;The number you entered is not in the correct format.&lt;br&gt;Use a
+	number such as (617) 555-1212, 617-555-1212, or 617-555-1212 x12345&quot;&gt;
+</pre>
+</li>
+<li>
+   For HTML and XML format forms (using ColdFusion MX skins), most ColdFusion form tags have an <code>onError</code> attribute that lets you specify a Javascript function to run if an onSubmit error occurs.
+</li>
+<li>
+   For the <code>IsValid</code> function, you write separate code paths to handle valid and invalid data. The following example shows a simplified case that displays an error message if the user entered an invalid e-mail address, or a different message if the address is valid:
+<pre>
+&lt;cfif IsValid(&quot;email&quot;, custEmail)&gt;
+	Thank you for entering a valid address.
+	&lt;!--- More processing would go here. ---&gt;
+&lt;cfelse&gt;
+	You must enter a valid e-mail address.&lt;br&gt;
+	Click the Back button and try again.
+&lt;/cfif&gt; 
+</pre>
+</li>
+<li>
+   For <code>cfparam</code> and <code>cfargument</code> tags, you use standard ColdFusion MX error-handling techniques. You can include the tag in a <code>try</code> block and use a <code>catch</code> block to handle the error, or you can use a custom error-handling page. The following example form action page code uses a custom error page, expresserr.cfm, to handle the error that the <code>cfparam</code> tag generates if a user submits a form with an invalid e-mail address:
+<pre>
+&lt;cferror type=&quot;EXCEPTION&quot; exception=&quot;expression&quot; template=&quot;expresserr.cfm&quot;&gt;
+&lt;cfif IsDefined(&quot;form.fieldnames&quot;)&gt;
+	&lt;cfparam name=&quot;form.custEmail&quot; type=&quot;email&quot;&gt;
+	&lt;!--- Normal form processing code goes here. ---&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001381.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001383.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001382.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

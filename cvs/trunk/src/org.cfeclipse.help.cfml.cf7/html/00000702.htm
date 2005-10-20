@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>onSessionStart</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000701.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000703.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>onSessionStart</h1>
+<h4><a name="wp1186742"></a>Description</h4>
+<p>Runs when a session starts.</p>
+<h4><a name="wp1187783"></a>Syntax</h4>
+<pre>&lt;cffunction name=&quot;onSessionStart&quot; returnType=&quot;void&quot;&gt;
+   ...
+&lt;/cffunction&gt;
+</pre><h4><a name="wp1186748"></a>See also</h4>
+<p><a href="00000701.htm#1188499"><code>onSessionEnd</code></a>, <a href="00000694.htm#1190269">Method summary</a>, <a href="00001119.htm#1191795">Managing sessions in Application.cfc</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1186769"></a>Returns</h4>
+<p>This method does not return a value; do not use the <code>cfreturn</code> tag.</p>
+<h4><a name="wp1186771"></a>Usage</h4>
+<p>This method is useful for initializing Session scope data, such as a shopping cart, or setting session-specific Application scope variables, such as for tracking the number of active sessions. You never need to lock the Session scope to set its variables using this method.</p>
+<p>If you call this method explicitly, ColdFusion does not start a session; it does execute the method code, but does not lock the Session scope.</p>
+<p>This method can access the requested page's Variables scope only if the Application.cfc file includes an <code>onRequest</code> method that calls the page.</p>
+<h4><a name="wp1188870"></a>Example</h4>
+<p>The following <code>onSessionStart</code> example initializes some Session scope variables and increments and Application scope counter of active sessions. </p>
+<pre>&lt;cffunction name=&quot;onSessionStart&quot;&gt;
+   &lt;cfscript&gt;
+      Session.started = now();
+      Session.shoppingCart = StructNew();
+      Session.shoppingCart.items =0;
+   &lt;/cfscript&gt;
+      &lt;cflock scope=&quot;Application&quot; timeout=&quot;5&quot; type=&quot;Exclusive&quot;&gt;
+         &lt;cfset Application.sessions = Application.sessions + 1&gt;
+   &lt;/cflock&gt;
+&lt;/cffunction&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000701.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000703.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000702.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,819 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfcollection</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000229.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000231.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfcollection</h1>
+<h4><a name="wp1344646"></a>Description</h4>
+<p>Creates and administers Verity search engine collections. </p>
+<h4><a name="wp1872903"></a>Category</h4>
+<p><a href="00000202.htm#2459750">Extensibility tags</a></p>
+<h4><a name="wp1097669"></a>Syntax</h4>
+<pre>&lt;cfcollection <br />   action = &quot;action&quot;<br />   collection = &quot;collection_name&quot;<br />   path = &quot;path_to_verity_collection&quot;<br />   language = &quot;language&quot;<br />   name = &quot;queryname&quot;<br />categories = &quot;yes&quot; or &quot;no&quot;&gt;
+</pre><h4><a name="wp1874458"></a>See also</h4>
+<p><a href="00000243.htm#1098198"><code>cfexecute</code></a><code>, </code><a href="00000278.htm#1100286"><code>cfindex</code></a><code>, </code><a href="00000302.htm#2820239"><code>cfobject</code></a><code>, </code><a href="00000323.htm#1102863"><code>cfreport</code></a><code>, </code><a href="00000330.htm#1103106"><code>cfsearch</code></a><code>, </code><a href="00000351.htm#2682044"><code>cfwddx</code></a></p>
+<h4><a name="wp2493228"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7:</p>
+<ul>
+<li>
+   Removed reference to external collections. 
+</li>
+<li>
+   Deprecated the <code>map</code> and <code>repair</code> options of the <code>action</code> attribute. They might not work, and might cause an error, in later releases.
+</li>
+<li>
+   Added <code>categories</code> attribute and <code>categorylist</code> action.
+</li>
+<li>
+   Added CATEGORIES, SIZE, DOCCOUNT, and LASTMODIFIED to list of variables returned by the <code>list</code> action.
+</li>
+<li>
+   Marked as obsolete the MAPPED, ONLINE, and REGISTERED variables returned by the <code>list</code> action.
+</li>
+</ul>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Changed the requirements for the <code>action</code> attribute: it is now required. 
+</li>
+<li>
+   Added the <code>action</code> attribute <code>list</code> value. It is the default.
+</li>
+<li>
+   Changed the requirements for the <code>action</code> attribute value <code>map</code>: it is not necessary to specify the <code>action</code> attribute value <code>map</code>. (ColdFusion detects collections and creates maps collections as required.)
+</li>
+<li>
+   Changed acceptable collection naming: this tag accepts collection names that include spaces. 
+</li>
+<li>
+   Changed Verity operations behavior: ColdFusion supports Verity operations on Acrobat PDF files.
+</li>
+<li>
+   Changed thrown exceptions: this tag can throw the SEARCHENGINE exception. 
+</li>
+</ul>
+<h4><a name="wp2208193"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Required; see Usage</p>
+    </td>
+    <td>
+<p>list</p>
+    </td>
+    <td>
+<ul>
+<li>
+   categorylist: retrieves categories from the collection and indicates how many documents are in each one. Returns a structure of structures in which the category representing each substructure is associated with a number of documents. For a category in a category tree, the number of documents is the number at <i>or below</i> that level in the tree.
+</li>
+<li>
+   create: registers the collection with ColdFusion. 
+<ul><li>If the collection is present: creates a map to it.</li>
+<li>If the collection is not present: creates it.</li>
+</ul></li>
+<li>
+   delete: unregisters a collection and deletes its directories.
+</li>
+<li>
+   list: returns a query result set, named from the <code>name</code> attribute value, of the attributes of the collections that are registered by ColdFusion.
+</li>
+<li>
+   map: creates a map to a collection. If the action is <code>create</code> and the collection already exists, Coldfusion also creates a map to the collection.
+</li>
+<li>
+   optimize: optimizes the structure and contents of the collection for searching; recovers space. Causes collection to be taken offline, preventing searches and indexing.
+</li>
+<li>
+   repair: deprecated. Does nothing. 
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>collection</p>
+    </td>
+    <td>
+<p>See Usage</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<ul>
+<li>
+   A collection name. The name can include spaces.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>See Usage</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Absolute path to a Verity collection. </p>
+<p>To map an existing collection, specify a fully qualified path to the collection (not including the collection name); for example, <code>&quot;C:\MyCollections\&quot;</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>language</p>
+    </td>
+    <td>
+<p>See Usage</p>
+    </td>
+    <td>
+<p>English</p>
+    </td>
+    <td>
+<p>Although English is the default language, Englishx, a more advanced English locale, is also provided. For a list of options, see Usage. </p>
+<p>Requires the appropriate (European or Asian) Verity Locales language pack.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>See Usage</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name for the query results returned by the <code>list</code> and <code>categorylist</code> actions.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>categories</p>
+    </td>
+    <td>
+<p>See Usage</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<p>Used only for creating a collection:</p>
+<ul>
+<li>
+   yes: this collection includes support for categories.
+</li>
+<li>
+   no: this collection does not support categories.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1097708"></a>Usage</h4>
+<p>With this tag you can create, register, and administer a Verity collection that was created by ColdFusion or by a Verity application.</p>
+<p>The following table shows the dependence relationships among this tag's attribute values:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th colspan="1" rowspan="2">
+This attribute is required, optional, or unnecessary (blank):
+    </th>
+    <th colspan="7" rowspan="1">
+For this action attribute value:
+    </th>
+  </tr>
+  <tr>
+    <th>
+<code>list</code>
+    </th>
+    <th>
+<code>create</code>
+    </th>
+    <th>
+<code>map</code>
+    </th>
+    <th>
+<code>optimize</code>
+    </th>
+    <th>
+<code>repair</code>
+    </th>
+    <th>
+<code>delete</code>
+    </th>
+    <th>
+<code>categorylist</code>
+    </th>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><code>collection</code>
+</pre>    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><code>path</code>
+</pre>    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><code>language</code>
+</pre>    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><code>name</code>
+</pre>    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>categories
+</pre>    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following examples illustrate the structures returned by the <code>categorylist</code> action:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th colspan="2" rowspan="1">
+CATEGORIES
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>blue</p>
+    </td>
+    <td>
+<p>10</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>green</p>
+    </td>
+    <td>
+<p>3</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>magenta</p>
+    </td>
+    <td>
+<p>3</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>purple</p>
+    </td>
+    <td>
+<p>2</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" rowspan="1">
+CATEGORYTREES
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>a/</p>
+    </td>
+    <td>
+<p>10</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>a/b</p>
+    </td>
+    <td>
+<p>10</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>a/b/c</p>
+    </td>
+    <td>
+<p>10</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>a/b/c/subdir</p>
+    </td>
+    <td>
+<p>3</p>
+    </td>
+  </tr>
+</table>
+
+<p>The <code>list</code> action returns the following information in a result set that contains one row per collection: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Column
+    </th>
+    <th>
+Contents
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>CATEGORIES</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: the collection has category support enabled.
+</li>
+<li>
+   no: the collection does not have category support enabled.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>CHARSET</p>
+    </td>
+    <td>
+<p>The character set of the collection.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>CREATED</p>
+    </td>
+    <td>
+<p>The date and time that the collection was created.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>DOCCOUNT</p>
+    </td>
+    <td>
+<p>The number of documents in this collection.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>EXTERNAL</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: the collection is external.
+</li>
+<li>
+   no: the collection is not external.
+</li>
+<li>
+   Not Found: the collection is registered but is not available in the defined path .
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>LANGUAGE</p>
+    </td>
+    <td>
+<p>The locale setting of the collection. </p>
+<p>This information is not available for K2Server collections.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>LASTMODIFIED</p>
+    </td>
+    <td>
+<p>The date and time that the collection was last changed.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>MAPPED</p>
+    </td>
+    <td>
+<p>Obsolete</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>NAME</p>
+    </td>
+    <td>
+<p>The name of the collection. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ONLINE</p>
+    </td>
+    <td>
+<p>Obsolete</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>PATH</p>
+    </td>
+    <td>
+<p> Absolute path to the collection. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>REGISTERED</p>
+    </td>
+    <td>
+<p>Obsolete</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SIZE</p>
+    </td>
+    <td>
+<p>The size of the collection, expressed in kilobytes.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The ColdFusion MX Administrator Verity &gt; Collections page displays the information that is returned when you use the <code>list</code> attribute.</p>
+<p>If the Verity Server is not running when the <code>list</code> action is executed, the tag throws an error.</p>
+<p>To determine whether a collection exists, use code, such as the following, to execute a query of queries:</p>
+<pre>&lt;cfcollection action=&quot;list&quot; name=&quot;myCollections&quot; &gt; 
+&lt;cfquery name=&quot;qoq&quot; dbtype=&quot;query&quot;&gt;<br />select * from myCollections <br />where myCollections.name = &#39;myCollectionName&#39;<br />&lt;/cfquery&gt; 
+&lt;cfif qoq.recordcount GT 0&gt;
+   &lt;!--- Collection exists ---&gt;
+   &lt;cfdump var = #qoq#&gt;
+&lt;/cfif&gt;
+</pre><p>To get a result set with values for all the collections that are registered with the Verity server, use code such as the following:</p>
+<pre>&lt;cfcollection action=&quot;list&quot; name=&quot;myCollections&quot;&gt;
+&lt;cfoutput query=&quot;myCollections&quot;&gt;
+   #name#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><p>To add content to a collection, use <a href="00000278.htm#1100286"><code>cfindex</code></a>. To search a collection, use <a href="00000330.htm#1103106"><code>cfsearch</code></a><code>.</code></p>
+<p>The <code>language</code> attribute of this tag supports the following options: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td colspan="4" rowspan="1">
+<p><strong>Asian Language Pack</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Japanese</p>
+    </td>
+    <td>
+<p>Korean</p>
+    </td>
+    <td>
+<p>Chinese </p>
+    </td>
+    <td>
+<p>Traditional Chinese</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="4" rowspan="1">
+<p><strong>Multilanguage Language Pack</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Unicode</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="4" rowspan="1">
+<p><strong>Western European Language Pack</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Bokmal</p>
+    </td>
+    <td>
+<p>Finnish</p>
+    </td>
+    <td>
+<p>Italian</p>
+    </td>
+    <td>
+<p>Spanish</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Danish</p>
+    </td>
+    <td>
+<p>French</p>
+    </td>
+    <td>
+<p>Nynorsk</p>
+    </td>
+    <td>
+<p>Swedish</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Dutch</p>
+    </td>
+    <td>
+<p>German</p>
+    </td>
+    <td>
+<p>Portuguese</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="4" rowspan="1">
+<p><strong>Eastern European/Middle Eastern Language Pack</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Arabic</p>
+    </td>
+    <td>
+<p>Greek</p>
+    </td>
+    <td>
+<p>Polish</p>
+    </td>
+    <td>
+<p>Turkish</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Bulgarian</p>
+    </td>
+    <td>
+<p>Hebrew</p>
+    </td>
+    <td>
+<p>Russian</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Czech</p>
+    </td>
+    <td>
+<p>Hungarian</p>
+    </td>
+    <td>
+<p>Russian2</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<p>The default location of Verity collections is as follows:</p>
+<ul>
+<li>
+   Server configuration:
+<ul><li>Windows: C:\CFusionMX7\verity\collections</li>
+<li>UNIX system: /opt/coldfusionmx7/verity/collections</li>
+</ul></li>
+<li>
+   J2EE configuration: <i>webapp_root</i>/WEB-INF/cfusion/verity/collections
+</li>
+</ul>
+<h4><a name="wp3320260"></a>Example</h4>
+<pre>&lt;!-------------------------------------------------------------------------
+(coll_actn.cfm)
+Check for server platform and use its default Verity Collection directory.
+If you did not install ColdFusion MX in the default directory, or if you use
+the J2EE configuration, or if your webroot is not C:\CFusionMX7\wwwroot, you
+might need to change the path in this example. For example, for JRun4 the path
+might be C:\JRun4\Verity\Collections\
+---------------------------------------------------------------------------&gt;
+&lt;cfif Find(&quot;Windows&quot;, Server.OS.Name)&gt;
+   &lt;cfset collPath = &quot;C:\JRun4\Verity\Collections\&quot;&gt;
+&lt;cfelse&gt;
+   &lt;cfset collpath = &quot;/opt/coldfusionmx7/verity/collections/&quot;&gt;
+&lt;/cfif&gt;
+
+&lt;!--------------------------------------------------------------------------
+Process form input and do the requested cfcollection operation. 
+---------------------------------------------------------------------------&gt;
+
+&lt;cfif IsDefined(&quot;form.CollectionName&quot;) AND IsDefined(&quot;form.CollectionAction&quot;)&gt;
+   &lt;cfif form.CollectionName is not &quot;&quot;&gt;
+      &lt;cfswitch expression=&quot;#FORM.CollectionAction#&quot;&gt;
+        &lt;cfcase value=&quot;Create&quot;&gt;
+          &lt;cfcollection action=&quot;CREATE&quot; collection=&quot;#FORM.CollectionName#&quot;
+               path=&quot;#collPath#&quot; categories=&quot;yes&quot;&gt;
+          &lt;h3&gt;Collection created.&lt;br&gt;
+         Use CFINDEX to populate it.&lt;/h3&gt;
+        &lt;/cfcase&gt;
+        &lt;cfcase value=&quot;Repair&quot;&gt;
+          &lt;cfcollection action=&quot;REPAIR&quot; collection=&quot;#FORM.CollectionName#&quot;&gt;
+          &lt;h3&gt;Collection repaired.&lt;/h3&gt;
+        &lt;/cfcase&gt;
+        &lt;cfcase value=&quot;Optimize&quot;&gt;
+          &lt;cfcollection action=&quot;OPTIMIZE&quot; collection=&quot;#FORM.CollectionName#&quot;&gt;
+          &lt;h3&gt;Collection optimized.&lt;/h3&gt;
+        &lt;/cfcase&gt;
+        &lt;cfcase value=&quot;Delete&quot;&gt;
+          &lt;cfcollection action=&quot;DELETE&quot; collection=&quot;#FORM.CollectionName#&quot;&gt;
+         &lt;h3&gt;Collection deleted.&lt;/h3&gt;
+        &lt;/cfcase&gt;
+      &lt;/cfswitch&gt;
+   &lt;cfelse&gt;
+   &lt;h3&gt;Please enter a name for your collection&lt;/h3&gt;   
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;!--------------------------------------------------------------------
+(coll_form.cfm)
+Form to specify the collection name and action
+   coll_form.cfm
+---------------------------------------------------------------------&gt;
+
+&lt;form action=&quot;coll_actn.cfm&quot; method=&quot;POST&quot; &gt;
+&lt;select name=&quot;CollectionAction&quot;&gt;
+   &lt;option value=&quot;Create&quot;&gt;Create this collection
+   &lt;option value=&quot;Optimize&quot;&gt;Optimize this collection
+   &lt;option value=&quot;Repair&quot;&gt;Repair this collection
+   &lt;option value=&quot;Delete&quot;&gt;Delete this collection
+&lt;/select&gt;
+
+&lt;p&gt;&lt;strong&gt;Collection on which to act&lt;/strong&gt;&lt;br&gt;
+Use the default value or enter your own Collection name&lt;br&gt;
+&lt;input type=&quot;Text&quot; name=&quot;CollectionName&quot; value=&quot;My_coll&quot;&gt;&lt;/p&gt;
+
+&lt;input type=&quot;Submit&quot; name=&quot;&quot; value=&quot;alter or create my collection&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000229.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000231.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000230.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

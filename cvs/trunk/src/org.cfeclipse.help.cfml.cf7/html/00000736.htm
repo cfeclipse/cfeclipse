@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setGatewayType</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000735.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000737.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setGatewayType</h1>
+<h4><a name="wp1176732"></a>Description</h4>
+<p>Identifies the type of event gateway.</p>
+<h4><a name="wp1176734"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1176736"></a>Syntax</h4>
+<pre>void setGatewayType(String <i>gatewayType</i>)
+</pre><h4><a name="wp1176738"></a>See also</h4>
+<h4><a name="wp1178003"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>gatewayType</p>
+    </td>
+    <td>
+<p>A gateway type identifier. </p>
+    </td>
+  </tr>
+</table>
+
+<p><a href="00000730.htm#1174627">getGatewayType</a>, <a href="00000744.htm#1182144">CFML CFEvent structure</a>, <a href="00001688.htm#117767">CFEvent class</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1176742"></a>Usage</h4>
+<p>For the sake of consistency, use the same name in this method and in the Type Name field when you add the event gateway type in the ColdFusion MX Administrator. Gateway application CFCs that handle multiple gateway types, such as those in an instant messaging application that handles multiple instant messaging providers, could use this field to determine the protocol type and any gateway type-specific actions.</p>
+<h4><a name="wp1176744"></a>Example</h4>
+<p>The following code shows the routine from the example JMS gateway that handles incoming messages. It sets the gateway type to JMS: </p>
+<pre>public void handleMessage(String msg, String topicName, String msgID) {
+   coldfusion.eventgateway.Logger log = getGatewayServices().getLogger();
+   Map data = new HashMap();
+   CFEvent cfMsg = new CFEvent(getGatewayID());
+   data.put(&quot;msg&quot;, msg);
+   data.put(&quot;id&quot;, msgID);
+   cfMsg.setData(data);
+   cfMsg.setOriginatorID(topicName);
+<strong>   cfMsg.setGatewayType(&quot;JMS&quot;);</strong>
+   if (sendMessage(cfMsg)) {
+         log.info(&quot;Added message &#39;&quot; + msgID + &quot;&#39; to queue.&quot;);
+   } else {
+         log.error(&quot;Failed to add message &#39;&quot; + msgID + &quot;&#39; to queue.&quot;);
+   }
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000735.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000737.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000736.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ValueList</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000661.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000663.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ValueList</h1>
+<h4><a name="wp139170"></a>Description</h4>
+<p>Inserts a delimiter between each value in an executed query. ColdFusion does not evaluate the arguments. </p>
+<h4><a name="wp139172"></a>Returns</h4>
+<p>A delimited list of the values of each record returned from an executed query.</p>
+<h4><a name="wp139174"></a>Category</h4>
+<p><a href="00000364.htm#1099435">List functions</a>, <a href="00000367.htm#1099653">Query functions</a></p>
+<h4><a name="wp139182"></a>Function syntax</h4>
+<pre><code><strong>ValueList</strong></code>(<i>query.column</i> [, <i>delimiter</i> ])
+</pre><h4><a name="wp139184"></a>See also</h4>
+<p><a href="00000602.htm#134904">QuotedValueList</a></p>
+<h4><a name="wp139189"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query.column</p>
+    </td>
+    <td>
+<p>Name of an executed query and column. Separate query name and column name with a period.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>delimiter</p>
+    </td>
+    <td>
+<p>A delimiter character to separate column data items. The default value is comma (,).</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139204"></a>Example</h4>
+<pre>&lt;h3&gt;ValueList Example&lt;/h3&gt;
+
+&lt;!--- use the contents of a query to create another dynamically ---&gt;
+&lt;cfquery name = &quot;GetDepartments&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT Dept_ID FROM Departments
+WHERE Dept_ID IN (&#39;BIOL&#39;)
+&lt;/cfquery&gt;
+
+&lt;cfquery name = &quot;GetCourseList&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT *
+FROM CourseList
+WHERE Dept_ID IN (&#39;#GetDepartments.Dept_ID#&#39;)
+&lt;/cfquery&gt;
+
+Value list of all BIOL Course ID&#39;s using (--) as the delimiter:&lt;br&gt;
+&lt;cfoutput&gt;
+#ValueList(GetCourseList.Course_ID,&quot;--&quot;)#&lt;br&gt; 
+&lt;/cfoutput&gt;
+
+Value list of all BIOL Course Numbers using (;) as the delimiter:&lt;br&gt;
+&lt;cfoutput&gt;
+#ValueList(GetCourseList.CorNumber,&quot;;&quot;)#&lt;br&gt; 
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000661.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000663.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000662.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

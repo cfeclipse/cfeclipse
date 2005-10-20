@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Collection maintenance options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001809.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001811.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Collection maintenance options</h1>
+<p>The mkvdk utility provides a variety of collection maintenance options, as described in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Option
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>-backup dir
+</pre>    </td>
+    <td>
+<p>Backs up the collection into the specified directory. The backup does not include the tde subdirectory. The tde subdirectory is created by and for Topic Document Entry if Topic Document Entry is used to create or maintain the collection.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-repair
+</pre>    </td>
+    <td>
+<p>Repairs the collection, performed by an API call. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-purge
+</pre>    </td>
+    <td>
+<p>Waits the amount of time specified by the <code>-purgewait</code> option and then deletes all documents in the collection, but not the collection itself. It leaves the collection directory structure intact.</p>
+<p>To specify a different wait period, use the <code>-purgewait</code> option instead of the <br /><code>-purge</code> option. If you do not use the <code>-purgewait</code> option, the default is 600 seconds. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-purgeback
+</pre>    </td>
+    <td>
+<p>Used with the <code>-purge</code> option, performs a purge in the background.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-purgewait sec
+</pre>    </td>
+    <td>
+<p>Specifies to the <code>-purge</code> option how many seconds to wait. If you do not specify sec, the default is 600.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-noservice
+</pre>    </td>
+    <td>
+<p>Prevents collection servicing, which includes indexing, by this instance of the mkvdk command, performed by an API call.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-persist
+</pre>    </td>
+    <td>
+<p>Services the collection repeatedly, at default intervals of 30 seconds. Use the <br /><code>-sleeptime</code> option to set a different interval.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-sleeptime sec
+</pre>    </td>
+    <td>
+<p>Specifies the interval between service calls when the mkvdk utility is run with the <code>-persist</code> option.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-optimize spec
+</pre>    </td>
+    <td>
+<p>Performs various optimizations on the collection, depending on the value of spec. The specifier, spec, is a string consisting of keywords separated by hyphens, such as maxmerge-squeeze-readonly. For valid keywords, see <a href="00001810.htm#1018755">Optimization keywords</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-noexit
+</pre>    </td>
+    <td>
+<p>Windows only. Causes the I/O window to remain after the program is finished. By default, the window closes and the program exits, so that scripts calling the mkvdk utility do not hang.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1018723"></a>Examples: maintaining collections</h3>
+<p>The following examples show the commands for maintaining a collection.</p>
+<h4><a name="wp1018727"></a>Repairing a collection</h4>
+<p>The following command automatically repairs a collection, or enables it after manual repairs:</p>
+<pre>mkvdk -repair -collection path
+</pre><h4><a name="wp1018732"></a>Backing up a collection</h4>
+<p>The following command backs up a collection to the specified directory:</p>
+<pre>mkvdk -backup path_1 -collection path_2
+</pre><h4><a name="wp1018737"></a>Deleting a collection</h4>
+<p>To delete a collection, use the appropriate command for your operating system. For example, to remove the collection directory structure and control files on a UNIX system, use the following command:</p>
+<pre>rm -r -collection_path
+</pre><h4><a name="wp1018740"></a>Purging a collection</h4>
+<p>The following command deletes all documents from a collection, but does not delete the collection itself:</p>
+<pre>mkvdk -purge -collection path
+</pre><h4><a name="wp1018743"></a>Purging a collection in the background</h4>
+<p>The following command purges the specified collection in the background:</p>
+<pre>mkvdk -purge -purgeback -collection path
+</pre><h4><a name="wp1018746"></a>Specifying persistent service</h4>
+<p>The following command runs the mkvdk command as a persistent process, so that servicing is performed repeatedly after num idle seconds:</p>
+<pre>mkvdk -persist -sleeptime num -collection path
+</pre><h3><a name="wp1018751"></a>Deleting a collection</h3>
+<p>The <code>-purge</code> option deletes all documents in a collection, but does not delete the collection itself. To delete a collection, use operating system commands, such as the rm command on UNIX, to remove the collection directory structure and control files.</p>
+<h3><a name="wp1018755"></a>Optimization keywords</h3>
+<p>The following table describes the optimization keywords for the <code>-optimize</code> option:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Keyword
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>maxclean</p>
+    </td>
+    <td>
+<p>Performs the most comprehensive housekeeping possible, and removes out-of-date collection files. Macromedia recommends this optimization only when you are preparing an isolated collection for publication. When using this type, if the collection is being searched, files sometimes get deleted too early, which can affect search results.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>maxmerge</p>
+    </td>
+    <td>
+<p>Performs maximal merging on the partitions to create partitions that are as large as possible. This creates partitions that can have up to 64000 documents in them.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>readonly</p>
+    </td>
+    <td>
+<p>Marks the collection as read-only and unchanged after the function call is done. This is appropriate for CD-ROM collections.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>spanword</p>
+    </td>
+    <td>
+<p>Creates a spanning word list across all the collection's partitions. A collection consists of numerous smaller units, called partitions, each of which includes a word list. Optionally, a spanning word list can be built with an ngram index.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ngramindex</p>
+    </td>
+    <td>
+<p>Builds an ngram index for the collection. An ngram index is designed to improve the search performance for queries with the &lt;TYPO&gt; and &lt;WILDCARD&gt; operators. An ngram index cannot be built without a spanning word list. You can build a spanning word list and ngram index in the same command, for example:</p>
+<pre>mkvdk -collection collname -optimize spanword -ngramindex
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>squeeze</p>
+    </td>
+    <td>
+<p>Squeezes deleted documents from the collection. Squeezing deleted documents recovers space in a collection, and improves search performance. (For more information about squeeze, see <a href="00001810.htm#1018805">About squeezing deleted documents</a>.) Using this option invalidates the search results.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>vdbopt</p>
+    </td>
+    <td>
+<p>Configures the collection's Verity databases (VDBs). Each collection consists of smaller units called VDBs. This keyword has the effect of linearizing the data in a VDB, and making the collection metadata contained in the VDB more streamlined. It also lets the VDB grow to a much larger size.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tuneup</p>
+    </td>
+    <td>
+<p>Performs the same as combining the maxmerge, vdbopt, and spanword keywords. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>publish</p>
+    </td>
+    <td>
+<p>Performs the same as all of the optimization types combined. Use this keyword to optimize the collection for the best possible retrieval performance, such as for publication to a network on a server or on a CD-ROM.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1018805"></a>About squeezing deleted documents</h3>
+<p>When a document is deleted from a collection, its space is not recovered. It is merely marked as deleted and not available for subsequent searches. Squeezing actually removes deleted documents from the collection's internal documents table and word indexes, thus creating a smaller collection and reducing the collection's disk space. A smaller collection has a more efficient structure that makes searching slightly faster and uses slightly less memory.</p>
+<p>You can safely squeeze deleted documents for a collection at anytime, because the mkvdk utility ensures that the collection is available for searching and servicing through its self-administration features. The application does not need to temporarily disable a collection to squeeze deleted documents, because when a squeeze request is made, the mkvdk utility assigns a new revision code to the collection. After a squeeze has occurred, the next time the application accesses the collection, the Verity engine notifies the application that dramatic changes have been made, and points the application to the new collection data.</p>
+<p>Squeezing deleted documents out of a collection is a significant update to the collection. If users are reviewing search results at the time when squeezing occurs, the search results might be invalidated after the squeeze operation.</p>
+<h3><a name="wp1018810"></a>About optimized Verity databases</h3>
+<p>The Verity database (VDB) is the fundamental storage mechanism responsible for supporting dynamic access to documents in collections. A VDB consists of simple tables with rows and columns that relate to each other by row position. VDB tables are not relational, and their architecture supports quick and efficient searching over textual data. A VDB consists of segments that are packed into a single file. One of the advantages of having one packed VDB file is optimized search performance. The fewer files that need to be opened during search processing, the faster the search performance.</p>
+<p>The VDB optimization option optimizes the packing of a collection's VDBs. When VDBs are built during normal indexing operations, the segments are not stored sequentially in the one-file VDB file system. As a result of VDB optimization, performance can be improved by reserializing the packed segments in the VDBs so that all segments are contiguous, and VDBs can grow in size. Optimized VDBs can grow up to 2 gigabytes in size, as opposed to the maximum 64 megabytes for an unoptimized one.</p>
+<p>Using this option might degrade your indexing performance when certain indexing modes are set for the collection.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001809.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001811.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001810.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

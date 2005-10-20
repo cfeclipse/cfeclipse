@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfgridrow</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000267.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000269.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfgridrow</h1>
+<h4><a name="wp1355634"></a>Description</h4>
+<p>Lets you define a <a href="00000266.htm#1836171"><code>cfgrid</code></a> control that does not use a query as source for row data. If a query attribute is specified in the <code>cfgrid</code> tag, the <code>cfgridrow</code> tags are ignored.</p>
+<h4><a name="wp1887655"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a></p>
+<h4><a name="wp1099728"></a>Syntax</h4>
+<pre>&lt;cfgridrow <br />   data = &quot;col1, col2, ...&quot;&gt;
+</pre><h4><a name="wp1887617"></a>See also</h4>
+<p><a href="00000266.htm#1836171"><code>cfgrid</code></a><code>, </code><a href="00000267.htm#3764697"><code>cfgridcolumn</code></a><code>, </code><a href="00000269.htm#1099751"><code>cfgridupdate</code></a><code>, </code><a href="00000256.htm#2433198"><code>cfform</code></a><code>, </code><a href="00000279.htm#1100379"><code>cfinput</code></a><code>, </code><a href="00000331.htm#2553073"><code>cfselect</code></a><code>, </code><a href="00000337.htm#2612389"><code>cfslider</code></a><code>, </code><a href="00000341.htm#2773598"><code>cftextarea</code></a><code>, </code><a href="00000347.htm#1104271"><code>cftree</code></a></p>
+<h4><a name="wp2229704"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>data</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Comma-delimited list of column values. If a value contains a comma, it must be escaped with another comma.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3259035"></a>Example</h4>
+<p>The following example shows how you use the <code>cfgridrow</code> tag can populate a <a href="00000266.htm#1836171">cfgrid</a> tag from list data:</p>
+<pre>&lt;!--- Set two lists, each with the data for a grid column. ---&gt;
+&lt;cfset cities = &quot;Rome,Athens,Canberra,Brasilia,Paris&quot;&gt;
+&lt;cfset countries = &quot;Italy,Greece,Australia,Brazil,France&quot;&gt;
+
+&lt;cfform name = &quot;cities&quot;&gt;
+   &lt;cfgrid name=&quot;GeoGrid&quot; autowidth = &quot;yes&quot; vspace = &quot;4&quot; 
+         height = &quot;120&quot; font=&quot;tahoma&quot; rowheaders=&quot;no&quot;&gt;
+      &lt;cfgridcolumn name=&quot;City&quot; header=&quot;City&quot;&gt;
+      &lt;cfgridcolumn name=&quot;Country&quot; header=&quot;Country&quot;&gt;
+      &lt;!--- Loop through the lists using cfgridrow to poplulate the grid. ---&gt; 
+      &lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;#ListLen(cities)#&quot;&gt;
+         &lt;cfgridrow data =&quot;#ListGetAt(cities, i)#,#ListGetAt(countries, i)#&quot;&gt;
+      &lt;/cfloop&gt;
+   &lt;/cfgrid&gt;&lt;br&gt;&lt;br&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000267.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000269.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000268.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

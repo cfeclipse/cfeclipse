@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetTimeZoneInfo</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000500.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000502.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetTimeZoneInfo</h1>
+<h4><a name="wp1224851"></a>Description</h4>
+<p>Gets local time zone information for the computer on which it is called, relative to Universal Time Coordinated (UTC). UTC is the mean solar time of the meridian of Greenwich, England, used as the basis for calculating standard time throughout the world.</p>
+<p>ColdFusion stores date and time values as date-time objects: real numbers on a universal time line. It converts an object to a time zone when it formats an object; it converts a date/time value from a time zone to a real number when it parses a value.</p>
+<h4><a name="wp3383078"></a>Returns</h4>
+<p>Structure that contains these elements and keys:</p>
+<ul>
+<li>
+   utcTotalOffset: offset of local time, in seconds, from UTC
+<ul><li>A plus sign indicates a time zone west of UTC (such as a zone in North America) </li>
+<li>A minus sign indicates a time zone east of UTC (such as a zone in Germany)</li>
+</ul></li>
+<li>
+   utcHourOffset: offset, in hours of local time, from UTC
+</li>
+<li>
+   utcMinuteOffset: offset, in minutes, beyond the hours offset. For North America, this is 0. For countries that are not exactly on the hour offset, the number is between 0 and 60. For example, standard time in Adelaide, Australia is offset 9 hours and 30 minutes from UTC.
+</li>
+<li>
+   isDSTOn: True, if Daylight Savings Time (DST) is on in the host; False, otherwise
+</li>
+</ul>
+<h4><a name="wp2501553"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000363.htm#1099325">International functions</a></p>
+<h4><a name="wp1105462"></a>Function syntax</h4>
+<pre><code><strong>GetTimeZoneInfo</strong></code>()
+</pre><h4><a name="wp2518799"></a>See also</h4>
+<p><a href="00000439.htm#1103075">DateConvert</a>, <a href="00000423.htm#1224498">CreateDateTime</a>, <a href="00000442.htm#1103355">DatePart</a></p>
+<h4><a name="wp1105464"></a>Example</h4>
+<pre>&lt;h3&gt;GetTimeZoneInfo Example&lt;/h3&gt;
+&lt;!--- This example shows the use of GetTimeZoneInfo ---&gt;
+&lt;cfoutput&gt;
+The local date and time are #now()#.
+&lt;/cfoutput&gt;
+
+&lt;cfset info = <strong>GetTimeZoneInfo()</strong>&gt;
+&lt;cfoutput&gt;
+&lt;p&gt;Total offset in seconds is #info.utcTotalOffset#.&lt;/p&gt;
+&lt;p&gt;Offset in hours is #info.utcHourOffset#.&lt;/p&gt;
+&lt;p&gt;Offset in minutes minus the offset in hours is
+   #info.utcMinuteOffset#.&lt;/p&gt;
+&lt;p&gt;Is Daylight Savings Time in effect? #info.isDSTOn#.&lt;/p&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000500.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000502.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000501.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

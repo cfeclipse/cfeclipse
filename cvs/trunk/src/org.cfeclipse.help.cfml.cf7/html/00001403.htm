@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example: applying styles to a Flash form</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001402.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001404.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example: applying styles to a Flash form</h1>
+<p>The following form uses a skin and styles to control its appearance:</p>
+<p><br />
+<img src="images/flashfoa.jpg" alt="Form that uses a skin and styles to control its appearance" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The code for the form is as follows. Comments in the code explain how formatting controls and styles determine the appearance.</p>
+<pre>&lt;!--- Specify the form height and width, use the HaloBlue skin. 
+       Note: Flash ignores a backgroundColor style set in cfform. ---&gt;
+&lt;cfform name=&quot;myform&quot; height=&quot;390&quot; width=&quot;440&quot; format=&quot;Flash&quot; skin=&quot;HaloBlue&quot;&gt;
+   &lt;!--- The input area is a panel. Styles to specify panel characteristics.
+          Child controls inherit the background color and font settings. ---&gt;
+   &lt;cfformgroup type=&quot;Panel&quot; label=&quot;Contact Information&quot;
+         style=&quot;marginTop:20; marginBottom:20; fontSize:14; fontStyle:italic; 
+         headerColors:##FFFF00, ##999900; backgroundColor:##FFFFEE;
+         headerHeight:35; cornerRadius:12&quot;&gt;
+      &lt;!--- This vbox sets the font size and style, and spacing between and
+             around its child controls. ---&gt; 
+      &lt;cfformgroup type=&quot;vbox&quot; style=&quot;fontSize:12; fontStyle:normal;
+            verticalGap:18; marginLeft:10; marginRight:10&quot;&gt;
+         &lt;!--- Use a horizontal group to align the first and last name fields 
+                and set a common label. ---&gt;
+         &lt;cfformgroup type=&quot;horizontal&quot; label=&quot;Name&quot; &gt;
+            &lt;!--- Use text styles to highlight the entered names. ---&gt;
+            &lt;cfinput type=&quot;text&quot; required=&quot;Yes&quot; name=&quot;firstName&quot; label=&quot;First&quot;
+               value=&quot;&quot; width=&quot;120&quot; style=&quot;color:##006090; fontSize:12;
+               fontWeight:bold&quot; /&gt;
+            &lt;cfinput type=&quot;text&quot; required=&quot;Yes&quot; name=&quot;lastName&quot; label=&quot;Last&quot;
+               value=&quot;&quot; width=&quot;120&quot; style=&quot;color:##006090; fontSize:12;
+               fontWeight:bold&quot;/&gt;
+         &lt;/cfformgroup&gt;
+         &lt;!--- Horizontal rules surround the e-mail address. 
+                Styles specify the rule characteristics. ---&gt;
+         &lt;cfformitem type=&quot;hrule&quot; style=&quot;color:##999900; shadowColor:##DDDD66;
+            strokeWidth:4&quot;/&gt;
+         &lt;cfformitem type=&quot;HTML&quot; Style=&quot;marginTop:0; marginBottom:0&quot;&gt;
+            &lt;textformat indent=&quot;57&quot;&gt; &lt;font size=&quot;-1&quot;&gt;Flash fills this field in
+            automatically. You can replace the text.&lt;/font&gt;&lt;/textformat&gt;
+         &lt;/cfformitem&gt;
+         &lt;cfinput type=&quot;text&quot; name=&quot;email&quot; label=&quot;email&quot; 
+            bind=&quot;{firstName.text}.{lastName.text}@mm.com&quot;&gt;
+         &lt;cfformitem type=&quot;hrule&quot; style=&quot;color:##999900; shadowColor:##DDDD66;
+            strokeWidth:4&quot;/&gt;
+         &lt;cfinput type=&quot;text&quot; name=&quot;phone&quot; validate=&quot;telephone&quot; label=&quot;Phone&quot;&gt;
+         &lt;!--- Styles control the colors of the current, selected, and 
+            rolled-over dates. ---&gt;
+         &lt;cfinput type=&quot;datefield&quot; name=&quot;mydate1&quot; label=&quot;Date&quot; 
+            style=&quot;rollOverColor:##DDDDFF; selectionColor:##0000FF;
+            todayColor:##AAAAFF&quot;&gt;
+      &lt;/cfformgroup&gt; &lt;!--- vbox ---&gt;
+   &lt;/cfformgroup&gt; &lt;!--- panel ---&gt;
+   &lt;!--- A style centers the buttons at the bottom of the form. ---&gt;
+   &lt;cfformgroup type=&quot;horizontal&quot;style=&quot;horizontalAlign:center&quot;&gt;
+      &lt;cfinput type = &quot;submit&quot; name=&quot;submit&quot; width=&quot;100&quot; value = &quot;Show Results&quot;&gt;
+      &lt;cfinput type = &quot;reset&quot; name=&quot;reset&quot; width=&quot;100&quot; value = &quot;Reset Fields&quot;&gt;
+   &lt;/cfformgroup&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001402.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001404.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001403.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

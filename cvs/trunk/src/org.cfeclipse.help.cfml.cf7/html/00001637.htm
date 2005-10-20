@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Structure of an event gateway application</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001636.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001638.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Structure of an event gateway application</h1>
+<p>To develop an event gateway application, you create and use some or all of the following elements:</p>
+<ul>
+<li>
+   One or more listener CFCs that handle any incoming messages and send any necessary responses. 
+</li>
+<li>
+   In some applications, ColdFusion pages that generate outgoing messages directly.
+</li>
+<li>
+   An event gateway instance configuration in the ColdFusion&#160;MX Administrator. This configuration might require a separate event gateway configuration file.
+</li>
+<li>
+   In some applications, a GatewayHelper object to provide access to additional features of the protocol or technology; for example, to manage instant messaging buddy lists.
+</li>
+</ul>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001637.htm#117276">The role of the listener CFC</a>
+</li>
+<li>
+   <a href="00001637.htm#137844">The role of ColdFusion pages</a>
+</li>
+<li>
+   <a href="00001637.htm#117277">The role of the ColdFusion MX Administrator</a>
+</li>
+<li>
+   <a href="00001637.htm#136687">The role of the GatewayHelper object</a>
+</li>
+</ul>
+<h2><a name="wp117276"></a>The role of the listener CFC</h2>
+<p>All incoming event messages must be handled by one or more listener CFCs. You specify the listener CFCs when you configure an event gateway in the ColdFusion MX Administrator. You must specify at least one CFC in the administrator. Some gateway types can use more than one CFC. By default, the ColdFusion event gateway service delivers events by calling the CFC's <code>onIncomingMessage</code> method.</p>
+<p>The event gateway developer must inform the event gateway application developer of methods that the listener CFC must implement (may be only the <code>onIncomingMessage</code> method) and of the structure and contents of the event message data, contained in the CFEvent instance, that the listener CFC must handle. Outgoing messages have the same event message data structure as incoming messages.</p>
+<p>Many gateways let the listener CFCs send a response by calling the <code>cfreturn</code> function, but ColdFusion MX does not require a return value. Listener CFCs can also use the <code>SendGatewayMessage</code> function, which provides more flexibility than the <code>cfreturn</code> tag.</p>
+<h2><a name="wp137844"></a>The role of ColdFusion pages</h2>
+<p>ColdFusion MX CFM pages cannot receive event messages. However, they can send messages using an event gateway. Therefore, an event gateway application that initiates outgoing messages might use one or more <code>SendGatewayMessage</code> functions to send the messages. An application that sends an SMS message to notify users when a package ships, for example, could use the <code>SendGatewayMessage</code> function to send the notification.</p>
+<h2><a name="wp117277"></a>The role of the ColdFusion MX Administrator</h2>
+<p>The Gateways page in the ColdFusion&#160;MX Administrator associates a specific event gateway instance with one or more listener CFCs that processes messages from the event gateway. It tells the ColdFusion event gateway service to send messages received by the event gateway to the listener CFC. It also lets you specify a configuration file for the event gateway instance and whether to start the event gateway instance (and therefore any responder application) when ColdFusion starts. For more information on using the Administrator, see <a href="00001636.htm#138121">ColdFusion&#160;MX Administrator event gateway pages</a> and the ColdFusion&#160;MX Administrator online&#160;Help.</p>
+<h2><a name="wp136687"></a>The role of the GatewayHelper object</h2>
+<p>A ColdFusion&#160;MX event gateway provides an information conduit: at its most basic, it receives and dispatches event messages. In some cases, however, an event gateway must provide additional functionality. An instant messaging event gateway, for example, needs to provide such services as managing buddies and providing status information. To support such use, an event gateway can enable access to a GatewayHelper object. The event gateway developer writes a Java class that provides the necessary utility routines as Java methods, and ColdFusion&#160;MX application developers can get an instance of the class by calling the CFML <code>GetGatewayHelper</code> method. The application calls the GatewayHelper object's methods using normal ColdFusion&#160;MX object access techniques. The ColdFusion&#160;MX instant messaging event gateways and the example socket event gateway provide GatewayHelper objects.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001636.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001638.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001637.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

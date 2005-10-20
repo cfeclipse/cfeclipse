@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>DayOfWeekAsString</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000444.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000446.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>DayOfWeekAsString</h1>
+<h4><a name="wp1224617"></a>Description</h4>
+<p>Determines the day of the week, in a date, as a string function. </p>
+<h4><a name="wp3354579"></a>Returns</h4>
+<p>The day of the week, as a string in the current locale, that corresponds to <i>day_of_week</i>.</p>
+<h4><a name="wp2501503"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp1103581"></a>Function syntax</h4>
+<pre><code><strong>DayOfWeekAsString</strong></code>(<i>day_of_week</i>)
+</pre><h4><a name="wp2576782"></a>See also</h4>
+<p><a href="00000443.htm#1103422">Day</a>, <a href="00000444.htm#1103491">DayOfWeek</a>, <a href="00000446.htm#1103621">DayOfYear</a>, <a href="00000447.htm#1103690">DaysInMonth</a>, <a href="00000448.htm#1103759">DaysInYear</a>, <a href="00000465.htm#1104605">FirstDayOfMonth</a></p>
+<h4><a name="wp5046228"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Changed behavior. The returned string is now in the language of the current locale.</p>
+<h4><a name="wp1284623"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>day_of_week</p>
+    </td>
+    <td>
+<p>Integer, in the range 1 (Sunday) - 7 (Saturday).</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1103587"></a>Example</h4>
+<p>The following example shows the use of the <code>DayOfWeekAsString</code> function. It is the action page for a form that submits year, month, and day fields.</p>
+<pre>&lt;h3&gt;DayOfWeekAsString Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.year&quot;)&gt;
+More information about your date:
+&lt;cfset yourDate = CreateDate(FORM.year, FORM.month, FORM.day)&gt;
+
+&lt;cfoutput&gt;
+&lt;p&gt;Your date, #DateFormat(yourDate)#.
+&lt;br&gt;It is #<code><strong>DayofWeekAsString(DayOfWeek(yourDate))</strong></code>#, day
+    #DayOfWeek(yourDate)# in the week.
+&lt;br&gt;This is day #Day(YourDate)# in the month of <br />#MonthAsString(Month(yourDate))#, which has
+     #DaysInMonth(yourDate)# days.
+&lt;br&gt;We are in week #Week(yourDate)# of #Year(YourDate)# (day #DayofYear(yourDate)#<br />of #DaysinYear(yourDate)#). 
+&lt;br&gt;&lt;cfif IsLeapYear(Year(yourDate))&gt;This is a leap year
+   &lt;cfelse&gt;This is not a leap year&lt;/cfif&gt;
+&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000444.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000446.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000445.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

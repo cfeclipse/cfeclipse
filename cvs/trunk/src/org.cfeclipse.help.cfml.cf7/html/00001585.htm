@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example 2: Using the Microsoft Word application object</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001584.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001586.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example 2: Using the Microsoft Word application object</h1>
+<p>The following example uses the Microsoft Word application COM object in the Application scope to convert a Word document to HTML. This example works with Word 2000 as written. To work with Word 97, change &quot;Val(8)&quot; to &quot;Val(10)&quot;. </p>
+<p>This example uses an Application scope lock to ensure that no other page interrupts creating the object. Once the Word object exists, the example uses a named lock to prevent simultaneous access to the file that is being converted.</p>
+<pre>&lt;cfapplication name=&quot;comtest&quot; clientmanagement=&quot;No&quot; Sessionmanagement=&quot;yes&quot;&gt;
+&lt;!--- Uncomment the following line if you need to delete the object from the
+Application scope ---&gt;
+&lt;!--- &lt;cfset structdelete(Application, &quot;MyWordObj&quot;)&gt; ---&gt;
+
+&lt;!--- use the GetTickCount function to get a current time indicator, used for
+      displaying the total processing time. ---&gt;
+&lt;cfset start = GetTickCount()&gt;
+&lt;!--- If necessary, create the Word.application object and put it in the
+      Application scope ---&gt;
+&lt;cfset WordObj_is_initialized = False&gt;
+&lt;cflock scope=&quot;application&quot; type=&quot;readonly&quot; timeout=120&gt;
+   &lt;cfset WordObj_is_initialized = StructKeyExists(application, &quot;MyWordObj&quot;)&gt;
+&lt;/cflock&gt;
+&lt;cfif not WordObj_is_initialized &gt;
+   &lt;cflock scope=&quot;Application&quot; type=&quot;exclusive&quot; timeout=&quot;120&quot;&gt;
+      &lt;cfif not StructKeyExists(application, &quot;MyWordObj&quot;)&gt;
+
+&lt;!--- First try to connect to an existing Word object ---&gt;
+         &lt;cftry&gt;
+            &lt;cfobject type=&quot;com&quot;
+               action=&quot;connect&quot;
+               class=&quot;Word.application&quot;
+               name=&quot;Application.MyWordobj&quot;
+               context=&quot;local&quot;&gt; 
+            &lt;cfcatch&gt;
+&lt;!--- There is no existing object, create one ---&gt;
+               &lt;cfobject type=&quot;com&quot;
+                  action=&quot;Create&quot;
+                  class=&quot;Word.application&quot;
+                  name=&quot;Application.MyWordobj&quot;
+                  context=&quot;local&quot;&gt; 
+            &lt;/cfcatch&gt;
+         &lt;/cftry&gt;
+         
+         &lt;cfset Application.mywordobj.visible = False&gt;
+      &lt;/cfif&gt;
+   &lt;/cflock&gt;
+&lt;/cfif&gt;
+
+&lt;!--- Convert a Word document in temp.doc to an HTML file in temp.htm. ---&gt;
+&lt;!--- Because this example uses a fixed filename, multiple pages might try
+   to use the file simultaneously. The lock ensures that all actions from
+   reading the input file through closing the output file are a single &quot;atomic&quot;
+   operation, and the next page cannot access the file until the current page
+   completes all processing. 
+   Use a named lock instead of the Application scope lock to reduce lock contention. ---&gt;
+&lt;cflock name=&quot;WordObjLock&quot; type=&quot;exclusive&quot; timeout=&quot;120&quot;&gt;
+   &lt;cfset docs = application.mywordobj.documents()&gt;
+   &lt;cfset docs.open(&quot;c:\CFusionMX7\wwwroot\temp.doc&quot;)&gt;
+   &lt;cfset converteddoc = application.mywordobj.activedocument&gt;
+   &lt;!--- Val(8) works with Word 2000. Use Val(10) for Word 97 ---&gt;
+   &lt;cfset converteddoc.saveas(&quot;c:\CFusionMX7\wwwroot\temp.htm&quot;,val(8))&gt;
+   &lt;cfset converteddoc.close()&gt;
+&lt;/cflock&gt;
+
+&lt;cfoutput&gt;
+   Conversion of temp.htm Complete&lt;br&gt;
+   Execution Time: #int(getTickCount()-start)# milliseconds&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001584.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001586.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001585.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

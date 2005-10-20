@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating data grids with the cfgrid tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001363.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001365.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating data grids with the cfgrid tag</h1>
+<p>The <a href="00000266.htm#1836171"><code>cfgrid</code></a> tag creates a <a href="00000256.htm#2433198"><code>cfform</code></a> grid control that resembles a spreadsheet table and can contain data populated from a <code>cfquery</code> tag or from other sources of data. As with other <code>cfform</code> tags, the <code>cfgrid</code> tag offers a wide range of data formatting options, as well as the option of validating user selections with a JavaScript validation script.</p>
+<p>You can also perform the following tasks with a <code>cfgrid</code> tag:</p>
+<ul>
+<li>
+   Sort data in the grid alphanumerically.
+</li>
+<li>
+   Update, insert, and delete data.
+</li>
+<li>
+   Display images in the grid.
+</li>
+</ul>
+<p><strong>Note: </strong>Flash format grids support a subset of the features available in applet format grids. For details on features supported in each format, see the <a href="00000266.htm#1836171"><code>cfgrid</code></a> tag in <i>CFML Reference</i>.</p><p>Users can sort the grid entries in ascending order by double-clicking any column header. Double-clicking again sorts the grid in descending order. In applet format, you can also add sort buttons to the grid control.</p>
+<p>When users select grid data and submit the form, ColdFusion passes the selection information as form variables to the application page specified in the <code>cfform</code> <code>action</code> attribute.</p>
+<p>Just as the <a href="00000347.htm#1104271"><code>cftree</code></a> tag uses the <a href="00000348.htm#1104421"><code>cftreeitem</code></a> tag, the <code>cfgrid</code> tag uses the <a href="00000267.htm#3764697"><code>cfgridcolumn</code></a> and <a href="00000268.htm#3842572"><code>cfgridrow</code></a> tags. You can define a wide range of row and column formatting options, as well as a column name, data type, selection options, and so on. You use the <code>cfgridcolumn</code> tag to define individual columns in the grid or associate a query column with a grid column. </p>
+<p>Use the <code>cfgridrow</code> tag to define a grid that does not use a query as the source for row data. If a query attribute is specified in the <code>cfgrid</code> tag, the <code>cfgridrow</code> tags are ignored.</p>
+<p>The <code>cfgrid</code> tag provides many attributes that control grid behavior and appearance. This chapter describes only the most important of these attributes. For detailed information on these attributes, see the <a href="00000266.htm#1836171"><code>cfgrid</code></a> tag in <i>CFML Reference</i><code>.</code></p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001365.htm#1130916">Working with a data grid and entering data</a>
+</li>
+<li>
+   <a href="00001366.htm#1165511">Creating an editable grid</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001363.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001365.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001364.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Accessing CFCs from outside ColdFusion and basic HTML</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001047.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001049.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Accessing CFCs from outside ColdFusion and basic HTML</h1>
+<p>Flash applications that use Flash Remoting MX can easily take advantage of ColdFusion components for business logic. Similarly, you can export CFCs so that any application can access CFC methods as web services.</p>
+<h3><a name="wp1214827"></a>Using Flash Remoting MX</h3>
+<p>For ColdFusion component methods to communicate with Flash Remoting MX applications, you must set the <code>access</code> attribute of the <code>cffunction</code> tag to <code>remote</code>. </p>
+<p>For more information on creating CFCs for Flash Remoting MX, see <a href="00001477.htm#1157546">Using the Flash Remoting Service</a>.</p>
+<h3><a name="wp1214838"></a>Invoking components as web services</h3>
+<p>Any application, whether it is a ColdFusion application, a Java application, JSP page, or a .Net application, can access well-formed ColdFusion components as web services by referencing the WSDL file that ColdFusion automatically generates.</p>
+<p>To see a component's WSDL definition, specify the component web address in a URL, followed by ?wsdl; for example:</p>
+<pre>http://localhost:8500/MyComponents/arithCFC.cfc?wsdl
+</pre><p>For more information on using CFCs as web services, see <a href="00001530.htm#1141005">Using Web Services</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001047.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001049.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001048.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

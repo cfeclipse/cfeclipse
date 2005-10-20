@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About Internet applications and web application servers</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000862.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000864.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About Internet applications and web application servers</h1>
+<p>With ColdFusion MX, you develop Internet applications that run on web application servers. The following sections introduce Internet applications and web application servers. Later sections explain the specific role that ColdFusion MX plays in this environment.</p>
+<h2><a name="wp1109875"></a>About web pages and Internet applications</h2>
+<p>The Internet has evolved from a collection of static HTML pages to an application deployment platform. First, the Internet changed from consisting of static web pages to providing dynamic, interactive content. Rather than providing unchanging content where organizations merely advertise goods and services, dynamic pages enable companies to conduct business ranging from e-commerce to managing internal business processes. For example, a static HTML page lets a bookstore publish its location, list services such as the ability to place special orders, and advertise upcoming events like book signings. A dynamic website for the same bookstore lets customers order books online, write reviews of books they read, and even get suggestions for purchasing books based on their reading preferences.</p>
+<p>More recently, the Internet has become the underlying infrastructure for a wide variety of applications. With the arrival of technologies such as XML, web services, J2EE (Java 2 Platform, Enterprise Edition), and Microsoft .NET, the Internet has become a multifaceted tool for integrating business activities. Now, enterprises can use the Internet to integrate distributed activities, such as customer service, order entry, order fulfillment, and billing.</p>
+<p>ColdFusion MX is a rapid application development environment that lets you build dynamic websites and Internet applications quickly and easily. It lets you develop sophisticated websites and Internet applications without knowing the details of many complex technologies, yet it lets advanced developers take advantage of the full capabilities of many of the latest Internet technologies.</p>
+<h2><a name="wp1111287"></a>About web application servers</h2>
+<p>To understand ColdFusion, you must first understand the role of web application servers. Typically, web browsers make requests, and web servers, such as Microsoft Internet Information Server (IIS) and the Apache web server, fulfill those requests by returning the requested information to the browser. This information includes, but is not limited to, HTML and Macromedia Flash files.</p>
+<p>A web server's capabilities are limited because all it does is wait for requests to arrive and attempt to fulfill those requests as soon as possible. A web server does not let you do the following tasks:</p>
+<ul>
+<li>
+   Interact with a database, other resource, or other application.
+</li>
+<li>
+   Serve customized information based on user preferences or requests.
+</li>
+<li>
+   Validate user input.
+</li>
+</ul>
+<p>A web server, basically, locates information and returns it to a web browser.</p>
+<p>To extend the capabilities of a web server, you use a <i>web application server</i><strong>, </strong>a software program that extends the web server's capabilities to do tasks such as those in the preceding list.</p>
+<h3><a name="wp1111295"></a>How a web server and web application server work together</h3>
+<p>The following steps explain how a web server and web application server work together to process a page request:</p>
+<ol>
+<li>
+   The user requests a page by typing a URL in a browser, and the web server receives the request.
+</li>
+<li>
+   The web server looks at the file extension to determine whether a web application server must process the page. Then, one of the following actions occur:
+<ul><li>If the user requests a file that is a simple web page (often one with an HTM or HTML extension), the web server fulfills the request and sends the file to the browser.</li>
+<li>If the user requests a file that is a page that a web application server must process (one with a CFM, CFML, or CFC extension for ColdFusion requests), the web server passes the request to the web application server. The web application server processes the page and sends the results to the web server, which returns those results to the browser. The following figure shows this process:</li>
+<p><br />
+<img src="images/works2_w.jpg" alt="Web server passing a request to ColdFusion" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</ul></li>
+</ol>
+<p>Because web application servers interpret programming instructions and generate output that a web browser can interpret, they let web developers build highly interactive and data-rich websites, which can do tasks such as the following: </p>
+<ul>
+<li>
+   Query other database applications for data.
+</li>
+<li>
+   Dynamically populate form elements.
+</li>
+<li>
+   Dynamically generate Flash application data.
+</li>
+<li>
+   Provide application security.
+</li>
+<li>
+   Integrate with other systems using standard protocols such as HTTP, FTP, LDAP, POP, and&#160;SMTP.
+</li>
+<li>
+   Create shopping carts and e-commerce websites.
+</li>
+<li>
+   Respond with an e-mail message immediately after a user submits a form.
+</li>
+<li>
+   Return the results of keyword searches.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000862.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000864.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000863.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

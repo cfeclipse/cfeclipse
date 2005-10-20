@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ListLen</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000557.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000559.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ListLen</h1>
+<h4><a name="wp131124"></a>Description</h4>
+<p>Determines the number of elements in a list. </p>
+<p>Integer; the number of elements in a list.</p>
+<h4><a name="wp131127"></a>Category</h4>
+<p><a href="00000364.htm#1099435">List functions</a></p>
+<h4><a name="wp131132"></a>Function syntax</h4>
+<pre><code><strong>ListLen</strong></code>(list [, <i>delimiters</i> ])
+</pre><h4><a name="wp131134"></a>See also</h4>
+<p><a href="00000547.htm#130310">ListAppend</a>, <a href="00000551.htm#130600">ListDeleteAt</a>, <a href="00000556.htm#130994">ListInsertAt</a>, <a href="00000559.htm#131224">ListPrepend</a>; <a href="00000889.htm#1100874">Lists</a> in <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i> </p>
+<h4><a name="wp131148"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>list</p>
+    </td>
+    <td>
+<p>A list or a variable that contains one.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>delimiters</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Character(s) that separate list elements. The default value is comma. </p>
+<p>If this parameter contains more than one character, ColdFusion processes each occurrence of each character as a delimiter. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp131164"></a>Usage</h4>
+<p>ColdFusion ignores empty list elements; thus, the list &quot;a,b,c,,,d&quot; has four elements.</p>
+<p>Here are some examples of ListLen processing:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Statement 
+    </th>
+    <th>
+Output
+    </th>
+    <th>
+Comment
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>ListLen(&#39;a,b, c,,,d&#39;)
+</pre>    </td>
+    <td>
+<p>4</p>
+    </td>
+    <td>
+<p>Third element is<code> &quot; c&quot;</code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>ListLen(&#39;a,b, c,,,d&#39;,&#39;,&#39;)
+</pre>    </td>
+    <td>
+<p>4</p>
+    </td>
+    <td>
+<p>Fourth element is<code> &quot;d&#39;&quot;</code></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>ListLen(&#39;elem_1___elem_2___elem_3&#39;)
+</pre>    </td>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>ListLen(&#39;elem*1***elem*2***elem*3&#39;)
+</pre>    </td>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>ListLen(&#39;elem_1___elem_2___elem_3&#39;,&#39;_&#39;)
+</pre>    </td>
+    <td>
+<p>6</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp131205"></a>Example</h4>
+<pre>&lt;h3&gt;ListLen Example&lt;/h3&gt;
+&lt;!--- Find a list of users who wrote messages ---&gt;
+&lt;cfquery name = &quot;GetMessageUser&quot; datasource = &quot;cfdocexamples&quot;&gt;
+   SELECT Username, Subject, Posted
+   FROM  Messages
+&lt;/cfquery&gt;
+&lt;cfset temp = ValueList(GetMessageUser.Username)&gt;
+&lt;!--- loop through the list and show it with ListGetAt ---&gt;
+&lt;h3&gt;This is a list of usernames who have posted messages
+&lt;cfoutput&gt;#<code><strong>ListLen(temp)</strong></code>#&lt;/cfoutput&gt; users.&lt;/h3&gt;
+&lt;ul&gt;
+&lt;cfloop From = &quot;1&quot; TO = &quot;#<code><strong>ListLen(temp)</strong></code>#&quot; INDEX = &quot;Counter&quot;&gt;
+   &lt;cfoutput&gt;&lt;li&gt;Username #Counter#: 
+    #ListGetAt(temp, Counter)#&lt;/cfoutput&gt;
+&lt;/cfloop&gt;
+&lt;/ul&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000557.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000559.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000558.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

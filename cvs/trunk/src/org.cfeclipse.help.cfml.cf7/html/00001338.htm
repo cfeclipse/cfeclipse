@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Testing for a variable's existence</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001337.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001339.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Testing for a variable's existence</h1>
+<p>Before relying on a variable's existence in an application page, you can test to see if it exists using the ColdFusion <a href="00000520.htm#1106482"><code>IsDefined</code></a> function. A <i>function</i> is a named procedure that takes input and operates on it. For example, the <code>IsDefined</code> function determines whether a variable exists. CFML provides a large number of functions, which are documented in <i>CFML Reference</i>.</p>
+<p>The following code prevents the error in the previous example by checking to see whether the Contractor Form variable exists before using it:</p>
+<pre>&lt;cfif IsDefined(&quot;Form.Contractor&quot;)&gt;<br />&lt;cfoutput&gt;Contractor: #Form.Contractor#&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre><p>The argument passed to the <code>IsDefined</code> function must always be enclosed in double-quotation marks. For more information on the <a href="00000520.htm#1106482"><code>IsDefined</code></a> function, see <i>CFML Reference</i>.</p>
+<p>If you attempt to evaluate a variable that you did not define, ColdFusion cannot process the page and displays an error message. To help diagnose such problems, turn on debugging in the ColdFusion&#160;MX Administrator. The Administrator debugging information shows which variables are being passed to your application pages.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001337.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001339.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001338.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

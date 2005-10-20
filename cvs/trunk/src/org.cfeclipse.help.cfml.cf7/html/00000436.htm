@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CreateUUID</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000435.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000437.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CreateUUID</h1>
+<h4><a name="wp1224563"></a>Description</h4>
+<p>Creates a Universally Unique Identifier (UUID). A UUID is a 35-character string representation of a unique 128-bit integer.</p>
+<h4><a name="wp3562693"></a>Returns</h4>
+<p>A ColdFusion format UUID, in the format <code>xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx</code>, where <code>x</code> is a hexadecimal digit (0-9 or A-F). (The character groups are 8-4-4-16.) </p>
+<h4><a name="wp4738673"></a>Category</h4>
+<p><a href="00000366.htm#3493621">Other functions</a></p>
+<h4><a name="wp1102829"></a>Function syntax</h4>
+<pre><code><strong>CreateUUID</strong></code>()
+</pre><h4><a name="wp1102831"></a>Usage</h4>
+<p>The ColdFusion UUID generation algorithm uses the unique time-of-day value, the IEEE 802 Host ID, and a cryptographically strong random number generator to generate UUIDs that conform to the principles laid out in the draft IEEE RFC &quot;<i>UUIDs and GUIDs.</i>&quot;</p>
+<p>The ColdFusion UUID format is as follows: </p>
+<p><code>xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx</code> (8-4-4-16).</p>
+<p>This does not conform to the Microsoft/DCE standard, which is as follows:</p>
+<p><code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code> (8-4-4-4-12) </p>
+<p>There are UUID test tools and a user-defined function called CreateGUID, which converts CFML UUIDs to UUID/Microsoft GUID format, available on the web at <a href="http://www.cflib.org" target="mm_window">www.cflib.org</a>. </p>
+<p>Use this function to generate a persistent identifier in a distributed environment. To a very high degree of certainty, this function returns a unique value; no other invocation on the same or any other system returns the same value.</p>
+<p>UUIDs are used by distributed computing frameworks, such as DCE/RPC, COM+, and CORBA. In ColdFusion, you can use UUIDs as primary table keys for applications in which data is stored in shared databases. In such cases, using numeric keys can cause primary-key constraint violations during table merges. Using UUIDs, you can eliminate these violations.</p>
+<h4><a name="wp3790674"></a>Example</h4>
+<pre>&lt;h3&gt;CreateUUID Example&lt;/h3&gt;
+&lt;p&gt; This example uses CreateUUID to generate a UUID when you submit the form. <br />You can submit the form more than once. &lt;/p&gt;
+&lt;!--- Checks whether the form was submitted; if so, creates UUID. ---&gt;
+&lt;cfif IsDefined(&quot;Form.CreateUUID&quot;) Is True&gt;
+   &lt;hr&gt;
+   &lt;p&gt;Your new UUID is: &lt;cfoutput&gt;#CreateUUID()#&lt;/cfoutput&gt;&lt;/p&gt;
+&lt;/cfif&gt;
+&lt;form action = &quot;createuuid.cfm&quot;&gt;
+&lt;p&gt;&lt;input type = &quot;Submit&quot; name = &quot;CreateUUID&quot;&gt; &lt;/p&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000435.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000437.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000436.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

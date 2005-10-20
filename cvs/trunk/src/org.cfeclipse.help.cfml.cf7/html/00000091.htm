@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Processing form data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000090.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000092.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Processing form data</h1>
+<p>Virtually all web applications that gather and write information to a database use a form to accomplish that task. Forms let you collect information from a user (using an order form, registration form, and so on) and write that information to a database. Like HTML, there are two independent steps for creating a form in ColdFusion:</p>
+<ol>
+<li>
+   Creating the layout for the form itself.
+</li>
+<li>
+   Writing the code to process the submitted information. 
+</li>
+</ol>
+<p>Every form that you create in ColdFusion consist of two parts: the form page and the action page. These two pages work together to process user input. The <i>form page</i> contains the user interface elements, such as input fields and radio buttons. The <i>action page</i> handles the processing of the form page data. </p>
+<p>When a user submits a form, the form values are stored in form variables and sent to the action page for processing. The following figure shows the relationship between the form page and action page: </p>
+<p><br />
+<img src="images/cfml_bb2.jpg" alt="This image shows the relationship between the form page and action page." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>In order for the form page to find its corresponding action page, the action statement in the form tag must be correct. The form tag includes the information that tells the server where to send the data that it collects. It also tells the server how to send it. To process these instructions to the server, the form tag uses the following syntax:</p>
+<pre>&lt;form action=&quot;actionpagename.cfm&quot; method=&quot;Post&quot;&gt;
+   HTML and CFML form tags
+&lt;/form&gt;
+</pre><p>The first attribute (<code>action</code>) in the form tag lets you specify where to send the data. The page that you specify where to send the data is the name of the action page. The second attribute in the form tag is <code>method</code>. The only method that ColdFusion supports is <code>post</code>. All ColdFusion forms must set the method attribute to <code>post</code>. </p>
+<p>In Part II of this manual, you use ColdFusion form tags to create forms and write collected values to a database. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000090.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000092.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000091.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

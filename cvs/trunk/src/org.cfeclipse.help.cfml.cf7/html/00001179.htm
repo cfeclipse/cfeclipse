@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using ColdFusion security tags and functions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001178.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001180.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using ColdFusion security tags and functions</h1>
+<p>ColdFusion provides the following tags and functions for user security:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Tag or function
+    </th>
+    <th>
+Purpose
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000287.htm#2991147"><code>cflogin</code></a></p>
+    </td>
+    <td>
+<p>A container for user authentication and login code. The body of the tag runs only if the user is not logged in. When using application-based security, you put code in the body of the <code>cflogin</code> tag to check the user-provided ID and password against a data source, LDAP directory, or other repository of login identification. The body of the tag includes a <code>cfloginuser</code> tag (or a ColdFusion page that contains a <code>cfloginuser</code> tag) to establish the authenticated user's identity in ColdFusion.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000288.htm#2873089"><code>cfloginuser</code></a></p>
+    </td>
+    <td>
+<p>Identifies (logs in) a user to ColdFusion. Specifies the user's ID, password, and roles. This tag is typically used inside a <code>cflogin</code> tag. </p>
+<p>The <code>cfloginuser</code> tag requires three attributes, <code>name</code>, <code>password</code>, and <code>roles</code>, and does not have a body. The <code>roles</code> attribute is a comma-delimited list of role identifiers to which the logged-in user belongs. All spaces in the list are treated as part of the role names, so you should not follow commas with spaces.</p>
+<p>While the user is logged-in to ColdFusion, security functions can access the user ID and role information.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000289.htm#2871521"><code>cflogout</code></a></p>
+    </td>
+    <td>
+<p>Logs out the current user. Removes knowledge of the user ID and roles from the server. If you do not use this tag, the user is automatically logged out as described in <a href="00001182.htm#1162916">Logging out users</a>.</p>
+<p>The <code>cflogout</code> tag does not take any attributes, and does not have a body.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000301.htm#2812370"><code>cfNTauthenticate</code></a></p>
+    </td>
+    <td>
+<p>Authenticates a user name and password against the NT domain on which ColdFusion server is running, and optionally retrieves the user's groups.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000263.htm#2852457"><code>cffunction</code></a></p>
+    </td>
+    <td>
+<p>If you include a <code>roles</code> attribute, the function executes only when there is a logged-in user who belongs to one of the specified roles. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000533.htm#4047189"><code>IsUserInRole</code></a></p>
+    </td>
+    <td>
+<p>Returns True if the current user is a member of the specified role.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000469.htm#4046631"><code>GetAuthUser</code></a></p>
+    </td>
+    <td>
+<p>Returns the ID of the currently logged-in user.</p>
+<p>This tag first checks for a login made with <code>cfloginuser</code> tag. If none exists, it checks for a web server login (cgi.remote_user.</p>
+    </td>
+  </tr>
+</table>
+
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001180.htm#1155688">Using the cflogin tag</a>
+</li>
+<li>
+   <a href="00001181.htm#1136115">Getting the user ID and password</a>
+</li>
+<li>
+   <a href="00001182.htm#1162916">Logging out users</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001178.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001180.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001179.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using conditional operators</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001268.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001270.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using conditional operators</h1>
+<p>ColdFusion lets you use the following conditional operators in your SQL statements:</p>
+<ul>
+<li>
+   Test
+</li>
+<li>
+   Null
+</li>
+<li>
+   Comparison
+</li>
+<li>
+   Between
+</li>
+<li>
+   IN
+</li>
+<li>
+   LIKE
+</li>
+</ul>
+<h3><a name="wp1138928"></a>Test conditional</h3>
+<p>This conditional tests whether a Boolean expression is True, False, or Unknown. </p>
+<h4><a name="wp1140075"></a>Syntax</h4>
+<pre>cond_test ::= expression [IS [NOT] {TRUE | FALSE | UNKNOWN} ]
+</pre><h4><a name="wp1139377"></a>Example</h4>
+<pre>SELECT _isValid FROM Chemicals
+WHERE _isValid IS true;
+</pre><h3><a name="wp1182201"></a>Null conditional</h3>
+<p>This conditional tests whether an expression is null.</p>
+<h4><a name="wp1149958"></a>Syntax</h4>
+<pre>null_cond ::= expression IS [NOT] NULL 
+</pre><h4><a name="wp1149983"></a>Example</h4>
+<pre>SELECT bloodVal FROM Standards
+WHERE bloodVal IS NOT null;
+</pre><h3><a name="wp1149985"></a>Comparison conditional</h3>
+<p>This conditional lets you compare an expression against another expression of the same data type (Numeric, String, Date, or Boolean). You can use it to selectively retrieve only the relevant rows of a record set.</p>
+<h4><a name="wp1140098"></a>Syntax</h4>
+<pre>comparison_cond ::= expression [&gt; | &gt;= | &lt;&gt; | != | &lt; | &lt;=] expression 
+</pre><h4><a name="wp1139467"></a>Example</h4>
+<p>The following example uses a comparison conditional to retrieve only those dogs whose IQ is at least 150:</p>
+<pre>SELECT dog_name, dog_IQ
+FROM Dogs
+WHERE dog_IQ &gt;= 150;
+</pre><h3><a name="wp1139690"></a>Between conditional</h3>
+<p>This conditional lets you compare an expression against another expression. You can use it to selectively retrieve only the relevant rows of a record set. Like the comparison conditional, the BETWEEN conditional makes a comparison; however, the between conditional makes a comparison against a range of values. Therefore, its syntax requires two values, which are inclusive, a minimum and a maximum. You must separate these values with the AND keyword.</p>
+<h4><a name="wp1140114"></a>Syntax</h4>
+<pre>between_cond ::= expression [NOT] BETWEEN expression AND expression 
+</pre><h4><a name="wp1139509"></a>Example</h4>
+<p>The following example uses a BETWEEN conditional to retrieve only those dogs whose IQ is between 150 and 165, inclusive:</p>
+<pre>SELECT dog_name, dog_IQ
+FROM Dogs
+WHERE dog_IQ BETWEEN 150 AND 165;
+</pre><h3><a name="wp1138936"></a>IN conditional</h3>
+<p>This conditional lets you specify a comma-delimited list of conditions to match. It is similar in function to the OR conditional. In addition to being more legible when working with long lists, the IN conditional can contain another SELECT statement.</p>
+<h4><a name="wp1140133"></a>Syntax</h4>
+<pre>in_cond ::= expression [NOT] IN (expression_list) 
+</pre><h4><a name="wp1140162"></a>Example</h4>
+<p>The following example uses the IN conditional to retrieve only those dogs who were born at either Ken's Kennels or Barb's Breeders:</p>
+<pre>SELECT dog_name, dog_IQ, Kennel_ID
+FROM Dogs
+WHERE kennel_ID IN (&#39;Kens&#39;,&#39;Barbs&#39;);
+</pre><h3><a name="wp1140519"></a>LIKE conditional</h3>
+<p>This conditional lets you perform wildcard searches, in which you compare your data to search patterns. This strategy differs from other conditionals, such as BETWEEN or IN, because the LIKE conditional compares your data to a value that is partially unknown.</p>
+<h4><a name="wp1140527"></a>Syntax</h4>
+<pre>like_cond ::= left_string_exp [NOT] LIKE right_string_exp [ESCAPE escape_char] 
+</pre><p>The left_string_exp can be either a constant string, or a column reference to a string column. The right_string_exp can be either a column reference to a string column, or a search pattern. A <i>search pattern</i> is a search condition that consists of literal text and at least one wildcard character. A <i>wildcard character</i> is a special character that represents an unknown part of a search pattern, and is interpreted as follows: </p>
+<ul>
+<li>
+   The underscore (_) represents any single character. 
+</li>
+<li>
+   The percent sign (%) represents zero or more characters.
+</li>
+<li>
+   Square brackets ([ ]) represents any character in the range.
+</li>
+<li>
+   Square brackets with a caret [^] represent any character not in the range.
+</li>
+<li>
+   All other characters represent themselves. 
+</li>
+</ul>
+<p><strong>Note: </strong>Earlier versions of ColdFusion do not support bracketed ranges.</p><h4><a name="wp1140186"></a>Examples</h4>
+<p>The following example uses the LIKE conditional to retrieve only those dogs of the breed Terrier, whether the dog is a Boston Terrier, Jack Russell Terrier, Scottish Terrier, and so on:</p>
+<pre>SELECT dog_name, dog_IQ, breed
+FROM Dogs
+WHERE breed LIKE &#39;%Terrier&#39;;
+</pre><p>The following examples are select statements that use bracketed ranges:</p>
+<pre>SELECT lname FROM Suspects WHERE lname LIKE &#39;A[^c]%&#39;;
+SELECT lname FROM Suspects WHERE lname LIKE &#39;[a-m]%&#39;;
+SELECT lname FROM Suspects WHERE lname LIKE &#39;%[]&#39;;
+SELECT lname FROM Suspects WHERE lname LIKE &#39;A[%]%&#39;;
+SELECT lname FROM Suspects WHERE lname LIKE &#39;A[^c-f]%&#39;;
+</pre><h3><a name="wp1151473"></a>Case sensitivity</h3>
+<p>Unlike the rest of ColdFusion, Query of Queries is case-sensitive. However, Query of Queries supports two string functions, <code>UPPER()</code> and <code>LOWER()</code>, which you can use to achieve case-insensitive matching.</p>
+<h4><a name="wp1151547"></a>Examples</h4>
+<p>The following example matches only &#39;Sylvester&#39;:</p>
+<pre>SELECT dog_name
+FROM Dogs
+WHERE dog_name LIKE &#39;Sylvester&#39;;
+</pre><p>The following example is not case-sensitive; it uses the <code>LOWER()</code> function to treat &#39;Sylvester&#39;, &#39;sylvester&#39;, &#39;SYLVESTER&#39;, and so on as all lowercase, and matches them with the all lowercase string, 'sylvester':</p>
+<pre>SELECT dog_name
+FROM Dogs
+WHERE LOWER(dog_name) LIKE &#39;sylvester&#39;;
+</pre><p>If you use a variable on the right side of the LIKE conditional and want to ensure that the comparison is not case-sensitive, use the <code>LCase</code> or <code>UCase</code> function to force the variable text to be all of one case, as in the following example:</p>
+<pre>WHERE LOWER(dog_name) LIKE &#39;#LCase(FORM.SearchString)#&#39;;
+</pre><h3><a name="wp1176455"></a>Escaping wildcards</h3>
+<p>You can specify your own escape character using the conditional ESCAPE clause.</p>
+<h4><a name="wp1150034"></a>Example</h4>
+<p>The following example uses the ESCAPE clause to enable a search for a literal percent sign (%), which ColdFusion normally interprets as a wildcard character:</p>
+<pre>SELECT emp_discount
+FROM Benefits
+WHERE emp_discount LIKE &#39;10\%&#39; 
+ESCAPE &#39;\&#39;;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001268.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001270.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001269.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Multiple selection lists</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001347.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001349.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Multiple selection lists</h1>
+<p>A multiple-selection list box is defined by a <code>select</code> or <code>cfselect</code> tag with a <code>multiple</code> or <code>multipe=&quot;yes&quot;</code> attribute and a <code>size</code> attribute value greater than 1. ColdFusion treats the result when a user selects multiple choices from a multiple-selection list box like the results of selecting multiple check boxes. The data made available to your page from any multiple-selection list box is a comma-delimited list of the entries selected by the user; for example, a list box could contain the four entries: Training, Marketing, HR, and Sales. If the user selects Marketing and Sales, the form field variable value is Marketing,Sales.</p>
+<p>You can use multiple-selection lists to search a database in the same way that you use check boxes. The following sections describe how you can use different types of multiple-selection data values.</p>
+<ul>
+<li>
+   <a href="00001347.htm#1133328">Handling numeric values</a>
+</li>
+<li>
+   <a href="00001347.htm#1133356">Handling string values</a>
+</li>
+</ul>
+<h3><a name="wp1133392"></a>Handling numeric values</h3>
+<p>Suppose you want the user to select departments from a multiple-selection list box. The query retrieves detailed information on the selected department(s), as follows:</p>
+<pre>Select one or more companies to get more information on:
+&lt;cfselect name=&quot;SelectDepts&quot; multiple&gt;
+   &lt;option value=&quot;1&quot;&gt;Training
+   &lt;option value=&quot;2&quot;&gt;Marketing
+   &lt;option value=&quot;3&quot;&gt;HR
+   &lt;option value=&quot;4&quot;&gt;Sales
+&lt;/cfselect&gt;
+</pre><p>If the user selects the Marketing and Sales items, the value of the SelectDepts form field is 2,4. If this parameter is used in the following SQL statement:</p>
+<pre>SELECT *<br />   FROM Departmt<br />   WHERE Dept_ID IN (#form.SelectDepts#)
+</pre><p>The following statement is sent to the database:</p>
+<pre>SELECT *<br />   FROM Departmt<br />   WHERE Dept_ID IN (2,4)
+</pre><h3><a name="wp1133407"></a>Handling string values</h3>
+<p>Suppose you want the user to select departments from a multiple-selection list box. The database search field is a string field. The query retrieves detailed information on the selected department(s), as follows:</p>
+<pre>&lt;cfselect name=&quot;SelectDepts&quot; multiple&gt;
+   &lt;option value=&quot;Training&quot;&gt;Training
+   &lt;option value=&quot;Marketing&quot;&gt;Marketing
+   &lt;option value=&quot;HR&quot;&gt;HR
+   &lt;option value=&quot;Sales&quot;&gt;Sales
+&lt;/cfselect&gt;
+</pre><p>If the user selects the Marketing and Sales items, the SelectDepts form field value is Marketing,Sales.</p>
+<p>Just as you did when using check boxes to search database fields containing string values, use the ColdFusion <a href="00000560.htm#131292"><code>ListQualify</code></a><code> </code>function with multiple-selection list boxes:</p>
+<pre>SELECT * <br />   FROM Departmt<br />   WHERE Dept_Name IN (#ListQualify(Form.SelectDepts,&quot;&#39;&quot;)#) 
+</pre><p>The following statement is sent to the database:</p>
+<pre>SELECT *<br />   FROM Departmt<br />   WHERE Dept_Name IN (&#39;Marketing&#39;,&#39;Sales&#39;)
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001347.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001349.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001348.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

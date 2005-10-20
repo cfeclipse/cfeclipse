@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 1: About the Login Wizard</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000179.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000181.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 1: About the Login Wizard</h1>
+<p>ColdFusion&#160;MX&#160;7 provides Macromedia Dreamweaver MX Extensions to assist you in creating a ColdFusion&#160;MX application that requires login, or user, authentication. The user authentication interface that you create using the Login Wizard can perform simple authentication, authentication against a Microsoft Windows NT domain, or authentication against a Lightweight Directory Access Protocol (LDAP) server.</p>
+<p>In Dreamweaver MX, you open the Login Wizard, which guides you through the user authentication interface creation process. The wizard then creates or modifies the files necessary to add user authentication to your ColdFusion&#160;MX application.</p>
+<h2><a name="wp1167525"></a>Installing the Login Wizard</h2>
+<p>The Login Wizard is installed with ColdFusion&#160;MX&#160;7 when you install the Dreamweaver Extensions. If you did not install the Dreamweaver Extensions when you installed ColdFusion&#160;MX&#160;7, you can install them separately.</p>
+<h4>To install the Dreamweaver Extensions:</h4>
+<ol>
+<li>
+   Ensure that you have installed Dreamweaver 7.0.1 or later.
+</li>
+<li>
+   Make coldfusion/CFIDE/installers the current directory.
+</li>
+<li>
+   Double-click the CFMX7DreamWeaverExtensions.mxp file.
+</li>
+<li>
+   Follow the prompts in the installer.
+</li>
+</ol>
+<h2><a name="wp1167680"></a>Preparing to run the Login Wizard</h2>
+<p>Before using the Login Wizard, you should determine the following information:</p>
+<ul>
+<li>
+   Which of the authentication types you want to use to restrict access to your application. The types include the following:
+<ul><li>LDAP, which grants access to users who have an entry in a known LDAP server.</li>
+<li>NT, which grants access to users who belong to the specified Windows domain.</li>
+<li>Simple authentication, which grants access to users who enter the user name and password that you specify in the Login Wizard.</li>
+</ul></li>
+<li>
+   Whether you want the login page to appear as either of the following:
+<ul><li>Basic authentication, which uses the browser login pop-up window to prompt the user for login credentials.</li>
+<li>ColdFusion Login page, which uses a web page to prompt the user for login credentials.</li>
+</ul></li>
+</ul>
+<p>If the application for which you want to restrict access is deployed on a remote server, you should synchronize the files that constitute the application with those that reside on your local server. You should then use the Login Wizard to modify the files on your local server, and perform testing before redeploying the application on the remote server. You can move the application files to the remote server either by using the Login Wizard, which uses Dreamweaver, or by using Dreamweaver directly.</p>
+<h2><a name="wp1168993"></a>Creating an application that includes user authentication</h2>
+<p>If you are creating an application, you can use the Login Wizard to create the files necessary for user authentication before creating any other application files. The following table lists the files that the Login Wizard creates for each type of authentication and type of login page:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+File
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Application.cfc</p>
+    </td>
+    <td>
+<p>This file is invoked every time any file in or under this directory is called. You can modify this file as appropriate for your application; however, you should not alter the following line of code:</p>
+<p><code>&lt;cfinclude template=&quot;mm_wizard_application_include.cfm&quot;&gt;</code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>index.cfm</p>
+    </td>
+    <td>
+<p>You can replace this file with your own index.cfm file.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>mm_wizard_application_include.cfm</p>
+    </td>
+    <td>
+<p>This file contains the logic to determine if the user is a valid user. If not, the application automatically redirects the user to a login form. This file is an included call from Application.cfc.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>mm_wizard_authenticate.cfc</p>
+    </td>
+    <td>
+<p>This file contains the method required to perform user authentication. It creates a &lt;cfloginuser&gt;, which is the ColdFusion&#160;MX&#160;7 version of an authenticated user.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>mm_wizard_login.cfm</p>
+    </td>
+    <td>
+<p>The ColdFusion Login page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>readme.txt</p>
+    </td>
+    <td>
+<p>Describes the files that the Login Wizard creates.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1168991"></a>Adding user authentication to an existing application</h2>
+<p>You can use the Login Wizard to add user authentication to an existing application. The Login Wizard modifies the existing Application.cfc. If your application uses an Application.cfm file instead of an Application.cfc file, ColdFusion&#160;MX ignores the Application.cfm file when the Login Wizard creates the Application.cfc file in the same directory as the existing Application.cfm file. </p>
+<p>If your application already contains a file named index.cfm, the Login Wizard creates the file mm_wizard_index.cfm. You can use your existing index.cfm file without modifying it.</p>
+<h2><a name="wp1167578"></a>Starting the Login Wizard</h2>
+<p>After you install the Login Wizard, you can open it from Dreamweaver. </p>
+<h4>To start the Login Wizard:</h4>
+<ol>
+<li>
+   Start Dreamweaver.
+</li>
+<li>
+   Ensure that the active site is the one for which you want to restrict access.
+<p><strong>Note: </strong>The currently active site must be a local site. The Remote Info Access and the Test Server Access must be RDS</p></li>
+<li>
+   In Dreamweaver, select Commands &gt; CF Login Wizard.
+</li>
+<li>
+   Click Begin the Wizard.
+</li>
+<li>
+   Do one of the following:
+<ul><li>If the site for which you want to restrict access is the currently active site in Dreamweaver, select the Secure Your Active Site option.</li>
+<li>To restrict access to a different site, select the Secure a Specific Directory option, click Browse, and then select the application for which you want to restrict access.</li>
+</ul></li>
+<li>
+   Click Next.
+</li>
+<li>
+   Depending on the type of authentication you want to use, continue with the instructions in the appropriate section:
+<ul><li><a href="00000181.htm#1168093">Creating a login using simple authentication</a></li>
+<li><a href="00000182.htm#1167903">Creating a login using LDAP authentication</a></li>
+<li><a href="00000183.htm#1167913">Creating a login using Windows NT authentication</a></li>
+</ul></li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000179.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000181.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000180.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

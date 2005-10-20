@@ -1,0 +1,161 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: .7em;
+	margin: 5px 5px 5px 5px;
+	background-color: #FFFFFF;
+}
+
+a:link {
+	color: #005FA9;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #A367B1;
+	text-decoration: none;
+}
+
+a:hover, a:visited:hover  { 
+	background-color: #DDEEFF;
+}
+
+h4 a, .index a {
+	color: #005FA9;
+}
+
+h4 a:visited, .index a:visited {
+	color: #005FA9;
+}
+
+h1 { 
+	font-size: 130%; 
+	margin-top: 0;
+	margin-bottom: .7em;
+}
+
+h2 {   
+	font-size: 120%;
+	margin-top: 1.4em;
+	margin-bottom: .7em;
+}
+
+h3 {  
+	font-size: 110%;
+	margin-top: 1.2em;
+	margin-bottom: .7em; 
+}
+
+h4 { 
+	font-size: 100%; 
+	font-weight: bold;
+	margin-top: 1.2em;
+	margin-bottom: .6em; 
+}
+
+hr { 
+	color: #000000;
+	height: 1px;
+	margin-top: 0em;
+	margin-bottom: 0em; 	
+}
+
+p, table {  
+	margin-top: .6em;
+	margin-bottom: .6em;
+}
+
+table p, table pre {
+	margin: 0px;
+}
+
+table ul, table ul ul, table li {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+ol p, ul p {  
+	margin-top: .7em;
+	margin-bottom: .7em;
+}
+
+ol, ul {
+	font-size: 100%; 
+	margin-top: .5em; 
+	margin-bottom: 0em; 
+	margin-left: .5em;	
+}
+
+ol ul, ul ul {
+	list-style: square; 
+	margin-top: .5em;
+	margin-left: .1em;
+}
+
+ol ol {
+	list-style: lower-alpha; 
+	margin-top: .5em;
+	margin-left: .1em;
+}
+
+li {
+	margin-bottom: .7em; 
+	margin-left: -2em;
+}
+
+pre {  
+	font-family: "Courier New", Courier, mono; 
+	font-size: 100%;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+ol pre, ul pre {  
+	margin-top: .6em;
+	margin-bottom: .6em;
+}
+
+code {  
+	font-family: "Courier New", Courier, mono;
+	font-size: 100%;
+}
+
+table {
+	font-size: 100%;
+	border-spacing: 0px 0px;
+	border-bottom: solid 1px #B6C0C3;
+	border-right: solid 1px #B6C0C3;
+}
+
+th {
+	font-weight: bold;
+	color: #000000;
+	background-color: #DEDEDE;
+	text-align: left;
+	border-top: solid 1px #B6C0C3; 
+	border-left: solid 1px #B6C0C3; 
+}
+
+td {
+	border-top: solid 1px #B6C0C3; 
+	border-left: solid 1px #B6C0C3; 
+}
+
+table th, table td {
+	padding: 0.4em 10px;
+	vertical-align: top;
+}
+
+img {
+	margin: 0px 5px 0px 0px;
+	border: none;
+}
+
+.code {  
+	white-space: nowrap;
+	font-family: "Courier New", Courier, mono; 
+	font-size: 100%;
+}
+
+div.procedure {
+	display:none;
+}

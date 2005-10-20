@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Sending e-mail to multiple recipients</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001598.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001600.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Sending e-mail to multiple recipients</h1>
+<p>In addition to simply using a comma-delimited list in the <code>to</code> attribute of the <a href="00000297.htm#2355015"><code>cfmail</code></a> tag, you can send e-mail to multiple recipients by using the <code>query</code> attribute of the <code>cfmail</code> tag. The following examples show how you can send the same message to multiple recipients and how you can a customize each message for the recipient.</p>
+<h3><a name="wp1119795"></a>Sending a simple message to multiple recipients</h3>
+<p>In the following example, a query (BetaTesters) retrieves a list of people who are beta testing ColdFusion. This query then notifies each beta tester that a new release is available. The contents of the <code>cfmail</code> tag body are not dynamic. What is dynamic is the list of e-mail addresses to which the message is sent. Using the variable <code>#TesterEMail#,</code> which refers to the TesterEmail column in the Betas table, in the <code>to</code> attribute, enables the dynamic list:</p>
+<pre>&lt;cfquery name=&quot;BetaTesters&quot; datasource=&quot;myDSN&quot;&gt;
+   SELECT * FROM BETAS
+&lt;/cfquery&gt;
+
+&lt;cfmail query=&quot;BetaTesters&quot;
+   from=&quot;beta@MyCompany.com&quot;
+   to=&quot;#BetaTesters.TesterEMail#&quot;
+   subject=&quot;Widget Beta Four Available&quot;&gt;
+
+To all Widget beta testers:
+
+Widget Beta Four is now available 
+for downloading from the MyCompany site.
+The URL for the download is:
+
+http://beta.mycompany.com
+
+Regards,
+Widget Technical Support
+beta@MyCompany.com
+
+&lt;/cfmail&gt;
+</pre><h3><a name="wp1096215"></a>Customizing e-mail for multiple recipients</h3>
+<p>In the following example, a query (GetCustomers) retrieves the contact information for a list of customers. The query then sends an e-mail to each customer to verify that the contact information is still valid:</p>
+<pre>&lt;cfquery name=&quot;GetCustomers&quot; datasource=&quot;myDSN&quot;&gt;
+   SELECT * FROM Customers
+&lt;/cfquery&gt;
+
+&lt;cfmail query=&quot;GetCustomers&quot;
+   from=&quot;service@MyCompany.com&quot;
+   to=&quot;#GetCustomers.EMail#&quot;
+   subject=&quot;Contact Info Verification&quot;&gt;
+
+Dear #GetCustomers.FirstName# -
+
+We&#39;d like to verify that our customer
+database has the most up-to-date contact
+information for your firm. Our current
+information is as follows:
+
+Company Name: #GetCustomers.Company#
+Contact: #GetCustomers.FirstName# #GetCustomers.LastName#
+
+Address:
+   #GetCustomers.Address1#
+   #GetCustomers.Address2#
+   #GetCustomers.City#, #GetCustomers.State# #GetCustomers.Zip#
+
+Phone: #GetCustomers.Phone#
+Fax: #GetCustomers.Fax#
+Home Page: #GetCustomers.HomePageURL#
+
+Please let us know if any of the above
+information has changed, or if we need to
+get in touch with someone else in your
+organization regarding this request.
+
+Thanks,
+Customer Service
+service@MyCompany.com
+
+&lt;/cfmail&gt;
+</pre><h4><a name="wp1114898"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery name=&quot;GetCustomers&quot;<br />datasource=&quot;myDSN&quot;&gt;
+   SELECT * FROM Customers
+&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Retrieves all data from the Customers table into a query named GetCustomers.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfmail query=&quot;GetCustomers&quot;
+   from=&quot;service@MyCompany.com&quot;
+   to=&quot;#GetCustomers.EMail#&quot;
+   subject=&quot;Contact Info<br />Verification&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Uses the <code>to</code> attribute of <code>cfmail</code>, the <code>#GetCustomers.Email#</code> query column causes one message to be sent to the address listed in each row of the query. Therefore, the mail body does not use a <code>cfoutput</code> tag. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>Dear #GetCustomers.FirstName# 
+...
+Company Name: #GetCustomers.Company#
+Contact: #GetCustomers.FirstName#<br />#GetCustomers.LastName#
+
+Address:
+   #GetCustomers.Address1#
+   #GetCustomers.Address2#
+   #GetCustomers.City#,<br />#GetCustomers.State#<br />#GetCustomers.Zip#
+
+Phone: #GetCustomers.Phone#
+Fax: #GetCustomers.Fax#
+Home Page: #GetCustomers.HomePageURL#
+</pre>    </td>
+    <td>
+<p>Uses other query columns (<code>#GetCustomers.FirstName#</code>, <code>#GetCustomers.LastName#</code>, and so on) within the <code>cfmail</code> section to customize the contents of the message for each recipient.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001598.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001600.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001599.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

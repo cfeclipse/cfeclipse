@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Outputting query data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001254.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001256.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Outputting query data</h1>
+<p>After you define a query, you can use the <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag with the <code>query</code> attribute to output data from the record set. When you use the <code>query</code> attribute, keep the following in mind:</p>
+<ul>
+<li>
+   ColdFusion loops through all the code contained within the <code>cfoutput</code> block, once for each row in the record set returned from the database.
+</li>
+<li>
+   You must reference specific column names within the <code>cfoutput</code> block to output the data to the page.
+</li>
+<li>
+   You can place text, CFML tags, and HTML tags inside or surrounding the <code>cfoutput</code> block to format the data on the page.
+</li>
+<li>
+   Although you do not have to specify the query name when you refer to a query column, you should use the query name as a prefix for best practices reasons. For example, if you specify the Emplist query in your <code>cfoutput</code> tag, you can refer to the Firstname column in the Emplist query as Firstname. However, using the query name as a prefix--Emplist.Firstname-- is preferred, and is in the following procedure.
+</li>
+</ul>
+<p>The <code>cfoutput</code> tag accepts a variety of optional attributes but, ordinarily, you use the <code>query</code> attribute to define the name of an existing query. </p>
+<h4>To output query data on your page:</h4>
+<ol>
+<li>
+   Edit emplist.cfm so that it appears as follows:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Employee List&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Employee List&lt;/h1&gt;
+&lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT FirstName, LastName, Salary, Contract
+	FROM Employee
+&lt;/cfquery&gt;
+&lt;cfoutput query=&quot;EmpList&quot;&gt;
+#EmpList.FirstName#, #EmpList.LastName#, #EmpList.Salary#, 
+#EmpList.Contract#&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file and view it in your web browser:
+<p>A list of employees appears in the browser, with each line displaying one row of data.</p>
+<p><strong>Note: </strong>You might need to refresh your browser to see your changes.</p></li>
+</ol>
+<p>You created a ColdFusion application page that retrieves and displays data from a database. At present, the output is raw and needs formatting. For more information, see <a href="00001330.htm#1096836">Introduction to Retrieving and Formatting Data</a>.</p>
+<h4><a name="wp1096509"></a>Reviewing the code</h4>
+<p>The results of the query appear on the page. The following table describes the highlighted code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput query=&quot;EmpList&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Displays information retrieved in the EmpList query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>#EmpList.FirstName#, #EmpList.LastName#,<br />#EmpList.Salary#, #EmpList.Contract#
+</pre>    </td>
+    <td>
+<p>Displays the value of the <code>FirstName</code>, <code>LastName</code>, <code>Salary</code>, and <code>Contract</code> fields of each record, separated by commas and spaces.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Inserts a line break (go to the next line) after each record.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Ends the <code>cfoutput</code> block.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1096533"></a>Query output notes and considerations</h2>
+<p>When outputting query results, keep the following guidelines in mind:</p>
+<ul>
+<li>
+   A <a href="00000316.htm#1102316"><code>cfquery</code></a> must retrieve data before the <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag can display its results. Although you can include both on the same page, Macromedia recommends that you put queries in ColdFusion components and output the results on a separate page. For more information, see <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a>.
+</li>
+<li>
+   To output data from all the records of a query, specify the query name by using the <code>query</code> attribute in the <code>cfoutput</code> tag.
+</li>
+<li>
+   Columns must exist and be retrieved to the application to output their values. 
+</li>
+<li>
+   Inside a <code>cfoutput</code> block that uses a <code>cfquery</code> attribute, you can prefix the query variables with the name of the query; for example, <code>Emplist.FirstName</code>.
+</li>
+<li>
+   As with other attributes, surround the <code>query</code> attribute value with double-quotation marks (&quot;). 
+</li>
+<li>
+   As with any variables that you reference for output, surround column names with number signs (#) to tell ColdFusion to output the column's current values.
+</li>
+<li>
+   Add a <code>&lt;br&gt; </code>tag to the end of the variable references so that ColdFusion starts a new line for each row that the query returns. 
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001254.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001256.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001255.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

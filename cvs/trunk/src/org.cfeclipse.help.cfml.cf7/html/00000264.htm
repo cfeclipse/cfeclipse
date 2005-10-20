@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfgraph</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000263.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000265.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfgraph</h1>
+<h4><a name="wp2031303"></a>Description</h4>
+<p>This tag is deprecated. Use the <a href="00000226.htm#2619630">cfchart</a>, <a href="00000227.htm#2748541">cfchartdata</a>, and <a href="00000228.htm#2741830">cfchartseries</a> tags instead.</p>
+<p>Displays data graphically.</p>
+<h4><a name="wp2902434"></a>History</h4>
+<p>ColdFusion&#160;MX: Deprecated this tag. It works differently than it did in ColdFusion 5, and it might not work in later releases.</p>
+<p>The incompatibilities between the ColdFusion&#160;MX implementation and earlier implementations of this tag are as follows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+cfgraph tag attribute
+    </th>
+    <th>
+ColdFusion&#160;MX functionality
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Title</p>
+    </td>
+    <td>
+<p>Ignored.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Titlefont</p>
+    </td>
+    <td>
+<p>Ignored.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Barspacing</p>
+    </td>
+    <td>
+<p>Ignored.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Bordercolor</p>
+    </td>
+    <td>
+<p>Color used for border, gridlines, and text displays.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Colorlist</p>
+    </td>
+    <td>
+<p>List of colors to use for each data point for bar, pyramid, area, horizontalbar, cone, cylinder, step, and pie charts.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Valuelabelfont</p>
+    </td>
+    <td>
+<p>Sets value label text font. If the <code>Valuelabelfont</code>, <code>Itemlabelfont</code>, and <code>Legendfont</code> values differ, ColdFusion uses the last value that you specify in the tag.</p>
+<p>Arial is not supported; it is mapped to <code>Dialog</code>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Itemlabelfont</p>
+    </td>
+    <td>
+<p>Sets item label text font. If the <code>Valuelabelfont</code>, <code>Itemlabelfont</code>, and <code>Legendfont</code> values differ, ColdFusion uses the last value that you specify in the tag.</p>
+<p>Arial is not supported; it is mapped to <code>Dialog</code>. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Legendfont</p>
+    </td>
+    <td>
+<p>Sets legend text font. If the <code>Valuelabelfont</code>, <code>Itemlabelfont</code>, and <code>Legendfont</code> values differ, ColdFusion uses the last value that you specify in the tag</p>
+<p>Arial is not supported; it is mapped to <code>Dialog</code>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ShowLegend</p>
+    </td>
+    <td>
+<ul>
+<li>
+   above, below, left, right: these options cause the legend to display, but have no effect on its location. 
+</li>
+<li>
+   none: prevents display of a legend.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Valuelabelsize</p>
+    </td>
+    <td>
+<p>Sets value label text size. If the <code>Valuelabelsize</code> and <code>Itemlabelsize</code> values differ, ColdFusion uses the last value that you specify in the tag.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Itemlabelsize</p>
+    </td>
+    <td>
+<p>Sets item label text size. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Itemlabelorientation</p>
+    </td>
+    <td>
+<p>Ignored. ColdFusion calculates best orientation based on label and graph size.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Borderwidth</p>
+    </td>
+    <td>
+<ul>
+<li>
+   a nonzero number: default-width border, regardless of number value.
+</li>
+<li>
+   0: no border.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Depth</p>
+    </td>
+    <td>
+<ul>
+<li>
+   0: displays graph with two-dimensional appearance.
+</li>
+<li>
+   any other value: displays graph with threedimensional appearance.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Linewidth</p>
+    </td>
+    <td>
+<p>Ignored.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Showvaluelabel</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: displays values on mouse-click.
+</li>
+<li>
+   no: suppresses value displays.
+</li>
+<li>
+   rollover: displays values on mouse-over.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Valuelocation</p>
+    </td>
+    <td>
+<p>Ignored.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>url</p>
+    </td>
+    <td>
+<p>URL of page to open if any item in the graph is clicked. </p>
+<p>The following variables may be used within the URL; they are substituted with real values before the URL is accessed:</p>
+<ul>
+<li>
+   &quot;$value$&quot;: selected row/column value or an empty string.
+</li>
+<li>
+   &quot;$itemlabel$&quot;: selected item (column) value or an empty string.
+</li>
+<li>
+   &quot;$serieslabel$&quot;: selected series (row) value or an empty string.
+</li>
+<li>
+   &quot;javascript:...&quot;: executes client side scripts. 
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Urlcolumn</p>
+    </td>
+    <td>
+<p>Ignored. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Type=&quot;HorizontalBar&quot;</p>
+    </td>
+    <td>
+<p>The (0,0) coordinate is located at the lower-left.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ScaleFrom </p>
+    </td>
+    <td>
+<p>If the smallest value in the data is less than scaleFrom or the largest value in the data is greater than scaleTo, the respective data value is used as the minimum or maximum on the Y scale. Therefore, regardless of the scaleFrom or scaleTo value, all data values display.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000263.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000265.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000264.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

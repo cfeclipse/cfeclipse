@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSTimeFormat</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000581.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000583.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSTimeFormat</h1>
+<h4><a name="wp133586"></a>Description</h4>
+<p>Formats the time part of a date/time string into a string in a locale-specific format.</p>
+<h4><a name="wp133588"></a>Returns</h4>
+<p>A string representing the time value.</p>
+<h4><a name="wp133590"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000359.htm#1099219">Display and formatting functions</a>, <a href="00000363.htm#1099325">International functions</a></p>
+<h4><a name="wp133601"></a>Function syntax</h4>
+<pre><code><strong>LSTimeFormat</strong></code>(<i>time</i> [, <i>mask</i> ])
+</pre><h4><a name="wp133603"></a>See also</h4>
+<p><a href="00000579.htm#133322"><code>LSParseDateTime</code></a>, <a href="00000571.htm#132367"><code>LSDateFormat</code></a>, <a href="00000651.htm#138423"><code>TimeFormat</code></a>; <a href="00001202.htm#1219089">Locales</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp133614"></a>History</h4>
+<p>ColdFusion MX&#160;6.1: Added the mask character L or l to represent milliseconds.</p>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Changed formatting behavior: this function might return different formatting than in earlier releases. This function uses Java standard locale formatting rules on all platforms. 
+</li>
+<li>
+   Added support for the following <code><i>mask</i></code> parameter options: <code>short</code>, <code>medium</code>, <code>long</code>, and <code>full</code>. 
+</li>
+</ul>
+<h4><a name="wp133625"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<ul>
+<li>
+   A date/time value 
+</li>
+<li>
+   A string that is convertible to a time value
+</li>
+</ul>
+<p>A date/time object is in the range 100 AD-9999 AD.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>mask</p>
+    </td>
+    <td>
+<p>Masking characters that determine the format:</p>
+<ul>
+<li>
+   h: Hours; no leading zero for single-digit hours (12-hour clock)
+</li>
+<li>
+   hh: Hours; leading zero for single-digit hours. (12-hour clock)
+</li>
+<li>
+   H: Hours; no leading zero for single-digit hours (24-hour clock)
+</li>
+<li>
+   HH: Hours; leading zero for single-digit hours (24-hour clock)
+</li>
+<li>
+   m: Minutes; no leading zero for single-digit minutes
+</li>
+<li>
+   mm: Minutes; leading zero for single-digit minutes
+</li>
+<li>
+   s: Seconds; no leading zero for single-digit seconds 
+</li>
+<li>
+   ss: Seconds; leading zero for single-digit seconds 
+</li>
+<li>
+   l: Milliseconds
+</li>
+<li>
+   t: One-character time marker string, such as A or P. 
+</li>
+<li>
+   tt: Multiple-character time marker string, such as AM or PM
+</li>
+</ul>
+<p>The following conform to Java locale-specific time encoding standards. Their exact formats depend on the locale:</p>
+<ul>
+<li>
+   short: includes hours, minutes; may include AM or PM
+</li>
+<li>
+   medium: includes hours, minutes; may include AM or PM
+</li>
+<li>
+   long: medium plus time zone
+</li>
+<li>
+   full: long, may also include an hour designator
+</li>
+</ul>
+<p>The default value is short.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp133659"></a>Usage</h4>
+<p>This function uses Java standard locale formatting rules on all platforms. </p>
+<p>When passing date/time value as a string, enclose it in quotation marks. Otherwise, it is interpreted as a number representation of a date/time object.</p>
+<p>To calculate a difference between time zones, use the <a href="00000501.htm#1105446"><code>GetTimeZoneInfo</code></a> function. </p>
+<p>To set the default display format of date, time, number, and currency values, use the <a href="00000624.htm#136340"><code>SetLocale</code></a> function. </p>
+<p>If no seconds value is passed to this function, and the mask value is <code>s</code>, the default output seconds format is one zero; for example, <code>lstimeformat(6:39, &quot;h:m:s&quot;)</code> returns <code>6:39:0</code>. If the mask value is <code>ss</code>, it returns <code>6:39:00.</code></p>
+<h4><a name="wp133671"></a>Example</h4>
+<pre>&lt;h3&gt;LSTimeFormat Example&lt;/h3&gt;
+
+&lt;p&gt;LSTimeFormat returns a time value using the locale convention. 
+
+&lt;!--- loop through a list of locales and show time values ---&gt;
+&lt;cfloop LIST = &quot;#Server.Coldfusion.SupportedLocales#&quot;
+index = &quot;locale&quot; delimiters = &quot;,&quot;&gt;
+   &lt;cfset oldlocale = SetLocale(locale)&gt;
+
+   &lt;cfoutput&gt;&lt;p&gt;&lt;B&gt;&lt;I&gt;#locale#&lt;/I&gt;&lt;/B&gt;&lt;br&gt;
+   #LSTimeFormat(Now())#&lt;br&gt;
+   #LSTimeFormat(Now(), 'hh:mm:ss')#&lt;br&gt;   
+   #LSTimeFormat(Now(), 'hh:mm:sst')#&lt;br&gt;   
+   #LSTimeFormat(Now(), 'hh:mm:sstt')#&lt;br&gt;   
+   #LSTimeFormat(Now(), 'HH:mm:ss')#&lt;br&gt;   
+      &lt;hr noshade&gt;
+   &lt;/cfoutput&gt;
+
+&lt;/cfloop&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000581.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000583.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000582.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

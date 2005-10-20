@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating complex forms with accordion and tab navigator containers</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001394.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001396.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating complex forms with accordion and tab navigator containers</h1>
+<p>The <code>accordion</code> and <code>tabnavigator</code> attributes of the <code>cfformgroup</code> tag let you construct complex forms that would otherwise require multiple HTML pages. With accordions and tab navigator containers, users can switch among multiple entry areas without submitting intermediate forms. All data that they enter is available until they submit the form, and all form elements load at one time.</p>
+<p>An accordion container puts each logical form page on an accordion pleat. Each pleat has a label bar; when the user clicks a bar, the current page collapses and the selected page expands to fill the available form space. The following figure shows a three-pleat accordion, open to the middle pleat, Preferences:</p>
+<p><br />
+<img src="images/flashfa4.jpg" alt="A three-pleat accordion form, showing the middle pleat, Preferences" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>A tab navigator container puts each logical form page on a tabbed frame. When the user clicks a tab, the selected page replaces the previous page. The figure in <a href="00001389.htm#131065">About Flash forms</a> shows a tab navigator container.</p>
+<p>The following example generates a two-tab tab navigator container that gets contact information and preferences. You can change it to an accordion container by changing the <code>type</code> attribute of the first <code>cfformgroup</code> tag from <code>accordion</code> to <code>tabnavigator.</code> To prevent the accordion from having scroll bars, you must also increase the <code>cfform</code> tag <code>height</code> attribute to 310 and the <code>tabnavigator</code> tag <code>height</code> attribute to 260.</p>
+<pre>&lt;cfif IsDefined(&quot;Form.fieldnames&quot;)&gt;
+   &lt;cfdump var=&quot;#form#&quot; label=&quot;form scope&quot;&gt;
+   &lt;br&gt;&lt;br&gt;
+&lt;/cfif&gt;
+&lt;br&gt;
+&lt;cfform name=&quot;myform&quot; height=&quot;285&quot; width=&quot;480&quot; format=&quot;Flash&quot; skin=&quot;HaloBlue&quot;&gt;
+   &lt;cfformgroup type=&quot;tabnavigator&quot; height=&quot;240&quot; style=&quot;marginTop: 0&quot;&gt;
+      &lt;cfformgroup type=&quot;page&quot; label=&quot;Contact Information&quot;&gt;
+         &lt;!--- Align the first and last name fields horizontally. ---&gt;
+         &lt;cfformgroup type=&quot;horizontal&quot; label=&quot;Your Name&quot;&gt;
+            &lt;cfinput type=&quot;text&quot; required=&quot;Yes&quot; name=&quot;firstName&quot; label=&quot;First&quot;
+               value=&quot;&quot; width=&quot;100&quot;/&gt;
+            &lt;cfinput type=&quot;text&quot; required=&quot;Yes&quot; name=&quot;lastName&quot; label=&quot;Last&quot;
+               value=&quot;&quot; width=&quot;100&quot;/&gt;
+         &lt;/cfformgroup&gt;
+         &lt;cfformitem type=&quot;hrule&quot; /&gt;
+         &lt;cfformitem type=&quot;HTML&quot;&gt;&lt;textformat indent=&quot;95&quot;&gt;&lt;font size=&quot;-2&quot;&gt;
+            Flash fills this field in automatically. 
+            You can replace the text.
+            &lt;/font&gt;&lt;/textformat&gt;
+         &lt;/cfformitem&gt;
+         &lt;!--- The bind attribute gets the field contents from the firstName
+               and lastName fields as they get filled in. ---&gt;
+         &lt;cfinput type=&quot;text&quot; name=&quot;email&quot; label=&quot;email&quot;
+            bind=&quot;{firstName.text}.{lastName.text}@mm.com&quot;&gt;
+         &lt;cfformitem type=&quot;spacer&quot; height=&quot;3&quot; /&gt;
+         &lt;cfformitem type=&quot;hrule&quot; /&gt;
+         &lt;cfformitem type=&quot;spacer&quot; height=&quot;3&quot; /&gt;
+      
+         &lt;cfinput type=&quot;text&quot; name=&quot;phone&quot; validate=&quot;telephone&quot; required=&quot;no&quot;
+            label=&quot;Phone Number&quot;&gt;
+         &lt;cfinput type=&quot;datefield&quot; name=&quot;mydate1&quot; label=&quot;Requested date&quot;&gt;
+      &lt;/cfformgroup&gt;
+
+      &lt;cfformgroup type=&quot;page&quot; label=&quot;Preferences&quot; style=&quot;marginTop: 0&quot;&gt;
+         &lt;cfformitem type=&quot;html&quot; height=&quot;20&quot;&gt;
+            &lt;b&gt;Tell us your preferences&lt;/b&gt;
+         &lt;/cfformitem&gt;
+         &lt;!--- Put the pet selectors to the left of the fruit selectors. ---&gt;
+         &lt;cfformgroup type=&quot;hdividedbox&quot; &gt;
+         &lt;!--- Group the pet selector box contents, aligned vertically. ---&gt;
+            &lt;cfformgroup type=&quot;VBox&quot;  height=&quot;130&quot;&gt;
+               &lt;cfformitem type=&quot;text&quot; height=&quot;20&quot;&gt;
+                  Pets:
+               &lt;/cfformitem&gt;
+               &lt;cfformgroup type=&quot;vertical&quot; height=&quot;80&quot;&gt;
+                  &lt;cfinput type=&quot;Radio&quot; name=&quot;pets&quot; label=&quot;Dogs&quot; value=&quot;Dogs&quot;
+                     checked&gt;
+                  &lt;cfinput type=&quot;Radio&quot; name=&quot;pets&quot; label=&quot;Cats&quot; value=&quot;Cats&quot;&gt;
+               &lt;/cfformgroup&gt;
+            &lt;/cfformgroup&gt;
+         
+         &lt;!--- Group the fruit selector box contents, aligned vertically. ---&gt;
+            &lt;cfformgroup type=&quot;VBox&quot; height=&quot;130&quot;&gt;
+               &lt;cfformitem type=&quot;text&quot; height=&quot;20&quot;&gt;
+                  Fruits:
+               &lt;/cfformitem&gt;
+               &lt;cfformgroup type=&quot;tile&quot; height=&quot;80&quot; width=&quot;190&quot; label=&quot;Tile box&quot;&gt;
+                  &lt;--- Flash requires unique names for all controls. ---&gt;
+                  &lt;cfinput type = &quot;Checkbox&quot; name=&quot;chk1&quot; Label=&quot;Apples&quot;
+                     value=&quot;Apples&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk2&quot; Label=&quot;Bananas&quot;
+                     value=&quot;Bananas&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk3&quot; Label=&quot;Pears&quot;
+                     value=&quot;Pears&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk4&quot; Label=&quot;Oranges&quot;
+                     value=&quot;Oranges&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk5&quot; Label=&quot;Grapes&quot;
+                     value=&quot;Grapes&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk6&quot; Label=&quot;Kumquats&quot;
+                     value=&quot;Cumquats&quot;&gt;
+               &lt;/cfformgroup&gt;
+            &lt;/cfformgroup&gt;
+         &lt;/cfformgroup&gt;
+      &lt;/cfformgroup&gt;
+   &lt;/cfformgroup&gt;
+
+   &lt;cfformgroup type=&quot;horizontal&quot;&gt;
+      &lt;cfinput type = &quot;submit&quot; name=&quot;submit&quot; width=&quot;100&quot; value = &quot;Show Results&quot;&gt;
+      &lt;cfinput type = &quot;reset&quot; name=&quot;reset&quot; width=&quot;100&quot; value = &quot;Reset Fields&quot;&gt;
+   &lt;/cfformgroup&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001394.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001396.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001395.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

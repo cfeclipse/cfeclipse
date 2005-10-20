@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Gateway development classes</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001690.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001692.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Gateway development classes</h1>
+<p>ColdFusion provides two classes that you can use as building blocks to develop your event gateway classes. Each corresponds to a different development methodology:</p>
+<ul>
+<li>
+   The coldfusion.eventgateway.GenericGateway class is an abstract class from which you can derive your gateway class.
+</li>
+<li>
+   The EmptyGateway class in the gateway\src\examples directory is a template gateway that you can complete to create your gateway class.
+</li>
+</ul>
+<h3><a name="wp135872"></a>The GenericGateway class</h3>
+<p>ColdFusion&#160;MX includes a coldfusion.eventgateway.GenericGateway abstract class that implements many of the methods of ColdFusion Gateway interface and provides some convenience methods for use in your gateway class. </p>
+<p>You can derive your gateway class from this class, which handles the basic mechanics of implementing a gateway, such as the <code>getGatewayID</code> and <code>SetCFCListeners</code> methods. Your derived class must implement at least the following methods: </p>
+<ul>
+<li>
+   <code>startGateway</code> (not <code>start</code>)
+</li>
+<li>
+   <code>stopGateway</code> (not <code>stop</code>)
+</li>
+<li>
+   <code>outgoingMessage</code>
+</li>
+</ul>
+<p>Your derived gateway class also must implement the following:</p>
+<ul>
+<li>
+   If you support a configuration file, a constructor that takes a configuration file, and configuration loading routines.
+</li>
+<li>
+   If you use a gatewayHelper class, the <code>getHelper</code> method.
+</li>
+<li>
+   If the event source status can change asynchronously from the gateway, the <code>getStatus</code> method.
+</li>
+</ul>
+<p>The example JMS gateway is derived from the generic gateway class. The gateway class JavaDocs in the gateway\docs directory provide documentation for this class. (The <i>CFML Reference</i> does not document this class.)</p>
+<h3><a name="wp135907"></a>The EmptyGateway class</h3>
+<p>The gateway\src\examples\EmptyGateway.java file contains an event gateway template that you can use as a skeleton for creating your own event gateway. (The gateway directory is in the <i>cf_root</i> directory in the server configuration and the <i>cf_root</i>\WEB-INF-cfusion directory on J2EE configurations.) This file contains minimal versions of all methods in the coldfusion.eventgateway.Gateway interface. It defines a skeleton listener thread and initializes commonly used Gateway properties. The EmptyGateway source code includes comments that describe the additional information that you must provide to complete an event gateway class. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001690.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001692.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001691.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

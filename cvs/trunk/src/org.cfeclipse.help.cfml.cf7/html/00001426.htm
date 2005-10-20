@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Charting a query of queries</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001425.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001427.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Charting a query of queries</h1>
+<p>In addition to charting the results of a query, you can also chart the results of a queries of queries. For more information about using query of queries, see <a href="00001263.htm#1181595">Using Query of Queries</a>. Query of queries provides significant power in generating the data for the chart. For example, you can use aggregating functions such as SUM, AVG, and GROUP BY to create a query of queries with statistical data based on a raw database query. For more information, see <a href="00001263.htm#1181595">Using Query of Queries</a>.</p>
+<p>You can also take advantage of the ability to dynamically reference and modify query data. For example, you can loop through the entries in a query column and reformat the data to show whole dollar values.</p>
+<p>The example in the following procedure analyzes the salary data in the cfdocexamples database using a query of queries, and displays the data as a bar chart.</p>
+<h4>To chart a query of queries:</h4>
+<ol>
+<li>
+   Create a new ColdFusion page with the following content:
+<pre>
+&lt;!-- Get the raw data from the database. --&gt;
+&lt;cfquery name=&quot;GetSalaries&quot; datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT Departmt.Dept_Name, 
+		Employee.Salary
+	FROM Departmt, Employee
+	WHERE Departmt.Dept_ID = Employee.Dept_ID
+&lt;/cfquery&gt;
+
+&lt;!-- Generate a query with statistical data for each department. --&gt;
+&lt;cfquery dbtype = &quot;query&quot; name = &quot;DeptSalaries&quot;&gt;
+	SELECT 
+		Dept_Name,
+		AVG(Salary) AS AvgByDept
+	FROM GetSalaries
+	GROUP BY Dept_Name
+&lt;/cfquery&gt;
+
+&lt;!--- Reformat the generated numbers to show only thousands. ---&gt;
+&lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;#DeptSalaries.RecordCount#&quot;&gt;
+	&lt;cfset DeptSalaries.AvgByDept[i]=Round(DeptSalaries.AvgByDept[i]/
+1000)*1000&gt;
+&lt;/cfloop&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Employee Salary Analysis&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h1&gt;Employee Salary Analysis&lt;/h1&gt; 
+
+&lt;!--- Bar chart, from DeptSalaries Query of Queries. ---&gt;
+&lt;cfchart 
+		xAxisTitle=&quot;Department&quot;
+		yAxisTitle=&quot;Salary Average&quot;
+		font=&quot;Arial&quot;
+		gridlines=6
+		showXGridlines=&quot;yes&quot;
+		showYGridlines=&quot;yes&quot;
+		showborder=&quot;yes&quot;
+		show3d=&quot;yes&quot; 
+	&gt; 
+
+	&lt;cfchartseries 
+		type=&quot;bar&quot; 
+		query=&quot;DeptSalaries&quot; 
+		valueColumn=&quot;AvgByDept&quot; 
+		itemColumn=&quot;Dept_Name&quot;
+		seriesColor=&quot;olive&quot; 
+		paintStyle=&quot;plain&quot;
+	/&gt;
+&lt;/cfchart&gt;
+
+&lt;br&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as chartdata.cfm in the myapps directory under the web root directory. For example, the directory path in Windows might be C:\Inetpub\wwwroot\myapps. 
+</li>
+<li>
+   Return to your browser and enter the following URL to view the chartdata.cfm page:
+<p>http://localhost/myapps/chartdata.cfm</p>
+<p>The following figure appears:</p>
+<p><br />
+<img src="images/chart_o2.jpg" alt="Three-dimentional bar chart showing the results of a query of queries" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+</ol>
+<p><strong>Note: </strong>If a query contains two rows with the same value for the <code>itemColumn</code> attribute, ColdFusion graphs the last row in the query for that value. For the preceding example, if the query contains two rows for the Sales department, ColdFusion graphs the value for the last row in the query for Sales. </p><h4><a name="wp1129744"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery name=&quot;GetSalaries&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   SELECT Departmt.Dept_Name, 
+      Employee.Salary
+   FROM Departmt, Employee
+   WHERE Departmt.Dept_ID =<br />      Employee.Dept_ID
+&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Query the cfdocexamples database to get the Dept_Name and Salary for each employee. Because the Dept_Name is in the Departmt table and the Salary is in the Employee table, you need a table join in the WHERE clause. You can use the raw results of this query elsewhere on the page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfquery dbtype = &quot;query&quot; 
+      name = &quot;DeptSalaries&quot;&gt;
+   SELECT 
+      Dept_Name,
+      AVG(Salary) AS AvgByDept
+   FROM GetSalaries
+   GROUP BY Dept_Name
+&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Generate a new query from the GetSalaries query. Use the AVG aggregating function to get statistical data on the employees. Use the GROUP BY statement to ensure that there is only one row for each department.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfloop index=&quot;i&quot; from=&quot;1&quot;<br />      to=&quot;#DeptSalaries.RecordCount#&quot;&gt;
+   &lt;cfset DeptSalaries.AvgByDept[i]=<br />   Round(DeptSalaries.AvgByDept[i]<br />   /1000)*1000&gt;
+&lt;/cfloop&gt;
+</pre>    </td>
+    <td>
+<p>Loop through all the rows in the DeptSalaries query and round the salary data to the nearest thousand. This loop uses the RecordCount query variable to get the number of rows, and directly changes the contents of the query object.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfchart 
+      xAxisTitle=&quot;Department&quot;
+      yAxisTitle=&quot;Salary Average&quot;
+      font=&quot;Arial&quot;
+      gridlines=6
+      showXGridlines=&quot;yes&quot;
+      showYGridlines=&quot;yes&quot;
+      showborder=&quot;yes&quot;
+      show3d=&quot;yes&quot; &gt; 
+   &lt;cfchartseries 
+      type=&quot;bar&quot; 
+      query=&quot;DeptSalaries&quot; 
+      valueColumn=&quot;AvgByDept&quot; 
+      itemColumn=&quot;Dept_Name&quot;
+      seriesColor=&quot;olive&quot; 
+      paintStyle=&quot;plain&quot;/&gt;
+&lt;/cfchart&gt;
+</pre>    </td>
+    <td>
+<p>Create a bar chart using the data from the AvgByDept column of the DeptSalaries query. Label the bars with the department names.</p>
+    </td>
+  </tr>
+</table>
+
+<p>You can also rewrite this example to use the <a href="00000309.htm#1101659"><code>cfoutput</code></a> and <a href="00000227.htm#2748541"><code>cfchartdata</code></a> tags within the <a href="00000228.htm#2741830"><code>cfchartseries</code></a> tag, instead of using the loop, to round the salary data, as the following code shows: </p>
+<pre>&lt;cfchartseries 
+   type=&quot;bar&quot; 
+   seriesColor=&quot;olive&quot; 
+   paintStyle=&quot;plain&quot;&gt;
+
+   &lt;cfoutput query=&quot;deptSalaries&quot;&gt;
+      &lt;cfchartdata item=&quot;#dept_name#&quot; value=#Round(AvgByDept/1000)*1000#&gt;
+   &lt;/cfoutput&gt;
+
+&lt;/cfchartseries&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001425.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001427.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001426.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

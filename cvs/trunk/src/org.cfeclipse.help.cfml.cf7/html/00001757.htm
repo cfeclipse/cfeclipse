@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Multihoming</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001756.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001758.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Multihoming</h1>
+<p>You typically use the Web Server Configuration Tool to configure a connection between the web server and ColdFusion server running on the same computer. However, you can use the web server connector to route requests to multiple virtual sites to a single ColdFusion server. This is known as <i>multihoming</i>.</p>
+<p>In a multihomed environment, you have multiple virtual hosts (also known as virtual sites) connected to a single ColdFusion server. You might use these virtual hosts for separate applications, such as Human Resources (HR), payroll, and marketing, or for separate users in a hosting environment.</p>
+<p><strong>Note: </strong>You use web-server-specific methods to create separate virtual websites for each use.</p><p>Multihoming configuration tasks include the following:</p>
+<p><strong>Enabling access to the </strong>ColdFusion&#160;MX<strong> Administrator</strong>&#160;If any of the applications under a virtual host need to access the ColdFusion&#160;MX Administrator, you must create a web server mapping (Alias directive in Apache) for /CFIDE that points to the original CFIDE directory. Alternatively, you can copy the entire CFIDE directory to the virtual website.</p>
+<p><strong>Tip: </strong>You can also configure the web server using the command-line Web Server Configuration Tool <code>-cfwebroot</code> option, which allows access to the CFIDE directory under the specified web root.</p><p><strong>Enabling access to the cfform.js file</strong>&#160;If you do not create a web server mapping for /CFIDE, and any of the applications under a virtual host use the <code>cfform</code> tag, you must enable the virtual host to find the JavaScript files under the CFIDE/scripts directory. To enable access to the these scripts, use one of the following options:</p>
+<ul>
+<li>
+   Copy the <i>original_web_root</i>/CFIDE/scripts directory to a CFIDE/scripts directory on your virtual host.
+</li>
+<li>
+   Modify all <code>cfform</code> tags to use the <code>scriptsrc</code> attribute to specify the location of the cfform.js file.
+</li>
+</ul>
+<p><strong>Disabling the cacheRealPath attribute</strong>&#160;To ensure that ColdFusion&#160;MX always returns pages from the correct server, ensure that Cache Web Server Paths is disabled in t'he Caching page of the ColdFusion&#160;MX Administrator. (When you use the multiserver configuration, set the <code>cacheRealPath</code> attribute to <code>false</code> for the ProxyService in the <i>jrun_root</i>/servers/<i>servername</i>/SERVER-INF/jrun.xml file.)</p>
+<p>The procedures you perform to enable multihoming differ for each web server:</p>
+<ul>
+<li>
+   <a href="00001757.htm#107539">IIS</a>
+</li>
+<li>
+   <a href="00001757.htm#107547">Apache</a>
+</li>
+<li>
+   <a href="00001757.htm#107549">Sun ONE Web Server, iPlanet, and Netscape</a>
+</li>
+</ul>
+<h2><a name="wp107539"></a>IIS</h2>
+<p>When you use IIS, you run the IIS Administrator to create additional websites and run the Web Server Configuration Tool. You store ColdFusion pages under the web root of each virtual website.</p>
+<h4>To connect multiple virtual sites on IIS to a single ColdFusion server:</h4>
+<ol>
+<li>
+   Use the IIS Administrator to create virtual websites, as necessary. The web root directory should enable read, write, and execute access. For more information, see your IIS documentation.
+</li>
+<li>
+   Configure DNS for each virtual website, as described in your IIS documentation.
+</li>
+<li>
+   Test each virtual website to ensure that HTML pages are served correctly.
+</li>
+<li>
+   Run the Web Server Configuration Tool, as follows:
+<ul><li><strong>GUI</strong>&#160;Specify IIS for the Web Server and All from the IIS Web Site drop-down list box, and select the Configure Web Server for ColdFusion&#160;MX Applications check box.</li>
+<li><strong>Command line</strong>&#160;Specify the <code>-site 0</code> and <code>-cfwebroot</code> options, as the following server configuration example shows:</li>
+<pre>
+cf_root/runtime/bin/wsconfig.exe -ws iis -site 0 
+-cfwebroot cf_root/wwwroot -coldfusion -v
+</pre>
+</ul></li>
+<li>
+   Test each virtual website to ensure that ColdFusion pages are served correctly.
+</li>
+</ol>
+<h2><a name="wp107547"></a>Apache</h2>
+<p>When you use Apache, you modify the <i>apache_root</i>/conf/httpd.conf file to create virtual hosts and run the Web Server Configuration Tool. You store ColdFusion pages under the web root of each virtual website.</p>
+<h4>To connect multiple Apache virtual hosts on a web server to a single ColdFusion server:</h4>
+<ol>
+<li>
+   Configure DNS for each virtual website, as described in your web server documentation.
+</li>
+<li>
+   Open the <i>apache_root</i>/conf/httpd.conf file in a text editor and create virtual hosts, as necessary. For more information, see your Apache documentation. For example:
+<pre>
+...
+NameVirtualHost 127.0.0.1
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@yoursite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs&quot;
+    ServerName SERVER02
+    ErrorLog logs/error.log
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@yoursite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs2&quot;
+    ServerName mystore
+    ErrorLog logs/error-store.log
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@yoursite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs3&quot;
+    ServerName myemployee
+    ErrorLog logs/error-employee.log
+&lt;/VirtualHost&gt;
+...
+</pre>
+</li>
+<li>
+   Test each virtual host to ensure that HTML pages are served correctly.
+</li>
+<li>
+   Run the Web Server Configuration Tool, as follows:
+<ul><li><strong>GUI</strong>&#160;Specify Apache for the Web Server, specify the directory that contains the httpd.conf file, and select the Configure Web Server for ColdFusion&#160;MX Applications check box.</li>
+<li><strong>Command line</strong>&#160;Specify <code>-ws</code> <code>apache</code> and the directory that contains the httpd.conf file, as the following example shows:</li>
+<pre>
+cf_root/runtime/bin/wsconfig.exe -ws apache 
+-dir &quot;c:\program&#160;files\apache&#160;group\apache2\conf&quot; 
+-cfwebroot cf_root/wwwroot -coldfusion -v
+<p>For additional UNIX command-line examples, see <a href="00001755.htm#121511">Using the command-line interface</a>.</p>
+</pre>
+<p>The Web Server Configuration Tool updates the httpd.conf file. For a sample, see <a href="00001757.htm#107547">Apache</a>.</p>
+</ul></li>
+<li>
+   Restart Apache. You store ColdFusion files for each virtual host in the directory specified by the DocumentRoot directive.
+</li>
+<li>
+   Test each virtual host to ensure that ColdFusion pages are served correctly.
+</li>
+</ol>
+<h2><a name="wp107549"></a>Sun ONE Web Server, iPlanet, and Netscape</h2>
+<p>When you use Sun ONE Web Server version 6, you use the Server Administrator to create virtual servers and run the Web Server Configuration Tool. You store ColdFusion pages under the web root of each virtual server.</p>
+<p><strong>Note: </strong>For earlier versions of Sun ONE/iPlanet and Netscape Enterprise Server (NES), you must create separate server instances for each site and run the Web Server Configuration Tool once for each site.</p><h4>To connect multiple Sun ONE Web Server virtual hosts to a single ColdFusion server:</h4>
+<ol>
+<li>
+   Using the Sun ONE Web Server Administrator, create virtual web servers for use by ColdFusion&#160;MX. For more information, see your Sun ONE Web Server documentation.
+</li>
+<li>
+   Configure DNS for each virtual website, as described in your web server documentation.
+</li>
+<li>
+   Test each virtual server to ensure that HTML pages are served correctly.
+</li>
+<li>
+   Run the Web Server Configuration Tool, as follows:
+<ul><li><strong>GUI</strong>&#160;Specify Netscape Enterprise Server/Sun ONE for the web server, specify the directory that contains the obj.conf and magnus.conf files, and select the Configure Web Server for ColdFusion&#160;MX Applications check box.</li>
+<li><strong>Command line</strong>&#160;Specify <code>-ws</code> <code>sunone</code> and the directory that contains the obj.conf file, as the following example shows:</li>
+<pre>
+cf_root/runtime/bin/wsconfig -ws sunone -dir [path to config] 
+-cfwebroot cf_root/wwwroot -coldfusion -v
+</pre>
+</ul></li>
+<li>
+   Test each virtual server to ensure that ColdFusion pages are served correctly.
+</li>
+</ol>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001756.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001758.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001757.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

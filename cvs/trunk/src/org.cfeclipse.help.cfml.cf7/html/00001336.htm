@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using form data to generate SQL statements</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001335.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001337.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using form data to generate SQL statements</h1>
+<p>As described in previous chapters, you can retrieve a record for every employee in a database table by composing a query like the following:</p>
+<pre>&lt;cfquery name=&quot;GetEmployees&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   SELECT  FirstName, LastName, Contract
+   FROM   Employee
+&lt;/cfquery&gt;
+</pre><p>When you want to return information about employees that matches user search criteria, you use the SQL WHERE clause with a SQL SELECT statement. When the WHERE clause is processed, it filters the query data based on the results of the comparison.</p>
+<p>For example, to return employee data for only employees with the last name of Smith, you build a query that looks like the following:</p>
+<pre>&lt;cfquery name=&quot;GetEmployees&quot; datasource=&quot;cfdocexamples&quot;&gt; 
+   SELECT FirstName, LastName, Contract
+   FROM    Employee
+<code><strong>   WHERE  LastName = &#39;Smith&#39;</strong></code>
+&lt;/cfquery&gt;
+</pre><p>However, instead of putting the LastName directly in the SQL WHERE clause, you can use the text that the user entered in the form for comparison:</p>
+<pre>&lt;cfquery name=&quot;GetEmployees&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   SELECT FirstName, LastName, Salary
+   FROM Employee
+   <strong>WHERE LastName=&lt;cfqueryparam value=&quot;#Form.LastName#&quot; <br />CFSQLType=&quot;CF_SQL_VARCHAR&quot;&gt;</strong> 
+&lt;/cfquery&gt;
+</pre><p>For security, this example encapsulates the form variable within the <a href="00000317.htm#1102474"><code>cfqueryparam</code></a> tag to ensure that the user passed a valid string value for the LastName. For more information on using the <code>cfqueryparam</code> tag with queries and on dynamic SQL, see <a href="00001252.htm#1127430">Accessing and Retrieving Data</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001335.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001337.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001336.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

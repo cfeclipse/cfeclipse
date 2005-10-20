@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The ColdFusion gateway directory</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001633.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001635.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The ColdFusion gateway directory</h1>
+<p>The ColdFusion MX installation includes a <i>cf_root</i>\WEB-INF\cfusion\gateway directory on J2EE configurations, or <i>cf_root</i>\gateway directory on server configurations. This directory contains all the code for ColdFusion example event gateways and example event gateway applications, and example configuration files for use by standard ColdFusion event gateways. You do not have to put your event gateways, event gateway application CFCs, or event gateway configuration files in this directory, but ColdFusion is configured to find event gateways and CFCs that you put there.</p>
+<p>The following table lists the event gateway directory subdirectories, their purpose, and their initial contents. For more information on using the example event gateways and applications, see <a href="00001648.htm#132552">Using the example event gateways and gateway applications</a>.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Directory
+    </th>
+    <th>
+Purpose
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>cfc</p>
+    </td>
+    <td>
+<p>Event gateway application CFCs. ColdFusion is installed with an Administrator Mapping between /gateway and this cfc directory.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfc/examples</p>
+    </td>
+    <td>
+<p> Code for the ColdFusion sample applications.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>config</p>
+    </td>
+    <td>
+<p>Configuration files for all ColdFusion event gateways, including standard ColdFusion&#160;MX event gateways, such as SMS, and example event gateways, such as the directory watcher event gateway.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>doc/api</p>
+    </td>
+    <td>
+<p>Javadoc for the Gateway, and GatewayHelper interfaces, and the CFEvent, GatewayServices, and GenericGateway classes that gateway developer use when writing gateways. This documentation is a subset of the information in the <a href="00000704.htm#1200651">Gateway development interfaces and classes</a> section in <i>CFML Reference</i>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>lib</p>
+    </td>
+    <td>
+<p>Executable code for example and user-developed event gateway classes. The ColdFusion&#160;MX class loader includes this directory on its classpath and includes any JAR files that are in that directory on the class path. The examples.jar file in this directory contains the class files for the DirectoryWatcherGateway, EmptyGateway, and SocketGateway classes.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>src/examples</p>
+    </td>
+    <td>
+<p>Source code for the example event gateway classes that Macromedia provides. Includes the EmptyGateway.java file and the following subdirectories: </p>
+<ul>
+<li>
+   socket: Socket gateway source files
+</li>
+<li>
+   watcher: directory watcher gateway source files
+</li>
+<li>
+   JMS: JMS gateway source files
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001633.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001635.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001634.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

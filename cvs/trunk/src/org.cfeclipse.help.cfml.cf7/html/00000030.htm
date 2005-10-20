@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>J2EE application servers</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000029.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000031.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>J2EE application servers</h1>
+<p>One of the main advantages of ColdFusion&#160;MX&#160;7 is that it can be installed as an integrated server (the server configuration) or deployed as a Java application on a standards-based J2EE application server (multiserver configuration and J2EE configuration). In addition to greater flexibility, this allows your ColdFusion applications to leverage features of the J2EE architecture, such as support for multiple application instances and multiple-instance clustering.</p>
+<p>You can deploy ColdFusion&#160;MX&#160;7 in the J2EE configuration using a J2EE application server, such as JRun 4 or IBM WebSphere. When you use the J2EE EAR/WAR configuration, you can use an existing J2EE application server; the installation wizard creates a web application archive (WAR) or enterprise application archive (EAR) file, which you then deploy using the tools provided by your chosen application server.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000030.htm#111836">Choosing EAR or WAR deployment</a>
+</li>
+<li>
+   <a href="00000030.htm#114577">Context root</a>
+</li>
+<li>
+   <a href="00000030.htm#114699">Multiple instances</a>
+</li>
+<li>
+   <a href="00000031.htm#116991">Platforms</a>
+</li>
+</ul>
+<h2><a name="wp111836"></a>Choosing EAR or WAR deployment</h2>
+<p>In the J2EE environment, you deploy applications in one of the following formats:</p>
+<p><strong>Web application archive file</strong>&#160;Contains the ColdFusion&#160;MX&#160;7 application. A web application archive (also called a WAR) uses a directory structure that contains a WEB-INF/web.xml deployment descriptor, which defines the servlets and context parameters it uses. J2EE application servers can deploy web applications in this directory structures as-is or in compressed WAR files that contain these directory structures. However, ColdFusion&#160;MX&#160;7 must run from an expanded directory structure:</p>
+<pre>cfusion (cfusion.war)
+&#160;&#160;WEB-INF
+&#160;&#160;&#160;&#160;web.xml
+&#160;&#160;CFIDE
+&#160;&#160;cfdocs
+CFIDE (rds.war)
+&#160;&#160;WEB-INF
+&#160;&#160;&#160;&#160;web.xml
+</pre><p>The cfusion.war file contains the ColdFusion&#160;MX&#160;7 web application. The rds.war file is a web application that redirects requests from /CFIDE to /<i>context-root</i>/CFIDE. It forwards requests to the ColdFusion&#160;MX Administrator when ColdFusion&#160;MX&#160;7 uses a context root other than a forward slash (/). </p>
+<p><strong>Enterprise application archive file</strong>&#160;Contains the ColdFusion&#160;MX&#160;7 and RDS redirector web applications. An enterprise application archive (also called an EAR) uses a directory structure that contains a META-INF/application.xml deployment descriptor, which defines the web applications that it contains. J2EE application servers can deploy enterprise applications in these directory structures as-is or in compressed EAR files that contain these directory structures. However, ColdFusion&#160;MX&#160;7 must run from an expanded directory structure:</p>
+<pre>cfusion-ear
+&#160;&#160;META-INF
+&#160;&#160;&#160;&#160;application.xml
+&#160;&#160;cfusion-war
+&#160;&#160;&#160;&#160;WEB-INF
+&#160;&#160;&#160;&#160;&#160;&#160;web.xml
+&#160;&#160;&#160;&#160;CFIDE
+&#160;&#160;&#160;&#160;cfdocs
+&#160;&#160;rds.war
+&#160;&#160;&#160;&#160;WEB-INF
+&#160;&#160;&#160;&#160;&#160;&#160;web.xml
+</pre><p>If your J2EE application server supports enterprise applications, you should install and deploy the EAR file. For more information, see <a href="00000033.htm#117629">Installing an EAR file or WAR files</a>.</p>
+<h2><a name="wp114577"></a>Context root</h2>
+<p>Because the J2EE environment supports multiple, isolated web applications running in a server instance, J2EE web applications running in a server are each rooted at a unique base URL, called a <i>context root</i> (or context path). The J2EE application server uses this initial portion of the URL (that is, the portion immediately following http://<i>hostname</i>) to determine which web application services an incoming request.</p>
+<p>For example, if you are running ColdFusion&#160;MX&#160;7 with a context root of <i>cfmx</i>, you display the ColdFusion&#160;MX Administrator using the URL http://localhost/<i>cfmx</i>/CFIDE/administrator/index.cfm.</p>
+<p>Most J2EE application servers allow one application in each server instance to use a forward slash (/) for the context root. Setting the context root to / for the ColdFusion&#160;MX&#160;7 application is especially useful when serving CFM pages from the web server, because it supports the functionality most similar to previous ColdFusion versions. In addition, the RDS web application is not required if you use a context root of /.</p>
+<p>When you deploy the ColdFusion&#160;MX&#160;7 EAR file, it uses the context root that you specified when you ran the installation wizard, which copied your specification to the <code>context-root</code> element of the META-INF/application.xml file. When you deploy ColdFusion&#160;MX&#160;7 as a WAR file, you use application-server-specific functionality to define the context root.</p>
+<p><strong>Note: </strong>Each web application running in a server instance must have a unique context root. The JRun default web application uses / for a context root, so if you want to use / for the ColdFusion&#160;MX&#160;7 context root when you deploy on JRun, you must either delete the default-war application or change the default-war context root by editing the default-ear/META-INF/application.xml file.</p><h2><a name="wp114699"></a>Multiple instances</h2>
+<p>When you use the J2EE configuration, you can define multiple server instances on a single computer, each running ColdFusion&#160;MX&#160;7. Running multiple instances of ColdFusion&#160;MX&#160;7 has the following advantages:</p>
+<p><strong>Application isolation</strong>&#160;You deploy an independent application to each server instance. Each server instance has separate settings, and because each server instance runs in its own instance of the JVM, problems encountered by one application have no effect on other applications.</p>
+<p><strong>Load balancing and failover</strong>&#160;You deploy the same application to each server instance and add the instances to a cluster. The web server connector optimizes performance and stability by automatically balancing load and by switching requests to another server instance when a server instance stops running.<strong> </strong></p>
+<p>For more information on configuring ColdFusion&#160;MX&#160;7 on multiple server instances, including detailed information for configuring multiple server instances when running on JRun 4, see <i>Configuring and Administering ColdFusion&#160;MX</i>. The multiserver configuration provides the instance manager to make configuring ColdFusion&#160;MX&#160;7 on multiple servers easier; however, you can also configure ColdFusion&#160;MX&#160;7 on multiple servers manually by deploying EAR files and WAR files on multiple server instances.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000029.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000031.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000030.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

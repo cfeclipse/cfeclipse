@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using XML and ColdFusion queries</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001517.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001519.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using XML and ColdFusion queries</h1>
+<p>You can convert XML documents into ColdFusion query objects and manipulate them using queries of queries. This technique does not require the use of XPath and provides a method of searching XML documents and extracting data that is natural to ColdFusion programmers.</p>
+<h3><a name="wp1172929"></a>Converting XML to a ColdFusion query</h3>
+<p>The following example reads an XML document, converts it to a query object, and then performs a query of queries on the object to extract selected data:</p>
+<pre>&lt;!--- Read the file and convert it to an XML document object ---&gt; 
+&lt;cffile action=&quot;read&quot; file=&quot;C:\CFusionMX7\wwwroot\myexamples\employees.xml&quot; variable=&quot;myxml&quot;&gt;
+&lt;cfset mydoc = XmlParse(myxml)&gt;
+
+&lt;!--- get an array of employees ---&gt;
+&lt;cfset emp = mydoc.employee.XmlChildren&gt;
+&lt;cfset size = ArrayLen(emp)&gt;
+
+&lt;cfoutput&gt;
+Number of employees = #size#
+&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;br&gt;
+&lt;!--- create a query object with the employee data ---&gt;
+&lt;cfset myquery = QueryNew(&quot;fname, lname&quot;) &gt;
+&lt;cfset temp = QueryAddRow(myquery, #size#)&gt;
+&lt;cfloop index=&quot;i&quot; from = &quot;1&quot; to = #size#&gt;
+   &lt;cfset temp = QuerySetCell(myquery, &quot;fname&quot;, 
+      #mydoc.employee.name[i].first.XmlText#, #i#)&gt;
+   &lt;cfset temp = QuerySetCell(myquery, &quot;lname&quot;, 
+      #mydoc.employee.name[i].last.XmlText#, #i#)&gt;
+&lt;/cfloop&gt;
+
+&lt;!--- Dump the query object ---&gt;
+Contents of the myquery Query object: &lt;br&gt;
+&lt;cfdump var=#myquery#&gt;
+&lt;br&gt;&lt;br&gt;
+
+&lt;!--- Select entries with the last name starting with A and dump the result ---&gt;
+&lt;cfquery name=&quot;ImqTest&quot; dbType=&quot;query&quot;&gt;
+   SELECT lname, fname 
+   FROM myquery 
+   WHERE lname LIKE &#39;A%&#39;
+&lt;/cfquery&gt;
+&lt;cfdump var=#imqtest#&gt;
+</pre><h3><a name="wp1132550"></a>Converting a query object to XML</h3>
+<p>The following example shows how to convert a query object to XML. It uses <code>cfquery</code> to get a list of employees from the cfdocexamples database and saves the information as an XML document.</p>
+<pre>&lt;!--- Query the database and get the names in the employee table ---&gt;
+&lt;cfquery name=&quot;myQuery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   SELECT FirstName, LastName
+   FROM employee 
+&lt;/cfquery&gt;
+
+&lt;!--- Create an XML document object containing the data ---&gt;
+&lt;cfxml variable=&quot;mydoc&quot;&gt;
+   &lt;employee&gt;
+      &lt;cfoutput query=&quot;myQuery&quot;&gt;
+          &lt;name&gt;
+            &lt;first&gt;#FirstName#&lt;/first&gt;
+            &lt;last&gt;#LastName#&lt;/last&gt;
+         &lt;/name&gt;
+      &lt;/cfoutput&gt;
+   &lt;/employee&gt;
+&lt;/cfxml&gt;
+
+&lt;!--- dump the resulting XML document object ---&gt;
+&lt;cfdump var=#mydoc#&gt;
+&lt;!--- Write the XML to a file ---&gt;
+&lt;cffile action=&quot;write&quot; file=&quot;C:\inetpub\wwwroot\xml\employee.xml&quot;
+      output=#toString(mydoc)#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001517.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001519.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001518.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

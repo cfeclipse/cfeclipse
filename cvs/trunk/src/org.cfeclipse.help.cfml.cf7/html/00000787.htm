@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXException class</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000786.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000788.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXException class</h1>
+<p>An abstract class that represents an exception thrown during processing of a ColdFusion Extension (CFX) procedure.</p>
+<p>Exceptions of this type can be thrown by <a href="00000795.htm#1098201"><code>CCFXRequest class</code></a>, <a href="00000788.htm#1098035"><code>CCFXQuery class</code></a>, and <a href="00000810.htm#1098541"><code>CCFXStringSet class</code></a>. Your ColdFusion Extension code must be written to handle exceptions of this type. For more information, see <a href="00000807.htm#1098490"><code>CCFXRequest::ThrowException</code></a> and <a href="00000804.htm#1098440"><code>CCFXRequest::ReThrowException</code></a>.</p>
+<h2><a name="wp1130350"></a>Class methods</h2>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>virtual LPCSTR GetError()
+</pre>    </td>
+    <td>
+<p>The <a href="00000787.htm#1130362">CCFXException::GetError</a> function returns a general error message.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>virtual LPCSTR GetDiagnostics()
+</pre>    </td>
+    <td>
+<p>The <a href="00000787.htm#1098023">CCFXException::GetDiagnostics</a> function returns detailed error information.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1130362"></a>CCFXException::GetError</h2>
+<h4><a name="wp1098021"></a>Description</h4>
+<p>Provides basic user output for exceptions that occur during processing.</p>
+<h2><a name="wp1098023"></a>CCFXException::GetDiagnostics</h2>
+<h4><a name="wp1102710"></a>Description</h4>
+<p>Provides detailed user output for exception that occur during processing.</p>
+<h4><a name="wp1098025"></a>Example</h4>
+<p>This code block shows how GetError and GetDiagnostics work with ThrowException and ReThrowException.</p>
+<pre>// Write output back to the user here...<br />pRequest-&gt;Write( &quot;Hello from CFX_FOO2!&quot; ) ;<br />pRequest-&gt;ThrowException(&quot;User Error&quot;, &quot;You goof&#39;d...&quot;);<br /><br />// Output optional debug info<br />if ( pRequest-&gt;Debug() )<br />{<br />               pRequest-&gt;WriteDebug( &quot;Debug info...&quot; ) ;<br />}<br /><br />// Catch ColdFusion exceptions &amp; re-raise them<br />catch( CCFXException* e )<br />{<br />               // This is how you would pull the error information<br />               LPCTSTR strError = e-&gt;GetError();<br />               LPCTSTR strDiagnostic = e-&gt;GetDiagnostics();<br /><br />               pRequest-&gt;ReThrowException( e ) ;<br />}<br /><br />// Catch ALL other exceptions and throw them as<br />// ColdFusion exceptions (DO NOT REMOVE! --<br />// this prevents the server from crashing in<br />// case of an unexpected exception)<br />catch( ... )<br />{<br />               pRequest-&gt;ThrowException(<br />               &quot;Error occurred in tag CFX_FOO2&quot;,<br />               &quot;Unexpected error occurred while processing tag.&quot; ) ;
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000786.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000788.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000787.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

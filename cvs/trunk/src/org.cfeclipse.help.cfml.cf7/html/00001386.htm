@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Validating form input and handling errors with JavaScript</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001385.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001387.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Validating form input and handling errors with JavaScript</h1>
+<p>ColdFusion MX lets you write your own validation routines in JavaScript, and lets you create JavaScript error handlers.</p>
+<h2><a name="wp1153704"></a>Validating input with JavaScript</h2>
+<p>In addition to native ColdFusion input validation using the <code>validate</code> attribute of the <a href="00000279.htm#1100379"><code>cfinput</code></a> and <a href="00000341.htm#2773598"><code>cftextarea</code></a> tags, the following tags support the <code>onValidate</code> attribute, which lets you specify a JavaScript function to handle your <code>cfform</code> input validation:</p>
+<ul>
+<li>
+   <a href="00000266.htm#1836171"><code>cfgrid</code></a>
+</li>
+<li>
+   <a href="00000279.htm#1100379"><code>cfinput</code></a> 
+</li>
+<li>
+   <a href="00000337.htm#2612389"><code>cfslider</code></a>
+</li>
+<li>
+   <a href="00000341.htm#2773598"><code>cftextarea</code></a> 
+</li>
+<li>
+   <a href="00000347.htm#1104271"><code>cftree</code></a>
+</li>
+</ul>
+<p>ColdFusion passes the following arguments to the JavaScript function that you specify in the <code>onValidate</code> attribute:</p>
+<ul>
+<li>
+   The form JavaScript DOM object
+</li>
+<li>
+   The <code>name</code> attribute of the form element
+</li>
+<li>
+   The value of the control to validate
+</li>
+</ul>
+<p>For example, if you write the <code>cfinput</code> tag as the following:</p>
+<pre>&lt;cfinput type=&quot;text&quot;
+   ...
+&lt;!--- Do not include () in JavaScript function name. ---&gt;
+   onvalidate=&quot;handleValidation&quot;
+   ...
+&gt;
+</pre><p>You define the JavaScript function as the following:</p>
+<pre>&lt;script&gt;
+&lt;!--
+function handleValidation(form_object, input_object, object_value) {
+...
+}
+//--&gt;
+&lt;/script&gt;
+</pre><h2><a name="wp1147417"></a>Example: validating a password</h2>
+<p>The following example validates a password. The password must have at least one of each of the following: an uppercase letter, a lowercase letter, and a number. It must be between 8 and 12 characters long. If the password is invalid, the browser displays a message box. If the password is valid, it redisplays the page with a brief success message.</p>
+<h4>To use JavaScript to validate form data:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;JavaScript Validation&lt;/title&gt;
+
+&lt;!--- JavaScript used for validation. ---&gt;
+&lt;script&gt;
+&lt;!--
+	// Regular expressions used for pattern matching.
+	var anUpperCase = /[A-Z]/;
+	var aLowerCase = /[a-z]/;
+	var aNumber = /[0-9]/;
+	/* The function specified by the onValidate attribute.
+		Tests for existence of at least one uppercase, lowercase, and numeric
+		character, and checks the length for a minimum.
+		A maximum length test is not needed because of the cfinput maxlength
+		attribute. */
+	function testpasswd(form, ctrl, value) {
+		if (value.length &lt; 8 || value.search(anUpperCase) == -1 || 
+			value.search (anUpperCase) == -1 || value.search (aNumber) == -1) 
+		{
+			return (false);
+		} 
+		else
+		{
+			return (true);
+		} 
+	}
+//--&gt;
+&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h2&gt;JavaScript validation test&lt;/h2&gt;
+&lt;!--- Form is submitted only if the password is valid. ---&gt;
+&lt;cfif IsDefined(&quot;Form.passwd1&quot;)&gt;
+	&lt;p&gt;Your Password if valid.&lt;/p&gt;
+&lt;/cfif&gt;
+&lt;p&gt;Please enter your new password:&lt;/p&gt;
+
+&lt;cfform name=&quot;UpdateForm&quot; preservedata=&quot;Yes&quot; &gt;
+	&lt;!--- The onValidate attribute specifies the JavaScript validation
+			 function. The message attribute is the message that appears
+			 if the validation function returns False. ---&gt;
+	&lt;cfinput type=&quot;password&quot; name=&quot;passwd1&quot; required=&quot;YES&quot;
+		onValidate=&quot;testpasswd&quot;
+		message=&quot;Your password must have 8-12 characters and include uppercase 
+and lowercase letters and at least one number.&quot;
+		size=&quot;13&quot; maxlength=&quot;12&quot;&gt;
+
+&lt;input type=&quot;Submit&quot; value=&quot; Update... &quot;&gt;
+&lt;/cfform&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as validjs.cfm.
+</li>
+<li>
+   View the validjs.cfm page in your browser.
+</li>
+</ol>
+<h2><a name="wp1153720"></a>Handling failed validation</h2>
+<p>The <code>onError</code> attribute lets you specify a JavaScript function to execute if an onValidate, onBlur or onSubmit validation fails. For example, if you use the <code>onValidate</code> attribute to specify a JavaScript function to handle input validation, you can also use the <code>onError</code> attribute to specify a JavaScript function to handle a failed validation (that is, when <code>onValidate</code> returns a False value). If you use the <code>onValidate</code> attribute, you can also use the <code>onError</code> attribute to specify a JavaScript function that handles the validation errors. The following <a href="00000256.htm#2433198"><code>cfform</code></a> tags support the <code>onerror</code> attribute:</p>
+<ul>
+<li>
+   <a href="00000266.htm#1836171"><code>cfgrid</code></a> 
+</li>
+<li>
+   <a href="00000279.htm#1100379"><code>cfinput</code></a> 
+</li>
+<li>
+   <a href="00000331.htm#2553073"><code>cfselect</code></a> 
+</li>
+<li>
+   <a href="00000337.htm#2612389"><code>cfslider</code></a> 
+</li>
+<li>
+   <a href="00000342.htm#2810302"><code>cftextinput</code></a> 
+</li>
+<li>
+   <a href="00000347.htm#1104271"><code>cftree</code></a> 
+</li>
+</ul>
+<p>ColdFusion passes the following JavaScript objects to the function in the <code>onerror</code> attribute:</p>
+<ul>
+<li>
+   The JavaScript form object 
+</li>
+<li>
+   The <code>name</code> attribute of the form element
+</li>
+<li>
+   The value that failed validation
+</li>
+<li>
+   The error message text specified by the CFML tag's <code>message</code> attribute
+</li>
+</ul>
+<p>The following example shows a form that uses an <code>onError</code> attribute to tell ColdFusion to call a showErrorMessage JavaScript function that uses the <code>alert</code> method to display an error message. The function assembles the message from the invalid value and the contents of the <code>cfinput</code> tag's <code>message</code> attribute. </p>
+<pre>&lt;!--- The JavaScript function to handle errors.
+       Puts a message, including the field name and value, in an alert box. ---&gt;
+&lt;script&gt;
+   &lt;!--
+   function showErrorMessage(form, ctrl, value, message) {
+      alert(&quot;The value &quot; + value +&quot; of the &quot; + ctrl + &quot; field &quot; + message);
+   }
+   //--&gt;
+&lt;/script&gt;
+
+&lt;!--- The form. 
+   The cfinput tags use the onError attribute to override the ColdFusion
+   default error message mechanism. ---&gt;
+&lt;cfform&gt;
+   &lt;!--- A minimum quantity is required and must be a number. ---&gt;
+   Minimum Quantity: &lt;cfinput type=&quot;Text&quot; name=&quot;MinQuantity&quot;
+      onError=&quot;showErrorMessage&quot; validate=&quot;numeric&quot; required=&quot;Yes&quot; 
+      message=&quot;is not a number.&quot; &gt;&lt;br&gt;
+   &lt;!--- A maximum quantity is optional, but must be a number if supplied. ---&gt;
+   Maximum Quantity: &lt;cfinput type=&quot;Text&quot; name=&quot;MaxQuantity&quot;
+      onError=&quot;showErrorMessage&quot; validate=&quot;numeric&quot; 
+         message=&quot;is not a number.&quot; &gt;&lt;br&gt;
+   &lt;cfinput type=&quot;submit&quot; name=&quot;submitit&quot;&gt; 
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001385.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001387.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001386.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

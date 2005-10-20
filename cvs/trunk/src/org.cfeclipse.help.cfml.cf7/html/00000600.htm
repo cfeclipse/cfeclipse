@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>QueryNew</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000599.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000601.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>QueryNew</h1>
+<h4><a name="wp134774"></a>Description</h4>
+<p>Creates an empty query (query object).</p>
+<h4><a name="wp134776"></a>Returns</h4>
+<p>An empty query with a set of named columns, or an empty query. </p>
+<h4><a name="wp134778"></a>Category</h4>
+<p><a href="00000367.htm#1099653">Query functions</a></p>
+<h4><a name="wp134783"></a>Function syntax</h4>
+<pre><code><strong>QueryNew</strong></code>(<i>columnlist </i>[, <i>columntypelist</i>])
+</pre><h4><a name="wp140921"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added <code>columntypelist</code> parameter.</p>
+<h4><a name="wp140908"></a>See also</h4>
+<p><a href="00000598.htm#134610"><code>QueryAddColumn</code></a>, <a href="00000599.htm#134706"><code>QueryAddRow</code></a>, <a href="00000601.htm#134832"><code>QuerySetCell</code></a>; <a href="00001270.htm#1182700">Managing data types for columns</a> in <a href="00001263.htm#1181595">Using Query of Queries</a> <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp134796"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>columnlist</p>
+    </td>
+    <td>
+<p>Comma-delimited list of column names, or an empty string. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>columntypelist</p>
+    </td>
+    <td>
+<p>(Optional) Comma-delimited list specifying column data types. ColdFusion generates an error if the data you add to the column is not of this type, or if it cannot convert the data to this type. The following data types are valid:</p>
+<ul>
+<li>
+   Integer: 32-bit integer
+</li>
+<li>
+   BigInt: 64-bit integer
+</li>
+<li>
+   Double: 64-bit decimal number
+</li>
+<li>
+   Decimal: Variable length decimal, as specified by java.math.BigDecimal
+</li>
+<li>
+   VarChar: String
+</li>
+<li>
+   Binary: Byte array
+</li>
+<li>
+   Bit: Boolean (1=True, 0=False)
+</li>
+<li>
+   Time: Time
+</li>
+<li>
+   Date: Date (can include time information)
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp134807"></a>Usage</h4>
+<p>If you specify an empty string in the <code><i>columnlist</i></code> parameter, you must use the <code>QueryAddColumn</code> function to add columns to the query.</p>
+<p>Macromedia recommends that you use the optional <code><i>columntypelist</i></code> parameter. Without this parameter, ColdFusion must try to determine data types when it uses the query object in a query of queries. Determining data types requires additional processing, and can result in errors if ColdFusion does not guess a type correctly.</p>
+<h4><a name="wp134809"></a>Example</h4>
+<p>The following example uses the <code>QueryNew</code> function to create an empty query with three columns. It populates two rows of the query and displays the contents of the query object and its metadata.</p>
+<pre>&lt;!--- Create a new three-column query, specifying the column data types ---&gt;
+&lt;cfset myQuery = QueryNew(&quot;Name, Time, Advanced&quot;, &quot;VarChar, Time, Bit&quot;)&gt;
+
+&lt;!--- Make two rows in the query ---&gt;
+&lt;cfset newRow = QueryAddRow(MyQuery, 2)&gt;
+
+&lt;!--- Set the values of the cells in the query ---&gt;
+&lt;cfset temp = QuerySetCell(myQuery, &quot;Name&quot;, &quot;The Wonderful World of CMFL&quot;, 1)&gt;
+&lt;cfset temp = QuerySetCell(myQuery, &quot;Time&quot;, &quot;9:15 AM&quot;, 1)&gt;
+&lt;cfset temp = QuerySetCell(myQuery, &quot;Advanced&quot;, False, 1)&gt;
+&lt;cfset temp = QuerySetCell(myQuery, &quot;Name&quot;, &quot;CFCs for Enterprise
+      Applications&quot;, 2)&gt;
+&lt;cfset temp = QuerySetCell(myQuery, &quot;Time&quot;, &quot;12:15 PM&quot;, 2)&gt;
+&lt;cfset temp = QuerySetCell(myQuery, &quot;Advanced&quot;, True, 2)&gt;
+
+&lt;h4&gt;The query object contents&lt;/h4&gt;
+&lt;cfoutput query = &quot;myQuery&quot;&gt;
+   #Name# #Time# #Advanced#&lt;br&gt;
+&lt;/cfoutput&gt;&lt;br&gt;
+&lt;br&gt;
+&lt;h4&gt;Using individual query data values&lt;/h4&gt;
+&lt;cfoutput&gt;
+   #MyQuery.name[2]# is at #MyQuery.Time[2]#&lt;br&gt;
+&lt;/cfoutput&gt;&lt;br&gt;
+&lt;br&gt;
+&lt;h4&gt;The query metadata&lt;/h4&gt;
+&lt;cfset querymetadata=getMetaData(myQuery)&gt;
+&lt;cfdump var=&quot;#querymetadata#&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000599.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000601.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000600.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

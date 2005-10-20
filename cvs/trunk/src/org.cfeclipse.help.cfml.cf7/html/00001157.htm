@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Configuring and enabling session variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001156.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001158.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Configuring and enabling session variables</h1>
+<p>To use session variables, you must enable them in two places:</p>
+<ul>
+<li>
+   ColdFusion&#160;MX Administrator
+</li>
+<li>
+   The Application.cfc initialization code This.sessionManagement variable or the active <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag.
+</li>
+</ul>
+<p>ColdFusion&#160;MX Administrator, Application.cfc, and the <code>cfapplication</code> tag also provide facilities for configuring session variable behavior, including the variable time-out.</p>
+<h3><a name="wp1160163"></a>Selecting and enabling session variables in ColdFusion&#160;MX Administrator</h3>
+<p>To use session variables, they must be enabled on the ColdFusion&#160;MX Administrator Memory Variables page. (They are enabled by default.) You can also use the Administrator Memory Variables page to do the following:</p>
+<ul>
+<li>
+   Select to use ColdFusion session management (the default) or J2EE session management.
+</li>
+<li>
+   Change the default session time-out. Application code can override this value. The default value for this time-out is 20 minutes.
+</li>
+<li>
+   Specify a maximum session time-out. Application code cannot set a time-out greater than this value. The default value for this time-out is two days.
+</li>
+</ul>
+<h3><a name="wp1160010"></a>Enabling session variables in your application</h3>
+<p>You must also enable session variables in the initialization code of your Application.cfc file or in the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag in your Application.cfm file.</p>
+<p>Do the following in the Application.cfc initialization code, below the <code>cfcomponent</code> tag, to enable session variables:</p>
+<ul>
+<li>
+   Set This.sessionManagement=&quot;Yes&quot;.
+</li>
+<li>
+   Set This.name to specify the application&#39;s name.
+</li>
+<li>
+   Optionally, set This.sessionTimeout to set an application-specific session time-out value. Use the <a href="00000435.htm#1102715"><code>CreateTimeSpan</code></a> function to specify the number of days, hours, minutes, and seconds for the time-out. 
+</li>
+</ul>
+<p>Do the following in the Application.cfm file to enable session variables:</p>
+<ul>
+<li>
+   Set <code>sessionManagement=&quot;Yes&quot;</code> 
+</li>
+<li>
+   Use the <code>name</code> attribute to specify the application&#39;s name.
+</li>
+<li>
+   Optionally, use the <code>sessionTimeout</code> attribute to set an application-specific session time-out value. Use the <a href="00000435.htm#1102715"><code>CreateTimeSpan</code></a> function to specify the number of days, hours, minutes, and seconds for the time-out. 
+</li>
+</ul>
+<p>The following sample code enables session management for the GetLeadApp application and sets the session variables to time out after a 45-minute period of inactivity:</p>
+<pre>&lt;cfapplication name=&quot;GetLeadApp&quot; <br />sessionmanagement=&quot;Yes&quot;<br />sessiontimeout=#CreateTimeSpan(0,0,45,0)#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001156.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001158.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001157.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

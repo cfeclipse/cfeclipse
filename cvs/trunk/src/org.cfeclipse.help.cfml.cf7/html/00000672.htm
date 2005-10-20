@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XmlSearch</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000671.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000673.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XmlSearch</h1>
+<h4><a name="wp140009"></a>Description</h4>
+<p>Uses an XPath language expression to search an XML document object.</p>
+<h4><a name="wp140011"></a>Returns</h4>
+<p>An array of XML object nodes that match the search criteria.</p>
+<h4><a name="wp140013"></a>Category</h4>
+<p><a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp140021"></a>Function syntax</h4>
+<pre><code><strong>XmlSearch</strong></code>(<i>xmlDoc, xPathString</i>)
+</pre><h4><a name="wp140023"></a>See also</h4>
+<p><a href="00000352.htm#2497244"><code>cfxml</code></a>, <a href="00000536.htm#4979215"><code>IsXML</code></a>, <a href="00000666.htm#139381"><code>XmlChildPos</code></a>, <a href="00000671.htm#139864"><code>XmlParse</code></a>, <a href="00000673.htm#140093"><code>XmlTransform</code></a>; <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp140046"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added support for attribute searches.</p>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp140051"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>xmlDoc</p>
+    </td>
+    <td>
+<p>XML document object</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>xPathString</p>
+    </td>
+    <td>
+<p>XPath expression</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp140066"></a>Usage</h4>
+<p>The <code>XmlSearch</code> function does not support complete XPath syntax. It only supports XPath expressions that return one or more XML nodes and attribute searches. XPath expressions that return any other type of value, such as a string, number, or Boolean, generate errors.</p>
+<p>XPath is specified by the World Wide Web Consortium (W3C). For detailed information on XPath, including XPath expression syntax, see the W3C website at <a href="http://www.w3.org/TR/xpath" target="mm_window">www.w3.org/TR/xpath</a>. </p>
+<h4><a name="wp140069"></a>Example</h4>
+<p>The following example extracts the elements named <i>last</i>, which contain employee last names, from an XML file, and displays the names.</p>
+<p>The employeesimple.xml file contains the following XML:</p>
+<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;employee&gt;
+&lt;!-- A list of employees --&gt;
+ &lt;name EmpType=&quot;Regular&quot;&gt;
+  &lt;first&gt;Almanzo&lt;/first&gt;
+  &lt;last&gt;Wilder&lt;/last&gt;
+ &lt;/name&gt;
+ &lt;name EmpType=&quot;Contract&quot;&gt;
+  &lt;first&gt;Laura&lt;/first&gt;
+  &lt;last&gt;Ingalls&lt;/last&gt;
+ &lt;/name&gt;
+&lt;/employee&gt;
+</pre><p>The CFML file contains the following lines:</p>
+<pre>&lt;cfscript&gt;
+   myxmldoc = XmlParse(&quot;C:\CFusionMX7\wwwroot\examples\employeesimple.xml&quot;);
+   selectedElements = <code><strong>XmlSearch(myxmldoc, &quot;/employee/name/last&quot;)</strong></code>;
+   for (i = 1; i LTE ArrayLen(selectedElements); i = i + 1)
+      writeoutput(selectedElements[i].XmlText &amp; &quot;&lt;br&gt;&quot;);
+&lt;/cfscript&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000671.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000673.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000672.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

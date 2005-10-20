@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using escape sequences</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000986.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000988.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using escape sequences</h1>
+<p>Escape sequences are special characters in regular expressions preceded by a backslash (\). You typically use escape sequences to represent special characters within a regular expression. For example, the escape sequence \t represents a tab character within the regular expression, and the \d escape sequence specifies any digit, similar to [0-9]. In ColdFusion the escape sequences are case-sensitive.</p>
+<p>The following table lists the escape sequences that ColdFusion supports:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Escape Sequence
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>\b</p>
+    </td>
+    <td>
+<p>Specifies a boundary defined by a transition from an alphanumeric character to a nonalphanumeric character, or from a nonalphanumeric character to an alphanumeric character.</p>
+<p>For example, the string &quot; Big&quot; contains boundary defined by the space (nonalphanumeric character) and the &quot;B&quot; (alphanumeric character). </p>
+<p>The following example uses the \b escape sequence in a regular expression to locate the string &quot;Big&quot; at the end of the search string and not the fragment &quot;big&quot; inside the word &quot;ambiguous&quot;.</p>
+<p>reFindNoCase(&quot;\bBig\b&quot;, 	&quot;Don't be ambiguous about Big.&quot;)</p>
+<pre><code>&lt;!--- The value of IndexOfOccurrence is 26 ---&gt;</code>
+</pre><p>When used inside of a character set (e.g. [\b]), it specifies a backspace</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\B</p>
+    </td>
+    <td>
+<p>Specifies a boundary defined by no transition of character type. For example, two alphanumeric character in a row or two nonalphanumeric character in a row; opposite of \b.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\A</p>
+    </td>
+    <td>
+<p>Specifies a beginning of string anchor, much like the ^ special character.</p>
+<p>However, unlike ^, you cannot combine \A with (?m) to specify the start of newlines in the search string.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\Z</p>
+    </td>
+    <td>
+<p>Specifies an end of string anchor, much like the $ special character.</p>
+<p>However, unlike $, you cannot combine \Z with (?m) to specify the end of newlines in the search string.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\n</p>
+    </td>
+    <td>
+<p>Newline character</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\r</p>
+    </td>
+    <td>
+<p>Carriage return </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\t</p>
+    </td>
+    <td>
+<p>Tab </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\f</p>
+    </td>
+    <td>
+<p>Form feed </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\d</p>
+    </td>
+    <td>
+<p>Any digit, similar to [0-9]</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\D</p>
+    </td>
+    <td>
+<p>Any nondigit character, similar to [^0-9]</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\w</p>
+    </td>
+    <td>
+<p>Any alphanumeric character, similar to [[:alnum:]]</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\W</p>
+    </td>
+    <td>
+<p>Any nonalphanumeric character, similar to [^[:alnum:]] </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\s</p>
+    </td>
+    <td>
+<p>Any whitespace character including tab, space, newline, carriage return, and form feed. Similar to [ \t\n\r\f]. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\S</p>
+    </td>
+    <td>
+<p>Any nonwhitespace character, similar to [^ \t\n\r\f] </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\xdd</p>
+    </td>
+    <td>
+<p>A hexadecimal representation of character, where d is a hexadecimal digit</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\ddd</p>
+    </td>
+    <td>
+<p>An octal representation of a character, where d is an octal digit, in the form \000 to \377</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000986.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000988.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000987.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

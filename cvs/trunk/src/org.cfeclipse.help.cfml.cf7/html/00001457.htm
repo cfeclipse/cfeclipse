@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Defining, modifying, and using fields and input parameters</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001456.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001458.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Defining, modifying, and using fields and input parameters</h1>
+<p>The Report Builder supports variable data through query fields, input parameters, and calculated fields, as follows:</p>
+<p><strong>Query field</strong>&#160;Maps to columns in the database result set associated with the report. You define one query field for each column in the associated database query.</p>
+<p><strong>Calculated field</strong>&#160;Analyzes or sums multiple detail rows in a report. ColdFusion dynamically generates calculated field values at report-generation time, optionally recalculating the value with each new report, page, column, or group.</p>
+<p><strong>Input parameter</strong>&#160;Specifies data fields that you pass to the report at runtime through the <code>cfreportparam</code> tag or from a main report to a subreport. You can place input parameters directly on a report band or you can use them as input to a calculated field.</p>
+<h4>To define a query field:</h4>
+<ol>
+<li>
+   Click the Fields and Parameters tab. By default, this tab is in the lower-right area of the Report Builder window.
+</li>
+<li>
+   Click Query Fields.
+</li>
+<li>
+   Click the plus sign (+) at the top of the tab.
+<p>The Add Query Field dialog box appears.</p>
+</li>
+<li>
+   Type a value for the name field. This must match a column name in the corresponding cfquery statement and cannot contain a period.
+</li>
+<li>
+   Type a default label.
+</li>
+<li>
+   Specify the data type of the corresponding database column, as follows:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Object</p>
+    </td>
+    <td>
+<p>Time</p>
+    </td>
+    <td>
+<p>Long</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Boolean</p>
+    </td>
+    <td>
+<p>Double</p>
+    </td>
+    <td>
+<p>Short</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Byte</p>
+    </td>
+    <td>
+<p>Float</p>
+    </td>
+    <td>
+<p>Big Decimal</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Date</p>
+    </td>
+    <td>
+<p>Integer</p>
+    </td>
+    <td>
+<p>Image</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Time Stamp</p>
+    </td>
+    <td>
+<p>BLOB</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+  </tr>
+</table>
+
+</li>
+<li>
+   Click OK.
+</li>
+</ol>
+<p><strong>Note: </strong>The Query Builder defines query fields automatically for all database columns in the result set (does not apply to the Advanced Query Builder). Additionally, if you run the Query Builder as part of the Report Creation Wizard, the wizard places query fields on the report.</p><h4>To define a calculated field:</h4>
+<ol>
+<li>
+   Click the Fields and Parameters tab. By default, this tab is in the lower-right area of the Report Builder window.
+</li>
+<li>
+   Click Calculated Fields.
+</li>
+<li>
+   Click the plus sign (+) at the upper edge of the tab.
+<p>The Add Calculated Field dialog box appears.</p>
+</li>
+<li>
+   Specify a name, default label text, and data type. Data type options are the same as for query&#160;fields.
+</li>
+<li>
+   Specify calculation options:
+<p><strong>Calculation</strong>&#160;Specifies the type of calculation that ColdFusion performs. Valid values are: Average, Count, Highest, Lowest, Nothing, Standard Deviation, Sum, System, and Variance. If you specify Nothing, you typically use the Perform Calculation On field to specify a dynamic expression. With the exception of Nothing (for which you use the Perform Calculation On field) and System (for which you write a customized scriptlet class), you use these calculations for group, page, and report totals.</p>
+<p><strong>Perform Calculation On</strong>&#160;Specifies a field or expression. Click the ... button to display the Expression Builder.</p>
+<p><strong>Initial Value</strong>&#160;Specifies an initial value for the calculated field.</p>
+</li>
+<li>
+   Specify reset options, as follows:
+<p><strong>Reset Field When</strong>&#160;Specifies when to reset the calculated field value. Valid values are: None, Report, Page, Column Group.</p>
+<p><strong>Reset Group</strong>&#160;If Reset Field When is set to Group, use this field to specify the group whose group break triggers the reset. </p>
+</li>
+<li>
+   Click OK.
+</li>
+</ol>
+<p>For additional information on calculated fields, see &quot;Add Calculated Field dialog box&quot; in Report Builder online Help and <a href="00001472.htm#134343">Expressions and the Expression Builder</a>.</p>
+<h4>To define an input parameter:</h4>
+<ol>
+<li>
+   Click the Fields and Parameters tab. By default, this tab is in the lower-right area of the Report Builder window.
+</li>
+<li>
+   Click Input Parameters.
+</li>
+<li>
+   Click the plus sign (+) at the top of the tab.
+</li>
+<li>
+   The Add Input Parameter dialog box appears.
+<p>Enter a value for the name field. This must match an input parameter, such as the name attribute of a <code>cfreportparam</code> tag included in the <code>cfreport</code> tag that invokes the report definition.</p>
+</li>
+<li>
+   Enter the default label text.
+</li>
+<li>
+   Specify a data type and default value. Data type options are the same as for query fields.
+</li>
+<li>
+   Click OK.
+</li>
+</ol>
+<p>For more information on using input parameters, see <a href="00001467.htm#126814">Using input parameters to pass variables and other data at runtime</a> and <a href="00001474.htm#119582">Using subreports</a>.</p>
+<h4>To place a query field, calculated field, or input parameter on a report band:</h4>
+<ol>
+<li>
+   In the Fields and Parameters tab, use the radio buttons to specify whether to place the label, the field, or both.
+</li>
+<li>
+   Drag the query field, calculated field, or input parameter from the Fields and Parameters tab to the appropriate report band. 
+</li>
+<li>
+   Drag the query field, calculated field, or input parameter to the desired band.
+</li>
+<li>
+   (Optional) Use the Properties sheet to customize the field display.
+</li>
+</ol>
+<p>For example, you might have a query field named query.emp_salary and a calculated field that sums query.emp_salary, resetting it with each group. Place query.emp_salary in the detail band, and the associated calculated field in the group footer band.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001456.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001458.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001457.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

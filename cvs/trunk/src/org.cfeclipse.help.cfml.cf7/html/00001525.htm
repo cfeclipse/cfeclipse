@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Validating WDDX data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001524.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001526.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Validating WDDX data</h1>
+<p>The <a href="00000351.htm#2682044"><code>cfwddx</code></a> tag has a <code>Validate</code> attribute that you can use when converting WDDX to CFML or JavaScript. When you set this attribute to True, the XML parser uses the WDDX DTD to validate the WDDX data before deserializing it. If the WDDX is not valid, ColdFusion generates an error. By default, ColdFusion does not validate WDDX data before trying to convert it to ColdFusion or JavaScript data.</p>
+<p>The <a href="00000535.htm#3123485"><code>IsWDDX</code></a> function returns True if a variable is a valid WDDX data packet. It returns False otherwise. You can use this function to validate WDDX packets before converting them to another format. For example, you can use it instead of the <code>cfwddx</code> <code>validate</code> attribute, so that invalid WDDX is handled within conditional logic instead of error-handling code. You can also use it to pre-validate data that will be deserialized by JavaScript at the browser.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001524.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001526.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001525.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

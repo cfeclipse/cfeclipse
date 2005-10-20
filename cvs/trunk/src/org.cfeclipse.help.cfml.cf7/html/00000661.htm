@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Val</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000660.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000662.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Val</h1>
+<h4><a name="wp139110"></a>Description</h4>
+<p>Converts numeric characters that occur at the beginning of a string to a number. </p>
+<h4><a name="wp139112"></a>Returns</h4>
+<p>A number. If conversion fails, returns zero.</p>
+<h4><a name="wp139114"></a>Category</h4>
+<p><a href="00000356.htm#1098761">Conversion functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp139122"></a>Function syntax</h4>
+<pre><code><strong>Val</strong></code>(<i>string</i>)
+</pre><h4><a name="wp139124"></a>See also</h4>
+<p><a href="00000525.htm#1106573">IsNumeric</a></p>
+<h4><a name="wp139129"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139140"></a>Usage</h4>
+<p>This function works as follows: </p>
+<ul>
+<li>
+   If <code>TestValue = &quot;234A56?7&#39;&quot;</code>, <code>Val(TestValue)</code> returns 234.
+</li>
+<li>
+   If <code>TestValue = &quot;234&#39;5678&#39;9?&#39;&quot;</code>, <code>Val(TestValue)</code> returns 234.
+</li>
+<li>
+   If <code>TestValue = &quot;BG234&quot;</code>, <code>Val(TestValue)</code> returns the value 0, (not an error).
+</li>
+<li>
+   If <code>TestValue = &quot;0&quot;</code>, <code>Val(TestValue)</code> returns the value 0, (not an error).
+</li>
+</ul>
+<h4><a name="wp139146"></a>Example</h4>
+<pre>&lt;h3&gt;Val Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.theTestValue&quot;)&gt;
+   &lt;cfif Val(FORM.theTestValue) is not 0&gt;
+      &lt;h3&gt;The string &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; <br />can be converted to a number:
+      &lt;cfoutput&gt;#<strong>Val(FORM.theTestValue)</strong>#&lt;/cfoutput&gt;&lt;/h3&gt;
+   &lt;cfelse&gt;
+      &lt;h3&gt;The beginning of the string &lt;cfoutput&gt;#DE(FORM.theTestValue)#
+       &lt;/cfoutput&gt; cannot be converted to a number&lt;/h3&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+&lt;form action = &quot;val.cfm&quot;&gt;
+&lt;p&gt;Enter a string, and determine whether its beginning can be evaluated <br />to a numeric value.
+&lt;p&gt;
+&lt;input type = &quot;Text&quot; 
+   name = &quot;TheTestValue&quot; 
+   value = &quot;123Boy&quot;&gt;
+&lt;input type = &quot;Submit&quot; 
+   value = &quot;Is the beginning numeric?&quot; 
+   name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000660.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000662.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000661.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

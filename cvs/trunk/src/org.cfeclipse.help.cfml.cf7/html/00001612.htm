@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Performing file operations with cfftp</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001611.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001613.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Performing file operations with cfftp</h1>
+<p>The <a href="00000259.htm#1800554"><code>cfftp</code></a> tag lets you perform tasks on remote servers using File Transfer Protocol (FTP). You can use <code>cfftp</code> to cache connections for batch file transfers when uploading or downloading files.</p>
+<p><strong>Note: </strong>To use <code>cfftp</code>, you must select the Enable ColdFusion Security option on the Sandbox Security page in the Security area in the ColdFusion&#160;MX Administrator. (In the Standard Edition, select Security &gt; Basic Security.)</p><p>For server/browser operations, use the <a href="00000245.htm#1098395"><code>cffile</code></a>, <a href="00000232.htm#2850760"><code>cfcontent</code></a>, and <a href="00000235.htm#1097918"><code>cfdirectory</code></a> tags.</p>
+<p>Using <code>cfftp</code> involves two major types of operations: connecting, and transferring files. The FTP protocol also provides commands for listing directories and performing other operations. For a complete list of attributes that support FTP operations and additional details on using the <a href="00000259.htm#1800554"><code>cfftp</code></a> tag, see <i>CFML Reference</i>.</p>
+<h4>To open an FTP connection and retrieve a file listing:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;FTP Test&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h1&gt;FTP Test&lt;/h1&gt;
+&lt;!--- Open ftp connection ---&gt;
+&lt;cfftp connection=&quot;Myftp&quot;
+	server=&quot;MyServer&quot;
+	username=&quot;MyUserName&quot;
+	password=&quot;MyPassword&quot;
+	action=&quot;Open&quot;
+	stoponerror=&quot;Yes&quot;&gt;
+
+&lt;!--- Get the current directory name. ---&gt;
+&lt;cfftp connection=Myftp
+	action=&quot;GetCurrentDir&quot;
+	stoponerror=&quot;Yes&quot;&gt;
+
+&lt;!--- output directory name ---&gt;
+&lt;cfoutput&gt;
+	The current directory is:  #cfftp.returnvalue#&lt;p&gt;
+&lt;/cfoutput&gt;
+
+&lt;!--- Get a listing of the directory. ---&gt;
+&lt;cfftp connection=Myftp
+	action=&quot;listdir&quot;
+	directory=&quot;#cfftp.returnvalue#&quot;
+	name=&quot;dirlist&quot;
+	stoponerror=&quot;Yes&quot;&gt;
+&lt;!--- Close the connection.---&gt;
+&lt;cfftp action=&quot;close&quot; connection=&quot;Myftp&quot;&gt;
+&lt;p&gt;Did the connection close successfully? 
+	&lt;cfoutput&gt;#cfftp.succeeded#&lt;/cfoutput&gt;&lt;/p&gt;
+
+&lt;!--- output dirlist results ---&gt;
+&lt;hr&gt;
+&lt;p&gt;FTP Directory Listing:&lt;/p&gt;
+
+&lt;cftable query=&quot;dirlist&quot; colheaders=&quot;yes&quot; htmltable&gt;
+	&lt;cfcol header=&quot;&lt;B&gt;Name&lt;/b&gt;&quot; TEXT=&quot;#name#&quot;&gt;
+	&lt;cfcol header=&quot;&lt;B&gt;Path&lt;/b&gt;&quot; TEXT=&quot;#path#&quot;&gt;
+	&lt;cfcol header=&quot;&lt;B&gt;URL&lt;/b&gt;&quot; TEXT=&quot;#url#&quot;&gt;
+	&lt;cfcol header=&quot;&lt;B&gt;Length&lt;/b&gt;&quot; TEXT=&quot;#length#&quot;&gt;
+	&lt;cfcol header=&quot;&lt;B&gt;LastModified&lt;/b&gt;&quot;
+	TEXT=&quot;#DateFormat(lastmodified)#&quot;&gt;
+	&lt;cfcol header=&quot;&lt;B&gt;IsDirectory&lt;/b&gt;&quot;
+		TEXT=&quot;#isdirectory#&quot;&gt;
+&lt;/cftable&gt;
+</pre>
+</li>
+<li>
+   Change <code>MyServer</code> to the name of a server for which you have FTP permission.
+</li>
+<li>
+   Change <code>MyUserName</code> and <code>MyPassword</code> to a valid username and password.
+<p>To establish an anonymous connection, enter &quot;anonymous&quot; as the username and an e-mail address (by convention) for the password.</p>
+</li>
+<li>
+   Save the file as ftp_connect.cfm in the myapps directory under your <i>web_root</i> and view it in the web browser.
+</li>
+</ol>
+<h4><a name="wp1104858"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfftp connection=&quot;Myftp&quot;
+   server=&quot;MyServer&quot;
+   username=&quot;MyUserName&quot;
+   password=&quot;MyPassword&quot;
+   action=&quot;Open&quot;
+   stoponerror=&quot;Yes&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Open an FTP connection to the MyServer server and log on as MyUserName. If an error occurs, stop processing and display an error. You can use this connection in other <a href="00000259.htm#1800554"><code>cfftp</code></a> tags by specifying the Myftp connection.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfftp connection=Myftp
+   action=&quot;GetCurrentDir&quot;
+   stoponerror=&quot;Yes&quot;&gt;
+&lt;cfoutput&gt;
+   The current directory is:  #cfftp.returnvalue#&lt;p&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Use the Myftp connection to get the name of the current directory; stop processing if an error occurs. </p>
+<p>Display the current directory.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfftp connection=Myftp
+   action=&quot;ListDir&quot;
+   directory=&quot;#cfftp.returnvalue#&quot;
+   name=&quot;dirlist&quot;
+   stoponerror=&quot;Yes&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Use the Myftp connection to get a directory listing. Use the value returned by the last <code>cfftp</code> call (the current directory of the connection) to specify the directory to list. Save the results in a variable named dirlist (a query object). Stop processing if there is an error.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfftp action=&quot;close&quot; connection=&quot;Myftp&quot;&gt;
+&lt;p&gt;Did the connection close successfully? 
+   &lt;cfoutput&gt;#cfftp.succeeded#&lt;/cfoutput&gt;&lt;/p&gt;
+</pre>    </td>
+    <td>
+<p>Close the connection, and do not stop processing if the operation fails (because you can still use the results). Instead, display the value of the <code>cfftp.succeeded</code> variable, which is <code>Yes</code> if the connection is closed, and <code>No</code> if the operation failed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cftable query=&quot;dirlist&quot; &#160;&#160;&#160;&#160;&#160;&#160;colheaders=&quot;yes&quot; htmltable&gt;
+&#160;&#160;&lt;cfcol header=&quot;&lt;B&gt;Name&lt;/b&gt;&quot;<br />&#160;&#160;&#160;&#160;TEXT=&quot;#name#&quot;&gt;
+&#160;&#160;&lt;cfcol header=&quot;&lt;B&gt;Path&lt;/b&gt;&quot;<br />&#160;&#160;&#160;&#160;TEXT=&quot;#path#&quot;&gt;
+&#160;&#160;&lt;cfcol header=&quot;&lt;B&gt;URL&lt;/b&gt;&quot;<br />&#160;&#160;&#160;&#160;TEXT=&quot;#url#&quot;&gt;
+&#160;&#160;&lt;cfcol header=&quot;&lt;B&gt;Length&lt;/b&gt;&quot;<br />&#160;&#160;&#160;&#160;TEXT=&quot;#length#&quot;&gt;
+&#160;&#160;&lt;cfcol header=&quot;&lt;B&gt;LastModified&lt;/b&gt;&quot;<br />&#160;&#160;&#160;&#160;   TEXT=&quot;#DateFormat(lastmodified)#&quot;&gt;
+&#160;&#160;&lt;cfcol header=&quot;&lt;B&gt;IsDirectory&lt;/b&gt;&quot;<br />&#160;&#160;&#160;&#160;TEXT=&quot;#isdirectory#&quot;&gt;
+&lt;/cftable&gt;
+</pre>    </td>
+    <td>
+<p>Display a table with the results of the ListDir FTP command.</p>
+    </td>
+  </tr>
+</table>
+
+<p>After you establish a connection with <code>cfftp</code>, you can reuse the connection to perform additional FTP operations until either you or the server closes the connection. When you access an already-active FTP connection, you do not need to re-specify the username, password, or server. In this case, make sure that when you use frames, only one frame uses the connection object.</p>
+<p><strong>Note: </strong>For a single simple FTP operation, such as GetFile or PutFile, you do not need to establish a connection. Specify all the necessary login information, including the server and any login and password, in the single <code>cfftp</code> request.</p><h2><a name="wp1106212"></a>Caching connections across multiple pages</h2>
+<p>The FTP connection established by <a href="00000259.htm#1800554"><code>cfftp</code></a> is maintained only in the current page unless you explicitly assign the connection to a variable with Application or Session scope.</p>
+<p>Assigning a <code>cfftp</code> connection to an application variable could cause problems, since multiple users could access the same connection object at the same time. Creating a session variable for a <code>cfftp</code> connection makes more sense, because the connection is available to only one client and does not last past the end of the session.</p>
+<h3><a name="wp1110338"></a>Example: caching a connection</h3>
+<pre>&lt;cflock scope=&quot;Session&quot; timeout=10&gt;
+&lt;cfftp action=&quot;Open&quot;<br />   username=&quot;anonymous&quot;<br />   password=&quot;me@home.com&quot;<br />   server=&quot;ftp.eclipse.com&quot;<br />   connection=&quot;Session.myconnection&quot;&gt;
+&lt;/cflock&gt;
+</pre><p>In this example, the connection cache remains available to other pages within the current session. You must enable session variables in your application for this approach to work, and you must lock code that uses session variables. For more information on locking, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+<p><strong>Note: </strong>Changing a connection's characteristics, such the <code>retrycount</code> or <code>timeout</code> values, might require you to re-establish the connection.</p><h2><a name="wp1096343"></a>Connection actions and attributes</h2>
+<p>The following table shows the available <a href="00000259.htm#1800554"><code>cfftp</code></a> actions and the attributes they require when you use a named (that is, cached) connection. If you do not specify an existing connection name, you must specify the <code>username</code>, <code>password</code>, and <code>server</code> attributes.</p>
+.<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Action
+    </th>
+    <th>
+Attributes
+    </th>
+    <th>
+Action
+    </th>
+    <th>
+Attributes
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Open</p>
+    </td>
+    <td>
+<p>none</p>
+    </td>
+    <td>
+<p>Rename</p>
+    </td>
+    <td>
+<p>existing</p>
+<p>new</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Close</p>
+    </td>
+    <td>
+<p>none</p>
+    </td>
+    <td>
+<p>Remove</p>
+    </td>
+    <td>
+<p>server</p>
+<p>item</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ChangeDir</p>
+    </td>
+    <td>
+<p>directory</p>
+    </td>
+    <td>
+<p>GetCurrentDir</p>
+    </td>
+    <td>
+<p>none</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>CreateDir</p>
+    </td>
+    <td>
+<p>directory</p>
+    </td>
+    <td>
+<p>GetCurrentURL</p>
+    </td>
+    <td>
+<p>none</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ListDir</p>
+    </td>
+    <td>
+<p>name</p>
+<p>directory</p>
+    </td>
+    <td>
+<p>ExistsDir</p>
+    </td>
+    <td>
+<p>directory</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>RemoveDir</p>
+    </td>
+    <td>
+<p>directory</p>
+    </td>
+    <td>
+<p>ExistsFile</p>
+    </td>
+    <td>
+<p>remotefile</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>GetFile</p>
+    </td>
+    <td>
+<p>localfile</p>
+<p>remotefile</p>
+    </td>
+    <td>
+<p>Exists</p>
+    </td>
+    <td>
+<p>item</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>PutFile</p>
+    </td>
+    <td>
+<p>localfile</p>
+<p>remotefile</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001611.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001613.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001612.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

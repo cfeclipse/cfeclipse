@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About Flash forms</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001388.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001390.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About Flash forms</h1>
+<p>ColdFusion&#160;MX can deliver forms to the client in Macromedia Flash (SWF) file format. ColdFusion automatically generates the Flash binary from your CFML code and displays it on the client. Flash forms have the following advantages over HTML forms:</p>
+<ul>
+<li>
+   They are browser-independent. Flash Player works in all commonly used browsers on Windows and Macintosh systems, and in Netscape and Mozilla on Linux.
+</li>
+<li>
+   By default, they present a modern, visually pleasing appearance, and you can apply predefined color skins or customize the appearance with specifications similar to those in a Cascading Style Sheet (CSS).
+</li>
+<li>
+   They let you develop complex, multipart forms that do no require multiple pages, by using tabbed or accordion-style dialog boxes.
+</li>
+<li>
+   They automatically do much of the layout work for you. 
+</li>
+</ul>
+<p><strong>Note: </strong>Flash form configuration requirements differ from ColdFusion&#160;MX requirements. For example, Flash forms might not work with all J2EE servers supported by ColdFusion&#160;MX. For more information, see <i>Installing and Using ColdFusion&#160;MX</i>.</p><p>In addition to creating Flash forms, ColdFusion&#160;MX lets you specify Flash format for <code>cfcalendar</code>, <code>cftree</code>, and <code>cfgrid</code> tags. Use these tags to embed Flash calendar choosers, trees, and grids in HTML forms, to eliminate the need to use Java applets. This chapter does not specifically discuss using Flash grids and trees in HTML forms; however, the information in this chapter about grids and trees also applies to these elements. </p>
+<h2><a name="wp132371"></a>A Flash form example</h2>
+<p>Flash forms provide many features that help you quickly create easy-to-use, professional-looking, complex forms. The following figure contains a two-tab form that shows many of these features:</p>
+<p><br />
+<img src="images/flashfob.jpg" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>This form includes the following features:</p>
+<ul>
+<li>
+   Each tab contains a different section of the overall form, and users can enter data on both tabs before submitting the form. This technique can eliminate the need for multiple forms on multiple HTML pages.
+</li>
+<li>
+   The first and last names are required fields, indicated by the red asterisks. 
+</li>
+<li>
+   The Flash form automatically fills the e-mail field with data from the name fields, but the user can override this information. 
+</li>
+<li>
+   When the user selects the date field, a calendar automatically opens for picking the date.
+</li>
+</ul>
+<h2><a name="wp126286"></a>Flash form CFML differences from HTML forms</h2>
+<p>Because ColdFusion&#160;MX sends a Flash form to the client in SWF format, everything inside a Flash form is rendered by Flash. Rendering the form in Flash has several effects:</p>
+<ul>
+<li>
+   Plain text and HTML tags in the body of a Flash Form have no effect. 
+</li>
+<li>
+   You must specify all form content inside CFML tags that support Flash forms. 
+</li>
+<li>
+   ColdFusion provides two tags that let you take advantage of Flash features and perform tasks that you would otherwise do in HTML: you use the <code>cfformitem</code> tag to add text blocks and horizontal and vertical rules to your form, and you use the <code>cfformgroup</code> tag to structure your form.
+</li>
+<li>
+   Standard ColdFusion forms tags, such as <code>cfinput</code> and <code>cftree</code>, include attributes that work only with Flash forms, and attribute values that let you specify form style and behavior. These include the <code>skin</code> attribute with many Flash-specific <code>style</code> attribute values for appearance, and the <code>bind</code> attribute for filling a field value with data from other fields.
+</li>
+</ul>
+<p>The reference pages for the individual tags in <i>CFML Reference</i> describe the form tags and their features, indicating which attributes and values work with Flash forms. This chapter describes how you can use CFML tags to build effective Flash forms.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001388.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001390.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001389.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

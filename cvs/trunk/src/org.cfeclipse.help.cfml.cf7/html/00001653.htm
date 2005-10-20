@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Incoming message handling</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001652.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001654.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Incoming message handling</h1>
+<p>You write the following ColdFusion CFC methods to handle incoming messages and requests from the IM event gateway. These CFCs receive messages from the IM server and can respond to them by setting a return value.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+CFC method
+    </th>
+    <th>
+Message type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><code>onIncomingMessage</code></p>
+    </td>
+    <td>
+<p>Standard message from IM users.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>onAddBuddyRequest</code></p>
+    </td>
+    <td>
+<p>Requests from others to add the gateway ID to their buddy list.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>onAddBuddyResponse</code></p>
+    </td>
+    <td>
+<p>Responses from others to requests from your gateway to add them to your buddy lists. Also used by buddies to ask to be removed from your list.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>onBuddyStatus</code></p>
+    </td>
+    <td>
+<p>Presence status messages from other users.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>onIMServerMessage</code></p>
+    </td>
+    <td>
+<p>Error and status messages from the IM server.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For more information on these methods, see <a href="00001655.htm#149425">Handling incoming messages</a>.</p>
+<h3><a name="wp142940"></a>Outgoing message handling</h3>
+<p>Applications send outgoing instant messages using the CFML <code>SendGatewayMessage</code> method. Incoming message-handling CFC methods can also send messages, including responses to requests from others to add the ColdFusion gateway's ID to their buddy list. For more information on sending messages, see <a href="00001656.htm#128843">Sending outgoing messages</a>.</p>
+<h3><a name="wp133656"></a>IMGatewayHelper methods</h3>
+<p>The ColdFusion IM gateway provides the IMGatewayHelper class, a gateway helper that you can access by calling the CFML <code>GetGatewayHelper</code> function. The IMGatewayHelper class has methods that let you do the following:</p>
+<ul>
+<li>
+   Get and set gateway configuration information and get gateway statistics
+</li>
+<li>
+   Get and set the gateway online presence status
+</li>
+<li>
+   Manage the gateway's buddy list
+</li>
+<li>
+   Manage permissions for others to get information about the gateway status.
+</li>
+</ul>
+<p>For more information on using GatewayHelper methods, including lists of all the methods, see <a href="00001660.htm#131590">Using the GatewayHelper object</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001652.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001654.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001653.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

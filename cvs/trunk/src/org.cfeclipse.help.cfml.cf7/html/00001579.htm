@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Connecting to COM objects</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001578.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001580.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Connecting to COM objects</h1>
+<p>The <code>action</code> attribute of the <a href="00000302.htm#2820239"><code>cfobject</code></a> tag provides the following two ways to connect to COM objects:</p>
+<p><strong>Create method</strong> (<code>cfobject action=&quot;Create&quot;</code>)&#160;Takes a COM object, typically a DLL, and instantiates it prior to invoking methods and assigning properties.</p>
+<p><strong>Connect method</strong> (<code>cfobject action=&quot;Connect&quot;</code>)&#160;Links to an object, typically an executable, that is already running on the server.</p>
+<p>You can use the optional <code>cfobject</code> <code>context</code> attribute to specify the object context. If you do not specify a context, ColdFusion uses the setting in the Registry. The following table describes the <code>context</code> attribute values:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute value
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>InProc</p>
+    </td>
+    <td>
+<p>An in-process server object (typically a DLL) that is running in the same process space as the calling process, such as ColdFusion.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>local</p>
+    </td>
+    <td>
+<p>An out-of-process server object (typically an EXE file) that is running outside the ColdFusion process space but running locally on the same server.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>remote</p>
+    </td>
+    <td>
+<p>An out-of-process server object (typically an EXE file) that is running remotely on the network. If you specify <code>remote</code>, you must also use the <code>server</code> attribute to identify where the object resides.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001578.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001580.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001579.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

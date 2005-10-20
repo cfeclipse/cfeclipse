@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Referencing complex structures</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000959.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000961.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Referencing complex structures</h1>
+<p>When a structure contains another structure, you reference the data in the nested structure by extending either object.property or associative array notation. You can even use a mixture of both notations.</p>
+<p>For example, if structure1 has a key key1 whose value is a structure that has keys struct2key1, struct2key2, and so on, you can use any of the following references to access the data in the first key of the embedded structure:</p>
+<pre>Structure1.key1.Struct2key1
+Structure1[&quot;key1&quot;].Struct2key1
+Structure1.key1[&quot;Struct2key1&quot;]
+Structure1[&quot;key1&quot;][&quot;Struct2key1&quot;]
+</pre><p>The following example shows various ways you can reference the contents of a complex structure:</p>
+<pre>&lt;cfset myArray=ArrayNew(1)&gt;
+&lt;cfset myArray[1]=&quot;2&quot;&gt;
+&lt;cfset myArray[2]=&quot;3&quot;&gt;
+&lt;cfset myStruct2=StructNew()&gt;
+&lt;cfset myStruct2.struct2key1=&quot;4&quot;&gt;
+&lt;cfset myStruct2.struct2key2=&quot;5&quot;&gt;
+&lt;cfset myStruct=StructNew()&gt;
+&lt;cfset myStruct.key1=&quot;1&quot;&gt;
+&lt;cfset myStruct.key2=myArray&gt;
+&lt;cfset myStruct.key3=myStruct2&gt;
+&lt;cfdump var=#myStruct#&gt;&lt;br&gt;
+
+&lt;cfset key1Var=&quot;key1&quot;&gt;
+&lt;cfset key2Var=&quot;key2&quot;&gt;
+&lt;cfset key3Var=&quot;key3&quot;&gt;
+&lt;cfset var2=&quot;2&quot;&gt;
+
+&lt;cfoutput&gt;
+Value of the first key&lt;br&gt;
+#mystruct.key1#&lt;br&gt;
+#mystruct[&quot;key1&quot;]#&lt;br&gt;
+#mystruct[key1Var]#&lt;br&gt;
+&lt;br&gt;
+Value of the second entry in the key2 array&lt;br&gt;
+#myStruct.key2[2]#&lt;br&gt;
+#myStruct[&quot;key2&quot;][2]#&lt;br&gt;
+#myStruct[key2Var][2]#&lt;br&gt;
+#myStruct[key2Var][var2]#&lt;br&gt;
+&lt;br&gt;
+Value of the struct2key2 entry in the key3 structure&lt;br&gt;
+#myStruct.key3.struct2key2#&lt;br&gt;
+#myStruct[&quot;key3&quot;][&quot;struct2key2&quot;]#&lt;br&gt;
+#myStruct[key3Var][&quot;struct2key2&quot;]#&lt;br&gt;
+#myStruct.key3[&quot;struct2key2&quot;]#&lt;br&gt;
+#myStruct[&quot;key3&quot;].struct2key2#&lt;br&gt;
+&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><h4><a name="wp1127630"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset myArray=ArrayNew(1)&gt;
+&lt;cfset myArray[1]=&quot;2&quot;&gt;
+&lt;cfset myArray[2]=&quot;3&quot;&gt;
+&lt;cfset myStruct2=StructNew()&gt;
+&lt;cfset myStruct2.struct2key1=&quot;4&quot;&gt;
+&lt;cfset myStruct2.struct2key2=&quot;5&quot;&gt;
+&lt;cfset myStruct=StructNew()&gt;
+&lt;cfset myStruct.key1=&quot;1&quot;&gt;
+&lt;cfset myStruct.key2=myArray&gt;
+&lt;cfset myStruct.key3=myStruct2&gt;
+</pre>    </td>
+    <td>
+<p>Create a structure with three entries: a string, an array, and an embedded structure.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfdump var=#myStruct#&gt;&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Display the complete structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset key1Var=&quot;key1&quot;&gt;
+&lt;cfset key2Var=&quot;key2&quot;&gt;
+&lt;cfset key3Var=&quot;key3&quot;&gt;
+&lt;cfset var2=&quot;2&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Create variables containing the names of the myStruct keys and the number 2.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+Value of the first key&lt;br&gt;
+#mystruct.key1#&lt;br&gt;
+#mystruct[&quot;key1&quot;]#&lt;br&gt;
+#mystruct[key1Var]#&lt;br&gt;
+&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Output the value of the structure's key1 (string) entry using the following notation:</p>
+<ul>
+<li>
+   object.property notation
+</li>
+<li>
+   associative array notation with a constant
+</li>
+<li>
+   associative array notation with a variable
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>Value of the second entry in the<br />key2 array&lt;br&gt;
+#myStruct.key2[2]#&lt;br&gt;
+#myStruct[&quot;key2&quot;][2]#&lt;br&gt;
+#myStruct[key2Var][2]#&lt;br&gt;
+#myStruct[key2Var][var2]#&lt;br&gt;
+&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Output the value of the second entry in the structure's key2 array using the following notation:</p>
+<ul>
+<li>
+   object.property notation
+</li>
+<li>
+   associative array notation with a constant
+</li>
+<li>
+   associative array notation with a variable
+</li>
+<li>
+   associative array notation with variables for both the array and the array index
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>Value of the struct2key2 entry in<br />the key3 structure&lt;br&gt;
+#myStruct.key3.struct2key2#&lt;br&gt;
+#myStruct[&quot;key3&quot;][&quot;struct2key2&quot;]#&lt;br&gt;
+#myStruct[key3Var][&quot;struct2key2&quot;]#&lt;br&gt;
+#myStruct.key3[&quot;struct2key2&quot;]#&lt;br&gt;
+#myStruct[&quot;key3&quot;].struct2key2#&lt;br&gt;
+&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Output the value of second entry in the structure's key3 embedded structure using the following notation: </p>
+<ul>
+<li>
+   object.property notation
+</li>
+<li>
+   associative array notation with two constants
+</li>
+<li>
+   associative array notation with a variable and a constant
+</li>
+<li>
+   object.property notation followed by associative array notation
+</li>
+<li>
+   associative array notation followed by object.property notation
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000959.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000961.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000960.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ArrayInsertAt</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000384.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000386.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ArrayInsertAt</h1>
+<h4><a name="wp1224275"></a>Description</h4>
+<p>Inserts a value into an array. Array elements whose indexes are equal to or greater than the new position are incremented by one. The array length increases by one. </p>
+<h4><a name="wp3303248"></a>Returns</h4>
+<p>True, on successful completion. </p>
+<h4><a name="wp2615659"></a>Category</h4>
+<p><a href="00000355.htm#3473387">Array functions</a></p>
+<h4><a name="wp2120971"></a>Function syntax</h4>
+<pre><code><strong>ArrayInsertAt</strong></code>(<i>array</i>, <i>position</i>, <i>value</i>)
+</pre><h4><a name="wp2618343"></a>See also</h4>
+<p><a href="00000384.htm#1100409"><code>ArrayDeleteAt</code></a><code>; </code><a href="00001514.htm#1120195">Functions for XML object management</a> in <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4539750"></a>History</h4>
+<p>ColdFusion&#160;MX:</p>
+<ul>
+<li>
+   Changed behavior: this function can be used on XML objects.
+</li>
+<li>
+   Changed thrown exceptions: this function can throw the InvalidArrayIndexException error.
+</li>
+</ul>
+<h4><a name="wp1240759"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>Name of an array</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>position</p>
+    </td>
+    <td>
+<p>Index position at which to insert value </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Value to insert </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp5047081"></a>Usage</h4>
+<p>To apply the <code>ArrayInsert()</code> function to a multidimensional array, you must specify all but the last index in the <code>array</code> parameter. For example, the following code inserts an element at <code>myarray</code>[2][4]:</p>
+<pre>&lt;cfset ArrayInsertAt(myarray[2], 4, &quot;test&quot;)&gt;
+</pre><h4><a name="wp3504947"></a>Throws</h4>
+<p>If this function attempts to insert an element at position 0, or specifies a value for <code>position</code> that is greater than the size of <code>array</code>, this function throws an InvalidArrayIndexException error. </p>
+<h4><a name="wp3465427"></a>Example</h4>
+<pre>&lt;h3&gt;ArrayInsertAt Example&lt;/h3&gt;&lt;p&gt;
+&lt;!--- create a new array ---&gt;
+&lt;cfset DaysArray = ArrayNew(1)&gt;
+&lt;!--- populate an element or two ---&gt;
+&lt;cfset DaysArray[1] = &quot;Monday&quot;&gt;
+&lt;cfset DaysArray[2] = &quot;Tuesday&quot;&gt;
+&lt;cfset DaysArray[3] = &quot;Thursday&quot;&gt;
+&lt;!--- add an element before position 3 ---&gt;
+&lt;p&gt;Add an element before position 3:
+   &lt;cfoutput&gt;#ArrayInsertAt(DaysArray,3,&quot;Wednesday&quot;)#&lt;/cfoutput&gt;
+&lt;p&gt;Now output the array as a list:
+&lt;cfoutput&gt;#ArrayToList(DaysArray)#&lt;/cfoutput&gt;
+&lt;!--- The array now has four elements. Element 3, &quot;Thursday&quot;, has become element four ---&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000384.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000386.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000385.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

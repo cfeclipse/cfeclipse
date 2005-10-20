@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Developing CFX tags in C++</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001100.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001102.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Developing CFX tags in C++</h1>
+<p>The following sections provide information to help you develop CFX tags in C++.</p>
+<h2><a name="wp1112329"></a>Sample C++ CFX tags</h2>
+<p>Before you begin development of a CFX tag in C++, you might want to study the two CFX tags included with ColdFusion&#160;MX. These examples will help you get started working with the CFXAPI. The two example tags are as follows:</p>
+<ul>
+<li>
+   <code>CFX_DIRECTORYLIST</code>&#160;Queries a directory for the list of files it contains.
+</li>
+<li>
+   <code>CFX_NTUSERDB</code> (Windows only)&#160;Lets you add and delete Windows NT users.
+</li>
+</ul>
+<p>On Windows, these tags are located in the <i>cf_root</i>\cfx\examples directory. On UNIX, these tags are in the <i>cf_root</i>/coldfusion/cfx/examples directory.</p>
+<h2><a name="wp1112337"></a>Setting up your C++ development environment</h2>
+<p>The following compliers generate valid CFX code for UNIX platforms:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Platform
+    </th>
+    <th>
+Compiler
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Solaris</p>
+    </td>
+    <td>
+<p>Sun C++ compiler 5.0 or higher (gcc does not work)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Linux</p>
+    </td>
+    <td>
+<p>RedHat 6.2 gcc/egcs 1.1.2 compiler</p>
+    </td>
+  </tr>
+</table>
+
+<p>Before you can use your C++ compiler to build custom tags, you must enable the compiler to locate the CFX API header file, cfx.h. In Windows, you do this by adding the CFX API include directory to your list of global include paths. In Windows, this directory is <i>cf_root</i>\cfx\include. On UNIX this directory is <i>cf_root</i>/cfx/include. On UNIX, you will need <code>-I &lt;</code><i>includepath</i><code>&gt;</code> on your compile line (see the Makefile for the directory list example in the cfx/examples directory).</p>
+<h2><a name="wp1112358"></a>Compiling C++ CFX tags</h2>
+<p>CFX tags built in Windows and on UNIX must be thread-safe. Compile CFX tags for Solaris with the <code>-mt</code> switch on the Sun compiler.</p>
+<h2><a name="wp1139892"></a>Locating your C++ library files on UNIX</h2>
+<p>On UNIX systems, your C++ library files can be in any directory as long as the directory is included in LD_LIBRARY_PATH or SHLIB_PATH (HP-UX only). </p>
+<h2><a name="wp1112515"></a>Implementing C++ CFX tags</h2>
+<p>CFX tags built in C++ use the tag request object, represented by the C++ <a href="00000795.htm#1098201"><code>CCFXRequest class</code></a>. This object represents a request made from an application page to a custom tag. A pointer to an instance of a request object is passed to the main procedure of a custom tag. The methods available from the request object let the custom tag accomplish its work. For information about the CFX API classes and members, see <a href="00000784.htm#1098874">ColdFusion C++ CFX Reference</a> in <i>CFML Reference</i>.</p>
+<p><strong>Note: </strong>Calling a non-existent C++ CFX procedure or entry point causes a JVM crash on UNIX.</p><h2><a name="wp1131394"></a>Debugging C++ CFX tags</h2>
+<p>After you configure a debugging session, you can run your custom tag from within the debugger, set breakpoints, single-step, and so on.</p>
+<h3><a name="wp1131845"></a>Debugging in Windows</h3>
+<p>You can debug custom tags within the Visual C++ environment. </p>
+<h4>To debug C++ CFX tags in Windows:</h4>
+<ol>
+<li>
+   Build your C++ CFX tag using the debug option. 
+</li>
+<li>
+   Restart ColdFusion.
+</li>
+<li>
+   Start Visual C++. 
+</li>
+<li>
+   Select Build &gt; Start Debug &gt; AttachProcess. 
+</li>
+<li>
+   Select jrunsvc.exe.
+<p>Macromedia recommends that you shut down all other Java programs. </p>
+</li>
+<li>
+   Execute any ColdFusion page that calls the CFX tag. 
+</li>
+<li>
+   Select File &gt; Open to open a file in VisualDev in which to set a breakpoint. 
+</li>
+<li>
+   Set a breakpoint in the CFX project. 
+<p>The best place is to put it in <code>ProcessRequest()</code>. Next time you execute the page you will hit the breakpoint. </p>
+</li>
+</ol>
+<h2><a name="wp1096674"></a>Registering CFX tags</h2>
+<p>To use a CFX tag in your ColdFusion applications, first register it in the Extensions, CFX Tags page in the ColdFusion&#160;MX Administrator.</p>
+<h4>To register a C++ CFX tag:</h4>
+<ol>
+<li>
+   In the ColdFusion&#160;MX Administrator, select Extensions &gt; CFX Tags to open the CFX Tags page.
+</li>
+<li>
+   Click Register C++ CFX.
+</li>
+<li>
+   Enter the Tag name (for example, <code>cfx_MyNewTag</code>).
+</li>
+<li>
+   If the Server Library .dll field is empty, enter the filepath.
+</li>
+<li>
+   Accept the default Procedure entry.
+</li>
+<li>
+   Clear the Keep library loaded box while developing the tag. 
+<p>For improved performance, when the tag is ready for production use, you can select this option to keep the DLL in memory.</p>
+</li>
+<li>
+   (Optional) Enter a description.
+</li>
+<li>
+   Click Submit.
+</li>
+</ol>
+<p>You can now call the tag from a ColdFusion page.</p>
+<h4>To delete a CFX tag:</h4>
+<ol>
+<li>
+   In the ColdFusion&#160;MX Administrator, select Extensions &gt; CFX Tags to open the CFX Tags page.
+</li>
+<li>
+   For the tag you want to delete, click the Delete icon in the Controls column of the Registered CFX Tags list.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001100.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001102.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001101.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

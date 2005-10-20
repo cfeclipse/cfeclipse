@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Copying structures</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000962.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000964.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Copying structures</h1>
+<p>ColdFusion provides several ways to copy structures and create structure references. The following table lists these methods and describes their uses:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Technique
+    </th>
+    <th>
+Use
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000456.htm#1104156"><code>Duplicate</code></a> function</p>
+    </td>
+    <td>
+<p>Makes a complete copy of the structure. All data is copied from the original structure to the new structure, including the contents of structures, queries, and other objects. As a result changes to one copy of the structure have no effect on the other structure.</p>
+<p>This function is useful when you want to move a structure completely into a new scope. In particular, if a structure is created in a scope that requires locking (for example, Application), you can duplicate it into a scope that does not require locking (for example, Request), and then delete it in the scope that requires locking.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000635.htm#137121"><code>StructCopy</code></a> function</p>
+    </td>
+    <td>
+<p>Makes a shallow copy of a structure. It creates a new structure and copies all simple variable and array values at the top level of the original structure to the new structure. However, it does not make copies of any structures, queries, or other objects that the original structure contains, or of any data inside these objects. Instead, it creates a reference in the new structure to the objects in the original structure. As a result, any change to these objects in one structure also changes the corresponding objects in the copied structure.</p>
+<p>The Duplicate replaces this function for most, if not all, purposes.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Variable assignment</p>
+    </td>
+    <td>
+<p>Creates an additional reference, or alias, to the structure. Any change to the data using one variable name changes the structure that you access using the other variable name.</p>
+<p>This technique is useful when you want to add a local variable to another scope or otherwise change a variable's scope without deleting the variable from the original scope.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following example shows the different effects of copying, duplicating, and assigning structure variables:</p>
+<pre>Create a new structure&lt;br&gt;
+&lt;cfset myNewStructure=StructNew()&gt;
+&lt;cfset myNewStructure.key1=&quot;1&quot;&gt;
+&lt;cfset myNewStructure.key2=&quot;2&quot;&gt;
+&lt;cfset myArray=ArrayNew(1)&gt;
+&lt;cfset myArray[1]=&quot;3&quot;&gt;
+&lt;cfset myArray[2]=&quot;4&quot;&gt;
+&lt;cfset myNewStructure.key3=myArray&gt;
+&lt;cfset myNewStructure2=StructNew()&gt;
+&lt;cfset myNewStructure2.Struct2key1=&quot;5&quot;&gt;
+&lt;cfset myNewStructure2.Struct2key2=&quot;6&quot;&gt;
+&lt;cfset myNewStructure.key4=myNewStructure2&gt;
+&lt;cfdump var=#myNewStructure#&gt;&lt;br&gt;
+&lt;br&gt;
+A StructCopy copied structure&lt;br&gt;
+&lt;cfset CopiedStruct=StructCopy(myNewStructure)&gt;
+&lt;cfdump var=#CopiedStruct#&gt;&lt;br&gt;
+&lt;br&gt;
+A Duplicated structure&lt;br&gt;
+&lt;cfset dupStruct=Duplicate(myNewStructure)&gt;
+&lt;cfdump var=#dupStruct#&gt;&lt;br&gt;
+&lt;br&gt;
+A new reference to a structure&lt;br&gt;
+&lt;cfset structRef=myNewStructure&gt;
+&lt;cfdump var=#structRef#&gt;&lt;br&gt;
+
+&lt;br&gt;
+Change a string, array element, and structure value in the StructCopy copy.&lt;br&gt;
+&lt;br&gt;
+&lt;cfset CopiedStruct.key1=&quot;1A&quot;&gt;
+&lt;cfset CopiedStruct.key3[2]=&quot;4A&quot;&gt;
+&lt;cfset CopiedStruct.key4.Struct2key2=&quot;6A&quot;&gt;
+Original structure&lt;br&gt;
+&lt;cfdump var=#myNewStructure#&gt;&lt;br&gt;
+Copied structure&lt;br&gt;
+&lt;cfdump var=#CopiedStruct#&gt;&lt;br&gt;
+Duplicated structure&lt;br&gt;
+&lt;cfdump var=#DupStruct#&gt;&lt;br&gt;
+Structure reference
+&lt;cfdump var=#structRef#&gt;&lt;br&gt;
+&lt;br&gt;
+Change a string, array element, and structure value in the Duplicate&lt;br&gt;
+&lt;br&gt;
+&lt;cfset DupStruct.key1=&quot;1B&quot;&gt;
+&lt;cfset DupStruct.key3[2]=&quot;4B&quot;&gt;
+&lt;cfset DupStruct.key4.Struct2key2=&quot;6B&quot;&gt;
+Original structure&lt;br&gt;
+&lt;cfdump var=#myNewStructure#&gt;&lt;br&gt;
+Copied structure&lt;br&gt;
+&lt;cfdump var=#CopiedStruct#&gt;&lt;br&gt;
+Duplicated structure&lt;br&gt;
+&lt;cfdump var=#DupStruct#&gt;&lt;br&gt;
+Structure reference
+&lt;cfdump var=#structRef#&gt;&lt;br&gt;
+&lt;br&gt;
+Change a string, array element, and structure value in the reference&lt;br&gt;
+&lt;br&gt;
+&lt;cfset structRef.key1=&quot;1C&quot;&gt;
+&lt;cfset structRef.key3[2]=&quot;4C&quot;&gt;
+&lt;cfset structRef.key4.Struct2key2=&quot;6C&quot;&gt;
+Original structure&lt;br&gt;
+&lt;cfdump var=#myNewStructure#&gt;&lt;br&gt;
+Copied structure&lt;br&gt;
+&lt;cfdump var=#CopiedStruct#&gt;&lt;br&gt;
+Duplicated structure&lt;br&gt;
+&lt;cfdump var=#DupStruct#&gt;&lt;br&gt;
+Structure reference
+&lt;cfdump var=#structRef#&gt;&lt;br&gt;
+&lt;br&gt;
+Clear the original structure&lt;br&gt;
+&lt;cfset foo=structclear(myNewStructure)&gt;
+Original structure:&lt;br&gt;
+&lt;cfdump var=#myNewStructure#&gt;&lt;br&gt;
+Copied structure&lt;br&gt;
+&lt;cfdump var=#CopiedStruct#&gt;&lt;br&gt;
+Duplicated structure&lt;br&gt;
+&lt;cfdump var=#DupStruct#&gt;&lt;br&gt;
+Structure reference:&lt;br&gt;
+&lt;cfdump var=#structRef#&gt;&lt;br&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000962.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000964.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000963.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

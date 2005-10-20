@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>RandRange</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000604.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000606.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>RandRange</h1>
+<h4><a name="wp135052"></a>Description</h4>
+<p>Generates a pseudo-random integer in the range between two specified numbers.</p>
+<h4><a name="wp135054"></a>Returns</h4>
+<p>A pseudo-random integer.</p>
+<h4><a name="wp149698"></a>Category</h4>
+<p><a href="00000365.htm#1099613">Mathematical functions</a>, <a href="00000368.htm#3542210">Security functions</a></p>
+<h4><a name="wp135061"></a>Function syntax</h4>
+<pre><code><strong>RandRange</strong></code>(<i>number1</i>, <i>number2</i>[, <code><i>algorithm</i></code>])
+</pre><h4><a name="wp149751"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code><i>algorithm</i></code> parameter.</p>
+<h4><a name="wp135063"></a>See also</h4>
+<p><a href="00000603.htm#134961">Rand</a>, <a href="00000604.htm#149956">Randomize</a></p>
+<h4><a name="wp135071"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>number1, number2</p>
+    </td>
+    <td>
+<p>Integer numbers. If the numbers are not in the range -2,147,483,648 - 2,147,483,647, ColdFusion generates an error.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>algorithm</p>
+    </td>
+    <td>
+<p>(Optional) The algorithm to use to generated the random number. ColdFusion MX installs a cryptography library with the following algorithms:</p>
+<ul>
+<li>
+   CFMX_COMPAT: the algorithm used in ColdFusion MX (default).
+</li>
+<li>
+   SHA1PRNG: generates a number using the Sun Java SHA1PRNG algorithm. This algorithm provides greater randomness than the default algorithm
+</li>
+<li>
+   IBMSecureRandom: for IBM WebSphere (IBM JVM does not support the SHA1PRNG algorithm.)
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp149793"></a>Usage</h4>
+<p>Very large positive or negative values for the <code><i>number1</i></code> and <code><i>number2</i></code> parameters might result in poor randomness in the results. To prevent this problem, do not specify numbers outside the range -1,000,000,000 - 1,000,000,000.</p>
+<p>ColdFusion&#160;MX&#160;7 uses the Java Cryptography Extension (JCE) and installs a Sun Java 1.4.2 runtime that includes the Sun JCE default security provider. This provider includes the algorithms listed in the Parameters section (except the default algorithm). The JCE framework includes facilities for using other provider implementations; however, Macromedia cannot provide technical support for third-party security providers.</p>
+<h4><a name="wp149789"></a>Example</h4>
+<p>The following example contains a form that requires random number range values, and lets you optionally specify a random number seed value. It uses <code>cfform</code> controls and attributes to specify a default range, ensure that the range fields have values, and validate that the field values are in a specified integer range. When you submit the form, it checks whether the seed field has an empty string; if the field has a value, the code uses the number to seed the random number generator. It then generates and displays the random number.</p>
+<pre>&lt;h3&gt;RandRange Example&lt;/h3&gt;
+
+&lt;!--- Do the following only if the form has been submitted. ---&gt;
+&lt;cfif IsDefined(&quot;Form.mySeed&quot;)&gt;
+
+   &lt;!--- Do the following only if the seed field has a non-empty string. ---&gt;
+   &lt;cfif Form.mySeed NEQ &quot;&quot;&gt;
+      &lt;cfoutput&gt;
+         &lt;b&gt;Seed value is #FORM.mySeed#&lt;/b&gt;&lt;br&gt;
+      &lt;/cfoutput&gt;
+      &lt;br&gt;
+
+      &lt;!--- Call Randomize to seed the random number generator. ---&gt;
+      &lt;cfset r = Randomize(FORM.mySeed, &quot;SHA1PRNG&quot;)&gt;
+   &lt;cfelse&gt;
+      &lt;b&gt;No Seed value submitted&lt;/b&gt;&lt;br&gt;
+   &lt;/cfif&gt;
+
+   &lt;!--- Generate and display the random number. ---&gt;
+   &lt;cfoutput&gt;&lt;p&gt;&lt;b&gt;
+      RandRange returned: #RandRange(FORM.myInt, FORM.myInt2, &quot;SHA1PRNG&quot;)#
+   &lt;/cfoutput&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;/cfif&gt;
+
+&lt;!--- This form uses cfform input validation to check the input range. ---&gt;
+&lt;cfform action = &quot;#CGI.SCRIPT_NAME#&quot;&gt;
+&lt;p&gt;Enter the random number Range: From 
+&lt;cfinput type = &quot;Text&quot; name = &quot;MyInt&quot; value = &quot;1&quot; 
+   RANGE = &quot;-1000000000,1000000000&quot;
+   message = &quot;Please enter a value between -1,000,000,000 and 1,000,000,000&quot;
+   validate = &quot;integer&quot; required = &quot;Yes&quot;&gt;
+To 
+&lt;cfinput type = &quot;Text&quot; name = &quot;MyInt2&quot; value = &quot;9999&quot; 
+   RANGE = &quot;-1000000000,1000000000&quot;
+   message = &quot;Please enter a value between --1,000,000,000  and 1,000,000,000&quot;
+   validate = &quot;integer&quot; required = &quot;Yes&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Enter a number to seed the randomizer: 
+&lt;cfinput type = &quot;Text&quot; name = &quot;mySeed&quot; RANGE = &quot;-1000000000,1000000000&quot;
+   message = &quot;Please enter a value between -1,000,000,000 and 1,000,000,000&quot;
+   validate = &quot;integer&quot; required = &quot;No&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input type = &quot;Submit&quot; name = &quot;&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000604.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000606.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000605.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

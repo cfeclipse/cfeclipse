@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Adding a directory entry</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001290.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001292.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Adding a directory entry</h1>
+<p>When you add an entry to an LDAP directory, you specify the DN, all the required attributes, including the entry's object class, and any optional attributes. The following example builds a form that adds an entry to an LDAP directory.</p>
+<h4>To add an entry:</h4>
+<ol>
+<li>
+   Create a file that looks like the following:
+<pre>
+&lt;!--- set the LDAP server ID, user name, and password as variables
+	here so they can be changed in only one place ---&gt;
+&lt;cfset myServer=&quot;ldap.myco.com&quot;&gt;
+&lt;cfset myUserName=&quot;cn=Directory Manager&quot;&gt;
+&lt;cfset myPassword=&quot;password&quot;&gt;
+
+&lt;!--- Initialize the values used in form fields to empty strings ---&gt;
+&lt;cfparam name=&quot;fullNameValue&quot; default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;surnameValue&quot; default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;emailValue&quot; default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;phoneValue&quot; default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;uidValue&quot; default=&quot;&quot;&gt;
+
+&lt;!---When the form is submitted, add the LDAP entry ---&gt;
+&lt;cfif isdefined(&quot;Form.action&quot;) AND Trim(Form.uid) IS NOT &quot;&quot;&gt;
+	&lt;cfif Form.action is &quot;add&quot;&gt;
+		&lt;cfif Trim(Form.fullName) is &quot;&quot; OR Trim(Form.surname) is &quot;&quot;
+			OR Trim(Form.email) is &quot;&quot; OR Trim(Form.phone) is &quot;&quot;&gt;
+				&lt;h2&gt;You must enter a value in every field.&lt;/h2&gt;
+				&lt;cfset fullNameValue=Form.fullName&gt;
+				&lt;cfset surnameValue=Form.surname&gt;
+				&lt;cfset emailValue=Form.email&gt;
+				&lt;cfset phoneValue=Form.phone&gt;
+				&lt;cfset uidValue=Form.uid&gt;
+		&lt;cfelse&gt;
+			&lt;cfset attributelist=&quot;objectclass=top, person,
+					organizationalperson, inetOrgPerson;
+				cn=#Trim(Form.fullName)#; sn=#Trim(Form.surname)#;
+				mail=#Trim(Form.email)#; 
+				telephonenumber=#Trim(Form.phone)#;
+				ou=Human Resources;
+				uid=#Trim(Form.uid)#&quot;&gt;
+			&lt;cfldap action=&quot;add&quot;
+				attributes=&quot;#attributeList#&quot;
+				dn=&quot;uid=#Trim(Form.uid)#, ou=People, o=Airius.com&quot;
+				server=#myServer#
+				username=#myUserName#
+				password=#myPassword#&gt;
+			&lt;cfoutput&gt;&lt;h3&gt;Entry for User ID #Form.uid# has been added&lt;/h3&gt;
+			&lt;/cfoutput&gt;
+		&lt;/cfif&gt;
+	&lt;/cfif&gt;	
+&lt;/cfif&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Update LDAP Form&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;Manage LDAP Entries&lt;/h2&gt;
+
+&lt;cfform action=&quot;update_ldap.cfm&quot; method=&quot;post&quot;&gt;
+	&lt;table&gt;
+		&lt;tr&gt;&lt;td&gt;Full Name:&lt;/td&gt;
+			&lt;td&gt;&lt;cfinput type=&quot;Text&quot;
+				 name=&quot;fullName&quot;
+				 value=#fullNameValue#
+				 size=&quot;20&quot;
+				 maxlength=&quot;30&quot;
+				 tabindex=&quot;1&quot;&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;&lt;td&gt;Surname:&lt;/td&gt; 
+			&lt;td&gt;&lt;cfinput type=&quot;Text&quot;
+				name=&quot;surname&quot;
+				Value= &quot;#surnameValue#&quot;
+				size=&quot;20&quot;
+				maxlength=&quot;20&quot;
+				tabindex=&quot;2&quot;&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;E-mail Address:&lt;/td&gt;
+			&lt;td&gt;&lt;cfinput type=&quot;Text&quot;
+				name=&quot;email&quot;
+				value=&quot;#emailValue#&quot;
+				size=&quot;20&quot;
+				maxlength=&quot;20&quot;
+				tabindex=&quot;3&quot;&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;Telephone Number:&lt;/td&gt;
+			&lt;td&gt;&lt;cfinput type=&quot;Text&quot;
+				name=&quot;phone&quot;
+				value=&quot;#phoneValue#&quot;
+				size=&quot;20&quot;
+				maxlength=&quot;20&quot;
+				tabindex=&quot;4&quot;&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;User ID:&lt;/td&gt;
+			&lt;td&gt;&lt;cfinput type=&quot;Text&quot;
+				name=&quot;uid&quot;
+				value=&quot;#uidValue#&quot;
+				size=&quot;20&quot;
+				maxlength=&quot;20&quot;
+				tabindex=&quot;5&quot;&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td colspan=&quot;2&quot;&gt;
+				&lt;input type=&quot;Submit&quot;
+				 name=&quot;action&quot;
+				 value=&quot;Add&quot;
+				 tabindex=&quot;8&quot;&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/table&gt;
+	&lt;br&gt;
+	*All fields are required for Add&lt;br&gt;
+&lt;/cfform&gt;
+
+&lt;!---Output the user list ---&gt;
+&lt;h2&gt;User List for the Human Resources Department&lt;/h2&gt;
+&lt;cfldap name=&quot;GetList&quot;
+	server=#myServer#
+	action=&quot;query&quot;
+	attributes=&quot;cn,sn,mail,telephonenumber,uid&quot;
+	start=&quot;o=Airius.com&quot;
+	scope=&quot;subtree&quot;
+	filter=&quot;ou=Human Resources&quot;
+	sort=&quot;sn,cn&quot;
+	sortControl=&quot;asc, nocase&quot;&gt;
+
+&lt;table border=&quot;1&quot;&gt;
+	&lt;tr&gt;
+		&lt;th&gt;Full Name&lt;/th&gt;
+		&lt;th&gt;Surname&lt;/th&gt;
+		&lt;th&gt;Mail&lt;/th&gt;
+		&lt;th&gt;Phone&lt;/th&gt;
+		&lt;th&gt;UID&lt;/th&gt;
+	&lt;/tr&gt;
+	&lt;cfoutput query=&quot;GetList&quot;&gt;
+	&lt;tr&gt;
+		&lt;td&gt;#GetList.cn#&lt;/td&gt;
+		&lt;td&gt;#GetList.sn#&lt;/td&gt;
+		&lt;td&gt;#GetList.mail#&lt;/td&gt;
+		&lt;td&gt;#GetList.telephonenumber#&lt;/td&gt;
+		&lt;td&gt;#GetList.uid#&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;/cfoutput&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   At the top of the file, change the myServer, myUserName, and myPassword variable assignments to values that are valid for your LDAP server.
+</li>
+<li>
+   Save the page as update_ldap.cfm and run it in your browser.
+</li>
+</ol>
+<h4><a name="wp1197554"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset myServer=&quot;ldap.myco.com&quot;&gt;
+&lt;cfset myUserName=&quot;cn=Directory<br />   Manager&quot;&gt;
+&lt;cfset myPassword=&quot;password&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Initializes the LDAP connection information variables. Uses variables for all connection information so that any changes have to be made in only one place.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfparam name=&quot;fullNameValue&quot;<br />   default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;surnameValue&quot; <br />   default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;emailValue&quot; <br />   default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;phoneValue&quot; <br />   default=&quot;&quot;&gt;
+&lt;cfparam name=&quot;uidValue&quot; default=&quot;&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Sets the default values of empty strings for the form field value variables. The data entry form uses <a href="00000279.htm#1100379"><code>cfinput</code></a> fields with <code>value</code> attributes so that the form can be prefilled and so that, if the user submits an incomplete form, ColdFusion can retain any entered values in the form when it redisplays the page. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif isdefined(&quot;Form.action&quot;) AND Trim(Form.uid) IS NOT &quot;&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Ensures that the user entered a User ID in the form.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfif Form.action is &quot;add&quot;&gt;
+</pre>    </td>
+    <td>
+<p>If the user clicks Add, processes the code that follows. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif Trim(Form.fullName) is &quot;&quot;<br />   OR Trim(Form.surname) is &quot;&quot;
+   OR Trim(Form.email) is &quot;&quot; <br />   OR Trim(Form.phone) is &quot;&quot;&gt;
+      &lt;h2&gt;You must enter a value in every<br />         field.&lt;/h2&gt;
+      &lt;cfset fullNameValue=<br />         Form.fullName&gt;
+      &lt;cfset surnameValue=<br />         Form.surname&gt;
+      &lt;cfset emailValue=Form.email&gt;
+      &lt;cfset phoneValue=Form.phone&gt;
+      &lt;cfset uidValue=Form.uid&gt;
+</pre>    </td>
+    <td>
+<p>If any field in the submitted form is blank, display a message and set the other form fields to display data that the user submitted.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfelse&gt;
+   &lt;cfset attributelist=<br />      &quot;objectclass=top,person,<br />         organizationalperson,<br />         inetOrgPerson;<br />      cn=#Trim(Form.fullName)#;<br />      sn=#Trim(Form.surname)#;<br />      mail=#Trim(Form.email)#; 
+         telephonenumber=<br />      #Trim(Form.phone)#;<br />      ou=Human Resources;<br />      uid=#Trim(Form.uid)#&quot;&gt;
+</pre>    </td>
+    <td>
+<p>If the user entered data in all fields, sets the attributelist variable to specify the entry's attributes, including the object class and the organizational unit (in this case, Human Resources). </p>
+<p>The <a href="00000656.htm#138803"><code>Trim</code></a> function removes leading or trailing spaces from the user data.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>   &lt;cfldap action=&quot;add&quot;
+      attributes=&quot;#attributeList#&quot;
+      dn=&quot;uid=#Trim(Form.uid)#,<br />      ou=People, o=Airius.com&quot;
+      server=#myServer#
+      username=#myUserName#
+      password=#myPassword#&gt;
+   &lt;cfoutput&gt;&lt;h3&gt;Entry for User ID<br />      #Form.uid# has been added&lt;/h3&gt;<br />   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+&lt;/cfif&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>Adds the new entry to the directory.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfform action=&quot;update_ldap.cfm&quot;
+       method=&quot;post&quot;&gt;
+   &lt;table&gt;
+      &lt;tr&gt;&lt;td&gt;Full Name:&lt;/td&gt;
+         &lt;td&gt;&lt;cfinput type=&quot;Text&quot;
+             name=&quot;fullName&quot;
+             value=#fullNameValue#
+             size=&quot;20&quot;
+             maxlength=&quot;30&quot;
+             tabindex=&quot;1&quot;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+.
+.
+.
+      &lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;
+         &lt;input type=&quot;Submit&quot;
+             name=&quot;action&quot;
+             value=&quot;Add&quot;
+             tabindex=&quot;6&quot;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+   &lt;/table&gt;
+   &lt;br&gt;
+   *All fields are required for Add&lt;br&gt;
+&lt;/cfform&gt;
+</pre>    </td>
+    <td>
+<p>Outputs the data entry form, formatted as a table. Each <code>cfinput</code> field always has a value, set by the <code>value</code> attribute when the page is called. The <code>value</code> attribute lets ColdFusion update the form contents when the form is redisplayed after the user clicks Add. The code that handles cases in which the user fails to enter all the required data uses this feature.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfldap name=&quot;GetList&quot;
+   server=#myServer#
+   action=&quot;query&quot;
+   attributes=&quot;cn,sn,mail,<br />      telephonenumber,uid&quot;
+   start=&quot;o=Airius.com&quot;
+   scope=&quot;subtree&quot;
+   filter=&quot;ou=Human Resources&quot;
+   sort=&quot;sn,cn&quot;
+   sortControl=&quot;asc, nocase&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Queries the directory and gets the common name, surname, e-mail address, telephone number, and user ID from the matching entries. </p>
+<p>Searches the subtree from the entry with the DN of o=Airius.com, and selects all entries in which the organizational unit is Human Resources. </p>
+<p>Sorts the results by surname and then common name (to sort by last name, then first). Sorts in default ascending order that is not case-sensitive.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;table border=&quot;1&quot;&gt;
+   &lt;tr&gt;
+   &lt;th&gt;Full Name&lt;/th&gt;
+   &lt;th&gt;Surname&lt;/th&gt;
+   &lt;th&gt;Mail&lt;/th&gt;
+   &lt;th&gt;Phone&lt;/th&gt;
+   &lt;th&gt;UID&lt;/th&gt;
+   &lt;/tr&gt;
+   &lt;cfoutput query=&quot;GetList&quot;&gt;
+   &lt;tr&gt;
+   &lt;td&gt;#GetList.cn#&lt;/td&gt;
+   &lt;td&gt;#GetList.sn#&lt;/td&gt;
+   &lt;td&gt;#GetList.mail#&lt;/td&gt;
+   &lt;td&gt;#GetList.telephonenumber#&lt;/td&gt;
+   &lt;td&gt;#GetList.uid#&lt;/td&gt;
+   &lt;/tr&gt;
+   &lt;/cfoutput&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>    </td>
+    <td>
+<p>Display the query results in a table.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001290.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001292.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001291.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

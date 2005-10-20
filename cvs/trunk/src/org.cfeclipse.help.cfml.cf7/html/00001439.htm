@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Linking to JavaScript from a pie chart</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001438.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001440.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Linking to JavaScript from a pie chart</h1>
+<p>In the following example, when you click a pie wedge, ColdFusion uses JavaScript to display a pop-up window about the wedge. </p>
+<h4>To create a dynamic chart using JavaScript:</h4>
+<ol>
+<li>
+   Create a new application page with the following content:
+<pre>
+&lt;script&gt;
+function Chart_OnClick(theSeries, theItem, theValue){
+alert(&quot;Series: &quot; + theSeries + &quot;, Item: &quot; + theItem + &quot;, Value: &quot; + 
+theValue);
+	}
+&lt;/script&gt;
+
+&lt;cfchart 
+		xAxisTitle=&quot;Department&quot;
+		yAxisTitle=&quot;Salary Average&quot;
+		tipstyle=none
+		
+url=&quot;javascript:Chart_OnClick(&#39;$SERIESLABEL$&#39;,&#39;$ITEMLABEL$&#39;,&#39;$VALUE$&#39;);&quot;
+	&gt;
+	&lt;cfchartseries type=&quot;bar&quot; seriesLabel=&quot;Average Salaries by Department&quot;&gt;
+		&lt;cfchartData item=&quot;Finance&quot; value=&quot;75000&quot;&gt;
+		&lt;cfchartData item=&quot;Sales&quot; value=&quot;120000&quot;&gt;
+		&lt;cfchartData item=&quot;IT&quot; value=&quot;83000&quot;&gt;
+		&lt;cfchartData item=&quot;Facilities&quot; value=&quot;45000&quot;&gt;	
+	&lt;/cfchartseries&gt;
+&lt;/cfchart&gt;
+</pre>
+</li>
+<li>
+   Save the page as chartdata_withJS.cfm in the myapps directory under the web root directory.
+</li>
+<li>
+   View the chartdata_withJS.cfm page in your browser:
+</li>
+<li>
+   Click the slices of the pie chart to display the pop-up window.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001438.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001440.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001439.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

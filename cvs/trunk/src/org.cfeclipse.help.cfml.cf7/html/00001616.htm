@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Uploading files</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001615.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001617.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Uploading files</h1>
+<p>File uploading requires that you create two files:</p>
+<ul>
+<li>
+   An HTML form to specify file upload information
+</li>
+<li>
+   An action page containing the file upload code
+</li>
+</ul>
+<p>The following procedures describe how to create these files.</p>
+<h4>To create an HTML file to specify file upload information:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;head&gt;&lt;title&gt;Specify File to Upload&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;Specify File to Upload&lt;/h2&gt;
+&lt;!--- the action attribute is the name of the action page ---&gt;
+&lt;form action=&quot;uploadfileaction.cfm&quot; 
+		enctype=&quot;multipart/form-data&quot; 
+		method=&quot;post&quot;&gt;
+	&lt;p&gt;Enter the complete path and filename of the file to upload:
+	&lt;input type=&quot;file&quot;
+			name=&quot;FiletoUpload&quot;
+			size=&quot;45&quot;&gt;
+	&lt;/p&gt;
+	&lt;input 	type=&quot;submit&quot;
+			value=&quot;Upload&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+</pre>
+</li>
+<li>
+   Save the file as uploadfileform.cfm in the myapps directory under your <i>web_root</i> and view it in the browser.
+</li>
+</ol>
+<p><strong>Note: </strong>The form will not work until you write an action page for it (see the next procedure).</p><h4><a name="wp1096204"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;form action=&quot;uploadfileaction.cfm&quot;
+   enctype=&quot;multipart/form-data&quot;
+   method=&quot;post&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Create a form that contains file selection fields for upload by the user. The <code>action</code> attribute value specifies the ColdFusion template that will process the submitted form. The <code>enctype</code> attribute value tells the server that the form submission contains an uploaded file. The<code> method</code> attribute is set to <code>post</code> to submit a ColdFusion form.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;input type=&quot;file&quot;
+   name=&quot;FiletoUpload&quot;
+   size=&quot;45&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Allow the user to specify the file to upload. The <code>file</code> type instructs the browser to prepare to read and transmit a file from the user&#39;s system to your server. It automatically includes a Browse button to let the user look for the file instead of manually entering the entire path and filename.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The user can enter a file path or browse the system and select a file to send.</p>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt; &lt;title&gt;Upload File&lt;/title&gt; &lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;Upload File&lt;/h2&gt;
+
+&lt;cffile action=&quot;upload&quot;
+		destination=&quot;c:\temp\&quot;
+		nameConflict=&quot;overwrite&quot;
+		fileField=&quot;Form.FiletoUpload&quot;&gt;
+		
+&lt;cfoutput&gt;
+You uploaded #cffile.ClientFileName#.#cffile.ClientFileExt#
+			successfully to #cffile.ServerDirectory#.
+&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Change the following line to point to an appropriate location on your server:
+<pre>
+destination=&quot;c:\temp\&quot;
+</pre>
+<p><strong>Note: </strong>This directory must exist on the server.</p></li>
+<li>
+   Save the file as uploadfileaction.cfm in the myapps directory under your <i>web_root</i>.
+</li>
+<li>
+   View uploadfileform.cfm in the browser, enter a file to upload, and submit the form.
+<p>The file you specified uploads.</p>
+</li>
+</ol>
+<h4><a name="wp1096257"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cffile action=&quot;upload&quot;
+</pre>    </td>
+    <td>
+<p>Output the name and location of the uploaded file on the client machine.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>destination=&quot;c:\temp\&quot;
+</pre>    </td>
+    <td>
+<p>Specify the destination of the file.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>nameConflict=&quot;overwrite&quot;
+</pre>    </td>
+    <td>
+<p>If the file already exists, overwrite it.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>fileField=&quot;Form.FiletoUpload&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Specify the name of the file to upload. Do not enclose the variable in number signs.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>You uploaded #cffile.ClientFileName#.#cffile.
+ClientFileExt# successfully to
+#cffile.ServerDirectory#.
+</pre>    </td>
+    <td>
+<p>Inform the user of the file that was uploaded and its destination. For information on <a href="00000245.htm#1098395"><code>cffile</code></a> scope variables, see <a href="00001620.htm#1096305">Evaluating the results of a file upload</a>.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>This example performs no error checking and does not incorporate any security measures. Before deploying an application that performs file uploads, ensure that you incorporate both error handling and security. For more information, see <a href="00001175.htm#1100022">Securing Applications</a> and <a href="00001130.htm#1220254">Handling Errors</a>.</p><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001617.htm#1125794">Resolving conflicting filenames</a>
+</li>
+<li>
+   <a href="00001618.htm#1096263">Controlling the type of file uploaded</a>
+</li>
+<li>
+   <a href="00001619.htm#1096280">Setting file and directory attributes</a>number
+</li>
+<li>
+   <a href="00001620.htm#1096305">Evaluating the results of a file upload</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001615.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001617.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001616.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

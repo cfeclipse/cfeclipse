@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Storing complex data in a string</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001528.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001530.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Storing complex data in a string</h1>
+<p>The following simple example uses WDDX to store complex data, a data structure that contains arrays as a string in a client variable. It uses the <a href="00000239.htm#3765824"><code>cfdump</code></a> tag to display the contents of the structure before serialization and after deserialization. It uses the <a href="00000506.htm#4744272"><code>HTMLEditFormat</code></a> function in a <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag to display the contents of the client variable. The <code>HTMLEditFormat</code> function is required to prevent the browser from trying to interpret (and throwing away) the XML tags in the variable.</p>
+<pre>&lt;!--- Enable client state management ---&gt;
+&lt;cfapplication name=&quot;relatives&quot; clientmanagement=&quot;Yes&quot;&gt;
+
+&lt;!--- Build a complex data structure ---&gt;
+&lt;cfscript&gt;
+   relatives = structNew();
+   relatives.father = &quot;Bob&quot;;
+   relatives.mother = &quot;Mary&quot;;
+   relatives.sisters = arrayNew(1);
+   arrayAppend(relatives.sisters, &quot;Joan&quot;);
+   relatives.brothers = arrayNew(1);
+   arrayAppend(relatives.brothers, &quot;Tom&quot;);
+   arrayAppend(relatives.brothers, &quot;Jesse&quot;);
+&lt;/cfscript&gt;
+
+A dump of the original relatives structure:&lt;br&gt;
+&lt;br&gt;
+&lt;cfdump var=&quot;#relatives#&quot;&gt;&lt;br&gt;
+&lt;br&gt;
+
+&lt;!--- Convert data structure to string form and save it in the client scope ---&gt;
+&lt;cfwddx action=&quot;cfml2wddx&quot; input=&quot;#relatives#&quot; output=&quot;Client.wddxRelatives&quot;&gt;
+
+The contents of the Client.wddxRelatives variable:&lt;br&gt;
+&lt;cfoutput&gt;#HtmlEditFormat(Client.wddxRelatives)#&lt;/cfoutput&gt;&lt;br&gt;
+
+&lt;!--- Now read the data from client scope into a new structure ---&gt;
+&lt;cfwddx action=&quot;wddx2cfml&quot; input=&quot;#Client.wddxRelatives#&quot; output=&quot;sameRelatives&quot;&gt;
+&lt;br&gt;
+A dump of the sameRelatives structure generated from client.wddxRelatives&lt;br&gt;
+&lt;cfdump var=&quot;#sameRelatives#&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001528.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001530.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001529.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

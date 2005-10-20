@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Viewing a directory schema</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001297.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001299.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Viewing a directory schema</h1>
+<p>LDAP v3 exposes a directory&#39;s schema information in a special entry in the root DN. You use the directory root subschemaSubentry attribute to access this information.</p>
+<p>The following ColdFusion query shows how to get and display the directory schema. It displays information from the schema's object class and attribute type definitions. For object classes, it displays the class name, superior class, required attribute types, and optional attribute types. For attribute types, it displays the type name, type description, and whether the type is single- or multivalued.</p>
+<p>The example does not display all the information in the schema. For example, it does not display the matching rules. It also does not display the object class IDs, attribute type IDs, attribute type syntax IDs, or the object class descriptions. (The object class description values are all &quot;Standard Object Class.&quot;)</p>
+<p><strong>Note: </strong>To be able to view the schema for an LDAP server, the server must support LDAP v3.</p><p>This example does not work on iPlanet Directory Server 5.0. It does work on a 4.x server.</p>
+<h4>To view the schema for an LDAP directory:</h4>
+<ol>
+<li>
+   Create a new file that looks like the following:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;LDAP Schema&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;!--- Start at Root DSE to get the subschemaSubentry attribute ---&gt;
+&lt;cfldap 
+	name=&quot;EntryList&quot;
+	server=&quot;ldap.mycorp.com&quot;
+	action=&quot;query&quot;
+	attributes=&quot;subschemaSubentry&quot;
+	scope=&quot;base&quot;
+	start=&quot;&quot;&gt;
+
+&lt;!--- Use the DN from the subschemaSubEntry attribute to get the schema ---&gt;
+&lt;cfldap 
+	name=&quot;EntryList2&quot;
+	server=&quot;ldap.mycorp.com&quot;
+	action=&quot;query&quot;
+	attributes=&quot;objectclasses, attributetypes&quot;
+	scope=&quot;base&quot;
+	filter=&quot;objectclass=*&quot;
+	start=#entryList.subschemaSubentry#&gt;
+
+&lt;!--- Only one record is returned, so query loop is not required ---&gt;
+&lt;h2&gt;Object Classes&lt;/h2&gt;
+&lt;table border=&quot;1&quot;&gt;
+	&lt;tr&gt;
+		&lt;th&gt;Name&lt;/th&gt;
+		&lt;th&gt;Superior class&lt;/th&gt;
+		&lt;th&gt;Must have&lt;/th&gt;
+		&lt;th&gt;May have&lt;/th&gt;
+	&lt;/tr&gt;
+	&lt;cfloop index = &quot;thisElement&quot; list = #Entrylist2.objectclasses#&gt;
+		&lt;cfscript&gt;
+			thiselement = Trim(thisElement);
+			nameloc = Find(&quot;NAME&quot;, thisElement);
+			descloc = Find(&quot;DESC&quot;, thisElement);
+			suploc = Find(&quot;SUP&quot;, thisElement);
+			mustloc = Find(&quot;MUST&quot;, thisElement);
+			mayloc = Find(&quot;MAY&quot;, thisElement);
+			endloc = Len(thisElement);
+		&lt;/cfscript&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement, nameloc+6, descloc-nameloc-8)#
+				&lt;/cfoutput&gt;&lt;/td&gt;
+			&lt;cfif #suploc# NEQ 0&gt;
+				&lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement, suploc+5, mustloc-suploc-7)#
+				&lt;/cfoutput&gt;&lt;/td&gt;
+			&lt;cfelse&gt;
+				&lt;td&gt;NONE&lt;/td&gt;
+			&lt;/cfif&gt;
+			&lt;cfif #mayloc# NEQ 0&gt;
+				&lt;td&gt;&lt;cfoutput&gt;#Replace(Mid(thisElement, mustloc+6,
+					mayloc-mustloc-9), &quot; $ &quot;, &quot;, &quot;, &quot;all&quot;)#&lt;/cfoutput&gt;&lt;/td&gt;
+				&lt;td&gt;&lt;cfoutput&gt;#Replace(Mid(thisElement, mayloc+5, endloc-mayloc-
+8),
+					&quot; $ &quot;, &quot;, &quot;, &quot;all&quot;)#&lt;/cfoutput&gt;&lt;/td&gt;
+			&lt;cfelse&gt;
+				&lt;td&gt;&lt;cfoutput&gt;#Replace(Mid(thisElement, mustloc+6,
+					endloc-mustloc-9), &quot; $ &quot;, &quot;, &quot;, &quot;all&quot;)#&lt;/cfoutput&gt;&lt;/td&gt;
+				&lt;td&gt;NONE&lt;/td&gt;
+			&lt;/cfif&gt;
+		&lt;/tr&gt;
+	&lt;/cfloop&gt; 
+&lt;/table&gt;
+&lt;br&gt;&lt;br&gt;
+
+	&lt;h2&gt;Attribute Types&lt;/h2&gt;
+&lt;table border=&quot;1&quot; &gt;
+	&lt;tr&gt;
+		&lt;th&gt;Name&lt;/th&gt;
+		&lt;th&gt;Description&lt;/th&gt;
+		&lt;th&gt;multivalued?&lt;/th&gt;
+	&lt;/tr&gt;
+	&lt;cfloop index = &quot;thisElement&quot; 
+		list = #ReplaceNoCase(EntryList2.attributeTypes, &quot;, alias&quot;, &quot;&lt;br&gt; 
+Alias&quot;, 
+		&quot;all&quot;)# delimiters = &quot;,&quot;&gt;
+		&lt;cfscript&gt;
+			thiselement = Trim(thisElement);
+			nameloc = Find(&quot;NAME&quot;, thisElement);
+			descloc = Find(&quot;DESC&quot;, thisElement);
+			syntaxloc = Find(&quot;SYNTAX&quot;, thisElement);
+			singleloc = Find(&quot;SINGLE&quot;, thisElement);
+			endloc = Len(thisElement);
+		&lt;/cfscript&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement, nameloc+6, descloc-nameloc-8)#
+				&lt;/cfoutput&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement, descloc+6, syntaxloc-descloc-8)#
+				&lt;/cfoutput&gt;&lt;/td&gt;
+			&lt;cfif #singleloc# EQ 0&gt;
+				 &lt;td&gt;&lt;cfoutput&gt;Yes&lt;/cfoutput&gt;&lt;/td&gt;
+			&lt;cfelse&gt;
+				 &lt;td&gt;&lt;cfoutput&gt;No&lt;/cfoutput&gt;&lt;/td&gt;
+			&lt;/cfif&gt;
+		&lt;/tr&gt;
+	&lt;/cfloop&gt; 
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Change the server from <code>ldap.mycorp.com </code>to your LDAP server. You might also need to specify a user ID and password in the <a href="00000283.htm#1100581"><code>cfldap</code></a> tag.
+</li>
+<li>
+   Save the template as <code>ldapschema.cfm</code> in <code>myapps</code> under your web root directory and view it in your browser.
+</li>
+</ol>
+<h4><a name="wp1121783"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfldap 
+   name=&quot;EntryList&quot;
+   server=&quot;ldap.mycorp.com&quot;
+   action=&quot;query&quot;
+   attributes=&quot;subschemaSubentry&quot;
+   scope=&quot;base&quot;
+   start=&quot;&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Gets the value of the subschemaSubentry attribute from the root of the directory server. The value is the DN of the schema. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfldap 
+   name=&quot;EntryList2&quot;
+   server=&quot;ldap.mycorp.com&quot;
+   action=&quot;query&quot;
+   attributes=&quot;objectclasses,<br />      attributetypes&quot;
+   scope=&quot;base&quot;
+   filter=&quot;objectclass=*&quot;
+   start=#entryList.subschemaSubentry#&gt;
+</pre>    </td>
+    <td>
+<p>Uses the schema DN to get the objectclasses and attributetypes attributes from the schema.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;h2&gt;Object Classes&lt;/h2&gt;
+&lt;table border=&quot;1&quot;&gt;
+   &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Superior class&lt;/th&gt;
+      &lt;th&gt;Must have&lt;/th&gt;
+      &lt;th&gt;May have&lt;/th&gt;
+   &lt;/tr&gt;
+   &lt;cfloop index = &quot;thisElement&quot; list =<br />         #Entrylist2.objectclasses#&gt;
+      &lt;cfscript&gt;
+         thisElement = Trim(thisElement);
+         nameloc = Find(&quot;NAME&quot;,<br />            thisElement);
+         descloc = Find(&quot;DESC&quot;,<br />            thisElement);
+         suploc = Find(&quot;SUP&quot;, thisElement);
+         mustloc = Find(&quot;MUST&quot;,<br />            thisElement);
+         mayloc = Find(&quot;MAY&quot;, thisElement);
+         endloc = Len(thisElement);
+      &lt;/cfscript&gt;
+</pre>    </td>
+    <td>
+<p>Displays the object class name, superior class, required attributes, and optional attributes for each object class in a table.</p>
+<p>The schema contains the definitions of all object classes in a comma delimited list, so the code uses a list type <a href="00000290.htm#3301338"><code>cfloop</code></a> tag.</p>
+<p>The thisElement variable contains the object class definition. Trim off any leading or trailing spaces, then use the class definition field keywords in <a href="00000462.htm#1104451"><code>Find</code></a> functions to get the starting locations of the required fields, including the Object class ID. (The ID is not displayed.) </p>
+<p>Gets the length of the thisElement string for use in later calculations.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>      &lt;tr&gt;
+         &lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement,<br />            nameloc+6, descloc-nameloc-8)<br />            #&lt;/cfoutput&gt;&lt;/td&gt;
+         &lt;cfif #suploc# NEQ 0&gt;
+            &lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement,<br />            suploc+5, mustloc-suploc-7)#
+            &lt;/cfoutput&gt;&lt;/td&gt;
+         &lt;cfelse&gt;
+            &lt;td&gt;NONE&lt;/td&gt;
+         &lt;/cfif&gt;
+         &lt;cfif #mayloc# NEQ 0&gt;
+          &lt;td&gt;&lt;cfoutput&gt;#Replace<br />            (Mid(thisElement, mustloc+6,<br />            mayloc-mustloc-9), &quot; $ &quot;, &quot;, &quot;,<br />            &quot;all&quot;)#&lt;/cfoutput&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;cfoutput&gt;#Replace<br />            (Mid(thisElement, mayloc+5,
+            endloc-mayloc-8), &quot; $ &quot;, &quot;, &quot;,<br />            &quot;all&quot;)#&lt;/cfoutput&gt;&lt;/td&gt;
+         &lt;cfelse&gt;
+          &lt;td&gt;&lt;cfoutput&gt;#Replace<br />            (Mid(thisElement, mustloc+6,<br />            endloc-mustloc-9), &quot; $ &quot;, &quot;, &quot;,<br />            &quot;all&quot;)#&lt;/cfoutput&gt;&lt;/td&gt;
+          &lt;td&gt;NONE&lt;/td&gt;
+         &lt;/cfif&gt;
+      &lt;/tr&gt;
+   &lt;/cfloop&gt;
+&lt;/table&gt;
+</pre>    </td>
+    <td>
+<p>Displays the field values. Uses the <a href="00000585.htm#133799"><code>Mid</code></a> function to extract individual field values from the thisElement string.</p>
+<p>The top object class does not have a superior class entry. Handles this special case by testing the suploc location variable. If the value is not 0, handles normally, otherwise, output &quot;NONE&quot;. </p>
+<p>There might not be any optional attributes. Handles this case similarly to the superior class. The calculation of the location of required attributes uses the location of the optional attributes if the field exists; otherwise, uses the end of the object class definition string.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>   &lt;h2&gt;Attribute Types&lt;/h2&gt;
+   &lt;table border=&quot;1&quot; &gt;
+      &lt;tr&gt;
+         &lt;th&gt;Name&lt;/th&gt;
+         &lt;th&gt;Description&lt;/th&gt;
+         &lt;th&gt;Multivalued?&lt;/th&gt;
+      &lt;/tr&gt;
+      &lt;cfloop index = &quot;thisElement&quot; list =<br />          #ReplaceNoCase(attributeTypes, &quot;,<br />          alias&quot;, &quot;&lt;br&gt; Alias&quot;, &quot;all&quot;)#<br />          delimiters = &quot;,&quot;&gt;
+         &lt;cfscript&gt;
+          thiselement = Trim(thisElement);
+          nameloc = Find(&quot;NAME&quot;,<br />            thisElement);
+          descloc = Find(&quot;DESC&quot;,<br />            thisElement);
+          syntaxloc = Find(&quot;SYNTAX&quot;,<br />            thisElement);
+          singleloc = Find(&quot;SINGLE&quot;,<br />            thisElement);
+          endloc = Len(thisElement);
+         &lt;/cfscript&gt;
+      &lt;tr&gt;
+         &lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement,<br />            nameloc+6, descloc-nameloc-8)#<br />            &lt;/cfoutput&gt;&lt;/td&gt;
+         &lt;td&gt;&lt;cfoutput&gt;#Mid(thisElement,<br />            descloc+6, syntaxloc-descloc-8)<br />            #&lt;/cfoutput&gt;&lt;/td&gt;
+         &lt;cfif #singleloc# EQ 0&gt;
+             &lt;td&gt;&lt;cfoutput&gt;Yes&lt;/cfoutput&gt;<br />            &lt;/td&gt;
+         &lt;cfelse&gt;
+             &lt;td&gt;&lt;cfoutput&gt;No&lt;/cfoutput&gt;<br />            &lt;/td&gt;
+         &lt;/cfif&gt;
+      &lt;/tr&gt;
+   &lt;/cfloop&gt; 
+&lt;/table&gt;
+&lt;/cfloop&gt;
+</pre>    </td>
+    <td>
+<p>Does the same types of calculations for the attribute types as for the object classes. </p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>The attribute type field can contain the text &quot;, alias for....&quot;. This text includes a comma, which also delimits attribute entries. Use the <a href="00000613.htm#135675"><code>ReplaceNoCase</code></a> function to replace any comma that precedes the word &quot;alias&quot; with an HTML <code>&lt;br&gt;</code> tag.</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>The attribute definition includes a numeric syntax identifier, which the code does not display, but uses its location in calculating the locations of the other fields.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001297.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001299.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001298.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

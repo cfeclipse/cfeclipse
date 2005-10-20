@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About conditional processing</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000089.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000091.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About conditional processing</h1>
+<p>So far, all the coding examples shown in this chapter are considered linear coding examples. <i>Linear code</i><strong> </strong>is when ColdFusion executes code starting with the first line on the page, and processes every line in order. Although you will use linear code in your applications, you will often write code that performs various actions based on conditions, such as the following:</p>
+<ul>
+<li>
+   Determine whether a user entered a value in a form field.
+</li>
+<li>
+   Display results based on user input.
+</li>
+<li>
+   Display messages based on the time of day.
+</li>
+</ul>
+<p>You use conditional processing to customize the behavior of your application. <i>Conditional processing</i> facilitates decision making and lets you control how the code on a page is processed. </p>
+<p>In ColdFusion, you implement conditional processing with flow control tags. These tags are similar to other programming language control elements, such as <code>if</code>, <code>then</code>, and <code>else</code>. When using these tags, you can facilitate decision making in your code. The most fundamental tags used to control code execution are the <code>cfif</code>, <code>cfelse</code>, and <code>cfelseif</code> tags. Because you will see and use these tags in Part II of this manual, the following sections provide a basic introduction on how to use these tags. For more information about other conditional processing tags, including tags for looping, see <i>ColdFusion MX Developer's Guide</i>.</p>
+<h2><a name="wp1162591"></a>Using the cfif tag to evaluate True or False conditions</h2>
+<p>To create statements that let you evaluate conditions and perform an action based on the result, you use the <code>cfif</code> tag to create a <code>cfif</code> statement. The basic syntax is as follows:</p>
+<pre>&lt;cfif <code><i>expression</i></code>&gt;
+   HTML and CFML tags executed if expression is True.
+&lt;/cfif&gt;
+</pre><p>In this example, ColdFusion only executes the code inside the <code>cfif</code> statement if the expression evaluates to True. To perform actions if the expression is False, you can use the <code>cfelse</code> tag. For example, if the following <code>cfif</code> expression evaluates to False, the code between the <code>cfels</code>e tag and the ending <code>cfif</code> tag is processed:</p>
+<pre>&lt;cfif <code><i>expression</i></code>&gt;
+   HTML and CFML tags executed if expression is True.
+&lt;cfelse&gt;
+   HTML and CFML tags executed if expression is False.
+&lt;/cfif&gt;
+</pre><h2><a name="wp1162632"></a>Using the cfelseif tag to evaluate multiple expressions</h2>
+<p>To evaluate multiple expressions in a <code>cfif</code> statement, you can use <code>cfelseif</code> and <code>cfelse</code> tags in your statement; for example:</p>
+<pre>&lt;cfif <code><i>expression 1</i></code><code>&gt;</code>
+   HTML and CFML tags executed if expression 1 is True.
+&lt;cfelseif <code><i>expression 2</i></code>&gt;
+   HTML and CFML tags executed if expression 2 is True.
+&lt;cfelse&gt;
+   HTML and CFML tags executed for expression(s) that is False.
+&lt;/cfif&gt;
+</pre><p>The following example shows you how you can evaluate multiple expressions using these tags. This example uses a form in which users can enter their state to determine their state tax: </p>
+<pre>&lt;cfoutput&gt;
+&lt;cfif form.state IS &quot;MA&quot;&gt;
+   #form.state# State Tax: 8.5%
+&lt;cfelseif form.state IS &quot;VA&quot;&gt;
+   #form.state# State Tax: 8.2%
+&lt;cfelse&gt;
+   #form.state# State Tax Unknown
+&lt;/cfif&gt;
+&lt;/cfoutput&gt;
+</pre><p>The output of this <code>cfif</code> statement is based on the value entered by the user. If the user enters MA in the state form field, the state tax results returned is 8.5%. If the user enters VA in the state form field, the state tax results returned is 8.2%. If the user enters any other state in the state form field, State Tax Unknown is returned.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000089.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000091.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000090.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

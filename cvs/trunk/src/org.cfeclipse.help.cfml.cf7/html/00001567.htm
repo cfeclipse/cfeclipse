@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating and using a simple Java class</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001566.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001568.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating and using a simple Java class</h1>
+<p>Java is a strongly typed language, unlike ColdFusion, which does not enforce data types. As a result, there are some subtle considerations when calling Java methods. The following sections create and use a Java class to show how to use Java effectively in ColdFusion pages.</p>
+<h3><a name="wp1134416"></a>The Employee class</h3>
+<p>The Employee class has four data members: FirstName and LastName are public, and Salary and JobGrade are private. The Employee class has three overloaded constructors and a overloaded SetJobGrade method. </p>
+<p>Save the following Java source code in the file Employee.java, compile it, and place the resulting Employee.class file in a directory that is specified in the classpath:</p>
+<pre>public class Employee {
+
+public String FirstName;
+public String LastName;
+private float Salary;
+private int JobGrade;
+
+public Employee() {
+   FirstName =&quot;&quot;;
+   LastName =&quot;&quot;;
+   Salary = 0.0f;
+   JobGrade = 0;
+}
+
+public Employee(String First, String Last) {
+   FirstName = First;
+   LastName = Last;
+   Salary = 0.0f;
+   JobGrade = 0;
+}
+
+public Employee(String First, String Last, float salary, int grade) {
+   FirstName = First;
+   LastName = Last;
+   Salary = salary;
+   JobGrade = grade;
+}
+
+public void SetSalary(float Dollars) {
+   Salary = Dollars;
+}
+
+public float GetSalary() {
+   return Salary;
+}
+
+public void SetJobGrade(int grade) {
+   JobGrade = grade;
+}
+
+public void SetJobGrade(String Grade) {
+   if (Grade.equals(&quot;CEO&quot;)) {
+      JobGrade = 3;
+   }
+   else if (Grade.equals(&quot;MANAGER&quot;)) {
+      JobGrade = 2;
+   }
+   else if (Grade.equals(&quot;DEVELOPER&quot;)) {
+      JobGrade = 1;
+   }
+}
+
+public int GetJobGrade() {
+   return JobGrade;
+}
+
+}
+</pre><h3><a name="wp1134477"></a>A CFML page that uses the Employee class</h3>
+<p>Save the following text as JEmployee.cfm:</p>
+<pre>&lt;html&gt;
+&lt;body&gt;
+&lt;cfobject action=&quot;create&quot; type=&quot;java&quot; class=&quot;Employee&quot; name=&quot;emp&quot;&gt;
+&lt;!--- &lt;cfset emp.init()&gt; ---&gt;
+&lt;cfset emp.firstname=&quot;john&quot;&gt;
+&lt;cfset emp.lastname=&quot;doe&quot;&gt;
+&lt;cfset firstname=emp.firstname&gt;
+&lt;cfset lastname=emp.lastname&gt;
+&lt;/body&gt;
+
+&lt;cfoutput&gt;
+   Employee name is #firstname# #lastname#
+&lt;/cfoutput&gt;
+&lt;/html&gt;
+</pre><p>When you view the page in your browser, you get the following output: </p>
+<p>Employee name is john doe</p>
+<h4><a name="wp1134495"></a>Reviewing the code</h4>
+<p>The following table describes the CFML code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfobject action=create<br />   type=java class=Employee<br />   name=emp&gt;
+</pre>    </td>
+    <td>
+<p>Loads the Employee Java class and gives it an object name of emp.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;!--- &lt;cfset emp.init()&gt; ---&gt;
+</pre>    </td>
+    <td>
+<p>Does not call a constructor. ColdFusion invokes the default constructor when it first uses the class; in this case, when it processes the next line.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset emp.firstname=&quot;john&quot;&gt;
+&lt;cfset emp.lastname=&quot;doe&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Sets the public fields in the emp object to your values.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfset firstname=emp.firstname&gt;
+&lt;cfset lastname=emp.lastname&gt;
+</pre>    </td>
+    <td>
+<p>Gets the field values back from emp object.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput&gt;
+   Employee name is #firstname#<br />      #lastname#
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Displays the retrieved values.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1134527"></a>Java considerations</h3>
+<p>Keep the following points in mind when you write a ColdFusion page that uses a Java class object:</p>
+<ul>
+<li>
+   The Java class name is case-sensitive. You must ensure that the Java code and the CFML code use Employee as the class name. 
+</li>
+<li>
+   Although Java method and field names are case-sensitive, ColdFusion variables are not case-sensitive, and ColdFusion does any necessary case conversions. As a result, the sample code works even though the CFML uses emp.firstname and emp.lastname; the Java source code uses FirstName and LastName for these fields. 
+</li>
+<li>
+   If you do not call the constructor (or, as in this example, comment it out), ColdFusion automatically invokes the default constructor when it first uses the class.
+</li>
+</ul>
+<h3><a name="wp1134533"></a>Using an alternate constructor</h3>
+<p>The following ColdFusion page explicitly calls one of the alternate constructors for the Employee object:</p>
+<pre>&lt;html&gt;
+&lt;body&gt;
+
+&lt;cfobject action=&quot;create&quot; type=&quot;java&quot; class=&quot;Employee&quot; name=&quot;emp&quot;&gt;
+&lt;cfset emp.init(&quot;John&quot;, &quot;Doe&quot;, 100000.00, 10)&gt;
+&lt;cfset firstname=emp.firstname&gt;
+&lt;cfset lastname=emp.lastname&gt;
+&lt;cfset salary=emp.GetSalary()&gt;
+&lt;cfset grade=emp.GetJobGrade()&gt;
+
+&lt;cfoutput&gt;
+   Employee name is #firstname# #lastname#&lt;br&gt; 
+   Employee salary #DollarFormat(Salary)#&lt;br&gt;
+   Employee Job Grade #grade#
+&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><p>In this example, the constructor takes four arguments: the first two are strings, the third is a float, and the fourth is an integer. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001566.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001568.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001567.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example: CFML for a skinnable XML form</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001414.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001416.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example: CFML for a skinnable XML form</h1>
+<p>The following CFML code creates the form shown in the figure in <a href="00001410.htm#116740">About XML skinnable forms</a>. It shows how you can use CFML to structure your form.</p>
+<pre>&lt;cfform name=&quot;comments&quot; format=&quot;xml&quot; skin=&quot;basiccss&quot; width=&quot;400&quot; preservedata=&quot;Yes&quot; &gt;
+   &lt;cfinput type=&quot;hidden&quot; name=&quot;revision&quot; value=&quot;12a&quot;&gt;
+   &lt;cfformgroup type=&quot;fieldset&quot; label=&quot;Basic Information&quot;&gt;
+      &lt;cfformgroup type=&quot;vertical&quot;&gt;
+      &lt;cfformgroup type=&quot;horizontal&quot; label=&quot;Name&quot;&gt;
+         &lt;cfinput type=&quot;text&quot; size=&quot;20&quot; name=&quot;firstname&quot; required=&quot;yes&quot;&gt;
+         &lt;cfinput type=&quot;text&quot; size=&quot;25&quot; name=&quot;lastname&quot; required=&quot;yes&quot;&gt;
+      &lt;/cfformgroup&gt;
+      &lt;cfinput type=&quot;text&quot; name=&quot;email&quot; label=&quot;E-mail&quot; validate=&quot;email&quot; maxlength=&quot;35&quot;&gt;
+      &lt;cfselect name=&quot;satisfaction&quot; style=&quot;width:120px&quot; multiple=&quot;false&quot; label=&quot;Satisfaction&quot;&gt;
+         &lt;option selected&gt;very satisfied&lt;/option&gt;
+         &lt;option&gt;somewhat satisfied&lt;/option&gt;
+         &lt;option&gt;somewhat dissatisfied&lt;/option&gt;
+         &lt;option&gt;very dissatisfied&lt;/option&gt;
+         &lt;option&gt;no opinion&lt;/option&gt;
+      &lt;/cfselect&gt;
+      &lt;/cfformgroup&gt;
+    &lt;/cfformgroup&gt;
+   &lt;cfformitem name=&quot;html1&quot; type=&quot;html&quot;&gt;
+   &lt;p&gt;&lt;b&gt;We value your input&lt;/b&gt;.&lt;br&gt;
+   &lt;em&gt;Please tell us a little about yourself and your thoughts.&lt;/em&gt;&lt;/p&gt;
+   &lt;/cfformitem&gt;
+   &lt;cftextarea name=&quot;thoughts&quot; label=&quot;Additional Comments&quot; rows=&quot;5&quot; cols=&quot;66&quot;&gt;We really want to hear from you!&lt;/cftextarea&gt;
+   &lt;cfformgroup type=&quot;horizontal&quot;&gt;
+      &lt;cfinput type=&quot;submit&quot; name=&quot;submit&quot; style=&quot;width:80&quot; value=&quot;Tell Us&quot;&gt;
+      &lt;cfinput type=&quot;reset&quot; name=&quot;reset&quot; style=&quot;width:80&quot; value=&quot;Clear Fields&quot;&gt;
+   &lt;/cfformgroup&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001414.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001416.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001415.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

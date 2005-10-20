@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetClientVariablesList</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000472.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000474.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetClientVariablesList</h1>
+<h4><a name="wp1224773"></a>Description</h4>
+<p>Finds the client variables to which a page has write access.</p>
+<h4><a name="wp3375462"></a>Returns</h4>
+<p>Comma-delimited list of non-read-only client variables, as a string.</p>
+<h4><a name="wp2538174"></a>Category</h4>
+<p><a href="00000364.htm#1099435">List functions</a>, <a href="00000366.htm#3493621">Other functions</a></p>
+<h4><a name="wp1104863"></a>Function syntax</h4>
+<pre><code><strong>GetClientVariablesList</strong></code>()
+</pre><h4><a name="wp2544838"></a>See also</h4>
+<p><a href="00000453.htm#4994925"><code>DeleteClientVariable</code></a></p>
+<h4><a name="wp1104865"></a>Usage</h4>
+<p>The list of variables returned by this function is compatible with ColdFusion list functions.</p>
+<h4><a name="wp1104867"></a>Example</h4>
+<pre>&lt;!--- This example is view-only. ---&gt;
+ 
+&lt;h3&gt;GetClientVariablesList Example&lt;/h3&gt;
+
+&lt;p&gt;This view-only example deletes a client variable called &quot;User_ID&quot;, if it exists<br />in the list of client variables returned by GetClientVariablesList().
+&lt;p&gt;This example requires the existence of an Application.cfm file and that client<br />management be in effect.
+&lt;!---
+&lt;cfset client.somevar = &quot;&quot;&gt;
+&lt;cfset client.user_id = &quot;&quot;&gt;
+&lt;p&gt;Client variable list:&lt;cfoutput&gt;#GetClientVariablesList()#&lt;/cfoutput&gt;
+
+&lt;cfif ListFindNoCase(GetClientVariablesList(), &quot;User_ID&quot;) is not 0&gt;
+&lt;!--- delete that variable 
+   &lt;cfset temp = DeleteClientVariable(&quot;User_ID&quot;)&gt;
+   &lt;p&gt;Was variable &quot;User_ID&quot; Deleted? &lt;cfoutput&gt;#temp#&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;p&gt;Amended Client variable list:&lt;cfoutput&gt;#GetClientVariablesList()#
+ &lt;/cfoutput&gt;
+---&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000472.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000474.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000473.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

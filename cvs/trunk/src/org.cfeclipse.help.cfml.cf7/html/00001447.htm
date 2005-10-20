@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using advanced PDF options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001446.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001448.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using advanced PDF options</h1>
+<p>The <code>cfdocument</code> tag supports the Acrobat security options, as the following table shows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Security option
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Encryption</p>
+    </td>
+    <td>
+<p>Use the <code>encryption</code> attribute to specify whether PDF output is encrypted. Specify one of the following:</p>
+<ul>
+<li>
+   128-bit
+</li>
+<li>
+   40-bit
+</li>
+<li>
+   none
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>User password</p>
+    </td>
+    <td>
+<p>Use the <code>userpassword</code> attribute to specify a password that users must enter to view the document.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Owner password</p>
+    </td>
+    <td>
+<p>Use the <code>ownerpassword</code> attribute to specify a password that users must enter to view and optionally modify the document.</p>
+    </td>
+  </tr>
+</table>
+
+<p>Additionally, the <a href="00000236.htm#3765835"><code>cfdocument</code></a> tag supports the following Acrobat security permissions through the <code>permissions</code> attribute. Specify one or more of the following values; separate multiple permissions with a comma:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Permission
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Printing</p>
+    </td>
+    <td>
+<p>Specify the <code>AllowPrinting</code> attribute to enable viewers to print the document.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Modification</p>
+    </td>
+    <td>
+<p>Specify the <code>AllowModifyContents</code> attribute to let viewers modify the document, assuming they have the required software.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Copy</p>
+    </td>
+    <td>
+<p>Specify the <code>AllowCopy</code> attribute to let viewers select and copy text from the document.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Annotation</p>
+    </td>
+    <td>
+<p>Specify <code>AllowModifyAnnotations</code> to let viewers add comments to the document. If users add annotations, they must save the PDF after making changes.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Screen readers</p>
+    </td>
+    <td>
+<p>Specify <code>AllowScreenReaders</code> to enable access to the document through a screen reader.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Fill in</p>
+    </td>
+    <td>
+<p>Specify <code>AllowFillIn</code> to enable users to use form fields.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Assembly</p>
+    </td>
+    <td>
+<p>Specify <code>AllowAssembly</code> to enable users to create bookmarks and thumbnails, as well as insert, delete, and rotate pages.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Degraded printing</p>
+    </td>
+    <td>
+<p>Specify <code>AllowDegradedPrinting</code> to enable low-resolution printing. Low resolution printing prints each page as a bitmap, so printing may be slower.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>The defaults for these options vary, based on encryption level. These options apply to PDF only. For more information, see the <a href="00000236.htm#3765835"><code>cfdocument</code></a> discussion in <i>CFML Reference</i>.</p><p>The following example creates a PDF document that allows copying only:</p>
+<pre>&lt;cfdocument format=&quot;PDF&quot; encryption=&quot;40-bit&quot;
+   ownerpassword=&quot;us3rpa$$w0rd&quot; userpassword=&quot;us3rpa$$w0rd&quot;
+   permissions=&quot;AllowCopy&quot; &gt;
+&lt;h1&gt;Employee List&lt;/h1&gt;
+&lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   SELECT FirstName, LastName, Salary
+   FROM Employee
+&lt;/cfquery&gt;
+&lt;cfoutput query=&quot;EmpList&quot;&gt;
+#EmpList.FirstName#, #EmpList.LastName#, #LSCurrencyFormat(EmpList.Salary)#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;/cfdocument&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001446.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001448.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001447.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

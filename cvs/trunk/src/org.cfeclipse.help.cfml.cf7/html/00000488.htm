@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetMetaData</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000487.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000489.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetMetaData</h1>
+<h4><a name="wp4605212"></a>Description</h4>
+<p>Gets metadata (such as the methods, properties, and parameters of a component) associated with an object that is deployed on the ColdFusion server. </p>
+<h4><a name="wp4099420"></a>Returns</h4>
+<p>Structured metadata information: for ColdFusion components (CFCs) and user defined functions (UDFs), a structure; for query objects, an array of structures.</p>
+<h4><a name="wp4099422"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp4099427"></a>Function syntax</h4>
+<pre><code><strong>GetMetaData</strong></code>(object)
+</pre><h4><a name="wp4989448"></a>See also</h4>
+<p><a href="00000424.htm#1102241">CreateObject</a>, <a href="00000598.htm#134610">QueryAddColumn</a>, <a href="00000600.htm#134773">QueryNew</a></p>
+<h4><a name="wp4099429"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added support for getting query object metadata.</p>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp4099530"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>object</p>
+    </td>
+    <td>
+<p>A ColdFusion component, user-defined function, or query object.<br />Within a CFC, the parameter can also specify the This scope.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4223122"></a>Usage</h4>
+<p>This function provides information about application data, and lets applications dynamically determine the structure of an object and how to use it. This function is useful for CFCs and query objects. The metadata for a CFC includes information on the component and its functions, arguments, and properties. The <code>getMetaData</code> function also returns metadata for user-defined functions that not part of CFCs.</p>
+<p>The following table lists the data returned by the function for supported object types:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Object
+    </th>
+    <th>
+Field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td colspan="2" rowspan="1">
+<p>Component</p>
+    </td>
+    <td>
+<p>A structure containing the following fields:</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="1" rowspan="10">
+<p>&#160;</p>
+    </td>
+    <td>
+<p>displayname</p>
+    </td>
+    <td>
+<p>Value of the <code>cfcomponent</code> tag <code>displayname</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>extends</p>
+    </td>
+    <td>
+<p>Metadata for the component's ancestor component. Components that do not explicitly extend another component extend the WEB-INF.cftags.component.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>functions</p>
+    </td>
+    <td>
+<p>Array of metadata structures for the component's functions.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>hint</p>
+    </td>
+    <td>
+<p>Value of the <code>cfcomponent</code> tag <code>displayname</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Component name, including the period-delimited path from a component search root such as the web root or a directory specified in the administrator Custom Tag Paths page. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>output</p>
+    </td>
+    <td>
+<p>Value of the <code>cfcomponent</code> tag <code>output</code> attribute, if any</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>Absolute path to the component.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>properties</p>
+    </td>
+    <td>
+<p>Array of structures containing metadata specified by the component's <code>cfproperty</code> tags, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Always, component.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>userMetadata</p>
+    </td>
+    <td>
+<p>User-specified attributes in the <code>cfcomponent</code> tag</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="2" rowspan="1">
+<p>Function</p>
+    </td>
+    <td>
+<p>A structure containing the following fields.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="1" rowspan="9">
+<p>&#160;</p>
+    </td>
+    <td>
+<p>access</p>
+    </td>
+    <td>
+<p>Value of the <code>cffunction</code> tag <code>access</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>displayname</p>
+    </td>
+    <td>
+<p>Value of the <code>cffunction</code> tag <code>displayname</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>hint</p>
+    </td>
+    <td>
+<p>Value of the <code>cffunction</code> tag <code>hint</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Function name.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>output</p>
+    </td>
+    <td>
+<p>Value of the <code>cffunction</code> tag <code>output</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>parameters</p>
+    </td>
+    <td>
+<p>Array of structures containing metadata for the function parameters.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>returntype</p>
+    </td>
+    <td>
+<p>Value of the <code>cffunction</code> tag <code>returntype</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>roles</p>
+    </td>
+    <td>
+<p>Value of the <code>cffunction</code> tag <code>output</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>userMetadata</p>
+    </td>
+    <td>
+<p>User-specified attributes in the <code>cffunction</code> tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="2" rowspan="1">
+<p>Parameter or Property</p>
+    </td>
+    <td>
+<p>A structure containing the following fields:</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="1" rowspan="7">
+<p>&#160;</p>
+    </td>
+    <td>
+<p>default</p>
+    </td>
+    <td>
+<p>Value of the <code>cfargument</code> or <code>cfproperty</code> tag <code>default</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>displayname</p>
+    </td>
+    <td>
+<p>Value of the <code>cfargument</code> or <code>cfproperty</code> tag <code>displayname</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>hint</p>
+    </td>
+    <td>
+<p>Value of the <code>cfargument</code> or <code>cfproperty</code> tag <code>hint</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Function parameter or CFC propery name.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>required</p>
+    </td>
+    <td>
+<p>Value of the <code>cfargument</code> or <code>cfproperty</code> tag <code>required</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Value of the <code>cfargument</code> or <code>cfproperty</code> tag <code>type</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>userMetadata</p>
+    </td>
+    <td>
+<p>User-specified attributes in the <code>argument</code> tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="2" rowspan="1">
+<p>Query</p>
+    </td>
+    <td>
+<p>An array of structures containing the following elements:</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="1" rowspan="3">
+<p>&#160;</p>
+    </td>
+    <td>
+<p>IsCaseSensitive</p>
+    </td>
+    <td>
+<p>Boolean value indicating whether character data must be case correct.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Name</p>
+    </td>
+    <td>
+<p>The column name.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>TypeName</p>
+    </td>
+    <td>
+<p>The SQL data type (Omitted if the query object is created with QueryNew without specifying types.)</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>Use the This scope to access component metadata inside the CFC. The This scope is available at runtime in the component body and in the CFC methods. It is used to read and write variables that are present during the life of the component.</p><p>For more information, see <a href="00001064.htm#1214870">Using introspection to get information about components</a> in <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp4989420"></a>Example</h4>
+<p>The following example uses the <code>cfdump</code> tag to display metadata for the utilities CFC that is used by the ColdFusion component browser. It also displays the names and data types of the fields in the cfdocexamples database Employees table.</p>
+<pre>&lt;!--- Create an instance of the Component Explorer utilities CFC. 
+      and get its metadata ---&gt;
+&lt;cfscript&gt;
+componentutils = createObject(&quot;component&quot;, &quot;cfide.componentutils.utils&quot;);
+utilmetadata = getMetaData(componentutils);
+&lt;/cfscript&gt;
+
+&lt;h4&gt;Metadata for the CFC component utilities&lt;/h4&gt;
+&lt;cfdump var=&quot;#utilmetadata#&quot;&gt;
+
+&lt;!--- use GetMetadata to get the names and data types of the fields in the <br />      cfdocexamples Employees table ---&gt;
+&lt;cfquery name=&quot;getemployees&quot; datasource=&quot;cfdocexamples&quot;&gt;
+SELECT      *
+FROM         Employees
+&lt;/cfquery&gt;
+&lt;cfset employeemeta=getMetaData(getemployees)&gt;
+
+&lt;h4&gt;The Employees table has the following columns&lt;/h4&gt;
+&lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;#arrayLen(employeemeta)#&quot;&gt;
+   &lt;cfoutput&gt;
+      #employeemeta[i].name# #employeemeta[i].TypeName# #employeemeta[i].isCaseSensitive#&lt;br&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfloop&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000487.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000489.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000488.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

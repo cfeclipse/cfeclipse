@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ColdFusion dynamic evaluation functions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000942.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000944.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ColdFusion dynamic evaluation functions</h1>
+<p>The following table describes the functions that perform dynamic evaluation and are useful in evaluating dynamic expressions:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Function
+    </th>
+    <th>
+Purpose
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000449.htm#1103833"><code>DE</code></a></p>
+    </td>
+    <td>
+<p>Escapes any double-quotation marks in the argument and wraps the result in double-quotation marks. The <code>DE</code> function is particularly useful with the <code>IIF</code> function, to prevent the function from evaluating a string to be output. </p>
+<p>For an example of using the <code>DE</code> function with the <code>IIF</code> function, see <a href="00000948.htm#2727274">Using the IIF function</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000458.htm#1104252"><code>Evaluate</code></a></p>
+    </td>
+    <td>
+<p>Takes one or more string expressions and dynamically evaluates their contents as expressions from left to right. (The results of an evaluation to the left can have meaning in an expression to the right.) Returns the result of evaluating the rightmost argument. </p>
+<p>For more information on this function see <a href="00000945.htm#2727671">About the Evaluate function</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000507.htm#1105815"><code>IIf</code></a></p>
+    </td>
+    <td>
+<p>Evaluates a boolean condition expression. Depending on whether this expression is True or False, dynamically evaluates one of two string expressions and returns the result of the evaluation. The <code>IIF</code> function is convenient for incorporating a <a href="00000274.htm#1100123"><code>cfif</code></a> tag in-line in HTML. </p>
+<p>For an example of using this function, see <a href="00000948.htm#2727274">Using the IIF function</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000626.htm#136570"><code>SetVariable</code></a></p>
+    </td>
+    <td>
+<p>Sets a variable identified by the first argument to the value specified by the second argument. This function is no longer required in well-formed ColdFusion pages; see <a href="00000947.htm#2740726">SetVariable function considerations</a>.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000942.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000944.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000943.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Variable scopes and special variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001084.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001086.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Variable scopes and special variables</h1>
+<p>Use the Request scope for variables in nested tags. The Request scope is available to the base page, all pages it includes, all custom tag pages it calls, and all custom tag pages called by the included pages and custom tag pages. Collaborating custom tags that are not nested in a single tag can exchange data using the request structure. The Request scope is represented as a structure named <code>Request</code>.</p>
+<h3><a name="wp1096364"></a>Where is data accessible?</h3>
+<p>Two custom tags can be related in a variety of ways in a page. Ancestor and descendant relationships are important because they relate to the order of tag nesting.</p>
+<p>A tag's descendants are inactive while the page is executed; that is, the descendent tags have no instance data. A tag, therefore, can only access data from its ancestors, not its descendants. Ancestor data is available from the current page and from the whole runtime tag context stack. The tag context stack is the path from the current tag element up the hierarchy of nested tags, including those in included pages and custom tag references, to the start of the base page for the request. Both <a href="00000277.htm#1100248"><code>cfinclude</code></a> tags and custom tags appear on the tag context stack.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001084.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001086.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001085.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

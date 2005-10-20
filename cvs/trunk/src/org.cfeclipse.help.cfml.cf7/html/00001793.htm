@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Logging options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001792.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001794.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Logging options</h1>
+<p>The following sections describe the Verity Spider logging options.</p>
+<h3><a name="wp1000418"></a>-loglevel</h3>
+<p><strong>Syntax</strong>: <code>-loglevel [nostdout] argument</code></p>
+<p>Specifies the types of messages to log. By default, messages are written to standard output and to various log files in the subdirectory named /log beneath the Verity Spider job directory. If you add nostdout to the <code>-loglevel</code> option, messages are not written to standard output. Log files, however, are still created.</p>
+<p>The following table describes valid message types:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Message type
+    </th>
+    <th>
+Description 
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>information</p>
+    </td>
+    <td>
+<p>Licensing information written to info.log. Included with all arguments. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>warning</p>
+    </td>
+    <td>
+<p>Warning messages written to warning.log. Included with all arguments. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>error</p>
+    </td>
+    <td>
+<p>Error messages written to error.log. Included with all arguments. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>badkey</p>
+    </td>
+    <td>
+<p>Messages regarding keys that could not be indexed due to invalid documents, written to badkey.log. Included with all arguments. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>progress</p>
+    </td>
+    <td>
+<p>Current state of a document key written to progress.log. Note that a key with a progress of &quot;inserting&quot; might be a badkey and therefore skipped, rather than an indexed key. Included with all arguments. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>summary</p>
+    </td>
+    <td>
+<p>Inserted, indexed, and ignored messages written to summary.log. Included with all arguments except skip. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>skip</p>
+    </td>
+    <td>
+<p>Skipped documents, with explanation, written to skip.log. Included with all arguments, except summary. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>debug</p>
+    </td>
+    <td>
+<p>Internal Verity Spider processing messages, such as enqueued, written to debug.log. Included with both debug and trace arguments. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>trace</p>
+    </td>
+    <td>
+<p>Internal Verity Spider processing messages written to debug.log. Included only with the trace argument. </p>
+    </td>
+  </tr>
+</table>
+
+<p>Choose one of the following arguments to determine which message types are logged:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Loglevel arguments
+    </th>
+    <th>
+Description 
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>summary</p>
+    </td>
+    <td>
+<p>Includes the following message types:</p>
+<p>information, warning, error, badkey, progress, summary</p>
+<p>Use this option only if you do not want skip type messages. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>skip</p>
+    </td>
+    <td>
+<p>Includes the following message types:</p>
+<p>information, warning, error, badkey, progress, skip</p>
+<p>Use this option only if you do not want summary type messages. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>verbose</p>
+    </td>
+    <td>
+<p>Includes the following message types:</p>
+<p>information, warning, error, badkey, progress, summary, skip </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>debug</p>
+    </td>
+    <td>
+<p>Includes the following message types:</p>
+<p>information, warning, error, badkey, progress, summary, skip, debug</p>
+<p><strong>Note: </strong>Only use this argument at the direction of Verity technical support or for troubleshooting indexing problems. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>trace</p>
+    </td>
+    <td>
+<p>Includes the following message types:</p>
+<p>information, warning, error, badkey, progress, summary, skip, debug, trace</p>
+<p><strong>Note: </strong>Only use this argument at the direction of Verity technical support or for troubleshooting indexing problems. </p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001792.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001794.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001793.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

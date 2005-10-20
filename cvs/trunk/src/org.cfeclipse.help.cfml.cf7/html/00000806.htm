@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXRequest::SetVariable</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000805.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000807.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXRequest::SetVariable</h1>
+<h4><a name="wp1099431"></a>Syntax</h4>
+<pre>void CCFXRequest::SetVariable(LPCSTR lpszName, LPCSTR lpszValue)
+</pre><h4><a name="wp1102839"></a>Description</h4>
+<p>Sets a variable in the calling template. If the variable name already exists in the template, its value is replaced. If it does not exist, a variable is created. The values of variables created using <code>SetVariable</code> can be accessed in the same manner as other template variables (for example, <code>#MessageSent#</code>).</p>
+<h4><a name="wp1102647"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>lpszName</p>
+    </td>
+    <td>
+<p>Name of variable</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>lpszValue</p>
+    </td>
+    <td>
+<p>Value of variable</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102954"></a>Example</h4>
+<p>The following example sets the value of a variable named <code>&#39;MessageSent&#39;</code> based on the success of an operation performed by the custom tag:</p>
+<pre>BOOL bMessageSent;<br />...attempt to send the message...<br />if ( bMessageSent == TRUE )<br />{<br />               pRequest-&gt;SetVariable( &quot;MessageSent&quot;, &quot;Yes&quot; ) ;<br />}<br />else<br />{<br />               pRequest-&gt;SetVariable( &quot;MessageSent&quot;, &quot;No&quot; ) ;<br />}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000805.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000807.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000806.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

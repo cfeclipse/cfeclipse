@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfobject</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000301.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000303.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfobject</h1>
+<h4><a name="wp1355783"></a>Description</h4>
+<p>Creates a ColdFusion object, of a specified type.</p>
+<p><strong>Note: </strong>You can enable and disable this tag in the ColdFusion Administrator page, under ColdFusion Security, Sandbox Security.</p><h4><a name="wp2497888"></a>Category</h4>
+<p><a href="00000202.htm#2459750">Extensibility tags</a></p>
+<h4><a name="wp2274175"></a>Syntax</h4>
+<p>The tag syntax depends on the object type. Some types use the <code>type</code> attribute; others do not. See the following sections:</p>
+<ul>
+<li>
+   <a href="00000303.htm#2581098">cfobject: COM object</a>
+</li>
+<li>
+   <a href="00000304.htm#2651979">cfobject: component object</a>
+</li>
+<li>
+   <a href="00000305.htm#1101575">cfobject: CORBA object</a>
+</li>
+<li>
+   <a href="00000306.htm#1101604">cfobject: Java or EJB object</a>
+</li>
+<li>
+   <a href="00000307.htm#2652402">cfobject: web service object</a>
+</li>
+</ul>
+<p><strong>Note: </strong>On UNIX, this tag does not support COM objects.</p><h4><a name="wp2575595"></a>See also</h4>
+<p><a href="00000218.htm#2855190">cfargument</a>, <a href="00000231.htm#3350776">cfcomponent</a>, <a href="00000263.htm#2852457">cffunction</a>, <a href="00000281.htm#2650065">cfinvoke</a>, <a href="00000282.htm#3014048">cfinvokeargument</a>, <a href="00000315.htm#2498235">cfproperty</a>, <a href="00000326.htm#2498057">cfreturn</a>; <a href="00001566.htm#1177942">Using Java objects</a> in <a href="00001557.htm#1176234">Integrating J2EE and Java Elements in CFML Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2340806"></a>History</h4>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Changed instantiation behavior: this tag, and the <code>CreateObject</code> function, can now instantiate ColdFusion components (CFCs); you can use them within the <code>cfscript</code> tag. 
+</li>
+<li>
+   For CORBA object: changed the Naming Service separator format for addresses from a dot to a forward slash. For example, if &quot;<code>context=NameService</code>&quot;, for a class, use either of the following formats for the <code>class</code> parameter:
+<ul><li>&quot;<code>Macromedia/Eng/CF</code>&quot; </li>
+<li>&quot;<code>Macromedia.current/Eng.current/CF</code>&quot; </li>
+<p>(In earlier releases, the format was &quot;<code>Macromedia.Eng.CF</code>&quot;.)</p>
+</ul></li>
+<li>
+   For CORBA object: changed the <code>locale</code> attribute; it specifies the Java configuration that contains the properties file.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000301.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000303.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000302.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>QuerySetCell</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000600.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000602.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>QuerySetCell</h1>
+<h4><a name="wp134833"></a>Description</h4>
+<p>Sets a cell to a value. If no row number is specified, the cell on the last row is set. </p>
+<h4><a name="wp134835"></a>Returns</h4>
+<p>True, if successful; False, otherwise.</p>
+<h4><a name="wp134837"></a>Category</h4>
+<p><a href="00000367.htm#1099653">Query functions</a></p>
+<h4><a name="wp134842"></a>Function syntax</h4>
+<pre><code><strong>QuerySetCell</strong></code>(<i>query</i>, <i>column_name</i>, <i>value</i> [, <i>row_number </i>])
+</pre><h4><a name="wp134844"></a>See also</h4>
+<p><a href="00000598.htm#134610"><code>QueryAddColumn</code></a>, <a href="00000599.htm#134706"><code>QueryAddRow</code></a>, <a href="00000600.htm#134773"><code>QueryNew</code></a>; <a href="00001264.htm#1135428">Creating a record set with a function</a> in <a href="00001263.htm#1181595">Using Query of Queries</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp134855"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Name of an executed query. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>column_name</p>
+    </td>
+    <td>
+<p>Name of a column in the query.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Value to set in the cell.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>row_number</p>
+    </td>
+    <td>
+<p>Row number. The default value is last row.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp134878"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of QueryAddRow and QuerySetCell ---&gt;
+
+&lt;!--- start by making a query ---&gt;
+&lt;cfquery name = &quot;GetCourses&quot; datasource = &quot;cfdocexamples&quot;&gt;
+   SELECT Course_ID, Descript 
+   FROM Courses
+&lt;/cfquery&gt;
+&lt;p&gt;The Query &quot;GetCourses&quot; has &lt;cfoutput&gt;#GetCourses.RecordCount#&lt;/cfoutput&gt; rows.
+
+&lt;cfset CountVar = 0&gt;
+&lt;cfloop CONDITION = &quot;CountVar LT 15&quot;&gt;
+   &lt;cfset temp = QueryAddRow(GetCourses)&gt;
+   &lt;cfset CountVar = CountVar + 1&gt;
+   &lt;cfset Temp = QuerySetCell(GetCourses, &quot;Number&quot;, 100*CountVar)&gt;
+   &lt;cfset CountVar = CountVar + 1&gt;
+   &lt;cfset Temp = QuerySetCell(GetCourses, &quot;Descript&quot;, <br />&quot;Description of variable #Countvar#&quot;)&gt;
+&lt;/cfloop&gt;
+
+&lt;P&gt;After the QueryAddRow action, the query has
+   &lt;CFOUTPUT&gt;#GetCourses.RecordCount#&lt;/CFOUTPUT&gt; 
+   records. 
+   &lt;CFOUTPUT query=&quot;GetCourses&quot;&gt; 
+   &lt;PRE&gt;#Course_ID# #Course_Number# #Descript#&lt;/pre&gt; &lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000600.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000602.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000601.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

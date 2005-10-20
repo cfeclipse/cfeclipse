@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setCFCPath</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000732.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000734.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setCFCPath</h1>
+<h4><a name="wp1176658"></a>Description</h4>
+<p>Specifies the listener CFC that will process this event.</p>
+<h4><a name="wp1176660"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1176662"></a>Syntax</h4>
+<pre>void setCFCPath(String <i>path</i>)
+</pre><h4><a name="wp1176664"></a>See also</h4>
+<p><a href="00000726.htm#1174475">getCFCPath</a>, <a href="00000732.htm#1176556">setCFCMethod</a>, <a href="00000734.htm#1176676">setCFCTimeout</a>, <a href="00001688.htm#117767">CFEvent class</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1176907"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>An absolute path to the application listener CFC that will process the event. If you do not call this method in your gateway, ColdFusion uses the first path configured for the event gateway instance on the Event Gateways page in the ColdFusion MX Administrator. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1176668"></a>Usage</h4>
+<p>By default, ColdFusion delivers messages to the CFC in the first path configured for the event gateway instance on the Event Gateways page in the ColdFusion MX Administrator.</p>
+<p>If your application supports multiple listener CFCs, use this method to set each listener CFC and then call the <code>gatewayService.addEvent</code> method to send the event to the CFC.</p>
+<h4><a name="wp1176671"></a>Example</h4>
+<p>The following example code is based on the Socket gateway processInput method that takes input from the socket and sends it to the CFC listener methods. The listeners variable contains an array of listener CFCS and is set by the gateway's <a href="00000712.htm#1173596">setCFCListeners</a> method, which ColdFusion calls when it starts the gateway.</p>
+<pre><strong>for (int i = 0; i &lt; listeners.length; i++)</strong>
+<strong>{</strong>
+<strong>   String path = listeners[i];</strong>
+   CFEvent event = new CFEvent(gatewayID);
+   Hashtable mydata = new Hashtable();
+   mydata.put(&quot;MESSAGE&quot;, theInput);
+   event.setData(mydata);
+   event.setGatewayType(&quot;SocketGateway&quot;);
+   event.setOriginatorID(theKey);
+   event.setCFCMethod(cfcEntryPoint);
+   event.setCFCTimeout(10);
+   if (path != null)
+      event.setCFCPath(path);   boolean sent = gatewayService.addEvent(event);
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000732.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000734.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000733.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

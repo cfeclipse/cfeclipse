@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>StructFindValue</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000639.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000641.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>StructFindValue</h1>
+<h4><a name="wp137598"></a>Description</h4>
+<p>Searches recursively through a substructure of nested arrays, structures, and other elements for structures with values that match the search key in the <code>value</code><i> </i>parameter. </p>
+<h4><a name="wp137600"></a>Returns</h4>
+<p>An array that contains structures with values that match the search key <i>value</i>. If none are found, returns an array of size 0.</p>
+<h4><a name="wp137602"></a>Category</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a></p>
+<h4><a name="wp137607"></a>Function syntax</h4>
+<pre><code><strong>StructFindValue</strong></code>( <i>top, value [, scope]</i>)
+</pre><h4><a name="wp137609"></a>See also</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a>; <a href="00000967.htm#1191258">Structure functions</a> in <a href="00000950.htm#1101236">Using Arrays and Structures</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp137614"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>top</p>
+    </td>
+    <td>
+<p>ColdFusion object (a structure or an array) from which to start search. This parameter requires an object, not a name of an object.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>String or a variable that contains one for which to search. </p>
+<p>The type must be a simple object. Arrays and structures are not supported. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>scope</p>
+    </td>
+    <td>
+<ul>
+<li>
+   one: function returns one matching key (default).
+</li>
+<li>
+   all: function returns all matching keys.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp137635"></a>Usage</h4>
+<p>The fields of each structure in the returned array are:</p>
+<ul>
+<li>
+   <code>Key</code>: name of the key in which the value was found
+</li>
+<li>
+   <code>Path</code>: string which could be used to reach the found key
+</li>
+<li>
+   <code>Owner</code>: parent object that contains the found key
+</li>
+</ul>
+<p>A structure's keys are unordered. </p>
+<h4><a name="wp137641"></a>Example</h4>
+<pre>&lt;cfset aResults = StructFindValue( #request#, &quot;235&quot; )&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000639.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000641.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000640.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

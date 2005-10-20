@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using CFX tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000998.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001000.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using CFX tags</h1>
+<p>ColdFusion Extension (CFX) tags are custom tags that you write in Java or C++. Generally, you create a CFX tag to do something that is not possible in CFML. CFX tags also let you use existing Java or C++ code in your ColdFusion application. Unlike CFML custom tags, CFX tags cannot have bodies or ending tags.</p>
+<p>CFX tags can return information to the calling page in a page variable or by writing text to the calling page.</p>
+<p>CFX tags can do the following:</p>
+<ul>
+<li>
+   Have any number of custom attributes.
+</li>
+<li>
+   Create and manipulate ColdFusion queries.
+</li>
+<li>
+   Dynamically generate HTML to be returned to the client.
+</li>
+<li>
+   Set variables within the ColdFusion page from which they are called.
+</li>
+<li>
+   Throw exceptions that result in standard ColdFusion error messages.
+</li>
+</ul>
+<h2><a name="wp1173609"></a>Calling CFX tags</h2>
+<p>To use a CFX tag, precede the class name with cfx_ and put the name in angle brackets. For example, use the following line to call the CFX tag defined by the MyCFXClass class and pass it one attribute.</p>
+<pre>&lt;cfx_MyCFXClass myArgument=&quot;arg1&quot;&gt;
+</pre><h2><a name="wp1173606"></a>Recommended uses</h2>
+<p>CFX tags provide one way of using C++ or Java code. However, you can also create Java classes and COM objects and access them using the <a href="00000302.htm#2820239"><code>cfobject</code></a> tag. CFX tags, however, provide some built-in features that the <code>cfobject</code> tag does not have:</p>
+<ul>
+<li>
+   CFX tags are easier to call in CFML code. You use CFX tags directly in CFML code as you would any other tag, and you can pass arguments using a standard tag format.
+</li>
+<li>
+   ColdFusion provides predefined classes for use in your Java or C++ code that facilitate CFX tag development. These classes include support for request handling, error reporting, and query management.
+</li>
+</ul>
+<p>You should consider using CFX tags in the following circumstances:</p>
+<ul>
+<li>
+   You already have existing application functionality written in C++ or Java that you want to incorporate into your ColdFusion application.
+</li>
+<li>
+   You cannot build the functionality you need using ColdFusion elements.
+</li>
+<li>
+   You want to provide the new functionality in a tag format, as opposed to using the <code>cfobject</code> tag to import native Java or COM objects.
+</li>
+<li>
+   You want use the Java and C++ classes provided by ColdFusion for developing your CFX code.
+</li>
+</ul>
+<h2><a name="wp1174487"></a>For more information</h2>
+<p>For more information on CFX tags, see <a href="00001087.htm#1140064">Building Custom CFXAPI Tags</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000998.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001000.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000999.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

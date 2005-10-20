@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Ending a session</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001162.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001164.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Ending a session</h1>
+<p>The following rules apply to ending a session and deleting Session scope variables: </p>
+<ul>
+<li>
+   If you use ColdFusion session management, ColdFusion automatically ends sessions and deletes all Session scope variables if the client is inactive for the session time-out period. The session does not end when the user closes the browser.
+</li>
+<li>
+   If you use J2EE session management, ColdFusion MX ends the session and deletes all Session scope variables when the user closes the browser, or if the client is inactive for the session time-out period. If the session times out, however, the browser continues to send the same session ID, and ColdFusion will reuse this ID for sessions with this browser instance, as long as the browser remains active.
+</li>
+<li>
+   Logging a user out does not end the session or delete Session scope variables.
+</li>
+<li>
+   In many cases, you can effectively end a session by clearing the Session scope, as shown in the following line. The following list, however, includes important limitations and alternatives:
+<pre>
+&lt;cfset StructClear(Session)&gt;
+</pre>
+</li>
+<li>
+   Clearing the Session scope does not clear the session ID, and future requests from the browser continue to use the same session ID until the browser exits. It also does not log the user out, even if you use Session scope storage for login information. Always use the <code>cflogout</code> tag to log users out.
+</li>
+<li>
+   If you use J2EE session management, you can invalidate the session, as follows:
+<pre>
+&lt;cfset getPageContext().getSession().invalidate()&gt;
+</pre>
+<p>This line creates a pointer to the servlet page context and calls an internal method to reset the session. This clears all session information, including the session ID Session scope variables, and if you are using session login storage, the login information, for future request. However, the session information does remain available until the end of the current request. After you invalidate a session, attempts by the browser to access the application will generate an invalid session exception until the session times out. </p>
+<p><strong>Note: </strong>You cannot destroy the session and create a session on the same request, as creating a new session involves sending session cookies back.</p></li>
+<li>
+   If you do not use client cookies, the Session scope and login state is available to your application only as long as you pass the session's CFID, CFTOKEN, and, for J2EE sessions, jsessionid values in the URL query string. After you stop using these values, however, the session data remains in memory until the session time-out period elapses.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001162.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001164.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001163.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

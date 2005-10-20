@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using an external web server</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001752.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001754.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using an external web server</h1>
+<p>ColdFusion&#160;MX uses the JRun web server connector to forward requests from an external web server to the ColdFusion&#160;MX runtime system.</p>
+<p>When a request is made for a CFM page, the connector on the web server opens a network connection to the JRun proxy service. The ColdFusion&#160;MX runtime system handles the request and sends its response back through the proxy service and connector. The web server connector uses web-server-specific plug-in modules, as the following table describes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Web server
+    </th>
+    <th>
+Connector details
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Apache</p>
+    </td>
+    <td>
+<p>The Web Server Configuration Tool adds the following elements to the Apache httpd.conf file: </p>
+<ul>
+<li>
+   A LoadModule directive defines the connector.
+</li>
+<li>
+   An AddHandler directive tells Apache to route requests for ColdFusion pages through the connector. 
+</li>
+</ul>
+<p>For Apache 1.3.x, the connection module is mod_jrun.so; for Apache 2.x, the connection module is mod_jrun20.so. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>IIS</p>
+    </td>
+    <td>
+<p>The Web Server Configuration Tool adds the following elements at either the global level (default) or website level:</p>
+<ul>
+<li>
+   An ISAPI filter (available on IIS 5 only). 
+</li>
+<li>
+   Extension mappings that tell IIS to route requests for ColdFusion pages through the connector.
+</li>
+</ul>
+<p>With IIS 5, the IIS connection module is jrun.dll. IIS 6 uses a connection module named jrun_iis6.dll and a helper DLL named jrun_iis6_wildcard.dll. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Sun ONE Web Server, including iPlanet and Netscape Enterprise Server (NES)</p>
+    </td>
+    <td>
+<p>The Web Server Configuration Tool adds the following elements to Sun ONE Web Server configuration files:</p>
+<ul>
+<li>
+   obj.conf&#160;&#160;A PathCheck directive for the JRun filter and ObjectType directives to route requests for ColdFusion pages through the connector.
+</li>
+<li>
+   magnus.conf&#160;Init directives to load and initialize the connector. 
+</li>
+</ul>
+<p>In Windows, the Sun ONE Web Server connection module is jrun_nsapi.dll; on UNIX, the Sun ONE Web Server connection module is jrun_nsapi.so. </p>
+<p>With iPlanet 4.x, the Web Server Configuration Tool places all settings in the obj.conf file. </p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001752.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001754.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001753.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

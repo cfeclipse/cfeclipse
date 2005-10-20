@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the GetMetaData function</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001066.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001068.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the GetMetaData function</h1>
+<p>The CFML <a href="00000488.htm#1105179"><code>GetMetaData</code></a> function returns a structure that contains all the metadata of a CFC instance. This structure contains substantially more data about the CFC than the <a href="00000239.htm#3765824"><code>cfdump</code></a> tag shows, and includes the following information:</p>
+<ul>
+<li>
+   All attributes to the component tag, including any metadata-only attributes, plus the component path.
+</li>
+<li>
+   An array of structures that contains complete information on each method (function) in the component. This information describes all attributes, including metadata-only function and parameter attributes. 
+</li>
+<li>
+   Within each function structure, a Parameters element that contains an array of parameters specified by <a href="00000218.htm#2855190"><code>cfargument</code></a> tags. Information on each parameter includes any metadata-only attributes.
+</li>
+<li>
+   Information about any properties that are specified using the <a href="00000315.htm#2498235"><code>cfproperty</code></a> tag.
+</li>
+</ul>
+<h4>To display metadata for a CFC:</h4>
+<ol>
+<li>
+   Create the tellAboutCfcs.cfm file in the same directory as the telltime.cfc file, with the following code:
+<pre>
+&lt;!--- Create an instance of the component. ---&gt;
+&lt;cfobject component=&quot;tellTime&quot; name=&quot;tellTimeObj&quot;&gt;
+&lt;!--- Create a new structure. ---&gt;
+&lt;cfset aboutcfc=structNew()&gt;
+&lt;!--- Populate the structure with the metadata for the
+			tellTimeObj instance of the tellTime CFC. ---&gt;
+&lt;cfset aboutcfc=GetMetaData(tellTimeObj)&gt;
+&lt;cfdump var=&quot;aboutcfc&quot;&gt;
+</pre>
+</li>
+<li>
+   View the tellAboutCfcs.cfm file in a browser.
+</li>
+</ol>
+<p>For information on how to specify CFC metadata, including how to use component tags and how to specify metadata-only attributes, see <a href="00001035.htm#1216248">Documenting CFCs</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001066.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001068.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001067.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

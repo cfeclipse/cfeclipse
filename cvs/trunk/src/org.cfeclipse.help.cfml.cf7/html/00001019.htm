@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Identifying and checking for UDFs</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001018.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001020.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Identifying and checking for UDFs</h1>
+<p>You can use the <a href="00000517.htm#2646249"><code>IsCustomFunction</code></a> function to determine whether a name represents a UDF. The <code>IsCustomFunction</code> function generates an error if its argument does not exist. As a result, you must ensure that the name exists before calling the function, for example, by calling the <a href="00000520.htm#1106482"><code>IsDefined</code></a> function. The following code shows this use:</p>
+<pre>&lt;cfscript&gt;
+if(IsDefined(&quot;MyFunc&quot;))
+   if(IsCustomFunction(MyFunc))
+      WriteOutput(&quot;MyFunc is a user-defined function&quot;);
+   else
+      WriteOutput(&quot;Myfunc is defined but is NOT a user-defined function&quot;);
+else
+   WriteOutput(&quot;MyFunc is not defined&quot;);
+&lt;/cfscript&gt;
+</pre><p>You do <i>not</i> surround the argument to <code>IsCustomFunction</code> in quotation marks, so you can use this function to determine if function arguments are themselves functions.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001018.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001020.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001019.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

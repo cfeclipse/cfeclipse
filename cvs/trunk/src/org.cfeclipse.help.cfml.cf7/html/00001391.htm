@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Adding text, images, rules, and space with the cfformitem tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001390.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001392.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Adding text, images, rules, and space with the cfformitem tag</h1>
+<p>Because Flash forms do not support inline HTML, you use the <code>cfformitem</code> tag to add text blocks and horizontal and vertical rules to your form. (Flash form controls, such as <code>cfinput</code>, use the <code>label</code> or <code>value</code> attribute to specify text labels.) You can also use the <code>cfformitem</code> tag to add spacers between visual form elements.</p>
+<p>The <code>cfformitem type=&quot;hrule&quot;</code> and <code>cfformitem type=&quot;vrule&quot;</code> tags put horizontal and vertical rules in the form. You can specify the rule thickness, color, and shadow characteristics by using style specifications. For more information on specifying rule styles, see <a href="00000684.htm#1186464">Styles for cfformitem with hrule or vrule type attributes</a> in <a href="00000677.htm#1116669">ColdFusion MX Flash Form Style Reference</a> in <i>CFML Reference</i>.</p>
+<p>The <code>cfformitem type=&quot;spacer&quot; </code>tag puts a blank space of the specified height and width on the form. This tag type does not use styles; it can be useful in improving the form appearance by helping you control the form layout.</p>
+<p>The <code>cfformitem type=&quot;text&quot;</code> tag lets you insert plain text in the form You can use the <code>style</code> attribute to apply a consistent format to the text. </p>
+<p>The <code>cfformitem type=&quot;html&quot;</code> tag lets you insert formatted text and images in the form. You can include basic HTML-style formatting tags in the body of this tag to add images and to format and style the text. </p>
+<p>You can use the following formatting tags and attributes in the body of a <code>cfformitem type=&quot;html&quot;</code> tag:</p>
+:<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Tag
+    </th>
+    <th>
+Valid attributes
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><code>a</code></p>
+    </td>
+    <td>
+<p><code>href&#160;</code>URL to link to.</p>
+<p><code>target&#160;</code>window name; can be a standard HTML window name such as _blank.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>b</code></p>
+    </td>
+    <td>
+<p>None.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>br</code></p>
+    </td>
+    <td>
+<p>None.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>font</code></p>
+    </td>
+    <td>
+<p><code>color&#160;</code>Must be in hexadecimal format, such as #FF00AA. Use a single number sign (#) character.</p>
+<p><code>face&#160;C</code>an be a comma-delimited list of font face names; Flash uses the first font that is available on the client system.</p>
+<p><code>size</code>&#160;In pixels; + and -relative values are allowed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>i</code></p>
+    </td>
+    <td>
+<p>None.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>img</code></p>
+    </td>
+    <td>
+<p>See the attribute table for the <code>img</code> tag.</p>
+<p>Note: You must close this tag with /&gt; or an &lt;/img&gt; tag.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>li</code></p>
+    </td>
+    <td>
+<p>None.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>p </code></p>
+    </td>
+    <td>
+<p><code>align </code>Must be one of the following: <code>left</code>, <code>right</code>, <code>center</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>textformat </code></p>
+    </td>
+    <td>
+<p>See the attribute table for the <code>textformat</code> tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>u</code></p>
+    </td>
+    <td>
+<p>None.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The <code>img</code> tag supports the following attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><code>src</code></p>
+    </td>
+    <td>
+<p>(Required) URL or pathname to a JPEG or SWF file. Images are not displayed until they have downloaded completely. Flash Player does not support progressive JPEG files.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>width</code></p>
+    </td>
+    <td>
+<p>Width of the image, in pixels. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>height</code></p>
+    </td>
+    <td>
+<p>Height of the image in pixels. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>align</code></p>
+    </td>
+    <td>
+<p>Horizontal alignment of the embedded image within the text field. Valid values are <code>left</code> and <code>right</code>. The default value is <code>left</code>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>hspace</code></p>
+    </td>
+    <td>
+<p>Number of pixels of horizontal space that surround the image where no text appears. The default value is <code>8</code>. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>vspace</code></p>
+    </td>
+    <td>
+<p>Number of pixels of vertical space that surround the image where no text appears. The default value is <code>8</code>.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>Because of the Flash dynamic sizing rules, to ensure that the image displays properly, you might have to specify the <code>formitem</code> tag <code>height</code> attribute and the <code>width</code> and <code>height</code> attributes for the form or the containing <code>cfformgroup</code> tag. Also, the image always displays on a new line, not inline with text, and text that follows the image in your code occupies any available space to the right of the image.</p><p>The <code>textformat</code> tag is specific to Flash, and has the following attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><code>blockindent</code></p>
+    </td>
+    <td>
+<p>Block indentation, in points.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>indent</code></p>
+    </td>
+    <td>
+<p>Indentation from the left margin to the first character in the paragraph.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>leading</code></p>
+    </td>
+    <td>
+<p>Amount of leading (vertical space) between lines.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>leftmargin</code></p>
+    </td>
+    <td>
+<p>Left margin of the paragraph, in points.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>rightmargin</code></p>
+    </td>
+    <td>
+<p>Right margin of the paragraph, in points.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>tabstops</code></p>
+    </td>
+    <td>
+<p>Custom tab stops as an array of nonnegative integers. To specify tabs in text, use the \t escape character.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For detailed descriptions of these tags, see the Flash documentation.</p>
+<p>The following code creates a simple Flash form that consists of a formatted text area surrounded by horizontal rules:</p>
+<pre>&lt;cfform name=&quot;myform&quot; height=&quot;220&quot; width=&quot;400&quot; format=&quot;Flash&quot; &gt;
+   &lt;!--- Use text formitem tag with style specifications for the heading. ---&gt;
+   &lt;cfformitem type=&quot;text&quot; style=&quot;fontWeight:bold; fontSize:14;&quot;&gt;
+   Flash form with formatted text and rules
+   &lt;/cfformitem&gt;
+   &lt;!--- The spacer adds space between the text and the rule ---&gt;
+   &lt;cfformitem type=&quot;spacer&quot; height=&quot;2&quot; /&gt;
+   &lt;cfformitem type=&quot;hrule&quot; /&gt;
+   &lt;cfformitem type=&quot;html&quot;&gt;
+      &lt;b&gt;&lt;font color=&quot;#FF0000&quot; size=&quot;+4&quot; face=&quot;serif&quot;&gt;
+      This form has formatted text, including:&lt;/font&gt;&lt;/b&gt;&lt;br&gt;
+      &lt;textformat blockindent=&quot;20&quot; leading=&quot;2&quot;&gt;
+         &lt;li&gt;colored text&lt;/li&gt;
+         &lt;li&gt;&lt;i&gt;italic and bold text&lt;/i&gt;&lt;/li&gt;
+         &lt;li&gt;a bulleted list in an indented block&lt;/li&gt;
+      &lt;/textformat&gt;
+      &lt;p&gt;&lt;b&gt;The text is preceded and followed by horizontal rules&lt;/b&gt;&lt;/p&gt;
+      It also has a link to a web page.&lt;/b&gt;&lt;br&gt;
+      &lt;a href=&quot;http://www.macromedia.com/&quot; target=&quot;_blank&quot;&gt;
+      &lt;font color=&quot;#0000FF&quot;&gt;&lt;u&gt;
+      This link displays the Macromedia home page in a new browser window
+      &lt;/u&gt;&lt;/font&gt;&lt;/a&gt;
+   &lt;/cfformitem&gt;
+   &lt;cfformitem type=&quot;spacer&quot; height=&quot;2&quot; /&gt;
+   &lt;cfformitem type=&quot;hrule&quot; /&gt;
+&lt;/cfform&gt;
+</pre><p>This form appears as follows:</p>
+<p><br />
+<img src="images/flashfa3.jpg" alt="Flash form that results from preceding code" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001390.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001392.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001391.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

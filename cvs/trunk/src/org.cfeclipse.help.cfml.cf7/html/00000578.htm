@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSParseCurrency</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000577.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000579.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSParseCurrency</h1>
+<h4><a name="wp133237"></a>Description</h4>
+<p>Converts a locale-specific currency string into a formatted number. Attempts conversion by comparing the string with each the three supported currency formats (none, local, international) and using the first that matches.</p>
+<h4><a name="wp133239"></a>Returns</h4>
+<p>A formatted number (string representation of a number) that matches the value of the parameter.</p>
+<h4><a name="wp133241"></a>Category</h4>
+<p><a href="00000363.htm#1099325">International functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp133249"></a>Function syntax</h4>
+<pre><code><strong>LSParseCurrency</strong></code>(<i>string</i>)
+</pre><h4><a name="wp133251"></a>See also</h4>
+<p><a href="00000580.htm#133438"><code>LSParseEuroCurrency</code></a><code>,</code> <a href="00000570.htm#132017"><code>LSCurrencyFormat</code></a>, <a href="00000572.htm#132471"><code>LSEuroCurrencyFormat</code></a>, <a href="00000574.htm#132806">LSIsCurrency</a>; <a href="00001207.htm#1224939">Locale-specific content</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp133265"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed formatting behavior: this function might return different formatting than in earlier releases. This function uses Java standard locale formatting rules on all platforms. </p>
+<h4><a name="wp133270"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A locale-specific string a variable that contains one </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp133281"></a>Usage</h4>
+<p>This function uses the locale formatting rules of the JVM (specified in the ColdFusion Administrator Java and JVM page) on all platforms. These rules changed between Sun JVM 1.3.1 and JVM 1.4.1:</p>
+<ul>
+<li>
+   JVM 1.3.1 requires that the local and international versions of currencies of countries in the Euro zone be formatted using the older, country-specific designations, such as 100.000,00 DM or DEM100.000,00 for the German (Standard) locale. Use the <a href="00000580.htm#133438"><code>LSParseEuroCurrency</code></a> function to parse euro currencies in these locales with JVM 1.3.1.
+</li>
+<li>
+   JVM 1.4.1 requires that currencies for Euro zone countries be expressed as euros; for example 100.000,00 € or EUR100.000,00.
+</li>
+</ul>
+<p><strong>Note: </strong>The <a href="00000574.htm#132806"><code>LSIsCurrency</code></a> function always returns True if the locale is in the Euro currency zone and the currency is expressed in euros, including when using JVM 1.3.1. As a result, with older JVMs, <a href="00000574.htm#132806"><code>LSIsCurrency</code></a> does not ensure that <code>LSParseCurrency</code> returns a value.</p><p>To set the default display format of date, time, number, and currency values, use the <a href="00000624.htm#136340"><code>SetLocale</code></a> function. </p>
+<p>For a list of the locale-specific formats used to parse the currency, see <a href="00000570.htm#132017">LSCurrencyFormat</a>.</p>
+<h4><a name="wp133303"></a>Example</h4>
+<pre>&lt;h3&gt;LSParseCurrency Example&lt;/h3&gt;
+&lt;p&gt;LSParseCurrency coverts a locale-specific currency string to a number. <br />Attempts conversion through each of the three default currency formats.
+&lt;!--- loop through a list of locales; show currency values for 123,456 units ---&gt;
+&lt;cfloop LIST = &quot;#Server.Coldfusion.SupportedLocales#&quot;
+index = &quot;locale&quot; delimiters = &quot;,&quot;&gt;
+   &lt;cfset oldlocale = SetLocale(locale)&gt;
+   &lt;cfoutput&gt;&lt;p&gt;&lt;B&gt;&lt;I&gt;#locale#&lt;/I&gt;&lt;/B&gt;&lt;br&gt;
+      Local: #LSCurrencyFormat(123456.78, &quot;local&quot;)#&lt;br&gt;
+      Parsed local Currency:<br />#<strong>LSParseCurrency(LSCurrencyFormat(123456,&quot;local&quot;))</strong>#&lt;br&gt;
+      International: #LSCurrencyFormat(123456.78999, &quot;international&quot;)#&lt;br&gt;
+      Parsed International Currency:<br />#LSParseCurrency(LSCurrencyFormat(123456.78999,&quot;international&quot;))#&lt;br&gt;
+      None: #LSCurrencyFormat(123456.78999, &quot;none&quot;)#&lt;br&gt;
+      Parsed None formatted currency:<br />#LSParseCurrency(LSCurrencyFormat(123456.78999,&quot;none&quot;))#&lt;br&gt;
+      &lt;hr noshade&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfloop&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000577.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000579.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000578.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

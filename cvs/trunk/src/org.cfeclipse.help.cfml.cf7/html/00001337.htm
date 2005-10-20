@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating action pages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001336.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001338.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating action pages</h1>
+<p>Use the following procedure to create an action page for the formpage.cfm page that you created in the previous example.</p>
+<h4>To create an action page for the form:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content: 
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Retrieving Employee Data Based on Criteria from Form&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;cfquery name=&quot;GetEmployees&quot; datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT FirstName, LastName, Salary
+	FROM Employee
+	WHERE LastName=&lt;cfqueryparam value=&quot;#Form.LastName#&quot; <br />
+CFSQLType=&quot;CF_SQL_VARCHAR&quot;&gt;
+&lt;/cfquery&gt;
+&lt;h4&gt;Employee Data Based on Criteria from Form&lt;/h4&gt;
+&lt;cfoutput query=&quot;GetEmployees&quot;&gt;
+#FirstName#
+#LastName#
+#Salary#&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;br&gt;
+&lt;cfoutput&gt;Contractor: #Form.Contractor#&lt;/cfoutput&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as actionpage.cfm in the myapps directory. 
+</li>
+<li>
+   View the formpage.cfm page in your browser.
+</li>
+<li>
+   Enter data, for example, Smith, in the Last Name box and submit the form.
+<p>The browser displays a line with the first and last name and salary for each entry in the database that match the name you typed, followed by a line with the text &quot;Contractor: Yes&quot;.</p>
+</li>
+<li>
+   Click Back in your browser to redisplay the form.
+</li>
+<li>
+   Remove the check mark from the check box and submit the form again. 
+<p>This time an error occurs because the check box does not pass a variable to the action page. For information on modifying the actionpage.cfm page to fix the error, see <a href="00001338.htm#1110466">Testing for a variable's existence</a>. </p>
+</li>
+</ol>
+<h4><a name="wp1096441"></a>Reviewing the code</h4>
+<p>The following table describes the highlighted code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery name=&quot;GetEmployees&quot;
+datasource=&quot;cfdocexamples&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Queries the data source cfdocexamples and names the query GetEmployees.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>SELECT FirstName, LastName, Salary
+FROM Employee
+WHERE LastName=&lt;cfqueryparam<br />   value=&quot;#Form.LastName#&quot; <br />   CFSQLType=&quot;CF_SQL_VARCHAR&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Retrieves the FirstName, LastName, and Salary fields from the Employee table, but only if the value of the LastName field matches what the user entered in the LastName text box in the form on formpage.cfm.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput query=&quot;GetEmployees&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Displays results of the GetEmployees query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>#FirstName#
+#LastName#
+#Salary#&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Displays the value of the FirstName, LastName, and Salary fields for a record, starting with the first record, then goes to the next line. Keeps displaying the records that match the criteria you specified in the SELECT statement, followed by a line break, until you run out of records.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Closes the <a href="00000309.htm#1101659"><code>cfoutput</code></a> block.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;br&gt;
+&lt;cfoutput&gt;Contractor: #Form.Contractor#<br />&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Displays a blank line followed by the text &quot;Contractor&quot;: and the value of the form Contractor check box. </p>
+<p>A more complete example would test to ensure the existence of the variable and would use the variable in the query. </p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001336.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001338.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001337.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

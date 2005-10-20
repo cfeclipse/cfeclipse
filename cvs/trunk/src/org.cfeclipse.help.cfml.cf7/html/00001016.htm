@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Specifying the scope of a function</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001015.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001017.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Specifying the scope of a function</h1>
+<p>User-defined function names are essentially ColdFusion variables. ColdFusion variables are names for data. Function names are names (references) for segments of CFML code. Therefore, like variables, functions belong to scopes.</p>
+<h3><a name="wp1121388"></a>About functions and scopes</h3>
+<p>Like ColdFusion variables, UDFs exist in a scope:</p>
+<ul>
+<li>
+   When you define a UDF, ColdFusion puts it in the Variables scope. 
+</li>
+<li>
+   You can assign a UDF to a scope the same way you assign a variable to a scope, by assigning the function to a name in the new scope. For example, the following line assigns the MyFunc UDF to the Request scope:
+<pre>
+&lt;cfset Request.MyFunc = Variables.MyFunc&gt;
+</pre>
+<p>You can now use the function from any page in the Request scope by calling Request.MyFunc.</p>
+</li>
+</ul>
+<h3><a name="wp1118520"></a>Selecting a function scope</h3>
+<p>The following table describes the advantages and disadvantages of scopes that you might considering using for your functions: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Scope
+    </th>
+    <th>
+Considerations
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Application</p>
+    </td>
+    <td>
+<p>Makes the function available across all invocations of the application. Access to UDFs in Application scope is multithreaded and you can execute multiple copies of the UDF at one time.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Request</p>
+    </td>
+    <td>
+<p>Makes the function available for the life of the current HTTP request, including in all custom tags and nested custom tags. This scope is useful if a function is used in a page and in the custom tags it calls, or in nested custom tags.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Server</p>
+    </td>
+    <td>
+<p>Makes the function available to all pages on a single server. In most cases, this scope is not a good choice because in clustered systems, it only makes the function available on a single server, and all code that uses the function must be inside a <a href="00000285.htm#1100787"><code>cflock</code></a> block.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Session</p>
+    </td>
+    <td>
+<p>Makes the function available to all pages during the current user session. This scope has no significant advantages over the Application scope.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1125687"></a>Using the Request scope</h3>
+<p>You can effectively manage functions that are used in application pages and custom tags by doing the following: </p>
+<ol>
+<li>
+   Define the functions on a function definitions page.
+</li>
+<li>
+   On the functions page, assign the functions to the request scope.
+</li>
+<li>
+   Use a <a href="00000277.htm#1100248"><code>cfinclude</code></a> tag to include the function definition page on the application page, but do not include it on any custom tag pages.
+</li>
+<li>
+   Always call the functions using the request scope.
+</li>
+</ol>
+<p>This way you only need to include the functions once per request and they are available throughout the life of the request. For example, create a myFuncs.cfm page that defines your functions and assigns them to the Request scope using syntax such as the following:</p>
+<pre>function MyFunc1(<i>Argument1, Argument2</i>)
+{ <i>Function definition goes here }</i>
+Request.MyFunc1 = MyFunc1
+</pre><p>The application page includes the myFuncs.cfm page:</p>
+<pre>&lt;cfinclude template=&quot;myfuncs.cfm&quot;&gt;
+</pre><p>The application page and all custom tags (and nested custom tags) call the functions as follows:</p>
+<pre>Request.MyFunc1(Value1, Value2)
+</pre><h4><a name="wp1126076"></a>Using the Request scope for static variables and constants</h4>
+<p>This section describes how to partially break the rule described in the section <a href="00001010.htm#1103038">Referencing caller variables</a>. Here, the function defines variables in the Request scope. However, it is a specific solution to a specific issue, where the following circumstances exist:</p>
+<ul>
+<li>
+   Your function initializes a large number of variables.
+</li>
+<li>
+   The variables have either of the following characteristics:
+<ul><li>They must be <i>static</i>: they are used only in the function, the function can change their values, and their values must persist from one invocation of the function to the next.</li>
+<li>They are <i>named constants</i>; that is the variable value never changes.</li>
+</ul></li>
+<li>
+   Your application page (and any custom tags) calls the function multiple times.
+</li>
+<li>
+   You can assure that the variable names are used only by the function.
+</li>
+</ul>
+<p>In these circumstances, you can improve efficiency and save processing time by defining your function's variables in the Request scope, rather than the Function scope. The function tests for the Request scope variables and initializes them if they do not exist. In subsequent calls, the variables exist and the function does not reset them.</p>
+<p>The <code>NumberAsString</code> function, written by Ben Forta and available from <a href="http://www.cflib.org" target="mm_window">www.cflib.org</a>, takes advantage of this technique.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001015.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001017.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001016.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

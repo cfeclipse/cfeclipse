@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 6: Dynamically populating the list of event types</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000161.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000163.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 6: Dynamically populating the list of event types</h1>
+<p>Currently, the event types in the tripedit.cfm file are hard-coded. In the preceding exercises, each <code>option</code> tag in the event type contained a <code>value</code> attribute and option text, such as <code>Surfing</code>. These values come from the eventtypes table; they do not have to be hard-coded. The event type in the Trips table is an identifier that is used as a foreign key to the eventtypes table, which holds the actual event names. The eventtypes table column <code>eventTypeID</code> is used for the <code>value</code> attribute and the <code>eventType</code> for the literal value that appears in the select box. To retrieve the data from this table, you must include the following <code>cfquery</code>:</p>
+<pre>&lt;cfquery name=&quot;GetEvents&quot; datasource=&quot;CompassTravel&quot;&gt;
+   SELECT eventType, eventTypeID 
+   FROM eventtypes            
+&lt;/cfquery&gt;
+</pre><p>To exploit the query in the HTML <code>option</code> tags, you can replace the HTML <code>select</code> tag with a <code>cfselect</code> tag.</p>
+<p>The <code>cfselect</code> tag is an improved version of the HTML <code>select</code> tag. Like other ColdFusion form tags, the <code>cfselect</code> tag provides the <code>required</code> and <code>message</code> attributes that validate the data entered. Using the <code>cfselect</code> tag and the preceding <code>cfquery</code>, you can implement the <code>eventType</code> field data entry as follows.</p>
+<h4>To display a list of event types from the eventtypes table and add validation:</h4>
+<ol>
+<li>
+   View the tripedit.cfm page in a browser. Select the event types drop-down list. Notice that only three event types appear in the list.
+</li>
+<li>
+   Open the tripedit.cfm file in the my_app directory.
+</li>
+<li>
+   Add the following code before the <code>&lt;html&gt;</code> tag:
+<pre>
+&lt;cfquery name=&quot;GetEvents&quot; datasource=&quot;CompassTravel&quot;&gt;
+	SELECT eventType, eventTypeID 
+	FROM eventtypes				
+&lt;/cfquery&gt;
+</pre>
+<p><strong>Note: </strong>In previous exercises, you learned to write structured reusable code by placing queries in ColdFusion components. Although this practice is advisable when creating ColdFusion applications, you put the query in the tripedit.cfm file for simplicity.</p></li>
+<li>
+   Replace the following eventtypes code lines:
+<pre>
+&lt;cfselect size=&quot;1&quot; name=&quot;eventType&quot; required=&quot;Yes&quot; <br />
+message=&quot;Type of event must be selected.&quot;&gt;
+	&lt;option value=&quot;1&quot; selected&gt;Surfing&lt;/option&gt;
+	&lt;option value=&quot;2&quot;&gt;Mountain Climbing&lt;/option&gt;
+	&lt;option value=&quot;3&quot;&gt;Mountain Biking&lt;/option&gt;
+&lt;/cfselect&gt;
+</pre>
+<p>with these lines:</p>
+<pre>
+&lt;cfselect size=&quot;1&quot; name=&quot;eventType&quot; required=&quot;Yes&quot; <br />
+message=&quot;Type of event must be selected.&quot;&gt;
+	&lt;cfoutput query=&quot;GetEvents&quot;&gt;
+		&lt;option value=&quot;#GetEvents.eventTypeID#&quot;&gt;
+			#GetEvents.eventType#
+		&lt;/option&gt;
+	&lt;/cfoutput&gt;
+&lt;/cfselect&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To test the modified code:</h4>
+<ol>
+<li>
+   View the tripedit.cfm page in a browser.
+</li>
+<li>
+   Select the event types drop-down list. Notice that all seven event types appear in the list.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000161.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000163.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000162.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

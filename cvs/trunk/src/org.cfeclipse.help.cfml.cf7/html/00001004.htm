@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About creating functions using tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001003.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001005.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About creating functions using tags</h1>
+<p>You use the <a href="00000263.htm#2852457"><code>cffunction</code></a> tag to define a UDF in CFML. The <code>cffunction</code> tag syntax has the following features and limitations:</p>
+<ul>
+<li>
+   Developers who have a background in CFML or HTML, but no scripting or programming experience will be more familiar with the syntax. 
+</li>
+<li>
+   You can include any ColdFusion tag in your function definition. Therefore, you can create a function, for example, that accesses a database.
+</li>
+<li>
+   You can embed CFScript code inside the function definition. 
+</li>
+<li>
+   The <code>cffunction</code> tag provides attributes that enable you to easily limit the execution of the tag to authorized users or specify how the function can be accessed.
+</li>
+</ul>
+<p>The following code uses the <code>cffunction</code> tag to define the exponentiation function:</p>
+<pre>&lt;cffunction name=&quot;twoPower&quot; output=True&gt;
+   &lt;cfargument name=&quot;exponent&quot;&gt;
+   &lt;cfreturn 2^exponent&gt;
+&lt;/cffunction&gt;
+</pre><p>For more information on how to use the <code>cffunction</code> tag to define a function, see <a href="00001005.htm#1194099">Defining functions using the cffunction tag</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001003.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001005.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001004.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

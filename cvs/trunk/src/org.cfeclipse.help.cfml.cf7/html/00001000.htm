@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Selecting among ColdFusion code reuse methods</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000999.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001001.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Selecting among ColdFusion code reuse methods</h1>
+<p>The following table lists common reasons to employ code reuse methods and indicates the techniques to consider for each purpose. The letter <strong>P</strong> indicates that the method is preferred. (There can be more than one preferred method.) The letter <strong>A</strong> means that the method provides an alternative that might be useful in some circumstances.</p>
+<p>This table does not include CFX tags. You use CFX tags only when you should code your functionality in C++ or Java. For more information about using CFX tags, see <a href="00000999.htm#1171700">Using CFX tags</a>.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Purpose
+    </th>
+    <th>
+cfinclude
+tag
+    </th>
+    <th>
+Custom tag
+    </th>
+    <th>
+UDF
+    </th>
+    <th>
+Component
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Provide code, including CFML, HTML, and static text, that must be used in multiple pages.</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Deploy headers and footers.</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Include one page in another page.</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Divide pages into smaller units.</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Use variables from a calling page.</p>
+    </td>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Implement code that uses recursion.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Distribute your code to others.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Operate on a body of HTML or CFML text.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Use subtags.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Provide a computation, data manipulation, or other procedure.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Provide a single functional element that takes any number of input values and returns a (possibly complex) result.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Use variables, whose variable names might change from use to use.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Provide accessibility from Flash clients.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Use built-in user security features.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Encapsulate multiple related functions and properties.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Create web services.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Implement object-oriented coding methodologies.</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>P</p>
+    </td>
+  </tr>
+</table>
+
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000999.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001001.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001000.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfmodule</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000299.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000301.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfmodule</h1>
+<h4><a name="wp1810048"></a>Description</h4>
+<p>Invokes a custom tag for use in ColdFusion application pages. This tag processes custom tag name conflicts.</p>
+<h4><a name="wp2074684"></a>Category</h4>
+<p><a href="00000197.htm#2463072">Application framework tags</a></p>
+<h4><a name="wp1101336"></a>Syntax</h4>
+<pre>&lt;cfmodule <br />   template = &quot;path&quot;<br />   name = &quot;tag_name&quot;<br />   attributeCollection = &quot;collection_structure&quot;<br />   attribute_name1 = &quot;valuea&quot;<br />   attribute_name2 = &quot;valueb&quot;<br />   ...&gt;
+</pre><h4><a name="wp1956600"></a>See also</h4>
+<p><a href="00000217.htm#1097308"><code>cfapplication</code></a>, <a href="00000219.htm#3393273"><code>cfassociate</code></a>, <a href="00000285.htm#1100787"><code>cflock</code></a>; <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2678977"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior when using this tag within a custom tag: if the <code>attribute_name</code> parameter is the same as a key element within the <code>attributeCollection</code> parameter, ColdFusion now uses the name value that is within the <code>attributeCollection</code> parameter. (Earlier releases did not process this consistently.)</p>
+<h4><a name="wp1424773"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>template</p>
+    </td>
+    <td>
+<p>Required unless <code>name</code> attribute is used</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Mutually exclusive with the <code>name</code> attribute. A path to the page that implements the tag. </p>
+<ul>
+<li>
+   Relative path: expanded from the current page.
+</li>
+<li>
+   Absolute path: expanded using ColdFusion mapping.
+</li>
+</ul>
+<p>A physical path is not valid. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required unless <code>template</code><code> </code>attribute is used</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Mutually exclusive with the <code>template</code> attribute. A custom tag name, in the form &quot;<code>Name.Name.Name...</code>&quot; Identifies subdirectory, under the ColdFusion tag root directory, that contains custom tag page. For example (Windows format): </p>
+<pre>&lt;cfmodule name = &quot;macromedia.Forums40.<br />GetUserOptions&quot;&gt; 
+</pre><p>This identifies the page GetUserOptions.cfm in the directory CustomTags\macromedia\Forums40 under the ColdFusion root directory.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>attributeCollection</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Structure. A collection of key-value pairs that represent attribute names and values. You can specify multiple key-value pairs. You can specify this attribute only once. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>attribute_name</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Attribute for a custom tag. You can include multiple instances of this attribute to specify the parameters of a custom tag. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1101348"></a>Usage</h4>
+<p>To name a ColdFusion page that contains the custom tag definition, including its path, use the <code>template</code> attribute. To refer to the custom tag in the ColdFusion installation directory, using dot notation to indicate its location, use the <code>name</code> attribute. </p>
+<p>On UNIX systems, ColdFusion searches first for a file with a name that matches the <code>name</code> attribute, but is all lower case. If it does not find the file, it looks for a file name that matches the attribute with identical character casing.</p>
+<p>You can use <code>attributeCollection</code> and <code>attribute_name</code> in the same call. </p>
+<p>Within the custom tag code, the attributes passed with <code>attributeCollection</code> are saved as independent attribute values, with no indication that they are grouped into a structure by the custom tag's caller.</p>
+<p>Similarly, if the custom tag uses a <code>cfassociate</code> tag to save its attributes, the attributes passed with <code>attributeCollection</code> are saved as independent attribute values, with no indication that they are grouped into a structure by the custom tag's caller.</p>
+<p>If you specify an end tag to <a href="00000300.htm#1810047"><code>cfmodule</code></a>, ColdFusion calls your custom tag as if it had both a start and an end tag. For more information, see <a href="00001080.htm#1126569">Handling end tags</a> of <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp1101352"></a>Example</h4>
+<pre>&lt;h3&gt;cfmodule Example&lt;/h3&gt;
+&lt;p&gt;This view-only example shows use of cfmodule to call a custom tag inline.&lt;/p&gt;
+&lt;p&gt;This example uses a sample custom tag that is saved in myTag.cfm in <br />the snippets directory. You can also save ColdFusion custom tags in the CFusionMX7\CustomTags directory.
+&lt;cfset attrCollection1 = StructNew()&gt;
+&lt;cfparam name=&quot;attrCollection1.value1&quot; default=&quot;22&quot;&gt;
+&lt;cfparam name=&quot;attrCollection1.value2&quot; default=&quot;45&quot;&gt;
+&lt;cfparam name=&quot;attrcollection1.value3&quot; default=&quot;88&quot;&gt;
+&lt;!--- Call the tag with CFMODULE with Name---&gt;
+&lt;cfmodule
+   Template=&quot;myTag.cfm&quot;
+   X=&quot;3&quot;
+   attributeCollection=#attrCollection1#
+   Y=&quot;4&quot;&gt;
+&lt;!--- Show the code. ---&gt;
+&lt;HR size=&quot;2&quot; color=&quot;#0000A0&quot;&gt;
+&lt;P&gt;Here is one way in which to invoke the custom tag,
+using the TEMPLATE attribute.&lt;/P&gt;
+&lt;cfoutput&gt;#HTMLCodeFormat(&quot; &lt;CFMODULE
+   Template=&quot;&quot;myTag.cfm&quot;&quot;
+   X=3
+   attributeCollection=##attrCollection1##
+   Y=4&gt;&quot;)#
+&lt;/cfoutput&gt;
+&lt;P&gt;The result: &lt;cfoutput&gt;#result#&lt;/cfoutput&gt;
+&lt;!--- Call the tag with CFMODULE with Name.---&gt;
+&lt;!---
+   &lt;CFMODULE
+      Name=&quot;myTag&quot;
+      X=&quot;3&quot;
+      attributeCollection=#attrCollection1#
+      Y=&quot;4&quot;&gt;
+---&gt;
+&lt;!--- Show the code. ---&gt;
+&lt;HR size=&quot;2&quot; color=&quot;#0000A0&quot;&gt;
+&lt;P&gt;Here is another way to invoke the custom tag,
+using the NAME attribute.&lt;/P&gt;
+&lt;cfoutput&gt;#HTMLCodeFormat(&quot; &lt;CFMODULE
+      NAME=&#39;myTag&#39;
+      X=3
+      attributeCollection=##attrCollection1##
+      Y=4&gt;&quot;)#
+&lt;/cfoutput&gt;
+&lt;P&gt;The result: &lt;cfoutput&gt;#result#&lt;/cfoutput&gt;
+&lt;!--- Call the tag using the shortcut notation. ---&gt;
+&lt;!---
+&lt;CF_myTag
+   X=&quot;3&quot;
+   attributeCollection=#attrCollection1#
+   Y=&quot;4&quot;&gt;
+---&gt;
+
+
+&lt;!--- Show the code. ---&gt;   
+&lt;p&gt;Here is the short cut to invoking the same tag.&lt;/p&gt;
+&lt;cfoutput&gt;#HTMLCodeFormat(   &quot;&lt;cf_mytag 
+   x = 3 
+   attributeCollection = ##attrcollection1## 
+   y = 4&gt;&quot;)#
+&lt;/cfoutput&gt;   
+&lt;p&gt;The result: &lt;cfoutput&gt;#result#&lt;/cfoutput&gt;&lt;/p&gt;   
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000299.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000301.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000300.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

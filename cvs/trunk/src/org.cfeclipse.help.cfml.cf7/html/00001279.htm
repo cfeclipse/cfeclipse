@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using Queries of Queries with dates</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001278.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001280.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using Queries of Queries with dates</h1>
+<p>If you create a query object with the <a href="00000600.htm#134773"><code>QueryNew</code></a> function and populate a column with date constants, ColdFusion&#160;MX stores the dates as a string inside the query object until a Query of Queries is applied to the query object. When ColdFusion applies a Query of Queries to the query object, it converts the string representations into date objects. </p>
+<p>Query of Queries supports date constants in SQL and ODBC format, as follows:</p>
+<ul>
+<li>
+   <strong>SQL format</strong>&#160;Dates, times, or timestamps in one of the following format:
+<ul><li><strong>Date string</strong>&#160;<i>yyyy-mm-dd</i>, for example, 1955-06-13.</li>
+<li><strong>Time string</strong>&#160;<i>hh:mm:ss[.[nnn]]</i>, for example, 14:34:30.75.</li>
+<li><strong>Timestamp string</strong>&#160;<i>yyyy-mm-dd&#160;hh:mm:ss[.[nnn]]</i>, for example, 1924-01-14&#160;12:00:00.000.</li>
+</ul></li>
+<li>
+   <strong>ODBC format</strong>&#160;Dates, times, or timestamps in one of the following format:
+<ul><li><strong>Date string</strong>&#160;<i>{d &#39;value&#39;}</i>, for example, {d &#39;2004-07-06&#39;}.</li>
+<li><strong>Time string</strong>&#160;<i>{t &#39;value&#39;}</i>, for example, {t &#39;13:45:30&#39;}.</li>
+<li><strong>Timestamp string</strong>&#160;<i>{ts &#39;value&#39;}</i>, for example, {ts &#39;2004-07-06 13:45:30&#39;}.</li>
+</ul></li>
+</ul>
+<p><strong>Tip: </strong>If you want to convert the date to its original format, use the <code>DateFormat</code> function and apply the &quot;mm/dd/yy&quot; mask. </p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001278.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001280.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001279.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The submit command</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001673.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001675.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The submit command</h1>
+<p>To send a message to a single destination address in an SMPP SUBMIT_SM PDU, the structure used in the <i>Data</i> parameter of a <code>SendGatewayMessage</code> function or the return variable of the CFC listener method normally has the following fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Contents
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>command</p>
+    </td>
+    <td>
+<p>If present, the value must be <code>&quot;submit&quot;</code>. If you omit this field, the event gateway sends a submit message.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>shortMessage</p>
+<p><i>or</i></p>
+<p>messagePayload</p>
+    </td>
+    <td>
+<p>The Message contents. You must specify one of these fields, but not both. The SMPP specification imposes a maximum size of 254 bytes on the <code>shortMessage</code> field, and some carriers might limit its size further. The <code>messagePayload</code> field can contain up to 64K bytes; it must start with 0x0424, followed by 2 bytes specifying the payload length, followed by the message contents.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>destAddress</p>
+    </td>
+    <td>
+<p>The address to which to send the message (required).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>sourceAddress</p>
+    </td>
+    <td>
+<p>The address of this application. You can omit this field if it is specified in the configuration file.</p>
+    </td>
+  </tr>
+</table>
+
+<p>You can also set optional fields in the structure, such as a field that requests a delivery receipt. For a complete list of fields, see <a href="00000780.htm#1172284">submit command</a> in <i>CFML Reference</i>. For detailed descriptions of these fields, see the documentation for the SUBMIT_MULTI PDU in the SMPP3.4 specification, which you can download from the SMS Forum at <a href="http://www.smsforum.net/" target="mm_window">www.smsforum.net/</a>. </p>
+<p><strong>Note: </strong>To send long messages, you can separate the message into multiple chunks and use a submit command to send each chunk separately. In this case, a CFC would use multiple <code>SendGatewayMessage</code> functions, instead of the <code>cfreturn</code> function.</p><h4><a name="wp142452"></a>Example: Using the submit command in sendGatewayMessage function</h4>
+<p>The following example from a CFM page uses a <code>sendGatewyMessage</code> CFML function with a <code>submit</code> command to send an SMS messages that you enter in the form. This example uses the SMS gateway that is configured in the ColdFusion MX installation, and will send the message to the SMS client simulator. </p>
+<pre>&lt;h3&gt;Sending SMS From a Web Page Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;form.oncethrough&quot;) is &quot;Yes&quot;&gt;
+    &lt;cfif IsDefined(&quot;form.SMSMessage&quot;) is True AND form.SMSMessage is not &quot;&quot;&gt;
+       &lt;h3&gt;Sending Text Message: &lt;/h3&gt;
+      &lt;cfoutput&gt;#form.SMSMessage#&lt;/cfoutput&gt;&lt;br&gt;
+      &lt;cfscript&gt;
+        /* Create a structure that contains the message. */
+        msg = structNew();
+        msg.command = &quot;submit&quot;;
+        msg.destAddress = &quot;5551234&quot;;
+        msg.shortMessage = form.SMSMessage;   
+        ret = sendGatewayMessage(&quot;SMS Menu App - 5551212&quot;, msg);
+      &lt;/cfscript&gt;
+    &lt;/cfif&gt;
+    &lt;hr noshade&gt;
+&lt;/cfif&gt;
+&lt;!--- begin by calling the cfform tag ---&gt;
+&lt;cfform action=&quot;command.cfm&quot; method=&quot;POST&quot;&gt;
+   SMS Text Message: &lt;cfinput type=&quot;Text&quot; name=&quot;SMSMessage&quot; value=&quot;Sample text Message&quot; required=&quot;No&quot; maxlength=&quot;160&quot;&gt;
+&lt;p&gt;&lt;input type = &quot;submit&quot; name = &quot;submit&quot; value = &quot;Submit&quot;&gt;
+&lt;input type = &quot;hidden&quot; name = &quot;oncethrough&quot; value = &quot;Yes&quot;&gt;
+&lt;/cfform&gt;
+&lt;/body&gt;
+&lt;/html&gt; 
+</pre><p>For a simple example of a listener CFC uses the <code>submit</code> command to echo incoming SMS messages to the message originator, see <a href="00001672.htm#143093">Incoming message handling example</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001673.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001675.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001674.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

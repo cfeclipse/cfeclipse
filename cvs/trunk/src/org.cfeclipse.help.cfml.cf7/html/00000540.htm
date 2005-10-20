@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsXmlNode</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000539.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000541.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsXmlNode</h1>
+<h4><a name="wp4979326"></a>Description</h4>
+<p>Determines whether the function parameter is an XML document object node.</p>
+<h4><a name="wp4979005"></a>Returns</h4>
+<p>True, if the function argument is an XML document object node, including an element; False, otherwise.</p>
+<h4><a name="wp4979007"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a>, <a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp4979015"></a>Function syntax</h4>
+<pre><code><strong>IsXmlNode</strong></code>(<code><i>value</i></code>)
+</pre><h4><a name="wp4979017"></a>See also</h4>
+<p><a href="00000536.htm#4979215"><code>IsXML</code></a>, <a href="00000537.htm#4979140"><code>IsXmlAttribute</code></a>, <a href="00000538.htm#4046340"><code>IsXmlDoc</code></a>, <a href="00000539.htm#4979134"><code>IsXmlElem</code></a>, <a href="00000541.htm#4392056"><code>IsXmlRoot</code></a>, <a href="00000669.htm#139655"><code>XmlGetNodeType</code></a>, <a href="00000672.htm#141075"><code>XmlSearch</code></a>, <a href="00000674.htm#140217"><code>XmlValidate</code></a>; <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4979040"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this function.</p>
+<h4><a name="wp4979045"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Name of an XML document object node.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4987679"></a>Usage</h4>
+<p>This function returns True for the following components of an XML document object:</p>
+<ul>
+<li>
+   The document object
+</li>
+<li>
+   Elements in the object
+</li>
+<li>
+   XmlNode objects in an element's XmlNodes array
+</li>
+</ul>
+<p>It also returns True for XML node objects returned by the <a href="00000672.htm#141075">XmlSearch</a> function. It does not return True for most entries in an element, including XmlText, XmlComment, XmlCdata, or the XmlAttributes array (or individual XML attributes).</p>
+<h4><a name="wp4987675"></a>Example</h4>
+<p>The following example tests whether an XML document object, an element, an attribute in the object, and an attribute returned by an <code>XmlSearch</code> function are nodes:</p>
+<pre>&lt;!--- Create an XML document object ---&gt;
+&lt;cfxml variable=&quot;xmlobject&quot;&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;order id=&quot;4323251&quot;&gt;
+   &lt;customer firstname=&quot;Philip&quot; lastname=&quot;Cramer&quot; accountNum=&quot;21&quot;/&gt;
+   &lt;items&gt;
+      &lt;item id=&quot;43&quot;&gt;
+         &lt;quantity&gt;1&lt;/quantity&gt;
+         &lt;unitprice&gt;15.95&lt;/unitprice&gt;
+      &lt;/item&gt;
+   &lt;/items&gt;
+&lt;/order&gt;
+&lt;/cfxml&gt;
+
+&lt;!--- use XmlSearch to get an attribute node. ---&gt;
+&lt;cfset lastnames = XmlSearch(xmlobject, &#39;//@lastname&#39;)&gt;
+
+&lt;!--- Test the objects to see if they are XML nodes---&gt;
+&lt;cfoutput&gt;
+&lt;h3&gt;Are the following XML nodes?&lt;/h3&gt;
+xmlobject: #<code><strong>IsXmlNode(xmlobject)</strong></code>#&lt;br&gt;
+&lt;!--- The items element ---&gt;
+xmlobject.order.items: #<code><strong>IsXmlNode(xmlobject.order.items)</strong></code>#&lt;br&gt;
+&lt;!--- The order element id attribute; a simple variable, not a DOM node.---&gt;
+xmlobject.order.XmlAttributes.id: 
+   #<code><strong>IsXmlNode(xmlobject.order.XmlAttributes.id)</strong></code>#&lt;br&gt;
+lastnames[1] returned by XmlSearch: 
+#<code><strong>isXmlNode(lastnames[1])</strong></code>#
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000539.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000541.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000540.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

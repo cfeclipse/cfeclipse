@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Validating form fields</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001380.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001382.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Validating form fields</h1>
+<p>This section describes basic validation of form fields. Later sections in this chapter describe other validation types and techniques that you can use, including regular expression validation, masking, hidden field validation, JavaScript validation, and validation using CFML tags and functions. </p>
+<p>In basic form field validation, you do the following:</p>
+<ul>
+<li>
+   Use a <code>cfinput</code> or <code>cftextarea</code> tag.
+</li>
+<li>
+   Specify a validation type, such as numeric, or multiple types.
+</li>
+<li>
+   Optionally, specify an error message.
+</li>
+<li>
+   Optionally, specify a validation technique. (By default, ColdFusion uses onSubmit validation.)
+</li>
+</ul>
+<p>The following example specifies onBlur validation of a telephone number:</p>
+<pre>Phone: &lt;cfinput type=&quot;text&quot; name=&quot;HPhone&quot; 
+      validateat=&quot;onBlur&quot;
+      validate=&quot;required,telephone&quot; 
+      message=&quot;Please enter a standard U.S. telephone number with an optional
+         extension, such as x12345&quot;&gt;
+</pre><p>The following sections describe considerations for validation in <code>cfinput</code> and <code>cftextarea</code> tags, and show a more complete example.</p>
+<h2><a name="wp1153329"></a>Validation type considerations</h2>
+<p><strong>General considerations</strong>&#160;Consider the following issues when you determine how to validate form data:</p>
+<ul>
+<li>
+   When you validate form data using onBlur, onSubmit, onServer, or hidden form field validation, you can specify one or more validation types for each field that you validate. For example, you can specify that a field entry is required and that it must be numeric. To specify multiple validation types for onSubmit, onBlur, or onServer validation, specify the type values in a comma-delimited list.
+</li>
+<li>
+   If you use onBlur, onSubmit, or onServer type validation, you can specify only one error message for each field that you validate. If you use hidden field validation, you can create a custom message for each validation rule (with the exception of range checking).
+</li>
+<li>
+   In the <code>cfinput</code> tag, most validation type attributes apply only to text or password fields.
+</li>
+</ul>
+<p><strong>Validation algorithm differences</strong>&#160;The underlying validation code used when validating form data can differ depending on the validation technique and the form type. As a result, the algorithms used vary in some instances, including the following:</p>
+<ul>
+<li>
+   The validation algorithms used for date/time values in onSubmit and OnBlur validation are different from those used for all server-side validation techniques.
+</li>
+<li>
+   The algorithms used for onSubmit and OnBlur validation in Flash might vary from those used for HTML or XML format, and generally follow simpler rules.
+</li>
+</ul>
+<p>For detailed information on the validation algorithms used for validation techniques used on the server, see <a href="00001385.htm#1154690">Validating form data using hidden fields</a>.</p>
+<h2><a name="wp1150099"></a>Validating data in XML skinnable forms</h2>
+<p>If you create an XML skinnable form and use any skin provided by Macromedia, such as the basic.xsl or silver.xsl skin, you can use all form validation techniques that are available for HTML forms. </p>
+<p>If you use a custom skin (XSL file), the available validation techniques depend on the skin. The <i>cf_webroot</i>\CFIDE\scripts\xsl directory contains a _cfformvalidation.xsl file that implements all ColdFusion HTML form validation techniques and supports onBlur, onSubmit, onServer, and hidden form field validation. XML skin writers can include this file in their skin XSLT to implement ColdFusion validation for their skin.</p>
+<h2><a name="wp1150126"></a>Example: basic form validation</h2>
+<p>The following form asks for information that might be used when registering a new user. It checks to make sure that the user enters required information. (Only the telephone number is optional.) It also checks to make sure that the telephone number and e-mail address are properly formatted and that the number to be used in a challenge question is in the proper range. This example performs onSubmit validation. It posts back to itself, and dumps the submitted results.</p>
+<pre>&lt;cfif IsDefined(&quot;form.fieldnames&quot;)&gt;
+   &lt;cfdump var=&quot;#form#&quot;&gt;&lt;br&gt;
+&lt;/cfif&gt;
+
+&lt;cfform name=&quot;myform&quot; preservedata=&quot;Yes&quot; &gt;
+   First Name: &lt;cfinput type=&quot;text&quot; size=&quot;15&quot; name=&quot;firstname&quot;
+      required=&quot;yes&quot; message=&quot;You must enter a first name.&quot;&gt;&lt;br&gt;
+   Last Name: &lt;cfinput type=&quot;text&quot; size=&quot;25&quot; name=&quot;lastname&quot;
+      required=&quot;yes&quot; message=&quot;You must enter a last name.&quot;&gt;&lt;br&gt;
+   Telephone: &lt;cfinput type=&quot;text&quot; size=&quot;20&quot; name=&quot;telephone&quot;
+      validate=&quot;telephone&quot; message=&quot;You must enter your telephone
+      number, for example 617-555-1212 x1234&quot;&gt;&lt;br&gt;
+   E-mail: &lt;cfinput type=&quot;text&quot; size=&quot;25&quot; name=&quot;email&quot;
+      validate=&quot;email&quot; required=&quot;Yes&quot;
+      message=&quot;You must enter a valid e-mail address.&quot;&gt;&lt;br&gt;
+   Password:   &lt;cfinput type=&quot;password&quot; size=&quot;12&quot; name=&quot;password1&quot;
+      required=&quot;yes&quot; maxlength=&quot;12&quot; 
+      message=&quot;You must enter a password.&quot;&gt;&lt;br&gt;
+   Reenter password:   &lt;cfinput type=&quot;password&quot; size=&quot;12&quot; name=&quot;password2&quot;
+      required=&quot;yes&quot; maxlength=&quot;12&quot;
+      message=&quot;You must enter your password twice.&quot;&gt;&lt;br&gt;
+   We will ask you for the following number, in the range 100-999 if you forget
+      your password.&lt;br&gt;
+   Number: &lt;cfinput type=&quot;text&quot; size=&quot;5&quot; name=&quot;chalenge&quot;
+      validate=&quot;range&quot; range=&quot;100,999&quot; required=&quot;Yes&quot;
+      message=&quot;You must enter a reminder number in the range 100-999.&quot;&gt;&lt;br&gt;
+   &lt;cfinput type=&quot;submit&quot; name=&quot;submitit&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001380.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001382.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001381.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetDirectoryFromPath</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000475.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000477.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetDirectoryFromPath</h1>
+<h4><a name="wp1224785"></a>Description</h4>
+<p>Extracts a directory from an absolute path. </p>
+<h4><a name="wp3375583"></a>Returns</h4>
+<p>Absolute path, without the filename. The last character is a forward or backward slash, depending on the operating system.</p>
+<h4><a name="wp2521154"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp1104954"></a>Function syntax</h4>
+<pre><code><strong>GetDirectoryFromPath</strong></code>(<i>path</i>)
+</pre><h4><a name="wp2536898"></a>See also</h4>
+<p><a href="00000460.htm#1104357">ExpandPath</a>, <a href="00000479.htm#1104998">GetFileFromPath</a></p>
+<h4><a name="wp1307307"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>Absolute path (drive, directory, filename, and extension)</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1104958"></a>Example</h4>
+<pre>&lt;h3&gt;GetDirectoryFromPath Example&lt;/h3&gt;
+&lt;cfset thisPath = ExpandPath(&quot;*.*&quot;)&gt;
+&lt;cfset thisDirectory = <strong>GetDirectoryFromPath(thisPath)</strong>&gt;
+&lt;cfoutput&gt;
+The current directory is: #<strong>GetDirectoryFromPath(thisPath)</strong>#
+&lt;cfif IsDefined(&quot;FORM.yourFile&quot;)&gt;
+   &lt;cfif FORM.yourFile is not &quot;&quot;&gt;
+      &lt;cfset yourFile = FORM.yourFile&gt;
+         &lt;cfif FileExists(ExpandPath(yourfile))&gt;
+         &lt;p&gt;Your file exists in this directory. You entered the correct file name,<br />   #GetFileFromPath(&quot;#thisPath#/#yourfile#&quot;)#
+   &lt;cfelse&gt;
+      &lt;p&gt;Your file was not found in this directory:
+      &lt;br&gt;Here is a list of the other files in this directory:
+      &lt;!--- use cfdirectory show directory, order by name &amp; size ---&gt;
+      &lt;cfdirectory directory = &quot;#thisDirectory#&quot;
+         name = &quot;myDirectory&quot; SORT = &quot;name ASC, size DESC&quot;&gt;
+      &lt;!--- Output the contents of the cfdirectory as a CFTABLE ---&gt;
+      &lt;cftable query = &quot;myDirectory&quot;&gt;
+         &lt;cfcol header = &quot;NAME:&quot; text = &quot;#Name#&quot;&gt;
+      &lt;cfcol header = &quot;SIZE:&quot; text = &quot;#Size#&quot;&gt;
+      &lt;/cftable&gt;
+      &lt;/cfif&gt;
+   &lt;/cfif&gt;
+&lt;cfelse&gt;
+   &lt;H3&gt;Please enter a file name&lt;/H3&gt;
+   &lt;/cfif&gt;
+   &lt;/cfoutput&gt;
+   &lt;form action=&quot;getdirectoryfrompath.cfm&quot; METHOD=&quot;post&quot;&gt;
+      &lt;H3&gt;Enter the name of a file in this directory &lt;I&gt;&lt;FONT SIZE=&quot;-1&quot;&gt;<br />(try expandpath.cfm)&lt;/FONT&gt;&lt;/I&gt;&lt;/H3&gt;
+      &lt;input type=&quot;Text&quot; NAME=&quot;yourFile&quot;&gt;
+      &lt;input type=&quot;Submit&quot; NAME=&quot;&quot;&gt;
+   &lt;/form&gt; ---&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000475.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000477.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000476.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Specifying operators in expressions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000088.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000090.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Specifying operators in expressions</h1>
+<p>In ColdFusion, you use operators to test conditions; for example, you use the <code>IS</code> operator to test for equality. When you use operators in expressions, you must only use supported logical operators that ColdFusion can interpret properly. For example, if you use the greater than operator (&gt;) or the less than operator (&lt;), ColdFusion interprets them as the start or end of a tag rather than as an operator. </p>
+<p>The following table lists the unsupported logical operators and their equivalent ColdFusion operators:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Unsupported logical operator
+    </th>
+    <th>
+Equivalent ColdFusion <br />decision operator
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>=</p>
+    </td>
+    <td>
+<p>IS, EQUAL, EQ</p>
+    </td>
+    <td>
+<p>Tests for equality.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&lt;</p>
+    </td>
+    <td>
+<p>LT, LESS THAN</p>
+    </td>
+    <td>
+<p>Tests for less than.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&lt;=</p>
+    </td>
+    <td>
+<p>LTE, LE, </p>
+<p>LESS THAN OR EQUAL TO</p>
+    </td>
+    <td>
+<p>Tests for less than or equal to.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&gt;</p>
+    </td>
+    <td>
+<p>GT</p>
+<p>GREATER THAN</p>
+    </td>
+    <td>
+<p>Tests for greater than.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&gt;=</p>
+    </td>
+    <td>
+<p>GTE, </p>
+<p>GREATER THAN OR EQUAL TO</p>
+    </td>
+    <td>
+<p>Tests for greater than or equal to.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&lt; &gt;</p>
+    </td>
+    <td>
+<p>IS NOT, NEQ,</p>
+<p>NOT EQUAL</p>
+    </td>
+    <td>
+<p>Tests for nonequality.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>CONTAINS</p>
+    </td>
+    <td>
+<p>Tests whether a value is contained within a second value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>DOES NOT CONTAIN</p>
+    </td>
+    <td>
+<p>Tests whether a value is not contained within a second value.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1166704"></a>Arithmetic operators</h4>
+<p>The following table lists the arithmetic operators that ColdFusion supports:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operators 
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>+, -, *, / </p>
+    </td>
+    <td>
+<p>The basic arithmetic operators: addition, subtraction, multiplication, and division. In the case of division, the right operand cannot be zero.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>+, - </p>
+    </td>
+    <td>
+<p>Unary arithmetic operators for setting the sign of a number as either positive or negative (+ or -).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Mod</p>
+    </td>
+    <td>
+<p>Returns the remainder (modulus) after a number is divided by a divisor. The result has the same sign as the divisor. The right operand cannot be zero. For example, 11 MOD 4 is 3.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>\ </p>
+    </td>
+    <td>
+<p>Divides two integer values. Use the \ (backslash character) to separate the integers. The right operand cannot be zero. For example, 9 \ 4 is 2.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>^ </p>
+    </td>
+    <td>
+<p>Returns the result of a number raised to a power (exponent). Use the ^ (caret) to separate the number from the power. The left operand cannot be zero. For example, 2 ^ 3 is 8.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1166955"></a>String operator</h4>
+<p>The following table describes the one ColdFusion string operator that is a concatenation operator:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>&amp;</p>
+    </td>
+    <td>
+<p>Concatenates strings.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000088.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000090.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000089.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

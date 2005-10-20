@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the CF.query function</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001495.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001497.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the CF.query function</h1>
+<p>You use the <code>CF.query</code> function in your server-side ActionScript to retrieve data from a ColdFusion MX data source. This function lets you perform queries against any ColdFusion MX data source. </p>
+<p><strong>Note: </strong>The <code>CF.query</code> function maps closely to the <code>cfquery</code> CFML tag, although it currently supports a subset of the <code>cfquery</code> attributes. </p><p>Use the <code>CF.query</code> function to do the following: </p>
+<ul>
+<li>
+   Identify the data source you want to query.
+</li>
+<li>
+   Pass SQL statements to the data source.
+</li>
+<li>
+   Pass other optional parameters to the database.
+</li>
+</ul>
+<p>For reference information about the <code>CF.query</code> function, see <a href="00000857.htm#1006667"><code>CF.query</code></a> in <i>CFML Reference</i>.</p>
+<h2><a name="wp1005881"></a>About CF.query function syntax</h2>
+<p>You can write the <code>CF.query</code> ActionScript function using either named arguments or positional arguments. The named argument style is more readable, but it requires more code. Although the positional argument style supports a subset of <code>CF.query</code> arguments, it allows a more compact coding style that is more appropriate for simple expressions of the <code>CF.query</code> function.</p>
+<h3><a name="wp1005883"></a>Using CF.query named argument syntax</h3>
+<p>The <code>CF.query</code> function accepts the following named arguments:</p>
+<pre>// CF.query named argument syntax
+CF.query
+   ({
+      datasource:&quot;data source name&quot;, 
+      sql:&quot;SQL stmts&quot;, 
+      username:&quot;username&quot;, 
+      password:&quot;password&quot;, 
+      maxrows:number, 
+      timeout:milliseconds 
+   })
+</pre><p><strong>Note: </strong>The named argument style requires curly braces {} to surround the function arguments.</p><h3><a name="wp1005896"></a>Using CF.query positional argument syntax</h3>
+<p>Positional arguments support a subset of <code>CF.query</code> arguments, and you can create more efficient code. The following is the syntax for the positional argument style:</p>
+<pre>// CF.query positional argument syntax
+CF.query(datasource, sql);
+CF.query(datasource, sql, maxrows);
+CF.query(datasource, sql, username, password);
+CF.query(datasource, sql, username, password, maxrows);
+</pre><p><strong>Note: </strong>When using positional arguments, do not use curly braces {}. </p><h2><a name="wp1005909"></a>About the CF.query record set</h2>
+<p>The <code>CF.query</code> function returns a RecordSet object, which is an instance of the RecordSet class of objects. The RecordSet class provides a wide range of functions for handling record set data. </p>
+<p>You use methods in the RecordSet ActionScript class in your client-side ActionScript to change data returned in the <code>CF.query</code> record set. </p>
+<p>Currently, the following methods are available in the RecordSet class:</p>
+:<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Method
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>addItem</p>
+    </td>
+    <td>
+<p>Appends a record to the end of the specified RecordSet</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>addItemAt</p>
+    </td>
+    <td>
+<p>Inserts a record at the specified index</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>addView</p>
+    </td>
+    <td>
+<p>Requests notification of changes in a RecordSet object's state</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>filter</p>
+    </td>
+    <td>
+<p>Creates a new RecordSet object that contains selected records from the original RecordSet object</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>getColumnNames</p>
+    </td>
+    <td>
+<p>Returns the names of all the columns of the RecordSet</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>getItemAt</p>
+    </td>
+    <td>
+<p>Retrieves a record from a RecordSet object</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>getItemID</p>
+    </td>
+    <td>
+<p>Gets the unique ID corresponding to a record</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>getLength</p>
+    </td>
+    <td>
+<p>Returns the total number of records in a RecordSet object</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>getNumberAvailable</p>
+    </td>
+    <td>
+<p>Returns the number of records that have been downloaded from the server</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>isFullyPopulated</p>
+    </td>
+    <td>
+<p>Determines whether a RecordSet object can be edited or manipulated</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>isLocal</p>
+    </td>
+    <td>
+<p>Determines whether a RecordSet object is local or server-associated</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>removeAll</p>
+    </td>
+    <td>
+<p>Removes all records from the RecordSet object</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>removeItemAt</p>
+    </td>
+    <td>
+<p>Removes a specified record</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>replaceItemAt</p>
+    </td>
+    <td>
+<p>Replaces the entire contents of a record</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>setDeliveryMode</p>
+    </td>
+    <td>
+<p>Changes the delivery mode of a server-associated record set</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>setField</p>
+    </td>
+    <td>
+<p>Replaces one field of a record with a new value</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>sort</p>
+    </td>
+    <td>
+<p>Sorts all records by a specified compare function</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>sortItemsBy</p>
+    </td>
+    <td>
+<p>Sorts all the records by a selected field</p>
+    </td>
+  </tr>
+</table>
+
+<p>These functions are available for every RecordSet object returned by the <code>CF.query</code> function to the Flash MX client. You invoke these functions as follows:</p>
+<pre>objectName.functionName();
+</pre><p>For example, in the result function that you create to handle record set data returned by the <code>CF.query</code> function, you can reference the database column names returned in the record set using the <code>getColumnNames</code> RecordSet function:</p>
+<pre>function selectData_Result ( result )
+{
+   //result holds the query data; employeesView is a Flash list box
+   stringOutput.text = result.getColumnNames();
+   _root.employeesView.setDataProvider(result);
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001495.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001497.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001496.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

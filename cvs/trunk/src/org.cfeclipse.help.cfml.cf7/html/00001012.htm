@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Handling errors in UDFs</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001011.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001013.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Handling errors in UDFs</h1>
+<p>This section discusses the following topics:</p>
+<ul>
+<li>
+   Displaying error messages directly in the function
+</li>
+<li>
+   Returning function status information to the calling page
+</li>
+<li>
+   Using <code>try</code>/<code>catch</code> or <a href="00000349.htm#1104557"><code>cftry</code></a>/<a href="00000225.htm#3395038"><code>cfcatch</code></a> blocks and the <code>cfthrow</code> and <code>cfrethrow</code> tags to handle and generate exceptions
+</li>
+</ul>
+<p>The technique you use depends on the circumstances of your function and application and on your preferred programming style. However, most functions should use the second or third technique, or a combination of the two. The following sections discuss the uses, advantages, and disadvantages of each technique, and provide examples of their use.</p>
+<ul>
+<li>
+   <a href="00001012.htm#1194630">Displaying error messages</a>
+</li>
+<li>
+   <a href="00001012.htm#1194682">Providing status information</a>
+</li>
+<li>
+   <a href="00001013.htm#1194800">Using exceptions</a>
+</li>
+</ul>
+<h2><a name="wp1194630"></a>Displaying error messages</h2>
+<p>Your function can test for errors and use the <a href="00000665.htm#139339"><code>WriteOutput</code></a> function to display an error message directly to the user. This method is particularly useful for providing immediate feedback to users for simple input errors. You can use it independently or in conjunction with either of the other two error-handling methods.</p>
+<p>For example, the following variation on a &quot;Hello world&quot; function displays an error message if you do not enter a name in the form:</p>
+<pre>&lt;cfform method=&quot;POST&quot; action=&quot;#CGI.script_name#&quot;&gt;
+   &lt;p&gt;Enter your Name:&amp;nbsp;
+   &lt;input name=&quot;name&quot; type=&quot;text&quot; hspace=&quot;30&quot; maxlength=&quot;30&quot;&gt;
+   &lt;input type=&quot;Submit&quot; name=&quot;submit&quot; value=&quot;OK&quot;&gt;
+&lt;/cfform&gt;
+&lt;cfscript&gt;
+   function HelloFriend(Name)&#160;{
+      if (Name is &quot;&quot;) WriteOutput(&quot;You forgot your name!&quot;);
+      else WriteOutput(&quot;Hello &quot; &amp; name &amp;&quot;!&quot;);
+      return &quot;&quot;;
+   }
+   if (IsDefined(&quot;Form.submit&quot;)) HelloFriend(Form.name);
+&lt;/cfscript&gt;
+</pre><h4><a name="wp1194649"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfform method=&quot;POST&quot; action=&quot;#CGI.script_name#&quot;&gt;
+   &lt;p&gt;Enter your Name:&amp;nbsp;
+   &lt;input name=&quot;name&quot; type=&quot;text&quot; hspace=&quot;30&quot;<br />      maxlength=&quot;30&quot;&gt;
+   &lt;input type=&quot;Submit&quot; name=&quot;submit&quot; value=&quot;OK&quot;&gt;
+&lt;/cfform&gt;
+</pre>    </td>
+    <td>
+<p>Creates a simple form requesting you to enter your name.</p>
+<p>Uses the script_name CGI variable to post to this page without specifying a URL. </p>
+<p>If you do not enter a name, the form posts an empty string as the name field.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfscript&gt;
+   function HelloFriend(Name)&#160;{ 
+      if (Name is &quot;&quot;) WriteOutput(&quot;You forgot your<br />         name!&quot;);
+      else WriteOutput(&quot;Hello &quot; &amp; name &amp;&quot;!&quot;);
+      return &quot;&quot;;
+   }
+   if (IsDefined(&quot;Form.submit&quot;))<br />      HelloFriend(Form.name);
+&lt;/cfscript&gt;
+</pre>    </td>
+    <td>
+<p>Defines a function to display &quot;Hello <i>name</i>!&quot; First, checks whether the argument is an empty string. If so, displays an error message. </p>
+<p>Otherwise displays the hello message. </p>
+<p>Returns the empty string. (The caller does not use the return value). It is not necessary to use curly braces around the if or else statement bodies because they are single statements.</p>
+<p>If this page has been called by submitting the form, calls the HelloFriend function. Otherwise, the page just displays the form.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1194682"></a>Providing status information</h2>
+<p>In some cases, such as those where the function cannot provide a corrective action, the function cannot, or should not, handle the error directly. In these cases, your function can return information to the calling page. The calling page must handle the error information and act appropriately.</p>
+<p>Consider the following mechanisms for providing status information:</p>
+<ul>
+<li>
+   Use the return value to indicate the function status only. The return value can be a Boolean success/failure indicator. The return value can also be a status code, for example where 1 indicates success, and various failure types are assigned known numbers. With this method, the function must set a variable in the caller to the value of a successful result.
+</li>
+<li>
+   Set a status variable that is available to the caller (not the return variable) to indicate success or failure and any information about the failure. With this method, the function can return the result directly to the caller. In this method, the function should use only the return value and structure arguments to pass the status back to the caller.
+</li>
+</ul>
+<p>Each of these methods can have variants, and each has advantages and disadvantages. The technique that you use should depend on the type of function, the application in which you use it, and your coding style.</p>
+<p>The following example, which modifies the function used in <a href="00001014.htm#1168072">A user-defined function example</a>, uses one version of the status variable method. It provides two forms of error information: </p>
+<ul>
+<li>
+   It returns -1, instead of an interest value, if it encounters an error. This value can serve as an error indicator because you never pay negative interest on a loan. 
+</li>
+<li>
+   It also writes an error message to a structure that contains an error description variable. Because the message is in a structure, it is available to both the calling page and the function.
+</li>
+</ul>
+<h3><a name="wp1194696"></a>The TotalInterest function</h3>
+<p>After changes to handle errors, the <code>TotalInterest</code> function looks like the following. Code that is changed from the example in <a href="00001014.htm#1168072">A user-defined function example</a> is in bold.</p>
+<pre>&lt;cfscript&gt;
+<code><strong>function TotalInterest(principal, annualPercent, months, status)&#160;{</strong></code>
+   Var years = 0;
+   Var interestRate = 0;
+   Var totalInterest = 0;
+   principal = trim(principal);
+   principal = REReplace(principal,&quot;[\$,]&quot;,&quot;&quot;,&quot;ALL&quot;);
+   annualPercent = Replace(annualPercent,&quot;%&quot;,&quot;&quot;,&quot;ALL&quot;);
+<code><strong>   if ((principal LE 0) OR (annualPercent LE 0) OR (months LE 0))&#160;{</strong></code>
+<strong>      </strong><code><strong>Status.errorMsg = &quot;All values must be greater than 0&quot;;</strong></code>
+<strong>      </strong><code><strong>Return -1;</strong></code>
+<strong>   </strong><code><strong>}</strong></code>
+   interestRate = annualPercent / 100;
+   years = months / 12;
+   totalInterest = principal*(((1+ interestRate)^years)-1);
+   Return DollarFormat(totalInterest);
+}
+&lt;/cfscript&gt;
+</pre><h4><a name="wp1194719"></a>Reviewing the code</h4>
+<p>The following table describes the code that has been changed or added to the previous version of this example. For a description of the initial code, see <a href="00001014.htm#1168072">A user-defined function example</a>.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>function TotalInterest(principal, 
+   annualPercent, months, status)
+</pre>    </td>
+    <td>
+<p>The function now takes an additional argument, a status structure. Uses a structure for the status variable so that changes that the function makes affect the status structure in the caller.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>if ((principal LE 0) OR 
+   (annualPercent LE 0) OR 
+   (months LE 0))&#160;{
+   Status.errorMsg = &quot;All values 
+      must be greater than 0&quot;;
+   Return -1;
+}
+</pre>    </td>
+    <td>
+<p>Checks to make sure the principal, percent rate, and duration are all greater than zero.</p>
+<p>If any is not, sets the errorMsg key (the only key) in the Status structure to a descriptive string. Also, returns -1 to the caller and exits the function without processing further.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1194746"></a>Calling the function</h3>
+<p>The code that calls the function now looks like the following. Code that is changed from the example in <a href="00001014.htm#1168072">A user-defined function example</a> is in bold.</p>
+<pre><code><strong>&lt;cfset status = StructNew()&gt;</strong></code>
+<code><strong>&lt;cfset myInterest = TotalInterest(Form.Principal, </strong></code>
+<code><strong>   Form.AnnualPercent,Form.Months, status)&gt;</strong></code>
+<code><strong>&lt;cfif myInterest EQ -1&gt;</strong></code>
+<code><strong>   &lt;cfoutput&gt;</strong></code>
+<code><strong>      ERROR: #status.errorMsg#&lt;br&gt;</strong></code>
+<code><strong>   &lt;/cfoutput&gt;</strong></code>
+<code><strong>&lt;cfelse&gt;</strong></code>
+<code>   &lt;cfoutput&gt; </code>
+      Loan amount: #Form.Principal#&lt;br&gt;
+      Annual percentage rate:<br />         #Form.AnnualPercent#&lt;br&gt;
+      Loan duration: #Form.Months# months&lt;br&gt;
+<code><strong>      TOTAL INTEREST: #myInterest#&lt;br&gt;</strong></code>
+<code>   &lt;/cfoutput&gt;</code>
+<code><strong>&lt;/cfif&gt;</strong></code>
+</pre><h4><a name="wp1194766"></a>Reviewing the code</h4>
+<p>The following table describes the code that has been changed or added:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset status = StructNew()&gt;
+</pre>    </td>
+    <td>
+<p>Creates a structure to hold the function status.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfset myInterest = TotalInterest<br />   (Form.Principal, Form.AnnualPercent,<br />   Form.Months, status)&gt;
+</pre>    </td>
+    <td>
+<p>Calls the function. This time, the function requires four arguments, including the status variable.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif myInterest EQ -1&gt;
+   &lt;cfoutput&gt;
+      ERROR: #status.errorMsg#&lt;br&gt;
+   &lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>If the function returns -1, there must be an error. Displays the message that the function placed in the status.errorMsg structure key.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfelse&gt;
+   &lt;cfoutput&gt; 
+      Loan amount: #Form.Principal#&lt;br&gt;
+      Annual percentage rate:<br />         #Form.AnnualPercent#&lt;br&gt;
+      Loan duration: #Form.Months# months&lt;br&gt;
+      TOTAL INTEREST: #myInterst#&lt;br&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>If the function does not return -1, it returns an interest value. Displays the input values and the function return value.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001011.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001013.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001012.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

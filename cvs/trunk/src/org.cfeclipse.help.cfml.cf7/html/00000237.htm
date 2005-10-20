@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfdocumentitem</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000236.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000238.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfdocumentitem</h1>
+<h4><a name="wp3766461"></a>Description</h4>
+<p>Specifies action items for a PDF or FlashPaper document created by the <a href="00000236.htm#3765835"><code>cfdocument</code></a> tag. Actions include the following:</p>
+<ul>
+<li>
+   Page break
+</li>
+<li>
+   Header
+</li>
+<li>
+   Footer
+</li>
+</ul>
+<h4><a name="wp3766463"></a>Category</h4>
+<p><a href="00000199.htm#2459638">Data output tags</a></p>
+<h4><a name="wp3766468"></a>Syntax</h4>
+<pre>&lt;cfdocument ...&gt;
+<code><strong>Syntax 1</strong></code>
+&lt;cfdocumentitem type = &quot;pagebreak&quot;/&gt;
+
+<code><strong>Syntax 2</strong></code>
+   &lt;cfdocumentitem 
+      type = &quot;header&quot; or &quot;footer&quot;&gt;<br /><code><i>header/footer text<br /></i></code>&lt;/cfdocumentitem&gt;
+
+&lt;/cfdocument&gt;
+</pre><h4><a name="wp3766472"></a>See also</h4>
+<p><a href="00000323.htm#1102863"><code>cfreport</code></a><code>, </code><a href="00000236.htm#3765835"><code>cfdocument</code></a>, <a href="00000238.htm#3766659"><code>cfdocumentsection</code></a></p>
+<h4><a name="wp3766477"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this tag.</p>
+<h4><a name="wp3766479"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Specifies the action:</p>
+<ul>
+<li>
+   pagebreak: start a new page at the location of the tag.
+</li>
+<li>
+   header: use the text between the <code>&lt;cfdocumentitem&gt;</code> and <code>&lt;/cfdocumentitem&gt;</code> tags as the running header.
+</li>
+<li>
+   footer: use the text between the <code>&lt;cfdocumentitem&gt;</code> and <code>&lt;/cfdocumentitem&gt;</code> tags as the running footer.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3766530"></a>Usage</h4>
+<p>Use the <code>cfdocumentitem</code> tag to control the formatting of a PDF or FlashPaper report. This tag must be wrapped inside a <code>&lt;cfdocument&gt;</code> <code>&lt;/cfdocument&gt;</code> pair.</p>
+<p>Write code for one <code>cfdocumentitem</code> tag for each pagebreak, running header, or running footer. </p>
+<p>You can use the cfdocument scope variable, cfdocument.currentpagenumber, to display the current page number in a header or footer. You can also use cfdocument.totalpagecount to display the total number of pages. For example:</p>
+<pre>...
+&lt;cfdocumentItem type= &quot;footer&gt;
+&#160;&#160;&#160;#cfdocument.currentpagenumber# of #cfdocument.totalpagecount#
+&lt;/cfdocumentitem&gt;
+</pre><p>You can use <code>cfdocumentitem</code> tags with or without the <a href="00000238.htm#3766659">cfdocumentsection</a> tag, as follows:</p>
+<p><strong>Without cfdocumentsection</strong>&#160;The <code>cfdocumentitem</code> attribute applies to the entire document, as follows:</p>
+<ul>
+<li>
+   If the tag is at the top of the document, it applies to the entire document.
+</li>
+<li>
+   If the tag is in the middle of the document, it applies to the rest of the document.
+</li>
+<li>
+   If the tag is at the end of the document, it has no affect.
+</li>
+</ul>
+<p><strong>With cfdocumentsection tags</strong>&#160;The <code>cfdocumentitem</code> attribute applies only to the section and overrides previously specified header and footer specifications.</p>
+<h4><a name="wp3766545"></a>Example</h4>
+<pre>&lt;cfquery datasource=&quot;cfdocexamples&quot; name=&quot;parksQuery&quot;&gt;
+SELECT parkname, suptmgr from parks
+&lt;/cfquery&gt;
+
+&lt;cfdocument format=&quot;PDF&quot;&gt;
+<code><strong>  &lt;cfdocumentitem type=&quot;header&quot;&gt;National Parks Report&lt;/cfdocumentitem&gt;</strong></code>
+  &lt;!--- Use a footer with current page of totalpages format ---&gt;
+  <code><strong>&lt;cfdocumentitem type=&quot;footer&quot;&gt;</strong></code>
+    &lt;cfoutput&gt;Page #cfdocument.currentpagenumber# of #cfdocument.totalpagecount#&lt;/cfoutput&gt;
+<code><strong> &lt;/cfdocumentitem&gt;</strong></code>
+
+&lt;h1&gt;Park list&lt;/h1&gt;
+&lt;table width=&quot;95%&quot; border=&quot;2&quot; cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; &gt;
+  &lt;tr &gt;
+    &lt;th&gt;Park&lt;/th&gt;
+    &lt;th&gt;Manager&lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;cfoutput query=&quot;parksQuery&quot;&gt;
+   &lt;tr&gt;
+    &lt;td&gt;&lt;font size=&quot;-1&quot;&gt;#parkname#&lt;/font&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;font size=&quot;-1&quot;&gt;#suptmgr#&lt;/font&gt;&lt;/td&gt;
+   &lt;/tr&gt;
+ &lt;/cfoutput&gt;
+&lt;/table&gt;
+&lt;/cfdocument&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000236.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000238.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000237.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

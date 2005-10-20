@@ -1,0 +1,565 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfldap</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000282.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000284.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfldap</h1>
+<h4><a name="wp1828283"></a>Description</h4>
+<p>Provides an interface to a Lightweight Directory Access Protocol (LDAP) directory server, such as the Netscape Directory Server. </p>
+<h4><a name="wp1953596"></a>Category</h4>
+<p><a href="00000206.htm#2460062">Internet Protocol tags</a></p>
+<h4><a name="wp1100586"></a>Syntax</h4>
+<pre>&lt;cfldap <br />   server = &quot;server_name&quot;<br />   port = &quot;port_number&quot;<br />   username = &quot;name&quot;<br />   password = &quot;password&quot;<br />   action = &quot;action&quot;<br />   name = &quot;name&quot;<br />   timeout = &quot;seconds&quot;<br />   maxRows = &quot;number&quot;<br />   start = &quot;distinguished_name&quot;<br />   scope = &quot;scope&quot;<br />   attributes = &quot;attribute, attribute&quot;<br />returnAsBinary = &quot;column_name, column_name&quot;<br />   filter = &quot;filter&quot;<br />   sort = &quot;attribute[, attribute]...&quot;<br />   sortControl = &quot;nocase&quot; and/or &quot;desc&quot; or &quot;asc&quot;<br />   dn = &quot;distinguished_name&quot;<br />   startRow = &quot;row_number&quot;<br />   modifyType = &quot;replace&quot; or &quot;add&quot; or &quot;delete&quot;<br />   rebind = &quot;yes&quot; or &quot;no&quot;<br />   referral = &quot;number_of_allowed_hops&quot;<br />   secure = &quot;multi_field_security_string&quot;<br />   separator = &quot;separator_character&quot;<br />   delimiter = &quot;delimiter_character&quot;&gt;
+</pre><h4><a name="wp1953603"></a>See also</h4>
+<p><a href="00000259.htm#1800554"><code>cfftp</code></a><code>, </code><a href="00000272.htm#1632966"><code>cfhttp</code></a><code>, </code><a href="00000297.htm#2355015"><code>cfmail</code></a><code>, </code><a href="00000298.htm#1101294"><code>cfmailparam</code></a><code>, </code><a href="00000311.htm#1101854"><code>cfpop</code></a><code>,</code> <a href="00001282.htm#1128431">Managing LDAP Directories</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2436742"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code>returnAsBinary</code> attribute.</p>
+<p>ColdFusion&#160;MX:</p>
+<ul>
+<li>
+   Changed the <code>name</code> attribute behavior: this tag validates the query name in the <code>name</code> attribute.
+</li>
+<li>
+   Changed sorting behavior: this tag does not support client-side sorting of query results. (It supports server-side sorting; use the <code>sort</code> and <code>sortcontrol</code> attributes.) 
+</li>
+<li>
+   Changed how results are sorted: server-side sorting results might be sorted slightly differently than in ColdFusion 5. If you attempt a sort against a server that does not support it, ColdFusion&#160;MX throws an error. 
+</li>
+<li>
+   Deprecated the <code>filterfile</code> attribute. It might not work, and might cause an error, in later releases.
+</li>
+</ul>
+<h4><a name="wp3487466"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>server</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Host name or IP address of LDAP server.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>port</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>389</p>
+    </td>
+    <td>
+<p>Port. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>username</p>
+    </td>
+    <td>
+<p>Required if <code>secure</code> <code>=</code> <code>&quot;CFSSL_BASIC&quot;</code></p>
+    </td>
+    <td>
+<p>(anonymous)</p>
+    </td>
+    <td>
+<p>User ID.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Required if <code>secure</code> <code>=</code> <code>&quot;CFSSL_BASIC&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Password that corresponds to user name. </p>
+<p>If <code>secure</code> <code>=</code> <code>&quot;CFSSL_BASIC&quot;</code>, V2 encrypts the password before transmission.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<ul>
+<li>
+   <code>query</code>: returns LDAP entry information only. Requires <code>name</code>, <code>start</code>, and <code>attributes</code> attributes. 
+</li>
+<li>
+   <code>add</code>: adds LDAP entries to LDAP server. Requires <code>attributes</code> attribute.
+</li>
+<li>
+   <code>modify</code>: modifies LDAP entries, except distinguished name <code>dn</code> attribute, on LDAP server. Requires <code>dn</code>. See <code>modifyType</code> attribute.
+</li>
+<li>
+   <code>modifyDN</code>: modifies distinguished name attribute for LDAP entries on LDAP server. Requires <code>dn</code>.
+</li>
+<li>
+   <code>delete</code>: deletes LDAP entries on an LDAP server. Requires <code>dn</code>.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;Query&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of LDAP query. The tag validates the value. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>timeout</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>60000</p>
+    </td>
+    <td>
+<p>Maximum length of time, in milliseconds, to wait for LDAP processing.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>maxRows</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Maximum number of entries for LDAP queries.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>start</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;Query&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Distinguished name of entry to be used to start a search. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>scope</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>oneLevel</p>
+    </td>
+    <td>
+<p>Scope of search, from entry specified in <code>start</code> attribute for <code>action</code> <code>=</code> <code>&quot;Query&quot;</code>. </p>
+<ul>
+<li>
+   oneLevel: entries one level below entry. 
+</li>
+<li>
+   base: only the entry. 
+</li>
+<li>
+   subtree: entry and all levels below it. 
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>attributes</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;Query&quot;</code>, <code>&quot;Add&quot;</code>, <code>&quot;ModifyDN&quot;</code>, or <code>&quot;Modify&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>For queries: comma-delimited list of attributes to return. For queries, to get all attributes, specify <code>&quot;*&quot;</code>. </p>
+<p>If <code>action</code> <code>=</code> <code>&quot;add&quot;</code> <code>or</code> <code>&quot;modify&quot;</code>, you can specify a list of update columns. Separate attributes with a semicolon. </p>
+<p>If <code>action</code> <code>=</code> <code>&quot;ModifyDN&quot;</code>, ColdFusion passes attributes to the LDAP server without syntax checking.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>returnAsBinary</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A comma-delimited list of columns that are to be returned as binary values.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>filter</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&quot;objectclass = *&quot;</p>
+    </td>
+    <td>
+<p>Search criteria for <code>action</code> <code>=</code> <code>&quot;query&quot;</code>. </p>
+<p>List attributes in the form: <br /><code>&quot;(attribute</code> <code>operator</code> <code>value)&quot;</code> <br />For example: <code>&quot;(sn</code> <code>=</code> <code>Smith)&quot; </code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>sort</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Attribute(s) by which to sort query results. Use a comma delimiter.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>sortControl</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>asc</p>
+    </td>
+    <td>
+<ul>
+<li>
+   nocase: case-insensitive sort.
+</li>
+<li>
+   asc: ascending (a to z) case-sensitive sort.
+</li>
+<li>
+   desc: descending (z to a) case-sensitive sort.
+</li>
+</ul>
+<p>You can enter a combination of sort types; for example, <code>sortControl</code> <code>=</code> <code>&quot;nocase,</code> <code>asc&quot;</code>. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>dn</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;Add&quot;</code>,<code> </code><code>&quot;Modify&quot;</code>, <code>&quot;ModifyDN&quot;</code>, or <code>&quot;delete&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Distinguished name, for <code>update</code> action; for example, <code>&quot;cn</code> <code>=</code> <code>Bob</code> <code>Jensen,</code> <code>o</code> <code>=</code> <code>Ace</code> <code>Industry,</code> <br /><code>c</code> <code>=</code> <code>US&quot;</code></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>startRow</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>1&#160;</p>
+    </td>
+    <td>
+<p>Used with <code>action</code> <code>=</code> <code>&quot;query&quot;</code>. First row of LDAP query to insert into a ColdFusion query. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>modifyType</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>replace</p>
+    </td>
+    <td>
+<p>How to process an attribute in a multi-value list:</p>
+<ul>
+<li>
+   add: appends it to any attributes. 
+</li>
+<li>
+   delete: deletes it from the set of attributes.
+</li>
+<li>
+   replace: replaces it with specified attributes.
+</li>
+</ul>
+<p>You cannot add an attribute that is already present or that is empty.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>rebind</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>no </p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: attempts to rebind referral callback and reissue query by referred address using original credentials. 
+</li>
+<li>
+   no: referred connections are anonymous.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>referral</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Integer. Number of hops allowed in a referral. A value of 0 disables referred addresses for LDAP; no data is returned.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>secure</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Security to employ, and required information. One option:</p>
+<ul>
+<li>
+   CFSSL_BASIC
+</li>
+</ul>
+<p>	&quot;CFSSL_BASIC&quot; provides V2 SSL encryption<br />	and server authentication.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>separator</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>, [comma]</p>
+    </td>
+    <td>
+<p>Delimiter to separate attribute values of multi-value attributes. Used by <code>query</code>, <code>add</code>, and <code>modify</code> actions, and by <code>cfldap</code> to output multi-value attributes. </p>
+<p>For example, if <code>$</code> (dollar sign), the <code>attributes</code> attribute could be <code>&quot;objectclass</code> <code>=</code> <code>top$person&quot;</code>, where the first value of objectclass is <code>top</code>, and the second value is <code>person</code>. This avoids confusion if values include commas.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>delimiter</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>; [semicolon]</p>
+    </td>
+    <td>
+<p>Separator between attribute name-value pairs. Use this attribute if either of these situations exist:</p>
+<ul>
+<li>
+   the <code>attributes</code> attribute specifies more than one item
+</li>
+<li>
+   an attribute contains the default delimiter (semicolon). For example: <code>mgrpmsgrejecttext;lang-en</code>
+</li>
+</ul>
+<p>Used by <code>query</code>, <code>add</code>, and <code>modify</code> actions, and by <code>cfldap</code> to output multivalue attributes. </p>
+<p>For example, if <code>$</code> (dollar sign), you could specify <br /><code>&quot;cn</code> <code>=</code> <code>Double</code> <code>Tree</code> <code>Inn$street</code> <code>=</code> <code>1111</code> <code>Elm;</code> <code>Suite</code> <code>100</code>, where the semicolon is part of the street value.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1100662"></a>Usage</h4>
+<p>If you use the query action, <code>cfldap</code> creates a query object, allowing access to information in the query variables, as follows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Variable name
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><i>queryname</i>.recordCount</p>
+    </td>
+    <td>
+<p>Number of records returned by query</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><i>queryname</i>.currentRow</p>
+    </td>
+    <td>
+<p>Current row of query that <code>cfoutput</code> is processing</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><i>queryname</i>.columnList</p>
+    </td>
+    <td>
+<p>Column names in query</p>
+    </td>
+  </tr>
+</table>
+
+<p>If you use the <code>security=&quot;CFSSL_BASIC&quot;</code> option, ColdFusion determines whether to trust the server by comparing the server's certificate with the information in the jre/lib/security/cacerts keystore of the JRE used by ColdFusion MX. The ColdFusion MX default cacerts file contains information about many certificate granting authorities. If you must update the file with additional information, you can use the keytool utility in the ColdFusion jre/bin directory to import certificates that are in X.509 format. For example, enter the following: </p>
+<pre>keytool -import -keystore cacerts -alias ldap -file ldap.crt -keypass bl19mq
+</pre><p>Then restart ColdFusion MX. The keytool utility initial <code>keypass</code> password is &quot;change it&quot;. For more information on using the keytool utility, see the Sun JDK documentation </p>
+<p>Characters that are illegal in ColdFusion can be used in LDAP attribute names. As a result, the <code>cfldap</code> tag could create columns in the query result set whose names contain illegal characters and are, therefore, inaccessible in CFML. In ColdFusion, illegal characters are automatically mapped to the underscore character; therefore, column names in the query result set might not exactly match the names of the LDAP attributes.</p>
+<p>For usage examples, see <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp1100692"></a>Example</h4>
+<pre>&lt;h3&gt;cfldap Example&lt;/h3&gt;
+&lt;p&gt;Provides an interface to LDAP directory servers. The example uses the 
+University of Connecticut public LDAP server. For more public LDAP servers,
+see &lt;a href=&quot;http://www.emailman.com&quot;&gt;http://www.emailman.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Enter a name and search the public LDAP resource. 
+An asterisk before or after the name acts as a wildcard.&lt;/p&gt;
+&lt;!--- If form.name exists, the form was submitted; run the query. ---&gt;
+&lt;cfif IsDefined(&quot;form.name&quot;)&gt;
+   &lt;!--- Check to see that there is a name listed. ---&gt;
+   &lt;cfif form.name is not &quot;&quot;&gt;
+      &lt;!--- Make the LDAP query. ---&gt;
+      &lt;cfldap 
+          server = &quot;ldap.uconn.edu&quot;
+          action = &quot;query&quot;
+          name = &quot;results&quot;
+          start = &quot;dc=uconn,dc=edu&quot;
+          filter = &quot;cn=#name#&quot;
+          attributes = &quot;cn,o,title,mail,telephonenumber&quot;
+          sort = &quot;cn ASC&quot;&gt;
+      &lt;!--- Display results. ---&gt;
+      &lt;center&gt;
+      &lt;table border = 0 cellspacing = 2 cellpadding = 2&gt;
+         &lt;tr&gt;
+            &lt;th colspan = 5&gt;
+               &lt;cfoutput&gt;#results.recordCount# matches found
+               &lt;/cfoutput&gt;&lt;/TH&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;th&gt;&lt;font size = &quot;-2&quot;&gt;Name&lt;/font&gt;&lt;/TH&gt;
+            &lt;th&gt;&lt;font size = &quot;-2&quot;&gt;Organization&lt;/font&gt;&lt;/TH&gt;
+            &lt;th&gt;&lt;font size = &quot;-2&quot;&gt;Title&lt;/font&gt;&lt;/TH&gt;
+            &lt;th&gt;&lt;font size = &quot;-2&quot;&gt;E-Mail&lt;/font&gt;&lt;/TH&gt;
+            &lt;th&gt;&lt;font size = &quot;-2&quot;&gt;Phone&lt;/font&gt;&lt;/TH&gt;
+         &lt;/tr&gt;
+         &lt;cfoutput query = &quot;results&quot;&gt;
+            &lt;tr&gt;
+               &lt;td&gt;&lt;font size = &quot;-2&quot;&gt;#cn#&lt;/font&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;font size = &quot;-2&quot;&gt;#o#&lt;/font&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;font size = &quot;-2&quot;&gt;#title#&lt;/font&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;font size = &quot;-2&quot;&gt;
+                  &lt;A href = &quot;mailto:#mail#&quot;&gt;#mail#&lt;/A&gt;&lt;/font&gt;&lt;/td&gt;
+               &lt;td&gt;&lt;font size = &quot;-2&quot;&gt;#telephonenumber#&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+         &lt;/cfoutput&gt;
+         &lt;/table&gt;
+         &lt;/center&gt;
+      &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action=&quot;#cgi.script_name#&quot; method=&quot;POST&quot;&gt;
+&lt;p&gt;Enter a name to search in the database.
+&lt;p&gt;
+&lt;input type=&quot;Text&quot; name=&quot;name&quot;&gt;
+&lt;input type=&quot;Submit&quot; value=&quot;Search&quot; name=&quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000282.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000284.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000283.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

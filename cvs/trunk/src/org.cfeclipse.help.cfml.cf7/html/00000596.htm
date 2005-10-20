@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>PreserveSingleQuotes</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000595.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000597.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>PreserveSingleQuotes</h1>
+<h4><a name="wp134494"></a>Description</h4>
+<p>Prevents ColdFusion from automatically escaping single-quotation mark characters that are contained in a variable. ColdFusion does not evaluate the argument.</p>
+<h4><a name="wp134496"></a>Returns</h4>
+<p>(None) </p>
+<h4><a name="wp134498"></a>Category</h4>
+<p><a href="00000366.htm#3493621">Other functions</a></p>
+<h4><a name="wp134503"></a>Function syntax</h4>
+<pre><code><strong>PreserveSingleQuotes</strong></code>(<i>variable</i>)
+</pre><h4><a name="wp134505"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: ColdFusion automatically escapes simple-variable, array-variable, and structure-variable references within a <code>cfquery</code> tag body or block. (Earlier releases did not automatically escape array-variable references.)</p>
+<h4><a name="wp134510"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>variable</p>
+    </td>
+    <td>
+<p>Variable that contains a string in which to preserve single-quotation marks.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp134521"></a>Usage</h4>
+<p>This function is useful in SQL statements to defer evaluation of a variable reference until runtime. This prevents errors that result from the evaluation of a single-quote or apostrophe data character (for example, &quot;Joe's Diner&quot;) as a delimiter. </p>
+<p><strong>Example A</strong>: Consider this code:</p>
+<pre>&lt;cfset mystring = &quot;&#39;Newton&#39;s Law&#39;, &#39;Fermat&#39;s Theorem&#39;&quot;&gt;
+PreserveSingleQuotes(#mystring#) is
+&lt;cfoutput&gt;<br />#PreserveSingleQuotes(mystring)#
+&lt;/cfoutput&gt; 
+</pre><p>The output is as follows:</p>
+<pre>PreserveSingleQuotes(#mystring#) is &#39;Newton&#39;s Law&#39;, &#39;Fermat&#39;s Theorem&#39; 
+</pre><p><strong>Example B</strong>: Consider this code:</p>
+<pre>&lt;cfset list0 = &quot; &#39;1&#39;,&#39;2&#39;, &#39;3&#39; &quot;&gt;
+&lt;cfquery sql = &quot;select * from foo where bar in (#list0#)&quot;&gt;
+</pre><p>ColdFusion escapes the single-quote characters in the list as follows:</p>
+<pre>&quot;&quot;1&quot;&quot;, &quot;&quot;2&quot;&quot;, &quot;&quot;3&quot;&quot;
+</pre><p>The <code>cfquery</code> tag throws an error.</p>
+<p>You code this function correctly as follows:</p>
+<pre>&lt;cfquery sql = &quot;select * from foo where bar in (#preserveSingleQuotes(list0)#)&quot;&gt; 
+</pre><p>This function ensures that ColdFusion evaluates the code as follows:</p>
+<pre>&#39;1&#39;, &#39;2&#39;, &#39;3&#39; 
+</pre><h4><a name="wp134540"></a>Example</h4>
+<pre>&lt;h3&gt;PreserveSingleQuotes Example&lt;/h3&gt;&lt;p&gt;This is a useful function for
+   creating lists of information to return from a query. In this example, 
+   we pick the list of Centers in Suisun, San Francisco, and San Diego, 
+   using the SQL grammar IN to modify a WHERE clause, rather than looping 
+   through the result set after the query is run.
+&lt;cfset List = &quot;&#39;Suisun&#39;, &#39;San Francisco&#39;, &#39;San Diego&#39;&quot;&gt;
+&lt;cfquery name = &quot;GetCenters&quot; datasource = &quot;cfdocexamples&quot;&gt;
+   SELECT Name, Address1, Address2, City, Phone
+   FROM Centers
+   WHERE City IN (#PreserveSingleQuotes(List)#)
+&lt;/cfquery&gt;
+&lt;p&gt;We found &lt;cfoutput&gt;#GetCenters.RecordCount#&lt;/cfoutput&gt; records.
+&lt;cfoutput query = &quot;GetCenters&quot;&gt;
+&lt;p&gt;#Name#&lt;br&gt;   
+#Address1#&lt;br&gt;
+&lt;cfif Address2 is not &quot;&quot;&gt;#Address2#<br />&lt;/cfif&gt;
+#City#&lt;br&gt;
+#Phone#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000595.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000597.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000596.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

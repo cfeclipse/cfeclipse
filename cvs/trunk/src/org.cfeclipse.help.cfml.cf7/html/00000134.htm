@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 3: Constructing the initial Trip Search Results page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000133.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000135.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 3: Constructing the initial Trip Search Results page</h1>
+<p>After the user enters the search criteria and submits the form, the results are posted to the Trip Search Results page, as the following figure shows:</p>
+<p><br />
+<img src="images/unformat.jpg" alt="This image shows a picture of the trip search results form." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The logic contained in the search results page, also known as the action page, invokes the CFC method that builds the SQL SELECT statement contained in a <code>cfquery</code> tag by using ColdFusion string manipulation. The action page displays the result using the <code>cfoutput</code> tag.</p>
+<h4>To create the Trip Search Results page:</h4>
+<ol>
+<li>
+   Create a blank document and save it as tripsearchresult.cfm in the my_app directory.
+<p><strong>Note: </strong>If you are using Dreamweaver, select Dynamic page in the Category list, and ColdFusion in the Dynamic Page list.</p></li>
+<li>
+   Enter the following code, or do the steps in the <a href="00000134.htm#1174725">Let Dreamweaver do it</a> section.
+<pre>
+&lt;cfinvoke 
+	component=&quot;cfdocs.getting_started.my_app.components.gettrips&quot; 
+	method=&quot;getTripsFromForm&quot;
+	returnvariable=&quot;TripResult&quot;&gt;
+&lt;/cfinvoke&gt;
+</pre>
+</li>
+<li>
+   Enter or copy and paste the following code after the closing <code>cfinvoke</code> tag:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Trip Maintenance - Search Results&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;img src=&quot;images/tripsearchresults.gif&quot;&gt;
+	&lt;table border=&quot;0&quot; cellpadding=&quot;3&quot; cellspacing=&quot;0&quot;&gt;
+		&lt;tr bgcolor=&quot;Gray&quot;&gt;
+			&lt;td&gt;	Trip Name
+			&lt;/td&gt;
+			&lt;td&gt;	Location
+			&lt;/td&gt;
+			&lt;td&gt;	Departure Date
+			&lt;/td&gt;
+			&lt;td&gt;	Return Date
+			&lt;/td&gt;
+			&lt;td&gt;	Price
+			&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;cfoutput query=&quot;TripResult&quot;&gt;
+			&lt;tr&gt;  
+				&lt;td&gt;	#tripName#
+				&lt;/td&gt;
+				&lt;td&gt;	#tripLocation#
+				&lt;/td&gt;
+				&lt;td&gt;	#departureDate#
+				&lt;/td&gt;
+				&lt;td&gt;	#returnDate#
+				&lt;/td&gt;
+				&lt;td&gt;	#price#
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/cfoutput&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4><a name="wp1174725"></a>Let Dreamweaver do it</h4>
+<p>As you have in previous exercises, you can let Dreamweaver generate the code to invoke the method.</p>
+<h4>To invoke the method using Dreamweaver:</h4>
+<ol>
+<li>
+   Click the Components tab.
+</li>
+<li>
+   Click the + button next to cfdocs.getting_started.my_app.components.
+</li>
+<li>
+   Click the + button next to gettrips.
+</li>
+<li>
+   Select query getTripsFromForm() and drag it to the top of the triplisting.cfm file.
+</li>
+<li>
+   Change the value of <code>returnvariable</code> to be the name of the query, TripResult, as follows:
+<pre>
+returnvariable=&quot;TripResult&quot;
+</pre>
+</li>
+<li>
+   Return to Step 3 in the <a href="00000134.htm#1198089">To create the Trip Search Results page:</a> section.
+</li>
+</ol>
+<h4><a name="wp1198096"></a>Reviewing the code</h4>
+<p>The following table describes the code used to build the tripLocation WHERE subclause:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset WhereClause = &quot; 0=0 &quot;&gt; 
+</pre>    </td>
+    <td>
+<p>The <code>cfset</code> tag initializes the <code>WhereClause</code> variable to hold the WHERE clause to be constructed. The initial value is set to <code>&quot; 0=0 &quot;</code> so that the WHERE clause has at least one subclause in case the user enters no search criteria.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfif Form.tripLocationValue GT &quot;&quot;&gt;         
+</pre>    </td>
+    <td>
+<p><code>The</code> <code>cfif</code> tag tests to see if the user entered anything in the Value input field for tripLocation criterion. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>SELECT tripName,  tripLocation, 
+departureDate, returnDate, price, tripID 
+FROM trips
+WHERE #PreserveSingleQuotes(WhereClause)#
+</pre>    </td>
+    <td>
+<p>SQL query to execute. The <code>PreserveSingleQuotes</code> function ensures that quotation marks are passed to the database server as intended.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The preceding code only builds the tripLocation subclause. In the following exercise, you will add code for the other two columns that you can query, departureDate and price.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000133.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000135.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000134.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About error handling in ColdFusion</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001130.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001132.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About error handling in ColdFusion</h1>
+<p>By default, ColdFusion generates its own error messages when it encounters errors. In addition, it provides a variety of tools and techniques for you to customize error information and handle errors when they occur. You can use any of the following error-management techniques.</p>
+<ul>
+<li>
+   Specify custom pages for ColdFusion to display in each of the following cases:
+<ul><li>When a ColdFusion page is missing (the Missing Template Handler page)</li>
+<li>When an otherwise-unhandled exception error occurs during the processing of a page (the Site-wide Error Handler page) </li>
+<p>You specify these pages on the Settings page in the Server Settings are in the ColdFusion&#160;MX Administrator; for more information, see the ColdFusion&#160;MX Administrator Help.</p>
+</ul></li>
+<li>
+   Use the <code>cferror</code> tag to specify ColdFusion pages to handle specific types of errors.
+</li>
+<li>
+   Use the <a href="00000349.htm#1104557"><code>cftry</code></a>, <a href="00000225.htm#3395038"><code>cfcatch</code></a>, <a href="00000343.htm#2773591"><code>cfthrow</code></a>, and <a href="00000325.htm#1102913"><code>cfrethrow</code></a> tags to catch and handle exception errors directly on the page where they occur.
+</li>
+<li>
+   In CFScript, use the <code>try</code> and <code>catch</code> statements to handle exceptions.
+</li>
+<li>
+   Use the <a href="00000697.htm#1188543"><code>onError</code></a> event in Application.cfc to handle exception errors that are not handled by try/catch code on the application pages.
+</li>
+<li>
+   Log errors. ColdFusion logs certain errors by default. You can use the <a href="00000286.htm#1842314"><code>cflog</code></a> tag to log other errors.
+</li>
+</ul>
+<p>The remaining sections in this chapter provide the following information:</p>
+<ul>
+<li>
+   The basic building blocks for understating types of ColdFusion errors and how ColdFusion handles them
+</li>
+<li>
+   How to use the <code>cferror</code> tag to specify error-handling pages
+</li>
+<li>
+   How to log errors
+</li>
+<li>
+   How to handle ColdFusion exceptions
+</li>
+</ul>
+<p><strong>Note: </strong>This chapter discusses using the <code>cftry</code> and <code>cfcatch</code> tags, but not the equivalent CFScript <code>try</code> and <code>catch</code> statements. The general discussion of exception handling in this chapter applies to tags and CFScript statements. However, the code that you use and the information available in CFScript differs from those in the tags. For more information on handling exceptions in CFScript, see <a href="00001012.htm#1194617">Handling errors in UDFs</a>.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001130.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001132.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001131.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

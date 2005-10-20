@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 3: Displaying the query result using the cfoutput tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000121.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000123.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 3: Displaying the query result using the cfoutput tag</h1>
+<p>In <a href="00000071.htm#1141005">CFML Basics</a>, you learned that the ColdFusion <code>cfoutput</code> tag is an easy mechanism to display literal text and the contents of variables. Additionally, the <code>cfoutput</code> tag significantly simplifies displaying the results of queries. When used to display the results from a query, the <code>cfoutput</code> tag automatically loops through the record set for you. You simply specify the name of the query in the <code>query</code> attribute of the <code>cfoutput</code> tag:</p>
+<pre>&lt;cfoutput query=&quot;TripResult&quot;&gt;
+</pre><p>All the code between the <code>cfoutput</code> start and end tags is the <i>output code block</i>. The output code block executes repeatedly, once for each row in the record set. However, if the query returns no rows, ColdFusion skips the code contained in the output code block.</p>
+<pre>&lt;cfoutput query = &quot;xxx&quot;&gt;
+   ...output code block...
+&lt;/cfoutput&gt;
+</pre><h2><a name="wp1195726"></a>Displaying the column contents from the SQL statement</h2>
+<p>In CFML you surround variables with number signs (#) to display their contents using the <code>cfoutput</code> tag. You also use this approach with column names specified in the SELECT statement of a <code>cfquery</code>. For example, when you want to display the trip names from the SQL query, you use <code>#tripName#</code> within the output code block:</p>
+<pre>&lt;cfoutput query=&quot;TripResult&quot;&gt;
+   #tripname# 
+&lt;/cfoutput&gt;
+</pre><p>For additional information about using SQL with <code>cfquery</code> and <code>cfoutput</code>, see <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4>To display the query results:</h4>
+<ol>
+<li>
+   Modify the triplisting.cfm file by adding the highlighted code so that it appears as follows:
+<pre>
+&lt;cfquery name=&quot;TripList&quot; datasource=&quot;compasstravel&quot;&gt;
+		SELECT trips.tripName FROM trips
+&lt;/cfquery&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Trip Listing&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Trip List&lt;/h1&gt;
+		&lt;cfoutput query=&quot;TripList&quot;&gt;#tripName#&lt;br&gt;&lt;/cfoutput&gt;
+	&lt;/body&gt;
+&lt;/html&gt; 
+</pre>
+</li>
+<li>
+   Save the file as triplisting.cfm in the my_app directory.
+</li>
+<li>
+   View the triplisting.cfm page in a browser. The page lists all the trip names retrieved from the Compass Travel database. 
+</li>
+</ol>
+<h4><a name="wp1195764"></a>Reviewing the code</h4>
+<p>The following table describes the code used to display the query result set:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput query=&quot;TripResult&quot;&gt; #tripName#&lt;br&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Output code block. Displays the value of the tripName column for each row in the result set from the &quot;TripResult&quot; query.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000121.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000123.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000122.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

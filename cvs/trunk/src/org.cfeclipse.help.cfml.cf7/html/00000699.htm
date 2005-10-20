@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>onRequestEnd</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000698.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000700.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>onRequestEnd</h1>
+<h4><a name="wp1186125"></a>Description</h4>
+<p>Runs at the end of a request, after all other CFML code.</p>
+<h4><a name="wp1186127"></a>Syntax</h4>
+<pre>&lt;cffunction name=&quot;onRequestEnd&quot; returnType=&quot;void&quot;&gt;
+   &lt;cfargument type=&quot;String&quot; name=&quot;<i>targetPage</i>&quot; required=true/&gt;
+   ...
+&lt;/cffunction&gt;
+</pre><h4><a name="wp1186131"></a>See also</h4>
+<p><a href="00000700.htm#1188711"><code>onRequestStart</code></a>, <a href="00000698.htm#1186087"><code>onRequest</code></a>, <a href="00000694.htm#1190269">Method summary</a>, <a href="00001120.htm#1191853">Managing requests in Application.cfc</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1186133"></a>Parameters</h4>
+<p>ColdFusion MX passes the following parameters to the method:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><i>targetPage</i></p>
+    </td>
+    <td>
+<p>Path from the web root to the requested page.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1186152"></a>Returns</h4>
+<p>This method does not return a value; do not use the <code>cfreturn</code> tag.</p>
+<h4><a name="wp1186154"></a>Usage</h4>
+<p>This method has the same purpose as the onRequestEnd.cfm page. (You cannot use an onRequestEnd.cfm page if you have an Application.cfc file for your application.) This method runs before the request terminates; therefore, it can access the page context, and can generate output.</p>
+<p>This method can be useful for gathering performance metrics, or for displaying dynamic footer information.</p>
+<p>This method can access the requested page's Variables scope only if the Application.cfc file includes an <code>onRequest</code> method that calls the page. You can use Request scope variables to share data with the requested page, even if the Application.cfc file does not have an <code>onRequest</code> method.</p>
+<p>If you call this method explicitly, ColdFusion does not end the request, but does execute the method code.</p>
+<h4><a name="wp1186156"></a>Example</h4>
+<p>The following example displays one of two footer pages depending on whether the user has logged in:</p>
+<p>The <code>onRequestEnd</code> method in Application.cfc contains the following code:</p>
+<pre>&lt;cffunction name=&quot;onRequestEnd&quot;&gt;
+   &lt;cfargument type=&quot;String&quot; name=&quot;targetPage&quot; required=true/&gt;
+   &lt;cfset theAuthuser=getauthuser()&gt;
+   &lt;cfif theAuthUser NEQ &quot;&quot;&gt;
+      &lt;cfinclude template=&quot;authuserfooter.cfm&quot;&gt;
+   &lt;cfelse&gt;
+      &lt;cfinclude template=&quot;noauthuserfooter.cfm&quot;&gt;
+   &lt;/cfif&gt; 
+&lt;/cffunction&gt;
+</pre><p>A very simple authuserfooter.cfm page consists of the following code:</p>
+<pre>&lt;cfoutput&gt;
+   &lt;h3&gt;Thank you for shopping at our store, #theAuthUser#!&lt;/h3&gt;
+&lt;/cfoutput&gt;
+</pre><p>A very simple noauthuserfooter.cfm page consists of the following code:</p>
+<pre>&lt;cfoutput&gt;
+   &lt;h3&gt;Remember, only registered users get all our benefits!&lt;/h3&gt;
+&lt;/cfoutput&gt;
+</pre><p>To test this example, implement code for logging in a user, or try the example with and without the following line in the <code>onRequestStart</code> Application.cfc method:</p>
+<pre>&lt;cfloginuser name=&quot;Robert Smith&quot; password=&quot;secret&quot; roles=&quot;customer&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000698.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000700.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000699.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

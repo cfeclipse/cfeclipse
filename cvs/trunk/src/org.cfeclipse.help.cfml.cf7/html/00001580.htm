@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Setting properties and invoking methods</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001579.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001581.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Setting properties and invoking methods</h1>
+<p>The following example, which uses the sample Mailer COM object, shows how to assign properties to your mail message and how to execute component methods to handle mail messages.</p>
+<p>In the example, form variables contain the method parameters and properties, such as the name of the recipient, the desired e-mail address, and so on:</p>
+<pre>&lt;!--- First, create the object ---&gt;
+&lt;cfobject type=&quot;COM&quot;
+   action=&quot;Create&quot;
+   name=&quot;Mailer&quot;
+   class=&quot;CDONTS.NewMail&quot;&gt;
+
+&lt;!--- Second, use the form variables from the user entry form to populate a number
+      of properties necessary to create and send the message. ---&gt;
+&lt;cfset Mailer.From = &quot;#Form.fromName#&quot;&gt;
+&lt;cfset Mailer.To = &quot;#Form.to#&quot;&gt;
+&lt;cfset Mailer.Subject = &quot;#Form.subject#&quot;&gt;
+&lt;cfset Mailer.Importance = 2&gt;
+&lt;cfset Mailer.Body = &quot;#Form.body#&quot;&gt;
+&lt;cfset Mailer.Cc = &quot;#Form.cc#&quot;&gt;
+
+&lt;!--- Last, use the Send() method to send the message.
+   Invoking the Send() method destroys the object.---&gt;
+&lt;cfset Mailer.Send()&gt;
+</pre><p><strong>Note: </strong>Use the <a href="00000349.htm#1104557"><code>cftry</code></a> and <a href="00000225.htm#3395038"><code>cfcatch</code></a> tags to handle exceptions thrown by COM objects. For more information on exception handling, see <a href="00001140.htm#1153612">Handling runtime exceptions with ColdFusion tags</a>.</p><h3><a name="wp1149326"></a>Releasing COM objects</h3>
+<p>By default, COM object resources are released when the Java garbage collector cleans them. You can use the <code>ReleaseCOMObject</code> function to immediately release resources if an object is no longer needed. </p>
+<p>Use the <code>ReleaseCOMObject</code> function to release COM objects that are launched as an external process, such as Microsoft Excel. The garbage collector might not clean these processes in a short time, resulting in multiple external processes running, which drains system resources.</p>
+<p>If the COM object has an end method, such as a quit method that terminates the program, call this method before you call the <code>ReleaseComObject</code> function. If you use the <code>ReleaseComObject</code> function on an object that is in use, the object is prematurely released and your application will get exceptions.</p>
+<h4><a name="wp1149329"></a>Example</h4>
+<p>The following example creates a Microsoft Excel application object, uses it, then releases the object when it is no longer needed:</p>
+<pre>&lt;h3&gt;ReleaseComObject Example&lt;/h3&gt;
+&lt;cfscript&gt;
+obj = CreateObject(&quot;Com&quot;, &quot;excel.application.9&quot;);
+//code that uses the object goes here
+obj.quit();
+ReleaseComObject(obj);
+&lt;/cfscript&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001579.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001581.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001580.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

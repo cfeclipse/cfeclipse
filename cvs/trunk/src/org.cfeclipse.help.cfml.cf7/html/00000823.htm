@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>getData</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000822.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000824.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>getData</h1>
+<h4><a name="wp1115059"></a>Description</h4>
+<p>Retrieves a data element from a row and column of a query. Row and column indexes begin with&#160;1. You can find the number of rows in a query by calling <code>getRowCount</code>. You can find the number of columns in a query by calling <code>getColumns</code>. </p>
+<p>Returns the value of the requested data element. </p>
+<h4><a name="wp1115062"></a>Category</h4>
+<p><a href="00000819.htm#1096914">Query interface</a></p>
+<h4><a name="wp1115067"></a>Syntax</h4>
+<pre>public String getData(int <code><i>iRow</i></code>, int <code><i>iCol</i></code>)
+</pre><h4><a name="wp1115069"></a>Throws</h4>
+<p><code>IndexOutOfBoundsException</code>&#160;If an invalid index is passed to the method.</p>
+<h4><a name="wp1115071"></a>See also</h4>
+<p><a href="00000826.htm#1097068"><code>setData</code></a>, <a href="00000820.htm#1112694"><code>addRow</code></a></p>
+<h4><a name="wp1115079"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>iRow</p>
+    </td>
+    <td>
+<p>Row to retrieve data from (1-based) </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>iCol</p>
+    </td>
+    <td>
+<p>Column to retrieve data from (1-based) </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1125530"></a>Example</h4>
+<p>The following example iterates over the rows of a query and writes the data back to the user in a simple, space-delimited format: </p>
+<pre>int iRow, iCol ;
+int nNumCols = query.getColumns().length ;
+int nNumRows = query.getRowCount() ;
+for ( iRow = 1; iRow &lt;= nNumRows; iRow++ )
+{
+   for ( iCol = 1; iCol &lt;= nNumCols; iCol++ )
+   {
+      response.write( query.getData( iRow, iCol ) + &quot; &quot; ) ;
+   }
+   response.write( &quot;&lt;BR&gt;&quot; ) ;
+} 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000822.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000824.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000823.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

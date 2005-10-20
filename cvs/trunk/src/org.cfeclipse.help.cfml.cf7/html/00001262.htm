@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Deleting data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001261.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001263.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Deleting data</h1>
+<p>You use a <a href="00000316.htm#1102316"><code>cfquery</code></a> tag with a SQL DELETE statement to delete data from a database. ColdFusion has no <code>cfdelete</code> tag.</p>
+<h2><a name="wp1122597"></a>Deleting a single record</h2>
+<p>To delete a single record, use the table's primary key in the WHERE condition of a SQL DELETE statement. In the following procedure, Emp_ID is the primary key, so the SQL Delete statement is as follows:</p>
+<pre>DELETE FROM Employee WHERE Emp_ID = #Form.Emp_ID#
+</pre><p>You often want to see the data before you delete it. The following procedure displays the data to be deleted by reusing the form page used to insert and update data. Any data that you enter in the form before submitting it is not used, so you can use a table to display the record to be deleted instead.</p>
+<h4>To delete one record from a database:</h4>
+<ol>
+<li>
+   In update_form.cfm, change the title to &quot;Delete Form&quot; and the text on the submit button to &quot;Delete Record&quot;.
+</li>
+<li>
+   Change the <code>form</code> tag so that it appears as follows:
+<pre>
+&lt;form action=&quot;delete_action.cfm&quot; method=&quot;Post&quot;&gt;
+</pre>
+</li>
+<li>
+   Save the modified file as delete_form.cfm.
+</li>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Delete Employee Record&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;cfquery name=&quot;DeleteEmployee&quot;
+	datasource=&quot;cfdocexamples&quot;&gt;
+		DELETE FROM Employee
+		WHERE Emp_ID = #Form.Emp_ID#
+&lt;/cfquery&gt;
+
+&lt;h1&gt;The employee record has been deleted.&lt;/h1&gt;
+&lt;cfoutput&gt;
+You have deleted #Form.FirstName# #Form.LastName# from the <br />
+employee database.
+&lt;/cfoutput&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as delete_action.cfm.
+</li>
+<li>
+   View delete_form.cfm in your web browser by specifying the page URL and an Employee ID; for example, enter the following:
+<p><strong>http://localhost/myapps/delete_form.cfm?Emp_ID=3.Click Delete Record</strong></p>
+<p>ColdFusion deletes the record in the Employee table and displays a confirmation message.</p>
+</li>
+</ol>
+<h4><a name="wp1114349"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery name=&quot;DeleteEmployee&quot;
+   datasource=&quot;cfdocexamples&quot;&gt;
+      DELETE FROM Employee
+      WHERE Emp_ID = #Form.Emp_ID#
+&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Deletes the record in the database whose Emp_ID column matches the Emp_ID (hidden) field on the form. Since the Emp_ID is the table's primary key, only one record is deleted.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+You have deleted #Form.FirstName#
+   #Form.LastName# from the
+   employee database.
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Informs the user that the record was deleted.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1101603"></a>Deleting multiple records</h2>
+<p>You can use a SQL condition to delete several records. The following example deletes the records for everyone in the Sales department (which has Dept_ID number 4) from the Employee table:</p>
+<pre>DELETE FROM Employee<br />WHERE Dept_ID = 4
+</pre><p>To delete all the records from the Employee table, use the following code:</p>
+<pre>DELETE FROM Employee
+</pre><p><strong>Caution: </strong>Deleting records from a database is not reversible. Use DELETE statements carefully.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001261.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001263.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001262.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ToScript</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000653.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000655.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ToScript</h1>
+<h4><a name="wp188862"></a>Description</h4>
+<p>Creates a JavaScript or ActionScript expression that assigns the value of a ColdFusion variable to a JavaScript or ActionScript variable. This function can convert ColdFusion strings, numbers, arrays, structures, and queries to JavaScript or ActionScript syntax that defines equivalent variables and values.</p>
+<h4><a name="wp188864"></a>Returns</h4>
+<p>A string that contains a JavaScript or ActionScript variable definition corresponding to the specified ColdFusion variable value.</p>
+<h4><a name="wp188866"></a>Category</h4>
+<p><a href="00000356.htm#1098761">Conversion functions</a>, <a href="00000361.htm#3490127">Extensibility functions</a></p>
+<h4><a name="wp188874"></a>Function syntax</h4>
+<pre><code><strong>ToScript</strong></code>(<i>cfvar</i>, <i>javascriptvar</i>, <i>outputformat</i>, <i>ASFormat</i>)
+</pre><h4><a name="wp188876"></a>See also</h4>
+<p><a href="00000351.htm#2682044"><code>cfwddx</code></a><code>; </code><a href="00000842.htm#1044493">WDDX JavaScript Objects</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp188884"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this function.</p>
+<h4><a name="wp188889"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>cfvar</p>
+    </td>
+    <td>
+<p>A ColdFusion variable. This can contain one of the following:</p>
+<ul>
+<li>
+   String
+</li>
+<li>
+   Number
+</li>
+<li>
+   Array
+</li>
+<li>
+   Structure
+</li>
+<li>
+   Query
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>javascriptvar</p>
+    </td>
+    <td>
+<p>A string that specifies the name of the JavaScript variable that the <code>ToScript</code> function creates.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>outputformat</p>
+    </td>
+    <td>
+<p>Optional. A Boolean value that determines whether to create WDDX (JavaScript) or ActionScript style output for structures and queries:</p>
+<ul>
+<li>
+   True: creates WDDX-style output (default).
+</li>
+<li>
+   False: creates ActionScript-style output.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ASFormat</p>
+    </td>
+    <td>
+<p>Optional. A Boolean value that specifies whether to use ActionScript shortcuts in the script:</p>
+<ul>
+<li>
+   True: creates new Objects and Arrays with ActionScript shortcuts: [] for New Array(), and {} for New Object. Using ActionScript shortcuts allows you to pass ActionScript into <code>cfform</code> attributes without triggering ActionScript validation.
+</li>
+<li>
+   False: does not use ActionScript shortcuts to create new Objects and new Arrays when generating the script. Instead, generates New Object() and New Array() in the script (default).
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp188915"></a>Usage</h4>
+<p>To use a ColdFusion variable in JavaScript or ActionScript, the <code>ToScript</code> function must be in a <code>cfoutput</code> region and be surrounded by number signs (#). For example, the following code uses the <code>ToScript</code> function to convert a ColdFusion variable to a JavaScript variable:</p>
+<pre>&lt;cfset thisString=&quot;hello world&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+   &lt;cfoutput&gt;
+      var #toScript(thisString, &quot;jsVar&quot;)#;
+   &lt;/cfoutput&gt;
+&lt;/script&gt;
+</pre><p>When ColdFusion runs this code, it sends the following to the client:</p>
+<pre>&lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+   var jsVar = &quot;hello world&quot;;
+&lt;/script&gt;
+</pre><p>An HTML script tag must enclose the JavaScript code. The <code>cfoutput</code> tag does not need to be inside the script block; it can also surround the block.</p>
+<p>WDDX-style output generates JavaScript code that creates a WDDXRecordset object, where the key of each record set entry is a column name, and the value of the recordlist entry is an array of the corresponding query column entries, as follows: </p>
+<pre>WDDXQuery = new WddxRecordset();
+col0 = new Array();
+col0[0] = &quot;John&quot;;
+col0[1] = &quot;John&quot;;
+WDDXQuery[&quot;firstname&quot;] = col0;
+col0 = null;
+col1 = new Array();
+col1[0] = &quot;Lund&quot;;
+col1[1] = &quot;Allen&quot;;
+WDDXQuery[&quot;lastname&quot;] = col1;
+col1 = null;
+</pre><p>To use WDDX-style output, you must first load the <i>cf_webroot</i>/CFIDE/scripts/wddx.js script, which defines JavaScript WDDX objects, as in the following line:</p>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;/CFIDE/scripts/wddx.js script&quot;&gt; &lt;/script&gt;
+</pre><p>For more information on WDDX in JavaScript, see <a href="00000842.htm#1044493">WDDX JavaScript Objects</a>.</p>
+<p>ActionScript-style output generates code that creates an array of objects, where the array is indexed by row number, and the objects consist of column name - column value pairs, as follows: </p>
+<pre>   ActionScriptQuery = new Array();
+ActionScriptQuery[0] = new Object();
+ActionScriptQuery[0][&#39;firstname&#39;] = &quot;John&quot;;
+ActionScriptQuery[0][&#39;lastname&#39;] = &quot;Lund&quot;;
+ActionScriptQuery[1] = new Object();
+ActionScriptQuery[1][&#39;firstname&#39;] = &quot;John&quot;;
+ActionScriptQuery[1][&#39;lastname&#39;] = &quot;Allen&quot;;
+</pre><p>An ActionScript-style array does not require you to include the wddx.js file, and creates a variable that you can use in ActionScript on a Flash format form, for example, in an <code>onChange</code> attribute.</p>
+<p>If the <code>outputformat</code> parameter is False, setting <code>ASFormat</code> to True causes <code>ToScript</code> to use the ActionScript shortcut <code>[]</code> in place of <code>New</code> <code>Array()</code> and the shortcut <code>{}</code> in place of <code>New</code> <code>Object()</code>. Using these shortcuts allows you to pass ActionScript into <code>cfform</code> attributes without triggering ActionScript validation. If <code>ASFormat</code> is False, <code>ToScript</code> generates <code>New</code> <code>Array()</code> and <code>New</code> <code>Object()</code> in the script.</p>
+<h4><a name="wp188955"></a>Example</h4>
+<p>The following example shows the results of converting a ColdFusion string, array, and query object to JavaScript variables. It also uses the string and array in JavaScript code.</p>
+<pre>&lt;h2&gt;ToScript&lt;/h2&gt;
+
+&lt;h3&gt;Converting a string variable&lt;/h3&gt;
+&lt;cfset thisString = &quot;This is a string&quot;&gt;
+&lt;cfoutput&gt;
+   &lt;b&gt;The thisString variable in ColdFusion&lt;/b&gt;&lt;br&gt;
+   #thisString#&lt;br&gt;
+   &lt;br&gt;
+   &lt;strong&gt;The output of ToScript(thisString, &quot;jsVar&quot;)&lt;/strong&gt;&lt;br&gt;
+   #ToScript(thisString, &quot;jsVar&quot;)#&lt;br&gt;
+   &lt;br&gt;
+   &lt;strong&gt;In a JavaScript script, convert thisString Variable to JavaScript
+    and output the resulting variable:&lt;/strong&gt;&lt;br&gt;
+   &lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+      var #ToScript(thisString, &quot;jsVar&quot;)#;
+      document.write(&quot;jsVar in JavaScript is: &quot; + jsVar);
+   &lt;/script&gt;
+&lt;/cfoutput&gt;
+
+&lt;h3&gt;Converting an array&lt;/h3&gt;
+&lt;!--- Create and populate a one-dimensional array ---&gt;
+&lt;cfset myArray=ArrayNew(1)&gt;
+&lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;4&quot;&gt;
+         &lt;cfset myArray[i]=&quot;This is array element&quot; &amp; i&gt;
+&lt;/cfloop&gt;
+
+&lt;cfoutput&gt;
+&lt;b&gt;The ColdFusion myArray Array&lt;/b&gt;&lt;br&gt;
+&lt;!--- Write the contents of the myArray variable in ColdFusion ---&gt;
+   &lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;#arrayLen(myArray)#&quot;&gt;
+      myArry[#i#]: #myArray[i]#&lt;br&gt;
+   &lt;/cfloop&gt;
+   &lt;br&gt;
+   &lt;strong&gt;The output of ToScript(myArray, &quot;jsArray&quot;)&lt;/strong&gt;&lt;br&gt;
+   #toScript(myArray, &quot;jsArray&quot;)#&lt;br&gt;
+   &lt;br&gt;
+   &lt;strong&gt;In JavaScript, convert myArray to a JavaScript variable and write it&#39;s contents&lt;/strong&gt;&lt;br&gt;
+   &lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+      var #ToScript(myArray, &quot;jsArray&quot;)#;
+      for (i in jsArray)
+      {
+         document.write(&quot;myArray[&quot; + i + &quot;]: &quot; + jsArray[i] + &quot;&lt;br&gt;&quot;);
+      }
+   &lt;/script&gt;
+&lt;br&gt;
+&lt;h3&gt;Converting a query&lt;/h3&gt;
+This section converts the following query object to both WDDX format 
+and ActionScript type Javascript objects.&lt;br&gt;
+
+&lt;!--- Query a database ---&gt;
+&lt;cfquery name=&quot;thisQuery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   SELECT FirstName,LastName
+   FROM employee
+   WHERE FirstName = &#39;John&#39;
+&lt;/cfquery&gt;
+&lt;br&gt;
+The Query in ColdFusion
+&lt;cftable query=&quot;thisQuery&quot; headerlines=&quot;1&quot; colheaders&gt;
+   &lt;cfcol align=&quot;left&quot; width=&quot;9&quot; header=&quot;&lt;b&gt;FirstName&lt;/b&gt;&quot; text=&quot;#FirstName#&quot;&gt;
+   &lt;cfcol align=&quot;left&quot; width=&quot;9&quot; header=&quot;&lt;b&gt;LastName&lt;/b&gt;&quot; text=&quot;#LastName#&quot;&gt;
+&lt;/cftable&gt;
+
+&lt;strong&gt;JavaScript generated by ToScript(thisQuery, &quot;WDDXQuery&quot;):&lt;/strong&gt;&lt;br&gt; 
+   #toScript(thisQuery, &quot;WDDXQuery&quot;)#;&lt;br&gt;
+   &lt;br&gt;
+&lt;strong&gt;JavaScript generated by ToScript(thisQuery, &quot;ActionScriptQuery&quot;,<br />      False):&lt;/strong&gt;&lt;br&gt; 
+   #toScript(thisQuery, &quot;ActionScriptQuery&quot;, False)#&lt;br&gt;
+   &lt;br&gt;
+&lt;!--- Convert to both WDDX format and ActionScript format ---&gt;
+&lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt; 
+   #ToScript(thisQuery, &quot;WDDXQuery&quot;)#;
+   #ToScript(thisQuery, &quot;ActionScriptQuery&quot;, False)#; 
+&lt;/script&gt;
+&lt;!--- For brevity, this example does not use JavaScript query variables ---&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000653.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000655.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000654.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

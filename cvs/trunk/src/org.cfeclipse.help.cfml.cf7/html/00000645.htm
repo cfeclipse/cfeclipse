@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>StructKeyExists</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000644.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000646.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>StructKeyExists</h1>
+<h4><a name="wp137978"></a>Description</h4>
+<p>Determines whether a specific key is present in a structure. </p>
+<h4><a name="wp137980"></a>Returns</h4>
+<p>True, if <i>key</i> is in <i>structure</i>; if <i>structure</i> does not exist, ColdFusion throws an exception.</p>
+<h4><a name="wp137982"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a>, <a href="00000370.htm#1099964">Structure functions</a></p>
+<h4><a name="wp137990"></a>Function syntax</h4>
+<pre><code><strong>StructKeyExists</strong></code>(<i>structure</i>, &quot;<i>key&quot;</i>)
+</pre><h4><a name="wp137992"></a>See also</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a>; <a href="00000967.htm#1191258">Structure functions</a> in <a href="00000950.htm#1101236">Using Arrays and Structures</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp137997"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>structure</p>
+    </td>
+    <td>
+<p>Name of structure to test</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>key</p>
+    </td>
+    <td>
+<p>Key to test</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp138012"></a>Usage</h4>
+<p>This function can sometimes be used in place of the <code>IsDefined </code>function, when working with the URL and Form scopes, which are structures. The following pieces of code are equivalent: </p>
+<pre>cfif IsDefined(&quot;Form.JediMaster&quot;)&gt;
+&lt;cfif StructKeyExists(Form,&quot;JediMaster&quot;)&gt;
+</pre><p>A structure's keys are unordered. </p>
+<h4><a name="wp138017"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of StructKeyExists. ---&gt;
+&lt;p&gt;This file is similar to addemployee.cfm, which is called by StructNew,<br />StructClear, and StructDelete. To test, copy the &amp;LT;CFELSEif&amp;GT;<br />statement to the appropriate place in addemployee.cfm. It is a custom tag<br />to add employees. Employee information is passed through the employee<br />structure (the EMPINFO attribute). In UNIX, you must also add the Emp_ID.
+
+&lt;cfswitch expression = &quot;#ThisTag.ExecutionMode#&quot;&gt;
+  &lt;cfcase value = &quot;start&quot;&gt;
+   &lt;cfif StructIsEmpty(attributes.EMPINFO)&gt;
+    &lt;cfoutput&gt;Error. No employee data was passed.&lt;/cfoutput&gt;
+     &lt;cfexit method = &quot;ExitTag&quot;&gt;
+<strong>  </strong> &lt;cfelseIf NOT <strong>StructKeyExists(attributes.EMPINFO, &quot;department&quot;)</strong>&gt;
+    &lt;cfscript&gt;StructUpdate(attributes.EMPINFO, &quot;department&quot;,
+      &quot;Unassigned&quot;);
+      &lt;/cfscript&gt;
+    &lt;cfexit method = &quot;ExitTag&quot;&gt;
+         &lt;cfelse&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000644.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000646.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000645.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

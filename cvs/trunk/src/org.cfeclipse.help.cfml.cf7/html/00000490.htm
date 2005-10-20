@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetPageContext</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000489.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000491.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetPageContext</h1>
+<h4><a name="wp4209679"></a>Description</h4>
+<p>Gets the current ColdFusion&#160;MX PageContext object that provides access to page attributes and configuration, request, and response objects.</p>
+<h4><a name="wp4210081"></a>Returns</h4>
+<p>The current ColdFusion&#160;MX Java PageContext Java object.</p>
+<h4><a name="wp4213027"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp4213032"></a>Function syntax</h4>
+<pre><code><strong>GetPageContext</strong></code>() 
+</pre><h4><a name="wp4213034"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function. </p>
+<h4><a name="wp4215954"></a>Usage</h4>
+<p>The ColdFusion&#160;MX PageContext class is a wrapper class for the Java PageContext object that can resolve scopes and perform case-insensitive variable lookups.</p>
+<p>The PageContext object exposes fields and methods that can be useful in J2EE integration. It includes the <code>include</code> and <code>forward</code> methods that provide the equivalent of the corresponding standard JSP tags. You use these methods to call JSP pages and servlets. For example, you use the following code in CFScript to include the JSP page hello.jsp and pass it a <code>name</code> parameter:</p>
+<pre>GetPageContext().include(&quot;hello.jsp?name=Bobby&quot;); ===
+</pre><p>When you use <code>GetPageContext</code> to include a JSP page in a CFML page on WebLogic, you may need to flush the output of the CFML page with <code>cfflush</code> before calling the JSP page. Otherwise, the ColdFusion output appears after the JSP output.</p>
+<p>For more information, see your Java Server Pages (JSP) documentation.</p>
+<h4><a name="wp4215937"></a>Example</h4>
+<pre>&lt;!--- this example shows using the page context to set a page <br />variable and access the language of the current locale ---&gt;
+&lt;cfset pc = <strong>GetPageContext()</strong>&gt;
+
+&lt;cfset pc.setAttribute(&quot;name&quot;,&quot;John Doe&quot;)&gt;
+&lt;cfoutput&gt;name: #variables.name#&lt;br&gt;&lt;/cfoutput&gt;
+
+&lt;cfoutput&gt;Language of the current locale is<br />#pc.getRequest().getLocale().getDisplayLanguage()#&lt;/cfoutput&gt;&gt;. 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000489.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000491.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000490.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

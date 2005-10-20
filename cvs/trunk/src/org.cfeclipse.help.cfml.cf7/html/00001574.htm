@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Getting started with COM and DCOM</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001573.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001575.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Getting started with COM and DCOM</h1>
+<p>ColdFusion is an automation (late-binding) COM client. As a result, the COM object must support the IDispatch interface, and arguments for methods and properties must be standard automation types. Because ColdFusion is a typeless language, it uses the object&#39;s type information to correctly set up the arguments on call invocations. Any ambiguity in the object&#39;s data types can lead to unexpected behavior.</p>
+<p>In ColdFusion, you should only use server-side COM objects, which do not have a graphical user interface. If your ColdFusion application invokes an object with a graphical interface in a window, the component might appear on the web server desktop, not on the user&#39;s desktop. This can take up ColdFusion server threads and prevent further web server requests from being serviced.</p>
+<p>ColdFusion can call Inproc, Local, or Remote COM objects. The attributes specified in the <code>cfobject</code> tag determine which type of object is called.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001575.htm#1127147">COM requirements</a>
+</li>
+<li>
+   <a href="00001576.htm#1127152">Registering the object</a>
+</li>
+<li>
+   <a href="00001577.htm#1127160">Finding the component ProgID and methods</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001573.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001575.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001574.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Operation-driven evaluation</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000906.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000908.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Operation-driven evaluation</h1>
+<p>Conventional programming languages enforce strict rules about mixing objects of different types in expressions. For example, in a language such as C++ or Basic, the expression <code>(&quot;8&quot; * 10)</code> produces an error because the multiplication operator requires two numerical operands and &quot;8&quot; is a string. When you program in such languages, you must convert between data types to ensure error-free program execution. For example, the previous expression might have to be written as <code>(ToNumber(&quot;8&quot;) * 10)</code>.</p>
+<p>In ColdFusion, however, the expression <code>(&quot;8&quot; * 10)</code> evaluates to the number 80 without generating an error. When ColdFusion processes the multiplication operator, it automatically attempts to convert its operands to numbers. Since &quot;8&quot; can be successfully converted to the number 8, the expression evaluates to 80.</p>
+<p>ColdFusion processes expressions and functions in the following sequence:</p>
+<ol>
+<li>
+   For each operator in an expression, it determines the required operands. (For example, the multiplication operator requires numeric operands and the CONTAINS operator requires string operands.)
+<p>For functions, it determines the type required for each function argument. (For example, the <code>Min</code> function requires two numbers as arguments and the <code>Len</code> function requires a string.)</p>
+</li>
+<li>
+   It evaluates all operands or function arguments. 
+</li>
+<li>
+   It converts all operands or arguments whose types differ from the required type. If a conversion fails, it reports an error.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000906.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000908.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000907.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

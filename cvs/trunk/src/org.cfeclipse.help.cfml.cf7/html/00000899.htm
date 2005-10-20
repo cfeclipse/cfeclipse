@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Queries</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000898.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000900.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Queries</h1>
+<p>A <i>query object</i>, sometimes referred to as a query, query result, or record set, is a complex ColdFusion data type that represents data in a set of named columns, similar to the columns of a database table. The following ColdFusion tags can create query objects: </p>
+<ul>
+<li>
+   <a href="00000316.htm#1102316"><code>cfquery</code></a>
+</li>
+<li>
+   <a href="00000235.htm#1097918"><code>cfdirectory</code></a>
+</li>
+<li>
+   <a href="00000272.htm#1632966"><code>cfhttp</code></a>
+</li>
+<li>
+   <a href="00000283.htm#1100581"><code>cfldap</code></a>
+</li>
+<li>
+   <a href="00000311.htm#1101854"><code>cfpop</code></a>
+</li>
+<li>
+   <a href="00000314.htm#1102246"><code>cfprocresult</code></a>
+</li>
+</ul>
+<p>In these tags, the <code>name</code> attribute specifies the query object's variable name. The <a href="00000600.htm#134773"><code>QueryNew</code></a> function also creates query objects.</p>
+<p>When you assign a query to a new variable, ColdFusion does <i>not </i>copy the query object. Instead, both names point to the same record set data. For example, the following line creates a new variable, myQuery2, that references the same record set as the myQuery variable:</p>
+<pre>&lt;cfset myQuery2 = myQuery&gt;
+</pre><p>If you make changes to data in myQuery, myQuery2 also shows those changes.</p>
+<p>You reference query columns by specifying the query name, a period, and the column name; for example:</p>
+<pre>myQuery.Dept_ID
+</pre><p>When you reference query columns inside tags, such as <a href="00000309.htm#1101659"><code>cfoutput</code></a> and <a href="00000290.htm#3301338"><code>cfloop</code></a>, in which you specify the query name in a tag attribute, you do not have to specify the query name.</p>
+<p>You can access query columns as if they are one-dimensional arrays. For example, the following line assigns the contents of the Employee column in the second row of the myQuery query to the variable myVar: </p>
+<pre>&lt;cfset myVar = myQuery.Employee[2]&gt;
+</pre><p><strong>Note: </strong>You cannot use array notation to refer to a row (of all columns) of a query. For example, myQuery[2] does not refer to the second row of the myQuery query object.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00000898.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000900.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000899.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

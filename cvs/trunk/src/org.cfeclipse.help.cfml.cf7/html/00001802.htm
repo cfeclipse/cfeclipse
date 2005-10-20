@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Getting started with the Verity mkvdk utility</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001801.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001803.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Getting started with the Verity mkvdk utility</h1>
+<p>The following is the basic mkvdk syntax:</p>
+<pre>mkvdk -collection path [option] [...] [filespec] [...]
+</pre><p>Where: </p>
+<ul>
+<li>
+   Square brackets ( [ ] ) indicate optional items.
+</li>
+<li>
+   An ellipsis (...) indicates repetition of the previous item. Thus, [filespec] [...] indicates an optional series of filespec items. 
+</li>
+<li>
+   filespec represents a document filename or a list of document filenames. If filespec is a list of files, it should consist of an at sign (@) followed by the filename containing the list (for example, @filelist). 
+</li>
+<li>
+   The -collection pat<code>h</code> argument creates or opens a collection. This argument is required. 
+</li>
+</ul>
+<p>Numerous optional syntax options are listed below. All syntax options must precede the first <code>filespec</code> parameter.</p>
+<h3><a name="wp1018312"></a>Creating a collection</h3>
+<p>Creating a collection with the mkvdk utility involves setting up a collection directory structure and inserting documents into this structure. You can create a collection using the following steps.</p>
+<h4>To create a collection:</h4>
+<ol>
+<li>
+   Set up a collection using the following syntax:
+<pre>
+mkvdk -create -collection collectionname
+</pre>
+<p>Where <code>collectionname</code> is the path to the collection directory. Running this command creates a collection directory that includes style files with configuration information.</p>
+</li>
+<li>
+   Insert documents using the following syntax:
+<pre>
+mkvdk -collection collectionname -bulk -insert filespec
+</pre>
+<p>Where <code>filespec</code> is the name of a bulk insert file that specifies which documents to index and insert into the collection.</p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001801.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001803.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001802.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

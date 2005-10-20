@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 7: Validating the existence of the trip photo file </title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000162.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000164.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 7: Validating the existence of the trip photo file </h1>
+<p>At this point, you have a more efficient application. The client is handling much of the validation of the Compass Travel new trip business rules. Except for the trip photo file, the server receives only valid data. </p>
+<p>The trip photo file business rule does not fit nicely into this design, however. This business rule has two parts:</p>
+<ul>
+<li>
+   A photo filename must accompany all new trips. 
+</li>
+<li>
+   The photo image file must reside in the images directory of the Compass Travel website.
+</li>
+</ul>
+<p>You used the <code>required</code> attribute for the photo <code>cfinput</code> tag to ensure that a filename is entered. Now you must ensure that the file exists in the right directory so that the application can display it to the user.</p>
+<p>Because browser clients are prohibited from doing standard file input and output (I/O) on the web server, the Trip Maintenance application uses server-side validation to ensure the existence of the photo file. You add the business rule for the photo file to the tripeditaction.cfm page.</p>
+<p>To verify that a file exists, ColdFusion provides a <code>FileExists</code> function. This function has the following syntax:</p>
+<pre>FileExists(absolute_path)
+</pre><p>This function returns Yes if the file specified in the argument does exist; otherwise, it returns No. </p>
+<p><strong>Note: </strong>The trip photo images are stored in the following path relative to your web root directory: \cfdocs\getting_ started\photos. Therefore, if your web root is C:\inetpub\wwwroot, the photos are stored in the C:\inetpub\wwwroot\cfdocs\getting_ started\photos directory. </p><p>For more information about the <code>FileExists</code> function, see <i>CFML Reference</i>.</p>
+<h4>To verify that the photo filename exists:</h4>
+<ol>
+<li>
+   Open the tripeditaction.cfm file in the my_app directory.
+</li>
+<li>
+   Add logic to check that the user entered a valid photo filename by copying the following code immediately following the first <code>&lt;cfset isOk = &quot;Yes&quot;&gt;</code> statement:
+<pre>
+	&lt;!-- Check to see if photo file exists. ---&gt;
+	&lt;cfset PhotoLocation = 
+&quot;C:\Inetpub\wwwroot\CFDOCS\getting_started\Photos\&quot;&gt;
+	&lt;cfset PhotoLocation = PhotoLocation  &amp; FORM.photo&gt; 
+	&lt;cfif not FileExists(PhotoLocation)&gt; 
+	   &lt;cfset isOk = &quot;No&quot;&gt;
+	   &lt;cfoutput&gt;Trip Photo does not exist&lt;/cfoutput&gt;
+	&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Verify that the code you just copied is pointing to the correct PhotoLocation path. The path is specified in the <code>&lt;cfset PhotoLocation = &quot;C:...&quot;&gt;</code> tag.
+<p>For example, depending on your web server configuration, the PhotoLocation path might be: </p>
+<li>For MS Windows systems:</li>
+<pre>
+	&lt;cfset PhotoLocation =
+	&quot;C:\CFusionMX7\wwwroot\cfdocs\getting_started\photos\&quot;&gt;
+<p>or</p>
+	&lt;cfset PhotoLocation =
+	&quot;C:\Inetpub\wwwroot\cfdocs\getting_started\photos\&quot;&gt;
+</pre>
+<li>For Linux or Solaris systems:</li>
+<pre>
+	&lt;cfset PhotoLocation =
+	&quot;/opt/cfusionmx7/wwwroot/cfdocs/getting_started/photos/&quot;&gt;
+<p>or</p>
+	&lt;cfset PhotoLocation =
+	&quot;/&lt;webserverdocroot&gt;/cfdocs/getting_started/photos/&quot;&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To test the modified code:</h4>
+<ol>
+<li>
+   View the tripedit.cfm page in your browser.
+</li>
+<li>
+   Perform tests by doing the following:
+<ol><li>In the Trip Edit page, enter valid information in all the required fields except the Photo Filename field.</li><li>In the Photo Filename field, enter <strong>nowhere.jpg,</strong> and click Save.</li><p>The following error message appears: Trip photo does not exist.</p>
+<li>To avoid the error, replace the invalid photo filename in the Trip Edit page with <strong>somewhere.jpg</strong> and click Save.</li><p>The following message appears: Trip added. </p>
+</ol></li>
+</ol>
+<h4><a name="wp1167494"></a>Reviewing the code</h4>
+<p>The following table describes the code used to verify whether the photo file exists:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset PhotoLocation =
+&quot;C:\CFusionMX7\wwwroot\cfdocs\
+getting_started\photos\&quot;&gt;
+</pre>    </td>
+    <td>
+<p>The <code>cfset</code> tag sets the value of the PhotoLocation path to the appropriate directory.</p>
+<p><i>Note:</i> The code snippet shows one value for Windows systems.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfset PhotoLocation = PhotoLocation  &amp; FORM.photo&gt;
+</pre>    </td>
+    <td>
+<p>The ColdFusion <code>&amp;</code> operator in the <code>cfset</code> tag combines the directory name with the name of the photo file entered in the form.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif not FileExists(PhotoLocation)&gt; 
+   &lt;cfset isOk = &quot;No&quot;&gt;
+   &lt;cfoutput&gt;
+   Trip Photo does not exist.
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p><code>FileExists</code> checks to see if the file indicated by the <code>fileLocation</code> variable exists at the specified disk location. If it doesn't, an error message appears.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000162.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000164.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000163.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

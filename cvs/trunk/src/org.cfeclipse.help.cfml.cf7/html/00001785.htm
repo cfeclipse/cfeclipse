@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Command-line option reference</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001784.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001786.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Command-line option reference</h1>
+<p>The following sections describe the Verity Spider V 5.0 command-line options. Option names are case-sensitive.</p>
+<h3><a name="wp999792"></a>-start</h3>
+<p>Specifies a starting point for an indexing job. You can specify multiple instances, or use multiple values in a single instance. </p>
+<p>When you execute an indexing job from a command line, and you do not use a command file (with the <code>-cmdfile</code> option), you must URL-escape any special characters in the starting point. To URL-escape a special character, use &quot;%hex-ASCII-character-number&quot; in place of the character. For example, use /time%26/ instead of /time&amp;/. This allows the operating system to properly process the command string.</p>
+<p>If an indexing task halts, you can rerun the task as-is. The persistent store for the specified collection is read, and only those candidate URLs that are in the queue but not yet processed are parsed. Candidate URLs correspond to URLs of the following status, as reported by vsdb:</p>
+<pre>cand, used, inse, upda, dele, fail
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Repository type
+    </th>
+    <th>
+Starting point 
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Web</p>
+    </td>
+    <td>
+<p>The URL or URLs from which Verity Spider is to begin indexing. Use other options, such as the <code>-jumps</code> option, to control how far from the starting point Verity Spider goes.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>File</p>
+    </td>
+    <td>
+<p>The starting directory or directories in which Verity Spider will start indexing. All subdirectories beneath the starting point will be indexed, unless you use the <br /><code>-pathlen</code> option or any of the inclusion or exclusion criteria.</p>
+    </td>
+  </tr>
+</table>
+
+</pre><p><strong>Note: </strong>By using the <code>-start</code> option with the <code>-refresh</code> option, you provide a starting point for Verity Spider and therefore do not need to use at least one of the following options: <code>-host</code>, <code>-domain</code>, <br /><code>-nofollow</code>, or <code>-unlimited</code>.</p><h3><a name="wp999800"></a>-refresh</h3>
+<p>Used for updating a collection, specifies that Verity Spider process only those documents that qualify, as follows:</p>
+<ul>
+<li>
+   They are new documents in the repository, and they qualify for indexing under the criteria. 
+</li>
+<li>
+   They exist in the collection and are recorded in the Verity Spider persistent store with a status of done. If Verity Spider determines that these indexed documents have been updated in the repository, then they are retrieved again to be reparsed and reindexed. The document VdkVgwKey values do not change. 
+</li>
+<li>
+   They are deleted in the collection. If Verity Spider determines that documents have been deleted from the repository, then they are also deleted from the persistent store and the collection. The exception to this rule is when you use the <code>-nooptimize</code> option with the <br /><code>-refresh</code> option. In this case, any document deleted from the repository is marked for deletion in the collection. It will be removed from the collection and the persistent store when the next indexing task is run for the collection. 
+</li>
+</ul>
+<p>When you rerun an existing indexing job, Verity Spider automatically refreshes the collection. If you add or remove any of the starting points, however, you must manually specify the <code>-refresh</code> option to refresh existing documents.</p>
+<p><strong>Note: </strong>You can also use the <code>-start</code> option to provide a starting point for Verity Spider. If you do not use the <code>-start</code> option, use at least one of the following options: <code>-host</code>, <code>-domain</code>, or <code>-nofollow</code>. For further control, also see the <code>-refreshtime</code> option. If you do not use any constraint criteria, Verity Spider operates without limits and will likely index far more than you intended.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001784.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001786.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001785.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

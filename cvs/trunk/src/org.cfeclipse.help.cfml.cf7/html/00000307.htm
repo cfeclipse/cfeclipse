@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfobject: web service object</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000306.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000308.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfobject: web service object</h1>
+<h4><a name="wp2652403"></a>Description</h4>
+<p>Creates a web service proxy object. </p>
+<h4><a name="wp2652410"></a>Syntax&#160;</h4>
+<pre>&lt;cfobject <br />   webservice= &quot;http://....?wsdl&quot; or &quot;name set in Administrator&quot;<br />   name = &quot;myobjectname&quot;&gt;
+</pre><h4><a name="wp2673607"></a>See also</h4>
+<p><a href="00000230.htm#1097667">cfcollection</a>, <a href="00000243.htm#1098198">cfexecute</a>, <a href="00000278.htm#1100286">cfindex</a>, <a href="00000323.htm#1102863">cfreport</a>, <a href="00000330.htm#1103106">cfsearch</a>, <a href="00000351.htm#2682044">cfwddx</a>; <a href="00001533.htm#1168676">Consuming web services</a> in <a href="00001530.htm#1141005">Using Web Services</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2652438"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>webservice</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>URL to web service WSDL file:</p>
+<ul>
+<li>
+   Absolute URL of web service.
+</li>
+<li>
+   Name (string) assigned in the Administrator to the web service.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Local name for the web service. String.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2652481"></a>Usage</h4>
+<p>Instantiates a proxy object for a web service. You can enter the absolute URL in this tag, or refer to a web service that is entered in the ColdFusion Administrator. To minimize potential code maintenance, enter the web service in the Administrator, and then refer to that name in this tag.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000306.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000308.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000307.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

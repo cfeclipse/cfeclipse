@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Request interface</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000826.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000828.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Request interface</h1>
+<pre>public abstract interface Request
+</pre><p>Interface to a request made to a CustomTag. The interface includes methods for retrieving attributes passed to the tag (including queries) and reading global tag settings. </p>
+<h2><a name="wp1111246"></a>Methods</h2>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Returns
+    </th>
+    <th>
+Syntax
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>boolean</p>
+    </td>
+    <td>
+<pre><a href="00000828.htm#1097157">attributeExists</a>(String name) 
+
+</pre>    </td>
+    <td>
+<p>Checks whether the attribute was passed to this tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>boolean</p>
+    </td>
+    <td>
+<pre><a href="00000829.htm#1115458"><code>debug</code></a><code>() </code>
+</pre>    </td>
+    <td>
+<p>Checks whether the tag contains the <code>debug</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<pre><a href="00000830.htm#1097174">getAttribute</a>(String name)
+
+</pre>    </td>
+    <td>
+<p>Retrieves the value of the passed attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>String[]</p>
+    </td>
+    <td>
+<pre><a href="00000831.htm#1115865">getAttributeList</a>() 
+</pre>    </td>
+    <td>
+<p>Retrieves a list of attributes passed to the tag.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>int</p>
+    </td>
+    <td>
+<pre><a href="00000832.htm#1161248">getIntAttribute</a>(String name) 
+</pre>    </td>
+    <td>
+<p>Retrieves the value of the passed attribute as an integer.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>int</p>
+    </td>
+    <td>
+<pre><a href="00000832.htm#1161248">getIntAttribute</a>(String name, <br />int def)
+
+</pre>    </td>
+    <td>
+<p>Retrieves the value of the passed attribute as an integer (returns default if the attribute does not exist or is not a valid number).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Query</p>
+    </td>
+    <td>
+<pre><a href="00000833.htm#1097219">getQuery</a>() 
+</pre>    </td>
+    <td>
+<p>Retrieves the query that was passed to this tag.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000826.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000828.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000827.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

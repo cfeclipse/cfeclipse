@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>FindNoCase</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000462.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000464.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>FindNoCase</h1>
+<h4><a name="wp1224725"></a>Description</h4>
+<p>Finds the first occurrence of a <i>substring</i> in a <i>string, </i>from a specified start position. If <i>substring </i>is not in <i>string</i>, returns zero. The search is case-insensitive.</p>
+<h4><a name="wp3366837"></a>Returns</h4>
+<p>The position of <i>substring</i> in <i>string; or</i> 0, if <i>substring </i>is not in <i>string</i>.</p>
+<h4><a name="wp2551516"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp1104522"></a>Function syntax</h4>
+<pre><code><strong>FindNoCase</strong></code>(<i>substring</i>, <i>string</i> [, <i>start</i> ])
+</pre><h4><a name="wp5052839"></a>See also</h4>
+<p><a href="00000462.htm#1104451">Find</a>, <a href="00000420.htm#1101887">CompareNoCase</a>, <a href="00000464.htm#1104557">FindOneOf</a>, <a href="00000606.htm#135102">REFind</a>, <a href="00000611.htm#135527">Replace</a></p>
+<h4><a name="wp5052856"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>substring</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. String for which to search.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. String in which to search.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>start</p>
+    </td>
+    <td>
+<p>Start position of search.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1104530"></a>Example</h4>
+<p>In the following example, the <code>Find</code> function returns 33 as the first position found because &quot;the&quot; is lowercase. The <code>FindNoCase</code> function returns 1 as the first postion because the case is ignored.</p>
+<pre>&lt;cfset stringToSearch = &quot;The quick brown fox jumped over the lazy dog.&quot;&gt;
+
+stringToSearch = &lt;cfoutput&gt;#stringToSearch#&lt;/cfoutput&gt;&lt;br&gt;
+&lt;p&gt;
+Find Function:&lt;br&gt;
+Find(&quot;the&quot;,stringToSearch) returns &lt;cfoutput&gt;#find(&quot;the&quot;,stringToSearch)#&lt;/cfoutput&gt;&lt;br&gt;
+&lt;p&gt;
+FindNoCase Function:&lt;br&gt;
+FindNoCase(&quot;the&quot;,stringToSearch) returns &lt;cfoutput&gt;#FindNoCase(&quot;the&quot;,stringToSearch)#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000462.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000464.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000463.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

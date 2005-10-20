@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating a local variable</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000158.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000160.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating a local variable</h1>
+<p>The purpose of the tripeditaction.cfm action page is to update the Compass Travel database, so it is important to make certain that any values entered conform to all the business rules before modifying the database. Failure of any one of the rules prevents modification of the database. </p>
+<p>One approach to ensuring that the action page considers each business rule is to create a local variable with a <code>cfset</code> tag within the action page that tests whether any of the business rules failed. </p>
+<p>The <code>cfset</code> tag lets you manipulate the value of a variable. For example, the following pseudocode initializes a variable to a specific value and checks the value using the <code>cfif</code> statement:</p>
+<pre>&lt;cfset isOk = &quot;Yes&quot;&gt;
+if rule 1 fails then
+&lt;cfset isOK = &quot;No&quot;
+...
+if Rule n fails then
+&lt;cfset isOk = &quot;No&quot;&gt;
+...
+&lt;cfif isOk = &quot;Yes&quot;&gt;
+   update the database
+&lt;/cfif&gt;
+</pre><p>In this example, the <code>cfset</code> tag initializes the local variable <code>isOk</code> to Yes<code>.</code> If any rule fails, the variable <code>isOK</code> is set to No. The code then tests if <code>isOk</code> equals Yes, before executing the SQL insert logic. </p>
+<h4>To create the local variable:</h4>
+<ol>
+<li>
+   Open the tripeditaction.cfm file in an editor.
+</li>
+<li>
+   Add the following code at the top of the file:
+<pre>
+&lt;cfset isOk = &quot;Yes&quot;&gt;
+</pre>
+</li>
+<li>
+   Modify the file by adding the following highlighted code:
+<pre>
+&lt;cfif isOk EQ &quot;Yes&quot;&gt;
+	&lt;h1&gt;Trip Added&lt;/h1&gt;
+	&lt;!--- Database insert logic goes here. ---&gt;
+	&lt;cfoutput&gt;
+		You have added #Form.TripName# to the trips database.
+	&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<p>Because you did not yet add any logic to test whether any values entered in the form are valid, the page works precisely as before, displaying a message that indicates the database was updated, without actually performing the update.</p>
+<p>For more information about using the <code>cfset</code> and <code>cfif</code> tags, see <i>ColdFusion MX Developer's Guide</i> or <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000158.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000160.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000159.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XmlFormat</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000667.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000669.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XmlFormat</h1>
+<h4><a name="wp139555"></a>Description</h4>
+<p>Escapes special XML characters in a string so that the string can be used as text in XML. </p>
+<h4><a name="wp139557"></a>Returns</h4>
+<p>A copy of the <code><i>string</i></code> parameter that is safe to use as text in XML.</p>
+<h4><a name="wp139559"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a>, <a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp139570"></a>Function syntax</h4>
+<pre><code><strong>XmlFormat</strong></code>(<i>string</i>)
+</pre><h4><a name="wp139572"></a>See also</h4>
+<p><a href="00000352.htm#2497244"><code>cfxml</code></a>, <a href="00000670.htm#139785"><code>XmlNew</code></a>, <a href="00000671.htm#139864"><code>XmlParse</code></a>, <a href="00000674.htm#140217">XmlValidate</a>; <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp139592"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp139597"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139608"></a>Usage</h4>
+<p>This function escapes characters as follows: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Text character
+    </th>
+    <th>
+Escaped representation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Greater than symbol (&gt;)</p>
+    </td>
+    <td>
+<p>&amp;gt;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Less than symbol (&lt;)</p>
+    </td>
+    <td>
+<p> &amp;lt;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Single-quotation mark (&#39;)</p>
+    </td>
+    <td>
+<p>&amp;apos;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Double-quotation mark (&quot;)</p>
+    </td>
+    <td>
+<p>&amp;quot;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Ampersand symbol (&amp;)</p>
+    </td>
+    <td>
+<p>&amp;amp;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Carriage return (but not line feed)</p>
+    </td>
+    <td>
+<p>Removed from the text.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>High ASCII characters in the range 128-255.</p>
+    </td>
+    <td>
+<p>Replaced by unicode escape sequence; for example, É (capital E with an Acute symbol) is replaced by &amp;#xc9;.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139643"></a>Example</h4>
+<p>The following example shows how <code>XmlFormat</code> escapes special XML characters. Use the View Source command in the browser to see the results. ColdFusion interprets the &quot;&quot; in the second text string as representing a single-quotation mark in text before it applies the <code>XmlFormat</code> function.</p>
+<pre>&lt;?xml version = &quot;1.0&quot;?&gt; 
+&lt;cfoutput&gt;
+&lt;someXML&gt;
+<code><strong>   </strong></code>&lt;someElement someAttribute=&quot;#<code><strong>XmlFormat(&quot;&#39;a quoted value&#39;&quot;)</strong></code>#&quot;&gt; 
+<code><strong>      </strong></code>#<code><strong>XmlFormat(&quot;Body of element with &lt;, &gt;, &quot;&quot; and &amp; goes here.&quot;)</strong></code>#
+   &lt;/someElement&gt;
+&lt;/someXML&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000667.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000669.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000668.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

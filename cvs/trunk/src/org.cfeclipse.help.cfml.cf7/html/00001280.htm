@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Understanding Query of Queries performance</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001279.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001281.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Understanding Query of Queries performance</h1>
+<p>Query of Queries performs very well on single-table query objects that were accessed directly from a database. This is because ColdFusion MX stores meta information for a query object accessed from a database.</p>
+<p>When working with a query resulting in a SQL join, Query of Queries performs as follows:</p>
+<ul>
+<li>
+   Query of Queries is very efficient for simple joins in which there is only one equality between two column references or constants; for example:
+<pre>
+SELECT T1.a, b, c, d FROM T1, T2 WHERE T1.a = T2.a
+</pre>
+</li>
+<li>
+   Query of Queries is less efficient for joins in which the predicate contains multiple expressions; for example:
+<pre>
+SELECT T1.a, b, c, d FROM T1, T2 
+WHERE T1.a = T2.a AND T1.b + T1.c = T2.b + T2.c
+</pre>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001279.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001281.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001280.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

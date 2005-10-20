@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Providing Gateway class service and information routines</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001692.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001694.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Providing Gateway class service and information routines</h1>
+<p>Several gateway methods perform event gateway configuration services and provide event gateway information. The ColdFusion event gateway services call many of these methods to configure the event gateway by using information stored by the ColdFusion&#160;MX Administrator, and to get access to resources and information that are needed by event gateway services and applications. Some of these methods can also be useful in event gateway code. The following methods provide these services and information:</p>
+<ul>
+<li>
+   <code>setCFCListeners</code> 
+</li>
+<li>
+   <code>setGatewayID</code> 
+</li>
+<li>
+   <code>getHelper</code> 
+</li>
+<li>
+   <code>getGatewayID</code> 
+</li>
+<li>
+   <code>getStatus</code> 
+</li>
+</ul>
+<p>ColdFusion MX calls the <code>setCFCListeners</code> method with the CFC or CFCs that are specified in the ColdFusion&#160;MX Administrator when it starts a gateway. ColdFusion&#160;MX also calls the method in a running event gateway when the configuration information changes, so the method must be written to handle such changes. The <code>setCFCListeners</code> method must save the listener information so that the gateway code that dispatches incoming messages to gateway services can use the listener CFCs in <code>setCFCPath</code> methods.</p>
+<p>ColdFusion&#160;MX calls the <code>setGatewayID</code> method when it starts a gateway. The <code>getGatewayID</code> method must return the value set by this method. </p>
+<p>ColdFusion&#160;MX calls the <code>getHelper</code> method when an application calls the CFML <code>GetGatewayHelper</code> function.</p>
+<p>The following code shows how the SocketGateway class defines these methods. To create a new gateway, modify the <code>getHelper</code> definition to return the correct class, or to return null if there is no gateway helper class. Most gateways do not need to change the other method definitions.</p>
+<pre>public void setCFCListeners(String[] listeners) {
+   this.listeners = listeners;
+}
+public GatewayHelper getHelper() {
+   // SocketHelper class implements the GatewayHelper interface.
+   return new SocketHelper();
+}
+public void setGatewayID(String id) {
+   gatewayID = id;
+}
+public String getGatewayID() {
+   return gatewayID;
+}
+public int getStatus() {
+   return status;
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001692.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001694.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001693.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

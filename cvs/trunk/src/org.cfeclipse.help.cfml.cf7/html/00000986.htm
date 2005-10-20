@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using special characters</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000985.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000987.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using special characters</h1>
+<p>Regular expressions define the following list of special characters:</p>
+<pre><code>+ * ? . [ ^ $ ( ) { | \ </code>
+</pre><p>In some cases, you use a special character as a literal character. For example, if you want to search for the plus sign in a string, you have to escape the plus sign by preceding it with a backslash:</p>
+<pre>&quot;\+&quot;
+</pre><p>The following table describes the special characters for regular expressions:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Special Character
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>\</p>
+    </td>
+    <td>
+<p>A backslash followed by any special character matches the literal character itself, that is, the backslash escapes the special character.</p>
+<p>For example, &quot;\+&quot; matches the plus sign, and &quot;\\&quot; matches a backslash. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>.</p>
+    </td>
+    <td>
+<p>A period matches any character, including newline. </p>
+<p>To match any character except a newline, use [^#chr(13)##chr(10)#], which excludes the ASCII carriage return and line feed codes. The corresponding escape codes are \r and \n.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>[ ]</p>
+    </td>
+    <td>
+<p>A one-character character set that matches any of the characters in that set. </p>
+<p>For example, &quot;[akm]&quot; matches an &quot;a&quot;, &quot;k&quot;, or &quot;m&quot;. A hyphen in a character set indicates a range of characters; for example, [a-z] matches any single lowercase letter. </p>
+<p>If the first character of a character set is the caret (^), the regular expression matches any character <i>except</i> those in the set. It does not match the empty string.</p>
+<p>For example, [^akm] matches any character except &quot;a&quot;, &quot;k&quot;, or &quot;m&quot;. The caret loses its special meaning if it is not the first character of the set.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>^</p>
+    </td>
+    <td>
+<p>If the caret is at the beginning of a regular expression, the matched string must be at the beginning of the string being searched.</p>
+<p>For example, the regular expression &quot;^ColdFusion&quot; matches the string &quot;ColdFusion lets you use regular expressions&quot; but not the string &quot;In ColdFusion, you can use regular expressions.&quot;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>$</p>
+    </td>
+    <td>
+<p>If the dollar sign is at the end of a regular expression, the matched string must be at the end of the string being searched.</p>
+<p>For example, the regular expression &quot;ColdFusion$&quot; matches the string &quot;I like ColdFusion&quot; but not the string &quot;ColdFusion is fun.&quot;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>?</p>
+    </td>
+    <td>
+<p>A character set or subexpression followed by a question mark matches zero or one occurrences of the character set or subexpression. </p>
+<p>For example, xy?z matches either &quot;xyz&quot; or &quot;xz&quot;.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>|</p>
+    </td>
+    <td>
+<p>The OR character allows a choice between two regular expressions. </p>
+<p>For example, jell(y|ies) matches either &quot;jelly&quot; or &quot;jellies&quot;.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>+</p>
+    </td>
+    <td>
+<p>A character set or subexpression followed by a plus sign matches one or more occurrences of the character set or subexpression.</p>
+<p>For example, [a-z]+ matches one or more lowercase characters.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>*</p>
+    </td>
+    <td>
+<p>A character set or subexpression followed by an asterisk matches zero or more occurrences of the character set or subexpression. </p>
+<p>For example, [a-z]* matches zero or more lowercase characters.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>()</p>
+    </td>
+    <td>
+<p>Parentheses group parts of a regular expression into subexpressions that you can treat as a single unit.</p>
+<p>For example, (ha)+ matches one or more instances of &quot;ha&quot;.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>(?x)</p>
+    </td>
+    <td>
+<p>If at the beginning of a regular expression, it specifies to ignore whitespace in the regular expression and lets you use ## for end-of-line comments. You can match a space by escaping it with a backslash.</p>
+<p>For example, the following regular expression includes comments, preceded by ##, that are ignored by ColdFusion:</p>
+<pre>
+reFind(&quot;(?x)
+	one                  ##first option
+	|two                 ##second option
+	|three\ point\ five  ## note escaped spaces
+	&quot;, &quot;three point five&quot;)
+</pre>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>(?m)</p>
+    </td>
+    <td>
+<p>If at the beginning of a regular expression, it specifies the multiline mode for the special characters ^ and $.</p>
+<p>When used with ^, the matched string can be at the start of the of entire search string or at the start of new lines, denoted by a linefeed character or chr(10), within the search string. For $, the matched string can be at the end the search string or at the end of new lines. </p>
+<p>Multiline mode does not recognize a carriage return, or chr(13), as a new line character. </p>
+<p>The following example searches for the string &quot;two&quot; across multiple lines: </p>
+<pre>
+#reFind(&quot;(?m)^two&quot;, &quot;one#chr(10)#two&quot;)#
+</pre>
+<p>This example returns 4 to indicate that it matched &quot;two&quot; after the chr(10) linefeed. Without (?m), the regular expression would not match anything, because ^ only matches the start of the string.</p>
+<p>The character (?m) does not affect \A or \Z, which always match the start or end of the string, respectively. For information on \A and \Z, see <a href="00000987.htm#1144043">Using escape sequences</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>(?i)</p>
+    </td>
+    <td>
+<p>If at the beginning of a regular expression for <code>REFind()</code>, it specifies to perform a case-insensitive compare. </p>
+<p>For example, the following line would return an index of 1: </p>
+<pre>
+	#reFind(&quot;(?i)hi&quot;, &quot;HI&quot;)#
+</pre>
+<p>If you omit the (?i), the line would return an index of zero to signify that it did not find the regular expression. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>(?=...)</p>
+    </td>
+    <td>
+<p>If at the beginning of a regular expression, it specifies to use positive lookahead when searching for the regular expression. </p>
+<p>Positive lookahead tests for the parenthesized subexpression like regular parenthesis, but does not include the contents in the match - it merely tests to see if it is there in proximity to the rest of the expression.</p>
+<p>For example, consider the expression to extract the protocol from a URL:</p>
+<pre>
+&lt;cfset regex = &quot;http(?=://)&quot;&gt;
+&lt;cfset string = &quot;http://&quot;&gt;
+&lt;cfset result = reFind(regex, string, 1, &quot;yes&quot;)&gt;
+mid(string, result.pos[1], result.len[1])
+</pre>
+<p>This example results in the string &quot;http&quot;. The lookahead parentheses ensure that the &quot;://&quot; is there, but does not include it in the result. If you did not use lookahead, the result would include the extraneous &quot;://&quot;.</p>
+<p>Lookahead parentheses do not capture text, so backreference numbering will skip over these groups. For more information on backreferencing, see <a href="00000989.htm#1140068">Using backreferences</a>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>(?!...)</p>
+    </td>
+    <td>
+<p>If at the beginning of a regular expression, it specifies to use negative lookahead. Negative is just like positive lookahead, as specified by (?=...), except that it tests for the absence of a match.</p>
+<p>Lookahead parentheses do not capture text, so backreference numbering will skip over these groups. For more information on backreferencing, see <a href="00000989.htm#1140068">Using backreferences</a>. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>(?:...)</p>
+    </td>
+    <td>
+<p>If you prefix a subexpression with &quot;?:&quot;, ColdFusion performs all operations on the subexpression except that it will not capture the corresponding text for use with a back reference.</p>
+    </td>
+  </tr>
+</table>
+
+<p>You must be aware of the following considerations when using special characters in character sets, such as [a-z]:</p>
+<ul>
+<li>
+   To include a hyphen (-) in the square brackets of a character set as a literal character, you cannot escape it as you can other special characters because ColdFusion always interprets a hyphen as a range indicator. Therefore, if you use a literal hyphen in a character set, make it the last character in the set.
+</li>
+<li>
+   To include a closing square bracket (]) in the character set, escape it with a backslash, as in [1-3\]A-z]. You do not have to escape the ] character outside of the character set designator.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000985.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000987.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000986.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using tracing</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001221.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001223.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using tracing</h1>
+<p>As its name indicates, the <a href="00000345.htm#2698629"><code>cftrace</code></a> tag is designed to help you trace the execution of your application. It can help you do any of several things:</p>
+<ul>
+<li>
+   You can time the execution of a tag or code section. This capability is particularly useful for tags and operations that can take substantial processing time. Typical candidates include all ColdFusion tags that access external resources, including <a href="00000316.htm#1102316"><code>cfquery</code></a>, <a href="00000283.htm#1100581"><code>cfldap</code></a>, <a href="00000259.htm#1800554"><code>cfftp</code></a>, <a href="00000245.htm#1098395"><code>cffile</code></a>, and so on. To time execution of any tag or code block, call the <code>cftrace</code> tag before and after the code you want to time.
+</li>
+<li>
+   You can display the values of internal variables, including data structures. For example, you can display the raw results of a database query.
+</li>
+<li>
+   You can display an intermediate value of a variable. For example, you could use this tag to display the contents of a raw string value before you use string functions to select a substring or format it.
+</li>
+<li>
+   You can display and log processing progress. For example, you can put a <code>cftrace</code> call at the head of pages in your application or before critical tags or calls to critical functions. (Doing this could result in massive log files in a complex application, so you should use this technique with care.)
+</li>
+<li>
+   If a page has many nested <a href="00000274.htm#1100123"><code>cfif</code></a> and <a href="00000241.htm#2647667"><code>cfelseif</code></a> tags you can put <code>cftrace</code> tags in each conditional block to trace the execution flow. When you do this, you should use the condition variable in the message or <code>var</code> attribute.
+</li>
+<li>
+   If you find that the ColdFusion server is hanging, and you suspect a particular block of code (or call to a cfx tag, COM object, or other third-party component), you can put a <code>cftrace</code> tag before and after the suspect code, to log entry and exit.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001221.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001223.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001222.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

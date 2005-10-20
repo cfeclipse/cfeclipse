@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Installing an EAR file or WAR files on UNIX</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000034.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000036.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Installing an EAR file or WAR files on UNIX</h1>
+<p>This section explains how to install the ColdFusion&#160;MX&#160;7 J2EE configuration on UNIX. If you are updating an existing deployment of ColdFusion MX or ColdFusion MX&#160;6.1 for J2EE, see <a href="00000036.htm#114170">Updating from ColdFusion MX or ColdFusion MX&#160;6.1 for J2EE</a> before you continue.</p>
+<p>By default, the ColdFusion&#160;MX&#160;7 J2EE installation places files in the /opt/cfmx7 directory. To install into a different directory, you must create that directory before you run the installation.</p>
+<h4>To install ColdFusion&#160;MX&#160;7 on UNIX (J2EE configuration):</h4>
+<ol>
+<li>
+   Read the online version of the Release Notes for any late-breaking information or updates. For more information, see <a href="http://www.macromedia.com/go/proddoc_releasenotes" target="mm_window">www.macromedia.com/go/proddoc_releasenotes</a>.
+</li>
+<li>
+   Ensure that your operating system meets the system requirements described on the Macromedia web site at <a href="http://www.macromedia.com/go/sysreqscf" target="mm_window">www.macromedia.com/go/sysreqscf</a>. 
+</li>
+<li>
+   Review the <a href="00000005.htm#1217505">Installation considerations for UNIX</a> and <a href="00000005.htm#1211318">Installation considerations for all platforms</a>.
+</li>
+<li>
+   Determine and record environment information, as described in <a href="00000032.htm#112618">Preparing to install using the J2EE configuration</a>.
+</li>
+<li>
+   Determine the answers to the questions in the section <a href="00000006.htm#1235536">Gathering information necessary to install ColdFusion&#160;MX&#160;7</a>.
+</li>
+<li>
+   Log in as root.
+</li>
+<li>
+   Copy the installation file that is appropriate for your platform and locale from the CD or Macromedia website, and save it to a directory on your local disk.
+<p>The following are the installation files for supported J2EE configuration platforms:</p>
+<li>coldfusion-70-lin.bin</li>
+<li>coldfusion-70-sol.bin</li>
+<li>coldfusion-70-other.jar</li>
+</li>
+<li>
+   Using the <code>cd</code> command, go to the directory with the installation file.
+</li>
+<li>
+   Start the installation with the following command:
+<pre>
+./&lt;filename&gt; -i console
+</pre>
+<p>The installation program starts.</p>
+<p>To use the coldfusion-70-other.jar file to install on a UNIX platform other than Solaris or Linux, enter the following command (for more information, see <a href="00000005.htm#1217505">Installation considerations for UNIX</a>):</p>
+<pre>
+java_home/bin/java -jar coldfusion-70-other.jar -i console
+</pre>
+<p><strong>Note: </strong>To run the UNIX installer in GUI mode, type <strong>./</strong><strong>&lt;</strong>filename<strong>&gt;</strong> <strong>-i gui.</strong></p></li>
+<li>
+   Follow the prompts, and let the installation program run to completion. 
+<p><strong>Caution: </strong>For security reasons, it is crucial that you do not use root for the runtime user. </p></li>
+<li>
+   Deploy ColdFusion&#160;MX&#160;7 and configure Java settings, as required by your application server. For more information, see <a href="00000039.htm#128292">ColdFusion&#160;MX&#160;7 J2EE deployment and configuration</a>.
+<p><strong>Note: </strong>If you deployed the rds.war file, and an error message indicates that RDS is not installed or not enabled, edit the rds.properties file to match the ColdFusion context root, restart the application server, and re-open the ColdFusion&#160;MX Administrator.</p></li>
+<li>
+   Open the ColdFusion&#160;MX Administrator to run the Configuration Wizard.
+</li>
+<li>
+   Configure and manage your system, as described in <a href="00000044.htm#1112861">Configuring Your System</a>. 
+</li>
+<li>
+   Code and test ColdFusion&#160;MX&#160;7 CFM pages. 
+<p>Store CFM pages under the web application root (either cfusion-ear/cfusion-war or cfusion-war) and access these pages using a URL of the form http://<i>hostname</i>:<i>portnumber</i>/<i>context-root</i>/<i>filename</i>.cfm, as follows: </p>
+<li><i>hostname</i>&#160;The machine name, IP address, or localhost.</li>
+<li><i>portnumber</i>&#160;The port number used by your application server's web server.</li>
+<li><i>contextroot</i>&#160;The context root for the ColdFusion&#160;MX&#160;7 web application. For more information, see <a href="00000030.htm#114577">Context root</a>. </li>
+<li><i>filename</i>&#160;The directory path and file to display. The path is relative to the cfusion-war directory. </li>
+<p>For example, to display a CFM file located at /opt/jrun4/servers/myserver/cfusion-ear/cfusion-war/eisapp/index.cfm using the built-in JRun web server and a context root of cfmx, you specify the URL as http://localhost:8100/cfmx/eisapp/index.cfm.</p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000034.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000036.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000035.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

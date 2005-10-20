@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating your own chart styles</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001430.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001432.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating your own chart styles</h1>
+<p>You can create your own chart styles by doing either of the following:</p>
+<ul>
+<li>
+   <a href="00001431.htm#1157590">Modifying the chart style XML files</a>
+</li>
+<li>
+   <a href="00001431.htm#1157683">Using WebCharts3D to create chart styles</a>
+</li>
+</ul>
+<h3><a name="wp1157590"></a>Modifying the chart style XML files</h3>
+<p>You can modify the chart styles included with ColdFusion to create your own chart styles. The files that contain the style information are XML files located in the <i>cf_root</i>\charting\styles directory. You should only modify attributes specified in the file. To specify additional attributes, follow the instructions in the section <a href="00001431.htm#1157683">Using WebCharts3D to create chart styles</a>.</p>
+<p><strong>Note: </strong>There are two XML files for each default chart style. For example, the beige style for pie charts is defined in the beige_pie.xml file; the beige style for all other types of charts is defined in the beige.xml file.</p><h4>To modify a chart style XML file:</h4>
+<ol>
+<li>
+   Open the XML file that you want to modify, for example beige.xml.
+</li>
+<li>
+   Modify the file contents.
+</li>
+<li>
+   Save the file with a different name; for example myBeige.xml.
+</li>
+</ol>
+<h3><a name="wp1157683"></a>Using WebCharts3D to create chart styles</h3>
+<p>ColdFusion&#160;MX&#160;7 includes the WebCharts3D utility, which you can use to create chart style files.</p>
+<h4>To create your own chart style file with the WebCharts3D utility:</h4>
+<ol>
+<li>
+   Start WebCharts3D by double-clicking the webcharts.bat file in the CFusionMX7\charting directory.
+</li>
+<li>
+   (Optional) Open an existing chart. 
+</li>
+<li>
+   Make the changes you want to the chart's appearance.
+<p><strong>Note: </strong>To use the chart style file in the <code>cfchart</code> tag, you can only make the modifications indicated in the table that follows this procedure.</p></li>
+<li>
+   Click the XML style tab.
+</li>
+<li>
+   Click the Save button in the bottom right corner.
+</li>
+<li>
+   Specify the name of the file; for example, mystyle.xml.
+</li>
+<li>
+   Specify the directory in which you want to save the chart style file.
+<p><strong>Note: </strong>ColdFusion uses the same rules to look for the chart style XML files as it does for files included using the <code>cfinclude</code> tag. For more information, see <a href="00000277.htm#1100248"><code>cfinclude</code></a>.</p></li>
+<li>
+   Click Save.
+</li>
+</ol>
+<p>The following table lists the attributes of the <code>cfchart</code> and <code>cfchartseries</code> tags and the associated WebCharts3D commands:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+WebCharts3D command
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><code>chartHeight</code></p>
+    </td>
+    <td>
+<p>Drag the chart by handles.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>chartWidth</code></p>
+    </td>
+    <td>
+<p>Drag the chart by handles.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>dataBackgroundColor</code></p>
+    </td>
+    <td>
+<p>Background: minColor (type must be PlainColor)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>font</code></p>
+    </td>
+    <td>
+<p>font: Family (specify only supported fonts.)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>fontBold</code></p>
+    </td>
+    <td>
+<p>font: check Bold</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>fontItalic</code></p>
+    </td>
+    <td>
+<p>font: check Italic</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>fontSize</code></p>
+    </td>
+    <td>
+<p>font: Size </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>foregroundColor</code></p>
+    </td>
+    <td>
+<p>foreground</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>gridlines</code></p>
+    </td>
+    <td>
+<p>XAxis: labelcount</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>labelFormat</code></p>
+    </td>
+    <td>
+<p>YAxis: LabelFormat: Number | Percent| Currency | Datetime</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>markerSize</code></p>
+    </td>
+    <td>
+<p>Elements: markerSize</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>pieSliceStyle</code></p>
+    </td>
+    <td>
+<p>style: solid | slice </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>rotated</code></p>
+    </td>
+    <td>
+<p>Type Frame chart: Elements: Shape: </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>scaleFrom</code></p>
+    </td>
+    <td>
+<p>Yaxis: isAbsolute; scaleMin(int)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>scaleTo</code></p>
+    </td>
+    <td>
+<p>Yaxis: isAbsolute; scaleMax(int)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>seriesPlacement</code></p>
+    </td>
+    <td>
+<p>Elements: place</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>show3D</code></p>
+    </td>
+    <td>
+<p>is3D</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>showBorder</code></p>
+    </td>
+    <td>
+<p>Decoration: style (none or simple)?</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>showLegend</code></p>
+    </td>
+    <td>
+<p>Legend: isVisible </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>showMarkers</code></p>
+    </td>
+    <td>
+<p>Elements: showMarkers</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>showXGridlines</code></p>
+    </td>
+    <td>
+<p>Frame: isVGridVisible</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>showYGridlines</code></p>
+    </td>
+    <td>
+<p>Frame: isHGridVisible</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>tipbgColor</code></p>
+    </td>
+    <td>
+<p>Popup: background</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>tipStyle</code></p>
+    </td>
+    <td>
+<p>Popup: showOn: MouseOver | MouseDown | Disabled</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>url</code></p>
+    </td>
+    <td>
+<p>Elements: action | Series: action</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>xAxisTitle</code></p>
+    </td>
+    <td>
+<p>Xaxis: TitleStyle: text (enter text)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>xAxisType</code></p>
+    </td>
+    <td>
+<p>xAxis: type: (category or scale)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>xOffset</code></p>
+    </td>
+    <td>
+<p>Frame: xDepth</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>yAxisTitle</code></p>
+    </td>
+    <td>
+<p>Yaxis: TitleStyle: text (enter text)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>yAxisType</code></p>
+    </td>
+    <td>
+<p>Currently has no effect.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>yOffset</code></p>
+    </td>
+    <td>
+<p>Frame: yDepth</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following table lists the attributes of the <code>cfchartseries</code> tag and the associated WebCharts3D commands:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+Attribute
+    </td>
+    <td>
+WebCharts3D command
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>colorlist</p>
+    </td>
+    <td>
+<p>Elements: series: Paint: color</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>markerStyle</p>
+    </td>
+    <td>
+<p>Elements: series: Marker type: Rectangle | Triangle | Diamond | Circle | Letter | MCROSS | Snow | RCROSS</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>paintStyle</p>
+    </td>
+    <td>
+<p>Paint: paint: Plain | Shade | Light </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>seriesColor</p>
+    </td>
+    <td>
+<p>Elements: series: Paint: color</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>seriesLabel</p>
+    </td>
+    <td>
+<p>Elements: series: </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Type: Pie chart | </p>
+<p>Type Frame chart: Elements: Shape: Bar | Line | Pyramid | Area | Curve | Step | Scatter | Cone | Cylinder | Horizontalbar | </p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001430.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001432.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001431.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

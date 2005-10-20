@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Handling complex data types</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001553.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001555.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Handling complex data types</h1>
+<p>When dealing with web services, handling complex types falls into the following categories:</p>
+<ul>
+<li>
+   Mapping the data types of a web service to consume to ColdFusion data types
+</li>
+<li>
+   Understanding how clients will reference your ColdFusion data types when you publish a web&#160;service
+</li>
+</ul>
+<p>This section describes both categories. </p>
+<ul>
+<li>
+   <a href="00001554.htm#1186737">Consuming web services that use complex data types</a>
+</li>
+<li>
+   <a href="00001555.htm#1187249">Publishing web services that use complex data types</a>
+</li>
+</ul>
+<h2><a name="wp1186737"></a>Consuming web services that use complex data types</h2>
+<p>The following table shows how WSDL data types are converted to ColdFusion data types:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+ColdFusion data type
+    </th>
+    <th>
+WSDL data type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>numeric</p>
+    </td>
+    <td>
+<p>SOAP-ENC:double</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>boolean</p>
+    </td>
+    <td>
+<p>SOAP-ENC:boolean</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>SOAP-ENC:string</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>SOAP-ENC:Array</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>numeric</p>
+    </td>
+    <td>
+<p>SOAP-ENC:float</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>binary</p>
+    </td>
+    <td>
+<p>xsd:base64Binary</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>date</p>
+    </td>
+    <td>
+<p>xsd:dateTime</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>void (operation returns nothing)</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>structure</p>
+    </td>
+    <td>
+<p>complex type</p>
+    </td>
+  </tr>
+</table>
+
+<p>This table shows that complex data types map to ColdFusion structures. ColdFusion structures offer a flexible way to represent data. You can create structures that contain single-dimension arrays, multi-dimensional arrays, and other structures. </p>
+<p>The ColdFusion mapping of complex types to structures is not automatic. You have to perform some processing on the data in order to access it as a structure. The next sections describe how to pass complex types to web services, and how to handle complex types returned from web services. </p>
+<h3><a name="wp1186803"></a>Passing input parameters to web services as complex types</h3>
+<p>A web service can take a complex data type as input. In this situation, you can construct a ColdFusion structure that models the complex data type, then pass the structure to the web service. </p>
+<p>For example, the following excerpt from a WSDL file shows the definition of a complex type named Employee: </p>
+<pre><code><strong>&lt;s:complexType name=&quot;Employee&quot;&gt; </strong></code>
+&#160;&lt;s:sequence&gt; 
+&#160;&#160;&#160;&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;fname&quot; type=&quot;s:string&quot; /&gt; 
+&#160;&#160;&#160;&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;lname&quot; type=&quot;s:string&quot; /&gt; 
+&#160;&#160;&#160;&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;active&quot; type=&quot;s:boolean&quot; /&gt; 
+&#160;&#160;&#160;&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;age&quot; type=&quot;s:int&quot; /&gt; 
+&#160;&#160;&#160;&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;hiredate&quot; type=&quot;s:dateTime&quot; /&gt; 
+&#160;&#160;&#160;&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;number&quot; type=&quot;s:double&quot; /&gt; 
+&#160;&lt;/s:sequence&gt; 
+&lt;/s:complexType&gt;
+</pre><p>The Employee data type definition includes six elements, the data type of each element, and the name of each element. </p>
+<p>Another excerpt from the WSDL file shows a message definition using the Employee data type. This message defines an input parameter, as the following code shows: </p>
+<pre>&lt;message name=&quot;updateEmployeeInfoSoapIn&quot;&gt; 
+   <code><strong>&lt;part name=&quot;thestruct&quot; type=&quot;s0:Employee&quot; /&gt;</strong></code> 
+&lt;/message&gt;
+</pre><p>A third excerpt from the WSDL file shows the definition of an operation, named updateEmployeeInfo, possibly one that updates the employee database with the employee information. This operation takes as input a parameter of type Employee, as the following code shows: </p>
+<pre>&lt;operation name=&quot;updateEmployeeInfo&quot;&gt; 
+<strong>   &lt;input message=&quot;s0:updateEmployeeInfoSoapIn&quot; /&gt; </strong>
+&lt;/operation&gt;
+</pre><p>To call the updateEmployeeInfo operation, create a ColdFusion structure, initialize six fields of the structure that correspond to the six elements of Employee, and then call the operation, as the following code shows: </p>
+<pre>&lt;!--- Create a structure using CFScript, then call the web service. ---&gt;
+&lt;cfscript&gt;
+   stUser = structNew();
+   stUser.active = TRUE;
+   stUser.fname = &quot;John&quot;;
+   stUser.lname = &quot;Smith&quot;;
+   stUser.age = 23;
+   stUser.hiredate = createDate(2002,02,22);
+   stUser.number = 123.321;
+
+   ws = createObject(&quot;webservice&quot;, &quot;http://somehost/EmployeeInfo.asmx?wsdl&quot;);
+   ws.updateEmployeeInfo(stUser);
+&lt;/cfscript&gt; 
+</pre><p>You can use structures for passing input parameters as complex types in many situations. However, to build a structure to model a complex type, you have to inspect the WSDL file for the web service to determine the layout of the complex type. This can take some practice. </p>
+<h3><a name="wp1196337"></a>Handling return values as complex types</h3>
+<p>When a web service returns a complex type, you can write that returned value directly to a ColdFusion variable. </p>
+<p>The previous section used a complex data type named Employee to define an input parameter to an operation. A WSDL file can also define a return value using the Employee type, as the following code shows: </p>
+<pre>&lt;message name=&quot;updateEmployeeInfoSoapOut&quot;&gt; 
+<strong>   &lt;part name=&quot;updateEmployeeInfoResult&quot; type=&quot;s0:Employee&quot; /&gt; </strong>
+&lt;/message&gt;
+&lt;operation name=&quot;updateEmployeeInfo&quot;&gt; 
+<strong>   &lt;input message=&quot;s0:updateEmployeeInfoSoapIn&quot; /&gt; </strong>
+<strong>   &lt;output message=&quot;s0:updateEmployeeInfoSoapOut&quot; /&gt; </strong>
+&lt;/operation&gt;
+</pre><p>In this example, the operation updateEmployeeInfo takes a complex type as input and returns a complex type as output. To handle the input parameter, you create a structure. To handle the returned value, you write it to a ColdFusion variable, as the following example shows: </p>
+<pre>&lt;!--- Create a structure using CFScript, then call the web service. ---&gt;
+&lt;!--- Write the returned value to a ColdFusion variable. ---&gt;
+&lt;cfscript&gt;
+   stUser = structNew();
+   stUser.active = TRUE;
+   stUser.fname = &quot;John&quot;;
+   stUser.lname = &quot;Smith&quot;;
+   stUser.age = 23;
+   stUser.hiredate = createDate(2002,02,22);
+   stUser.number = 123.321;
+
+   ws = createObject(&quot;webservice&quot;, &quot;http://somehost/echosimple.asmx?wsdl&quot;);
+   myReturnVar = ws.echoStruct(stUser);
+
+&lt;/cfscript&gt; 
+
+&lt;!--- Output the returned values. ---&gt;
+&lt;cfoutput&gt;
+   &lt;br&gt;  
+   &lt;br&gt;Name of employee is: #myReturnVar.fname#  #myReturnVar.lname#
+   &lt;br&gt;Active status: #myReturnVar.active#
+   &lt;br&gt;Age:  #myReturnVar.age#
+   &lt;br&gt;Hire Date: #myReturnVar.hiredate#
+   &lt;br&gt;Favorite Number: #myReturnVar.number# 
+&lt;/cfoutput&gt;
+</pre><p>You access elements of the variable myReturnVar using dot notation in the same way that you access structure fields. If a complex type has nested elements, in the way a structure can have multiple levels of nested fields, you use dot notation to access the nested elements, as in a.b.c.d, to whatever nesting level is necessary. </p>
+<p>However, the variable myReturnVar is not a ColdFusion structure. It is a container for the complex type, but has none of the attributes of a ColdFusion structure. Calling the ColdFusion function <code>isStruct</code> on the variable returns False. </p>
+<p>You can copy the contents of the variable to a ColdFusion structure, as the following example shows: </p>
+<pre>&lt;cfscript&gt;
+...
+   ws = createObject(&quot;webservice&quot;, &quot;http://somehost/echosimple.asmx?wsdl&quot;);
+   myReturnVar = ws.echoStruct(stUser);
+
+   realStruct = structNew();
+   realStruct.active = #myReturnVar.active#;
+   realStruct.fname = &quot;#myReturnVar.fname#&quot;;
+   realStruct.lname = &quot;#myReturnVar.lname#&quot;;
+   realStruct.age = #myReturnVar.age#;
+   realStruct.hiredate = #myReturnVar.hiredate#;
+   realStruct.number = #myReturnVar.number#;
+
+&lt;/cfscript&gt; 
+</pre><p>Calling <a href="00000532.htm#1106910"><code>IsStruct</code></a> on realStruct returns True and you can use all ColdFusion structure functions to process it. </p>
+<p>This example shows that ColdFusion variables and structures are useful for handling complex types returned from web services. To understand how to access the elements of a complex type written to a ColdFusion variable, you have to inspect the WSDL file for the web service. The WSDL file defines the API to the web service and will provide you with the information necessary to handle data returned from it. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001553.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001555.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001554.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

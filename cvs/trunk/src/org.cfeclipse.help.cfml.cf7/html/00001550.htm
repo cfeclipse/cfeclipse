@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Publishing document-literal style web services</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001549.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001551.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Publishing document-literal style web services</h1>
+<p>In addition to RPC-oriented operations, for which consumers specify a method and arguments, ColdFusion also lets you publish web services using the document-literal style. When you use document-literal style, the WSDL for the web service tells the client to use XML schemas rather than RPC calling conventions.</p>
+<p>In most cases, the publisher of a web services identifies it as document-literal or RPC style. To identify the type, open the WSDL document and find the <code>soap:binding</code> element and examine its <code>style</code> attribute, as the following example shows:</p>
+<pre>&lt;wsdl:binding name=&quot;WeatherForecastSoap&quot; type=&quot;tns:WeatherForecastSoap&quot;&gt;
+&lt;soap:binding transport=&quot;http://schemas.xmlsoap.org/soap/http&quot; style=&quot;document&quot; /&gt;
+</pre><p>In this example, the style is document-literal. You must further examine the WSDL to determine the methods you can call and the parameters for each method.</p>
+<p>On the client side, the <code>cfinvoke</code> tag and other ColdFusion methods for calling web services handle this automatically. In most cases, no modifications are necessary. Similarly, when publishing CFCs as document-literal style web services, ColdFusion automatically creates and manages the appropriate WSDL.</p>
+<p>To publish CFCs as document-literal style web services, specify <code>cfcomponent style=&quot;document&quot;</code>, along with the other attributes required for document-literal style web services. For example, ColdFusion&#160;MX publishes the following CFC using document-literal style:</p>
+<pre>&lt;cfcomponent style=&quot;document&quot; &gt;
+   &lt;cffunction 
+      name = &quot;getEmp&quot; 
+      returntype=&quot;string&quot;  
+      output = &quot;no&quot;
+      access = &quot;remote&quot;&gt;
+   &lt;cfargument name=&quot;empid&quot; required=&quot;yes&quot; type=&quot;numeric&quot;&gt;
+   &lt;cfset var fullname = &quot;&quot;&gt;
+   &lt;cfquery name=&quot;empinfo&quot; datasource=&quot;cfdocexamples&quot;&gt;
+      SELECT emp_id, firstname, lastname
+      FROM employee
+      WHERE emp_id = &lt;cfqueryparam cfsqltype=&quot;cf_sql_integer&quot;
+         value=&quot;#arguments.empid#&quot;&gt;
+   &lt;/cfquery&gt;
+   &lt;cfif empinfo.recordcount gt 0&gt;
+      &lt;cfset fullname = empinfo.lastname &amp; &quot;, &quot; &amp; empinfo.firstname&gt;
+   &lt;cfelse&gt;
+       &lt;cfset fullname = &quot;not found&quot;&gt;
+   &lt;/cfif&gt;      
+    &lt;cfreturn #fullname#&gt;
+  &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre><p>The <code>cfcomponent</code> tag includes optional attributes that you can use to control the WSDL that ColdFusion generates. You can use these attributes to create meaningful WSDL attribute names, as the following example shows:</p>
+<pre>&lt;cfcomponent style=&quot;document&quot;    
+    namespace = &quot;http://www.mycompany.com/&quot;
+   serviceportname = &quot;RestrictedEmpInfo&quot;
+   porttypename = &quot;RestrictedEmpInfo&quot;
+   bindingname = &quot;myns:RestrictedEmpInfo&quot;
+   displayname = &quot;RestrictedEmpInfo&quot;
+   hint = &quot;RestrictedEmpInfo&quot;&gt;
+</pre><p><strong>Tip: </strong>For complete control of the WSDL, advanced users can specify the <code>cfcomponent</code> <code>wsdlFile</code> attribute to use a predefined WSDL file.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001549.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001551.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001550.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

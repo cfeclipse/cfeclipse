@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cffile action = &quot;rename&quot;</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000251.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000253.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cffile action = &quot;rename&quot;</h1>
+<h4><a name="wp1355604"></a>Description</h4>
+<p>Renames or moves a file on the server. </p>
+<h4><a name="wp1098670"></a>Syntax</h4>
+<pre>&lt;cffile <br />   action = &quot;rename&quot;<br />   source = &quot;full_path_name&quot;<br />   destination = &quot;path_name&quot; <br />   mode = &quot;mode&quot;<br />   attributes = &quot;file_attributes_list&quot;&gt;
+</pre><h4><a name="wp1877304"></a>See also</h4>
+<p><a href="00000235.htm#1097918"><code>cfdirectory</code></a></p>
+<h4><a name="wp3083580"></a>History</h4>
+<p>See the History section of the main <a href="00000245.htm#1098395"><code>cffile</code></a> tag page.</p>
+<h4><a name="wp3504080"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>action </p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Type of file manipulation that the tag performs. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>source</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Pathname of file to rename. </p>
+<p>If not an absolute path (starting a with a drive letter and a colon, or a forward or backward slash), it is relative to the ColdFusion temporary directory, which is returned by the <a href="00000497.htm#1105302">GetTempDirectory</a> function.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>destination</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Destination file or directory. If not an absolute path, it is relative to the source directory. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>mode</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Applies only to UNIX and Linux. Permissions. Octal values of UNIX chmod command. Assigned to owner, group, and other. For example:</p>
+<ul>
+<li>
+   644: assigns read/write permission to owner; read permission to group and other.
+</li>
+<li>
+   777: assigns read/write/execute permission to all.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>attributes</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Applies to Windows. A comma-delimited list of attributes to set on the file.</p>
+<p>If omitted, the file&#39;s attributes are maintained.</p>
+<p>Each value must be specified explicitly. For example, if <code>attributes</code> <code>=</code> <code>&quot;readOnly&quot;</code>, all other attributes are overwritten. </p>
+<ul>
+<li>
+   hidden
+</li>
+<li>
+   normal
+</li>
+<li>
+   readOnly
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3504082"></a>Usage</h4>
+<p>The <code>rename</code> action renames or move a file. The <code>destination</code> attribute must be a pathname, not just a new name for the file. If the destination is a directory, the file is moved and not renamed.</p>
+<h4><a name="wp3503979"></a>Example</h4>
+<p>Windows Example:</p>
+<pre>&lt;!--- Source Document is read-only but when renamed it becomes normal (not hidden or read-only). ---&gt;
+&lt;cffile action = &quot;rename&quot; source = &quot;c:\files\memo\readonlymemo.doc&quot; destination = &quot;c:\files\memo\normalmemo.doc&quot; attributes=&quot;normal&quot;&gt; 
+
+</pre><p>Unix Example:</p>
+<pre>&lt;cffile action = &quot;rename&quot; source = &quot;#myWR#/memo/sample.txt&quot; destination = &quot;#myWR#/memo/other_sample.txt&quot; mode=&quot;666&quot;&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000251.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000253.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000252.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

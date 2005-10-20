@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Deleting structure elements and structures</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000963.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000965.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Deleting structure elements and structures</h1>
+<p>To delete a key and its value from a structure, use the <a href="00000637.htm#137396"><code>StructDelete</code></a> function, as follows:</p>
+<pre>StructDelete(<code><i>structure_name</i></code>, <code><i>key</i></code> [, <code><i>indicateNotExisting</i></code> ])
+</pre><p>The <i>indicateNotExisting</i> argument tells the function what to do if the specified key does not exist. By default, the function always returns True. However, if you specify True for the <i>indicateNotExisting</i> argument, the function returns True if the key exists and False if it does not.</p>
+<p>You can also use the <a href="00000634.htm#137053"><code>StructClear</code></a> function to delete all the data in a structure but keep the structure instance itself, as follows:</p>
+<pre>StructClear(<code><i>structure_name</i></code>)
+</pre><p>If you use <code>StructClear</code> to delete a structure that you have copied using the <a href="00000635.htm#137121"><code>StructCopy</code></a> function, the specified structure is deleted, but the copy is unaffected. </p>
+<p>If you use <code>StructClear</code> to delete a structure that has a multiple references, the function deletes the contents of the structure and all references point to the empty structure, as shown in the following example:</p>
+<pre>&lt;cfset myStruct.Key1=&quot;Macromedia&quot;&gt;
+Structure before StructClear&lt;br&gt;
+&lt;cfdump var=&quot;#myStruct#&quot;&gt;
+&lt;cfset myCopy=myStruct&gt;
+&lt;cfset StructClear(myCopy)&gt;
+After Clear:&lt;br&gt;
+myStruct: &lt;cfdump var=&quot;#myStruct#&quot;&gt;&lt;br&gt;
+myCopy: &lt;cfdump var=&quot;#myCopy#&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000963.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000965.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000964.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

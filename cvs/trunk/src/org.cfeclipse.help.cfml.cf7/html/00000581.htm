@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSParseNumber</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000580.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000582.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSParseNumber</h1>
+<h4><a name="wp133516"></a>Description</h4>
+<p>Converts a string that is a valid numeric representation in the current locale into a formatted number.</p>
+<h4><a name="wp133518"></a>Returns</h4>
+<p>A formatted number that matches the value of the string.</p>
+<h4><a name="wp133520"></a>Category</h4>
+<p><a href="00000363.htm#1099325">International functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp133528"></a>Function syntax</h4>
+<pre><code><strong>LSParseNumber</strong></code>(<i>string</i>)
+</pre><h4><a name="wp133530"></a>See also</h4>
+<p><a href="00000579.htm#133322">LSParseDateTime</a>, <a href="00000624.htm#136340">SetLocale</a>; <a href="00001202.htm#1219089">Locales</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp133538"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed formatting behavior: this function might return different formatting than in earlier releases. This function uses Java standard locale formatting rules on all platforms. </p>
+<h4><a name="wp133544"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp133555"></a>Usage</h4>
+<p>This function uses Java standard locale formatting rules on all platforms.</p>
+<p>To set the default display format of date, time, number, and currency values, use the <a href="00000624.htm#136340"><code>SetLocale</code></a> function. </p>
+<h4><a name="wp133561"></a>Example</h4>
+<pre>&lt;h3&gt;LSParseNumber Example&lt;/h3&gt;
+&lt;p&gt;LSParseNumber converts a locale-specific string to a number. <br />Returns the number matching the value of string. 
+&lt;!--- loop through a list of locales and show number values ---&gt;
+&lt;cfloop LIST = &quot;#Server.Coldfusion.SupportedLocales#&quot;
+index = &quot;locale&quot; delimiters = &quot;,&quot;&gt;
+   &lt;cfset oldlocale = SetLocale(locale)&gt;
+
+   &lt;cfoutput&gt;&lt;p&gt;&lt;B&gt;&lt;I&gt;#locale#&lt;/I&gt;&lt;/B&gt;&lt;br&gt;
+      #LSNumberFormat(-1234.5678, &quot;_________&quot;)#&lt;br&gt;
+      #LSNumberFormat(-1234.5678, &quot;_________.___&quot;)#&lt;br&gt;
+      #LSNumberFormat(1234.5678, &quot;_________&quot;)#&lt;br&gt;
+      #LSNumberFormat(1234.5678, &quot;_________.___&quot;)#&lt;br&gt;      
+      #LSNumberFormat(1234.5678, &quot;$_(_________.___)&quot;)#&lt;br&gt;      
+      #LSNumberFormat(-1234.5678, &quot;$_(_________.___)&quot;)#&lt;br&gt;      
+      #LSNumberFormat(1234.5678, &quot;+_________.___&quot;)#&lt;br&gt;      
+      #LSNumberFormat(1234.5678, &quot;-_________.___&quot;)#&lt;br&gt;      
+      The actual number: 
+         #<strong>LSParseNumber(LSNumberFormat(1234.5678, &quot;_________&quot;))</strong>#&lt;br&gt;
+      &lt;hr noshade&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfloop&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000580.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000582.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000581.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

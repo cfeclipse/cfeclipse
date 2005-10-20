@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsDate</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000517.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000519.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsDate</h1>
+<h4><a name="wp1225268"></a>Description</h4>
+<p>Determines whether a string or Java object can be converted to a date/time value.</p>
+<h4><a name="wp3399697"></a>Returns</h4>
+<p>True, if <i>string </i>can be converted to a date/time value; False, otherwise. ColdFusion converts the Boolean return value to its string equivalent, &quot;Yes&quot; or &quot;No.&quot; </p>
+<h4><a name="wp2494552"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000358.htm#3485787">Decision functions</a> </p>
+<h4><a name="wp1106405"></a>Function syntax</h4>
+<pre><code><strong>IsDate</strong></code>(<i>string</i>)
+</pre><h4><a name="wp2494574"></a>See also</h4>
+<p><a href="00000423.htm#1224498">CreateDateTime</a>, <a href="00000526.htm#1106623">IsNumericDate</a>, <a href="00000534.htm#4996076">IsValid</a>, <a href="00000571.htm#132367">LSDateFormat</a>, <a href="00000575.htm#132884">LSIsDate</a>, <a href="00000594.htm#134381">ParseDateTime</a></p>
+<h4><a name="wp1325353"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2650209"></a>Usage</h4>
+<p>This function checks against U.S. date formats only. For other date support, see <a href="00000571.htm#132367"><code>LSDateFormat</code></a>.</p>
+<p>A date/time object falls in the range 100 AD-9999 AD.</p>
+<h4><a name="wp1106415"></a>Example</h4>
+<pre>&lt;h3&gt;IsDate Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.theTestValue&quot;)&gt;
+   &lt;cfif <strong>IsDate(FORM.theTestValue)</strong>&gt;
+   &lt;h3&gt;The string &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; 
+    is a valid date&lt;/h3&gt;
+   &lt;cfelse&gt;
+   &lt;h3&gt;The string &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; 
+    is not a valid date&lt;/h3&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+&lt;form action = &quot;isDate.cfm&quot;&gt;
+&lt;p&gt;Enter a string, find whether it can be evaluated to a date value.
+&lt;p&gt;&lt;input type = &quot;Text&quot; name = &quot;TheTestValue&quot; value = &quot;&lt;cfoutput&gt;#Now()#<br />&lt;/cfoutput&gt;&quot;&gt;
+&lt;input type = &quot;Submit&quot; value = &quot;Is it a Date?&quot; name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000517.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000519.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000518.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetSOAPResponseHeader</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000495.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000497.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetSOAPResponseHeader</h1>
+<h4><a name="wp5052163"></a>Description</h4>
+<p>Returns a SOAP response header. Call this function from within code that is invoking a web service <i>after</i> making a web service request.</p>
+<h4><a name="wp5052318"></a>Returns</h4>
+<p>A SOAP response header.</p>
+<h4><a name="wp5052320"></a>Category</h4>
+<p><a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp5052322"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this function.</p>
+<h4><a name="wp5052165"></a>Function syntax</h4>
+<pre><strong>GetSOAPResponseHeader</strong>(<code><i>webservice</i></code>, <code><i>namespace</i></code>, <code><i>name</i></code> [,<code><i> asXML</i></code>])
+</pre><h4><a name="wp5052167"></a>See also</h4>
+<p><a href="00000379.htm#5050827">AddSOAPRequestHeader</a>, <a href="00000380.htm#5050841">AddSOAPResponseHeader</a>, <a href="00000493.htm#5054299">GetSOAPRequest</a>, <a href="00000494.htm#5054295">GetSOAPRequestHeader</a>, <a href="00000495.htm#5054378">GetSOAPResponse</a>, <a href="00000531.htm#5052211">IsSOAPRequest</a>; <a href="00001531.htm#1172015">Basic web service concepts</a> in <a href="00001530.htm#1141005">Using Web Services</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp5052169"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>webservice</p>
+    </td>
+    <td>
+<p>A webservice object as returned from the <code>cfobject</code> tag or the <code>CreateObject</code> function.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>namespace</p>
+    </td>
+    <td>
+<p>A String that is the namespace for the header.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>A String that is the name of the SOAP header.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>asXML</p>
+    </td>
+    <td>
+<p>If True, the header is returned as a CFML XML object. If False (default), the header is returned as a Java object.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp5054167"></a>Usage</h4>
+<p>If you specify false for the <code>asXML</code> parameter, ColdFusion first attempts to retrieve the header using the data type specified in the header's <code>xsi:type</code> attribute. If the <code>xsi:type</code> attribute is not available, ColdFusion attempts to retrieve the header as a string. If you specify True for the <code>asXML</code> parameter, ColdFusion retrieves the header as raw XML.</p>
+<p>Used within CFML code by a consumer of a web service <i>after</i> it calls the web service with <code>cfinvoke</code>.</p>
+<h4><a name="wp5052182"></a>Example</h4>
+<p>There are two parts to this example. The first part is the web service CFC that this function (as well as the other ColdFusion SOAP functions) uses to demonstrate its interaction with a web service. To implement the web service for this function, see the example for either the <a href="00000380.htm#5050841">AddSOAPResponseHeader</a> function or the <a href="00000494.htm#5054295">GetSOAPRequestHeader</a> function.</p>
+<p>Execute the following example to see how the <code>GetSOAPResponseHeader</code> function operates:</p>
+<pre>&lt;!--- Note that you might need to modify the URL in the CreateObject function
+to match your server and the location of the headerservice.cfc file if it is
+different than shown here. Likewise for the cfinvoke tag at the end ---&gt;
+
+&lt;h3&gt;GetSOAPResponseHeader Example&lt;/h3&gt;
+&lt;cfscript&gt;
+ // Create the web service object
+ ws = CreateObject(&quot;webservice&quot;, &quot;http://localhost/soapheaders/headerservice.cfc?WSDL&quot;);
+ 
+ // Set the username header as a string
+ addSOAPRequestHeader(ws, &quot;http://mynamespace/&quot;, &quot;username&quot;, &quot;tom&quot;, false);
+ 
+ // Set the password header as a CFML XML object
+ doc = XmlNew();
+ doc.password = XmlElemNew(doc, &quot;http://mynamespace/&quot;, &quot;password&quot;);
+ doc.password.XmlText = &quot;My Voice is my Password&quot;;
+ doc.password.XmlAttributes[&quot;xsi:type&quot;] = &quot;xsd:string&quot;;
+ addSOAPRequestHeader(ws, &quot;ignoredNameSpace&quot;, &quot;ignoredName&quot;, doc);
+  
+ // Invoke the web service operation
+ ret = ws.echo_me(&quot;argument&quot;);
+ 
+ // Get the first header as an object (string) and as XML
+ header = getSOAPResponseHeader(ws, &quot;http://www.tomj.org/myns&quot;, &quot;returnheader&quot;);
+ XMLheader = getSOAPResponseHeader(ws, &quot;http://www.tomj.org/myns&quot;, &quot;returnheader&quot;, true);
+
+ // Get the second header as an object (string) and as XML
+ header2 =  getSOAPResponseHeader(ws, &quot;http://www.tomj.org/myns&quot;, &quot;returnheader2&quot;);
+ XMLheader2 = getSOAPResponseHeader(ws, &quot;http://www.tomj.org/myns&quot;, &quot;returnheader2&quot;, true);
+&lt;/cfscript&gt;
+&lt;hr&gt;
+&lt;cfoutput&gt;
+Soap Header value: #HTMLCodeFormat(header)#&lt;br&gt;
+Soap Header XML value: #HTMLCodeFormat(XMLheader)#&lt;br&gt;
+Soap Header 2 value: #HTMLCodeFormat(header2)#&lt;br&gt;
+Soap Header 2 XML value: #HTMLCodeFormat(XMLheader2)#&lt;br&gt;
+Return value: #HTMLCodeFormat(ret)#&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;hr&gt;
+
+&lt;cfinvoke component=&quot;soapheaders.headerservice&quot; method=&quot;echo_me&quot; returnvariable=&quot;ret&quot; in_here=&quot;hi&quot;&gt;
+&lt;/cfinvoke&gt;
+&lt;cfoutput&gt;Cfinvoke returned: #ret#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000495.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000497.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000496.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

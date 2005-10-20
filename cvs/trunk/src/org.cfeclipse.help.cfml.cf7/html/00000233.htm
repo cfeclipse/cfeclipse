@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfcookie</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000232.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000234.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfcookie</h1>
+<h4><a name="wp1344663"></a>Description</h4>
+<p>Defines web browser cookie variables, including expiration and security options. </p>
+<h4><a name="wp1873052"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a>, <a href="00000209.htm#2460154">Variable manipulation tags</a> </p>
+<h4><a name="wp1097827"></a>Syntax</h4>
+<pre>&lt;cfcookie <br />   name = &quot;cookie_name&quot;<br />   value = &quot;text&quot;<br />   expires = &quot;period&quot;<br />   secure = &quot;yes&quot; or &quot;no&quot;<br />   path = &quot;url&quot;<br />   domain = &quot;.domain&quot;&gt;
+</pre><h4><a name="wp1873045"></a>See also</h4>
+<p><a href="00000239.htm#3765824"><code>cfdump</code></a><code>, </code><a href="00000310.htm#1101730"><code>cfparam</code></a><code>, </code><a href="00000318.htm#1102654"><code>cfregistry</code></a><code>, </code><a href="00000327.htm#1844410"><code>cfsavecontent</code></a><code>, </code><a href="00000328.htm#1843993"><code>cfschedule</code></a><code>, </code><a href="00000334.htm#1103445"><code>cfset</code></a></p>
+<h4><a name="wp3537266"></a>History</h4>
+<p>ColdFusion MX&#160;6.1: </p>
+<ul>
+<li>
+   Changed the <code>expires</code> attribute: it now accepts a date time object.
+</li>
+<li>
+   Cookie names can include all ASCII characters except commas, semicolons, or whitespace characters.
+</li>
+</ul>
+<h4><a name="wp3537192"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of cookie variable. ColdFusion converts cookie names to all-uppercase. Cookie names set using this tag can include any printable ASCII characters except commas, semicolons or white space characters.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Value to assign to cookie variable. Must be a string or variable that can be stored as a string.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>expires</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Expiration of cookie variable. </p>
+<ul>
+<li>
+   The default: the cookie expires when the user closes the browser, that is, the cookie is &quot;session only&quot;.
+</li>
+<li>
+   A date or date/time object (for example, 10/09/97)
+</li>
+<li>
+   A number of days (for example, 10, or 100)
+</li>
+<li>
+   now: deletes cookie from client cookie.txt file (but does not delete the corresponding variable the Cookie scope of the active page).
+</li>
+<li>
+   never: The cookie expires in 30 years from the time it was created (effectively never in web years).
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>secure</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>If browser does not support Secure Sockets Layer (SSL) security, the cookie is not sent. To use the cookie, the page must be accessed using the https protocol. </p>
+<ul>
+<li>
+   yes: Variable must be transmitted securely.
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>URL, within a domain, to which the cookie applies; typically a directory. Only pages in this path can use the cookie. By default, all pages on the server that set the cookie can access the cookie.</p>
+<p>path = &quot;/services/login&quot;</p>
+<p>To specify multiple URLs, use multiple <code>cfcookie</code> tags. </p>
+<p>If you specify <code>path</code>, you must also specify <code>domain</code>. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>domain</p>
+    </td>
+    <td>
+<p>Required if <code>path</code> attribute is specified.<br />Optional otherwise</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Domain in which cookie is valid and to which cookie content can be sent from the user's system. By default, the cookie is only available to the server that set it. Use this attribute to make the cookie available to other servers.</p>
+<p>Must start with a period. If the value is a subdomain, the valid domain is all domain names that end with this string. This attribute sets the available subdomains on the site upon which the cookie can be used.</p>
+<p>For a <code>domain</code> value that ends in a country code, the specification must contain at least three periods; for example, <code>&quot;.mongo.state.us&quot;</code>. For top-level domains, two periods are required; for example, <code>&quot;.mgm.com&quot;</code>. </p>
+<p>You cannot use an IP address as a domain.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1097846"></a>Usage</h4>
+<p>If this tag specifies that a cookie is to be saved beyond the current browser session, the client browser writes or updates the cookie in its local cookies file. Until the browser is closed, the cookie resides in browser memory. If the <code>expires</code> attribute is not specified, the cookie is not written to the browser cookies file.</p>
+<p>If you use this tag after the <code>cfflush</code> tag on a page, ColdFusion does not send the cookie to the browser; however, the value you set is available to ColdFusion in the Cookie scope during the browser session.</p>
+<p><strong>Note: </strong>You can also create a cookie that expires when the current browser session expires by using the <code>cfset</code> tag or a CFScript assignment statement to set a variable in the Cookie scope, as in <code>&lt;cfset</code> <code>Cookie.mycookie=&quot;sugar&quot;&gt;</code>. To get a cookie's value, refer to the cookie name in the Cookie scope, as in <code>&lt;cfif Cookie.mycookie is &quot;oatmeal&quot;&gt;</code>.</p><p>You can use dots in cookie names, as the following examples show: </p>
+<pre>&lt;cfcookie name=&quot;person.name&quot; value=&quot;wilson, john&quot;&gt;
+&lt;cfset cookie.person.lastname=&quot;Santiago&quot;&gt;
+</pre><p>To access cookies, including cookies that you set and all cookies that are sent by the client, use the Cookie scope. For example, to display the value of the person.name cookie set in the preceding code, use the following line:</p>
+<pre>&lt;cfoutput&gt;#cookie.person.name#&lt;/cfoutput&gt;
+</pre><h4><a name="wp2303148"></a>Example</h4>
+<pre>&lt;!--- This example shows how to set/delete a cfcookie variable. ---&gt;
+&lt;!--- Select users who have entered comments into a sample database. ---&gt;
+&lt;cfquery name = &quot;GetAolUser&quot; dataSource = &quot;cfdocexamples&quot;&gt;
+   SELECT EMail, FromUser, Subject, Posted
+   FROM Comments
+&lt;/cfquery&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h3&gt;cfcookie Example&lt;/h3&gt;
+&lt;!--- If the URL variable delcookie exists, set cookie expiration date <br />to NOW ---&gt;
+&lt;cfif IsDefined(&quot;url.delcookie&quot;) is True&gt;
+   &lt;cfcookie name = &quot;TimeVisited&quot;
+   value = &quot;#Now()#&quot;
+   expires = &quot;NOW&quot;&gt;      
+&lt;cfelse&gt;
+&lt;!--- Otherwise, loop through list of visitors; stop when you match <br />the string aol.com in a visitor's e-mail address. ---&gt;
+&lt;cfloop query = &quot;GetAolUser&quot;&gt;
+   &lt;cfif FindNoCase(&quot;aol.com&quot;, Email, 1) is not 0&gt;
+      &lt;cfcookie name = &quot;LastAOLVisitor&quot;
+      value = &quot;#Email#&quot;
+      expires = &quot;NOW&quot; &gt;      
+   &lt;/cfif&gt;
+&lt;/cfloop&gt;
+&lt;!--- If the timeVisited cookie is not set, set a value. ---&gt;
+   &lt;cfif IsDefined(&quot;Cookie.TimeVisited&quot;) is False&gt;
+      &lt;cfcookie name = &quot;TimeVisited&quot;
+      value = &quot;#Now()#&quot;
+      expires = &quot;10&quot;&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+&lt;!--- Show the most recent cookie set. ---&gt;
+&lt;cfif IsDefined(&quot;Cookie.LastAOLVisitor&quot;) is &quot;True&quot;&gt;
+   &lt;p&gt;The last AOL visitor to view this site was
+   &lt;cfoutput&gt;#Cookie.LastAOLVisitor#&lt;/cfoutput&gt;, on
+   &lt;cfoutput&gt;#DateFormat(COOKIE.TimeVisited)#&lt;/cfoutput&gt;
+&lt;!--- Use this link to reset the cookies. ---&gt;
+&lt;p&gt;&lt;a href = &quot;cfcookie.cfm?delcookie = yes&quot;&gt;Hide my tracks&lt;/A&gt;
+&lt;cfelse&gt;
+   &lt;p&gt;No AOL Visitors have viewed the site lately.
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000232.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000234.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000233.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

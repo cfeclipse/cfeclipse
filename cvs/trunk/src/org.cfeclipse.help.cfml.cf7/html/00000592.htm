@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ParagraphFormat</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000591.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000593.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ParagraphFormat</h1>
+<h4><a name="wp134320"></a>Description</h4>
+<p>Replaces characters in a string: </p>
+<ul>
+<li>
+   Single newline characters (CR/LF sequences) with spaces 
+</li>
+<li>
+   Double newline characters with HTML paragraph tags (&lt;p&gt;)
+</li>
+</ul>
+<h4><a name="wp134324"></a>Returns</h4>
+<p>A copy of the string, with characters converted.</p>
+<h4><a name="wp134326"></a>Category</h4>
+<p><a href="00000359.htm#1099219">Display and formatting functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp134334"></a>Function syntax</h4>
+<pre><code><strong>ParagraphFormat</strong></code>(<i>string</i>)
+</pre><h4><a name="wp134336"></a>See also</h4>
+<p><a href="00000632.htm#136910"><code>StripCR</code></a></p>
+<h4><a name="wp134341"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp134352"></a>Usage</h4>
+<p>This function is useful for displaying data entered in <code>textarea</code> fields.</p>
+<h4><a name="wp134354"></a>Example</h4>
+<pre>&lt;h3&gt;ParagraphFormat Example&lt;/h3&gt;
+&lt;p&gt;Enter text into this textarea, and see it returned as HTML.
+&lt;cfif IsDefined(&quot;FORM.myTextArea&quot;)&gt;
+   &lt;p&gt;Your text area, formatted
+   &lt;p&gt;&lt;cfoutput&gt;#<strong>ParagraphFormat(FORM.myTextArea)</strong>#&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+&lt;!--- use #Chr(10)##Chr(13)# to simulate a line feed/carriage
+return combination; i.e, a return ---&gt;
+&lt;form action = &quot;paragraphformat.cfm&quot;&gt;
+&lt;textArea name = &quot;MyTextArea&quot; cols = &quot;35&quot; ROWS = 8&gt;
+This is sample text and you see how it scrolls<br />&lt;cfoutput&gt;#Chr(10)##Chr(13)#&lt;/cfoutput&gt;<br />From one line <br />&lt;cfoutput&gt;#Chr(10)##Chr(13)##Chr(10)##Chr(13)#&lt;/cfoutput&gt;<br />to the next
+&lt;/textArea&gt;
+&lt;input type = &quot;Submit&quot; name = &quot;Show me the HTML version&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000591.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000593.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000592.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

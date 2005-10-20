@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About COM and CORBA</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001571.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001573.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About COM and CORBA</h1>
+<p>This section provides some basic information on COM and CORBA objects supported in Macromedia ColdFusion&#160;MX and provides resources for further inquiry.</p>
+<h2><a name="wp1133315"></a>About objects</h2>
+<p>COM and CORBA are two of the <i>object</i> technologies supported by ColdFusion&#160;MX. Other object technologies include Java and ColdFusion components. For more information on ColdFusion components see <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a>.</p>
+<p>An object is a self-contained module of data and its associated processing. An object is a building block that you can put together with other objects and integrate into ColdFusion code to create an application. </p>
+<p>An object is represented by a handle, or name. Objects have <i>properties</i> that represent information. Objects also provide <i>methods</i> for manipulating the object and getting data from it. The exact terms and rules for using objects vary with the object technology.</p>
+<p>You create instances of objects using the <a href="00000302.htm#2820239"><code>cfobject</code></a> tag or the <a href="00000424.htm#1102241"><code>CreateObject</code></a> function. You then use the object and its methods in ColdFusion tags, functions, and expressions. For more information on the ColdFusion syntax for using objects, see <a href="00001573.htm#1138673">Creating and using objects</a>.</p>
+<h2><a name="wp1133348"></a>About COM and DCOM</h2>
+<p>COM (Component Object Model) is a specification and a set of services defined by Microsoft to enable component portability, reusability, and versioning. DCOM (Distributed Component Object Model) is an implementation of COM for distributed services, which allows access to components residing on a network.</p>
+<p>COM objects can reside locally or on any network node. COM is supported on Microsoft Windows platforms. </p>
+<p>For more information on COM, go to the Microsoft COM website, <a href="http://www.microsoft.com/com" target="mm_window">www.microsoft.com/com</a>.</p>
+<h2><a name="wp1127091"></a>About CORBA</h2>
+<p>CORBA (Common Object Request Broker Architecture) is a distributed computing model for object-oriented applications defined by the Object Management Group (OMG). In this model, an object is an encapsulated entity whose services are accessed only through well-defined interfaces. The location and implementation of each object is hidden from the client requesting the services. ColdFusion supports CORBA 2.3 on both Windows and UNIX.</p>
+<p>CORBA uses an Object Request Broker (ORB) to send requests from applications on one system to objects executing on another system. The ORB allows applications to interact in a distributed environment, independent of the computer platforms on which they run and the languages in which they are implemented. For example, a ColdFusion application running on one system can communicate with an object that is implemented in C++ on another system.</p>
+<p>CORBA follows a client-server model. The client invokes operations on objects that are managed by the server, and the server replies to requests. The ORB manages the communications between the client and the server using the Internet Inter-ORB Protocol (IIOP).</p>
+<p>Each CORBA object has an interface that is defined in the CORBA Interface Definition Language (IDL). The CORBA IDL describes the operations that can be performed on the object, and the parameters of those operations. Clients do not have to know anything about how the interface is implemented to make requests.</p>
+<p>To request a service from the server, the client application gets a handle to the object from the ORB. It uses the handle to call the methods specified by the IDL interface definition. The ORB passes the requests to the server, which processes the requests and returns the results to the client.</p>
+<p>For information about CORBA, see the following OMG website, which is the main web repository for CORBA information: <a href="http://www.omg.com" target="mm_window">www.omg.com.</a></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001571.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001573.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001572.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

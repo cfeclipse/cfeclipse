@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>onAddBuddyRequest</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000746.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000748.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>onAddBuddyRequest</h1>
+<h4><a name="wp1169058"></a>Description</h4>
+<p>Handles incoming requests for users to add the gateway user name as one of their buddies.</p>
+<h4><a name="wp1169060"></a>Syntax</h4>
+<pre>onAddBuddyRequest(CFEvent)
+</pre><h4><a name="wp1169062"></a>See also</h4>
+<p><a href="00000751.htm#1184666"><code>onIncomingMessage</code></a>, <a href="00000748.htm#1169190"><code>onAddBuddyResponse</code></a>, <a href="00000749.htm#1169283"><code>onBuddyStatus</code></a>, <a href="00000750.htm#1169392"><code>onIMServerMessage</code></a></p>
+<h4><a name="wp1169079"></a>Parameters</h4>
+<p>The method must take one parameter, a CFEvent structure with the following fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>gatewayType</p>
+    </td>
+    <td>
+<p>Gateway type, either XMPP or SAMETIME</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>gatewayID</p>
+    </td>
+    <td>
+<p>The ID of the gateway instance, as configured in ColdFusion MX Administrator</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>originatorID</p>
+    </td>
+    <td>
+<p>The IM ID of the message originator</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfcMethod</p>
+    </td>
+    <td>
+<p>This CFC method; by default, onAddBuddyRequest.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>data.MESSAGE</p>
+    </td>
+    <td>
+<p>The message that was sent with the request</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>data.SENDER</p>
+    </td>
+    <td>
+<p>The sender's ID; identical to the originatorID field value</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>data.RECIPIENT</p>
+    </td>
+    <td>
+<p>The recipient's ID, as specified in the gateway's configuration file</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>data.TIMESTAMP</p>
+    </td>
+    <td>
+<p>The date and time when the message was sent</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1169119"></a>Returns</h4>
+<p>The function can optionally return a value to send a response message. The return structure must contain the following fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>command</p>
+    </td>
+    <td>
+<p>One of the following:</p>
+<ul>
+<li>
+   accept&#160;Accept the request to add you as a buddy. ColdFusion adds the user to the permit list of users that can get status information. 
+</li>
+<li>
+   decline&#160;Deny request to add you as a buddy. ColdFusion adds the user to the deny list of users that can get status information. 
+</li>
+<li>
+   noact&#160;Take no action. ColdFusion does not respond to the requestor.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>buddyID</p>
+    </td>
+    <td>
+<p>ID to which to send the message. Normally, the value of the CFEvent.data.SENDER field. Not used with the <code>noact</code> command.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>reason</p>
+    </td>
+    <td>
+<p>A text message describing the reason for the action. Not used with the <code>noact</code> command.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1169142"></a>Example</h4>
+<p>The following example searches for the requested buddy's name in a data source and, if it finds a unique entry, adds the buddy and updates the buddy's status information in an Application scope buddyStatus structure. If it doesn't find the name, it declines the buddy. If there are multiple entries for the buddy name in the database, it tells the gateway not to respond. It logs all actions. </p>
+<pre>&lt;cffunction name=&quot;onAddBuddyRequest&quot;&gt;
+   &lt;cfargument name=&quot;CFEvent&quot; type=&quot;struct&quot; required=&quot;YES&quot;&gt;
+   &lt;cfquery name=&quot;buddysearch&quot; datasource=&quot;cfdocexamples&quot;&gt;
+      select IM_ID
+      from Employees
+      where IM_ID = &#39;#CFEvent.Data.SENDER#&#39;
+   &lt;/cfquery&gt;
+   &lt;cflock scope=&quot;APPLICATION&quot; timeout=&quot;10&quot; type=&quot;EXCLUSIVE&quot;&gt;
+      &lt;cfscript&gt;
+         // If the name is in the DB once, accept; if it is missing, decline.
+         // If it is in the DB multiple times, take no action.
+         if (buddysearch.RecordCount IS 0) {
+            action=&quot;decline&quot;;
+            reason=&quot;Invalid ID&quot;;
+         }
+         else if (buddysearch.RecordCount IS 1) {
+            action=&quot;accept&quot;;
+            reason=&quot;Valid ID&quot;;
+            //Add the buddy to the buddy status structure only if accepted.
+            if (NOT StructKeyExists(Application,
+                  &quot;buddyStatus&quot;)) {
+               Application.buddyStatus=StructNew();
+            }
+            if (NOT StructKeyExists(Application.buddyStatus,
+                  CFEvent.Data.SENDER)) {
+               Application.buddyStatus[#CFEvent.Data.SENDER#]=StructNew();
+            }
+            Application.buddyStatus[#CFEvent.Data.SENDER#].status=
+               &quot;Accepted Buddy Request&quot;;
+            Application.buddyStatus[#CFEvent.Data.SENDER#].timeStamp=
+               CFEvent.Data.TIMESTAMP;
+            Application.buddyStatus[#CFEvent.Data.SENDER#].message=
+               CFEvent.Data.MESSAGE;
+         }
+         else {
+            action=&quot;noact&quot;;
+         }
+      &lt;/cfscript&gt;
+   &lt;/cflock&gt;
+   &lt;!--- Log the request and decision information. ---&gt;
+   &lt;cflog file=&quot;#CFEvent.GatewayID#Status&quot; 
+         text=&quot;onAddBuddyRequest; SENDER: #CFEvent.Data.SENDER# MESSAGE:
+#CFEvent.Data.MESSAGE# TIMESTAMP: #CFEvent.Data.TIMESTAMP# ACTION: #action#&quot;&gt;
+   &lt;!--- Return the action decision. ---&gt;
+   &lt;cfset retValue = structNew()&gt;
+   &lt;cfset retValue.command = action&gt;
+   &lt;cfset retValue.BuddyID = CFEvent.DATA.SENDER&gt;
+   &lt;cfset retValue.Reason = reason&gt;
+   &lt;cfreturn retValue&gt; 
+&lt;/cffunction&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000746.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000748.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000747.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

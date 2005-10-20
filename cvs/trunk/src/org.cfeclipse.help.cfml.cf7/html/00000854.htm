@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setField</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000853.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000855.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setField</h1>
+<h4><a name="wp1042827"></a>Description</h4>
+<p>Sets the element in the specified row/column position.</p>
+<h4><a name="wp1017282"></a>Syntax</h4>
+<pre><code><i>object</i></code>.setField( <code><i>row</i></code>, <code><i>col</i></code>, <code><i>value</i></code> )
+</pre><h4><a name="wp1043361"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>object</p>
+    </td>
+    <td>
+<p>Instance name of a WddxRecordset object</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>row</p>
+    </td>
+    <td>
+<p>Integer; row that contains the element to set</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>col</p>
+    </td>
+    <td>
+<p>Integer or string; the column containing the element to set</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Value to set</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1067400"></a>Return value</h4>
+<p>None.</p>
+<h4><a name="wp1017288"></a>Usage</h4>
+<p>Call this function to set a value in a WddxRecordset instance.</p>
+<h4><a name="wp1017290"></a>Example</h4>
+<p>This example calls the <code>setField</code> function:</p>
+<pre>// Create a new recordset
+rs = new WddxRecordset();
+
+// Add a new column
+rs.addColumn(&quot;NewColumn&quot;);
+
+// Extend the record set by 3 rows
+rs.addRows(3);
+
+// Set an element in the first row
+// newValue is a previously defined variable
+rs.setField(0, &quot;NewColumn&quot;, newValue);
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000853.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000855.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000854.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

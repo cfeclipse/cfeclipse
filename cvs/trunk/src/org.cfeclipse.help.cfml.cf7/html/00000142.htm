@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Building the Trip Detail page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000141.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000143.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Building the Trip Detail page</h1>
+<p>To build the Trip Detail page, you do the following:</p>
+<ul>
+<li>
+   Create a CFC that queries the database.
+</li>
+<li>
+   Create the Trip Detail page, which invokes the CFC query and displays the results of the query.
+</li>
+</ul>
+<h4>To build the CFC query:</h4>
+<ol>
+<li>
+   Create a blank ColdFusion page.
+</li>
+<li>
+   Save the file as tripdetail.cfm in the my_app directory.
+</li>
+<li>
+   Perform the following steps, or do the steps in the <a href="00000142.htm#1181723">Let Dreamweaver do it</a> section.
+<ol><li>Enter the following code:</li><pre>
+&lt;cfinvoke
+  component=&quot;cfdocs.getting_started.my_app.components.displaytripdetail&quot;
+  method=&quot;getTripDetails&quot;
+  returnvariable=&quot;tripDetails&quot;&gt;
+&lt;/cfinvoke&gt;
+</pre>
+<li>Save the file. </li><li>Create a file named displaytripdetail.cfc in the my_app/components directory.</li><li>Enter the following code:</li><pre>
+&lt;cfcomponent&gt;
+  &lt;cffunction name=&quot;getTripDetails&quot; access=&quot;public&quot; returntype=&quot;query&quot;&gt;
+    &lt;cfset var tripDetails = &quot;&quot; &gt;
+    &lt;cfquery name=&quot;tripDetails&quot; datasource=&quot;CompassTravel&quot; maxrows=1&gt;
+    	SELECT * FROM trips
+			&lt;cfif IsDefined(&quot;URL.ID&quot;)&gt;
+			WHERE tripID = #URL.ID#
+			&lt;/cfif&gt;
+    &lt;/cfquery&gt;
+    &lt;cfreturn tripDetails&gt;
+  &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+<li>Save the file.</li></ol></li>
+</ol>
+<h4><a name="wp1181723"></a>Let Dreamweaver do it</h4>
+<p>You can use the Dreamweaver Extensions to build the CFC query.</p>
+<h4>To create the CFC query in Dreamweaver:</h4>
+<ol>
+<li>
+   Open a new file in the my_app directory in Dreamweaver.
+</li>
+<li>
+   Save the file as tripdetail.cfm.
+</li>
+<li>
+   Click the Bindings tab.
+</li>
+<li>
+   Click the + button.
+</li>
+<li>
+   Select Recordset (Query).
+</li>
+<li>
+   In the Name text box, enter <strong>tripDetails</strong>.
+</li>
+<li>
+   In the Data sources list, select CompassTravel.
+</li>
+<li>
+   Click the CFC Query button.
+</li>
+<li>
+   In the Name text box, enter <strong>tripDetails</strong>.
+</li>
+<li>
+   Click the Create New Component button.
+</li>
+<li>
+   In the Name text box, enter <strong>displaytripdetail</strong>.
+</li>
+<li>
+   In the Component Location text box, enter <strong>/components/</strong>.
+</li>
+<li>
+   In the Recordset name text box, enter <strong>tripDetails</strong>.
+</li>
+<li>
+   In the Function text box, enter <strong>getTripDetails</strong>.
+</li>
+<li>
+   In the Data source list, select CompassTravel.
+</li>
+<li>
+   In the Table list, select trips.
+</li>
+<li>
+   Click OK.
+</li>
+<li>
+   When asked whether to include dependent files, click Yes.
+</li>
+<li>
+   Click OK.
+</li>
+<li>
+   In the displaytripdetail.cfc file, modify the <code>cfquery</code> code block by adding the highlighted text:
+<pre>
+&lt;cfquery name=&quot;tripDetails&quot; datasource=&quot;CompassTravel&quot; maxrows=1&gt;
+    	SELECT * FROM trips
+			&lt;cfif IsDefined(&quot;URL.ID&quot;)&gt;
+			WHERE tripID = #URL.ID#
+			&lt;/cfif&gt;
+    &lt;/cfquery&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To display the results of the query on the Trip Detail page:</h4>
+<ol>
+<li>
+   Open the tripdetail.cfm file.
+</li>
+<li>
+   Enter or copy and paste the following <code>cfoutput</code> code after the <code>cfinvoke</code> code block:
+<pre>
+&lt;cfoutput query=&quot;TripDetails&quot;&gt;
+	&lt;img src=&quot;images/tripmaintenance.gif&quot;&gt;
+&lt;table&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Trip Name:
+		&lt;/td&gt;
+		&lt;td&gt;	#tripName#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Description:
+		&lt;/td&gt;
+		&lt;td&gt;	#tripDescription#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Location:
+		&lt;/td&gt;
+		&lt;td&gt;	#tripLocation#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Departure Date:
+		&lt;/td&gt;
+		&lt;td&gt;	#departureDate#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Return Date:
+		&lt;/td&gt;
+		&lt;td&gt;	#returnDate#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Price:
+		&lt;/td&gt;
+		&lt;td&gt;	#price#
+		&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Base Cost:
+		&lt;/td&gt;
+		&lt;td&gt;	#baseCost#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Trip Leader:
+		&lt;/td&gt;
+		&lt;td&gt;	#tripLeader#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Number People:
+		&lt;/td&gt;
+		&lt;td&gt;	#numberPeople#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Deposit Required:
+		&lt;/td&gt;
+		&lt;td&gt;	#depositRequired#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td valign=&quot;top&quot;&gt;	Photo File:
+		&lt;/td&gt;
+		&lt;td&gt;	#photo#
+		&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/cfoutput&gt;
+</pre>
+</li>
+<li>
+   To provide a title that appears in the browser window, insert the following HTML code before the <code>&lt;cfoutput query = &quot;TripQuery&quot;&gt; </code>line:
+<pre>
+&lt;html&gt;&lt;head&gt;
+	&lt;title&gt; Trip Maintenance - View Record &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+</pre>
+</li>
+<li>
+   Add the following code at the end of the file:
+<pre>
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To view the Trip Detail page:</h4>
+<ol>
+<li>
+   Open a browser.
+</li>
+<li>
+   Enter one of the following URLs, which use the tripID of 24, which specifies the Rio Cahabon Rafting trip:
+<pre>
+http://localhost/cfdocs/getting_started/my_app/tripdetail.cfm?ID=24
+</pre>
+<p><strong>Note: </strong>If you are using the built-in ColdFusion server, enter <code>localhost:8500</code> instead of <code>localhost</code>.</p><p>The following figure shows the expected result:</p>
+<p><br />
+<img src="images/trip244.jpg" alt="This image shows a picture of Trip Maintenance page." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+</ol>
+<h4><a name="wp1181866"></a>Reviewing the code</h4>
+<p>The following table describes the ColdFusion code that you use to build the Trip Detail page:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfcomponent&gt;
+  &lt;cffunction name=&quot;getTripDetails&quot; access=&quot;public&quot; returntype=&quot;query&quot;&gt;
+...
+&lt;cfreturn tripDetails&gt;
+  &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>    </td>
+    <td>
+<p>The <code>cfcomponent</code> tag creates a CFC. The <code>cffunction</code> tag creates a method named <code>getTripDetails</code> in the CFC; the method returns the results of the query to the calling page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfquery name=&quot;TripQuery&quot;<br />dataSource=&quot;CompassTravel&quot; maxRows=1&gt;
+</pre>    </td>
+    <td>
+<p>The <code>cfquery</code> tag includes a <code>maxRows</code> attribute. This attribute limits the number of result rows brought back from the database. In the Trip Detail page, you want to show only a single row at a time; therefore, the <code>maxRows</code> attribute is set to&#160;<code>1</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif IsDefined(&quot;URL.ID&quot;)&gt;
+   WHERE tripID = #URL.ID#
+&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>The URL.ID specifies a parameter that you can include in the URL that requests this page. If the ID parameter is passed within the URL, it is used in the SQL query to identify the <code>tripID</code> to SELECT. You can use the CFML <code>IsDefined</code> function to determine if a parameter is passed within the URL. You can also use <code>IsDefined</code> to determine if the user has entered data in form fields prior to the form post action.</p>
+    </td>
+  </tr>
+</table>
+
+<p>As you did in this exercise, you can build comprehensive database query applications using CFML and dynamic SQL. To further test the new Trip Detail page that you created, you will link it to the search facility that you built in <a href="00000127.htm#1141005">Lesson 4: Building Dynamic Queries</a>. However, before you link that search facility, you must understand a potential security risk using dynamic SQL. The following exercise describes this risk and how to avoid it.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000141.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000143.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000142.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

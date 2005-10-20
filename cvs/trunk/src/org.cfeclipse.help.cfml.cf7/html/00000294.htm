@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfloop: looping over a query</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000293.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000295.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfloop: looping over a query</h1>
+<h4><a name="wp1101139"></a>Description</h4>
+<p>A loop over a query executes for each record in a query record set. The results are similar to those of the <code>cfoutput</code> tag. During each iteration, the columns of the current row are available for output. The <code>cfloop</code> tag loops over tags that cannot be used within a <code>cfoutput</code> tag.</p>
+<h4><a name="wp1101141"></a>Syntax</h4>
+<pre>&lt;cfloop <br />   query = &quot;query_name&quot;<br />   startRow = &quot;row_num&quot;<br />   endRow = &quot;row_num&quot;&gt;<br />&lt;/cfloop&gt;
+</pre><h4><a name="wp1956321"></a>See also</h4>
+<p><a href="00000215.htm#3835579">cfabort</a>, <a href="00000221.htm#1097484">cfbreak</a>, <a href="00000243.htm#1098198">cfexecute</a>, <a href="00000244.htm#1098252">cfexit</a>, <a href="00000274.htm#1100123">cfif</a>, <a href="00000284.htm#1100753">cflocation</a>, <a href="00000309.htm#1101659">cfoutput</a>, <a href="00000339.htm#1103819">cfswitch</a>, <a href="00000343.htm#2773591">cfthrow</a>, <a href="00000349.htm#1104557">cftry</a>; For more information, see <a href="00000876.htm#2733882">cfloop and cfbreak</a> in <a href="00000866.htm#2689636">Elements of CFML</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2743892"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Query that controls the loop. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>startRow</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>First row of query that is included in the loop. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>endRow</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Last row of query that is included in the loop. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3836435"></a>Example</h4>
+<pre>&lt;cfquery name = &quot;MessageRecords&quot; 
+dataSource = &quot;cfdocexamples&quot;&gt; 
+SELECT * FROM Messages 
+&lt;/cfquery&gt;
+&lt;cfloop query = &quot;MessageRecords&quot;&gt; 
+&lt;cfoutput&gt;#Message_ID#&lt;/cfoutput&gt;&lt;br&gt;
+&lt;/cfloop&gt;
+</pre><p>The <code>cfloop</code> tag also iterates over a record set with dynamic start and stop points. This gets the next <i>n</i> sets of records from a query. This example loops from the fifth through the tenth record returned by the MessageRecords query:</p>
+<pre>&lt;cfset Start = 5&gt; 
+&lt;cfset End = 10&gt; 
+&lt;cfloop query = &quot;MessageRecords&quot; 
+startRow = &quot;#Start#&quot; 
+endRow = &quot;#End#&quot;&gt; 
+&lt;cfoutput&gt;#MessageRecords.Message_ID#&lt;/cfoutput&gt;&lt;br&gt;
+&lt;/cfloop&gt;
+</pre><p>The loop stops when there are no more records, or when the current record index is greater than the value of the endRow attribute. </p>
+<p>The following example combines the pages that are returned by a query of a list of page names into one document, using the <code>cfinclude</code> tag: </p>
+<pre>&lt;cfquery name = &quot;GetTemplate&quot; 
+dataSource = &quot;Library&quot;
+maxRows = &quot;5&quot;&gt; 
+SELECT TemplateName 
+FROM Templates 
+&lt;/cfquery&gt; 
+&lt;cfloop query = &quot;GetTemplate&quot;&gt; 
+&lt;cfinclude template = &quot;#TemplateName#&quot;&gt; 
+&lt;/cfloop&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000293.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000295.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000294.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

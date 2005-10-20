@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>DayOfYear</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000445.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000447.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>DayOfYear</h1>
+<h4><a name="wp1224623"></a>Description</h4>
+<p>Determines the day of the year, in a date.</p>
+<h4><a name="wp3354585"></a>Returns</h4>
+<p>The ordinal value of day of the year, as an integer. </p>
+<h4><a name="wp2501513"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a></p>
+<h4><a name="wp1103642"></a>Function syntax</h4>
+<pre><code><strong>DayOfYear</strong></code>(&quot;<i>date&quot;</i>) 
+</pre><h4><a name="wp2571645"></a>See also</h4>
+<p><a href="00000443.htm#1103422">Day</a>, <a href="00000444.htm#1103491">DayOfWeek</a>, <a href="00000445.htm#1103560">DayOfWeekAsString</a>, <a href="00000447.htm#1103690">DaysInMonth</a>, <a href="00000448.htm#1103759">DaysInYear</a>, <a href="00000465.htm#1104605">FirstDayOfMonth</a></p>
+<h4><a name="wp1286126"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>date</p>
+    </td>
+    <td>
+<p>Date/time object, in the range 100 AD-9999 AD.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1103646"></a>Usage</h4>
+<p>This function accounts for leap years. </p>
+<p>When passing a date/time object as a string, you must enclose it in quotation marks. Otherwise, it is interpreted as a numeric representation of a date/time object.</p>
+<p><strong>Note: </strong>You can pass the <a href="00000422.htm#4731550"><code>CreateDate</code></a> function or <a href="00000590.htm#134078"><code>Now</code></a> function as the <code>date</code> parameter of this function<code>;</code> for example,<code> #DayOfYear(CreateDate(2001, 3, 3))#</code></p><h4><a name="wp1103658"></a>Example</h4>
+<pre>&lt;h3&gt;Day7OfYear Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.year&quot;)&gt;
+   More information about your date:
+   &lt;cfset yourDate = CreateDate(FORM.year, FORM.month, FORM.day)&gt;
+   &lt;cfoutput&gt;
+   &lt;p&gt;Your date, #DateFormat(yourDate)#.
+   &lt;br&gt;It is #DayofWeekAsString(DayOfWeek(yourDate))#, <br />    day #DayOfWeek(yourDate)# in the week.
+   &lt;br&gt;This is day #Day(yourDate)# in the month of <br />    #MonthAsString(Month(yourDate))#, which has
+    #DaysInMonth(yourDate)# days.
+   &lt;br&gt;We are in week #Week(yourDate)# of #Year(yourDate)# <br />(day #DayofYear(yourDate)# of #DaysinYear(yourDate)#). 
+   &lt;br&gt;&lt;cfif IsLeapYear(Year(yourDate))&gt;This is a leap year
+      &lt;cfelse&gt;This is not a leap year&lt;/cfif&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000445.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000447.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000446.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

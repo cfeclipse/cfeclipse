@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Passing data between nested custom tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001083.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001085.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Passing data between nested custom tags</h1>
+<p>A key custom tag feature is for collaborating custom tags to exchange complex data without user intervention, while encapsulating each tag's implementation so that others cannot see it. </p>
+<p>When you decide to you use nested tags, you must address the following issues: </p>
+<ul>
+<li>
+   What data should be accessible?
+</li>
+<li>
+   Which tags can communicate to which tags?
+</li>
+<li>
+   How are the source and targets of the data exchange identified?
+</li>
+<li>
+   What CFML mechanism is used for the data exchange?
+</li>
+</ul>
+<h3><a name="wp1096360"></a>What data is accessible?</h3>
+<p>To enable developers to obtain maximum productivity in an environment with few restrictions, CFML custom tags can expose all their data to collaborating tags.</p>
+<p>When you develop custom tags, you should document all variables that collaborating tags can access and/or modify. When your custom tags collaborate with other custom tags, you should make sure that they do not modify any undocumented data.</p>
+<p>To preserve encapsulation, put all tag data access and modification operations into custom tags. For example, rather than documenting that the variable MyQueryResults in a tag&#39;s implementation holds a query result and expecting users to manipulate MyQueryResults directly, create a nested custom tag that manipulates MyQueryResult. This protects the users of the custom tag from changes in the tag&#39;s implementation.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001083.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001085.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001084.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

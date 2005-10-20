@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>MonthAsString</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000588.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000590.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>MonthAsString</h1>
+<h4><a name="wp134019"></a>Description</h4>
+<p>Determines the name of the month that corresponds to <i>month_number</i>.</p>
+<h4><a name="wp134021"></a>Returns</h4>
+<p>A string; the name of the specified month, in the current locale.</p>
+<h4><a name="wp134023"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp134031"></a>Function syntax</h4>
+<pre><code><strong>MonthAsString</strong></code>(<i>month_number</i>)
+</pre><h4><a name="wp134033"></a>See also</h4>
+<p><a href="00000442.htm#1103355">DatePart</a>, <a href="00000588.htm#133954">Month</a>, <a href="00000597.htm#134562">Quarter</a></p>
+<h4><a name="wp134044"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>month_number</p>
+    </td>
+    <td>
+<p>An integer in the range 1 - 12.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp134055"></a>Example</h4>
+<pre>&lt;h3&gt;MonthAsString Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;FORM.year&quot;)&gt;
+&lt;p&gt;More information about your date:
+&lt;cfset yourDate = CreateDate(FORM.year, FORM.month, FORM.day)&gt;
+
+&lt;cfoutput&gt;
+&lt;p&gt;Your date, #DateFormat(yourDate)#.
+&lt;br&gt;It is #DayofWeekAsString(DayOfWeek(yourDate))#, day
+ #DayOfWeek(yourDate)# in the week.
+&lt;br&gt;This is day #Day(YourDate)# in the month of
+ #<strong>MonthAsString(Month(yourDate))</strong>#, which has 
+  #DaysInMonth(yourDate)# days.
+&lt;br&gt;We are in week #Week(yourDate)# of #Year(yourDate)# 
+   (day #DayofYear(yourDate)# of #DaysinYear(yourDate)#). &lt;br&gt;
+   &lt;cfif IsLeapYear(Year(yourDate))&gt;This is a leap year
+      &lt;cfelse&gt;This is not a leap year
+   &lt;/cfif&gt;
+&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000588.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000590.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000589.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

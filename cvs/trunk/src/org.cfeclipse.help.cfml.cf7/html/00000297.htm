@@ -1,0 +1,595 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfmail</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000296.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000298.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfmail</h1>
+<h4><a name="wp1355765"></a>Description</h4>
+<p>Sends an e-mail message that optionally contains query output, using an SMTP server. </p>
+<h4><a name="wp1956502"></a>Category</h4>
+<p><a href="00000206.htm#2460062">Internet Protocol tags</a></p>
+<h4><a name="wp1101205"></a>Syntax</h4>
+<pre>&lt;cfmail <br />   to = &quot;recipient&quot;<br />   from = &quot;sender&quot;<br />   cc = &quot;copy_to&quot;<br />   bcc = &quot;blind_copy_to&quot;<br />   subject = &quot;msg_subject&quot;<br />   replyto = &quot;reply_to_addr&quot;
+   failto = &quot;fail_message_addr&quot;<br />   username = &quot;user name&quot;<br />   password = &quot;password&quot;<br />   wraptext = &quot;column number&quot;<br />   charset = &quot;character encoding&quot;<br />   type = &quot;msg_type&quot;<br />   mimeattach = &quot;path&quot;<br />   query = &quot;query_name&quot;<br />   group = &quot;query_column&quot;<br />   groupcasesensitive = &quot;yes&quot; or &quot;no&quot;<br />   startrow = &quot;query_row&quot;<br />   maxrows = &quot;max_msgs&quot;<br />   server = &quot;serverspecs&quot;<br />   port = &quot;port_id&quot;<br />   mailerid = &quot;headerid&quot;<br />   timeout = &quot;seconds&quot;<br />   spoolenable = &quot;yes&quot; or &quot;no&quot;<br />   debug = &quot;yes&quot; or &quot;no&quot;&gt;
+
+<i>(Optional) Mail message body and/or cfhttpparam tags</i>
+
+&lt;/cfmail&gt;
+</pre><h4><a name="wp2733342"></a>See also</h4>
+<p><a href="00000298.htm#1101294">cfmailparam</a>, <a href="00000299.htm#2732354">cfmailpart</a>, <a href="00000311.htm#1101854">cfpop</a>, <a href="00000259.htm#1800554">cfftp</a>, <a href="00000272.htm#1632966">cfhttp</a>, <a href="00000283.htm#1100581">cfldap</a>, <a href="00000664.htm#139282">Wrap</a>; <a href="00001593.htm#1096139">Using ColdFusion with mail servers</a> in <a href="00001592.htm#1120458">Sending and Receiving E-Mail</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<p>ColdFusion MX&#160;6.1:</p>
+<ul>
+<li>
+   Added the following attributes: <code>charset</code>, <code>failto,</code> <code>replyto</code>, <code>username</code>, <code>password</code> and <code>wraptext</code>.
+</li>
+<li>
+   Added support for multiple mail servers in the <code>server</code> attribute.
+</li>
+<li>
+   Added several configuration options to the ColdFusion MX Administrator Mail Settings page.
+</li>
+</ul>
+<p>ColdFusion&#160;MX: Added the <code>SpoolEnable</code> attribute.</p>
+<h4><a name="wp1424069"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>to</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Message recipient e-mail addresses: </p>
+<ul>
+<li>
+   Static address; for example, <code>&quot;</code><code>support@macromedia.com</code><code>&quot;.</code>
+</li>
+<li>
+   Variable that contains an address; for example, <code>&quot;#Form.Email#&quot;</code>.
+</li>
+<li>
+   Name of a query column that contains an address; for example, <code>&quot;</code><code>#EMail#</code><code>&quot;</code>. An e-mail message is sent for each returned row.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>from</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>E-mail message sender:</p>
+<ul>
+<li>
+   A static string; for example, <code>&quot;</code><code>support@mex.com</code><code>&quot;</code>
+</li>
+<li>
+   A variable; for example, &quot;<code>#GetUser.EMailAddress#</code>&quot; .
+</li>
+</ul>
+<p>This attribute does not have to be a valid Internet address; it can be any text string.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cc</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Address(es) to which to copy the message.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>bcc</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Address(es) to which to copy the message, without listing them in the message header. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>subject</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Message subject. Can be dynamically generated. For example, to send messages that give customers status updates: <code>&quot;</code><code>Status</code> <code>of</code> <code>Order</code> <code>Number</code> <code>#Order_ID#</code><code>&quot;</code>. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>replyto</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Address(es) to which the recipient is directed to send replies.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>failto</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Address to which mailing systems should send delivery failure notifications. Sets the mail envelope reverse-path value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>username</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A user name to send to SMTP servers that require authentication. Requires a <code>password</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A password to send to SMTP servers that require authentication. Requires a <code>username</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>wraptext</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Do not wrap text</p>
+    </td>
+    <td>
+<p>Specifies the maximum line length, in characters of the mail text. If a line has more than the specified number of characters, replaces the last white space character, such as a tab or space, preceding the specified position with a line break. If there are no white space characters, inserts a line break at the specified position. A common value for this attribute is 72.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>charset</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Character encoding selected in ColdFusion MX Administrator Mail page; default is UTF-8</p>
+    </td>
+    <td>
+<p>Character encoding of the mail message, including the headers. The following list includes commonly used values:</p>
+<ul>
+<li>
+   utf-8
+</li>
+<li>
+   iso-8859-1 
+</li>
+<li>
+   windows-1252
+</li>
+<li>
+   us-ascii
+</li>
+<li>
+   shift_jis
+</li>
+<li>
+   iso-2022-jp 
+</li>
+<li>
+   euc-jp
+</li>
+<li>
+   euc-kr
+</li>
+<li>
+   iso-2022-kr
+</li>
+<li>
+   big5
+</li>
+<li>
+   hz-gb-2312
+</li>
+<li>
+   euc-cn
+</li>
+<li>
+   utf-16
+</li>
+</ul>
+<p>For more information on character encodings, see <br /><a href="http://www.w3.org/International/O-charset.html" target="mm_window">www.w3.org/International/O-charset.html</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>text/plain</p>
+    </td>
+    <td>
+<p>MIME type of the message. Can be a valid MIME media type or one of the following:</p>
+<ul>
+<li>
+   text:&#160;specifies text/plain type.
+</li>
+<li>
+   plain:&#160;specifies text/plain type.
+</li>
+<li>
+   html:&#160;specifies text/html type.
+</li>
+</ul>
+<p>For a list of all registered MIME media types, see <a href="http://www.iana.org/assignments/media-types/" target="mm_window">www.iana.org/assignments/media-types/.</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>MIMEAttach</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Path of file to attach to message. Attached file is MIME-encoded. ColdFusion attempts to determine the MIME type of the file; use the <a href="00000298.htm#1101294">cfmailparam</a> tag to send an attachment and specify the MIME type.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of <code>cfquery</code> from which to draw data for message(s). Use this attribute to send more than one message, or to send query results within a message.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>group</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>CurrentRow</p>
+    </td>
+    <td>
+<p>Query column to use when you group sets of records to send as a message. For example, to send a set of billing statements to a customer, group on &quot;<code>Customer_ID</code>.&quot; Case-sensitive. Eliminates adjacent duplicates when data is sorted by the specified field.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>groupCase<br />Sensitive</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<p>Boolean. Whether to consider case when using the group attribute. To group on case-sensitive records, set this attribute to Yes.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>startRow</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>Row in a query to start from.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>maxRows</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Maximum number of messages to send when looping over a query.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>server</p>
+    </td>
+    <td>
+<p>Optional </p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>SMTP server address, or (Enterprise edition only) a comma-delimited list of server addresses, to use for sending messages. At least one server must be specified here or in the ColdFusion MX Administrator. A value here overrides the Administrator. A value that includes a port specification overrides the <code>port</code> attribute. See the Usage section for details.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>port</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>TCP/IP port on which SMTP server listens for requests (normally 25). A value here overrides the Administrator.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>mailerID</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>ColdFusion MX Application Server</p>
+    </td>
+    <td>
+<p>Mailer ID to be passed in X-Mailer SMTP header, which identifies the mailer application.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>timeout</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Number of seconds to wait before timing out connection to SMTP server. A value here overrides the Administrator.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>spoolEnable</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Specifies whether to spool mail or always send it Immediately. Overrides the ColdFusion MX Administrator Spool mail messages to disk for delivery setting.</p>
+<ul>
+<li>
+   Yes: saves a copy of the message until the sending operation is complete. Pages that use this option might run slower than those that use the <code>No</code> option.
+</li>
+<li>
+   No: queues the message for sending, without storing a copy until the operation is complete. If a delivery error occurs when this option is <code>No</code>, ColdFusion generates an Application exception and logs the error to the mail.log file.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>debug</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: sends debugging output to standard output. By default, if the console window is unavailable, ColdFusion sends output to cf_root\runtime\logs\coldfusion-out.log on server configurations. On J2EE configurations, with JRun, the default location is <i>jrun_home</i>/logs/<i>servername</i>-out.log. <br /><i>Caution</i>: If you set this option to Yes, ColdFusion MX writes detailed debugging information to the log, including all message contents, and can generate large logs quickly.
+</li>
+<li>
+   No: does not generate debugging output.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2706751"></a>Usage</h4>
+<p>Sends a mail message to the specified address. Mail messages can include attachments. The tag body can include CFML code to generate mail output. The <code>cfmailparam</code> <code>and cfmailpart</code> tags can only be used in the cfmail tag body. </p>
+<p>Mail messages can be single or multipart. If you send a multi-part mail message, all message content must be in <code>cfmailpart</code> tags; ColdFusion ignores multipart message text that is not in <code>cfmailpart</code> tags.</p>
+<p><strong>Note: </strong>The <code>cfmail</code> tag does not make copies of attachments when spooling mail to disk. If you use the <code>cfmail</code> tag to send a message with an attachment with spooling enabled and you use the <code>cffile</code> tag to delete the attachment file, ColdFusion might not send the mail because the mailing process might execute after the file was is deleted. (When this happens, the mail log includes a FileNotFound exception and the e-mail is not sent.) You can prevent this problem by setting <code>SpoolEnable=&quot;No&quot;</code> in the attribute or disabling spooling in the ColdFusion MX Administrator. Disabling spooling causes the e-mail to be delivered immediately. </p><h4><a name="wp2740254"></a>Mail addressing</h4>
+<p>Mail addresses can have any of the following forms:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Format
+    </th>
+    <th>
+Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>user@server</p>
+    </td>
+    <td>
+<p>rsmith@company.com</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&lt;user@server&gt;</p>
+    </td>
+    <td>
+<p>&lt;rsmith@company.com&gt;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>DisplayName &lt;user@server&gt;</p>
+    </td>
+    <td>
+<p>Rob Smith &lt;rsmith@company.com&gt;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&quot;DisplayName&quot; &lt;user@server&gt;</p>
+    </td>
+    <td>
+<p>&quot;Rob Smith&quot; &lt;rsmith@company.com&gt;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>user@server (DisplayName)</p>
+    </td>
+    <td>
+<p>rsmith@company.com (Rob Smith)</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2743411"></a>Specifying mail servers</h4>
+<p>The <code>server</code> attribute can specify one or more mail servers. </p>
+<p><strong>Note: </strong>If you specify multiple mail servers in ColdFusion MX Standard, the <code>cfmail</code> tag uses only the first server in the specification. ColdFusion logs a warning message to the mail log file and ignores the additional servers. </p><p>For each server, you can optionally specify a username, password, and port. These values override the corresponding attributes, if any. The <code>server</code> attribute has the following format:</p>
+<pre>[<i>user:password@</i>]server[<i>:port</i>],[<i>user:password@</i>]server[<i>:port</i>],....
+</pre><p>For example, the following line specifies one server, mail.myco.com that uses the default port and no user or password, and a second server with a user, password, and specific port:</p>
+<pre>server=mail.myco.com,mail_admin:adm2qzf@mail2.myco.com:24
+</pre><p>When you specify multiple mail servers in ColdFusion Enterprise, ColdFusion tries the available servers in the order they are listed until it connects to a server. ColdFusion does not try to connect to a server that was unavailable in the last 60 seconds.</p>
+<h4><a name="wp2864238"></a>Example</h4>
+<pre>&lt;h3&gt;cfmail Example&lt;/h3&gt;
+
+&lt;!--- Delete the surrounding comments to use this example.
+
+&lt;cfif IsDefined(&quot;form.mailto&quot;)&gt;
+   &lt;cfif form.mailto is not &quot;&quot; 
+            AND form.mailfrom is not &quot;&quot; 
+            AND form.Subject is not &quot;&quot;&gt;
+      &lt;cfmail to = &quot;#form.mailto#&quot;
+          from = &quot;#form.mailFrom#&quot;
+          subject = &quot;#form.subject#&quot;&gt;
+            This message was sent by an automatic mailer built with cfmail:
+            = = = = = = = = = = = = = = = = = = = = = = = = = = =
+            #form.body#
+      &lt;/cfmail&gt;   
+      &lt;h3&gt;Thank you&lt;/h3&gt;
+      &lt;p&gt;Thank you, &lt;cfoutput&gt;#mailfrom#: your message, #subject#, has
+            been sent to #mailto#&lt;/cfoutput&gt;.
+   &lt;/cfif&gt;   
+&lt;/cfif&gt;
+&lt;p&gt;
+&lt;form action = &quot;cfmail.cfm&quot;&gt;
+   &lt;pre&gt;
+   TO:        &lt;input type = &quot;Text&quot; name = &quot;MailTo&quot;&gt;
+   FROM: &lt;input type = &quot;Text&quot; name = &quot;MailFrom&quot;&gt;
+   SUBJECT:    &lt;input type = &quot;Text&quot; name = &quot;Subject&quot;&gt;
+   &lt;hr&gt;
+   MESSAGE BODY:
+   &lt;textarea name =&quot;body&quot; cols=&quot;40&quot; rows=&quot;5&quot; wrap=&quot;virtual&quot;&gt;&lt;/textarea&gt;
+   &lt;/pre&gt;
+   &lt;!--- Establish required fields. ---&gt;
+   &lt;input type = &quot;hidden&quot; name = &quot;MailTo_required&quot; value = &quot;You must enter<br />a recipient&quot;&gt;
+   &lt;input type = &quot;hidden&quot; name = &quot;MailFrom_required&quot; value = &quot;You must<br />enter a sender&quot;&gt;
+   &lt;input type = &quot;hidden&quot; name = &quot;Subject_required&quot; value = &quot;You must enter<br />a subject&quot;&gt;
+   &lt;input type = &quot;hidden&quot; name = &quot;Body_required&quot; value = &quot;You must enter<br />some text&quot;&gt;
+   &lt;p&gt;&lt;input type = &quot;Submit&quot; name = &quot;&quot;&gt;
+&lt;/form&gt; 
+---&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000296.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000298.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000297.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

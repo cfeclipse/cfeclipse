@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using arguments</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001010.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001012.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using arguments</h1>
+<p>Function arguments can have the same names, but different values, as variables in the caller. Avoid such uses for clarity, however.</p>
+<p>The following rules apply to argument persistence: </p>
+<ul>
+<li>
+   Because simple variable and array arguments are passed by value, their names and values exist only while the function executes. 
+</li>
+<li>
+   Because structures, queries, and objects such as COM objects are passed by reference, the argument <i>name</i> exists only while the function executes, but the underlying <i>data</i> persists after the function returns and can be accessed by using the caller's variable name. The caller's variable name and the argument name can, and should, be different.
+</li>
+</ul>
+<p><strong>Note: </strong>If a function must use a variable from another scope that has the same name as a function-only variable, prefix the external variable with its scope identifier, such as Variables or Form. (However, remember that using variables from other scopes directly in your code is often poor practice.)</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001010.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001012.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001011.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

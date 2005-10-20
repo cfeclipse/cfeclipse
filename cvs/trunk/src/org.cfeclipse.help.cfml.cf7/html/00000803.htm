@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXRequest::GetQuery</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000802.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000804.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXRequest::GetQuery</h1>
+<h4><a name="wp1099411"></a>Syntax</h4>
+<pre><strong>CCFXQuery* CCFXRequest::GetQuery(void)</strong>
+</pre><h4><a name="wp1102815"></a>Description</h4>
+<p>Retrieves a query that was passed to a tag. To pass a query to a custom tag, you use the <code>QUERY</code> attribute. This attribute should be set to the name of a query (created using the <code>cfquery</code> tag or another custom tag). The <code>QUERY</code> attribute is optional and should be used only by tags that process an existing data set.</p>
+<h4><a name="wp1145649"></a>Returns</h4>
+<p>Returns an object of the <a href="00000788.htm#1098035">CCFXQuery class</a> that represents the query passed to the tag. If no query was passed to the tag, <code>NULL</code> is returned. The memory allocated for the returned query is freed automatically by ColdFusion after the request is completed.</p>
+<h4><a name="wp1102998"></a>Example</h4>
+<p>The following example retrieves the query that was passed to the tag. If no query was passed, an exception is thrown:</p>
+<pre>CCFXQuery* pQuery = pRequest-&gt;GetQuery() ;<br />if ( pQuery == NULL )<br />{<br />               pRequest-&gt;ThrowException(<br />                  &quot;Missing QUERY parameter&quot;,<br />                  &quot;You must pass a QUERY parameter in &quot;<br />                  &quot;order for this tag to work correctly.&quot; ) ;<br />}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000802.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000804.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000803.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

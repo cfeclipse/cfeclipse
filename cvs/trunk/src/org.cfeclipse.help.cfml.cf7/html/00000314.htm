@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfprocresult</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000313.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000315.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfprocresult</h1>
+<h4><a name="wp1355819"></a>Description</h4>
+<p>Associates a query object with a result set returned by a stored procedure. Other ColdFusion tags, such as <code>cfoutput</code> and <a href="00000340.htm#1103885"><code>cftable</code></a>, use this query object to access the result set. This tag is nested within a <code>cfstoredproc</code> tag. </p>
+<h4><a name="wp1957874"></a>Category</h4>
+<p><a href="00000198.htm#2459589">Database manipulation tags</a></p>
+<h4><a name="wp1102251"></a>Syntax</h4>
+<pre>&lt;cfprocresult <br />   name = &quot;query_name&quot;<br />   resultSet = &quot;1-n&quot; <br />   maxRows = &quot;maxrows&quot;&gt;
+</pre><h4><a name="wp1957777"></a>See also</h4>
+<p><a href="00000280.htm#1100472">cfinsert</a>, <a href="00000313.htm#1102102">cfprocparam</a>, <a href="00000316.htm#1102316">cfquery</a>, <a href="00000317.htm#1102474">cfqueryparam</a>, <a href="00000338.htm#2607555">cfstoredproc</a>, <a href="00000346.htm#1104164">cftransaction</a>, <a href="00000350.htm#1104662">cfupdate</a>; <a href="00001128.htm#1173446">Optimizing database use</a> in <a href="00001102.htm#1101532">Designing and Optimizing a ColdFusion&#160;Application</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1426748"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name for the query result set.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>resultSet</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>Names one result set, if stored procedure returns more than one.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>maxRows</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>-1 (All)</p>
+    </td>
+    <td>
+<p>Maximum number of rows returned in result set.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102259"></a>Usage</h4>
+<p>To enable access to data returned by the stored procedure, specify one or more <code>cfprocresult</code> tags. If the stored procedure returns more than one result set, use the <code>resultSet</code> attribute to specify which of the stored procedure's result sets to return.</p>
+<p>The <code>resultSet</code> attribute must be unique within the scope of the <code>cfstoredproc</code> tag. If you specify a result set twice, the second occurrence overwrites the first.</p>
+<p>CFML supports Oracle 8 and 9 Reference Cursor type, which passes a parameter by reference. Parameters that are passed this way can be allocated and deallocated from memory within the execution of one application. To use reference cursors in packages or stored procedures, use the <a href="00000314.htm#1102246">cfprocresult</a> tag. This causes the ColdFusion JDBC database driver to put Oracle reference cursors into a result set. (You cannot use this method with Oracle's ThinClient JDBC drivers.)</p>
+<h4><a name="wp2668964"></a>Example</h4>
+<pre>&lt;!--- This example executes a Sybase stored procedure that returns three <br />result sets, two of which we want. The stored procedure returns <br />status code and one output parameter, which we display. We use <br />named notation for parameters. ---&gt;
+&lt;!--- cfstoredproc tag ---&gt;
+&lt;cfstoredproc procedure = &quot;foo_proc&quot;
+      dataSource = &quot;MY_SYBASE_TEST&quot;    username = &quot;sa&quot;
+      password = &quot;&quot;    dbServer = &quot;scup&quot;    dbName = &quot;pubs2&quot;
+      returnCode = &quot;Yes&quot;    debug = &quot;Yes&quot;&gt;
+   &lt;!--- cfprocresult tags ---&gt;
+   &lt;cfprocresult name = RS1&gt;
+   &lt;cfprocresult name = RS3 resultSet = 3&gt;
+   &lt;!--- cfprocparam tags ---&gt;
+   &lt;cfprocparam type = &quot;IN&quot;
+      CFSQLType = CF_SQL_INTEGER
+         value = &quot;1&quot;    dbVarName = @param1&gt;
+      
+   &lt;cfprocparam type = &quot;OUT&quot;    CFSQLType = CF_SQL_DATE
+      variable = FOO dbVarName = @param2&gt;
+   &lt;!--- Close the cfstoredproc tag. ---&gt;
+&lt;/cfstoredproc&gt;
+&lt;cfoutput&gt;
+   The output param value: '#foo#'&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;h3&gt;The Results Information&lt;/h3&gt;
+&lt;cfoutput query = RS1&gt;#name#,#DATE_COL#&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;p&gt;
+&lt;cfoutput&gt;
+   &lt;hr&gt;
+   &lt;p&gt;Record Count: #RS1.recordCount# &lt;p&gt;Columns: #RS1.columnList#
+   &lt;hr&gt;
+&lt;/cfoutput&gt; 
+&lt;cfoutput query = RS3&gt;#col1#,#col2#,#col3#&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;p&gt;
+&lt;cfoutput&gt;
+   &lt;hr&gt;
+   &lt;p&gt;Record Count: #RS3.recordCount# &lt;p&gt;Columns: #RS3.columnList#
+   &lt;hr&gt;
+   The return code for the stored procedure is:<br />'#cfstoredproc.statusCode#'&lt;br&gt;
+&lt;/cfoutput&gt;
+...
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000313.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000315.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000314.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Sorting results</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001241.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001243.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Sorting results</h1>
+<p>By default, a database does not sort the records returned from a SQL query. In fact, you cannot guarantee that the records returned from the same query are returned in the same order each time you run the query.</p>
+<p>However, if you require records in a specific order, you can write your SQL statement to sort the records returned from the database. To do so, you include an ORDER BY clause in the SQL statement.</p>
+<p>For example, the following SQL statement returns the records of the table ordered by the LastName column:</p>
+<pre>SELECT * FROM employees ORDER BY LastName
+</pre><p>You can combine multiple fields in the ORDER BY clause to perform additional sorting:</p>
+<pre>SELECT * FROM employees ORDER BY DepartmentID, LastName
+</pre><p>This statement returns row ordered by department, then by last name within the department.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001241.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001243.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001242.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

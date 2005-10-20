@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Installing the Verity search server separately</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000037.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000039.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Installing the Verity search server separately</h1>
+<p>To enable searches using Verity, you must install the Verity search server separately if either of the following is true:</p>
+<ul>
+<li>
+   You are running ColdFusion in a J2EE configuration with a WAR or EAR file.
+</li>
+<li>
+   You want to install the Verity search server on a different machine from the one where you install ColdFusion&#160;MX&#160;7.
+</li>
+</ul>
+<p>You should start by planning the answers to questions asked by the Installer:</p>
+<ul>
+<li>
+   &quot;Where would you like to install?&quot; _______________________________ 
+<p>Macromedia recommends that you specify a location that is not a subdirectory of the application server directories. </p>
+</li>
+<li>
+   The IP address of the ColdFusion Server that this machine will accept requests from__________________ 
+</li>
+</ul>
+<p>The IP address is necessary only if you are installing Verity search server on a different computer from the one where you installed ColdFusion MX 7. If you do not specify an IP address, the Installer uses the default 127.0.0.1, which is localhost.</p>
+<h4>To install the Verity search server separately:</h4>
+<ol>
+<li>
+   Download your platform-specific installer from the Macromedia website at <a href="http://www.macromedia.com/go/verity" target="mm_window">www.macromedia.com/go/verity</a> or copy it from the ColdFusion MX CD, as follows:
+<ul><li>Windows - coldfusion-search.win.exe</li>
+<li>Linux - coldfusion-search-lin.bin</li>
+<li>Solaris - coldfusion-search-sol.bin</li>
+</ul></li>
+<li>
+   Close any applications that are currently running on your computer. 
+</li>
+<li>
+   Run the platform-specific installer using the appropriate command.
+<p><strong>Note: </strong>Only console installations are available for UNIX systems.</p></li>
+<li>
+   (UNIX only) If you chose not to start the Verity search server automatically, start, stop, and restart Verity by running <i>verity_root</i>/bin/cfmxsearch -start | -stop | -restart.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000037.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000039.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000038.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

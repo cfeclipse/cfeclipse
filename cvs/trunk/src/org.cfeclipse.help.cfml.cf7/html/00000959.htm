@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About structures</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000958.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000960.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About structures</h1>
+<p>ColdFusion <i>structures</i> consist of key-value pairs. Structures let you build a collection of related variables that are grouped under a single name. You can define ColdFusion structures dynamically.</p>
+<p>You can use structures to refer to related values as a unit, rather than individually. To maintain employee lists, for example, you can create a structure that holds personnel information such as name, address, phone number, ID numbers, and so on. Then you can refer to this collection of information as a structure called <i>employee</i> rather than as a collection of individual variables.</p>
+<p>A structure's <i>key</i> must be a string. The <i>values</i> associated with the key can be any valid ColdFusion value or object. It can be a string or integer, or a complex object such as an array or another structure. Because structures can contain any kind of data they provide a very powerful and flexible mechanism for representing complex data.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000959.htm#1126503">Structure notation</a>
+</li>
+<li>
+   <a href="00000960.htm#1135238">Referencing complex structures</a>
+</li>
+</ul>
+<h2><a name="wp1126503"></a>Structure notation</h2>
+<p>ColdFusion supports two types of notation for referencing structure contents. The notation that you use depends on your requirements.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Notation
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Object.property</p>
+    </td>
+    <td>
+<p>You can refer to a property, prop, of an object, obj, as obj.prop. This notation, also called dot notation, is useful for simple assignments, as in this example:</p>
+<pre>depts.John=&quot;Sales&quot;
+</pre><p>Use this notation only when you know the property names (keys) in advance and they are strings, with no special characters, numbers, or spaces. You cannot use the dot notation when the property, or key, is dynamic.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Associative arrays</p>
+    </td>
+    <td>
+<p>If you do not know the key name in advance, or it contains spaces, numbers, or special characters, you can use associative array notation. This notation uses structures as arrays with string indexes; for example:</p>
+<pre>depts[&quot;John&quot;]=&quot;Sales&quot;
+depts[employeeName]=&quot;Sales&quot; 
+</pre><p>You can use a variable (such as employeeName) as an associative array index. Therefore, you must enclose any literal key names in quotation marks. </p>
+<p>For information on using associative array references containing variables, see <a href="00000941.htm#2736092">Dynamically constructing structure references</a>.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000958.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000960.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000959.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

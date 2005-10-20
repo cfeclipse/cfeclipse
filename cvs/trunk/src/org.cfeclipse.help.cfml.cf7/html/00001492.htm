@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Connecting to the Flash Remoting service</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001491.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001493.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Connecting to the Flash Remoting service</h1>
+<p>Before you can use functions defined in your server-side ActionScript files, you must connect the Macromedia Flash MX movie to the server-side Flash Remoting service. </p>
+<h4>To create a Flash Remoting service connection:</h4>
+<ol>
+<li>
+   Include the necessary ActionScript classes in the first frame of the Flash movie that will be using server-side ActionScript functions. 
+<ol><li>Use the following command to include the <code>NetServices</code> class: </li><pre>
+#include &quot;NetServices.as&quot;
+</pre>
+<li>(Optional) Use the following command to include the <code>NetDebug</code> class:</li><pre>
+#include &quot;NetDebug.as&quot;
+</pre>
+<p>For more information about the <code>NetDebug</code> and <code>RecordSet</code> classes, see <i>Using Flash Remoting MX</i>.</p>
+</ol></li>
+<li>
+   Since the Flash Remoting service serves as a broker for calls to server-side ActionScript functions, you must identify the Flash Remoting service URL as an argument in the <code>NetServices.setDefaultGatewayUrl</code> function. For example:
+<pre>
+NetServices.setDefaultGatewayURL(&quot;http://localhost:8500/flashservices&quot;)
+</pre>
+<p>You must specify a server hostname. The default port number for the Flash Remoting service is 8500. </p>
+</li>
+<li>
+   Create the gateway connection using the <code>NetServices.createGatewayConnection</code> function; for example:
+<pre>
+gatewayConnection = NetServices.createGatewayConnection();
+</pre>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001491.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001493.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001492.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

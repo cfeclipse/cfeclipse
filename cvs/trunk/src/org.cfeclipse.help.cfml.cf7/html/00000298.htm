@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfmailparam</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000297.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000299.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfmailparam</h1>
+<h4><a name="wp1355771"></a>Description</h4>
+<p>Attaches a file or adds a header to an e-mail message. </p>
+<h4><a name="wp1956575"></a>Category</h4>
+<p><a href="00000206.htm#2460062">Internet Protocol tags</a></p>
+<h4><a name="wp1101300"></a>Syntax</h4>
+<pre>&lt;cfmail <br />   to = &quot;recipient&quot;<br />   subject = &quot;msg_subject&quot;<br />   from = &quot;sender&quot;<br />   ...more attributes... &gt;<br /><br />   &lt;cfmailparam <br />      file = &quot;file-name&quot; <br />      type =&quot;media type&quot;<br />      contentID = &quot;content ID&quot;<br />      disposition = &quot;disposition type&quot;&gt;<br />   or<br />   &lt;cfmailparam <br />      name = &quot;header-name&quot;<br />       value = &quot;header-value&quot; &gt;<br />   ...<br />&lt;/cfmail&gt;
+</pre><h4><a name="wp2863237"></a>See also</h4>
+<p><a href="00000297.htm#2355015">cfmail</a>, <a href="00000299.htm#2732354">cfmailpart</a>, <a href="00000259.htm#1800554">cfftp</a>, <a href="00000272.htm#1632966">cfhttp</a>, <a href="00000283.htm#1100581">cfldap</a>, <a href="00000311.htm#1101854">cfpop</a>; <a href="00001600.htm#1102822">Using the cfmailparam tag</a> in <a href="00001592.htm#1120458">Sending and Receiving E-Mail</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2863257"></a>History</h4>
+<p>ColdFusion MX 6.x: Added the <code>Disposition</code> and <code>ContentID</code> attributes.</p>
+<p>ColdFusion MX&#160;6.1: Added the <code>type</code> attribute.</p>
+<h4><a name="wp2244562"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>file</p>
+    </td>
+    <td>
+<p>Required if you do not specify <code>name</code> attribute</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Attaches a file in a message. Mutually exclusive with <code>name</code> attribute. The file is MIME encoded before sending.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required if you do not specify <code>file</code> attribute</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of header. Case-insensitive. Mutually exclusive with <code>file</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>The MIME media type of the file. Not used with the <code>name</code> attribute. Can be a valid MIME media type or one of the following:</p>
+<ul>
+<li>
+   text: specifies text/plain type.
+</li>
+<li>
+   plain: specifies text/plain type.
+</li>
+<li>
+   html: specifies text/html type.
+</li>
+</ul>
+<p><strong>Note:	</strong>For a list of all registered MIME media types, see <a href="http://www.iana.org/assignments/media-types/" target="mm_window">www.iana.org/assignments/media-types/</a>.</p>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Value of the header. Not used with the <code>file</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>contentID</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>The Identifier for the attached file. This ID should be globally unique and is used to identify the file in an IMG or other tag in the mail body that references the file content. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>disposition</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>attachment</p>
+    </td>
+    <td>
+<p>How the attached file is to be handled. Can be one of the following:</p>
+<ul>
+<li>
+   attachment: presents the file as an attachment.
+</li>
+<li>
+   inline: displays the file contents in the message.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2812120"></a>Usage</h4>
+<p>This tag attaches a file or adds a header to an e-mail message. It can only be used in the <a href="00000297.htm#2355015"><code>cfmail</code></a> tag. You can use multiple <code>cfmailparam</code> tags within a <code>cfmail</code> tag. </p>
+<p>You can use this tag to include a file, such as an image, in an HTML mail message. The file can be displayed inline in an HTML message, or as an attachment. To include multiple files, use multiple <code>cfmailparam</code> tags.</p>
+<h4>To display a file inline in a mail message:</h4>
+<ol>
+<li>
+   Specify <code>type=&quot;html&quot;</code> in the <code>cfmail</code> tag. 
+</li>
+<li>
+   Specify <code>disposition=&quot;inline&quot;</code> and a <code>ContentID</code> attribute in the <code>cfmailparam</code> tag. 
+</li>
+<li>
+   Use a <code>src=&quot;cid:</code><i>ContentIDValue</i>&quot; attribute to identify the content to include in the HTML tag such as the <code>img</code> tag. 
+</li>
+</ol>
+<p>The second example shows this use.</p>
+<h4><a name="wp1101308"></a>Examples</h4>
+<pre>&lt;h3&gt;cfmailparam Examples&lt;/h3&gt;
+&lt;p&gt;This view-only example uses cfmailparam to 1) add header to a message and 2) attach files and 3) to return a receipt to the sender.&lt;/p&gt;
+&lt;cfmail from = &quot;peter@domain.com&quot; To = &quot;paul@domain.com&quot; <br />Subject = &quot;See Important Attachments and Reply&quot;&gt;
+   &lt;cfmailparam name = &quot;Importance&quot; value = &quot;High&quot;&gt;
+   Please review the new logo. Tell us what you think.
+   &lt;cfmailparam file = &quot;c:\work\readme.txt&quot; type=&quot;text/plain&quot;&gt;
+   &lt;cfmailparam file = &quot;c:\work\logo.gif&quot; type=&quot;image/gif&quot;&gt;
+   &lt;cfmailparam name=&quot;Disposition-Notification-To&quot; value=&quot;peter@domain.com&quot;&gt;
+&lt;/cfmail&gt;
+&lt;p&gt;This view-only example displays an image in the body of
+   an HTML message.&lt;/p&gt;
+&lt;cfmail type=&quot;HTML&quot;
+      to = &quot;#form.mailto#&quot;
+      from = &quot;#form.mailFrom#&quot;
+      subject = &quot;Sample inline image&quot;&gt;
+   &lt;cfmailparam file=&quot;C:\Inetpub\wwwroot\web.gif&quot; 
+      disposition=&quot;inline&quot; 
+      contentID=&quot;image1&quot;&gt;
+   &lt;P&gt;There should be an image here&lt;/p&gt;
+   &lt;img src=&quot;cid:image1&quot;&gt;
+   &lt;p&gt; After the picture&lt;/p&gt;
+&lt;/cfmail&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000297.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000299.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000298.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

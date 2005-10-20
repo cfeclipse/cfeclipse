@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Security scenarios</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001182.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001184.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Security scenarios</h1>
+<p>The following sections provide two detailed security scenarios. The first scenario uses the web server to perform the authentication against its user and password database. The second scenario uses ColdFusion for all authentication and authorization.</p>
+<h2><a name="wp1139642"></a>A web server authentication security scenario</h2>
+<p>An application that uses web server authentication might work as follows. The example in <a href="00001187.htm#1162591">Web server-based authentication user security example</a> implements this scenario.</p>
+<ol>
+<li>
+   When the user requests a page from a particular directory on the server for the first time after starting the browser, the web server displays a login page and logs in the user. The web server handles all user authentication.
+</li>
+<li>
+   Because the user requested a ColdFusion page, the web server hands the request to ColdFusion.
+</li>
+<li>
+   When ColdFusion receives a request for a ColdFusion page, it instantiates the Application.cfc and runs <code>onRequestStart</code> method. If you use an Application.cfm page in place of the Application.cfc, it runs the contents of the Application.cfm page before it runs the requested page. The <code>onRequestStart</code> method or Application.cfm page contains a <code>cflogin</code> tag. ColdFusion executes the <a href="00000287.htm#2991147"><code>cflogin</code></a> tag body if the user is not logged into ColdFusion. The user is logged in if the <code>cfloginuser</code> tag has run successfully for this application and the user has not been logged out.
+</li>
+<li>
+   Code in the <code>cflogin</code> tag body uses the user ID and password from the browser login, contained in the cflogin.name and cflogin.password variables, as follows. (With Digest or NTLM web server authentication, the cflogin.password variable is the empty string.)
+<ol><li>It checks the user's name against information it maintains about users and roles. In a simple case, the application might have two roles, one for users and one for administrators. The CFML assigns the Admin role to any user logged on with the user ID <i>Admin</i> and assigns the User role to all other users.</li><li>It calls the <a href="00000288.htm#2873089"><code>cfloginuser</code></a> tag with the user's ID, password, and roles, to identify the user to ColdFusion.</li></ol></li>
+<li>
+   Application.cfc or the Application.cfm page completes processing, and ColdFusion processes the requested application page.
+</li>
+<li>
+   The application uses the <a href="00000533.htm#4047189"><code>IsUserInRole</code></a> function to check whether the user belongs to a role before it runs protected code that must be available only to users in that role. 
+</li>
+<li>
+   The application can use the <a href="00000469.htm#4046631"><code>GetAuthUser</code></a> function to determine the user ID; for example, to display the ID for personalization. It can also use the ID as a database key to get user-specific data.
+</li>
+</ol>
+<p><strong>Caution: </strong>If you use web server-based authentication or any form authentication that uses a Basic HTTP Authorization header, the browser continues to send the authentication information to your application until the user closes the browser, or in some cases, all open browser windows. As a result, after the user logs out and your application uses the <code>cflogout</code> tag, until the browser closes, the cflogin structure in the <code>cflogin</code> tag will contain the logged-out user's UserID and password. If a user logs out and does not close the browser, another user might access pages with the first user's login.</p><h2><a name="wp1130436"></a>An application authentication security scenario</h2>
+<p>An application that does its own authentication might work as follows. The example in <a href="00001190.htm#1130940">Application-based user security example</a> implements this scenario.</p>
+<ol>
+<li>
+   Whenever ColdFusion receives a request for a ColdFusion page, it instantiates the Application.cfc and runs the <code>onRequestStart</code> method. If you use an Application.cfm page in place of Application.cfc, ColdFusion runs the contents of the Application.cfm page before it runs the requested page. The <code>onRequestStart</code> method or Application.cfm page contains the <code>cflogin</code> tag. ColdFusion executes the <code>cflogin</code> tag body if the user is not logged in. A user is logged in if the <a href="00000288.htm#2873089"><code>cfloginuser</code></a> tag has run during the current session and the user had not been logged out by a <a href="00000289.htm#2871521"><code>cflogout</code></a> tag.
+</li>
+<li>
+   Code in the <code>cflogin</code> tag body checks to see if it has received a user ID and password, normally from a login form. 
+</li>
+<li>
+   If there is no user ID or password, the code in the <code>cflogin</code> tag body displays a login form that asks for the user's ID and password. 
+<p>The form posts the login information back to the originally requested page, and the <code>cflogin</code> tag in the <code>onRequestStart</code> method or the Application.cfm page runs again. This time, the <code>cflogin</code> tag body code checks the user name and password against a database, LDAP directory, or other policy store, to ensure that the user is valid and get the user's roles.</p>
+</li>
+<li>
+   If the user name and password are valid, the <code>cflogin</code> tag body code calls the <code>cfloginuser</code> tag with the user's ID, password, and roles, to identify the user to ColdFusion.
+</li>
+<li>
+   When the user is logged in, application pages use the <a href="00000533.htm#4047189"><code>IsUserInRole</code></a> function to check whether the user belongs to a role before they run protected code that must be available only to users in that role. 
+<p>The application can use the <a href="00000469.htm#4046631"><code>GetAuthUser</code></a> function to determine the user ID; for example, to display the ID for personalization. It can also use the ID as a database key to get user-specific data.</p>
+</li>
+<li>
+   Each application page displays a link to a logout form that uses the <code>cflogout</code> tag to log out the user. Typically, the logout link is in a page header that appears in all pages. The logout form can also be in the Application.cfc (for example, in the <code>onRequestStart</code> or <code>onRequestEnd</code> method) or on the Application.cfm page.
+</li>
+</ol>
+<p>Although this scenario shows one method for implementing user security, it is only an example. For example, your application could require users to log in for only some pages, such as pages in a folder that contains administrative functions. When you design your user security implementation, remember the following: </p>
+<ul>
+<li>
+   Code in the <code>cflogin</code> tag body executes only if there is no user logged in. 
+</li>
+<li>
+   With application authentication, you write the code that gets the identification from the user and tests this information against a secure credential store.
+</li>
+<li>
+   After you have authenticated the user, you use the <code>cfloginuser</code> tag to log the user into ColdFusion. 
+</li>
+</ul>
+<p>The following figure shows this flow of control. For simplicity, it omits the log-out option.</p>
+<p><br />
+<img src="images/securef2.jpg" alt="A six-step authentication scenerio" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001182.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001184.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001183.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>StructFindKey</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000638.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000640.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>StructFindKey</h1>
+<h4><a name="wp137551"></a>Description</h4>
+<p>Searches recursively through a substructure of nested arrays, structures, and other elements, for structures whose values match the search key in the <i>value</i> parameter. </p>
+<h4><a name="wp137553"></a>Returns</h4>
+<p>An array that contains structures with values that match <i>value</i>.</p>
+<h4><a name="wp137555"></a>Category</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a> </p>
+<h4><a name="wp137560"></a>Function syntax</h4>
+<pre><code><strong>StructFindKey</strong></code>(<i>top, value, scope</i>)
+</pre><h4><a name="wp137562"></a>See also</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a>; <a href="00000967.htm#1191258">Structure functions</a> in <a href="00000950.htm#1101236">Using Arrays and Structures</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp137567"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>top</p>
+    </td>
+    <td>
+<p>ColdFusion object (structure or array) from which to start search. This parameter requires an object, not a name of an object.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>String or a variable that contains one for which to search. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>scope</p>
+    </td>
+    <td>
+<ul>
+<li>
+   one: returns one matching key. Default.
+</li>
+<li>
+   all: returns all matching keys.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp137587"></a>Usage</h4>
+<p>Returns an array that includes one structure for each of the specified values it finds. The fields of each of these structures are:</p>
+<ul>
+<li>
+   <code>Value</code>: value held in the found key
+</li>
+<li>
+   <code>Path</code>: string that can be used to reach the found key
+</li>
+<li>
+   <code>Owner</code>: parent object that contains the found key
+</li>
+</ul>
+<p>A structure's keys are unordered. </p>
+<h4><a name="wp137593"></a>Example</h4>
+<pre>&lt;cfset aResults = StructFindKey( #request#, &quot;bass&quot; )&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000638.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000640.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000639.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

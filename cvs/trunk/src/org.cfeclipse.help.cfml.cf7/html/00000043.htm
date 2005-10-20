@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Undeploying ColdFusion&#160;MX&#160;7</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000042.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000044.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Undeploying ColdFusion&#160;MX&#160;7</h1>
+<p>To undeploy ColdFusion&#160;MX&#160;7 in the J2EE configuration, you use application-server specific undeploy tools and methods. </p>
+<h4>To undeploy ColdFusion&#160;MX&#160;7 in the J2EE configuration:</h4>
+<ol>
+<li>
+   Remove all ColdFusion&#160;MX&#160;7 specifications from the <code>java.args</code> and <code>java.library.path</code> JVM arguments used by your application server.
+</li>
+<li>
+   (Windows only) If you installed ODBC support, remove the ODBC Windows services by navigating to the <i>cf_webapp_root</i>\WEB_INF\cfusion\db\SequeLink Setup directory and executing the RemoveSequeLink.bat file.
+</li>
+<li>
+   If necessary, copy and save CFM pages from the ColdFusion&#160;MX&#160;7 web application root.
+</li>
+<li>
+   Undeploy the ColdFusion&#160;MX&#160;7 web application, using application-server-specific undeploy functionality. In JRun 4, you undeploy by deleting the <i>jrun_root</i>/server/<i>servername</i>/cfusion-ear directory.
+</li>
+<li>
+   If necessary, restart the application server.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000042.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000044.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000043.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

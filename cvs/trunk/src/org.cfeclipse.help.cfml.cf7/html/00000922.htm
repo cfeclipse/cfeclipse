@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Passing variables to CFML tags and UDFs</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000921.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000923.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Passing variables to CFML tags and UDFs</h1>
+<p>When you pass a variable to a CFML custom tag as an attribute, or to a user-defined function as an argument, the following rules determine whether the custom tag or function receives its own private copy of the variable or only gets a reference to the calling page's variable:</p>
+<ul>
+<li>
+   Simple variables and arrays are passed as copies of the data. If your argument is an expression that contains multiple simple variables, the result of the expression evaluation is copied to the function or tag.
+</li>
+<li>
+   Structures, queries, and <a href="00000302.htm#2820239"><code>cfobject</code></a> objects are passed as references to the object.
+</li>
+</ul>
+<p>If the tag or function gets a copy of the calling page's data, changes to the variable in the custom tag or function do not change the value of the variable on the calling page. If the variable is passed by reference, changes to the variable in the custom tag or function also change the value of the variable in the calling page.</p>
+<p>To pass a variable to a custom tag, you must enclose the variable name in number signs. To pass a variable to a function, do <i>not</i> enclose the variable name in number signs. For example, the following code calls a user-defined function using three Form variables:</p>
+<pre>&lt;cfoutput&gt;
+TOTAL INTEREST: #TotalInterest(Form.Principal, Form.AnnualPercent,<br />Form.Months)#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><p>The following example calls a custom tag using two variables, MyString and MyArray:</p>
+<pre>&lt;cf_testTag stringval=#MyString# arrayval=#MyArray#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000921.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000923.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000922.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

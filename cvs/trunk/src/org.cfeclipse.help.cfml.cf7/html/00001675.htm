@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The submitMulti command</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001674.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001676.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The submitMulti command</h1>
+<p>To send a single text message to multiple recipients using an SMPP SUBMIT_MULTI PDU, the <i>Data</i> parameter of a <code>SendGatewayMessage</code> function or the return variable of the CFC listener method normally has the following fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Contents
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>command</p>
+    </td>
+    <td>
+<p>Must be <code>&quot;submitMulti&quot;</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>shortMessage</p>
+<p><i>or</i></p>
+<p>messagePayload</p>
+    </td>
+    <td>
+<p>The message contents. You must specify one of these fields, but not both. The SMPP specification imposes a maximum size of 254 bytes on the <code>shortMessage</code> field, and some carriers might limit its size further. The <code>messagePayload</code> field can contain up to 64K bytes; it must start with 0x0424, followed by 2 bytes specifying the payload length, followed by the message contents.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>destAddress</p>
+    </td>
+    <td>
+<p>A ColdFusion array of destination addresses (required).</p>
+<p>You cannot specify individual TON and NPI values for these addresses; all must conform to a single setting.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>sourceAddress</p>
+    </td>
+    <td>
+<p>The address of this application; you can omit this field if it is specified in the configuration file.</p>
+    </td>
+  </tr>
+</table>
+
+<p>You can also set optional fields in the structure, such as a field that requests delivery receipts. For a complete list of fields, see <a href="00000781.htm#1172422">submitMulti command</a> in <i>CFML Reference</i>. For detailed descriptions of these fields, see the documentation for the SUBMIT_MULTI PDU in the SMPP 3.4 specification, which you can download from the SMS Forum at <a href="http://www.smsforum.net/" target="mm_window">www.smsforum.net/</a>. </p>
+<h4><a name="wp142155"></a>Example: Using the submitMulti command in an onIncomingMessage method</h4>
+<p>The following example <code>onIncomingMessage</code> method sends a response that echoes an incoming message to the originator address, and sends a copy of the response to a second address. To test the example, run two instances of the ColdFusion SMS client application. Use the default phone number of 5551212 for the first, and set the second one to have a phone number of 555-1235. (Notice that the second phone number requires a hyphen (-).) Send a message from the first simulator, and the response will appear in both windows.</p>
+<pre>&lt;cffunction name=&quot;onIncomingMessage&quot; output=&quot;no&quot;&gt;
+   &lt;cfargument name=&quot;CFEvent&quot; type=&quot;struct&quot; required=&quot;yes&quot;&gt;
+   &lt;!--- Get the message. ---&gt;
+  &lt;cfset data=CFEvent.DATA&gt;
+  &lt;cfset message=&quot;#data.message#&quot;&gt;
+   &lt;!--- Create the return structure. ---&gt;
+   &lt;cfset retValue = structNew()&gt;
+   &lt;cfset retValue.command = &quot;submitmulti&quot;&gt;
+   &lt;cfset retValue.sourceAddress = arguments.CFEVENT.gatewayid&gt;
+   &lt;cfset retValue.destAddresses=arraynew(1)&gt;
+   &lt;!--- One destination is incoming message originator; 
+               get the address from CFEvent originator ID. ---&gt;
+   &lt;cfset retValue.destAddresses[1] = arguments.CFEvent.originatorid&gt;
+   &lt;cfset retValue.destAddresses[2] = &quot;555-1235&quot;&gt;
+   &lt;cfset retValue.shortMessage = &quot;echo: &quot; &amp; message&gt;
+&lt;cfreturn retValue&gt;
+&lt;/cffunction&gt;
+&lt;/cffunction&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001674.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001676.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001675.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

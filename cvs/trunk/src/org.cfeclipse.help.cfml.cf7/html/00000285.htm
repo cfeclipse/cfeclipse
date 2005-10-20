@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cflock</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000284.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000286.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cflock</h1>
+<h4><a name="wp1355733"></a>Description</h4>
+<p>Ensures the integrity of shared data. Instantiates the following kinds of locks:</p>
+<p><strong>Exclusive</strong>&#160;Allows single-thread access to the CFML constructs in its body. The tag body can be executed by one request at a time. No other requests can start executing code within the tag while a request has an exclusive lock. ColdFusion issues exclusive locks on a first-come, first-served basis.</p>
+<p><strong>Read-only</strong>&#160;Allows multiple requests to access CFML constructs within the tag body concurrently. Use a read-only lock only when shared data is read and not modified. If another request has an exclusive lock on shared data, the new request waits for the exclusive lock to be released.</p>
+<h4><a name="wp3702252"></a>Category</h4>
+<p><a href="00000197.htm#2463072">Application framework tags</a></p>
+<h4><a name="wp3702257"></a>Syntax</h4>
+<pre>&lt;cflock <br />   timeout = &quot;timeout in seconds &quot;<br />   scope = &quot;Application&quot; or &quot;Server&quot; or &quot;Session&quot;<br />   name = &quot;lockname&quot; <br />   throwOnTimeout = &quot;yes&quot; or &quot;no&quot;<br />   type = &quot;readOnly&quot; or &quot;exclusive &quot;&gt; <br />   &lt;!--- CFML to be synchronized ---&gt; <br />&lt;/cflock&gt;
+</pre><h4><a name="wp1955813"></a>See also</h4>
+<p><a href="00000217.htm#1097308"><code>cfapplication</code></a><code>, </code><a href="00000219.htm#3393273"><code>cfassociate</code></a><code>, </code><a href="00000300.htm#1810047"><code>cfmodule</code></a><code>,</code> <a href="00001147.htm#1159066">Using Persistent Data and Locking</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1422498"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>timeout</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Maximum length of time, in seconds, to wait to obtain a lock. If lock is obtained, tag execution continues. Otherwise, behavior depends on <code>throwOnTimeout</code> attribute value. If you set <code>timout=&quot;0&quot;</code>, the timeout is determined by the &quot;Timeout Requests after <i>x</i>&quot; setting in the ColdFusion MX Administrator Settings page, if that setting is enabled. However, if the setting is not enabled, and you set <code>timeout=&quot;0&quot;</code>, ColdFusion can wait indefinitely to obtain the lock.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>scope</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Lock scope. Mutually exclusive with the <code>name</code> attribute. Lock name. Only one request in the specified scope can execute the code within this tag (or within any other <code>cflock</code> tag with the same lock scope) at a time. </p>
+<ul>
+<li>
+   Application
+</li>
+<li>
+   Server
+</li>
+<li>
+   Session
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Lock name. Mutually exclusive with the <code>scope</code> attribute. Only one request can execute the code within a <code>cflock</code><code> </code>tag with a given name at a time. Cannot be an empty string.</p>
+<p>Permits synchronizing access to resources from different parts of an application. Lock names are global to a ColdFusion server. They are shared among applications and user sessions, but not clustered servers.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>throwOnTimeout</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>yes</p>
+    </td>
+    <td>
+<p>How timeout conditions are handled:</p>
+<ul>
+<li>
+   yes: exception is generated for the timeout.
+</li>
+<li>
+   no: execution continues past this tag.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Exclusive</p>
+    </td>
+    <td>
+<ul>
+<li>
+   readOnly: lets more than one request read shared data.
+</li>
+<li>
+   exclusive: lets one request read or write shared data.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>Limit the scope of code that updates shared data structures, files, and CFXs. Exclusive locks are required to ensure the integrity of updates, but read-only locks are faster. In a performance-sensitive application, substitute read-only locks for exclusive locks where possible; for example, when reading shared data.</p><h4><a name="wp1100806"></a>Usage</h4>
+<p>ColdFusion&#160;MX is a multithreaded server; it can process multiple page requests at a time. Use the <code>cflock</code> tag for these purposes:</p>
+<ul>
+<li>
+   To ensure that modifications to shared data and objects made in concurrently executing requests occur sequentially.
+</li>
+<li>
+   Around file manipulation constructs, to ensure that file updates do not fail because files are open for writing by other applications or tags.
+</li>
+<li>
+   Around CFX invocations, to ensure that ColdFusion can safely invoke CFXs that are not implemented in a thread-safe manner. (This applies only to CFXs developed in C++.) 
+</li>
+</ul>
+<p>To work safely with ColdFusion, a C++ CFX that maintains and manipulates shared (global) data structures must be made thread-safe; however, this requires advanced knowledge. You can use a CFML custom tag wrapper around a CFX to make its invocation thread-safe.</p>
+<p>When you display, set, or update variables in a shared scope, use the <code>scope</code> attribute to identify the scope as Server, Application or Session.</p>
+<h4><a name="wp1100868"></a>Deadlocks</h4>
+<p>A deadlock is a state in which no request can execute the locked section of a page. Once a deadlock occurs, neither user can break it, because all requests to the protected section of the page are blocked until the deadlock can be resolved by a lock timeout.</p>
+<p>The <code>cflock</code> tag uses kernel level synchronization objects that are released automatically upon timeout and/or the abnormal termination of the thread that owns them. Therefore, while processing a <code>cflock</code> tag, ColdFusion never deadlocks for an infinite period of time. However, very large timeouts can block request threads for long periods, and radically decrease throughput. To prevent this, always use the minimum timeout value.</p>
+<p>Another cause of blocked request threads is inconsistent nesting of <code>cflock</code> tags and inconsistent naming of locks. If you nest locks, everyone accessing the locked variables must consistently nest <code>cflock</code> tags in the same order. Otherwise, a deadlock can occur. </p>
+<p>These examples show situations that cause deadlocks:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th colspan="2" rowspan="1">
+Example deadlock with two users
+    </th>
+  </tr>
+  <tr>
+    <th>
+User 1
+    </th>
+    <th>
+User 2
+    </th>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Locks the session scope.</p>
+    </td>
+    <td>
+<p>Locks the Application scope.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Deadlock: Tries to lock the Application scope, but it is already locked by User 2.</p>
+    </td>
+    <td>
+<p>Deadlock: Tries to lock the Session scope, but it is already locked by User 1.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following deadlock could occur if you tried to nest an exclusive lock inside a read lock: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Example deadlock with one user
+    </th>
+  </tr>
+  <tr>
+    <th>
+User 1
+    </th>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Locks the Session scope with a read lock.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Attempts to lock the Session scope with an exclusive lock. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Deadlock: Cannot lock the Session scope with an exclusive lock because the scope is already locked for reading.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following code shows this scenario:</p>
+<pre>&lt;cflock timeout = &quot;60&quot; scope = &quot;SESSION&quot; type = &quot;readOnly&quot;&gt;
+   ...............
+   &lt;cflock timeout = &quot;60&quot; scope = &quot;SESSION&quot; type = &quot;Exclusive&quot;&gt;
+   .........
+   &lt;/cflock&gt;
+&lt;/cflock&gt;
+</pre><p>To avoid a deadlock, everyone who nests locks must do so in a well-specified order and name the locks consistently. If you must lock access to the Server, Application, and Session scopes, you must do so in this order:</p>
+<ol>
+<li>
+   Lock the Session scope. In the <code>cflock</code> tag, specify <code>scope</code> = &quot;<code>session&quot;</code>.
+</li>
+<li>
+   Lock the Application scope. In the <code>cflock</code> tag, specify <code>scope = &quot;Application&quot;</code>.
+</li>
+<li>
+   Lock the Server scope. In the <code>cflock</code> tag, specify <code>scope</code> = <code>&quot;server&quot;</code>.
+</li>
+<li>
+   Unlock the Server scope.
+</li>
+<li>
+   Unlock the Application scope.
+</li>
+<li>
+   Unlock the Session scope.
+</li>
+</ol>
+<p><strong>Note: </strong>If you do not have to lock a scope, you can skip any pair of these lock/unlock steps. For example, if you do not have to lock the Server scope, you can skip Steps 3 and 4. Similar rules apply for named locks.</p><p>For more information, see the following:</p>
+<ul>
+<li>
+   <a href="00001147.htm#1159066">Using Persistent Data and Locking</a> in <i>ColdFusion MX Developer's Guide</i> 
+</li>
+<li>
+   Article #20370, <i>ColdFusion Locking Best Practices</i><i>,</i> on the Macromedia website at <a href="http://www.macromedia.com/support/service/" target="mm_window">www.macromedia.com/support/service/</a> 
+</li>
+</ul>
+<h4><a name="wp2316436"></a>Example</h4>
+<pre>&lt;!--- This example shows how cflock can guarantee consistency of data updates<br />to variables in the Application, Server, and Session scopes. ---&gt;
+
+&lt;!---&#160;Copy the following code into an Application.cfm file in the application<br />      root directory. ---&gt;
+&lt;!----------------&#160;&#160;&#160;Beginning of Application.cfm code&#160;&#160;&#160;---------------&gt;
+&lt;!--- cfapplication defines scoping for a ColdFusion application and 
+enables or disables storing of application and session variables.
+Put this tag in a special file called Application.cfm. 
+It is run before any other ColdFusion page in its directory. ---&gt;
+
+&lt;!--- Enable session management for this application. ---&gt;
+&lt;cfapplication name = &quot;ETurtle&quot; 
+   sessionTimeout = #CreateTimeSpan(0,0, 0, 60)# 
+   sessionManagement = &quot;yes&quot;&gt;
+
+&lt;!--- Initialize session and application variables used by E-Turtleneck. 
+Use session scope for the session variables. ---&gt; 
+&lt;cflock scope = &quot;Session&quot; 
+   timeout = &quot;30&quot; type = &quot;Exclusive&quot;&gt;
+   &lt;cfif NOT IsDefined(&quot;session.size&quot;)&gt;
+      &lt;cfset session.size = &quot;&quot;&gt;
+   &lt;/cfif&gt;
+   &lt;cfif NOT IsDefined(&quot;session.color&quot;)&gt;
+      &lt;cfset session.color = &quot;&quot;&gt;
+   &lt;/cfif&gt;
+&lt;/cflock&gt;
+
+&lt;!--- Use an application lock for the application-wide variable that
+      keeps track of the number of turtlenecks sold.
+      For a more efficient, but more complex, way of handling Application scope
+      locking, see &quot;ColdFusion MX Developer's Guide&quot;---&gt;
+&lt;cflock scope = &quot;Application&quot;       timeout = &quot;30&quot; type = &quot;Exclusive&quot;&gt;
+   &lt;cfif NOT IsDefined(&quot;application.number&quot;)&gt;
+      &lt;cfset application.number = 0&gt;
+   &lt;/cfif&gt;
+&lt;/cflock&gt;
+
+&lt;!----------------------- End of Application.cfm -----------------------&gt;    
+
+&lt;h3&gt;cflock Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;form.submit&quot;)&gt;
+&lt;!--- The form has been submitted; process the request. ---&gt;
+   &lt;cfoutput&gt;
+      Thanks for shopping E-Turtleneck. You chose size &lt;b&gt;#form.size#&lt;/b&gt;, 
+      color &lt;b&gt;#form.color#&lt;/b&gt;.&lt;br&gt;&lt;br&gt;
+   &lt;/cfoutput&gt;
+
+&lt;!--- Lock the code that assigns values to session variables. ----&gt; 
+   &lt;cflock scope = &quot;Session&quot; timeout = &quot;30&quot; type = &quot;Exclusive&quot;&gt;
+      &lt;cfparam name = session.size Default = #form.size#&gt;
+      &lt;cfparam name = session.color Default = #form.color#&gt;
+   &lt;/cflock&gt;
+
+&lt;!---- Lock the code that updates the Application scope number of 
+      turtlenecks sold. ---&gt; 
+   &lt;cflock scope = &quot;Application&quot; timeout = &quot;30&quot; type = &quot;Exclusive&quot;&gt;
+      &lt;cfset application.number = application.number + 1&gt;
+   &lt;cfoutput&gt;
+      E-Turtleneck has now sold #application.number# turtlenecks!
+   &lt;/cfoutput&gt;
+   &lt;/cflock&gt;
+
+&lt;cfelse&gt;
+&lt;!--- Show the form only if it has not been submitted. ---&gt;
+   &lt;cflock scope = &quot;Application&quot; timeout = &quot;30&quot; type = &quot;Readonly&quot;&gt;
+      &lt;cfoutput&gt;
+         E-Turtleneck has sold #application.number# turtlenecks to date.
+      &lt;/cfoutput&gt;
+   &lt;/cflock&gt;
+
+   &lt;form method=&quot;post&quot; action=&quot;cflocktest.cfm&quot;&gt;
+      &lt;p&gt;Congratulations! You selected the most comfortable turtleneck in the world.
+      Please select color and size.&lt;/p&gt; 
+      &lt;table cellspacing = &quot;2&quot; cellpadding = &quot;2&quot; border = &quot;0&quot;&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Select a color.&lt;/td&gt;
+            &lt;td&gt;&lt;select type = &quot;Text&quot; name = &quot;color&quot;&gt;
+                  &lt;option&gt;red
+                  &lt;option&gt;white
+                  &lt;option&gt;blue
+                  &lt;option&gt;turquoise
+                  &lt;option&gt;black
+                  &lt;option&gt;forest green
+               &lt;/select&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Select a size.&lt;/td&gt;
+            &lt;td&gt;&lt;select type = &quot;Text&quot; name = &quot;size&quot; &gt;
+                  &lt;option&gt;XXsmall
+                  &lt;option&gt;Xsmall
+                  &lt;option&gt;small
+                  &lt;option&gt;medium
+                  &lt;option&gt;large
+                  &lt;option&gt;Xlarge
+               &lt;/select&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+         &lt;tr&gt;
+            &lt;td&gt;Press Submit when you are finished making your selection.&lt;/td&gt;
+            &lt;td&gt;&lt;input type = &quot;Submit&quot; name = &quot;submit&quot; value = &quot;Submit&quot;&gt; &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/table&gt;
+   &lt;/form&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000284.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000286.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000285.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

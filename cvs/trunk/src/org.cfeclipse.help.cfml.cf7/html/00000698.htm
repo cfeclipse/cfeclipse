@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>onRequest</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000697.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000699.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>onRequest</h1>
+<h4><a name="wp1186088"></a>Description</h4>
+<p>Runs when a request starts, after the <a href="00000700.htm#1188711"><code>onRequestStart</code></a> event handler. If you implement this method, it <strong>must</strong> explicitly call the requested page to process it.</p>
+<h4><a name="wp1186090"></a>Syntax</h4>
+<pre>&lt;cffunction name=&quot;onRequest&quot; returnType=&quot;void&quot;&gt;
+   &lt;cfargument name=&quot;<i>targetPage</i>&quot; type=&quot;String&quot; required=true/&gt;
+   ...
+   &lt;cfinclude template=&quot;#Arguments.targetPage#&quot;&gt;
+   ...
+&lt;/cffunction&gt;
+</pre><h4><a name="wp1186094"></a>See also</h4>
+<p><a href="00000700.htm#1188711"><code>onRequestStart</code></a>, <a href="00000699.htm#1186124"><code>onRequestEnd</code></a>, <a href="00000694.htm#1190269">Method summary</a>, <a href="00001120.htm#1191853">Managing requests in Application.cfc</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1186096"></a>Parameters</h4>
+<p>ColdFusion MX passes the following parameters to the method:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><i>targetPage</i></p>
+    </td>
+    <td>
+<p>Path from the web root to the requested page.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1186115"></a>Returns</h4>
+<p>This method does not return a value; do not use the <code>cfreturn</code> tag.</p>
+<h4><a name="wp1186117"></a>Usage</h4>
+<p>This event handler provides an optional request filter mechanism for CFML page requests (that is, .cfm pages requested using a browser). Use it to intercept requests to target pages and override the default behavior of running the requested pages. The following rules specify where and how you use the <code>onRequest</code> method. </p>
+<ul>
+<li>
+   Implement this method only if the following are true:
+<ul><li>The directory, and any subdirectories affected by this Application.cfc contain CFM files and do not contain any CFC files that are intended to be accessed as web services, using Flash Remoting, or using an event gateway.</li>
+<li>You want to intercept the request and process it in a special way.</li>
+</ul></li>
+<li>
+   If you do not implement this method, ColdFusion automatically calls the target page (or the CFC for a web service, Flash Remoting, or event gateway event).
+</li>
+<li>
+   If you implement this method, it <strong>must</strong> explicitly call the target page, normally by using a <code>cfinclude</code> tag.
+</li>
+<li>
+   Do <strong>not</strong> implement the onRequest method in any Application.cfc file that affects .cfc files that implement web services, process Flash Remoting or event gateway requests; ColdFusion MX will not execute the requests if you implement this method. 
+</li>
+<li>
+   Code in this method that precedes the call to the target page can perform the same functions as the <code>onRequestStart</code> method, and shares the Variables scope with the target page. 
+</li>
+<li>
+   Code in this method that follows the call to the target page can perform the same functions as the <code>onRequestEnd</code> method, and shares the Variables scope with the target page.
+</li>
+<li>
+   If you implement this method, you can also implement the <code>onRequestStart</code> and <code>onRequestEnd</code> methods.
+</li>
+</ul>
+<p>You can use this method to do preprocessing that is required for all requests. Typical uses include filtering and modifying request page contents (such as removing extraneous white space), or creating a switching mechanism that determines the exact page to display based on available parameters.</p>
+<h4><a name="wp1186119"></a>Example</h4>
+<pre>&lt;cffunction name=&quot;onRequest&quot;&gt;
+   &lt;cfargument name=&quot;targetPage&quot; type=&quot;String&quot; required=true/&gt;
+   &lt;cfset var content=&quot;&quot;&gt;
+   &lt;cfsavecontent variable=&quot;content&quot;&gt;
+      &lt;cfinclude template=&quot;#Arguments.targetPage#&quot;&gt;
+   &lt;/cfsavecontent&gt;
+   &lt;cfoutput&gt;
+      #replace(content, &quot;report&quot;, &quot;MyCompany Quarterly Report&quot;, &quot;all&quot;)#
+   &lt;/cfoutput&gt;
+&lt;/cffunction&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000697.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000699.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000698.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

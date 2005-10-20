@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Trim</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000655.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000657.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Trim</h1>
+<h4><a name="wp138804"></a>Description</h4>
+<p>Removes leading and trailing spaces from a string.</p>
+<h4><a name="wp138806"></a>Returns</h4>
+<p>A copy of <i>string</i>, after removing leading and trailing spaces. </p>
+<h4><a name="wp138808"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp138813"></a>Function syntax</h4>
+<pre><code><strong>Trim</strong></code>(<i>string</i>)
+</pre><h4><a name="wp138815"></a>See also</h4>
+<p><a href="00000583.htm#133693">LTrim</a>, <a href="00000620.htm#136141">RTrim</a></p>
+<h4><a name="wp138823"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp138834"></a>Example</h4>
+<pre>&lt;h3&gt;Trim Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.myText&quot;)&gt;
+   &lt;cfoutput&gt;
+      &lt;pre&gt;
+         Your string:   &quot;#FORM.myText#&quot;
+         Your string:   &quot;#<strong>Trim(FORM.myText)</strong>#&quot;
+         (trimmed on both sides)
+      &lt;/pre&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+&lt;form method = &quot;post&quot; action = &quot;trim.cfm&quot;&gt;
+&lt;p&gt;Type in some text, and it will be modified by trim to remove leading <br />spaces from the left and right
+&lt;p&gt;&lt;input type = &quot;Text&quot; name = &quot;myText&quot; value = &quot;   TEST   &quot;&gt;
+&lt;p&gt;&lt;input type = &quot;Submit&quot; name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000655.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000657.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000656.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

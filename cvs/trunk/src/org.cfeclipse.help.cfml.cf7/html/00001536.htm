@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Handling return values from a web service</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001535.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001537.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Handling return values from a web service</h1>
+<p>Web service operations often return information back to your application. You can determine the name and data type of returned information by examining subelements of the message and operation elements in the WSDL file. </p>
+<p>The following example shows a portion of the WSDL file for the TemperatureService web service:</p>
+<pre><strong>&lt;message name=&quot;getTempRequest&quot;&gt;</strong>
+<strong>   &lt;part name=&quot;zipcode&quot; type=&quot;xsd:string&quot;/&gt;</strong>
+<strong>&lt;/message&gt;</strong>
+<code><strong>&lt;message name=&quot;getTempResponse&quot;&gt;</strong></code>
+<code><strong>   &lt;part name=&quot;return&quot; type=&quot;xsd:float&quot;/&gt;</strong></code>
+<code><strong>&lt;/message&gt;</strong></code>
+&lt;portType name=&quot;TemperaturePortType&quot;&gt;
+<code><strong>   &lt;operation name=&quot;getTemp&quot;&gt;</strong></code>
+      &lt;input message=&quot;tns:getTempRequest&quot;/&gt;
+<code><strong>      &lt;output message=&quot;tns:getTempResponse&quot;/&gt;</strong></code>
+<code><strong>   &lt;/operation&gt;</strong></code>
+&lt;/portType&gt; 
+</pre><p>The operation getTemp returns a message of type getTempResponse. The message statement in the WSDL file defines the getTempResponse message as containing a single string parameter named <code>return</code>. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001535.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001537.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001536.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Event gateway application models</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001639.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001641.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Event gateway application models</h1>
+<p>Event gateway applications follow one or both of the following models: </p>
+<ul>
+<li>
+   <strong>Responder applications</strong>&#160;Where event messages from external sources initiate a response from a ColdFusion listener CFC
+</li>
+<li>
+   <strong>Initiator applications</strong>&#160;Where a ColdFusion application generates event messages to send out using the event gateway
+</li>
+</ul>
+<p>Unlike other ColdFusion applications, responder applications are request-free. They do not have CFM pages, just CFCs, and they do not respond to HTTP requests. Instead, ColdFusion the event gateway service deliver the event messages directly to the listener CFC, and the CFC listener method returns any response directly to the event gateway service. Applications that allow mobile phone owners to get a news feed, check for text messages, or request other forms of information follow this model.</p>
+<p>Initiator applications are similar to most ColdFusion applications. At some point, ColdFusion executes a CFM page in response to a request. (The request could be initiated by the ColdFusion MX Administrator Scheduled Tasks page.) ColdFusion sends a message to the event gateway when the application calls a CFML <code>SendGatewayMessage</code> function. An application that uses SMS to notify customers when orders have been shipped follows this model.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001639.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001641.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001640.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>onApplicationStart</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000695.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000697.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>onApplicationStart</h1>
+<h4><a name="wp1169605"></a>Description</h4>
+<p>Runs when ColdFusion MX receives the first request for a page in the application.</p>
+<h4><a name="wp1169607"></a>Syntax</h4>
+<pre>&lt;cffunction name=&quot;onApplicationStart&quot; returnType=&quot;boolean&quot;&gt;
+   ...
+   &lt;cfreturn <i>Boolean</i>&gt;
+&lt;/cffunction&gt;
+</pre><h4><a name="wp1169609"></a>See also</h4>
+<p><a href="00000695.htm#1188612"><code>onApplicationEnd</code></a>, <a href="00000694.htm#1190269"><code>Method summary</code></a>, <a href="00001118.htm#1195565">Managing the application with Application.cfc</a> in <a href="00001102.htm#1101532">Designing and Optimizing a ColdFusion&#160;Application</a> in <a href="00000692.htm#1116669">Application.CFC Reference</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1190506"></a>Returns</h4>
+<p>A Boolean value: True if the application startup code ran successfully; False, otherwise. You do not need to explicitly return a True value if you omit the <code>cffunction</code> tag <code>returntype</code> attribute.</p>
+<h4><a name="wp1185099"></a>Usage</h4>
+<p>Use this method for application initialization code; for example, use it to set Application scope variables, to determine whether a required data source or other resource is available, or to log the application start. You do not have to lock the Application scope if you set Application variables in this method, and you can reference Application scope variables as you normally do; for example, as Application.myVariable.</p>
+<p>This method can access the requested page's Variables scope only if the Application.cfc file includes an <code>onRequest</code> method that calls the page. </p>
+<p>If you call this method explicitly, ColdFusion does not start the application; it does execute the method code, but does not lock the Application scope while the method executes.</p>
+<p>If this method throws an uncaught exception or returns False, the application does not start and ColdFusion MX does not process any pages in the application. In this case, ColdFusion will run the <code>onApplicationStart</code> method the next time a user requests a page in the application.</p>
+<h4><a name="wp1169644"></a>Example</h4>
+<p>The following example tests for the availability of a database. If the database is not available it reports and logs the error, and does not start the application; if it is available, the method initializes two Application scope variables.</p>
+<pre>&lt;cffunction name=&quot;onApplicationStart&quot;&gt;
+   &lt;cftry&gt;
+      &lt;!--- Test whether the DB is accessible by selecting some data. ---&gt;
+      &lt;cfquery name=&quot;testDB&quot; dataSource=&quot;cfdocexamples&quot; maxrows=&quot;2&quot;&gt;
+         SELECT Emp_ID FROM employee
+      &lt;/cfquery&gt;
+      &lt;!--- If we get a database error, report an error to the user, log the
+            error information, and do not start the application. ---&gt;
+      &lt;cfcatch type=&quot;database&quot;&gt;
+         &lt;cfoutput&gt;
+            This application encountered an error&lt;br&gt;
+            Please contact support.
+         &lt;/cfoutput&gt;
+         &lt;cflog file=&quot;#This.Name#&quot; type=&quot;error&quot; 
+            text=&quot;cfdocexamples DB not available. message: #cfcatch.message# <br />Detail: #cfcatch.detail# Native Error: #cfcatch.NativeErrorCode#&quot; &gt;
+         &lt;cfreturn False&gt;
+      &lt;/cfcatch&gt;
+   &lt;/cftry&gt;
+   &lt;cflog file=&quot;#This.Name#&quot; type=&quot;Information&quot; text=&quot;Application Started&quot;&gt;
+   &lt;!--- You do not have to lock code in the onApplicationStart method that sets
+         Application scope variables. ---&gt;
+   &lt;cfscript&gt;
+      Application.availableResources=0;
+      Application.counter1=1;
+   &lt;/cfscript&gt;
+   &lt;cfreturn True&gt;
+&lt;/cffunction&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000695.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000697.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000696.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

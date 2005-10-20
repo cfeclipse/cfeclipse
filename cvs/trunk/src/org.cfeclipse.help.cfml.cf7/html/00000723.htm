@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CFEvent class</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000722.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000724.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CFEvent class</h1>
+<pre>coldfusion.gateway.CFEvent
+</pre><p>The Gateway class sends and receives <code>CFEvent</code> instances to communicate with the ColdFusion listener CFC or application. The <code>CFEvent</code> instances correspond to <a href="00000744.htm#1182144">CFML CFEvent structure</a>s that ColdFusion application listener CFC methods receive and contain the message structures that ColdFusion application code sends to the gateway.</p>
+<ul>
+<li>
+   The Gateway notifies ColdFusion of a message by sending a CFEvent instance in <code>GatewayServices.</code><a href="00000719.htm#1174238">addEvent</a> method. 
+</li>
+<li>
+   The Gateway receives a CFEvent instance when ColdFusion calls the gateway's <a href="00000710.htm#1172018">outgoingMessage</a> method.
+</li>
+</ul>
+<p>The CFEvent Class extends the java.util.Hashtable class and has the following methods:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Methods
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000724.htm#1179037">CFEvent</a>(String <i>gatewayID</i>)
+</pre>    </td>
+    <td>
+<p><code>CFEvent</code> constructor.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><code>String </code><a href="00000729.htm#1174589"><code>getGatewayID</code></a><code>()</code>
+</pre>    </td>
+    <td>
+<p>Returns the gateway ID (set in the CFEvent constructor).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>void <a href="00000732.htm#1176556">setCFCMethod</a>(String <i>method</i>)
+<code>String </code><a href="00000725.htm#1174437"><code>getCFCMethod</code></a><code>()</code>
+</pre>    </td>
+    <td>
+<p>Sets or gets the name of the CFC method that receives an incoming message.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>void <a href="00000733.htm#1176657">setCFCPath</a>(String <i>path</i>)
+<code>String </code><a href="00000726.htm#1174475"><code>getCFCPath</code></a><code>()</code>
+</pre>    </td>
+    <td>
+<p>Sets or gets the path to the application listener CFC that processes the event.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>void <a href="00000734.htm#1176676">setCFCTimeout</a>(String <i>seconds</i>)
+<code>String </code><a href="00000727.htm#1174513"><code>getCFCTimeout</code></a><code>()</code>
+</pre>    </td>
+    <td>
+<p>Sets or gets the time-out, in seconds, for the listener CFC to process the event request. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>void <a href="00000735.htm#1176695">setData</a>(Map <i>data</i>)
+<code>Map </code><a href="00000728.htm#1178562">getData</a><code>()</code>
+</pre>    </td>
+    <td>
+<p>Sets or gets the event data structure, which contains the message contents and any other gateway-specific information. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>void <a href="00000736.htm#1176731">setGatewayType</a>(String <i>type</i>)
+<code>String </code><a href="00000730.htm#1174627"><code>getGatewayType</code></a><code>()</code>
+</pre>    </td>
+    <td>
+<p>Sets or gets the event gateway type identifier, such as SMS.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>void <a href="00000737.htm#1176586">setOriginatorID</a>(String <i>id</i>)
+<code>String </code><a href="00000731.htm#1174665"><code>getOriginatorID</code></a><code>()</code>
+</pre>    </td>
+    <td>
+<p>Sets or gets the gateway- or protocol-specific Identity of the originator of a message.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000722.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000724.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000723.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

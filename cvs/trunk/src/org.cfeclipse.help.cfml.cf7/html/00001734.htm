@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Administrator API</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001733.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001735.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Administrator API</h1>
+<p>You can perform most ColdFusion&#160;MX Administrator tasks programmatically using the Administrator API. The Administrator API consists of a set of ColdFusion components (CFCs) that contain methods you call to perform Administrator tasks. For example, you use the <code>setMSQL</code> method of datasource.cfc to add a SQL Server data source.</p>
+<p>The CFCs for the Administrator API are located in the <i>cf_web_root</i>/CFIDE/adminapi directory, and each CFC corresponds to an area of the ColdFusion&#160;MX Administrator, as the following table shows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+CFC
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>administrator.cfc</p>
+    </td>
+    <td>
+<p>Contains basic Administrator functionality, including login, logout, the Migration Wizard, and the Setup Wizard. You must call the <code>login</code> method before calling any other methods in the Administrator API.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>base.cfc</p>
+    </td>
+    <td>
+<p>Base object for all other Administrator API CFCs.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>datasource.cfc</p>
+    </td>
+    <td>
+<p>Add, modify, and delete ColdFusion data sources.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>debugging.cfc</p>
+    </td>
+    <td>
+<p>Manage debug settings.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>eventgateway.cfc</p>
+    </td>
+    <td>
+<p>Manage event gateways.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>extensions.cfc</p>
+    </td>
+    <td>
+<p>Manage custom tags, mappings, CFXs, applets, CORBA, and web services.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>mail.cfc</p>
+    </td>
+    <td>
+<p>Manage ColdFusion mail settings.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>runtime.cfc</p>
+    </td>
+    <td>
+<p>Manage runtime settings for fonts, cache, charts, configuration, and other settings.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>security.cfc</p>
+    </td>
+    <td>
+<p>Manage passwords, RDS, and sandbox security.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>serverinstance.cfc</p>
+    </td>
+    <td>
+<p>Start, stop, and restart JRun servers. This CFC only works when running the multiserver configuration.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The adminapi directory also contains an Application.cfm file and two subdirectories.</p>
+<p><strong>Note: </strong>If you are using sandbox security, you must enable access to the <i>cf_web_root</i>/CFIDE/adminapi directory to use the Administrator API.</p><p>There are two styles of methods in the Administrator API:</p>
+<ul>
+<li>
+   <strong>Method arguments</strong>&#160;When setting complex or varied values, the Administrator API uses method arguments.
+</li>
+<li>
+   <strong>Getting and setting simple values</strong>&#160;When setting simple values, such as true or false debug settings, the Administrator API uses get and set property methods.
+</li>
+</ul>
+<p>To view the methods, method arguments, and documentation for the Administrator API CFCs, use the CFC Explorer. For example, to view datasource.cfc when running in the server configuration, open a browser to http://localhost:8500/CFIDE/adminapi/datasource.cfc. </p>
+<h4>To use the Administrator API:</h4>
+<ol>
+<li>
+   Instantiate administrator.cfc:
+<pre>
+&lt;cfscript&gt;
+	// Login is always required.
+	adminObj = createObject(&quot;component&quot;,&quot;cfide.adminapi.administrator&quot;);
+</pre>
+<p><strong>Tip: </strong>You can instantiate administrator.cfc and call the <code>login</code> method in a single line of code, as the following example shows:</p><pre>
+createObject(&quot;component&quot;,&quot;cfide.adminapi.administrator&quot;).login(&quot;admin&quot;);
+</pre>
+</li>
+<li>
+   Call the administrator.cfc <code>login</code> method, passing the ColdFusion&#160;MX Administrator password or the RDS password:
+<pre>
+adminObj.login(&quot;admin&quot;);
+</pre>
+</li>
+<li>
+   Instantiate the desired CFC:
+<pre>
+myObj = createObject(&quot;component&quot;,&quot;cfide.adminapi.debugging&quot;);
+</pre>
+</li>
+<li>
+   Call the desired CFC method (this example enables debugging):
+<pre>
+myObj.setDebugProperty(propertyName=&quot;enableDebug&quot;, propertyValue=&quot;true&quot;);
+</pre>
+</li>
+</ol>
+<h2><a name="wp1330009"></a>Examples</h2>
+<p>The following example adds a SQL Server data source:</p>
+<pre>&lt;cfscript&gt;
+   // Login is always required. This example uses two lines of code.
+   adminObj = createObject(&quot;component&quot;,&quot;cfide.adminapi.administrator&quot;);
+   adminObj.login(&quot;admin&quot;);
+
+   // Instantiate the data source object.
+   myObj = createObject(&quot;component&quot;,&quot;cfide.adminapi.datasource&quot;);
+
+   // Create a DSN.
+   myObj.setMSSQL(driver=&quot;MSSQLServer&quot;, 
+      name=&quot;northwind_MSSQL&quot;, 
+      host = &quot;10.1.147.73&quot;, 
+      port = &quot;1433&quot;,
+      database = &quot;northwind&quot;,
+      username = &quot;sa&quot;,
+      login_timeout = &quot;29&quot;,
+      timeout = &quot;23&quot;,
+      interval = 6,
+      buffer = &quot;64000&quot;,
+      blob_buffer = &quot;64000&quot;,
+      setStringParameterAsUnicode = &quot;false&quot;,
+      description = &quot;Northwind SQL Server&quot;,
+      pooling = true,
+      maxpooledstatements = 999,
+      enableMaxConnections = &quot;true&quot;,
+      maxConnections = &quot;299&quot;,
+      enable_clob = true,
+      enable_blob = true,
+      disable = false,
+      storedProc = true,
+      alter = false,
+      grant = true,
+      select = true,
+      update = true,
+      create = true,
+      delete = true,
+      drop = false,
+      revoke = false );
+&lt;/cfscript&gt;
+</pre><p>The following example adds the same SQL Server data source, but uses the <code>argumentCollection</code> attribute to pass all method arguments in a structure:</p>
+<pre>&lt;cfscript&gt;
+   // Login is always required. This example uses a single line of code.
+   createObject(&quot;component&quot;,&quot;cfide.adminapi.administrator&quot;).login(&quot;admin&quot;);
+
+   // Instantiate the data source object.
+   myObj = createObject(&quot;component&quot;,&quot;cfide.adminapi.datasource&quot;);
+
+   // Required arguments for a data source.
+   stDSN = structNew();
+   stDSN.driver = &quot;MSSQLServer&quot;;
+   stDSN.name=&quot;northwind_MSSQL&quot;;
+   stDSN.host = &quot;10.1.147.73&quot;;
+   stDSN.port = &quot;1433&quot;;
+   stDSN.database = &quot;northwind&quot;;
+   stDSN.username = &quot;sa&quot;;
+
+   // Optional and advanced arguments.
+   stDSN.login_timeout = &quot;29&quot;;
+   stDSN.timeout = &quot;23&quot;;
+   stDSN.interval = 6;
+   stDSN.buffer = &quot;64000&quot;;
+   stDSN.blob_buffer = &quot;64000&quot;;
+   stDSN.setStringParameterAsUnicode = &quot;false&quot;;
+   stDSN.description = &quot;Northwind SQL Server&quot;;
+   stDSN.pooling = true;
+   stDSN.maxpooledstatements = 999;
+   stDSN.enableMaxConnections = &quot;true&quot;;
+   stDSN.maxConnections = &quot;299&quot;;
+   stDSN.enable_clob = true;
+   stDSN.enable_blob = true;
+   stDSN.disable = false;
+   stDSN.storedProc = true;
+   stDSN.alter = false;
+   stDSN.grant = true;
+   stDSN.select = true;
+   stDSN.update = true;
+   stDSN.create = true;
+   stDSN.delete = true;
+   stDSN.drop = false;
+   stDSN.revoke = false;
+
+   //Create a DSN.
+   myObj.setMSSQL(argumentCollection=stDSN);
+&lt;/cfscript&gt;
+&lt;!--- Optionally dump the stDSN structure. ---&gt;
+&lt;!--- 
+&lt;cfoutput&gt;
+&lt;cfdump var=&quot;#stDSN#&quot;&gt;
+&lt;/cfoutput&gt;
+---&gt;
+</pre><p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001733.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001735.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001734.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

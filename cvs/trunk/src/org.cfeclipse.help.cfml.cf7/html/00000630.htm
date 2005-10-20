@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>SpanIncluding</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000629.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000631.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>SpanIncluding</h1>
+<h4><a name="wp136816"></a>Description</h4>
+<p>Gets characters from a string<i>,</i><i> </i>from the beginning to a character that is not in a specified set of characters. The search is case-sensitive. </p>
+<h4><a name="wp136818"></a>Returns</h4>
+<p>A string; characters from <i>string</i><i>,</i><i> </i>from the beginning to a character that is not in <i>set</i>.</p>
+<h4><a name="wp136820"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp136825"></a>Function syntax</h4>
+<pre><code><strong>SpanIncluding</strong></code>(<i>string</i>, <i>set</i>)
+</pre><h4><a name="wp136827"></a>See also</h4>
+<p><a href="00000502.htm#3732032"><code>GetToken</code></a>, <a href="00000629.htm#136759"><code>SpanExcluding</code></a>; <a href="00001127.htm#1173434">Caching parts of ColdFusion pages</a>in <a href="00001102.htm#1101532">Designing and Optimizing a ColdFusion&#160;Application</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp136835"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains the search string.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>set</p>
+    </td>
+    <td>
+<p>A string or a variable that contains a set of characters. Must contain one or more characters.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp136850"></a>Example</h4>
+<pre>&lt;h3&gt;SpanIncluding Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.myString&quot;)&gt;
+&lt;p&gt;Your string was &lt;cfoutput&gt;#FORM.myString#&lt;/cfoutput&gt;
+&lt;p&gt;Your set of characters was &lt;cfoutput&gt;#FORM.mySet#&lt;/cfoutput&gt;
+&lt;p&gt;Your string, until the characters in the set have been found, is:
+&lt;cfoutput&gt;#<strong>SpanIncluding(FORM.myString, FORM.mySet)</strong>#&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;p&gt;Returns characters of a string, from beginning to a character <br />that is not in set. The search is case-sensitive.
+
+&lt;form action = &quot;spanincluding.cfm&quot; method=&quot;post&quot;&gt;
+&lt;p&gt;Enter a string:
+&lt;br&gt;&lt;input type = &quot;Text&quot; name = &quot;myString&quot; value = &quot;Hey, you!&quot;&gt;
+&lt;p&gt;And a set of characters:
+&lt;br&gt;&lt;input type = &quot;Text&quot; name = &quot;mySet&quot; value = &quot;ey,H&quot;&gt;
+&lt;br&gt;&lt;input type = &quot;Submit&quot; name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000629.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000631.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000630.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

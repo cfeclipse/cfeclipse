@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Working with action pages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001334.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001336.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Working with action pages</h1>
+<p>When the user submits a form, ColdFusion runs the action page specified by the <code>cfform</code> or <code>form</code> tag <code>action</code> attribute. A ColdFusion action page is like any other application page, except that you can use the form variables that are passed to it from an associated form. The following sections describe how to create effective action pages.</p>
+<ul>
+<li>
+   <a href="00001335.htm#1148478">Processing form variables on action pages</a>
+</li>
+<li>
+   <a href="00001336.htm#1110454">Using form data to generate SQL statements</a>
+</li>
+<li>
+   <a href="00001337.htm#1096376">Creating action pages</a>
+</li>
+<li>
+   <a href="00001338.htm#1110466">Testing for a variable's existence</a>
+</li>
+<li>
+   <a href="00001339.htm#1133528">Requiring users to enter values in form fields</a>
+</li>
+<li>
+   <a href="00001340.htm#1110432">Form variable notes and considerations</a>
+</li>
+</ul>
+<h2><a name="wp1148478"></a>Processing form variables on action pages</h2>
+<p>The action page gets a form variable for every form control that contains a value when the form is submitted.</p>
+<p><strong>Note: </strong>If multiple controls have the same name, one form variable is passed to the action page with a comma-delimited list of values.</p><p>A form variable's name is the name that you assigned to the form control on the form page. Refer to the form variable by name within tags, functions, and other expressions on an action page. </p>
+<p>On the action page, the form variables are in the Form scope, so you should prefix them with &quot;Form.&quot; to explicitly tell ColdFusion that you are referring to a form variable. For example, the following code references the LastName form variable for output on an action page:</p>
+<pre>&lt;cfoutput&gt;
+   #Form.LastName#
+&lt;/cfoutput&gt;
+</pre><p>The Form scope also contains a list variable called <code>Form.fieldnames</code>. It contains a list of all form variables submitted to the action page. If no form variables are passed to the action page, ColdFusion does not create the <code>Form.fieldnames</code> list. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001334.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001336.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001335.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the command-line interface</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001754.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001756.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the command-line interface</h1>
+<p>You can also run the Web Server Configuration Tool through a command-line interface. </p>
+<h4>To run the command-line interface:</h4>
+<ol>
+<li>
+   Open a console window.
+</li>
+<li>
+   Change to the <i>cf_root</i>/runtime/bin (server configuration) or <i>jrun_root</i>/bin (multiserver configuration) directory.
+</li>
+<li>
+   Execute the wsconfig.exe (Windows) or wsconfig (UNIX) command:
+<pre>
+&#160;&#160;&#160;wsconfig.exe [-options]
+&#160;&#160;&#160;./wsconfig [-options]
+</pre>
+</li>
+</ol>
+<p>The following table describes the options:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Option
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>-ws
+</pre>    </td>
+    <td>
+<p>Specifies the web server, as follows:</p>
+<ul>
+<li>
+   IIS 
+</li>
+<li>
+   Apache 
+</li>
+<li>
+   SunOne
+</li>
+<li>
+   iPlanet 
+</li>
+<li>
+   NES 
+</li>
+</ul>
+<p>The web server name you supply is not case-sensitive.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-dir 
+</pre>    </td>
+    <td>
+<p>Specifies the path to the configuration directory (Apache conf or NES/iPlanet config).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-site
+</pre>    </td>
+    <td>
+<p>Specifies the IIS website name (case-sensitive). Specify All or 0 to configure the connector at a global level, which applies to all IIS websites.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-host 
+</pre>    </td>
+    <td>
+<p>Specifies the ColdFusion server address. The default value is <code>localhost</code>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-server
+</pre>    </td>
+    <td>
+<p>Specifies the ColdFusion server name. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-username
+</pre>    </td>
+    <td>
+<p>Specifies a username defined to the JRun server. The default value is <code>guest account</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-password
+</pre>    </td>
+    <td>
+<p>Specifies a password that corresponds to <code>-username</code>. The default value is <code>guest account</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-norestart
+</pre>    </td>
+    <td>
+<p>Specifies not to restart the web server.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-cluster
+</pre>    </td>
+    <td>
+<p>Specifies the JRun cluster name. Use this option to define a connection to a JRun cluster instead of a single server.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-l
+</pre>    </td>
+    <td>
+<p>Enables verbose logging for the connector.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-a
+</pre>    </td>
+    <td>
+<p>Enables native OS memory allocation. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>-map</code> <code>.cfm,.cfc,.cfml,.cfr,<br />.cfswf,.jsp,.jws</code></p>
+    </td>
+    <td>
+<p>Specifies the extension mappings list. (To use the web server connector with ColdFusion&#160;MX, you should specify .cfm,.cfc,.cfml,.cfr,.cfswf,.jsp,.jws.) </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-filter-prefix-only
+</pre>    </td>
+    <td>
+<p>(IIS 5 only) Sets <code>ignoresuffixmap=true</code> in the jrun.ini file. This means that the connector module runs as an IIS extension.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-coldfusion
+</pre>    </td>
+    <td>
+<p>Ensures that the proper ColdFusion&#160;MX mappings are set (.cfm, .cfml, .cfc, .cfswf, .cfr, .jsp, .jws), and, if IIS, <code>filter-prefix-only</code> is implicitly specified.</p>
+<p><strong>Always use this option when configuring a web server for use with </strong>ColdFusion&#160;MX<strong>.</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-upgrade
+</pre>    </td>
+    <td>
+<p>Upgrades existing configured connectors with newer modules from a newer wsconfig.jar file. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-service
+</pre>    </td>
+    <td>
+<p>Specifies the Apache Windows service name. The default value is <code>Apache</code>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-bin
+</pre>    </td>
+    <td>
+<p>Specifies the path to the Apache server binary file (apache.exe in Windows, httpd on UNIX).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-script
+</pre>    </td>
+    <td>
+<p>Specifies the path to the Apache UNIX control script file (apachectl, but slightly different with certain Apache variants, such as Stronghold).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-v
+</pre>    </td>
+    <td>
+<p>Enables verbose output from the Web Server Configuration Tool.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-cfwebroot
+</pre>    </td>
+    <td>
+<p>Specifies the directory corresponding to <i>cf_root</i>/wwwroot. If you use this option, the Web Server Configuration Tool creates web server mappings for /CFIDE and /cfdocs, each of which points to the corresponding directories under <i>cf_root</i>/wwwroot. This option is useful in a multihoming or hosting environment where you want multiple applications to share the ColdFusion&#160;MX Administrator.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-list
+</pre>    </td>
+    <td>
+<p>Lists all configured web servers.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-list -host server-host
+</pre>    </td>
+    <td>
+<p>Lists all JRun servers on the specified host.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-remove
+</pre>    </td>
+    <td>
+<p>Removes a configuration. Requires the <code>-ws</code> and either the <code>-dir</code> or <code>-site</code> options.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>-uninstall
+</pre>    </td>
+    <td>
+<p>Uninstalls all configured connectors.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>-h 
+</pre>    </td>
+    <td>
+<p>Lists all parameters. </p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp103741"></a>Using the batch files and shell scripts</h3>
+<p>The ColdFusion&#160;MX server configuration includes batch files and shell scripts that implement typical command-line connector configurations. These files are in the <i>cf_root</i>/bin/connectors directory. For example, the IIS_connector.bat file configures all sites in IIS to site 0, which establishes a globally defined connector so that all sites inherit the filter and mappings.</p>
+<p>If you use Apache or Sun ONE Web Server, use these files as prototypes, editing and saving them as appropriate for your site.</p>
+<h3><a name="wp103748"></a>Command-line interface examples</h3>
+<p>This section provides examples of multiple use-cases for different web servers:</p>
+<ul>
+<li>
+   Configure a specific IIS site:
+<pre>
+cf_root/runtime/bin/wsconfig.exe -server coldfusion -ws iis -site &quot;web31&quot; <br />
+-coldfusion -v
+</pre>
+<p>On systems where all sites run ColdFusion, there is generally no need to configure an individual site. </p>
+</li>
+<li>
+   Configure all existing IIS sites (ISPs):
+<pre>
+cf_root/runtime/bin/wsconfig.exe -server coldfusion -ws iis -site 0 <br />
+-coldfusion -cfwebroot C:\Inetpub\wwwroot -v
+</pre>
+<p>The <code>-cfwebroot</code> option allows all sites to share the ColdFusion&#160;MX Administrator that runs under C:\Inetpub\wwwroot. This example does not automatically configure newly added sites after the first <code>-site 0</code> run, but you can rerun with <code>-site 0</code> at a later time, and the Web Server Configuration Tool configures new sites only.</p>
+</li>
+<li>
+   Configure Apache on UNIX #1:
+<pre>
+cf_root/runtime/bin/wsconfig -server coldfusion -ws Apache <br />
+-bin /opt/apache2/bin/httpd -script /opt/apache2/bin/apachectl <br />
+-dir /opt/apache2/conf -coldfusion -v
+</pre>
+</li>
+<li>
+   Configure Apache on UNIX #2:
+<pre>
+cf_root/runtime/bin/wsconfig -server coldfusion -ws Apache<br />
+-bin /usr/bin/httpd -script /usr/bin/httpd -dir /etc/httpd/conf <br />
+-coldfusion -v
+</pre>
+</li>
+<li>
+   Configure Apache in Windows:
+<pre>
+cf_root/runtime/bin/wsconfig.exe -server coldfusion -ws apache -dir 
+&quot;c:\program&#160;files\apache&#160;group\apache2\conf&quot; -coldfusion -v
+</pre>
+</li>
+<li>
+   Configure Netscape on UNIX:
+<pre>
+cf_root/runtime/bin/wsconfig -server coldfusion -ws nes <br />
+-dir [path to config] -coldfusion -v
+</pre>
+</li>
+<li>
+   Configure Sun ONE Web Server on UNIX:
+<pre>
+cf_root/runtime/bin/wsconfig -server coldfusion -ws sunone <br />
+-dir [path to config] -coldfusion -v
+</pre>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001754.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001756.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001755.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

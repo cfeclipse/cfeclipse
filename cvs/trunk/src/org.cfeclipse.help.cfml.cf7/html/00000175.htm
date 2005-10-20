@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 3: Adding data using the cfinsert tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000174.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000176.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 3: Adding data using the cfinsert tag</h1>
+<p>For developers who prefer not to have to remember SQL syntax to add information to SQL databases, ColdFusion simplifies the coding for inserting SQL rows through the use of the <code>cfinsert</code> tag. As you might expect, the <code>cfinsert</code> tag has <code>datasource</code> and <code>tablename</code> attributes to specify where the data is inserted. The tag also has a <code>formfields</code> attribute to identify which fields to insert. The <code>formfields</code> attribute specifies a comma-separated list of form fields to insert. If this attribute is not specified, all the fields in the form are included in the operation. The following example uses the <code>cfinsert</code> tag with these attributes:</p>
+<pre>&lt;cfinsert datasource=&quot;CompassTravel&quot; tablename=&quot;Trips&quot; 
+   formfields=&quot;tripName, eventType, tripDescription, tripLocation,
+   departureDate, returnDate, price, tripLeader, photo, baseCost, 
+   numberPeople, depositRequired&quot;&gt;
+</pre><p>The <code>cfinsert</code> tag used in the preceding code snippet uses the following attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>datasource</p>
+    </td>
+    <td>
+<p>The data source name associated with the database where the data is inserted.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tablename</p>
+    </td>
+    <td>
+<p>The name of the SQL table within the database where the data is inserted.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>formfields</p>
+    </td>
+    <td>
+<p> A comma-separated list of form fields to insert.</p>
+    </td>
+  </tr>
+</table>
+
+<h4>To add data using cfinsert:</h4>
+<ol>
+<li>
+   Open the tripeditaction.cfm file from the my_app directory in your editor.
+</li>
+<li>
+   Remove the entire AddTrip <code>cfquery</code> code block that you added in <a href="00000174.htm#1182470">Exercise 2: Adding trips with SQL INSERT statements</a>: 
+<pre>
+	&lt;cfquery name=&quot;AddTrip&quot; datasource=&quot;compasstravel&quot;&gt;
+		INSERT INTO Trips (tripName, eventType, tripDescription, 
+			tripLocation,departureDate, returnDate, price, tripLeader,
+			photo, baseCost, numberPeople, depositRequired)
+		VALUES (&#39;#Form.tripName#&#39;, #Form.eventType#,
+			&#39;#Form.tripDescription#&#39;,
+			&#39;#Form.tripLocation#&#39;,&#39;#Form.departureDate#&#39;,
+			&#39;#Form.returnDate#&#39;,
+			#Form.price#, &#39;#Form.tripLeader#&#39;, &#39;#Form.photo#&#39;,
+			#Form.baseCost#, #Form.numberPeople#, &#39;#Form.depositRequired#&#39;)
+	&lt;/cfquery&gt;
+</pre>
+</li>
+<li>
+   Add the following <code>cfinsert</code> tag to insert data into the trips table in the same location as the code that you just deleted:
+<pre>
+&lt;cfinsert datasource=&quot;CompassTravel&quot; tablename=&quot;trips&quot;&gt; 
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To test the modified code:</h4>
+<ol>
+<li>
+   Open the tripedit.cfm page in your browser.
+</li>
+<li>
+   In the tripedit.cfm page, enter in the fields the values in the following table, and then click Save:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Value
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Trip Name</p>
+    </td>
+    <td>
+<p>NH White Mountains</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Event Type</p>
+    </td>
+    <td>
+<p>Mountain Climbing</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Trip Description</p>
+    </td>
+    <td>
+<p>Climb the 5 highest peaks in the New Hampshire White Mountains.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Trip Location</p>
+    </td>
+    <td>
+<p>Northeastern New Hampshire</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Departs</p>
+    </td>
+    <td>
+<p>05/01/2005</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Returns</p>
+    </td>
+    <td>
+<p>05/10/2005</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Number of People</p>
+    </td>
+    <td>
+<p>15</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Price</p>
+    </td>
+    <td>
+<p>1200</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Base Cost</p>
+    </td>
+    <td>
+<p>600</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Deposit Required</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Trip Leader</p>
+    </td>
+    <td>
+<p>Tom Finn</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Photo File Name</p>
+    </td>
+    <td>
+<p>whitemountains.jpg</p>
+    </td>
+  </tr>
+</table>
+
+<p>After the new trip is written to the database, the following message appears: You have added NH White Mountains to the trips database.</p>
+</li>
+<li>
+   To verify that the trip was saved, open the tripsearchform.cfm page in the my_app directory in your browser.
+</li>
+<li>
+   In the Trip Search page, in the Trip Location drop-down list, select the Begins With option, and enter the value <strong>Nor</strong> in the text box.
+</li>
+<li>
+   Click Search. 
+<p>The TripResults page appears.</p>
+</li>
+<li>
+   Click NH White Mountains to display the details of the trip you just added. Verify that all the fields were saved correctly. 
+</li>
+</ol>
+<p>For more information about adding data to a database using the <code>cfinsert</code> tag, see <i>ColdFusion MX Developer's Guide</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000174.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000176.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000175.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

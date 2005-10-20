@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using explicit queries</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001324.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001326.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using explicit queries</h1>
+<p>In an explicit query, the Verity search engine literally interprets your search terms. The following are two ways to perform an explicit query:</p>
+<ul>
+<li>
+   On a search form, use quotation marks around your search term(s).
+</li>
+<li>
+   In CFML, use <code>type=&quot;explicit</code>&quot; in the <a href="00000330.htm#1103106"><code>cfsearch</code></a> tag.
+</li>
+</ul>
+<p>When you put a search term in quotation marks, Verity does not use the STEM operator. For example, a search for &quot;instructional&quot;--enclosed in quotation marks, as shown in <a href="00001324.htm#1212862">Preventing stemming</a>--does not return files that contain instruct, instructs, instructions, and so on (unless the files also contain instructional).</p>
+<p><strong>Note: </strong>The Verity products and documentation refers to the Explicit parser as the BooleanPlus parser. </p><p>When you specify <code>type=&quot;explicit&quot;</code> the search expression must be a valid Verity Query Language expression. As a result, an individual search term must be in explicit quotation marks. The following table shows valid and invalid criteria: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Effect
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>criteria=&quot;government&quot;
+</pre>    </td>
+    <td>
+<p>Generates an error </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>criteria=&quot;&#39;government&#39;&quot; or
+criteria=&#39;&quot;government&quot;&#39;
+</pre>    </td>
+    <td>
+<p>Finds only government</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>criteria=&quot;&lt;WORD&gt;government&quot; 
+</pre>    </td>
+    <td>
+<p>Finds only government</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>criteria=&quot;&lt;STEM&gt;government&quot;
+</pre>    </td>
+    <td>
+<p>Finds government, governments, and governmental</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>criteria=&quot;&lt;MANY&gt;&lt;STEM&gt;government&quot;
+</pre>    </td>
+    <td>
+<p>Finds government, governments, and governmental ranked by relevance</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>criteria=&quot;&lt;WILDCARD&gt;governmen*&quot;
+</pre>    </td>
+    <td>
+<p>Finds government, governments,  and governmental</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1192795"></a>Using AND, OR, and NOT</h2>
+<p>Verity has many powerful operators and modifiers available for searching (for more information, see <a href="00001328.htm#1096988">Operators and modifiers</a>). However, users might only use the most basic operators--AND, OR, and the modifier NOT. The following are a few important points:</p>
+<ul>
+<li>
+   You can type operators in uppercase or lowercase letters.
+</li>
+<li>
+   Verity reads operators from left to right. 
+</li>
+<li>
+   The AND operator takes precedence over the OR operator.
+</li>
+<li>
+   Use parentheses to clarify the search. Terms enclosed in parentheses are evaluated first; innermost parentheses are evaluated first when there are nested parentheses.
+</li>
+<li>
+   To search for a literal AND, OR, or NOT, enclose the literal term in double-quotation marks; for example: 
+<p><code>love &quot;and&quot; marriage</code></p>
+</li>
+</ul>
+<p><strong>Note: </strong>Although NOT is a modifier, you use it only with the AND and OR operators. Therefore, it is sometimes casually referred to as an operator.</p><p>The following table gives examples of searches and their results:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Search term
+    </th>
+    <th>
+Returns files that contain
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>doctorate AND nausea</p>
+    </td>
+    <td>
+<p>both doctorate and nausea</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>doctorate &quot;and&quot; nausea</p>
+    </td>
+    <td>
+<p>the phrase doctorate and nausea</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&quot;doctorate and nausea&quot;</p>
+    </td>
+    <td>
+<p>the phrase doctorate and nausea</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>masters OR doctorate AND nausea </p>
+    </td>
+    <td>
+<p>masters, or the combination of doctorate and nausea</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>masters OR (doctorate AND nausea) </p>
+    </td>
+    <td>
+<p>masters, or the combination of doctorate and nausea</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>(masters OR doctorate) AND nausea</p>
+    </td>
+    <td>
+<p>either masters or doctorate, and nausea</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>masters OR doctorate NOT nausea</p>
+    </td>
+    <td>
+<p>either masters or doctorate, but not nausea</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1194155"></a>Using wildcards and special characters</h2>
+<p>Part of the strength of the Verity search is its use of wildcards and special characters to refine searches. Wildcard searches are especially useful when you are unsure of the correct spelling of a term. Special characters help you search for tags in your code.</p>
+<h3><a name="wp1194160"></a>Searching with wildcards</h3>
+<p>The following table shows the wildcard characters that you can use to search Verity collections:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Wildcard
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Example
+    </th>
+    <th>
+Search result
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>?</p>
+    </td>
+    <td>
+<p>Matches any single alphanumeric character.</p>
+    </td>
+    <td>
+<p>apple?</p>
+    </td>
+    <td>
+<p>apples or applet</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>*</p>
+    </td>
+    <td>
+<p>Matches zero or more alphanumeric characters. Avoid using the asterisk as the first character in a search string. An asterisk is ignored in a set, ([]) or an alternative pattern ({}).</p>
+    </td>
+    <td>
+<p>app*ed</p>
+    </td>
+    <td>
+<p>Appleseed, applied, appropriated, and so on</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>[ ]</p>
+    </td>
+    <td>
+<p>Matches any one of the characters in the brackets. Square brackets indicate an implied OR.</p>
+    </td>
+    <td>
+<p>&lt;WILDCARD&gt; &#39;sl[iau]m&#39;</p>
+    </td>
+    <td>
+<p>slim, slam, or slum</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>{ }</p>
+    </td>
+    <td>
+<p>Matches any one of a set of patterns separated by a comma,</p>
+    </td>
+    <td>
+<p>&lt;WILDCARD&gt; &#39;hoist{s,ing,ed}&#39;</p>
+    </td>
+    <td>
+<p>hoists, hoisting, or hoisted</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>^</p>
+    </td>
+    <td>
+<p>Matches any character not in the set.</p>
+    </td>
+    <td>
+<p>&lt;WILDCARD&gt;&#39;sl[^ia]m&#39;</p>
+    </td>
+    <td>
+<p>slum, but not slim or slam</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>-</p>
+    </td>
+    <td>
+<p>Specifies a range for a single character in a set.</p>
+    </td>
+    <td>
+<p>&lt;WILDCARD&gt; &#39;c[a-r]t&#39;</p>
+    </td>
+    <td>
+<p>cat, cot, but not cut (that is, every word beginning with c, ending with t, and containing any single letter from a to r)</p>
+    </td>
+  </tr>
+</table>
+
+<p>To search for a wildcard character as a literal, place a backslash character before it; for example:</p>
+<ul>
+<li>
+   To match a question mark or other wildcard character, precede the ? with one backslash. For example, type the following in a search form: Checkers\?
+</li>
+<li>
+   To match a literal asterisk, you precede the * with two backslashes, and enclose the search term with either single or double quotation marks. For example, type the following in a search form: &#39;M\\*&#39; (or &quot;M\\*&quot;) The following is the corresponding CFML code:
+<pre>
+&lt;cfsearch name = &quot;quick_search&quot;
+	collection=&quot;bbb&quot; 
+	type = &quot;simple&quot;
+	criteria=&quot;&#39;M\\*&#39;&quot;&gt;
+</pre>
+<p><strong>Note: </strong>The last line is equivalent to <code>criteria=&#39;&quot;M\\*&quot;&#39;&gt;</code>.</p></li>
+</ul>
+<h3><a name="wp1194226"></a>Searching for special characters</h3>
+<p>The search engine handles a number of characters in particular ways as the following table describes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Characters
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>, ( ) [</p>
+    </td>
+    <td>
+<p>These characters end a text token. </p>
+<p>A <i>token</i> is a variable that stores configurable properties. It lets the administrator or user configure various settings and options.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>= &gt; &lt; !</p>
+    </td>
+    <td>
+<p>These characters also end a text token. They are terminated by an associated end character.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#39; ` &lt; { [ !</p>
+    </td>
+    <td>
+<p>These characters signify the start of a delimited token. They are terminated by an associated end character.</p>
+    </td>
+  </tr>
+</table>
+
+<p>To search for special characters as literals, precede the following nonalphanumeric characters with a backslash character (\) in a search string: </p>
+<ul>
+<li>
+   comma (,) 
+</li>
+<li>
+   left parenthesis (
+</li>
+<li>
+   right parenthesis )
+</li>
+<li>
+   double-quotation mark (&quot;)
+</li>
+<li>
+   backslash (\)
+</li>
+<li>
+   left curly brace ({)
+</li>
+<li>
+   left bracket ([)
+</li>
+<li>
+   less than sign (&lt;)
+</li>
+<li>
+   backquote (`)
+</li>
+</ul>
+<p>In addition to the backslash character, you can use paired backquote characters (` `) to interpret special characters as literals. For example, to search for the wildcard string &quot;a{b&quot; you can surround the string with back quotation marks, as follows:</p>
+<pre>`a{b`
+</pre><p>To search for a wildcard string that includes the literal backquote character (`) you must use two backquote characters together and surround the entire string in back quotation marks:</p>
+<pre>`*n``t` 
+</pre><p>You can use paired back quotation marks or backslashes to escape special characters. There is no functional difference between the two. For example, you can query for the term: &lt;DDA&gt; using <code>\&lt;DDA\&gt;</code> or <code>`&lt;DDA&gt;`</code> as your search term.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001324.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001326.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001325.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

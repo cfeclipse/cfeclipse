@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>String functions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000368.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000370.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>String functions</h1>
+<h4><a name="wp3452818"></a>History</h4>
+<p>ColdFusion&#160;MX: ColdFusion now supports the Java UCS-2 representation of Unicode character values 0-65535. (Earlier releases supported ASCII values.) </p>
+<p>String-processing functions process any of these characters (including ASCII 0 (NUL) characters), and continue counting subsequent characters of the string, if any. (In earlier releases, some string-processing functions processed the ASCII 0 (NUL) character, but did not process subsequent characters of the string.) </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000398.htm#1101046">Asc</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000502.htm#3732032">GetToken</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000579.htm#133322">LSParseDateTime</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000616.htm#135913">Reverse</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000403.htm#4989807">BinaryDecode</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000503.htm#1105551">Hash</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000580.htm#133438">LSParseEuroCurrency</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000617.htm#135972">Right</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000404.htm#4989676">BinaryEncode</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000505.htm#1105634">HTMLCodeFormat</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000581.htm#133515">LSParseNumber</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000618.htm#136036">RJustify</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000415.htm#4990140">CharsetDecode</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000506.htm#4744272">HTMLEditFormat</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000583.htm#133693">LTrim</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000620.htm#136141">RTrim</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000416.htm#4990268">CharsetEncode</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000510.htm#1105995">Insert</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000585.htm#133799">Mid</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000629.htm#136759">SpanExcluding</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000417.htm#4749523">Chr</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000542.htm#1106957">JavaCast</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000589.htm#134018">MonthAsString</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000630.htm#136815">SpanIncluding</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000418.htm#4749554">CJustify</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000543.htm#1106993">JSStringFormat</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000592.htm#134319">ParagraphFormat</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000632.htm#136910">StripCR</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000419.htm#1101820">Compare</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000544.htm#130124">LCase</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000594.htm#134381">ParseDateTime</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000652.htm#138529">ToBase64</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000420.htm#1101887">CompareNoCase</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000545.htm#130173">Left</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000606.htm#135102">REFind</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000653.htm#138631">ToBinary</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000445.htm#1103560">DayOfWeekAsString</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000546.htm#130247">Len</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000607.htm#135225">REFindNoCase</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000655.htm#138710">ToString</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000452.htm#1103962">Decrypt</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000567.htm#131850">LJustify</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000609.htm#135418">RemoveChars</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000656.htm#138803">Trim</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000457.htm#1104201">Encrypt</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000565.htm#131683">ListValueCount</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000610.htm#135476">RepeatString</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000657.htm#138852">UCase</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000462.htm#1104451">Find</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000566.htm#131767">ListValueCountNoCase</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000611.htm#135527">Replace</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000658.htm#138899">URLDecode</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000463.htm#1104504">FindNoCase</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000575.htm#132884">LSIsDate</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000613.htm#135675">ReplaceNoCase</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000659.htm#138993">URLEncodedFormat</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000464.htm#1104557">FindOneOf</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000576.htm#132961">LSIsNumeric</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000614.htm#135742">REReplace</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000661.htm#139109">Val</a>
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000467.htm#1104705">FormatBaseN</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000578.htm#133236">LSParseCurrency</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000615.htm#135829">REReplaceNoCase</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000664.htm#139282">Wrap</a>
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000468.htm#4992278">GenerateSecretKey</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000574.htm#132806">LSIsCurrency</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000612.htm#135597">ReplaceList</a>
+</pre>    </td>
+    <td>
+<pre><a href="00000668.htm#139554">XmlFormat</a>
+</pre>    </td>
+  </tr>
+</table>
+
+<p>See also <a href="00000356.htm#1098761">Conversion functions</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000368.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000370.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000369.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

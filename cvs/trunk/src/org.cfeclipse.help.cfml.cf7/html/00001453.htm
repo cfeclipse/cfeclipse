@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Basic steps for creating reports</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001452.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001454.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Basic steps for creating reports</h1>
+<p>The Report Builder is a very flexible tool that provides a variety of ways you can define a report. However, all reports use the following basic steps:</p>
+<ol>
+<li>
+   Begin a new report by selecting File &gt; New from the menu bar, clicking the New toolbar icon, or pressing Control+N.
+<p>The ColdFusion Report Builder Gallery dialog box appears.</p>
+</li>
+<li>
+   Select the As a Blank Report option or the Using the Report Wizard option.
+<p>Whether or not you use the Report Creation Wizard, continue with the following steps.</p>
+</li>
+<li>
+   Define the data to be retrieved, either using the Query Builder or by defining the <code>cfquery</code> tag whose query is passed to the report through the <code>cfreport</code> tag. It's best to plan your data access before defining the report, as described in <a href="00001454.htm#119320">Report definition guidelines</a>.
+<p><strong>Tip: </strong>You can use the Query Builder through the Report Creation Wizard or from the main Report Builder interface (select Report &gt; Report Query from the menu bar).</p></li>
+<li>
+   Define query fields. In addition to the Query Builder, you can also define query fields using the Import or Add Fields buttons on the Report Creation Wizard Define Query Fields panel or the Query Fields node on the Fields and Parameters tab.
+<p><strong>Tip: </strong>Use the Import button to import query field definitions from an existing report.</p></li>
+<li>
+   Place query fields on the report. The Report Creation Wizard places query fields on the report bands automatically. To manually place query fields on a report, drag them from the Query Fields node on the Fields and Parameters tab to a report band. For more information, see <a href="00001455.htm#118847">Common reporting tasks and techniques</a>.
+</li>
+<li>
+   (Optional) Define input parameters. To define input parameters, use the Input Parameters area on the Fields and Parameters tab. You pass input parameters to a report through the <code>cfreportparam</code> tag. For more information on input parameters, see <a href="00001467.htm#126814">Using input parameters to pass variables and other data at runtime</a>.
+</li>
+<li>
+   (Optional) Define groups. Use the Report Creation Wizard Define Grouping panel or the Group Management dialog box (Report &gt; Group Management) to define the query field whose change causes a group break. For more information on grouping, see <a href="00001456.htm#122593">Grouping and group breaks</a>.
+</li>
+<li>
+   (Optional) Define the related CFM page. Whether or not the report has an internal query, you may want to invoke it through the <code>cfreport</code> tag in a CFM page. If you define a CFM page, be sure to specify the URL of the CFM page in the Report Preview URL field of the Report Properties dialog box (used in report preview).
+<p><strong>Tip: </strong>The Code Snippet Preview dialog box generates a prototype CFM page (or CFC and calling CFM page) and lets you save this code to a file (or files).</p></li>
+<li>
+   Preview, modify, repeat. To preview a report, select File &gt; Preview from the menu bar, click the Preview toolbar icon, or press F12.
+<p>For more information on report preview, see <a href="00001461.htm#122130">Previewing reports</a>.</p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001452.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001454.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001453.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

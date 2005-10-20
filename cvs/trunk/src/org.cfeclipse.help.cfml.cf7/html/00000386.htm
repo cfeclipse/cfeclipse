@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ArrayIsEmpty</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000385.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000387.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ArrayIsEmpty</h1>
+<h4><a name="wp1224281"></a>Description</h4>
+<p>Determines whether an array is empty of data elements. </p>
+<h4><a name="wp3310433"></a>Returns</h4>
+<p>True, if the array is empty; False, otherwise.</p>
+<h4><a name="wp2615649"></a>Category</h4>
+<p><a href="00000355.htm#3473387">Array functions</a></p>
+<h4><a name="wp2121056"></a>Function syntax</h4>
+<pre><code><strong>ArrayIsEmpty</strong></code>(<i>array</i>)
+</pre><h4><a name="wp2618326"></a>See also</h4>
+<p><a href="00000387.htm#1100537"><code>ArrayLen</code></a>, <a href="00001514.htm#1120195">Functions for XML object management</a> in <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4549000"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: this function can be used on XML objects.</p>
+<h4><a name="wp1242713"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>Name of an array</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1100505"></a>Example</h4>
+<pre>&lt;h3&gt;ArrayIsEmpty Example&lt;/h3&gt;
+&lt;!--- create a new array ---&gt;
+&lt;cfset MyArray = ArrayNew(1)&gt;
+&lt;!--- populate an element or two ---&gt;
+&lt;cfset MyArray[1] = &quot;Test&quot;&gt;
+&lt;cfset MyArray[2] = &quot;Other Test&quot;&gt;
+&lt;!--- output the contents of the array ---&gt;
+&lt;p&gt;Your array contents are:
+&lt;cfoutput&gt;#ArrayToList(MyArray)#&lt;/cfoutput&gt;
+&lt;!--- check if the array is empty ---&gt;
+&lt;p&gt;Is the array empty?:
+&lt;cfoutput&gt;#ArrayIsEmpty(MyArray)#&lt;/cfoutput&gt;
+&lt;p&gt;Now, clear the array:
+&lt;!--- now clear the array ---&gt;
+&lt;cfset Temp = ArrayClear(MyArray)&gt;
+&lt;!--- check if the array is empty ---&gt;
+&lt;p&gt;Is the array empty?:
+&lt;cfoutput&gt;#ArrayIsEmpty(MyArray)#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000385.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000387.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000386.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

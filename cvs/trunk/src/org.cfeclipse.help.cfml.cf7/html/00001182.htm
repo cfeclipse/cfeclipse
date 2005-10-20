@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Logging out users</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001181.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001183.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Logging out users</h1>
+<p>After a user logs in, the ColdFusion user authorization and authentication information remains valid until any of the following happens:</p>
+<ul>
+<li>
+   The application uses a <code>cflogout</code> tag to log out the user, usually in response to the user clicking a log-out link or button.
+</li>
+<li>
+   If your application uses the Session scope for login information, the session ends.
+</li>
+<li>
+   If your application does not use the Session scope for login information, the user does not request a new page for the <a href="00000287.htm#2991147"><code>cflogin</code></a> tag <code>idleTimeout</code> period.
+</li>
+<li>
+   If your application does not use Session scope for login information, or if you use J2EE-based session identification, the user closes all browser windows.
+</li>
+</ul>
+<p>Logging a user out by using the <code>cflogout</code> tag does not close the user's session, but if you use session login storage, it does remove the login information (the Session.cfauthorization variable) from the Session scope. For more information on ending sessions, see <a href="00001163.htm#1211974">Ending a session</a>.</p>
+<p><strong>Caution: </strong>If you use web server-based authentication or any form authentication that uses a Basic HTTP Authorization header, the browser continues to send the authentication information to your application until the user closes the browser, or in some cases, all open browser windows. As a result, after the user logs out and your application uses the <code>cflogout</code> tag, until the browser closes, the cflogin structure in the <code>cflogin</code> tag will contain the logged-out user's UserID and password. If a user logs out and does not close the browser, another user might access pages with the first user's login.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001181.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001183.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001182.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

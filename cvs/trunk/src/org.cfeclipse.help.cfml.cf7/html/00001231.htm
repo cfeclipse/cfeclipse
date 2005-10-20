@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>What is a database?</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001230.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001232.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>What is a database?</h1>
+<p>A <i>database</i> defines a structure for storing information. Databases are typically organized into <i>tables</i>, which are collections of related items. You can think of a table as a grid of columns and rows. ColdFusion&#160;MX works primarily with relational databases, such as Oracle, DB2, and SQL Server. </p>
+<p>The following figure shows the basic layout of a database table: </p>
+<p><br />
+<img src="images/sql_db_w.jpg" alt="Basic layout of a database table" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>A <i>column</i> defines one piece of data stored in all rows of the table. A <i>row</i> contains one item from each column in the table.</p>
+<p>For example, a table might contain the ID, name, title, and other information for individuals employed by a company. Each row, called a data <i>record</i>, corresponds to one employee. The value of a column within a record is referred to as a record <i>field</i>.</p>
+<p>The following figure shows an example table, named employees, containing information about company employees:</p>
+<p><br />
+<img src="images/sql_emp2.jpg" alt="Example table containing employee information" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The record for employee 4 contains the following field values: </p>
+<ul>
+<li>
+   LastName field is &quot;Smith&quot;
+</li>
+<li>
+   FirstName field is &quot;John&quot;
+</li>
+<li>
+   Title field is &quot;Engineer&quot;
+</li>
+</ul>
+<p>This example uses the EmpID field as the table's <i>primary key</i> field. The primary key contains a unique identifier to maintain each record&#39;s unique identity. Primary keys field can include an employee ID, part number, or customer number. Typically, you specify which column contains the primary key when you create a database table. </p>
+<p>To access the table to read or modify table data, you use the SQL programming language. For example, the following SQL statement returns all rows from the table where the department ID is&#160;3:</p>
+<pre>SELECT * FROM employees WHERE DEPTID=3
+</pre><p><strong>Note: </strong>In this chapter, SQL keywords and syntax are always represented by uppercase letters. Table and column names use mixed uppercase and lowercase letters. </p><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001232.htm#1117123">Using multiple database tables</a>
+</li>
+<li>
+   <a href="00001233.htm#1126035">Database permissions</a>
+</li>
+<li>
+   <a href="00001234.htm#1115469">Commits, rollbacks, and transactions</a>
+</li>
+<li>
+   <a href="00001235.htm#1110968">Database design guidelines</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001230.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001232.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001231.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

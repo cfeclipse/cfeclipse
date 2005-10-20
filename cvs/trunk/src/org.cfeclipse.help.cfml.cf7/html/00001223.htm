@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Calling the cftrace tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001222.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001224.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Calling the cftrace tag</h1>
+<p>The <a href="00000345.htm#2698629"><code>cftrace</code></a> tag takes the following attributes. All attributes are optional.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Purpose
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>abort</p>
+    </td>
+    <td>
+<p>A Boolean value. If you specify True, ColdFusion stops processing the current request immediately after the tag. This attribute is the equivalent of placing a <code>cfabort</code> tag immediately after the <code>cftrace</code> tag. The default is False. If this attribute is True, the output of the <code>cftrace</code> call appears only in the cftrace.log file. The line in the file includes the text &quot;[ABORTED]&quot;.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>category</p>
+    </td>
+    <td>
+<p>A text string specifying a user-defined trace type category. This attribute lets you identify or process multiple trace lines by categories. For example, you could sort entries in a log according to the category.</p>
+<p>The <code>category</code> attribute is designed to identify the general purpose of the trace point. For example, you might identify the point where a custom tag returns processing to the calling page with a &quot;Custom Tag End&quot; category. You can also use finer categories; for example, by identifying the specific custom tag name in the category.</p>
+<p>You can include simple ColdFusion variables, but not arrays, structures, or objects, in the category text by enclosing the variable name in number signs (#).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>inline</p>
+    </td>
+    <td>
+<p>A Boolean value. If you specify True, ColdFusion displays trace output in-line in the page. The default is False.</p>
+<p>The <code>inline</code> attribute lets you display the trace results at the place that the <code>cftrace</code> call is processed. This provides a visual cue directly in the ColdFusion page display.</p>
+<p>Trace output also appears in a section in the debugging information display.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>text</p>
+    </td>
+    <td>
+<p>A text message describing this trace point. You can include simple ColdFusion variables, but not arrays, structures, or objects, in the text output by enclosing the variable name in number signs (#). </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>A ColdFusion logging severity type. The inline trace display and dockable.cfm output format show a symbol for each type. The default debugging output shows the type name, which is also used in the log file. The type name must be one of the following: </p>
+<p><img src="images/debuga9.jpg" alt="The Information icon for the logging severity type " border="0" hspace="0" vspace="0"/>
+	Information (default)</p>
+<p><img src="images/debuga10.jpg" alt="The Warning icon for the logging severity type " border="0" hspace="0" vspace="0"/>
+	Warning</p>
+<p><img src="images/debuga11.jpg" alt="The Error icon for the logging severity type " border="0" hspace="0" vspace="0"/>
+	Error</p>
+<p><img src="images/fatal_12.jpg" alt="The Fatal Information icon for the logging severity type " border="0" hspace="0" vspace="0"/>
+	Fatal Information</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>var</p>
+    </td>
+    <td>
+<p>The name of a single variable that you want displayed. This attribute can specify a simple variable, such as a string, or a complex variable, such as a structure name. Do not surround the variable name in number signs.</p>
+<p>Complex variables are displayed in inline output in <a href="00000239.htm#3765824"><code>cfdump</code></a> format; the debugging display and log file report the number of elements in the complex variable, instead of any values. </p>
+<p>You can use this attribute to display an internal variable that the page does not normally show, or an intermediate value of a variable before the page processes it further. </p>
+<p>To display a function return value, put the function inside the message. Do not use the function in the <code>var</code> attribute, because the attribute cannot evaluate functions.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>If you specify inline trace output, and a <code>cftrace</code> tag is inside a <a href="00000336.htm#1103549"><code>cfsilent</code></a> tag block, ColdFusion does not display the trace information in line, but does include it in the standard debugging display.</p><p>The following <code>cftrace</code> tag displays the information shown in the example output and log entry in the <a href="00001221.htm#1121588">About the cftrace tag</a> section:</p>
+<pre>&lt;cftrace abort=&quot;False&quot; category=&quot;UDF End&quot; inline = &quot;True&quot; text = &quot;GetRecords UDF
+   call has completed&quot; var = &quot;MyStatus&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001222.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001224.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001223.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

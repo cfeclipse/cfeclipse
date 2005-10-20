@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Searching collections that contain categories</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001313.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001315.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Searching collections that contain categories</h1>
+<p>When searching data in a collection created with categories, you specify <code>category</code> and <code>categoryTree</code>. The values supplied to these attributes specify what category should be searched for the specified search string (the <code>criteria</code> attribute). The <code>category</code> attribute can contain a comma separated list of categories to search. Both attributes can be specified at the same time. </p>
+<pre>&lt;cfsearch collection=&quot;collectionName&quot; 
+   name=&quot;results&quot;
+   maxrows = &quot;100&quot;
+   criteria=&quot;search keywords&quot;
+   category=&quot;FAQ,Technote&quot;
+   <code><strong>categoryTree=&quot;Docs/Tags&quot;</strong></code>&gt;
+</pre><p><strong>Note: </strong>If <code>cfsearch</code> is executed on a collection that was created without category information, an exception is thrown. </p><p>To search collections that contain categories, you use the <code>cfsearch</code> tag, and create an application page that searches within specified categories. The following example lets the user enter and submit the name of the collection, the category in which to search, and the document tree associated with the category through a form. By restricting the search in this way, the users are better able to retrieve the documents that contain the information they are looking for. In addition to searching with a specified category, this example also makes use of the <code>contextHighlight</code> attribute, which highlights the returned search results.</p>
+<pre>&lt;cfparam name=&quot;collection&quot; default=&quot;test-pi&quot;&gt;
+
+&lt;cfoutput&gt;
+&lt;form action=&quot;#CGI.SCRIPT_NAME#&quot; method=&quot;POST&quot;&gt;
+ Collection Name: &lt;input Type=&quot;text&quot; Name=&quot;collection&quot; value=&quot;#collection#&quot;&gt;
+ &lt;P&gt;
+ Category: &lt;input Type=&quot;text&quot; Name=&quot;category&quot; value=&quot;&quot;&gt;&lt;br&gt;
+ CategoryTree: &lt;input Type=&quot;text&quot; Name=&quot;categoryTree&quot; value=&quot;&quot;&gt;&lt;br&gt;
+ &lt;P&gt;
+Search: &lt;input Type=&quot;text&quot; Name=&quot;criteria&quot;&gt;
+ &lt;input Type=&quot;submit&quot; Value=&quot;Search&quot;&gt;
+&lt;/form&gt;
+&lt;/cfoutput&gt;
+
+&lt;cfif isdefined(&quot;Form.criteria&quot;)&gt;
+   &lt;cfoutput&gt;Search results for: &lt;b&gt;#criteria#&lt;/b&gt;&lt;/cfoutput&gt;
+   &lt;br&gt;
+   &lt;<code><strong>cfsearch collection=&quot;#form.collection#&quot;</strong></code>
+<code><strong>      category=&quot;#form.category#&quot;</strong></code>
+<code><strong>      categoryTree=&quot;#form.categoryTree#&quot; </strong></code>
+<code><strong>      name=&quot;sr&quot;</strong></code>
+<code><strong>      status=&quot;s&quot;</strong></code>
+<code><strong>      criteria=&quot;#form.criteria#&quot;</strong></code>
+<code><strong>      contextPassages=&quot;3&quot;</strong></code>
+      <code><strong>contextBytes=&quot;300&quot;</strong></code>
+<code><strong>      contextHighlightBegin=&quot;&lt;i&gt;&lt;b&gt;&quot;</strong></code>
+<code><strong>      contextHighlightEnd=&quot;&lt;/b&gt;&lt;/i&gt;&quot;</strong></code>
+<code><strong>      </strong></code>maxrows=&quot;100&quot;&gt;
+   &lt;cfdump var=&quot;#s#&quot;&gt;
+
+   &lt;cfoutput&gt;
+   &lt;p&gt;Number of records in query: #sr.recordcount#&lt;/P&gt;
+   &lt;/cfoutput&gt;
+
+   &lt;cfdump var=&quot;#sr#&quot;&gt;
+
+   &lt;cfoutput Query=&quot;sr&quot;&gt;
+   Title: &lt;i&gt;#title#&lt;/i&gt;&lt;br&gt;
+   URL: #url#&lt;br&gt;
+   Score: #score#&lt;br&gt;
+   &lt;hr&gt;
+   #context#&lt;br&gt;
+   &lt;br&gt;
+   #summary#&lt;br&gt;
+   &lt;hr&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre><p>For more information on using the <code>cfindex</code> tag to create Verity collections with support for categories, see <a href="00000330.htm#1103106"><code>cfsearch</code></a> in <a href="00000195.htm#2501150">ColdFusion Tags</a> in <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001313.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001315.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001314.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

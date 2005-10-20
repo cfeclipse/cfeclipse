@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XML document object management reference</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001515.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001517.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XML document object management reference</h1>
+<p>The following tables provide a quick reference to the ways you can modify the contents of an XML document object. The sections that follow describe in detail how to modify XML contents.</p>
+<p><strong>Note: </strong>If your XML object is case sensitive, you cannot use dot notation to reference an element or attribute name. Use the name in associative array (bracket) notation, or a reference that does not use the case-sensitive name (such as xmlChildren[1]) instead.</p><h4><a name="wp1172695"></a>Adding information to an element</h4>
+<p>Use the following techniques to add new information to an element:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type
+    </th>
+    <th>
+Using a function
+    </th>
+    <th>
+Using an assignment statement
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Attribute</p>
+    </td>
+    <td>
+<pre><a href="00000642.htm#137718"><code>StructInsert</code></a>(<code><i>xmlElemPath</i></code>.XmlAttributes, <br />   &quot;key&quot;, &quot;<code><i>value</i></code>&quot;)
+</pre>    </td>
+    <td>
+<pre><code><i>xmlElemPath</i></code>.XmlAttributes.<i>key</i> =
+   &quot;<code><i>value</i></code>&quot;
+
+<code><i>xmlElemPath</i></code>.XmlAttributes[&quot;<i>key</i>&quot;] 
+   = &quot;<code><i>value</i></code>&quot;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Child element</p>
+    </td>
+    <td>
+<p>To append:</p>
+<pre><a href="00000381.htm#1100231"><code>ArrayAppend</code></a>(<code><i>xmlElempath</i></code>.XmlChildren,<br />   <code><i>newElem</i></code>)<br />
+</pre><p>To insert:</p>
+<pre><a href="00000385.htm#1100451"><code>ArrayInsertAt</code></a>(<code><i>xmlElempath</i></code>.<br />   XmlChildren, <code><i>position</i></code>, <code><i>newElem</i></code>)
+</pre>    </td>
+    <td>
+<p>To append:</p>
+<pre><code><i>xmlElemPath</i></code><i>.</i>XmlChildren[<i>i</i>] =
+   <code><i>newElem</i></code>
+
+<code><i>xmlElemPath</i></code><i>.</i><code><i>newChildName</i></code> =
+   <code><i>newElem</i></code>
+</pre><p>(where <code><i>newChildName</i></code> must be the same as <code><i>newElem</i></code>.XmlName and cannot be an indexed name such as name[3])</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1172733"></a>Deleting information from an element</h4>
+<p>Use the following techniques to delete information from an element:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type
+    </th>
+    <th>
+Using a function
+    </th>
+    <th>
+Using an assignment statement
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Property</p>
+    </td>
+    <td>
+<pre><a href="00000637.htm#137396"><code>StructDelete</code></a>(<code><i>xmlElemPath</i></code>, <code><i>propertyName</i></code>)
+</pre>    </td>
+    <td>
+<pre><code><i>xmlElemPath</i></code><i>.</i><code><i>propertyName</i></code>=&quot;&quot;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Attribute</p>
+    </td>
+    <td>
+<p>All attributes:</p>
+<pre>StructDelete(<code><i>xmlElemPath</i></code>, XmlAttributes)
+
+</pre><p>A specific attribute:</p>
+<pre>StructDelete(<code><i>xmlElemPath</i></code>.XmlAttributes,<br />&quot;<code><i>attributeName</i></code>&quot;)
+</pre>    </td>
+    <td>
+<p>Not available</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Child element</p>
+    </td>
+    <td>
+<p>All children of an element:</p>
+<pre>StructDelete(<code><i>xmlElemPath</i></code>, &quot;XmlChildren&quot;)
+or
+<a href="00000383.htm#1100366"><code>ArrayClear</code></a>(<code><i>xmlElemPath</i></code>.XmlChildren)
+
+</pre><p>All children with a specific name:</p>
+<pre>StructDelete(<code><i>xmlElementpath</i></code>,<br />   &quot;<code><i>elemName</i></code>&quot;)
+ArrayClear(<code><i>xmlElemPath</i></code>.<code><i>elemName</i></code>)
+
+</pre><p>A specific child:</p>
+<pre><a href="00000384.htm#1100409"><code>ArrayDeleteAt</code></a>(<code><i>xmlElemPath</i></code>.XmlChildren,<br />   <code><i>position</i></code>)
+ArrayDeleteAt(<code><i>xmlElemPath</i></code>.<code><i>elemName</i></code>,<br />   <code><i>position</i></code>)
+</pre>    </td>
+    <td>
+<p>Not available</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1172774"></a>Changing contents of an element</h4>
+<p>Use the following techniques to change the contents of an element:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type
+    </th>
+    <th>
+Using a function
+    </th>
+    <th>
+Using an assignment statement
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Property</p>
+    </td>
+    <td>
+<pre><a href="00000649.htm#138287"><code>StructUpdate</code></a>(<code><i>xmlElemPath</i></code>,<br />   &quot;<code><i>propertyName</i></code>&quot;, &quot;<code><i>value</i></code>&quot;)
+</pre>    </td>
+    <td>
+<pre><code><i>xmlElemPath.propertyName</i></code> =
+   &quot;<code><i>value</i></code>&quot;
+
+<code><i>xmlElemPath</i></code>[&quot;<code><i>propertyName</i></code>&quot;] =
+   &quot;<code><i>value</i></code>&quot;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Attribute</p>
+    </td>
+    <td>
+<pre>StructUpdate(<code><i>xmlElemPath</i></code>.XmlAttributes,<br />   &quot;<code><i>attributeName</i></code>&quot;, &quot;<code><i>value</i></code>&quot;)
+
+</pre>    </td>
+    <td>
+<pre><code><i>xmlElemPath</i></code>.XmlAttributes.
+   <code><i>attributeName</i></code>=&quot;<code><i>value</i></code>&quot;
+
+<code><i>xmlElemPath</i></code>.XmlAttributes
+   [&quot;<code><i>attributeName</i></code>&quot;] = &quot;<code><i>value</i></code>&quot;
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Child element</p>
+<p>(replace)</p>
+    </td>
+    <td>
+<pre><a href="00000393.htm#1100826"><code>ArraySet</code></a>(<code><i>xmlElemPath</i></code>.<code><i>XmlChildren</i></code>, <code><i>index</i></code>,<br />   <code><i>index</i></code>, <code><i>newElement</i></code>)
+</pre><p>&#160;</p>
+<p>(use the same value for both index entries to change one element)</p>
+    </td>
+    <td>
+<p>Replace first or only child named <i>elementName</i>:</p>
+<pre><code><i>parentElemPath</i></code>.<code><i>elementName</i></code> =
+   <code><i>newElement</i></code>
+
+<code><i>parentElemPath</i></code>[&quot;<code><i>elementName</i></code>&quot;]
+   = <code><i>newElement</i></code>
+
+</pre><p>Replace a specific child named <i>elementName</i>:</p>
+<pre><code><i>parentElemPath</i></code>.<code><i>elementName</i></code>
+   [<code><i>index</i></code>] = <code><i>newElement</i></code>
+</pre><p>or</p>
+<pre><code><i>parentElemPath</i></code>[&quot;<code><i>elementName</i></code>&quot;]
+   [<code><i>index</i></code>] = <code><i>newElement</i></code>
+</pre>    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001515.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001517.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001516.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

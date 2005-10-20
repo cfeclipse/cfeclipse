@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfloop: index loop</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000290.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000292.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfloop: index loop</h1>
+<h4><a name="wp1101088"></a>Description</h4>
+<p>An index loop repeats for a number of times that is determined by a numeric value. An index loop is also known as a FOR loop. </p>
+<h4><a name="wp1101090"></a>Syntax</h4>
+<pre>&lt;cfloop <br />   index = &quot;parameter_name&quot;<br />   from = &quot;beginning_value&quot;<br />   to = &quot;ending_value&quot;<br />   step = &quot;increment&quot;&gt;<br />   ... HTML or CFML code ...<br />&lt;/cfloop&gt;
+</pre><h4><a name="wp2583699"></a>See also</h4>
+<p><a href="00000215.htm#3835579">cfabort</a>, <a href="00000221.htm#1097484">cfbreak</a>, <a href="00000235.htm#1097918">cfdirectory</a>, <a href="00000243.htm#1098198">cfexecute</a>, <a href="00000244.htm#1098252">cfexit</a>, <a href="00000274.htm#1100123">cfif</a>, <a href="00000284.htm#1100753">cflocation</a>, <a href="00000325.htm#1102913">cfrethrow</a>, <a href="00000339.htm#1103819">cfswitch</a>, <a href="00000343.htm#2773591">cfthrow</a>, <a href="00000349.htm#1104557">cftry</a>; <a href="00000876.htm#2733882">cfloop and cfbreak</a> in <a href="00000866.htm#2689636">Elements of CFML</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2239853"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>index</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Index value. ColdFusion sets it to the <code>from</code> value and increments or decrements by <code>step</code> value, until it equals the <code>to</code> value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>from</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Beginning value of index.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>to</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Ending value of index.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>step</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>Step by which to increment or decrement the index value.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1101100"></a>Usage</h4>
+<p>Using anything other than integer values in the <code>from</code> and <code>to</code> attributes of an index loop can product unexpected results. For example, if you increment through an index loop from 1 to 2, with a step of 0.1, ColdFusion outputs &quot;1,1.1,1.2,...,1.9&quot;, but not &quot;2&quot;. This is a programming language problem regarding the internal representation of floating point numbers. </p>
+<p><strong>Note: </strong>The <code>to</code> value is evaluated once, when the <code>cfloop</code> tag is encountered. Any change to this value within the loop block, or within the expression that evaluates to this value, does not affect the number of times the loop is executed. </p><h4><a name="wp1810445"></a>Example</h4>
+<p>In this example, the code loops five times, displaying the <code>index</code> value each time:</p>
+<pre>&lt;cfloop index = &quot;LoopCount&quot; from = &quot;1&quot; to = &quot;5&quot;&gt;
+   The loop index is &lt;cfoutput&gt;#LoopCount#&lt;/cfoutput&gt;.&lt;br&gt;
+&lt;/cfloop&gt;
+</pre><p>The output of this loop is as follows: </p>
+<pre>The loop index is 1. 
+The loop index is 2. 
+The loop index is 3. 
+The loop index is 4. 
+The loop index is 5. 
+</pre><p>In this example, the code loops four times, displaying the <code>index</code> value each time. The value of <code>j</code> is decreased by one for each iteration. This does not affect the value of <code>to</code>, because it is a copy of <code>j</code> that is made before entering the loop.</p>
+<pre>&lt;cfset j = 4&gt;
+&lt;cfloop index = &quot;LoopCount&quot; from = &quot;1&quot; to = #j#&gt;
+   &lt;cfoutput&gt;The loop index is #LoopCount#&lt;/cfoutput&gt;.&lt;br&gt;
+   &lt;cfset j = j - 1&gt;
+&lt;/cfloop&gt;
+</pre><p>The output of this loop is as follows: </p>
+<pre>The loop index is 1. 
+The loop index is 2. 
+The loop index is 3. 
+The loop index is 4. 
+</pre><p>As before, the value of <code>j</code> is decremented by one for each iteration, but this does not affect the value of <code>to</code>, because its value is a copy of <code>j</code> that is made before the loop is entered.</p>
+<p>In this example, <code>step</code> has the default value, 1. The code decrements the index:</p>
+<pre>&lt;cfloop index = &quot;LoopCount&quot; 
+   from = &quot;5&quot; 
+   to = &quot;1&quot; 
+   step = &quot;-1&quot;&gt;
+The loop index is &lt;cfoutput&gt;#LoopCount#&lt;/cfoutput&gt;.&lt;br&gt;
+&lt;/cfloop&gt;
+</pre><p>The output of this loop is as follows: </p>
+<pre>The loop index is 5. 
+The loop index is 4. 
+The loop index is 3. 
+The loop index is 2. 
+The loop index is 1. 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000290.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000292.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000291.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

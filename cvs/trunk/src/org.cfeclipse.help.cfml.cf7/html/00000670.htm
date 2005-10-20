@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XmlNew</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000669.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000671.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XmlNew</h1>
+<h4><a name="wp139786"></a>Description</h4>
+<p>Creates an XML document object.</p>
+<h4><a name="wp139788"></a>Returns</h4>
+<p>An empty XML document object.</p>
+<h4><a name="wp139790"></a>Category</h4>
+<p><a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp139798"></a>Function syntax</h4>
+<pre><code><strong>XmlNew</strong></code>([<i>caseSensitive</i>])
+</pre><h4><a name="wp139800"></a>See also</h4>
+<p><a href="00000352.htm#2497244"><code>cfxml</code></a>, <a href="00000538.htm#4046340"><code>IsXmlDoc</code></a>, <a href="00000655.htm#138710"><code>ToString</code></a>, <a href="00000668.htm#139554"><code>XmlFormat</code></a>, <a href="00000671.htm#139864"><code>XmlParse</code></a>,<code> </code><a href="00000674.htm#140217"><code>XmlValidate</code></a>; <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp139823"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp139828"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>caseSensitive</p>
+    </td>
+    <td>
+<p>Determines how ColdFusion processes the case of XML document object component identifiers:</p>
+<ul>
+<li>
+   True: maintains case 
+</li>
+<li>
+   False: ColdFusion ignores case. Default.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139841"></a>Usage</h4>
+<p>An XML document object is represented in ColdFusion as a structure.</p>
+<p>The <code><i>caseSensitive</i></code> parameter value determines whether identifiers whose characters are of varying case, but are otherwise the same, refer to different components; for example:</p>
+<ul>
+<li>
+   If True, the element or attribute names &quot;name&quot; and &quot;NAME&quot; refer to different elements or attributes.
+</li>
+<li>
+   If False, these names refer to the same elements or attributes.
+</li>
+</ul>
+<p>If your XML object is case sensitive, you cannot use dot notation to reference an element or attribute name. Use the name in associative array (bracket) notation, or a reference that does not use the case-sensitive name (such as xmlChildren[1]) instead. In the following code, the first line will work with a case-sensitive XML object. The second and third lines cause errors:</p>
+<pre>
+MyDoc.xmlRoot.XmlAttributes[&quot;Version&quot;] = &quot;12b&quot;;
+MyDoc.xmlRoot.XmlAttributes.Version = &quot;12b&quot;;
+MyDoc.MyRoot.XmlAttributes[&quot;Version&quot;] = &quot;12b&quot;;
+</pre>
+<p>To convert an XML document object into a string, use the <a href="00000655.htm#138710"><code>ToString</code></a> function.</p>
+<h4><a name="wp239232"></a>Example</h4>
+<p>The following example creates and displays a ColdFusion document object:</p>
+<pre>&lt;cfset testVar = True&gt;
+&lt;cfscript&gt;
+   <code><strong>MyDoc = XmlNew();</strong></code>
+   MyDoc.xmlRoot = XmlElemNew(MyDoc,&quot;MyRoot&quot;);
+   if (testVar IS TRUE)
+      MyDoc.MyRoot.XmlText = &quot;The value of testVar is True.&quot;;
+   else 
+      MyDoc.MyRoot.XmlText = &quot;The value of testVar is False.&quot;;
+   for (i = 1; i LTE 4; i = i + 1)   {
+      MyDoc.MyRoot.XmlChildren[i] = XmlElemNew(MyDoc,&quot;childNode&quot;);
+      MyDoc.MyRoot.XmlChildren[i].XmlText = &quot;This is Child node &quot; &amp; i &amp;&quot;.&quot;;
+      }
+&lt;/cfscript&gt;
+&lt;cfdump var=#MyDoc#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000669.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000671.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000670.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

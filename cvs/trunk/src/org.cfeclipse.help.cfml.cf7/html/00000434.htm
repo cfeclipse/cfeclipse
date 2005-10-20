@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CreateTime</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000433.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000435.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CreateTime</h1>
+<h4><a name="wp1224551"></a>Description</h4>
+<p>Creates a time variable.</p>
+<h4><a name="wp3349717"></a>Returns</h4>
+<p>A time variable.</p>
+<h4><a name="wp2501400"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a></p>
+<h4><a name="wp2130657"></a>Function syntax</h4>
+<pre><code><strong>CreateTime</strong></code>(<i>hour</i>, <i>minute</i>, <i>second</i>)
+</pre><h4><a name="wp2587751"></a>See also</h4>
+<p><a href="00000433.htm#1102559"><code>CreateODBCTime</code></a>, <a href="00000423.htm#1224498"><code>CreateDateTime</code></a>; <a href="00000909.htm#1117587">Evaluation and type conversion issues</a> in <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1281093"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>hour</p>
+    </td>
+    <td>
+<p>Number in the range 0-23</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>minute</p>
+    </td>
+    <td>
+<p>Number in the range 0-59</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>second</p>
+    </td>
+    <td>
+<p>Number in the range 0-59</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102656"></a>Usage</h4>
+<p><code>CreateTime</code> is a subset of <a href="00000423.htm#1224498"><code>CreateDateTime</code></a>.</p>
+<p>A time variable is a special case of a date-time variable. The date part of a time variable is set to December 30, 1899. </p>
+<h4><a name="wp1102662"></a>Example</h4>
+<pre>&lt;h3&gt;CreateTime Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.hour&quot;)&gt;
+Your time value, presented using CreateTime time function:
+&lt;cfset yourTime = CreateTime(FORM.hour, FORM.minute, FORM.second)&gt;
+&lt;cfoutput&gt;&lt;ul&gt;
+   &lt;li&gt;Formatted with timeFormat: #TimeFormat(yourTime)#
+   &lt;li&gt;Formatted with timeFormat and hh:mm:ss: #TimeFormat(yourTime, &#39;hh:mm:ss&#39;)#
+&lt;/ul&gt;&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+&lt;CFFORM action=&quot;createtime.cfm&quot; METHOD=&quot;post&quot;&gt;
+&lt;PRE&gt;Hour         &lt;CFINPUT TYPE=&quot;Text&quot; NAME=&quot;hour&quot; VALUE=&quot;16&quot; RANGE=&quot;0,23&quot; 
+   MESSAGE=&quot;You must enter an hour (0-23)&quot; VALIDATE=&quot;integer&quot; REQUIRED=&quot;Yes&quot;&gt;
+Minute         &lt;CFINPUT TYPE=&quot;Text&quot; NAME=&quot;minute&quot; VALUE=&quot;12&quot; RANGE=&quot;0,59&quot; 
+   MESSAGE=&quot;You must enter a minute value (0-59)&quot; VALIDATE=&quot;integer&quot;<br />REQUIRED=&quot;Yes&quot;&gt;
+Second         &lt;CFINPUT TYPE=&quot;Text&quot; NAME=&quot;second&quot; VALUE=&quot;0&quot; RANGE=&quot;0,59&quot; 
+   MESSAGE=&quot;You must enter a value for seconds (0-59)&quot; VALIDATE=&quot;integer&quot;<br />REQUIRED=&quot;Yes&quot;&gt;
+&lt;/PRE&gt;
+&lt;p&gt;&lt;INPUT TYPE=&quot;Submit&quot; NAME=&quot;&quot;&gt; &lt;INPUT TYPE=&quot;RESET&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000433.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000435.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000434.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Week</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000662.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000664.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Week</h1>
+<h4><a name="wp139225"></a>Description</h4>
+<p>From a date/time object, determines the week number within the year.</p>
+<h4><a name="wp139227"></a>Returns</h4>
+<p>An integer in the range 1-53; the ordinal of the week, within the year.</p>
+<h4><a name="wp139229"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a></p>
+<h4><a name="wp139234"></a>Function syntax</h4>
+<pre><code><strong>Week</strong></code>(<i>date</i>)
+</pre><h4><a name="wp139236"></a>See also</h4>
+<p><a href="00000442.htm#1103355">DatePart</a></p>
+<h4><a name="wp139241"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>date</p>
+    </td>
+    <td>
+<p>A date/time object in the range 100 AD-9999 AD.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139252"></a>Usage</h4>
+<p>When passing date as a string, enclose it in quotation marks. Otherwise, it is interpreted as a number representation of a date.</p>
+<h4><a name="wp139262"></a>Example</h4>
+<pre>&lt;h3&gt;Week Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.year&quot;)&gt;
+More information about your date:
+&lt;cfset yourDate = CreateDate(FORM.year, FORM.month, FORM.day)&gt;
+&lt;cfoutput&gt;
+   &lt;p&gt;Your date, #DateFormat(yourDate)#.
+   &lt;br&gt;It is #DayOfWeekAsString(DayOfWeek(yourDate))#, day
+       #DayOfWeek(yourDate)# in the week.
+   &lt;br&gt;This is day #Day(YourDate)# in the month of
+       #MonthAsString(Month(yourDate))#, which has #DaysInMonth(yourDate)# days.
+   &lt;br&gt;We are in week #<strong>Week(yourDate)</strong># of #Year(yourDate)# (day
+       #DayOfYear(yourDate)# of #DaysInYear(yourDate)#). &lt;br&gt;
+   &lt;cfif IsLeapYear(Year(yourDate))&gt;This is a leap year
+      &lt;cfelse&gt;This is not a leap year
+   &lt;/cfif&gt;
+&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000662.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000664.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000663.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

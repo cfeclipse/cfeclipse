@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfloop: looping over a list or file</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000294.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000296.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfloop: looping over a list or file</h1>
+<h4><a name="wp1101166"></a>Description</h4>
+<p>Looping over a list steps through elements contained in any of these entities:</p>
+<ul>
+<li>
+   A variable 
+</li>
+<li>
+   A value that is returned from an expression
+</li>
+<li>
+   A file 
+</li>
+</ul>
+<h4><a name="wp1101167"></a>Syntax</h4>
+<pre>&lt;cfloop <br />   index = &quot;index_name&quot;<br />   list = &quot;list_items&quot;<br />   delimiters = &quot;item_delimiter&quot;&gt;<br />   ...<br />&lt;/cfloop&gt;
+</pre><h4><a name="wp1956380"></a>See also</h4>
+<p><a href="00000215.htm#3835579">cfabort</a>, <a href="00000221.htm#1097484">cfbreak</a>, <a href="00000243.htm#1098198">cfexecute</a>, <a href="00000244.htm#1098252">cfexit</a>, <a href="00000274.htm#1100123">cfif</a>, <a href="00000284.htm#1100753">cflocation</a>, <a href="00000339.htm#1103819">cfswitch</a>, <a href="00000343.htm#2773591">cfthrow</a>, <a href="00000349.htm#1104557">cftry</a>; <a href="00000876.htm#2733882">cfloop and cfbreak</a> in <a href="00000866.htm#2689636">Elements of CFML</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2242318"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>index</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>In a list loop, the variable to receive the next list element.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>list</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A list, variable, or filename; contains a list.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>delimiters</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Character(s) that separates items in list.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1101175"></a>Example</h4>
+<p>This loop displays four names:</p>
+<pre>&lt;cfloop index = &quot;ListElement&quot; 
+   list = &quot;John,Paul,George,Ringo&quot;&gt; 
+      &lt;cfoutput&gt;#ListElement#&lt;/cfoutput&gt;&lt;br&gt; 
+&lt;/cfloop&gt;
+</pre><p>You can put more than one character in the <code>delimiters</code> attribute, in any order. For example, this loop processes commas, colons, and slashes as list delimiters:</p>
+<pre>&lt;cfloop index = &quot;ListElement&quot; 
+   list = &quot;John/Paul,George::Ringo&quot; 
+   delimiters = &quot;,:/&quot;&gt; 
+      &lt;cfoutput&gt;#ListElement#&lt;/cfoutput&gt;&lt;br&gt; 
+&lt;/cfloop&gt;
+</pre><p>ColdFusion skips the second and subsequent consecutive delimiters between list elements. Thus, in the example, the two colons between &quot;George&quot; and &quot;Ringo&quot; are processed as one delimiter.</p>
+<p>To loop over each line of a file, use the tag this way:</p>
+<pre>&lt;cfloop list=&quot;#theFile#&quot; 
+   index=&quot;curLine&quot; 
+   delimiters=&quot;#chr(10)##chr(13)#&quot;&gt; 
+   ...
+&lt;/cfloop&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000294.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000296.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000295.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>fatal</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000740.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000742.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>fatal</h1>
+<h4><a name="wp1182393"></a>Description</h4>
+<p>Writes a log entry with a fatal severity to the ColdFusion MX logger. The entry includes the severity, thread ID, date, time, and a text message.</p>
+<h4><a name="wp1182395"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1182397"></a>Syntax</h4>
+<pre>fatal(String <i>message</i>)
+fatal(Throwable <i>th</i>)
+fatal(String <i>message</i>, Throwable th)
+</pre><h4><a name="wp1182399"></a>See also</h4>
+<p><a href="00000739.htm#1181717">debug</a>, <a href="00000740.htm#1182148">error</a>, <a href="00000742.htm#1182459">info</a>, <a href="00000743.htm#1182564">warn</a>, <a href="00000720.htm#1179536">getLogger</a>, <a href="00001697.htm#139247">Logging events and using log files</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1182413"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>message</p>
+    </td>
+    <td>
+<p>The message to include in the log entry.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>th</p>
+    </td>
+    <td>
+<p>A throwable object, normally an exception. ColdFusion MX logs the exception information in the exception.log file in the ColdFusion MX logs directory.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1182424"></a>Usage</h4>
+<p>Use this method to send a fatal error message to the ColdFusion MX logging subsystem. ColdFusion MX will write a messages with a severity of &quot;fatal&quot; to the log file specified in the <code>getLogger</code> method that returned the Logger instance (or the default log file).</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000740.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000742.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000741.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

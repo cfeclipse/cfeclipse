@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Managing data types for columns</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001269.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001271.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Managing data types for columns</h1>
+<p>A Query of Queries requires that every column have metadata that defines the column's data type. All queries that ColdFusion&#160;MX creates have metadata. However, a query created with <a href="00000600.htm#134773"><code>QueryNew</code></a> function that omits the second parameter does not contain metadata. You use this optional second parameter to define the data type of each column in the query.</p>
+<h4>To specify column data types in the QueryNew function:</h4>
+<ul>
+<li>
+   Type a <code>QueryNew</code> function, specifying the column names in the first parameter and the data types in the second parameter, as the following example shows:
+<pre>
+&lt;cfset qInstruments = queryNew(&quot;name, instrument, years_playing&quot;, 
+&quot;CF_SQL_VARCHAR, CF_SQL_VARCHAR, CF_SQL_INTEGER&quot;)&gt;
+</pre>
+</li>
+</ul>
+<p><strong>Tip: </strong>To see the metadata for a Query of Queries, use the <a href="00000488.htm#1105179"><code>GetMetaData</code></a> function.</p><h4>To specify the column data types in the QueryAddColumn function:</h4>
+<ol>
+<li>
+   Create a query by specifying the QueryNew function with no parameters.
+</li>
+</ol>
+<pre>&lt;!--- Make a query. ---&gt;
+&lt;cfset myQuery = QueryNew(&quot;&quot;)&gt;
+</pre><ol>
+<li>
+   Add and populate a column with the <a href="00000598.htm#134610"><code>QueryAddColumn</code></a> function, specifying the data type in the third parameter:
+</li>
+</ol>
+<pre>&lt;!--- Create an array. ---&gt;
+&lt;cfset FastFoodArray = ArrayNew(1)&gt;
+&lt;cfset FastFoodArray[1] = &quot;French Fries&quot;&gt;
+&lt;cfset FastFoodArray[2] = &quot;Hot Dogs&quot;&gt;
+&lt;cfset FastFoodArray[3] = &quot;Fried Clams&quot;&gt;
+&lt;cfset FastFoodArray[4] = &quot;Thick Shakes&quot;&gt;
+&lt;!--- Use the array to add a column to the query. ---&gt;
+&lt;cfset nColumnNumber = QueryAddColumn(myQuery, &quot;FastFood&quot;, &quot;CF_SQL_VARCHAR&quot;,
+<pre>
+	FastFoodArray)&gt;
+</pre>
+</pre><p>If you do not specify the data type, ColdFusion&#160;MX examines the first fifty rows of each column to determine the data type when performing conditional expressions. </p>
+<p>In some cases, ColdFusion&#160;MX can guess a data type that is inappropriate for your application. In particular, if you use columns in a WHERE clause or other conditional expression, the data types must be compatible. If they are not compatible, you must use the CAST function to recast one of the columns to a compatible data type. For more information on casting, see <a href="00001271.htm#1182707">Using the CAST function</a>. For more information on data type compatibility, see <a href="00001281.htm#1182597">Understanding Query of Queries processing</a>.</p>
+<p><strong>Note: </strong>Specifying the data type in the <code>QueryNew</code> function helps you avoid compatibility issues.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001269.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001271.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001270.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Requiring users to enter values in form fields</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001338.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001340.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Requiring users to enter values in form fields</h1>
+<p>One of the limitations of HTML forms is the inability to define input fields as required. Because this is a particularly important requirement for database applications, ColdFusion lets you require users to enter data in fields. To specify a field as required, you can do either of the following:</p>
+<ul>
+<li>
+   Use the <code>required</code> attribute of the <code>cfinput</code>, <code>cfselect</code>, <code>cftextarea</code>, and <code>cftree</code> tags.
+</li>
+<li>
+   Use a hidden field that has a <code>name</code> attribute composed of the field name and the suffix &quot;_required&quot;. You can use this technique with CFML and HTML form tags.
+</li>
+</ul>
+<p>For example, to require that the user enter a value in the FirstName field of a <code>cfinput</code> tag, use the following syntax:</p>
+<pre>&lt;cfinput type=&quot;Text&quot; name=&quot;FirstName&quot; size=&quot;20&quot; maxlength=&quot;35&quot; required=&quot;Yes&quot;&gt;
+</pre><p>To require that the user enter a value in the FirstName field of an HTML <code>input</code> tag, use the following syntax:</p>
+<pre>&lt;input type=&quot;Text&quot; name=&quot;FirstName&quot; size=&quot;20&quot; maxlength=&quot;35&quot;&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;FirstName_required&quot;&gt;
+</pre><p>In either of these examples, if the user leaves the FirstName field empty, ColdFusion rejects the form submittal and returns a message informing the user that the field is required. You can customize the contents of this error message.</p>
+<p>If you use a <code>required</code> attribute, you customize the message by using the <code>message</code> attribute, as follows:</p>
+<pre>&lt;cfinput type=&quot;Text&quot; name=&quot;FirstName&quot; size=&quot;20&quot; maxlength=&quot;35&quot; required=&quot;Yes&quot;
+   message=&quot;You must enter your first name.&quot;&gt;
+</pre><p>If you use a hidden field tag, you customize the message using the <code>value</code> attribute of the hidden field, as follows:</p>
+<pre>&lt;input type=&quot;hidden&quot; name=&quot;FirstName_required&quot;
+   value=&quot;You must enter your first name.&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001338.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001340.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001339.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

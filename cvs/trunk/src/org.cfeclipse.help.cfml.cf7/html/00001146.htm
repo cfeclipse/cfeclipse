@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example: using nested tags, cfthrow, and cfrethrow</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001145.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001147.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example: using nested tags, cfthrow, and cfrethrow</h1>
+<p>The following example shows many of the techniques discussed in this chapter, including nested <a href="00000349.htm#1104557"><code>cftry</code></a> blocks and the <a href="00000343.htm#2773591"><code>cfthrow</code></a> and <a href="00000325.htm#1102913"><code>cfrethrow</code></a> tags. The example includes a simple calling page and a custom tag page: </p>
+<ul>
+<li>
+   The calling page does little more than call the custom tag with a single attribute, a name to be looked up in a database. It does show, however, how a calling page can handle an exception thrown by the custom tag.
+</li>
+<li>
+   The custom tag finds all records in the cfdocexamples database with a matching last name, and returns the results in a Caller variable. If it fails to connect with the main database, it tries a backup database. 
+</li>
+</ul>
+<h4><a name="wp1136248"></a>The calling page</h4>
+<p>The calling page represents a section from a larger application page. To keep things simple, the example hard-codes the name to be looked up.</p>
+<pre>&lt;cftry&gt;
+   &lt;cf_getEmps EmpName=&quot;Jones&quot;&gt;
+   &lt;cfcatch type=&quot;myApp.getUser.noEmpName&quot;&gt;
+      &lt;h2&gt;Oops&lt;/h2&gt;
+      &lt;cfoutput&gt;#cfcatch.Message#&lt;/cfoutput&gt;&lt;br&gt;
+   &lt;/cfcatch&gt;
+&lt;/cftry&gt;
+&lt;cfif isdefined(&quot;getEmpsResult&quot;)&gt;
+   &lt;cfdump var=&quot;#getEmpsResult#&quot;&gt;
+&lt;/cfif&gt;
+</pre><h4><a name="wp1136395"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><code>&lt;cftry&gt;</code></p>
+<p><code>	&lt;cf_getEmps EmpName=&quot;Jones&quot;&gt;</code></p>
+    </td>
+    <td>
+<p>In a <code>cftry</code> block, calls the cf_getEmps custom tag (getEmps.cfm).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code>&lt;cfcatch type=&quot;myApp.getUser.noEmpName&quot;&gt;</code></p>
+<p><code>		&lt;h2&gt;Oops&lt;/h2&gt;</code></p>
+<p><code>		&lt;cfoutput&gt;#cfcatch.Message#&lt;/cfoutput&gt;&lt;br&gt;</code></p>
+<p><code>	&lt;/cfcatch&gt;</code></p>
+<p><code>&lt;/cftry&gt;</code></p>
+    </td>
+    <td>
+<p>If the tag throws an exception indicating that it did not receive a valid attribute, catches the exception and displays a message, including the message variable set by the <code>cfthrow</code> tag in the custom tag.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code>&lt;cfif isdefined(&quot;getEmpsResult&quot;)&gt;</code></p>
+<p><code>&lt;cfdump var=&quot;#getEmpsResult#&quot;&gt;</code></p>
+<p><code>&lt;/cfif&gt;</code></p>
+    </td>
+    <td>
+<p>If the tag returns a result, uses the <code>cfdump</code> tag to display it. (A production application would not use the <code>cfdump</code> tag.)</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1136379"></a>The custom tag page</h4>
+<p>The custom tag page searches for the name in the database and returns any matching records in a getEmpsResult variable in the calling page. It includes several nested <code>cftry</code> blocks to handle error conditions. For a full description, see <a href="00001146.htm#1136056">Reviewing the code</a>, following the example:</p>
+<p>Save the following code as getEmps.cfm in the same directory as the calling page.</p>
+<pre>&lt;!--- If the tag didn't pass an attribute, throw an error to be handled by
+         the calling page ---&gt;
+&lt;cfif NOT IsDefined(&quot;attributes.EmpName&quot;)&gt;
+   &lt;cfthrow Type=&quot;myApp.getUser.noEmpName&quot;
+      message = &quot;Last Name was not supplied to the cf_getEmps tag.&quot;&gt;
+   &lt;cfexit method = &quot;exittag&quot;&gt;
+&lt;!--- Have a name to look up ---&gt;
+&lt;cfelse&gt;
+&lt;!--- Outermost Try Block ---&gt;
+   &lt;cftry&gt;
+
+&lt;!--- Inner Try Block ---&gt;
+      &lt;cftry&gt;
+&lt;!--- Try to query the main database and set a caller variable to the result ---&gt;
+         &lt;cfquery Name = &quot;getUser&quot; DataSource=&quot;cfdocexamples&quot;&gt;
+            SELECT * 
+            FROM Employee
+            WHERE LastName = '#attributes.EmpName#'
+         &lt;/cfquery&gt;
+         &lt;cfset caller.getEmpsResult = getuser&gt;
+&lt;!--- If the query failed with a database error, check the error type
+         to see if the database was found ---&gt;         
+         &lt;cfcatch type= &quot;Database&quot;&gt;
+            &lt;cfif (cfcatch.SQLState IS &quot;S100&quot;) OR (cfcatch.SQLState IS
+               &quot;IM002&quot;)&gt;
+
+&lt;!--- If the database wasn&#39;t found, try the backup database ---&gt;
+&lt;!--- Use a third-level Try block ---&gt;
+               &lt;cftry&gt;
+                  &lt;cfquery Name = &quot;getUser&quot; DataSource=&quot;cfdocexamplesBackup&quot;&gt;
+                     SELECT * 
+                     FROM Employee
+                     WHERE LastName = '#attributes.EmpName#'
+                  &lt;/cfquery&gt;
+                   &lt;cfset caller.getEmpsResult = getuser&gt;
+
+&lt;!--- If still get a database error, just return to the calling page
+         without setting the caller variable. There is no cfcatch body.
+         This might not be appropriate in some cases. 
+         The Calling page ends up handling this case as if a match was not
+         found ---&gt;
+                   &lt;cfcatch type = &quot;Database&quot; /&gt;
+&lt;!--- Still in innermost try block. Rethrow any other errors to the next
+         try block level ---&gt;                  
+                  &lt;cfcatch type = &quot;Any&quot;&gt;
+                     &lt;cfrethrow&gt;
+                  &lt;/cfcatch&gt;
+               &lt;/cftry&gt;
+
+&lt;!--- Now in second level try block.
+         Throw all other types of Database exceptions to the next try 
+            block level ---&gt;
+            &lt;cfelse&gt;
+               &lt;cfrethrow&gt;
+            &lt;/cfif&gt;
+         &lt;/cfcatch&gt;
+&lt;!--- Throw all other exceptions to the next try block level ---&gt;
+         &lt;cfcatch type = &quot;Any&quot;&gt;
+               &lt;cfrethrow&gt;
+         &lt;/cfcatch&gt;
+      &lt;/cftry&gt;
+
+&lt;!--- Now in Outermost try block. 
+       Handle all unhandled exceptions, including rethrown exceptions, by
+         displaying a message and exiting to the calling page.---&gt;
+      &lt;cfcatch Type = &quot;Any&quot;&gt;
+         &lt;h2&gt;Sorry&lt;/h2&gt;
+         &lt;p&gt;An unexpected error happened in processing your user inquiry.
+            Please report the following to technical support:&lt;/p&gt;
+         &lt;cfoutput&gt;
+            Type: #cfcatch.Type#
+            Message: #cfcatch.Message#
+         &lt;/cfoutput&gt;
+         &lt;cfexit method = &quot;exittag&quot;&gt;
+      &lt;/cfcatch&gt;
+   &lt;/cftry&gt;   
+&lt;/cfif&gt;
+</pre><h4><a name="wp1136056"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif NOT IsDefined(&quot;attributes.EmpName&quot;)&gt;
+&#160;&#160;cfthrow Type=&quot;myApp.getUser.noEmpName&quot;
+&#160;&#160;&#160;&#160;message = &quot;Last Name was not supplied to<br />      the cf_getEmps tag.&quot;&gt;
+  &lt;cfexit method = &quot;exittag&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Makes sure the calling page specified an <code>EmpName</code> attribute. If not, throws a custom error that indicates the problem and exits the tag. The calling page handles the thrown error.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfelse&gt;
+  &lt;cftry&gt;
+</pre>    </td>
+    <td>
+<p>If the tag has an <code>EmpName</code> attribute, does the remaining work inside an outermost try block. The <code>cfcatch</code> block at its end handles any otherwise-uncaught exceptions.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cftry&gt;
+  &lt;cfquery Name = &quot;getUser&quot;<br />      DataSource=&quot;cfdocexamples&quot;&gt;
+    SELECT * 
+    FROM Employee
+    WHERE LastName = &#39;#attributes.EmpName#&#39;
+  &lt;/cfquery&gt;
+  &lt;cfset caller.getEmpsResult = getuser&gt;
+</pre>    </td>
+    <td>
+<p>Starts a second nested try block. This block catches exceptions in the database query. </p>
+<p>If there are no exceptions, sets the calling page's <code>getEmpsResult</code> variable with the query results.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfcatch type= &quot;Database&quot;&gt;
+  &lt;cfif (cfcatch.sqlstate IS &quot;S100&quot;) OR 
+      (cfcatch.sqlstate IS &quot;IM002&quot;)&gt;
+    &lt;cftry&gt;
+      &lt;cfquery Name = &quot;getUser&quot; DataSource=<br />         &quot;cfdocexamplesBackup&quot;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SELECT * 
+        FROM Employee
+        WHERE LastName = &#39;#attributes.EmpName#&#39;
+      &lt;/cfquery&gt;
+      &lt;cfset caller.getEmpsResult = getuser&gt;
+</pre>    </td>
+    <td>
+<p>If the query threw a Database error, checks to see if the error was caused by an inability to access the database (indicated by an <code>SQLState</code> variable value of S100 or IM002). </p>
+<p>If the database was not found, starts a third nested try block and tries accessing the backup database. This try block catches exceptions in this second database access.</p>
+<p>If the database inquiry succeeds, sets the calling page's <code>getEmpsResult</code> variable with the query results.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&#160;&#160;&lt;cfcatch type = &quot;Database&quot; /&gt;
+
+</pre>    </td>
+    <td>
+<p>If the second database query failed with a database error, gives up silently. Because the Database type <code>cfcatch</code> tag does not have a body, the tag exits. The calling page does not get a <code>getEmpsResult</code> variable. It cannot tell whether the database had no match or an unrecoverable database error occurred, but it does know that no match was found.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&#160;&#160;&lt;cfcatch type = &quot;Any&quot;&gt;
+&#160;&#160;&#160;&#160;&lt;cfrethrow&gt;
+&#160;&#160;&lt;/cfcatch&gt;
+&lt;/cftry&gt;
+</pre>    </td>
+    <td>
+<p>If the second database query failed for any other reason, throws the error up to the next try block.</p>
+<p>Ends the innermost try block</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&#160;&#160;&lt;cfelse&gt;
+&#160;&#160;&#160;&#160;&lt;cfrethrow&gt;
+&#160;&#160;&lt;/cfif&gt;
+&lt;/cfcatch&gt;
+</pre>    </td>
+    <td>
+<p>In the second try block, handles the case in which the first database query failed for a reason other than a failure to find the database. </p>
+<p>Rethrows the error up to the next level, the outermost try block. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&#160;&#160;&lt;cfcatch type = &quot;Any&quot;&gt;
+&#160;&#160;&#160;&#160;&lt;cfrethrow&gt;
+&#160;&#160;&lt;/cfcatch&gt;
+&lt;/cftry&gt;
+</pre>    </td>
+    <td>
+<p>In the second try block, catches any errors other exceptions and rethrows them up to the outermost try block. </p>
+<p>Ends the second try block.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>    &lt;cfcatch Type = &quot;Any&quot;&gt;
+      &lt;h2&gt;Sorry&lt;/h2&gt;
+      &lt;p&gt;An unexpected error happened in processing<br />         your user inquiry.
+        Please report the following to technical support:&lt;/p&gt;
+      &lt;cfoutput&gt;
+        Type: #cfcatch.Type#
+        Message: #cfcatch.Message#
+      &lt;/cfoutput&gt;
+&#160;&#160;&#160;&#160;&lt;cfexit method = &quot;exittag&quot;&gt;
+    &lt;/cfcatch&gt;
+  &lt;/cftry&gt;  
+&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>In the outermost try block, handles any exceptions by displaying an error message that includes the exception type and the exception's error message. Because there was no code to try that is not also in a nested try block, this <code>cfcatch</code> tag handles only errors that are rethrown from the nested blocks.</p>
+<p>Exits the custom tag and returns to the calling page.</p>
+<p>Ends the catch block, try block, and initial <code>cfif</code> block.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1136054"></a>Testing the code</h4>
+<p>To test the various ways errors can occur and be handled in this example, try the following:</p>
+<ul>
+<li>
+   In the calling page, change the attribute name to any other value; for example, My Attrib. Then change it back.
+</li>
+<li>
+   In the first <a href="00000316.htm#1102316"><code>cfquery</code></a> tag, change the data source name to an invalid data source; for example, NoDatabase.
+</li>
+<li>
+   With an invalid first data source name, change the data source in the second <code>cfquery</code> tag to cfdocexamples.
+</li>
+<li>
+   Insert <a href="00000343.htm#2773591"><code>cfthrow</code></a> tags throwing custom exculpations in various places in the code and observe the effects.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001145.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001147.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001146.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

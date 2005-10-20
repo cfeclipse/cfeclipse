@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Publishing web services</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001545.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001547.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Publishing web services</h1>
+<p>To publish web services for consumption by remote applications, you create the web service using ColdFusion components. For more information on components, see <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a>. </p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001546.htm#1177328">Creating components for web services</a>
+</li>
+<li>
+   <a href="00001547.htm#1186403">Specifying data types of function arguments and return values</a>
+</li>
+<li>
+   <a href="00001548.htm#1177548">Producing WSDL files</a>
+</li>
+<li>
+   <a href="00001549.htm#1203363">Using ColdFusion components to define data types for web services</a>
+</li>
+<li>
+   <a href="00001550.htm#1222045">Publishing document-literal style web services</a>
+</li>
+<li>
+   <a href="00001551.htm#1175733">Securing your web services</a>
+</li>
+<li>
+   <a href="00001552.htm#1204824">Best practices for publishing web services</a>
+</li>
+</ul>
+<h2><a name="wp1177328"></a>Creating components for web services</h2>
+<p>ColdFusion components (CFCs) encapsulate application functionality and provide a standard interface for client access to that functionality. A component typically contains one or more functions defined by the <a href="00000263.htm#2852457"><code>cffunction</code></a> tag. </p>
+<p>For example, the following component contains a single function:</p>
+<pre>&lt;cfcomponent&gt;
+   &lt;cffunction name=&quot;echoString&quot; returnType=&quot;string&quot; output=&quot;no&quot;&gt;
+      &lt;cfargument name=&quot;input&quot; type=&quot;string&quot;&gt;
+      &lt;cfreturn #arguments.input#&gt;
+   &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre><p>The function, named echoString, echoes back any string passed to it. To publish the function as a web service, you must modify the function definition to add the <code>access</code> attribute and specify remote, as the following example shows:</p>
+<pre>&lt;cffunction name=&quot;echoString&quot; returnType=&quot;string&quot; output=&quot;no&quot; <code><strong>access=&quot;remote&quot;</strong></code>&gt;
+</pre><p>By defining the function as remote, ColdFusion includes the function in the WSDL file. Only those functions marked as remote are accessible as a web service.</p>
+<p>The following list defines the requirements for how to create web services for publication: </p>
+<ol>
+<li>
+   The value of the <code>access</code> attribute of the <code>cffunction</code> tag must be <code>remote</code>. 
+</li>
+<li>
+   The <code>cffunction</code> tag must include the <code>returnType</code> attribute to specify a return type.
+</li>
+<li>
+   The <code>output</code> attribute of the <code>cffunction</code> tag must be set to <code>No</code> because ColdFusion converts all output to XML to return it to the consumer. 
+</li>
+<li>
+   The attribute setting <code>required=&quot;false&quot;</code> for the <a href="00000218.htm#2855190"><code>cfargument</code></a> tag is ignored. ColdFusion considers all parameters as required. 
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001545.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001547.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001546.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

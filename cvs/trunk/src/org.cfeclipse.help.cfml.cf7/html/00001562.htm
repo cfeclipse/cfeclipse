@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About CFML variables and Java variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001561.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001563.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About CFML variables and Java variables</h1>
+<p>Because ColdFusion variables are case-independent and Java variables are case-dependent, you must be careful about variable names. Use the following rules and guidelines when sharing data between ColdFusion and Java code, including JSP pages and servlets.</p>
+<h4><a name="wp1186958"></a>Rules</h4>
+<ul>
+<li>
+   If you use mixed case variables, all variable names must be unique, independent of case. For example, you must not have two Java variables, MyVariable and MYVARIABLE. ColdFusion cannot distinguish between the two.
+</li>
+<li>
+   If you share Request scope variables between a CFML page and a JSP page or servlet, all shared Request scope variable names <i>must</i> be all-lowercase in the JSP page or servlet. Mixed case or all-uppercase variables will cause null pointer exceptions if CFML refers to these variables.
+</li>
+<li>
+   If you share Application or Session scope variables between a CFML page and a JSP page or servlet and use a named ColdFusion application (the common usage), the variables on the JSP page or servlet are case-independent.
+</li>
+<li>
+   If you share the Application or Session scope variables between a CFML page and a JSP page or servlet, and use an <i>unnamed</i> ColdFusion application, the variable names in the JSP page or servlet <i>must</i> be all lowercase.
+</li>
+<li>
+   When you specify a class name in the <code>cfobject</code> tag or <code>CreateObject</code> function, the name must be case-correct.
+</li>
+</ul>
+<h4><a name="wp1176043"></a>Guidelines</h4>
+<ul>
+<li>
+   You can prevent problems by consistently using all-lowercase variable names.
+</li>
+<li>
+   In your CFML, use the same case as you do in your Java or JSP. Doing so does not change how the application works, but does help prevent confusion.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001561.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001563.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001562.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

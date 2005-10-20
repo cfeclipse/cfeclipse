@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ArraySum</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000394.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000396.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ArraySum</h1>
+<h4><a name="wp1224335"></a>Description</h4>
+<p>Array sum function.</p>
+<h4><a name="wp3318132"></a>Returns</h4>
+<p>The sum of values in an array. If the <code>array</code> parameter value is an empty array, returns zero. </p>
+<h4><a name="wp2613175"></a>Category</h4>
+<p><a href="00000355.htm#3473387">Array functions</a>, <a href="00000365.htm#1099613">Mathematical functions</a></p>
+<h4><a name="wp2123509"></a>Function syntax</h4>
+<pre><code><strong>ArraySum</strong></code>(<i>array</i>)
+</pre><h4><a name="wp1254404"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>Name of an array </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1100915"></a>Example</h4>
+<pre>&lt;h3&gt;ArraySum Example&lt;/h3&gt;
+&lt;p&gt;This example uses ArraySum to add two numbers together.&lt;br&gt; &lt;/p&gt;
+&lt;!--- After checking whether the form has been submitted, the code creates <br />an array and assigns the form fields to the first two elements in <br />the array. ---&gt;
+&lt;cfif IsDefined(&quot;FORM.submit&quot;)&gt;
+   &lt;cfset myNumberArray = ArrayNew(1)&gt;
+   &lt;cfset myNumberArray[1] = number1&gt;
+   &lt;cfset myNumberArray[2] = number2&gt;
+      
+   &lt;cfif Form.Submit is &quot;Add&quot;&gt;   
+      &lt;!--- use ArraySum to add the number in the array ---&gt;
+      &lt;p&gt;The sum of the numbers is
+      &lt;cfoutput&gt;#ArraySum(myNumberArray)#.&lt;/cfoutput&gt;
+   &lt;/cfif&gt;   
+&lt;/cfif&gt;   
+&lt;!--- This form provides two numeric fields that are added when the form is<br />submitted. ---&gt;
+&lt;form action = &quot;arraysum.cfm&quot; method=&quot;post&quot;&gt;
+   &lt;input type = &quot;hidden&quot; name = &quot;number1_Float&quot;&gt;
+   &lt;input type = &quot;hidden&quot; name = &quot;number2_Float&quot;&gt;
+   &lt;input type = &quot;text&quot; name = &quot;number1&quot;&gt;
+   &lt;br&gt;
+   &lt;input type = &quot;text&quot; name = &quot;number2&quot;&gt;
+   &lt;br&gt;
+   &lt;input type = &quot;submit&quot; name = &quot;submit&quot; value = &quot;Add&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000394.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000396.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000395.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

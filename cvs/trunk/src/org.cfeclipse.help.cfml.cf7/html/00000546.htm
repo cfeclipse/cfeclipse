@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Len</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000545.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000547.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Len</h1>
+<h4><a name="wp130248"></a>Description</h4>
+<p>Determines the length of a string or binary object.</p>
+<h4><a name="wp130250"></a>Returns</h4>
+<p>Number; length of a string or a binary object.</p>
+<h4><a name="wp130252"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp130257"></a>Function syntax</h4>
+<pre><code><strong>Len</strong></code>(<i>string or binary object</i>)
+</pre><h4><a name="wp130259"></a>See also</h4>
+<p><a href="00000653.htm#138631"><code>ToBinary</code></a><code>, </code><a href="00000545.htm#130173"><code>Left</code></a><code>, </code><a href="00000617.htm#135972"><code>Right</code></a><code>, </code><a href="00000585.htm#133799"><code>Mid</code></a></p>
+<h4><a name="wp130273"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed Unicode support: ColdFusion supports the Java UCS-2 representation of Unicode character values 0-65535. (ColdFusion 5 and earlier releases supported ASCII values 1-255. When calculating a length, some string-processing functions processed the ASCII 0 (NUL) character, but did not process subsequent characters of the string.) </p>
+<h4><a name="wp130278"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string, the name of a string, or a binary object </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp130289"></a>Example</h4>
+<pre>&lt;h3&gt;Len Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;Form.MyText&quot;)&gt;
+   &lt;!--- If len returns 0 (zero), then show error message. ---&gt;
+   &lt;cfif Len(FORM.myText)&gt;
+      &lt;cfoutput&gt;&lt;p&gt;Your string, &lt;strong&gt;&quot;#FORM.myText#&quot;&lt;/strong&gt;,
+      has &lt;strong&gt;#Len(FORM.myText)#&lt;/strong&gt; characters.&lt;/cfoutput&gt;
+   &lt;cfelse&gt;
+      &lt;p style=&quot;color: red; font-weight: bold&quot;&gt;Please enter a string of more
+      than 0 characters.&lt;/p&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action = &quot;&lt;cfoutput&gt;#CGI.SCRIPT_NAME#&lt;/cfoutput&gt;&quot; method=&quot;POST&quot;&gt;
+&lt;p&gt;Type in some text to see the length of your string.&lt;/p&gt;
+
+&lt;input type = &quot;Text&quot; name = &quot;MyText&quot;&gt;&lt;br /&gt;
+&lt;input type = &quot;Submit&quot; name=&quot;Submit&quot; value = &quot;Count characters&quot;&gt;&lt;br&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000545.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000547.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000546.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

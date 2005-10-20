@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Managing LDAP security</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001299.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001301.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Managing LDAP security</h1>
+<p>When you consider how to implement LDAP security, you must consider server security and application security.</p>
+<h3><a name="wp1196428"></a>Server security</h3>
+<p>The <a href="00000283.htm#1100581"><code>cfldap</code></a> tag supports secure socket layer (SSL) v2 security. This security provides certificate-based validation of the LDAP server. It also encrypts data transferred between the ColdFusion server and the LDAP server, including the user password, and ensures the integrity of data passed between the servers. To specify SSL v2 security, set the <code>cfladap</code> tag <code>secure=&quot;cfssl_basic&quot;</code> attribute.</p>
+<h4><a name="wp1196433"></a>About LDAP Server Security</h4>
+<p>ColdFusion MX uses Java Native Directory Interface (JNDI), the LDAP provider, and an SSL package to create the client side of an SSL communication. The LDAP server provides the server side. The LDAP server that the <code>cfldap</code> tag connects to using SSL holds an SSL server certificate, a certificate that is securely &quot;signed&quot; by a trusted authority and identifies (authenticates) the sender. During the initial SSL connection, the LDAP server presents its server certificate to the client. If the client trusts this certificate, the SSL connection is established and secure LDAP communication can begin. </p>
+<p>ColdFusion determines whether to trust the server by comparing the server's certificate with the information in the jre/lib/security/cacerts keystore of the JRE used by ColdFusion MX. The ColdFusion MX default cacerts file contains information about many certificate granting authorities. If you must update the file with additional information, you can use the keytool utility in the ColdFusion jre/bin directory to import certificates that are in X.509 format. For example, enter the following:</p>
+<pre>keytool -import -keystore cacerts -alias ldap -file ldap.crt -keypass bl19mq
+</pre><p>The keytool utility initial keypass password is &quot;change it&quot;. For more information on using the keytool utility, see the Sun JDK documentation. </p>
+<p>Once ColdFusion establishes secure communication with the server, it must provide the server with login credentials. You specify the login credentials in the <code>cfldap</code> tag <code>username</code> and <code>password</code> attributes. When the server determines that the login credentials are valid, ColdFusion can access the directory.</p>
+<h4><a name="wp1196439"></a>Using LDAP security</h4>
+<p>To use security, first ensure that the LDAP server supports SSL v2 security. </p>
+<p>Specify the <code>cfldap</code> tag <code>secure</code> attribute as follows:</p>
+<pre>secure = &quot;cfssl_basic&quot;
+</pre><p>For example:</p>
+<pre>&lt;cfldap action=&quot;modify&quot;
+   modifyType=&quot;add&quot;
+   atributes=&quot;cn=Lizzie&quot;
+   dn=&quot;uid=lborden, ou=People, o=Airius.com&quot;
+   server=#myServer#
+   username=#myUserName#
+   password=#myPassword#
+   secure=&quot;cfssl_basic&quot;
+   port=636&gt;
+</pre><p>The <code>port</code> attribute specifies the server port used for secure LDAP communications, which is 636 by default. If you do not specify a port, ColdFusion attempts to connect to the default, nonsecure, LDAP port 389.</p>
+<h3><a name="wp1196455"></a>Application security</h3>
+<p>To ensure application security, you must prevent outsiders from gaining access to the passwords that you use in <a href="00000283.htm#1100581"><code>cfldap</code></a> tags. The best way to do this is to use variables for your <code>username</code> and <code>password</code> attributes. You can set these variables on one encrypted application page. For more information on securing applications, see <a href="00001175.htm#1100022">Securing Applications</a>.</p>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001299.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001301.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001300.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

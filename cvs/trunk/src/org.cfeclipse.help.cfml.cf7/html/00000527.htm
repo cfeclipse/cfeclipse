@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsObject</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000526.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000528.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsObject</h1>
+<h4><a name="wp4078458"></a>Description</h4>
+<p>Determines whether a value is an object.</p>
+<h4><a name="wp4078468"></a>Returns</h4>
+<p>True, if the value represents a ColdFusion object. False if the value is any other type of data, such as an integer, string, date, or struct.</p>
+<h4><a name="wp4078475"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a></p>
+<h4><a name="wp4078497"></a>Function syntax</h4>
+<pre><code><strong>IsObject</strong></code>(<i>value</i>)
+</pre><h4><a name="wp4723790"></a>See also</h4>
+<p><a href="00000518.htm#4758075">IsDate</a>, <a href="00000525.htm#1106573">IsNumeric</a>, <a href="00000526.htm#1106623">IsNumericDate</a>, <a href="00000529.htm#1106805">IsQuery</a>, <a href="00000530.htm#1106859">IsSimpleValue</a>, <a href="00000532.htm#1106910">IsStruct</a>, <a href="00000535.htm#3123485">IsWDDX</a>, <a href="00000538.htm#4046340">IsXmlDoc</a>, <a href="00000539.htm#4979134">IsXmlElem</a>, <a href="00000541.htm#4392056">IsXmlRoot</a></p>
+<h4><a name="wp4462186"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp4078507"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>A value, typically the name of a variable.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4078482"></a>Usage</h4>
+<p>This function returns False for query and XML objects.</p>
+<h4><a name="wp4722835"></a>Example</h4>
+<pre>&lt;!--- to use this example, create a color.cfc component as follows: ---&gt;
+&lt;!--- 
+&lt;cfcomponent&gt;
+    &lt;cffunction name=&quot;myFunction&quot; access=&quot;public&quot; returntype=&quot;string&quot;&gt;
+        &lt;!--- Create a structure object ---&gt;
+      &lt;cfset myColor = &quot;Blue&quot;&gt;
+      &lt;cfreturn myColor&gt;
+    &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+---&gt;
+
+&lt;!--- Create an instance of the color.cfc component ---&gt;
+&lt;cfobject name=&quot;getColor&quot; component=&quot;color&quot;&gt;
+
+&lt;cfif IsObject(getColor)&gt;
+   &lt;!--- Invoke the myFunction method ---&gt;
+   &lt;cfinvoke
+      component=&quot;#getColor#&quot;
+      method=&quot;myFunction&quot;
+      returnVariable=&quot;myColor&quot;&gt;
+   &lt;/cfinvoke&gt;
+
+   &lt;cfif IsDefined(&quot;myColor&quot;)&gt;
+      &lt;!--- Output the returned variable ---&gt;
+      The value of myColor = &lt;cfoutput&gt;#myColor#&lt;/cfoutput&gt;&lt;p&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000526.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000528.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000527.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

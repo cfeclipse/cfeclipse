@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>QueryAddRow</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000598.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000600.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>QueryAddRow</h1>
+<h4><a name="wp134707"></a>Description</h4>
+<p>Adds a specified number of empty rows to a query. </p>
+<h4><a name="wp134709"></a>Returns</h4>
+<p>The number of rows in the query</p>
+<h4><a name="wp134711"></a>Category</h4>
+<p><a href="00000367.htm#1099653">Query functions</a></p>
+<h4><a name="wp134716"></a>Function syntax</h4>
+<pre><code><strong>QueryAddRow</strong></code>(<i>query</i> [, <i>number</i> ])
+</pre><h4><a name="wp134718"></a>See also</h4>
+<p><a href="00000598.htm#134610"><code>QueryAddColumn</code></a>, <a href="00000599.htm#134706">QueryAddRow</a>, <a href="00000601.htm#134832"><code>QuerySetCell</code></a>, <a href="00000600.htm#134773"><code>QueryNew</code></a>; <a href="00001264.htm#1135428">Creating a record set with a function</a> in <a href="00001263.htm#1181595">Using Query of Queries</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp134732"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Name of an executed query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>number</p>
+    </td>
+    <td>
+<p>Number of rows to add to the query. The default value is 1.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp134747"></a>Example</h4>
+<pre>&lt;h3&gt;QueryAddRow Example&lt;/h3&gt;
+
+&lt;!--- start by making a query ---&gt;
+&lt;cfquery name = &quot;GetCourses&quot; datasource = &quot;cfdocexamples&quot;&gt;
+   SELECT Course_ID, Descript 
+   FROM Courses
+&lt;/cfquery&gt;
+&lt;p&gt;The Query &quot;GetCourses&quot; has &lt;cfoutput&gt;#GetCourses.RecordCount#&lt;/cfoutput&gt; rows.
+
+&lt;cfset CountVar = 0&gt;
+&lt;cfloop CONDITION = &quot;CountVar LT 15&quot;&gt;
+   &lt;cfset temp = QueryAddRow(GetCourses)&gt;
+   &lt;cfset CountVar = CountVar + 1&gt;
+   &lt;cfset Temp = QuerySetCell(GetCourses, &quot;Number&quot;, 100*CountVar)&gt;
+   &lt;cfset CountVar = CountVar + 1&gt;
+   &lt;cfset Temp = QuerySetCell(GetCourses, &quot;Descript&quot;, <br />&quot;Description of variable #Countvar#&quot;)&gt;
+&lt;/cfloop&gt;
+
+&lt;P&gt;After the QueryAddRow action, the query has
+   &lt;CFOUTPUT&gt;#GetCourses.RecordCount#&lt;/CFOUTPUT&gt; 
+   records. 
+   &lt;CFOUTPUT query=&quot;GetCourses&quot;&gt; 
+   &lt;PRE&gt;#Course_ID# #Course_Number# #Descript#&lt;/pre&gt; &lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000598.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000600.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000599.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

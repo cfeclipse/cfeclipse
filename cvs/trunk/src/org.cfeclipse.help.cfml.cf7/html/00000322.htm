@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfregistry action = &quot;delete&quot;</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000321.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000323.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfregistry action = &quot;delete&quot;</h1>
+<h4><a name="wp1761122"></a>Description</h4>
+<p>Deletes a registry key or value. </p>
+<h4><a name="wp1102835"></a>Syntax</h4>
+<pre>&lt;cfregistry <br />   action = &quot;delete&quot;<br />   branch = &quot;branch&quot;<br />   entry = &quot;keyorvalue&quot;&gt;
+</pre><h4><a name="wp2863921"></a>See also</h4>
+<p><a href="00001147.htm#1159066">Using Persistent Data and Locking</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2863864"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Always <code>delete.</code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>branch</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<ul>
+<li>
+   For key deletion: name of registry key to delete. Do not specify the <code>entry</code> attribute.
+</li>
+<li>
+   For value deletion: name of registry branch that contains value to delete. You must specify the <code>entry</code> attribute.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>entry</p>
+    </td>
+    <td>
+<p>Required for value deletion</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Value to delete.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2863900"></a>Usage</h4>
+<p>If you delete a key, the <code>cfregistry</code> tag also deletes values and subkeys defined beneath it.</p>
+<h4><a name="wp1102845"></a>Example</h4>
+<pre>&lt;cfregistry action = &quot;delete&quot;
+ branch = &quot;HKEY_LOCAL_MACHINE\Software\cflangref\tempkey&quot;
+ entry = &quot;LastCFM01&quot;&gt;
+&lt;h1&gt;cfregistry action = &quot;delete&quot;&lt;/h1&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000321.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000323.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000322.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

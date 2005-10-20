@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 1: Verifying the tutorial file structure</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000111.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000113.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 1: Verifying the tutorial file structure</h1>
+<p>Before you begin the tutorial, verify that the configuration of the computer where ColdFusion&#160;MX&#160;7 is installed matches the file structure described in the following sections.</p>
+<p>The files required to complete the Compass Travel tutorial are installed under the web server root directory. The location of this directory varies, depending on whether you chose to configure a local third-party web server (such as IIS) or the ColdFusion stand-alone web server during installation, as follows:</p>
+<ul>
+<li>
+   When you use a third-party web server (such as IIS or Apache), the files are installed in: <i>web_root/</i>cfdocs/getting_started.
+</li>
+<li>
+   When you use the ColdFusion built-in web server, the files are installed in: <i>cf_root</i>\webroot\cfdocs\getting_started.
+</li>
+</ul>
+<p>The following is the getting_started directory structure:</p>
+<pre>getting_started
+&#160;&#160;&#160;-db
+&#160;&#160;&#160;-my_app
+&#160;&#160;&#160;&#160;&#160;&#160;-images
+&#160;&#160;&#160;-new_user_database
+&#160;&#160;&#160;-photos
+&#160;&#160;&#160;-solutions
+</pre><p><strong>Note: </strong>When you use the J2EE configuration, the cfdocs directory is under the ColdFusion web application root. For more information, see <a href="00000074.htm#1157274">Saving your ColdFusion page</a>.</p><p>ColdFusion MX installs two copies of the sample CompassTravel database file. The working copy is located in the db directory; a backup copy of the file is in the new_user_database directory. </p>
+<p>To ensure that you are working with the original database file, verify that the file in the db directory has the same date as the backup file in the new_user_database directory. If the date of the file in the db directory is later than the backup file, replace the file in the db directory with a copy of the backup database.</p>
+<p><strong>Caution: </strong>Do not write to the database file in the new_user_database directory. The backup file lets multiple users perform the tutorial. </p><p>In each of the database subdirectories, the tutorial provides one sample database file for Microsoft Windows users and one sample database file for UNIX users. Windows users use a Microsoft Access file, and UNIX users use a PointBase file. </p>
+<p><strong>Note: </strong>The sample PointBase file consists of two files: compasstravel.dbn and compasstavel$1.wal. ColdFusion MX uses both of these files to work with the content in the sample PointBase database.</p><p>Save all the files that you create for the tutorial application in the my_app directory. This directory contains one subdirectory for images. The image subdirectory contains the required image files for the tutorial application.</p>
+<p>The photos directory contains the required photo files for the tutorial application. The solutions directory provides sample application files that you can use when building the tutorial application.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000111.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000113.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000112.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

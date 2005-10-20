@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Considering lock granularity</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001169.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001171.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Considering lock granularity</h1>
+<p>When you design your locking strategy, consider whether you should have multiple locks containing small amounts of code or few locks with larger blocks of code. There is no simple rule for making such a decision, and you might do performance testing with different options to help make your decision. However, you must consider the following issues:</p>
+<ul>
+<li>
+   If the code block is larger, ColdFusion will spend more time inside the block, which might increase the number of times an application waits for the lock to released.
+</li>
+<li>
+   Each lock requires processor time. The more locks you have, the more processor time is spent on locking code.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001169.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001171.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001170.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

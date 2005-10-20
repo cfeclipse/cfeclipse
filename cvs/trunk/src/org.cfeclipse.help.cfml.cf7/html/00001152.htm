@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Client identifiers and security</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001151.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001153.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Client identifiers and security</h1>
+<p>The following client identifier issues can have security implications:</p>
+<ul>
+<li>
+   Ensuring the uniqueness and complexity of the <code>CFToken</code> identifier
+</li>
+<li>
+   Limiting the availability of Session identifiers
+</li>
+</ul>
+<p>The next sections discuss these issues.</p>
+<h4><a name="wp1167902"></a>Ensuring CFToken uniqueness and security</h4>
+<p>By default, ColdFusion uses an eight-digit random number in the <code>CFToken</code> identifier. This <code>CFToken</code> format provides a unique, secure identifier for users under most circumstances. (In ColdFusion MX, the method for generating this number uses a cryptographic-strength random number generator that is seeded only when the server starts.)</p>
+<p>However, in the ColdFusion&#160;MX Administrator, you can enable the Settings page to produce a more complex <code>CFToken</code> identifier. If you enable the Use UUID for cftoken option, ColdFusion creates the <code>CFToken</code> value by prepending a 16-digit random hexadecimal number to a ColdFusion UUID. The resulting <code>CFToken</code> identifier looks similar to the following:</p>
+<pre><code>3ee6c307a7278c7b-5278BEA6-1030-C351-3E33390F2EAD02B9</code>
+</pre><h4><a name="wp1167907"></a>Providing Session security</h4>
+<p>ColdFusion uses the same client identifiers for the Client scope and the standard Session scope. Because the <code>CFToken</code> and <code>CFID</code> values are used to identify a client over a period of time, they are normally saved as cookies on the user's browser. These cookies persist until the client's browser deletes them, which can be a considerable length of time. As a result, hackers could have more access to these variables than if ColdFusion used different user identifiers for each session.</p>
+<p>A hacker who has the user's <code>CFToken</code> and <code>CFID</code> cookies could gain access to user data by accessing a web page during the user's session using the stolen <code>CFToken</code> and <code>CFID</code> cookies. While this scenario is unlikely, it is theoretically possible.</p>
+<p>You can remove this vulnerability by selecting the Use J2EE Session Variables option on the ColdFusion&#160;MX Administrator Memory Variables page. The J2EE session management mechanism creates a new session identifier for each session, and does not use either the <code>CFToken</code> or the <code>CFID</code> cookie value.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001151.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001153.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001152.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

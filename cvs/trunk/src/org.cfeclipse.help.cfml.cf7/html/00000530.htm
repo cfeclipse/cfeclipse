@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsSimpleValue</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000529.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000531.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsSimpleValue</h1>
+<h4><a name="wp1225306"></a>Description</h4>
+<p>Determines the type of a value.</p>
+<h4><a name="wp3402742"></a>Returns</h4>
+<p>True, if value is a string, number, Boolean, or date/time value; False, otherwise.</p>
+<h4><a name="wp2485952"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a></p>
+<h4><a name="wp1106861"></a>Function syntax</h4>
+<pre><code><strong>IsSimpleValue</strong></code>(<i>value</i>)
+</pre><h4><a name="wp4995927"></a>See also</h4>
+<p><a href="00000534.htm#4996076">IsValid</a></p>
+<h4><a name="wp1329082"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Variable or expression</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1106865"></a>Example</h4>
+<pre>&lt;!--- Shows an example of IsQuery and IsSimpleValue ---&gt;
+&lt;h3&gt;IsSimpleValue Example&lt;/h3&gt;
+&lt;!--- define a variable called &quot;GetEmployees&quot; ---&gt;
+&lt;cfparam name = &quot;GetEmployees&quot; default = &quot;#Now()#&quot;&gt;
+
+&lt;p&gt;Before the query is run, the value of GetEmployees is <br />&lt;cfoutput&gt;#GetEmployees#&lt;/cfoutput&gt;
+
+&lt;cfif <strong>IsSimpleValue(GetEmployees)</strong>&gt;
+   &lt;p&gt;GetEmployees is currently a simple value
+&lt;/cfif&gt;
+&lt;!--- make a query on the snippets datasource ---&gt;
+&lt;cfquery name = &quot;GetEmployees&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT *
+FROM employees
+&lt;/cfquery&gt; 
+&lt;p&gt;After the query is run, GetEmployees contains a number of rows <br />that look like this (display limited to three rows):
+&lt;cfoutput QUERY = &quot;GetEmployees&quot; MaxRows = &quot;3&quot;&gt;
+&lt;pre&gt;#Emp_ID# #FirstName# #LastName#&lt;/pre&gt;
+&lt;/cfoutput&gt;
+
+&lt;cfif IsQuery(GetEmployees)&gt;
+   GetEmployees is no longer a simple value, but the name of a query
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000529.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000531.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000530.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

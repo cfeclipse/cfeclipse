@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the cflock tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001168.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001170.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the cflock tag</h1>
+<p>The <a href="00000285.htm#1100787"><code>cflock</code></a> tag ensures that concurrently executing requests do not run the same section of code simultaneously and thus manipulate shared data structures, files, or CFX tags inconsistently. It is important to remember that <code>cflock</code> protects code sections that access or set data, <i>not</i> the variables themselves.</p>
+<p>You protect access to code by surrounding it in a <code>cflock</code> tag; for example:</p>
+<pre>&lt;cflock scope=&quot;Application&quot; timeout=&quot;10&quot; type=&quot;Exclusive&quot;&gt;
+   &lt;cfif not IsDefined(&quot;Application.number&quot;)&gt;
+      &lt;cfset Application.number = 1&gt;
+   &lt;/cfif&gt;
+&lt;/cflock&gt;
+</pre><h3><a name="wp1154870"></a>Lock types</h3>
+<p>The <a href="00000285.htm#1100787"><code>cflock</code></a> tag offers two modes of locking, specified by the <code>type</code> attribute: </p>
+<p><strong>Exclusive locks</strong> (the default lock type)&#160;Allow only one request to process the locked code. No other requests can run code inside the tag while a request has an exclusive lock.</p>
+<p>Enclose all code that creates or modifies session, application, or server variables in exclusive <code>cflock</code> tags.</p>
+<p><strong>Read-only locks</strong>&#160;Allow multiple requests to execute concurrently if no exclusive locks with the same scope or name are executing. No requests can run code inside the tag while a request has an exclusive lock.</p>
+<p>Enclose code that only reads or tests session, application, or server variables in read-only <code>cflock</code> tags. You specify a read-only lock by setting the <code>type=&quot;readOnly&quot;</code> attribute in the <code>cflock</code> tag, for example:</p>
+<pre>&lt;cflock scope=&quot;Application&quot; timeout=&quot;10&quot; type=&quot;readOnly&quot;&gt;
+   &lt;cfif IsDefined(&quot;Application.dailyMessage&quot;)&gt;
+      &lt;cfoutput&gt;#Application.dailyMessage#&lt;br&gt;&lt;/cfoutput&gt;
+   &lt;/cfif&gt;
+&lt;/cflock&gt;
+</pre><p>Although ColdFusion does not prevent you from setting shared variables inside read-only lock tag, doing so loses the advantages of locking. As a result, you must be careful not to set any session, application, or server variables inside a read-only <code>cflock</code> tag body. </p>
+<p><strong>Note: </strong>You cannot upgrade or downgrade a lock from one type to another. In other words, do not nest an exclusive lock in a read-only lock of the same name or scope; the exclusive lock will always time out. Also, do not nest a read-only lock inside an exclusive lock with the same name or scope; doing so has no effect.</p><h3><a name="wp1181808"></a>Lock scopes and names</h3>
+<p>The <a href="00000285.htm#1100787"><code>cflock</code></a> tag prevents simultaneous access to sections of code, not to variables. If you have two sections of code that access the same variable, they must be synchronized to prevent them from running simultaneously. You do this by identifying the locks with the same <code>scope</code> or <code>name</code> attributes.</p>
+<p><strong>Note: </strong>ColdFusion does not require you to identify exclusive locks. If you omit the identifier, the lock is anonymous and you cannot synchronize the code in the <code>cflock</code> tag block with any other code. Anonymous locks do not cause errors when they protect a resource that is used in a single code block, but they are bad programming practice. You must always identify read-only locks.</p><h4><a name="wp1154888"></a>Controlling access to data with the scope attribute</h4>
+<p>When the code that you are locking accesses session, application, or server variables, synchronize access by using the <code>cflock</code> <code>scope</code> attribute. </p>
+<p>You can set the attribute to any of the following values:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Scope
+    </th>
+    <th>
+Meaning
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Server</p>
+    </td>
+    <td>
+<p>All code sections with this attribute on the server share a single lock.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Application</p>
+    </td>
+    <td>
+<p>All code sections with this attribute in the same application share a single lock.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Session</p>
+    </td>
+    <td>
+<p>All code sections with this attribute that run in the same session of an application share a single lock.</p>
+    </td>
+  </tr>
+</table>
+
+<p>If multiple code sections share a lock, the following rules apply:</p>
+<ul>
+<li>
+   When code is running in a <code>cflock</code> tag block with the <code>type</code> attribute set to <code>Exclusive</code>, code in <code>cflock</code> tag blocks with the same <code>scope</code> attribute is not allowed to run. They wait until the code with the exclusive lock completes.
+</li>
+<li>
+   When code in a <code>cflock</code> tag block with the type <code>readOnly</code> is running, code in other <code>cflock</code> tag blocks with the same <code>scope</code> attribute and the <code>readOnly</code> <code>type</code> attribute can run, but any blocks with the same <code>scope</code> attribute and an <code>Exclusive</code> type cannot run and must wait until all code with the read-only lock completes. However, if a read-only lock is active and code with an exclusive lock with the same scope or name is waiting to execute, read-only requests using the same scope or name that are made after the exclusive request is queued must wait until code with the exclusive lock executes and completes.
+</li>
+</ul>
+<h4><a name="wp1154913"></a>Controlling locking access to files and CFX tags with the name attribute</h4>
+<p>The <code>cflock</code> <code>name</code> attribute provides a second way to identify locks. Use this attribute when you use locks to protect code that manges file access or calls non-thread-safe CFX code.</p>
+<p>When you use the <code>name</code> attribute, specify the same name for each section of code that accesses a specific file or a specific CFX tag.</p>
+<h3><a name="wp1154920"></a>Controlling and minimizing lock time-outs</h3>
+<p>You must include a <code>timeout</code> attribute in your <a href="00000285.htm#1100787"><code>cflock</code></a> tag. The <code>timeout</code> attribute specifies the maximum time, in seconds, to wait to obtain the lock if it is not available. By default, if the lock does not become available within the time-out period, ColdFusion generates a Lock type exception error, which you can handle using <a href="00000349.htm#1104557"><code>cftry</code></a> and <a href="00000225.htm#3395038"><code>cfcatch</code></a> tags.</p>
+<p>If you set the <code>cflock</code> <code>throwOnTimeout</code> attribute to No, processing continues after the time-out at the line after the <code>&lt;/cflock&gt;</code> end tag. Code in the <code>cflock</code> tag body does not run if the time-out occurs before ColdFusion can acquire the lock. Therefore, never use the <code>throwOnTimeout</code> attribute for CFML that must run.</p>
+<p>Normally, it does not take more than a few seconds to obtain a lock. Very large time-outs can block request threads for long periods of time and radically decrease throughput. Always use the smallest time-out value that does not result in a significant number of time-outs.</p>
+<p>To prevent unnecessary time-outs, lock the minimum amount of code possible. Whenever possible, lock only code that sets or reads variables, not business logic or database queries. One useful technique is to do the following:</p>
+<ol>
+<li>
+   Perform a time-consuming activity outside of a <code>cflock</code> tag
+</li>
+<li>
+   Assign the result to a Variables scope variable
+</li>
+<li>
+   Assign the Variables scope variable's value to a shared scope variable inside a <code>cflock</code> block.
+</li>
+</ol>
+<p>For example, if you want to assign the results of a query to a session variable, first get the query results using a Variables scope variable in unlocked code. Then, assign the query results to a session variable inside a locked code section. The following code shows this technique: </p>
+<pre>&lt;cfquery name=&quot;Variables.qUser&quot; datasource=&quot;#request.dsn#&quot;&gt;
+   SELECT FirstName, LastName
+   FROM Users
+   WHERE UserID = #request.UserID#
+&lt;/cfquery&gt;
+&lt;cflock scope=&quot;Session&quot; timeout=&quot;5&quot; type=&quot;exclusive&quot;&gt;
+   &lt;cfset Session.qUser = Variables.qUser&gt;
+&lt;/cflock&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001168.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001170.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001169.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

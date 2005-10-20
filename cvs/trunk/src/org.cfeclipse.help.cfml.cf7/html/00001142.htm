@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using cftry and cfcatch tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001141.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001143.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using cftry and cfcatch tags</h1>
+<p>The <a href="00000349.htm#1104557"><code>cftry</code></a> tag lets you go beyond reporting error data to the user: </p>
+<ul>
+<li>
+   You can include code that recovers from errors so your application can continue processing without alerting the user. 
+</li>
+<li>
+   You can create customized error messages that apply to the specific code that causes the error.
+</li>
+</ul>
+<p>For example, you can use <code>cftry</code> to catch errors in code that enters data from a user registration form to a database. The <a href="00000225.htm#3395038"><code>cfcatch</code></a> code could do the following:</p>
+<ol>
+<li>
+   Retry the query, so the operation succeeds if the resource was only temporarily unavailable. 
+</li>
+<li>
+   If the retries fail:
+<ul><li>Display a custom message to the user</li>
+<li>Post the data to an email address so the data could be entered by company staff after the problem has been solved.</li>
+</ul></li>
+</ol>
+<p>Code that accesses external resources such as databases, files, or LDAP servers where resource availability is not guaranteed is a good candidate for using try/catch blocks.</p>
+<h3><a name="wp1121790"></a>Try/catch code structure</h3>
+<p>In order for your code to directly handle an exception, the tags in question must appear within a <code>cftry</code> block. It is a good idea to enclose an entire application page in a <code>cftry</code> block. You then follow the <code>cftry</code> block with <code>cfcatch</code> blocks, which respond to potential errors. When an exception occurs within the <code>cftry</code> block, processing is thrown to the <code>cfcatch</code> block for that type of exception. </p>
+<p>Here is an outline for using <code>cftry</code> and <code>cfcatch</code> to handle errors:</p>
+<pre>&lt;<code>cftry</code>&gt;
+   Put your application code here ...
+   &lt;<code>cfcatch</code> <code>type</code>=&quot;<code><i>exception type</i></code>1&quot;&gt;
+      Add exception processing code here ...
+   &lt;/<code>cfcatch</code>&gt;
+   &lt;<code>cfcatch</code> <code>type</code>=&quot;<code><i>exception type</i></code>2&quot;&gt;
+      Add exception processing code here ...
+   &lt;/<code>cfcatch</code>&gt;
+   ...
+   &lt;<code>cfcatch</code> <code>type</code>=&quot;Any&quot;&gt;
+      Add exception processing code appropriate for all other exceptions<br />here ...
+   &lt;/<code>cfcatch</code>&gt;
+&lt;/<code>cftry</code>&gt;
+</pre><h3><a name="wp1131750"></a>Try/catch code rules and recommendations</h3>
+<p>Follow these rules and recommendations when you use <code>cftry</code> and <code>cfcatch</code> tags:</p>
+<ul>
+<li>
+   The <code>cfcatch</code> tags must follow all other code in a <code>cftry</code> tag body.
+</li>
+<li>
+   You can nest <code>cftry</code> blocks. For example, the following structure is valid:
+<pre>
+&lt;cftry&gt;
+	code that may cause an exception
+	&lt;cfcatch ...&gt;
+		&lt;cftry&gt;
+			First level of exception handling code
+			&lt;cfcatch ...&gt;
+				Second level of exception handling code
+			&lt;/cfcatch
+		&lt;/cftry&gt;
+	&lt;/cfcatch&gt;
+&lt;/cftry&gt;
+</pre>
+<p>If an exception occurs in the first level of exception-handling code, the inner <code>cfcatch</code> block can catch and handle it. (An exception in a <code>cfcatch</code> block cannot be handled by <code>cfcatch</code> blocks at the same level as that block.)</p>
+</li>
+<li>
+   ColdFusion always responds to the latest exception that gets raised. For example, if code in a <code>cftry</code> block causes an exception that gets handled by a <code>cfcatch</code> block, and the <code>cfcatch</code> block causes an exception that has no handler, ColdFusion will display the default error message for the exception in the <code>cfcatch</code> block, and you will not be notified of the original exception.
+</li>
+<li>
+   If an exception occurs when the current tag is nested inside other tags, the CFML processor checks the entire stack of open tags until it finds a suitable <code>cftry/cfcatch</code> combination or reaches the end of the stack.
+</li>
+<li>
+   Use <code>cftry</code> with <code>cfcatch</code> to handle exceptions based on their point of origin within an application page, or based on diagnostic information.
+</li>
+<li>
+   The entire <code>cftry</code> tag, including all its <code>cfcatch</code> tags, must be on a single ColdFusion page. You cannot put the <code>&lt;cftry&gt;</code> start tag on one page and have the <code>&lt;/cftry&gt;</code> end tag on another page.
+</li>
+<li>
+   For cases when a <code>cfcatch</code> block is not able to successfully handle an error, consider using the <a href="00000325.htm#1102913"><code>cfrethrow</code></a> tag, as described in <a href="00001145.htm#1133574">Using the cfrethrow tag</a>.
+</li>
+<li>
+   If an exception can be safely ignored, use a <code>cfcatch</code> tag with no body; for example:
+<pre>
+&lt;cfcatch Type = Database /&gt;
+</pre>
+</li>
+<li>
+   In particularly problematic cases, you might enclose an exception-prone tag in a specialized combination of <code>cftry</code> and <code>cfcatch</code> tags to immediately isolate the tag&#39;s exceptions.
+</li>
+</ul>
+<h3><a name="wp1131396"></a>Exception information in cfcatch blocks</h3>
+<p>Within the body of a <a href="00000225.htm#3395038"><code>cfcatch</code></a> tag, the active exception's properties are available in a <code>cfcatch</code> object. The following sections describe the object contents.</p>
+<h4><a name="wp1131818"></a>Standard cfcatch variables</h4>
+<p>The following table describes the variables that are available in most <code>cfcatch</code> blocks:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Property variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.Detail
+</pre>    </td>
+    <td>
+<p>A detailed message from the CFML compiler. This message, which can contain HTML formatting, can help to determine which tag threw the exception. </p>
+<p>The <code>cfcatch.Detail</code> value is available in the CFScript <code>cfcatch</code> statement as the <code>exceptionVariable</code> parameter.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>cfcatch.ErrorCode
+</pre>    </td>
+    <td>
+<p>The <code>cfthrow</code> tag can supply a value for this code through the <code>errorCode</code> attribute. For <code>Type=&quot;Database&quot;</code>, <code>cfcatch.ErrorCode</code> has the same value as <code>cfcatch.SQLState</code>. </p>
+<p>Otherwise, the value of <code>cfcatch.ErrorCode</code> is the empty string.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.ExtendedInfo
+</pre>    </td>
+    <td>
+<p>Custom error message information. This is returned only to <code>cfcatch</code> tags for which the <code>type</code> attribute is <code>Application</code> or a custom type.</p>
+<p>Otherwise, the value of <code>cfcatch.ExtendedInfo</code> is the empty string.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>cfcatch.Message
+</pre>    </td>
+    <td>
+<p>The exception's default diagnostic message, if one was provided. If no diagnostic message is available, this is an empty string.</p>
+<p>The <code>cfcatch.Message</code> value is included in the value of the CFScript <code>catch</code> statement <code>exceptionVariable</code> parameter.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.RootCause
+</pre>    </td>
+    <td>
+<p>The Java servlet exception reported by the JVM as the cause of the &quot;root cause&quot; of the exception. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>cfcatch.TagContext
+</pre>    </td>
+    <td>
+<p>An array of structures structure containing information for each tag in the tag stack The tag stack consists of each tag that is currently open.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.Type 
+</pre>    </td>
+    <td>
+<p>The exception's type, returned as a string.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>If you use <a href="00000239.htm#3765824"><code>cfdump</code></a> to display the cfcatch variable, the display does not include variables that do not have values.</p><p>The <code>cfcatch.TagContext</code> variable contains an array of tag information structures. Each structure represents one level of the active tag context at the time when ColdFusion detected the exception. That is, there is one structure for each tag that is open at the time of the exception. For example, if the exception occurs in a tag on a custom tag page, the tag context displays information about the called custom tag and the tag in which the error occurs.</p>
+<p>The structure at position 1 in the array represents the currently executing tag at the time the exception was detected. The structure at position <a href="00000387.htm#1100537"><code>ArrayLen</code></a><code>(cfcatch.tagContext)</code> represents the initial tag in the stack of tags that were executing when the compiler detected the exception.</p>
+<p>The following table lists the tagContext structure attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Entry
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Column</p>
+    </td>
+    <td>
+<p>Obsolete (retained for backwards compatibility). Always 0.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ID</p>
+    </td>
+    <td>
+<p>The tag in which the exception occurred. Exceptions in CFScript are indicated by two question marks (??). All custom tags, including those called directly, are identified as cfmodule.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Line</p>
+    </td>
+    <td>
+<p>The line on the page in which the tag is located.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Raw_Trace</p>
+    </td>
+    <td>
+<p>The raw Java stack trace for the error.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Template</p>
+    </td>
+    <td>
+<p>The pathname of the application page that contains the tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Type</p>
+    </td>
+    <td>
+<p>The type of page; it is always a ColdFusion page.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1193891"></a>Database exceptions</h4>
+<p>The following additional variables are available whenever the exception type is database:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Property variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.NativeErrorCode
+</pre>    </td>
+    <td>
+<p>The native error code associated with this exception. Database drivers typically provide error codes to assist in the diagnosis of failing database operations. The values assumed by <code>cfcatch.NativeErrorCode</code> are driver-dependent.</p>
+<p>If no error code is provided, the value of <code>cfcatch.nativeErrorCode</code> is -1. The value is 0 for queries of queries.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>cfcatch.SQLState
+</pre>    </td>
+    <td>
+<p>The SQLState code associated with this exception. Database drivers typically provide error codes to assist in the diagnosis of failing database operations. SQLState codes are more consistent across database systems than native error codes. </p>
+<p>If the driver does not provide an SQLState value, the value of <code>cfcatch.SQLState</code> is -1.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.Sql
+</pre>    </td>
+    <td>
+<p>The SQL statement sent to the data source.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>cfcatch.queryError
+</pre>    </td>
+    <td>
+<p>The error message as reported by the database driver.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.where
+</pre>    </td>
+    <td>
+<p>If the query uses the <a href="00000317.htm#1102474"><code>cfqueryparam</code></a> tag, query parameter name-value pairs.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1212201"></a>Expression exceptions</h4>
+<p>The following variable is only available for Expression exceptions:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Property variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.ErrNumber
+</pre>    </td>
+    <td>
+<p>An internal expression error number, valid only when <code>type=&quot;Expression&quot;</code>.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1212214"></a>Locking exceptions</h4>
+<p>The following additional information is available for exceptions related to errors that occur in <a href="00000285.htm#1100787"><code>cflock</code></a> tags:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Property variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.lockName
+</pre>    </td>
+    <td>
+<p>The name of the affected lock. This is set to &quot;anonymous&quot; if the lock name is unknown.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>cfcatch.lockOperation
+</pre>    </td>
+    <td>
+<p>The operation that failed. This is set to &quot;unknown&quot; if the failed operation is unknown.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1212109"></a>Missing include exceptions</h4>
+<p>The following additional variable is available if the error is caused by a missing file specified by a <a href="00000277.htm#1100248"><code>cfinclude</code></a> tag:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Property variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>cfcatch.missingFileName
+</pre>    </td>
+    <td>
+<p>The name of the missing file.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001141.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001143.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001142.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

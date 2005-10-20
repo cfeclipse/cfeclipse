@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 3: About data validation</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000156.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000158.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 3: About data validation</h1>
+<p>To ensure that the data entered in the trip edit form is valid, Compass Travel has identified a set of business rules for capturing and editing trip information. A fundamental concern is ensuring that the captured data is suitable for the column definitions in the Trips table. This type of validation on a single field is often referred to as a <i>single-field edit</i>.</p>
+<p>Compass Travel has other operating policies that involve evaluating the values from more than one field. These validations, referred to as <i>cross-field edits</i>, are usually more difficult to program. To ensure that new trips are uniformly captured, Compass Travel has published cross-field validations and single-field edits in its Compass Travel business rules. </p>
+<p>The following table lists the Compass Travel business rules for capturing and editing trip information. This table identifies which rules require single-field or cross-field editing. </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th colspan="2" rowspan="1">
+Compass Travel new trip policy
+    </th>
+    <th>
+Edit type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>All trips must be named.</p>
+    </td>
+    <td>
+<p>Single-field</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>2</p>
+    </td>
+    <td>
+<p>All trips must be accompanied by a full description.</p>
+    </td>
+    <td>
+<p>Single-field</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>3</p>
+    </td>
+    <td>
+<p>Each trip must be categorized by event type. Only valid event types (1-surfing, 2-mountain climbing, and so on) are permissible.</p>
+    </td>
+    <td>
+<p>Single-field</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>4</p>
+    </td>
+    <td>
+<p>Trip locations are required.</p>
+    </td>
+    <td>
+<p>Single-field</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>5</p>
+    </td>
+    <td>
+<p>The maximum number of people permitted on the trip must be specified.</p>
+    </td>
+    <td>
+<p>Single-field</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>6</p>
+    </td>
+    <td>
+<p>The trip departure and return dates must be specified for each trip.</p>
+<p>All trip dates must be valid future dates. Departure date must precede return date.</p>
+    </td>
+    <td>
+<p>Single-field</p>
+<p>Cross-field</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>7</p>
+    </td>
+    <td>
+<p>The trip's price and base cost are required. Both values are positive numeric values. The trip price must have at least a 20% markup over base cost.</p>
+    </td>
+    <td>
+<p>Cross-field</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>8</p>
+    </td>
+    <td>
+<p>Any trip priced over $750 requires a deposit. </p>
+    </td>
+    <td>
+<p>Cross-field</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>9</p>
+    </td>
+    <td>
+<p>A trip leader must be identified. </p>
+    </td>
+    <td>
+<p>Single-field</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>10</p>
+    </td>
+    <td>
+<p>A photo must accompany all new trips. The photo image file must reside in the images directory of the Compass Travel website.</p>
+    </td>
+    <td>
+<p>Single-field</p>
+    </td>
+  </tr>
+</table>
+
+<p>ColdFusion provides numerous ways to validate data. For more information, see <a href="00001376.htm#1096836">Validating Data</a> in <i>ColdFusion MX Developer's Guide</i>. In this lesson, you use special tags to simplify the process of enforcing business rules. Using ColdFusion, it is possible to enforce business rules in several places. For example, you can enforce some validation edits on the client. You can enforce other validation edits on the server after the data entry form is submitted. You will explore these options in the following exercises.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000156.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000158.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000157.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

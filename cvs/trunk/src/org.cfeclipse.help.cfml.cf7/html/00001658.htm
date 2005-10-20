@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Phone directory lookup CFC</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001657.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001659.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Phone directory lookup CFC</h1>
+<p>The following CFC implements a simple employee phone directory lookup application. The user sends an instant message containing some part of the name to be looked up (a space requests all names). The <code>onIncomingMessage</code> response depends on the number matches.</p>
+<ul>
+<li>
+   If there is no match, the <code>onIncomingMessage</code> function returns a message indicating that there are no matches.
+</li>
+<li>
+   If there is one match, the function returns the name, department, and phone number. 
+</li>
+<li>
+   If there are up to ten matches, the function returns a list of the names preceded by a number that the user can enter to get the detailed information.
+</li>
+<li>
+   If there are over ten matches, the function returns a list of only the first ten names. A more complex application might let the user get multiple lists of messages to provide access to all names.
+</li>
+<li>
+   If the user enters a number, and previously got a multiple-match list, the application returns the information for the name that corresponds to the number. 
+</li>
+</ul>
+<p>The following listing shows the CFC code:</p>
+<pre>&lt;cfcomponent&gt;
+   &lt;cffunction name=&quot;onIncomingMessage&quot;&gt;
+      &lt;cfargument name=&quot;CFEvent&quot; type=&quot;struct&quot; required=&quot;YES&quot;&gt;
+      &lt;!--- Remove any extra white space from the message. ---&gt;
+      &lt;cfset message =  Trim(arguments.CFEvent.data.MESSAGE)&gt;
+      &lt;!--- If the message is numeric, a previous search probably returned a
+         list of names. Get the name to search for from the name list stored in
+         the Session scope. ---&gt;
+      &lt;cfif isNumeric(message)&gt;
+         &lt;cfscript&gt;
+            if (structKeyExists(session.users, val(message))) {
+               message = session.users[val(message)];
+            }         
+         &lt;/cfscript&gt;
+      &lt;/cfif&gt;
+
+      &lt;!--- Search the database for the requested name. ---&gt;
+      &lt;cfquery name=&quot;employees&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         select FirstName, LastName, Department, Phone
+         from Employees
+         where 0 = 0
+         &lt;!--- A space indicates the user entered a first and last name. ---&gt;
+         &lt;cfif listlen(message, &quot; &quot;) eq 2&gt;
+            and FirstName like &#39;#listFirst(message, &quot; &quot;)#%&#39;
+            and LastName like &#39;#listlast(message, &quot; &quot;)#%&#39;
+         &lt;!--- No space: the user entered a first or a last name. ---&gt;
+         &lt;cfelse&gt;
+            and (FirstName like &#39;#listFirst(message, &quot; &quot;)#%&#39; 
+            or LastName like &#39;#listFirst(message, &quot; &quot;)#%&#39;)
+         &lt;/cfif&gt;
+      &lt;/cfquery&gt;
+
+      &lt;!--- Generate and  return the message.---&gt;
+      &lt;cfscript&gt;
+         retrunVal = structNew();
+         retrunVal.command = &quot;submit&quot;;
+         retrunVal.buddyID = arguments.CFEvent.data.SENDER;
+         
+         //No records were found. 
+         if (employees.recordCount eq 0) {
+            retrunVal.message = &quot;No records found for &#39;#message#&#39;&quot;;
+         }
+         //One record was found.
+         else if (employees.recordCount eq 1) {
+         // Whitespace in the message text results in bad formatting,
+         // so the source cannot be indented.
+            retrunVal.message = &quot;Requested information:
+#employees.firstName# #employees.lastName#
+#employees.Department#
+#employees.Phone#&quot;;
+         }
+         //Multiple possibilities were found.
+         else if (employees.recordCount gt 1) {
+            //If more than ten were found, return only the first ten.
+            if (employees.recordCount gt 10)
+            {
+               retrunVal.message = &quot;First 10 of #employees.recordCount# records&quot;;
+            }else{
+               retrunVal.message = &quot;Records found: #employees.recordCount#&quot;;
+            }
+            // The session.users structure contains the found names.
+            // The record key is a number that is also returned in front of the 
+            // name in the message.
+            session.users = structNew();
+            for(i=1; i lte min(10, employees.recordCount); i=i+1)
+            {
+               // These two lines are formatted to prevent extra white space.
+               retrunVal.message = retrunVal.message &amp; &quot;
+#i# - #employees.firstName[i]# #employees.lastName[i]#&quot;;
+               // The following two lines must be a single line in the source
+               session.users[i]=&quot;#employees.firstName[i]#
+                  #employees.lastName[i]#&quot;;
+            }
+         }
+         return retrunVal;
+      &lt;/cfscript&gt;
+   &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001657.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001659.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001658.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

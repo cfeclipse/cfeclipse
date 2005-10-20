@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Maintenance options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001793.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001795.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Maintenance options</h1>
+<p>The following sections describe the Verity Spider maintenance options.</p>
+<h3><a name="wp1000412"></a>-nooptimize</h3>
+<p>Prevents Verity Spider from optimizing the collection, thus reducing processing overhead during indexing. Use this option sparingly, as it leaves the collection in less than optimum shape. The following are some examples of when you might want to use this option:</p>
+<ul>
+<li>
+   You want to manually perform custom optimization of the collection, using the mkvdk utility. By default, the Verity Spider optimization mimics the mkvdk actions of maxmerge and vdbopt. For more information on the mkvdk utility, see V<i>erity Command-Line Indexing Reference</i> and <a href="00001800.htm#1000347">Using the mkvdk utility</a>. 
+</li>
+<li>
+   You are running multiple indexing jobs against a collection, and want to wait until they are all finished to optimize. 
+</li>
+</ul>
+<p>Generally, you should not leave a collection unoptimized for too long, as search times can slow significantly.</p>
+<p>In brief, optimizing a collection means creating a small number of large partitions, which can greatly reduce search times. </p>
+<h3><a name="wp1000406"></a>-purge</h3>
+<p>Deletes document tables and index files in the collection, and cleans up the collection&#39;s persistent store. The collection is then fresh with its original style files, and is not deleted from the file system.</p>
+<h3><a name="wp1000400"></a>-repair</h3>
+<p>Specifies a failure-recovery mode for the collection, where the goal is to determine the causes of any errors, repair the errors (if possible), and restart a collection.</p>
+<p>Although the Verity indexing engine always leaves the collection in a consistent, usable state, and no data can be lost or corrupted due to machine failures, it is possible for a process or event external to the Verity engine to corrupt one or more collections.</p>
+<p>You can use the <code>-repair</code> option for constant failure-recovery operation, or you can run it selectively on collections that failed.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001793.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001795.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001794.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

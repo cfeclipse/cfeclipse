@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using ColdFusion components</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001036.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001038.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using ColdFusion components</h1>
+<p>There are two ways to use a CFC:</p>
+<ul>
+<li>
+   You can <i>instantiate</i><strong> </strong>a CFC object, which creates a CFC instance. You then invoke the methods of the instance. You can access the CFC methods and data as instance elements. You can also use the instance in the <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag to invoke the CFC methods. When you instantiate a CFC, data in the CFC is preserved as long as the CFC instance exists, and ColdFusion does not incur the overhead of creating the instance each time you call a method. 
+<p>Instantiate CFCs to preserve data in the CFC. To ensure processing efficiency if you use the CFC more than once on a page, instantiate the CFC before you invoke its methods.</p>
+<p>Methods that are executed remotely through Flash Remoting and web services always create a new instance of the CFC before executing the method.</p>
+</li>
+<li>
+   You can<strong> </strong><i>invoke</i> (call) a method of the CFC without creating an instance of the CFC, which is referred to as <i>transiently</i> invoking a method. In this case, ColdFusion creates an instance of the CFC that exists only from the time you invoke the method until the method returns a result. No data is preserved between invocations and there is no instance of the CFC that you can reuse elsewhere in your CFML. It is considered a best practice to create an instance of a CFC before invoking any of its methods, unless your CFML request uses the CFC only once. If you transiently invoke a method frequently, consider creating a user-defined function to replace the CFC method.
+</li>
+</ul>
+<p>You can create persistent CFCs by assigning the CFC instance to a persistent scope, such as the Session or Application scope. This way, you can create CFCs for objects, such as shopping carts or logged-in users, that must persist for sessions. You can also create CFCs that provide application-specific data and methods.</p>
+<p>This section describes how to use CFCs, including the following topics:</p>
+<ul>
+<li>
+   <a href="00001038.htm#1216925">Tags for using CFCs</a>
+</li>
+<li>
+   <a href="00001039.htm#1214389">CFC invocation techniques</a>
+</li>
+<li>
+   <a href="00001040.htm#1181877">Instantiating CFCs</a>
+</li>
+<li>
+   <a href="00001041.htm#1214486">Invoking CFC methods with the cfinvoke tag</a>
+</li>
+<li>
+   <a href="00001045.htm#1214638">Using components directly in CFScript and CFML</a>
+</li>
+<li>
+   <a href="00001046.htm#1214711">Invoking CFC methods using forms and URLs</a>
+</li>
+<li>
+   <a href="00001048.htm#1214821">Accessing CFCs from outside ColdFusion and basic HTML</a>
+</li>
+<li>
+   <a href="00001049.htm#1214812">Specifying the CFC location</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001036.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001038.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001037.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

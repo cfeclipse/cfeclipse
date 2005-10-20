@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About Flash form style value formats</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001400.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001402.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About Flash form style value formats</h1>
+<p>Style properties can be Boolean values, strings, numbers, or arrays of these values. The following sections describe the formats for length, time, and color values.</p>
+<h3><a name="wp119046"></a>Length format</h3>
+<p>You specify styles that take length or dimension values, including font sizes, in pixels.</p>
+<p>The <code>fontSize</code> style property lets you use a set of keywords in addition to numbered units. You can use the following keywords when you set the <code>fontSize</code> style property. The exact sizes are defined by the client browser.</p>
+<ul>
+<li>
+   <code>xx-small</code> 
+</li>
+<li>
+   <code>x-small</code> 
+</li>
+<li>
+   <code>small</code> 
+</li>
+<li>
+   <code>medium</code> 
+</li>
+<li>
+   <code>large</code> 
+</li>
+<li>
+   <code>x-large</code> 
+</li>
+<li>
+   <code>xx-large</code> 
+</li>
+</ul>
+<p>The following <code>cfinput</code> tag uses the <code>style</code> attribute with a <code>fontSize</code> keyword to specify the size of the text in the input box:</p>
+<pre>&lt;cfinput type=&quot;text&quot; name=&quot;text1&quot; style=&quot;fontSize:X-large&quot; label=&quot;Name&quot;&gt;
+</pre><h3><a name="wp119247"></a>Time format</h3>
+<p>You specify styles that take time values, such as the <code>openDuration</code> style that specifies how fast an accordion pleat opens, in milliseconds. The following example shows an <code>accordion</code> tag that takes one-half second to change between accordion pleats:</p>
+<pre>&lt;cfformgroup type=&quot;accordion&quot; height=&quot;260&quot; style=&quot;openDuration: 500&quot;&gt;
+</pre><h3><a name="wp119252"></a>Color format</h3>
+<p>You define color values, such as those for the <code>backgroundColor</code> style, in the following formats:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Format
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>hexadecimal</p>
+    </td>
+    <td>
+<p>Hexadecimal colors are represented by a six-digit code preceded by two number sign characters (##). Two # characters are required to prevent ColdFusion from interpreting the character. The range of possible values is <code>##000000</code> to <code>##FFFFFF</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>VGA color names</p>
+    </td>
+    <td>
+<p>VGA color names are a set of 16 basic colors supported by all browsers that support CSS. The available color names are <code>Aqua</code>, <code>Black</code>, <code>Blue</code>, <code>Fuchsia</code>, <code>Gray</code>, <code>Green</code>, <code>Lime</code>, <code>Maroon</code>, <code>Navy</code>, <code>Olive</code>, <code>Purple</code>, <code>Red</code>, <code>Silver</code>, <code>Teal</code>, <code>White</code>, and <code>Yellow</code>. Some browsers support a larger list of color names. VGA color names are not case-sensitive. </p>
+    </td>
+  </tr>
+</table>
+
+<p>Some styles support only the hexadecimal color format. </p>
+<p>Some controls accept multiple colors. For example, the tree control's <code>depthColors</code> style property can use a different background color for each level in the tree. To assign multiple colors, use a comma-delimited list, as the following example shows:</p>
+<pre>style=&quot;depthColors: ##EAEAEA, ##FF22CC, ##FFFFFF&quot;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001400.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001402.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001401.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

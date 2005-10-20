@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Switching from another web server</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000017.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000019.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Switching from another web server</h1>
+<p>You can switch from an external web server to the built-in ColdFusion&#160;MX&#160;7 web server without reinstalling, even if you did not select it during installation.</p>
+<h4>To switch from an external web server to the built-in web server:</h4>
+<ol>
+<li>
+   Back up the jrun.xml file. 
+<p>This file is in the <i>cf_root</i>\runtime\servers\default\SERVER-INF directory in Windows, and in the <i>cf_root</i>/runtime/servers/default/SERVER-INF directory on UNIX.</p>
+</li>
+<li>
+   Open the original jrun.xml file for editing. 
+</li>
+<li>
+   Locate the WebService service and set the deactivated attribute to false: 
+<pre>
+&lt;service class=&quot;jrun.servlet.http.WebService&quot; name=&quot;WebService&quot;&gt;
+	&lt;attribute name=&quot;port&quot;&gt;8500&lt;/attribute&gt;
+	&lt;attribute name=&quot;interface&quot;&gt;*&lt;/attribute&gt;
+	&lt;attribute name=&quot;deactivated&quot;&gt;false&lt;/attribute&gt;
+	...
+&lt;/service&gt;
+</pre>
+</li>
+<li>
+   Locate the ProxyService service and set the deactivated attribute to true:
+<pre>
+&lt;service class=&quot;jrun.servlet.jrpp.JRunProxyService&quot; name=&quot;ProxyService&quot;&gt;
+&#160;&#160;&lt;attribute name=&quot;activeHandlerThreads&quot;&gt;8&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;minHandlerThreads&quot;&gt;1&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;maxHandlerThreads&quot;&gt;1000&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;mapCheck&quot;&gt;0&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;threadWaitTimeout&quot;&gt;20&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;backlog&quot;&gt;500&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;deactivated&quot;&gt;true&lt;/attribute&gt;
+...
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+<li>
+   Copy the CFM pages in your web root directory (including the CFIDE and cfdocs directories) to the ColdFusion&#160;MX&#160;7 <i>cf_root</i>/wwwroot directory, and use appropriate URL references (for example, http://localhost:8500/YourApp1/index.cfm). If you switch from the built-in web server to an external web server, you must copy the contents of the <i>cf_root</i>/wwwroot directory to your web server root. If you are using Macromedia Dreamweaver, be sure to reconfigure any sites that you move from one server to another.
+</li>
+<li>
+   Restart ColdFusion&#160;MX&#160;7.
+</li>
+</ol>
+<p>To switch to another web server, follow the instructions for the appropriate web server on your platform in <a href="00000049.htm#1117590">Configuring web servers</a>.</p>
+<p><strong>Note: </strong>The installation wizard does not allow you to configure both an external web server and the built-in web server and in most cases, you do not enable both the built-in web server and an external web server. If you do, you must create web server directory mappings so that both web servers use the same web root. </p>
+
+<hr />
+<p align="right"><p align="right"><a href="00000017.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000019.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000018.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

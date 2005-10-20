@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Initializing instance data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001029.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001031.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Initializing instance data</h1>
+<p>Some components have <i>instance data</i>, which is data that persists as long as the component instance exists. For example, a shopping cart component might have instance data that includes the IDs and quantities of items that the user puts in the shopping cart. Instance data is often shared by several methods that can create, delete, or modify the data. </p>
+<p>You can refer to instance data of a CFC only if you create an instance of the CFC. From inside the CFC, you refer to instance data of the CFC using the <code>this</code> prefix, for example <code>this.firstvariable</code>. From the calling page, you refer to instance data using dot notation, including the name of the instance of the component and the name of the instance data, as in <code>objectname.ivarname</code>. Components whose methods you invoke without first instantiating the component do not typically have instance data.</p>
+<p>You initialize instance data at the top of the component definition, before the method definitions. ColdFusion executes this code when it instantiates the component; for example, when a <a href="00000302.htm#2820239"><code>cfobject</code></a> tag creates the component instance. Because this code executes only when the instance is created and it typically &quot;constructs&quot; properties of the component, instance data initialization code is sometimes called <i>constructor</i> code.</p>
+<p>You can use any CFML tag or function in constructor code, and the code can perform any ColdFusion processing, such as querying a database or data validation and manipulation. If one component extends another, the parent component's constructor code executes before the child component's constructor code.</p>
+<p><strong>Note: </strong>ColdFusion does not require you to put the initialization code at the top of the component definition; however, it is good programming practice to do so.</p><p>The following example shows constructor code for a shopping cart CFC:</p>
+<pre>&lt;cfcomponent&gt;
+   &lt;!--- Initialize the array for the cart item IDs and quantities. ---&gt;
+   &lt;cfset This.CartData = ArrayNew(2)&gt;
+   &lt;!--- The following variable has the ID of the &quot;Special Deal&quot; product for 
+         this session. ---&gt;
+   &lt;cfset This.Special_ID = RandRange(1, 999)&gt;
+</pre><p>For information on scopes, see <a href="00001054.htm#1214884">The This scope</a> and <a href="00001055.htm#1214897">The Variables scope</a>.</p>
+<p>A useful technique is to define a method named <code>init()</code>, which initializes an instance of a CFC, acting as a constructor. The <code>init()</code> method can initialize constants and return an instance of the component to the calling page. The following code illustrates an example of an <code>init()</code> method:</p>
+<pre>&lt;cfcomponent displayname=&quot;shoppingCart&quot;&gt;
+   &lt;cffunction name=&quot;init&quot; access=&quot;public&quot; output=&quot;no&quot; returntype=&quot;shoppingCart&quot;&gt;
+      &lt;cfargument name=&quot;shoppingCartID&quot; type=&quot;UUID&quot; required=&quot;yes&quot;&gt;
+      &lt;cfset variables.shoppingCartID = arguments.shoppingCartID&gt;
+      &lt;cfreturn this&gt;
+   &lt;/cffunction&gt;
+
+   &lt;!--- Additional methods go here. ---&gt;
+&lt;/cfcomponent&gt;
+</pre><p>In this example, the <code>init()</code> method uses the variables scope to make the shopping cart ID available anywhere in the CFC. For more information about scope, see <a href="00001054.htm#1214875">CFC variables and scope</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001029.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001031.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001030.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

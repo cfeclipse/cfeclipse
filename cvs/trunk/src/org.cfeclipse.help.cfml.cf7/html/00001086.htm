@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>High-level data exchange</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001085.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001087.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>High-level data exchange</h1>
+<p>While the ability to create nested custom tags is a tremendous productivity gain, keeping track of complex nested tag hierarchies can become a chore. The <a href="00000219.htm#3393273"><code>cfassociate</code></a> tag lets the parent know what the children are up to. By adding this tag to a sub tag, you enable communication of its attributes to the base tag.</p>
+<p>In addition, there are many cases in which descendant tags are used only as a means for data validation and exchange with an ancestor tag, such as <a href="00000272.htm#1632966"><code>cfhttp</code></a>/<a href="00000273.htm#1100049"><code>cfhttpparam</code></a> and <a href="00000347.htm#1104271"><code>cftree</code></a><code>/</code><a href="00000348.htm#1104421"><code>cftreeitem</code></a>. You can use the <code>cfassociate</code> tag to encapsulate this processing.</p>
+<p>The <code>cfassociate</code> tag has the following format:</p>
+<pre><code>&lt;cfassociate baseTag=&quot;tagName&quot; dataCollection=&quot;collectionName&quot;&gt;</code>
+</pre><p>The <code>baseTag</code> attribute specifies the name of the base tag that gets access to this tag's attributes. The <code>dataCollection</code> attribute specifies the name of the structure in which the base tag stores the sub-tag data. Its default value is AssocAttribs. You only need to specify a <code>dataCollection</code> attribute if the base tag can have more than one type of subtag. It is convenient for keeping separate collections of attributes, one per tag type.</p>
+<p><strong>Note: </strong>If the custom tag requires an end tag, the code processing the structure referenced by the <code>dataCollection</code> attribute must be part of end-tag code. </p><p>When <code>cfassociate</code> is encountered in a sub tag, the sub tag's attributes are automatically saved in the base tag. The attributes are in a structure appended to the end of an array whose name is thisTag.collectionName. </p>
+<p>The <code>cfassociate</code> tag performs the following operations:</p>
+<pre>&lt;!--- Get base tag instance data ---&gt;<br />&lt;cfset data = getBaseTagData(baseTag)&gt;<br />&lt;!--- Create a string with the attribute collection name ---&gt;<br />&lt;cfset collection_Name = &quot;data.#dataCollection#&quot;&gt;<br />&lt;!--- Create the attribute collection, if necessary ---&gt;<br />&lt;cfif not isDefined(collectionName)&gt;<br />   &lt;cfset #collection_Name# = arrayNew(1)&gt;<br />&lt;/cfif&gt;<br />&lt;!--- Append the current attributes to the array ---&gt;<br />&lt;cfset temp=arrayAppend(evaluate(collectionName), attributes)&gt;
+</pre><p>The code accessing sub-tag attributes in the base tag could look like the following:</p>
+<pre>&lt;!--- Protect against no sub-tags ---&gt;<br />&lt;cfparam Name=&#39;thisTag.assocAttribs&#39; default=#arrayNew(1)#&gt;<br /><br />&lt;!--- Loop over the attribute sets of all sub tags ---&gt;<br />&lt;cfloop index=i from=1 to=#arrayLen(thisTag.assocAttribs)#&gt;<br /><br />   &lt;!--- Get the attributes structure ---&gt;<br />   &lt;cfset subAttribs = thisTag.assocAttribs[i]&gt;<br />   &lt;!--- Perform other operations ---&gt;<br /><br />&lt;/cfloop&gt;
+</pre><h3><a name="wp1096380"></a>Ancestor data access</h3>
+<p>The ancestor's data is represented by a structure object that contains all the ancestor's data.</p>
+<p>The following functions provide access to ancestral data:</p>
+<ul>
+<li>
+   <a href="00000471.htm#1104790"><code>GetBaseTagList</code></a><code>()</code>&#160;Returns a comma-delimited list of uppercase ancestor tag names, as a string. The first list element is the current tag, the next element is the parent tag name if the current tag is a nested tag. If the function is called for a top-level tag, it returns an empty string. 
+</li>
+<li>
+   <a href="00000470.htm#1104755"><code>GetBaseTagData</code></a><code>(TagName</code>, <code>InstanceNumber=1)</code>&#160;Returns an object that contains all the variables (not just the local variables) of the nth ancestor with a given name. By default, the closest ancestor is returned. If there is no ancestor by the given name, or if the ancestor does not expose any data (such as <a href="00000274.htm#1100123"><code>cfif</code></a>), an exception is thrown.
+</li>
+</ul>
+<h3><a name="wp1096385"></a>Example: ancestor data access</h3>
+<p>This example creates two custom tags and a simple page that calls each of the custom tags. The first custom tag calls the second. The second tag reports on its status and provides information about its ancestors.</p>
+<h4>To create the calling page:</h4>
+<ol>
+<li>
+   Create a ColdFusion page (the calling page) with the following content:
+<pre>
+Call cf_nesttag1 which calls cf_nesttag2&lt;br&gt;
+&lt;cf_nesttag1&gt;
+&lt;hr&gt;
+
+Call cf_nesttag2 directly&lt;br&gt;
+&lt;cf_nesttag2&gt;
+&lt;hr&gt;
+</pre>
+</li>
+<li>
+   Save the page as nesttest.cfm.
+</li>
+</ol>
+<h4>To create the first custom tag page:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;cf_nesttag2&gt;
+</pre>
+</li>
+<li>
+   Save the page as nesttag1.cfm.
+</li>
+</ol>
+<h4>To create the second custom tag page:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;cfif thisTag.executionmode is &#39;start&#39;&gt;
+	&lt;!--- Get the tag context stack. The list will look something like 
+	&quot;MYTAGNAME, CALLINGTAGNAME, ...&quot; ---&gt;
+	&lt;cfset ancestorlist = getbasetaglist()&gt;
+
+	&lt;!--- Output your own name. You are the first entry in the context stack. 
+---&gt;
+	&lt;cfoutput&gt;
+	&lt;p&gt;I&#39;m custom tag #ListGetAt(ancestorlist,1)#&lt;/p&gt;
+	
+	&lt;!--- output all the contents of the stack a line at a time ---&gt;
+	&lt;cfloop index=&quot;loopcount&quot; from=&quot;1&quot; to=&quot;#listlen(ancestorlist)#&quot;&gt;
+	Ancestorlist entry #loopcount# n is 
+#ListGetAt(ancestorlist,loopcount)#&lt;br&gt;
+	&lt;/cfloop&gt;&lt;br&gt;
+	&lt;/cfoutput&gt;
+
+	&lt;!--- Determine whether you are nested inside a custom tag. Skip the first<br />
+element of the ancestor list, i.e., the name of the custom tag I&#39;m in ---&gt;
+	&lt;cfset incustomtag = &#39;&#39;&gt;
+	&lt;cfloop index=&quot;elem&quot; 
+		list=&quot;#listrest(ancestorlist)#&quot;
+		&lt;cfif (left(elem, 3) eq &#39;cf_&#39;)&gt;
+			&lt;cfset incustomtag = elem&gt;
+			&lt;cfbreak&gt;
+		&lt;/cfif&gt;
+	&lt;/cfloop&gt;
+
+	&lt;cfif incustomtag neq &#39;&#39;&gt;
+		&lt;!--- Say you are there ---&gt;
+		&lt;cfoutput&gt;
+			I&#39;m running in the context of a custom
+			tag named #inCustomTag#.&lt;p&gt;
+		&lt;/cfoutput&gt;
+		
+		&lt;!--- Get the tag instance data ---&gt;
+		&lt;cfset tagdata = getbasetagdata(incustomtag)&gt;
+		
+		&lt;!--- Find out the tag&#39;s execution mode ---&gt;
+		I&#39;m located inside the
+		&lt;cfif tagdata.thisTag.executionmode neq &#39;inactive&#39;&gt;
+			custom tag code either because it is in
+			its start or end execution mode.
+		&lt;cfelse&gt;
+			body of the tag
+		&lt;/cfif&gt;
+		&lt;p&gt;
+	&lt;cfelse&gt;
+		&lt;!--- Say you are lonely ---&gt;
+		I&#39;m not nested inside any custom tags. :^( &lt;p&gt;
+	&lt;/cfif&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Save the page as nesttag2.cfm.
+</li>
+<li>
+   Open the file nesttest.cfm in your browser.
+</li>
+</ol>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001085.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001087.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001086.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

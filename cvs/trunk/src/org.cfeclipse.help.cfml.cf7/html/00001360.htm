@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Embedding URLs in a cftree tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001359.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001361.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Embedding URLs in a cftree tag</h1>
+<p>The <code>href</code> attribute in the <a href="00000348.htm#1104421"><code>cftreeitem</code></a> tag lets you designate tree items as links. To use this feature in a <code>cftree</code> control, you define the destination of the link in the <code>href</code> attribute of the <code>cftreeitem</code> tag. The URL for the link can be a relative URL or an absolute URL, as in the following examples.</p>
+<h4>To embed links in a cftree control:</h4>
+<ol>
+<li>
+   Create a ColdFusion page named tree3.cfm with the following contents:
+<pre>
+&lt;cfform action=&quot;submit.cfm&quot;&gt;
+&lt;cftree name=&quot;oak&quot;
+	highlighthref=&quot;Yes&quot;
+	height=&quot;100&quot;
+	width=&quot;200&quot;
+	hspace=&quot;100&quot;
+	vspace=&quot;6&quot;
+	hscroll=&quot;No&quot;
+	vscroll=&quot;No&quot;
+	border=&quot;No&quot;&gt;
+	&lt;cftreeitem value=&quot;Important Links&quot;&gt;
+	&lt;cftreeitem value=&quot;Macromedia Home&quot;
+		parent=&quot;Important Links&quot;
+		img=&quot;document&quot;
+		href=&quot;http://www.macromedia.com&quot;&gt;
+	&lt;cftreeitem value=&quot;ColdFusion Developer Center&quot;
+		parent=&quot;Important Links&quot;
+		img=&quot;document&quot;
+		href=&quot;http://www.macromedia.com/devnet/mx/coldfusion/&quot;&gt;
+&lt;/cftree&gt;
+&lt;/cfform&gt;
+</pre>
+</li>
+<li>
+   Save the page and view it in your browser. 
+<p>The following figure shows the output of this code:</p>
+<p><br />
+<img src="images/treelin7.jpg" alt="Embedded links in a tree control" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+</ol>
+<h4><a name="wp1096498"></a>Reviewing the code</h4>
+<p>The following table describes the highlighted code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>href=&quot;http://www.macromedia.com&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Makes the node of the tree a link.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>href=&quot;http://www.<br />macromedia.com/devnet/mx/coldfusion/&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Makes the node of the tree a link.</p>
+<p>Although this example does not show it, the <code>href</code> attribute can refer to the name of a column in a query if that query populates the tree item.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001359.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001361.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001360.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

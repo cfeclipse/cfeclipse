@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cferror</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000241.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000243.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cferror</h1>
+<h4><a name="wp1734658"></a>Description</h4>
+<p>Displays a custom HTML page when an error occurs. This lets you maintain a consistent look and feel among an application's functional and error pages.</p>
+<h4><a name="wp1873122"></a>Category</h4>
+<p><a href="00000201.htm#2459716">Exception handling tags</a>, <a href="00000202.htm#2459750">Extensibility tags</a>, <a href="00000197.htm#2463072">Application framework tags</a></p>
+<h4><a name="wp1734660"></a>Syntax</h4>
+<pre>&lt;cferror <br />   type = &quot;a type&quot;<br />   template = &quot;template_path&quot;<br />   mailTo = &quot;email_address&quot;<br />   exception = &quot;exception_type&quot;&gt;
+</pre><h4><a name="wp1873133"></a>See also</h4>
+<p><a href="00000325.htm#1102913"><code>cfrethrow</code></a><code>, </code><a href="00000343.htm#2773591"><code>cfthrow</code></a><code>, </code><a href="00000349.htm#1104557"><code>cftry</code></a><code>, </code><a href="00001130.htm#1220254">Handling Errors</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp2438507"></a>History</h4>
+<p>ColdFusion&#160;MX: Deprecated the <code>monitor</code> option of the <code>exception</code> attribute. It might not work, and might cause an error, in later releases.</p>
+<h4><a name="wp2210520"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Type of error that the custom error page handles. The type also determines how ColdFusion handles the error page. For more information, see <a href="00001138.htm#1106836">Specifying a custom error page</a> in <a href="00001138.htm#1106836">Specifying a custom error page</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<ul>
+<li>
+   exception: an exception of the type specified by the <code>exception</code> attribute.
+</li>
+<li>
+   validation: errors recognized by server-side type validation.
+</li>
+<li>
+   request: any encountered error.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>template</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Relative path to the custom error page. (A ColdFusion page was formerly called a template.)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>mailTo</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>An e-mail address. This attribute is available on the error page as the variable <code>error.mailto</code>. ColdFusion does not automatically send anything to this address.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>exception</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Any</p>
+    </td>
+    <td>
+<p>Type of exception that the tag handles: </p>
+<ul>
+<li>
+   application: application exceptions.
+</li>
+<li>
+   database: database exceptions.
+</li>
+<li>
+   template: ColdFusion page exceptions.
+</li>
+<li>
+   security: security exceptions.
+</li>
+<li>
+   object: object exceptions.
+</li>
+<li>
+   missingInclude: missing include file exceptions.
+</li>
+<li>
+   expression: expression exceptions.
+</li>
+<li>
+   lock: lock exceptions.
+</li>
+<li>
+   <i>custom_type</i>: developer-defined exceptions, defined in the <code>cfthrow</code> tag.
+</li>
+<li>
+   any: all exception types. 
+</li>
+</ul>
+<p>For more information on exception types, see <a href="00000349.htm#1104557">cftry</a>.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1734697"></a>Usage</h4>
+<p>Use this tag to provide custom error messages for pages in an application. This lets you maintain a consistent look and feel within the application, even when errors occur. </p>
+<p>You generally embed this tag in your Application CFC or Application.cfm file to specify error-handling responsibilities for an entire application. You <strong>must</strong> put it in one of these files if you specify <code>type=&quot;validation&quot;</code>; ColdFusion ignores it on any other page. </p>
+<p>The <code>cftry</code> and <code>cfcatch</code> tags provide a more interactive way to handle ColdFusion errors within a ColdFusion page than the <code>cferror</code> tag, but the <code>cferror</code> tag is a good safeguard against general errors. </p>
+<p>To ensure that error pages display successfully, avoid using the <code>cfencode</code> utility to encode pages that include the <code>cferror</code> tag.</p>
+<h4><a name="wp1734703"></a>Page types</h4>
+<p>The following table describes the types of errors you can specify and code you can use on the pages that handle these error type: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Page type
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Use
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Exception</p>
+    </td>
+    <td>
+<p>Dynamically invoked by the CFML language processor when it detects an unhandled exception condition.</p>
+<p>Uses the full range of CFML tags. Error variables must be in <code>cfoutput</code> tags.</p>
+    </td>
+    <td>
+<p>Can handle specific exception types or display general information for exceptions.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Request</p>
+    </td>
+    <td>
+<p>Includes the error variables described in the Error Variables section. </p>
+<p>Cannot include CFML tags, but you can display values of the error variables by enclosing them in number signs (#), as in <code>#error.MailTo#</code>.</p>
+    </td>
+    <td>
+<p>Use as a backup error handler to other error handling methods, including exception type.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Validation</p>
+    </td>
+    <td>
+<p>Handles data input validation errors that occur when submitting a form that uses hidden form-field validation or onSubmit validation. </p>
+<p>Cannot include CFML tags, but you can display values of the error variables by enclosing them in number signs (#), as in <code>#Error.InvalidFields#</code>.</p>
+<p>You must specify the validation error handler in the Application.cfc or Application.cfm file. </p>
+    </td>
+    <td>
+<p>Handles hidden form-field or onSubmit format validation errors only.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1734741"></a>Error variables</h4>
+<p>The exception-handling page specified in the <code>cferror</code> tag <code>template</code> attribute contains one or more error variables. ColdFusion substitutes the value of the error variable when an error displays.</p>
+<p>The following table lists error variables:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Page type
+    </th>
+    <th>
+Error variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td colspan="1" rowspan="3">
+<p>Validation only</p>
+    </td>
+    <td>
+<p>error.validationHeader</p>
+    </td>
+    <td>
+<p>Validation message header text.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>error.invalidFields</p>
+    </td>
+    <td>
+<p>Unordered list of validation errors.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>error.validationFooter</p>
+    </td>
+    <td>
+<p>Validation message footer text.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td colspan="1" rowspan="9">
+<p>Request and Exception</p>
+    </td>
+    <td>
+<p>error.diagnostics</p>
+    </td>
+    <td>
+<p>Detailed error diagnostics from ColdFusion&#160;MX.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>error.mailTo</p>
+    </td>
+    <td>
+<p>E-mail address (same as value in <code>cferror.MailTo</code>).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>error.dateTime</p>
+    </td>
+    <td>
+<p>Date and time when error occurred.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>error.browser</p>
+    </td>
+    <td>
+<p>Browser that was running when error occurred.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>error.remoteAddress</p>
+    </td>
+    <td>
+<p>IP address of remote client.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>error.HTTPReferer</p>
+    </td>
+    <td>
+<p>Page from which client accessed link to page where error occurred.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>error.template</p>
+    </td>
+    <td>
+<p>Page executing when error occurred.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>error.generatedContent</p>
+    </td>
+    <td>
+<p>The content generated by the page up to the point where the error occurred.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>error.queryString</p>
+    </td>
+    <td>
+<p>URL query string of client&#39;s request.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="1" rowspan="4">
+<p>Exception only</p>
+    </td>
+    <td>
+<p>error.message</p>
+    </td>
+    <td>
+<p>Error message associated with the exception.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>error.rootCause</p>
+    </td>
+    <td>
+<p>The root cause of the exception. This structure contains the information that is returned by a <a href="00000225.htm#3395038"><code>cfcatch</code></a> tag. For example, for a database exception, the SQL statement that caused the error is in the error.RootCause.Sql variable. For Java exceptions, this variable contains the Java servlet exception reported by the JVM as the cause of the &quot;root cause&quot; of the exception.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>error.tagContext</p>
+    </td>
+    <td>
+<p>Array of structures containing information for each tag in the tag stack. The tag stack consists of each tag that is currently open. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>error.type</p>
+    </td>
+    <td>
+<p>Exception type. </p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>If <code>type = &quot;exception&quot;</code>, you can substitute the prefix <code>cferror</code> for <code>Error</code>; for example, <code>cferror.diagnostics, cferror.mailTo</code>, or <code>cferror.dateTime</code>. </p><h4><a name="wp1734827"></a>Example</h4>
+<pre>&lt;h3&gt;cferror Example&lt;/h3&gt;
+
+&lt;!--- Example of cferror call within a page.
+       NOTE: If you use cferror type=&quot;VALIDATION&quot; you MUST put it in
+       Application.cfc or Application.cfm ---&gt;
+&lt;cferror type = &quot;REQUEST&quot;
+template = &quot;request_err.cfm&quot;
+mailTo = &quot;admin@mywebsite.com&quot;&gt;
+&lt;!--- This query calls a non-existent datasource, triggering an error to be handled. ---&gt;
+&lt;cfquery name=&quot;testQuery&quot; datasource=&quot;doesNotExist&quot;&gt;
+select * from nothing
+&lt;/cfquery&gt;
+
+&lt;!--- Example of the page (request_err.cfm) to handle this error. ---&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;We&#39;re sorry -- An Error Occurred&lt;/title&gt;
+&lt;/head&gt; 
+&lt;body&gt;
+&lt;h2&gt;We&#39;re sorry -- An Error Occurred&lt;/h2&gt;
+&lt;p&gt;
+If you continue to have this problem, please contact #error.mailTo#
+with the following information:&lt;/p&gt;
+&lt;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;Your Location:&lt;/b&gt; #error.remoteAddress#
+&lt;li&gt;&lt;b&gt;Your Browser:&lt;/b&gt; #error.browser#
+&lt;li&gt;&lt;b&gt;Date and Time the Error Occurred:&lt;/b&gt; #error.dateTime#
+&lt;li&gt;&lt;b&gt;Page You Came From:&lt;/b&gt; #error.HTTPReferer#
+&lt;li&gt;&lt;b&gt;Message Content&lt;/b&gt;:
+&lt;p&gt;#error.diagnostics#&lt;/p&gt;
+&lt;/ul&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000241.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000243.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000242.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

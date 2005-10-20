@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ListLast</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000556.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000558.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ListLast</h1>
+<h4><a name="wp131063"></a>Description</h4>
+<p>Gets the last element of a list.</p>
+<h4><a name="wp131065"></a>Returns</h4>
+<p>The last element of the list.</p>
+<h4><a name="wp131067"></a>Category</h4>
+<p><a href="00000364.htm#1099435">List functions</a></p>
+<h4><a name="wp131072"></a>Function syntax</h4>
+<pre><code><strong>ListLast</strong></code>(<i>list</i> [, <i>delimiters</i> ])
+</pre><h4><a name="wp238887"></a>See also</h4>
+<p><a href="00000555.htm#130923">ListGetAt</a>, <a href="00000554.htm#130862">ListFirst</a>; <a href="00000889.htm#1100874">Lists</a> in <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i> </p>
+<h4><a name="wp238904"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>list</p>
+    </td>
+    <td>
+<p>A list or a variable that contains a list.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>delimiters</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Character(s) that separate list elements. The default value is comma. </p>
+<p>If this parameter contains more than one character, ColdFusion processes each occurrence of each character as a delimiter; you cannot specify a multicharacter delimiter.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp131098"></a>Usage</h4>
+<p>If you use list functions on strings that separated by a delimiter character and a space, a returned list element might contain a leading space; use the <code>trim</code> function to remove leading and trailing spaces from a returned element. For example, consider this list:</p>
+<pre>&lt;cfset myList = &quot;one hundred, two hundred, three hundred&quot;&gt;
+</pre><p>To get a value from this list, use the <code>trim</code> function to remove the space before the returned value:</p>
+<pre>&lt;cfset MyValue = #trim(ListLast(myList)#&gt;
+</pre><p>With this usage, the MyValue variable gets the value &quot;three hundred&quot;, not &quot; three hundred&quot;, and spaces within a list element are preserved.</p>
+<p>ColdFusion ignores empty list elements; thus, the list &quot;a,b,c,,,d&quot; has four elements.</p>
+<h4><a name="wp131105"></a>Example</h4>
+<pre>&lt;h3&gt;ListFirst, ListLast, and ListRest Example&lt;/h3&gt;
+&lt;!--- Find a list of users who wrote messages ---&gt;
+&lt;cfquery name = &quot;GetMessageUser&quot; datasource = &quot;cfdocexamples&quot;&gt;
+   SELECT Username, Subject, Posted
+   FROM  Messages
+&lt;/cfquery&gt;
+&lt;cfset temp = ValueList(GetMessageUser.Username)&gt;
+&lt;p&gt;Before editing the list, it is:&amp;nbsp;
+&lt;cfoutput&gt;#ValueList(GetMessageUser.Username)#&lt;/cfoutput&gt;. 
+&lt;p&gt;(Users who posted more than once are listed more than once.)
+&lt;!--- Show the first user in the list ---&gt;
+&lt;p&gt;The first user in the list is: &lt;cfoutput&gt;#ListFirst(temp)#&lt;/cfoutput&gt;
+&lt;p&gt;The rest of the list is:&amp;nbsp;&lt;cfoutput&gt;#ListRest(temp)#&lt;/cfoutput&gt;.
+&lt;p&gt;(Users who posted more than once are listed more than once.)
+&lt;p&gt;The last user in the list is: &lt;cfoutput&gt;#<strong>ListLast(temp)</strong>#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000556.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000558.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000557.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

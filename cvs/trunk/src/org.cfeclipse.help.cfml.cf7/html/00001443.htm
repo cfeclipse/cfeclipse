@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating basic reports from HTML and CFML</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001442.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001444.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating basic reports from HTML and CFML</h1>
+<p>You can convert HTML-based reports into PDF or FlashPaper output by wrapping the HTML in the <code>cfdocument</code> start and end tags, and specifying <code>cfdocument</code> attributes, as appropriate, to customize the following items:</p>
+<ul>
+<li>
+   Page size
+</li>
+<li>
+   Page orientation
+</li>
+<li>
+   Margins
+</li>
+<li>
+   Encryption (PDF only)
+</li>
+<li>
+   User password and owner password (PDF only)
+</li>
+<li>
+   Permissions (PDF only)
+</li>
+</ul>
+<p>For complete information on these options, see the <a href="00000236.htm#3765835"><code>cfdocument</code></a> tag discussion in <i>CFML Reference</i>.</p>
+<p><strong>Note: </strong>Embedding fonts in the report can help ensure consistent display across multiple browsers and platforms. For more information on the considerations related to embedding fonts, see <a href="00001475.htm#118912">Font management with printable reports</a>.</p><p>The following example displays a list of employees, using a <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag to loop through the query:</p>
+<pre><code><strong>&lt;cfdocument format=&quot;flashpaper&quot;&gt;</strong></code>
+&lt;h1&gt;Employee List&lt;/h1&gt;
+&lt;!--- Inline query used for example purposes only ---&gt;
+&lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot;&gt;
+&#160;&#160;&#160;SELECT FirstName, LastName, Salary, Contract
+&#160;&#160;&#160;FROM Employee
+&lt;/cfquery&gt;
+&lt;cfoutput query=&quot;EmpList&quot;&gt;
+#EmpList.FirstName#, #EmpList.LastName#, #LSCurrencyFormat(EmpList.Salary)#, #EmpList.Contract#&lt;br&gt;
+&lt;/cfoutput&gt;
+<code><strong>&lt;/cfdocument&gt;</strong></code>
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001442.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001444.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001443.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            targetID="com.rohanclan.cfml.editors.CFMLEditor"
+            id="com.rohanclan.cfml.editors.CFMLEditorActions">
+         <menu
+               label="&amp;CFML"
+               path="window"
+               id="com.rohanclan.cfml.cfmlmenu">
+            <separator
+                  name="helpgroup">
+            </separator>
+         </menu>
+         <action
+               class="org.cfeclipse.help.cfml.cf7.actions.ViewHelp"
+               icon="icons/sample.gif"
+               id="org.cfeclipse.help.cfml.cf7.actions.ViewHelp"
+               label="&amp;CFML Help"
+               menubarPath="com.rohanclan.cfml.cfmlmenu/helpgroup"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="View Help"/>
+        </editorContribution>
+        
+		
+   </extension>
+
+
+</plugin>

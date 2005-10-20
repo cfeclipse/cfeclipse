@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Structure functions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000966.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000968.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Structure functions</h1>
+<p>You can use the following functions to create and manage structures in ColdFusion applications. The table describes each function's purpose and provides specific, but limited, information that can assist you in determining whether to use the function instead of other techniques:<code> </code></p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Function
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000456.htm#1104156"><code>Duplicate</code></a></p>
+    </td>
+    <td>
+<p>Returns a complete copy of the structure.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000532.htm#1106910"><code>IsStruct</code></a></p>
+    </td>
+    <td>
+<p>Returns True if the specified variable is a ColdFusion structure or a Java object that implements the java.util.Map interface.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000633.htm#136968"><code>StructAppend</code></a></p>
+    </td>
+    <td>
+<p>Appends one structure to another.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000634.htm#137053"><code>StructClear</code></a></p>
+    </td>
+    <td>
+<p>Removes all data from the specified structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000635.htm#137121"><code>StructCopy</code></a></p>
+    </td>
+    <td>
+<p>Returns a &quot;shallow&quot; copy of the structure. All embedded objects are references to the objects in the original structure. The <code>Duplicate</code> function has replaced this function for most purposes.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000636.htm#137332"><code>StructCount</code></a></p>
+    </td>
+    <td>
+<p>Returns the number of keys in the specified structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000637.htm#137396"><code>StructDelete</code></a></p>
+    </td>
+    <td>
+<p>Removes the specified item from the specified structure.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000638.htm#137488"><code>StructFind</code></a></p>
+    </td>
+    <td>
+<p>Returns the value associated with the specified key in the specified structure. This function is redundant with accessing structure elements using associative array notation.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000639.htm#137550"><code>StructFindKey</code></a></p>
+    </td>
+    <td>
+<p>Searches through a structure for the specified key name and returns an array containing data on the found key or keys.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000640.htm#137597"><code>StructFindValue</code></a></p>
+    </td>
+    <td>
+<p>Searches through a structure for the specified simple data value (for example, a string or number) and returns an array containing information on the value location in the structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000641.htm#137645"><code>StructGet</code></a></p>
+    </td>
+    <td>
+<p>Returns a reference to a substructure contained in a structure at the specified path. This function is redundant with using direct reference to a structure. If you accidentally use this function on a variable that is not a structure, it replaces the value with an empty structure.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000642.htm#137718"><code>StructInsert</code></a></p>
+    </td>
+    <td>
+<p>Inserts the specified key-value pair into the specified structure. Unlike a direct assignment statement, this function generates an error by default if the specified key exists in the structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000643.htm#137815"><code>StructIsEmpty</code></a></p>
+    </td>
+    <td>
+<p>Indicates whether the specified structure contains data. Returns True if the structure contains no data, and False if it does contain data.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000644.htm#137882"><code>StructKeyArray</code></a></p>
+    </td>
+    <td>
+<p>Returns an array of keys in the specified structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000645.htm#137977"><code>StructKeyExists</code></a></p>
+    </td>
+    <td>
+<p>Returns True if the specified key is in the specified structure. You can use this function in place of the <code>IsDefined</code> function to check for the existence of variables in scopes that are available as structures.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000646.htm#138035"><code>StructKeyList</code></a></p>
+    </td>
+    <td>
+<p>Returns a list of keys in the specified structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000647.htm#138139"><code>StructNew</code></a></p>
+    </td>
+    <td>
+<p>Returns a new structure.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000648.htm#138189"><code>StructSort</code></a></p>
+    </td>
+    <td>
+<p>Returns an array containing the key names of a structure in the order determined by the sort criteria.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000649.htm#138287"><code>StructUpdate</code></a></p>
+    </td>
+    <td>
+<p>Updates the specified key with the specified value. Unlike a direct assignment statement, this function generates an error if the structure or key does not exist.</p>
+    </td>
+  </tr>
+</table>
+
+<p>All functions except <code>StructDelete</code> throw an exception if a referenced key or structure does not exist.</p>
+<p>For more information on these functions, see <i>CFML Reference</i>.</p>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000966.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000968.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000967.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Enabling CORBA support </title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000051.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000053.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Enabling CORBA support </h1>
+<p>ColdFusion&#160;MX&#160;7 supports third-party Object Request Brokers (ORBs) through its integration with Borland Visibroker. However, you must acquire the Common Object Request Broker Architecture (CORBA) software separately from Borland. </p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000052.htm#1128185">System requirements</a>
+</li>
+<li>
+   <a href="00000052.htm#1128108">Installing Visibroker for CORBA connections</a>
+</li>
+</ul>
+<h2><a name="wp1128185"></a>System requirements</h2>
+<p>You must have all of the following components installed on your computer before you can make CORBA invocations from ColdFusion&#160;MX&#160;7:</p>
+<ul>
+<li>
+   Borland Visibroker 4.5.1 for Java 
+</li>
+<li>
+   Java Runtime Environment (JRE) 1.2 for the Visibroker Interface Repository
+</li>
+<li>
+   JRE 1.3 or later for ColdFusion&#160;MX&#160;7
+</li>
+</ul>
+<h2><a name="wp1128108"></a>Installing Visibroker for CORBA connections</h2>
+<h4>To install Visibroker for CORBA connections:</h4>
+<ol>
+<li>
+   Install Visibroker on the CORBA server side. 
+<p>For more information, see the Borland Visibroker documentation.</p>
+</li>
+<li>
+   Add the vbjorb.jar file to the ColdFusion&#160;MX&#160;7 classpath, as follows:
+<ol><li>In the ColdFusion&#160;MX Administrator, select Server Settings &gt; Java and JVM. When using the J2EE configuration, you add the vbjorb.jar file to the J2EE application server classpath, using the server-specific method.</li><li>On the Java and JVM Settings page, in the Class Path text box, enter the path to your vbjorb.jar file (for example, C:\Inprise\vbroker\lib\vbjorb.jar). If you are using JVM version 1.4 or later, you must add <code>-Xbootclasspath/a:&quot;C:/Inprise/vbroker/lib/vbjorb.jar&quot;</code>, to the JVM Args text box.</li><p>You only need the JAR file on the computer that is running ColdFusion&#160;MX&#160;7; you do not need the full Visibroker installation.</p>
+<li>Click Submit Changes.</li></ol></li>
+<li>
+   Configure a Visibroker connector in ColdFusion&#160;MX&#160;7, as follows: 
+<ol><li>In the ColdFusion&#160;MX Administrator, select Extensions &gt; CORBA Connectors.</li><li>In the CORBA Connectors page, click Register CORBA Connector.</li><li>In the CORBA Connector page, enter information for the connector.</li><p>The following is an example of a correctly configured connector:</p>
+</ol></li>
+</ol>
+<p><table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Value
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>ORB Name</p>
+    </td>
+    <td>
+<p>visibroker</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ORB Class Name</p>
+    </td>
+    <td>
+<p>coldfusion.runtime.corba.VisibrokerConnector</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Classpath</p>
+    </td>
+    <td>
+<p>(none)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ORB Property File</p>
+    </td>
+    <td>
+<p>C:\CFusionMX7\lib\vbjorb.properties </p>
+    </td>
+  </tr>
+</table>
+</p>
+<p>The ORB Property File points to a Java properties file that contains the correct ORB settings for Visibroker. </p>
+<p>The contents of the vbjorb.properties file look like the following: </p>
+	org.omg.CORBA.ORBClass=com.inprise.vbroker.orb.ORB
+	org.omg.CORBA.ORBSingletonClass=com.inprise.vbroker.orb.ORB
+	SVCnameroot=namingroot 
+<li>When you finish editing the page, click Submit.</li><p>The CORBA Connectors page appears. </p>
+<li>Select the radio button to the left of your new CORBA connector and click Select ORB Connector.</li><p>This sets the new connector to be the default. </p>
+</li>
+<li>
+   Prepare your CORBA server side, as follows: 
+<ol><li>Start your Visibroker osagent service or process, if it is not already running, by entering the following command: </li><pre>
+	osagent
+<p><strong>Note: </strong>If you must connect to an osagent in another subnetwork, include the following lines in the vbjorb.properties file:</p>	vbroker.agent.addr=&lt;IP address of machine running OSAGENT&gt;
+	vbroker.agent.port=&lt;port&gt;
+</pre>
+<li>Start the Interface Repository and load it with the IDL file that you plan to use, by entering an <code>irep</code> command, as in the following example: </li><pre>
+	irep myir MyIDLFile.idl 
+</pre>
+<li>(Optional) Start the Naming Service by entering a command like the following: </li><pre>
+	nameserv namingroot 
+<p><strong>Note: </strong>The name of the Naming Service (<i>namingroot</i> in the previous example) must match the value for SVCnameroot in the vbjorb.properties file. </p></pre>
+<li>Start Visibroker on your CORBA server.</li><p>For more information, see the Borland Visibroker documentation.</p>
+</ol></li>
+<li>
+   Restart ColdFusion&#160;MX&#160;7 for your changes to take effect.
+<p>For more information, see <a href="00000046.htm#1127488">Managing ColdFusion&#160;MX&#160;7</a>.</p>
+<p>You can now make CORBA invocations from ColdFusion&#160;MX&#160;7. For more information about integrating CORBA objects into ColdFusion&#160;MX&#160;7, see <i>ColdFusion MX Developer's Guide</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000051.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000053.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000052.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

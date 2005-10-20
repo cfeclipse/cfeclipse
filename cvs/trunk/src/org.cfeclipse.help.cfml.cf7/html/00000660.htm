@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>URLSessionFormat</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000659.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000661.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>URLSessionFormat</h1>
+<h4><a name="wp139075"></a>Description</h4>
+<p>Depending on whether a client computer accepts cookies, this function does the following:</p>
+<ul>
+<li>
+   If the client does not accept cookies: automatically appends all required client identification information to a URL
+</li>
+<li>
+   If the client accepts cookies: does not append information 
+</li>
+</ul>
+<p>This function automatically determines which identifiers are required, and sends only the required information. It provides a more secure and robust method for supporting client identification than manually encoding the information in each URL, because it sends only required information, when it is required, and it is easier to code.</p>
+<h4><a name="wp139080"></a>Returns</h4>
+<p>A URL; if cookies are disabled for the browser, client and session data are appended.</p>
+<h4><a name="wp139082"></a>Category</h4>
+<p><a href="00000366.htm#3493621">Other functions</a>; <a href="00001149.htm#1167090">Maintaining client identity</a> in <a href="00001147.htm#1159066">Using Persistent Data and Locking</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp139087"></a>Function syntax</h4>
+<pre><code><strong>URLSessionFormat</strong></code>(<code><i>request_URL</i></code>)
+</pre><h4><a name="wp139089"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>request_URL</p>
+    </td>
+    <td>
+<p>URL of a ColdFusion page</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139100"></a>Usage</h4>
+<p>In the following example, the <code>cfform</code> tag posts a request to another page and sends the client identification, if required. If cookie support is detected, the function returns the following:</p>
+<pre>
+myactionpage.cfm 
+</pre>
+<p>If the detected cookie is not turned on, or cookie support cannot be reliably detected, the function return value is as follows:</p>
+<pre>
+myactionpage.cfm?jsessionid=xxxx;cfid=xxxx&amp;cftoken=xxxxxxxx
+</pre>
+<h4><a name="wp139105"></a>Example</h4>
+<pre>&lt;cfform <br />method=&quot;Post&quot; <br />action=&quot;#URLSessionFormat(&quot;MyActionPage.cfm&quot;)#&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000659.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000661.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000660.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using Internet queries</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001326.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001328.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using Internet queries</h1>
+<p>With the Internet query parser, users can search entire documents or parts of documents (zones and fields) entering words, phrases, and plain language similar to that used by many web search engines. ColdFusion&#160;MX supports two Internet query parsers in the <code>cfsearch type</code> attribute.</p>
+<p><strong>Internet</strong>&#160;Uses standard, web-style query syntax. For more information, see <a href="00001327.htm#1238445">Query syntax</a>.</p>
+<p><strong>Internet_basic</strong>&#160;Similar to Internet. This query parser enhances performance, but produces less accurate relevancy statistics.</p>
+<p><strong>Note: </strong>Verity also includes the Internet_BasicWeb and Internet_AdvancedWeb query parsers, which are not directly supported by ColdFusion&#160;MX.</p><h2><a name="wp1246865"></a>Search terms</h2>
+<p>In a search form enabled with the Internet query parser, users can enter words, phrases, and plain language. The Internet parser does not support the Verity query language (VQL). </p>
+<h2><a name="wp1237868"></a>Words</h2>
+<p>To search for multiple words, separate them with spaces. </p>
+<h2><a name="wp1237872"></a>Phrases </h2>
+<p>To search for an exact phrase, surround it with double-quotation marks. A string of capitalized words is assumed to be a name. Separate a series of names with commas. Commas aren't needed when the phrases are surrounded by quotation marks. </p>
+<p>The following example searches for a document that contains the phrases &quot;San Francisco&quot; and &quot;sourdough bread&quot;: </p>
+<pre>&quot;San Francisco&quot; &quot;sourdough bread&quot;
+</pre><h2><a name="wp1237884"></a>Plain language</h2>
+<p>To search with plain language, enter a question or concept. The Internet Query Parser identifies the important words and searches for them. For example, enter a question such as: </p>
+<p><code>Where is the sales office in San Francisco? </code></p>
+<p>This query produces the same results as entering: </p>
+<pre>sales office San Francisco 
+</pre><h2><a name="wp1237896"></a>Including and excluding search terms </h2>
+<p>You can limit searches by excluding or requiring search terms, or by limiting the areas of the document that are searched. </p>
+<p>A minus sign (-) immediately preceding a search term (word or phrase) excludes documents containing the term. </p>
+<p>A plus sign (+) immediately preceding a search term (word or phrase) means returned documents are guaranteed to contain the term. </p>
+<p>If neither sign is associated with the search term, the results may include documents that do not contain the specified term as long as they meet other search criteria.</p>
+<h2><a name="wp1238000"></a>Field searches </h2>
+<p>The Internet parser lets users perform field searches. The fields that are available for searching depend on field extraction rules based on the document type of the documents in the collection. </p>
+<p>To search a document field, type the name of the field, a colon (:), and the search term with no spaces. </p>
+<pre>field:term 
+</pre><p>If you enter a minus sign (-) immediately preceding field, documents that contain the specified term are excluded from the search results. For example, if you enter <code>-field:term</code>, documents that contain the specified term in the specified field are excluded from the results of the search. </p>
+<p>If you enter a plus sign (+) immediately proceeding the field search specification, such as +<code>field:term</code>, documents are included in the search results only if the search term is present in the specified field. </p>
+<p>Field searches are enabled by the <code>enableField</code> parameter in a template file. This parameter, set to 0 by default, must be set to 1 to allow searching a document field. </p>
+<p><strong>Caution: </strong>The <code>enableField</code> parameter is the only thing in a template file that should be modified. </p><h2><a name="wp1238445"></a>Query syntax</h2>
+<p>The query syntax is very similar to the syntax that users expect to use on the web. Queries are interpreted according to the following rules: </p>
+<ul>
+<li>
+   Individual search terms are separated by whitespace characters, such as a space, tab, or comma; for example:
+<p>cake recipes </p>
+</li>
+<li>
+   Search phrases are entered within double-quotation marks; for example: 
+<p>&quot;chocolate cake&quot; recipe</p>
+</li>
+<li>
+   Exclude terms with the negation operator, minus ( - ), or the NOT operator; for example: 
+<p>cake recipes -rum </p>
+<p>cake recipes NOT rum </p>
+</li>
+<li>
+   Require a compulsory term with the unary inclusion operator, plus sign (+); in this example, the term <i>chocolate</i> must be included:
+<p>cake recipes +chocolate </p>
+</li>
+<li>
+   Require compulsory terms with the binary inclusion operator AND; in this example, the terms <i>recipes</i> and <i>chocolate</i> must be included: 
+<p>cake recipes and chocolate </p>
+</li>
+</ul>
+<h2><a name="wp1238492"></a>Field searches </h2>
+<p>You can search fields or zones by specifying <code>name: term</code>, where:</p>
+<p><code>name</code> is the name of the field or zone</p>
+<p><code>term</code> is an individual search term or phrase</p>
+<p>For example:</p>
+<pre>bakery city:&quot;San Francisco&quot;
+bakery city:Sunnyvale
+</pre><p>For more information, see <a href="00001329.htm#1194784">Refining your searches with zones and fields</a>.</p>
+<h2><a name="wp1238502"></a>Pass-through of terms </h2>
+<p>Search terms are passed through to the VDK-level and are interpreted as Verity Query Language (VQL) syntax. No issues arise if the terms contain only alphabetic or numeric characters. Other kinds of characters might be interpreted by the language you're using. If a term contains a character that is not handled by the specified language, it might be interpreted as VQL. For example, a search term that includes an asterisk (*) might be interpreted as a wildcard. </p>
+<h2><a name="wp1238506"></a>Stop words </h2>
+<p>The configurable Internet query parser uses its own stop-word list, qp_inet.stp, to specify terms to ignore for natural language processing. </p>
+<p><strong>Note: </strong>You can override the &quot;stop out&quot; by using quotation marks around the word. </p><p>For example, the following stop words are provided in the query parser's stop-word file for the English (Basic) template:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>a</p>
+    </td>
+    <td>
+<p>did</p>
+    </td>
+    <td>
+<p>i</p>
+    </td>
+    <td>
+<p>or</p>
+    </td>
+    <td>
+<p>what</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>also</p>
+    </td>
+    <td>
+<p>do</p>
+    </td>
+    <td>
+<p>i'm</p>
+    </td>
+    <td>
+<p>should</p>
+    </td>
+    <td>
+<p>when</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>an</p>
+    </td>
+    <td>
+<p>does</p>
+    </td>
+    <td>
+<p>if</p>
+    </td>
+    <td>
+<p>so</p>
+    </td>
+    <td>
+<p>where</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>and</p>
+    </td>
+    <td>
+<p>find</p>
+    </td>
+    <td>
+<p>in</p>
+    </td>
+    <td>
+<p>than</p>
+    </td>
+    <td>
+<p>whether</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>any</p>
+    </td>
+    <td>
+<p>for</p>
+    </td>
+    <td>
+<p>is</p>
+    </td>
+    <td>
+<p>that</p>
+    </td>
+    <td>
+<p>which</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>am</p>
+    </td>
+    <td>
+<p>from</p>
+    </td>
+    <td>
+<p>it</p>
+    </td>
+    <td>
+<p>the</p>
+    </td>
+    <td>
+<p>who</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>are</p>
+    </td>
+    <td>
+<p>get</p>
+    </td>
+    <td>
+<p>its</p>
+    </td>
+    <td>
+<p>there</p>
+    </td>
+    <td>
+<p>whose</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>as</p>
+    </td>
+    <td>
+<p>got</p>
+    </td>
+    <td>
+<p>it's</p>
+    </td>
+    <td>
+<p>to</p>
+    </td>
+    <td>
+<p>why</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>at</p>
+    </td>
+    <td>
+<p>had</p>
+    </td>
+    <td>
+<p>like</p>
+    </td>
+    <td>
+<p>too</p>
+    </td>
+    <td>
+<p>will</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>be</p>
+    </td>
+    <td>
+<p>has</p>
+    </td>
+    <td>
+<p>not</p>
+    </td>
+    <td>
+<p>want</p>
+    </td>
+    <td>
+<p>with</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>but</p>
+    </td>
+    <td>
+<p>have</p>
+    </td>
+    <td>
+<p>of</p>
+    </td>
+    <td>
+<p>was</p>
+    </td>
+    <td>
+<p>would</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>can</p>
+    </td>
+    <td>
+<p>how</p>
+    </td>
+    <td>
+<p>on</p>
+    </td>
+    <td>
+<p>were</p>
+    </td>
+    <td>
+<p>&lt;or&gt;</p>
+    </td>
+  </tr>
+</table>
+
+<p>Verity provides a populated stop-word file for the English and English (Advanced) languages. You do not need to modify the qp_inet.stp file for these languages. If you use the configurable Internet query parser for another language, you must provide your own qp_inet.stp file that contains the stop words that you want to ignore in that language. This stop-word file must contain, at a minimum, the language-equivalent words for <i>or</i> and <i>&lt;or&gt;</i>.</p>
+<p><strong>Note: </strong>The configurable Internet query parser's stop-word file contains a different word list than the vdk30.stp word file, which is used for other purposes, such as summarization. </p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001326.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001328.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001327.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

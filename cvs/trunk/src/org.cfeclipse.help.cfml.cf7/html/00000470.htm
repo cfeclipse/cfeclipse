@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetBaseTagData</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000469.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000471.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetBaseTagData</h1>
+<h4><a name="wp1224755"></a>Description</h4>
+<p>Used within a custom tag. Finds calling (ancestor) tag by name and accesses its data.</p>
+<h4><a name="wp3375361"></a>Returns</h4>
+<p>An object that contains data (variables, scopes, and so on) from an ancestor tag. If there is no ancestor by the specified name, or if the ancestor does not expose data (for example, <code>cfif</code>), an exception is thrown. </p>
+<h4><a name="wp2571492"></a>Category</h4>
+<p><a href="00000366.htm#3493621">Other functions</a></p>
+<h4><a name="wp1104761"></a>Function syntax</h4>
+<pre><code><strong>GetBaseTagData</strong></code>(<i>tagname</i> [, <i>instancenumber </i>] )
+</pre><h4><a name="wp2546161"></a>See also</h4>
+<p><a href="00000471.htm#1104790"><code>GetBaseTagList</code></a>; <a href="00001086.htm#1096367">High-level data exchange</a> in <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1305944"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>tagname</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Ancestor tag name for which to return data</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>instancenumber</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Number of ancestor levels to jump before returning data. The default value is 1 (closest ancestor).</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1104767"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of GetBaseTagData <br />function. Typically used in custom tags.---&gt;
+...
+&lt;cfif trim(inCustomTag) neq &quot;&quot;&gt;
+      &lt;cfoutput&gt;
+         Running in the context of a custom
+         tag named #inCustomTag#.&lt;p&gt;
+      &lt;/cfoutput&gt;
+      &lt;!--- Get the tag instance data ---&gt;
+      &lt;cfset tagData = GetBaseTagData(inCustomTag)&gt;
+      &lt;!--- Find the tag&#39;s execution mode ---&gt;
+      Located inside the 
+      &lt;cfif tagData.thisTag.executionMode neq 'inactive'&gt;
+         template
+      &lt;cfelse&gt;
+         BODY
+      &lt;/cfif&gt;
+
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000469.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000471.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000470.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Specifying number signs to denote functions or variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000086.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000088.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Specifying number signs to denote functions or variables</h1>
+<p>In ColdFusion, you specify number signs (#) to denote functions and variables within a string of text. You use number signs to show the results of the function or variable on the page. Number signs instruct the ColdFusion server to evaluate the function (or variable) between the number signs and display the value. The value of the function (or variable) appears in the browser as a result.</p>
+<p>The following are some common ways to use number signs:</p>
+<ul>
+<li>
+   In the following example, you include the number signs to return the value to a page: 
+<pre>
+&lt;cfoutput&gt; Hello #variables.my_first_name# &lt;/cfoutput&gt;
+</pre>
+<p>If you omit the number signs, the text, not the value, appears on the page.</p>
+</li>
+<li>
+   In the following example, you do not include the number signs because you are using the <code>cfset</code> tag to assign one variable's value to another value:
+<pre>
+&lt;cfset my_full_name = variables.my_first_name &amp; &quot; &quot; &amp; 
+variables.my_last_name&gt;
+</pre>
+</li>
+<li>
+   To display a number sign on a page, you must designate the number sign as a literal character. You do this by using two number signs (##); for example:
+<pre>
+&lt;cfoutput&gt;
+	##1: Your name.
+&lt;/cfoutput&gt;
+</pre>
+<p>The result is the following output:</p>
+<p>#1. Your name.</p>
+</li>
+</ul>
+<p>For more information and examples on using number signs in expressions, see <i>ColdFusion MX Developer's Guide</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000086.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000088.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000087.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

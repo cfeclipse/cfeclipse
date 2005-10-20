@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using WDDX</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001523.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001525.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using WDDX</h1>
+<p>The following sections describe how you can use WDDX in ColdFusion applications. The first two sections describe the tools that ColdFusion provides for creating and converting WDDX. The remaining sections show how you use these tools for common application uses.</p>
+<ul>
+<li>
+   <a href="00001524.htm#1126810">Using the cfwddx tag</a>
+</li>
+<li>
+   <a href="00001525.htm#1176578">Validating WDDX data</a>
+</li>
+<li>
+   <a href="00001526.htm#1169848">Using JavaScript objects</a>
+</li>
+<li>
+   <a href="00001527.htm#1117849">Converting CFML data to a JavaScript object</a>
+</li>
+<li>
+   <a href="00001528.htm#1096516">Transferring data from the browser to the server</a>
+</li>
+<li>
+   <a href="00001529.htm#1088159">Storing complex data in a string</a>
+</li>
+</ul>
+<h2><a name="wp1126810"></a>Using the cfwddx tag</h2>
+<p>The <a href="00000351.htm#2682044"><code>cfwddx</code></a> tag can do the following conversions:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+From
+    </th>
+    <th>
+To
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>CFML</p>
+    </td>
+    <td>
+<p>WDDX</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>CFML</p>
+    </td>
+    <td>
+<p>JavaScript</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>WDDX</p>
+    </td>
+    <td>
+<p>CFML</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>WDDX</p>
+    </td>
+    <td>
+<p>JavaScript</p>
+    </td>
+  </tr>
+</table>
+
+<p>A typical <code>cfwddx</code> tag used to convert a CFML query object to WDDX looks like the following:</p>
+<pre>&lt;cfwddx action=&quot;cfml2wddx&quot; input=&quot;#MyQueryObject#&quot; output=&quot;WddxTextVariable&quot;&gt;
+</pre><p>In this example, MyQueryObject is the name of the query object variable, and WddxTextVariable is the name of the variable in which to store the resulting WDDX XML. Note</p>
+<p>For more information on the <a href="00000351.htm#2682044"><code>cfwddx</code></a> tag, see <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001523.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001525.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001524.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

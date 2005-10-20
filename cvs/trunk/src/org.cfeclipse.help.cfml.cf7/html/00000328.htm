@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfschedule</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000327.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000329.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfschedule</h1>
+<h4><a name="wp1355855"></a>Description</h4>
+<p>Provides a programmatic interface to the ColdFusion scheduling engine. Can run a CFML page at scheduled intervals, with the option to write the page output to a static HTML page. This feature enables you to schedule pages that publish data, such as reports, without waiting while a database transaction is performed to populate the page.</p>
+<h4><a name="wp1959925"></a>Category</h4>
+<p><a href="00000209.htm#2460154">Variable manipulation tags</a></p>
+<h4><a name="wp1102977"></a>Syntax</h4>
+<pre>&lt;cfschedule <br />   action = &quot;update&quot;<br />   task = &quot;taskname&quot;<br />   operation = &quot;HTTPRequest&quot;<br />   file = &quot;filename&quot;<br />   path = &quot;path_to_file&quot;<br />   startDate = &quot;date&quot;<br />   startTime = &quot;time&quot;<br />   url = &quot;URL&quot;<br />   port = &quot;port_number&quot;<br />   publish = &quot;yes&quot; or &quot;no&quot;<br />   endDate = &quot;date&quot;<br />   endTime = &quot;time&quot;<br />   interval = &quot;seconds&quot;<br />   requestTimeOut = &quot;seconds&quot;<br />   username = &quot;username&quot;<br />   password = &quot;password&quot;<br />   proxyServer = &quot;hostname&quot;<br />   proxyPort = &quot;port_number&quot;&gt;<br />   proxyUser = &quot;username&quot;<br />   proxyPassword = &quot;password&quot;<br />   resolveURL = &quot;yes&quot; or &quot;no&quot;<br />&#160;<br />&lt;cfschedule <br />   action = &quot;delete&quot; <br />   task = &quot;TaskName&quot;&gt;<br />&#160;<br />&lt;cfschedule <br />   action = &quot;run&quot; <br />   task = &quot;TaskName&quot;&gt;
+</pre><h4><a name="wp2864158"></a>See also</h4>
+<p><a href="00000233.htm#3839604">cfcookie</a>, <a href="00000310.htm#1101730">cfparam</a>, <a href="00000318.htm#1102654">cfregistry</a>, <a href="00000327.htm#1844410">cfsavecontent</a>, <a href="00000334.htm#1103445">cfset</a></p>
+<h4><a name="wp2801263"></a>History</h4>
+<p>ColdFusion MX&#160;6.1: Changed the way intervals are calculated. The day length now reflects changes between standard and daylight saving times. The month length is now the calendar month length, not four weeks. The scheduler handles leap years correctly.</p>
+<h4><a name="wp1427865"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<ul>
+<li>
+   delete: deletes the specified task .
+</li>
+<li>
+   update: updates an existing task or creates a new task, if one with the name specified by the <code>task</code> attribute does not exist.
+</li>
+<li>
+   run: executes the specified task. 
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>task</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the task.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>operation</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;update&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Operation that the scheduler performs. Must be <code>HTTPRequest</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>file</p>
+    </td>
+    <td>
+<p>Required if <code>publish</code> <code>=</code> <code>&quot;Yes&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the file in which to store the published output of the scheduled task. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>Required if <code>publish = &quot;Yes&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Path to the directory in which to put the published file.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>startDate</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;update&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Date on which to first run the scheduled task. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>startTime</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;update&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Time at which to run the scheduled of task starts. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>url</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;update&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p> URL of the page to execute. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>port</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>80</p>
+    </td>
+    <td>
+<p>Port to use on the server that is specified by the <code>url</code> parameter. If <code>resolveURL</code> <code>=</code> <code>&quot;yes&quot;</code>, retrieved document URLs that specify a port number are automatically resolved, to preserve links in the retrieved document. A port value in the <code>url</code> attribute overrides this value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>publish</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: saves the result to a file.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>endDate</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Date when scheduled task ends. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>endTime</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Time when scheduled task ends (seconds).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>interval</p>
+    </td>
+    <td>
+<p>Required if <code>action</code> <code>=</code> <code>&quot;update&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Interval at which task is scheduled:</p>
+<ul>
+<li>
+   number of seconds
+</li>
+<li>
+   once
+</li>
+<li>
+   daily
+</li>
+<li>
+   weekly
+</li>
+<li>
+   monthly
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>requestTimeOut</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Can be used to extend the default timeout period.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>username</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Username, if URL is protected.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Password, if URL is protected.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>proxyServer</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Host name or IP address of a proxy server.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>proxyPort</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>80</p>
+    </td>
+    <td>
+<p>Port number to use on the proxy server.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>proxyUser</p>
+    </td>
+    <td>
+<p>Opt</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>User name to provide to the proxy server.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>proxyPassword</p>
+    </td>
+    <td>
+<p>Opt</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Password to provide to the proxy server.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>resolveURL</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: resolves links in the output page to absolute references.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2801281"></a>Usage</h4>
+<p>This tag and the ColdFusion MX Administrator Scheduled task page schedule ColdFusion tasks. Tasks that you add or change using this tag are visible in the Administrator. You can disable this tag in the Administrator Sandbox/Resource security page. This tag's success or failure status is written to the schedule.log file in the <i>cf_root</i>/logs directory (<i>cf_webapp_root</i>/WEB-INF/cfusion/logs in the multiserver and J2EE configurations).</p>
+<p>When you create a task, you specify the URL of the ColdFusion page to execute, the date, time and frequency of execution, and whether to publish the task output to a HTML file. If the output is published, you specify the output file path and file.</p>
+<p>If you schedule a job to run monthly on any date in the range 28-31, the scheduler does the following:</p>
+<ul>
+<li>
+   If you schedule a monthly job to run on the last day of a month, the scheduled job will run on the last day of each month. For example, if you schedule a monthly job to start on January 31, it will run on January 31, February 28 or 29, March 31, April 30, and so on. 
+</li>
+<li>
+   If you schedule a monthly job to run on the 29th or 30th of the month, the job will run on the specified day of each month for 30 or 31-day months, and the last day of February. For example, if you schedule a monthly job to start on January 30, the job will run on January 30, February 28 or 29, March 30, April 30, and so on. 
+</li>
+</ul>
+<p>If you schedule a job to run once, the starting time is in the past, and the task has not yet run, it runs immediately. If you schedule a recurring job with a start time in the past, ColdFusion schedules the job to run on the next closest interval in the future.</p>
+<p>The Scheduler configuration file, <i>cf_root</i>\lib\neo-cron.xml contains all scheduled events, as individual entries.</p>
+<h4><a name="wp1103021"></a>Example</h4>
+<pre>&lt;h3&gt;cfschedule Example&lt;/h3&gt;
+&lt;!--- This read-only example schedules a task. 
+      To run the example, remove the comments around the code 
+      and change the startDate, startTime, url, file, and path attributes
+      to appropriate values. ---&gt;
+<strong>&lt;!--- </strong>
+<strong>&lt;cfschedule action = &quot;update&quot;</strong>
+<strong>   task = &quot;TaskName&quot; </strong>
+<strong>   operation = &quot;HTTPRequest&quot;</strong>
+<strong>   url = &quot;http://127.0.0.1/playpen/history.cfm&quot;</strong>
+<strong>   startDate = &quot;8/7/03&quot;</strong>
+<strong>   startTime = &quot;12:25 PM&quot;</strong>
+<strong>   interval = &quot;3600&quot;</strong>
+<strong>   resolveURL = &quot;Yes&quot;</strong>
+<strong>   publish = &quot;Yes&quot;</strong>
+<strong>   file = &quot;sample.html&quot;</strong>
+<strong>   path = &quot;c:\inetpub\wwwroot\playpen&quot;</strong>
+<strong>   requestTimeOut = &quot;600&quot;&gt;</strong>
+---&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000327.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000329.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000328.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

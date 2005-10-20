@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>How the SMS event gateway and provider SMSC interact</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001669.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001671.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>How the SMS event gateway and provider SMSC interact</h1>
+<p>This section provides a brief overview of the interactions between the ColdFusion MX SMS event gateway and the SMPP provider's SMSC. It is designed to help you to understand the basics of SMPP interactions, and defines the terms necessary to for you to understand gateway configuration and message handling. For more details, see the SMPP specification, which is available at <a href="http://www.smsforum.net/" target="mm_window"></a>www.smsforum.net/.</p>
+<p>A typical interaction between an SMSC and a ColdFusion SMS event gateway instance consists of messages, or PDUs sent between the two entities, such as a mobile device and a ColdFusion MX event gateway instance (and therefore, and event gateway application). The following sections describe these interactions and how you handle them in ColdFusion MX.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001670.htm#133596">Gateway binding</a>
+</li>
+<li>
+   <a href="00001670.htm#135102">Incoming PDU handling</a>
+</li>
+<li>
+   <a href="00001670.htm#133617">Outgoing message handling</a>
+</li>
+<li>
+   <a href="00001670.htm#133656">Outgoing message synchronization and notification</a>
+</li>
+</ul>
+<h3><a name="wp133596"></a>Gateway binding</h3>
+<p>The event gateway must <i>bind</i> to the SMSC before they can communicate. The SMS event gateway instance initiates a binding by sending a bind_transceiver PDU to the SMSC, which includes the gateway's ID and password. If the initial bind request fails, the gateway retries the bind at the rate specified by the gateway configuration file retry-interval value until either the bind is successful or the gateway reaches the maximum number of retries, specified by the retries configuration value. If the bind operation fails, ColdFusion logs an error to the eventgateway.log file, and you must restart the gateway instance in the ColdFusion MX Administrator to establish the connection.</p>
+<p><strong>Note: </strong>Some SMSCs can send a prohibited status in response to a bind request. If the gateway receives such a status response, it sets the retry interval to one minute and the maximum number of retries to 15. The SMS gateway detects SMPP 5.0-compliant and AT&amp;T prohibited status responses.</p><p>When the SMSC accepts the bind request, it returns a bind_transceiver_resp PDU. The binding remains in effect until the gateway instance shuts down and sends an unbind PDU to the SMSC. Because the gateway binds as a transceiver, it can initiate messages to the SMSC, and the SMSC can send messages to it.</p>
+<h3><a name="wp135102"></a>Incoming PDU handling</h3>
+<p>If the ColdFusion SMS event gateway gets an Unbind PDU from the SMSC, it sends an unbind_resp PDU to the SMSC, does a restart, and attempts to rebind to the SMSC. </p>
+<p>When the event gateway receives an EnquireLink or any other request PDU from the SMSC, it sends a default response to the SMSC.</p>
+<p>The gateway receives incoming messages from the SMSC in deliver _sm PDUs; it does not handle data_sm PDUs. Deliver_sm PDUs can contain user- or application-generated messages, or disposition responses for messages that the gateway has sent. The gateway extracts the short message field and source and destination addresses from the PDU, puts them in a CFEvent object, and sends the object to ColdFusion event gateway services for delivery to the listener CFC. For information on how the CFML application must handle these incoming messages, see <a href="00001672.htm#134440">Handling incoming messages</a>.</p>
+<h3><a name="wp133617"></a>Outgoing message handling</h3>
+<p>The gateway supports three types of outgoing messages from ColdFusion applications. The CFML <code>sendGatewayMessage</code> function or a listener CFC method <code>cfreturn</code> tag can specify the following commands:</p>
+<p><strong>submit</strong>&#160;Sends a submit_sm PDU with the message contents to the SMSC. This PDU sends a message to a single destination.</p>
+<p><strong>submitMulti</strong>&#160;Sends a submit_multi PDU with the message contents to the SMSC. This PDU sends a message to multiple destinations.</p>
+<p><strong>data</strong>&#160;Sends a data_sm PDU with the message contents to the SMSC. This is an alternative to the submit command, and is typically used by interactive applications such as those provided via a wireless application protocol (WAP) framework.</p>
+<p>The SMS gateway lets you control the contents of all of the fields of these PDUs. For more information, see the documentation for the individual commands in <a href="00001673.htm#128843">Sending outgoing messages</a>.</p>
+<p>When you send a message, if the SMSC responds with a status that indicates that the message was rejected or not sent, ColdFusion MX logs information about the failure in the eventgateway.log file. If the SMSC indicates that the service type is not available (SMPP v5 ESME_RSERTYPUNAVAIL status or AT&amp;T Serviced denied status), and the gateway configuration file transient-retry value is set to yes, the gateway also tries to resend the message.</p>
+<h3><a name="wp133656"></a>Outgoing message synchronization and notification</h3>
+<p>The gateway and SMSC communicate asynchronously: the gateway does not wait for a response from the SMSC for one message before it sends another message. However, you can configure your gateway instance so that the CFML <code>sendGatewayMessage</code> function behaves asynchronously or synchronously. </p>
+<ul>
+<li>
+   In <i>asynchronous mode</i>, the function returns when the message is queued in ColdFusion gateway services. 
+</li>
+<li>
+   In <i>synchronous mode</i>, the function waits until the SMSC receives the message and returns a message ID, or an error occurs. 
+</li>
+</ul>
+<p>For more information on configuring message synchronization and sending messages synchronously, see <a href="00001677.htm#135175">Controlling SMS message sending and response</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001669.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001671.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001670.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

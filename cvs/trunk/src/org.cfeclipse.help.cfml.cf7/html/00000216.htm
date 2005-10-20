@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfapplet</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000215.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000217.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfapplet</h1>
+<h4><a name="wp1344608"></a>Description</h4>
+<p>This tag references a registered custom Java applet. To register a Java applet, in the ColdFusion Administrator, click Extensions &gt; Java Applets. </p>
+<p>Using this tag within a <code>cfform</code> tag is optional. If you use it within <code>cfform</code>, and the <code>method</code> attribute is defined in the Administrator, the return value is incorporated into the form. </p>
+<h4><a name="wp1864170"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a></p>
+<h4><a name="wp1343227"></a>Syntax</h4>
+<pre>&lt;cfapplet <br />   appletSource = &quot;applet_name&quot;<br />   name = &quot;form_variable_name&quot;<br />   height = &quot;height_in_pixels&quot;<br />   width = &quot;width_in_pixels&quot;<br />   vSpace = &quot;space_above_and_below_in_pixels&quot;<br />   hSpace = &quot;space_on_each_side_in_pixels&quot;<br />   align = &quot;alignment_option&quot;<br />   notSupported = &quot;message_to_display_for_nonJava_browser&quot;<br />   param_1 = &quot;applet_parameter_name&quot;<br />   param_2 = &quot;applet_parameter_name&quot;<br />   param_n = &quot;applet_parameter_name&quot;&gt;
+</pre><h4><a name="wp1864160"></a>See also</h4>
+<p><a href="00000256.htm#2433198"><code>cfform</code></a><code>, </code><a href="00000257.htm#3833404"><code>cfformgroup</code></a><code>, </code><a href="00000258.htm#3768073"><code>cfformitem</code></a><code>, </code><a href="00000266.htm#1836171"><code>cfgrid</code></a><code>, </code><a href="00000279.htm#1100379"><code>cfinput</code></a><code>, </code><a href="00000302.htm#2820239"><code>cfobject</code></a><code>, </code><a href="00000331.htm#2553073"><code>cfselect</code></a><code>, </code><a href="00000332.htm#1103314"><code>cfservlet</code></a><code>, </code><a href="00000337.htm#2612389"><code>cfslider</code></a><code>, </code><a href="00000341.htm#2773598"><code>cftextarea</code></a><code>, </code><a href="00000347.htm#1104271"><code>cftree</code></a></p>
+<h4><a name="wp2745725"></a>History</h4>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Removed the requirement that you use this tag within a <code>cfform</code> tag. 
+</li>
+<li>
+   Changed the behavior when this tag is used within a <code>cfform</code> tag; if the <code>method</code> attribute is defined in the Administrator, the return value of the applet's method is incorporated into the form. 
+</li>
+</ul>
+<h4><a name="wp2199122"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>appletSource</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of registered applet</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Form variable name for applet</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>height</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Height of applet, in pixel</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>width</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Width of applet, in pixels</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>vSpace</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Space above and below applet, in pixels</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hSpace</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Space on left and right of applet, in pixels</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>align</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Alignment:</p>
+<ul>
+<li>
+   Left
+</li>
+<li>
+   Right
+</li>
+<li>
+   Bottom
+</li>
+<li>
+   Top
+</li>
+<li>
+   TextTop
+</li>
+<li>
+   Middle
+</li>
+<li>
+   AbsMiddle
+</li>
+<li>
+   Baseline
+</li>
+<li>
+   AbsBottom
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>notSupported</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>See Description</p>
+    </td>
+    <td>
+<p>Text to display if a page that contains a Java applet-based cfform control is opened by a browser that does not support Java or has Java support disabled. For example:</p>
+<p>notSupported = &quot;&lt;b&gt;Browser must support Java to view </p>
+<p>ColdFusion Java Applets&lt;/b&gt;&quot;</p>
+<p>Default: </p>
+<p>&lt;b&gt;Browser must support Java to&lt;br&gt; view ColdFusion Java Applets!&lt;/b&gt;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>param_n</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Registered parameter for applet. Specify only to override values for applet in ColdFusion Administrator. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1097277"></a>Usage</h4>
+<p>You can specify the applet <code>method</code> attribute only in the Administrator, Java Applets view. For other attributes, you can accept the default values in the Administrator view, or specify values in this tag and override the defaults. </p>
+<p>If Java applet components are stored in a JAR file, enter the filename in the ColdFusion Administrator, Java Applets window, Archive text box. For more information, see <a href="00001372.htm#1096711">Embedding Java applets</a> in <a href="00001349.htm#1102770">Building Dynamic Forms with cfform Tags</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1097279"></a>Example</h4>
+<pre>&lt;p&gt;cfapplet lets you reference custom Java applets that have been 
+   registered using the ColdFusion Administrator.
+&lt;p&gt;To register a Java applet, open the ColdFusion Administrator and 
+   click &quot;Applets&quot; link under &quot;extensions&quot; section.
+&lt;p&gt;This example applet copies text that you type into a form. Type 
+   some text, and then click &quot;copy&quot; to see the copied text.
+
+&lt;cfform action = &quot;index.cfm&quot;&gt;
+<strong>   &lt;cfapplet appletsource = &quot;copytext&quot; name = &quot;copytext&quot;&gt;</strong>
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000215.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000217.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000216.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

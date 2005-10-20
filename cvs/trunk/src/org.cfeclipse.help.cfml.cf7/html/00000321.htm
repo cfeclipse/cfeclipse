@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfregistry action = &quot;set&quot;</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000320.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000322.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfregistry action = &quot;set&quot;</h1>
+<h4><a name="wp1761117"></a>Description</h4>
+<p>Adds a registry key, adds a value, or updates a value. </p>
+<h4><a name="wp1102794"></a>Syntax</h4>
+<pre>&lt;cfregistry <br />   action = &quot;set&quot;<br />   branch = &quot;branch&quot;<br />   entry = &quot;key or value&quot;<br />   type = &quot;value type&quot;<br />   value = &quot;data&quot;&gt;
+</pre><h4><a name="wp2864037"></a>See also</h4>
+<p><a href="00001147.htm#1159066">Using Persistent Data and Locking</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1427355"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Always <code>set.</code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>branch</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of a registry branch.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>entry</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Key or value to set.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<ul>
+<li>
+   string: sets a string value (default).
+</li>
+<li>
+   dWord: sets a DWord value.
+</li>
+<li>
+   key: creates a key.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Value data to set. If you omit this attribute, the <code>cfregistry</code> tag creates default value, as follows:</p>
+<ul>
+<li>
+   string: creates an empty string: <code>&quot;&quot;</code>.
+</li>
+<li>
+   dWord: creates a value of <code>0</code> (zero).
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102809"></a>Usage</h4>
+<p>If it does not exist, the <code>cfregistry</code> tag creates the key or value.</p>
+<h4><a name="wp1102811"></a>Example</h4>
+<pre>&lt;!--- This example uses the cfregistry set action to modify registry value data. ---&gt;
+&lt;!--- Normally you pass in a filename instead of setting one here. ---&gt;
+&lt;cfset FileName = &quot;dummy.cfm&quot;&gt;
+&lt;cfregistry action = &quot;set&quot;
+ branch = &quot;HKEY_LOCAL_MACHINE\Software\cflangref&quot;
+ entry = &quot;LastCFM01&quot; type = &quot;String&quot; value = &quot;#FileName#&quot;&gt;
+&lt;h1&gt;cfregistry action = &quot;set&quot;&lt;/h1&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000320.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000322.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000321.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

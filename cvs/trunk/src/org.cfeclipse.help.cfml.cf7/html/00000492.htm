@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetProfileString</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000491.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000493.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetProfileString</h1>
+<h4><a name="wp4755213"></a>Description</h4>
+<p>Gets an initialization file entry. </p>
+<p>An initialization file assigns values to configuration variables, also known as entries, that are set when the system boots, the operating system comes up, or an application starts. An initialization file has the suffix INI; for example, boot.ini, Win32.ini. </p>
+<h4><a name="wp3382867"></a>Returns</h4>
+<p>An entry in an initialization file, as a string. If there is no value, returns an empty string.</p>
+<h4><a name="wp2519950"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp1105239"></a>Function syntax</h4>
+<pre><code><strong>GetProfileString</strong></code>(ini<i>Path</i>,<i> section, entry</i>)
+</pre><h4><a name="wp2524106"></a>See also</h4>
+<p><a href="00000491.htm#4229331">GetProfileSections</a>, <a href="00000492.htm#4755212">GetProfileString</a>, <a href="00000625.htm#136464">SetProfileString</a></p>
+<h4><a name="wp4018866"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>iniPath</p>
+    </td>
+    <td>
+<p>Absolute path (drive, directory, filename, extension) of initialization file; for example, C:\boot.ini</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>section</p>
+    </td>
+    <td>
+<p>Section of initialization file from which to extract information</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>entry</p>
+    </td>
+    <td>
+<p>Name of value to get</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1105247"></a>Example</h4>
+<pre>&lt;h3&gt;GetProfileString Example&lt;/h3&gt;
+Uses GetProfileString to get the value of timeout in an initialization file. Enter<br />the full path of your initialization file, and submit the form.
+&lt;!--- If the form was submitted, it gets the initialization path and timeout value specified in the form ---&gt;
+&lt;cfif Isdefined(&quot;Form.Submit&quot;)&gt;
+   &lt;cfset IniPath = FORM.iniPath&gt;
+   &lt;cfset Section = &quot;boot loader&quot;&gt;
+   &lt;cfset timeout = <strong>GetProfileString(IniPath, Section, &quot;timeout&quot;)</strong>&gt;
+   &lt;h4&gt;Boot Loader&lt;/h4&gt;
+   &lt;!--- If no entry in an initialization file, nothing displays ---&gt;
+   &lt;p&gt;Timeout is set to: &lt;cfoutput&gt;#timeout#&lt;/cfoutput&gt;.&lt;/p&gt;
+&lt;/cfif&gt;
+&lt;form action = &quot;getprofilestring.cfm&quot;&gt;
+&lt;table cellspacing = &quot;2&quot; cellpadding = &quot;2&quot; border = &quot;0&quot;&gt;
+   &lt;tr&gt;
+       &lt;td&gt;Full Path of Init File&lt;/td&gt;
+       &lt;td&gt;&lt;input type = &quot;Text&quot; name = &quot;IniPath&quot; value = &quot;C:\myboot.ini&quot;&gt;
+      &lt;/td&gt;
+   &lt;/tr&gt;
+   &lt;tr&gt;
+    &lt;td&gt;&lt;input type = &quot;Submit&quot; name = &quot;Submit&quot; value = &quot;Submit&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+   &lt;/tr&gt;&lt;/table&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000491.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000493.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000492.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

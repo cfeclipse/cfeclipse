@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetCurrentTemplatePath</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000474.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000476.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetCurrentTemplatePath</h1>
+<h4><a name="wp1224779"></a>Description</h4>
+<p>Gets the path of the page that calls this function. </p>
+<h4><a name="wp3375506"></a>Returns</h4>
+<p>The absolute path of the page that contains the call to this function, as a string. </p>
+<h4><a name="wp2524043"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp1104918"></a>Function syntax</h4>
+<pre><code><strong>GetCurrentTemplatePath</strong></code>()
+</pre><h4><a name="wp2538145"></a>See also</h4>
+<p><a href="00000472.htm#1104820">GetBaseTemplatePath</a>, <a href="00000461.htm#1104406">FileExists</a>, <a href="00000460.htm#1104357">ExpandPath</a></p>
+<h4><a name="wp1104920"></a>Usage</h4>
+<p>If the function call is made from a page included with a <code>cfinclude</code> tag, this function returns the page path of an included page. Contrast this with the <code>GetBaseTemplatePath</code> function, which returns the path of the top-level page, even if it is called from an included page.</p>
+<h4><a name="wp1104922"></a>Example</h4>
+<pre>&lt;!--- This example uses GetCurrentTemplatePath to show the <br />template path of the current page ---&gt;
+&lt;h3&gt;GetCurrentTemplatePath Example&lt;/h3&gt;
+
+&lt;p&gt;The template path of the current page is:
+&lt;cfoutput&gt;#GetCurrentTemplatePath()#&lt;/cfoutput&gt;
+
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000474.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000476.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000475.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

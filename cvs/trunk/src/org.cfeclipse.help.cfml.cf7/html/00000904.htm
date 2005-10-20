@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Setting a variable</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000903.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000905.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Setting a variable</h1>
+<p>ColdFusion cannot be as flexible when it sets a variable value as when it gets a variable, because it must determine the type of variable to create or set. Therefore, the rules for variable names that you set are stricter. Also, the rules vary depending on whether the first part of the variable name is the Cookie or Client scope identifier.</p>
+<p>For example, assume you have the following code:</p>
+<pre>&lt;cfset myVar.a.b = &quot;This is a test&quot;&gt;
+</pre><p>If a variable myVar does not exist, it does the following:</p>
+<ol>
+<li>
+   Creates a structure named myVar.
+</li>
+<li>
+   Creates a structure named a in the structure myVar.
+</li>
+<li>
+   Creates a key named b in myVar.a.
+</li>
+<li>
+   Gives it the value &quot;This is a test&quot;. 
+</li>
+</ol>
+<p>If either myVar or myVar.a exist and neither one is a structure, ColdFusion generates an error.</p>
+<p>In other words, ColdFusion uses the same rules as for getting a variable to resolve the variable name until it finds a name that does not exist yet. It then creates any structures that are needed to create a key named b inside a structure, and assigns the value to the key.</p>
+<p>However, if the name before the first period is either Cookie or Client, ColdFusion uses a different rule. It treats all the text (including any periods) that follow the scope name as the name of a simple variable, because Cookie and Client scope variables must be simple. If you have the following code, you see that ColdFusion creates a single, simple Client scope variable named myVar.a.b:</p>
+<pre>&lt;cfset Client.myVar.a.b = &quot;This is a test&quot;&gt;
+&lt;cfdump var=#Client.myVar.a.b#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000903.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000905.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000904.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

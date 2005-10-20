@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetMetricData</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000488.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000490.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetMetricData</h1>
+<h4><a name="wp1224815"></a>Description</h4>
+<p>Gets server performance metrics.</p>
+<h4><a name="wp3382809"></a>Returns</h4>
+<p>ColdFusion structure that contains metric data, depending on the <code>mode</code> value.</p>
+<h4><a name="wp2524171"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp1105181"></a>Function syntax</h4>
+<pre><code><strong>GetMetricData</strong></code>(mode)
+</pre><h4><a name="wp4467519"></a>History</h4>
+<p>ColdFusion&#160;MX: Deprecated the <code>cachepops</code> parameter. It might not work, and it might cause an error, in later releases.</p>
+<h4><a name="wp1310076"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Option
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>mode</p>
+    </td>
+    <td>
+<p>perf_monitor</p>
+    </td>
+    <td>
+<p>Returns internal data, in a structure.</p>
+<p>To receive data, you must enable PerfMonitor in ColdFusion Administrator before executing the function. </p>
+<p>On Windows, this data is otherwise displayed in the Windows PerfMonitor. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>simple_load</p>
+    </td>
+    <td>
+<p>Returns an integer value that is computed from the state of the server&#39;s internal queues. Indicates the overall server load.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>prev_req_time</p>
+    </td>
+    <td>
+<p>Returns the time, in milliseconds, that it took the server to process the previous request.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>avg_req_time</p>
+    </td>
+    <td>
+<p>Returns the average time, in milliseconds, that it takes the server to process a request.</p>
+<p>Changing the setting to 0 prevents the server from calculating the average and removes overhead associated with gathering data.</p>
+<p>The default value is 120 seconds. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1105193"></a>Usage</h4>
+<p>If <code>mode</code> <code>=</code> <code>&quot;perf_monitor&quot;</code>, the function returns a structure with these data fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>InstanceName</p>
+    </td>
+    <td>
+<p>The name of the ColdFusion server. The default value is cfserver.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>PageHits</p>
+    </td>
+    <td>
+<p>Number of HTTP requests received since ColdFusion&#160;MX was started.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ReqQueued</p>
+    </td>
+    <td>
+<p>Number of HTTP requests in the staging queue, waiting for processing.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>DBHits</p>
+    </td>
+    <td>
+<p>Number of database requests since the server was started.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ReqRunning</p>
+    </td>
+    <td>
+<p>Number of HTTP requests currently running. </p>
+<p>In the ColdFusion Administrator, you can set the maximum number of requests that run concurrently.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ReqTimedOut</p>
+    </td>
+    <td>
+<p>Number of HTTP requests that timed out while in the staging queue or during processing.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BytesIn</p>
+    </td>
+    <td>
+<p>Number of bytes in HTTP requests to ColdFusion&#160;MX.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BytesOut</p>
+    </td>
+    <td>
+<p>Number of bytes in HTTP responses from ColdFusion&#160;MX.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>AvgQueueTime</p>
+    </td>
+    <td>
+<p>For the last two HTTP requests (current and previous), the average length of time the request waited in the staging queue.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>AvgReqTime</p>
+    </td>
+    <td>
+<p>For the last two HTTP requests (current and previous), the average length of time the server required to process the request</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>AvgDBTime</p>
+    </td>
+    <td>
+<p>For the last two HTTP requests (current and previous), the average length of time the server took to process CFQueries in the request.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cachepops</p>
+    </td>
+    <td>
+<p>This parameter is deprecated. ColdFusion automatically sets its value to -1.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1105207"></a>Example</h4>
+<pre>&lt;!--- This example gets and displays metric data from Windows NT PerfMonitor ---&gt;
+&lt;cfset pmData = GetMetricData( &quot;PERF_MONITOR&quot; ) &gt;
+&lt;cfoutput&gt;
+   Current PerfMonitor data is: &lt;p&gt;
+   InstanceName:   #pmData.InstanceName# &lt;p&gt;
+   PageHits:      #pmData.PageHits# &lt;p&gt;
+   ReqQueued:       #pmData.ReqQueued# &lt;p&gt;
+   DBHits:    #pmData.DBHits# &lt;p&gt;
+   ReqRunning:       #pmData.ReqRunning# &lt;p&gt;
+   ReqTimedOut: #pmData.ReqTimedOut# &lt;p&gt;
+   BytesIn:       #pmData.BytesIn# &lt;p&gt;
+   BytesOut:       #pmData.BytesOut# &lt;p&gt;
+   AvgQueueTime: #pmData.AvgQueueTime# &lt;p&gt;
+   AvgReqTime:       #pmData.AvgReqTime# &lt;p&gt;
+   AvgDBTime:       #pmData.AvgDBTime# &lt;p&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000488.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000490.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000489.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

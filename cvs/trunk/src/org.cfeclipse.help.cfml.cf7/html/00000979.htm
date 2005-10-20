@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CFScript example</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000978.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000980.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CFScript example</h1>
+<p>The example in this section uses the following CFScript features:</p>
+<ul>
+<li>
+   Variable assignment 
+</li>
+<li>
+   Function calls
+</li>
+<li>
+   For loops
+</li>
+<li>
+   If-else statements
+</li>
+<li>
+   <code>WriteOutput</code> functions
+</li>
+<li>
+   Switch statements
+</li>
+</ul>
+<p>The example uses CFScript without any other ColdFusion tags. It creates a structure of course applicants. This structure contains two arrays; the first has accepted students, the second has rejected students. The script also creates a structure with rejection reasons for some (but not all) rejected students. It then displays the accepted applicants followed by the rejected students and their rejection reasons.</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;CFScript Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;cfscript&gt;
+
+   //Set the variables
+
+   acceptedApplicants[1] = &quot;Cora Cardozo&quot;;
+   acceptedApplicants[2] = &quot;Betty Bethone&quot;;
+   acceptedApplicants[3] = &quot;Albert Albertson&quot;;
+   rejectedApplicants[1] = &quot;Erma Erp&quot;;
+   rejectedApplicants[2] = &quot;David Dalhousie&quot;;
+   rejectedApplicants[3] = &quot;Franny Farkle&quot;;
+   applicants.accepted=acceptedApplicants;
+   applicants.rejected=rejectedApplicants;
+
+   rejectCode=StructNew();
+   rejectCode[&quot;David Dalhousie&quot;] = &quot;score&quot;;
+   rejectCode[&quot;Franny Farkle&quot;] = &quot;too late&quot;;
+
+   //Sort and display accepted applicants 
+
+   ArraySort(applicants.accepted,&quot;text&quot;,&quot;asc&quot;);
+   WriteOutput(&quot;The following applicants were accepted:&lt;hr&gt;&quot;);
+   for (j=1;j lte ArrayLen(applicants.accepted);j=j+1)&#160;{ 
+      WriteOutput(applicants.accepted[j] &amp; &quot;&lt;br&gt;&quot;); 
+   }
+   WriteOutput(&quot;&lt;br&gt;&quot;);
+   
+   //sort and display rejected applicants with reasons information
+
+   ArraySort(applicants.rejected,&quot;text&quot;,&quot;asc&quot;);
+   WriteOutput(&quot;The following applicants were rejected:&lt;hr&gt;&quot;);
+   for (j=1;j lte ArrayLen(applicants.rejected);j=j+1)&#160;{
+      applicant=applicants.rejected[j];
+      WriteOutput(applicant &amp; &quot;&lt;br&gt;&quot;);
+      if (StructKeyExists(rejectCode,applicant))&#160;{
+         switch(rejectCode[applicant])&#160;{
+            case &quot;score&quot;:
+               WriteOutput(&quot;Reject reason: Score was too low.&lt;br&gt;&quot;);
+               break;
+            case &quot;late&quot;:
+               WriteOutput(&quot;Reject reason: Application was late.&lt;br&gt;&quot;);
+               break;
+            default:
+               WriteOutput(&quot;Rejected with invalid reason code.&lt;br&gt;&quot;);
+         } //end switch
+      } //end if
+      else&#160;{
+         WriteOutput(&quot;Reject reason was not defined.&lt;br&gt;&quot;); 
+      } //end else
+      WriteOutput(&quot;&lt;br&gt;&quot;);
+   } //end for
+&lt;/cfscript&gt;
+</pre><h4><a name="wp1118589"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfscript&gt;
+acceptedApplicants[1] = &quot;Cora Cardozo&quot;;
+acceptedApplicants[2] = &quot;Betty Bethone&quot;;
+acceptedApplicants[3] = &quot;Albert Albertson&quot;;
+rejectedApplicants[1] = &quot;Erma Erp&quot;;
+rejectedApplicants[2] = &quot;David Dalhousie&quot;;
+rejectedApplicants[3] = &quot;Franny Farkle&quot;;
+applicants.accepted=acceptedApplicants;
+applicants.rejected=rejectedApplicants;
+
+rejectCode=StructNew();
+rejectCode[&quot;David Dalhousie&quot;] = &quot;score&quot;;
+rejectCode[&quot;Franny Farkle&quot;] = &quot;too late&quot;;
+</pre>    </td>
+    <td>
+<p>Creates two one-dimensional arrays, one with the accepted applicants and another with the rejected applicants. The entries in each array are in random order.</p>
+<p>Creates a structure and assign each array to an element of the structure.</p>
+<p>Creates a structure with rejection codes for rejected applicants. The <code>rejectedCode</code> structure does not have entries for all rejected applicants, and one of its values does not match a valid code. The structure element references use associative array notation in order to use key names that contain spaces.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>ArraySort(applicants.accepted,&quot;text&quot;,&quot;asc&quot;);
+WriteOutput(&quot;The following applicants were accepted:&lt;hr&gt;&quot;);
+for (j=1;j lte ArrayLen(applicants.accepted);j=j+1)&#160;{ 
+&#160;&#160;WriteOutput(applicants.accepted[j] &amp; &quot;&lt;br&gt;&quot;); 
+}
+WriteOutput(&quot;&lt;br&gt;&quot;);
+</pre>    </td>
+    <td>
+<p>Sorts the accepted applicants alphabetically.</p>
+<p>Displays a heading.</p>
+<p>Loops through the accepted applicants and writes their names. Braces enhance clarity, although they are not needed for a single statement loop.</p>
+<p>Writes an additional line break at the end of the list of accepted applicants.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>ArraySort(applicants.rejected,&quot;text&quot;,&quot;asc&quot;);
+WriteOutput(&quot;The following applicants were rejected:&lt;hr&gt;&quot;);
+</pre>    </td>
+    <td>
+<p>Sorts <code>rejectedApplicants</code> array alphabetically and writes a heading.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>for (j=1;j lte ArrayLen(applicants.rejected);j=j+1)&#160;{
+  applicant=applicants.rejected[j];
+  WriteOutput(applicant &amp; &quot;&lt;br&gt;&quot;);
+</pre>    </td>
+    <td>
+<p>Loops through the rejected applicants.</p>
+<p>Sets the applicant variable to the applicant name. This makes the code clearer and enables you to easily reference the <code>rejectCode</code> array later in the block.</p>
+<p>Writes the applicant name.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>if (StructKeyExists(rejectCode,applicant))&#160;{
+  switch(rejectcode[applicant])&#160;{
+    case &quot;score&quot;:
+      WriteOutput(&quot;Reject reason: Score was too low.&lt;br&gt;&quot;);
+      break;
+    case &quot;late&quot;:
+      WriteOutput(&quot;Reject reason: Application was<br />         late.&lt;br&gt;&quot;);
+      break;
+    default:
+      WriteOutput(&quot;Rejected with invalid reason code.&lt;br&gt;&quot;);
+  } //end switch
+} //end if
+</pre>    </td>
+    <td>
+<p>Checks the <code>rejectCode</code> structure for a rejection code for the applicant. </p>
+<p>If a code exists, enters a switch statement that examines the rejection code value. </p>
+<p>If the rejection code value matches one of the known codes, displays an expanded explanation of the meaning. Otherwise (the default case), displays an indication that the rejection code is not valid.</p>
+<p>Comments at the end of blocks help clarify the control flow.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>else&#160;{
+&#160;&#160;WriteOutput(&quot;Reject reason was not defined. &lt;br&gt;&quot;);
+{
+</pre>    </td>
+    <td>
+<p>If there is no entry for the applicant in the <code>rejectCode</code> structure, displays a message indicating that the reason was not defined.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>      WriteOutput(&quot;&lt;br&gt;&quot;);
+} //end for
+&lt;/cfscript&gt;
+</pre>    </td>
+    <td>
+<p>Displays a blank line after each rejected applicant.</p>
+<p>Ends the for loop that handles each rejected applicant.</p>
+<p>Ends the CFScript.</p>
+    </td>
+  </tr>
+</table>
+
+<pre>
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000978.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000980.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000979.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

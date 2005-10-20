@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Logging errors with the cflog tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001138.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001140.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Logging errors with the cflog tag</h1>
+<p>ColdFusion provides extensive capabilities for generating, managing, and viewing log files, as described in <i>Configuring and Administering ColdFusion&#160;MX</i>. It also provides the <a href="00000286.htm#1842314"><code>cflog</code></a> tag which adds entries to ColdFusion logs.</p>
+<p>ColdFusion automatically logs errors to the default logs if you use the default error handlers. In all other cases, you must use the <code>cflog</code> tag in your error handling code to generate log entries.</p>
+<p>The <code>cflog</code> tag lets you specify the following information:</p>
+<ul>
+<li>
+   A custom file or standard ColdFusion log file in which to write the message.
+</li>
+<li>
+   Text to write to the log file. This can include the values of all available error and <code>cfcatch</code> variables.
+</li>
+<li>
+   Message severity (type): Information Warning, Fatal, or Error.
+</li>
+<li>
+   Whether to log any of the following: application name, thread ID, system date, or system time. By default, all get logged.
+</li>
+</ul>
+<p>For example, you could use a <code>cflog</code> tag in an exception error-handling page to log the error information to an application-specific log file, as in the following page:</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Products - Error&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h2&gt;Sorry&lt;/h2&gt;
+
+&lt;p&gt;An error occurred when you requested this page.
+The error has been logged and we will work to correct the problem.
+We apologize for the inconvenience. &lt;/p&gt;
+
+<code><strong>&lt;cflog type=&quot;Error&quot;</strong></code>
+<code><strong>      file=&quot;myapp_errors&quot;</strong></code>
+<code><strong>      text=&quot;Exception error -- </strong></code>
+<code><strong>         Exception type: #error.type#</strong></code>
+<code><strong>         Template: #error.template#,</strong></code>
+<code><strong>         Remote Address: #error.remoteAddress#, </strong></code>
+<code><strong>         HTTP Reference: #error.HTTPReferer#</strong></code>
+<code><strong>         Diagnostics: #error.diagnostics#&quot;&gt;</strong></code>
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><h4><a name="wp1100891"></a>Reviewing the code</h4>
+<p>The following table describes the highlighted code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cflog     type=&quot;Error&quot;
+&#160;&#160;file=&quot;myapp_errors&quot;
+&#160;&#160;text=&quot;Exception error
+&#160;&#160;Exception type: #Error.type#
+&#160;&#160;Template: #Error.template#,
+&#160;&#160;Remote Address: #Error.remoteAddress#,
+&#160;&#160;HTTP Reference: #error.HTTPReferer#
+&#160;&#160;Diagnostics: #Error.diagnostics#&quot;&gt;
+</pre>    </td>
+    <td>
+<p>When this page is processed, log an entry in the file myapp_errors.log file in the ColdFusion log directory. Identify the entry as an error message and include an error message that includes the exception type, the path of the page that caused the error, the remote address that called the page, and the error's diagnostic message.</p>
+    </td>
+  </tr>
+</table>
+
+<p>A log file entry similar to the following is generated if you try to call a nonexistent custom tag and this page catches the error (line breaks added for clarity):</p>
+<pre>&quot;Error&quot;,&quot;web-13&quot;,&quot;12/19/01&quot;,&quot;11:29:07&quot;,MYAPP,&quot;Exception error -- 
+      Exception type: coldfusion.runtime.CfErrorWrapper
+      Template: /MYStuff/MyDocs/exceptiontest.cfm,
+      Remote Address: 127.0.0.1, 
+      HTTP Reference: 
+      Diagnostics: Cannot find CFML template for custom tag testCase. Cannot 
+      find CFML template for custom tag testCase. ColdFusion attempted looking 
+      in the tree of installed custom tags but did not find a custom tag with 
+      this name.&quot;
+</pre><p>The text consists of a comma-delimited list of the following entries:</p>
+<ul>
+<li>
+   Log entry type, specified by the <code>cflog</code> <code>type</code> attribute
+</li>
+<li>
+   ID of the thread that was executing
+</li>
+<li>
+   Date the entry was written to the log
+</li>
+<li>
+   Time the entry was written to the log
+</li>
+<li>
+   Application name, as specified in the Application.cfc initialization code (by setting the This.application variable) or by a <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag (for example, in an Application.cfm file).
+</li>
+<li>
+   The message specified by the <code>cflog</code> <code>text</code> attribute.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001138.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001140.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001139.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

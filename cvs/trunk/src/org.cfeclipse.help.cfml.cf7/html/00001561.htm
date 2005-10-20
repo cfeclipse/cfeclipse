@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About ColdFusion and Java objects</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001560.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001562.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About ColdFusion and Java objects</h1>
+<p>Java objects include the following:</p>
+<ul>
+<li>
+   Standard Java classes and methods that make up the J2EE API
+</li>
+<li>
+   Custom-written Java objects, including the following:
+<ul><li>Custom classes, including JavaBeans</li>
+<li>Enterprise JavaBeans</li>
+</ul></li>
+</ul>
+<p>ColdFusion pages use the <a href="00000302.htm#2820239"><code>cfobject</code></a> tag to access Java objects. </p>
+<p>ColdFusion&#160;MX searches for the objects in the following order:</p>
+<ol>
+<li>
+   The ColdFusion Java Dynamic Class Load directories:
+<ul><li>Java archive (.jar) files in <i>web_root</i>/WEB-INF/lib</li>
+<li>Class (.class) files in <i>web_root</i>/WEB-INF/classes</li>
+<p>ColdFusion reloads classes from these directories, as described in the next section, <a href="00001561.htm#1167055">About class loading</a>.</p>
+</ul></li>
+<li>
+   The classpath specified on the JVM and Java Settings page in the ColdFusion&#160;MX Administrator.
+</li>
+<li>
+   The default JVM classpath.
+</li>
+</ol>
+<h3><a name="wp1167055"></a>About class loading</h3>
+<p>ColdFusion dynamically loads classes that are either .class files in the <i>web_root</i>/WEB-INF/classes directory or in JAR files in the <i>web_root</i>/WEB-INF/lib directory. ColdFusion checks the time stamp on the file when it creates an object that is defined in either directory, even when the class is already in memory. If the file that contains the class is newer than the class in memory, ColdFusion loads the class from that directory. </p>
+<p>To use this feature, make sure that the Java implementation classes that you modify are not in the general JVM classpath.</p>
+<p>To disable automatic class loading of your classes, put the classes in the JVM classpath. Classes located on the JVM classpath are loaded once per server lifetime. To reload these classes, stop and restart ColdFusion&#160;MX.</p>
+<p><strong>Note: </strong>Because you put tag libraries in the<i> web_root</i>/WEB-INF/lib directory, ColdFusion automatically reloads these libraries if necessary when you import the library.</p><h3><a name="wp1142198"></a>About GetPageContext and the PageContext object</h3>
+<p>Because ColdFusion pages are J2EE servlet pages, all ColdFusion pages have an underlying Java PageContext object. CFML includes the <a href="00000490.htm#4209678"><code>GetPageContext</code></a> function that you can then use in your ColdFusion page. </p>
+<p>The PageContext object exposes a number of fields and methods that can be useful in J2EE integration. In particular, it includes the <code>include</code> and <code>forward</code> methods that provide the equivalent of the corresponding standard JSP tags. </p>
+<p>This chapter describes how to use the <code>include</code> and <code>forward</code> PageContext methods for calling JSP pages and servlets. It does not discuss the PageContext object in general. For more information on the object, see Java documentation. You can find the Javadoc description of this class at <a href="http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/jsp/PageContext.html" target="mm_window">http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/jsp/PageContext.html</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001560.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001562.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001561.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

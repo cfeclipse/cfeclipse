@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 2: Adding database maintenance buttons</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000150.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000152.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 2: Adding database maintenance buttons</h1>
+<p>The search and sequential navigation capabilities are features for locating Compass Travel trips. After locating a trip, the trip coordinator must be able to modify or delete it. Additionally, when viewing the detail for a trip, the trip coordinator must be allowed to add a new trip or use the search facility. To enable trip coordinators to do this, you add the following buttons to the Trip Detail page:</p>
+<p><br />
+<img src="images/tripupd4.jpg" alt="This image shows a picture of the maintenance buttons." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>As described in <a href="00000149.htm#1153482">Exercise 1: Creating the main application page from the Trip Detail page</a>, it is important to pass the current record ID (<code>tripID</code>) to the action page to build the proper SQL statement to process the navigation button requests. It is also important to pass the current record ID to the Maintenance Action page. Therefore, you use an HTML <code>input</code> tag to hide the current <code>recordID</code> and post it to the maintenanceaction.cfm page.</p>
+<h4>To add maintenance buttons:</h4>
+<ol>
+<li>
+   Open the tripdetail.cfm file from the my_app subdirectory.
+</li>
+<li>
+   Enter the following code immediately after the <code>&lt;cfoutput query=&quot;TripQuery&quot;&gt;</code> tag:
+<pre>
+&lt;form action=&quot;maintenanceaction.cfm&quot; method=&quot;post&quot;&gt;
+	&lt;input type=&quot;hidden&quot; name=&quot;RecordID&quot; value=&quot;#tripID#&quot;&gt;
+	&lt;input type=&quot;submit&quot; name=&quot;btnAdd&quot; value=&quot;   Add    &quot;&gt;
+	&lt;input type=&quot;submit&quot; name=&quot;btnEdit&quot; value=&quot;  Edit  &quot;&gt;
+	&lt;input type=&quot;submit&quot; name=&quot;btnDelete&quot; value=&quot;Delete&quot;&gt;
+	&lt;input type=&quot;submit&quot; name=&quot;btnSearch&quot; value=&quot;Search&quot;&gt;
+&lt;/form&gt;
+</pre>
+<p><strong>Note: </strong>The current trip record ID (<code>tripID</code>) is in a hidden field in the form code. This field provides the action page with current record ID that it must have in order to build the query to access the appropriate record in the Trips database table.</p></li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4>To test the updated application:</h4>
+<ol>
+<li>
+   Open your browser.
+</li>
+<li>
+   Enter the following URL to view the updated tripdetail.cfm page
+<pre>
+http://localhost/cfdocs/getting_started/my_app/tripdetail.cfm?ID=8
+</pre>
+<p><strong>Note: </strong>If you are using the built-in ColdFusion server, enter <code>localhost:8500</code> instead of <code>localhost</code>.</p><p>The page appears as follows:</p>
+<p><br />
+<img src="images/tripdea5.jpg" alt="This image shows a picture of the Trip Maintenance page with maintenance buttons." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+<li>
+   Click Search or Delete to test the database maintenance buttons. 
+<p>An error occurs because the Maintenance Action page does not exist. The Maintenance Action page is required to process the maintenance button requests. You will develop this page in <a href="00000154.htm#1141005">Lesson 7: Validating Data to Enforce Business&#160;Rules</a>.</p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000150.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000152.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000151.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

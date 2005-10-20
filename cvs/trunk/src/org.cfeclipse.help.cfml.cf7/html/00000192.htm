@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ColdFusion tag-specific variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000191.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000193.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ColdFusion tag-specific variables</h1>
+<p>Some ColdFusion tags return data as variables. For example, the <code>cffile</code> tag returns file size information in the FileSize variable, referenced as CFFILE.FileSize.</p>
+<p>The following tags return data that can be referenced in variables:</p>
+<pre>cfcatch
+cfdirectory
+cferror
+cffile
+cfftp
+cfhttp
+cfindex
+cfldap
+cfpop
+cfquery
+cfregistry
+cfsearch
+cfstoredproc
+</pre><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000192.htm#2712069">ColdFusion query variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2746862">CFCATCH variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712089">CFDIRECTORY variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712097">CFERROR variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712126">CFFILE ACTION=Upload variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712149">CFFTP error variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712154">CFFTP ReturnValue variable</a>
+</li>
+<li>
+   <a href="00000192.htm#2712163">CFFTP query object columns</a><a href="00000192.htm#2712173">CFHTTP variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712180">CFLDAP variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712185">CFPOP variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712201">CFQUERY and CFSTOREDPROC variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712211">CFREGISTRY variables</a>
+</li>
+<li>
+   <a href="00000192.htm#2712216">CFSEARCH variables</a>
+</li>
+</ul>
+<h2><a name="wp2712069"></a>ColdFusion query variables</h2>
+<p>A ColdFusion tag that returns a query object supports the following variables, where <i>queryname</i> is the value of the <code>name</code> attribute:</p>
+<pre><code><i>queryname</i></code>.CurrentRow
+<code><i>queryname</i></code>.RecordCount
+<code><i>queryname</i></code>.ColumnList
+</pre><h2><a name="wp2746862"></a>CFCATCH variables</h2>
+<p>Within a <code>cfcatch</code> block, the active exception properties can be accessed as the following variables:</p>
+<pre>CFCATCH.Type
+CFCATCH.Message
+CFCATCH.Detail
+CFCATCH.ErrNumber
+CFCATCH.NativeErrorCode
+CFCATCH.SQLState
+CFCATCH.LockName
+CFCATCH.LockOperation
+CFCATCH.MissingFileName
+CFCATCH.TagContext
+CFCATCH.ErrorCode
+CFCATCH.ExtendedInfo
+</pre><p>Within a <code>cfcatch</code> block, database exception properties can be accessed as the following variables:</p>
+<pre>CFCATCH.QueryError
+CFCATCH.SQL
+CFCATCH.Where
+CFCATCH.Datasource
+</pre><p>Within a <code>cfcatch</code> block, undefined variable exception properties can be accessed as the following variable:</p>
+<pre>CFCATCH.Name
+</pre><p>Within a <code>cfcatch</code> block, syntax and parsing exception properties can be accessed as the following variables:</p>
+<pre>CFCATCH.TokenText
+CFCATCH.Snippet
+CFCATCH.Column
+CFCATCH.KnownColumn
+CFCATCH.Line
+CFCATCH.KnownLine
+</pre><h2><a name="wp2712089"></a>CFDIRECTORY variables</h2>
+<p>The <code>cfdirectory</code> tag, with <code>action=list</code>, returns a query object as follows, where <i>queryname</i> is the <code>name</code> attribute value: </p>
+<pre><code><i>queryname</i></code>.Name
+<code><i>queryname</i></code>.Size
+<code><i>queryname</i></code>.Type
+<code><i>queryname</i></code>.DateLastModified
+<code><i>queryname</i></code>.Attributes
+<code><i>queryname</i></code>.Mode
+</pre><h2><a name="wp2712097"></a>CFERROR variables</h2>
+<p>When <code>cferror</code> generates an error page, the following error variables are available if <code>type=&quot;request&quot;</code> or <code>&quot;exception&quot;</code>. </p>
+<pre>Error.Diagnostics
+Error.MailTo
+Error.DateTime
+Error.Browser
+Error.GeneratedContent
+Error.RemoteAddress
+Error.HTTPReferer
+Error.Template
+Error.QueryString
+</pre><p>The following error variables are available if <code>type=&quot;validation&quot;</code>. </p>
+<pre>Error.ValidationHeader 
+Error.InvalidFields 
+Error.ValidationFooter 
+</pre><p>Any <code>cfcatch</code> variable that applies to exception type can be accessed within the Error scope, as follows:</p>
+<pre>Error.Type
+Error.Message
+Error.Detail
+Error.ErrNumber
+Error.NativeErrorCode
+Error.SQLState
+Error.LockName
+Error.LockOperation
+Error.MissingFileName
+Error.TagContext
+Error.ErrorCode
+Error.ExtendedInfo
+</pre><p><strong>Note: </strong>You can substitute the prefix <code>CFERROR</code> for <code>Error</code>, if <code>type</code> <code>=</code> <code>&quot;Exception&quot;</code>; for example, <code>CFERROR.Diagnostics</code>, <code>CFERROR.Mailto</code>, or <code>CFERROR.DateTime</code>. </p><h2><a name="wp2712126"></a>CFFILE ACTION=Upload variables</h2>
+<p>File variables are read-only. Use the <code>CFFILE</code> prefix to reference file variables; for example, <code>CFFILE.ClientDirectory</code>. The <code>File</code> prefix is deprecated in favor of the <code>CFFILE</code> prefix.</p>
+<pre>CFFILE.AttemptedServerFile
+CFFILE.ClientDirectory
+CFFILE.ClientFile
+CFFILE.ClientFileExt
+CFFILE.ClientFileName
+CFFILE.ContentSubType
+CFFILE.ContentType
+CFFILE.DateLastAccessed
+CFFILE.FileExisted
+CFFILE.FileSize
+CFFILE.FileWasAppended
+CFFILE.FileWasOverwritten
+CFFILE.FileWasRenamed
+CFFILE.FileWasSaved
+CFFILE.OldFileSize
+CFFILE.ServerDirectory
+CFFILE.ServerFile
+CFFILE.ServerFileExt
+CFFILE.ServerFileName
+CFFILE.TimeCreated
+CFFILE.TimeLastModified
+</pre><h2><a name="wp2712149"></a>CFFTP error variables</h2>
+<p>When you use the <code>cfftp stoponerror</code> attribute, these variables are populated: </p>
+<pre>CFFTP.Succeeded
+CFFTP.ErrorCode
+CFFTP.ErrorText
+</pre><h2><a name="wp2712154"></a>CFFTP ReturnValue variable</h2>
+<p>Some <code>cfftp</code> file and directory operations provide a return value, in the variable CFFTP.ReturnValue. Its value is determined by the results of the <code>action</code> attribute. When you specify any of the following actions, <code>cfftp</code> returns a value:</p>
+<pre>GetCurrentDir
+GetCurrentURL
+ExistsDir
+ExistsFile
+Exists
+</pre><h2><a name="wp2712163"></a>CFFTP query object columns</h2>
+<p>When you use the <code>cfftp</code> tag with the <code>listdir</code> action, <code>cfftp</code> returns a query object, where <code><i>queryname</i></code> is the <code>name</code> attribute value, and <code><i>row</i></code> is the row number of each file or directory entry: </p>
+<pre><code><i>queryname</i></code>.Name[<code><i>row</i></code>]
+<code><i>queryname</i></code>.Path[<code><i>row</i></code>]
+<code><i>queryname</i></code>.URL[<code><i>row</i></code>]
+<code><i>queryname</i></code>.Length[<code><i>row</i></code>]
+<code><i>queryname</i></code>.LastModified[<code><i>row</i></code>]
+<code><i>queryname</i></code>.Attributes
+<code><i>queryname</i></code>.IsDirectory
+<code><i>queryname</i></code>.Mode
+</pre><h2><a name="wp2712173"></a>CFHTTP variables</h2>
+<p>A <code>cfhttp get</code> operation can return text and binary files. Files are downloaded and the contents stored in a variable or file, depending on the MIME type, as follows: </p>
+<pre>CFHTTP.FileContent
+CFHTTP.MimeType
+<code>CFHTTP.Header</code>
+<code>CFHTTP.ResponseHeader</code><i>[http_hd_key]</i>
+CFHTTP.StatusCode
+</pre><h2><a name="wp2712180"></a>CFLDAP variables</h2>
+<p>The <code>cfldap</code> <code>action=query</code> tag returns information about the LDAP query, as follows:</p>
+<pre><code><i>queryname</i></code>.CurrentRow
+<code><i>queryname</i></code>.RecordCount
+<code><i>queryname</i></code>.ColumnList
+</pre><h2><a name="wp2712185"></a>CFPOP variables</h2>
+<p>The <code>cfpop</code> tag returns the following result columns, depending on the <code>action</code> attribute value and the use of other attributes, such as <code>attachmentpath</code>, where <i>queryname</i> is the <code>name</code> attribute value: </p>
+<pre><code><i>queryname</i></code>.Date
+<code><i>queryname</i></code>.From
+<code><i>queryname</i></code>.Body
+<code><i>queryname</i></code>.Header
+<code><i>queryname</i></code>.MessageNumber
+<code><i>queryname</i></code>.ReplyTo
+<code><i>queryname</i></code>.Subject
+<code><i>queryname</i></code>.CC
+<code><i>queryname</i></code>.To
+<code><i>queryname</i></code>.CurrentRow
+<code><i>queryname</i></code>.RecordCount
+<code><i>queryname</i></code>.ColumnList
+<code><i>queryname</i></code>.Attachments
+<code><i>queryname</i></code>.AttachmentFiles
+</pre><h2><a name="wp2712201"></a>CFQUERY and CFSTOREDPROC variables</h2>
+<p>The <code>cfquery</code> tag returns information about the query in this variable:</p>
+<pre>CFQUERY.ExecutionTime 
+</pre><p>The <code>cfquery</code> tag uses the query name to scope the following data about the query:</p>
+<pre><code><i>queryname</i></code>.CurrentRow
+<code><i>queryname</i></code>.RecordCount
+<code><i>queryname</i></code>.ColumnList
+</pre><p>The <code>cfstoredproc</code> tag returns the following variables:</p>
+<pre>CFSTOREDPROC.ExecutionTime
+CFSTOREDPROC.StatusCode
+</pre><h2><a name="wp2712211"></a>CFREGISTRY variables</h2>
+<p>The <code>cfregistry</code> tag returns a query record set that you can reference after executing the <code>GetAll</code> action, as follows, where <i>queryname</i> is the <code>name</code> attribute value:</p>
+<pre>queryname.Entry
+queryname.Type
+queryname.Value
+</pre><h2><a name="wp2712216"></a>CFSEARCH variables</h2>
+<p>A <code>cfsearch</code> operation returns the following variables, where searchname is the <code>name</code> attribute value:</p>
+<pre><code><i>searchname</i></code>.URL
+<code><i>searchname</i></code>.Key
+<code><i>searchname</i></code>.Title
+<code><i>searchname</i></code>.Score
+<code><i>searchname</i></code>.Custom1 and Custom2
+<code><i>searchname</i></code>.Summary
+<code><i>searchname</i></code>.RecordCount
+<code><i>searchname</i></code>.CurrentRow
+<code><i>searchname</i></code>.RecordsSearched
+<code><i>searchname</i></code>.ColumnList
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000191.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000193.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000192.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

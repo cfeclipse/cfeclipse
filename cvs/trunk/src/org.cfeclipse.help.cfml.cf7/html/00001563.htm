@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using JSP tags and tag libraries</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001562.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001564.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using JSP tags and tag libraries</h1>
+<p>You can use JSP tags from any JSP tag library. For example, you can use any of the custom tags in the open-source Apache Jakarta Project Taglibs project tag libraries, located at <a href="http://jakarta.apache.org/taglibs/index.html" target="mm_window">http://jakarta.apache.org/taglibs/index.html</a>. This project consists of a number of individual JSP custom tag libraries for purposes ranging from JNDI access to generating random text strings.</p>
+<h2><a name="wp1176476"></a>Using a JSP tag in a ColdFusion page</h2>
+<p>JSP pages use a standard set of tags, such as <code>jsp:forward</code> and <code>jsp:include</code>. You can also import custom JSP tag libraries into a JSP application. You can use both the standard JSP tags and custom JSP tags in ColdFusion pages, as the following sections describe.</p>
+<h3><a name="wp1139889"></a>Standard JSP tags and ColdFusion</h3>
+<p>ColdFusion tags provide equivalent features to most standard JSP tags. For example, the <a href="00000216.htm#1097239"><code>cfapplet</code></a> tag provides the same service as the <code>jsp:plugin</code> tag, and <a href="00000302.htm#2820239"><code>cfobject</code></a> tag lets you use JavaBeans, as does the <code>jsp:usebean</code> tag. Similarly, you do not use the <code>jsp:getproperty</code> tag because ColdFusion automatically gets properties when you reference them. Therefore, ColdFusion does not support the use of standard JSP tags directly.</p>
+<p>However, two standard JSP tags provide functionality that is useful in ColdFusion pages: the <code>forward</code> and <code>include</code> tags invoke JSP pages and Java servlets. The PageContext object described in <a href="00001561.htm#1142198">About GetPageContext and the PageContext object</a> has <code>forward</code> and <code>include</code> methods that provide the same operations. For more information about using these methods see <a href="00001564.htm#1176605">Accessing a JSP page or servlet from a ColdFusion page</a>.</p>
+<h3><a name="wp1135807"></a>Using custom JSP tags in a ColdFusion page</h3>
+<p>Follow these steps to use a custom JSP tag on a ColdFusion page:</p>
+<h4>To use a custom tag:</h4>
+<ol>
+<li>
+   Put the tag library, consisting of the <i>taglibname</i>.jar file, and the <i>taglibname</i>.tld file, if one is supplied, in the <i>web_root</i>/WEB-INF/lib directory. The JSP custom tag library must be in this directory for you to use the <code>cfimport</code> tag.
+</li>
+<li>
+   Restart ColdFusion.
+</li>
+<li>
+   In the ColdFusion page that uses a JSP tag from the tag library, specify the tag library name in a <a href="00000276.htm#2693767"><code>cfimport</code></a> tag; for example:
+<pre>
+&lt;cfimport taglib=&quot;/WEB-INF/lib/random.jar&quot; prefix=&quot;random&quot;&gt;
+</pre>
+<p>If the TLD file is not included in the JAR file, use the .tld suffix in place of the .jar suffix.</p>
+<p><strong>Note: </strong>The <code>cfimport</code> tag must be on the page that uses the imported tag. You cannot put the <code>cfimport</code> tag in Application.cfm.</p></li>
+<li>
+   Use the custom tag using the form <i>prefix</i>:<i>tagName</i>; for example:
+<pre>
+&lt;random:number id=&quot;myNum&quot; range=&quot;000000-999999&quot; /&gt;
+</pre>
+</li>
+</ol>
+<p><strong>Note: </strong>You cannot use the <code>cfsavecontent</code> tag to suppress output of a custom JSP tag.</p><h2><a name="wp1164044"></a>Example: using the random tag library</h2>
+<p>The following example uses the random tag library from the Apache Jakarta Taglibs project and calls the library's <code>number</code> tag, which initializes a random number generator that uses a secure algorithm to generate a six-digit random number. You get a new random number each time you reference the variable randPass.random.</p>
+<pre>&lt;cfimport taglib=&quot;/WEB-INF/lib/taglibs-random.jar&quot; prefix=&quot;myrand&quot;&gt;
+&lt;myrand:number id=&quot;randPass&quot; range=&quot;000000-999999&quot; algorithm=&quot;SHA1PRNG&quot; provider=&quot;SUN&quot; /&gt;
+&lt;cfset myPassword = randPass.random&gt;
+&lt;cfoutput&gt;
+   Your password is #myPassword#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><p>For more information on the Jakarta random tag library and how to use its tags, see the documentation at the Apache Jakarta Taglibs project website, http://jakarta.apache.org/taglibs/index.html. The Taglibs project includes many open source custom tag libraries.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001562.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001564.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001563.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

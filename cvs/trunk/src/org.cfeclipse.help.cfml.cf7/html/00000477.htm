@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetEncoding</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000476.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000478.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetEncoding</h1>
+<h4><a name="wp4739517"></a>Description</h4>
+<p>Returns the encoding (character set) of the Form or URL scope. </p>
+<h4><a name="wp4739519"></a>Returns</h4>
+<p>String; the character encoding of the specified scope.</p>
+<h4><a name="wp4742298"></a>Category</h4>
+<p><a href="00000363.htm#1099325">International functions</a>, <a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp4742306"></a>Function syntax</h4>
+<pre><code><strong>GetEncoding</strong></code>(scope_name)
+</pre><h4><a name="wp4739951"></a>See also</h4>
+<p><a href="00000623.htm#136247">SetEncoding</a>, <a href="00000232.htm#2850760">cfcontent</a>, <a href="00000312.htm#1102085">cfprocessingdirective</a>, <a href="00000658.htm#138899">URLDecode</a>, <a href="00000659.htm#138993">URLEncodedFormat</a></p>
+<h4><a name="wp4739970"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp4739934"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>scope_name</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Form 
+</li>
+<li>
+   URL.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4739991"></a>Usage</h4>
+<p>Use this function to determine the character encoding of the URL query string or the fields of a form that was submitted to the current page. The default encoding, if none has been explicitly set, is UTF-8.</p>
+<p>For more information, see <a href="http://www.iana.org/assignments/character-sets" target="mm_window">www.iana.org/assignments/character-sets</a>.</p>
+<h4><a name="wp4740012"></a>Example</h4>
+<pre>&lt;!--- This example sends the contents of two fields and interprets them as
+      big5 encoded text. ---&gt;
+&lt;cfcontent type=&quot;text/html; charset=big5&quot;&gt;
+&lt;form action=&#39;#cgi.script_name#&#39; method=&#39;get&#39;&gt;
+&lt;input name=&#39;xxx&#39; type=&#39;text&#39;&gt;
+&lt;input name=&#39;yyy&#39; type=&#39;text&#39;&gt;
+&lt;input type=&quot;Submit&quot; value=&quot;Submit&quot;&gt;
+&lt;/form&gt;
+
+&lt;cfif IsDefined(&quot;URL.xxx&quot;)&gt;
+&lt;cfscript&gt;
+   SetEncoding(&quot;url&quot;, &quot;big5&quot;); 
+   WriteOutput(&quot;URL.XXX is &quot; &amp; URL.xxx &amp; &quot;&lt;br&gt;&quot;); 
+   WriteOutput(&quot;URL.YYY is &quot; &amp; URL.yyy &amp; &quot;&lt;br&gt;&quot;);
+    theEncoding = GetEncoding(&quot;URL&quot;);
+    WriteOutput(&quot;The URL variables were decoded using &#39;&quot; &amp; theEncoding &amp; &quot;&#39; encoding.&quot;); 
+
+    WriteOutput(&quot;The encoding is &quot; &amp; theEncoding); 
+&lt;/cfscript&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000476.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000478.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000477.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

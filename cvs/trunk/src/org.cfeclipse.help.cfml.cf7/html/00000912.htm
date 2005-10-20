@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Scope types</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000911.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000913.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Scope types</h1>
+<p>The following table describes ColdFusion scopes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Scope 
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Variables (local)</p>
+    </td>
+    <td>
+<p>The default scope for variables of any type that are created with the <code>cfset</code> and <code>cfparam</code> tags. A local variable is available only on the page on which it is created and any included pages (see also the Caller scope).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Form</p>
+    </td>
+    <td>
+<p>Contains variables passed from a Form page to its action page as the result of submitting the form. (If you use the HTML <code>form</code> tag, you must use <code>method=&quot;post&quot;</code>.) For more information, see <a href="00001330.htm#1096836">Introduction to Retrieving and Formatting Data</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>URL</p>
+    </td>
+    <td>
+<p>Contains parameters passed to the current page in the URL that is used to call it. The parameters are appended to the URL in the format ?variablename = value[&amp;variablename=value...]; for example www.MyCompany.com/inputpage.cfm?productCode=A12CD1510&amp;quantity=3.</p>
+<p><strong><i>Note</i></strong><strong>:</strong> If a URL includes multiple parameters with the same name, the resulting variable in the ColdFusion URL scope consists of all parameter values separated by commas. For example, a URL of the form http://localhost/urlparamtest.cfm? param=1&amp;param=2&amp;param=3 results in a URL.param variable value of 1,2,3 on the ColdFusion page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Attributes</p>
+    </td>
+    <td>
+<p>Used only in custom tag pages. Contains the values passed by the calling page in the custom tag's attributes. For more information, see <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Caller</p>
+    </td>
+    <td>
+<p>Used only in custom tag pages. The custom tag's Caller scope is a reference to the calling page's Variables scope. Any variables that you create or change in the custom tag page using the Caller scope are visible in the calling page's Variables scope. For more information, see <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ThisTag</p>
+    </td>
+    <td>
+<p>Used only in custom tag pages. The ThisTag scope is active for the current invocation of the tag. If a custom tag contains a nested tag, any ThisTag scope values you set before calling the nested tag are preserved when the nested tag returns to the calling tag. </p>
+<p>The ThisTag scope includes three built-in variables that identify the tag's execution mode, contain the tag's generated contents, and indicate whether the tag has an end tag.</p>
+<p>A nested custom tag can use the <code>cfassociate</code> tag to return values to the calling tag's ThisTag scope. For more information, see <a href="00001079.htm#1127084">Accessing tag instance data</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Request</p>
+    </td>
+    <td>
+<p>Used to hold data that must be available for the duration of one HTTP request. The Request scope is available to all pages, including custom tags and nested custom tags, that are processed in response to the request. </p>
+<p>This scope is useful for nested (child/parent) tags. This scope can often be used in place of the Application scope, to avoid the need for locking variables. Several chapters discuss using the Request scope.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>CGI</p>
+    </td>
+    <td>
+<p>Contains environment variables identifying the context in which a page was requested. The variables available depend on the browser and server software. For a list of the commonly used CGI variables, see <a href="00000186.htm#2733334"><i>Reserved Words and Variables</i></a><i> </i>in <i>CFML Reference</i>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Cookie</p>
+    </td>
+    <td>
+<p>Contains variables maintained in a user's browser as cookies. Cookies are typically stored in a file on the browser, so they are available across browser sessions and applications. You can create memory-only Cookie variables, which are not available after the user closes the browser. Cookie scope variable names can include periods.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Client</p>
+    </td>
+    <td>
+<p>Contains variables that are associated with one client. Client variables let you maintain state as a user moves from page to page in an application, and are available across browser sessions. By default, Client variables are stored in the system registry, but you can store them in a cookie or a database. Client variables cannot be complex data types and can include periods in their names. For more information, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Session</p>
+    </td>
+    <td>
+<p>Contains variables that are associated with one client and persist only as long as the client maintains a session. They are stored in the server's memory and can be set to time out after a period of inactivity. For more information, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Application</p>
+    </td>
+    <td>
+<p>Contains variables that are associated with one, named application on a server. The <code>cfapplication</code> tag <code>name</code> attribute or the Application.cfc This.name variable setting specifies the application name. For more information, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Server</p>
+    </td>
+    <td>
+<p>Contains variables that are associated with the current ColdFusion server. This scope lets you define variables that are available to all your ColdFusion pages, across multiple applications. For more information, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Flash</p>
+    </td>
+    <td>
+<p>Variables sent by a Macromedia Flash movie to ColdFusion and returned by ColdFusion to the movie. For more information, see <a href="00001477.htm#1157546">Using the Flash Remoting Service</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Arguments</p>
+    </td>
+    <td>
+<p>Variables passed in a call to a user-defined function or ColdFusion component method. For more information, see <a href="00001008.htm#1193923">About the Arguments scope</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>This</p>
+    </td>
+    <td>
+<p>Exists only in ColdFusion components or <code>cffunction</code> tags that are part of a containing object such as a ColdFusion Struct. Exists for the duration of the component instance or containing object. Data in the This scope is accessible from outside the component or container by using the instance or object name as a prefix. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>function local</p>
+    </td>
+    <td>
+<p>Contains variables that are declared inside a user-defined function or ColdFusion component method and exist only while a function executes. For more information, see <a href="00001001.htm#1167055">Writing and Calling User-Defined Functions</a>.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Caution: </strong>To prevent data corruption, you lock code that uses Session, Application, or Server scope variables. For more information, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00000911.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000913.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000912.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

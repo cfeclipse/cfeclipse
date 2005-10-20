@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The CFScript language</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000969.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000971.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The CFScript language</h1>
+<p>This section explains the syntax of the CFScript language.</p>
+<h2><a name="wp1117197"></a>Identifying CFScript</h2>
+<p>You enclose CFScript regions inside <code>&lt;</code><a href="00000329.htm#1103056"><code>cfscript</code></a><code>&gt;</code> and <code>&lt;/cfscript&gt;</code> tags. No other CFML tags are allowed inside a <code>cfscript</code> region. The following lines show a minimal script:</p>
+<pre>&lt;cfscript&gt;
+a = 2;
+&lt;/cfscript&gt;
+</pre><h2><a name="wp1105472"></a>Variables</h2>
+<p>CFScript variables can be of any ColdFusion type, such as numbers, strings, arrays, queries, and objects. The CFScript code can read and write any variables that are available in the page that contains the script. This includes all common scope variables, such as session, application, and server variables.</p>
+<h2><a name="wp1105474"></a>Expressions and operators</h2>
+<p>CFScript supports all CFML expressions. CFML expressions include operators (such as +, -, EQ, and so on), as well as all CFML functions. As in all ColdFusion expressions, you must use CFML operators, such as LT, GT, and EQ. You cannot use JavaScript operators, such as &lt;, &gt;, ==, or ++.</p>
+<p>For information about CFML expressions, operators, and functions, see <a href="00000924.htm#2689636">Using Expressions and Number Signs</a>.</p>
+<h2><a name="wp1114248"></a>Statements</h2>
+<p>CFScript supports the following statements:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>assignment</p>
+    </td>
+    <td>
+<p>for-in</p>
+    </td>
+    <td>
+<p>try-catch</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>function call</p>
+    </td>
+    <td>
+<p>while</p>
+    </td>
+    <td>
+<p>function (function definition)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>if-else</p>
+    </td>
+    <td>
+<p>do-while</p>
+    </td>
+    <td>
+<p>var (in custom functions only)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>switch-case-default</p>
+    </td>
+    <td>
+<p>break</p>
+    </td>
+    <td>
+<p>return (in custom functions only)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>for</p>
+    </td>
+    <td>
+<p>continue</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following rules apply to statements:</p>
+<ul>
+<li>
+   You must put a semicolon at the end of a statement. 
+</li>
+<li>
+   Line breaks are ignored. A single statement can cross multiple lines.
+</li>
+<li>
+   White space is ignored. For example, it does not matter whether you precede a semicolon with a space character.
+</li>
+<li>
+   Use curly braces to group multiple statements together into one logical statement unit.
+</li>
+<li>
+   Unless otherwise indicated, you can use any ColdFusion expression in the body of a statement.
+</li>
+</ul>
+<p><strong>Note: </strong>This chapter documents all statements except <code>function</code>, <code>var</code>, and <code>return</code>. For information on these statements, see <a href="00001003.htm#1194225">Defining functions in CFScript</a>.</p><h2><a name="wp1174053"></a>Statement blocks</h2>
+<p>Curly brace characters ({ and }) group multiple CFScript statements together so that they are treated as a single unit or statement. This enables you to create code blocks in conditional statements, such as the following:</p>
+<pre>if(score GT 0)&#160;{
+   result = &quot;positive&quot;;
+   Positives = Positives + 1;
+}
+</pre><p>In this example, both assignment statements are executed if the score is greater than 0. If they were not in the code block, only the first line would execute.</p>
+<p>You do not have to put brace characters on their own lines in the code. For example, you could put the open brace in the preceding example on the same line as the <code>if</code> statement, and some programmers use this style. However, putting at least the ending brace on its own line makes it easier to read the code and separate out code blocks.</p>
+<h2><a name="wp1115414"></a>Comments</h2>
+<p>CFScript has two forms of comments: single line and multiline. </p>
+<p>A single line comment begins with two forward slashes (//) and ends at the line end; for example:</p>
+<pre>//This is a single-line comment.
+//This is a second single-line comment.
+</pre><p>A multiline comment starts with a /* marker and continues until it reaches a */ marker; for example:</p>
+<pre>/*This is a multiline comment.
+&#160;&#160;You do not need to start each line with a comment indicator.
+&#160;&#160;This is the last line in the comment. */
+</pre><p>The following rules apply to comments:</p>
+<ul>
+<li>
+   Comments do not have to start at the beginning of a line. They can follow active code on a line. For example, the following line is valid:
+<pre>
+MyVariable = 12; // Set MyVariable to the default value.
+</pre>
+</li>
+<li>
+   The end of a multiline comment can be followed on the same line by active code. For example, the following line is valid, although it is poor coding practice:
+<pre>
+End of my long comment */ foo = &quot;bar&quot;;
+</pre>
+</li>
+<li>
+   You can use multiline format for a comment on a single line, for example:
+<pre>
+/*This is a single line comment using multiline format. */
+</pre>
+</li>
+<li>
+   You cannot nest /* and */ markers inside other comment lines.
+</li>
+<li>
+   CFML comments (&lt;!--- and ---&gt;) do not work in CFScript.
+</li>
+</ul>
+<h2><a name="wp1114772"></a>Reserved words</h2>
+<p>In addition to the names of ColdFusion functions and words reserved by ColdFusion expressions (such as NOT, AND, IS, and so on), the following words are reserved in CFScript. Do not use these words as variables or identifiers in your scripting code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>break</p>
+    </td>
+    <td>
+<p>default</p>
+    </td>
+    <td>
+<p>function</p>
+    </td>
+    <td>
+<p>switch</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>case</p>
+    </td>
+    <td>
+<p>do</p>
+    </td>
+    <td>
+<p>if</p>
+    </td>
+    <td>
+<p>try</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>catch</p>
+    </td>
+    <td>
+<p>else</p>
+    </td>
+    <td>
+<p>in</p>
+    </td>
+    <td>
+<p>var</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>continue</p>
+    </td>
+    <td>
+<p>for</p>
+    </td>
+    <td>
+<p>return</p>
+    </td>
+    <td>
+<p>while</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1114809"></a>Differences from JavaScript</h2>
+<p>Although CFScript and JavaScript are similar, they have several key differences. The following list identifies CFScript features that differ from JavaScript:</p>
+<ul>
+<li>
+   CFScript uses ColdFusion expressions, which are neither a subset nor a superset of JavaScript expressions. For example, there is no &lt; operator in CFScript; you use the LT operator instead.
+</li>
+<li>
+   Variable declarations are only used in user-defined functions. 
+</li>
+<li>
+   CFScript is case-insensitive.
+</li>
+<li>
+   All statements end with a semicolon and line breaks in the code are ignored.
+</li>
+<li>
+   Assignments are statements, not expressions.
+</li>
+<li>
+   JavaScript objects, such as Window and Document, are not available.
+</li>
+<li>
+   Only the ColdFusion server processes CFScript. There is no client-side CFScript.
+</li>
+</ul>
+<h2><a name="wp1145789"></a>CFScript limitation</h2>
+<p>You cannot include ColdFusion tags in CFScript. However, you can include <code>cfscript</code> blocks inside other ColdFusion tags, such as <code>cfoutput.</code></p>
+<h2><a name="wp1160935"></a>CFScript functional equivalents to ColdFusion tags</h2>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Tag
+    </th>
+    <th>
+CFScript equivalent
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000334.htm#1103445"><code>cfset</code></a></p>
+    </td>
+    <td>
+<p>Direct assignment, such as Myvar=1;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000309.htm#1101659"><code>cfoutput</code></a></p>
+    </td>
+    <td>
+<p><a href="00000665.htm#139339"><code>WriteOutput</code></a> function</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000274.htm#1100123"><code>cfif</code></a>, <a href="00000241.htm#2647667"><code>cfelseif</code></a>, <a href="00000240.htm#3138301"><code>cfelse</code></a></p>
+    </td>
+    <td>
+<p><code>if</code> and <code>else</code> statements</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000339.htm#1103819"><code>cfswitch</code></a>, <a href="00000224.htm#3798974"><code>cfcase</code></a>, <a href="00000234.htm#2664493"><code>cfdefaultcase</code></a></p>
+    </td>
+    <td>
+<p><code>switch</code>, <code>case</code>, and <code>default</code> statements</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Indexed <a href="00000290.htm#3301338"><code>cfloop</code></a></p>
+    </td>
+    <td>
+<p><code>for</code> loops</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Conditional <code>cfloop</code></p>
+    </td>
+    <td>
+<p><code>while</code> loops and <code>do while</code> loops</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Structure <code>cfloop</code></p>
+    </td>
+    <td>
+<p><code>for</code> <code>in</code> loop. (There is no equivalent for queries, lists, or objects.)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000221.htm#1097484"><code>cfbreak</code></a></p>
+    </td>
+    <td>
+<p><code>break</code> statement. CFScript also has a <code>continue</code> statement that has no equivalent CFML tag.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000349.htm#1104557"><code>cftry</code></a>, <a href="00000225.htm#3395038"><code>cfcatch</code></a></p>
+    </td>
+    <td>
+<p><code>try</code> and <code>catch</code> statements</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000233.htm#3839604"><code>cfcookie</code></a></p>
+    </td>
+    <td>
+<p>Direct assignment of Cookie scope memory-only variables. You cannot use direct assignment to set persistent cookies that are stored on the user's system.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000302.htm#2820239"><code>cfobject</code></a></p>
+    </td>
+    <td>
+<p><a href="00000424.htm#1102241"><code>CreateObject</code></a> function</p>
+    </td>
+  </tr>
+</table>
+
+<p>For example, the following example loops through a query in CFScript:</p>
+<pre>...
+&lt;cfscript&gt;
+// Loop through the qGetEmails RecordSet
+for (x = 1; x LTE qGetEmails.RecordCount; x=x+1) {
+&#160;&#160;This_id = qGetEmails.Emails_id[x];
+&#160;&#160;This_Subject = qGetEmails.Subject[x];
+&#160;&#160;This_RecFrom = qGetEmails.RecFrom[x];
+&#160;&#160;This_SentTo = qGetEmails.SentTo[x];
+&#160;&#160;This_dReceived = qGetEmails.dReceived[x];
+&#160;&#160;&#160;This_Body = qGetEmails.Body[x];
+... // More code goes here.
+}
+&lt;/cfscript&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000969.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000971.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000970.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

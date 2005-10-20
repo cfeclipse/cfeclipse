@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CFC variables and scope</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001053.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001055.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CFC variables and scope</h1>
+<p>This section describes how CFCs interact with ColdFusion scopes and use local variables, including the following topics:</p>
+<ul>
+<li>
+   <a href="00001054.htm#1214884">The This scope</a>
+</li>
+<li>
+   <a href="00001055.htm#1214897">The Variables scope</a>
+</li>
+<li>
+   <a href="00001056.htm#1214938">The Arguments scope</a>
+</li>
+<li>
+   <a href="00001057.htm#1218132">Other variable scopes</a>
+</li>
+<li>
+   <a href="00001058.htm#1214959">Function local variables</a>
+</li>
+</ul>
+<p><strong>Note: </strong>Components also have a Super keyword that is sometimes called a scope. For information on the Super keyword, see <a href="00001060.htm#1215079">Using the Super keyword</a>.</p><h2><a name="wp1214884"></a>The This scope</h2>
+<p>The This scope is available within the CFC and is shared by all CFC methods. It is also available in the base component (if the CFC is a child component), on the page that instantiates the CFC, and all CFML pages included by the CFC.</p>
+<p>Inside the CFC, you define and access This scope variables by using the prefix This, as in the following line:</p>
+<pre>&lt;cfset This.color=&quot;green&quot;&gt;
+</pre><p>In the calling page, you can define and access CFC This scope variables by using the CFC instance name as the prefix. For example, if you create a CFC instance named <code>car</code> and, within the <code>car</code> CFC specify <code>&lt;cfset This.color=</code>&quot;<code>green&quot;&gt;</code>, a ColdFusion page that instantiates the CFC could refer to the component's color property as <code>#car.color#</code>.</p>
+<p>Variable values in the This scope last as long as the CFC instance exists and, therefore, can persist between calls to methods of a CFC instance. </p>
+<p><strong>Note: </strong>The This scope identifier works like the This keyword of JavaScript and ActionScript. CFCs do not follow the Java class model, and the This keyword behaves differently in ColdFusion MX than in Java. In Java, This is a private scope, whereas in ColdFusion, it is a public scope.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001053.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001055.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001054.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

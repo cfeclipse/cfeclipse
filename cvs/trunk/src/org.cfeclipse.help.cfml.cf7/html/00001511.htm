@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ColdFusion XML tag and functions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001510.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001512.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ColdFusion XML tag and functions</h1>
+<p>The following table lists the ColdFusion tag (<a href="00000352.htm#2497244"><code>cfxml</code></a>) and functions that create and manipulate XML documents:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Tag or function
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfxml variable=&quot;<code><i>objectName</i></code>&quot;
+[caseSensitive=&quot;<code><i>Boolean</i></code>&quot;]&gt;
+</pre>    </td>
+    <td>
+<p>Creates a new ColdFusion XML document object consisting of the markup in the tag body. The tag can include XML and CFML tags. ColdFusion processes all CFML in the tag body before converting the resulting text to an XML document object.</p>
+<p>If you specify the <code>CaseSensitive=&quot;True&quot;</code> attribute, the case of names of elements and attributes in the document is meaningful. The default value is <code>False</code>.</p>
+<p>For more information on using the <code>cfxml</code> tag, see <a href="00001513.htm#1127782">Creating a new XML document object using the cfxml tag</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000671.htm#139864"><code>XmlParse</code></a>(<code><i>XMLText</i></code>
+[[, <code><i>caseSensitive</i></code>],
+<i>validator</i>])
+</pre>    </td>
+    <td>
+<p>Converts an XML document in a file or a string variable into an XML document object, and optionally validates the document against a DTD or schema. </p>
+<p>If you specify the optional second argument as <code>True</code>, the case of names of elements and attributes in the document is meaningful. The default value is <code>False</code>.</p>
+<p>For more information on using the <a href="00000671.htm#139864"><code>XmlParse</code></a> function, see <a href="00001513.htm#1120217">Creating an XML document object from existing XML</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000670.htm#139785"><code>XmlNew</code></a>([<code><i>caseSensitive</i></code>])
+</pre>    </td>
+    <td>
+<p>Returns a new, empty XML document object. </p>
+<p>If you specify the optional argument as <code>True</code>, the case of names of elements and attributes in the document is meaningful. The default value is <code>False</code>.</p>
+<p>For more information on using the <a href="00000670.htm#139785"><code>XmlNew</code></a> function, see <a href="00001513.htm#1204405">Creating a new XML document object using the XmlNew function</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000667.htm#139471"><code>XmlElemNew</code></a>(<code><i>objectName</i></code>{,
+<i>namespaceURI</i>],
+<code><i>elementName</i></code>)
+</pre>    </td>
+    <td>
+<p>Returns a new XML document object element with the specified name, optionally belonging to the specified namespace. You can omit the <code><i>namespaceURI</i></code> parameter and use only a namespace prefix if the prefix is defined elsewhere in the object.</p>
+<p>For more information on using the <a href="00000667.htm#139471"><code>XmlElemNew</code></a> function, see <a href="00001517.htm#1132966">Adding an element</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000673.htm#140093"><code>XmlTransform</code></a>(<code><i>XMLVar</i></code>,
+<code><i>XSLTStringVar</i></code>[,
+<i>parameters</i>])
+</pre>    </td>
+    <td>
+<p>Applies an Extensible Stylesheet Language Transformation (XSLT) to an XML document. The document can be represented as a string variable or as an XML document object. The function returns the resulting XML document as a string.</p>
+<p>For more information on using the <a href="00000673.htm#140093"><code>XmlTransform</code></a> function, see <a href="00001520.htm#1209889">Transforming documents with XSLT</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000672.htm#141075"><code>XmlSearch</code></a>(<code><i>objectName</i></code>,
+<code><i>XPathExpression</i></code>)
+</pre>    </td>
+    <td>
+<p>Uses an XPath expression to search an XML document object and returns an array of XML elements that match the search criteria.</p>
+<p>For more information on using the <a href="00000672.htm#141075"><code>XmlSearch</code></a> function, see <a href="00001521.htm#1140176">Extracting data with XPath</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000674.htm#140217"><code>XmlValidate</code></a>(<code><i>xmlDoc</i></code>[,
+<i>validator</i>])
+</pre>    </td>
+    <td>
+<p>Uses a Document Type Definition (DTD) or XML Schema to validate an XML text document (in a string or file) or an XML document object. The validator can be a DTD or Schema. If you omit the <code>validator</code> parameter, the document must specify a DTD or schema. For more information on using the <a href="00000674.htm#140217"><code>XmlValidate</code></a> function, see <a href="00001519.htm#1132552">Validating XML documents</a></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000666.htm#139381"><code>XmlChildPos</code></a>(<code><i>element</i></code>,
+<code><i>elementName</i></code>, <code><i>position</i></code>)
+</pre>    </td>
+    <td>
+<p>Returns the position (index) in an XmlChildren array of the Nth child with the specified element name. For example, <code>XmlChildPos(mydoc.employee, &quot;name&quot;, 2)</code> returns the position in mydoc.employee.XmlChildren of the mydoc.employee.name[2] element. This index can be used in the <code>ArrayInsertAt</code> and <code>ArrayDeleteAt</code> functions. </p>
+<p>For more information on using the <a href="00000666.htm#139381"><code>XmlChildPos</code></a> function, see <a href="00001517.htm#1154088">Determining the position of a child element with a common name</a>, <a href="00001517.htm#1132966">Adding an element</a>, and <a href="00001517.htm#1132967">Deleting elements</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000669.htm#139655"><code>XmlGetNodeType</code></a>(<i>xmlNode</i>)
+</pre>    </td>
+    <td>
+<p>Returns a string identifying the type of an XML document object node returned by the <a href="00000672.htm#141075"><code>XmlSearch</code></a> function or in an element's XmlNodes array.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000535.htm#3123485"><code>IsWDDX</code></a>(<i>String</i>)
+</pre>    </td>
+    <td>
+<p>Determines whether a string is a well-formed WDDX packet.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000536.htm#4979215"><code>IsXML</code></a>(<i>String</i>)
+</pre>    </td>
+    <td>
+<p>Determines whether a string is well-formed XML text.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000537.htm#4979140"><code>IsXmlAttribute</code></a>(<i>variable</i>)
+</pre>    </td>
+    <td>
+<p>Determines whether the function parameter is an XML Document Object Model (DOM) attribute node.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000538.htm#4046340"><code>IsXmlDoc</code></a>(<code><i>objectName</i></code>)
+</pre>    </td>
+    <td>
+<p>Returns <code>True</code> if the function argument is an XML document object.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000539.htm#4979134"><code>IsXmlElem</code></a>(<code><i>elementName</i></code>)
+</pre>    </td>
+    <td>
+<p>Returns <code>True</code> if the function argument is an XML document object element.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000540.htm#4979002"><code>IsXmlNode</code></a>(<i>variable</i>)
+</pre>    </td>
+    <td>
+<p>Determines whether the function parameter is an XML document object node.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000541.htm#4392056"><code>IsXmlRoot</code></a>(<code><i>elementName</i></code>)
+</pre>    </td>
+    <td>
+<p>Returns <code>True</code> if the function argument is the root element of an XML document object.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000655.htm#138710"><code>ToString</code></a>(<code><i>objectName</i></code>)
+</pre>    </td>
+    <td>
+<p>Converts an XML document object to a string representation.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000668.htm#139554"><code>XmlFormat</code></a>(<i>string</i>)
+</pre>    </td>
+    <td>
+<p>Escapes special XML characters in a string so that the string can be used as text in XML.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1221186"></a>About case-sensitivity and XML document objects</h2>
+<p>The tags and functions that create XML document objects let you specify whether ColdFusion will treat the object in a case-sensitive manner. If you do not specify case-sensitivity, ColdFusion ignores the case of XML document object component identifiers, such as element and attribute names. If you do specify case-sensitivity, names with different cases refer to different components. For example, if you do not specify case-sensitivity, the names mydoc.employee.name[1] and mydoc.employee.NAME[1] always refer to the same element. If you specify case-sensitivity, these names refer to two separate elements. You cannot use dot notation references for element or attribute names in a case-sensitive XML document; for more information see <a href="00001512.htm#1133173">Referencing the contents of an XML object</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001510.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001512.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001511.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

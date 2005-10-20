@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Wrap</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000663.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000665.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Wrap</h1>
+<h4><a name="wp139283"></a>Description</h4>
+<p>Wraps text so that each line has a specified maximum number of characters.</p>
+<h4><a name="wp139285"></a>Returns</h4>
+<p>String containing the wrapped text.</p>
+<h4><a name="wp139287"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp139292"></a>Function syntax</h4>
+<pre><code><strong>Wrap</strong></code>(<i>string,</i> <i>limit</i>[, <i>strip</i>])
+</pre><h4><a name="wp139294"></a>See also</h4>
+<p><a href="00000297.htm#2355015"><code>cfmail</code></a></p>
+<h4><a name="wp139299"></a>History</h4>
+<p>ColdFusion MX&#160;6.1: Added this function</p>
+<h4><a name="wp139304"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>String or variable that contains one. The text to wrap.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>limit</p>
+    </td>
+    <td>
+<p>Positive integer maximum number of characters to allow on a line.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>strip</p>
+    </td>
+    <td>
+<p>Boolean specifying whether to remove all existing newline and carriage return characters in the input string with spaces before wrapping the text. The default value is False.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139323"></a>Usage</h4>
+<p>Inserts line break at the location of the first white space character (such as a space, tab, or new line) before the specified limit on a line. If a line has no whitespace characters before the limit, inserts a line break at the limit. Uses the operating-system specific line break: newline for UNIX, carriage return and newline on Windows.</p>
+<p>If you specify the <code>strip</code> parameter, all existing line breaks are removed, so any paragraph formatting is lost.</p>
+<p>Use this function to limit the length of text lines, such as text to be included in a mail message. The <a href="00000297.htm#2355015">cfmail</a> and <a href="00000299.htm#2732354">cfmailpart</a> tag <code>wraptext</code> attributes use this function </p>
+<h4><a name="wp139333"></a>Example</h4>
+<pre>&lt;h3&gt;Wrap Example&lt;/h3&gt;
+&lt;cfset inputText=&quot;This is an example of a text message that we want to wrap. It is rather long and needs to be broken into shorter lines.&quot;&gt;
+&lt;cfoutput&gt;#Wrap(inputText, 59)#&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000663.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000665.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000664.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfargument</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000217.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000219.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfargument</h1>
+<h4><a name="wp2855800"></a>Description</h4>
+<p>Creates a parameter definition within a component definition. Defines a function argument. Used within a <a href="00000263.htm#2852457"><code>cffunction</code></a> tag. </p>
+<h4><a name="wp2855808"></a>Category</h4>
+<p><a href="00000202.htm#2459750">Extensibility tags</a></p>
+<h4><a name="wp2855813"></a>Syntax</h4>
+<pre>&lt;cfargument <br />   name=&quot;string&quot; <br />   type=&quot;data type&quot; <br />   required=&quot;yes&quot; or &quot;no&quot; <br />   default=&quot;default value&quot; <br />   displayname=&quot;descriptive name&quot;<br />   hint=&quot;extended description&quot;   &gt;
+</pre><h4><a name="wp2995590"></a>See also</h4>
+<p><a href="00000231.htm#3350776"><code>cfcomponent</code></a><code>, </code><a href="00000263.htm#2852457"><code>cffunction</code></a><code>, </code><a href="00000281.htm#2650065"><code>cfinvoke</code></a><code>, </code><a href="00000282.htm#3014048"><code>cfinvokeargument</code></a><code>, </code><a href="00000302.htm#2820239"><code>cfobject</code></a><code>, </code><a href="00000315.htm#2498235"><code>cfproperty</code></a><code>, </code><a href="00000326.htm#2498057"><code>cfreturn</code></a></p>
+<h4><a name="wp3058801"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>String; an argument name. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type </p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>any</p>
+    </td>
+    <td>
+<p>String; a type name; data type of the argument.</p>
+<ul>
+<li>
+   any
+</li>
+<li>
+   array
+</li>
+<li>
+   binary
+</li>
+<li>
+   boolean
+</li>
+<li>
+   date
+</li>
+<li>
+   guid: the argument must be a UUID or GUID of the form <i>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</i> where each<i> x</i> is a character representing a hexadecimal number (0-9A-F).
+</li>
+<li>
+   numeric
+</li>
+<li>
+   query
+</li>
+<li>
+   string
+</li>
+<li>
+   struct
+</li>
+<li>
+   uuid: the argument must be a ColdFusion UUID of the form <i>xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx</i> where each<i> x</i> is a character representing a hexadecimal number (0-9A-F).
+</li>
+<li>
+   variableName: a string formatted according to ColdFusion variable naming conventions.
+</li>
+<li>
+   xml: XML objects and XML strings
+</li>
+<li>
+   a component name: if the type attribute value is not one of the preceding items, ColdFusion treats it as the name of a ColdFusion component. When the function executes, it generates an error if the argument that is passed in is not a CFC with the specified name.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>required</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<p><strong>Note:</strong> All arguments are required when invoked as a web service, irrespective of how they are defined.</p>
+<p>&#160;</p>
+<p>Specifies whether the parameter is required to execute the component method. The parameter is <i>not</i> required if you specify a <code>default</code> attribute.</p>
+<ul>
+<li>
+   true or &quot;yes&quot; 
+</li>
+<li>
+   false or &quot;no&quot;
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>default</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>If no argument is passed, specifies a default argument value.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>displayname</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p><code>name</code> attribute value</p>
+    </td>
+    <td>
+<p>Meaningful only for CFC method parameters. A value to be displayed when using introspection to show information about the CFC.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hint</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Meaningful only for CFC method parameters. Text to be displayed when using introspection to show information about the CFC. The <code>hint</code> attribute value follows the <code>displayname</code> attribute value in the parameter description line. This attribute can be useful for describing the purpose of the parameter.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3058847"></a>Usage</h4>
+<p>This tag must be in a <code>cffunction</code> tag, before any other tags in the <code>cffunction</code> tag body.</p>
+<p>Arguments that are passed when a method is invoked can be accessed from the method body in the following ways:</p>
+<ul>
+<li>
+   With shorthand syntax: <code>#myargument#<br /></code>(This example accesses the argument <code>myargument</code>.)
+</li>
+<li>
+   Using the arguments scope as an array: <code>#arguments[1]#<br /></code>(This example accesses the first defined argument in the <code>cffunction</code>.)
+</li>
+<li>
+   Using the arguments scope as a struct: <code>#arguments.myargument#<br /></code>(This example accesses the argument <code>myargument</code> in the array.)
+</li>
+</ul>
+<h4><a name="wp3702820"></a>Example</h4>
+<pre>
+&lt;!--- This example defines a function that takes a course number parameter 
+and returns the course description. ---&gt;
+&lt;cffunction name=&quot;getDescription&quot;&gt;
+	&lt;!--- Identify argument ---&gt;
+	&lt;cfargument name=&quot;Course_Number&quot; type=&quot;numeric&quot; required=&quot;true&quot;&gt;
+	&lt;!--- Use the argument to get a course description from the database ---&gt;
+	&lt;cfquery name=&quot;Description&quot; datasource=&quot;cfdocexamples&quot;&gt;
+		SELECT Descript
+		FROM Courses
+		WHERE Number = &#39;#Course_Number#&#39;
+	&lt;/cfquery&gt;
+	&lt;!--- Specify the variable that the function returns ---&gt;
+	&lt;cfreturn Description.Descript&gt;
+&lt;/cffunction&gt;
+</pre>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000217.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000219.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000218.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example 1: Using the FileSystem object</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001583.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001585.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example 1: Using the FileSystem object</h1>
+<p>The following example uses the Microsoft FileSystem Scripting object in the Application scope. This code creates a user-defined function that returns a structure that consists of the drive letters and free disk space for all hard drives on the system. </p>
+<pre>&lt;cfapplication name=&quot;comtest&quot; clientmanagement=&quot;No&quot; Sessionmanagement=&quot;yes&quot;&gt;
+
+&lt;!--- Uncomment the following line if you must delete the object from the
+Application scope during debugging. Then restore the comments. 
+This technique is faster than stopping and starting the ColdFusion server. ---&gt;
+ &lt;!--- &lt;cfset structdelete(Application, &quot;fso&quot;)&gt; ---&gt;
+
+&lt;!--- The getFixedDriveSpace user-defined function returns a structure with
+the drive letters as keys and the drive&#39;s free space as data for all fixed 
+drives on a system. The function does not take any arguments ---&gt;
+
+&lt;cffunction name=&quot;getFixedDriveSpace&quot; returnType=&quot;struct&quot; output=True&gt;
+   &lt;!--- If the FileSystemObject does not exist in the Application scope,
+   create it. ---&gt;
+   &lt;!--- For information on the use of initialization variables and locking in
+      this code, see &quot;Locking application variables efficiently&quot; in Chapter 15,
+      &quot;Using Persistent Data and Locking&quot; ---&gt;
+   &lt;cfset fso_is_initialized = False&gt;
+   &lt;cflock scope=&quot;application&quot; type=&quot;readonly&quot; timeout=&quot;120&quot;&gt;
+      &lt;cfset fso_is_initialized = StructKeyExists(Application, &quot;fso&quot;)&gt;
+   &lt;/cflock&gt;
+   &lt;cfif not fso_is_initialized &gt;
+      &lt;cflock scope=&quot;Application&quot; type=&quot;EXCLUSIVE&quot; timeout=&quot;120&quot;&gt;
+         &lt;cfif NOT StructKeyExists(Application, &quot;fso&quot;)&gt;
+            &lt;cfobject type=&quot;COM&quot; action=&quot;create&quot; class=&quot;Scripting.FileSystemObject&quot;
+               name=&quot;Application.fso&quot; server=&quot;\\localhost&quot;&gt;
+         &lt;/cfif&gt;
+      &lt;/cflock&gt;
+   &lt;/cfif&gt;
+
+   &lt;!--- Get the drives collection and loop through it to populate the
+      structure. ---&gt;
+   &lt;cfset drives=Application.fso.drives()&gt;
+   &lt;cfset driveSpace=StructNew()&gt;
+   &lt;cfloop collection=&quot;#drives#&quot; item=&quot;curDrive&quot;&gt;
+      &lt;!--- A DriveType of 2 indicates a fixed disk ---&gt;
+      &lt;cfif curDrive.DriveType IS 2&gt;
+      &lt;!--- Use dynamic array notation with the drive letter for the struct key
+      ---&gt;
+         &lt;cfset driveSpace[&quot;#curDrive.DriveLetter#&quot;]=curDrive.availablespace&gt;
+      &lt;/cfif&gt;
+   &lt;/cfloop&gt;
+   &lt;cfreturn driveSpace&gt;
+&lt;/cffunction&gt;
+
+&lt;!--- Test the function. Get the execution time for running the function ---&gt;
+&lt;cfset start = getTickCount()&gt;
+&lt;cfset DriveInfo=getFixedDriveSpace()&gt;
+&lt;h3&gt;Getting fixed drive<code> available space&lt;/h3&gt;</code>
+<code>&lt;cfoutput&gt;Execution Time: #int(getTickCount()-start)# milliseconds&lt;/cfoutput&gt;&lt;br&gt;&lt;br&gt;</code>
+&lt;cfdump label=&quot;Drive Free Space&quot; var=&quot;#driveInfo#&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001583.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001585.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001584.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

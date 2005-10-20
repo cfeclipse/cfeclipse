@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Getting information about structures and keys</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000961.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000963.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Getting information about structures and keys</h1>
+<p>The following sections describe how to use ColdFusion functions to find information about structures and their keys.</p>
+<h3><a name="wp1135438"></a>Getting information about structures</h3>
+<p>To find out if a given value represents a structure, use the <a href="00000532.htm#1106910"><code>IsStruct</code></a> function, as follows:</p>
+<pre>IsStruct(<code><i>variable</i></code>)
+</pre><p>This function returns True if <i>variable</i> is a ColdFusion structure. (It also returns True if <i>variable</i> is a Java object that implements the java.util.Map interface.)</p>
+<p>Structures are not indexed numerically, so to find out how many name-value pairs exist in a structure, use the <a href="00000636.htm#137332"><code>StructCount</code></a> function, as in the following example:</p>
+<pre>StructCount(employee)
+</pre><p>To discover whether a specific Structure contains data, use the <a href="00000643.htm#137815"><code>StructIsEmpty</code></a> function, as follows:</p>
+<pre>StructIsEmpty(<code><i>structure_name</i></code>)
+</pre><p>This function returns True if the structure is empty, and False if it contains data.</p>
+<h3><a name="wp1180920"></a>Finding a specific key and its value</h3>
+<p>To determine whether a specific key exists in a structure, use the <a href="00000645.htm#137977"><code>StructKeyExists</code></a> function, as follows:</p>
+<pre>StructKeyExists(<code><i>structure_name</i></code>, <code><i>&quot;key_name&quot;</i></code>)
+</pre><p>Do <i>not</i> put the name of the structure in quotation marks, but you do put the key name in quotation marks. For example, the following code displays the value of the MyStruct.MyKey only if it exists:</p>
+<pre>&lt;cfif StructKeyExists(myStruct, &quot;myKey&quot;)&gt;
+&lt;cfoutput&gt; #mystruct.myKey#&lt;/cfoutput&gt;&lt;br&gt;
+&lt;/cfif&gt;
+</pre><p>You can use the <code>StructKeyExists</code> function to dynamically test for keys by using a variable to represent the key name. In this case, you do not put the variable in quotation marks. For example, the following code loops through the records of the GetEmployees query and tests the myStruct structure for a key that matches the query's LastName field. If ColdFusion finds a matching key, it displays the Last Name from the query and the corresponding entry in the structure.</p>
+<pre>&lt;cfloop query=&quot;GetEmployees&quot;&gt;
+&lt;cfif StructKeyExists(myStruct, LastName)&gt;
+&lt;cfoutput&gt;#LastName#: #mystruct[LastName]#&lt;/cfoutput&gt;&lt;br&gt;
+&lt;/cfif&gt;
+&lt;/cfloop&gt;
+</pre><p>If the name of the key is known in advance, you can also use the ColdFusion <a href="00000520.htm#1106482"><code>IsDefined</code></a> function, as follows:</p>
+<pre>IsDefined(&quot;<code><i>structure_name.key</i></code>&quot;)&gt;
+</pre><p>However, if the key is dynamic, or contains special characters, you must use the <code>StructKeyExists</code> function.</p>
+<p><strong>Note: </strong>Using <code>StructKeyExists</code> to test for the existence of a structure entry is more efficient than using <code>IsDefined</code>. ColdFusion scopes are available as structures and you can improve efficiency by using <code>StructKeyExists</code> to test for the existence of variables.</p><h3><a name="wp1112164"></a>Getting a list of keys in a structure</h3>
+<p>To get a list of the keys in a CFML structure, you use the <a href="00000646.htm#138035"><code>StructKeyList</code></a> function, as follows:</p>
+<pre>&lt;cfset temp=StructKeyList(<code><i>structure_name</i></code>, [<code><i>delimiter</i></code>] )&gt;
+</pre><p>You can specify any character as the delimiter; the default is a comma.</p>
+<p>Use the <a href="00000644.htm#137882"><code>StructKeyArray</code></a> function to returns an array of keys in a structure, as follows:</p>
+<pre>&lt;cfset temp=StructKeyArray(<code><i>structure_name</i></code>)&gt;
+</pre><p><strong>Note: </strong>The <code>StructKeyList</code> and <code>StructKeyArray</code> functions do not return keys in any particular order. Use the <a href="00000563.htm#131526"><code>ListSort</code></a> or <a href="00000394.htm#1100866"><code>ArraySort</code></a> functions to sort the results.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00000961.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000963.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000962.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

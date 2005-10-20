@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ColdFusion security features</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001175.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001177.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ColdFusion security features</h1>
+<p>ColdFusion provides scalable, granular security for building and deploying your ColdFusion applications.</p>
+<p>ColdFusion provides the following types of security resources:</p>
+<p><strong>Development</strong><strong>&#160;</strong>ColdFusion&#160;MX Administrator is protected by a password. Additionally, you can specify a password for access to data sources from Macromedia Dreamweaver MX. For more information on configuring Administrator security passwords, see the ColdFusion&#160;MX Administrator online Help.</p>
+<p><strong>CFML features</strong>&#160;The CFML language includes specific features that you can use to enhance application security. These include the following features:</p>
+<ul>
+<li>
+   <code>The cfqueryparam</code> tag&#160;This tag helps prevent users from injecting malicious SQL expressions. For more information on using this tag for database security, see <a href="00001257.htm#1142383">Enhancing security with cfqueryparam</a>,
+</li>
+<li>
+   Scriptprotect setting&#160;This setting helps protect against cross-site scripting attacks. You can set this value with the ColdFusion MX Administrator Enable Global Script Protection setting, in the Application.cfc This.scriptprotect variable, or in the corresponding <code>cfapplication</code> tag <code>scriptprotect</code> attribute. For more information on this feature, see <a href="00000217.htm#1097308"><code>cfapplication</code></a> in <i>CFML Reference</i>. For information on Application.cfc see <a href="00001112.htm#1191449">Defining the application and its event handlers in Application.cfc</a>.
+</li>
+<li>
+   Encryption and hashing functions&#160;The <code>Encrypt</code>, <code>Decrypt,</code> and <code>Hash</code> functions let you select a secure algorithm for encrypting and decrypting data or generating a hash &quot;fingerprint.&quot; You can select from among several secure algorithms that are supported by the underlying Java security mechanisms; for encryption, these include, AES, Blowfish, DES and Triple DES. For more information, see the <a href="00000457.htm#1104201"><code>Encrypt</code></a>, <a href="00000452.htm#1103962"><code>Decrypt</code></a>, and <a href="00000503.htm#1105551"><code>Hash</code></a>, functions in <i>CFML Reference</i>.
+</li>
+<li>
+   Data validation tools&#160;ColdFusion includes a variety of tools for validating form input and other data values, including ways to ensure that users do not submit malicious form data. For information on data validation see <a href="00001376.htm#1096836">Validating Data</a>; for specific information on security and validation, see <a href="00001379.htm#1151558">Security considerations</a>. 
+</li>
+</ul>
+<p><strong>Note: </strong>This chapter does not discuss development or CFML language security features. For additional information on security in ColdFusion programs, see the security entries in the index.</p><p><strong>Resource/Sandbox</strong>&#160;The ColdFusion&#160;MX Administrator can limit access to ColdFusion resources, including selected tags and functions, data sources, files, and host addresses. In the Standard Edition, you configure a single set of resource limitations that apply to all your ColdFusion applications.</p>
+<p>In the Enterprise Edition, you can have multiple sandboxes, based on the location of your ColdFusion pages, each with its own set of resource limitations. You can confine applications to secure areas, thereby flexibly restricting the access that the application has to resources. </p>
+<p><strong>User</strong>&#160;ColdFusion applications can require users to log in to use application pages. You can assign users to roles (sometimes called groups); ColdFusion pages can determine the logged-in user's roles or ID and selectively determine what to do based on this information. User security is also called authentication and authorization security.</p>
+<p><strong>Note: </strong>You can also use the <code>cfencode</code> utility, located in the <i>cf_root</i>/bin directory, to obscure ColdFusion pages that you distribute. Although this technique cannot prevent persistent hackers from determining the contents of your pages, it does prevent inspection of the pages. </p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001175.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001177.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001176.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

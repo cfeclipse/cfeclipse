@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXRequest::SetCustomData</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000804.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000806.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXRequest::SetCustomData</h1>
+<h4><a name="wp1099426"></a>Syntax</h4>
+<pre>void CCFXRequest::SetCustomData(LPVOID lpvData)
+</pre><h4><a name="wp1102833"></a>Description</h4>
+<p>Sets custom (tag specific) data to carry with the request. Use this function to store request specific data to pass to procedures within your custom tag implementation.</p>
+<h4><a name="wp1102657"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>lpvData</p>
+    </td>
+    <td>
+<p>Pointer to custom data</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102965"></a>Example</h4>
+<p>The following example creates a request-specific data structure of hypothetical type MYTAGDATA and stores a pointer to the structure in the request for future use:</p>
+<pre>void ProcessTagRequest( CCFXRequest* pRequest )<br />      try<br />      {<br />               MYTAGDATA tagData ;<br />               pRequest-&gt;SetCustomData( (LPVOID)&amp;tagData ) ;<br />&#160;<br />               ... remainder of procedure ...<br />}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000804.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000806.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000805.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

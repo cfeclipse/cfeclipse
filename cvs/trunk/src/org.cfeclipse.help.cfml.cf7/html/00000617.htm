@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Right</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000616.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000618.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Right</h1>
+<h4><a name="wp135973"></a>Description</h4>
+<p>Gets a specified number of characters from a string, beginning at the right.</p>
+<p>Returns the specified number of characters from the end (or <i>right</i> side) of the specified string.</p>
+<h4><a name="wp135975"></a>Returns</h4>
+<ul>
+<li>
+   If the length of the string is greater than or equal to <code><i>count</i></code>, the rightmost <code><i>count</i></code> characters of the string
+</li>
+<li>
+   If <code><i>count</i></code> is greater than the length of the string, the whole string
+</li>
+<li>
+   If <code><i>count</i></code> is greater than 1, and the string is empty, an empty string
+</li>
+</ul>
+<h4><a name="wp135979"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp135984"></a>Function syntax</h4>
+<pre><code><strong>Right</strong></code>(<code><i>string, count</i></code>)
+</pre><h4><a name="wp135986"></a>See also</h4>
+<p><a href="00000545.htm#130173">Left</a>, <a href="00000585.htm#133799">Mid</a>, <a href="00000616.htm#135913">Reverse</a></p>
+<h4><a name="wp135997"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>count</p>
+    </td>
+    <td>
+<p>A positive integer that specifies the number of characters to return.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp136012"></a>Example</h4>
+<pre>&lt;!--- Simple Right Example---&gt;
+&lt;cfoutput&gt;
+#Right(&quot;See the quick red fox jump over the fence&quot;, 9)#
+&lt;br&gt;
+#Right(&quot;ColdFusion&quot;, 6)#
+&lt;/cfoutput&gt;
+
+&lt;!--- Right Example using form input ---&gt;
+&lt;h3&gt;Right Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;Form.MyText&quot;)&gt;
+&lt;!--- If len returns 0 (zero), then show error message. ---&gt;
+   &lt;cfif Len(FORM.myText)&gt;
+      &lt;cfif Len(FORM.myText) LTE FORM.RemoveChars&gt;
+         &lt;cfoutput&gt;&lt;p style=&quot;color: red; font-weight: bold&quot;&gt;Your string
+         #FORM.myText# only has #Len(FORM.myText)# characters. You cannot output
+         the #FORM.removeChars# rightmost characters of this string because it 
+         is not long enough.&lt;/p&gt;&lt;/cfoutput&gt;
+      &lt;cfelse&gt;
+         &lt;cfoutput&gt;&lt;p&gt;Your original string: &lt;strong&gt;#FORM.myText#&lt;/strong&gt;
+         &lt;p&gt;Your changed string, showing only the &lt;strong&gt;#FORM.removeChars#
+         &lt;/strong&gt; rightmost characters:
+         &lt;strong&gt;#right(Form.myText, FORM.removeChars)#&lt;/strong&gt;&lt;/p&gt;
+         &lt;/cfoutput&gt;
+      &lt;/cfif&gt; 
+   &lt;cfelse&gt;
+      &lt;p style=&quot;color: red; font-weight: bold&quot;&gt;Please enter a string of more
+      than 0 (zero) characters.&lt;/p&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action=&quot;&lt;cfoutput&gt;#CGI.ScriptName#&lt;/cfoutput&gt;&quot; method=&quot;POST&quot;&gt;
+&lt;p&gt;Type in some text&lt;br /&gt;
+&lt;input type=&quot;Text&quot; name=&quot;myText&quot;&gt;&lt;/p&gt;
+&lt;p&gt;How many characters from the right do you want to show?
+&lt;select name=&quot;RemoveChars&quot;&gt;
+&lt;option value=&quot;1&quot;&gt;1
+&lt;option value=&quot;3&quot; selected&gt;3
+&lt;option value=&quot;5&quot;&gt;5
+&lt;option value=&quot;7&quot;&gt;7
+&lt;option value=&quot;9&quot;&gt;9&lt;/select&gt;
+&lt;input type=&quot;Submit&quot; name=&quot;Submit&quot; value=&quot;Remove characters&quot;&gt;&lt;/p&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000616.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000618.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000617.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

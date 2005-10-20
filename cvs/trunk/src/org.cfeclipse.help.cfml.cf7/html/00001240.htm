@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Results of a SELECT statement</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001239.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001241.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Results of a SELECT statement</h1>
+<p>When the database processes a SELECT statement, it returns a <i>record set</i> containing the requested data. The format of a record set is a table with rows and columns. For example, if you write the following query:</p>
+<pre>SELECT * FROM employees WHERE DeptID=3
+</pre><p>The query returns the following table:</p>
+<p><br />
+<img src="images/sql_emp5.jpg" alt="Results from the SELECT query" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>Since the data returned to ColdFusion&#160;MX by a SELECT statement is in the form of a database table, ColdFusion&#160;MX lets you write a SQL query on the returned results. This functionality is called <i>query of queries</i>. For more information on query of queries, see <a href="00001252.htm#1127430">Accessing and Retrieving Data</a>. </p>
+<p>The next example uses a SELECT statement to return only a specific set of columns from a table: </p>
+<pre>SELECT LastName, FirstName FROM employees WHERE DeptID=3
+</pre><p>The query returns the following table:</p>
+<p><br />
+<img src="images/sql_emp6.jpg" alt="Results of a SELECT query returning selected table columns" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001239.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001241.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001240.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

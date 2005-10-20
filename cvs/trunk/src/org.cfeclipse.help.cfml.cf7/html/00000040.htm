@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Deployment</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000039.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000041.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Deployment</h1>
+<p>The instructions at <a href="http://www.macromedia.com/go/cfmxj2ee-cert" target="mm_window">www.macromedia.com/go/cfmx7_j2eecert</a> provide detailed, application-server-specific ColdFusion&#160;MX&#160;7 deployment instructions. Depending on your application server, the instructions describe deployment of an EAR file or WAR files in either a compressed archive or an expanded directory structure. When you deploy ColdFusion&#160;MX&#160;7 on an existing version of JRun 4, you must expand the EAR file or WAR files manually before deployment. </p>
+<p>The following procedures describe EAR and WAR deployment on an existing version of JRun 4.</p>
+<p><strong>Tip: </strong>The instructions for expanding the cfusion.ear file also apply when deploying ColdFusion&#160;MX&#160;7 on BEA WebLogic.</p><h3><a name="wp122579"></a>Expanding and deploying an EAR file on JRun 4</h3>
+<p>Before you deploy ColdFusion&#160;MX&#160;7 as an enterprise application on an existing JRun server, you must expand the EAR and the WAR files that it contains. </p>
+<p><strong>Note: </strong>If you are already using an application with an empty context root, you must use a context root other than / for the cfusion-ear file. If you specified / when you installed ColdFusion&#160;MX&#160;7, you can change it by opening the cfusion-ear/META-INF/application.xml file in a text editor and modifying the context-root element. After you deploy the cfusion-ear file, you access ColdFusion pages by specifying http://<code><i>hostname:portnumber/contextroot/pagename</i></code>.cfm.</p><h4>To deploy ColdFusion&#160;MX&#160;7 as an enterprise application on JRun 4:</h4>
+<ol>
+<li>
+   Run the installation wizard for your platform, as described in <a href="00000033.htm#117629">Installing an EAR file or WAR files</a>. Select the EAR option. When you get to the deployment step, return to these instructions.
+<p>If you are updating an existing deployment of ColdFusion MX or ColdFusion MX&#160;6.1 for J2EE, you must undeploy ColdFusion MX or ColdFusion MX&#160;6.1 for J2EE before you deploy ColdFusion&#160;MX&#160;7, as described in <a href="00000036.htm#114170">Updating from ColdFusion MX or ColdFusion MX&#160;6.1 for J2EE</a>.</p>
+</li>
+<li>
+   Expand the EAR file by performing the following steps:
+<ol><li>Open a console window, navigate to the directory that contains the EAR file, and make a new directory named cfusion-ear:</li><pre>
+&#160;&#160;&#160;&#160;md cfusion-ear (mkdir cfusion-ear on UNIX)
+</pre>
+<li>Change to the cfusion-ear directory and expand the cfusion.ear file with the <code>jar</code> command:</li><pre>
+&#160;&#160;&#160;&#160;cd cfusion-ear
+&#160;&#160;&#160;&#160;java_home/bin/jar -xvf ../cfusion.ear
+<p>This expands the cfusion.ear file into cfusion.war and rds.war (rds.war is not included if you specified a context root of / when you ran the installation wizard).</p>
+</pre>
+<li>In cfusion-ear, make a new directory named cfusion-war.</li><pre>
+&#160;&#160;&#160;&#160;md cfusion-war (mkdir cfusion-war on UNIX)
+</pre>
+<li>Change to the cfusion-war directory and expand the cfusion.war file with the <code>jar</code> command:</li><pre>
+&#160;&#160;&#160;&#160;cd cfusion-war
+&#160;&#160;&#160;&#160;java_root/bin/jar -xvf ../cfusion.war
+<p>This expands the cfusion.war file.</p>
+</pre>
+<li>(If rds.war exists) Go up one level to cfusion-ear, make a new directory named rds-war.</li><pre>
+&#160;&#160;&#160;&#160;cd ..
+&#160;&#160;&#160;&#160;md rds-war (mkdir rds-war on UNIX)
+</pre>
+<li>(If rds.war exists) Change to the rds-war directory and expand rds.war with the <code>jar</code> command:</li><pre>
+&#160;&#160;&#160;&#160;cd rds-war
+&#160;&#160;&#160;&#160;java_root/bin/jar -xvf ../rds.war
+<p>This expands rds.war.</p>
+</pre>
+<li>Go up one level to the cfusion-ear file, and delete the cfusion.war and rds.war files:</li><pre>
+&#160;&#160;&#160;&#160;cd ..
+&#160;&#160;&#160;&#160;del cfusion.war (rm cfusion.war on UNIX)
+&#160;&#160;&#160;&#160;del rds.war (rm rds.war on UNIX)
+</pre>
+<li>Open the cfusion-ear/META-INF/application.xml file in a text editor.</li><li>Change the <code>web-uri</code> element from cfusion.war to cfusion-war (or the name of the directory that contains the expanded cfusion.war file). Change the <code>web-uri</code> element for rds.war to rds-war. A directory name in the <code>web-uri</code> element cannot contain a dot.</li><li>Save the application.xml file.</li></ol></li>
+<li>
+   Deploy ColdFusion&#160;MX&#160;7 by copying the cfusion-ear directory structure to the <i>jrun_root</i>/servers/<i>servername</i> directory. If auto deploy is enabled, JRun 4 either deploys the application immediately (if the JRun server is running), or when you start the JRun server.
+</li>
+<li>
+   Review the server log (<i>jrun_root</i>/logs/<i>servername</i>-event.log) to ensure that ColdFusion&#160;MX&#160;7 deployed successfully.
+</li>
+</ol>
+<h3><a name="wp118426"></a>Expanding and deploying WAR files on JRun 4</h3>
+<p>When you deploy ColdFusion&#160;MX&#160;7 as a web application on an existing JRun server, you expand the cfusion.war file, deploy it, and optionally modify the context root. For complete information on deploying ColdFusion&#160;MX&#160;7 on JRun 4 as a WAR file, see <a href="http://www.macromedia.com/go/cfmx7_j2eecert" target="mm_window">www.macromedia.com/go/cfmx7_j2eecert</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000039.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000041.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000040.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

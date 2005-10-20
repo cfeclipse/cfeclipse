@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Data conversions between ColdFusion and WSDL data types</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001543.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001545.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Data conversions between ColdFusion and WSDL data types</h1>
+<p>A WSDL file defines the input and return parameters of an operation, including data types. For example, the TemperatureService web service contains the following definition of input and return parameters:</p>
+<pre>&lt;<code><strong>message</strong></code> name=&quot;getTempRequest&quot;&gt;
+   &lt;part name=&quot;zipcode&quot; <code><strong>type=&quot;xsd:string&quot;</strong></code>/&gt;
+&lt;<code><strong>/message</strong></code>&gt;
+&lt;<code><strong>message</strong></code> name=&quot;getTempResponse&quot;&gt;
+   &lt;part name=&quot;return&quot; <code><strong>type=&quot;xsd:float&quot;</strong></code>/&gt;
+&lt;<code><strong>/message</strong></code>&gt;
+</pre><p>As part of consuming web services, you must understand how ColdFusion&#160;MX converts WSDL defined data types to ColdFusion data types. The following table shows this conversion: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+ColdFusion data type
+    </th>
+    <th>
+WSDL data type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>numeric</p>
+    </td>
+    <td>
+<p>SOAP-ENC:double</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>boolean</p>
+    </td>
+    <td>
+<p>SOAP-ENC:boolean</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>SOAP-ENC:string</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>SOAP-ENC:Array</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>binary</p>
+    </td>
+    <td>
+<p>xsd:base64Binary</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>numeric</p>
+    </td>
+    <td>
+<p>xsd:float</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>xsd:enumeration</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>date</p>
+    </td>
+    <td>
+<p>xsd:dateTime</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>void (operation returns nothing)</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>struct</p>
+    </td>
+    <td>
+<p>complex type</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>tns1:QueryBean (Returned by CFCs)</p>
+    </td>
+  </tr>
+</table>
+
+<p>For many of the most common data types, such as string and numeric, a WSDL data type maps directly to a ColdFusion data type. For complex WSDL data types, the mapping is not as straight forward. In many cases, you map a complex WSDL data type to a ColdFusion structure. For more information on handling complex data types, see <a href="00001554.htm#1168427">Handling complex data types</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001543.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001545.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001544.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

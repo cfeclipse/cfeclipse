@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Understanding errors</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001131.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001133.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Understanding errors</h1>
+<p>There are many ways to look at errors; for example, you can look at errors by their causes. You can also look at them by their effects, particularly by whether your application can recover from them. You can also look at them the way ColdFusion does. The following sections discuss these ways of looking at errors.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001132.htm#1212589">About error causes and recovery</a>
+</li>
+<li>
+   <a href="00001133.htm#1102886">ColdFusion error types</a>
+</li>
+<li>
+   <a href="00001134.htm#1133743">About ColdFusion exceptions</a>
+</li>
+<li>
+   <a href="00001135.htm#1123436">How ColdFusion handles errors</a>
+</li>
+</ul>
+<h2><a name="wp1212589"></a>About error causes and recovery</h2>
+<p>Errors can have many causes. Depending on the cause, the error might be <i>recoverable</i>. A recoverable error is one for which your application can identify the error cause and take action on the problem. Some errors, such as time-out errors, might be recoverable without indicating to the user that an error was encountered. An error for which a requested application page does not exist is not recoverable, and the application can only display an error message.</p>
+<p>Errors such as validation errors, for which the application cannot continue processing the request, but can provide an error-specific response, can also be considered recoverable. For example, an error that occurs when a user enters text where a number is required can be considered recoverable, because the application can recognize the error and redisplay the data field with a message providing information about the error's cause and telling the user to reenter the data. </p>
+<p>Some types of errors might be recoverable in some, but not all circumstances. For example, your application can retry a request following a time-out error, but it must also be prepared for the case where the request always times out.</p>
+<p>Error causes fall in the broad categories listed in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Category
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Program errors</p>
+    </td>
+    <td>
+<p>Can be in the code syntax or the program logic. The ColdFusion compiler identifies and reports program syntax errors when it compiles CFML into Java classes. Errors in your application logic are harder to locate. For information on debugging tools and techniques, see <a href="00001208.htm#1096654">Debugging and Troubleshooting Applications</a>.</p>
+<p>Unlike ColdFusion syntax errors, SQL syntax errors are only caught at runtime.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Data errors</p>
+    </td>
+    <td>
+<p>Are typically user data input errors. You use validation techniques to identify errors in user input data and enable the user to correct the errors.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>System errors</p>
+    </td>
+    <td>
+<p>Can come from a variety of causes, including database system problems, time-outs due to excessive demands on your server, out-of-memory errors in the system, file errors, and disk errors.</p>
+    </td>
+  </tr>
+</table>
+
+<p>Although these categories do not map completely to the way ColdFusion categorizes errors they provide a useful way of thinking about errors and can help you in preventing and handling errors in your code.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001131.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001133.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001132.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

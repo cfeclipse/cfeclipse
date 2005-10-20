@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>getCFCPath</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000725.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000727.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>getCFCPath</h1>
+<h4><a name="wp1174476"></a>Description</h4>
+<p>Gets the path to the listener CFC that processes this message.</p>
+<h4><a name="wp1174478"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1174480"></a>Syntax</h4>
+<pre>String getCFCPath()
+</pre><h4><a name="wp1174482"></a>See also</h4>
+<p><a href="00000725.htm#1174437">getCFCMethod</a>, <a href="00000727.htm#1174513">getCFCTimeout</a>, <a href="00000733.htm#1176657">setCFCPath</a>, <a href="00000744.htm#1182144">CFML CFEvent structure</a>, <a href="00001688.htm#117767">CFEvent class</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1174495"></a>Returns</h4>
+<p>An absolute path to the application listener CFC that will process the event, as set by the <a href="00000733.htm#1176657">setCFCPath</a> method. If the <code>setCFCPath</code> method has not been called, returns null, not the path specified in the ColdFusion Administrator and used by default by gateway services. Outgoing messages that are returned by a CFC in response to an incoming message also have the CFC method name in this field if the gateway set the field on the incoming message.</p>
+<h4><a name="wp1174497"></a>Usage</h4>
+<p>Most event gateways do not need to use this method. This method could be useful if a gateway sends messages to multiple CFCs and must determine which CFC is responding.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000725.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000727.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000726.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 3: Designing the database for your application</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000105.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000107.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 3: Designing the database for your application</h1>
+<p>After you identify the information to collect, you must consider where to store the data. Prior to creating the data collection form and instructing ColdFusion where to store the form data, you must have a database ready to accept the data.</p>
+<p>If you had to create the Compass Travel database, you would create a table named trips to store the information that you plan to collect about each trip. The table would look something like the following table:</p>
+<p><br />
+<img src="images/trips_ta.jpg" alt="This image shows the trips database table." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<h4><a name="wp1155381"></a>Recognizing the data types </h4>
+<p>Each field in the Trips table has a data type attribute that describes the type of data that can be stored in the column. For instance, the tripName column can contain text data, while the price column can only contain numeric data. It is important to know what type of data is valid for each&#160;column so that your data collection forms can validate against incorrect values entered by the&#160;user. </p>
+<p>Looking closer, you might wonder why the eventType column is a number and not a text data type column. Recall that data requirements analysis identified the need for a type of event (surfing, mountain climbing, kayaking, and so on). The purpose of this column is to classify trips into various categories based on the trip activity. It is essential that the application classify the trips consistently. Therefore, it is important to offer a list of event types for the user to select, rather than to accept free text input. </p>
+<p>To present a list of event types for user selection, the event types are stored in a separate table, the eventtypes table. This table is already populated and contains the following rows:</p>
+<p><br />
+<img src="images/event_t2.jpg" alt="The list of event types for user selection are stored in the Eventtypes table." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<h4><a name="wp1155678"></a>Establishing a relationship between the two tables</h4>
+<p>When the user selects an event type from the list obtained from reading the eventtypes table, the correct event type must be saved to the trips table with all the other trip-related data. The application could store the eventType (for example, mountain climbing) itself into the eventType column in the trips table. But if the name Mountain Climbing were later shortened to Climbing in the eventtypes table, new mountain climbing trips would be classified differently than ones saved before the change. For this reason and to save space in the database, the key to the eventtypes row (eventTypeID) is stored in the trips table instead. </p>
+<p>The two tables are said to have a <i>relationship</i>. This relationship works by matching data in key fields. In this case, the matching fields consist of a <i>primary key</i> (eventTypeID) from the eventtypes table, which provides a unique identifier for each record, and a <i>foreign key</i> (eventType) in the trips table. The foreign key contains the same value as the primary key, pointing to a unique event type. The following figure shows this relationship:</p>
+<p><br />
+<img src="images/table_r4.jpg" alt="This image shows the relationship between the eventtypes table and the trips table." border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000105.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000107.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000106.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

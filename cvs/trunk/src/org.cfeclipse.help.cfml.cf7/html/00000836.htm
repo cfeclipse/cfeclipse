@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>addQuery</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000835.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000837.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>addQuery</h1>
+<h4><a name="wp1116057"></a>Description</h4>
+<p>Adds a query to the calling template. The query can be accessed by CFML tags in the template. After calling <code>addQuery,</code> the query is empty (it has 0 rows). To populate the query with data, call the Query methods <code>addRow</code> and <code>setData</code>. </p>
+<p>Returns the Query that was added to the template. </p>
+<h4><a name="wp1116060"></a>Category</h4>
+<p><a href="00000835.htm#1097262">Response interface</a></p>
+<h4><a name="wp1116065"></a>Syntax</h4>
+<pre>public Query addQuery(String <code><i>name</i></code>, String[] <code><i>columns</i></code>)
+</pre><h4><a name="wp1116067"></a>Throws</h4>
+<p><code>IllegalArgumentException</code>&#160;If the name parameter is not a valid CFML variable name.</p>
+<h4><a name="wp1116069"></a>See also</h4>
+<p><a href="00000820.htm#1112694"><code>addRow</code></a>, <a href="00000826.htm#1097068"><code>setData</code></a></p>
+<h4><a name="wp1116077"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>The name of the query to add to the template</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>columns</p>
+    </td>
+    <td>
+<p>The column names to use in the query</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1116092"></a>Example</h4>
+<p>The following example adds a query named <i>People</i> to the calling template. The query has two columns (<i>FirstName</i> and <i>LastName</i>) and two rows:</p>
+<pre>// Create string array with column names (also track columns indexes)
+String[] columns = { &quot;FirstName&quot;, &quot;LastName&quot; } ;
+int iFirstName = 1, iLastName = 2 ;
+
+// Create a query which contains these columns
+Query query = response.addQuery( &quot;People&quot;, columns ) ;
+
+// Add data to the query
+int iRow = query.addRow() ;
+query.setData( iRow, iFirstName, &quot;John&quot; ) ;
+query.setData( iRow, iLastName, &quot;Smith&quot; ) ;
+iRow = query.addRow() ;
+query.setData( iRow, iFirstName, &quot;Jane&quot; ) ;
+query.setData( iRow, iLastName, &quot;Doe&quot; ) ; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000835.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000837.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000836.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

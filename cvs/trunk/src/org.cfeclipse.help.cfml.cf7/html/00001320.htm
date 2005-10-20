@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Indexing query results obtained from an LDAP directory</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001319.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001321.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Indexing query results obtained from an LDAP directory</h1>
+<p>The widespread use of the Lightweight Directory Access Protocol (LDAP) to build searchable directory structures, internally and across the web, gives you opportunities to add value to the sites that you create. You can index contact information or other data from an LDAP-accessible server and let users search it. </p>
+<p>When creating an index from an LDAP query, remember the following considerations:</p>
+<ul>
+<li>
+   Because LDAP structures vary greatly, you must know the server's directory schema and the exact name of every LDAP attribute that you intend to use in a query.
+</li>
+<li>
+   The records on an LDAP server can be subject to frequent change.
+</li>
+</ul>
+<p>In the following example, the search criterion is records with a telephone number in the 617 area code. Generally, LDAP servers use the Distinguished Name (<code>dn</code>) attribute as the unique identifier for each record so that attribute is used as the <code>key</code> value for the index. </p>
+<pre>&lt;!--- Run the LDAP query. ---&gt;
+&lt;cfldap name=&quot;OrgList&quot;
+   server=&quot;myserver&quot;
+   action=&quot;query&quot;
+   attributes=&quot;o, telephonenumber, dn, mail&quot;
+   scope=&quot;onelevel&quot;
+   filter=&quot;(|(O=a*) (O=b*))&quot;
+   sort=&quot;o&quot;
+   start=&quot;c=US&quot;&gt;
+
+&lt;!--- Output query record set. ---&gt;
+&lt;cfoutput query=&quot;OrgList&quot;&gt;
+   DN: #dn# &lt;br&gt;
+   O: #o# &lt;br&gt;
+   TELEPHONENUMBER: #telephonenumber# &lt;br&gt;
+   MAIL: #mail# &lt;br&gt;
+=============================&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;!--- Index the record set. ---&gt;
+&lt;cfindex action=&quot;update&quot;
+   collection=&quot;ldap_query&quot;
+   key=&quot;dn&quot;
+   type=&quot;custom&quot;
+   title=&quot;o&quot;
+   query=&quot;OrgList&quot;
+   body=&quot;telephonenumber&quot;&gt;
+
+&lt;!--- Search the collection. ---&gt;
+&lt;!--- Use the wildcard * to contain the search string. ---&gt;
+&lt;cfsearch collection=&quot;ldap_query&quot;
+   name=&quot;s_ldap&quot;
+   criteria=&quot;*617*&quot;
+   maxrows = &quot;100&quot;&gt;
+
+&lt;!--- Output returned records. ---&gt;
+&lt;cfoutput query=&quot;s_ldap&quot;&gt;
+   #Key#, #Title#, #Body# &lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001319.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001321.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001320.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using toolbox elements on report bands</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001457.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001459.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using toolbox elements on report bands</h1>
+<p>You can use the toolbox to add graphic and textual elements, such as images, circles, squares, lines, dynamic fields, charts, and subreports, to report bands. </p>
+<p>This section discusses text, images, circles, squares, lines, and dynamic fields. For information on charts, see <a href="00001473.htm#119594">Using charts</a>. For information on subreports, see <a href="00001474.htm#119582">Using subreports</a>.</p>
+<p>The basic technique for adding toolbox elements is to click in the toolbox element and then drag to define an area in the appropriate report band. For some toolbox elements, such as image and text box, a dialog box immediately appears, prompting for more information. For all toolbox elements, you can customize the appearance of the element using the Properties sheet.</p>
+<p><strong>Tip: </strong>You can add toolbox elements through the Insert menu.</p><h4>To use text boxes:</h4>
+<ol>
+<li>
+   Click the Label icon (abc) in the toolbox.
+</li>
+<li>
+   Define the area for the label by dragging on the desired band.
+<p>The Edit Label Text dialog box appears.</p>
+</li>
+<li>
+   Enter the label text. To add a line break, press Control+Enter.
+</li>
+<li>
+   Click OK, or press Enter.
+<p><strong>Note: </strong>ColdFusion trims leading and trailing blanks from labels. To include leading and trailing blanks, define a dynamic field and include the blanks in the expression; for example, &quot;&#160;&#160;&#160;&#160;My&#160;Title&#160;&#160;&#160;&#160;&quot;.</p></li>
+</ol>
+<h4>To use image files:</h4>
+<ol>
+<li>
+   Click the Image icon in the toolbox.
+</li>
+<li>
+   Define the area for the image by dragging on the desired band.
+<p>The Image File Name dialog box appears.</p>
+</li>
+<li>
+   Navigate to the file containing the image, select the file, and click OK.
+</li>
+</ol>
+<h4>To use a database BLOB column as an image source:</h4>
+<ol>
+<li>
+   Click the Image icon in the toolbox.
+</li>
+<li>
+   Define the area for the image by dragging on the desired band.
+<p>The Image File Name dialog box appears.</p>
+<p><strong>Tip: </strong>You can also drag the BLOB field from the Fields and Parameters tab to a report band.</p></li>
+<li>
+   Click Cancel.
+<p>The Expression Builder appears.</p>
+</li>
+<li>
+   Click the Image Type drop-down list box and change File/URL to BLOB.
+</li>
+<li>
+   Select the query field or input parameter that contains the BLOB column.
+<p><strong>Note: </strong>The BLOB column must contain a binary image in GIF, JPEG, or PNG format.</p></li>
+<li>
+   Click OK.
+</li>
+</ol>
+<p><strong>Note: </strong>These instructions assume that the contents of the BLOB column can be rendered as an image.</p><h4>To use rectangles, ellipses, and lines:</h4>
+<ol>
+<li>
+   Click the rectangle, ellipses, or line icon in the toolbox.
+</li>
+<li>
+   Define the area or line by dragging on the desired band.
+</li>
+<li>
+   (Optional) Resize the selected element by dragging the handles that surround it.
+<p><strong>Tip: </strong>Pressing the Control key while resizing a rectangle, ellipsis, or line, constrains the element to a square, circle, or angles that are multiples of 45 degrees.</p></li>
+</ol>
+<h4>To use dynamic fields:</h4>
+<ol>
+<li>
+   Click the Field icon in the toolbox.
+</li>
+<li>
+   Define the area for the dynamic field by dragging on the desired band.
+<p>The Add Field dialog box appears (if you haven't defined any query fields, the Expression Builder appears).</p>
+</li>
+<li>
+   Select the field to add. If you select a query field, calculated field, or input parameter, this is the same as dragging from the Fields and Parameters tab.
+</li>
+<li>
+   (Optional) Select Manually Entered Expression.
+<p>The Expression Builder appears. This option is useful for calculations that use variables in the same row. For example, to compute total price for an order detail line item, you might use the following expression:</p>
+<pre>
+LSNumberFormat((query.unitprice * query.quantity), &quot;,_.__&quot;)
+</pre>
+</li>
+<li>
+   Click OK.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001457.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001459.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001458.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

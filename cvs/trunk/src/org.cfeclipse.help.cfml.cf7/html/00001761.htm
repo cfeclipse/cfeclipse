@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Packaging applications in J2EE archive files</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001760.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001762.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Packaging applications in J2EE archive files</h1>
+<p>When running ColdFusion&#160;MX in the multiserver and J2EE configurations, you deploy the ColdFusion application, in enterprise application archive (EAR) or web application archive (WAR) format, on a J2EE application server. You then create your ColdFusion&#160;MX application, configuring resources (such as data sources), and storing CFM, CFC, and CFR files in the web application root or in the web server root. In earlier ColdFusion&#160;MX releases, your J2EE administrator had to redo each of these steps when deploying your ColdFusion application onto a production J2EE server.</p>
+<p>The ColdFusion&#160;MX Administrator lets you create an EAR or WAR file that contains the entire application. This archive file contains the ColdFusion&#160;MX web application, settings for ColdFusion&#160;MX (such as data source definitions), and the CFM, CFC, and CFR files used by your application.</p>
+<p><strong>Tip: </strong>If you are using the multiserver configuration, you can combine J2EE archiving with the instance creation functionality of the ColdFusion&#160;MX Administrator Enterprise Manager. First, create an EAR file that contains your application and all of its settings, and then use that EAR file in the Create From EAR/WAR option of the Instance Manager. For more information on the Enterprise Manager, see <a href="00001771.htm#102761">Defining additional server instances</a>.</p><h2><a name="wp120149"></a>Application packaging</h2>
+<p>The J2EE Archive feature lets you quickly create an archive file that a J2EE administrator can use to deploy your ColdFusion&#160;MX application.</p>
+<h4>To add a new archive definition and create an archive file:</h4>
+<ol>
+<li>
+   Open the ColdFusion&#160;MX Administrator.
+</li>
+<li>
+   Specify a unique name for the archive file (no extension) in the Archive Name field.
+</li>
+<li>
+   Click Add. The Add New Archive screen appears.
+</li>
+<li>
+   Specify archive settings on the Add New Archive screen.
+</li>
+<li>
+   Click Create. ColdFusion creates an EAR or WAR file in the specified application distribution directory.
+</li>
+</ol>
+<p>The following table describes the settings you make when creating or modifying archive:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Setting
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Archive Type</p>
+    </td>
+    <td>
+<p>Select EAR or WAR.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Context Root (EAR only)</p>
+    </td>
+    <td>
+<p>Each J2EE web application running in a server is rooted at a unique base URL, called a context root (or context path). The J2EE application server uses the initial portion of the URL (that is, the portion immediately following http://hostname) to determine which web application services an incoming request.</p>
+<p>&#160;</p>
+<p>For example, if you are running ColdFusion&#160;MX with a context root of <i>cfmx</i>, you display the Administrator using the URL http://<i>hostname</i>/cfmx/CFIDE/administrator/index.cfm. Most J2EE application servers allow one application in each server instance to use a forward slash (/) for the context root. The Remote Development Services (RDS) web application is not required if you use a context root of /.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Serial Number</p>
+    </td>
+    <td>
+<p>Specifies a ColdFusion&#160;MX Enterprise Edition serial number. If you do not specify a valid ColdFusion MX Enterprise Edition serial number when creating the archive file, it is deployed as an Enterprise Edition evaluation version, which reverts to the Developer Edition after 30 days.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>COM Support</p>
+    </td>
+    <td>
+<p>If your application doesn't use COM support, you can reduce the size of the archive file by omitting the supporting files.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Debugging</p>
+    </td>
+    <td>
+<p>If the current ColdFusion&#160;MX server is running with debugging enabled, you can disable debugging in the application contained in the archive file.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Include CFML Source</p>
+    </td>
+    <td>
+<p>You can optionally deploy Java bytecode instead of CFML source code. For more information, see <a href="00001762.htm#117491">Sourceless distribution</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ColdFusion MX Administrator</p>
+    </td>
+    <td>
+<p>If your application does not require modification using the ColdFusion&#160;MX Administrator, you can reduce archive size and reduce security issues by omitting the Administrator files.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Data Sources</p>
+    </td>
+    <td>
+<p>Specifies the data source definitions to include in the archive file.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp120728"></a>Deployment considerations</h2>
+<p>Once the archive file is created, you deploy using standard ColdFusion&#160;MX J2EE configuration deployment techniques. For more information, see <a href="00000033.htm#117629">Installing an EAR file or WAR files</a> in <a href="00000029.htm#109411">Installing the J2EE Configuration</a> of <i>Installing and Using ColdFusion&#160;MX</i>.</p>
+<h2><a name="wp120787"></a>Post-deployment considerations</h2>
+<p>Depending on your application, the resources that it uses, and the environment in which it is deployed, you may need to perform post-deployment configuration, as follows:</p>
+<p><strong>Mappings</strong>&#160;The ColdFusion mappings in the archived application refer to directories on the original computer. If those directories do not exist on the deployment computer, modify the ColdFusion mappings using the ColdFusion&#160;MX Administrator or the Administrator API.</p>
+<p><strong>Verity</strong>&#160;You must ensure that the Verity server settings on the original computer are appropriate for the deployment computer. If not, you must modify the Verity server settings using the ColdFusion&#160;MX Administrator or the Administrator API.</p>
+<p><strong>Serial number</strong>&#160;J2EE deployment is a ColdFusion&#160;MX Enterprise feature. To upgrade to the Enterprise Edition, enter a serial number using the ColdFusion&#160;MX Administrator or the Administrator API.</p>
+<p>For more information on the Administrator API, see <a href="00001734.htm#1329746">Administrator API</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001760.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001762.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001761.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

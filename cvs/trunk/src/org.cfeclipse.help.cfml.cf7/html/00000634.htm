@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>StructClear</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000633.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000635.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>StructClear</h1>
+<h4><a name="wp137054"></a>Description</h4>
+<p>Removes all data from a structure. </p>
+<h4><a name="wp137056"></a>Returns</h4>
+<p>True, on successful execution; False, otherwise.</p>
+<h4><a name="wp137058"></a>Category</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a></p>
+<h4><a name="wp137063"></a>Function syntax</h4>
+<pre><code><strong>StructClear</strong></code>(<i>structure</i>)
+</pre><h4><a name="wp137065"></a>See also</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a>; <a href="00001514.htm#1120048">Modifying a ColdFusion XML object</a> in <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp137070"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: this function can be used on XML objects.</p>
+<h4><a name="wp137075"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>structure</p>
+    </td>
+    <td>
+<p>Structure to clear</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp137086"></a>Usage</h4>
+<p>Do not call this function on a session variable. For more information, see TechNote 14143, &quot;<i>ColdFusion 4.5 and the StructClear(Session) function</i>,&quot; at <a href="http://www.coldfusion.com/Support/KnowledgeBase/SearchForm.cfm" target="mm_window">www.coldfusion.com/Support/KnowledgeBase/SearchForm.cfm</a>. (The article applies to ColdFusion 4.5, 5.x, and ColdFusion&#160;MX.)</p>
+<h4><a name="wp137091"></a>Example</h4>
+<pre>&lt;!--- Shows StructClear function. Calls cf_addemployee custom tag which 
+   uses the addemployee.cfm file. ---&gt;
+&lt;body&gt;
+&lt;h1&gt;Add New Employees&lt;/h1&gt;
+&lt;!--- Establish params for first time through ---&gt;
+&lt;cfparam name = &quot;Form.firstname&quot; default = &quot;&quot;&gt;
+&lt;cfparam name = &quot;Form.lastname&quot; default = &quot;&quot;&gt;
+&lt;cfparam name = &quot;Form.email&quot; default = &quot;&quot;&gt;
+&lt;cfparam name = &quot;Form.phone&quot; default = &quot;&quot;&gt;
+&lt;cfparam name = &quot;Form.department&quot; default = &quot;&quot;&gt; 
+&lt;cfif form.firstname eq &quot;&quot;&gt;
+ &lt;p&gt;Please fill out the form.
+&lt;cfelse&gt;
+ &lt;cfoutput&gt;
+  &lt;cfscript&gt;
+   employee = StructNew();
+   StructInsert(employee, &quot;firstname&quot;, Form.firstname);
+   StructInsert(employee, &quot;lastname&quot;, Form.lastname);
+   StructInsert(employee, &quot;email&quot;, Form.email);
+   StructInsert(employee, &quot;phone&quot;, Form.phone);
+   StructInsert(employee, &quot;department&quot;, Form.department); 
+  &lt;/cfscript&gt; 
+ &lt;/cfoutput&gt;
+&lt;!--- Call the custom tag that adds employees ---&gt;
+ &lt;cf_addemployee empinfo = &quot;#employee#&quot;&gt;
+ &lt;cfscript&gt;StructClear(employee);&lt;/cfscript&gt; 
+ &lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000633.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000635.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000634.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

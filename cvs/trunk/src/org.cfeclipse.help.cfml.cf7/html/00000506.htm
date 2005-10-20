@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>HTMLEditFormat</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000505.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000507.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>HTMLEditFormat</h1>
+<h4><a name="wp1224881"></a>Description</h4>
+<p>Replaces special characters in a string with their HTML-escaped equivalents.</p>
+<h4><a name="wp3393518"></a>Returns</h4>
+<p>HTML-escaped string <i>string</i>. Return characters are removed; line feed characters are preserved. Characters with special meanings in HTML are converted to HTML character entities such as &amp;gt;.</p>
+<h4><a name="wp2507038"></a>Category</h4>
+<p><a href="00000359.htm#1099219">Display and formatting functions</a></p>
+<h4><a name="wp1105729"></a>Function syntax</h4>
+<pre><code><strong>HTMLEditFormat</strong></code>(<i>string</i> [, <i>version</i> ])
+</pre><h4><a name="wp2507058"></a>See also</h4>
+<p><a href="00000505.htm#1105634"><code>HTMLCodeFormat</code></a><code>, </code><a href="00000217.htm#1097308"><code>cfapplication</code></a></p>
+<h4><a name="wp1316607"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>version</p>
+    </td>
+    <td>
+<p>HTML version to use; currently ignored.</p>
+<ul>
+<li>
+   -1: The latest implementation of HTML
+</li>
+<li>
+   2.0: HTML 2.0 (Default)
+</li>
+<li>
+   3.2: HTML 3.2
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1105738"></a>Usage</h4>
+<p>This function converts the following characters to HTML character entities:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Text character
+    </th>
+    <th>
+Encoding
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>&lt;</p>
+    </td>
+    <td>
+<p>&amp;lt;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&gt;</p>
+    </td>
+    <td>
+<p>&amp;gt;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&amp;</p>
+    </td>
+    <td>
+<p>&amp;amp;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&quot;</p>
+    </td>
+    <td>
+<p>&amp;quot;</p>
+    </td>
+  </tr>
+</table>
+
+<p>This function can usefed to help protect ColdFusion pages that return user-provided data to the client browser from cross-site scripting attacks. However, the <code>scriptprotect</code> attribute of the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag or the equivalent This.scriptProtect variable setting in Application.cfc can be preferable in most instances, because you only need to specify it once for an application.</p>
+<p>This function typically increases the length of a string. This can cause unpredictable results when performing certain string functions (<code>Left</code>, <code>Right</code>, and <code>Mid</code>, for example) against the expanded string.</p>
+<p>The only difference between this function and <code>HTMLCodeFormat</code> is that <code>HTMLCodeFormat</code> surrounds the text in an HTML <code>pre</code> tag.</p>
+<h4><a name="wp1105740"></a>Example</h4>
+<pre>&lt;!--- This example shows the effects of HTMLCodeFormat and 
+      HTMLEditFormat. View it in your browser, then View it
+      using your browser&#39;s the View Source command. ---&gt;
+&lt;cfset testString=&quot;This is a test
+        &amp; this is another 
+&lt;This text is in angle brackets&gt;
+
+Previous line was blank!!!&quot;&gt;
+
+&lt;cfoutput&gt;
+    &lt;h3&gt;The text without processing&lt;/h3&gt;
+    #testString#&lt;br&gt;
+    &lt;h3&gt;Using HTMLCodeFormat&lt;/h3&gt;
+    #HTMLCodeFormat(testString)#
+    &lt;h3&gt;Using HTMLEditFormat&lt;/h3&gt;
+    #HTMLEditFormat(testString)#
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000505.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000507.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000506.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

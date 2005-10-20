@@ -1,0 +1,1055 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Composing search expressions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001327.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001329.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Composing search expressions</h1>
+<p>The following rules apply to the composition of search expressions.</p>
+<h2><a name="wp1172491"></a>Case sensitivity</h2>
+<p>Verity searches are case-sensitive only when the search term is entered in mixed case. For example, a search for <i>zeus</i> finds zeus, Zeus, or ZEUS; however, a search for <i>Zeus</i> finds only Zeus.</p>
+<p>To have your application always ignore the case that the user types, use the ColdFusion <a href="00000544.htm#130124"><code>LCase</code></a><code>()</code> function in the <code>criteria</code> attribute of <a href="00000330.htm#1103106"><code>cfsearch</code></a>. The following code converts user input to lowercase, thereby eliminating case-sensitivity concerns:</p>
+<pre>&lt;cfsearch name=&quot;results&quot; 
+   collection=&quot;#form.collname#&quot;
+<strong>   </strong><code><strong>criteria=&quot;#LCase(form.criteria)#&quot;</strong></code>
+   type=&quot;#form.type#&quot;&gt;
+</pre><h2><a name="wp1174396"></a>Prefix and infix notation</h2>
+<p>By default, Verity uses <i>infix notation</i>, in which precedence is implicit in the expression; for example, the AND operator takes precedence over the OR operator.</p>
+<p>You can use <i>prefix notation</i> with any operator except an evidence operator (typically, STEM, WILDCARD, or WORD; for a description of evidence operators, see <a href="00001328.htm#1187376">Evidence operators</a>). In prefix notation, the expression explicitly specifies precedence. Rather than repeating an operator, you can use prefix notation to list the operator once and list the search targets in parentheses. For example, the following expressions are equivalent:</p>
+<ul>
+<li>
+   Moses &lt;NEAR&gt; Larry &lt;NEAR&gt; Jerome &lt;NEAR&gt; Daniel &lt;NEAR&gt; Jacob
+</li>
+<li>
+   &lt;NEAR&gt;(Moses,Larry,Jerome,Daniel,Jacob)
+</li>
+</ul>
+<p>The following prefix notation example searches first for documents that contain Larry and Jerome, and then for documents that contain Moses:</p>
+<p>OR (Moses, AND (Larry,Jerome))</p>
+<p>The infix notation equivalent of this is as follows:</p>
+<p>Moses OR (Larry AND Jerome) </p>
+<h2><a name="wp1174270"></a>Commas in expressions</h2>
+<p>If an expression includes two or more search terms within parentheses, a comma is required between the elements (whitespace is ignored). The following example searches for documents that contain any combination of Larry and Jerome together:</p>
+<p>AND (Larry, Jerome)</p>
+<h2><a name="wp1172458"></a>Precedence rules</h2>
+<p>Expressions are read from left to right. The AND operator takes precedence over the OR operator; however, terms enclosed in parentheses are evaluated first. When the search engine encounters nested parentheses, it starts with the innermost term.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Example
+    </th>
+    <th>
+Search result
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Moses AND Larry OR Jerome</p>
+    </td>
+    <td>
+<p>documents that contain Moses and Larry, or Jerome</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>(Moses AND Larry) OR Jerome</p>
+    </td>
+    <td>
+<p>(same as above)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Moses AND (Larry OR Jerome)</p>
+    </td>
+    <td>
+<p>documents that contain Moses and either Larry or Jerome</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1172318"></a>Delimiters in expressions</h2>
+<p>You use angle brackets (&lt; &gt;), double quotation marks (&quot;), and backslashes (\) to delimit various elements in a search expression, as the following table describes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+Character
+    </td>
+    <td>
+Usage
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&lt; &gt;</p>
+    </td>
+    <td>
+<p>Left and right angle brackets are reserved for designating operators and modifiers. They are optional for the AND, OR, and NOT, but required for all other operators.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&quot;</p>
+    </td>
+    <td>
+<p>Use double quotation marks in expressions to search for a word that is otherwise reserved as an operator or modifier, such as AND, OR, and NOT.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>\</p>
+    </td>
+    <td>
+<p>To include a backslash in a search expression, insert two backslashes for each backslash character that you want included in the search; for example, C:\\CFusionmMX7\\bin.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1096988"></a>Operators and modifiers</h2>
+<p>You are probably familiar with searches containing AND, OR, and NOT. Verity has many additional operators and modifiers, of various types, that offer you a high degree of specificity in setting search parameters.</p>
+<h3><a name="wp1096991"></a>Operators</h3>
+<p>An <i>operator</i> represents logic to be applied to a search element. This logic defines the qualifications that a document must meet to be retrieved. You can use operators to refine your search or to influence the results in other ways. </p>
+<p>For example, you can construct an HTML form for conducting searches. In the form, you can search for a single term. You can refine the search by limiting the search scope in a number of ways. Operators are available for limiting a query to a sentence or paragraph, and you can search words based on proximity.</p>
+<p>Ordinarily, you use operators in explicit searches, as follows:</p>
+<pre>&quot;&lt;operator&gt;search_string&quot;
+</pre><p>The following operator types are available:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator type
+    </th>
+    <th>
+Purpose
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Concept</p>
+    </td>
+    <td>
+<p>Identifies a concept in a document by combining the meanings of search elements.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Relational</p>
+    </td>
+    <td>
+<p>Searches fields in a collection.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Evidence</p>
+    </td>
+    <td>
+<p>Specifies basic and intelligent word searches.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Proximity</p>
+    </td>
+    <td>
+<p>Specifies the relative location of words in a document.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Score</p>
+    </td>
+    <td>
+<p>Manipulates the score returned by a search element. You can set the score percentage display to four decimal places.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following table shows the operators, according to type, that are available for conducting searches of ColdFusion Verity collections:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+Concept
+    </td>
+    <td>
+Relational
+    </td>
+    <td>
+Evidence
+    </td>
+    <td>
+Proximity
+    </td>
+    <td>
+Score
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ACCRUE</p>
+    </td>
+    <td>
+<p>&lt; </p>
+    </td>
+    <td>
+<p>STEM</p>
+    </td>
+    <td>
+<p>NEAR</p>
+    </td>
+    <td>
+<p>YESNO</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ALL</p>
+    </td>
+    <td>
+<p>&lt;= </p>
+    </td>
+    <td>
+<p>WILDCARD</p>
+    </td>
+    <td>
+<p>NEAR/N</p>
+    </td>
+    <td>
+<p>PRODUCT</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>AND</p>
+    </td>
+    <td>
+<p>=</p>
+    </td>
+    <td>
+<p>WORD</p>
+    </td>
+    <td>
+<p>PARAGRAPH</p>
+    </td>
+    <td>
+<p>SUM</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ANY</p>
+    </td>
+    <td>
+<p>&gt;</p>
+    </td>
+    <td>
+<p>THESAURUS</p>
+    </td>
+    <td>
+<p>PHRASE</p>
+    </td>
+    <td>
+<p>COMPLEMENT</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>OR</p>
+    </td>
+    <td>
+<p>&gt;=</p>
+    </td>
+    <td>
+<p>SOUNDEX</p>
+    </td>
+    <td>
+<p>SENTENCE</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>CONTAINS</p>
+    </td>
+    <td>
+<p>TYPO/N</p>
+    </td>
+    <td>
+<p>IN</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>MATCHES</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>STARTS</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>ENDS</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>SUBSTRING</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1171175"></a>Concept operators</h4>
+<p>Concept operators combine the meaning of search elements to identify a concept in a document. Documents retrieved using concept operators are ranked by relevance. The following table describes each concept operator:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>AND</p>
+    </td>
+    <td>
+<p>Selects documents that contain all the search elements that you specify.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>OR</p>
+    </td>
+    <td>
+<p>Selects documents that show evidence of at least one of the search elements that you specify.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ACCRUE</p>
+    </td>
+    <td>
+<p>Selects documents that include at least one of the search elements that you specify. Documents are ranked based on the number of search elements found.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ALL</p>
+    </td>
+    <td>
+<p>Selects documents that contain all of the search elements that you specify. A score of 1.00 is assigned to each retrieved document. ALL and AND retrieve the same results, but queries using ALL are always assigned a score of 1.00.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ANY</p>
+    </td>
+    <td>
+<p>Selects documents that contain at least one of the search elements that you specify. A score of 1.00 is assigned to each retrieved document. ANY and OR retrieve the same results, but queries using ANY are always assigned a score of 1.00.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1171230"></a>Relational operators</h4>
+<p>Relational operators search document fields (such as AUTHOR) that you defined in the collection. Documents that contain specified field values are returned. Documents retrieved using relational operators are not ranked by relevance, and you cannot use the MANY modifier with relational operators.</p>
+<p>You use the following operators for numeric and date comparisons:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>=</p>
+    </td>
+    <td>
+<p>Equal</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>!=</p>
+    </td>
+    <td>
+<p>Not equal</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&gt;</p>
+    </td>
+    <td>
+<p>Greater than</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&gt;=</p>
+    </td>
+    <td>
+<p>Greater than or equal to</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&lt;</p>
+    </td>
+    <td>
+<p>Less than</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&lt;=</p>
+    </td>
+    <td>
+<p>Less than or equal to</p>
+    </td>
+  </tr>
+</table>
+
+<p>For example, to search for documents that contain values for 1999 through 2002, you perform either of the following searches:</p>
+<ul>
+<li>
+   A simple search for 1999,2000,2001,2002
+</li>
+<li>
+   An explicit search using the = operator: &gt;=1999,&lt;=2002
+</li>
+</ul>
+<p>If a document field named PAGES is defined, you can search for documents that are 5 pages or fewer by entering <strong>PAGES &lt; 5</strong> in your search. Similarly, if a document field named DATE is defined, you can search for documents dated prior to and including December 31, 1999 by entering <strong>DATE &lt;= 12-31-99</strong> in your search.</p>
+<p>The following relational operators compare text and match words and parts of words:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>CONTAINS</p>
+    </td>
+    <td>
+<p>Selects documents by matching the word or phrase that you specify with the values stored in a specific document field. Documents are selected only if the search elements specified appear in the same sequential and contiguous order in the field value.</p>
+    </td>
+    <td>
+<ul>
+<li>
+   In a document field named TITLE, to retrieve documents whose titles contain music, musical, or musician, search for <i>TITLE &lt;CONTAINS&gt; Musi*</i>.
+</li>
+<li>
+   To retrieve CFML and HTML pages whose meta tags contain Framingham as a content word, search for <i>KEYWORD &lt;CONTAINS&gt; Framingham</i>.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>MATCHES</p>
+    </td>
+    <td>
+<p>Selects documents by matching the query string with values stored in a specific document field. Documents are selected only if the search elements specified match the field value exactly. If a partial match is found, a document is not selected. When you use the MATCHES operator, you specify the field name to search, and the word, phrase, or number to locate. You can use ? and * to represent individual and multiple characters, respectively, within a string.</p>
+    </td>
+    <td>
+<p>For examples, see the text immediately following this table.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>STARTS</p>
+    </td>
+    <td>
+<p>Selects documents by matching the character string that you specify with the starting characters of the values stored in a specific document field.</p>
+    </td>
+    <td>
+<p>In a document field named REPORTER, to retrieve documents written by Clark, Clarks, and Clarkson, search for <i>REPORTER &lt;STARTS&gt; Clark</i>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ENDS</p>
+    </td>
+    <td>
+<p>Selects documents by matching the character string that you specify with the ending characters of the values stored in a specific document field.</p>
+    </td>
+    <td>
+<p>In a document field named OFFICER, to retrieve arrest reports written by Tanner, Garner, and Milner, search for <i>OFFICER &lt;ENDS&gt; ner</i>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SUBSTRING</p>
+    </td>
+    <td>
+<p>Selects documents by matching the query string that you specify with any portion of the strings in a specific document field.</p>
+    </td>
+    <td>
+<p>In a document field named TITLE, to retrieve documents whose titles contain words such as solution, resolution, solve, and resolve, search for <i>TITLE &lt;SUBSTRING&gt; sol</i>.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For example, assume a document field named SOURCE includes the following values:</p>
+<ul>
+<li>
+   Computer
+</li>
+<li>
+   Computerworld
+</li>
+<li>
+   Computer Currents
+</li>
+<li>
+   PC Computing
+</li>
+</ul>
+<p>To locate documents whose source is Computer, enter the following:</p>
+<pre><strong>SOURCE &lt;MATCHES&gt; computer</strong>
+</pre><p>To locate documents whose source is Computer, Computerworld, and Computer Currents, enter the following:</p>
+<pre><strong>SOURCE &lt;MATCHES&gt; computer*</strong>
+</pre><p>To locate documents whose source is Computer, Computerworld, Computer Currents, and PC Computing, enter the following:</p>
+<pre><code><strong>SOURCE &lt;MATCHES&gt; *comput*</strong></code>
+</pre><p>For an example of ColdFusion code that uses the CONTAINS relational operator, see <a href="00001329.htm#1194837">Field searches</a>.</p>
+<p>You can use the SUBSTRING operator to match a character string with data stored in a specified data source. In the example described in this section, a data source called TEST1 contains the table YearPlaceText, which contains three columns: Year, Place, and Text. Year and Place make up the primary key. The following table shows the TEST1 schema:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Year
+    </th>
+    <th>
+Place
+    </th>
+    <th>
+Text
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>1990</p>
+    </td>
+    <td>
+<p>Utah</p>
+    </td>
+    <td>
+<p>Text about Utah 1990</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>1990</p>
+    </td>
+    <td>
+<p>Oregon</p>
+    </td>
+    <td>
+<p>Text about Oregon 1990</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>1991</p>
+    </td>
+    <td>
+<p>Utah</p>
+    </td>
+    <td>
+<p>Text about Utah 1991</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>1991</p>
+    </td>
+    <td>
+<p>Oregon</p>
+    </td>
+    <td>
+<p>Text about Oregon 1991</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>1992</p>
+    </td>
+    <td>
+<p>Utah</p>
+    </td>
+    <td>
+<p>Text about Utah 1992</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following application page matches records that have 1990 in the TEXT column and are in the Place Utah. The search operates on the collection that contains the TEXT column and then narrows further by searching for the string <i>Utah</i> in the CF_TITLE document field. Document fields are defaults defined in every collection corresponding to the values that you define for URL, TITLE, and KEY in the <a href="00000278.htm#1100286"><code>cfindex</code></a> tag.</p>
+<pre>&lt;cfquery name=&quot;GetText&quot;
+   datasource=&quot;TEST1&quot;&gt;
+   SELECT Year+Place AS Identifier, text
+      FROM YearPlaceText
+&lt;/cfquery&gt;
+
+&lt;cfindex collection=&quot;testcollection&quot;
+   action=&quot;Update&quot;
+   type=&quot;Custom&quot;
+   title=&quot;Identifier&quot;
+   key=&quot;Identifier&quot;
+   body=&quot;TEXT&quot;
+   query=&quot;GetText&quot;&gt;
+
+&lt;cfsearch name=&quot;GetText_Search&quot;
+   collection=&quot;testcollection&quot;
+   type=&quot;Explicit&quot;
+   criteria=&quot;1990 and CF_TITLE &lt;SUBSTRING&gt; Utah&quot;&gt;
+&lt;cfoutput&gt;
+   Record Counts: &lt;br&gt;
+   #GetText.RecordCount# &lt;br&gt;
+   #GetText_Search.RecordCount# &lt;br&gt;
+&lt;/cfoutput&gt;
+
+Query Results --- Should be 5 rows &lt;br&gt;
+&lt;cfoutput query=&quot;Gettext&quot;&gt;
+   #Identifier# &lt;br&gt;
+&lt;/cfoutput&gt;
+
+Search Results -- should be 1 row &lt;br&gt;
+&lt;cfoutput query=&quot;GetText_Search&quot;&gt;
+   #GetText_Search.TITLE# &lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><h4><a name="wp1187376"></a>Evidence operators</h4>
+<p>Evidence operators let you specify a basic word search or an intelligent word search. A <i>basic word search</i> finds documents that contain only the word or words specified in the query. An <i>intelligent word search</i> expands the query terms to create an expanded word list so that the search returns documents that contain variations of the query terms.</p>
+<p>Documents retrieved using evidence operators are not ranked by relevance unless you use the MANY modifier.</p>
+<p>The following table describes the evidence operators:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>STEM</p>
+    </td>
+    <td>
+<p>Expands the search to include the word that you enter and its variations. The STEM operator is automatically implied in any simple query.</p>
+    </td>
+    <td>
+<p><i>&lt;STEM&gt;believe</i> retrieves matches such as &quot;believe,&quot; &quot;believing,&quot; and &quot;believer&quot;.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>WILDCARD</p>
+    </td>
+    <td>
+<p>Matches wildcard characters included in search strings. Certain characters automatically indicate a wildcard specification, such as apostrophe (*) and question mark(?). </p>
+    </td>
+    <td>
+<p><i>spam*</i> retrieves matches such as, spam, spammer, and spamming.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>WORD</p>
+    </td>
+    <td>
+<p>Performs a basic word search, selecting documents that include one or more instances of the specific word that you enter. The WORD operator is automatically implied in any SIMPLE query.</p>
+    </td>
+    <td>
+<p><i>&lt;WORD&gt; logic</i> retrieves logic, but not variations such as logical and logician.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>THESAURUS</p>
+    </td>
+    <td>
+<p>Expands the search to include the word that you enter and its synonyms. Collections do not have a thesaurus by default; to use this feature you must build one.</p>
+    </td>
+    <td>
+<p><i>&lt;THESAURUS&gt; altitude</i> retrieves documents containing synonyms of the word altitude, such as height or elevation.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SOUNDEX</p>
+    </td>
+    <td>
+<p>Expands the search to include the word that you enter and one or more words that &quot;sound like,&quot; or whose letter pattern is similar to, the word specified. Collections do not have sound-alike indexes by default; to use this feature you must build sound-alike indexes.</p>
+    </td>
+    <td>
+<p><i>&lt;SOUNDEX&gt; sale</i> retrieves words such as sale, sell, seal, shell, soul, and scale. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>TYPO/N</p>
+    </td>
+    <td>
+<p>Expands the search to include the word that you enter plus words that are similar to the query term. This operator performs &quot;approximate pattern matching&quot; to identify similar words. The optional N variable in the operator name expresses the maximum number of errors between the query term and a matched term, a value called the error distance. If N is not specified, the default error distance is 2.</p>
+    </td>
+    <td>
+<p><i>&lt;TYPO&gt; swept</i> retrieves kept.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following example uses an evidence operator:</p>
+<pre>&lt;cfsearch name = &quot;quick_search&quot;
+   collection=&quot;bbb&quot; 
+   type = &quot;explicit&quot;
+   criteria=&quot;&lt;WORD&gt;film&quot;&gt;
+</pre><h4><a name="wp1211675"></a>Proximity operators</h4>
+<p>Proximity operators specify the relative location of specific words in the document. To retrieve a document, the specified words must be in the same phrase, paragraph, or sentence. In the case of NEAR and NEAR/N operators, retrieved documents are ranked by relevance based on the proximity of the specified words. Proximity operators can be nested; phrases or words can appear within SENTENCE or PARAGRAPH operators, and SENTENCE operators can appear within PARAGRAPH operators.</p>
+<p>The following table describes the proximity operators:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>NEAR</p>
+    </td>
+    <td>
+<p>Selects documents containing specified search terms. The closer the search terms are to one another within a document, the higher the document's score. The document with the smallest possible region containing all search terms always receives the highest score. Documents whose search terms are not within 1000 words of each other are not selected.</p>
+    </td>
+    <td>
+<p><i>war &lt;NEAR&gt; peace</i> retrieves documents that contain stemmed variations of these words within close proximity to each other (as defined by Verity). To control search proximity, use NEAR/N.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>NEAR/N</p>
+    </td>
+    <td>
+<p>Selects documents containing two or more search terms within N number of words of each other, where N is an integer between 1 and 1024. NEAR/1 searches for two words that are next to each other. The closer the search terms are within a document, the higher the document&#39;s score.</p>
+<p>You can specify multiple search terms using multiple instances of NEAR/N as long as the value of N is the same.</p>
+    </td>
+    <td>
+<p><i>commute &lt;NEAR/10&gt; bicycle &lt;NEAR/10&gt; train &lt;NEAR/10&gt;</i> retrieves documents that contain stemmed variations of these words within 10 words of each other.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>PARAGRAPH</p>
+    </td>
+    <td>
+<p>Selects documents that include all of the words you specify within the same paragraph. To search for three or more words or phrases in a paragraph, you must use the PARAGRAPH operator between each word or phrase. </p>
+    </td>
+    <td>
+<p><i>&lt;PARAGRAPH&gt; (mission, goal, statement)</i> retrieves documents that contain these terms within a paragraph.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>PHRASE</p>
+    </td>
+    <td>
+<p>Selects documents that include a phrase you specify. A phrase is a grouping of two or more words that occur in a specific order.</p>
+    </td>
+    <td>
+<p><i>&lt;PHRASE&gt; (mission, oak)</i> returns documents that contain the phrase mission oak.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SENTENCE</p>
+    </td>
+    <td>
+<p>Selects documents that include all of the words you specify within the same sentence.</p>
+    </td>
+    <td>
+<p><i>&lt;SENTENCE&gt; (jazz, musician)</i> returns documents that contain these words in the same sentence.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>IN</p>
+    </td>
+    <td>
+<p>Selects documents that contain specified values in one or more document zones. A document zone represents a region of a document, such as the document's summary, date, or body text. To search for a term only within the one or more zones that have certain conditions, you qualify the IN operator with the WHEN operator.</p>
+    </td>
+    <td>
+<p><i>Chang &lt;IN&gt; author</i> searches document zones named author for the word Chang.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following example uses a proximity operator:</p>
+<pre>&lt;cfsearch name = &quot;quick_search&quot;
+   collection=&quot;bbb&quot; 
+   type = &quot;explicit&quot;
+   criteria=&quot;red&lt;near&gt;socks&quot;&gt;
+</pre><p>For an example using the IN proximity operator to search XML documents , see <a href="00001329.htm#1194792">Zone searches</a>.</p>
+<h4><a name="wp1175585"></a>Score operators</h4>
+<p>Score operators control how the search engine calculates scores for retrieved documents. The maximum score that a returned search element can have is 1.000. You can set the score to display a maximum of four decimal places.</p>
+<p>When you use a score operator, the search engine first calculates a separate score for each search element found in a document, and then performs a mathematical operation on the individual element scores to arrive at the final score for each document.</p>
+<p>The document's score is available as a result column. You can use the SCORE result column to get the relevancy score of any document retrieved; for example:</p>
+<pre>&lt;cfoutput&gt;
+   &lt;a href=&quot;#Search1.URL#&quot;&gt;#Search1.Title#&lt;/a&gt;&lt;br&gt;
+   Document Score=#Search1.SCORE#&lt;BR&gt;
+&lt;/cfoutput&gt;
+</pre><p>The following table describes the score operators:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Operator
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>YESNO</p>
+    </td>
+    <td>
+<p>Forces the score of an element to 1 if the element's score is nonzero.</p>
+    </td>
+    <td>
+<p><i>&lt;YESNO&gt;mainframe</i>. If the retrieval result of the search on mainframe is 0.75, the YESNO operator forces the result to 1. You can use YESNO to avoid relevance ranking.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>PRODUCT</p>
+    </td>
+    <td>
+<p>Multiplies the scores for the search elements in each document matching a query.</p>
+    </td>
+    <td>
+<p><i>&lt;PRODUCT&gt;(computers, laptops)</i> takes the product of the resulting scores.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SUM</p>
+    </td>
+    <td>
+<p>Adds the scores for the search element in each document matching a query, up to a maximum value of 1.</p>
+    </td>
+    <td>
+<p><i>&lt;SUM&gt;(computers, laptops)</i> takes the sum of the resulting scores.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>COMPLEMENT</p>
+    </td>
+    <td>
+<p>Calculates scores for documents matching a query by taking the complement (subtracting from 1) of the scores for the query's search elements. The new score is 1 minus the search element's original score.</p>
+    </td>
+    <td>
+<p><i>&lt;COMPLEMENT&gt;computers</i>. If the search element's original score is .785, the COMPLEMENT operator recalculates the score as .215.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1097277"></a>Modifiers</h3>
+<p>You combine modifiers with operators to change the standard behavior of an operator in some way. The following table describes the available modifiers:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Modifier
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>CASE</p>
+    </td>
+    <td>
+<p>Specifies a case-sensitive search. Normally, Verity searches are case-insensitive for search text entered in all uppercase or all lowercase, and case-sensitive for mixed-case search strings.</p>
+    </td>
+    <td>
+<p><i>&lt;CASE&gt;Java OR &lt;CASE&gt;java</i> retrieves documents that contain Java or java, but not JAVA.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>MANY</p>
+    </td>
+    <td>
+<p>Counts the density of words, stemmed variations, or phrases in a document and produces a relevance-ranked score for retrieved documents. Use with the following operators:</p>
+<ul>
+<li>
+   WORD
+</li>
+<li>
+   WILDCARD
+</li>
+<li>
+   STEM
+</li>
+<li>
+   PHRASE
+</li>
+<li>
+   SENTENCE
+</li>
+<li>
+   PARAGRAPH
+</li>
+</ul>
+    </td>
+    <td>
+<p><i>&lt;PARAGRAPH&gt;&lt;MANY&gt;javascript &lt;AND&gt; vbscript</i>.</p>
+<p>You cannot use the MANY modifier with the following operators:</p>
+<ul>
+<li>
+   AND
+</li>
+<li>
+   OR
+</li>
+<li>
+   ACCRUE
+</li>
+<li>
+   Relational operators
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>NOT</p>
+    </td>
+    <td>
+<p>Excludes documents that contain the specified word or phrase. Use only with the AND and OR operators.</p>
+    </td>
+    <td>
+<p><i>Java &lt;AND&gt; programming &lt;NOT&gt; coffee</i> retrieves documents that contain Java and programming, but not coffee.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ORDER</p>
+    </td>
+    <td>
+<p>Specifies that the search elements must occur in the same order in which you specify them in the query. Use with the following operators:</p>
+<ul>
+<li>
+   PARAGRAPH
+</li>
+<li>
+   SENTENCE 
+</li>
+<li>
+   NEAR/N 
+</li>
+</ul>
+<p>Place the ORDER modifier before any operator.</p>
+    </td>
+    <td>
+<p><i>&lt;ORDER&gt;&lt;PARAGRAPH&gt; (&quot;server&quot;, &quot;Java&quot;)</i> retrieves documents that contain server before Java.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001327.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001329.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001328.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using cfhttp to interact with the web</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001608.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001610.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using cfhttp to interact with the web</h1>
+<p>The <a href="00000272.htm#1632966"><code>cfhttp</code></a> tag, which lets you retrieve information from a remote server, is one of the more powerful tags in the CFML tag set. You can use one of two methods--Get or Post--to interact with a remote server using the <code>cfhttp</code> tag:</p>
+<ul>
+<li>
+   Using the Get method, you can only send information to the remote server in the URL. This method is often used for a one-way transaction in which <code>cfhttp</code> retrieves an object.
+</li>
+<li>
+   Using the Post method, you can pass variables to a ColdFusion page or CGI program, which processes them and returns data to the calling page. The calling page then appears or further processes the data that was received. For example, when you use <code>cfhttp</code> to Post to another ColdFusion page, that page does not appear. It processes the request and returns the results to the original ColdFusion page, which then uses the information as appropriate.
+</li>
+</ul>
+<h2><a name="wp1096178"></a>Using the cfhttp Get method</h2>
+<p>You use Get to retrieve files, including text and binary files, from a specified server. The retrieved information is stored in a special variable, <code>cfhttp.fileContent</code>. The following examples show several common Get operations. </p>
+<h4>To retrieve a file and store it in a variable:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Use Get Method&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;cfhttp 
+	method=&quot;Get&quot;
+	url=&quot;http://www.macromedia.com&quot;
+	resolveurl=&quot;Yes&quot;&gt;
+&lt;cfoutput&gt;
+	#cfhttp.FileContent# &lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   (Optional) Replace the value of the <code>url</code> attribute with another URL. 
+</li>
+<li>
+   Save the file as get_webpage.cfm in the myapps directory under your <i>web_root</i> and view it in the web browser.
+<p>The browser loads the web page specified in the <code>url</code> attribute.</p>
+</li>
+</ol>
+<h4><a name="wp1096201"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfhttp method=&quot;Get&quot;
+&#160;&#160;&#160;url=&quot;http://www.macromedia.com&quot;
+&#160;&#160;&#160;resolveurl=&quot;Yes&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Get the page specified in the URL and make the links absolute instead of relative so that they appear properly.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+   #cfhttp.FileContent# &lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Display the page, which is stored in the variable <code>cfhttp.fileContent</code>, in the browser.</p>
+    </td>
+  </tr>
+</table>
+
+<h4>To get a web page and save it in a file:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Use Get Method&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;cfhttp
+	method = &quot;Get&quot;
+	url=&quot;http://www.macromedia.com/software&quot;
+	path=&quot;c:\temp&quot;
+	file=&quot;macr_software.htm&quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   (Optional) Replace the value of the <code>url</code> attribute with another URL and change the filename.
+</li>
+<li>
+   (Optional) Change the path from C:\temp to a path on your hard drive.
+</li>
+<li>
+   Save the page as save_webpage.cfm in the myapps directory under your <i>web_root </i>directory.
+</li>
+<li>
+   Go to the specified path and view the file that you specified in a text editor (using the values specified in step 1, this is C:\temp\macr_software.htm).
+<p>The saved file does not appear properly in your browser because the Get operation saves only the specified web page HTML. It does not save the frame, image, or other files that the page might include.</p>
+</li>
+</ol>
+<h4><a name="wp1096220"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfhttp
+method = &quot;Get&quot;
+url=&quot;http://www.macromedia.com/software&quot;
+   path=&quot;c:\temp&quot;
+   file=&quot;macr_software.htm&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Get the page specified in the URL and save it in the file specified by the <code>path</code> and <code>file</code> attributes.</p>
+<p>When you use the <code>path</code> and <code>file</code> attributes, ColdFusion ignores any <code>resolveurl</code> attribute. As a result, frames and other included files cannot appear when you view the saved page.</p>
+    </td>
+  </tr>
+</table>
+
+<h4>To get a binary file and save it:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;cfhttp
+	method=&quot;Get&quot;
+	url=&quot;http://www.macromedia.com/macromedia/accessibility/images/
+spotlight.jpg&quot;
+	path=&quot;c:\temp&quot;
+	file=&quot;My_SavedBinary.jpg&quot;&gt;
+&lt;cfoutput&gt;
+	#cfhttp.MimeType#
+&lt;/cfoutput&gt;
+</pre>
+</li>
+<li>
+   (Optional) Replace the value of the <code>url</code> attribute with the URL of a binary file that you want to download.
+</li>
+<li>
+   (Optional) Change the path from C:\temp to a path on your hard drive.
+</li>
+<li>
+   Save the file as save_binary.cfm in the myapps directory under your <i>web_root</i> and open it in the web browser to view the MIME type.
+</li>
+<li>
+   (Optional) Verify that the binary file now exists at the location you specified in the <code>path</code> attribute.
+</li>
+</ol>
+<h4><a name="wp1129606"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfhttp
+method=&quot;Get&quot;
+url=&quot;http://www.macromedia.com/macromedia/accessibility/images/spotlight.jpg&quot;
+   path=&quot;c:\temp&quot;
+   file=&quot;My_SavedBinary.jpg&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Get a binary file and save it in the <code>path</code> and <code>file</code> specified.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;<br />   #cfhttp.MimeType#<br />&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Display the MIME type of the file.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001608.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001610.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001609.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

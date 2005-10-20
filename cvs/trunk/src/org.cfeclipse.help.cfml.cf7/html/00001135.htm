@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>How ColdFusion handles errors</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001134.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001136.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>How ColdFusion handles errors</h1>
+<p>The following sections describe briefly how ColdFusion handles errors. The rest of this chapter expands on this information.</p>
+<h3><a name="wp1126151"></a>Missing template errors</h3>
+<p>If a user requests a page that the ColdFusion cannot find, and the Administrator Server Settings Missing Template Handler field specifies a Missing Template Handler page, ColdFusion uses that page to display error information. Otherwise, it displays a standard error message.</p>
+<h3><a name="wp1102640"></a>Form field validation errors</h3>
+<p>When a user enters invalid data in an HTML tag that uses onServer or hidden form field server-side data validation ColdFusion does the following:</p>
+<ol>
+<li>
+   If the Application CFC (Application.cfc) has an <code>onError</code> event handler method, ColdFusion calls the method.
+</li>
+<li>
+   If the Application.cfc initialization code or the Application.cfm page has a <code>cferror</code> that specifies a Validation error handler, ColdFusion displays the specified error page.
+</li>
+<li>
+   Otherwise, it displays the error information in a standard format that consists of a default header, a bulleted list describing the errors, and a default footer. 
+</li>
+</ol>
+<p>For more information on using hidden form field validation, see <a href="00001376.htm#1096836">Validating Data</a>. For more information on Application.cfc, see <a href="00001102.htm#1101532">Designing and Optimizing a ColdFusion&#160;Application</a></p>
+<h3><a name="wp1127152"></a>Compiler exception errors</h3>
+<p>If ColdFusion encounters a compiler exception, how it handles the exception depends on whether the error occurs on a requested page or on an included page: </p>
+<ul>
+<li>
+   If the error occurs on a page that is accessed by a <a href="00000277.htm#1100248"><code>cfinclude</code></a> or <a href="00000300.htm#1810047"><code>cfmodule</code></a> tag, or on a custom tag page that you access using the cf_ notation, ColdFusion handles it as a runtime exception in the page that accesses the tag. See the <a href="00001135.htm#1126084">Runtime exception errors</a> section, next, for a description of how these errors are handled.
+</li>
+<li>
+   If the error occurs directly on the requested page, and the Administrator Settings Site-wide Error Handler field specifies an error handler page, ColdFusion displays the specified error page. Otherwise, ColdFusion reports the error using the standard error message format described in <a href="00001136.htm#1119274">Error messages and the standard error format</a>.
+</li>
+</ul>
+<h3><a name="wp1126084"></a>Runtime exception errors</h3>
+<p>If ColdFusion encounters a runtime exception, it does the action for the <i>first</i> matching condition in the following table:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Condition
+    </th>
+    <th>
+Action
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>The code with the error is inside a <a href="00000349.htm#1104557"><code>cftry</code></a> tag and the exception type is specified in a <code>cfcatch</code> tag.</p>
+    </td>
+    <td>
+<p>Executes the code in the <a href="00000225.htm#3395038"><code>cfcatch</code></a> tag.</p>
+<p>If the <code>cftry</code> block does not have a <code>cfcatch</code> tag for this error, tests for an appropriate <a href="00000242.htm#2022557"><code>cferror</code></a> handler or site-wide error handler.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>The ColdFusion MX application has an Application.cfc with an <a href="00000697.htm#1188543"><code>onError</code></a> method</p>
+    </td>
+    <td>
+<p>Executes the code in the <code>onError</code> method. For more information on using the <code>onError</code> method, see <a href="00001121.htm#1191865">Handling errors in Application.cfc</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>A <code>cferror</code> tag specifies an exception error handler for the exception type.</p>
+    </td>
+    <td>
+<p>Uses the error page specified by the <code>cferror</code> tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>The Administrator Settings Site-wide Error Handler field specifies an error handler page.</p>
+    </td>
+    <td>
+<p>Uses the custom error page specified by the Administrator setting.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>A <code>cferror</code> tag specifies a Request error handler.</p>
+    </td>
+    <td>
+<p>Uses the error page specified by the <code>cferror</code> tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>The default case.</p>
+    </td>
+    <td>
+<p> Uses the standard error message format</p>
+    </td>
+  </tr>
+</table>
+
+<p>For example, if an exception occurs in CFML code that is not in a <code>cftry</code> block, and Application.cfc does not have an <code>onError</code> method, but a <code>cferror</code> tag specifies a page to handle this error type, ColdFusion uses the specified error page.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001134.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001136.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001135.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

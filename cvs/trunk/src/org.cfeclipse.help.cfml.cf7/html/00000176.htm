@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 4: Updating a SQL row using the cfupdate tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000175.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000177.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 4: Updating a SQL row using the cfupdate tag</h1>
+<p>To update an existing SQL row, ColdFusion offers a simple approach through the use of the <code>cfupdate</code> tag. Like the <code>cfinsert</code> tag, the <code>cfupdate</code> tag has <code>datasource</code> and <code>tablename </code>attributes to specify where the data is to be inserted. The tag also has a <code>formfields</code> attribute to identify which fields are to insert. The <code>formfields</code> attribute specifies a comma-separated list of form fields to insert. If this attribute is not specified, all the fields in the form are included in the operation. </p>
+<p>All the fields of the tripedit.cfm page have corresponding columns in the Trips table, so you can omit the <code>FormFields</code> attribute for both the <code>cfinsert</code> and <code>cfupdate</code> tags. If the <code>tripID</code> form field is passed from the Trip Edit page, the <code>cfupdate</code> tag is used; otherwise the <code>cfinsert</code> tag is executed. The following example uses the <code>cfupdate</code> and <code>cfinsert</code> tags without the <code>formfields</code> attribute:</p>
+<pre>&lt;cfif not isdefined(&quot;form.tripID&quot;)&gt;
+   &lt;cfinsert datasource=&quot;CompassTravel&quot; tablename=&quot;Trips&quot;&gt; 
+      &lt;cflocation url=&quot;tripdetail.cfm&quot;&gt;
+   &lt;cfelse&gt;
+   &lt;cfupdate datasource=&quot;CompassTravel&quot; tablename=&quot;Trips&quot;&gt;
+      &lt;cflocation url=&quot;tripdetail.cfm?ID=#Form.tripID#&quot;&gt;
+&lt;/cfif&gt;
+</pre><h4><a name="wp1155944"></a>Reviewing the code</h4>
+<p>The following tables describes the <code>cfinsert</code> and <code>cfupdate</code> code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif not isdefined(&quot;form.tripID&quot;)&gt;
+   &lt;cfinsert datasource=&quot;CompassTravel&quot;
+   tablename=&quot;Trips&quot;&gt; 
+      &lt;cflocation url=&quot;tripdetail.cfm&quot;&gt;
+&lt;cfelse&gt;
+&lt;cfupdate datasource=&quot;CompassTravel&quot;
+   tablename=&quot;Trips&quot;&gt;
+&lt;cflocation url=&quot;tripdetail.cfm?ID=#Form.tripID#&quot;&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>The <code>IsDefined</code> function determines whether the hidden field <code>tripID</code> was passed to the action page from the tripedit.cfm page. If there is a current trip, the <code>IsDefined</code> function returns True. When there is no current trip, the <code>cfif</code> statement is True. When the <code>cfif</code> statement is True, the <code>cfinsert</code> tag executes and the main page appears with the updated trip. If the <code>cfif</code> statement evaluates to False, the <code>cfinsert</code> statement executes and the first trip appears in the main page. </p>
+    </td>
+  </tr>
+</table>
+
+<h4>To update the database using a cfupdate tag:</h4>
+<ol>
+<li>
+   Open the tripeditaction.cfm file in the my_app directory in your editor.
+</li>
+<li>
+   Add the following code before the <code>&lt;/body&gt;</code> tag at the end of the file:
+<pre>
+&lt;!--- Update the database ---&gt;
+	&lt;cfif isOk EQ &quot;Yes&quot;&gt;
+	   &lt;cfif isdefined(&quot;form.tripID&quot;)&gt;
+		   &lt;cfupdate datasource=&quot;CompassTravel&quot; tablename=&quot;trips&quot;&gt;
+	       &lt;cflocation url=&quot;tripdetail.cfm?ID=#Form.tripID#&quot;&gt;
+	   &lt;cfelse&gt;
+		   &lt;cfinsert datasource=&quot;CompassTravel&quot; tablename=&quot;TRIPS&quot;&gt; 
+           &lt;cflocation url=&quot;tripdetail.cfm&quot;&gt;
+	   &lt;/cfif&gt;
+	&lt;cfoutput&gt;You have added #Form.TripName# to the trips database.
+	&lt;/cfoutput&gt;
+	&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<p>For more information about adding data to a database using the <code>cfupdate</code> tag, see <i>ColdFusion MX Developer's Guide</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000175.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000177.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000176.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

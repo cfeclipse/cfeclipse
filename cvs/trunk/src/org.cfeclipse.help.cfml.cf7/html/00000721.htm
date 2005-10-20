@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>getMaxQueueSize</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000720.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000722.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>getMaxQueueSize</h1>
+<h4><a name="wp1174315"></a>Description</h4>
+<p>Returns the maximum size of the ColdFusion event queue, as set in the ColdFusion MX Administrator.</p>
+<h4><a name="wp1174317"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1174319"></a>Syntax</h4>
+<pre>int getMaxQueueSize()
+</pre><h4><a name="wp1174321"></a>See also</h4>
+<p><a href="00000719.htm#1174238">addEvent</a>, <a href="00000722.htm#1179501">getQueueSize</a></p>
+<h4><a name="wp1175302"></a>Returns</h4>
+<p>The integer maximum number of messages that the gateway services queue can hold.</p>
+<h4><a name="wp1175304"></a>Usage</h4>
+<p>If the queue length reaches this value, the <code>addEvent</code> method will not add its message to the processing queue. You can use this method and the <code>getQueueSize</code> method to control the rate of event queuing and to help diagnose any throughput problems in your gateways.</p>
+<h4><a name="wp1174337"></a>Example</h4>
+<p>The following example logs the queue size, maximum queue size, and other information if a gatewayService.addEvent method fails to queue a message for delivery to a listener CFC. (It uses an internal method to construct the error message string.)</p>
+<pre>boolean sent = gatewayService.addEvent(cfmsg);
+if (!sent)
+{
+   logger.error(RB.getString(this, &quot;IMGateway.cantAddToQueue&quot;,
+      gatewayType, gatewayID, ((path != null) ? path : &quot;default&quot;),
+      Integer.ToString(gatewayService.getQueueSize()),
+<strong>      Integer.ToString(gatewayService.getMaxQueueSize())));</strong>
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000720.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000722.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000721.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

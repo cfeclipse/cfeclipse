@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfregistry action = &quot;get&quot;</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000319.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000321.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfregistry action = &quot;get&quot;</h1>
+<h4><a name="wp1761112"></a>Description</h4>
+<p>Accesses a registry value and stores it in a ColdFusion variable. </p>
+<h4><a name="wp1102755"></a>Syntax</h4>
+<pre>&lt;cfregistry <br />   action = &quot;get&quot;<br />   branch = &quot;branch&quot;<br />   entry = &quot;key or value&quot;<br />   variable = &quot;variable&quot;<br />   type = &quot;data type&quot;&gt;
+</pre><h4><a name="wp2863935"></a>See also</h4>
+<p><a href="00001147.htm#1159066">Using Persistent Data and Locking</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1426944"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Always <code>get.</code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>branch</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of a registry branch.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>entry</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Registry value to access.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>variable</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Variable into which to put value.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<ul>
+<li>
+   string: returns string value.
+</li>
+<li>
+   dWord: returns DWord value.
+</li>
+<li>
+   key: returns key's default value.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102768"></a>Usage</h4>
+<p>If the value does not exist, the <code>cfregistry</code> tag does not create an entry.</p>
+<h4><a name="wp1102770"></a>Example</h4>
+<pre>&lt;!--- This example uses cfregistry with the get action. ---&gt;
+&lt;cfregistry action = &quot;get&quot;
+ branch = &quot;HKEY_LOCAL_MACHINE\Software\Microsoft\Java VM&quot; 
+ entry = &quot;ClassPath&quot; type = &quot;String&quot; variable = &quot;RegValue&quot;&gt;
+&lt;h1&gt;cfregistry action = &quot;get&quot;&lt;/h1&gt;
+&lt;cfoutput&gt;
+   &lt;p&gt;Java ClassPath value is #RegValue#
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000319.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000321.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000320.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

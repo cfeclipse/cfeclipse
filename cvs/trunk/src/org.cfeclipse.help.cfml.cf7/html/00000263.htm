@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cffunction</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000262.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000264.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cffunction</h1>
+<h4><a name="wp2852458"></a>Description</h4>
+<p>Defines a function that you can call in CFML. Required to define ColdFusion component methods.</p>
+<h4><a name="wp3839894"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code>XML</code> value to the <code>returntype</code> attribute.</p>
+<p>ColdFusion MX: Added this tag.</p>
+<h4><a name="wp2852462"></a>Category</h4>
+<p><a href="00000202.htm#2459750">Extensibility tags</a></p>
+<h4><a name="wp2852467"></a>Syntax</h4>
+<pre>&lt;cffunction<br />   name = &quot;methodName&quot;<br />   returnType = &quot;dataType&quot;<br />   roles = &quot;securityRoles&quot;<br />   access = &quot;methodAccess&quot;<br />description = &quot;function description&quot;<br />output = &quot;yes&quot; or &quot;no&quot;<br />   displayName = &quot;name&quot;<br />   Hint = &quot;hint text&quot;&gt;
+</pre><h4><a name="wp3486338"></a>See also</h4>
+<p><a href="00000218.htm#2855190"><code>cfargument</code></a><code>, </code><a href="00000231.htm#3350776"><code>cfcomponent</code></a><code>, </code><a href="00000281.htm#2650065"><code>cfinvoke</code></a><code>, </code><a href="00000282.htm#3014048"><code>cfinvokeargument</code></a><code>, </code><a href="00000302.htm#2820239"><code>cfobject</code></a><code>, </code><a href="00000315.htm#2498235"><code>cfproperty</code></a><code>, </code><a href="00000326.htm#2498057"><code>cfreturn</code></a></p>
+<h4><a name="wp2852474"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A string; a component method that is used within the <code>cfcomponent</code> tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>returnType</p>
+    </td>
+    <td>
+<p>Required for a web service; Optional, otherwise.</p>
+    </td>
+    <td>
+<p>&#160;any</p>
+    </td>
+    <td>
+<p>String; a type name; data type of the function return value:</p>
+<ul>
+<li>
+   any
+</li>
+<li>
+   array
+</li>
+<li>
+   binary
+</li>
+<li>
+   boolean
+</li>
+<li>
+   date
+</li>
+<li>
+   guid - The argument must be a UUID or GUID of the form <i>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</i> where each<i> x</i> is a character representing a hexadecimal number (0-9A-F).
+</li>
+<li>
+   numeric
+</li>
+<li>
+   query
+</li>
+<li>
+   string
+</li>
+<li>
+   struct
+</li>
+<li>
+   uuid: the argument must be a ColdFusion UUID of the form <i>xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx</i> where each<i> x</i> is a character representing a hexadecimal number (0-9A-F).
+</li>
+<li>
+   variableName: a string formatted according to ColdFusion variable naming conventions.
+</li>
+<li>
+   void: does not return a value
+</li>
+<li>
+   xml: allows web service functions to return CFML XML objects and XML strings.
+</li>
+<li>
+   a component name: if the type attribute value is not one of the preceding items, ColdFusion treats it as the name of a ColdFusion component. When the function executes, it generates an error if the argument that is passed in is not a CFC with the specified name.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>roles</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&quot;&quot; (empty)</p>
+    </td>
+    <td>
+<p>A comma-delimited list of ColdFusion security roles that can invoke the method. Only users who are logged in with the specified roles can execute the function. If this attribute is omitted, all users can invoke the method.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>access</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>public</p>
+    </td>
+    <td>
+<p>The client security context from which the method can be invoked:</p>
+<ul>
+<li>
+   private: available only to the component that declares the method and any components that extend the component in which it is defined.
+</li>
+<li>
+   package: available only to the component that declares the method, components that extend the component, or any other components in the package.
+</li>
+<li>
+   public: available to a locally executing page or component method.
+</li>
+<li>
+   remote: available to a locally or remotely executing page or component method, or a remote client through a URL, Flash, or a web service. To publish the function as a web service, this option is required.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>description</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Supplies a short text description of the function.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>output</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Function body is processed as standard CFML</p>
+    </td>
+    <td>
+<p>Specifies under which conditions the function can generate HTML output.</p>
+<ul>
+<li>
+   yes: the entire function body is processed as if it were within a <code>cfoutput</code> tag. Variables names surrounded by number signs (#) are automatically replaced with their values.
+</li>
+<li>
+   no: the function is processed as if it were within a <code>cfsilent</code> tag
+</li>
+</ul>
+<p>If you do not specify this attribute, the function body is processed as standard CFML. Any variables must be in <code>cfoutput</code> tags.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>displayname</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p><code>&#160;</code></p>
+    </td>
+    <td>
+<p>Meaningful only for CFC method parameters. A value to be displayed in parentheses following the function name when using introspection to show information about the CFC.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hint</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Meaningful only for CFC method parameters. Text to be displayed when using introspection to show information about the CFC. The <code>hint</code> attribute value follows the syntax line in the function description.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3011529"></a>Usage</h4>
+<p>The <code>cffunction</code> tag can define a function that you call in the same manner as a ColdFusion built-in function. </p>
+<p>To define a ColdFusion component (CFC) method, you must use a <code>cffunction</code> tag. </p>
+<p>The following example shows <code>cffunction</code> tag attributes for a simple CFC method that returns a ColdFusion Query object.</p>
+<pre>&lt;cffunction
+   name=&quot;getEmployees&quot; 
+   access=&quot;remote&quot; 
+   returnType=&quot;query&quot; 
+   hint=&quot;This query returns all records in the employee database. It can<br />drill-down or narrow the search, based on optional input parameters.&quot;&gt;
+</pre><p>For information on using the <code>cffunction</code> tag for ColdFusion components, see <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<p>If you specify a <code>roles</code> attribute, the function executes only if a user is logged in and belongs to one of the specified roles.</p>
+<p>If you specify <code>variableName</code> for the <code>returnType</code> attribute, the function must return a string that is in ColdFusion variable name format; that is, the function must return a string that starts with a letter, underscore, or Unicode currency symbol, and consist of letters, numbers, and underscores (_), periods, and Unicode currency symbols, only. ColdFusion does not check whether the value corresponds to an existing ColdFusion variable.</p>
+<h4><a name="wp3209470"></a>Example</h4>
+<pre>&lt;cfcomponent&gt;
+   <strong>&lt;cffunction name=&quot;getEmp&quot;&gt;</strong>
+<strong>       &lt;cfquery </strong>
+<strong>            name=&quot;empQuery&quot; datasource=&quot;ExampleApps&quot; &gt;</strong>
+<strong>            SELECT FIRSTNAME, LASTNAME, EMAIL</strong>
+<strong>            FROM tblEmployees</strong>
+<strong>       &lt;/cfquery&gt;</strong>
+<strong>       &lt;cfreturn empQuery&gt;</strong>
+<strong>   &lt;/cffunction&gt;</strong>
+   <strong>&lt;cffunction name=&quot;getDept&quot;&gt;</strong>
+<strong>      &lt;cfquery <br />name=&quot;deptQuery&quot; datasource=&quot;ExampleApps&quot; &gt;</strong>
+<strong>          SELECT *</strong>
+<strong>          FROM tblDepartments</strong>
+<strong>       &lt;/cfquery&gt;</strong>
+<strong>       &lt;cfreturn deptQuery&gt;</strong>
+<strong>   &lt;/cffunction&gt;</strong>
+&lt;/cfcomponent&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000262.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000264.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000263.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

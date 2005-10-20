@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfchartdata</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000226.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000228.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfchartdata</h1>
+<h4><a name="wp2748542"></a>Description</h4>
+<p>Used with the <a href="00000226.htm#2619630"><code>cfchart</code></a> and <a href="00000228.htm#2741830"><code>cfchartseries</code></a> tags. This tag defines chart data points. Its data is submitted to the <a href="00000228.htm#2741830"><code>cfchartseries</code></a> tag. </p>
+<h4><a name="wp2748544"></a>Category</h4>
+<p><a href="00000199.htm#2459638">Data output tags</a>, <a href="00000202.htm#2459750">Extensibility tags</a></p>
+<h4><a name="wp2748549"></a>Syntax</h4>
+<pre>&lt;cfchartdata <br />   item = &quot;text&quot; <br />   value = &quot;number&quot;&gt;
+</pre><h4><a name="wp2752500"></a>See also</h4>
+<p><a href="00000226.htm#2619630"><code>cfchart</code></a>, <a href="00000228.htm#2741830"><code>cfchartseries</code></a>; <a href="00001421.htm#1156498">Creating Charts and Graphs</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<p>ColdFusion&#160;MX: Added this tag.</p>
+<h4><a name="wp2748557"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>item</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Data point name; string.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Data point value; number or expression.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3831915"></a>Example</h4>
+<pre>&lt;!--- The following example analyzes the salary data in the cfdocexamples
+database and generates a bar chart showing average salary by department. The
+body of the cfchartseries tag loops over a cfchartdata tag to include data
+available from the query. ---&gt;
+
+&lt;!--- Get the raw data from the database. ---&gt;
+&lt;cfquery name=&quot;GetSalaries&quot; datasource=&quot;cfdocexamples&quot;&gt;
+SELECT Departmt.Dept_Name, 
+Employee.Dept_ID, 
+Employee.Salary
+FROM Departmt, Employee
+WHERE Departmt.Dept_ID = Employee.Dept_ID
+&lt;/cfquery&gt;
+
+&lt;!--- Use a query of queries to generate a new query with ---&gt;
+&lt;!--- statistical data for each department. ---&gt;
+&lt;!--- AVG and SUM calculate statistics. ---&gt;
+&lt;!--- GROUP BY generates results for each department. ---&gt;
+&lt;cfquery dbtype = &quot;query&quot; name = &quot;DataTable&quot;&gt;
+SELECT 
+Dept_Name,
+AVG(Salary) AS avgSal,
+SUM(Salary) AS sumSal
+FROM GetSalaries
+GROUP BY Dept_Name
+&lt;/cfquery&gt;
+
+&lt;!--- Reformat the generated numbers to show only thousands. ---&gt;
+&lt;cfloop index = &quot;i&quot; from = &quot;1&quot; to = &quot;#DataTable.RecordCount#&quot;&gt;
+&lt;cfset DataTable.sumSal[i] = Round(DataTable.sumSal[i]/1000)*1000&gt;
+&lt;cfset DataTable.avgSal[i] = Round(DataTable.avgSal[i]/1000)*1000&gt;
+&lt;/cfloop&gt;
+
+&lt;h1&gt;Employee Salary Analysis&lt;/h1&gt; 
+&lt;!--- Bar graph, from Query of Queries. ---&gt;
+&lt;cfchart format=&quot;flash&quot; 
+xaxistitle=&quot;Department&quot; 
+yaxistitle=&quot;Salary Average&quot;&gt; 
+
+&lt;cfchartseries type=&quot;bar&quot; 
+itemcolumn=&quot;Dept_Name&quot; 
+valuecolumn=&quot;avgSal&quot;&gt;
+
+&lt;cfloop query=&quot;DataTable&quot;&gt;
+&lt;<code><strong>cfchartdata</strong></code> item=&quot;#DataTable.Dept_Name#&quot; value=&quot;#DataTable.avgSal#&quot;&gt;
+&lt;/cfloop&gt;
+
+&lt;/cfchartseries&gt;
+&lt;/cfchart&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000226.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000228.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000227.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

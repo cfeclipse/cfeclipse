@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using function names as function arguments</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001016.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001018.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using function names as function arguments</h1>
+<p>Because function names are ColdFusion variables, you can pass a function's name as an argument to another function. This technique allows a function to use another function as a component. For example, a calling page can call a calculation function, and pass it the name of a function that does some subroutine of the overall function. </p>
+<p>This way, the calling page could use a single function for different specific calculations, such as calculating different forms of interest. The initial function provides the framework, while the function whose name is passed to it can implement a specific algorithm that is required by the calling page.</p>
+<p>The following simple example shows this use. The <code>binop</code> function is a generalized function that takes the name of a function that performs a specific binary operation and two operands. The <code>binop</code> function simply calls the specified function and passes it the operands. This code defines a single operation function, the sum function. A more complete implementation would define multiple binary operations.</p>
+<pre>&lt;cfscript&gt;
+function binop(operation, operand1, operand2)
+{ return (operation(operand1, operand2)); }
+function sum(addend1, addend2)
+{ return addend1 + addend2;}
+x = binop(sum, 3, 5);
+writeoutput(x);
+&lt;/cfscript&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001016.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001018.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001017.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

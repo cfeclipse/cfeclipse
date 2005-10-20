@@ -1,0 +1,403 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Validating form data using hidden fields</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001384.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001386.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Validating form data using hidden fields</h1>
+<p>ColdFusion lets you specify form field validation on the server by using hidden form fields whose names consist of the name of the field to validate and the validation type. Hidden field validation uses the same underlying techniques and algorithms as onServer validation of ColdFusion form fields.</p>
+<p>Hidden field validation has the following features:</p>
+<ul>
+<li>
+   You can use it with standard HTML tags. For example, you can validate data in an HTML <code>input</code> tag. This feature was particularly useful in releases prior to ColdFusion&#160;MX&#160;7, because the <code>cfinput</code> tag did not support all HTML <code>type</code> attributes.
+</li>
+<li>
+   It is backward-compatible with validation prior to ColdFusion&#160;MX&#160;7, when hidden field validation was the only way to do validation on the server.
+</li>
+<li>
+   Because you use a separate tag for each validation type, if you specify multiple validation rules for a field, you can specify a different error message for each rule.
+</li>
+<li>
+   You can use hidden field validation with any form field type that submits a data value, not just <code>input</code>, <code>cfinput</code>, <code>textarea</code>, or <code>cftextarea.</code>
+</li>
+</ul>
+<h2><a name="wp1153661"></a>Specifying hidden form field validation</h2>
+<p>To specify hidden field validation, you do the following:</p>
+<ul>
+<li>
+   Create one HTML <code>input</code> element or CFML <code>cfinput</code> tag of <code>type=&quot;hidden&quot; </code>for each validation rule. 
+</li>
+<li>
+   Specify the name of the field to validate as the first part of the hidden field name.
+</li>
+<li>
+   Specify the type of validation, starting with an underscore character (_), as the second part of the hidden field name.
+</li>
+<li>
+   You can specify multiple rules for each form data field. For example, to specify range and required validation for a field named myValue, create hidden myValue_cfformrange and myValue_cfformrequired fields.
+</li>
+<li>
+   For most types of validation, specify the error message as the field <code>value</code> attribute.
+</li>
+<li>
+   For range, maximum length, or regular expression validation, specify the rule, such as the maximum length, in the <code>value</code> attribute. For these validation types, you cannot specify a custom error message.
+</li>
+</ul>
+<p>The following example uses hidden fields to require data in a date field and ensure that the field contains a date. It consists only of HTML tags.</p>
+<pre>&lt;input type=&quot;text&quot; name=&quot;StartDate&quot; size=&quot;16&quot; maxlength=&quot;16&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;StartDate_required&quot; 
+      value=&quot;You must enter a start date.&quot;&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;StartDate_date&quot; 
+   value=&quot;Please enter a valid date as the start date.&quot;&gt;
+</pre><p>Use the following suffixes at the end of hidden form field names to specify the validation type. The type identifier always starts with an underscore. Several validation rules have two names you can use. The names that do not start with &quot;_cf&quot; were used in earlier releases and are retained for backward compatibility. For consistency and clarity, Macromedia recommends using the names that start with &quot;_cf&quot; in new forms.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+<strong>Field name suffix</strong>
+    </th>
+    <th>
+Verifies
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>_integer, _cfforminteger</p>
+    </td>
+    <td>
+<p>An integer of the range -2,147,483,648 -- 2,147,483,647. Treats the initial characters &quot;$ ¤ ¥ £ +&quot; as valid input, but removes them from the number. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_cfformnumeric</p>
+    </td>
+    <td>
+<p>Any numeric value. Treats the initial characters &quot;$ ¤ ¥ £ +&quot;as valid input, but does NOT remove them from the number.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_float, _cfformfloat</p>
+    </td>
+    <td>
+<p>Any value (including an integer) that can be represented as a floating point number with up to 12 significant digits. Treats the initial characters &quot;$ ¤ ¥ £ +&quot; as valid input, but removes them from the number. </p>
+<p>Converts input data to a real number; for example a dump of an integer value on the action page includes a decimal point followed by a 0.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_range, _cfformrange</p>
+    </td>
+    <td>
+<p>A numeric value within boundaries specified by the <code>value</code> attribute. Specify the range in the value attribute using the format &quot;min=<i>minvalue</i> max=<i>maxvalue</i>.&quot;<i> </i>You cannot specify a custom error message for this validation.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_date, _cfformdate</p>
+    </td>
+    <td>
+<p>A date in any format that ColdFusion can understand; converts the input to ODBC date format. Allows entry of a time part, but removes it from the ODBC value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_cfformusdate </p>
+    </td>
+    <td>
+<p>A date in the form m/d/y, m-d-y , or m.d.y, The m and d format can be 1 or 2 digits; y can be 2 or 4 digits. Does not convert the string to an ODBC value and does not allow a time part.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_eurodate, _cfformeurodate</p>
+    </td>
+    <td>
+<p>A date in the form d/m/y, d-m-y, or d.m.y. The m and d format can be 1 or 2 digits; y can be 2 or 4 digits. Converts the input to ODBC date format. Allows entry of a time part, but removes it from the ODBC value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_time, _cfformtime</p>
+    </td>
+    <td>
+<p>A time. Can be in 12-hour or 24-hour clock format, and can include seconds in the form hh:mm:ss or a case-independent am or pm indicator.</p>
+<p>Converts the input to ODBC time format. Allows entry of a date part, but removes it from the ODBC value.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_cfformcreditcard</p>
+    </td>
+    <td>
+<p>After stripping blanks and dashes, a number that conforms to the mod10 algorithm. Number must have 13-16 digits.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_cfformSSN, _cfformsocial_security_number</p>
+    </td>
+    <td>
+<p>A nine-digit Social Security number. Can be of the form xxx-xx-xxxx or xxx xx xxxx.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_cfformtelephone</p>
+    </td>
+    <td>
+<p>Standard U.S. telephone formats. Does not support international telephone numbers.</p>
+<p>Allows area codes with or without parentheses, and hyphens (-), spaces, periods, or no separators between standard number groups. Can be preceded by a 1 long-distance designator, and can end with an up-to-5 digit extension, optionally starting with x. The area code and exchange must begin with a digit in the range 1 - 9.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_cfformzipcode</p>
+    </td>
+    <td>
+<p>A 5-digit or 9-digit U.S. ZIP code. In 9-digit codes, the final four digits must be preceded by a hyphen (-) or space.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_cfformemail</p>
+    </td>
+    <td>
+<p>A valid e-mail address. Valid address characters are a-zA-Z0-9_- and the period and separator. There must be a single at sign (@) and the text after the @ character must include a period, as in my_address@MyCo.com or b-b.jones27@hisco.co.uk.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_cfformURL</p>
+    </td>
+    <td>
+<p>A valid URL. Must start with http:\\, https:\\, ftp:\\, file:\\, mailto:, or news:. Can include, as appropriate, username and password designators and query strings. The main part of the address can only have the characters A-Za-z0-9 and -.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_cfformboolean</p>
+    </td>
+    <td>
+<p>A value that can be treated as a Boolean: Yes, No, True, False, 0, 1.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p> _cfformUUID</p>
+    </td>
+    <td>
+<p>A universally unique identifier (UUID) that follows the ColdFusion format, xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx, where x is a hexadecimal number.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_cfformGUID</p>
+    </td>
+    <td>
+<p>A unique identifier that follows the Microsoft/DCE format, xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx, where x is a hexadecimal number.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_cfformnoblanks</p>
+    </td>
+    <td>
+<p>The field must not include blanks. ColdFusion uses this validation only if you also specify a _<code>required</code> hidden field.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_cfformmaxlength</p>
+    </td>
+    <td>
+<p>The number of characters must not exceed the number specified by the tag <code>value</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>_cfformregex, _cfformregular_expression</p>
+    </td>
+    <td>
+<p>The data must match a JavaScript regular expression specified by the tag <code>value</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>_required, _cfformrequired</p>
+    </td>
+    <td>
+<p>Data must be entered or selected in the form field.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1147833"></a>Hidden form field considerations</h2>
+<p>Consider the following rules and recommendations when determining whether and how to use hidden form field validation:</p>
+<ul>
+<li>
+   Use hidden field validation if you want to validate data from standard HTML <code>input</code> tags. The <code>cfinput</code> and <code>cftextarea</code> tags include a <code>validateAt</code> attribute that provides a simpler method for specifying server-side validation. 
+</li>
+<li>
+   Consider using hidden field validation with the <code>cfinput</code> and <code>cftextarea</code> tags if you specify multiple validation rules for a single field and want to provide a separate error message for each validation.
+</li>
+<li>
+   Do not use the suffixes listed in the table as field names.
+</li>
+<li>
+   Adding a validation rule to a field does not make it a required field. You must add a separate <code>_required</code> hidden field to ensure user entry.
+</li>
+</ul>
+<h2><a name="wp1133600"></a>Hidden form field example</h2>
+<p>The following procedure creates a simple form for entering a start date and a salary. It uses hidden fields to ensure that you enter data and that the data is in the right format. </p>
+<p>This example uses a self-submitting form; the same ColdFusion page is both the form page and its action page. The page uses an <a href="00000520.htm#1106482"><code>IsDefined</code></a> function to check that form data has been submitted. This way, the pages does not show any results until you submit the input. The form uses HTML tags only; you can substitute these tags with the CFML equivalents.</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;Simple Data Form&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;Simple Data Form&lt;/h2&gt;
+
+&lt;!--- Form part. ---&gt;
+&lt;form action=&quot;datatest.cfm&quot; method=&quot;Post&quot;&gt;
+   &lt;input type=&quot;hidden&quot; 
+      name=&quot;StartDate_cfformrequired&quot; 
+      value=&quot;You must enter a start date.&quot;&gt;
+   &lt;input type=&quot;hidden&quot; 
+      name=&quot;StartDate_cfformdate&quot; 
+      value=&quot;Enter a valid date as the start date.&quot;&gt;
+   &lt;input type=&quot;hidden&quot; 
+      name=&quot;Salary_cfformrequired&quot; 
+      value=&quot;You must enter a salary.&quot;&gt;
+   &lt;input type=&quot;hidden&quot; 
+      name=&quot;Salary_cfformfloat&quot; 
+      value=&quot;The salary must be a number.&quot;&gt;
+   Start Date: 
+   &lt;input type=&quot;text&quot; 
+      name=&quot;StartDate&quot; size=&quot;16&quot; 
+      maxlength=&quot;16&quot;&gt;&lt;br&gt;
+   Salary: 
+   &lt;input type=&quot;text&quot; 
+      name=&quot;Salary&quot; 
+      size=&quot;10&quot; 
+      maxlength=&quot;10&quot;&gt;&lt;br&gt;
+   &lt;input type=&quot;reset&quot; 
+      name=&quot;ResetForm&quot; 
+      value=&quot;Clear Form&quot;&gt;
+   &lt;input type=&quot;submit&quot; 
+      name=&quot;SubmitForm&quot; 
+      value=&quot;Insert Data&quot;&gt;
+&lt;/form&gt;
+&lt;br&gt;
+
+&lt;!--- Action part. ---&gt;
+&lt;cfif isdefined(&quot;Form.StartDate&quot;)&gt;
+   &lt;cfoutput&gt;
+      Start Date is: #DateFormat(Form.StartDate)#&lt;br&gt;
+      Salary is: #DollarFormat(Form.Salary)#
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+&lt;/html&gt;
+</pre><p>When the user submits this form, ColdFusion scans the form fields to find any validation rules. It then uses the rules to analyze the user's input. If any of the input rules are violated, ColdFusion displays an error page with the error message that you specified in the hidden field's <code>value</code> attribute. The user must go back to the form, correct the problem, and resubmit the form. ColdFusion does not accept form submission until the user enters the entire form correctly.</p>
+<p>Because numeric values often contain commas and currency symbols, ColdFusion automatically deletes these characters from fields with _cfforminteger and _cfformfloat rules before it validates the form field and passes the data to the form&#39;s action page. ColdFusion does not delete these characters from fields with _cfformnumeric rules.</p>
+<h4><a name="wp1133659"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;form action=&quot;datatest.cfm&quot;
+   method=&quot;post&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Gathers the information from this form sends it to the dataform.cfm page (this page) using the Post method.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;input type=&quot;hidden&quot; 
+   name=&quot;StartDate_cfformrequired&quot; 
+   value=&quot;You must enter a start date.&quot;&gt;
+&lt;input type=&quot;hidden&quot; 
+   name=&quot;StartDate_cfformdate&quot; 
+   value=&quot;Enter a valid date as the<br />   start date.&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Requires input into the StartDate input field. If there is no input, displays the error information &quot;You must enter a start date.&quot; Requires the input to be in a valid date format. If the input is not valid, displays the error information &quot;Enter a valid date as the start date.&quot;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;input type=&quot;hidden&quot; 
+   name=&quot;Salary_required&quot; 
+   value=&quot;You must enter a salary.&quot;&gt;
+&lt;input type=&quot;cfformhidden&quot; 
+   name=&quot;Salary_cfformfloat&quot; 
+   value=&quot;The salary must be a number.&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Requires input into the Salary input field. If there is no input, displays the error information &quot;You must enter a salary.&quot; Requires the input to be in a valid number. If it is not valid, displays the error information &quot;The salary must be a number.&quot;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>Start Date: 
+&lt;input type=&quot;text&quot; 
+   name=&quot;StartDate&quot; size=&quot;16&quot; 
+   maxlength=&quot;16&quot;&gt;&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Creates a text box called StartDate in which users can enter their starting date. Makes it 16-characters wide.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>Salary: 
+&lt;input type=&quot;text&quot; 
+   name=&quot;Salary&quot; 
+   size=&quot;10&quot; 
+   maxlength=&quot;10&quot;&gt;&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Creates a text box called Salary in which users can enter their salary. Makes it ten-characters wide.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfif isdefined(&quot;Form.StartDate&quot;)&gt;
+   &lt;cfoutput&gt;
+      Start Date is:<br />         #DateFormat(Form.StartDate)#&lt;br&gt;
+      Salary is: <br />         #DollarFormat(Form.Salary)#
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>Displays the values of the StartDate and Salary form fields only if they are defined. They are not defined until you submit the form, so they do not appear on the initial form. Uses the <a href="00000441.htm#1103264"><code>DateFormat</code></a> function to display the start date in the default date format. Uses the <a href="00000455.htm#1104101"><code>DollarFormat</code></a> function to display the salary with a dollar sign and commas.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001384.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001386.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001385.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

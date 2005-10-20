@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Configuring web servers</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000048.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000050.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Configuring web servers</h1>
+<p>This section describes how to configure a web server to serve ColdFusion pages, for Windows and UNIX. Do this if you did not configure a web server automatically during installation, to change your web server, or to configure a web server for a cluster.</p>
+<p>You configure an external web server connection using the Web Server Configuration Tool, which you can run either through a graphical user interface (GUI) or the command line. The Windows discussions describe GUI mode, and the UNIX instructions describe command-line mode; however, you can use GUI mode on UNIX if you have access to a graphical environment. </p>
+<p><strong>Tip: </strong>ColdFusion&#160;MX&#160;7 provides batch files and shell scripts in the <i>cf_root</i>/bin/connectors directory to help you get started with command-line usage.</p><p>For more information on the Web Server Configuration Tool, including information on multihoming and distributed usage, see <i>Configuring and Administering ColdFusion&#160;MX</i>.</p>
+<p><strong>Note: </strong>If you cannot verify your configuration, repeat the procedure. If the problem persists, contact Macromedia Technical Support for assistance, or manually create the element that you cannot verify in the configuration (for example, manually add an entry to the Apache httpd.conf file, as described in this section).</p><h2><a name="wp1149379"></a>Configuring web servers in Windows</h2>
+<p>This section explains how to configure the following web servers in Windows:</p>
+<ul>
+<li>
+   <a href="00000049.htm#1175085">Configuring IIS in Windows</a>
+</li>
+<li>
+   <a href="00000049.htm#1126688">Configuring SunONE Web Server or iPlanet web server in Windows</a>
+</li>
+<li>
+   <a href="00000049.htm#1123947">Configuring Apache web server in Windows</a>
+</li>
+</ul>
+<h3><a name="wp1175085"></a>Configuring IIS in Windows</h3>
+<p>This section describes how to configure IIS for ColdFusion MX in Windows, and how to verify your configuration. You configure IIS using the Web Server Configuration Tool in either GUI or command-line mode. This discussion describes how to use GUI mode. </p>
+<p><strong>Tip: </strong>(Server configuration only) To use the command line, open the batch files located in <i>cf_root</i>\bin\connectors. </p><p>For more information, see the Web Server Management chapter in <i>Configuring and Administering ColdFusion&#160;MX</i>.</p>
+<h4>To configure IIS for ColdFusion&#160;MX&#160;7 in Windows:</h4>
+<ol>
+<li>
+   Start the Web Server Configuration Tool by selecting Start &gt; Programs &gt; Macromedia &gt; ColdFusion&#160;MX&#160;7 &gt; Web Server Configuration Tool.
+</li>
+<li>
+   Click Add.
+</li>
+<li>
+   In the Server drop-down list box, select the host name and the server or cluster name that you want to configure. In the ColdFusion&#160;MX&#160;7 server configuration, the server name is always coldfusion. Clustering support is not available on the server configuration.
+<p><strong>Note: </strong>The server or cluster does not have to reside on the web server computer.</p></li>
+<li>
+   In the Web Server Properties area, select IIS and specify the website. For IIS, you typically specify All.
+</li>
+<li>
+   Select the Configure web server for ColdFusion MX applications option. 
+<p><strong>Caution: </strong>Omitting the previous step causes your web server to serve ColdFusion&#160;MX&#160;7 source code.</p></li>
+<li>
+   Click OK.
+</li>
+<li>
+   Copy the CFIDE and cfdocs directories from <i>cf_root</i>/wwwroot to your web server root directory. In addition, copy your application's CFM pages from <i>cf_root</i>/wwwroot to your web server root directory. In the multiserver configuration, these files are under the <i>jrun_root</i>/servers/cfusion/cfusion-ear/cfusion-war directory.
+</li>
+</ol>
+<h4>To verify your IIS configuration:</h4>
+<ol>
+<li>
+   Verify that the following file was created: <i>cf_root</i>/runtime/lib/wsconfig/jrun.dll (server configuration) or <i>jrun_root</i>/lib/wsconfig/jrun.dll (multiserver configuration). On IIS6, this file is named jrun_iis6.dll.
+</li>
+<li>
+   For each of your IIS websites, verify that application mappings for .cfm, .cfml, .cfc, .cfswf, .cfr, .jsp, and .jws were added, as follows:
+<ol><li>In IIS, right-click an IIS website and select Properties. </li><li>In the Properties dialog box, on the Home Directory tab, click Configuration. </li><li>In the Application Configuration dialog box, click the App Mappings tab.</li><p>You should see mappings for .cfm, .cfml, .cfc, .cfswf, .cfr, .jsp, and .jws in the Extension column.</p>
+</ol></li>
+<li>
+   Verify that each of your IIS websites has a virtual directory called JRunScripts.
+<p>The following figure shows a sample JRunScripts virtual directory: </p>
+<p><br />
+<img src="images/iis_virt.jpg" alt="The IIS virtual directory for ColdFusion MX, called JRunScripts" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+<li>
+   Verify that the JRunScripts directory in each of your IIS websites points to the correct location, as follows:
+<ol><li>Right-click the JRunScripts directory and select Properties. </li><li>In the Properties dialog box, on the Virtual Directories tab, verify that the Local Path text box contains the following path:</li><p><i>path</i>/wsconfig/<i>number</i> (typically 1)</p>
+</ol></li>
+</ol>
+<h3><a name="wp1126688"></a>Configuring SunONE Web Server or iPlanet web server in Windows</h3>
+<p>This section describes how to configure SunONE Web Server 6 or iPlanet web server 6.x for ColdFusion&#160;MX&#160;7 in Windows, and how to verify your configuration. You configure SunONE or iPlanet using the Web Server Configuration Tool in either GUI or command-line mode. This discussion describes how to use GUI mode. </p>
+<p><strong>Tip: </strong>(Server configuration only) To use the command line, open the batch files located in <i>cf_root</i>/bin/connectors. </p><p>For more information, see the Web Server Management chapter of <i>Configuring and Administering ColdFusion&#160;MX</i>.</p>
+<h4>To configure SunONE or iPlanet for ColdFusion&#160;MX&#160;7 in Windows:</h4>
+<ol>
+<li>
+   Start the Web Server Configuration Tool by selecting Start &gt; Programs &gt; Macromedia &gt; ColdFusion&#160;MX&#160;7 &gt; Web Server Configuration Tool.
+</li>
+<li>
+   Click Add.
+</li>
+<li>
+   In the Server drop-down list box, select the host name and the server or cluster name to configure. For the ColdFusion&#160;MX&#160;7 server configuration, this is always coldfusion. Clustering support is not available on the server configuration.
+<p><strong>Note: </strong>The server or cluster does not have to reside on the web server computer.</p></li>
+<li>
+   In the Web Server Properties area, select SunONE Web Server (iPlanet) or Netscape Enterprise Server (NES), and specify the path to the directory that contains the obj.conf file.
+</li>
+<li>
+   Select the Configure web server for ColdFusion MX applications option. 
+<p><strong>Caution: </strong>Omitting the previous step causes your web server to serve ColdFusion&#160;MX&#160;7 source code.</p></li>
+<li>
+   Click OK.
+</li>
+<li>
+   Copy the CFIDE and cfdocs directories from <i>cf_root</i>/wwwroot to your web server root directory. In addition, copy your application's CFM pages from <i>cf_root</i>/wwwroot to your web server root directory. In the multiserver configuration, these files are under the <i>jrun_root</i>/servers/cfusion/cfusion-ear/cfusion-war directory.
+</li>
+</ol>
+<h4>To verify your SunONE or iPlanet configuration:</h4>
+<ol>
+<li>
+   Verify that the following file was created: <i>cf_root</i>/runtime\lib\wsconfig\<i>number</i>\jrun_nsapi35.dll (server configuration) or <i>jrun_root</i>/lib/wsconfig/<i>number</i>/jrun_nsapi35.dll (multiserver configuration).
+</li>
+<li>
+   Open the SunONE configuration file, obj.conf, in the web server directory (for example, in C:\iPlanet\Servers\https-<i>yourserver</i>\config\obj.conf).
+</li>
+<li>
+   Verify that the following line was added to the file:
+<pre>
+NameTrans fn=&quot;jrunfilter&quot;
+</pre>
+</li>
+<li>
+   Verify that <i>#JRun</i> prefixes the following <code>NameTrans</code> line in the file:
+<pre>
+#JRun NameTrans fn=&quot;pfx2dir&quot; from=&quot;/servlet&quot; <br />
+dir=&quot;$docroot/servlet&quot; name=&quot;ServletByExt&quot;
+</pre>
+</li>
+<li>
+   Verify that the following object element is at the end of the file:
+<pre>
+&lt;Object name=&quot;jrun&quot;&gt;
+PathCheck fn=&quot;jrunfilter&quot;
+Service fn=&quot;jrunservice&quot;
+&lt;/Object&gt;
+</pre>
+</li>
+</ol>
+<h3><a name="wp1123947"></a>Configuring Apache web server in Windows </h3>
+<p>This section describes how to configure the Apache web server for ColdFusion&#160;MX&#160;7 in Windows, and how to verify your configuration. You configure Apache using the Web Server Configuration Tool in either GUI or command-line mode. This discussion describes how to use GUI mode. </p>
+<p><strong>Tip: </strong>(Server configuration only) To use the command line, open the batch files located in <i>cf_root</i>\bin\connectors. </p><p>For more information, see the Web Server Management chapter in <i>Configuring and Administering ColdFusion&#160;MX</i>.</p>
+<h4>To configure Apache for ColdFusion&#160;MX&#160;7 in Windows:</h4>
+<ol>
+<li>
+   Start the Web Server Configuration Tool by selecting Start &gt; Programs &gt; Macromedia &gt; ColdFusion&#160;MX&#160;7 &gt; Web Server Configuration Tool.
+</li>
+<li>
+   Click Add.
+</li>
+<li>
+   In the Server drop-down list box, select the host name and the server or cluster name to configure. For the ColdFusion&#160;MX&#160;7 server configuration, this is always coldfusion. Clustering support is not available on the server configuration.
+<p><strong>Note: </strong>The server or cluster does not have to reside on the web server computer.</p></li>
+<li>
+   In the Web Server Properties area, select Apache and specify the path to the directory that contains the httpd.conf file.
+</li>
+<li>
+   Select the Configure web server for ColdFusion MX applications option. 
+<p><strong>Caution: </strong>Omitting the previous step causes your web server to serve ColdFusion&#160;MX&#160;7 source code.</p></li>
+<li>
+   Click OK.
+</li>
+<li>
+   Copy the CFIDE and cfdocs directories from <i>cf_root</i>/wwwroot to your web server root directory. In addition, copy your application's CFM pages from <i>cf_root</i>/wwwroot to your web server root directory. In the multiserver configuration, these files are under the <i>jrun_root</i>/servers/cfusion/cfusion-ear/cfusion-war directory.
+</li>
+</ol>
+<h4>To verify your Apache configuration:</h4>
+<ol>
+<li>
+   Verify that one of the following files was created: 
+<ul><li><i>cf_root</i>\runtime\lib\wsconfig\<i>number</i>\mod_jrun.so (Apache 1.3.2.7)</li>
+<li><i>cf_root</i>\runtime\lib\wsconfig\<i>number</i>\mod_jrun20.so (Apache 2.x)</li>
+<p>In the multiserver configuration, this file is located under <i>jrun_root</i>/lib/wsconfig.</p>
+</ul></li>
+<li>
+   Open the Apache configuration file, httpd.conf, in your Apache conf directory. In Windows, the default is C:\Program Files\Apache Group\Apache\conf\httpd.conf.
+<p>Verify that the following code is appended to this file:</p>
+<pre>
+# JRun Settings
+LoadModule jrun_module &quot;c:/CFusionMX7/runtime/lib/wsconfig/1/mod_jrun.so&quot;
+&lt;IfModule mod_jrun.c&gt;
+&#160;&#160;JRunConfig Verbose false
+&#160;&#160;JRunConfig Apialloc false
+&#160;&#160;JRunConfig Ssl false
+&#160;&#160;JRunConfig IgnoreSuffixmap false
+&#160;&#160;JRunConfig Serverstore 
+&quot;c:/CFusionMX7/runtime/lib/wsconfig/1/jrunserver.store&quot;
+&#160;&#160;JRunConfig Bootstrap 127.0.0.1:51000
+&#160;&#160;#JRunConfig Errorurl &lt;optionally redirect to this URL on errors&gt;
+&#160;&#160;JRunConfig jrun-handler .jsp .jws .cfm .cfml .cfc .cfswf .cfr
+&lt;/IfModule&gt;
+</pre>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000048.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000050.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000049.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

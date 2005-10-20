@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using CFCs effectively</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001058.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001061.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using CFCs effectively</h1>
+<p>This section describes the following techniques:</p>
+<ul>
+<li>
+   <a href="00001059.htm#1215022">Structuring and reusing code</a>
+</li>
+<li>
+   <a href="00001063.htm#1215154">Building secure ColdFusion components</a>
+</li>
+<li>
+   <a href="00001064.htm#1214870">Using introspection to get information about components</a>
+</li>
+</ul>
+<h2><a name="wp1215022"></a>Structuring and reusing code</h2>
+<p>The following sections provide information about the techniques that ColdFusion MX provides for structuring and reusing component code:</p>
+<ul>
+<li>
+   <a href="00001059.htm#1215030">Using inheritance and the Super keyword</a>
+</li>
+<li>
+   <a href="00001061.htm#1215093">Using component packages</a>
+</li>
+<li>
+   <a href="00001062.htm#1215129">Using CFCs in persistent scopes</a>
+</li>
+</ul>
+<h2><a name="wp1215030"></a>Using inheritance and the Super keyword</h2>
+<p>Component inheritance and the Super keyword are two important tools for creating structured, object-oriented ColdFusion components. </p>
+<p><strong>Component inheritance</strong> lets you create a single base component and reuse this code in multiple subclasses that are derived from the base component. Typically a base component is more general, and subcomponents are typically more specific. Each subclass does not have to redefine the code in the base component, but can override it if necessary.</p>
+<p><strong>The Super keyword</strong> lets a component that overrides a base component method execute the original base component method. This technique lets your subclassed component override a method without losing the ability to call the original version of the method.</p>
+<h3><a name="wp1215037"></a>Using component inheritance</h3>
+<p>Component inheritance lets you import component methods and properties from one component to another component. Inherited components share any component methods or properties that they inherit from other components, and ColdFusion MX initializes instance data in the parent CFC when you instantiate the CFC that extends it. </p>
+<p>When using component inheritance, inheritance should define an <i>is a</i> relationship between components. For example, a component named president.cfc inherits its methods and properties from manager.cfc, which inherits its methods and properties from employee.cfc. In other words, president.cfc <i>is a</i> manager.cfc; manager.cfc <i>is an</i> employee.cfc; and president.cfc <i>is an</i> employee.cfc.</p>
+<p>In this example, employee.cfc is the <i>base</i> component; it's the component upon which the others are based. The manager component extends the employee component; it has all the methods and properties of the employee component, and some additional ones. The president component extends the manager component. The president component is called a subcomponent or child component of the manager component, which, in turn, is a child component of the employee component.</p>
+<h4>To use component inheritance:</h4>
+<ol>
+<li>
+   Create the employee.cfc file with the following content:
+<pre>
+&lt;cfcomponent&gt;
+	&lt;cfset This.basesalary=40*20&gt;
+&lt;/cfcomponent&gt;
+</pre>
+</li>
+<li>
+   Create the manager.cfc file with the following content:
+<pre>
+&lt;cfcomponent extends=&quot;employee&quot;&gt;
+	&lt;cfset This.mgrBonus=40*10&gt;
+&lt;/cfcomponent&gt;
+</pre>
+<p>In the example, the <a href="00000231.htm#3350776"><code>cfcomponent</code></a> tag's <code>extends</code> attribute points to the <code>employee</code> component.</p>
+</li>
+<li>
+   Create the president.cfc file with the following content:
+<pre>
+&lt;cfcomponent extends=&quot;manager&quot;&gt;
+	&lt;cfset This.prezBonus=40*20&gt;
+&lt;/cfcomponent&gt;
+</pre>
+<p>In the example, the <a href="00000231.htm#3350776"><code>cfcomponent</code></a> tag's <code>extends</code> attribute points to the <code>manager</code> component. </p>
+</li>
+<li>
+   Create the inherit.cfm file with the following content, and save it in the same directory as the components you created in the previous steps:
+<pre>
+&lt;cfobject name=&quot;empObj&quot; component=&quot;employee&quot;&gt;
+&lt;cfobject name=&quot;mgrObj&quot; component=&quot;manager&quot;&gt;
+&lt;cfobject name=&quot;prezObj&quot; component=&quot;president&quot;&gt;
+&lt;cfoutput&gt;
+	An employee&#39;s salary is #empObj.basesalary# per week.&lt;br&gt;
+	A manager&#39;s salary is #mgrObj.basesalary + mgrObj.mgrBonus# per week.&lt;br&gt;
+	A president&#39;s salalry is #prezObj.basesalary + prezObj.mgrBonus +
+		prezObj.PrezBonus# per week.
+&lt;/cfoutput&gt;
+</pre>
+</li>
+</ol>
+<p>When you browse the inherit.cfm file, the <code>manager</code> component refers to the <code>basesalary</code> defined in employee.cfc, which is the base component; the <code>president</code> component refers to both the <code>basesalary</code> defined in the <code>employee</code> component, and the <code>mgrBonus</code> defined in the <code>manager</code> component. The <code>manager</code> component is the parent class of the <code>president</code> component.</p>
+<h3><a name="wp1215076"></a>Using the component.cfc file</h3>
+<p>All CFCs automatically extend the ColdFusion WEB-INF/cftags/component.cfc component. (The WEB-INF directory is in the <i>cf_root</i>/wwwroot directory on ColdFusion configured with an embedded J2EE server. It is in the <i>cf_root</i> directory when you deploy ColdFusion on a J2EE server.) This CFC is distributed as a zero-length file. You can use it for any core methods or properties that you want <i>all</i> CFCs in your ColdFusion application server instance to inherit. </p>
+<p><strong>Note: </strong>If you install a newer version of ColdFusion, the installation procedure replaces the existing component.cfc file with a new version. Therefore, before upgrading to a new version of ColdFusion, you should save any code that you have added to the component.cfc file, and then copy the code into the new component.cfc file.</p><h3><a name="wp1215079"></a>Using the Super keyword</h3>
+<p>You use the Super keyword only on CFCs that use the <code>Extends</code> attribute to extend another CFC. Unlike ColdFusion scopes, the Super keyword is not used for variables; it is only used for CFC methods, and it is not available on ColdFusion pages that invoke CFCs. </p>
+<p>The Super keyword lets you refer to versions of methods that are defined in the CFC that the current component extends. For example, the employee, manager, and president CFCs each contain a <code>getPaid</code> method. The manager CFC extends the employee CFC. Therefore, the manager CFC can use the original versions of the overridden <code>getPaid</code> method, as defined in the employee CFC, by prefixing the method name with Super. </p>
+<h4>To use the Super keyword:</h4>
+<ol>
+<li>
+   Create the employee.cfc file with the following content:
+<pre>
+&lt;cfcomponent&gt;
+	&lt;cffunction name=&quot;getPaid&quot; returntype=&quot;numeric&quot;&gt;
+		&lt;cfset var salary=40*20&gt;
+		&lt;cfreturn salary&gt;
+	&lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+</li>
+<li>
+   Create the manager.cfc file with the following content:
+<pre>
+&lt;cfcomponent extends=&quot;employee&quot;&gt;
+	&lt;cffunction name=&quot;getPaid&quot; returntype=&quot;numeric&quot;&gt;
+		&lt;cfset var salary=1.5 * Super.getPaid()&gt;
+		&lt;cfreturn salary&gt;
+	&lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+</li>
+<li>
+   Create the president.cfc file with the following content:
+<pre>
+&lt;cfcomponent extends=&quot;manager&quot;&gt;
+	&lt;cffunction name=&quot;getPaid&quot; returntype=&quot;numeric&quot;&gt;
+		&lt;cfset var salary=1.5 * Super.getPaid()&gt;
+		&lt;cfreturn salary&gt;
+	&lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+</li>
+<li>
+   Create the payday.cfm file with the following content, and save it in the same directory as the components that you created in the previous steps:
+<pre>
+&lt;cfobject name=&quot;empObj&quot; component=&quot;employee&quot;&gt;
+&lt;cfobject name=&quot;mgrObj&quot; component=&quot;manager&quot;&gt;
+&lt;cfobject name=&quot;prezObj&quot; component=&quot;president&quot;&gt;
+&lt;cfoutput&gt;
+	&lt;cfoutput&gt;
+		An employee earns #empObj.getPaid()#.&lt;br&gt;
+		A manager earns #mgrObj.getPaid()#.&lt;br&gt;
+		The president earns #prezObj.getPaid()#.
+	&lt;/cfoutput&gt;
+&lt;/cfoutput&gt;
+</pre>
+</li>
+</ol>
+<p>In this example, each <code>getPaid</code> method in a child component invoked the <code>getPaid</code> method of its parent component. The child's <code>getPaid</code> method then used the salary returned by the parent's <code>getPaid</code> method to calculate the appropriate amount.</p>
+<p>Included pages can use the Super keyword. </p>
+<p><strong>Note: </strong>The Super keyword supports only one level of inheritance. If you use multiple levels of inheritance, you can only use the Super keyword to access the current component's immediate parent. The example in this section illustrates handling this limitation by invoking methods in a chain.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001058.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001061.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001060.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

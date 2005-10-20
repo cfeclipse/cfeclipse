@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Core options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001785.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001787.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Core options</h1>
+<p>The following sections describe the Verity Spider core options.</p>
+<h3><a name="wp1024768"></a>-cmdfile</h3>
+<p><strong>Syntax</strong>: <code>-cmdfile path_and_filename</code></p>
+<p>Specifies that Verity Spider reads command-line syntax from a file, in addition to the options passed in the command-line. This option includes the pathname to the file that contains the command-line syntax. The <code>-cmdfile</code> option circumvents command-line length limits. </p>
+<p>The syntax for the command-file is:</p>
+<pre>option optional_parameters
+</pre><p>For better readability, put each option and any parameters on a single line. Verity Spider can properly parse the lines.</p>
+<p><strong>Note: </strong>Macromedia strongly recommends that you take advantage of the abstraction offered by this option. This can greatly reduce user error in erroneously including or omitting options in subsequent indexing jobs.</p><h3><a name="wp1024793"></a>-collection</h3>
+<p>Specifies the full path to the collection to create or update.</p>
+<p><strong>Note: </strong>You receive an error if you specify a filename with an extension of CLM. Meta collections are not supported.</p><h3><a name="wp1001017"></a>-help</h3>
+<p>Displays Verity Spider syntax options.</p>
+<h3><a name="wp1029937"></a>-jobpath</h3>
+<p><strong>Syntax</strong>: <code>-jobpath path</code></p>
+<p>Specifies the location of the Verity Spider databases and the indexing job-related files and directories. </p>
+<p>The following are the job-related directories and their contents:</p>
+<p><strong>log</strong>&#160;All Verity Spider log files. For descriptions of the log files, see <a href="00001793.htm#1000418">-loglevel</a>.</p>
+<p><strong>bif</strong>&#160;Bulk insert files. </p>
+<p><strong>temp</strong>&#160;Web pages cached for indexing. You can also specify the temp directory using the <br /><code>-temp</code> option. </p>
+<p>These directories are created for you under the last directory specified in path.</p>
+<p>Path values must be unique for all indexing jobs. If you do not use the <code>-jobpath</code> option, Verity Spider creates a /spider/job directory within the collection. For multiple-collection tasks, the first collection specified is used.</p>
+<p><strong>Note: </strong>You cannot use multiple job paths for multiple simultaneous indexing tasks for the same collection. Only one indexing task at a time can run for a given collection.</p><h3><a name="wp1001073"></a>-style</h3>
+<p><strong>Syntax</strong>: <code>-style path</code></p>
+<p>Specifies the path to the style files to use when creating a new collection. </p>
+<p>If the <code>-style</code> option is not specified, Verity Spider uses the default style files in <i>cf_root</i>/lib/common/style.</p>
+<p><strong>Note: </strong>You can safely omit the <code>-style</code> option when resubmitting an indexing job, as the style information will already be part of the collection. If you are using the <code>-cmdfile</code> option, you can leave it there.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001785.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001787.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001786.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating and using structures</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000960.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000962.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating and using structures</h1>
+<p>This section explains how to create and use structures in ColdFusion. The sample code in this section uses a structure called <i>employee</i>, which is used to add new employees to a corporate information system.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000961.htm#1096396">Creating structures</a>
+</li>
+<li>
+   <a href="00000961.htm#1096403">Adding data elements to structures</a>
+</li>
+<li>
+   <a href="00000961.htm#1096407">Updating values in structures</a>
+</li>
+<li>
+   <a href="00000962.htm#1096423">Getting information about structures and keys</a>
+</li>
+<li>
+   <a href="00000963.htm#1096447">Copying structures</a>
+</li>
+<li>
+   <a href="00000964.htm#1096453">Deleting structure elements and structures</a>
+</li>
+<li>
+   <a href="00000965.htm#1124005">Looping through structures</a>
+</li>
+</ul>
+<h2><a name="wp1096396"></a>Creating structures</h2>
+<p>You can create a structure by creating a first key-pair or by using the ColdFusion <a href="00000647.htm#138139"><code>StructNew</code></a> function.</p>
+<h3><a name="wp1180851"></a>Creating structures by assigning values</h3>
+<p>You can create a structure by assigning a key-value pair. For example, the following line creates a structure named myStruct with one element, name, that has the value Macromedia.</p>
+<pre>&lt;cfset myStruct.name=&quot;Macromedia&quot;&gt;
+</pre><p><strong>Note: </strong>You can also create a structure using the <code><i>structname</i></code>[&quot;<code><i>keyname</i></code>&quot;] format; for example, <code>&lt;cfset myStruct[&quot;name&quot;] =&quot;Macromedia&quot;&gt;</code>.</p><h3><a name="wp1121236"></a>Creating structures using a function</h3>
+<p>You can create structures by assigning a variable name to the structure with the <a href="00000647.htm#138139"><code>StructNew</code></a> function as follows:</p>
+<pre>&lt;cfset <code><i>mystructure</i></code>=StructNew()&gt;
+</pre><p>For example, to create a structure named departments, use the following syntax:</p>
+<pre>&lt;cfset departments=StructNew()&gt;
+</pre><p>This creates an empty structure to which you can add data.</p>
+<p>Use this technique to create structures if your application must run on ColdFusion server versions 5 and earlier.</p>
+<h2><a name="wp1096403"></a>Adding data elements to structures</h2>
+<p>You add an element to a structure by assigning the element a value or by using a ColdFusion function. It is cleaner and more efficient to use direct assignment, so only this technique is described.</p>
+<p>You add structure key-value pairs by defining the value of the structure key, as shown in the following example:</p>
+<pre>&lt;cfset myNewStructure.key1=&quot;A new structure with a new key&quot;&gt;
+&lt;cfdump var=#myNewStructure#&gt;
+&lt;cfset myNewStructure.key2=&quot;Now I've added a second key&quot;&gt;
+&lt;cfdump var=#myNewStructure#&gt;
+</pre><h2><a name="wp1096407"></a>Updating values in structures</h2>
+<p>You can update structure element values by assignment or by using the <a href="00000649.htm#138287"><code>StructUpdate</code></a> function. Direct assignment results in simpler code than using a function, so only the assignment technique is described.</p>
+<p>To update a structure value, assign the key a new value. For example, the following code uses <code>cfset</code> and object.property notation to create a new structure element called departments.John, and changes John's department from Sales to Marketing. It then uses associative array notation to change his department to Facilities. Each time the department changes, it displays the results:</p>
+<pre>&lt;cfset departments=structnew()&gt;
+&lt;cfset departments.John = &quot;Sales&quot;&gt;
+&lt;cfoutput&gt;
+   Before the first change, John was in the #departments.John# Department&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;cfset Departments.John = &quot;Marketing&quot;&gt;
+&lt;cfoutput&gt;
+   After the first change, John is in the #departments.John# Department&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;cfset Departments[&quot;John&quot;] = &quot;Facilities&quot;&gt;
+&lt;cfoutput&gt;
+   After the second change, John is in the #departments.John# Department&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000960.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000962.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000961.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

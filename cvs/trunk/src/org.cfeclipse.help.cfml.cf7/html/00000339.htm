@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfswitch</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000338.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000340.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfswitch</h1>
+<h4><a name="wp2427859"></a>Description</h4>
+<p>Evaluates a passed expression and passes control to the <code>cfcase</code> tag that matches the expression result. You can, optionally, code a <code>cfdefaultcase</code> tag, which receives control if there is no matching <code>cfcase</code> tag value.</p>
+<h4><a name="wp1961532"></a>Category</h4>
+<p><a href="00000204.htm#2459878">Flow-control tags</a></p>
+<h4><a name="wp1103821"></a>Syntax</h4>
+<pre>&lt;cfswitch <br />   expression = &quot;expression&quot;&gt;<br />      one or more cfcase tags<br />      zero or one cfdefaultcase tags
+&lt;/cfswitch&gt;
+</pre><h4><a name="wp1961539"></a>See also</h4>
+<p><a href="00000224.htm#3798974"><code>cfcase</code></a>, <a href="00000234.htm#2664493"><code>cfdefaultcase</code></a>, <a href="00000215.htm#3835579"><code>cfabort</code></a>, <a href="00000290.htm#3301338"><code>cfloop</code></a>, <a href="00000221.htm#1097484"><code>cfbreak</code></a>, <a href="00000243.htm#1098198"><code>cfexecute</code></a>, <a href="00000244.htm#1098252"><code>cfexit</code></a>, <a href="00000274.htm#1100123"><code>cfif</code></a>, <a href="00000284.htm#1100753"><code>cflocation</code></a>, <a href="00000325.htm#1102913"><code>cfrethrow</code></a>, <a href="00000343.htm#2773591"><code>cfthrow</code></a>, <a href="00000349.htm#1104557"><code>cftry</code></a>; <a href="00000876.htm#2732439">cfswitch, cfcase, and cfdefaultcase</a> in <a href="00000866.htm#2689636">Elements of CFML</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2489175"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed <code>cfdefaultcase</code> tag placement requirements: you can put the <code>cfdefaultcase</code> tag at any position within a <code>cfswitch</code> statement; it is not required to be the last&#160;item. </p>
+<h4><a name="wp2489256"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>expression</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>ColdFusion expression that yields a scalar value. ColdFusion converts integers, real numbers, Booleans, and dates to numeric values. For example, True, 1, and 1.0 are all equal. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1103830"></a>Usage</h4>
+<p>This tag requires an end tag. All code within this tag must be within a <code>cfcase</code> or <code>cfdefaultcase</code> tag. Otherwise, ColdFusion throws an error.</p>
+<p>Use this tag followed by one or more <code>cfcase</code> tags. Optionally, include a <code>cfdefaultcase</code> tag. This tag selects the matching alternative from the <code>cfcase</code> and <code>cfdefaultcase</code> tags, jumps to the matching tag, and executes the code between the <code>cfcase</code> start and end tags.</p>
+<p>The <code>cfswitch</code> tag provides better performance than a series of <code>cfif</code>/<code>cfelseif</code> tags, and the code is easier to read. </p>
+<h4><a name="wp1103834"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of cfswitch and cfcase to <br />exercise a case statement in CFML. ---&gt;
+&lt;cfquery name = &quot;GetEmployees&quot; dataSource = &quot;cfdocexamples&quot;&gt;
+   SELECT Emp_ID, FirstName, LastName, EMail, Phone, Department
+   FROM   Employees
+&lt;/cfquery&gt;
+
+&lt;h3&gt;cfswitch Example&lt;/h3&gt;
+&lt;!--- By outputting the query and using cfswitch, we classify the <br />output without using a cfloop construct. ---&gt;
+&lt;p&gt;Each time the case is fulfilled, the specific information is printed; 
+if the case is not fulfilled, the default case is output &lt;/p&gt; 
+&lt;cfoutput query=&quot;GetEmployees&quot;&gt; 
+&lt;cfswitch expression=&quot;#Trim(Department)#&quot;&gt; 
+   &lt;cfcase value=&quot;Sales&quot;&gt; 
+      #FirstName# #LastName# is in &lt;b&gt;sales&lt;/b&gt;&lt;br&gt;&lt;br&gt; 
+   &lt;/cfcase&gt; 
+   &lt;cfcase value=&quot;Accounting&quot;&gt; 
+      #FirstName# #LastName# is in &lt;b&gt;accounting&lt;/b&gt;&lt;br&gt;&lt;br&gt; 
+   &lt;/cfcase&gt; &lt;cfcase value=&quot;Administration&quot;&gt; 
+      #FirstName# #LastName# is in &lt;b&gt;administration&lt;/b&gt;&lt;br&gt;&lt;br&gt; 
+   &lt;/cfcase&gt; 
+   &lt;cfdefaultcase&gt; 
+      #FirstName# #LastName# is not in Sales, Accounting, or
+         Administration.&lt;br&gt;&lt;br&gt;
+   &lt;/cfdefaultcase&gt; 
+&lt;/cfswitch&gt; 
+&lt;/cfoutput&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000338.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000340.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000339.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

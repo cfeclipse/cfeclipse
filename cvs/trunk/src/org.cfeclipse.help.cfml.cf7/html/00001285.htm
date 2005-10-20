@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using LDAP with ColdFusion</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001284.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001286.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using LDAP with ColdFusion</h1>
+<p>The <a href="00000283.htm#1100581"><code>cfldap</code></a> tag extends the ColdFusion query capabilities to LDAP network directory services. The <code>cfldap</code> tag lets you use LDAP in many ways, such as the following:</p>
+<ul>
+<li>
+   Create Internet White Pages so users can locate people and resources and get information about them.
+</li>
+<li>
+   Provide a front end to manage and update directory entries.
+</li>
+<li>
+   Build applications that incorporate data from directory queries in their processes.
+</li>
+<li>
+   Integrate applications with existing organizational or corporate directory services.
+</li>
+</ul>
+<p>The <code>cfldap</code> tag <code>action</code> attribute supports the following operations on LDAP directories:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Action
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Returns attribute values from a directory.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>add</p>
+    </td>
+    <td>
+<p>Adds an entry to a directory.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>modify</p>
+    </td>
+    <td>
+<p>Adds, deletes, or changes the value of an attribute in a directory entry.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>delete</p>
+    </td>
+    <td>
+<p>Deletes an entry from a directory.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>modifyDN</p>
+    </td>
+    <td>
+<p>Renames a directory entry (changes its distinguished name).</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following table lists the attributes that are required and optional for each action. For more information on each attribute, see the <a href="00000283.htm#1100581"><code>cfldap</code></a> tag in <i>CFML Reference</i>.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Action
+    </th>
+    <th>
+Required attributes
+    </th>
+    <th>
+Optional attributes
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>server, name, start, attributes</p>
+    </td>
+    <td>
+<p>port, username, password, timeout, secure, rebind, referral, scope, filter, sort, sortControl startRow, maxRows, separator, delimiter</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>add</p>
+    </td>
+    <td>
+<p>server, dn, attributes</p>
+    </td>
+    <td>
+<p>port, username, password, timeout, secure, rebind, referral, separator, delimiter</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>modify</p>
+    </td>
+    <td>
+<p>server, dn, attributes</p>
+    </td>
+    <td>
+<p>port, username, password, timeout, secure, rebind, referral, modifyType, separator, delimiter</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>modifyDN</p>
+    </td>
+    <td>
+<p>server, dn, attributes</p>
+    </td>
+    <td>
+<p>port, username, password, timeout, secure, rebind, referral</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>delete</p>
+    </td>
+    <td>
+<p>server, dn</p>
+    </td>
+    <td>
+<p>port, username, password, timeout, secure, rebind, referral</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001284.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001286.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001285.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

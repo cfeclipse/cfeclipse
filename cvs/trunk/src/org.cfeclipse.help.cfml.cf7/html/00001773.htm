@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Web server configuration for application isolation</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001772.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001774.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Web server configuration for application isolation</h1>
+<p>When you use multiple server instances for application isolation, the steps you perform to configure communication between the website and the server instance differ for each web server. This section contains the following sections:</p>
+<ul>
+<li>
+   <a href="00001773.htm#105680">Configuring application isolation in IIS</a>
+</li>
+<li>
+   <a href="00001773.htm#103767">Configuring application isolation in Apache</a>
+</li>
+<li>
+   <a href="00001773.htm#103770">Configuring application isolation in Sun ONE Web Server</a>
+</li>
+</ul>
+<p><strong>Tip: </strong>To enhance performance when using an external web server with multiple server instances, place all static content (HTML files and images, for example) under the web server root directory or one of its subdirectories. Minimize the amount of static content served from ColdFusion web application root directory. </p><h3><a name="wp105680"></a>Configuring application isolation in IIS</h3>
+<p>When you use multiple virtual websites with multiple server instances under IIS, you define separate filters and mappings for each virtual website and server instance combination.</p>
+<p>This section assumes that you already created server instances and virtual websites, as described in <a href="00001772.htm#113725">Enabling application isolation</a>.</p>
+<h4>To configure multiple server instances for application isolation when using IIS:</h4>
+<ul>
+<li>
+   Run the Web Server Configuration Tool multiple times, once for each virtual website, and specify a different site and server instance each time. Ensure that you select the Configure Web Server for ColdFusion MX Applications check box (GUI) or use the <code>-coldfusion</code> option (command-line). For more information on running the Web Server Configuration Tool, see <a href="00001753.htm#102387">Using an external web server</a>.
+</li>
+</ul>
+<h3><a name="wp103767"></a>Configuring application isolation in Apache</h3>
+<p>When you use multiple virtual hosts with multiple server instances under Apache, you edit the httpd.conf file manually.</p>
+<p>This section assumes that you already created server instances and virtual websites, as described in <a href="00001772.htm#113725">Enabling application isolation</a>.</p>
+<h4>To configure multiple server instances for application isolation when using Apache:</h4>
+<ol>
+<li>
+   Run the Web Server Configuration Tool once, specifying the location of the Apache httpd.conf file and any other required information. Ensure that you select the Configure Web Server for ColdFusion MX Applications check box (GUI) or use the <code>-coldfusion</code> option (command-line).
+</li>
+<li>
+   The Web Server Configuration Tool creates a sequentially numbered subdirectory under <i>jrun_root</i>/lib/wsconfig. You can use the subdirectory created by the Web Server Configuration Tool for one of your virtual hosts, but you must create additional subdirectories for all other virtual hosts. For example, the first time you run the Web Server Configuration Tool, it creates <i>jrun_root</i>/lib/wsconfig/1; if you have two other virtual hosts, you must manually create two other directories (<i>jrun_root</i>/lib/wsconfig/mystore and <i>jrun_root</i>/lib/wsconfig/myemp in this example). These directories can be empty.
+</li>
+<li>
+   Open the <i>jrun_root</i>/servers/servername/SERVER-INF/jrun.xml file for each of your server instances, locate the <code>ProxyService</code> service, ensure that the <code>deactivated</code> element is set to false, and note the value of the port element; for example:
+<pre>
+...
+&lt;service class=&quot;jrun.servlet.jrpp.JRunProxyService&quot; name=&quot;ProxyService&quot;&gt;
+&#160;&#160;&lt;attribute name=&quot;activeHandlerThreads&quot;&gt;25&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;backlog&quot;&gt;500&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;deactivated&quot;&gt;false&lt;/attribute&gt; 
+&#160;&#160;&lt;attribute name=&quot;interface&quot;&gt;*&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;maxHandlerThreads&quot;&gt;1000&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;minHandlerThreads&quot;&gt;1&lt;/attribute&gt;
+&#160;&#160;&lt;attribute name=&quot;port&quot;&gt;51002&lt;/attribute&gt; 
+...
+</pre>
+</li>
+<li>
+   Restart each of the modified JRun servers.
+</li>
+<li>
+   Open the <i>apache_root</i>/conf/httpd.conf file in a text editor and find the <code>VirtualHost</code> directives. The settings added by the Web Server Configuration Tool are after the last <code>&lt;/IfModule&gt;</code> directive, as the following example shows:
+<pre>
+...
+# JRun Settings
+LoadModule jrun_module &quot;C:/JRun4/lib/wsconfig/1/mod_jrun20.so&quot;
+&lt;IfModule mod_jrun20.c&gt;
+    JRunConfig Verbose false
+    JRunConfig Apialloc false
+    JRunConfig Ssl false
+    JRunConfig Ignoresuffixmap false
+    JRunConfig Serverstore &quot;C:/JRun4/lib/wsconfig/1/jrunserver.store&quot;
+    JRunConfig Bootstrap 127.0.0.1:51000
+    #JRunConfig Errorurl &lt;optionally redirect to this URL on errors&gt;
+    #JRunConfig ProxyRetryInterval &lt;number of seconds to wait before trying 
+to reconnect to unreachable clustered server&gt;
+    #JRunConfig ConnectTimeout 15
+    #JRunConfig RecvTimeout 300
+    #JRunConfig SendTimeout 15
+    AddHandler jrun-handler .jsp .jws .cfm .cfml .cfc .cfr .cfswf
+&lt;/IfModule&gt;
+
+NameVirtualHost 127.0.0.1
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@mysite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs&quot;
+    ServerName SERVER02
+    ErrorLog logs/error.log
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@mysite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs2&quot;
+    ServerName mystore
+    ErrorLog logs/error-store.log
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@mysite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs3&quot;
+    ServerName myemployee
+    ErrorLog logs/error-employee.log
+&lt;/VirtualHost&gt;
+...
+</pre>
+</li>
+<li>
+   For each <code>VirtualHost</code> directive that relates to a ColdFusion server instance, copy the entire <code>IfModule mod_jrun20.c</code> directive from its original location outside the <code>VirtualHost</code> directive to the last element in the <code>VirtualHost</code> directive.
+</li>
+<li>
+   Delete the <code>Apialloc</code>, <code>Ssl</code>, <code>Ignoresuffixmap</code>, and <code>AddHandler</code> elements in the <code>IfModule</code> directive for each virtual host. Modify the <code>Serverstore</code> and <code>Bootstrap</code> elements to point to the appropriate proxy port (from the jrun.xml file) and <i>jrun_root</i>/lib/wsconfig/<i>subdirectory</i>/jrunserver.store file, which the web server connector creates automatically.
+</li>
+<li>
+   In the original <code>IfModule</code> directive, remove or comment out the <code>Serverstore</code> and <code>Bootstrap</code> lines (comments start with #). The following example shows three virtual hosts, two of which are configured for ColdFusion&#160;MX:
+<pre>
+...
+# JRun Settings
+LoadModule jrun_module &quot;C:/JRun4/lib/wsconfig/1/mod_jrun20.so&quot;
+&lt;IfModule mod_jrun20.c&gt;
+    JRunConfig Verbose false
+    JRunConfig Apialloc false
+    JRunConfig Ssl false
+    JRunConfig Ignoresuffixmap false
+    #JRunConfig Serverstore &quot;C:/JRun4/lib/wsconfig/1/jrunserver.store&quot;
+    #JRunConfig Bootstrap 127.0.0.1:51020
+&#160;&#160;&#160;&#160; AddHandler jrun-handler .jsp .jws .cfm .cfml .cfc .cfr .cfswf
+&lt;/IfModule&gt;
+NameVirtualHost 127.0.0.1
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@mysite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs&quot;
+    ServerName RNIELSEN02
+    ErrorLog logs/error.log
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@mysite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs2&quot;
+    ServerName rnielsenstore
+    ErrorLog logs/error-store.log
+  &lt;IfModule mod_jrun20.c&gt;
+&#160;&#160;&#160;&#160;JRunConfig Verbose true
+&#160;&#160;&#160;&#160;JRunConfig Serverstore &quot;C:/JRun4/lib/wsconfig/mystore/jrunserver.store&quot;
+    JRunConfig Bootstrap 127.0.0.1:51002
+&#160;&#160;&lt;/IfModule&gt;
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 127.0.0.1&gt;
+    ServerAdmin admin@mysite.com
+    DocumentRoot &quot;C:/Program Files/Apache Group/Apache2/htdocs3&quot;
+    ServerName rnielsenemployee
+    ErrorLog logs/error-employee.log
+  &lt;IfModule mod_jrun20.c&gt;
+&#160;&#160;&#160;&#160;JRunConfig Verbose true
+&#160;&#160;&#160;&#160;JRunConfig Serverstore &quot;C:/JRun4/lib/wsconfig/myemp/jrunserver.store&quot;
+    JRunConfig Bootstrap 127.0.0.1:51003
+&#160;&#160;&lt;/IfModule&gt;
+&lt;/VirtualHost&gt;
+...
+</pre>
+</li>
+<li>
+   Restart Apache.
+</li>
+<li>
+   (Optional) Store the application's ColdFusion files in your external web server root directory.
+</li>
+<li>
+   Test the applications under each virtual host.
+<p><strong>Note: </strong>Remember that the web server connector doesn't serve static content, such as HTML and images. Place these files under the web root or create a web server mapping to the ColdFusion web application root.</p></li>
+</ol>
+<h3><a name="wp103770"></a>Configuring application isolation in Sun ONE Web Server</h3>
+<p>When using multiple virtual hosts with multiple server instances under Sun ONE Web Server, you create multiple Sun ONE Web Server instances, one for each ColdFusion server instance.</p>
+<p>This section assumes that you have already created server instances, as described in <a href="00001772.htm#113725">Enabling application isolation</a>.</p>
+<h4>To configure multiple server instances for application isolation when using Sun ONE Web&#160;Server:</h4>
+<ul>
+<li>
+   Run the Web Server Configuration Tool multiple times, once for each Sun ONE Web Server server instance, and specify a different configuration directory and ColdFusion server instance each time. Ensure that you select the Configure Web Server for ColdFusion MX Applications check box (GUI) or use the <code>-coldfusion</code> option (command-line).
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001772.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001774.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001773.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

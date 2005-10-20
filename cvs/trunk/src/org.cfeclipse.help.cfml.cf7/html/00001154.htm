@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Configuring and using client variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001153.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001155.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Configuring and using client variables</h1>
+<p>Use client variables for data that is associated with a particular client and application and that must be saved between user sessions. Use client variables for long-term information such as user display or content preferences.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001154.htm#1154528">Enabling client variables</a>
+</li>
+<li>
+   <a href="00001155.htm#1171938">Using client variables</a>
+</li>
+</ul>
+<h2><a name="wp1154528"></a>Enabling client variables</h2>
+<p>To enable client variables, you specify This.clientmanagement=&quot;True&quot; in the Application.cfc initialization code, or set the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag <code>clientmanagement</code> attribute to Yes in the Application.cfm file. For example, to enable client variables in an application named SearchApp, you can use the following line in the application's Application.cfm page:</p>
+<pre>&lt;cfapplication NAME=&quot;SearchApp&quot; clientmanagement=&quot;Yes&quot;&gt;
+</pre><h3><a name="wp1154538"></a>Choosing a client variable storage method</h3>
+<p>By default, Coldfusion stores client variables in the Registry. In most cases, however, it is more appropriate to store the information as client cookies or in a SQL database. </p>
+<p>The ColdFusion&#160;MX Administrator Client Variables page controls the default client variable location. You can override the default location by specifying a This.clientStorage value in Application.cfc or by setting the <code>clientStorage</code> attribute in the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag.</p>
+<p>You can specify the following values for the client storage method:</p>
+<ul>
+<li>
+   <code>Registry</code>(default). Client variables are stored under the key HKEY_LOCAL_MACHINE\ SOFTWARE\Macromedia\ColdFusion\CurrentVersion\Clients.
+</li>
+<li>
+   Name of a data source configured in ColdFusion&#160;MX Administrator
+</li>
+<li>
+   <code>Cookie</code>
+</li>
+</ul>
+<p>Generally, it is most efficient to store client variables in a database. Although the Registry option is the default, the Registry has significant limitations for client data storage. The Registry cannot be used in clustered systems and its use for client variables on UNIX is not supported in ColdFusion MX.</p>
+<h4><a name="wp1185249"></a>Using cookie storage</h4>
+<p>When you set the client storage method to Cookie, the cookie that ColdFusion creates has the application's name. Storing client data in a cookie is scalable to large numbers of clients, but this storage mechanism has some limitations. In particular, if the client turns off cookies in the browser, client variables do not work.</p>
+<p>Consider the following additional limitations before implementing cookie storage for client variables:</p>
+<ul>
+<li>
+   Any Client variable that you set after a <code>cfflush</code> tag is not sent to the browser, so the variable value does not get saved.
+</li>
+<li>
+   Some browsers allow only 20 cookies to be set from a particular host. ColdFusion uses two of these cookies for the <code>CFID</code> and <code>CFToken</code> identifiers, and also creates a cookie named <code>cfglobals</code> to hold global data about the client, such as <code>HitCount</code>, <code>TimeCreated</code>, and <code>LastVisit</code>. This limits you to 17 unique applications per client-host pair.
+</li>
+<li>
+   Some browsers set a size limit of 4K bytes per cookie. ColdFusion encodes nonalphanumeric data in cookies with a URL encoding scheme that expands at a 3-1 ratio, which means you should not store large amounts of data per client. ColdFusion throws an error if you try to store more than 4,000 encoded bytes of data for a client.
+</li>
+</ul>
+<h4><a name="wp1171889"></a>Configuring database storage</h4>
+<p>When you specify a database for client variable storage, do not always have to manually create the data tables that store the client variables. </p>
+<p>If ColdFusion can identify that the database you are using supports SQL creation of database tables, you only need to create the database in advance. When you click the Add button on the Select Data Source to Add as Client Store box on the Memory Variables page, the Administrator displays a Add/Edit Client Store page which contains a Create Client Database Tables selection box. Select this option to have ColdFusion create the necessary tables in your database. (The option does not appear if the database already has the required tables.)</p>
+<p>If your database does not support SQL creation of tables, or if you are using the ODBC socket [Macromedia] driver to access your database, you must use your database tool to create the client variable tables. Create the CDATA and CGLOBAL tables.</p>
+<p>The CDATA table must have the following columns:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Column
+    </th>
+    <th>
+Data type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>cfid</p>
+    </td>
+    <td>
+<p>CHAR(64), TEXT, VARCHAR, or any data type capable of taking variable length strings up to 64 characters</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>app</p>
+    </td>
+    <td>
+<p>CHAR(64), TEXT, VARCHAR, or any data type capable of taking variable length strings up to 64 characters</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>data</p>
+    </td>
+    <td>
+<p>MEMO, LONGTEXT, LONG VARCHAR, CLOB, or any data type capable of taking long, indeterminate-length strings</p>
+    </td>
+  </tr>
+</table>
+
+<p>The CGLOBAL table must have the following columns:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Column
+    </th>
+    <th>
+Data type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>cfid</p>
+    </td>
+    <td>
+<p>CHAR(64), TEXT, VARCHAR, or any data type capable of taking variable length strings up to 64 characters</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>data</p>
+    </td>
+    <td>
+<p>MEMO, LONGTEXT, LONG VARCHAR, CLOB, or any data type capable of taking long, indeterminate-length strings</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>lvisit</p>
+    </td>
+    <td>
+<p>TIMESTAMP, DATETIME, DATE, or any data type that stores date and time values</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>Different databases use different names for their data types. The names in the preceding tables are common, but your database might use other names.</p><p>To improve performance, you should also create indexes when you create these tables. For the CDATA table, index these cfid and app columns. For the CGLOBAL table, index the cfid column.</p>
+<h3><a name="wp1181188"></a>Specifying client variable storage in your application</h3>
+<p>The override the default client variable storage location, set the This.clientstorage variable in the Application.cfc initialization code, or use the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag <code>clientStorage</code> attribute. </p>
+<p>The following lines from an Application.cfc file tell ColdFusion to store the client variables in the mydatasource data source:</p>
+<pre>&lt;cfscript&gt;
+   This.name&quot;SearchApp&quot;;
+   This.clientManagement=&quot;Yes&quot;;
+   This.clientStorage=&quot;mydatasource&quot;;
+&lt;/cfscript&gt;
+</pre><p>The following code from an Application.cfm file does the same thing as the previous example:</p>
+<pre>&lt;cfapplication name&quot;SearchApp&quot; 
+   clientmanagement=&quot;Yes&quot;
+   clientstorage=&quot;mydatasource&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001153.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001155.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001154.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setGatewayID</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000712.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000714.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setGatewayID</h1>
+<h4><a name="wp1107628"></a>Description</h4>
+<p>Sets the gateway ID that uniquely identifies the Gateway instance. </p>
+<h4><a name="wp1111301"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1107634"></a>Syntax</h4>
+<pre>public void setGatewayID(String <i>id</i>)
+</pre><h4><a name="wp1168807"></a>See also</h4>
+<p><a href="00000706.htm#1168522"><code>Constructor</code></a>, <a href="00000707.htm#1168855"><code>getGatewayID</code></a>, <a href="00001693.htm#117863">Providing Gateway class service and information routines</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1143019"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>id</p>
+    </td>
+    <td>
+<p>The identifier for this gateway instance.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1172138"></a>Usage</h4>
+<p>This method sets a string value that is returned by the <code>getGatewayID</code> method. ColdFusion MX calls this method to set the gateway ID with the value specified in the gateway instance configuration in the ColdFusion MX Administrator before it starts the event gateway, even if the Gateway constructor also sets the ID.</p>
+<h4><a name="wp1168468"></a>Example</h4>
+<p>The following example is the ColdFusion MX SocketGateway class <code>setGatewayID</code> method: </p>
+<pre>public void setGatewayID(String id)
+   {
+      gatewayID = id;
+   }
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000712.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000714.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000713.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

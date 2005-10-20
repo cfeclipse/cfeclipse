@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsStruct</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000531.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000533.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsStruct</h1>
+<h4><a name="wp1225312"></a>Description</h4>
+<p>Determines whether a variable is a structure.</p>
+<h4><a name="wp3403012"></a>Returns</h4>
+<p>True, if <i>variable</i> is a ColdFusion structure or is a Java object that implements the java.lang.Map interface. The return value is False if the object in <i>variable</i> is a user-defined function (UDF).</p>
+<h4><a name="wp2374506"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a>, <a href="00000370.htm#1099964">Structure functions</a></p>
+<h4><a name="wp1106916"></a>Function syntax</h4>
+<pre><code><strong>IsStruct</strong></code>(<i>variable</i>)
+</pre><h4><a name="wp3824900"></a>See also</h4>
+<p><a href="00000370.htm#1099964">Structure functions</a>; <a href="00001514.htm#1120048">Modifying a ColdFusion XML object</a> in <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp4549064"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: this function can be used on XML objects.</p>
+<h4><a name="wp1329130"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>variable</p>
+    </td>
+    <td>
+<p>Variable name</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1106920"></a>Example</h4>
+<pre>&lt;!--- This view-only example shows the use of IsStruct. ---&gt;
+&lt;p&gt;This file is similar to addemployee.cfm, which is called by StructNew,<br />StructClear, and StructDelete. It is an example of a custom tag used to<br />add employees. Employee information is passed through the employee<br />structure (the EMPINFO attribute). In UNIX, you must also add the Emp_ID.
+&lt;!--- 
+&lt;cfswitch expression = &quot;#ThisTag.ExecutionMode#&quot;&gt;
+  &lt;cfcase value = &quot;start&quot;&gt;
+   &lt;cfif <strong>IsStruct(attributes.EMPINFO)</strong>&gt;
+   &lt;cfoutput&gt;Error. Invalid data.&lt;/cfoutput&gt;
+   &lt;cfexit method = &quot;ExitTag&quot;&gt;
+   &lt;cfelse&gt;
+   &lt;cfquery name = &quot;AddEmployee&quot; datasource = &quot;cfdocexamples&quot;&gt;
+   INSERT INTO Employees
+   (FirstName, LastName, Email, Phone, Department)
+   VALUES 
+   &lt;cfoutput&gt;
+   (
+   '#StructFind(attributes.EMPINFO, &quot;firstname&quot;)#' ,
+   '#StructFind(attributes.EMPINFO, &quot;lastname&quot;)#' ,
+   '#StructFind(attributes.EMPINFO, &quot;email&quot;)#' ,
+   '#StructFind(attributes.EMPINFO, &quot;phone&quot;)#' ,
+   '#StructFind(attributes.EMPINFO, &quot;department&quot;)#'
+   )
+   &lt;/cfoutput&gt; 
+   &lt;/cfquery&gt;
+&lt;/cfif&gt;
+&lt;cfoutput&gt;&lt;hr&gt;Employee Add Complete&lt;/cfoutput&gt;
+&lt;/cfcase&gt;
+&lt;/cfswitch&gt; ---&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000531.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000533.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000532.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

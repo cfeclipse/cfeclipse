@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfformgroup</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000256.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000258.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfformgroup</h1>
+<h4><a name="wp3833405"></a>Description</h4>
+<p>Creates a container control for multiple form controls. Used in the <code>cfform</code> tag body of Macromedia Flash and XML forms. Ignored in HTML forms.</p>
+<h4><a name="wp3767836"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a></p>
+<h4><a name="wp3767841"></a>Syntax</h4>
+<pre>&lt;cfformgroup <br />   type = &quot;group type&quot;<br />   label = &quot;label&quot;<br />   style = &quot;style specification&quot;<br />   selectedIndex = &quot;page number&quot;&gt;<br />   width = &quot;pixels&quot;<br />   height = &quot;pixels&quot;<br />   enabled = &quot;Yes&quot; or &quot;No&quot;<br />   visible = &quot;Yes&quot; or &quot;No&quot;<br />   OnChange = &quot;ActionScript expression&quot;<br />   toolTip = &quot;Tip text&quot;<br />...<i>ColdFusion forms controls<br /></i>&lt;/cfformgroup&gt;<br /><i>or<br /></i>&lt;cfformgroup <br />   type = &quot;repeater&quot;<br />   query = &quot;query object&quot;<br />startrow = &quot;row number&quot;<br />maxrows = &quot;integer&quot;&gt;<br />...ColdFusion forms controls<br />&lt;/cfformgroup&gt;
+</pre><h4><a name="wp3767843"></a>See also</h4>
+<p><a href="00000216.htm#1097239"><code>cfapplet</code></a><code>,</code> <a href="00000223.htm#3798877"><code>cfcalendar</code></a><code>,</code> <a href="00000256.htm#2433198"><code>cfform</code></a><code>, </code><a href="00000258.htm#3768073"><code>cfformitem</code></a><code>, </code><a href="00000266.htm#1836171"><code>cfgrid</code></a><code>, </code><a href="00000279.htm#1100379"><code>cfinput</code></a><code>, </code><a href="00000331.htm#2553073"><code>cfselect</code></a><code>, </code><a href="00000337.htm#2612389"><code>cfslider</code></a><code>, </code><a href="00000341.htm#2773598"><code>cftextarea</code></a><code>, </code><a href="00000347.htm#1104271"><code>cftree</code></a>, <a href="00001392.htm#130689">Using the cfformgroup tag to structure forms</a> in <a href="00001388.htm#131336">Chapter&#160;29, &quot;Creating Forms in Macromedia Flash,&quot;</a> and <a href="00001414.htm#139105">Using cfformgroup tags</a> in <a href="00001409.htm#118763">Chapter&#160;30, &quot;Creating Skinnable XML Forms,&quot;</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp3767866"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this tag.</p>
+<h4><a name="wp3767871"></a>Attributes</h4>
+<p>The following table lists the attributes and their behavior in Flash forms. For XML, if not otherwise noted, the attribute is passed to the XML but is not interpreted by the basic XSL style sheet provided with ColdFusion MX.</p>
+<p><strong>Note: </strong>Attributes that are not marked as supported in XML are not handled by the skins provided with ColdFusion MX. They are, however, included in the generated XML</p><table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt;
+Formats
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td colspan="1" rowspan="2">
+<p>type</p>
+    </td>
+    <td>
+<p>Required;</p>
+<p>Flash and XML</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p><strong>XML:</strong> Can be any XForms group type defined in the XSLT. The XSL skins provided with ColdFusion MX support the following types:</p>
+<ul>
+<li>
+   horizontal: align child tags horizontally within a form and put this tag's <code>label</code> attribute to the left of the children.
+</li>
+<li>
+   vertical: align child tags vertically within a form and put this tag's <code>label</code> attribute to the left of the children. 
+</li>
+<li>
+   fieldset: corresponds to the HTML <code>fieldset</code> tag, which groups its children, typically by drawing a box around them and replacing part of the top line with legend text. To specify the legend, use the <code>label</code> attribute. To specify the box dimensions, use the <code>style</code> attribute with <code>height</code> and <code>width</code> values. You must explicitly use <code>cfformgroup</code> <code>type=</code>&quot;<code>vertical</code>&quot; inside this formgroup to align its child tags vertically.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p><strong>Flash:</strong> Must be one of the following:</p>
+<ul>
+<li>
+   repeater: dynamically creates an instance of the <code>cfformgroup</code>'s child tag or tags for each row of a query object, without requiring ColdFusion to recompile the Flash SWF file when the number of rows changes. 
+</li>
+<li>
+   horizontal: aligns child tags horizontally within a form and put this tag's <code>label</code> attribute to the left of the children. Use this tag to arrange individual controls horizontally.
+</li>
+<li>
+   vertical: aligns child tags vertically within a form and puts this tag's <code>label</code> attribute to the left of the children. Use this tag to arrange individual controls vertically.
+</li>
+<li>
+   hbox: aligns children horizontally. Use this type to arrange groups of form controls horizontally. Do not use this attribute to align individual controls horizontally, because the child controls do not align properly; use the horizontal type instead.
+</li>
+<li>
+   vbox: aligns children vertically. Use this type to arrange groups of controls vertically. Do not use this attribute to align individual controls vertically, as the child controls will not align properly; use the vertical type instead.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<ul>
+<li>
+   hdividedbox: aligns children horizontally. Each child is in a box with a border, and there are dividers between the boxes that users can move to change the relative sizes of the children. Use a tag with this attribute to arrange groups of form controls horizontally. You cannot use this attribute to align individual controls horizontally.
+</li>
+<li>
+   vdividedbox: aligns children vertically. Each child is in a box with a border, and there are dividers between the boxes that users can move to change the relative sizes of the children. Use this type to group form controls, for example as a unit in an hbox form group. Do not use this attribute to align individual tags vertically.
+</li>
+<li>
+   panel: a container consisting of a title bar containing the <code>label</code> attribute text, a border, and a content area with vertically arranged children.
+</li>
+<li>
+   tile: places the children in a rectangular grid. 
+</li>
+<li>
+   accordion: places each child in a pleat of an expanding and contracting accordion. Define each pleat using a <code>cfformgroup type=&quot;page&quot;</code> tag.
+</li>
+<li>
+   tabnavigator: places the children in a tabbed dialog box. Define each tab using a <code>cfformgroup type=&quot;page&quot;</code> tag.
+</li>
+<li>
+   page: places the children tags, aligned vertically, in a single tab of a parent tabnavigator or pleat of an accordion container.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Required for <code>type= repeater</code>, ignored otherwise;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>The query to use with the repeater. Flash creates an instance of each of the <code>cfformgroup</code> tag's child tags for each row in the query. You can use the <code>bind</code> attribute in the child tags to use data from the query row for the instance. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>startrow</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>0</p>
+    </td>
+    <td>
+<p>Used only for the <code>repeater</code> type; ignored otherwise.</p>
+<p>Specifies the row number of the first row of the query to use in the Flash form repeater. This attribute is zero-based: the first row is row 0, not row 1 (as in most ColdFusion tags).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>maxrows</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Used only for the <code>repeater</code> type; ignored otherwise.</p>
+<p>Specifies the maximum number of query rows to use in the Flash form repeater. If the query has more rows than the sum of the <code>startrow</code> attribute and this value, the repeater does not use the remaining rows.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>label</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash and XML</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Label to apply to the form group. </p>
+<p>In Flash, does the following:</p>
+<ul>
+<li>
+   For a page or panel form group, determines the label to put on the corresponding accordion pleat, the tabnavigator tab, or the panel title bar. For a Flash horizontal or vertical form group, specifies the label to put to the left of the group.
+</li>
+<li>
+   Ignored in Flash for repeater, hbox, hdividedbox, vbox, vdividedbox, tile, accordion, and tabnavigator types.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>style</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash and XML</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Flash<strong>:</strong>&#160;A Flash style specification in CSS format. For detailed information on specifying Flash styles, see <a href="00001388.htm#131336">Creating Forms in Macromedia Flash</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<p><strong>XML:&#160;</strong>An inline CSS style specification.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>selectedIndex</p>
+    </td>
+    <td>
+<p>Optional; </p>
+<p>Flash only</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Used only for accordion and tabnavigator types; ignored otherwise. Specifies the page control to display as open, where 0 (not 1) specifies the first page control defined in the group.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>width</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash and XML</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Width of the group container, in pixels. If you omit this attribute, Flash automatically sizes the container width. Ignored for Flash repeater type.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>height</p>
+    </td>
+    <td>
+<p>Optional; </p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Height of the group container, in pixels. If you omit this attribute, Flash automatically sizes the container height. Ignored for Flash repeater type.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>enabled</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<p>Boolean value specifying whether the controls in the form group are enabled. Disabled controls appear in light gray.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>visible</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<p>Boolean value specifying whether the controls in the form group are visible. If the controls are invisible, the space that would be occupied by visible controls is blank.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onChange</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Tabnavigator and accordion types only: ActionScript expression or expressions to execute when a new tab or accordion page is selected. </p>
+<p>Note:<strong> </strong>The onChange event occurs when the form first appears.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>tooltip</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Text to display when the mouse pointer hovers in the form group area. If a control in the form group also specifies a tooltip, Flash displays the control's tooltip when the mouse pointer hovers over the control.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3771931"></a>Usage</h4>
+<p>This tag requires an end tag. This tag is ignored if the <code>cfform</code> type is HTML; any tag body's contents are interpreted as if the surrounding <code>cfformgroup</code> does not exist.</p>
+<p>In Flash format forms, this tag organizes the contents of the form. It groups and arranges child tags. The body of this tag can contain the following tags; all other tags and text are ignored:</p>
+<ul>
+<li>
+   <a href="00000257.htm#3833404">cfformgroup</a>
+</li>
+<li>
+   <a href="00000258.htm#3768073">cfformitem</a>
+</li>
+<li>
+   <a href="00000223.htm#3798877"><code>cfcalendar</code></a>
+</li>
+<li>
+   <a href="00000266.htm#1836171">cfgrid</a>
+</li>
+<li>
+   <a href="00000279.htm#1100379">cfinput</a>
+</li>
+<li>
+   <a href="00000331.htm#2553073">cfselect</a>
+</li>
+<li>
+   <a href="00000341.htm#2773598">cftextarea</a>
+</li>
+<li>
+   <a href="00000347.htm#1104271">cftree</a>
+</li>
+</ul>
+<p>For more information on using this tag in Flash forms, see <a href="00001388.htm#131336">Creating Forms in Macromedia Flash</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<p>In XML format, ColdFusion passes the tag and its attributes to the XML; it is the responsibility of the skin XSLT to handle the XML. The ColdFusion basic skin supports the <code>horizontal</code>, <code>vertical</code>, and <code>dualselectlist</code> styles only. For more information on using this tag in XML forms, see <a href="00001388.htm#131336">Creating Forms in Macromedia Flash</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp3767970"></a>Example</h4>
+<p>For a simple example of an XML form that uses a single <code>cfformgroup</code> tag, see <a href="00000256.htm#2433198"><code>cfform</code></a><code>.</code></p>
+<p>The following example shows how to use the <code>cfformgroup</code> tag to arrange elements on a Flash form. It creates an hdividedbox container that has a vbox container on each side. The left box has heading text and two radio buttons. The right box has heading text and three check boxes.</p>
+<pre>&lt;h3&gt;Simple cfformgroup Example&lt;/h3&gt;
+&lt;cfform name=&quot;myform&quot; height=&quot;450&quot; width=&quot;500&quot; format=&quot;Flash&quot; &gt;
+   &lt;cfformgroup type=&quot;hdividedbox&quot; &gt;
+      &lt;cfformgroup type=&quot;VBox&quot;&gt;
+         &lt;cfformitem type=&quot;text&quot; height=&quot;20&quot;&gt;
+            Pets:
+         &lt;/cfformitem&gt;
+         &lt;cfinput type=&quot;Radio&quot; name=&quot;pets&quot; label=&quot;Dogs&quot; value=&quot;Dogs&quot;
+            checked&gt;
+         &lt;cfinput type=&quot;Radio&quot; name=&quot;pets&quot; label=&quot;Cats&quot; value=&quot;Cats&quot;&gt;
+      &lt;/cfformgroup&gt;
+
+      &lt;cfformgroup type=&quot;VBox&quot;&gt;
+         &lt;cfformitem type=&quot;text&quot; height=&quot;20&quot;&gt;
+            Fruits:
+         &lt;/cfformitem&gt;
+         &lt;cfinput type = &quot;Checkbox&quot; name=&quot;chk1&quot; Label=&quot;Apples&quot;
+            value=&quot;Apples&quot;&gt;
+         &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk2&quot; Label=&quot;Bananas&quot;
+            value=&quot;Bananas&quot;&gt;
+         &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk3&quot; Label=&quot;Pears&quot;
+            value=&quot;Pears&quot;&gt;
+      &lt;/cfformgroup&gt;
+   &lt;/cfformgroup&gt;
+&lt;/cfform&gt;
+</pre><p>The following more complex example shows more fully how you can use <code>cfformgroup</code> tags to arrange controls in a Flash form. It also shows many of the text formatting features that you can use in a text <code>cfformgroup</code> body. When you submit the form, the page dumps the contents of the Forms scope, to show you the submitted data.</p>
+<pre>&lt;h2&gt;cfformgroup Example&lt;/h2&gt;
+&lt;cfif IsDefined(&quot;form.oncethrough&quot;)&gt;
+   &lt;h3&gt;The form submitted the following information to ColdFusion MX:&lt;/h3&gt;
+   &lt;cfdump var=&quot;#form#&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;/cfif&gt;
+
+&lt;h3&gt;A Flash form using cfformgroup tags&lt;/h3&gt;
+&lt;cfform name=&quot;myform&quot; height=&quot;450&quot; width=&quot;500&quot; format=&quot;Flash&quot;&gt;
+
+&lt;!--- The following formgroup shows how you can present formatted text. ---&gt;
+   &lt;cfformitem type=&quot;html&quot;&gt;
+      &lt;b&gt;&lt;font color=&quot;#FF0000&quot; size=&quot;+4&quot; face=&quot;serif&quot;&gt;
+      This form has two tabs, asking for the following:&lt;/font&gt;&lt;/b&gt;&lt;br&gt;
+      &lt;li&gt;contact information&lt;/li&gt;
+      &lt;li&gt;&lt;i&gt;preferences&lt;/i&gt;&lt;/li&gt;
+      &lt;b&gt;Try entering information on both tabs&lt;/b&gt;&lt;br&gt;
+      Submit the form and see what ColdFusion gets in the Forms scope.&lt;/b&gt;&lt;br&gt;
+      &lt;a href=&quot;http://www.macromedia.com/&quot; target=&quot;_blank&quot;&gt;
+      &lt;font color=&quot;#0000FF&quot;&gt;&lt;u&gt;
+      This link displays the Macromedia home page in a new browser window
+      &lt;/u&gt;&lt;/font&gt;&lt;/a&gt;&lt;br&gt;
+      &amp;nbsp;&lt;br&gt;
+   &lt;/cfformitem&gt;
+
+&lt;!--- Use a tabnavigator with two tabs for user input. ---&gt;
+   &lt;cfformgroup type=&quot;tabnavigator&quot; height=&quot;220&quot;&gt;
+      &lt;cfformgroup type=&quot;page&quot; label=&quot;Contact Information&quot;&gt;
+         &lt;!--- Align the first and last name fields horizontally ---&gt;
+         &lt;cfformgroup type=&quot;horizontal&quot; label=&quot;Your Name&quot;&gt;
+            &lt;cfinput type=&quot;text&quot; required=&quot;Yes&quot; name=&quot;firstName&quot; label=&quot;First&quot;
+               value=&quot;&quot; width=&quot;100&quot;/&gt;
+            &lt;cfinput type=&quot;text&quot; required=&quot;Yes&quot; name=&quot;lastName&quot; label=&quot;Last&quot;
+               value=&quot;&quot; width=&quot;100&quot;/&gt;
+         &lt;/cfformgroup&gt;
+         &lt;cfformitem type=&quot;html&quot;&gt;&lt;textformat indent=&quot;95&quot;&gt;&lt;font size=&quot;-2&quot;&gt;
+            Flash fills the email field in automatically. 
+            You can replace any of the text.
+            &lt;/font&gt;&lt;/textformat&gt;
+         &lt;/cfformitem&gt;
+         &lt;!--- The bind attribute gets the field contents from the firstname
+               and lastName fields as they get filled in. ---&gt;
+         &lt;cfinput type=&quot;text&quot; name=&quot;email&quot; label=&quot;email&quot;
+            bind=&quot;{firstName.text}.{lastName.text}@mm.com&quot;&gt;
+      
+         &lt;cfinput type=&quot;text&quot; name=&quot;phone&quot; validate=&quot;telephone&quot; required=&quot;Yes&quot;
+            label=&quot;Phone Number&quot;&gt;
+      &lt;/cfformgroup&gt;
+
+      &lt;cfformgroup type=&quot;page&quot; label=&quot;Preferences&quot;&gt;
+         &lt;cfformitem type=&quot;text&quot; height=&quot;30&quot;&gt;
+            &lt;b&gt;Tell us your preferences&lt;/b&gt;
+         &lt;/cfformitem&gt;
+         &lt;!--- Put the pet selectors to the left of the fruit selectors. ---&gt;
+         &lt;cfformgroup type=&quot;hbox&quot;&gt;
+         &lt;!--- Group the pet selector box contents, aligned vertically. ---&gt;
+            &lt;cfformgroup type=&quot;vbox&quot;&gt;
+               &lt;cfformitem type=&quot;text&quot; height=&quot;20&quot;&gt;
+                  Pets:
+               &lt;/cfformitem&gt;
+               &lt;cfformgroup type=&quot;vertical&quot;&gt;
+                  &lt;cfinput type=&quot;Radio&quot; name=&quot;pets&quot; label=&quot;Dogs&quot; value=&quot;Dogs&quot;
+                     checked&gt;
+                  &lt;cfinput type=&quot;Radio&quot; name=&quot;pets&quot; label=&quot;Cats&quot; value=&quot;Cats&quot;&gt;
+               &lt;/cfformgroup&gt;
+            &lt;/cfformgroup&gt;
+         &lt;!--- Group the fruit selector box contents, aligned vertically. ---&gt;
+            &lt;cfformgroup type=&quot;vbox&quot;&gt;
+               &lt;cfformitem type=&quot;text&quot; height=&quot;20&quot;&gt;
+                  Fruits:
+               &lt;/cfformitem&gt;
+               &lt;cfformgroup type=&quot;tile&quot; width=&quot;200&quot; label=&quot;Tile box&quot;&gt;
+                  &lt;--- Flash requires unique names for all controls ---&gt;
+                  &lt;cfinput type = &quot;Checkbox&quot; name=&quot;chk1&quot; Label=&quot;Apples&quot;
+                     value=&quot;Apples&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk2&quot; Label=&quot;Bananas&quot;
+                     value=&quot;Bananas&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk3&quot; Label=&quot;Pears&quot;
+                     value=&quot;Pears&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk4&quot; Label=&quot;Oranges&quot;
+                     value=&quot;Oranges&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk5&quot; Label=&quot;Grapes&quot;
+                     value=&quot;Grapes&quot;&gt;
+                  &lt;cfinput type=&quot;Checkbox&quot; name=&quot;chk6&quot; Label=&quot;Cumquats&quot;
+                     value=&quot;Cumquats&quot;&gt;
+               &lt;/cfformgroup&gt;
+            &lt;/cfformgroup&gt;
+         &lt;/cfformgroup&gt;
+      &lt;/cfformgroup&gt;
+   &lt;/cfformgroup&gt;
+
+   &lt;cfformgroup type=&quot;horizontal&quot;&gt;
+      &lt;cfinput type = &quot;submit&quot; name=&quot;submit&quot; width=&quot;100&quot; value = &quot;Show Results&quot;&gt;
+      &lt;cfinput type = &quot;reset&quot; name=&quot;reset&quot; width=&quot;100&quot; value = &quot;Reset Fields&quot;&gt;
+      &lt;cfinput type = &quot;hidden&quot; name=&quot;oncethrough&quot; value = &quot;Yes&quot;&gt;
+   &lt;/cfformgroup&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000256.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000258.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000257.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

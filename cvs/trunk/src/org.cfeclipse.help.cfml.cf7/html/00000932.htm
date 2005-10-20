@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using number signs</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000931.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000933.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using number signs</h1>
+<p>Number signs (#) have a special meaning in CFML. When the ColdFusion server encounters number signs in CFML text, such as the text in a <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag body, it checks to see if the text between the number signs is either a variable or a function.</p>
+<p><strong>Tip: </strong>Number signs are also called pound signs.</p><p>Is so, it replaces the text and surrounding number signs with the variable value or the result of the function. Otherwise, ColdFusion generates an error.</p>
+<p>For example, to output the current value of a variable named <code>Form.MyFormVariable</code>, you delimit (surround) the variable name with number signs:</p>
+<pre>&lt;cfoutput&gt;Value is #Form.MyFormVariable#&lt;/cfoutput&gt;
+</pre><p>In this example, the variable <code>Form.MyFormVariable</code> is replaced with the value assigned to it.</p>
+<p>Follow these guidelines when using number signs:</p>
+<ul>
+<li>
+   Use number signs to distinguish variables or functions from plain text.
+</li>
+<li>
+   Surround only a single variable or function in number signs; for example, #Variables.myVar# or #Left(myString, position)#. (However, a function in number signs can contain nested functions, such as #Left(trim(myString), position)#.
+</li>
+<li>
+   Do not put complex expressions, such as<code> 1 + 2 </code>in number signs. Although this is allowed in a cfoutput block, such as &lt;cfoutput&gt;One plus one is #1 + 1#&lt;/cfoutput&gt;, doing so mixes logic and presentation.
+</li>
+<li>
+   Use number signs <i>only</i> where necessary, because unneeded number signs slow processing.
+</li>
+</ul>
+<p>The following sections provide more details on how to use number signs in CFML. For a description of using number signs to create variable names, see <a href="00000941.htm#2736194">Using number signs to construct a variable name in assignments</a>.</p>
+<ul>
+<li>
+   <a href="00000933.htm#2770962">Using number signs in ColdFusion tag attribute values</a>
+</li>
+<li>
+   <a href="00000934.htm#2673599">Using number signs in tag bodies</a>
+</li>
+<li>
+   <a href="00000935.htm#2673613">Using number signs in strings</a>
+</li>
+<li>
+   <a href="00000936.htm#2673642">Nested number signs</a>
+</li>
+<li>
+   <a href="00000937.htm#2673653">Using number signs in expressions</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000931.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000933.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000932.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Comments</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000867.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000869.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Comments</h1>
+<p>ColdFusion comments have a similar format to HTML comments. However, they use three dash characters instead of two; for example:</p>
+<pre>&lt;!--- This is a ColdFusion Comment. Browsers do not receive it. ---&gt;
+</pre><p>The ColdFusion server removes all ColdFusion comments from the page before returning it to the web server. As a result, the page that a user browser receives does not include the comment, and users cannot see it even if they view the page source.</p>
+<p>You can embed CFML comments in begin tags (not just tag bodies), functions calls, and variable text in number signs. ColdFusion ignores the text in comments such as the following:</p>
+<pre>&lt;cfset MyVar = var1 &lt;!--- &amp; var2 ---&gt;&gt;
+&lt;cfoutput&gt;#Dateformat(now() &lt;!---, &quot;dddd, mmmm yyyy&quot; ---&gt;)#&lt;/cfoutput&gt; 
+</pre><p>This technique can be useful if you want to temporarily comment out parts of expressions or optional attributes or arguments.</p>
+<p>You can also nest comments, as the following example shows:</p>
+<pre>&lt;!--- disable this code
+&lt;!--- display error message ---&gt;
+&lt;cfset errormessage1=&quot;Oops!&quot;&gt;
+&lt;cfoutput&gt;
+#errormessage1#
+&lt;/cfoutput&gt;
+---&gt;
+</pre><p>This is useful if you want to temporarily disable a section of code while you test your application.</p>
+<p>You can embed comments within comments, however, you should use this technique carefully.</p>
+<p><strong>Note: </strong>You cannot embed comments inside a tag name or function name, such as <br /><code>&lt;cf_My&lt;!--- New ---&gt;CustomTag&gt;</code>. You also cannot embed comments inside strings, as in the following example: <code>IsDefined(&quot;My&lt;!--- New ---&gt;Variable&quot;)</code>.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00000867.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000869.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000868.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

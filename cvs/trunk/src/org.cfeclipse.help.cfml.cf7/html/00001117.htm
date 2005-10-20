@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using application event handlers</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001116.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001118.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using application event handlers</h1>
+<p>The following table briefly describes the application event CFC methods that you can implement, including when they are triggered. The following sections describe how to use these methods in more detail.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Method
+    </th>
+    <th>
+When run
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000696.htm#1188381"><code>onApplicationStart</code></a>
+</pre>    </td>
+    <td>
+<p>The application first starts: when the first request for a page is processed or the first CFC method is invoked by an event gateway instance, Flash Remoting request, or a web service invocation. </p>
+<p>This method is useful for setting application-wide (Application scope) variables, such as the names of data sources.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000695.htm#1188612"><code>onApplicationEnd</code></a>
+</pre>    </td>
+    <td>
+<p>The application ends: when the application times out or the server shuts down.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000702.htm#1186741"><code>onSessionStart</code></a>
+</pre>    </td>
+    <td>
+<p>A new session is created as a result of a request that is not in an existing session, including ColdFusion event gateway sessions. The application must enable sessions for this event to happen. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000701.htm#1188499"><code>onSessionEnd</code></a>
+</pre>    </td>
+    <td>
+<p>A session time-out setting is reached or, if using J2EE sessions, the user closes the browser. This event is <strong>not</strong> triggered when the application ends or the server shuts down.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000700.htm#1188711"><code>onRequestStart</code></a>
+</pre>    </td>
+    <td>
+<p>ColdFusion receives any of the following: a request, an HTTP request (for example, from a browser), a message to an event gateway,<strong> </strong>a SOAP request, or a Flash Remoting request.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000698.htm#1186087"><code>onRequest</code></a>
+</pre>    </td>
+    <td>
+<p>The <code>onRequestStart</code> event has completed. This method can act as a filter for the requested page content.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre><a href="00000699.htm#1186124"><code>onRequestEnd</code></a>
+</pre>    </td>
+    <td>
+<p>All pages and CFCs in the request have been processed: equivalent to the OnRequestEnd.cfm page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre><a href="00000697.htm#1188543"><code>onError</code></a>
+</pre>    </td>
+    <td>
+<p>When an exception occurs that is not caught by a try/catch block.</p>
+    </td>
+  </tr>
+</table>
+
+<p>When ColdFusion MX receives a request, it instantiates the Application CFC and runs the Application.cfc code in the following order:</p>
+<ul>
+<li>
+   CFC initialization code at the top of the file
+</li>
+<li>
+   <code>onApplicationStart</code>, if not run before for this application
+</li>
+<li>
+   <code>onSessionStart</code>, if not run before for this session
+</li>
+<li>
+   <code>onRequestStart</code>
+</li>
+<li>
+   <code>onRequest</code>, or the requested page if there is no onRequest method
+</li>
+<li>
+   <code>onRequestEnd</code>
+</li>
+</ul>
+<p>The following methods are triggered by specific events:</p>
+<ul>
+<li>
+   <code>onApplicationEnd</code>
+</li>
+<li>
+   <code>onSessionEnd</code>
+</li>
+<li>
+   <code>onError</code>
+</li>
+</ul>
+<p>The <code>onApplicationEnd</code> and <code>onSessionEnd</code> methods do not execute in the context of a page request, so they cannot access request variables or display information to the user. The <code>OnError</code> method does not always execute in the context of a request; you can use its <code>Event</code> argument to determine the context.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001116.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001118.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001117.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

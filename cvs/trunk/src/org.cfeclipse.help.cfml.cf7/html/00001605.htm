@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Retrieving messages and attachments</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001604.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001606.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Retrieving messages and attachments</h1>
+<p>When you use the <a href="00000311.htm#1101854"><code>cfpop</code></a> tag with an <code>attachmentpath</code> attribute to specify the directory in which to store attachments, ColdFusion retrieves any attachment files from the POP server and saves them in the specified directory. The <code>cfpop</code> tag fills the attachmentfiles field with a tab-separated list of the locations of the attachment files. Use the <code>cffile</code> tag to delete these temporary files when they are no longer needed. ColdFusion&#160;MX creates the directory if it does not exist. (ColdFusion&#160;MX must have the appropriate rights on the system to create the directory.)</p>
+<p>If a message has no attachments, the <code>attachments</code> and <code>attachmentfiles </code>columns contain empty strings.</p>
+<p><strong>Note: </strong>CFML does not provide a way to change the name of a mail attachment returned by <code>cfpop</code> before it tries to save the file. If the attachment name is invalid for the file system on which ColdFusion is running, the attachment cannot be saved.</p><h4>To retrieve all parts of a message, including attachments:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;POP Mail Message Attachment Example&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h2&gt;This example retrieves message header,
+body, and all attachments:&lt;/h2&gt;
+
+&lt;cfpop server=&quot;mail.company.com&quot;
+	username=#myusername#
+	password=#mypassword#
+	action=&quot;GetAll&quot;
+	attachmentpath=&quot;c:\temp\attachments&quot;
+	name=&quot;Sample&quot;&gt;
+
+&lt;cfoutput query=&quot;Sample&quot;&gt;
+	MessageNumber: #HTMLEditFormat(Sample.MessageNumber)# &lt;br&gt;
+	To: #HTMLEditFormat(Sample.to)# &lt;br&gt;
+	From: #HTMLEditFormat(Sample.from)# &lt;br&gt;
+	Subject: #HTMLEditFormat(Sample.subject)# &lt;br&gt;
+	Date: #HTMLEditFormat(Sample.date)# &lt;br&gt;
+	Cc: #HTMLEditFormat(Sample.cc)# &lt;br&gt;
+	ReplyTo: #HTMLEditFormat(Sample.ReplyTo)# &lt;br&gt;
+	Attachments: #HTMLEditFormat(Sample.Attachments)# &lt;br&gt;
+	Attachment Files: #HTMLEditFormat(Sample.AttachmentFiles)# &lt;br&gt;
+	&lt;br&gt;
+	Body:&lt;br&gt;
+	#Sample.body# &lt;br&gt;
+	&lt;br&gt;
+	Header:&lt;br&gt;
+	HTMLCodeFormat(Sample.header)# &lt;br&gt;
+	&lt;hr&gt;
+&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Edit the following lines so that they refer to valid values for your POP mail server, username, and password:
+<pre>
+&lt;cfpop server=&quot;mail.company.com&quot;
+	username=#myusername#
+	password=#mypassword#
+</pre>
+</li>
+<li>
+   Save the file as header_body_att.cfm in the myapps directory under your <i>web_root</i> and view it in your web browser:
+</li>
+</ol>
+<p><strong>Note: </strong>To avoid duplicate filenames when saving attachments, set the <code>generateUniqueFilenames</code> attribute of <code>cfpop</code> to <code>Yes</code>.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001604.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001606.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001605.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

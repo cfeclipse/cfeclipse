@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IsNumeric</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000524.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000526.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IsNumeric</h1>
+<h4><a name="wp1224232"></a>Description</h4>
+<p>Determines whether a string can be converted to a numeric value. Supports numbers in U.S. number format. For other number support, use <a href="00000576.htm#132961"><code>LSIsNumeric</code></a>.</p>
+<h4><a name="wp3401678"></a>Returns</h4>
+<p>True, if <i>string </i>can be converted to a number; False, otherwise.</p>
+<h4><a name="wp2486743"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a></p>
+<h4><a name="wp1106582"></a>Function syntax</h4>
+<pre><code><strong>IsNumeric</strong></code>(<i>string</i>)
+</pre><h4><a name="wp4995959"></a>See also</h4>
+<p><a href="00000515.htm#1106300"><code>IsBinary</code></a>, <a href="00000534.htm#4996076">IsValid</a></p>
+<h4><a name="wp1327759"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1106586"></a>Example</h4>
+<pre>&lt;h3&gt;IsNumeric Example&lt;/h3&gt;
+&lt;cfif IsDefined(&quot;FORM.theTestValue&quot;)&gt;
+   &lt;cfif <strong>IsNumeric(FORM.theTestValue)</strong>&gt;
+   &lt;h3&gt;The string &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; can be <br />converted to a number&lt;/h3&gt;
+   &lt;cfelse&gt;
+   &lt;h3&gt;The string &lt;cfoutput&gt;#DE(FORM.theTestValue)#&lt;/cfoutput&gt; cannot be <br />converted to a number&lt;/h3&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action = &quot;isNumeric.cfm&quot;&gt;
+&lt;p&gt;Enter a string, and find out whether it can be evaluated to a numeric value.
+
+&lt;p&gt;&lt;input type = &quot;Text&quot; name = &quot;TheTestValue&quot; value = &quot;123&quot;&gt; 
+&lt;input type = &quot;Submit&quot; value = &quot;Is it a Number?&quot; name = &quot;&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000524.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000526.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000525.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

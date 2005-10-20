@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Client Variables page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001706.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001708.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Client Variables page</h1>
+<p>Client variables let you store user information and preferences between sessions. Using information from client variables, you can customize page content for individual users.</p>
+<p>You enable client variable default settings in ColdFusion&#160;MX on the Client Variables page of the Administrator. ColdFusion&#160;MX lets you store client variables in the following ways:</p>
+<ul>
+<li>
+   In database tables
+<p><strong>Note: </strong>If your data source uses one of the JDBC drivers bundled with ColdFusion&#160;MX&#160;7, ColdFusion&#160;MX can automatically create the necessary tables. If your data source uses the ODBC Socket or a third-party JDBC driver, you must manually create the necessary CDATA and CGLOBAL database tables.</p></li>
+<li>
+   As cookies in users' web browsers
+</li>
+<li>
+   In the operating system registry
+<p><strong>Caution: </strong>Macromedia recommends that you do not store client variables in the registry because it can critically degrade performance of the server. If you do use the registry to store client variables, you must allocate sufficient memory and disk space.</p></li>
+</ul>
+<p>You can override settings specified in the Client Variables page using the Application.cfc file or the <code>cfapplication</code> tag. For more information, see <i>ColdFusion MX Developer's Guide</i>.</p>
+<p>The following table compares the client variable storage options:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Storage type
+    </th>
+    <th>
+Advantages
+    </th>
+    <th>
+Disadvantages
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Data source</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Can use existing data source
+</li>
+<li>
+   Portable: not tied to the host system or operating system
+</li>
+</ul>
+    </td>
+    <td>
+<ul>
+<li>
+   Requires database transaction to read/write variables
+</li>
+<li>
+   More complex to implement
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Browser cookies</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Simple implementation
+</li>
+<li>
+   Good performance
+</li>
+<li>
+   Can be set to expire automatically
+</li>
+<li>
+   Client-side control
+</li>
+</ul>
+    </td>
+    <td>
+<ul>
+<li>
+   Users can configure browsers to disallow cookies
+</li>
+<li>
+   Cookie data is limited to 4 KB
+</li>
+<li>
+   Netscape Navigator allows only 20 cookies from one host; ColdFusion&#160;MX uses three cookies to store read-only data, leaving only 17 cookies available
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>System registry</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Simple implementation
+</li>
+<li>
+   Good performance
+</li>
+<li>
+   Registry can be exported easily to other systems
+</li>
+<li>
+   Server-side control
+</li>
+</ul>
+    </td>
+    <td>
+<ul>
+<li>
+   Possible restriction of the registry's maximum size limit in Windows in the Control Panel
+</li>
+<li>
+   Integrated with the host system: not practical for clustered servers 
+</li>
+<li>
+   Not available for UNIX
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1170483"></a>Migrating client variable data</h3>
+<p>To migrate your client variable data to another data source, you should know the structure of the database tables that store this information. Client variables stored externally use two simple database tables, like those shown in the following tables:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th colspan="2" rowspan="1">
+CDATA Table
+    </th>
+  </tr>
+  <tr>
+    <th>
+Column
+    </th>
+    <th>
+Data type
+    </th>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfid</p>
+    </td>
+    <td>
+<p>CHAR(64), TEXT, VARCHAR, or equivalent</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>app</p>
+    </td>
+    <td>
+<p>CHAR(64), TEXT, VARCHAR, or equivalent</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>data</p>
+    </td>
+    <td>
+<p>MEMO, LONGTEXT, LONG VARCHAR, or equivalent</p>
+    </td>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th colspan="2" rowspan="1">
+CGLOBAL Table
+    </th>
+  </tr>
+  <tr>
+    <th>
+Column
+    </th>
+    <th>
+Data type
+    </th>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cfid</p>
+    </td>
+    <td>
+<p>CHAR(64), TEXT, VARCHAR, or equivalent</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>data</p>
+    </td>
+    <td>
+<p>MEMO, LONGTEXT, LONG VARCHAR, or equivalent</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>lvisit</p>
+    </td>
+    <td>
+<p>TIMESTAMP, DATETIME, DATE, or equivalent</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1212794"></a>Creating client variable tables</h3>
+<p>Use the following sample ColdFusion page as a model for creating client variable database tables in your own database. However, keep in mind that not all databases support the same column data type names. For the proper data type, see your database documentation. </p>
+<p><strong>Tip: </strong>The ColdFusion&#160;MX Administrator can create client variable tables for data sources that use one of the bundled JDBC drivers. For more information, see the online help.</p><h4><a name="wp1160810"></a>Sample table creation page</h4>
+<pre>&lt;!---- Create the Client variable storage tables in a datasource. 
+This example applies to Microsoft Access databases. ---&gt;
+
+&lt;cfquery name=&quot;data1&quot; datasource=&quot;#DSN#&quot;&gt;
+CREATE TABLE CDATA
+(
+    cfid char(20),
+    app char(64),
+    data memo
+)
+&lt;/cfquery&gt;
+
+&lt;cfquery name=&quot;data2&quot; datasource=&quot;#DSN#&quot;&gt; 
+   CREATE UNIQUE INDEX id1 
+   ON CDATA (cfid,app)
+&lt;/cfquery&gt;
+   
+&lt;cfquery name=&quot;global1&quot; datasource=&quot;#DSN#&quot;&gt;
+CREATE TABLE CGLOBAL
+(
+    cfid char(20),
+    data memo,
+   lvisit date
+)
+&lt;/cfquery&gt;
+
+&lt;cfquery name=&quot;global2&quot; datasource=&quot;#DSN#&quot;&gt; 
+   CREATE INDEX id2 
+   ON CGLOBAL (cfid)
+&lt;/cfquery&gt;
+
+&lt;cfquery name=&quot;global2&quot; datasource=&quot;#DSN#&quot;&gt; 
+   CREATE INDEX id3 
+   ON CGLOBAL (lvisit)
+&lt;/cfquery&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001706.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001708.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001707.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

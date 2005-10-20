@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Configuring a sandbox</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001767.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001769.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Configuring a sandbox</h1>
+<p>Before you begin security sandbox configuration, analyze your application and its usage to determine the tags, functions, and resources that it requires. You can then configure the sandbox to enable access to the required resources and disable use of the appropriate tags and functions. For example, if the applications in the sandbox do not use the <code>cfregistry</code> tag, you can safely disable it.</p>
+<p><strong>Note: </strong>In the Standard Edition, the Root Security Context is the only sandbox. There is no initial list of defined directory permissions.</p><h4>To configure a sandbox:</h4>
+<ol>
+<li>
+   Open the Security &gt; Sandbox Security page (Security &gt; Resource Security page in the Standard Edition) in the ColdFusion&#160;MX Administrator.
+</li>
+<li>
+   (Enterprise Edition only) In the list of Defined Directory Permissions, click the name or Edit icon for the directory.
+<p>A page with several tabs appears. This is the initial page in the Standard Edition. The remaining steps describe the use of each tab.</p>
+</li>
+<li>
+   To disable a data source, in the left column of the Datasources tab, highlight the data source, and click the right arrow.
+<p>By default, ColdFusion pages in this sandbox can access all data sources.</p>
+<p><strong>Note: </strong>If &lt;&lt;ALL DATASOURCES&gt;&gt; is in the Enabled Datasources column, any data source that you add is enabled. If you move &lt;&lt;ALL DATASOURCES&gt;&gt; to the Disabled Datasources column, any new data source is disabled.</p></li>
+<li>
+   Click the CFTags tab.
+</li>
+<li>
+   To disable tags, in the left column of the CFTags tab, highlight the tags, and click the right arrow.
+<p>By default, ColdFusion pages in this sandbox can access all listed tags.</p>
+</li>
+<li>
+   Click the CFFunctions tab.
+</li>
+<li>
+   To disable functions, in the left column of the CFFunctions tab, highlight the functions, and click the right arrow.
+<p>By default, ColdFusion pages in this sandbox can access all listed functions.</p>
+</li>
+<li>
+   Click the Files/Dirs tab.
+</li>
+<li>
+   To enable files or directories, in the File Path box, enter or browse to the files or directories; for example, C:\pix. A file path that consists of the special token &lt;&lt;ALL FILES&gt;&gt; matches any file. For information on using the backslash-hyphen (\-) and backslash-asterisk (\*) wildcard characters, see <a href="00001766.htm#1117493">About directories and permissions</a>.
+</li>
+<li>
+   Select the permissions.
+<p>For example, select the Read check box to let ColdFusion pages in the mytestapps sandbox read files in the C:\pix directory.</p>
+</li>
+<li>
+   Click Add Files/Paths. When you edit an existing sandbox, this button reads Edit Files/Paths.
+<p>The file path and its permissions appear in the Secured Files and Directories list.</p>
+</li>
+<li>
+   In the Secured Files and Directories list, verify that the file path is correct.
+<p>The character after the backslash is important. For information, see <a href="00001766.htm#1117493">About directories and permissions</a>.</p>
+<p><strong>Note: </strong>The Files/Dirs tab works together with the file-based permissions of the operating system. To restrict a user from browsing another user's directory, you must use file-based permissions.</p></li>
+<li>
+   Click the Server/Ports tab.
+</li>
+<li>
+   To turn off default behavior (global access to all servers and ports), enter the IP addresses and port numbers that pages in this sandbox can connect to by using tags that access external resources (for example, <code>cfmail</code>, <code>cfpop</code>, <code>cfldap</code>, <code>cfhttp</code>, and so on). You can specify an IP address, a server name (such as www.someservername.com), or a domain name (such as someservername.com). You can optionally specify a port restriction.
+<p><strong>Note: </strong>This behavior differs from other tabs, such as CFTags, where you select items to disable. If you set any values in this tab, external-resource tags executed in this sandbox can access only the specified servers and ports.</p><p>For example, to allow this sandbox access to 207.88.220.3 on ports 80 and lower, perform the following steps:</p>
+<li>In the IP Address field, enter 207.88.220.3.</li><li>In the Port field, enter 80, and click This Port and Lower.</li><p><strong>Tip: </strong>To deny access by these ColdFusion tags to an entire site, enable access for a local resource, such as your local mail server, FTP server, and so on.</p></li>
+<li>
+   Click Finish to save changes to the sandbox.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001767.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001769.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001768.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

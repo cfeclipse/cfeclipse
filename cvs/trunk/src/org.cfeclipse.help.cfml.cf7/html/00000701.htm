@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>onSessionEnd</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000700.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000702.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>onSessionEnd</h1>
+<h4><a name="wp1188500"></a>Description</h4>
+<p>Runs when a session ends.</p>
+<h4><a name="wp1188502"></a>Syntax</h4>
+<pre>&lt;cffunction name=&quot;onSessionEnd&quot; returnType=&quot;void&quot;&gt;
+   &lt;cfargument name=&quot;<i>SessionScope</i>&quot; required=True/&gt;
+   &lt;cfargument name=&quot;<i>ApplicationScope</i>&quot; required=False/&gt;
+   ...
+&lt;/cffunction&gt;
+</pre><h4><a name="wp1188507"></a>See also</h4>
+<p><a href="00000702.htm#1186741"><code>onSessionStart</code></a>, <a href="00000694.htm#1190269">Method summary</a>, <a href="00001119.htm#1191795">Managing sessions in Application.cfc</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1188515"></a>Parameters</h4>
+<p>ColdFusion MX passes the following parameters to the method:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><i>SessionScope</i></p>
+    </td>
+    <td>
+<p>The Session scope</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><i>ApplicationScope</i></p>
+    </td>
+    <td>
+<p>The Application scope;</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1188526"></a>Returns</h4>
+<p>This method does not return a value; do not use the <code>cfreturn</code> tag.</p>
+<h4><a name="wp1188528"></a>Usage</h4>
+<p>Use this method for any clean-up activities when the session ends. A session ends when the session is inactive for the session time-out period or, if using J2EE sessions, the user closes the browser. You can, for example, save session-related data, such as shopping cart contents or whether the user has not completed an order, in a database, or do any other required processing based on the user's status. You might also want to log the end of the session, or other session related information, to a file for diagnostic use.</p>
+<p>If you call this method explicitly, ColdFusion does not end the session; it does execute the method code, but does not lock the Session.</p>
+<p>You cannot use this method to display data on a user page, because it is not associated with a request.</p>
+<p>You can access shared scope variables as follows:</p>
+<ul>
+<li>
+   You must use the <code><i>SessionScope</i></code> parameter to access the Session scope. You cannot reference the Session scope directly; for example, use Arguments.SessionScope.myVariable, not Session.myVariable. 
+</li>
+<li>
+   You must use the <code><i>ApplicationScope</i></code> parameter to access the Application scope. You cannot reference the Application scope directly; for example, use Arguments.ApplicationScope.myVariable, not Application.myVariable. Use a named lock when you reference variables in the Application scope, as shown in the example.
+</li>
+<li>
+   You can access the Server scope directly; for example, Server.myVariable.
+</li>
+<li>
+   You cannot access the Request scope.
+</li>
+</ul>
+<p>Sessions do not end, and the <code>onSessionEnd</code> method is not called when an application ends. The <code>onSessionEnd</code> does not execute if there is no active application, however.</p>
+<h4><a name="wp1188531"></a>Example</h4>
+<p>The following method decrements an Application scope session count variable and logs the session length.</p>
+<pre>&lt;cffunction name=&quot;onSessionEnd&quot;&gt;
+   &lt;cfargument name = &quot;SessionScope&quot; required=true/&gt;
+   &lt;cfargument name = &quot;AppScope&quot; required=true/&gt;
+   &lt;cfset var sessionLength = TimeFormat(Now() - SessionScope.started,
+      &quot;H:mm:ss&quot;)&gt;
+   &lt;cflock name=&quot;AppLock&quot; timeout=&quot;5&quot; type=&quot;Exclusive&quot;&gt;
+      &lt;cfset Arguments.AppScope.sessions = Arguments.AppScope.sessions - 1&gt;
+   &lt;/cflock&gt;
+   &lt;cflog file=&quot;#This.Name#&quot; type=&quot;Information&quot; 
+      text=&quot;Session #Arguments.SessionScope.sessionid# ended. Length: #sessionLength# Active sessions: #Arguments.AppScope.sessions#&gt;
+&lt;/cffunction&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000700.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000702.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000701.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

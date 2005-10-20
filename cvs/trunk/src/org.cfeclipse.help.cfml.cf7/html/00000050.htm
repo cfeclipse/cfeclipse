@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Configuring web servers on UNIX</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000049.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000051.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Configuring web servers on UNIX</h1>
+<p>This section explains how to configure the following web servers on UNIX:</p>
+<ul>
+<li>
+   <a href="00000050.htm#1119142">Configuring Apache web server on UNIX</a>
+</li>
+<li>
+   <a href="00000050.htm#1141729">Configuring SunONE or iPlanet web server on UNIX</a>
+</li>
+</ul>
+<h3><a name="wp1119142"></a>Configuring Apache web server on UNIX</h3>
+<p>This section describes how to configure the Apache web server for ColdFusion&#160;MX&#160;7 on UNIX, and how to verify your configuration. </p>
+<p><strong>Note: </strong>When running the Web Server Configuration Tool on the multiserver configuration, wsconfig.jar is located in <i>jrun_root</i>/lib. On the server configuration only, you can also use the scripts in <i>cf_root</i>/bin/connectors, modifying them, as appropriate for your environment.</p><h4>To configure the Apache web server for ColdFusion&#160;MX&#160;7 on UNIX:</h4>
+<ol>
+<li>
+   Enter the following command on a single line: 
+<pre>
+wsconfig -server servername -ws Apache -dir &lt;apache config directory&gt; -
+coldfusion -v
+</pre>
+<p><strong>Note: </strong>You must enter the previous command as a single (long) line.</p><p>The wsconfig file is in <i>cf_root</i>/runtime/bin (server configuration) or <i>jrun_root</i>/bin (multiserver configuration)</p>
+<p>The following is a sample command:</p>
+<pre>
+/opt/cfusionmx7/runtime/bin/wsconfig -server coldfusion -ws Apache -dir 
+/etc/httpd/conf  -coldfusion -v
+</pre>
+<p><strong>Note: </strong>For unique configurations (such as the preconfigured Apache web servers from Redhat or Sun), add the -bin and -script parameters, as described in <i>Configuring and Administering ColdFusion&#160;MX</i>.</p></li>
+<li>
+   Copy the CFIDE and cfdocs directories from <i>cf_root</i>/wwwroot to your web server root directory. In addition, copy your application's pages from <i>cf_root</i>/wwwroot to your web server root directory. In the multiserver configuration, these files are under the <i>jrun_root</i>/servers/cfusion/cfusion-ear/cfusion-war directory.
+</li>
+</ol>
+<h4>To verify your Apache configuration:</h4>
+<ol>
+<li>
+   Verify that one of the following files was created: 
+<ul><li><i>cf_root</i>/runtime/lib/wsconfig/<i>number</i>/mod_jrun.so (Apache 1.3.x)</li>
+<li><i>cf_root</i>/runtime/lib/wsconfig/<i>number</i>/mod_jrun20.so (Apache 2.x)</li>
+<p>In the multiserver configuration, this file is located under <i>jrun_root</i>/lib/wsconfig.</p>
+</ul></li>
+<li>
+   Open the Apache configuration file, httpd.conf, in your Apache conf directory. By default it is /etc/httpd/conf/httpd.conf.
+<p>Verify that the following code is added to this file:</p>
+<pre>
+# JRun Settings
+LoadModule jrun_module &quot;/opt/CFusionMX7/runtime/lib/wsconfig/1/mod_jrun.so&quot;
+&lt;IfModule mod_jrun.c&gt;
+&#160;&#160;JRunConfig Verbose false
+&#160;&#160;JRunConfig Apialloc false
+&#160;&#160;JRunConfig Ssl false
+&#160;&#160;JRunConfig Serverstore &quot;/opt/CFusionMX7/runtime/lib/wsconfig/1/<br />
+jrunserver.store&quot;
+&#160;&#160;JRunConfig Bootstrap 127.0.0.1:51000
+&#160;&#160;#JRunConfig Errorurl &lt;URL for errors&gt;
+&#160;&#160;JRunConfig jrun-handler .jsp .jws .cfm .cfml .cfc
+&lt;/IfModule&gt;
+</pre>
+</li>
+</ol>
+<h3><a name="wp1141729"></a>Configuring SunONE or iPlanet web server on UNIX </h3>
+<p>This section describes how to configure SunONE Web Server or iPlanet web server (4.x or 6.x) for ColdFusion&#160;MX&#160;7 on UNIX, and how to verify your configuration. </p>
+<p><strong>Note: </strong>When running the Web Server Configuration Tool on the multiserver configuration, wsconfig.jar is located in <i>jrun_root</i>/lib. On the server configuration only, you can also use the scripts in <i>cf_root</i>/bin/connectors, modifying them, as appropriate for your environment.</p><h4>To configure Netscape or iPlanet for ColdFusion&#160;MX&#160;7 on UNIX:</h4>
+<ol>
+<li>
+   Enter the following command on a single line: 
+<pre>
+wsconfig -server servername -ws sunone | iplanet | nes -dir path_to_config  
+-coldfusion -v
+</pre>
+<p><strong>Note: </strong>You must enter the previous command as a single (long) line. Specify sunone, iplanet or nes.</p><p>The following is a sample command:</p>
+<pre>
+/opt/cfusionmx7/runtime/bin/wsconfig -server coldfusion -ws sunone -dir 
+path_to_config -coldfusion -v
+</pre>
+</li>
+<li>
+   Copy the CFIDE and cfdocs directories from <i>cf_root</i>/wwwroot to your web server root directory. In addition, copy your application's CFM pages from <i>cf_root</i>/wwwroot to your web server root directory. In the multiserver configuration, these files are under the <i>jrun_root</i>/servers/cfusion/cfusion-ear/cfusion-war directory.
+</li>
+</ol>
+<h4>To verify your Netscape or iPlanet configuration:</h4>
+<ol>
+<li>
+   Verify that the following file was created: <br /><i>cf_root</i>/runtime/lib/wsconfig/1/jrun_nsapi35.dll
+<p>In the multiserver configuration, this file is located under <i>jrun_root</i>/lib/wsconfig.</p>
+</li>
+<li>
+   Open the Netscape configuration file, obj.conf, in the web server directory (for example, in /usr/netscape/server4/https-surf/config/obj.conf).
+</li>
+<li>
+   Verify that the following line is in the file:
+<pre>
+NameTrans fn=&quot;jrunfilter&quot;
+</pre>
+</li>
+<li>
+   Verify that #JRun prefixes the following <code>NameTrans</code> line in the file:
+<pre>
+#JRun NameTrans fn=&quot;pfx2dir&quot; from=&quot;/servlet&quot; <br />
+dir=&quot;e:/netscape/servers/docs/servlet&quot; 
+</pre>
+</li>
+<li>
+   Verify that the following object element is at the end of the file:
+<pre>
+&lt;Object name=&quot;jrun&quot;&gt;
+PathCheck fn=&quot;jrunfilter&quot;
+Service fn=&quot;jrunservice&quot;
+&lt;/Object&gt;
+</pre>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000049.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000051.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000050.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

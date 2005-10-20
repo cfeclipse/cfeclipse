@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Data types</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000884.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000886.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Data types</h1>
+<p>ColdFusion is often referred to as <i>typeless</i> because you do not assign types to variables and ColdFusion does not associate a type with the variable name. However, the data that a variable represents does have a type, and the data type affects how ColdFusion evaluates an expression or function argument. ColdFusion can automatically convert many data types into others when it evaluates expressions. For simple data, such as numbers and strings, the data type is unimportant until the variable is used in an expression or as a function argument.</p>
+<p>ColdFusion variable data belongs to one of the following type categories: </p>
+<ul>
+<li>
+   <strong>Simple</strong>&#160;One value. Can use directly in ColdFusion expressions. Include numbers, strings, Boolean values, and date-time values.
+</li>
+<li>
+   <strong>Complex</strong>&#160;A container for data. Generally represent more than one value. ColdFusion built-in complex data types include arrays, structures, queries, and XML document objects. 
+<p>You cannot use a complex variable, such as an array, directly in a ColdFusion expression, but you can use simple data type elements of a complex variable in an expression. </p>
+<p>For example, with a one-dimensional array of numbers called myArray, you cannot use the expression myArray * 5. However, you could use an expression myArray[3] * 5 to multiply the third element in the array by five.</p>
+</li>
+<li>
+   <strong>Binary</strong>&#160;Raw data, such as the contents of a GIF file or an executable program file.
+</li>
+<li>
+   <strong>Objects</strong>&#160;Complex constructs. Often encapsulate both data and functional operations. The following table lists the types of objects that ColdFusion can use, and identifies the chapters that describe how to use them:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Object type
+    </th>
+    <th>
+See
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Component Object Model (COM)</p>
+    </td>
+    <td>
+<p><a href="00001571.htm#1100380">Integrating COM and CORBA Objects in CFML Applications</a></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Common Object Request Broker Architecture (CORBA)</p>
+    </td>
+    <td>
+<p><a href="00001571.htm#1100380">Integrating COM and CORBA Objects in CFML Applications</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Java</p>
+    </td>
+    <td>
+<p><a href="00001557.htm#1176234">Integrating J2EE and Java Elements in CFML Applications</a></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ColdFusion component</p>
+    </td>
+    <td>
+<p><a href="00001022.htm#1170255">Building and Using ColdFusion Components</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Web service</p>
+    </td>
+    <td>
+<p><a href="00001530.htm#1141005">Using Web Services</a></p>
+    </td>
+  </tr>
+</table>
+ 
+</li>
+</ul>
+<h4><a name="wp1143116"></a>Data type notes</h4>
+<p>Although ColdFusion variables do not have types, it is often convenient to use &quot;variable type&quot; as a shorthand for the type of data that the variable represents.</p>
+<p>ColdFusion can validate the type of data contained in form fields and query parameters. For more information, see <a href="00001348.htm#1133423">SELECT * FROM Departmt WHERE Dept_Name IN (&#39;Marketing&#39;,&#39;Sales&#39;)</a> and <a href="00001257.htm#1142588">Using cfqueryparam</a>.</p>
+<p>The <code>cfdump</code> tag displays the entire contents of a variable, including ColdFusion complex data structures. It is an excellent tool for debugging complex data and the code that handles it.</p>
+<p>ColdFusion provides the following functions for identifying the data type of a variable:</p>
+<ul>
+<li>
+   <a href="00000512.htm#1106086"><code>IsArray</code></a>
+</li>
+<li>
+   <a href="00000515.htm#1106300"><code>IsBinary</code></a>
+</li>
+<li>
+   <a href="00000516.htm#1106344"><code>IsBoolean</code></a>
+</li>
+<li>
+   <a href="00000527.htm#4078366"><code>IsObject</code></a>
+</li>
+<li>
+   <a href="00000529.htm#1106805"><code>IsQuery</code></a>
+</li>
+<li>
+   <a href="00000530.htm#1106859"><code>IsSimpleValue</code></a>
+</li>
+<li>
+   <a href="00000532.htm#1106910"><code>IsStruct</code></a>
+</li>
+<li>
+   <a href="00000538.htm#4046340"><code>IsXmlDoc</code></a>
+</li>
+</ul>
+<p>ColdFusion also includes the following functions for determining whether a string can be represented as or converted to another data type:</p>
+<ul>
+<li>
+   <a href="00000518.htm#4758075"><code>IsDate</code></a>
+</li>
+<li>
+   <a href="00000525.htm#1106573"><code>IsNumeric</code></a>
+</li>
+<li>
+   <a href="00000536.htm#4979215"><code>IsXML</code></a>
+</li>
+</ul>
+<p>ColdFusion does not use a null data type. However, if ColdFusion receives a null value from an external source such as a database, a Java object, or some other mechanism, it maintains the null value until you use it as a simple value. At that time, ColdFusion converts the null to an empty string (&quot;&quot;). Also, you can use the <a href="00000542.htm#1106957"><code>JavaCast</code></a> function in a call to a Java object to convert a ColdFusion empty string to a Java null.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000884.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000886.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000885.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the built-in web server</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000015.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000017.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the built-in web server</h1>
+<p>ColdFusion&#160;MX&#160;7 has its own web server that you can use to develop ColdFusion&#160;MX&#160;7 applications, without depending on an external web server, such as Internet Information Server (IIS), Apache, or SunONE. Macromedia does not recommend using the built-in web server in a production environment. However, it is more than suitable for development, allowing you to create virtual directories and set the default document (for example, default.cfm or index.cfm).</p>
+<p>During the ColdFusion&#160;MX&#160;7 installation, you must choose a web server. If you select the built-in web server, your web root directory is located in the <i>cf_root</i>/wwwroot directory. By default, the web server runs on port 8500. This means that to display a page in your application, you must append :8500 to the host name or IP address in the URL; for example, <br />http://localhost:8500/YourApp1/index.cfm. (If the page still does not appear, make sure that the document is located in the built-in web server's web root directory; for example, C:\CFusionMX7\wwwroot\YourApp1\index.cfm.)</p>
+<p><strong>Note: </strong>If you install the Server configuration of ColdFusion&#160;MX&#160;7 with the built-in server and port 8500 is in use, for example by ColdFusion&#160;MX or ColdFusion MX&#160;6.1, the installer starts with port 8501 and looks at up to 100 ports to find one that is not being used by an application that is running. ColdFusion&#160;MX&#160;7 uses that port and displays a message to indicate which port it selected. </p><p>If you select an external web server, the built-in web server is deactivated.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000017.htm#1196686">Switching the port for the built-in web server</a>
+</li>
+<li>
+   <a href="00000018.htm#1166728">Switching from another web server</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000015.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000017.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000016.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

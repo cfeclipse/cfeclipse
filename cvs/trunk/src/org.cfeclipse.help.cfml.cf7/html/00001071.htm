@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating and calling custom tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001070.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001072.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating and calling custom tags</h1>
+<p>You implement a custom tag with a single ColdFusion page. You then call the custom tag from a ColdFusion page by inserting the prefix <code>cf_</code> before the page's file name. The page referencing the custom tag is referred to as the <i>calling</i> page. </p>
+<h4>To create and call a custom tag:</h4>
+<ol>
+<li>
+   Create a ColdFusion page, the custom tag page, that shows the current date:
+<pre>
+&lt;cfoutput&gt;#DateFormat(Now())#&lt;/cfoutput&gt;
+</pre>
+</li>
+<li>
+   Save the file as date.cfm.
+</li>
+<li>
+   Create a ColdFusion page, the calling page, with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Date Custom Tag&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+	&lt;!--- Call the custom tag defined in date.cfm ---&gt;
+	&lt;cf_date&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file as callingdate.cfm.
+</li>
+<li>
+   View callingdate.cfm in your browser. 
+<p>This custom tag returns the current date in the format DD-MMM-YY.</p>
+</li>
+</ol>
+<p>As you can see from this example, creating a custom tag in CFML is no different from writing any ColdFusion page. You can use all CFML constructs, as well as HTML. You are free to use any naming convention that fits your development practice. Unique descriptive names make it easy for you and others to find the right tag. </p>
+<p><strong>Note: </strong>Although tag names in ColdFusion pages are case-insensitive, custom tag filenames must be lowercase on UNIX. </p><h3><a name="wp1121560"></a>Storing custom tag pages</h3>
+<p>You must store custom tag pages in any one of the following:</p>
+<ul>
+<li>
+   The same directory as the calling page
+</li>
+<li>
+   The cfusion\CustomTags directory
+</li>
+<li>
+   A subdirectory of the cfusion\CustomTags directory
+</li>
+<li>
+   A directory that you specify in the ColdFusion&#160;MX Administrator
+</li>
+</ul>
+<p>To share a custom tag among applications in multiple directories, place it in the cfusion\CustomTags directory. You can create subdirectories to organize custom tags. ColdFusion searches recursively for the Custom Tags directory, stepping down through any existing subdirectories until the custom tag is found.</p>
+<p>You might have a situation where you have multiple custom tags with the same name. To guarantee which tag ColdFusion calls, copy it to the same directory as the calling page. Or, use the <code>cfmodule</code> tag with the <code>template</code> attribute to specify the absolute path to the custom tag. For more information on <code>cfmodule</code>, see the next section.</p>
+<h3><a name="wp1125164"></a>Calling custom tags using the cfmodule tag</h3>
+<p>You can also use the <a href="00000300.htm#1810047"><code>cfmodule</code></a> tag to call custom tags if you want to specify the location of the custom tag page. The <code>cfmodule</code> tag is useful if you are concerned about possible name conflicts when invoking a custom tag, or if the application must use a variable to dynamically call a custom tag at runtime.</p>
+<p>You must use either a <code>template</code> or <code>name</code> attribute in the tag, but you cannot use both. The following table describes the basic <code>cfmodule</code> attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Description &#160;
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>template</p>
+    </td>
+    <td>
+<p>Required if the <code>name</code> attribute is not used. Same as the <code>template</code> attribute in <a href="00000277.htm#1100248"><code>cfinclude</code></a>. This attribute: </p>
+<ul>
+<li>
+   Specifies a path relative to the directory of the calling page.
+</li>
+<li>
+   If the path value is prefixed with &quot;/&quot;, ColdFusion searches directories explicitly mapped in the ColdFusion&#160;MX Administrator for the included file.
+</li>
+</ul>
+<p>Example: <code>&lt;cfmodule template=&quot;../MyTag.cfm&quot;&gt;</code> identifies a custom tag file in the parent directory.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>name </p>
+    </td>
+    <td>
+<p>Required if the <code>template</code> attribute is not used. Use period-separated names to uniquely identify a subdirectory under the CustomTags root directory.</p>
+<p>Example: <code>&lt;cfmodule name=&quot;MyApp.GetUserOptions&quot;&gt;</code> identifies the file GetUserOptions.cfm in the CustomTags\MyApp directory under the ColdFusion root directory.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>attributes</p>
+    </td>
+    <td>
+<p>The custom tag&#39;s attributes.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For example, the following code specifies to execute the custom tag defined by the mytag.cfm page in the parent directory of the calling page:</p>
+<pre><code>&lt;cfmodule template=&quot;../mytag.cfm&quot;&gt;</code> 
+</pre><p>For more information on using the <a href="00000300.htm#1810047"><code>cfmodule</code></a> tag, see <i>CFML Reference</i>.</p>
+<h3><a name="wp1146764"></a>Calling custom tags using the cfimport tag</h3>
+<p>You can use the <a href="00000276.htm#2693767"><code>cfimport</code></a> tag to import custom tags from a directory as a tag library. The following example imports the tags from the directory myCustomTags:</p>
+<pre>&lt;cfimport prefix=&quot;mytags&quot; taglib=&quot;myCustomTags&quot;&gt;
+</pre><p>Once imported, you call the custom tags using the prefix that you set when importing, as the following example shows: </p>
+<pre>&lt;mytags:customTagName&gt;
+</pre><p>where customTagName corresponds to a ColdFusion application page named customTagName.cfm. If the tag takes attributes, you include them in the call:</p>
+<pre>&lt;mytags:custom_tag_name attribute1=val_1 attribute2=val_2&gt;
+</pre><p>You can also include end tags when calling your custom tags, as the following example shows:</p>
+<pre>&lt;mytags:custom_tag_name attribute1=val_1 attribute2=val_2&gt;
+...
+&lt;/mytags:custom_tag_name&gt;
+</pre><p>ColdFusion calls the custom tag page twice for a tag that includes an end tag: once for the start tag and once for the end tag. For more information on how ColdFusion handles end tags, and how to write your custom tags to handle them, see <a href="00001080.htm#1126569">Handling end tags</a>. </p>
+<p>One of the advantages to using the <code>cfimport</code> tag is that you can define a directory structure for your custom tags to organize them by category. For example, you can put all security tags in one directory, and all interface tags in another. You then import the tags from each directory and give them a different prefix:</p>
+<pre>&lt;cfimport prefix=&quot;security&quot; taglib=&quot;securityTags&quot;&gt;
+&lt;cfimport prefix=&quot;ui&quot; taglib=&quot;uiTags&quot;&gt;
+...
+&lt;security:validateUser name=&quot;Bob&quot;&gt;
+...
+&lt;ui:greeting name=&quot;Bob&quot;&gt;
+...
+</pre><p>Reading your code becomes easier because you can identify the location of your custom tags from the prefix. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001070.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001072.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001071.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

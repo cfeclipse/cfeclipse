@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Deleting a directory entry</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001291.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001293.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Deleting a directory entry</h1>
+<p>To delete a directory entry, you must specify the entry DN. </p>
+<p>The following example builds on the code that adds an entry. It adds Retrieve and Delete buttons. The Retrieve button lets you view a user's information in the form before you delete it.</p>
+<h4>To delete an entry:</h4>
+<ol>
+<li>
+   Open update_ldap.cfm, which you created in <a href="00001291.htm#1096357">Adding a directory entry</a>.
+</li>
+<li>
+   Between the first and second <code>&lt;/</code><a href="00000274.htm#1100123"><code>cfif</code></a><code>&gt;</code> tags, add the following code:
+<pre>
+&lt;cfelseif Form.action is &quot;Retrieve&quot;&gt;
+	&lt;cfldap name=&quot;GetEntry&quot;
+		server=#myServer#
+		action=&quot;query&quot;
+		attributes=&quot;cn,sn,mail,telephonenumber,uid&quot;
+		scope=&quot;subtree&quot;
+		filter=&quot;uid=#Trim(Form.UID)#&quot;
+		start=&quot;o=Airius.com&quot;&gt;
+	&lt;cfset fullNameValue = GetEntry.cn[1]&gt;
+	&lt;cfset surnameValue = GetEntry.sn[1]&gt;
+	&lt;cfset emailValue = GetEntry.mail[1]&gt;
+	&lt;cfset phoneValue = GetEntry.telephonenumber[1]&gt;
+	&lt;cfset uidValue = GetEntry.uid[1]&gt;
+&lt;cfelseif Form.action is &quot;Delete&quot;&gt;
+	&lt;cfldap action=&quot;delete&quot;
+		dn=&quot;uid=#Trim(Form.UID)#, ou=People, o=Airius.com&quot;
+		server=#myServer#
+		username=#myUserName#
+		password=#myPassword#&gt;
+	&lt;cfoutput&gt;&lt;h3&gt;Entry for User ID #Form.UID# has been deleted<br />
+&lt;/h3&gt;&lt;/cfoutput&gt;
+</pre>
+</li>
+<li>
+   At the end of the code for the Add button (the <code>input</code> tag with <code>Value=Add</code> at the bottom of the form<code>)</code>, delete the <code>&lt;/td&gt;</code> end tag.
+</li>
+<li>
+   After the end of the Add button <code>input</code> tag, add the following code:
+<pre>
+	&amp;nbsp
+	&lt;input type=&quot;Submit&quot;
+		 name=&quot;action&quot;
+		 value=&quot;Retrieve&quot;
+		 tabindex=&quot;7&quot;&gt;
+	&amp;nbsp
+	&lt;input type=&quot;Submit&quot;
+		 name=&quot;action&quot;
+		 value=&quot;Delete&quot;
+		 tabindex=&quot;8&quot;&gt;&lt;/td&gt;
+</pre>
+</li>
+<li>
+   Save the file and run it in your browser.
+</li>
+</ol>
+<h4><a name="wp1197693"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfelseif Form.action is &quot;Retrieve&quot;&gt;
+   &lt;cfldap name=&quot;GetEntry&quot;
+      server=#myServer#
+      action=&quot;query&quot;
+      attributes=&quot;cn,sn,mail,<br />         telephonenumber,uid&quot;
+      scope=&quot;subtree&quot;
+      filter=&quot;uid=#Trim(Form.UID)#&quot;
+      start=&quot;o=Airius.com&quot;&gt;
+   &lt;cfset fullNameValue=<br />      GetEntry.cn[1]&gt;
+   &lt;cfset surnameValue=GetEntry.sn[1]&gt;
+   &lt;cfset emailValue=GetEntry.mail[1]&gt;
+   &lt;cfset phoneValue=<br />      GetEntry.telephonenumber[1]&gt;
+   &lt;cfset uidValue=GetEntry.uid[1]&gt;
+</pre>    </td>
+    <td>
+<p>If the user clicks Retrieve, queries the directory and gets the information for the specified User ID.</p>
+<p>Sets the form field's <code>Value</code> attribute to the corresponding query column. </p>
+<p>This example uses the array index [1] to identify the first row of the GetEntry query object. Because the query always returns only one row, the index can be omitted.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfelseif Form.action is &quot;Delete&quot;&gt;
+   &lt;cfldap action=&quot;delete&quot;
+      dn=&quot;uid=#Trim(Form.UID)#,<br />         ou=People, o=Airius.com&quot;
+      server=#myServer#
+      username=#myUserName#
+      password=&quot;password&quot;&gt;
+   &lt;cfoutput&gt;&lt;h3&gt;Entry for User<br />      ID #Form.UID# has been<br />      deleted&lt;/h3&gt;&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>The user clicks delete, deletes the entry with the specified User ID and informs the user that the entry was deleted.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&amp;nbsp
+&lt;input type=&quot;Submit&quot;
+   name=&quot;action&quot;
+   value=&quot;Retrieve&quot;
+   tabindex=&quot;7&quot;&gt;
+&amp;nbsp
+&lt;input type=&quot;Submit&quot;
+   name=&quot;action&quot;
+   value=&quot;Delete&quot;
+   tabindex=&quot;8&quot;&gt;&lt;/td&gt;
+</pre>    </td>
+    <td>
+<p>Displays submit buttons for the Retrieve and Delete actions.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001291.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001293.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001292.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

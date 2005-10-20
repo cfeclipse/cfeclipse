@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>getColumnIndex</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000820.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000822.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>getColumnIndex</h1>
+<h4><a name="wp1113531"></a>Description</h4>
+<p>Returns the index of the column, or 0 if no such column exists. </p>
+<h4><a name="wp1113534"></a>Category</h4>
+<p><a href="00000819.htm#1096914">Query interface</a></p>
+<h4><a name="wp1113539"></a>Syntax</h4>
+<pre>public int getColumnIndex(String <code><i>name</i></code>)
+</pre><h4><a name="wp1113541"></a>See also</h4>
+<p><a href="00000822.htm#1114329"><code>getColumns</code></a>, <a href="00000823.htm#1115058"><code>getData</code></a></p>
+<h4><a name="wp1113549"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Name of column to get index of (lookup is case-insensitive) </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1113560"></a>Example</h4>
+<p>The following example retrieves the index of the EMAIL column and uses it to output a list of the addresses contained in the column:</p>
+<pre>// Get the index of the EMAIL column
+int iEMail = query.getColumnIndex( &quot;EMAIL&quot; ) ;
+
+// Iterate over the query and output list of addresses
+int nRows = query.getRowCount() ;
+for( int iRow = 1; iRow &lt;= nRows; iRow++ )
+{
+   response.write( query.getData( iRow, iEMail ) + &quot;&lt;BR&gt;&quot; ) ;
+} 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000820.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000822.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000821.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

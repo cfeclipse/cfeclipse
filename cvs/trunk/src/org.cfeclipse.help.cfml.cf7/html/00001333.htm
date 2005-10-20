@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating a basic form</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001332.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001334.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating a basic form</h1>
+<p>The following simple form shows how you can create a form that lets a user enter data. This form uses basic CFML form tags. It does not use any of the advanced features of ColdFusion MX, such as validation, Flash or XML format, or special input controls. You could convert it to a purely HTML form by removing the initial &quot;cf&quot; prefix from the tag names, and the form would work.</p>
+<p><br />
+<img src="images/form.jpg" alt="Example form page and form control " border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The following table shows the format of form control tags:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Control
+    </th>
+    <th>
+Code
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Text control</p>
+    </td>
+    <td>
+<pre>&lt;cfinput type=&quot;Text&quot; name=&quot;ControlName&quot; size=&quot;Value&quot; maxlength=&quot;Value&quot;&gt;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>List (select) box</p>
+    </td>
+    <td>
+<pre>&lt;cfselect name=&quot;ControlName&quot;&gt;
+   &lt;option value=&quot;Value1&quot;&gt;DisplayName1
+   &lt;option value=&quot;Value2&quot;&gt;DisplayName2
+   &lt;option value=&quot;Value3&quot;&gt;DisplayName3
+&lt;/cfselect&gt;
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Radio buttons</p>
+    </td>
+    <td>
+<pre>&lt;cfinput type=&quot;Radio&quot; name=&quot;ControlName&quot; value=&quot;Value1&quot;&gt;DisplayName1
+&lt;cfinput type=&quot;Radio&quot; name=&quot;ControlName&quot; value=&quot;Value2&quot;&gt;DisplayName2
+&lt;cfinput type=&quot;Radio&quot; name=&quot;ControlName&quot; value=&quot;Value3&quot;&gt;DisplayName3
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Check box</p>
+    </td>
+    <td>
+<pre>&lt;cfinput type=&quot;Checkbox&quot; name=&quot;ControlName&quot; value=&quot;Yes|No&quot;&gt;Yes
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Reset button</p>
+    </td>
+    <td>
+<pre>&lt;cfinput type=&quot;Reset&quot; name=&quot;ControlName&quot; value=&quot;DisplayName&quot;&gt;
+</pre>    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Submit button</p>
+    </td>
+    <td>
+<pre>&lt;cfinput type=&quot;Submit&quot; name=&quot;ControlName&quot; value=&quot;DisplayName&quot;&gt;
+</pre>    </td>
+  </tr>
+</table>
+
+<p>The following listing shows the form source in detail. To test the form and use it as input for later examples in this chapter, save this code as formpage.cfm.</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Input form&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!--- Specify the action page in the form tag. The form variables will
+      pass to this page when the form is submitted. ---&gt;
+
+&lt;cfform action=&quot;actionpage.cfm&quot; method=&quot;post&quot;&gt;
+
+&lt;!--- Text box. ---&gt;
+&lt;p&gt;
+First Name: &lt;cfinput type=&quot;Text&quot; name=&quot;FirstName&quot; size=&quot;20&quot;<br />maxlength=&quot;35&quot;&gt;&lt;br&gt;
+Last Name: &lt;cfinput type=&quot;Text&quot; name=&quot;LastName&quot; size=&quot;20&quot; maxlength=&quot;35&quot;&gt;&lt;br&gt;
+Salary: &lt;cfinput type=&quot;Text&quot; name=&quot;Salary&quot; size=&quot;10&quot; maxlength=&quot;10&quot;&gt;
+&lt;/p&gt;
+
+&lt;!--- List box. ---&gt;
+&lt;p&gt;
+City
+&lt;cfselect name=&quot;City&quot;&gt;
+   &lt;option value=&quot;Arlington&quot;&gt;Arlington
+   &lt;option value=&quot;Boston&quot;&gt;Boston
+   &lt;option value=&quot;Cambridge&quot;&gt;Cambridge
+   &lt;option value=&quot;Minneapolis&quot;&gt;Minneapolis
+   &lt;option value=&quot;Seattle&quot;&gt;Seattle
+&lt;/cfselect&gt;
+&lt;/p&gt;
+
+&lt;!--- Radio buttons. ---&gt;
+&lt;p&gt;
+Department:&lt;br&gt;
+&lt;cfinput type=&quot;radio&quot; name=&quot;Department&quot; value=&quot;Training&quot;&gt;Training&lt;br&gt;
+&lt;cfinput type=&quot;radio&quot; name=&quot;Department&quot; value=&quot;Sales&quot;&gt;Sales&lt;br&gt;
+&lt;input type=&quot;radio&quot; name=&quot;Department&quot;<br />value=&quot;Marketing&quot;&gt;Marketing&lt;br&gt;
+&lt;/p&gt;
+
+&lt;!--- Check box. ---&gt;
+&lt;p&gt;
+Contractor? &lt;cfinput type=&quot;checkbox&quot; name=&quot;Contractor&quot; <br />value=&quot;Yes&quot; checked&gt;Yes
+&lt;/p&gt;
+
+&lt;!--- Reset button. ---&gt;
+&lt;cfinput type=&quot;Reset&quot; name=&quot;ResetForm&quot; value=&quot;Clear Form&quot;&gt;
+&lt;!--- submit button ---&gt;
+&lt;cfinput type=&quot;Submit&quot; name=&quot;SubmitForm&quot; value=&quot;Submit&quot;&gt;
+
+&lt;/cfform&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001332.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001334.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001333.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

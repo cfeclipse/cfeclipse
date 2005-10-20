@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using input parameters to pass variables and other data at runtime</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001466.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001468.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using input parameters to pass variables and other data at runtime</h1>
+<p>Input parameters are data fields that you pass to the report at runtime. You can place input parameters directly on a report band or you can use them as input to a calculated field.</p>
+<p>Define input parameters in the same manner as query fields. You can specify a default value that ColdFusion uses when there is no corresponding parameter. For more information on defining input parameters, see <a href="00001457.htm#122109">Defining, modifying, and using fields and input parameters</a>.</p>
+<p>You use input parameters in the following ways:</p>
+<ul>
+<li>
+   <strong>Through the </strong><a href="00000324.htm#2821951"><code>cfreportparam</code></a><strong> tag</strong>&#160;Input parameters must correspond, by name, to <code>cfreportparam</code> tags embedded in the <a href="00000323.htm#1102863"><code>cfreport</code></a> invocation. For example, if you define an input parameter named ReportTime, you pass a <code>cfreportparam</code> tag with a name attribute set to ReportTime, as the following example shows:
+<pre>
+&lt;cfreport format=&quot;PDF&quot; template=&quot;FourthReport.cfr&quot; query=&quot;#coursedept#&quot;&gt;
+&#160;&#160;&#160;&lt;cfreportparam name=&quot;ReportTime&quot; value=&quot;#DateFormat(Now())#, 
+#TimeFormat(Now())#&quot;&gt;
+&lt;/cfreport&gt;
+</pre>
+</li>
+<li>
+   <strong>Subreport parameters</strong>&#160;When a subreport requires information from a main report, you define subreport parameters in the main report and corresponding input parameters in the subreport. For more information, see <a href="00001474.htm#119582">Using subreports</a>.
+</li>
+</ul>
+<p>For information on dynamically populating input parameters at runtime, see <a href="00001471.htm#134350">Advanced query mode</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001466.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001468.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001467.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

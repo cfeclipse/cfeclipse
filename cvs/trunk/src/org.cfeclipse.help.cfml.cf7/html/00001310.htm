@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Providing alternative spelling suggestions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001309.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001311.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Providing alternative spelling suggestions</h1>
+<p>Many unsuccessful searches are the result of incorrectly spelled query terms. Verity can automatically suggest alternative spellings for misspelled queries using a dictionary that is dynamically built from the search index. </p>
+<p>To implement alternative spelling suggestions, you use the <code>cfsearch</code> tag's <code>suggestions</code> attribute with an integer value. If the number of documents returned by the search is less than or equal to the value you specify, Verity provides alternative search term suggestions. In addition to using the <code>suggestions</code> attribute, you may also use the <code>cfif</code> tag to output the spelling suggestions, and a link through which to search on the suggested terms.</p>
+<p><strong>Note: </strong>Using alternative spelling suggestions incurs a small performance penalty. This occurs because the <code>cfsearch</code> tag must also look up alternative spellings in addition to the specified search terms.</p><p>The following example specifies that if the number of search results returned is less than 5, an alternative search term--which is displayed using the <code>cfif</code> tag--is displayed with a link that the user can click to activate the alternate search. </p>
+<h4>To create a search results page providing alternative spelling suggestions:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Search Results&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;cfsearch 
+	name = &quot;codecoll_results&quot;
+	collection = &quot;CodeColl&quot;
+	criteria = &quot;#Form.Criteria#&quot;&gt;
+	status = &quot;info&quot;
+	suggestions=&quot;5&quot;
+	ContextPassages = &quot;1&quot;
+	ContextBytes = &quot;300&quot;
+	maxrows = &quot;100&quot;&gt;
+&lt;h2&gt;Search Results&lt;/h2&gt;
+&lt;cfoutput&gt;
+Your search returned #codecoll_results.RecordCount# file(s).
+&lt;/cfoutput&gt;
+&lt;cfif info.FOUND LTE 5 AND isDefined(&quot;info.SuggestedQuery)&gt;
+	Did you mean:
+	&lt;a href=&quot;search,cfm?query=#info.SuggestedQuery#&gt;#info.SuggestedQuery#&lt;/a&gt;
+&lt;/cfif&gt; 
+&lt;cfoutput query=&quot;codecoll_results&quot;&gt;
+	&lt;p&gt;
+	File: &lt;a href=&quot;#URL#&quot;&gt;#Key#&lt;/a&gt;&lt;br&gt;
+	Document Title (if any): #Title#&lt;br&gt;
+	Score: #Score#&lt;br&gt;
+	Summary: #Summary#&lt;br&gt;
+	Highlighted Summary: #context#&lt;/p&gt;
+&lt;/cfoutput&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file as collection_search_action.cfm.
+<p><strong>Note: </strong>This overwrites the previous ColdFusion example page.</p></li>
+<li>
+   View collection_search_form.cfm in the web browser:
+</li>
+<li>
+   Enter any misspelled target words and click Search. 
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001309.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001311.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001310.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

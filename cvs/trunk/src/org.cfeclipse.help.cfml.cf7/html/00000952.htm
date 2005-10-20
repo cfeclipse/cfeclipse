@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Basic array techniques</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000951.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000953.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Basic array techniques</h1>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00000952.htm#1125988">Referencing array elements</a>
+</li>
+<li>
+   <a href="00000952.htm#1121122">Creating arrays</a>
+</li>
+<li>
+   <a href="00000953.htm#1096208">Adding elements to an array</a>
+</li>
+<li>
+   <a href="00000954.htm#1120979">Deleting elements from an array</a>
+</li>
+<li>
+   <a href="00000955.htm#1123505">Copying arrays</a>
+</li>
+</ul>
+<h2><a name="wp1125988"></a>Referencing array elements</h2>
+<p>You reference array elements by enclosing the index with brackets: <i>arrayName</i>[<i>x</i>] where <i>x</i> is the index that you want to reference. In ColdFusion, array indexes are counted starting with position 1, which means that position 1 in the firstname array is referenced as firstname[1]. For 2D arrays, you reference an index by specifying two coordinates: <code>myarray[1][1]</code>.</p>
+<p>You can use ColdFusion variables and expressions inside the square brackets to reference an index, as the following example shows:</p>
+<pre>&lt;cfset myArray=ArrayNew(1)&gt;
+&lt;cfset myArray[1]=&quot;First Array Element&quot;&gt;
+&lt;cfset myArray[1 + 1]=&quot;Second Array&quot; &amp; &quot;Element&quot;&gt;
+&lt;cfset arrayIndex=3&gt;
+&lt;cfset arrayElement=&quot;Third Array Element&quot;&gt;
+&lt;cfset myArray[arrayIndex]=arrayElement&gt;
+&lt;cfset myArray[arrayIndex + 1]=&quot;Fourth Array Element&quot;&gt;
+&lt;cfdump var=#myArray#&gt;
+</pre><p><strong>Note: </strong>The <a href="00000520.htm#1106482"><code>IsDefined</code></a> function does not test the existence of array elements. Instead, put any code that might try to access an undefined array element in a try block and use a catch block to handle exceptions that arise if elements do not exist. </p><h2><a name="wp1121122"></a>Creating arrays</h2>
+<p>In ColdFusion, you declare an array by assigning a variable name to the new array and specifying its dimensions, as follows:</p>
+<pre>&lt;cfset mynewarray=ArrayNew(x)&gt;
+</pre><p>where x is the number of dimensions (from 1 to 3) in the array that you want to create. </p>
+<p>Once you declare an array, you can add array elements, which you can then reference using the elements' indexes.</p>
+<p>For example, suppose you declare a 1D array called firstname:</p>
+<pre>&lt;cfset firstname=ArrayNew(1)&gt;
+</pre><p>The array firstname holds no data and is of an unspecified length. Next you add data to the array:</p>
+<pre>&lt;cfset firstname[1]=&quot;Coleman&quot;&gt;
+&lt;cfset firstname[2]=&quot;Charlie&quot;&gt;
+&lt;cfset firstname[3]=&quot;Dexter&quot;&gt;
+</pre><p>After you add these names to the array, it has a length of 3.</p>
+<h3><a name="wp1113796"></a>Creating complex multidimensional arrays</h3>
+<p>ColdFusion supports dynamic multidimensional arrays. When you declare an array with the <a href="00000390.htm#1100696"><code>ArrayNew</code></a> function, you specify the number of dimensions. You can create an asymmetrical array or increase an existing array's dimensions by nesting arrays as array elements.</p>
+<p>It is important to know that when you assign one array (array1) to an element of another array (array2), array1 is copied into array2. The original copy of array1 still exists, independent of array2. You can then change the contents of the two arrays independently.</p>
+<p>The best way to understand an asymmetrical array is by looking at it. The following example creates an asymmetric, multidimensional array and the <code>cfdump</code> tag displays the resulting array structure. Several array elements do not yet contain data.</p>
+<pre>&lt;cfset myarray=ArrayNew(1)&gt;
+&lt;cfset myotherarray=ArrayNew(2)&gt;
+&lt;cfset biggerarray=ArrayNew(3)&gt;
+
+&lt;cfset biggerarray[1][1][1]=myarray&gt;
+&lt;cfset biggerarray[1][1][1][10]=3&gt;
+&lt;cfset biggerarray[2][1][1]=myotherarray&gt;
+&lt;cfset biggerarray[2][1][1][4][2]=&quot;five deep&quot;&gt;
+
+&lt;cfset biggestarray=ArrayNew(3)&gt;
+&lt;cfset biggestarray[3][1][1]=biggerarray&gt;
+&lt;cfset biggestarray[3][1][1][2][3][1]=&quot;This is complex&quot;&gt;
+&lt;cfset myarray[3]=&quot;Can you see me&quot;&gt;
+
+&lt;cfdump var=#biggestarray#&gt;&lt;br&gt;
+&lt;cfdump var=#myarray#&gt;
+</pre><p><strong>Note: </strong>The <code>cfdump</code> tag displays the entire contents of an array. It is an excellent tool for debugging arrays and array-handling code.</p><h4><a name="wp1122304"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset myarray=ArrayNew(1)&gt;
+&lt;cfset myotherarray=ArrayNew(2)&gt;
+&lt;cfset biggerarray=ArrayNew(3)&gt;
+</pre>    </td>
+    <td>
+<p>Create three empty arrays, a 1D array, a 2D array, and a 3D array.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfset biggerarray[1][1][1]=myarray&gt;
+&lt;cfset biggerarray[1][1][1][10]=3&gt;
+</pre>    </td>
+    <td>
+<p>Make element [1][1][1] of the 3D biggerarray array be a copy of the 1D array. Assign 3 to the [1][1][1][10] element of the resulting array. </p>
+<p>The biggerarray array is now asymmetric. For example, it does not have a [1][1][2][1] element.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset biggerarray[2][1][1]=<br />   myotherarray&gt;
+&lt;cfset biggerarray[2][1][1][4][2]=<br />   &quot;five deep&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Make element [2][1][1] of the 3D array be the 2D array, and assign the [2][1][1][4][2] element the value &quot;five deep&quot;. </p>
+<p>The biggerarray array is now even more asymmetric.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfset biggestarray=ArrayNew(3)&gt;
+&lt;cfset biggestarray[3][1][1]<br />   =biggerarray&gt;
+&lt;cfset biggestarray[3][1][1][2][3][1]<br />   =&quot;This is complex&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Create a second 3D array. Make the [3][1][1] element of this array be a copy of the bigerarray array, and assign element [3][1][1][2][3][1]. </p>
+<p>The resulting array is very complex and asymmetric.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset myarray[3]=&quot;Can you see me&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Assign a value to element [3] of myarray.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfdump var=#biggestarray#&gt;&lt;br&gt;
+&lt;cfdump var=#myarray#&gt;
+</pre>    </td>
+    <td>
+<p>Use <a href="00000239.htm#3765824"><code>cfdump</code></a> to view the structure of biggestarray and myarray. </p>
+<p>Notice that the &quot;Can you see me&quot; entry appears in myarray, but not in biggestarray, because biggestarray has a copy of the original myarray values and is not affected by the change to myarray.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000951.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000953.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000952.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

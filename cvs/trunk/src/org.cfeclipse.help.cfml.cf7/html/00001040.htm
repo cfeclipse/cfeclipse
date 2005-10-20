@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Instantiating CFCs</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001039.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001041.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Instantiating CFCs</h1>
+<p>If you use a CFC multiple times in a ColdFusion request, or if you use a CFC with persistent properties, use the <a href="00000302.htm#2820239"><code>cfobject</code></a> tag or <a href="00000424.htm#1102241"><code>CreateObject</code></a> function to instantiate the CFC before you call its methods. </p>
+<p>The following example uses the <code>cfobject</code> tag to create an instance of the tellTime CFC.</p>
+<pre>&lt;cfobject component=&quot;tellTime&quot; name=&quot;tellTimeObj&quot;&gt;
+</pre><p>The following example uses the <code>CreateObject</code> function to instantiate the same component in CFScript:</p>
+<pre>tellTimeObj = CreateObject(&quot;component&quot;, &quot;tellTime&quot;);
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001039.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001041.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001040.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

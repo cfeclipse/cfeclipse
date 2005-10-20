@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Installing the multiserver configuration on UNIX</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000023.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000025.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Installing the multiserver configuration on UNIX</h1>
+<p>This section explains how to install the ColdFusion&#160;MX&#160;7 multiserver configuration on UNIX. </p>
+<h4>To install the multiserver configuration on UNIX:</h4>
+<ol>
+<li>
+   Read the online version of the Release Notes for any late-breaking information or updates. For more information, see <a href="http://www.macromedia.com/go/proddoc_releasenotes" target="mm_window">www.macromedia.com/go/proddoc_releasenotes</a>. 
+</li>
+<li>
+   Ensure that your operating system meets the system requirements described on the Macromedia web site at <a href="http://www.macromedia.com/go/sysreqscf" target="mm_window">www.macromedia.com/go/sysreqscf</a>. 
+</li>
+<li>
+   Review the <a href="00000005.htm#1217505">Installation considerations for UNIX</a> and <a href="00000005.htm#1211318">Installation considerations for all platforms</a>.
+</li>
+<li>
+   Determine the answers to the questions in the section <a href="00000006.htm#1235536">Gathering information necessary to install ColdFusion&#160;MX&#160;7</a>.
+</li>
+<li>
+   Log in as root.
+</li>
+<li>
+   Copy the installation file that is appropriate for your platform and locale from the CD or Macromedia website, and save it to a directory on your local disk.
+<p>The following are the installation files for supported server configuration platforms:</p>
+<li>coldfusion-70-lin.bin</li>
+<li>coldfusion-70-sol.bin</li>
+</li>
+<li>
+   Using the <code>cd</code> command, go to the directory that contains the installation file.
+</li>
+<li>
+   Start the installation with the following command:
+<pre>
+./&lt;filename&gt; -i console 
+</pre>
+<p>The installation program starts.</p>
+<p><strong>Note: </strong>To run the UNIX installer in GUI mode, type <code><strong>./&lt;</strong></code><i>filename</i><code><strong>&gt; -i gui</strong></code>.</p></li>
+<li>
+   Follow the instructions in the installation wizard. Ensure that you select Multiserver configuration. 
+<p><strong>Note: </strong>For security reasons, it is crucial that you do not use <i>root</i> for the runtime user. </p></li>
+<li>
+   When the installation completes successfully, start the JRun cfusion server:
+<pre>
+jrun_root/bin/jrun -start cfusion
+</pre>
+</li>
+<li>
+   If you specified external web server settings when you ran the installation wizard, run the <i>jrun_root</i>/bin/cfmx-connectors.sh shell script. The script runs the Web Server Configuration Tool, which configures the web server for use with ColdFusion&#160;MX&#160;7. The web server should also be running. 
+<p>If there are problems running this script, review the configuration and bin directory specifications, modify as necessary, and rerun the script. You can also configure your web server using the scripts in <i>jrun_root</i>/bin/connectors, or through java -jar <i>jrun_root</i>/lib/wsconfig.jar, as appropriate.</p>
+<p><strong>Note: </strong>This step is important, because if you specified the use of an external web server when you ran the installation wizard, the CFIDE and cfdocs directories are placed under that web server's root directory, and you must successfully configure the web server before you open the ColdFusion&#160;MX Administrator. </p></li>
+<li>
+   Open ColdFusion&#160;MX Administrator to run the configuration wizard.
+</li>
+<li>
+   Configure and manage your system, as described in <a href="00000044.htm#1112861">Configuring Your System</a>. 
+</li>
+<li>
+   Code and test ColdFusion&#160;MX&#160;7 CFM pages. 
+<p>If you configured an external web server, store CFM pages under your web root directory. If you are using the built-in web server, store CFM pages under the web application root (<i>jrun_root</i>/servers/cfusion/cfusion-ear/cfusion-war) and access these pages using a URL of the form http://<i>hostname</i>:8300/<i>context-root</i>/<i>filename</i>.cfm, as follows:</p>
+<li><i>hostname</i>&#160;The machine name, IP address, or localhost.</li>
+<li><i>contextroot</i>&#160;The context root for the ColdFusion&#160;MX&#160;7 web application. For more information, see <a href="00000030.htm#114577">Context root</a>. </li>
+<li><i>filename</i>&#160;The directory path and file to display. The path is relative to the cfusion-war directory. </li>
+<p>For example, to display a CFM file located at /opt/jrun4/servers/cfusion/cfusion-ear/cfusion-war/eisapp/index.cfm using the built-in JRun web server and a context root of cfmx, you specify the URL as http://localhost:8300/cfmx/eisapp/index.cfm.</p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000023.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000025.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000024.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating reports with Crystal Reports (Windows only)</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001475.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001477.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating reports with Crystal Reports (Windows only)</h1>
+<p>When running on Windows, the <a href="00000323.htm#1102863"><code>cfreport</code></a> tag also supports the execution of reports created using Crystal Reports version 9 or 10.</p>
+<p><strong>Note: </strong>When you install Crystal Reports, you must select the Enable export to HTML and Enable export to Disk options. These options are not enabled by default, so you must use the Custom Install option.</p><h4>To invoke a Crystal Report report definition using the <strong>cfreport</strong> tag:</h4>
+<ol>
+<li>
+   Create a report definition in Crystal Reports.
+</li>
+<li>
+   Create a CFM page and add a <code>cfreport</code> tag that invokes the Crystal Reports report definition. The following example shows the cfreport tag invoking a Crystal Reports report definition and passing a filter condition:
+<pre>
+&lt;cfreport report = '/reports/monthlysales.rpt'&gt;
+     {Departments.Department} = 'International'
+&lt;/cfreport&gt;
+</pre>
+</li>
+<li>
+   Open a browser and display the CFM page.
+</li>
+</ol>
+<p><strong>Tip: </strong>ColdFusion&#160;MX uses COM to call Craxdrt9.dll for Crystal Reports version 9, and Craxdrt.dll for Crystal Reports version 10. If you have problems with the <code>cfreport</code> tag, ensure that these DLLs are registered and, if not, use regsvr32 to register them (the default location for these DLLs is C:\Program Files\Crystal Decisions\Report Designer Component\).</p><p>For complete information on defining reports in Crystal Reports, see the Crystal Reports documentation.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001475.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001477.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001476.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

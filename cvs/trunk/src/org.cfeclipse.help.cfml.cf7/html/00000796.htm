@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXRequest::AddQuery</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000795.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000797.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXRequest::AddQuery</h1>
+<h4><a name="wp1099376"></a>Syntax</h4>
+<pre>CCFXQuery* CCFXRequest::AddQuery(LPCSTR <i>lpszName</i>, <br />CCFXStringSet* <i>pColumns</i>)
+</pre><h4><a name="wp1102770"></a>Description</h4>
+<p>Adds a query to the calling template. The query can be accessed by CFML tags (for example, <code>CFOUTPUT</code> or <code>CFTABLE</code>) within the template. After calling <code>AddQuery</code>, the query is empty (it has 0 rows). To populate the query with data, call the <a href="00000789.htm#1098084">CCFXQuery::AddRow</a> and <a href="00000794.htm#1098163">CCFXQuery::SetData</a> functions.</p>
+<h4><a name="wp1104057"></a>Returns</h4>
+<p>Returns a pointer to the query that was added to the template (an object of class <code>CCFXQuery</code>). The memory allocated for the returned query is freed automatically by ColdFusion after the request is completed.</p>
+<h4><a name="wp1102687"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>lpszName</p>
+    </td>
+    <td>
+<p>Name of query to add to the template (must be unique)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>pColumns</p>
+    </td>
+    <td>
+<p>List of column names to be used in the query</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1103242"></a>Example</h4>
+<p>The following example adds a query named &#39;People&#39; to the calling template. The query has two columns (&#39;FirstName&#39; and &#39;LastName&#39;) and two rows:</p>
+<pre>// Create a string set and add the column names to it<br />CCFXStringSet* pColumns = pRequest-&gt;CreateStringSet() ;<br />int iFirstName = pColumns-&gt;AddString( &quot;FirstName&quot; ) ;<br />int iLastName = pColumns-&gt;AddString( &quot;LastName&quot; ) ;<br />&#160;<br />// Create a query that contains these columns<br />CCFXQuery* pQuery = pRequest-&gt;AddQuery( &quot;People&quot;, pColumns ) ;<br />&#160;<br />// Add data to the query<br />int iRow ;<br />iRow = pQuery-&gt;AddRow() ;<br />pQuery-&gt;SetData( iRow, iFirstName, &quot;John&quot; ) ;<br />pQuery-&gt;SetData( iRow, iLastName, &quot;Smith&quot; ) ;<br />iRow = pQuery-&gt;AddRow() ;<br />pQuery-&gt;SetData( iRow, iFirstName, &quot;Jane&quot; ) ;<br />pQuery-&gt;SetData( iRow, iLastName, &quot;Doe&quot; ) ;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000795.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000797.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000796.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

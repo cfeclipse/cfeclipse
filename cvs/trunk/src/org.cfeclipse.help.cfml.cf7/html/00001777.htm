@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Collections and the ColdFusion MX Verity architecture</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001776.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001778.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Collections and the ColdFusion MX Verity architecture</h1>
+<p>ColdFusion MX includes Verity K2 Server search technology. Verity K2 Server is a high-performance search engine designed to process searches quickly in a high-performance, distributed system. The K2 search system has a client/server model. K2 client applications, such as ColdFusion server, provide users access to document indexes stored in Verity collections. K2 Server supports simultaneous indexing of distributed enterprise repositories, and handles hundreds of concurrent queries and users.</p>
+<p>The Verity search system takes advantage of the latest advances in hardware and software technology, and provides the following features:</p>
+<ul>
+<li>
+   Multithreaded architecture
+</li>
+<li>
+   Support for Verity knowledge retrieval features, including topics
+</li>
+<li>
+   Continuous operation support
+</li>
+<li>
+   High scalability
+</li>
+<li>
+   Category support (also called parametric indexes)
+</li>
+</ul>
+<p><strong>Note: </strong>ColdFusion MX no longer uses VDK mode and K2 mode. All Verity processing now uses the K2 architecture. Additionally, ColdFusion MX no longer uses the neo-verity.xml file.</p><p>Because ColdFusion MX reads custom queries into memory, indexing a large query result set can cause a &quot;Java out of memory&quot; error or lead to excessive disk use on your computer if your ColdFusion MX Java Virtual Machine (JVM) memory allocation is too small. Manage ColdFusion JVM memory settings as follows:</p>
+<p><strong>Server configuration</strong>&#160;Through the -Xmx argument to the java.args parameter in the <i>cf_root</i>/runtime/bin/jvm.config file (for example, [-Xmx512m]). </p>
+<p><strong>Multiserver configuration</strong>&#160;Through the <i>jrun_root</i>/bin/jvm.config file. </p>
+<p><strong>J2EE configuration</strong>&#160;Through application server-specific methods.</p>
+<h2><a name="wp1037812"></a>Verity information storage</h2>
+<p>The Verity Search Server runs as a separate process from ColdFusion&#160;MX. This server controls all access to Verity collections, as the following figure shows:</p>
+<p><br />
+<img src="images/verityar.jpg" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>In the multiserver and J2EE configurations, multiple ColdFusion server instances all use the same Verity Search Server to access the same set of Collections.</p>
+<p>ColdFusion&#160;MX uses different processes for Windows and UNIX, as follows:</p>
+<p><strong>Windows</strong>&#160;The ColdFusion&#160;MX&#160;7 Verity Search Server service manages and controls configuration and services of a Verity K2 domain. This service starts three processes: k2server.exe, k2index.exe, and k2admin.exe.</p>
+<p><strong>UNIX</strong>&#160;The <i>cf_root</i>/bin/cfmxsearch control script (<i>cf_webapp_root</i>/WEB-INF/cfusion/bin/cfmxsearch in the multiserver configurations) starts and stops Verity. When you call this script with the start argument, it calls <i>verity_root</i>/k2/<i>platform_dir</i>/bin/k2adminstart with the appropriate user context and environment, which in turn starts up three processes: k2server, k2index, and k2admin. Calling the script with the stop argument calls the Verity k2adminstop script, which kills those three processes.</p>
+<p><strong>Note: </strong>When you use the J2EE configuration, you must install Verity separately. For more information, see <a href="00000038.htm#132695">Installing the Verity search server separately</a> in <i>Installing and Using ColdFusion&#160;MX</i>.</p><p>You can install the Verity Search Server on a separate computer from ColdFusion&#160;MX. For more information, see Administrator online Help.</p>
+<p><strong>Tip: </strong>If no Verity collections appear in the ColdFusion&#160;MX Administrator, it probably means that the Verity Search Server process isn't running. </p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001776.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001778.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001777.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

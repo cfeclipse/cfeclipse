@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Mid</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000584.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000586.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Mid</h1>
+<h4><a name="wp133800"></a>Description</h4>
+<p>Extracts a substring from a string. </p>
+<h4><a name="wp133802"></a>Returns</h4>
+<p>A string; the set of characters from <i>string</i>, beginning at <i>start</i>, of length <i>count</i>.</p>
+<h4><a name="wp133804"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp133809"></a>Function syntax</h4>
+<pre><code><strong>Mid</strong></code>(<i>string</i>, <i>start</i>, <i>count</i>)
+</pre><h4><a name="wp133811"></a>See also</h4>
+<p><a href="00000545.htm#130173">Left</a>, <a href="00000546.htm#130247">Len</a>, <a href="00000617.htm#135972">Right</a></p>
+<h4><a name="wp133822"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Must be single-quotation mark or double-quotation mark delimited. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>start</p>
+    </td>
+    <td>
+<p>A positive integer or a variable that contains one. Position at which to start count. Positions start with 1, not 0. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>count</p>
+    </td>
+    <td>
+<p>A positive integer or a variable that contains one. Number of characters to return. (Zero is not valid, but it does not throw an error.) </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp133841"></a>Example</h4>
+<pre>&lt;h3&gt;Mid Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;Form.myText&quot;)&gt;
+   &lt;!--- If len returns 0 (zero), then show error message. ---&gt;
+   &lt;cfif Len(Form.myText)&gt;
+      &lt;cfif Len(Form.myText) LTE Form.RemoveChars&gt;
+         &lt;cfoutput&gt;&lt;p style=&quot;color: red; font-weight: bold&quot;&gt;Your string
+         #Form.myText# only has #Len(Form.myText)# characters. You cannot output
+         the #Form.removeChars# middle characters of this string because it is
+         not long enough.&lt;/p&gt;&lt;/cfoutput&gt;
+      &lt;cfelseif Form.startPos GTE Len(Form.myText)&gt;
+         &lt;cfoutput&gt;&lt;p style=&quot;color: red; font-weight: bold&quot;&gt;Your string
+         #Form.myText# only has #Len(Form.myText)# characters. You cannot start
+         at position #Form.startPos#.&lt;/p&gt;&lt;/cfoutput&gt;
+      &lt;cfelse&gt;
+         &lt;cfoutput&gt;&lt;p&gt;Your original string: &lt;strong&gt;#Form.myText#&lt;/strong&gt;&lt;/p&gt;
+         &lt;p&gt;Your changed string, showing only the &lt;strong&gt;#Form.removeChars#
+         &lt;/strong&gt; middle characters: &lt;strong&gt;#Mid(Form.myText, 
+         Form.startPos, Form.removeChars)#&lt;/strong&gt;&lt;/p&gt;&lt;/cfoutput&gt;
+      &lt;/cfif&gt;
+   &lt;cfelse&gt;
+      &lt;p style=&quot;color: red; font-weight: bold&quot;&gt;Please enter a string of more
+      than 0 (zero) characters.&lt;/p&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action=&quot;&lt;cfoutput&gt;#CGI.ScriptName#&lt;/cfoutput&gt;&quot; method=&quot;POST&quot;&gt;
+&lt;p&gt;Type in some text&lt;br /&gt;
+&lt;input type=&quot;Text&quot; name=&quot;myText&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Enter a starting position (from the beginning of the entered text)&lt;br /&gt;
+&lt;input name=&quot;startPos&quot; type=&quot;text&quot; size=&quot;1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;How many characters do you want to show?
+&lt;select name=&quot;RemoveChars&quot;&gt;
+&lt;option value=&quot;1&quot;&gt;1
+&lt;option value=&quot;3&quot; selected&gt;3
+&lt;option value=&quot;5&quot;&gt;5
+&lt;option value=&quot;7&quot;&gt;7
+&lt;option value=&quot;9&quot;&gt;9&lt;/select&gt;
+&lt;input type=&quot;Submit&quot; name=&quot;Submit&quot; value=&quot;Remove characters&quot;&gt;&lt;/p&gt;
+&lt;/form&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000584.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000586.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000585.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

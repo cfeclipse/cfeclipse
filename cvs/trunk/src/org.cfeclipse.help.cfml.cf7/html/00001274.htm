@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using ORDER BY clauses</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001273.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001275.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using ORDER BY clauses</h1>
+<p>ColdFusion supports the ORDER BY clause to sort. Make sure that it is the last clause in your SELECT statement. You can sort by multiple columns, by relative column position, by nonselected columns. You can specify a descending sort direction with the DESC keyword (by default, most RDBMS sorts are ascending, which makes the ASC keyword unnecessary).</p>
+<h4><a name="wp1164979"></a>Syntax</h4>
+<pre>order_by_column ::= ( &lt;IDENTIFIER&gt; | &lt;INTEGER_LITERAL&gt; ) [&lt;ASC&gt; | &lt;DESC&gt;]
+</pre><h4><a name="wp1164981"></a>Examples</h4>
+<p>The following example shows a simple sort using an ORDER BY clause:</p>
+<pre>SELECT acetylcholine_levels, dopamine_levels
+FROM results
+ORDER BY dopamine_levels
+</pre><p>The following example shows a more complex sort; results are first sorted by ascending levels of dopamine, then by descending levels of acetylcholine. The ASC keyword is unnecessary, and is used only for legibility.</p>
+<pre>SELECT acetylcholine_levels, dopamine_levels
+FROM results
+ORDER BY 2 ASC, 1 DESC
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001273.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001275.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001274.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

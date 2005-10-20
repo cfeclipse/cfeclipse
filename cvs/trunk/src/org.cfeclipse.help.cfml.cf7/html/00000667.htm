@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XmlElemNew</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000666.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000668.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XmlElemNew</h1>
+<h4><a name="wp139472"></a>Description</h4>
+<p>Creates an XML document object element.</p>
+<h4><a name="wp139474"></a>Returns</h4>
+<p>An XML document object element.</p>
+<h4><a name="wp139476"></a>Category</h4>
+<p><a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp139484"></a>Function syntax</h4>
+<pre><code><strong>XmlElemNew</strong></code>(<i>xmlObj</i>[, <i>namespace</i>]<i>, childName</i>)
+</pre><h4><a name="wp139486"></a>See also</h4>
+<p><a href="00000352.htm#2497244"><code>cfxml</code></a>, <a href="00000539.htm#4979134"><code>IsXmlElem</code></a>, <a href="00000666.htm#139381">XmlChildPos</a>, <a href="00000668.htm#139554"><code>XmlFormat</code></a>, <a href="00000670.htm#139785"><code>XmlNew</code></a>, <a href="00000671.htm#139864"><code>XmlParse</code></a>; <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i> </p>
+<h4><a name="wp139512"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code>namespace</code> parameter.</p>
+<p>ColdFusion&#160;MX: Added this function.</p>
+<h4><a name="wp139517"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>xmlObj</p>
+    </td>
+    <td>
+<p>Name of the XML document object in which you are creating the element</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>namespace</p>
+    </td>
+    <td>
+<p>(Optional) URI of the namespace to which this element belongs</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>childName</p>
+    </td>
+    <td>
+<p>Name of the element to create</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp139532"></a>Usage</h4>
+<p>The function's return variable specifies the location of the new element in the document object. It must specify a valid location in the document object identified by the <i>xmlObj</i> parameter. The following statements show this use:</p>
+<pre>MyDoc.MyRoot.XmlChildren[2] = XmlElemNew(MyDoc,&quot;childNode&quot;);
+ArrayAppend(MyDoc.MyRoot.XmlChildren, XmlElemNew(MyDoc,&quot;childNode&quot;));
+</pre><p>If you do not specify a <code>namespace</code> URI and use a namespace prefix in the <code>childName</code> parameter, ColdFusion checks to see if a namespace URI has already been specified for the prefix, and if so, uses that namespace.</p>
+<h4><a name="wp139536"></a>Example</h4>
+<p>The following example creates and displays a ColdFusion document object:</p>
+<pre>&lt;cfscript&gt;
+   MyDoc = XmlNew();
+   MyDoc.xmlRoot = <code><strong>XmlElemNew(MyDoc,&quot;MyRoot&quot;)</strong></code>;
+   if (testVar IS TRUE)
+      MyDoc.MyRoot.XmlText = &quot;The value of testVar is True.&quot;;
+   else 
+      MyDoc.MyRoot.XmlText = &quot;The value of testVar is False.&quot;;
+   for (i = 1; i LTE 4; i = i + 1)
+      {
+<code><strong>      </strong></code>MyDoc.MyRoot.XmlChildren[i] = <code><strong>XmlElemNew(MyDoc,&quot;childNode&quot;)</strong></code>;
+      MyDoc.MyRoot.XmlChildren[i].XmlText = &quot;This is Child node &quot; &amp; i &amp;&quot;.&quot;;
+      }
+&lt;/cfscript&gt;
+&lt;cfdump var=#MyDoc#&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000666.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000668.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000667.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

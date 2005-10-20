@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Logging events and using log files</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001696.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001698.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Logging events and using log files</h1>
+<p>The <code>GatewayServices.getLogger</code> method returns an instance of the coldfusion.eventgateway.Logger class that you can use to log messages to a file in the ColdFusion logs directory. (You set this directory on the ColdFusion&#160;MX Administrator Logging Settings page.) The method can take no parameter, or one parameter:</p>
+<ul>
+<li>
+   The default <code>GatewayServices.getLogger</code> method uses the eventgateway.log file. 
+</li>
+<li>
+   Optionally, you can specify a log filename, without the .log extension or directory path. 
+</li>
+</ul>
+<p>The following example tells ColdFusion to log messages from the gateway to the mygateway.log file in the ColdFusion logs directory:</p>
+<pre>coldfusion.eventgateway.Logger log =<br />   getGatewayServices().getLogger(&quot;mygateway&quot;);
+</pre><p>The Logger class has the following methods, all of which take a message string. The method you use determines severity level that is set in the log message.</p>
+<ul>
+<li>
+   <code>info</code> 
+</li>
+<li>
+   <code>warn</code> 
+</li>
+<li>
+   <code>error</code> 
+</li>
+<li>
+   <code>fatal</code> 
+</li>
+</ul>
+<p>You can also pass these methods an exception instance as a second parameter. When you do this, CColdFusion&#160;MX puts the exception information in the exception.log file in the ColdFusion&#160;MX logs directory.</p>
+<p>You can use these methods to log any messages that you find appropriate. If you use the default eventgateway.log file, however, remember that it is used by all ColdFusion&#160;MX standard gateways, and might be used by other gateways. As a result, you should limit the messages that you normally log to this file to infrequent normal occurrences (such as gateway startup and shutdown) or errors for which you want to retain data. </p>
+<p>ColdFusion&#160;MX uses the following format for the message text, and your application should follow this pattern:</p>
+<pre><i>GatewayType</i> (<i>Gateway ID</i>) <i>Message</i>
+</pre><p>The SMS event gateway, for example, includes the following exception catching code, which logs a general exception messages and the exception name in the eventgateway.log file, and also (automatically) logs the exception in the exceptions.log file:</p>
+<pre>catch(Exception e)
+{
+   logger.error(&quot;SMSGateway (&quot; + gatewayID + &quot;) Exception while processing<br />incoming event: &quot; + e, e);
+}
+</pre><p><strong>Note: </strong>When you are developing an event gateway application, you can use the ColdFusion Log viewer to inspect your log files and the standard ColdFusion&#160;MX log files, including the eventgateway.log file and exception.log file. You can use the viewer to filter the display, for example, by selecting different severity levels, or searching for keywords.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001696.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001698.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001697.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ColdFusion component example</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001067.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001069.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ColdFusion component example</h1>
+<p>A number of code examples in <i>ColdFusion MX Developer's Guide</i> reuse code, particularly queries. To illustrate the advantages of CFCs, these examples invoke the appropriate method in the CFC that appears in the following example. Although Macromedia recommends using CFCs to create structured, reusable code, some code examples in this manual contain queries within a CFML page, rather than invoking a CFC, in order to clearly illustrate a particular element of ColdFusion.</p>
+<pre>&lt;cfcomponent&gt;
+   &lt;cffunction name=&quot;allemployees&quot; access=&quot;public&quot; output=&quot;false&quot;
+      returntype=&quot;query&quot;&gt;
+      &lt;cfset var getNames=&quot;&quot;&gt;
+      &lt;cfquery name=&quot;getNames&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         SELECT * FROM Employee
+      &lt;/cfquery&gt;
+   &lt;/cffunction&gt;
+   
+   &lt;cffunction name=&quot;namesalarycontract&quot; access=&quot;public&quot; output=&quot;false&quot;
+      returntype=&quot;query&quot;&gt;
+      &lt;cfset var EmpList=&quot;&quot;&gt;
+      &lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         SELECT Firstname, Lastname, Salary, Contract
+         FROM Employee
+      &lt;/cfquery&gt;
+   &lt;/cffunction&gt;
+   
+   &lt;cffunction name=&quot;fullname&quot; access=&quot;public&quot; output=&quot;false&quot;
+      returntype=&quot;query&quot;&gt;
+      &lt;cfset var engquery=&quot;&quot;&gt;
+      &lt;cfquery name=&quot;engquery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         SELECT FirstName + &#39; &#39; + LastName AS FullName
+         FROM Employee
+      &lt;/cfquery&gt;
+   &lt;/cffunction&gt;
+   
+   &lt;cffunction name=&quot;bydept&quot; access=&quot;public&quot; output=&quot;false&quot; returntype=&quot;query&quot;&gt;
+      &lt;cfset var deptquery=&quot;&quot;&gt;
+      &lt;cfquery name=&quot;deptquery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         SELECT Dept_ID, FirstName + &#39; &#39; + LastName
+         AS FullName
+         FROM Employee
+         ORDER BY Dept_ID
+      &lt;/cfquery&gt;
+   &lt;/cffunction&gt;
+
+   &lt;cffunction name=&quot;employeebyURLID&quot; access=&quot;public&quot; output=&quot;false&quot;
+      returntype=&quot;query&quot;&gt;
+      &lt;cfset var GetRecordtoUpdate=&quot;&quot;&gt;
+      &lt;cfquery name=&quot;GetRecordtoUpdate&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         SELECT * FROM Employee
+         WHERE Emp_ID = #URL.Emp_ID#
+      &lt;/cfquery&gt;
+   &lt;/cffunction&gt;
+   
+   &lt;cffunction name=&quot;deleteemployee&quot; access=&quot;public&quot; output=&quot;false&quot;
+      returntype=&quot;void&quot;&gt;
+      &lt;cfset var DeleteEmployee=&quot;&quot;&gt;
+      &lt;cfquery name=&quot;DeleteEmployee&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         DELETE FROM Employee
+         WHERE Emp_ID = #Form.Emp_ID#
+      &lt;/cfquery&gt;
+   &lt;/cffunction&gt;
+   
+   &lt;cffunction name=&quot;distinctlocs&quot;  access=&quot;public&quot; output=&quot;false&quot;
+      returntype=&quot;void&quot;&gt;
+      &lt;cfset var GetDepartments=&quot;&quot;&gt;
+      &lt;cfquery name=&quot;GetDepartments&quot; datasource=&quot;cfdocexamples&quot;&gt;
+         SELECT DISTINCT Location
+         FROM Departmt
+      &lt;/cfquery&gt;
+   &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001067.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001069.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001068.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

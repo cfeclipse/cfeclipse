@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Retrieving data</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001253.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001255.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Retrieving data</h1>
+<p>You can query databases to retrieve data at runtime. The retrieved data, called the <i>record set</i>, is stored on that page as a query object. A<i> query object</i> is a special entity that contains the record set values, plus RecordCount, CurrentRow, ColumnList, SQL, Cached, and SQLParameter query variables. You specify the query object's name in the <code>name</code> attribute of the <a href="00000316.htm#1102316"><code>cfquery</code></a> tag. The query object is often called simply <i>the query</i>.</p>
+<p>The following is a simple <code>cfquery</code> tag:</p>
+<pre>&lt;cfquery name = &quot;GetSals&quot; datasource = &quot;cfdocexamples&quot;&gt;
+   SELECT * FROM Employee
+   ORDER BY LastName
+&lt;/cfquery&gt;
+</pre><p><strong>Note: </strong>The terms &quot;record set&quot; and &quot;query object&quot; are often used synonymously when discussing record sets for queries. For more information, see <a href="00001263.htm#1181595">Using Query of Queries</a>.</p><p>When retrieving data from a database, perform the following tasks:</p>
+<ul>
+<li>
+   To tell ColdFusion how to connect to a database, use the <code>cfquery</code> tag on a page.
+</li>
+<li>
+   To specify the data that you want to retrieve from the database, write SQL commands inside the <code>cfquery</code> block.
+</li>
+<li>
+   Reference the query object and use its data values in any tag that presents data, such as <a href="00000309.htm#1101659"><code>cfoutput</code></a>, <a href="00000266.htm#1836171"><code>cfgrid</code></a>, <a href="00000340.htm#1103885"><code>cftable</code></a>, <a href="00000264.htm#2031302"><code>cfgraph</code></a>, or <a href="00000347.htm#1104271"><code>cftree</code></a>.
+</li>
+</ul>
+<h2><a name="wp1107499"></a>The cfquery tag</h2>
+<p>The <a href="00000316.htm#1102316"><code>cfquery</code></a> tag is one of the most frequently used CFML tags. You use it to retrieve and reference the data returned from a query. When ColdFusion encounters a <code>cfquery</code> tag on a page, it does the following:</p>
+<ul>
+<li>
+   Connects to the specified data source.
+</li>
+<li>
+   Performs SQL commands that are enclosed within the block.
+</li>
+<li>
+   Returns result set values to the page in a query object.
+</li>
+</ul>
+<h2><a name="wp1096241"></a>The cfquery tag syntax</h2>
+<p>The following code shows the syntax for the <a href="00000316.htm#1102316"><code>cfquery</code></a> tag:</p>
+<pre>&lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   <i>SQL code...</i>
+&lt;/cfquery&gt;
+</pre><p>In this example, the query code tells ColdFusion to do the following:</p>
+<ul>
+<li>
+   Connect to the cfdocexamples data source (the cfdocexamples.mdb database).
+</li>
+<li>
+   Execute SQL code that you specify.
+</li>
+<li>
+   Store the retrieved data in the query object EmpList.
+</li>
+</ul>
+<p>When creating queries to retrieve data, keep the following guidelines in mind:</p>
+<ul>
+<li>
+   You must use opening <code>&lt;cfquery&gt;</code> and ending <code>&lt;/cfquery&gt;</code> tags, because the <code>cfquery</code> tag is a block tag.
+</li>
+<li>
+   Enter the query <code>name</code> and <code>datasource</code> attributes within the opening <code>cfquery</code> tag.
+</li>
+<li>
+   To tell the database what to process during the query, place SQL statements inside the <code>cfquery</code> block.
+</li>
+<li>
+   When referencing text literals in SQL, use single-quotation marks (&#39;). For example, <code>SELECT * FROM mytable WHERE FirstName=&#39;Jacob&#39;</code> selects every record from mytable in which the first name is Jacob. 
+</li>
+<li>
+   Surround attribute values with double quotation marks (&quot;attrib_value&quot;).
+</li>
+<li>
+   Make sure that a data source exists in the ColdFusion&#160;MX Administrator before you reference it in a <code>cfquery</code> tag.
+</li>
+<li>
+   Columns and tables that you refer to in your SQL statement must exist, otherwise the query will fail. 
+</li>
+<li>
+   Reference the query data by naming the query in one of the presentation tags, such as <a href="00000309.htm#1101659"><code>cfoutput</code></a>, <a href="00000266.htm#1836171"><code>cfgrid</code></a>, <a href="00000340.htm#1103885"><code>cftable</code></a>, <a href="00000264.htm#2031302"><code>cfgraph</code></a>, or <a href="00000347.htm#1104271"><code>cftree</code></a>.
+</li>
+<li>
+   When ColdFusion returns database columns, it removes table and owner prefixes. For example, if you query Employee.Emp_ID in the query, the Employee, is removed and returns as Emp_ID. You can use an alias to handle duplicate column names; for more information, see <a href="00001263.htm#1181595">Using Query of Queries</a>.
+</li>
+<li>
+   You cannot use SQL reserved words, such as MIN, MAX, COUNT, in a SQL statement. Because reserved words are database-dependent, see your database's documentation for a list of reserved words.
+</li>
+</ul>
+<h2><a name="wp1096426"></a>Building queries</h2>
+<p>As discussed earlier in this chapter, you build queries using the <a href="00000316.htm#1102316"><code>cfquery</code></a> tag and SQL.</p>
+<p><strong>Note: </strong>This and many subsequent procedures use the cfdocexamples data source that connects to the cfdocexamples.mdb database. This data source is installed by default. For information on adding or configuring a data source, see <i>Configuring and Administering ColdFusion&#160;MX</i>.</p><h4>To query the table:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Employee List&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Employee List&lt;/h1&gt;
+&lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT FirstName, LastName, Salary, Contract
+	FROM Employee
+&lt;/cfquery&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Note: </strong>Macromedia recommends that you create structured, reusable code by putting queries in ColdFusion components; however, for simplicity, the examples in this chapter include the query in the body of the ColdFusion page. For more information about using ColdFusion components, see <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a>.</p></li>
+<li>
+   Save the page as emplist.cfm in the myapps directory under your <i>web_root </i>directory. For example, the default path on a Windows computer would be:
+<p>C:\CFusionMX7\wwwroot\myapps\</p>
+</li>
+<li>
+   Enter the following URL in your web browser:
+<p>http://localhost/myapps/emplist.cfm</p>
+<p>Only the header appears.</p>
+</li>
+<li>
+   View the source in the browser:
+<p><br />
+<img src="images/emplist_.jpg" alt="Viewing the browser source code for emplist.cfm" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>ColdFusion creates the EmpList data set, but only HTML and text return to the browser. When you view the page's source, you see only HTML tags and the heading &quot;Employee List.&quot; To display the data set on the page, you must code tags and variables to output the data.</p>
+</li>
+</ol>
+<h4><a name="wp1096450"></a>Reviewing the code</h4>
+<p>The query you just created retrieves data from the cfdocexamples database. The following table describes the highlighted code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Queries the database specified in the cfdocexamples data source.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>SELECT FirstName, LastName, Salary, Contract
+FROM Employee
+</pre>    </td>
+    <td>
+<p>Gets information from the FirstName, LastName, Salary, and Contract fields in the Employee table.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Ends the <code>cfquery</code> block.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001253.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001255.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001254.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

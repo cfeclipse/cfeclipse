@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CreateObject: COM object</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000425.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000427.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CreateObject: COM object</h1>
+<h4><a name="wp1102287"></a>Description</h4>
+<p>The <code>CreateObject</code> function can create a Component Object Model (COM) object. </p>
+<p>To create a COM object, you must provide this information:</p>
+<ul>
+<li>
+   The object's program ID or filename 
+</li>
+<li>
+   The methods and properties available to the object through the IDispatch interface
+</li>
+<li>
+   The arguments and return types of the object&#39;s methods
+</li>
+</ul>
+<p>For most objects, you can get this information from the OLEView utility. </p>
+<p><strong>Note: </strong>On UNIX, this function does not support COM objects.</p><h4><a name="wp3515969"></a>Returns</h4>
+<p>A COM object.</p>
+<h4><a name="wp2587954"></a>Function syntax</h4>
+<pre><code><strong>CreateObject</strong></code>(<i>type, class, context, serverName</i>) 
+</pre><h4><a name="wp4762159"></a>See also</h4>
+<p><a href="00000608.htm#135363">ReleaseComObject</a>, <a href="00000302.htm#2820239">cfobject</a>; <a href="00001571.htm#1100380">Integrating COM and CORBA Objects in CFML Applications</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp1279108"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Type of object to create.</p>
+<ul>
+<li>
+   com
+</li>
+<li>
+   corba
+</li>
+<li>
+   java
+</li>
+<li>
+   component
+</li>
+<li>
+   webservice
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>class</p>
+    </td>
+    <td>
+<p>Component ProgID for the object to invoke</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>context</p>
+    </td>
+    <td>
+<ul>
+<li>
+   InProc
+</li>
+<li>
+   Local
+</li>
+<li>
+   Remote
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>serverName</p>
+    </td>
+    <td>
+<p>Server name, using UNC or DNS convention, in one of these forms: </p>
+<ul>
+<li>
+   \\lanserver
+</li>
+<li>
+   lanserver
+</li>
+<li>
+   http://www.servername.com
+</li>
+<li>
+   www.servername.com
+</li>
+<li>
+   127.0.0.1
+</li>
+</ul>
+<p>If <code>context = &quot;remote&quot;</code>, this parameter is required.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102303"></a>Usage</h4>
+<p>The following example creates the Windows Collaborative Data Objects (CDO) for NTS NewMail object to send mail. You would use this code within a <code>cfscript</code> tag.</p>
+<pre><code>Mailer = CreateObject</code>(&quot;COM&quot;, &quot;CDONTS.NewMail&quot;);
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000425.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000427.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000426.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>REFindNoCase</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000606.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000608.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>REFindNoCase</h1>
+<h4><a name="wp135226"></a>Description</h4>
+<p>Uses a regular expression (RE) to search a string for a pattern, starting from a specified position. The search is case-insensitive. </p>
+<p>For more information on regular expressions, including escape sequences, anchors, and modifiers, see <a href="00000980.htm#1100400">Using Regular Expressions in Functions</a> in <i>ColdFusion MX Developer's Guide</i>. </p>
+<h4><a name="wp135235"></a>Returns</h4>
+<p>Depends on the value of the <code>returnsubexpressions</code> parameter:</p>
+<ul>
+<li>
+   If <code>returnsubexpressions</code> <code>= &quot;False&quot;</code>: 
+<ul><li>The position in the string where the match begins</li>
+<li>0, if the regular expression is not matched in the string</li>
+</ul></li>
+<li>
+   If <code>returnsubexpressions = &quot;True&quot;</code>: a structure that contains two arrays, <code>len</code> and <code>pos</code>. The array elements are as follows:
+<ul><li>If the regular expression is found in the string, the first element of the <code>len</code> and <code>pos</code> arrays contains the length and position, respectively, of the first match of the entire regular expression.</li>
+<li>If the regular expression contains parentheses that group subexpressions, each subsequent array element contains the length and position, respectively, of the first occurrence of each group.</li>
+<li>If the regular expression is not found in the string, the first element of the <code>len</code> and <code>pos</code> arrays contains 0. </li>
+</ul></li>
+</ul>
+<h4><a name="wp135244"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp135249"></a>Function syntax</h4>
+<pre><code><strong>REFindNoCase</strong></code>(<i>reg_expression</i>, <i>string</i> [, <i>start</i>] [, returnsubexpressions] )
+</pre><h4><a name="wp135251"></a>See also</h4>
+<p><a href="00000462.htm#1104451">Find</a>, <a href="00000463.htm#1104504">FindNoCase</a>, <a href="00000606.htm#135102">REFind</a>, <a href="00000614.htm#135742">REReplace</a>, <a href="00000615.htm#135829">REReplaceNoCase</a></p>
+<h4><a name="wp135268"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>reg_expression</p>
+    </td>
+    <td>
+<p>Regular expression for which to search. Case-insensitive.</p>
+<p>For more information, see <a href="00000980.htm#1100400">Using Regular Expressions in Functions</a> in <i>ColdFusion MX Developer's Guide</i>. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. String in which to search.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>start</p>
+    </td>
+    <td>
+<p>Optional. A positive integer or a variable that contains one. Position at which to start search. The default value is 1.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>returnsubexpressions</p>
+    </td>
+    <td>
+<p>Optional. Boolean. Whether to return substrings of reg_expression, in arrays named <code>len</code> and <code>pos</code>:</p>
+<ul>
+<li>
+   True: if the regular expression is found, the first array element contains the length and position, respectively, of the first match.<br />If the regular expression contains parentheses that group subexpressions, each subsequent array element contains the length and position, respectively, of the first occurrence of each group.<br />If the regular expression is not found, the arrays each contain one element with the value 0.
+</li>
+<li>
+   False: the function returns the position in the string where the match begins. Default.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp135300"></a>Usage</h4>
+<p>This function finds the first occurrence of a regular expression in a string. To find the second and subsequent instances of the expression or of subexpressions in it, you call this function more than once, each time with a different start position. To determine the next start position, use the <code>returnsubexpressions</code> parameter, and add the value returned in the first element of the length array to the value in the first element of the position array.</p>
+<h4><a name="wp135302"></a>Example</h4>
+<pre>&lt;h3&gt;REFindNoCase Example&lt;/h3&gt;
+&lt;p&gt;This example demonstrates the use of the REFindNoCase function with and <br />without the &lt;i&gt;returnsubexpressions&lt;/i&gt; parameter set to True.&lt;/p&gt; 
+&lt;p&gt;If you do not use the &lt;i&gt;returnsubexpressions&lt;/i&gt; parameter, REFindNoCase<br />returns the position of the first occurrence of a regular expression <br />in a string starting from the specified position. Returns 0 if no<br />occurrences are found. &lt;/p&gt;
+&lt;p&gt;REFindNoCase(&quot;a+c+&quot;, &quot;abcaaccdd&quot;):   
+&lt;cfoutput&gt;#REFindNoCase(&quot;a+c+&quot;, &quot;abcaaccdd&quot;)#&lt;/cfoutput&gt;&lt;/p&gt;
+&lt;p&gt;REFindNoCase(&quot;a+c*&quot;, &quot;abcaaccdd&quot;):   
+&lt;cfoutput&gt;#REFindNoCase(&quot;a+c*&quot;, &quot;abcaaccdd&quot;)#&lt;/cfoutput&gt;&lt;/p&gt;
+&lt;p&gt;REFindNoCase(&quot;[[:alpha:]]+&quot;, &quot;abcaacCDD&quot;):   
+&lt;cfoutput&gt;#REFindNoCase(&quot;[[:alpha:]]+&quot;, &quot;abcaacCDD&quot;)#&lt;/cfoutput&gt;&lt;/p&gt;
+&lt;p&gt;REFindNoCase(&quot;[\?&amp;]rep = &quot;, &quot;report.cfm?rep = 1234&amp;u = 5&quot;):
+&lt;cfoutput&gt;#REFindNoCase(&quot;[\?&amp;]rep = &quot;, &quot;report.cfm?rep = 1234&amp;u = 5&quot;)#<br />&lt;/cfoutput&gt;&lt;/p&gt;
+&lt;!--- Set startPos to one; returnMatchedSubexpressions = True ---&gt;
+&lt;hr size = &quot;2&quot; color = &quot;#0000A0&quot;&gt;
+&lt;p&gt;If you do use the &lt;i&gt;returnssubexpression&lt;/i&gt; parameter, REFindNoCase returns<br />the position and length of the first occurrence of a regular expression<br />in a string starting from the specified position. The position and length<br />variables are stored in a structure. To access position and length<br />information, use the keys &lt;i&gt;pos&lt;/i&gt; and &lt;i&gt;len&lt;/i&gt;, respectively.&lt;/p&gt;
+
+&lt;cfset teststring = &quot;The cat in the hat hat came back!&quot;&gt;
+&lt;p&gt;The string in which the function is to search is: <br />&lt;cfoutput&gt;&lt;b&gt;#teststring#&lt;/b&gt;&lt;/cfoutput&gt;.&lt;/p&gt;
+&lt;p&gt;The first call to REFindNoCase to search this string is: 
+&lt;b&gt;REFindNoCase(&quot;[[:alpha:]]+&quot;,testString,1,&quot;True&quot;)&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;This function returns a structure that contains two arrays: pos and len.&lt;/p&gt;
+&lt;p&gt;To create this structure you can use a CFSET statement, <br />for example:&lt;/p&gt;
+&amp;lt;CFSET st = REFindNoCase(&quot;[[:alpha:]]+&quot;,testString,1,&quot;True&quot;)&amp;gt;
+&lt;cfset st = REFindNoCase(&quot;[[:alpha:]]+&quot;,testString,1,&quot;True&quot;)&gt;
+&lt;p&gt;
+   &lt;cfoutput&gt;
+   The number of elements in each array: #ArrayLen(st.pos)#.
+   &lt;/cfoutput&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;The number of elements in the pos and len arrays will always be one, <br />if you do not use parentheses to denote subexpressions in the regular<br />expression.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;The value of st.pos[1] is: &lt;cfoutput&gt;#st.pos[1]#.&lt;/cfoutput&gt;&lt;/p&gt;
+&lt;p&gt;The value of st.len[1] is: &lt;cfoutput&gt;#st.len[1]#.&lt;/cfoutput&gt;&lt;/p&gt;
+&lt;p&gt;
+   &lt;cfoutput&gt;
+   Substring is &lt;b&gt;[#Mid(testString,st.pos[1],st.len[1])#]&lt;/B&gt;
+   &lt;/cfoutput&gt;&lt;/p&gt;
+&lt;hr size = &quot;2&quot; color = &quot;#0000A0&quot;&gt;
+&lt;p&gt;However, if you use parentheses to denote subexpressions in the regular<br />expression, the first element contains the position and length of <br />the first instance of the whole expression. The position and length <br />of the first instance of each subexpression within will be included <br />in additional array elements.&lt;/p&gt;
+&lt;p&gt;For example:
+&amp;lt;CFSET st1 = REFindNoCase(&quot;([[:alpha:]]+)[ ]+(\1)&quot;,testString,1,&quot;True&quot;)&amp;gt;&lt;/p&gt;
+&lt;cfset st1 = REFindNoCase(&quot;([[:alpha:]]+)[ ]+(\1)&quot;,testString,1,&quot;True&quot;)&gt;
+
+&lt;p&gt;The number of elements in each array is 
+&lt;cfoutput&gt;
+   #ArrayLen(st1.pos)#
+&lt;/cfoutput&gt;.&lt;/p&gt;
+
+&lt;p&gt;First whole expression match; position is 
+&lt;cfoutput&gt;
+   #st1.pos[1]#; length is #st1.len[1]#; 
+   whole expression match is &lt;B&gt;[#Mid(testString,st1.pos[1],st1.len[1])#]&lt;/B&gt;
+&lt;/cfoutput&gt;&lt;/p&gt;
+
+&lt;p&gt;Subsequent elements of the arrays provide the position and length of the <br />first instance of each parenthesized subexpression therein.&lt;/p&gt;
+ &lt;cfloop index = &quot;i&quot; from = &quot;2&quot; to = &quot;#ArrayLen(st1.pos)#&quot;&gt;
+   &lt;p&gt;&lt;cfoutput&gt;Position is #st1.pos[i]#; Length is #st1.len[i]#; 
+   Substring is &lt;B&gt;[#Mid(testString,st1.pos[i],st1.len[i])#]&lt;/B&gt;
+   &lt;/cfoutput&gt;&lt;/p&gt;
+&lt;/cfloop&gt;&lt;br&gt;  
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000606.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000608.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000607.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

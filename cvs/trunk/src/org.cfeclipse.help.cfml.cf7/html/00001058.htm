@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Function local variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001057.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001060.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Function local variables</h1>
+<p>Variables that you declare with the Var keyword inside a <a href="00000263.htm#2852457"><code>cffunction</code></a> tag or CFScript <code>function</code> definition are available only in the method in which they are defined, and only last from the time the method is invoked until it returns the result. You cannot use the Var keyword outside of function definitions.</p>
+<p><strong>Tip: </strong>You should always use the Var keyword on variables that are only used inside of the function in which they are declared.</p><p>You must define all function local variables at the top of the function definition, before any other CFML code; for example:</p>
+<pre>&lt;cffunction ...&gt;
+   &lt;cfset Var testVariable = &quot;this is a local variable&quot;&gt;
+      &lt;!--- Function code goes here. ---&gt;
+   &lt;cfreturn myresult&gt;
+&lt;/cffunction&gt;
+</pre><p>Any arguments declared with the <code>cfargument</code> tag must appear before any variables defined with the <code>cfset</code> tag. You can also put any <code>cfscript</code> tag first and define variables that you declare with the Var keyword in the script.</p>
+<p>Use function local variables if you put the CFC in a persistent scope such as the Session scope, and the function has data that must be freed when the function exits.</p>
+<p>Local variables do not persist between calls to CFC methods.</p>
+<p>Local variables are available to pages included by the method.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001057.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001060.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001058.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

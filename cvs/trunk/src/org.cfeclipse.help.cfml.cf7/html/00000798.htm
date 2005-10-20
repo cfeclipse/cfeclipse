@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXRequest::CreateStringSet</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000797.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000799.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXRequest::CreateStringSet</h1>
+<h4><a name="wp1099386"></a>Syntax</h4>
+<pre><strong>CCFXStringSet* CCFXRequest::CreateStringSet(void)</strong>
+</pre><h4><a name="wp1102785"></a>Description</h4>
+<p>Allocates and returns an instance. Always use this function to create string sets, as opposed to directly using the <code>new</code> operator.</p>
+<h4><a name="wp1104095"></a>Returns</h4>
+<p>Returns an object of <a href="00000810.htm#1098541">CCFXStringSet class</a>. The memory allocated for the returned string set is freed automatically by ColdFusion after the request is completed</p>
+<h4><a name="wp1103096"></a>Example</h4>
+<p>The following example creates a string set and adds three strings to it:</p>
+<pre>CCFXStringSet* pColors = pRequest-&gt;CreateStringSet() ;<br />pColors-&gt;AddString( &quot;Red&quot; ) ;<br />pColors-&gt;AddString( &quot;Green&quot; ) ;<br />pColors-&gt;AddString( &quot;Blue&quot; ) ;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000797.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000799.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000798.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

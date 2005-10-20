@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cflogin</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000286.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000288.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cflogin</h1>
+<h4><a name="wp2949571"></a>Description</h4>
+<p>A container for user login and authentication code. ColdFusion runs the code in this tag if a user is not already logged in. You put code in the tag that authenticates the user and identifies the user with a set of roles. Used with <a href="00000288.htm#2873089"><code>cfloginuser</code></a> tag.</p>
+<h4><a name="wp2871610"></a>Category</h4>
+<p><a href="00000208.htm#2487583">Security tags</a></p>
+<h4><a name="wp2871615"></a>Syntax</h4>
+<pre>&lt;cflogin<br />   idletimeout = &quot;value&quot;<br />   applicationToken = &quot;token&quot;<br />   cookieDomain = &quot;domain&quot;<br />   ...<br />   &lt;cfloginuser<br />      name = &quot;name&quot;<br />      password = &quot;password-string&quot;<br />      roles = &quot;roles&quot;&gt;<br />   ...&gt;<br />&lt;/cflogin&gt;
+</pre><h4><a name="wp3486179"></a>See also</h4>
+<p><a href="00000288.htm#2873089"><code>cfloginuser</code></a><code>, </code><a href="00000289.htm#2871521"><code>cflogout</code></a><code>, </code><a href="00000469.htm#4046631">GetAuthUser</a><code>, </code><a href="00000533.htm#4047189">IsUserInRole</a><code>, </code><a href="00001175.htm#1100022">Securing Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2871631"></a>History</h4>
+<p>ColdFusion MX&#160;6.1: Changed behavior: the <code>cflogin</code> variable exists when ColdFusion receives a request with NTLM or Digest (CFHTTP Negotiated header) authentication information.</p>
+<p>ColdFusion&#160;MX: Added this tag.</p>
+<h4><a name="wp3211222"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>idletimeout</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>1800</p>
+    </td>
+    <td>
+<p>Time interval, in seconds, after which ColdFusion logs off the user.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>applicationtoken</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>The current application name</p>
+    </td>
+    <td>
+<p>Unique application identifier. Limits the login validity to one application, as specified by the <code>cfapplication</code> tag or the Application.cfc file.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cookiedomain</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Domain of the cookie that is used to mark a user as logged in. Use this attribute to enable a user login cookie to work with multiple clustered servers in the same domain.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2872304"></a>Usage</h4>
+<p>The body of this tag executes only if there is no logged-in user. When using application-based security, you put code in the body of the <code>cflogin</code> tag to check the user-provided ID and password against a data source, LDAP directory, or other repository of login identification. The body must include a <code>cfloginuser</code> tag to establish the authenticated user&#39;s identity in ColdFusion.</p>
+<p>You control the data source and are responsible for coding the SQL within the <code>cflogin</code> tag, and you must make sure that the associated database has user, password, and role information.</p>
+<p>The <code>cflogin</code> tag has a built-in <code>cflogin</code> structure that contains two variables, <code>cflogin.name</code> and <code>cflogin.password</code>, if the page is executing in response to any of the following:</p>
+<ul>
+<li>
+   Submission of a form that contains input fields with the names <code>j_username</code> and <code>j_password</code>.
+</li>
+<li>
+   A request that uses CFHTTP Basic authentication, and therefore includes an Authorization header with the username and password.
+</li>
+<li>
+   A request that uses NTLM or Digest authentication. In this case, the username and password are hashed using a one-way algorithm in the Authorization header; ColdFusion gets the username from the web server and sets the <code>cflogin.password</code> value to the empty string.
+</li>
+</ul>
+<p>You can use these values in the <code>cflogin</code> tag body to authenticate the user, and, in the <code>cfloginuser</code> tag, to log the user in. The structure is only available in the <code>cflogin</code> tag body.</p>
+<h4><a name="wp3702940"></a>Example</h4>
+<p>The following example shows a simple authentication. This code is typically in the Application.cfc <code>onRequestStart</code> method or in the application.cfm page.</p>
+<pre>&lt;cflogin&gt;
+   &lt;cfif NOT IsDefined(&quot;cflogin&quot;)&gt;
+      &lt;cfinclude template=&quot;loginform.cfm&quot;&gt;
+      &lt;cfabort&gt;
+   &lt;cfelse&gt;
+      &lt;cfif cflogin.name eq &quot;admin&quot;&gt;
+         &lt;cfset roles = &quot;user,admin&quot;&gt;
+      &lt;cfelse&gt;
+            &lt;cfset roles = &quot;user&quot;&gt;
+      &lt;/cfif&gt;
+      &lt;cfloginuser name = &quot;#cflogin.name#&quot; password = &quot;#cflogin.password#&quot;
+         roles = &quot;#roles#&quot; /&gt;
+   &lt;/cfif&gt;
+&lt;/cflogin&gt;
+</pre><p>The following view-only example checks the user ID and password against a data source:</p>
+<pre>&lt;cfquery name=&quot;qSecurity&quot;
+   datasource=&quot;UserRolesDb&quot;&gt;
+   select Roles FROM SecurityRoles
+   where username=&lt;cfqueryparam value=&quot;#cflogin.name#&quot;
+      CFSQLTYPE=&quot;CF_SQL_VARCHAR&quot;
+   and password=&lt;cfqueryparam value=&quot;#cflogin.password#&quot;
+      CFSQLTYPE=&quot;CF_SQL_VARCHAR&quot;
+&lt;/cfquery&gt;
+
+&lt;cfif qSecurity.recordcount gt 0&gt;
+&lt;cfloginuser name = &quot;#cflogin.name#&quot;
+password = &quot;#cflogin.password#&quot;
+roles = &quot;#trim(qSecurity.Roles)#&quot; &gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000286.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000288.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000287.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

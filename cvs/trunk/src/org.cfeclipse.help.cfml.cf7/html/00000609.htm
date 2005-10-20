@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>RemoveChars</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000608.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000610.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>RemoveChars</h1>
+<h4><a name="wp135419"></a>Description</h4>
+<p>Removes characters from a string. </p>
+<h4><a name="wp135421"></a>Returns</h4>
+<p>A copy of the string, with <i>count</i> characters removed from the specified start position. If no characters are found, returns zero.</p>
+<h4><a name="wp135423"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp135428"></a>Function syntax</h4>
+<pre><code><strong>RemoveChars</strong></code>(<i>string</i>, <i>start</i>, <i>count</i>)
+</pre><h4><a name="wp135430"></a>See also</h4>
+<p><a href="00000510.htm#1105995">Insert</a>, <a href="00000546.htm#130247">Len</a></p>
+<h4><a name="wp135438"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. String in which to search.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>start</p>
+    </td>
+    <td>
+<p>A positive integer or a variable that contains one. Position at which to start search.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>count</p>
+    </td>
+    <td>
+<p>Number of characters to remove.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp135457"></a>Example</h4>
+<pre>&lt;h3&gt;RemoveChars Example&lt;/h3&gt;
+Returns a string with &lt;I&gt;count&lt;/I&gt; characters removed from the <br />start position. Returns 0 if no characters are found.
+
+&lt;cfif IsDefined(&quot;FORM.myString&quot;)&gt;
+   &lt;cfif (FORM.numChars + FORM.start) GT Len(FORM.myString)&gt;
+      &lt;p&gt;Your string is only &lt;cfoutput&gt;#Len(FORM.myString)#
+       &lt;/cfoutput&gt; characters long.
+      Please enter a longer string, select fewer characters to remove or
+      begin earlier in the string.
+   &lt;cfelse&gt;
+      &lt;cfoutput&gt;
+      &lt;p&gt;Your original string:    #FORM.myString#
+      &lt;p&gt;Your modified string:   #RemoveChars(FORM.myString,<br />FORM.start, FORM.numChars)# 
+      &lt;/cfoutput&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000608.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000610.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000609.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

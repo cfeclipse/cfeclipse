@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Variable naming rules</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000882.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000884.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Variable naming rules</h1>
+<p>ColdFusion variable names, including form field names and custom function and ColdFusion component argument names, must conform to Java naming rules and the following guidelines:</p>
+<ul>
+<li>
+   A variable name must begin with a letter, underscore, or Unicode currency symbol.
+</li>
+<li>
+   The initial character can by followed by any number of letters, numbers, underscore characters, and Unicode currency symbols.
+</li>
+<li>
+   A variable name cannot contain spaces.
+</li>
+<li>
+   A query result is a type of variable, so it overwrites a local variable with the same name.
+</li>
+<li>
+   ColdFusion variables are not case-sensitive. However, consistent capitalization makes the code easier to read.
+</li>
+<li>
+   When creating a form with fields that are used in a query, match form field names with the corresponding database field names.
+</li>
+<li>
+   Periods separate the components of structure or object names. They also separate a variable scope from the variable name. You cannot use periods in simple variable names, with the exception of variables in the Cookie and Client scopes. For more information on using periods, see <a href="00000901.htm#1190273">Using periods in variable references</a>.
+</li>
+</ul>
+<p>The following rule applies to variable names, but does not apply to form field and argument names:</p>
+<ul>
+<li>
+   Prefix each variable's name with its scope. Although some ColdFusion programmers do not use the Variables prefix for local variable names, you should use prefixes for all other scopes. Using scope prefixes makes variable names clearer and increases code efficiency. In many cases, you must prefix the scope. For more information, see <a href="00000911.htm#1100240">About scopes</a>. 
+</li>
+</ul>
+<p><strong>Note: </strong>In some cases, when you use an existing variable name, you must enclose it with number signs (#) to allow ColdFusion to distinguish it from string or HTML text, and to insert its value, as opposed to its name. For more information, see <a href="00000932.htm#2708421">Using number signs</a>.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00000882.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000884.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000883.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

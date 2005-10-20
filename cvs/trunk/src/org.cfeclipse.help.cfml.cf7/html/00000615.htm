@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>REReplaceNoCase</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000614.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000616.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>REReplaceNoCase</h1>
+<h4><a name="wp135830"></a>Description</h4>
+<p>Uses a regular expression to search a string for a string pattern and replace it with another. The search is case-insensitive.</p>
+<h4><a name="wp135832"></a>Returns</h4>
+<ul>
+<li>
+   If <code>scope = &quot;one&quot;</code>: returns a string with the first occurrence of the regular expression replaced by the value of <i>substring</i>. 
+</li>
+<li>
+   If <code>scope = &quot;all&quot;</code>: returns a string with all occurrences of the regular expression replaced by the value of <i>substring</i>. 
+</li>
+<li>
+   If the function finds no matches: returns a copy of the string, unchanged.
+</li>
+</ul>
+<h4><a name="wp135836"></a>Category</h4>
+<p><a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp135841"></a>Function syntax</h4>
+<pre><code><strong>REReplaceNoCase</strong></code>(<i>string</i>, <i>reg_expression</i>, <i>substring</i> [, <i>scope</i> ])
+</pre><h4><a name="wp135843"></a>See also</h4>
+<p><a href="00000606.htm#135102">REFind</a>, <a href="00000607.htm#135225">REFindNoCase</a>, <a href="00000611.htm#135527">Replace</a>, <a href="00000612.htm#135597">ReplaceList</a></p>
+<h4><a name="wp135857"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed behavior: this function inserts the following special characters in regular expression replacement strings, to control case conversion: \u, \U, \l, \L, and \E. If any of these strings is present in a ColdFusion 5 application, you must insert a backslash before it (for example, change &quot;\u&quot; to &quot;\\u&quot;). </p>
+<h4><a name="wp135862"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>reg_expression</p>
+    </td>
+    <td>
+<p>Regular expression to replace. For more information, see <a href="00000980.htm#1100400">Using Regular Expressions in Functions</a> in <i>ColdFusion MX Developer's Guide</i>. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>substring</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Replaces <code>reg_expression</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>scope</p>
+    </td>
+    <td>
+<ul>
+<li>
+   one: replaces the first occurrence of the regular expression. Default.
+</li>
+<li>
+   all: replaces all occurrences of the regular expression.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp135892"></a>Usage</h4>
+<p>For details on using regular expressions, see <a href="00000980.htm#1100400">Using Regular Expressions in Functions</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp135900"></a>Example</h4>
+<pre>&lt;p&gt;The REReplaceNoCase function returns &lt;i&gt;string&lt;/i&gt; with a regular <br />expression replaced with &lt;i&gt;substring&lt;/i&gt; in the specified scope. <br />This is a case-insensitive search.
+&lt;p&gt;REReplaceNoCase(&quot;cabaret&quot;,&quot;C|B&quot;,&quot;G&quot;,&quot;ALL&quot;):   
+&lt;cfoutput&gt;#<code><strong>REReplaceNoCase(&quot;cabaret&quot;,&quot;C|B&quot;,&quot;G&quot;,&quot;ALL&quot;)</strong></code>#&lt;/cfoutput&gt;
+&lt;p&gt;REReplaceNoCase(&quot;cabaret&quot;,&quot;[A-Z]&quot;,&quot;G&quot;,&quot;ALL&quot;):   
+&lt;cfoutput&gt;#<strong>REReplaceNoCase(&quot;cabaret&quot;,&quot;[A-Z]&quot;,&quot;G&quot;,&quot;ALL&quot;)</strong>#&lt;/cfoutput&gt;
+&lt;p&gt;REReplaceNoCase(&quot;I LOVE JELLIES&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;):   
+&lt;cfoutput&gt;#<strong>REReplaceNoCase(&quot;I LOVE JELLIES&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;)</strong>#
+&lt;/cfoutput&gt;
+&lt;p&gt;REReplaceNoCase(&quot;I LOVE JELLY&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;):   
+&lt;cfoutput&gt;#<strong>REReplaceNoCase(&quot;I LOVE JELLY&quot;,&quot;jell(y|ies)&quot;,&quot;cookies&quot;)</strong>#<br />&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000614.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000616.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000615.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

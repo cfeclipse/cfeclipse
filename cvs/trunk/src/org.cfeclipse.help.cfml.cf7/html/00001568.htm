@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Java and ColdFusion data type conversions</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001567.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001569.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Java and ColdFusion data type conversions</h1>
+<p>ColdFusion does not use explicit types for variables, while Java is strongly typed. However, ColdFusion data does use a number of underlying types to represent data.</p>
+<p>Under most situations, when the method names are not ambiguous, ColdFusion can determine the data types that are required by a Java object, and often it can convert ColdFusion data to the required types. For example, ColdFusion text strings are implicitly converted to the Java String type. Similarly, if a Java object contains a doIt method that expects a parameter of type int, and CFML is issuing a doIt call with a CFML variable x that contains an integer value, ColdFusion converts the variable x to Java int type. However, ambiguous situations can result from Java method overloading, where a class has multiple implementations of the same method that differ only in their parameter types.</p>
+<p>The following sections describe how ColdFusion handles the unambiguous situations, and how it provides you with the tools to handle ambiguous ones.</p>
+<h3><a name="wp1160845"></a>Default data type conversion</h3>
+<p>Whenever possible, ColdFusion automatically matches Java types to ColdFusion types. </p>
+<p>The following table lists how ColdFusion converts ColdFusion data values to Java data types when passing arguments. The left column represents the underlying ColdFusion representation of its data. The right column indicates the Java data types into which ColdFusion can automatically convert the data:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+CFML
+    </th>
+    <th>
+Java
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Integer</p>
+    </td>
+    <td>
+<p>short, int, long &#160;(short and int might result in a loss of precision).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Real number</p>
+    </td>
+    <td>
+<p>float double&#160;&#160;(float might result in a loss of precision.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Boolean</p>
+    </td>
+    <td>
+<p>boolean</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Date-time</p>
+    </td>
+    <td>
+<p>java.util.Date</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>String, including lists</p>
+    </td>
+    <td>
+<p>String</p>
+<p>short, int, long, float, double, java.util.Date, when a CFML string represents a number or date.</p>
+<p>boolean, for strings with the value Yes, No, True, and False (case-insensitive).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Array</p>
+    </td>
+    <td>
+<p>java.util.Vector (ColdFusion Arrays are internally represented using an instance of a java.util.Vector object.)</p>
+<p>ColdFusion can also map a CFML array to any of the following when the CFML array contains consistent data of a type that can be converted to the Java array's data type: byte[], char[], boolean[], int[], long[], float[], double[], String[], or Object[]. When a CFML array contains data of different of types, the conversion to a simple array type might fail.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Structure</p>
+    </td>
+    <td>
+<p>java.util.Map</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Query object</p>
+    </td>
+    <td>
+<p>java.util.Map</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XML document object</p>
+    </td>
+    <td>
+<p>Not supported.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ColdFusion component</p>
+    </td>
+    <td>
+<p>Not applicable.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following table lists how ColdFusion converts data returned by Java methods to ColdFusion data types:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Java
+    </th>
+    <th>
+CFML
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>boolean/Boolean</p>
+    </td>
+    <td>
+<p>Boolean</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>byte/Byte</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>char/Char</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>short/Short</p>
+    </td>
+    <td>
+<p>Integer</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>int/Integer</p>
+    </td>
+    <td>
+<p>Integer</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>long/Long</p>
+    </td>
+    <td>
+<p>Integer</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>float/Float</p>
+    </td>
+    <td>
+<p>Real Number</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>double/Double</p>
+    </td>
+    <td>
+<p>Real Number</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>java.util.Date</p>
+    </td>
+    <td>
+<p>Date-time</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>java.util.List</p>
+    </td>
+    <td>
+<p>Comma-delimited list</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>byte[]</p>
+    </td>
+    <td>
+<p>Array</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>char[]</p>
+    </td>
+    <td>
+<p>Array</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>boolean[]</p>
+    </td>
+    <td>
+<p>Array</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>String[]</p>
+    </td>
+    <td>
+<p>Array</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>java.util.Vector</p>
+    </td>
+    <td>
+<p>Array</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>java.util.Map</p>
+    </td>
+    <td>
+<p>Structure</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1163422"></a>Resolving ambiguous data types with the JavaCast function</h3>
+<p>You can overload Java methods so a class can have several identically named methods. At runtime, the JVM resolves the specific method to use based on the parameters passed in the call and their types.</p>
+<p>In the section <a href="00001567.htm#1134416">The Employee class</a>, the Employee class has two implementations for the SetJobGrade method. One method takes a string variable, the other an integer. If you write code such as the following, which implementation to use is ambiguous:</p>
+<pre>&lt;cfset emp.SetJobGrade(&quot;1&quot;)&gt;
+</pre><p>The &quot;1&quot; could be interpreted as a string or as a number, so there is no way to know which method implementation to use. When ColdFusion encounters such an ambiguity, it throws a user exception.</p>
+<p>The ColdFusion <a href="00000542.htm#1106957"><code>JavaCast</code></a> function helps you resolve such issues by specifying the Java type of a variable, as in the following line: </p>
+<pre>&lt;cfset emp.SetJobGrade(JavaCast(&quot;int&quot;, &quot;1&quot;))&gt;
+</pre><p>The <code>JavaCast</code> function takes two parameters: a string representing the Java data type, and the variable whose type you are setting. You can specify the following Java data types: boolean, int, long, float, double, and String.</p>
+<p>For more information about the <a href="00000542.htm#1106957"><code>JavaCast</code></a> function, see <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001567.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001569.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001568.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

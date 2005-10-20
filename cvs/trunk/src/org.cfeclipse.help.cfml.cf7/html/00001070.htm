@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating custom tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001069.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001071.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating custom tags</h1>
+<p>Custom tags let you extend CFML by adding your own tags to the ones supplied with ColdFusion. After you define a custom tag, you can use it on a ColdFusion page just as you would any of the standard CFML tags, such as <a href="00000316.htm#1102316"><code>cfquery</code></a> and <a href="00000309.htm#1101659"><code>cfoutput</code></a>. </p>
+<p>You use custom tags to encapsulate your application logic so that it can be referenced from any ColdFusion page. Custom tags allow for rapid application development and code reuse while offering off-the-shelf solutions for many programming chores.</p>
+<p>For example, you might create a custom tag, named <code>cf_happybirthday</code>, to generate a birthday message. You could then use that tag in a ColdFusion page, as follows:</p>
+<pre>&lt;cf_happybirthday name=&quot;Ted Cantor&quot; birthDate=&quot;December 5, 1987&quot;&gt;
+</pre><p>When ColdFusion processes the page containing this tag, it could output the message:</p>
+<pre>December 5, 1987 is Ted Cantor's Birthday.
+Please wish him well.
+</pre><p>A custom tag can also have a body and end tag, for example:</p>
+<pre>&lt;cf_happybirthdayMessge name=&quot;Ellen Smith&quot; birthDate=&quot;June 8, 1993&quot;&gt;
+   &lt;P&gt; Happy Birthday Ellen!&lt;/P&gt;
+   &lt;P&gt; May you have many more!&lt;/P&gt;
+&lt;/cf_happybirthdayMessge&gt;
+</pre><p>This tag could output the message:</p>
+<pre>June 8, 1993 is Ellen Smith's Birthday.
+Happy Birthday Ellen!
+May you have many more!
+</pre><p>For more information about using end tags, see <a href="00001080.htm#1126569">Handling end tags</a>.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001071.htm#1121367">Creating and calling custom tags</a>
+</li>
+<li>
+   <a href="00001072.htm#1137046">Securing custom tags</a>
+</li>
+<li>
+   <a href="00001073.htm#1108500">Accessing existing custom tags</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001069.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001071.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001070.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

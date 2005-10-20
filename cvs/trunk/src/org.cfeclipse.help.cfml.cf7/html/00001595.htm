@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Sending e-mail messages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001594.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001596.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Sending e-mail messages</h1>
+<p>Before you configure ColdFusion to send e-mail messages, you must have access to an SMTP e-mail server. Also, before you run application pages that refer to the e-mail server, you can configure the ColdFusion&#160;MX Administrator to use the SMTP server. If you need to override the ColdFusion&#160;MX Administrator SMTP server setting for any messages, you can specify a new mail server in the <code>server</code> attribute of the <a href="00000297.htm#2355015"><code>cfmail</code></a> tag.</p>
+<h4>To configure ColdFusion for e-mail:</h4>
+<ol>
+<li>
+   In the ColdFusion&#160;MX Administrator, select Server Settings &gt; Mail.
+</li>
+<li>
+   In the Mail Server box, enter the name or IP address of your SMTP mail server.
+</li>
+<li>
+   (Optional) Change the Server Port and Connection Timeout default settings.
+</li>
+<li>
+   Select the Verify Mail Server Connection check box to make sure ColdFusion can access your mail server.
+</li>
+<li>
+   If your mail server does not use port 25, the default, SMTP port, change the Server Port default settings.
+</li>
+<li>
+   Depending on your ColdFusion&#160;MX edition, the Mail page in the Administrator has additional options that you can use to configure and optimize ColdFusion mail behavior. Select these as appropriate.
+</li>
+<li>
+   Click Submit Changes.
+<p>ColdFusion saves the settings. The page displays a message indicating success or failure for connecting to the server.</p>
+</li>
+</ol>
+<p>ColdFusion&#160;MX Enterprise edition includes additional mail spooling and delivery features. For more information on these features, and for information on the Administrator's mail settings, see <i>Configuring and Administering ColdFusion&#160;MX</i>.</p>
+<h2><a name="wp1096161"></a>Sending SMTP e-mail with the cfmail tag</h2>
+<p>The <a href="00000297.htm#2355015"><code>cfmail</code></a> tag provides support for sending SMTP e-mail from within ColdFusion applications. The <code>cfmail</code> tag is similar to the <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag, except that <code>cfmail</code> outputs the generated text as an SMTP mail message rather than to a page. The <code>cfmail</code> tag supports all the attributes and commands that you use with <code>cfoutput</code>, including <code>query</code>. The following table describes basic <code>cfmail</code> tag attributes that you might use to send a simple email message. For a complete list of attributes, see the <a href="00000297.htm#2355015"><code>cfmail</code></a> description in <i>CFML Reference</i>.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>subject</p>
+    </td>
+    <td>
+<p>The subject of the message.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>from</p>
+    </td>
+    <td>
+<p>The e-mail address of the sender.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>to</p>
+    </td>
+    <td>
+<p>The e-mail address of the recipient. Use a comma-delimited list to specify multiple recipients.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cc</p>
+    </td>
+    <td>
+<p>(Optional) The e-mail address of a carbon copy recipient. The recipient's address is visible to other recipients. Use a comma-delimited list to specify multiple cc recipients.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>bcc</p>
+    </td>
+    <td>
+<p>(Optional) The e-mail address of a blind carbon copy recipient. The recipient's address is not visible to other recipients. Use a comma-delimited list to specify multiple bcc recipients.</p>
+    </td>
+  </tr>
+</table>
+
+<h4>To send a simple e-mail message:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Sending a simple e-mail&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Sample e-mail&lt;/h1&gt;
+&lt;cfmail
+	from=&quot;Sender@Company.com&quot;
+	to=&quot;#URL.email#&quot;
+	subject=&quot;Sample e-mail from ColdFusion MX&quot;&gt;
+
+This is a sample e-mail message to show basic e-mail capability.
+
+&lt;/cfmail&gt;
+The e-mail was sent.
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the file as send_mail.cfm in the myapps directory under your <i>web_root </i>directory.
+</li>
+<li>
+   Open your browser and enter the following URL: 
+<p><strong>http://localhost:8500/myapps/send_mail.cfm?email=</strong>myname@mycompany.com</p>
+<p>(Replace myname@mycompany.com with your e-mail address.)</p>
+<p>The page sends the e-mail message to you, through your SMTP server.</p>
+</li>
+</ol>
+<p><strong>Note: </strong>If you do not receive an e-mail message, check whether you have configured ColdFusion to work with your SMTP server; for more information, see <a href="00001595.htm#1096150">Sending e-mail messages</a>.</p><p>The <code>cfmail</code> tag has many options that let you customize your mail or control how it is sent.  For a description of all attributes, including options to wrap mail text at a specified column, specify the mail character encoding, and specify the mail server, user name, and password, see the <a href="00000297.htm#2355015"><code>cfmail</code></a> description in <i>CFML Reference</i>.</p>
+<h2><a name="wp1126596"></a>Sending HTML format e-mail</h2>
+<p>If you know all the mail recipients use mail applications that are capable of reading and interpreting HTML code in a mail message, you can use the <a href="00000297.htm#2355015"><code>cfmail</code></a> tag to send an HTML message. The <code>cfmail</code> tag <code>type=&quot;HTML&quot;</code> attribute informs the receiving e-mail client that the message contains embedded HTML tags that must be processed. For an example that sends HTML mail, see <a href="00001600.htm#1108150">Including images in a message</a>.</p>
+<h2><a name="wp1126848"></a>Sending multipart mail messages</h2>
+<p>The <a href="00000299.htm#2732354"><code>cfmailpart</code></a> tag lets you create multipart mail messages, with each part having a different MIME type or character set. For example, if you do not know that all recipients can interpret HTML mail messages, you can send your message as a multipart mail with a text part and an HTML part. To do so use two <code>cfmailpart</code> tags, one with the HTML version of the message and one with the plain text message, as shown in the following example. To test this example, replace the <code>To</code> attribute value with a valid email address, save and run the page, and check the incoming email at the address you entered.</p>
+<pre>&lt;cfmail from = &quot;peter@domain.com&quot; To = &quot;paul@domain.com&quot; 
+Subject = &quot;Which version do you see?&quot;&gt;
+   &lt;cfmailpart 
+      type=&quot;text&quot;
+      wraptext=&quot;74&quot;&gt;
+         You are reading this message as plain text, because your mail reader 
+         does not handle HTML text.
+   &lt;/cfmailpart&gt;&gt;
+   &lt;cfmailpart 
+      type=&quot;html&quot;&gt;
+         &lt;h3&gt;HTML Mail Message&lt;/h3&gt;
+         &lt;p&gt;You are reading this message as &lt;strong&gt;HTML&lt;/strong&gt;.&lt;/p&gt;
+         &lt;p&gt;Your mail reader handles HTML text.&lt;/p&gt;
+   &lt;/cfmailpart&gt;
+&lt;/cfmail&gt;
+</pre><p><strong>Note: </strong>In the HTML version of the message, you must escape any number signs, such as those used to specify colors, by using two # characters; for example, <code>bgcolor=&quot;##C5D9E5&quot;</code>.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001594.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001596.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001595.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

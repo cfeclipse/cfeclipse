@@ -1,0 +1,907 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cftree</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000346.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000348.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cftree</h1>
+<h4><a name="wp1355945"></a>Description</h4>
+<p>Inserts a tree control in a form. Validates user selections. Used within a <a href="00000256.htm#2433198">cfform</a> tag block. You can use a ColdFusion query to supply data to the tree. </p>
+<h4><a name="wp1962583"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a></p>
+<h4><a name="wp2774563"></a>Syntax</h4>
+<pre>&lt;cftree name = &quot;name&quot;<br />format=&quot;applet&quot;, &quot;flash&quot;, xml, or &quot;object&quot;<br />   required = &quot;yes&quot; or &quot;no&quot;<br />   delimiter = &quot;delimiter&quot;<br />   completePath = &quot;yes&quot; or &quot;no&quot;<br />   appendKey = &quot;yes&quot; or &quot;no&quot;<br />   highlightHref = &quot;yes&quot; or &quot;no&quot;<br />   onValidate = &quot;script_name&quot;<br />   message = &quot;text&quot;<br />   onError = &quot;text&quot;<br />   lookAndFeel = &quot;motif&quot; or &quot;windows&quot; or &quot;metal&quot;<br />   font = &quot;font&quot;<br />   fontSize = &quot;size&quot;<br />   italic = &quot;yes&quot; or &quot;no&quot;<br />   bold = &quot;yes&quot; or &quot;no&quot;<br />   height = &quot;integer&quot;<br />   width = &quot;integer&quot;<br />   vSpace = &quot;integer&quot;<br />   hSpace = &quot;integer&quot;<br />   align = &quot;alignment&quot;<br />   border = &quot;yes&quot; or &quot;no&quot;<br />   hScroll = &quot;yes&quot; or &quot;no&quot;<br />   vScroll = &quot;yes&quot; or &quot;no&quot;<br />   style= &quot;style specification&quot;<br />   enabled = &quot;Yes&quot; or &quot;No&quot;<br />   visible = &quot;Yes&quot; or &quot;No&quot;<br />   tooltip = &quot;tip text&quot;<br />onChange = &quot;ActionScript&quot;<br />   notSupported = &quot;text&quot;&gt;<br />&#160;<br />&lt;/cftree&gt;
+</pre><h4><a name="wp1962694"></a>See also</h4>
+<p><a href="00000216.htm#1097239">cfapplet</a>, <a href="00000223.htm#3798877">cfcalendar</a>, <a href="00000256.htm#2433198">cfform</a>, <a href="00000257.htm#3833404">cfformgroup</a>, <a href="00000258.htm#3768073">cfformitem</a>, <a href="00000266.htm#1836171">cfgrid</a>, <a href="00000279.htm#1100379">cfinput</a>, <a href="00000331.htm#2553073">cfselect</a>, <a href="00000337.htm#2612389">cfslider</a>, <a href="00000341.htm#2773598">cftextarea</a>, <a href="00000348.htm#1104421">cftreeitem</a>; <a href="00001335.htm#1096340">Working with action pages</a> in <a href="00001330.htm#1096836">Introduction to Retrieving and Formatting Data</a> and <a href="00001354.htm#1096353">Building tree controls with the cftree tag</a> in <a href="00001349.htm#1102770">Building Dynamic Forms with cfform Tags</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2325018"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: </p>
+<ul>
+<li>
+   Added the <code>format</code> attribute and support for generating Flash and XML and object output.
+</li>
+<li>
+   Added <code>enabled</code>, <code>onChange</code>, <code>style</code>, <code>tooltip</code>, and <code>visible</code> attributes (Flash format only).
+</li>
+</ul>
+<p>ColdFusion&#160;MX: Changed behavior: ColdFusion renders a tree control regardless of whether there are any <code>treeitems</code> within it. </p>
+<h4><a name="wp1429289"></a>Attributes</h4>
+<p><strong>Note: </strong>In XML format, ColdFusion MX passes all attributes to the XML. The supplied XSLT skins do not handle or display XML format trees, but do display applet and Flash format trees.</p><table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+Format
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name for tree control.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>format</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>applet</p>
+    </td>
+    <td>
+<ul>
+<li>
+   applet: displays the tree using a Java applet in the browser.
+</li>
+<li>
+   flash: displays the tree using a Flash control
+</li>
+<li>
+   object: returns the tree as a ColdFusion structure with the name specified by the <code>name</code> attribute, For details of the structure contents, see <a href="00000347.htm#2781321">object format</a>.
+</li>
+<li>
+   xml: generates an XML representation of the tree. <br />In XML format forms, includes the generated XML in the form.<br />In HTML format forms, puts the XML in a string variable with the name specified by the <code>name</code> attribute.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>required</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, Flash</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: user must select an item in the tree control.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>delimiter</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>\\</p>
+    </td>
+    <td>
+<p>Character to separate elements in the Forms.<i>treename</i>.path variable of the action page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>completePath</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, object</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: starts the Form.<i>treename</i>.path variable with the root of the tree path when <code>cftree</code> is submitted.
+</li>
+<li>
+   No: omits the root level from the Form.<i>treename</i>.path variable; the value starts with the first child node in the tree.
+</li>
+</ul>
+<p>For the <code>preserveData</code> attribute of <code>cfform</code> to work with the tree, you must set this attribute to Yes. </p>
+<p>For tree items populated by a query, if you use the <code>cftreeitem</code> <code>queryasroot</code> attribute to specify a root name, that value is returned. If you do not specify a root name, ColdFusion returns the query name.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>appendKey</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: if you use <code>cftreeitem</code> <code>href</code> attributes, ColdFusion appends a CFTREEITEMKEY query string variable with the value of the selected tree item to the <code>cfform</code> action URL.
+</li>
+<li>
+   No: does not append the tree item value to the URL.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>highlightHref</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, Object</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: highlights as a link the displayed value for any <code>cftreeitem</code> tag that specifies an <code>href</code> attribute.
+</li>
+<li>
+   No: disables highlighting.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onValidate</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript function to validate user input. The JavaScript DOM form object, input object, and input object value are passed to the specified routine, which should return True if validation succeeds; False, otherwise. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>message</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Message to display if validation fails.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onError</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript function to execute if validation fails. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>lookAndFeel</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, object</p>
+    </td>
+    <td>
+<p>windows</p>
+    </td>
+    <td>
+<ul>
+<li>
+   motif: renders the slider in Motif style.
+</li>
+<li>
+   windows: renders the slider in Windows style.
+</li>
+<li>
+   metal: renders the slider in Java Swing style.
+</li>
+</ul>
+<p>If the platform does not support a style option, the tag defaults to platform default style. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>font</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Font name for text in the tree control. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>fontSize</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Font size for text in the tree control, in points.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>italic</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, Flash</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: displays tree control text in italics.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>bold</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, Flash</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: displays tree control text in bold.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>height</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, Flash</p>
+    </td>
+    <td>
+<p>320 (applet only)</p>
+    </td>
+    <td>
+<p>Tree control height, in pixels. If you omit this attribute in Flash format, Flash automatically sizes the tree.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>width</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, Flash</p>
+    </td>
+    <td>
+<p>200 (applet only)</p>
+    </td>
+    <td>
+<p>Tree control width, in pixels. If you omit this attribute in Flash format, Flash automatically sizes the tree.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>vSpace</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Vertical margin above and below tree control, in pixels.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>hSpace</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Horizontal spacing to left and right of tree control, in pixels.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>align</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, object</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<ul>
+<li>
+   top
+</li>
+<li>
+   left
+</li>
+<li>
+   bottom
+</li>
+<li>
+   baseline
+</li>
+<li>
+   texttop
+</li>
+<li>
+   absbottom
+</li>
+<li>
+   middle
+</li>
+<li>
+   absmiddle
+</li>
+<li>
+   right
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>border</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, object</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: displays a border around the tree control.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hScroll</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, object</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: permits horizontal scrolling. 
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>vScroll</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet, object</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: permits vertical scrolling.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>style</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Must be a style specification in CSS format, with the same syntax and contents as used in Macromedia Flex for the corresponding Flash element.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>enabled</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<p>Flash format only: Boolean value specifying whether the control is enabled. A disabled control appears in light gray.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>visible</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<p>Flash format only: Boolean value specifying whether to show the control. Space that would be occupied by an invisible control is blank.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>tooltip</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Flash format only: Text to display when the mouse pointer hovers over the control.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onChange</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>ActionScript to run when the control changes due to user action.</p>
+<p>If you specify an onChange event handler, the Form scope of the ColdFusion action page does not automatically get information about selected items. The ActionScript onChange event handler must handle all changes and selections.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>notSupported</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Applet</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Text to display if a page that contains a Java applet-based <code>cfform</code> control is opened by a browser that does not support Java or has Java support disabled. For example:</p>
+<p><code>&quot;&lt;b&gt; Browser must support Java to view ColdFusion Java Applets&lt;/b&gt;&quot;</code></p>
+<p>Default message:</p>
+<p>&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>All attributes are passed to the XML generated in XML format, but no ColdFusion MX skin interprets <code>cftree</code> XML.</p><h4><a name="wp1962592"></a>Usage</h4>
+<p>This tag must be in a <code>cfform</code> tag block. </p>
+<p>The applet format tree requires the client to download a Java applet. Also, if the client does not have an up-to-date Java plugin installed, the system might also have to download an updated Java plugin to display an applet format tree. The Flash format tree uses a Flash control, and can be embedded in an HTML format <code>cfform</code> tag. For this tag to work properly in either Flash or applet format, the browser must also be JavaScript-enabled.</p>
+<p><strong>Note: </strong>If you specify Flash format for this tag in an HTML format form, and you do not specify <code>height</code> and <code>width</code> attributes, Flash takes up more than the remaining visible area on the screen. If any other output follows the tree, including any form controls, users must scroll to see it. Therefore, if you follow a Flash tree in an HTML form with additional output, specify <code>height</code> and <code>width</code> values.</p><p>If the following conditions are true, a user's selection from query data that populates this tag's options continues to display after the user submits the form: </p>
+<ul>
+<li>
+   The <code>cfform</code> <code>preserveData</code> attribute is set to &quot;<code>Yes</code>&quot;
+</li>
+<li>
+   The <code>cfform</code> <code>action</code> attribute posts to the same page as the form itself (this is the default), or the action page has a form that contains controls with the same names as corresponding controls on the user entry form
+</li>
+</ul>
+<p>For more information, see the <a href="00000256.htm#2433198"><code>cfform</code></a> tag entry. </p>
+<h4><a name="wp2774614"></a>Form variables</h4>
+<p>When you select a tree item and submit the form that contains the tree, ColdFusion creates a structure with two variables in the action page Form scope. The structure name is the tree name. The fields are as follows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Value
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>The path through the tree to the selected node, in the form [<i>root</i>\]<i>node_1</i>\<i>node_2</i>\.... In applet format, the path includes the root node only if the <code>completePath</code> attribute is True. In Flash format, the path always includes the root node.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>node</p>
+    </td>
+    <td>
+<p>The value of the selected tree node.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2781321"></a>object format</h4>
+<p>If you specify <code>object</code> in the <code>format</code> attribute, ColdFusion returns the tree as a ColdFusion structure, and does not send the tree to the browser. You can, for example, loop over the structure to populate a menu, generate &quot;breadcrumb&quot; links for page navigation, or create a dhtml tree. </p>
+<p><strong>Note: </strong>If you specify an object format tree in an XML format form, ColdFusion does not generate the tree.</p><p>The structure variable name is specified by the <code>cftree</code> <code>name</code> attribute. The top level of the structure has two types of entries: </p>
+<ul>
+<li>
+   Attribute settings
+</li>
+<li>
+   A children array
+</li>
+</ul>
+<h4><a name="wp2808344"></a>Attribute settings</h4>
+<p>The structure has top-level entries with the values of the following <code>cftree</code> attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>align</p>
+    </td>
+    <td>
+<p>completePath</p>
+    </td>
+    <td>
+<p>highlightHref</p>
+    </td>
+    <td>
+<p>lookAndFeel</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>appendKey</p>
+    </td>
+    <td>
+<p>delimiter</p>
+    </td>
+    <td>
+<p>hScroll</p>
+    </td>
+    <td>
+<p>name</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>bold</p>
+    </td>
+    <td>
+<p>fontWeight</p>
+    </td>
+    <td>
+<p>italic</p>
+    </td>
+    <td>
+<p>vscroll</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>border</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2808343"></a>Children array</h4>
+<p>The top-level children entry is an array of items entries. Each item has the following entries:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Value
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>children</p>
+    </td>
+    <td>
+<p>This item's child items; an array of item structures.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>display</p>
+    </td>
+    <td>
+<p>Tree item label, as determined by the <code>cftreeitem</code> <code>display</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>expand</p>
+    </td>
+    <td>
+<p>Whether to expand the item to display any children; value of <code>cftreeitem</code> <code>expand</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>href</p>
+    </td>
+    <td>
+<p>The URL to link to when the user selects the item; value of the <code>cftreeitem</code> <code>href</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>img</p>
+    </td>
+    <td>
+<p>The tree image icon Image to display as an icon for the tree item; value of <code>cftreeitem</code> <code>img</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>imgOpen</p>
+    </td>
+    <td>
+<p>Image to display when the tree item is open (expanded); value of <code>cftreeitem</code> <code>imgopen</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>parent</p>
+    </td>
+    <td>
+<p>Value of this item's parent item in the tree.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>path</p>
+    </td>
+    <td>
+<p>The node path from the tree root to the current element.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>queryAsRoot</p>
+    </td>
+    <td>
+<p>Whether the query is the root of the item; value of <code>cftreeitem</code> <code>queryAsRoot</code> attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>target</p>
+    </td>
+    <td>
+<p>The link target, such as _blank; value of the item's <code>cftreeitem</code> <code>target</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>The item's value, as determined by the <code>cftreeitem</code> <code>value</code> attribute.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1796071"></a>Example</h4>
+<p>The following example creates a tree that shows available courses from the CourseList table of the cfdocexamples database, and puts each department's courses in a folder. This example is displayed in Flash and uses the Departments list to get department names.</p>
+<pre>&lt;cfquery name=&quot;getCourses&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   select d.dept_name, c.course_id, c.CorName, c.CorLevel, c.corName +&#39; ( &#39; +c.corLevel +&#39; )&#39; as corLabel
+   from CourseList c, Departments d
+   where d.Dept_ID = c.Dept_ID
+   order by d.dept_Name, c.corName, c.corLevel
+&lt;/cfquery&gt;
+
+&lt;cfform name=&quot;studentForm&quot; format=&quot;flash&quot; width=&quot;400&quot; height=&quot;450&quot;&gt;
+   &lt;cftree name=&quot;courseTree&quot;  width=&quot;350&quot; height=&quot;400&quot;&gt;
+      &lt;cftreeitem 
+         query=&quot;getCourses&quot; 
+         value=&quot;dept_name,Course_id&quot; 
+         display=&quot;dept_name,CorLabel&quot; queryasroot=&quot;NO&quot; expand=&quot;yes,no&quot;&gt;
+   &lt;/cftree&gt;
+&lt;/cfform&gt;
+</pre><p>The following example creates a tree that shows the basic information about all employees in an organization, organized by department. The departments are expanded to show all employees. You can click the + signs to display additional information. If you click the employee name, ColdFusion links back to the same page and displays the Path and node values for the selection.</p>
+<pre>&lt;!--- Query the datasource to get employee information. ---&gt;
+&lt;!--- Group the output by Department. 
+   (All fields are required in Group By clause.) ---&gt;
+&lt;cfquery name = &quot;GetEmployees&quot; dataSource = &quot;cfdocexamples&quot;&gt;
+   SELECT Emp_ID, FirstName, LastName, EMail, Phone, Department
+   FROM Employees 
+   GROUP BY Department, Emp_ID, FirstName, LastName, EMail, Phone
+&lt;/cfquery&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h3&gt;cftree Example&lt;/h3&gt;
+
+&lt;!--- The following runs if the user clicked on a link in the tree. 
+   A complete application would use the ID for additional processing. ---&gt;
+
+&lt;cfif isdefined(&quot;Form.fieldnames&quot;)&gt;
+&lt;b&gt;Selected item information&lt;/b&gt;&lt;br&gt;
+&lt;cfoutput&gt;
+&lt;b&gt;Path: &lt;/b&gt;#form.Employees.Path#&lt;br&gt;
+&lt;b&gt;node: &lt;/b&gt;#form.Employees.node#&lt;br&gt;
+&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;!--- Display the tree. The cftree tag must be in a cfform. ---&gt;
+&lt;cfform action=&quot;#cgi.script_name#&quot; preservedata=&quot;Yes&quot; format=&quot;Flash&quot;&gt;
+   &lt;cftree name = &quot;Employees&quot; height = &quot;400&quot; width = &quot;400&quot; 
+      font = &quot;Arial Narrow&quot; italic=&quot;yes&quot; highlighthref=&quot;No&quot; HScroll=&quot;no&quot; VScroll=&quot;no&quot;
+      completepath=&quot;no&quot; lookandfeel=&quot;windows&quot; border=&quot;No&quot; required=&quot;yes&quot;&gt; 
+      &lt;!--- cfoutput tag with a group attribute loops over the departments. ---&gt;
+      &lt;cfoutput group=&quot;Department&quot; query = &quot;GetEmployees&quot;&gt;
+         &lt;cftreeitem value=&quot;#Department#&quot; parent=&quot;Employees&quot; expand=&quot;yes&quot;&gt;
+         &lt;!--- This cfoutput tag loops over the records for the department.
+               The cfoutput tag does not need any attributes. ---&gt;
+         &lt;cfoutput&gt;
+            &lt;!--- Create an item for each employee in the department.
+               Do not expand children. Each employee name links to this page,
+               and sends the employee ID in the query string.---&gt;
+            &lt;cftreeitem value = &quot;#LastName#, #FirstName#&quot;
+               parent = &quot;#Department#&quot; expand=&quot;false&quot; img=&quot;cd&quot;
+               href=&quot;#cgi.script_name#?user_id=#emp_id#&quot;&gt;
+            &lt;!--- Each Employee entry has Id, and contact info children. ---&gt;
+            &lt;cftreeitem value = &quot;#Emp_ID#&quot; display = &quot;Employee ID: #Emp_ID#&quot; 
+               parent = &quot;#LastName#, #FirstName#&quot; img=&quot;remote&quot;&gt;
+            &lt;!--- Each node must be unique value, so use Emp_ID om value. ---&gt;
+            &lt;cftreeitem value = &quot;#Emp_ID#_ContactInfo&quot; img=&quot;computer&quot;
+               display = &quot;Contact Information&quot; 
+               parent = &quot;#LastName#, #FirstName#&quot; expand = &quot;false&quot;&gt;
+            &lt;!--- ContacInfo has two children ---&gt;
+            &lt;cftreeitem value = &quot;#Phone#&quot; parent = &quot;#Emp_ID#_ContactInfo&quot;&gt;
+            &lt;cftreeitem value = &quot;#Email#&quot; parent = &quot;#Emp_ID#_ContactInfo&quot;&gt;
+         &lt;/cfoutput&gt;
+      &lt;/cfoutput&gt;
+   &lt;/cftree&gt;
+   &lt;cfinput type=&quot;Submit&quot; name=&quot;submitit&quot; value=&quot;Submit&quot; width=&quot;100&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000346.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000348.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000347.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

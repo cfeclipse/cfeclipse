@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>stop</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000714.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000716.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>stop</h1>
+<h4><a name="wp1173216"></a>Description</h4>
+<p>Stops a gateway if it is running.</p>
+<h4><a name="wp1173218"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1173220"></a>Syntax</h4>
+<pre>public void stop()
+</pre><h4><a name="wp1173222"></a>See also</h4>
+<p><a href="00000711.htm#1173100"><code>restart</code></a>, <a href="00000714.htm#1173355"><code>start</code></a>, <a href="00001694.htm#119353">The stop method</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1173230"></a>Usage</h4>
+<p>Stops a gateway by performing any required clean-up operations. This method stops any listener thread or threads that monitor the gateway's event source and releases any other resources. The ColdFusion MX Administrator calls this function when it stops a gateway instance.</p>
+<p>This method should update the status information that is returned by the <code>getStatus</code> method to indicate when the gateway is stopping and when the gateway is stopped.</p>
+<h4><a name="wp1173232"></a>Example</h4>
+<p>The following example is the ColdFusion MX SocketGateway class <code>stop</code> method: </p>
+<pre>public void stop()
+   {
+      status = STOPPING;
+      listening=false;
+      Enumeration e = socketRegistry.elements();
+      while (e.hasMoreElements()) {
+         try 
+         {
+            ((SocketServerThread)e.nextElement()).socket.close();
+         }
+         catch (IOException e1) {
+            e1.printStackTrace();
+         }
+      }
+      if (serverSocket != null) {
+         try
+         {
+            serverSocket.close();
+         }
+         catch (IOException e1) {
+         }
+         serverSocket = null;
+      }
+      status = STOPPED;
+   }
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000714.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000716.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000715.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

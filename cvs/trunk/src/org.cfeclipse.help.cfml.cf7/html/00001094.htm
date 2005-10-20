@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Processing requests</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001093.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001095.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Processing requests</h1>
+<p>Implementing a Java CFX tag requires interaction with the <code>Request</code> and <code>Response</code> objects passed to the <a href="00000818.htm#1117853"><code>processRequest</code></a> method. In addition, CFX tags that need to work with ColdFusion queries also interface with the <code>Query</code> object. The <code>com.allaire.cfx</code> package, located in the WEB-INF/lib/cfx.jar archive, contains the <code>Request</code>, <code>Response</code>, and <code>Query</code> objects.</p>
+<p>This section provides an overview of these object types. For a complete description of these object types, see <a href="00000815.htm#1116669">ColdFusion Java CFX Reference</a> in <i>CFML Reference</i>. </p>
+<p>For a complete example Java CFX tag that uses <code>Request</code>, <code>Response</code>, and <code>Query</code> objects, see <a href="00001096.htm#1096473">ZipBrowser example</a>.</p>
+<h3><a name="wp1096304"></a>Request object</h3>
+<p>The <code>Request</code> object is passed to the <a href="00000818.htm#1117853"><code>processRequest</code></a> method of the <code>CustomTag</code> interface. The following table lists the methods of the <code>Request</code> object for retrieving attributes, including queries, passed to the tag and for reading global tag settings:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Method
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000828.htm#1097157"><code>attributeExists</code></a></p>
+    </td>
+    <td>
+<p>Checks whether the attribute was passed to this tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000829.htm#1115458"><code>debug</code></a></p>
+    </td>
+    <td>
+<p>Checks whether the tag contains the <code>debug</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000830.htm#1097174"><code>getAttribute</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the value of the passed attribute.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000831.htm#1115865"><code>getAttributeList</code></a></p>
+    </td>
+    <td>
+<p>Retrieves a list of all attributes passed to the tag.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000832.htm#1161248"><code>getIntAttribute</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the value of the passed attribute as an integer.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000833.htm#1097219"><code>getQuery</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the query that was passed to this tag, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000834.htm#1097234"><code>getSetting</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the value of a global custom tag setting.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For detailed reference information on each of these interfaces, see <i>CFML Reference</i>.</p>
+<h3><a name="wp1096343"></a>Response object</h3>
+<p>The Response object is passed to the <a href="00000818.htm#1117853"><code>processRequest</code></a> method of the CustomTag interface. The following table lists the methods of the Response object for writing output, generating queries, and setting variables within the calling page: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Method
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000838.htm#1097297"><code>write</code></a></p>
+    </td>
+    <td>
+<p>Outputs text to the calling page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000837.htm#1116231"><code>setVariable</code></a></p>
+    </td>
+    <td>
+<p>Sets a variable in the calling page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000836.htm#1116056"><code>addQuery</code></a></p>
+    </td>
+    <td>
+<p>Adds a query to the calling page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000839.htm#1167901"><code>writeDebug</code></a></p>
+    </td>
+    <td>
+<p>Outputs text to the debug stream.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For detailed reference information on each of these interfaces, see <i>CFML Reference</i>.</p>
+<h3><a name="wp1131634"></a>Query object</h3>
+<p>The Query object provides an interface for working with ColdFusion queries. The following table lists the methods of the Query object for retrieving name, row count, and column names and methods for getting and setting data elements:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Method
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000824.htm#1096967"><code>getName</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the name of the query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000825.htm#1096975"><code>getRowCount</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the number of rows in the query.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000821.htm#1113530"><code>getColumnIndex</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the index of a query column.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000822.htm#1114329"><code>getColumns</code></a></p>
+    </td>
+    <td>
+<p>Retrieves the names of the query columns.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000823.htm#1115058"><code>getData</code></a></p>
+    </td>
+    <td>
+<p>Retrieves a data element from the query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000820.htm#1112694"><code>addRow</code></a></p>
+    </td>
+    <td>
+<p>Adds a new row to the query.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000826.htm#1097068"><code>setData</code></a></p>
+    </td>
+    <td>
+<p>Sets a data element within the query.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For detailed reference information on each of these interfaces, see <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001093.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001095.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001094.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>getBuddyInfo</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000756.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000758.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>getBuddyInfo</h1>
+<h4><a name="wp1169761"></a>Description</h4>
+<p>Gets information about the specified user from the buddy list, deny list, and permit list.</p>
+<h4><a name="wp1169763"></a>Syntax</h4>
+<pre><i>array</i> = getBuddyInfo(<i>name</i>)
+</pre><h4><a name="wp1169765"></a>See also</h4>
+<p><a href="00000754.htm#1169604">addBuddy</a>, <a href="00000758.htm#1169866">getBuddyList</a>, <a href="00000771.htm#1170417">removeBuddy</a>, <a href="00001660.htm#131590">Using the GatewayHelper object</a> in <a href="00001651.htm#109411">Using the Instant Messaging Event Gateways</a> of <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1169776"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>The unique instant messaging user name for the person about whom you want to get information.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1169787"></a>Returns</h4>
+<p>An array of structures, with one structure for each information record found. The method finds one record for each group that the user belongs to in each of the lists (buddy, permit, deny) that contains the specified name. Each structure has the following fields. Some fields might not be meaningful for some IM protocols. If there is no information for a field, it is blank.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>BUDDYNAME</p>
+    </td>
+    <td>
+<p>The user's unique ID.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BUDDYGROUP</p>
+    </td>
+    <td>
+<p>The group to which the user belongs.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BUDDYNICKNAME</p>
+    </td>
+    <td>
+<p>The nickname that you have assigned to the user.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BUDDYPROTOCOL</p>
+    </td>
+    <td>
+<p>The instant messaging protocol. JABBER (for XMPP) or SAMETIME, or an empty string (if the server did not return a value).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BUDDYSTATUS</p>
+    </td>
+    <td>
+<p>The user's presence state, can by any of the following:</p>
+<ul>
+<li>
+   ONLINE
+</li>
+<li>
+   OFFLINE
+</li>
+<li>
+   AWAY
+</li>
+<li>
+   DND (displays as DO NOT DISTURB)
+</li>
+</ul>
+<p><strong>XMPP only</strong></p>
+<ul>
+<li>
+   NA (displays as NOT AVAILABLE)
+</li>
+<li>
+   FREE_TO_CHAT (displays as FREE TO CHAT)
+</li>
+</ul>
+<p><strong>Sametime only</strong></p>
+<ul>
+<li>
+   IDLE
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BUDDYSIGNONTIME</p>
+    </td>
+    <td>
+<p>The date and time when the user signed onto the IM server. Empty if the user is not currently signed on. Always an empty string for XMPP and Sametime.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BUDDYSTATUSTIME</p>
+    </td>
+    <td>
+<p>The date and time when the user's status most recently changed.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BUDDYCUSTOM<br />AWAYMESSAGE</p>
+    </td>
+    <td>
+<p>The custom away message that the user has set to explain the current status, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BUDDYOWNER</p>
+    </td>
+    <td>
+<p>A string representing the client and protocol associated with this ID, in the format <i>client</i>@<i>protocol</i>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BUDDYLISTTIYPE</p>
+    </td>
+    <td>
+<p>The type of list that this buddy record is in; one of the following:</p>
+<ul>
+<li>
+   BUDDY_LIST&#160;The list of users whose presence status information the gateway can receive.
+</li>
+<li>
+   DENY_LIST&#160;The list of users who cannot get presence information about the gateway ID. 
+</li>
+<li>
+   PERMIT_LIST&#160;The list of users who can send presence information messages to the gateway ID.
+</li>
+<li>
+   REVERSE_LIST&#160;The list of users who do not allow messages to us.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BUDDYIDLETIME</p>
+    </td>
+    <td>
+<p>If the buddy status is IDLE, how long the buddy has been idle. Always 0 for XMPP or SameTime.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>BUDDYISMOBILE</p>
+    </td>
+    <td>
+<p>True or False, indicating whether the user is on a mobile device. Always False for XMPP or SameTime.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BUDDYWARNING<br />PERCENT</p>
+    </td>
+    <td>
+<p>The user's warning percentage value. Always 0 for XMPP or SameTime.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1169860"></a>Example</h4>
+<p>See <a href="00001665.htm#148029">GatewayHelper example</a>, in <a href="00001651.htm#109411">Using the Instant Messaging Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i>, which uses all GatewayHelper class methods. For an example of using this method to get the buddy custom away message, see <a href="00000749.htm#1169283">onBuddyStatus</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000756.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000758.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000757.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

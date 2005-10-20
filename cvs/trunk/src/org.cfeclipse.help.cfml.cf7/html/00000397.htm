@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ArrayToList</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000396.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000398.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ArrayToList</h1>
+<h4><a name="wp1224347"></a>Description</h4>
+<p>Converts a one-dimensional array to a list.</p>
+<h4><a name="wp3465410"></a>Returns</h4>
+<p>Delimited list, as a string. </p>
+<h4><a name="wp2613154"></a>Category</h4>
+<p><a href="00000355.htm#3473387">Array functions</a>, <a href="00000356.htm#1098761">Conversion functions</a>, <a href="00000364.htm#1099435">List functions</a></p>
+<h4><a name="wp2123527"></a>Function syntax</h4>
+<pre><code><strong>ArrayToList</strong></code>(<i>array</i> [, <i>delimiter</i> ])
+</pre><h4><a name="wp1256335"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>array</p>
+    </td>
+    <td>
+<p>Name of array </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>delimiter</p>
+    </td>
+    <td>
+<p>Character or multicharacter string to separate list elements. The default value is comma.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1101008"></a>Example</h4>
+<pre>&lt;h3&gt;ArrayToList Example&lt;/h3&gt;
+
+&lt;cfquery name = &quot;GetEmployeeNames&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT FirstName, LastName FROM Employees
+&lt;/cfquery&gt;
+
+&lt;!--- create an array ---&gt;
+&lt;cfset myArray = ArrayNew(1)&gt;
+
+&lt;!--- loop through query, append names successively to last element ---&gt;
+&lt;cfloop query = &quot;GetEmployeeNames&quot;&gt;
+   &lt;cfset temp = ArrayAppend(myArray, &quot;#FirstName# #LastName#&quot;)&gt;
+&lt;/cfloop&gt;
+
+&lt;!--- show the resulting array as a list ---&gt;
+&lt;cfset myList = ArrayToList(myArray, &quot;,&quot;)&gt;
+
+&lt;!--- sort that array descending alphabetically ---&gt;
+&lt;cfset myAlphaArray = ArraySort(myArray, &quot;textnocase&quot;, &quot;desc&quot;)&gt;
+
+&lt;!--- show the resulting alphabetized array as a list ---&gt;
+&lt;cfset myAlphaList = ArrayToList(myArray, &quot;,&quot;)&gt;
+
+&lt;!--- output the array as a list ---&gt;
+&lt;cfoutput&gt;
+   &lt;p&gt;The contents of the array are as follows:
+   &lt;p&gt;#myList#
+   &lt;p&gt;This array, alphabetized by first name (descending):
+   &lt;p&gt;#myAlphaList#
+   &lt;p&gt;This array has #ArrayLen(MyArray)# elements.
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000396.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000398.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000397.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

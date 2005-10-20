@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfcomponent</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000230.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000232.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfcomponent</h1>
+<h4><a name="wp3350777"></a>Description</h4>
+<p>Creates and defines a component object; encloses functionality that you build in CFML and enclose within <a href="00000263.htm#2852457"><code>cffunction</code></a> tags. This tag contains one or more <a href="00000263.htm#2852457"><code>cffunction</code></a> tags that define methods. Code within the body of this tag, other than <code>cffunction</code> tags, is executed when the component is instantiated.</p>
+<p>A component file has the extension CFC and is stored in any directory of an application.</p>
+<p>A component method is invoked in the following ways:</p>
+<ul>
+<li>
+   Within the <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag in a ColdFusion page
+</li>
+<li>
+   Within a URL that calls a CFC file and passes a method name as a URL parameter
+</li>
+<li>
+   Within the <a href="00000329.htm#1103056"><code>cfscript</code></a> tag
+</li>
+<li>
+   As a web service
+</li>
+<li>
+   From Flash code 
+</li>
+</ul>
+<h4><a name="wp3350798"></a>Category</h4>
+<p><a href="00000202.htm#2459750">Extensibility tags</a></p>
+<h4><a name="wp3350803"></a>Syntax</h4>
+<pre>&lt;cfcomponent<br />   extends =&quot;anotherComponent&quot;<br />   output = &quot;yes&quot; or &quot;no&quot;<br />   style = &quot;rpc&quot; or &quot;document&quot;<br />   namespace = &quot;default service namespace&quot;<br />   serviceportname = &quot;port element name&quot;<br />   porttypename = &quot;porttype element name&quot;<br />   bindingname = &quot;binding element name&quot;<br />   wsdlfile = &quot;path to hard-coded wsdl file&quot;<br />   displayname = &quot;text string&quot;&gt;<br />   hint = &quot;text string&quot;&gt;
+   <i>variable declarations<br /></i>   &lt;cffunction ...&gt;<br />      ...<br />   &lt;/cffunction&gt; <br /><br />   &lt;cffunction ...&gt;<br />      ...<br />   &lt;/cffunction&gt; <br />&lt;/cfcomponent&gt;
+</pre><h4><a name="wp3350805"></a>See also</h4>
+<p><a href="00000218.htm#2855190"><code>cfargument</code></a><code>, </code><a href="00000263.htm#2852457"><code>cffunction</code></a><code>, </code><a href="00000281.htm#2650065"><code>cfinvoke</code></a><code>, </code><a href="00000282.htm#3014048"><code>cfinvokeargument</code></a><code>, </code><a href="00000302.htm#2820239"><code>cfobject</code></a><code>, </code><a href="00000315.htm#2498235"><code>cfproperty</code></a><code>, </code><a href="00000326.htm#2498057"><code>cfreturn</code></a><code>, </code><a href="00001022.htm#1170255">Building and Using ColdFusion Components</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp3844764"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7:</p>
+<ul>
+<li>
+   Added support for publishing document-literal style web services.
+</li>
+<li>
+   Added the <code>style</code>, <code>namespace</code>, <code>serviceportname</code>, <code>porttypename</code>, <code>wsdlfile</code>, and <code>bindingname</code> attributes.
+</li>
+<li>
+   Extended functionality for the <code>hint</code> and <code>displayname</code> attributes when publishing document-literal style web services.
+</li>
+</ul>
+<p>ColdFusion&#160;MX: Added this tag.</p>
+<h4><a name="wp3350828"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>extends</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of parent component from which to inherit methods and properties. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>output</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Component body displayable text is processed as standard CFML</p>
+    </td>
+    <td>
+<p>Specifies whether constructor code in the component can generate HTML output; does not affect output in the body of <code>cffunction</code> tags in the component<code>.</code></p>
+<ul>
+<li>
+   yes: Constructor code is processed as if it were within a <code>cfoutput</code> tag. Variable names surrounded by number signs (#) are automatically replaced with their values.
+</li>
+<li>
+   no: Constructor code is processed as if it were within a <code>cfsilent</code> tag.
+</li>
+<li>
+   If you do not specify this attribute, constructor code is processed as standard CFML. Any variables must be in <code>cfoutput</code> tags.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>style</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>rpc</p>
+    </td>
+    <td>
+<p>Specifies whether a CFC used for web services uses RPC-encoded style or document-literal style:</p>
+<ul>
+<li>
+   rpc: RPC-encoded style
+</li>
+<li>
+   document: document-literal style
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>namespace</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>classname</p>
+    </td>
+    <td>
+<p>Specifies the namespace used in the WSDL when using the CFC as a document-literal style web service. If you don't specify this attribute, ColdFusion&#160;MX derives the value from the CFC class name.</p>
+<p>&#160;</p>
+<p>This attribute applies only when <code>style=&quot;document&quot;</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>serviceportname</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Specifies the <code>name</code> attribute of the <code>port</code> element in the WSDL. If you don't specify this attribute, ColdFusion&#160;MX derives the value from the CFC class name.</p>
+<p>&#160;</p>
+<p>This attribute applies only when <code>style=&quot;document&quot;</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>porttypename</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Specifies the <code>name</code> attribute of the <code>porttype</code> element in the WSDL. If you don't specify this attribute, ColdFusion&#160;MX derives the value from the CFC class name.</p>
+<p>&#160;</p>
+<p>This attribute applies only when <code>style=&quot;document&quot;</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>bindingname</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Specifies the <code>binding</code> attribute of the <code>port</code> element in the WSDL. If you don't specify this attribute, ColdFusion&#160;MX derives the value from the CFC class name.</p>
+<p>&#160;</p>
+<p>This attribute applies only when <code>style=&quot;document&quot;</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>wsdlfile</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A properly formatted WSDL file to be used instead of WSDL generated by ColdFusion&#160;MX.</p>
+<p>&#160;</p>
+<p>This attribute applies only when <code>style=&quot;document&quot;</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>displayname</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p><code>&#160;</code></p>
+    </td>
+    <td>
+<p>A string to be displayed when using introspection to show information about the CFC. The information appears on the heading, following the component name.</p>
+<p>&#160;</p>
+<p>If the <code>style</code> attribute is set to document, ColdFusion&#160;MX uses the <code>displayname</code> attribute as the <code>name</code> attribute of the <code>service</code> element in the WSDL. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hint</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Text to be displayed when using introspection to show information about the CFC. The <code>hint</code> attribute value appears below the component name heading. This attribute can be useful for describing the purpose of the parameter.</p>
+<p>&#160;</p>
+<p>If the <code>style</code> attribute is set to document, ColdFusion&#160;MX uses the <code>hint</code> attribute as the content of the <code>documentation</code> element of the service in the WSDL.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3350857"></a>Usage</h4>
+<p>If you specify the <code>extends</code> attribute, the data and methods of the parent component are available to CFC methods as if they were parts of the current component. If the managerCFC component extends the employeeCFC component, and the employeeCFC component has a getEmployeeName method, you can call this method using the managerCFC, as follows:</p>
+<pre>&lt;cfinvoke component=&quot;managerCFC&quot; method=&quot;getEmployeeName&quot; returnVariable=&quot;managerName&quot; EmployeeID=#EmpID#&gt;
+</pre><p>This tag requires an end tag.</p>
+<p>If you specify <code>style=&quot;document&quot;</code>, ColdFusion&#160;MX publishes the CFC as a document-literal style web service. For more information, see <a href="00001550.htm#1222045">Publishing document-literal style web services</a> in <a href="00001530.htm#1141005">Using Web Services</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp3350863"></a>Example</h4>
+<pre>&lt;cfcomponent&gt;
+   &lt;cffunction name=&quot;getEmp&quot;&gt;
+       &lt;cfquery name=&quot;empQuery&quot; datasource=&quot;cfdocexamples&quot; &gt;
+          SELECT FIRSTNAME, LASTNAME, EMAIL
+          FROM tblEmployees
+       &lt;/cfquery&gt;
+       &lt;cfreturn empQuery&gt;
+   &lt;/cffunction&gt;
+
+   &lt;cffunction name=&quot;getDept&quot;&gt;
+      &lt;cfquery name=&quot;deptQuery&quot; datasource=&quot;cfdocexamples&quot; &gt;
+          SELECT *
+          FROM tblDepartments
+       &lt;/cfquery&gt;
+       &lt;cfreturn deptQuery&gt;
+   &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000230.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000232.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000231.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

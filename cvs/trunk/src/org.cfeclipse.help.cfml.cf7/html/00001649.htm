@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example event gateways</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001648.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001650.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example event gateways</h1>
+<p>The gateway\src\examples directory and its subdirectories include the sources for the example event gateways. Compiled versions are located in the gateway\lib\examples.jar file. The following sections briefly describe the event gateways and their functions. For more detailed information, see the code and comments in the files.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001649.htm#135751">EmptyGateway</a>
+</li>
+<li>
+   <a href="00001649.htm#135823">SocketGateway</a>
+</li>
+<li>
+   <a href="00001649.htm#135887">DirectoryWatcherGateway</a>
+</li>
+<li>
+   <a href="00001649.htm#139329">JMSGateway</a>
+</li>
+</ul>
+<h3><a name="wp135751"></a>EmptyGateway</h3>
+<p>The EmptyGateway.java file contains an event gateway template that you can use as a skeleton for creating your own event gateway. For more information on this class, and on creating new event gateways, see <a href="00001684.htm#146437">Creating Custom Event Gateways</a>.</p>
+<h3><a name="wp135823"></a>SocketGateway</h3>
+<p>The SocketGateway event gateway listens on a TCP/IP port. Therefore, you can use this gateway for applications that send and respond to messages using TCP/IP-based protocols such as Telnet, or for applications that send messages between sockets. For example, a simple gateway application that might respond to messages from a Telnet terminal client without supporting the full Telnet protocol.</p>
+<p><strong>Note: </strong>The ColdFusion&#160;MX Administrator uses Socket as the gateway type name for the SocketGateway class.</p><p>The SocketGateway.java file defines two classes: SocketGateway, the event gateway, and SocketHelper, a GatewayHelper class. The Source file is located in the gateway\src\examples\socket directory.</p>
+<p><strong>SocketGateway</strong>&#160;Listens on a TCP/IP port. This event gateway is multithreaded and can handle multiple clients simultaneously. It can send outgoing messages to existing clients, but cannot establish a link itself.</p>
+<p>By default, the SocketGateway class listens on port 4445, but you can specify the port number in a configuration file. The file should contain a single line in the following format:</p>
+<pre>port=<i>portNumber</i>
+</pre><p><strong>SocketHelper</strong>&#160;A GatewayHelper class with the following methods: </p>
+<ul>
+<li>
+   <code>getSocketIDs()</code>&#160;returns an array containing the socket IDs of all Java sockets that are open. The event gateway opens a socket for each remote client.
+</li>
+<li>
+   <code>killSocket(String </code><i>socketid</i><code>)</code>&#160;Removes the specified socket. Returns a Boolean success indicator.
+</li>
+</ul>
+<h3><a name="wp135887"></a>DirectoryWatcherGateway</h3>
+<p>The DirectoryWatcherGateway event gateway sends events to the listener CFC when a file is created, deleted, or modified in a directory. The watcher runs in a thread that sleeps for an interval specified in the configuration file, and when the interval has passed, checks for changes since the last time it was awake. If it finds added, deleted, or changed files, it sends a message to a listener CFC. You can configure separate CFCs for add, delete, and change events, or use a single CFC for all events. The source for this event gateway is located in the gateway/src/examples/watcher directory.</p>
+<p><strong>Note: </strong>The ColdFusion&#160;MX Administrator uses DirectoryWatcher as the gateway type name for the DirectoryWatcherGateway class.</p><h4><a name="wp135907"></a>Configuration file</h4>
+<p>This event gateway requires a configuration file, consisting of lines in the following format:</p>
+<pre>directory=C:/temp
+</pre><p><strong>Note: </strong>If you use backward slash characters (\) as directory separators in Windows the file paths, you must escape them by using double slashes, as in C:\\temp. You can use forward slashes (/) as the directory separator on all operating systems, including Windows.</p><p>The configuration file can have comment lines, preceded by a number sign (#). If you omit a property or comment it out, ColdFusion uses the default value. If you specify a property with no value, ColdFusion sets an empty property. The configuration file can define the following values:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Property
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>directory</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>Path to the directory to watch.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>recurse</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Whether to check subdirectories. The default value is <code>No</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>extensions</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Comma-delimited list of extensions to watch. The event gateway logs only changed files with these extensions. An asterisk (*) indicates all files. The default is all files.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>interval</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Number of milliseconds between the times that the event gateway checks the directory. The default value is 60 seconds.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>addFunction </p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Name of the function to call when a file is added. The default value is <code>onAdd</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>changeFunction</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Name of the function to call when a file is changed. The default value is <code>onChange</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>deleteFunction</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Name of the function to call when a file is deleted. The default value is <code>onDelete</code>.</p>
+    </td>
+  </tr>
+</table>
+
+<p>An example configuration file is located in the gateway\config\directory-watcher.cfg file.</p>
+<h4><a name="wp135916"></a>CFC methods</h4>
+<p>When the directory contents change, the event gateway calls one of the following CFC listener methods, unless you change the names in the configuration file:</p>
+<ul>
+<li>
+   <code>onAdd</code> 
+</li>
+<li>
+   <code>onChange</code> 
+</li>
+<li>
+   <code>onDelete</code> 
+</li>
+</ul>
+<p>The CFEvent.Data field sent to the listener methods includes the following fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>TYPE</p>
+    </td>
+    <td>
+<p>Event type, one of ADD, CHANGE, DELETE.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>FILENAME</p>
+    </td>
+    <td>
+<p>Name of the file that was added, deleted, or changed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>LASTMODIFIED</p>
+    </td>
+    <td>
+<p>The date and time that the file was created or modified. This field is not included if the file was deleted.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The event gateway supports multiple listener CFCs and sends the event messages to all listeners. The event gateway is one-way; it watches for events and dispatches event information to a CFC, but it does not accept return values from the CFC or input from <code>SendGatewayMessage</code> functions.</p>
+<p>The directory watcher logs errors to the watcher.log file in the ColdFusion logs directory.</p>
+<h4><a name="wp136358"></a>Example DirectoryWatcher application</h4>
+<p>The following code shows a simple directory watcher application. It enters a line in a log file each time a file is added, deleted, or changed in the directory specified in the configuration file. ColdFusion MX includes the date and time that a log entry is made. However, if the directory watcher monitors changes infrequently, for example once every minute or more, the time in the log entry might differ from the time a file was added or changed, so the information includes the time (but not date) for these actions.</p>
+<pre>&lt;cfcomponent&gt;
+&lt;cffunction name=&quot;onAdd&quot; output=&quot;no&quot;&gt;
+   &lt;cfargument name=&quot;CFEvent&quot; type=&quot;struct&quot; required=&quot;yes&quot;&gt;
+   &lt;cfset data=CFEvent.data&gt;
+   &lt;cflog file=&quot;MydirWatcher&quot; application=&quot;No&quot; 
+      text=&quot;ACTION: #data.type#;  FILE: #data.filename#;
+      TIME: #timeFormat(data.lastmodified)#&quot;&gt;
+&lt;/cffunction&gt;
+
+&lt;cffunction name=&quot;onDelete&quot; output=&quot;no&quot;&gt;
+  &lt;cfargument name=&quot;CFEvent&quot; type=&quot;struct&quot; required=&quot;yes&quot;&gt;
+  &lt;cfset data=CFEvent.data&gt;
+  &lt;cflog file=&quot;MydirWatcher&quot; application=&quot;No&quot; 
+     text=&quot; ACTION: #data.type#;  FILE: #data.filename#&quot;&gt;
+&lt;/cffunction&gt;
+
+&lt;cffunction name=&quot;onChange&quot; output=&quot;no&quot;&gt;
+  &lt;cfargument name=&quot;CFEvent&quot; type=&quot;struct&quot; required=&quot;yes&quot;&gt;
+  &lt;cfset data=CFEvent.data&gt;
+  &lt;cflog file=&quot;MydirWatcher&quot; application=&quot;No&quot; 
+      text=&quot; ACTION: #data.type#;  FILE: #data.filename#;
+      TIME: #timeFormat(data.lastmodified)#&quot;&gt;
+&lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre><h3><a name="wp139329"></a>JMSGateway</h3>
+<p>The JMSGateway class acts as a Java Messaging Service consumer or producer. The source for this event gateway is located in gateway/src/examples/JMS. The gateway requires a configuration file, which is in gateway/config/jmsgateway.cfg. For full documentation of the configuration options, See the configuration file. The ColdFusion MX Administrator lists the compiled gateway (which is included in the gateway\lib\examples.jar file) on the Gateway Types page.</p>
+<p><strong>Note: </strong>The ColdFusion&#160;MX Administrator uses JMS as the gateway type name for the JMSGateway class.</p><h4><a name="wp149607"></a>Using the JMS Gateway as a consumer</h4>
+<p>The JMSGateway class creates a subscriber to the topic specified in the configuration file. The gateway consumes the following types of messages:</p>
+<ul>
+<li>
+   TextMessage
+</li>
+<li>
+   BytesMessage containing raw UTF-8 text
+</li>
+</ul>
+<p>The gateway passes the contents of the message to the configured CFC in the event structure, as follows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Contents
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>data.id </p>
+    </td>
+    <td>
+<p>Message correlation ID</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>data.msg </p>
+    </td>
+    <td>
+<p>Text of the message</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>gatewayType </p>
+    </td>
+    <td>
+<p>Gateway type: JMS</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>originatorID </p>
+    </td>
+    <td>
+<p> Topic name from which the message was consumed</p>
+    </td>
+  </tr>
+</table>
+
+<p>The listener CFC method must be named <code>onIncomingMessage</code>. If the CFC method does not send a message in response, it should return a structure containing a status field with a value of OK or EXCEPTION. (In this case, The gateway checks the return status field, but does not process these return values further.) To send a message, the CFC method must return a structure as documented in the following section.</p>
+<h4><a name="wp139364"></a>Using the JMS Gateway as a producer</h4>
+<p>To send a JMS message, the return value of your CFC method or the second, <i>messageStruct</i>, parameter to the <code>SendGatewayMessage</code> function must be a structure with the following fields:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Contents
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>status </p>
+    </td>
+    <td>
+<p>Must be SEND.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>topic </p>
+    </td>
+    <td>
+<p>Name of the topic to publish the message to.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>id </p>
+    </td>
+    <td>
+<p>(Optional) The JMS correlation ID to associate with the message. The default is null.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>message </p>
+    </td>
+    <td>
+<p>Text of the message to publish.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>asBytes</p>
+    </td>
+    <td>
+<p>(Optional) How to publish the message:</p>
+<ul>
+<li>
+   If omitted, no, or false, send the message as text.
+</li>
+<li>
+   If any other value, send the message as byte-encoded UTF-8. 
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<p>If you send the message in a <code>SendGatewayMessage</code> function, the function returns OK if the gateway sends the message, or EXCEPTION if it fails to send the message.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001648.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001650.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001649.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

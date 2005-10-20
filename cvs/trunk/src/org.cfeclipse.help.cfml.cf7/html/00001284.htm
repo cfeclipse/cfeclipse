@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>The LDAP information structure</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001283.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001285.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>The LDAP information structure</h1>
+<p>The following sections describe the LDAP information structure: the elements of an LDAP directory and how they are structured. These sections describe the following basic LDAP concepts:</p>
+<ul>
+<li>
+   <a href="00001284.htm#1110422">Entry</a>
+</li>
+<li>
+   <a href="00001284.htm#1106892">Attribute</a>
+</li>
+<li>
+   <a href="00001284.htm#1096194">Distinguished name (DN)</a>
+</li>
+<li>
+   <a href="00001284.htm#1135223">Schema</a>, including the object class and attribute type
+</li>
+</ul>
+<h2><a name="wp1110422"></a>Entry</h2>
+<p>The basic information object of LDAP is the <i>entry</i>. An entry is composed of one or more <i>attributes</i>. Entries are subject to content rules defined by the directory <i>schema</i> (see <a href="00001284.htm#1135223">Schema</a>).</p>
+<p>Each node, not just the terminal nodes, of an LDAP directory is an entry. In the preceding figures, each item is an entry. For example, in the first diagram, both USA and Ferrari are entries. The USA entry's attributes could include a Language attribute, and the Ferrari entry could include an entry for the chief executive officer.</p>
+<h2><a name="wp1106892"></a>Attribute</h2>
+<p>An LDAP directory entry consists of one or more attributes. Attributes have <i>types</i> and <i>values</i>. The type determines the information that the values can contain. The type also specifies how the value is processed. For example, the type determines whether an attribute can have multiple values. The mail attribute type, which contains an e-mail address, is multivalued so you can store multiple e-mail addresses for one person.</p>
+<p>Some commonly-used attribute types have short keyword type names. Often these correspond to longer type names, and the two names can be used interchangeably. The following table lists common attribute type keywords used in LDAP directories:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Keyword
+    </th>
+    <th>
+Long name
+    </th>
+    <th>
+Comment
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>c</p>
+    </td>
+    <td>
+<p>CountryName</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>st</p>
+    </td>
+    <td>
+<p>stateOrProvinceName</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>l</p>
+    </td>
+    <td>
+<p>LocalityName</p>
+    </td>
+    <td>
+<p>Typically, city, but can be any geographical unit</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>street</p>
+    </td>
+    <td>
+<p>StreetAddress</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>o</p>
+    </td>
+    <td>
+<p>OrganizationName</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ou</p>
+    </td>
+    <td>
+<p>OrganizationalUnitName</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cn</p>
+    </td>
+    <td>
+<p>CommonName</p>
+    </td>
+    <td>
+<p>Typically, first and last name</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>sn</p>
+    </td>
+    <td>
+<p>SurName</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>dc</p>
+    </td>
+    <td>
+<p>domaincomponent </p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>mail</p>
+    </td>
+    <td>
+<p>mail</p>
+    </td>
+    <td>
+<p>E-mail address</p>
+    </td>
+  </tr>
+</table>
+
+<p>For more information, see <a href="00001284.htm#1116156">Attribute type</a>.</p>
+<h2><a name="wp1096194"></a>Distinguished name (DN)</h2>
+<p>An entry's <i>distinguished name</i> uniquely identifies it in the directory. A DN is made up of <i>relative distinguished names</i> (RDNs). An RDN identifies the entry among the children of its parent entry. For example, in the first figure in <a href="00001283.htm#1096135">About LDAP</a>, the RDN for the Ferrari entry is &quot;o=Ferrari&quot;. </p>
+<p>An entry's DN consists of an entry's RDN followed by the DN of its parent. In other words, it consists of the RDNs for the entry and each of the entry's parent entries, up to the root of the directory tree. The RDNs are separated by commas and optional spaces. For example, in the first figure, the DN for the Ferrari entry is &quot;o=Ferrari, c=Italy&quot;. </p>
+<p>As with file system pathnames and URLs, entering the correct LDAP name format is essential to successful search operations.</p>
+<p><strong>Note: </strong>The RDN is an attribute of a directory entry. The full DN is not. However, you can output the full DN by specifying &quot;dn&quot; in a query's <code>attributes</code> list. For more information, see <a href="00000283.htm#1100581"><code>cfldap</code></a> in <i>CFML Reference</i>. ColdFusion always returns DNs with spaces after the commas.</p><p>A <i>multivalued RDN</i> is made up of more than one attribute-value pair. In multivalued RDNs, the attribute-value pairs are separated by plus signs (+). In the sample directories, individuals could have complex RDNs consisting of their common name and their e-mail address; for example, &quot;cn=Robert Boyd + mail=rjboyd@macromedia.com&quot;. </p>
+<h2><a name="wp1135223"></a>Schema</h2>
+<p>The concepts of schemas and object classes are central to a thorough understanding of LDAP. Although detailed descriptions of them are beyond the scope of this chapter, the following sections provide enough information to use the <a href="00000283.htm#1100581"><code>cfldap</code></a> tag effectively.</p>
+<p>A directory <i>schema</i> is a set of rules that determines what can be stored in a directory. It defines, at a minimum, the following two basic directory characteristics:</p>
+<ul>
+<li>
+   The object classes to which entries can belong
+</li>
+<li>
+   The directory attribute types
+</li>
+</ul>
+<h3><a name="wp1115114"></a>Object class</h3>
+<p><i>Object classes</i> enable LDAP to group related information. Frequently, an object class corresponds to a real object or concept, such as a country, person, room, or domain (in fact, these are all standard object type names). Each entry in an LDAP directory must belong to one or more object classes. </p>
+<p>The following characteristics define an object class:</p>
+<ul>
+<li>
+   The class name
+</li>
+<li>
+   A unique object ID that identifies the class
+</li>
+<li>
+   The attribute types that entries of the class must contain
+</li>
+<li>
+   The attribute types that entries of the class can optionally contain
+</li>
+<li>
+   (Optional) A <i>superior</i> class from which the class is derived 
+</li>
+</ul>
+<p>If an entry belongs to a class that derives from another class, the entry's objectclass attribute lists the lowest-level class and all the superior classes from which the lowest-level class derives.</p>
+<p>When you add, modify, or delete a directory entry, you must treat the entry's object class as a possibly multivalued attribute. For example, when you add a new entry, you specify the object class in the <a href="00000283.htm#1100581"><code>cfldap</code></a> tag <code>attributes</code> attribute. To retrieve an entry's object class names, specify &quot;objectclass&quot; in the list of query attributes. To retrieve entries that provide a specific type of information, you can use the object class name in the <code>cfldap</code> tag <code>filter</code> attribute.</p>
+<h3><a name="wp1116156"></a>Attribute type</h3>
+<p>A schema's attribute type specification defines the following properties:</p>
+<ul>
+<li>
+   The attribute type name
+</li>
+<li>
+   A unique object ID that identifies the attribute type
+</li>
+<li>
+   (Optional) An indication of whether the type is single-valued or multivalued (the default is multivalued)
+</li>
+<li>
+   The attribute syntax and matching rules (such as case sensitivity)
+</li>
+</ul>
+<p>The attribute type definition can also determine limits on the range or size of values that the type represents, or provide an application-specific usage indicator. For standard attributes, a registered numeric ID specifies the syntax and matching rule information. For more information on attribute syntaxes, see ETF RFC 2252 at http://www.ietf.org/rfc/rfc2252.txt.</p>
+<p><i>Operational attributes</i>, such as creatorsName or modifyTimeStamp, are managed by the directory service and cannot be changed by user applications.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001283.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001285.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001284.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfdirectory</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000234.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000236.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfdirectory</h1>
+<h4><a name="wp1344668"></a>Description</h4>
+<p>Manages interactions with directories.</p>
+<h4><a name="wp1873092"></a>Category</h4>
+<p><a href="00000203.htm#2459859">File management tags</a></p>
+<h4><a name="wp1097925"></a>Syntax</h4>
+<pre>&lt;cfdirectory <br />   action = &quot;directory action&quot;<br />   directory = &quot;directory name&quot;<br />   name = &quot;query name&quot;<br />   filter = &quot;list filter&quot;<br />   mode = &quot;permission&quot;<br />   sort = &quot;sort specification&quot;<br />   newDirectory = &quot;new directory name&quot;<br />   recurse = &quot;yes&quot; or &quot;no&quot;&gt;
+</pre><h4><a name="wp1873102"></a>See also</h4>
+<p><a href="00000245.htm#1098395"><code>cffile</code></a></p>
+<h4><a name="wp2744225"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added the <code>recurse</code> attribute (named <code>recursive</code> in Alpha 1) and <code>directory</code> result-set column.</p>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Changed behavior for <code>action = &quot;list&quot;: </code>
+<ul><li>On Windows, <a href="00000235.htm#1097918"><code>cfdirectory</code></a> <code>action = &quot;list&quot;</code> no longer returns the directory entries <code>&quot;.&quot;</code> (dot) or <code>&quot;..&quot;</code> (dot dot), which represent &quot;the current directory&quot; and &quot;the parent directory.&quot;</li>
+<li>On Windows, <a href="00000235.htm#1097918"><code>cfdirectory</code></a> <code>action = &quot;list&quot;</code> no longer returns the values of the Archive and System attributes.</li>
+<li>On UNIX and Linux, <a href="00000235.htm#1097918"><code>cfdirectory</code></a> <code>action = &quot;list&quot;</code> does not return any information in the <code>mode</code> column.</li>
+</ul></li>
+</ul>
+<h4><a name="wp3553172"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>action</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>List</p>
+    </td>
+    <td>
+<ul>
+<li>
+   list: returns a query record set of the files in the specified directory. The directory entries &quot;.&quot; (dot) and &quot;..&quot; (dot dot), which represent the current directory and the parent directory, are not returned. 
+</li>
+<li>
+   create
+</li>
+<li>
+   delete
+</li>
+<li>
+   rename
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>directory</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Absolute pathname of directory against which to perform action. </p>
+<p>You can use an IP address, as in the following example:</p>
+<pre>&lt;cfdirectory directory=&quot;//12.3.123.123/c_drive/&quot; name=&quot;dirQuery&quot; action=&quot;LIST&quot;&gt;
+</pre>    </td>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required if <code>action = &quot;list&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name for output record set. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>filter</p>
+    </td>
+    <td>
+<p>Optional if <code>action = &quot;list&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>File extension filter applied to returned names; for example, *.cfm. One filter can be applied. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>mode</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Used with <code>action = &quot;create&quot;</code>. Permissions. Applies only to UNIX and Linux. Octal values of chmod command. Assigned to owner, group, and other, respectively. For example: </p>
+<ul>
+<li>
+   644: assigns read/write permission to owner; read permission to group and other.
+</li>
+<li>
+   777: assigns read/write/execute permission to all.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>sort</p>
+    </td>
+    <td>
+<p>Optional; used if <code>action = &quot;list&quot;</code></p>
+    </td>
+    <td>
+<p>ASC</p>
+    </td>
+    <td>
+<p>Query column(s) by which to sort directory listing. Delimited list of columns from query output. </p>
+<p>To qualify a column, use:</p>
+<ul>
+<li>
+   asc: ascending (a to z) sort order. 
+</li>
+<li>
+   desc: descending (z to a) sort order. 
+</li>
+</ul>
+<p>For example:</p>
+<p><code>sort</code> <code>=</code> <code>&quot;directory</code> <code>ASC,</code> <code>size</code> <code>DESC,</code> <code>datelastmodified&quot;</code></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>newDirectory</p>
+    </td>
+    <td>
+<p>Required if <code>action = &quot;rename&quot;</code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>New name for directory.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>recurse</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<p>Whether ColdFusion performs the action on subdirectories:</p>
+<ul>
+<li>
+   yes 
+</li>
+<li>
+   no
+</li>
+</ul>
+<p>Valid for <code>action=&quot;list&quot;</code> and <code>action=&quot;delete&quot;</code>.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1097952"></a>Usage</h4>
+<p>If you put ColdFusion applications on a server that is used by multiple customers, you must consider the security of files and directories that could be uploaded or otherwise manipulated with this tag by unauthorized users. For more information about securing ColdFusion tags, see <i>Configuring and Administering ColdFusion&#160;MX</i>.</p>
+<p>If <code>action = &quot;list&quot;</code>, <code>cfdirectory</code> returns the following result columns, which you can reference in a <code>cfoutput</code> tag:</p>
+<ul>
+<li>
+   <code>name</code>&#160;Directory entry name. The entries <code>&quot;.&quot;</code> and <code>&quot;..&quot; </code>are not returned. 
+</li>
+<li>
+   <code>directory</code>&#160;Directory containing the entry.
+</li>
+<li>
+   <code>size</code>&#160;Directory entry size.
+</li>
+<li>
+   <code>type</code>&#160;File type: File, for a file; Dir, for a directory.
+</li>
+<li>
+   <code>dateLastModified</code>&#160;The date that an entry was last modified.
+</li>
+<li>
+   <code>attributes</code>&#160;File attributes, if applicable.
+</li>
+<li>
+   <code>mode</code>&#160;Empty column; retained for backward compatibility with ColdFusion 5 applications on UNIX.
+</li>
+</ul>
+<p>You can use the following result columns in standard CFML expressions, preceding the result column name with the query name:</p>
+<pre>#mydirectory.name#
+#mydirectory.directory#
+#mydirectory.size#
+#mydirectory.type#
+#mydirectory.dateLastModified#
+#mydirectory.attributes#
+#mydirectory.mode# 
+</pre><p><strong>Note: </strong>If the <code>cfdirectory</code> tag does not appear to work, for example, if a <code>list</code> operation returns an empty result set, make sure that you have correct permissions to access the directory. For example, if you run ColdFusion as a service on Windows, it operates by default as System, and cannot access directories on a remote system or mapped drive; to resolve this issue, do not run ColdFusion using the local system account.</p><p>The <code>filter</code> attribute specifies a pattern of one or more characters. All names that match that pattern are included in the list. On Windows systems, pattern matching ignores text case, on UNIX and Linux, pattern matches are case-sensitive. </p>
+<p>The following two characters have special meaning in the pattern and are called metacharacters: </p>
+<ul>
+<li>
+   *&#160;matches any zero or more characters
+</li>
+<li>
+   ?&#160;matches any single character
+</li>
+</ul>
+<p>The following table shows examples of patterns and file names that they match:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Pattern
+    </th>
+    <th>
+Matches
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>foo.*</p>
+    </td>
+    <td>
+<p>Any file called foo with any extension; for example, foo.html, foo.cfm, and foo.xml.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>*.html</p>
+    </td>
+    <td>
+<p>All files with the suffix .html, but not files with the suffix .htm.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>??</p>
+    </td>
+    <td>
+<p>All files with two-character names.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp3554678"></a>Example</h4>
+<pre>&lt;!--- EXAMPLE 1: Creating and Renaming 
+Check that the directory exists to avoid getting a <br />ColdFusion error message. ---&gt;
+&lt;cfset newDirectory = &quot;otherNewDir&quot;&gt;
+&lt;cfset currentDirectory = GetDirectoryFromPath(GetTemplatePath()) &amp; &quot;newDir&quot;&gt;
+&lt;!--- Check to see if the Directory exists. ---&gt;
+&lt;cfif DirectoryExists(currentDirectory)&gt;
+&lt;!--- If TRUE then rename the directory. ---&gt; 
+   &lt;cfdirectory action = &quot;rename&quot; directory = &quot;#currentDirectory#&quot; newDirectory = &quot;#newDirectory#&quot; &gt;
+   &lt;cfoutput&gt;
+   &lt;p&gt;The directory existed and the name has been changed to: #newDirectory#&lt;/p&gt;
+   &lt;/cfoutput&gt;
+&lt;cfelse&gt;
+   &lt;!--- If FALSE, create the directory. ---&gt;
+   &lt;cfdirectory action = &quot;create&quot; directory = &quot;#currentDirectory#&quot; &gt;
+   &lt;cfoutput&gt;&lt;p&gt;Your directory has been created.&lt;/p&gt;&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;!--- EXAMPLE 2: Deleting a directory 
+Check that the directory exists and that files are not in the directory
+to avoid getting ColdFusion error messages. ---&gt;
+
+&lt;cfset currentDirectory = GetDirectoryFromPath(GetTemplatePath()) &amp; &quot;otherNewDir&quot;&gt;
+&lt;!--- Check to see if the Directory exists. ---&gt;
+&lt;cfif DirectoryExists(currentDirectory)&gt;
+   &lt;!--- If TRUE, check to see if there are files in the directory before deleting. ---&gt;
+   &lt;cfdirectory action=&quot;list&quot; directory=&quot;#currentDirectory#&quot; 
+   name=&quot;myDirectory&quot;&gt;
+   &lt;cfif myDirectory.recordcount gt 0&gt;
+   &lt;!--- If TRUE, delete the files from the directory. ---&gt;
+      &lt;cfoutput&gt;
+      &lt;p&gt;Files exist in this directory. Either delete the files or code 
+         something to do so.&lt;/P&gt;
+      &lt;/cfoutput&gt; 
+   &lt;cfelse&gt;
+   &lt;!--- Directory is empty - just delete the directory. ---&gt;
+      &lt;cfdirectory action = &quot;delete&quot; directory = &quot;#currentDirectory#&quot;&gt;
+      &lt;cfoutput&gt;
+      &lt;p&gt;The directory existed and has been deleted.&lt;/P&gt;
+      &lt;/cfoutput&gt;
+   &lt;/cfif&gt; 
+&lt;cfelse&gt;
+   &lt;!--- If FALSE, post message or do some other function. ---&gt;
+   &lt;cfoutput&gt;&lt;p&gt;The directory did NOT exist.&lt;/p&gt;&lt;/cfoutput&gt;
+&lt;/cfif&gt; 
+&lt;!---EXAMPLE 3: List directories 
+The following example creates both an array of directory names and a query that
+contains entries for the directories only. ---&gt;
+
+&lt;cfdirectory directory=&quot;C:/temp&quot; name=&quot;dirQuery&quot; action=&quot;LIST&quot;&gt;
+
+&lt;!--- Get an array of directory names. ---&gt;
+&lt;cfset dirsArray=arraynew(1)&gt;
+&lt;cfset i=1&gt;
+&lt;cfloop query=&quot;dirQuery&quot;&gt;
+&lt;cfif dirQuery.type IS &quot;dir&quot;&gt;
+   &lt;cfset dirsArray[i]=dirQuery.name&gt;
+   &lt;cfset i = i + 1&gt;
+&lt;/cfif&gt;
+&lt;/cfloop&gt;
+&lt;cfdump var=&quot;#dirsArray#&quot;&gt;
+&lt;br&gt;
+&lt;!--- Get all directory information in a query of queries.---&gt;
+&lt;cfquery dbtype=&quot;query&quot; name=&quot;dirsOnly&quot;&gt;
+SELECT * FROM dirQuery
+WHERE TYPE=&#39;Dir&#39;
+&lt;/cfquery&gt;
+&lt;cfdump var=&quot;#dirsOnly#&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000234.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000236.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000235.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

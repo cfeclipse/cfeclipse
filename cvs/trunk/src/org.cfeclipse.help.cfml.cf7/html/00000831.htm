@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>getAttributeList</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000830.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000832.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>getAttributeList</h1>
+<h4><a name="wp1115866"></a>Description</h4>
+<p>Retrieves a list of attributes passed to the tag. To retrieve the value of one attribute, use the <code>getAttribute</code> method. </p>
+<p>Returns an array of strings containing the names of the attributes passed to the tag. </p>
+<h4><a name="wp1115869"></a>Category</h4>
+<p><a href="00000827.htm#1097098">Request interface</a></p>
+<h4><a name="wp1115874"></a>Syntax</h4>
+<pre>public String[] getAttributeList()
+</pre><h4><a name="wp1115876"></a>See also</h4>
+<p><a href="00000828.htm#1097157"><code>attributeExists</code></a>, <a href="00000831.htm#1115865"><code>getAttributeList</code></a></p>
+<h4><a name="wp1115884"></a>Example</h4>
+<p>The following example retrieves the list of attributes, then iterates over the list, writing each attribute and its value back to the user: </p>
+<pre>String[] attribs = request.getAttributeList() ;
+int nNumAttribs = attribs.length ;               
+
+for( int i = 0; i &lt; nNumAttribs; i++ )
+{
+   String strName = attribs[i] ;
+   String strValue = request.getAttribute( strName ) ;
+   response.write( strName + &quot;=&quot; + strValue + &quot;&lt;BR&gt;&quot; ) ;
+} 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000830.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000832.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000831.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

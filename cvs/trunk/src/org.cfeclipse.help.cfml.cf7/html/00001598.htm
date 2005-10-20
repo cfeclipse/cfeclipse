@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Sending query-based e-mail</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001597.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001599.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Sending query-based e-mail</h1>
+<p>In the following example, a query (ProductRequests) retrieves a list of the customers who inquired about a product during the previous seven days. ColdFusion sends the list, with an appropriate header and footer, to the marketing department:</p>
+<pre>&lt;cfmail
+   query=&quot;ProductRequests&quot;
+   from=&quot;webmaster@MyCompany.com&quot;
+   to=&quot;marketing@MyCompany.com&quot;
+   subject=&quot;Widget status report&quot;&gt;
+
+Here is a list of people who have inquired about
+MyCompany Widgets during the previous seven days:
+
+&lt;cfoutput&gt;
+#ProductRequests.FirstName# #ProductRequests.LastName# (#ProductRequests.Company#) - #ProductRequests.EMailAddress#&amp;##013;
+&lt;/cfoutput&gt;
+
+Regards,
+The WebMaster
+webmaster@MyCompany.com
+
+&lt;/cfmail&gt;
+</pre><h4><a name="wp1114954"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput&gt;
+#ProductRequests.FirstName#<br />#ProductRequests.LastName#<br />(#ProductRequests.Company#) -<br />#ProductRequests.EMailAddress#&amp;##013;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Presents a dynamic list embedded within a normal <a href="00000297.htm#2355015"><code>cfmail</code></a> message, repeating for each row in the ProductRequests query. Because the <code>cfmail</code> tag specifies a query, the <code>cfoutput</code> tag does not use a <code>query</code> attribute. The <code>&amp;##013;</code> forces a carriage return between output records.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001597.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001599.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001598.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

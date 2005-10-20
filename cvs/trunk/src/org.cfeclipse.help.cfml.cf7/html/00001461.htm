@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Previewing reports</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001460.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001462.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Previewing reports</h1>
+<p>Report building is an iterative process and most developers periodically display the in-progress report to review their most recent changes. If your report uses an internal query and you have established default webroot settings, preview functionality is enabled automatically. If your report uses a passed query, you must define an associated CFM page and associate that page with the report. The Report Builder invokes this page when you request Report Preview.</p>
+<h4>To use Report Builder preview with a report that uses an internal query:</h4>
+<ol>
+<li>
+   (Optional) Define default server connection information using the Preferences dialog box, if you did not define these settings previously:
+<ul><li>Default RDS server configuration (used for Query Builder and Chart Wizard only; not required for report preview).</li>
+<li>Fully qualified path for the local web root directory; for example, C:\CFusionMX7\wwwroot or C:\Inetpub\wwwroot.</li>
+<li>URL for the local web root, for example, http://localhost:8500 or http://localhost.</li>
+</ul></li>
+<li>
+   (Optional) Specify the output format in the Report Properties dialog box (the default is FlashPaper).
+</li>
+<li>
+   (Optional) If your report is designed to be invoked by a CFM page, specify the URL of the CFM page in the Report Properties dialog box.
+</li>
+<li>
+   Save your report.
+</li>
+<li>
+   Select File &gt; Preview from the menu bar.<br />or<br />Click the Preview button on the toolbar.<br />or<br />Press F12.
+<p>The Preview Report window displays your report.</p>
+<p><strong>Note: </strong>If the Report Builder displays the Edit Preview Report URL dialog box instead of displaying the Preview window, select Edit &gt; Preferences from the menu bar and ensure that the web root file and URL settings are correct on the Server Connection pane.</p></li>
+<li>
+   Close the preview window by pressing F12.
+</li>
+</ol>
+<p>If your report is designed to accept a query object from a <code>cfreport</code> tag, you must associate a URL with the report. If necessary, the Report Builder prompts for this URL when you preview the report. Otherwise, you can open the Report Properties dialog box, and specify the URL of the CFM page in the Report Preview URL field.</p>
+<p><strong>Tip: </strong>You can use the <code>cfreport</code> tag to invoke a report, regardless of whether the report has an internal query or is passed a query.</p><h4>To use Report Builder preview with an associated CFM file:</h4>
+<ol>
+<li>
+   Select Report &gt; Report Properties from the menu bar.
+</li>
+<li>
+   Specify the URL of the associated CFM page in the Report Preview URL field. This CFM page must contain a <code>cfreport</code> tag whose <code>template</code> attribute specifies the current CFR file and, if necessary, passes a query in the <code>query</code> attribute.
+</li>
+<li>
+   Save your report.
+</li>
+<li>
+   Select File &gt; Preview from the menu bar.<br />or<br />Click the Preview button on the toolbar.<br />or<br />Press F12.
+<p>The Preview Report window displays your report in PDF, FlashPaper, or Excel format.</p>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001460.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001462.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001461.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using scopes</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000913.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000915.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using scopes</h1>
+<p>The following sections provide details on how you can create and use variables in different scopes.</p>
+<h3><a name="wp1130538"></a>Evaluating unscoped variables</h3>
+<p>If you use a variable name without a scope prefix, ColdFusion checks the scopes in the following order to find the variable: </p>
+<ol>
+<li>
+   Function local (UDFs and CFCs only)
+</li>
+<li>
+   Arguments
+</li>
+<li>
+   Variables (local scope)
+</li>
+<li>
+   CGI
+</li>
+<li>
+   Cffile
+</li>
+<li>
+   URL
+</li>
+<li>
+   Form
+</li>
+<li>
+   Cookie
+</li>
+<li>
+   Client
+</li>
+</ol>
+<p>Because ColdFusion must search for variables when you do not specify the scope, you can improve performance by specifying the scope for all variables.</p>
+<p>To access variables in all other scopes, you must prefix the variable name with the scope identifier.</p>
+<h3><a name="wp1133157"></a>Scopes and CFX tags</h3>
+<p>ColdFusion scopes do not apply to ColdFusion Extension (CFX) tags, custom tags that you write in a programming language such as C++ or Java. The ColdFusion page that calls a CFX tag must use tag attributes to pass data to the CFX tag. The CFX tag must use the Java Request and Response interfaces or the C++ Request class to get and return data. </p>
+<p>The Java <code>setVariable</code> Response interface method and C++ <code>CCFX::SetVariable</code> method return data to the Variables scope of the calling page. Therefore, they are equivalent to setting a Caller scope variable in a custom ColdFusion tag.</p>
+<h3><a name="wp1132447"></a>Using scopes as structures</h3>
+<p>ColdFusion makes all named scopes available as structures. You cannot access the function-local scope for user defined functions (UDFs) that you define using CFScript as a structure. (In ColdFusion 4.5 and 5, the following scopes are <i>not</i> available as structures: Variables, Caller, Client, and Server.)</p>
+<p>You can reference the variables in named scopes as elements of a structure. To do so, specify the scope name as the structure name and the variable name as the key. For example, if you have a MyVar variable in the Request scope, you can refer to it in either of the following ways:</p>
+<pre>Request.MyVar
+Request[&quot;MyVar&quot;]
+</pre><p>Similarly, you can use CFML structure functions to manipulate the contents of the scope. For more information on using structures, see <a href="00000950.htm#1101236">Using Arrays and Structures</a>.</p>
+<p><strong>Caution: </strong>Do not call <a href="00000634.htm#137053"><code>StructClear</code></a><code>(Session)</code> to clear session variables. This deletes the <code>SessionID</code>, <code>CFID</code>, and <code>CFtoken</code> built-in variables, effectively ending the session. If you want to use <code>StructClear</code> to delete your application variables, put those variables in a structure in the Session scope, and then clear that structure. For example, put all your application variables in Session.MyVars and then call <code>StructClear(Session.MyVars)</code> to clear the variables.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00000913.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000915.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000914.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

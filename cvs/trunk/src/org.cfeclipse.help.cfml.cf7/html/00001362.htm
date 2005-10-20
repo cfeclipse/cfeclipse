@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Building drop-down list boxes</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001361.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001363.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Building drop-down list boxes</h1>
+<p>The drop-down list box that you can create in a <a href="00000256.htm#2433198"><code>cfform</code></a> tag with a <a href="00000331.htm#2553073"><code>cfselect</code></a> tag is similar to the HTML <code>select</code> tag. However, the <code>cfselect</code> tag gives you more control over user inputs, provides error handling, and, most importantly, lets you automatically populate the selection list from a query.</p>
+<p>You can populate the drop-down list box from a query, or using lists of option elements created by the <code>option</code> tag. The syntax for the <code>option</code> tag with the <code>cfselect</code> tag is the same as for the HTML <code>option</code> tag.</p>
+<p>When you populate a <code>cfselect</code> tag with data from a query, you only need to specify the name of the query that is supplying data for the <code>cfselect</code> tag and the query column name for each list element to display. </p>
+<h4>To populate a drop-down list box with query data using the cfselect tag:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content: 
+<pre>
+&lt;cfquery name=&quot;getNames&quot;
+	datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT * FROM Employee
+&lt;/cfquery&gt;
+
+&lt;cfform name=&quot;Form1&quot; action=&quot;submit.cfm&quot;&gt;
+
+	&lt;cfselect name=&quot;employees&quot;
+		query=&quot;getNames&quot;
+		value=&quot;Emp_ID&quot;
+		display=&quot;FirstName&quot;
+		required=&quot;Yes&quot;
+		multiple=&quot;Yes&quot;
+		size=&quot;8&quot;&gt;
+	&lt;/cfselect&gt;
+
+	&lt;br&gt;&lt;input type=&quot;Submit&quot; value=&quot;Submit&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+</li>
+<li>
+   Save the file as selectbox.cfm and view it in your browser. 
+<p>The following figure shows the output of this code:</p>
+<p><br />
+<img src="images/selectb6.jpg" alt="Drop-down list box containing query data" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+</ol>
+<p>Because the tag includes the <code>multiple</code> attribute, the user can select multiple entries in the list box. Also, because the <code>value</code> tag specifies Emp_ID, the primary key for the Employee table, Employee IDs (not first names) get passed in the Form.Employee variable to the application page specified in the <code>cfform</code> <code>action</code> attribute.</p>
+<p>You can use a query to create a two-level hierarchical list grouped by one of the query columns. For an example of this use, see the example for the <a href="00000331.htm#2553073"><code>cfselect</code></a> entry in <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001361.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001363.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001362.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

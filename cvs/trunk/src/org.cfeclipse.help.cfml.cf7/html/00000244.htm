@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfexit</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000243.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000245.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfexit</h1>
+<h4><a name="wp1344687"></a>Description</h4>
+<p>This tag aborts processing of the currently executing CFML custom tag, exits the page within the currently executing CFML custom tag, or re-executes a section of code within the currently executing CFML custom tag.</p>
+<h4><a name="wp2515973"></a>Category</h4>
+<p><a href="00000200.htm#2459702">Debugging tags</a>, <a href="00000204.htm#2459878">Flow-control tags</a></p>
+<h4><a name="wp1098257"></a>Syntax</h4>
+<pre>&lt;cfexit <br />   method = &quot;method&quot;&gt;
+</pre><h4><a name="wp1875340"></a>See also</h4>
+<p><a href="00000215.htm#3835579">cfabort</a>, <a href="00000221.htm#1097484">cfbreak</a>, <a href="00000243.htm#1098198">cfexecute</a>, <a href="00000274.htm#1100123">cfif</a>, <a href="00000284.htm#1100753">cflocation</a>, <a href="00000290.htm#3301338">cfloop</a>, <a href="00000339.htm#1103819">cfswitch</a>, <a href="00000343.htm#2773591">cfthrow</a>, <a href="00000349.htm#1104557">cftry</a>; <a href="00000876.htm#2734022">cfabort and cfexit</a> in <a href="00000866.htm#2689636">Elements of CFML</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2210702"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>method</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>exitTag</p>
+    </td>
+    <td>
+<ul>
+<li>
+   exitTag: aborts processing of currently executing tag.
+</li>
+<li>
+   exitTemplate: exits page of currently executing tag.
+</li>
+<li>
+   loop: re-executes body of currently executing tag.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1098264"></a>Usage</h4>
+<p>If this tag is encountered outside the context of a custom tag, for example in the base page or an included page, it executes in the same way as <code>cfabort</code>. The <code>cfexit</code> tag can help simplify error checking and validation logic in custom tags. </p>
+<p>The <code>cfexit</code> tag function depends on its location and execution mode:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Method value
+    </th>
+    <th>
+Location of cfexit call
+    </th>
+    <th>
+Behavior
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>exitTag</p>
+    </td>
+    <td>
+<p>Base page</p>
+    </td>
+    <td>
+<p>Terminate processing</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Execution mode = Start</p>
+    </td>
+    <td>
+<p>Continue after end tag</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Execution mode = End</p>
+    </td>
+    <td>
+<p>Continue after end tag</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>exitTemplate</p>
+    </td>
+    <td>
+<p>Base page</p>
+    </td>
+    <td>
+<p>Terminate processing</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Execution mode = Start</p>
+    </td>
+    <td>
+<p>Continue from first child in body</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Execution mode = End</p>
+    </td>
+    <td>
+<p>Continue after end tag</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>loop</p>
+    </td>
+    <td>
+<p>Base page</p>
+    </td>
+    <td>
+<p>Error</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Execution mode = Start</p>
+    </td>
+    <td>
+<p>Error</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Execution mode = End</p>
+    </td>
+    <td>
+<p>Continue from first child in body</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1098328"></a>Example</h4>
+<pre>&lt;h3&gt;cfexit Example&lt;/h3&gt;
+&lt;p&gt;cfexit can be used to abort the processing of the currently executing <br />CFML custom tag. Execution resumes following the invocation of <br />the custom tag in the page that called the tag.
+&lt;h3&gt;Usage of cfexit&lt;/h3&gt;
+&lt;p&gt;cfexit is used primarily to perform a conditional stop of processing <br />inside a custom tag. cfexit returns control to the page that <br />called that custom tag, or in the case of a tag called by another <br />tag, to the calling tag.
+
+&lt;!--- cfexit can be used within a CFML custom tag, as follows: ---&gt;
+&lt;!--- Place this code (uncomment the appropriate sections) within the <br />customtags directory. ---&gt;
+
+&lt;!--- MyCustomTag.cfm ---&gt;
+&lt;!--- This simple custom tag checks for the existence.
+of myValue1 and myValue2. If they are both defined,
+the tag adds them and returns the result to the calling
+page in the variable &quot;result&quot;. If either or both of the
+expected attribute variables is not present, an error message
+is generated, and cfexit returns control to the
+calling page. ---&gt;
+
+&lt;!--- &lt;cfif NOT IsDefined(&quot;attributes.myValue2&quot;)&gt;
+         &lt;cfset caller.result = &quot;Value2 is not defined&quot;&gt;
+         &lt;cfexit method = &quot;exitTag&quot;&gt;
+    &lt;cfelseif NOT IsDefined(&quot;attributes.myValue1&quot;)&gt;
+         &lt;cfset caller.result = &quot;Value1 is not defined&quot;&gt;
+         &lt;cfexit method = &quot;exitTag&quot;&gt;
+    &lt;cfelse&gt;
+          &lt;cfset value1 = attributes.myValue1&gt;      
+          &lt;cfset value2 = attributes.myValue2&gt;      
+         &lt;cfset caller.result = value1 + value2&gt;
+    &lt;/cfif&gt; ---&gt;
+&lt;!--- End MyCustomTag.cfm ---&gt;
+
+&lt;!--- Place this code within your page ---&gt;    
+
+&lt;!--- &lt;p&gt;The call to the custom tag, and then the result:
+&lt;CF_myCustomTag
+      myvalue2 = 4&gt;
+&lt;cfoutput&gt;#result#&lt;/cfoutput&gt; ---&gt;
+&lt;p&gt;If cfexit is used outside a custom tag, it functions like a cfabort. <br />For example, the text after this message is not processed:
+&lt;cfexit&gt;
+&lt;p&gt;This text is not executed because of the cfexit tag above it.
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000243.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000245.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000244.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

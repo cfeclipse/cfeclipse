@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example: Application.cfc</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001187.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001189.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example: Application.cfc</h1>
+<p>The Application.cfc page consists of the following:</p>
+<pre><code>&lt;cfcomponent&gt;</code>
+<code>&lt;cfset This.name = &quot;Orders&quot;&gt;</code>
+<code>&lt;cffunction name=&quot;OnRequestStart&quot;&gt;</code>
+<code>   &lt;cfargument name = &quot;request&quot; required=&quot;true&quot;/&gt;</code>
+<code>   &lt;cflogin&gt;</code>
+<code>      &lt;cfif IsDefined(&quot;cflogin&quot;)&gt;</code>
+<code>         &lt;cfif cflogin.name eq &quot;admin&quot;&gt;</code>
+<code>            &lt;cfset roles = &quot;user,admin&quot;&gt;</code>
+<code>         &lt;cfelse&gt;</code>
+<code>            &lt;cfset roles = &quot;user&quot;&gt;</code>
+<code>         &lt;/cfif&gt;</code>
+<code>         &lt;cfloginuser name = &quot;#cflogin.name#&quot; password = &quot;#cflogin.password#&quot;</code>
+<code>            roles = &quot;#roles#&quot; /&gt;</code>
+<code>      &lt;cfelse&gt;</code>
+<code>         &lt;!--- This should never happen. ---&gt;</code>
+<code>         &lt;h4&gt;Authentication data is missing.&lt;/h4&gt;</code>
+<code>         Try to reload the page or contact the site administrator.</code>
+<code>      &lt;cfabort&gt;</code>
+<code>      &lt;/cfif&gt;</code>
+<code>   &lt;/cflogin&gt;</code>
+<code>&lt;/cffunction&gt;</code>
+&lt;/cfcomponent&gt;
+</pre><h4><a name="wp1132254"></a>Reviewing the code</h4>
+<p>The Application.cfc <code>onRequestStart</code> method executes before the code in each ColdFusion page in an application. For more information on the Application.cfc page and when it is executed, see <a href="00001102.htm#1101532">Designing and Optimizing a ColdFusion&#160;Application</a>.</p>
+<p>The following table describes the CFML code in Application.cfc and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfcomponent&gt;
+&lt;cfset This.name = &quot;Orders&quot;&gt;
+&lt;cffunction name=&quot;OnRequestStart&quot;&gt;
+   &lt;cfargument name = &quot;request&quot;
+      required=&quot;true&quot;/&gt;
+</pre>    </td>
+    <td>
+<p>Identifies the application and starts the <code>onRequestStart</code> method that runs at the starts of each request. The login information on this page only applies to this application.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cflogin&gt;
+   &lt;cfif IsDefined(&quot;cflogin&quot;)&gt;
+      &lt;cfif cflogin.name eq &quot;admin&quot;&gt;
+         &lt;cfset roles = &quot;user,admin&quot;&gt;
+      &lt;cfelse&gt;
+            &lt;cfset roles = &quot;user&quot;&gt;
+         &lt;/cfif&gt;
+</pre>    </td>
+    <td>
+<p>Executes if there is no logged-in user.</p>
+<p>Makes sure the user is correctly logged in by the web server. (Otherwise, there would be no <a href="00000287.htm#2991147"><code>cflogin</code></a> variable.)</p>
+<p>Sets a roles variable based on the user's ID. Assigns users named &quot;admin&quot; to the admin role. Assigns all other users to the users role.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfloginuser name = &quot;#cflogin.name#&quot;
+   password = &quot;#cflogin.password#&quot;
+   roles = &quot;#roles#&quot; /&gt;
+</pre>    </td>
+    <td>
+<p>Logs the user into the ColdFusion security system and specifies the user's password, name, and roles. Gets the password and name directly from the cflogin structure.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfelse&gt;
+   &lt;!--- This should never happen. ---&gt;
+   &lt;h4&gt;Authentication data is missing.&lt;/h4&gt;
+      Try to reload the page or contact the<br />         site administrator.
+   &lt;cfabort&gt;
+</pre>    </td>
+    <td>
+<p>This code should never run, but if the user somehow got to this page without logging in to the web server, this message would display and ColdFusion would stop processing the request.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>   &lt;/cfif&gt;
+&lt;/cflogin&gt;
+&lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>    </td>
+    <td>
+<p>Ends the if/else block.</p>
+<p>Ends the <code>cflogin</code> tag body.</p>
+<p>Ends the <code>onRequestStart</code> method.</p>
+<p>Ends the Application component.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001187.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001189.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001188.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

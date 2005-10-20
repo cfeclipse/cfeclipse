@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>BinaryDecode</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000402.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000404.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>BinaryDecode</h1>
+<h4><a name="wp4993968"></a>Description</h4>
+<p>Converts a string to a binary object. Used to convert binary data that has been encoded into string format back into binary data.</p>
+<h4><a name="wp4993970"></a>Returns</h4>
+<p>A binary object.</p>
+<h4><a name="wp4989812"></a>Category</h4>
+<p><a href="00000356.htm#1098761">Conversion functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp4989820"></a>Function syntax</h4>
+<pre><code><strong>BinaryDecode</strong></code>(<code><i>string</i></code>, <i>binaryencoding</i>)
+</pre><h4><a name="wp4992884"></a>See also</h4>
+<p><a href="00000404.htm#4989676">BinaryEncode</a>, <a href="00000416.htm#4990268"><code>CharsetEncode</code></a>, <a href="00000415.htm#4990140"><code>CharsetDecode</code></a></p>
+<h4><a name="wp4992904"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this function.</p>
+<h4><a name="wp4989824"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string containing encoded binary data.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>binaryencoding</p>
+    </td>
+    <td>
+<p>A string specifying the algorithm used to encode the original binary data into a string; must be one of the following:</p>
+<ul>
+<li>
+   Hex: the characters 0-9 and A-F represent the hexadecimal value of each byte; for example, 3A.
+</li>
+<li>
+   UU: data is encoded using the UNIX UUencode algorithm.
+</li>
+<li>
+   Base64: data is encoded using the Base64 algorithm, as specified by IETF RFC 2045, at <a href="http://www.ietf.org/rfc/rfc2045.txt" target="mm_window">www.ietf.org/rfc/rfc2045.txt</a>.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4989842"></a>Usage</h4>
+<p>Use this function to convert a binary-encoded string representation of binary data back to a binary object for use in your application. Binary data is often encoded as a string for transmission over many Internet protocols, such as HTTP and SMTP, or for storage in a database.</p>
+<p>Macromedia recommends that you use the <code>BinaryDecode</code> function, not the <a href="00000653.htm#138631">ToBinary</a><code>(</code><code><i>base64data</i></code><code>)</code> function, to convert Base64-encoded data to binary data in all new applications.</p>
+<p>See the following pages for additional information on handling binary data:</p>
+<ul>
+<li>
+   <a href="00000245.htm#1098395"><code>cffile</code></a> for loading and reading binary data in files
+</li>
+<li>
+   <a href="00000351.htm#2682044"><code>cfwddx</code></a> for serializing and deserializing binary data
+</li>
+<li>
+   <a href="00000515.htm#1106300"><code>IsBinary</code></a> for checking variables for binary format
+</li>
+<li>
+   <a href="00000546.htm#130247"><code>Len</code></a> for determining the length of a binary object
+</li>
+</ul>
+<h4><a name="wp4989845"></a>Example</h4>
+<p>The following example reads a GIF file as binary data, converts it to a binary-encoded string, converts the binary-encoded data back to binary data and writes the result to a file. It displays the encoded string and the image in the output file.</p>
+<pre>&lt;h3&gt;Binary Encoding Conversion Example&lt;/h3&gt;
+
+&lt;!--- Do the following if the form has been submitted. ---&gt;
+&lt;cfif IsDefined(&quot;Form.binEncoding&quot;)&gt;
+
+   &lt;!--- Read in a binary data file. ---&gt;
+   &lt;cffile action=&quot;readbinary&quot; file=&quot;C:\CFusionMX7\wwwroot\CFIDE\administrator\images\help.gif&quot; variable=&quot;binimage&quot;&gt;
+
+   &lt;!--- Convert the read data to binary encoding and back to binary data. ---&gt;
+   &lt;cfscript&gt;
+      binencode=BinaryEncode(binimage, Form.binEncoding);
+      bindecode=<code><strong>BinaryDecode(binencode, Form.binEncoding)</strong></code>;
+   &lt;/cfscript&gt;
+
+   &lt;!---  Write the converted results to a file. ---&gt;
+   &lt;cffile action=&quot;write&quot; file=&quot;C:\temp\help.gif&quot; output=&quot;#bindecode#&quot; addnewline=&quot;No&quot; &gt;
+
+   &lt;!--- Display the results. ---&gt;
+   &lt;cfoutput&gt;
+      &lt;p&gt;&lt;b&gt;The binary encoding:&lt;/b&gt; #Form.binEncoding#&lt;/p&gt;
+      
+      &lt;p&gt;&lt;b&gt;The image converted into a binary-encoded string by BinaryEncode
+         &lt;/b&gt;&lt;br&gt;
+         #binencode#&lt;/p&gt;
+      &lt;p&gt;&lt;b&gt;The image as written back to a file after converting back to binary
+         using BinaryDecode&lt;/b&gt;&lt;br&gt;
+      &lt;img src=&quot;C:\temp\help.gif&quot;&gt;&lt;br&gt; 
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;!--- The input form. ---&gt;
+&lt;form action=&quot;#CGI.SCRIPT_NAME#&quot; method=&quot;post&quot;&gt;
+   &lt;b&gt;Select binary encoding&lt;/b&gt;&lt;br&gt;
+   &lt;select size=&quot;1&quot; name=&quot;binEncoding&quot; &gt;
+      &lt;option selected&gt;UU&lt;/option&gt;
+      &lt;option&gt;Base64&lt;/option&gt;
+      &lt;option&gt;Hex&lt;/option&gt;
+   &lt;/select&gt;&lt;br&gt;
+   &lt;br&gt;
+   &lt;input type = &quot;Submit&quot; value = &quot;convert my data&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000402.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000404.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000403.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

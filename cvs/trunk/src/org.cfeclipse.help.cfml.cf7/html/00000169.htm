@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 3: Enabling searching from the Trip Detail page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000168.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000170.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 3: Enabling searching from the Trip Detail page</h1>
+<p>You already created a search capability when you created the tripsearchform.cfm page in <a href="00000127.htm#1141005">Lesson 4: Building Dynamic Queries</a>. When the user clicks the Search button, you want to navigate to the tripsearchform.cfm page. You use the <code>cflocation</code> tag to do so.</p>
+<h4>To enable searching from the Trip Detail page:</h4>
+<ol>
+<li>
+   Open the maintenanceaction.cfm file in the my_app directory in your editor.
+</li>
+<li>
+   Add the highlighted code in the file.
+<pre>
+&lt;cfif IsDefined(&quot;Form.btnSearch&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Search. ---&gt;
+	&lt;cflocation url=&quot;tripsearchform.cfm&quot;&gt;
+&lt;cfelseif IsDefined(&quot;Form.btnDelete&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Delete. ---&gt;
+&lt;cfelseif IsDefined(&quot;Form.btnEdit&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Edit. ---&gt;
+&lt;cfelseif IsDefined(&quot;Form.btnAdd&quot;)&gt;
+	&lt;!--- Code to execute if the user clicked Add. ---&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4><a name="wp1175095"></a>Reviewing the code</h4>
+<p>The following table describes the code that executes when the user clicks the Search button:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif IsDefined(&quot;Form.btnSearch&quot;)&gt;
+   <strong>&lt;cflocation url=</strong>&quot;<strong>tripsearchform.cfm</strong>&quot;<strong>&gt;</strong>
+</pre>    </td>
+    <td>
+<p>If the Form.btnSearch variable exists because the user clicked the Search button, go to the page tripsearchform.cfm.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000168.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000170.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000169.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

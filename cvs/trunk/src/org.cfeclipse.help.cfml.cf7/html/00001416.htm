@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ColdFusion XML format</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001415.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001417.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ColdFusion XML format</h1>
+<p>This section describes the XML generated from a ColdFusion <code>cfform</code> tag and its children. It provides a building block toward creating your own XSL skins.</p>
+<ul>
+<li>
+   <a href="00001416.htm#138010">XML namespace use</a>
+</li>
+<li>
+   <a href="00001417.htm#134953">XML structure</a>
+</li>
+<li>
+   <a href="00001418.htm#131882">Data model</a>
+</li>
+<li>
+   <a href="00001419.htm#131545">Control elements</a>
+</li>
+</ul>
+<h2><a name="wp138010"></a>XML namespace use</h2>
+<p>The XML that ColdFusion generates for forms uses elements and attributes in several XML <i>namespaces</i>. Namespaces are named collections of names that help ensure that XML names are unique. They often correspond to a web standard, a specific document type definition (DTD), or a schema. In XML, the namespace name and a colon (:) precede the name of the tag that is defined in that namespace; for example <code>xf:model</code> for the XForms namespace <code>model</code> tag.</p>
+<p>ColdFusion uses several standard XML namespaces defined by the World Wid Web Consortium (W3C). These namespaces correspond to specifications for standard XML dialects such as XHTML, XForms and XML Events. ColdFusion XML forms also use a custom namespace for skinnable forms XML extensions. The following table lists the namespaces in the XML that ColdFusion generates.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Prefix
+    </th>
+    <th>
+URL
+    </th>
+    <th>
+Used for
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>html</p>
+    </td>
+    <td>
+<p>http://www.w3.org/1999/xhtml</p>
+    </td>
+    <td>
+<p>Form tag information, including action, height, width, and name. XHTML compliant.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>xf</p>
+    </td>
+    <td>
+<p>http://www.w3.org/2002/xforms</p>
+    </td>
+    <td>
+<p>XForms model (including initial field values) and XForms elements that correspond to cfform tags.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ev</p>
+    </td>
+    <td>
+<p>http://www.w3.org/2001/xml-events</p>
+    </td>
+    <td>
+<p>System events. Used for the <code>cfinput type=&quot;reset&quot;.</code> </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cf</p>
+    </td>
+    <td>
+<p>http://www.macromedia.com/2004/cfform</p>
+    </td>
+    <td>
+<p>All ColdFusion extensions, including passthrough of attributes that do not correspond to XForms elements or attributes.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001415.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001417.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001416.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

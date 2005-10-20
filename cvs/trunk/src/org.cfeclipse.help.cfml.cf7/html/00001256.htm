@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Getting information about query results</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001255.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001257.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Getting information about query results</h1>
+<p>Each time you query a database with the <a href="00000316.htm#1102316"><code>cfquery</code></a> tag, you get the data (the record set) and the query variables; together these comprise the query object. The following table describes the query variables, which are sometimes referred to as query properties:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Variable
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>RecordCount</p>
+    </td>
+    <td>
+<p>The total number of records returned by the query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ColumnList</p>
+    </td>
+    <td>
+<p>A comma-delimited list of the query columns, in alphabetical order.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SQL</p>
+    </td>
+    <td>
+<p>The SQL statement executed.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Cached</p>
+    </td>
+    <td>
+<p>Whether the query was cached.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>SQLParameters</p>
+    </td>
+    <td>
+<p>Ordered array of <code>cfqueryparam</code> values.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ExecutionTime</p>
+    </td>
+    <td>
+<p>Cumulative time required to process the query, in milliseconds.</p>
+    </td>
+  </tr>
+</table>
+
+<p>In your CFML code, you can use these variables as if they were columns in a database table. Use the <code>result</code> attribute to specify the name of the structure that ColdFusion populates with these variables. You then use that structure name to refer to the query variables as illustrated in the following example:</p>
+<h4>To output information about the query on your page:</h4>
+<ol>
+<li>
+   Edit emplist.cfm so that it appears as follows:
+<pre>
+&lt;cfset Emp_ID = 1&gt;
+&lt;cfquery name=&quot;EmpList&quot; datasource=&quot;cfdocexamples&quot; result=&quot;tmpResult&quot;&gt;
+	SELECT FirstName, LastName, Salary, Contract
+	FROM Employee
+	WHERE Emp_ID = &lt;cfqueryPARAM value = &quot;#Emp_ID#&quot;
+   					CFSQLType = &quot;CF_SQL_INTEGER&quot;&gt;
+&lt;/cfquery&gt;
+&lt;cfoutput query=&quot;EmpList&quot;&gt;
+	#EmpList.FirstName#, #EmpList.LastName#, #EmpList.Salary#, 
+#EmpList.Contract#&lt;br&gt; 
+&lt;/cfoutput&gt; &lt;br&gt; 
+&lt;cfoutput&gt;
+	The query returned #tmpResult.RecordCount# records.&lt;br&gt;
+	The query columns are:  #tmpResult.ColumnList#.&lt;br&gt;
+	The SQL is #tmpResult.SQL#.&lt;br&gt;
+	Whether the query was cached: #tmpResult.Cached#.&lt;br&gt; 
+	Query execution time: #tmpResult.ExecutionTime#.&lt;br&gt;
+&lt;/cfoutput&gt;
+&lt;cfdump var=&quot;#tmpResult.SQLParameters#&quot;&gt;
+</pre>
+</li>
+<li>
+   Save the file and view it in your web browser:
+<p>The number of employees now appears below the list of employees. You might have to refresh your browser and scroll to see the RecordCount output.</p>
+</li>
+</ol>
+<h4><a name="wp1096598"></a>Reviewing the code</h4>
+<p>You now display the number of records retrieved in the query. The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Displays what follows.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>The query returned
+</pre>    </td>
+    <td>
+<p>Displays the text &quot;The query returned&quot;.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>#EmpList.RecordCount#
+</pre>    </td>
+    <td>
+<p>Displays the number of records retrieved in the EmpList query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>records.
+</pre>    </td>
+    <td>
+<p>Displays the text &quot;records.&quot;</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Ends the <code>cfoutput</code> block.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1151218"></a>Query variable notes and considerations</h2>
+<p>When using query variables, keep the following guidelines in mind:</p>
+<ul>
+<li>
+   Reference the query variable within a <a href="00000309.htm#1101659"><code>cfoutput</code></a> block so that ColdFusion outputs the query variable value to the page.
+</li>
+<li>
+   Surround the query variable reference with number signs (#) so that ColdFusion knows to replace the variable name with its current value.
+</li>
+<li>
+   Do not use the <code>cfoutput</code> tag <code>query</code> attribute when you output the <code>RecordCount</code> or <code>ColumnList</code> property. If you do, you get one copy of the output for each row. Instead, prefix the variable with the name of the query.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001255.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001257.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001256.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

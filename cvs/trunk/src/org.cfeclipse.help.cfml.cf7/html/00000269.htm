@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfgridupdate</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000268.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000270.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfgridupdate</h1>
+<h4><a name="wp1355640"></a>Description</h4>
+<p>Used within a <a href="00000266.htm#1836171"><code>cfgrid</code></a> tag. Updates data sources directly from edited grid data. This tag provides a direct interface with your data source.</p>
+<p>This tag applies <code>delete</code> row actions first, then <code>insert</code> row actions, then <code>update</code> row actions. If it encounters an error, it stops processing rows. </p>
+<h4><a name="wp1887729"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a></p>
+<h4><a name="wp1099755"></a>Syntax</h4>
+<pre>&lt;cfgridupdate <br />   grid = &quot;gridname&quot;<br />   dataSource = &quot;data source name&quot;<br />   tableName = &quot;table name&quot;<br />   username = &quot;data source username&quot;<br />   password = &quot;data source password&quot;<br />   tableOwner = &quot;table owner&quot;<br />   tableQualifier = &quot;qualifier&quot;<br />   keyOnly = &quot;yes&quot; or &quot;no&quot;&gt;
+</pre><h4><a name="wp1887688"></a>See also</h4>
+<p><a href="00000266.htm#1836171"><code>cfgrid</code></a><code>, </code><a href="00000267.htm#3764697"><code>cfgridcolumn</code></a><code>, </code><a href="00000268.htm#3842572"><code>cfgridrow</code></a><code>, </code><a href="00000256.htm#2433198"><code>cfform</code></a><code>, </code><a href="00000216.htm#1097239"><code>cfapplet</code></a><code>,</code> <a href="00000279.htm#1100379"><code>cfinput</code></a><code>, </code><a href="00000331.htm#2553073"><code>cfselect</code></a><code>, </code><a href="00000337.htm#2612389"><code>cfslider</code></a><code>, </code><a href="00000342.htm#2810302"><code>cftextinput</code></a><code>, </code><a href="00000347.htm#1104271"><code>cftree</code></a></p>
+<h4><a name="wp2510735"></a>History</h4>
+<p>ColdFusion&#160;MX: Deprecated the <code>connectString</code>, <code>dbName</code>, <code>dbServer</code>, <code>dbtype</code>, <code>provider</code>, and <code>providerDSN</code> attributes. They do not work, and might cause an error, in releases later than ColdFusion 5. </p>
+<h4><a name="wp2985868"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>grid</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the <code>cfgrid</code> form element that is the source for the update action. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>dataSource</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the data source for the update action. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>tableName</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the table to update.</p>
+<p>For ORACLE drivers, entry must be upper-case.</p>
+<p>For Sybase driver, entry is case-sensitive; must be same case as used when table was created.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>username</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Overrides username value specified in ODBC setup.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>password</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Overrides password value specified in ODBC setup.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tableOwner</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Table owner, if supported.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>tableQualifier</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Table qualifier, if supported. Purpose:</p>
+<ul>
+<li>
+   SQL Server and Oracle driver: name of database that contains the table.
+</li>
+<li>
+   Intersolv dBASE driver: directory of DBF files.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>keyOnly</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>no </p>
+    </td>
+    <td>
+<p>Applies to the <code>update</code> action:</p>
+<ul>
+<li>
+   yes: the WHERE criteria are limited to the key values.
+</li>
+<li>
+   no: the WHERE criteria include key values and the original values of changed fields.
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1099792"></a>Example</h4>
+<p>The following example lets you update a database by using a <code>cfgrid</code> tag to add and delete entire records or to update the data in individual cells. The <code>cfgridupdate</code> tag processes the data from the submitted form and updates the database.</p>
+<pre>&lt;!--- If the gridEntered form field exists, the form was submitted.
+      Perform gridupdate. ---&gt;
+&lt;cfif IsDefined(&quot;form.gridEntered&quot;) is True&gt;
+   &lt;cfgridupdate grid = &quot;FirstGrid&quot; dataSource = &quot;cfdocexamples&quot; Keyonly=&quot;true&quot;
+      tableName = &quot;CourseList&quot;&gt;
+ &lt;/cfif&gt;
+
+&lt;!--- Query the database to fill up the grid. ---&gt;
+&lt;cfquery name = &quot;GetCourses&quot; dataSource = &quot;cfdocexamples&quot;&gt;
+SELECT Course_ID, Dept_ID, CorNumber,
+     CorName, CorLevel, CorDesc
+FROM CourseList
+ORDER by Dept_ID ASC, CorNumber ASC
+&lt;/cfquery&gt;
+
+&lt;h3&gt;cfgrid Example&lt;/h3&gt;
+&lt;I&gt;Try adding a course to the database, and then deleting it.&lt;/i&gt;
+&lt;cfform&gt;
+&lt;cfgrid name = &quot;FirstGrid&quot; width = &quot;450&quot; 
+   query = &quot;GetCourses&quot; insert = &quot;Yes&quot; delete = &quot;Yes&quot;
+   font = &quot;Tahoma&quot; rowHeaders = &quot;No&quot; 
+   colHeaderBold = &quot;Yes&quot; 
+   selectMode = &quot;EDIT&quot;
+   insertButton = &quot;Insert a Row&quot; deleteButton = &quot;Delete selected row&quot; &gt;
+&lt;/cfgrid&gt;&lt;br&gt;
+&lt;cfinput type=&quot;submit&quot; name=&quot;gridEntered&quot;&gt;
+&lt;/cfform&gt;...
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000268.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000270.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000269.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

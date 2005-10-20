@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setCFCTimeout</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000733.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000735.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setCFCTimeout</h1>
+<h4><a name="wp1177684"></a>Description</h4>
+<p>Sets the time-out, in seconds, during which the listener CFC must process the event request and return before ColdFusion gateway services terminates the request.</p>
+<h4><a name="wp1177686"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1176681"></a>Syntax</h4>
+<pre>void setCFTimeout(String <i>timeout</i>)
+</pre><h4><a name="wp1176683"></a>See also</h4>
+<p><a href="00000727.htm#1174513">getCFCTimeout</a>, <a href="00000732.htm#1176556">setCFCMethod</a>, <a href="00000733.htm#1176657">setCFCPath</a>, <a href="00001688.htm#117767">CFEvent class</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1177659"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>timeout</p>
+    </td>
+    <td>
+<p>The CFC time-out period, in seconds. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1177643"></a>Usage</h4>
+<p>When ColdFusion calls a listener CFC method to process the event, and the CFC does not return in the specified time-out period, ColdFusion terminates the request and logs an error in the application.log file. </p>
+<p>If you do not use this method, ColdFusion uses the Timeout Request value set on the Server Settings page in the ColdFusion MX Administrator. </p>
+<p>Use this method if your messages require a longer or shorter time-out period than standard ColdFusion MX HTML requests.</p>
+<h4><a name="wp1176690"></a>Example</h4>
+<p>The following example code is based on the Socket gateway processInput method that takes input from the socket and sends it to the CFC listener methods. It sets the CFC time-out to 10 seconds.</p>
+<pre>for (int i = 0; i &lt; listeners.length; i++)
+{
+   String path = listeners[i];
+   CFEvent event = new CFEvent(gatewayID);
+   Hashtable mydata = new Hashtable();
+   mydata.put(&quot;MESSAGE&quot;, theInput);
+   event.setData(mydata);
+   event.setGatewayType(&quot;SocketGateway&quot;);
+   event.setOriginatorID(theKey);
+   event.setCfcMethod(cfcEntryPoint);
+<strong>   event.setCfcTimeOut(10);</strong>
+   if (path != null)
+       event.setCfcPath(path);
+   boolean sent = gatewayService.addEvent(event);
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000733.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000735.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000734.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

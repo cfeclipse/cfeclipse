@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXStringSet::GetCount</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000811.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000813.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXStringSet::GetCount</h1>
+<h4><a name="wp1099464"></a>Syntax</h4>
+<pre>int CCFXStringSet::GetCount(void)
+</pre><h4><a name="wp1102877"></a>Description</h4>
+<p>Gets the number of strings in a string set. The value can be used with <a href="00000814.htm#1098622">CCFXStringSet::GetString</a> to iterate over the strings in the set (recall that the index values for strings in the list begin at 1).</p>
+<h4><a name="wp1145663"></a>Returns</h4>
+<p>Returns the number of strings contained in the string set.</p>
+<h4><a name="wp1102924"></a>Example</h4>
+<p>The following example demonstrates using <code>GetCount</code> with <a href="00000814.htm#1098622">CCFXStringSet::GetString</a> to iterate over a string set and write the contents of the list back to the user:</p>
+<pre>int nNumItems = pStringSet-&gt;GetCount() ;<br />for ( int i=1; i&lt;=nNumItems; i++ )<br />{<br />               pRequest-&gt;Write( pStringSet-&gt;GetString( i ) ) ;<br />               pRequest-&gt;Write( &quot;&lt;BR&gt;&quot; ) ;<br />}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000811.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000813.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000812.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the Flash Remoting service with ColdFusion pages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001479.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001481.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the Flash Remoting service with ColdFusion pages</h1>
+<p>When you build a ColdFusion page that interacts with a Flash application, the directory name that contains the ColdFusion pages translates to the service name that you call in ActionScript. The individual ColdFusion page names within that directory translate to service functions that you call in ActionScript.</p>
+<p><strong>Note: </strong>Flash Remoting cannot interact with virtual directories accessed through a ColdFusion mapping.</p><p>In your ColdFusion pages, you use the Flash variable scope to access parameters passed to and from a Flash application. To access parameters passed from a Flash application, you use the parameter name appended to the <code>Flash</code> scope or the <code>Flash.Params</code> array. To return values to the Flash application, use the <code>Flash.Result </code>variable. To set an increment value for records in a query object to be returned to the Flash application, use the<code> Flash.Pagesize</code> variable. </p>
+<p>The following table shows the variables contained in the Flash scope:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Variable
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+For more information
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Flash.Params</p>
+    </td>
+    <td>
+<p>Array that contains the parameters passed from the Flash application. If you do not pass any parameters, <code>Flash.params</code> still exists, but it is empty.</p>
+    </td>
+    <td>
+<p>See <a href="00001480.htm#1165623">Accessing parameters passed from Flash</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Flash.Result</p>
+    </td>
+    <td>
+<p>The variable returned from the ColdFusion page to the Flash application that called the function.</p>
+<p><code><strong>Note:</strong></code> Because ActionScript performs automatic type conversion, do not return a Boolean literal to Flash from ColdFusion. Return <code>1</code> to indicate <code>true</code>, and return <code>0</code> to indicate <code>false</code>.</p>
+    </td>
+    <td>
+<p>See <a href="00001480.htm#1164793">Returning results to Flash</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Flash.Pagesize</p>
+    </td>
+    <td>
+<p>The number of records returned in each increment of a record set to a Flash application.</p>
+    </td>
+    <td>
+<p>See <a href="00001480.htm#1160826">Returning records in increments to Flash</a>.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following table compares the ColdFusion&#160;MX data types and their ActionScript equivalents:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+ActionScript data type
+    </th>
+    <th>
+ColdFusion MX data type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Number (primitive data type)</p>
+    </td>
+    <td>
+<p>Number</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Boolean (primitive data type) </p>
+    </td>
+    <td>
+<p>Boolean (0 or 1) </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>String (primitive data type)</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ActionScript Object</p>
+    </td>
+    <td>
+<p>Structure</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>ActionScript Object (as the only argument passed to a service function)</p>
+    </td>
+    <td>
+<p>Arguments of the service function. ColdFusion pages (CFM files): <code>flash</code> variable scope, ColdFusion components (CFC files): named arguments</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Null</p>
+    </td>
+    <td>
+<p>Null (<code>Asc()</code> returns 0, which translates to not defined)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Undefined</p>
+    </td>
+    <td>
+<p>Null (<code>Asc()</code> returns 0, which translates to not defined)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Ordered array</p>
+<p><strong>Note: </strong>ActionScript array indexes start at zero (for example: my_ASarray[0]). </p>
+    </td>
+    <td>
+<p>Array</p>
+<p><strong>Note:</strong> ColdFusion array indexes start at one (for example: my_CFarray[1]).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Named (or associative) array</p>
+    </td>
+    <td>
+<p>Struct</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Date object</p>
+    </td>
+    <td>
+<p>Date</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XML object</p>
+    </td>
+    <td>
+<p>XML document</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>RecordSet</p>
+    </td>
+    <td>
+<p>Query object (when returned to a Flash application only; you cannot pass a RecordSet from a Flash application to a ColdFusion&#160;MX application)</p>
+    </td>
+  </tr>
+</table>
+
+<p>Also, remember the following considerations regarding data types:</p>
+<ul>
+<li>
+   If a string data type on the server represents a valid number in ActionScript, Flash can automatically cast it to a number if needed.
+</li>
+<li>
+   To return multiple, independent values to the Flash application, place them in a complex variable that converts to a Flash Object, Array, or Associative Array, that can hold all of the required data. Return the single variable and access its elements in the Flash application.
+</li>
+</ul>
+<p>For a complete explanation of using Flash Remoting data in ActionScript, see Using Flash Remoting MX 2004<i> </i>Help. </p>
+<h2><a name="wp1165623"></a>Accessing parameters passed from Flash</h2>
+<p>To access variables passed from Flash applications, you append the parameter name to the Flash scope or use the <code>Flash.Params</code> array. Depending on how the values were passed from Flash, you refer to array values using ordered array syntax or structure name syntax. Only ActionScript objects can pass named parameters.</p>
+<p>For example, if you pass the parameters as an ordered array from Flash<code>,</code> <code>array[1]</code> references the first value. If you pass the parameters as named parameters, you use standard structure-name syntax like <code>params.name</code>.</p>
+<p>You can use most of the CFML array and structure functions on ActionScript collections. However, the <code>StructCopy</code> CFML function does not work with ActionScript collections. The following table lists ActionScript collections and describes how to access them in ColdFusion&#160;MX:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Collection
+    </th>
+    <th>
+ActionScript example
+    </th>
+    <th>
+Notes
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Strict array</p>
+    </td>
+    <td>
+<pre>var myArray:Array = new Array(); 
+myArray[0] = &quot;zero&quot;; 
+myArray[1] = &quot;one&quot;; 
+myService.myMethod(myArray);
+</pre>    </td>
+    <td>
+<p>The Flash Remoting service converts the Array argument to a ColdFusion&#160;MX array. All CFML array operations work as expected. </p>
+<p><code>&lt;cfset p1=Flash.Params[1][1]&gt;</code></p>
+<p><code>&lt;cfset p2=Flash.Params[1][2]&gt;</code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Named or associative array</p>
+    </td>
+    <td>
+<pre>var myStruct:Array = new Array(); 
+myStruct[&quot;zero&quot;] = &quot;banana&quot;; 
+myStruct[&quot;one&quot;] = &quot;orange&quot;; 
+myService.myMethod(myStruct);
+</pre>    </td>
+    <td>
+<p>Named array keys are not case-sensitive in ActionScript. </p>
+<p><code>&lt;cfset p1=Flash.Params[1].zero&gt;</code></p>
+<p><code>&lt;cfset p2=Flash.Params[1].one&gt;</code></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Mixed array</p>
+    </td>
+    <td>
+<pre>var myMxdArray:Array = new Array();
+myMxdArray[&quot;one&quot;] = 1; 
+myMxdArray[2] = true;
+</pre>    </td>
+    <td>
+<p>Treat this collection like a structure in ColdFusion&#160;MX. However, keys that start with numbers are invalid CFML variable names. Depending on how you attempt to retrieve this data, ColdFusion&#160;MX might throw an exception. For example, the following CFC method throws an exception: </p>
+<p><code>&lt;cfargument name=&quot;ca&quot; type=&quot;struct&quot;&gt; </code></p>
+<p><code>&lt;cfreturn ca.2&gt;</code><code> </code></p>
+<p>&#160;</p>
+<p>The following CFC method does not throw an exception:</p>
+<p><code>&lt;cfargument name=&quot;ca&quot; type=&quot;struct&quot;&gt; </code></p>
+<p><code>&lt;cfreturn ca[&quot;2&quot;]&gt;</code><code> </code></p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Using an ActionScript object initializer for named arguments</p>
+    </td>
+    <td>
+<pre>myService.myMethod<br />({ x:1, Y:2, z:3 });
+</pre>    </td>
+    <td>
+<p>This notation provides a convenient way of passing named arguments to ColdFusion pages. You can access these arguments in ColdFusion pages as members of the Flash scope: </p>
+<p><code>&lt;cfset p1 = Flash.x&gt;</code></p>
+<p><code>&lt;cfset p2 = Flash.y&gt;</code></p>
+<p><code>&lt;cfset p3 = Flash.z&gt;</code></p>
+<p>Or, you can access them as normal named arguments of a CFC method.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The <code>Flash.Params</code> array retains the order of the parameters as they were passed to the method. You use standard structure name syntax to reference the parameters; for example:</p>
+<pre>&lt;cfquery name=&quot;flashQuery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+   SELECT ItemName, ItemDescription, ItemCost
+   FROM tblItems
+   WHERE ItemName EQ <code><strong>&#39;#Flash.paramName#&#39;</strong></code>
+&lt;/cfquery&gt;
+</pre><p>In this example, the query results are filtered by the value of <code>Flash.paramName</code>, which<code> </code>references the first parameter in the passed array. If the parameters were passed as an ordered array from the Flash application, you use standard structure name syntax; for example:</p>
+<pre>&lt;cfset Flash.Result = &quot;Variable 1:#Flash.Params[1]#, Variable 2: #Flash.Params[2]#&quot;&gt;
+</pre><p><strong>Tip: </strong>ActionScript array indexes start at zero. ColdFusion array indexes start at one. </p><h2><a name="wp1164793"></a>Returning results to Flash</h2>
+<p>In ColdFusion pages, only the value of the <code>Flash.Result</code> variable is returned to the Flash application. For more information about supported data types between ColdFusion&#160;MX and Flash, see the data type table in <a href="00001480.htm#1171034">Using the Flash Remoting service with ColdFusion pages</a>. The following procedure creates the service function <code>helloWorld</code>, which returns a structure that contains simple messages to the Flash application. </p>
+<h4>To create a ColdFusion page that passes a structure to a Flash application:</h4>
+<ol>
+<li>
+   Create a folder in your web root, and name it helloExamples.
+</li>
+<li>
+   Create a ColdFusion page, and save it as helloWorld.cfm in the helloExamples directory. 
+</li>
+<li>
+   Modify helloWorld.cfm so that the CFML code appears as follows:
+<pre>
+&lt;cfset tempStruct = StructNew()&gt;
+&lt;cfset tempStruct.timeVar = DateFormat(Now ())&gt;
+&lt;cfset tempStruct.helloMessage = &quot;Hello World&quot;&gt;
+</pre>
+<p>In the example, two string variables are added to a structure; one with a formatted date and one with a simple message. The structure is passed back to the Flash application using the <code>Flash.Result</code> variable. </p>
+<pre>
+&lt;cfset Flash.Result = tempStruct&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<p>Remember, the directory name is the service address. The helloWorld.cfm file is a method of the <code>helloExamples</code> Flash Remoting service. The following ActionScript example calls the helloWorld ColdFusion page and displays the values that it returns:</p>
+<pre>import mx.remoting.*;  
+import mx.services.Log;
+import mx.rpc.*; 
+
+// Connect to helloExamples service and create the howdyService service object
+   var howdyService:Service = new Service(
+         &quot;http://localhost/flashservices/gateway&quot;,
+         null,
+         &quot;helloExamples&quot;,
+         null, 
+         null );
+// Call the service helloWorld() method
+var pc:PendingCall = howdyService.helloWorld();
+// Tell the service what methods handle result and fault conditions
+pc.responder = new RelayResponder( this, &quot;helloWorld_Result&quot;, &quot;helloWorld_Fault&quot; );  
+  
+function helloWorld_Result(re:ResultEvent)
+{
+   // Display successful result
+   messageDisplay.text = re.result.HELLOMESSAGE;
+   timeDisplay.text = re.result.TIMEVAR;
+}
+
+function helloWorld_Fault(fe:FaultEvent)
+{
+   // Display fault returned from service
+   messageDisplay.text = fe.fault;
+}
+</pre><p><strong>Note: </strong>Due to ActionScript&#39;s automatic type conversion, do not return a Boolean literal to Flash from ColdFusion. Return <code>1</code> to indicate <code>true</code>, and return <code>0</code> to indicate <code>false</code>. </p><h2><a name="wp1160826"></a>Returning records in increments to Flash</h2>
+<p>ColdFusion&#160;MX lets you return record set results to Flash in increments. For example, if a query returns 20 records, you can set the <code>Flash.Pagesize</code> variable to return five records at a time to Flash. Incremental record sets let you minimize the time that a Flash application waits for the application server data to load.</p>
+<h4>To create a ColdFusion page that returns a incremental record set to Flash:</h4>
+<ol>
+<li>
+   Create a ColdFusion page, and save it as getData.cfm in the helloExamples directory.
+</li>
+<li>
+   Modify getData.cfm so that the code appears as follows:
+<pre>
+&lt;cfparam name=&quot;pagesize&quot; default=&quot;10&quot;&gt;
+&lt;cfif IsDefined(&quot;Flash.Params&quot;)&gt;
+	&lt;cfset pagesize = Flash.Params[1]&gt;
+&lt;/cfif&gt;
+&lt;cfquery name=&quot;myQuery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT *
+	FROM tblParks
+&lt;/cfquery&gt;
+&lt;cfset Flash.Pagesize = pagesize&gt;
+&lt;cfset Flash.Result = myQuery&gt;
+</pre>
+<p>In this example, if a single parameter is passed from the Flash application, the <code>pagesize</code> variable is set to the value of the <code>Flash.Params[1]</code> variable; otherwise, the value of the variable is the default, 10. Next, a <a href="00000316.htm#1102316"><code>cfquery</code></a> statement queries the database. After that, the <code>pagesize</code> variable is assigned to the <code>Flash.Pagesize </code>variable. Finally, the query results are assigned to the <code>Flash.Result</code> variable, which is returned to the Flash application. </p>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<p>When you assign a value to the <code>Flash.Pagesize</code> variable, you are specifying that if the record set has more than a certain number of records, the record set becomes pageable and returns the number of records specified in the <code>Flash.Pagesize</code> variable. For example, the following code calls the <code>getData()</code> function of the CFMService and uses the first parameter to request a page size of 5:</p>
+<pre>import mx.remoting.*;  
+import mx.services.Log;
+import mx.rpc.*; 
+// Connect to helloExamples service and create the CFMService service object
+   var CFMService:Service = new Service(
+         &quot;http://localhost/flashservices/gateway&quot;,
+         null,
+         &quot;helloExamples&quot;,
+         null, 
+         null );
+// Call the service getData() method
+var pc:PendingCall = <code><strong>CFMService.getData(5)</strong></code>;
+// Tell the service what methods handle result and fault conditions
+pc.responder = new RelayResponder( this, &quot;getData_Result&quot;, &quot;getData_Fault&quot; );  
+  
+function getData_Result(re:ResultEvent)
+{
+   // Display successful result
+   DataGlue.bindFormatStrings(employeeData, re.result, &quot;#PARKNAME#, #CITY#, #STATE#&quot;);
+}
+function getData_Fault(fe:FaultEvent)
+{
+   // Display fault returned from service
+   trace(&quot;Error description from server: &quot; + fe.fault.description);
+}
+</pre><p>In this example, <code>employeeData</code> is a Flash list box. The result handler, <code>getData_Result,</code> displays the columns PARKNAME, CITY, and STATE in the <code>employeeData</code> list box. After the initial delivery of records, the RecordSet ActionScript class assumes the task of fetching records. In this case, the list box requests more records as the user scrolls the list box. </p>
+<p>You can configure the client-side RecordSet object to fetch records in various ways using the <code>ResordSet.setDeliveryMode</code> ActionScript function.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001479.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001481.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001480.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

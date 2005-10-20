@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using an Application.cfm page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001123.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001125.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using an Application.cfm page</h1>
+<p>If you do not use an Application.cfc file, you can use the Application.cfm page to define application-level settings and functions, as described in the following sections.</p>
+<ul>
+<li>
+   <a href="00001124.htm#1192702">Naming the application</a>
+</li>
+<li>
+   <a href="00001124.htm#1162949">Setting the client, application, and session variables options</a>
+</li>
+<li>
+   <a href="00001124.htm#1169243">Defining page processing settings</a>
+</li>
+<li>
+   <a href="00001124.htm#1195439">Setting application default variables and constants</a>
+</li>
+<li>
+   <a href="00001124.htm#1169477">Processing logins</a>
+</li>
+<li>
+   <a href="00001124.htm#1169418">Handling errors</a>
+</li>
+<li>
+   <a href="00001124.htm#1169391">Example: an Application.cfm page</a>
+</li>
+</ul>
+<h2><a name="wp1192702"></a>Naming the application</h2>
+<p>Use the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag to specify the application name and define a set of pages as part of the same logical application. Although you can create an application by putting a <code>cfapplication</code> tag with the application name on each page, you normally put the tag in the Application.cfm file; for example:</p>
+<pre>&lt;cfapplication name=&quot;SearchApp&quot;&gt;
+</pre><p><strong>Note: </strong>The value that you set for the <code>name</code> attribute in the <code>cfapplication</code> tag is limited to 64 characters. </p><h2><a name="wp1162949"></a>Setting the client, application, and session variables options</h2>
+<p>Use the <a href="00000217.htm#1097308"><code>cfapplication</code></a> tag to specify client state and persistent variable use, as follows: </p>
+<ul>
+<li>
+   To use Client scope variables, you must specify <code>clientManagement=True.</code>
+</li>
+<li>
+   To use Session scope variables, you must specify <code>sessionManagment=True</code>.
+</li>
+</ul>
+<p>You can also optionally do the following:</p>
+<ul>
+<li>
+   Set application-specific time-outs for Application and Session scope variables. These settings override the default values set in the ColdFusion&#160;MX Administrator.
+</li>
+<li>
+   Specify a storage method for Client scope variables. This setting overrides the method set in the ColdFusion&#160;MX Administrator.
+</li>
+<li>
+   Specify not to use cookies on the client browser.
+</li>
+</ul>
+<p>For more information on configuring these options, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>, and <i>CFML Reference</i>.</p>
+<h2><a name="wp1169243"></a>Defining page processing settings</h2>
+<p>The <a href="00000335.htm#1103514"><code>cfsetting</code></a> tag lets you specify page processing attributes that you might want to apply to all pages in your application. For more information, see <a href="00001116.htm#1193871">Setting page processing options</a>.</p>
+<h2><a name="wp1195439"></a>Setting application default variables and constants</h2>
+<p>You can set default variables and application-level constants on the Application.cfm page. For example, you can specify the following values:</p>
+<ul>
+<li>
+   A data source
+</li>
+<li>
+   A domain name
+</li>
+<li>
+   Style settings, such as fonts or colors
+</li>
+<li>
+   Other important application-level variables
+</li>
+</ul>
+<p>Often, an Application.cfm page uses one or more <a href="00000277.htm#1100248"><code>cfinclude</code></a> tags to include libraries of commonly used code, such as user-defined functions, that are required on many of the application's pages.</p>
+<h2><a name="wp1169477"></a>Processing logins</h2>
+<p>When an application requires a user to log in, you typically put the <code>cflogin</code> tag on the Application.cfm page. For detailed information on security and creating logins, including an Application.cfm page that manages user logins, see <a href="00001175.htm#1100022">Securing Applications</a>.</p>
+<h2><a name="wp1169418"></a>Handling errors</h2>
+<p>You can use the <code>cferror</code> tag on your Application.cfm page to specify application-specific error-handling pages for request, validation, or exception errors, as shown in the example in the following section. This way you can include application-specific information, such as contact information or application or version identifiers, in the error message, and you display all error messages in the application in a consistent manner.</p>
+<p>For more information on error pages and error handling, see <a href="00001130.htm#1220254">Handling Errors</a>.</p>
+<h2><a name="wp1169391"></a>Example: an Application.cfm page</h2>
+<p>The following example shows a sample Application.cfm file that uses several of the techniques typically used in Application.cfm pages. For the sake of simplicity, it does not show login processing; for a login example, see <a href="00001175.htm#1100022">Securing Applications</a>.</p>
+<pre>&lt;!--- Set application name and enable Client and Session variables. ---&gt;
+&lt;cfapplication name=&quot;Products&quot;
+   clientmanagement=&quot;Yes&quot;
+   clientstorage=&quot;myCompany&quot;
+   sessionmanagement=&quot;Yes&quot;&gt;
+
+&lt;!--- Set page processing attributes. ---&gt;
+&lt;cfsetting showDebugOutput=&quot;No&quot;&gt;
+
+&lt;!--- Set custom global error handling pages for this application.---&gt;
+&lt;cferror type=&quot;request&quot;
+   template=&quot;requesterr.cfm&quot;
+   mailto=&quot;admin@company.com&quot;&gt;
+&lt;cferror type=&quot;validation&quot; 
+   template=&quot;validationerr.cfm&quot;&gt;
+
+&lt;!--- Set the Application variables if they aren't defined. ---&gt;
+&lt;!--- Initialize local app_is_initialized flag to false. ---&gt;
+&lt;cfset app_is_initialized = False&gt;
+&lt;!--- Get a read-only lock. ---&gt;
+&lt;cflock scope=&quot;application&quot; type=&quot;readonly&quot; timeout=10&gt;
+&lt;!--- Read init flag and store it in local variable. ---&gt;
+   &lt;cfset app_is_initialized = IsDefined(&quot;Application.initialized&quot;)&gt;
+&lt;/cflock&gt;
+&lt;!--- Check the local flag. ---&gt;
+&lt;cfif not app_is_initialized&gt;
+&lt;!--- Application variables are not initialized yet.
+      Get an exclusive lock to write scope. ---&gt;
+   &lt;cflock scope=&quot;application&quot; type=&quot;exclusive&quot; timeout=10&gt;
+      &lt;!--- Check the Application scope initialized flag since another request
+         could have set the variables after this page released the read-only
+         lock. ---&gt;
+      &lt;cfif not IsDefined(&quot;Application.initialized&quot;)&gt;
+         &lt;!--- Do initializations ---&gt;
+         &lt;cfset Application.ReadOnlyData.Company = &quot;MyCompany&quot;&gt;
+         &lt;!--- and so on ---&gt; 
+         &lt;!--- Set the Application scope initialization flag. ---&gt;
+         &lt;cfset Application.initialized = &quot;yes&quot;&gt;
+      &lt;/cfif&gt;
+   &lt;/cflock&gt;
+&lt;/cfif&gt;
+
+&lt;!--- Set a Session variable.---&gt;
+&lt;cflock timeout=&quot;20&quot; scope=&quot;Session&quot; type=&quot;exclusive&quot;&gt;
+   &lt;cfif not IsDefined(&quot;session.pagesHit&quot;)&gt;
+      &lt;cfset session.pagesHit=1&gt;
+   &lt;cfelse&gt;
+      &lt;cfset session.pagesHit=session.pagesHit+1&gt;
+   &lt;/cfif&gt;
+&lt;/cflock&gt;
+
+&lt;!--- Set Application-specific Variables scope variables. ---&gt;
+&lt;cfset mainpage = &quot;default.cfm&quot;&gt;
+&lt;cfset current_page = &quot;#cgi.path_info#?#cgi.query_string#&quot;&gt;
+
+&lt;!--- Include a file containing user-defined functions called throughout
+      the application. ---&gt;
+&lt;cfinclude template=&quot;commonfiles/productudfs.cfm&quot;&gt;
+</pre><h4><a name="wp1171013"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfapplication name=&quot;Products&quot;
+   clientmanagement=&quot;Yes&quot;
+   clientstorage=&quot;myCompany&quot;
+   sessionmanagement=&quot;Yes&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Names the application, enables Client and Session scope variables, and sets the client variable store to the myCompany data source.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfsetting showDebugOutput=&quot;No&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Ensures that debugging output is not displayed, if the ColdFusion&#160;MX Administrator enables it.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cferror type=&quot;request&quot;
+   template=&quot;requesterr.cfm&quot;
+   mailto=&quot;admin@company.com&quot;&gt;
+&lt;cferror type=&quot;validation&quot; 
+   template=&quot;validationerr.cfm&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Specifies custom error handlers for request and validation errors encountered in the application. Specifies the mailing address for use in the request error handler.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfset app_is_initialized = False&gt;
+.
+.
+.
+</pre>    </td>
+    <td>
+<p>Sets the Application scope variables, if they are not already set. For a detailed description of the technique used to set the Application scope variables, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cflock timeout=&quot;20&quot; 
+      scope=&quot;Session&quot; 
+      type=&quot;exclusive&quot;&gt;
+   &lt;cfif not IsDefined(&quot;session.pagesHit&quot;)&gt;
+      &lt;cfset session.pagesHit=1&gt;
+   &lt;cfelse&gt;
+      &lt;cfset session.pagesHit=
+         session.pagesHit+1&gt;
+   &lt;/cfif&gt;
+&lt;/cflock&gt;
+</pre>    </td>
+    <td>
+<p>Sets the Session scope <code>pagesHit</code> variable, which counts the number of pages touched in this session. If the variable does not exist, creates it; otherwise, increments it.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfset mainpage = &quot;default.cfm&quot;&gt;
+&lt;cfset current_page =
+   &quot;#cgi.path_info#?#cgi.query_string#&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Sets two Variables scope variables that are used throughout the application. Creates the current_page variable dynamically; its value varies from request to request.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfinclude template=
+   &quot;commonfiles/productudfs.cfm&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Includes a library of user-defined functions that are used in most pages in the application.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001123.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001125.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001124.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

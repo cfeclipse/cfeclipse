@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating ColdFusion components</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001025.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001027.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating ColdFusion components</h1>
+<p>When you create CFCs, you create methods, which are ColdFusion user-defined functions, in the component page. You pass data to a method by using parameters. The method then performs the function and, if specified in the <a href="00000326.htm#2498057"><code>cfreturn</code></a> tag, returns data.</p>
+<p>You can also define variables in a CFC. Within a CFC, these variables are known as <i>properties</i>.</p>
+<p>The following sections describe how to create CFCs:</p>
+<ul>
+<li>
+   <a href="00001026.htm#1220253">Tags for creating CFCs</a>
+</li>
+<li>
+   <a href="00001026.htm#1215909">Elements of a CFC</a>
+</li>
+<li>
+   <a href="00001026.htm#1217170">Building ColdFusion components</a>
+</li>
+<li>
+   <a href="00001032.htm#1214265">Providing results</a>
+</li>
+<li>
+   <a href="00001026.htm#1220253">Tags for creating CFCs</a>
+</li>
+<li>
+   <a href="00001026.htm#1215909">Elements of a CFC</a>
+</li>
+<li>
+   <a href="00001026.htm#1217170">Building ColdFusion components</a>
+</li>
+<li>
+   <a href="00001032.htm#1214265">Providing results</a>
+</li>
+</ul>
+<h2><a name="wp1220253"></a>Tags for creating CFCs</h2>
+<p>The following table lists the tags that you use to create a CFC. You use these tags on the CFML page that defines the CFC.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Tag
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000231.htm#3350776"><code>cfcomponent</code></a></p>
+    </td>
+    <td>
+<p>Contains a component definition; includes attributes for introspection. For more information, see <a href="00001026.htm#1217170">Building ColdFusion components</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000263.htm#2852457"><code>cffunction</code></a></p>
+    </td>
+    <td>
+<p>Defines a component method (function); includes attributes for introspection. For more information, see <a href="00001027.htm#1215261">Defining component methods</a>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><a href="00000218.htm#2855190"><code>cfargument</code></a></p>
+    </td>
+    <td>
+<p>Defines a parameter (argument) to a method; includes attributes for introspection. For more information, see <a href="00001031.htm#1213291">Defining and using method parameters</a>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><a href="00000315.htm#2498235"><code>cfproperty</code></a></p>
+    </td>
+    <td>
+<p>Defines variables for CFCs that provide web services; also use to document component properties. For more information, see <a href="00001035.htm#1216286">The cfproperty tag</a>.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1215909"></a>Elements of a CFC</h2>
+<p>A CFC has the following characteristics:</p>
+<ul>
+<li>
+   It is a single CFML page with a .cfc filename extension. The component name is the same as the filename. For example, if the file is myComponent.cfc, the component name is myComponent.
+</li>
+<li>
+   The page is surrounded by a <a href="00000231.htm#3350776"><code>cfcomponent</code></a> tag. No code can be outside this tag.
+</li>
+<li>
+   The component page defines methods (functions), properties (data), or both. Most CFCs have methods, or methods and properties, but you can also have a CFC that contains only properties.
+</li>
+<li>
+   You use the <a href="00000263.htm#2852457"><code>cffunction</code></a> tag to define CFC methods. The CFScript <code>function</code> statement can create simple methods, but it does not provide options to control access to the method, provide metadata, specify a return type, or control generated output.
+</li>
+<li>
+   You can write code on the component page that is outside of <code>cffunction</code> definitions. This code executes when the CFC is instantiated or whenever you invoke a method of the CFC.
+</li>
+</ul>
+<h2><a name="wp1217170"></a>Building ColdFusion components</h2>
+<p>You use the <a href="00000231.htm#3350776"><code>cfcomponent</code></a> and <a href="00000263.htm#2852457"><code>cffunction</code></a> tags to create ColdFusion components. By itself, the <code>cffunction</code> tag does not provide functionality. The <code>cfcomponent</code> tag provides an envelope that describes the functionality that you build in CFML and enclose in <code>cffunction</code> tags. The following example shows the skeleton of a component with two methods:</p>
+<pre>&lt;cfcomponent&gt;
+   &lt;cffunction name=&quot;firstMethod&quot;&gt;
+       &lt;!--- CFML code for this method goes here. ---&gt;
+   &lt;/cffunction&gt;
+   &lt;cffunction name=&quot;secondMethod&quot;&gt;
+       &lt;!--- CFML code for this method goes here. ---&gt;
+   &lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001027.htm#1215261">Defining component methods</a>
+</li>
+<li>
+   <a href="00001028.htm#1213252">Defining CFCs with related methods</a>
+</li>
+<li>
+   <a href="00001029.htm#1213452">Putting executable code in a separate file</a>
+</li>
+<li>
+   <a href="00001030.htm#1230708">Initializing instance data</a>
+</li>
+<li>
+   <a href="00001031.htm#1213291">Defining and using method parameters</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001025.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001027.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001026.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

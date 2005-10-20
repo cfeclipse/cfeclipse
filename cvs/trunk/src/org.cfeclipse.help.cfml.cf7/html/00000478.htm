@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetException</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000477.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000479.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetException</h1>
+<h4><a name="wp3128142"></a>Description</h4>
+<p>Used with the <code>cftry</code> and <code>cfcatch</code> tags. Retrieves a Java exception object from a Java object. </p>
+<h4><a name="wp3378009"></a>Returns</h4>
+<p>Any Java exception object raised by a previous method call on the Java object.</p>
+<h4><a name="wp3124699"></a>Category</h4>
+<p><a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp3124701"></a>Syntax</h4>
+<pre><code><strong>GetException</strong></code>(<code><i>object</i></code>)
+</pre><h4><a name="wp3124705"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>object</p>
+    </td>
+    <td>
+<p>A Java object.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4134568"></a>Usage</h4>
+<p>ColdFusion stores a Java exception object for each method call on a Java object. Subsequent method calls reset the exception object. To get the current exception object, you must call <code>GetException</code> on the Java object before other methods are invoked on it.</p>
+<h4><a name="wp3124719"></a>Example</h4>
+<pre>&lt;!--- Create the Java object reference ---&gt;
+&lt;cfobject action = create type = java class = primativetype name = myObj&gt;
+&lt;!--- Calls the object&#39;s constructor ---&gt;
+&lt;cfset void = myObj.init()&gt;
+&lt;cftry&gt;
+&lt;cfset void = myObj.DoException() &gt;
+&lt;Cfcatch type = &quot;Any&quot;&gt;
+   &lt;cfset exception = GetException(myObj)&gt;
+&lt;!--- User can call any valid method on the exception object.---&gt;
+   &lt;cfset message = exception.toString()&gt;
+   &lt;cfoutput&gt;
+      Error&lt;br&gt;
+      I got exception &lt;br&gt;
+      &lt;br&gt; The exception message is: #message# &lt;br&gt;
+   &lt;/cfoutput&gt; 
+&lt;/cfcatch&gt;
+&lt;/cftry&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000477.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000479.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000478.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

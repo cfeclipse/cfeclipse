@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using cfinvoke to consume a web service</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001536.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001538.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using cfinvoke to consume a web service</h1>
+<p>This section describes how to consume a web service using the <code>cfinvoke</code> tag. With the <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag, you reference the WSDL file and invoke an operation on the web service with a single tag.</p>
+<p>The <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag includes attributes that specify the URL to the WSDL file, the method to invoke, the return variable, and input parameters. For complete <a href="00000281.htm#2650065"><code>cfinvoke</code></a><code> </code>syntax, see <i>CFML Reference</i>.</p>
+<p><strong>Note: </strong>You can pass parameters to a web service using the <code>cfinvokeargument</code> tag or by specifying parameter names in the <code>cfinvoke</code> tag itself. For more information, see <a href="00001051.htm#1215321">Passing parameters to methods using the cfinvoke tag</a>.</p><h4>To access a web service using cfinvoke:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;cfinvoke 
+  webservice=&quot;http://www.xmethods.net/sd/2001/TemperatureService.wsdl&quot;
+  method=&quot;getTemp&quot;
+  returnvariable=&quot;aTemp&quot;&gt;
+    &lt;cfinvokeargument name=&quot;zipcode&quot; value=&quot;55987&quot;/&gt;
+&lt;/cfinvoke&gt;
+&lt;cfoutput&gt;The temperature at zip code 55987 is #aTemp#&lt;/cfoutput&gt;
+</pre>
+</li>
+<li>
+   Save the page as wscfc.cfm in your web root directory.
+</li>
+<li>
+   View the page in your browser.
+</li>
+</ol>
+<p>You can omit a parameter by setting the <a href="00000282.htm#3014048"><code>cfinvokeargument</code></a><code> omit</code> attribute to <code>&quot;yes&quot;</code>. If the WSDL specifies that the argument is nillable, ColdFusion&#160;MX sets the associated argument to null. If the WSDL specifies minoccurs=0, ColdFusion&#160;MX omits the argument from the WSDL. However, CFC web services must still specify <code>required=&quot;true&quot;</code> for all arguments.</p>
+<p>You can also use an attribute collection to pass parameters. An attribute collections is a structure where each structure key corresponds to a parameter name and each structure value is the parameter value passed for the corresponding key. The following example shows an invocation of a web service using an attribute collection: </p>
+<pre>&lt;cfscript&gt;
+   stArgs = structNew();
+   stArgs.zipcode = &quot;55987&quot;;
+&lt;/cfscript&gt;
+
+&lt;cfinvoke 
+  webservice=&quot;http://www.xmethods.net/sd/2001/TemperatureService.wsdl&quot;
+  method=&quot;getTemp&quot;
+  <code><strong>argumentcollection=&quot;#stArgs#&quot;</strong></code>
+  returnvariable=&quot;aTemp&quot;&gt;
+&lt;cfoutput&gt;The temperature at zip code 55987 is #aTemp#&lt;/cfoutput&gt;
+</pre><p>In this example, you create the structure in a CFScript block, but you can use any ColdFusion method to create the structure. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001536.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001538.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001537.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

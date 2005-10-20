@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfapplication</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000216.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000218.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfapplication</h1>
+<h4><a name="wp1344613"></a>Description</h4>
+<p>Defines the scope of a ColdFusion application; enables and disables storage of Client variables; specifies the Client variable storage mechanism; enables Session variables; and sets Application variable timeouts. </p>
+<h4><a name="wp1864638"></a>Category</h4>
+<p><a href="00000197.htm#2463072">Application framework tags</a></p>
+<h4><a name="wp1864640"></a>Syntax</h4>
+<pre>&lt;cfapplication <br />   name = &quot;application_name&quot;<br />   loginStorage = &quot;cookie&quot; or &quot;session&quot;<br />   clientManagement = &quot;yes&quot; or &quot;no&quot;<br />   clientStorage = &quot;datasource_name&quot; or &quot;Registry&quot; or &quot;Cookie&quot; <br />   setClientCookies = &quot;yes&quot; or &quot;no&quot; <br />   sessionManagement = &quot;yes&quot; or &quot;no&quot;<br />   sessionTimeout = #CreateTimeSpan(days, hours, minutes, seconds)#<br />   applicationTimeout = #CreateTimeSpan(days, hours, minutes, seconds)#<br />   setDomainCookies = &quot;yes&quot; or &quot;no&quot;<br />   scriptProtect = &quot;none&quot;, &quot;all&quot;, or list&gt;
+</pre><h4><a name="wp2889777"></a>See also</h4>
+<p><a href="00000219.htm#3393273"><code>cfassociate</code></a>, <a href="00000242.htm#2022557"><code>cferror</code></a>, <a href="00000285.htm#1100787"><code>cflock</code></a>, <a href="00000300.htm#1810047"><code>cfmodule</code></a>; <a href="00000692.htm#1116669">Application.CFC Reference</a>; <a href="00001102.htm#1101532">Designing and Optimizing a ColdFusion&#160;Application</a> and <a href="00001557.htm#1176234">Integrating J2EE and Java Elements in CFML Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2889794"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added <code>scriptProtect</code> attribute</p>
+<p>ColdFusion MX&#160;6.1: Added <code>loginStorage</code> attribute</p>
+<p>ColdFusion&#160;MX:</p>
+<ul>
+<li>
+   Changed how persistent scopes are available: Server, Session, and Application scope variables are stored in memory as structures. In earlier releases, only Session and Application scope variables were stored this way. You cannot access the UDF function scope as a structure.
+</li>
+<li>
+   Changed the algorithm for setting the CFTOKEN variable value: if the registry key UUIDToken is a non-zero value, ColdFusion uses a number constructed from the UUID plus a random number. Otherwise, ColdFusion sets the CFTOKEN variable default value using a positive random integer. (In earlier releases, ColdFusion always used a number constructed from the UUID plus a random number.)
+</li>
+</ul>
+<h4><a name="wp2196184"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>See Description</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of application. Up to 64 characters.</p>
+<p>For Application and Session variables: Required. </p>
+<p>For Client variables: Optional</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>loginStorage</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>cookie</p>
+    </td>
+    <td>
+<ul>
+<li>
+   cookie: store login information in the Cookie scope.
+</li>
+<li>
+   session: store login information in the Session scope.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>clientManagement</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: enables client variables.
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>clientStorage</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>registry</p>
+    </td>
+    <td>
+<p>How client variables are stored:</p>
+<ul>
+<li>
+   datasource_name: in ODBC or native data source. You must create storage repository in the Administrator.
+</li>
+<li>
+   registry: in the system registry.
+</li>
+<li>
+   cookie: on client computer in a cookie. Scalable. If client disables cookies in the browser, client variables do not work.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>setClientCookies</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>yes</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: enables client cookies.
+</li>
+<li>
+   no: ColdFusion does not automatically send CFID and CFTOKEN cookies to client browser; you must manually code CFID and CFTOKEN on the URL for every page that uses Session or Client variables.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>sessionManagement</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: enables session variables.
+</li>
+<li>
+   no
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>sessionTimeout</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Specified in Variables page of ColdFusion Administrator</p>
+    </td>
+    <td>
+<p>Lifespan of session variables. CreateTimeSpan function and values in days, hours, minutes, and seconds, separated by commas. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>applicationTimeout</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Specified in Variables page of ColdFusion Administrator</p>
+    </td>
+    <td>
+<p>Lifespan of application variables. CreateTimeSpan function and values in days, hours, minutes, and seconds, separated by commas.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>setDomainCookies</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: uses domain cookies for CFID and CFTOKEN cookies and for all Client variables when using cookies for client variable storage. Required for applications running on clusters.
+</li>
+<li>
+   no: uses host-specific cookies for CFID, CFTOKEN, and all client variable cookies.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>scriptProtect</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Determined by ColdFusion MX Administrator Enable Global Script Protection setting</p>
+    </td>
+    <td>
+<p>Specifies whether to protect variables from cross-site scripting attacks</p>
+<ul>
+<li>
+   none: do not protect variables
+</li>
+<li>
+   all: protect Form, URL, CGI, and Cookie variables
+</li>
+<li>
+   comma-delimited list of ColdFusion scopes: Protect variables in the specified scopes. 
+</li>
+</ul>
+<p>For more information, see Usage.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1097332"></a>Usage</h4>
+<p>This tag is typically used in the Application.cfm file, to set defaults for a ColdFusion application.</p>
+<p><strong>Note: </strong>You can also set the application defaults in the Application.cfc file. For more information, see <a href="00000693.htm#1187059">Application variables</a>.</p><p>This tag enables application variables, unless they are disabled in the ColdFusion Administrator. The Administrator setting also overrides the <code>sessionManagement</code> attribute. For more information, see <i>Configuring and Administering ColdFusion&#160;MX</i>. </p>
+<p>If ColdFusion is running on a cluster, you must specify <code>clientStorage = &quot;cookie&quot; </code>or a data source name; you cannot specify <code>&quot;registry&quot;</code>.</p>
+<p>ColdFusion generates an error if the application name is longer than 64 characters. </p>
+<p>The CFTOKEN variable is 8 bytes in length. Its range is 10000000 --99999999.</p>
+<p><strong>Note: </strong>If you specify <code>ClientStorage=cookie</code>, any Client scope variables set following a <code>cfflush</code> tag are not saved in the Client browser.</p><h4><a name="wp3770252"></a>Protecting variables from cross-site scripting attacks</h4>
+<p>The <code>ScriptProtect</code> attribute lets you protect one or more variable scopes from cross-site scripting attacks, where a client attempts to get your application to send malicious code back to a user's browser. In these attacks, user input (for example, from form fields or from URL variables) sets a CF variable which is destined for user output. The submitted data includes malicious code, such as JavaScript or an applet or object reference, which then executes on the user's system. </p>
+<p><strong>Note: </strong>The ColdFusion MX Administrator Settings page Enable Global Script Protection option determines the default script protection setting. You can use the <code>scriptProtect</code> attribute to override the Administrator setting. You can also use the Application.cfc initialization code to set the protection value.</p><p>The ColdFusion MX cross-site scripting protection operation is done when ColdFusion MX processes the application settings at the beginning of a request. Thus, it can process the URL, and Cookie, CGI, and Form variables in a user's request. By default, it replaces occurrences of the following tag names with the text <i>InvalidTag</i>: object, embed, script, applet, and meta. It allows these names in plain text, replaces the words if they are used as tag names. </p>
+<p>You can specify any or all ColdFusion scopes for protection, but only the Form, URL, CGI, and Cookie scopes have variables that are often provided by unknown sources. Also, protecting a scope requires additional processing. For these reasons, the <code>all</code> attribute value applies protection to only the four scopes.</p>
+<p>The script protection mechanism applies a regular expression that is defined in the <i>cf_root</i>/lib/neo-security.xml file in the server configuration, or the <i>cf_root</i>/WEB-INF/cfusion/lib/neo-security.xml file in the J2EE configuration to the variable value. You can customize the patterns that ColdFusion replaces by modifying the regular expression in the CrossSiteScriptPatterns variable. </p>
+<h4><a name="wp3770265"></a>Locking server, application, and session variables</h4>
+<p>When you set or update variables in the server, application, and session scopes, use the <code>cflock</code> tag with the <code>scope</code> attribute set to the following value: </p>
+<ul>
+<li>
+   For server variables, specify &quot;<code>server</code>&quot;
+</li>
+<li>
+   For application variables, specify &quot;<code>application</code>&quot;
+</li>
+<li>
+   For session variables, specify &quot;<code>session</code>&quot;
+</li>
+</ul>
+<p>In some cases, you should also lock code that reads variables in these scopes. For information about locking scopes, see <a href="00000285.htm#1100787">cflock</a>.</p>
+<h4><a name="wp3195711"></a>Example</h4>
+<pre>&lt;!--- This example shows how to use cflock to prevent race conditions during data updates to variables in Application, Server, and Session scopes. ---&gt;
+&lt;h3&gt;cfapplication Example&lt;/h3&gt;
+&lt;p&gt;cfapplication defines scoping for a ColdFusion application and enables or disables application and/or session variable storage. This tag is placed in a special file called Application.cfm that automatically runs before any other CF page in a directory (or subdirectory) where the Application.cfm file appears.&lt;/p&gt;
+
+&lt;cfapplication name = &quot;ETurtle&quot; 
+sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# 
+sessionManagement = &quot;Yes&quot;&gt;
+
+&lt;!--- Initialize session and application variables used by E-Turtleneck. ---&gt; 
+&lt;cfparam name=&quot;application.number&quot; default=&quot;1&quot;&gt;
+&lt;cfparam name=&quot;session.color&quot; default= &quot;&quot;&gt;
+&lt;cfparam name=&quot;session.size&quot; default=&quot;&quot;&gt;
+
+&lt;cfif IsDefined(&quot;session.numPurchased&quot;) AND IsNumeric(trim(session.cartTotal))&gt;
+&lt;!--- Use the application scope for the application variable to prevent race condition. This variable keeps track of total number of turtlenecks sold. ---&gt;
+   &lt;cflock scope = &quot;Application&quot; timeout = &quot;30&quot; type = &quot;Exclusive&quot;&gt;
+   &lt;cfset application.number = application.number + session.numPurchased&gt;
+   &lt;/cflock&gt;
+&lt;/cfif&gt;
+
+&lt;cfoutput&gt;
+E-Turtleneck is proud to say that we have sold #application.number# turtlenecks to date.
+&lt;/cfoutput&gt;
+&lt;!--- End of Application.cfm ---&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000216.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000218.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000217.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

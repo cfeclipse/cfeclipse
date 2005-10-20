@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Handling data in ColdFusion&#160;MX</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001206.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001208.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Handling data in ColdFusion&#160;MX</h1>
+<p>Many of the issues involved with globalizing applications deal with processing data from the various sources supported by ColdFusion&#160;MX, including the following:</p>
+<ul>
+<li>
+   <a href="00001207.htm#1220608">General character encoding issues</a>
+</li>
+<li>
+   <a href="00001207.htm#1224939">Locale-specific content</a>
+</li>
+<li>
+   <a href="00001207.htm#1220598">Input data from URLs and HTML forms</a>
+</li>
+<li>
+   <a href="00001207.htm#1198598">File data</a>
+</li>
+<li>
+   <a href="00001207.htm#1227836">Databases</a>
+</li>
+<li>
+   <a href="00001207.htm#1218842">E-mail</a>
+</li>
+<li>
+   <a href="00001207.htm#1185044">HTTP</a>
+</li>
+<li>
+   <a href="00001207.htm#1185088">LDAP</a>
+</li>
+<li>
+   <a href="00001207.htm#1185142">WDDX</a>
+</li>
+<li>
+   <a href="00001207.htm#1185165">COM</a>
+</li>
+<li>
+   <a href="00001207.htm#1185187">CORBA</a>
+</li>
+<li>
+   <a href="00001207.htm#1185217">Searching and indexing</a>
+</li>
+</ul>
+<p>This section describes how to handle data from each of these sources. </p>
+<h2><a name="wp1220608"></a>General character encoding issues</h2>
+<p>Applications developed for earlier versions of ColdFusion that assumed that the character length of a string was the same as the byte length might produce errors in ColdFusion MX. The byte length of a string depends on the character encoding.</p>
+<h2><a name="wp1224939"></a>Locale-specific content</h2>
+<p>The following sections provide information on how to handle locale-specific content in pages that support multiple locales, and how to handle euro values.</p>
+<h3><a name="wp1220663"></a>Generating multi-locale content</h3>
+<p>In an application that supports users in multiple locales and produces output that is specific to multiple locales, you call the <code>SetLocale</code> function in every request to set the locale for that specific request. When processing has completed, the locale should be set back to its previous value. One useful technique is to save the user's desired locale in a Session variable once the user has selected it, and use the Session variable value to set the locale for each user request during the session.</p>
+<h3><a name="wp1220610"></a>Supporting the euro</h3>
+<p>The euro is the currency of many European countries, and ColdFusion supports the reading and writing of correctly formatted euro values. Unlike other supported currencies, the euro is not tied to any single country (or locale). The <a href="00000570.htm#132017"><code>LSCurrencyFormat</code></a> and <a href="00000578.htm#133236"><code>LSParseCurrency</code></a> functions rely on the underlying JVM for their operations, and the rules used for currencies depend on the JVM. For Sun JVMs, the 1.3 releases did not support euros and used the older country-specific currencies. The 1.4 releases use euros for all currencies that are in the euro zone as of 2002. If you are using a JVM that does not support the euro, use the <a href="00000572.htm#132471"><code>LSEuroCurrencyFormat</code></a> and <a href="00000580.htm#133438"><code>LSParseEuroCurrency</code></a> functions to format and parse euro values in locales that use euros as their currency.</p>
+<h2><a name="wp1220598"></a>Input data from URLs and HTML forms</h2>
+<p>A web application server receives character data from request URL parameters or as form data. </p>
+<p>The HTTP 1.1 standard only allows US-ASCII characters (0-127) for the URL specification and for message headers. This requires a browser to encode the non-ASCII characters in the URL, both address and parameters, by escaping (URL encoding) the characters using the &quot;%xx&quot; hexadecimal format. URL encoding, however, does not determine how the URL is used in a web document. It only specifies how to encode the URL. </p>
+<p>Form data uses the message headers to specify the encoding used by the request (Content headers) and the encoding used in the response (Accept headers). Content negotiation between the client and server uses this information.</p>
+<p>This section contains suggestions on how you can handle both URL and form data entered in different character encodings. </p>
+<h3><a name="wp1188531"></a>Handling URL strings</h3>
+<p>URL requests to a server often contain name/value pairs as part of the request. For example, the following URL contains name/value pairs as part of the URL: </p>
+<p>http://company.com/prod_page.cfm?name=Stephen;ID=7645</p>
+<p>As discussed previously, URL characters entered using any character encoding other than US-ASCII are URL-encoded in a hexadecimal format. However, by default, a web server assumes that the characters of a URL string are single-byte characters. </p>
+<p>One common method used to support non-ASCII characters within a URL is to include a name/value pair within the URL that defines the character encoding of the URL. For example, the following URL uses a parameter called <i>encoding</i> to define the character encoding of the URL parameters:</p>
+<p>http://company.com/prod_page.cfm?name=Stephen;ID=7645;encoding=Latin-1</p>
+<p>Within the prod_page.cfm page, you can check the value of the encoding parameter before processing any of the other name/value pairs. This guarantees that you will handle the parameters correctly. </p>
+<p>You can also use the <a href="00000623.htm#136247"><code>SetEncoding</code></a> function to specify the character encoding of URL parameters. The <code>SetEncoding</code> function takes two parameters: the first specifies a variable scope and the second specifies the character encoding used by the scope. Since ColdFusion writes URL parameters to the URL scope, you specify &quot;URL&quot; as the scope parameter to the function. </p>
+<p>For example, if the URL parameters were passed using Shift-JIS, you could access them as follows:</p>
+<pre>&lt;cfscript&gt; 
+      setEncoding(&quot;URL&quot;, &quot;Shift_JIS&quot;); 
+      writeoutput(URL.name); 
+      writeoutput(URL.ID); 
+&lt;/cfscript&gt; 
+</pre><p><strong>Note: </strong>To specify the Shift-JIS character encoding, use the Shift_JIS attribute, with an underscore (_), not a hyphen (-).</p><h3><a name="wp1188543"></a>Handling form data</h3>
+<p>The HTML <code>form</code> tag and the ColdFusion <a href="00000256.htm#2433198"><code>cfform</code></a> tag let users enter text on a page, then submit that text to the server. The form tags are designed to work only with single-byte character data. Since ColdFusion uses two bytes per character when it stores strings, ColdFusion converts each byte of the form input into a two-byte representation.</p>
+<p>However, if a user enters double-byte text into the form, the form interprets each byte as a single character, rather than recognize that each character is two bytes. This will corrupt the input text, as the following example shows:</p>
+<ol>
+<li>
+   A customer enters three double-byte characters in a form, represented by six bytes. 
+</li>
+<li>
+   The form returns the six bytes to ColdFusion as six characters. ColdFusion converts them to a representation using two bytes per input byte for a total of twelve bytes. 
+</li>
+<li>
+   Outputting these characters results in corrupt information displayed to the user. 
+</li>
+</ol>
+<p>To work around this issue, use the <a href="00000623.htm#136247"><code>SetEncoding</code></a> function to specify the character encoding of input form text. The <code>SetEncoding</code> function takes two parameters: the first specifies the variable scope and the second specifies the character encoding used by the scope. Since ColdFusion writes form parameters to the Form scope, you specify &quot;Form&quot; as the scope parameter to the function. If the input text is double-byte, ColdFusion preserves the two-byte representation of the text. </p>
+<p>The following example specifies that the form data contains Korean characters: </p>
+<pre>&lt;cfscript&gt;
+   setEncoding(&quot;FORM&quot;, &quot;EUC-KR&quot;); 
+&lt;/cfscript&gt;
+&lt;h1&gt; Form Test Result &lt;/h1&gt;
+&lt;strong&gt;Form Values :&lt;/strong&gt;
+
+&lt;cfset text = &quot;String = #form.input1# , Length = #len(Trim(form.input1))#&quot;&gt;
+&lt;cfoutput&gt;#text#&lt;/cfoutput&gt;
+</pre><h2><a name="wp1198598"></a>File data</h2>
+<p>You use the <a href="00000245.htm#1098395"><code>cffile</code></a> tag to write to and read from text files. By default, the <code>cffile</code> tag assumes that the text that you are reading, writing, copying, moving, or appending is in the JVM default file character encoding, which is typically the system default character encoding. For <code>cffile action=&quot;Read&quot;</code>, ColdFusion&#160;MX also checks for a byte order mark (BOM) at the start of the file; if there is one, it uses the character encoding that the BOM specifies.</p>
+<p><strong>Note: </strong>To specify the JVM default file character encoding, use the <code>-Dfile.encoding=</code> switch in the JVM Arguments field on the Java and JVM page in the ColdFusion&#160;MX Administrator.</p><p>Problems can arise if the file character encoding does not correspond to JVM character encoding, particularly if the number of bytes used for characters in one encoding does not match the number of bytes used for characters in the other encoding.</p>
+<p>For example, assume that the JVM default file character encoding is ISO 8859-1, which uses a single byte for each character, and the file uses Shift-JIS, which uses a two-byte representation for many characters. When reading the file, the <code>cffile</code> tag treats each byte as an ISO 8859-1 character, and converts it into its corresponding two-byte Unicode representation. Because the characters are in Shift-JIS, the conversion corrupts the data, converting each two-byte Shift-JIS character into two Unicode characters.</p>
+<p>To enable the <code>cffile</code> tag to correctly read and write text that is not encoded in the JVM default character encoding, you can pass the <code>charset</code> attribute to it. Specify as a value the character encoding of the data to read or write, as the following example shows: </p>
+<pre>&lt;cffile action=&quot;read&quot; 
+   charset=&quot;EUC-KR&quot; 
+   file = &quot;c:\web\message.txt&quot; 
+   variable = &quot;Message&quot; &gt; 
+</pre><h2><a name="wp1227836"></a>Databases</h2>
+<p>ColdFusion applications access databases using drivers for each of the supported database types. The conversion of client native language data types to SQL data types is transparent and is done by the driver managers, database client, or server. For example, the character data (SQL CHAR, VARCHAR) you use with JDBC API is represented using Unicode-encoded strings. </p>
+<p>Database administrators configure data sources and usually are required to specify the character encodings for character column data. Many of the major vendors, such as Oracle, Sybase, and Informix, support storing character data in many character encodings, including Unicode UTF-8 and UTF-16. </p>
+<p>The database drivers supplied with ColdFusion&#160;MX correctly handle data conversions from the database native format to the ColdFusion Unicode format. You should not have to perform any additional processing to access databases. However, you should always check with your database administrator to determine how your database supports different character encodings. </p>
+<h2><a name="wp1218842"></a>E-mail</h2>
+<p>ColdFusion sends e-mail messages using the <a href="00000297.htm#2355015"><code>cfmail</code></a>, <a href="00000298.htm#1101294"><code>cfmailparam</code></a>, and <a href="00000299.htm#2732354"><code>cfmailpart</code></a> tags. </p>
+<p>By default, ColdFusion sends mail in UTF-8 encoding. You can specify a different default encoding on the Mail page in the ColdFusion&#160;MX Administrator, and you can use the <code>charset</code> attribute of the <code>cfmail</code> and <code>cfmailpart</code> tags to specify the character encoding for a specific mail message or part of a multipart mail message.</p>
+<h2><a name="wp1185044"></a>HTTP</h2>
+<p>ColdFusion&#160;MX supports HTTP communication using the <a href="00000272.htm#1632966"><code>cfhttp</code></a> and <a href="00000273.htm#1100049"><code>cfhttpparam</code></a> tags and the <a href="00000482.htm#1955092"><code>GetHttpRequestData</code></a> function. </p>
+<p>The <code>cfhttp</code> tag supports making HTTP requests. The <code>cfhttp</code> tag uses the Unicode UTF-8 encoding for passing data by default, and you can use the <code>charset</code> attribute to specify the character encoding. You can also use the <code>cfhttpparam</code> tag <code>mimeType</code> attribute to specify the MIME type and character set of a file. </p>
+<h2><a name="wp1185088"></a>LDAP</h2>
+<p>ColdFusion&#160;MX supports LDAP (Lightweight Directory Access Protocol) through the <a href="00000283.htm#1100581"><code>cfldap</code></a> tag. LDAP uses the UTF-8 encoding format, so you can mix all retrieved data with other data and safely manipulated it. No extra processing is required to support LDAP. </p>
+<h2><a name="wp1185142"></a>WDDX</h2>
+<p>ColdFusion&#160;MX supports the <a href="00000351.htm#2682044"><code>cfwddx</code></a> tag. ColdFusion stores WDDX (Web Distributed Data Exchange) data as UTF-8 encoding, so it automatically supports double-byte character encodings. You do not have to perform any special processing to handle double-byte characters with WDDX.</p>
+<h2><a name="wp1185165"></a>COM</h2>
+<p>ColdFusion&#160;MX supports COM through the <a href="00000302.htm#2820239"><code>cfobject</code></a> <code>type=&quot;com&quot;</code> tag. All string data used in COM interfaces is constructed using wide characters (wchars), which support double-byte characters. You do not have to perform any special processing to interface with COM objects. </p>
+<h2><a name="wp1185187"></a>CORBA</h2>
+<p>ColdFusion&#160;MX supports CORBA through the <a href="00000302.htm#2820239"><code>cfobject</code></a> <code>type=&quot;corba&quot;</code> tag. The CORBA 2.0 interface definition language (IDL) basic type &quot;String&quot; used the Latin-1 character encoding, which used the full 8-bits (256) to represent characters. </p>
+<p>As long as you are using CORBA later than version 2.0, which includes support for the IDL types wchar and wstring, which map to Java types char and string respectively, you do not have to do anything to support double-byte characters.</p>
+<p>However, if you are using a version of CORBA that does not support wchar and wstring, the server uses char and string data types, which assume a single-byte representation of text. </p>
+<h2><a name="wp1185217"></a>Searching and indexing</h2>
+<p>ColdFusion&#160;MX supports Verity search through the <a href="00000278.htm#1100286"><code>cfindex</code></a>, <a href="00000230.htm#1097667"><code>cfcollection</code></a>, and <a href="00000330.htm#1103106"><code>cfsearch</code></a> tags. To support multilingual searching, the ColdFusion MX product CD-ROM includes the Verity language packs that you install to support different languages. </p>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001206.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001208.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001207.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

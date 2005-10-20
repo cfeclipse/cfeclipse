@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the attributes of the cfchart and cfchartseries tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001429.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001431.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the attributes of the cfchart and cfchartseries tags</h1>
+<p>You can specify the appearance of charts by using the attributes of the <a href="00000226.htm#2619630"><code>cfchart</code></a> and <a href="00000228.htm#2741830"><code>cfchartseries</code></a> tags. </p>
+<p>You can optionally specify the following characteristics to the <code>cfchart</code> tag on the types of charts indicated:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Chart characteristic
+    </th>
+    <th>
+Attributes used
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Chart<br />type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>File type</p>
+    </td>
+    <td>
+<p><code>format</code></p>
+    </td>
+    <td>
+<p>Whether to send the chart to the user as a JPEG, PNG, or SWF file. The SWF file is the default format.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Size</p>
+    </td>
+    <td>
+<p><code>chartWidth<br />chartHeight</code></p>
+    </td>
+    <td>
+<p>The width and height, in pixels, of the chart. This size defines the entire chart area, including the legend and background area around the chart.</p>
+<p>The default height is 240 pixels; the default width is 320 pixels. </p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Color</p>
+    </td>
+    <td>
+<p><code>foregroundColor<br />dataBackgroundColor<br />backgroundColor</code></p>
+    </td>
+    <td>
+<p>The colors used for foreground and background objects. </p>
+<p>The default foreground color is black; the default background colors are white. </p>
+<p>You can specify 16 color names, use any valid HTML color format, or specify an 8-digit hexadecimal value to specify the RGB value and transparency. If you use numeric format, you must use double number signs; for example, blue or ##FF33CC. To specify the color and transparency, use the format ##<i>xx</i>FF33CC, where xx indicates the transparency. Opaque is indicated by the value FF; transparent is indicated by the value 00. For the complete list of colors, see <i>Configuring and Administering ColdFusion&#160;MX</i>.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Labels</p>
+    </td>
+    <td>
+<p><code>font<br />fontSize<br />fontBold<br />frontItalic<br />labelFormat<br />xAxisTitle<br />yAxisTitle</code></p>
+    </td>
+    <td>
+<p>The <code>font</code> attribute specifies the font for all text. The default value is <code>Arial</code>. If you are using a double-byte character set on UNIX, or using a double-byte character set in Windows with a file type of Flash, you must specify <code>ArialUnicodeMs</code> as the font.</p>
+<p><i>Note:</i> If a chart attempts to use a font that is not installed on the ColdFusion server, it uses a different font that is available. Also, if you do not specify the font, characters that are not ASCII, such as Japanese, Chinese, Korean and so on, may not display properly.</p>
+<p>The <code>fontSize</code> specifies an Integer font size used for all text. The default value is 11.</p>
+<p>The <code>fontBold</code> attribute specifies to display all text as bold. The default value is <code>no</code>.</p>
+<p>The <code>fontItalic</code> attribute specifies to display all text as italic. The default value is <code>no</code>.</p>
+<p>The <code>labelFormat</code> attribute specifies the format of the y-axis labels, number, currency, percent, or date. The default value is <code>number</code>.</p>
+<p>The <code>xAxisTitle</code> and <code>yAxisTitle</code> attributes specify the title for each axis.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Border</p>
+    </td>
+    <td>
+<p><code>showBorder</code></p>
+    </td>
+    <td>
+<p>Use the <code>showBorder</code> attribute to draw a border around the chart. The border color is specified by the <code>foregroundColor</code> attribute. The default value is <code>no</code>.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Grid lines</p>
+    </td>
+    <td>
+<p><code>showXGridlines<br />showYGridlines<br />gridLines</code></p>
+    </td>
+    <td>
+<p>Use the <code>showXGridlines</code> and <code>showYGridlines</code> attributes to display <br />x-axis and y-axis grid lines. The default value <code>No</code> for x-axis gridlines, and <code>Yes</code> for y-axis gridlines.</p>
+<p>The <code>gridLines</code> attribute specifies the total number of grid lines on the value axis, including the axis itself. The value of each grid line appears along the value axis. The <code>cfchart</code> tag displays horizontal grid lines only. A value of 0 (the default) means no grid lines.</p>
+    </td>
+    <td>
+<p>Area<br />Bar<br />Cone<br />Curve<br />Cylinder<br />Horizontalbar<br />Line<br />Pyramid<br />Scatter<br />Step</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Slice style</p>
+    </td>
+    <td>
+<p><code>pieSliceStyle</code></p>
+    </td>
+    <td>
+<p>Displays the pie chart as solid or sliced. The default value is <code>sliced</code>.</p>
+    </td>
+    <td>
+<p>Pie</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Markers</p>
+    </td>
+    <td>
+<p><code>showMarkers<br />markerSize</code></p>
+    </td>
+    <td>
+<p>The <code>showMarkers</code> attribute displays markers at the data points for two dimensional line, curve, and scatter charts. The default value is <code>yes</code>.</p>
+<p>The <code>markerSize</code> attribute specifies an integer number of pixels for the marker size. ColdFusion determines the default value.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Value axis</p>
+    </td>
+    <td>
+<p><code>scaleFrom<br />scaleTo</code></p>
+    </td>
+    <td>
+<p>The minimum and maximum points on the data axis. </p>
+<p>By default, the minimum is <code>0</code> or the lowest negative chart data value, and the maximum is the largest data value.</p>
+<p><i>Note:</i> If you specify a <code>scaleFrom</code> or <code>scaleTo</code> attribute that would result in cropping the chart, <code>cfchart</code> uses a value that shows the entire chart without cropping.</p>
+    </td>
+    <td>
+<p>Area<br />Bar<br />Cone<br />Curve<br />Cylinder<br />Horizontalbar<br />Line<br />Pyramid<br />Scatter<br />Step</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Axis type</p>
+    </td>
+    <td>
+<p><code>XAxisType<br />sortXAxis</code></p>
+    </td>
+    <td>
+<p>Whether the x-axis corresponds to a numeric scale or identifies different categories, and how to sort the items on the axis.</p>
+<p>If the <code>XAxisType</code> attribute value is <code>scale</code>, the x-axis is numeric. All <code>cfchartdata</code> <code>item</code> attribute values must be numeric, and the axis is automatically sorted numerically. The <code>scale</code> value lets you create graphs of numeric relationships, such as population against age.</p>
+<p>If the attribute value is <code>category</code> (the default), the axis indicates the data category. </p>
+<p>The <code>sortXAxis</code> attribute determines the order of items when you specify the <code>cfchartdata</code> <code>item</code> attribute, whose values are treated as text. By default, the items are displayed in the order in which they are entered in the first chart series. </p>
+    </td>
+    <td>
+<p>Area<br />Bar<br />Cone<br />Curve<br />Cylinder<br />Horizontalbar<br />Line<br />Pyramid<br />Scatter<br />Step</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>3D appearance</p>
+    </td>
+    <td>
+<p><code>show3D<br />xOffset<br />yOffset</code></p>
+    </td>
+    <td>
+<p>The <code>show3D</code> attribute displays the chart in three dimensions. The default value is <code>No</code>.</p>
+<p>The <code>xOffset</code> and <code>yOffset</code> attributes specify the amount to which the chart should be rotated on a horizontal axis (<code>xOffset</code>) or vertical axis (<code>yOffset</code>). The value <code>0</code> is flat (no rotation), <code>-1</code> and <code>1</code> are for a full 90 degree rotation left <br />(<code>-1</code>) or right (<code>1</code>). The default value is <code>1.</code></p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Multiple series</p>
+    </td>
+    <td>
+<p><code>showLegend<br />seriesPlacement</code></p>
+    </td>
+    <td>
+<p>The <code>showLegend</code> attribute lets you display the chart's legend when the chart contains more than one series of data. The default value is <code>Yes</code>.</p>
+<p>The <code>seriesPlacement</code> attribute specifies the location of each series relative to the others. By default, ColdFusion determines the best placement based on the graph type of each series.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Tips</p>
+    </td>
+    <td>
+<p><code>tipStyle<br />tipBGColor</code></p>
+    </td>
+    <td>
+<p>The <code>tipStyle</code> attribute lets you display a small pop-up window that shows information about the chart element pointed to by the mouse pointer. Options are <code>none</code>, <code>mousedown</code>, or <code>mouseover</code>. The default value is <code>mouseover</code>.</p>
+<p>The <code>tipBGColor</code> attribute specifies the background color of the tip window for Flash format only. The default value is <code>white</code>.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+</table>
+
+<p>You can also use the <a href="00000228.htm#2741830"><code>cfchartseries</code></a> tag to specify attributes of chart appearance. The following table describes these attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Chart <br />characteristic
+    </th>
+    <th>
+Attributes used
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Chart<br />type
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Multiple series</p>
+    </td>
+    <td>
+<p><code>seriesLabel<br />seriesColor</code></p>
+    </td>
+    <td>
+<p>The <code>seriesLabel</code> attribute specifies the text that displays for the series label.</p>
+<p>The <code>seriesColor</code> attribute specifies a single color of the bar, line, pyramid, and so on. For pie charts, this is the first slice's color. Subsequent slices are automatically colored based on the specified initial color, or use the <code>colorList</code> attribute.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Paint</p>
+    </td>
+    <td>
+<p><code>paintStyle</code></p>
+    </td>
+    <td>
+<p>Specifies the way color is applied to a data series. You can specify solid color, buttonized look, linear gradient fill with a light center and darker outer edge, and gradient fill on lighter version of color. The default value is <code>solid</code>.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Data point colors</p>
+    </td>
+    <td>
+<p>colorList</p>
+    </td>
+    <td>
+<p>A comma-separated list of colors to use for each data point for bar, pyramid, area, horizontalbar, cone, cylinder, step, and pie charts.</p>
+<p>You can specify 16 color names, use any valid HTML color format, or specify an 8-digit hexadecimal value to specify the RGB value and transparency. If you use numeric format, you must use double number signs; for example, blue or ##FF33CC. To specify the color and transparency, use the format ##<i>xx</i>FF33CC, where xx indicates the transparency. Opaque is indicated by the value FF; transparent is indicated by the value 00. For the complete list of colors, see <i>Configuring and Administering ColdFusion&#160;MX</i><i>.</i></p>
+<p>If you specify fewer colors than data points, the colors repeat. If you specify more colors than data points, the extra colors are not used.</p>
+    </td>
+    <td>
+<p>Pie</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Data markers</p>
+    </td>
+    <td>
+<p>markerStyle</p>
+    </td>
+    <td>
+<p>Specifies the shape used to mark the data point. Shapes include <code>circle</code>, <code>diamond</code>, <code>letterx</code>, <code>mcross</code>, <code>rcross</code>, <code>rectangle</code>, <code>snow</code>, and <code>triangle</code>. Supported for two-dimensional charts. The default value is <code>rectangle</code>. </p>
+    </td>
+    <td>
+<p>Curve<br />Line<br />Scatter</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Labels</p>
+    </td>
+    <td>
+<p>dataLabelStyle</p>
+    </td>
+    <td>
+<p>Specifies the way in which the color is applied to the item in the series Styles include <code>None,</code> <code>Value</code>, <code>Rowlabel</code>, <code>Columnlabel</code>, and <code>Pattern</code>.</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001429.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001431.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001430.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

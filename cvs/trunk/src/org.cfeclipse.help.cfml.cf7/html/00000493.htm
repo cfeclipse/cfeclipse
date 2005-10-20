@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetSOAPRequest</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000492.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000494.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetSOAPRequest</h1>
+<h4><a name="wp5054303"></a>Description</h4>
+<p>Returns an XML object that contains the entire SOAP request. Usually called from within a web service CFC.</p>
+<h4><a name="wp5054342"></a>Returns</h4>
+<p>An XML object that contains the entire SOAP request.</p>
+<h4><a name="wp5054307"></a>Category</h4>
+<p><a href="00000372.htm#3468770">XML functions</a></p>
+<h4><a name="wp5054311"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this function.</p>
+<h4><a name="wp5054319"></a>Function syntax</h4>
+<pre><strong>GetSOAPRequest</strong>()
+</pre><h4><a name="wp5054331"></a>See also</h4>
+<p><a href="00000379.htm#5050827">AddSOAPRequestHeader</a>, <a href="00000380.htm#5050841">AddSOAPResponseHeader</a>, <a href="00000494.htm#5054295">GetSOAPRequestHeader</a>, <a href="00000495.htm#5054378">GetSOAPResponse</a>, <a href="00000496.htm#5054369">GetSOAPResponseHeader</a>, <a href="00000531.htm#5052211">IsSOAPRequest</a>; <a href="00001531.htm#1172015">Basic web service concepts</a> in <a href="00001530.htm#1141005">Using Web Services</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp5054323"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>webservice</p>
+    </td>
+    <td>
+<p>Optional. A webservice object as returned from the <code>cfobject</code> tag or the <code>CreateObject</code> function.</p>
+<p>Required if the function is called from the client.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp5054327"></a>Usage</h4>
+<p>Call this function to obtain a web service request object after the web service has been invoked. If you call this function from outside a web service CFC without the <code>webservice</code> parameter, it throws the following expression error:</p>
+<pre>Unable to use getSOAPRequest: not processing a web service request.
+</pre><p>If you call this function from within a web service CFC, you can omit the <code>webservice</code> argument. The function executes against the request that it is currently processing.</p>
+<p>You can use CFML XML functions to examine the returned XML object.</p>
+<h4><a name="wp5054335"></a>Example</h4>
+<p>This example makes a request to execute the <code>echo_me</code> function of the headerservice.cfc web service. For information on implementing the headerservice.cfc web service and also to see the <code>echo_me</code> function and the content of the web service CFC, see the example for either the <a href="00000380.htm#5050841">AddSOAPResponseHeader</a> function or the <a href="00000494.htm#5054295">GetSOAPRequestHeader</a> function.</p>
+<pre>&lt;!--- Note that you might need to modify the URL in the CreateObject function
+to match your server and the location of the headerservice.cfc file if it is
+different than shown here. 
+Note, too, that getSOAPRequest is called from the client here, whereas often it
+would be called from within the web service CFC. ---&gt;
+
+&lt;cfscript&gt;
+   ws = CreateObject(&quot;webservice&quot;,
+        &quot;http://localhost/soapheaders/headerservice.cfc?WSDL&quot;);
+   ws.echo_me(&quot;hello world&quot;);
+   req = getSOAPRequest(ws);
+&lt;/cfscript&gt;
+&lt;cfdump var=&quot;#req#&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000492.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000494.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000493.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

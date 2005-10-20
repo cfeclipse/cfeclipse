@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXQuery::GetData</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000790.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000792.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXQuery::GetData</h1>
+<h4><a name="wp1099356"></a>Syntax</h4>
+<pre>LPCSTR CCFXQuery::GetData(int <i>iRow</i>, int iColumn)
+</pre><h4><a name="wp1102741"></a>Description</h4>
+<p>Gets a data element from a row and column of a query. Row and column indexes begin with 1. You can determine the number of rows in a query by calling <a href="00000793.htm#1098151">CCFXQuery::GetRowCount</a>. You can determine the number of columns in a query by retrieving the list of columns using <a href="00000790.htm#1098097">CCFXQuery::GetColumns</a>, and then calling <a href="00000812.htm#1098588">CCFXStringSet::GetCount</a> on the returned string set.</p>
+<h4><a name="wp1104041"></a>Returns</h4>
+<p>Returns the value of the requested data element.</p>
+<h4><a name="wp1102699"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>iRow</p>
+    </td>
+    <td>
+<p>Row to retrieve data from (1-based)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>iColumn</p>
+    </td>
+    <td>
+<p>Column to retrieve data from (1-based)</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1103314"></a>Example</h4>
+<p>The following example iterates over the elements of a query and writes the data in the query back to the user in a simple, space-delimited format:</p>
+<pre>int iRow, iCol ;<br />int nNumCols = pQuery-&gt;GetColumns()-&gt;GetCount() ;<br />int nNumRows = pQuery-&gt;GetRowCount() ;<br />for ( iRow=1; iRow&lt;=nNumRows; iRow++ )<br />{<br />   for ( iCol=1; iCol&lt;=nNumCols; iCol++ )<br />   {<br />   pRequest-&gt;Write( pQuery-&gt;GetData( iRow, iCol ) ) ;<br />   pRequest-&gt;Write( &quot; &quot; ) ;<br />   }<br />   pRequest-&gt;Write( &quot;&lt;BR&gt;&quot; ) ;<br />}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000790.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000792.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000791.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

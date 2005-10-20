@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Preserving input data with the preservedata attribute</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001351.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001353.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Preserving input data with the preservedata attribute</h1>
+<p>The <a href="00000256.htm#2433198"><code>cfform</code></a> <code>preservedata</code> attribute tells ColdFusion to continue displaying the user data in a form after the user submits the form. Data is preserved in the <a href="00000279.htm#1100379"><code>cfinput</code></a>, <a href="00000337.htm#2612389"><code>cfslider</code></a>, <a href="00000342.htm#2810302"><code>cftextinput</code></a>, and <a href="00000347.htm#1104271"><code>cftree</code></a> controls and in <a href="00000331.htm#2553073"><code>cfselect</code></a> controls populated by queries. If you specify a default value for a control, and a user overrides that default in the form, the user input is preserved. </p>
+<p>You can retain data on the form when the same page contains the form and the form's action code; that is, the form submits to itself. You can also retain the data if the action page has a copy of the form, and the control names are the same in the forms on both pages. (The action page form does not need to be identical to the initial form. It can have more or fewer elements than the initial page form; only the form elements with identical names on both pages keep their data.)</p>
+<p><strong>Note: </strong>The <code>preservedata</code> setting on the action page controls the preservation of the data.</p><p>For example, if you save this form as preserve.cfm, it continues to display any text that you enter after you submit it, as follows:</p>
+<pre>&lt;cfform action=&quot;preserve.cfm&quot; preservedata=&quot;Yes&quot;&gt;
+   &lt;p&gt;Please enter your name:
+   &lt;cfinput type=&quot;Text&quot; name=&quot;UserName&quot; required=&quot;Yes&quot;&gt;&lt;p&gt;
+   &lt;input type=&quot;Submit&quot; name=&quot;&quot;&gt; &lt;input type=&quot;RESET&quot;&gt;
+&lt;/cfform&gt;
+</pre><h3><a name="wp1110181"></a>Usage notes for the preservedata attribute</h3>
+<p>When you use the <code>preservedata</code> attribute, follow these guidelines: </p>
+<ul>
+<li>
+   In the <a href="00000347.htm#1104271"><code>cftree</code></a> tag, the <code>preservedata</code> attribute causes the tree to expand to the previously selected element. For this to work correctly, you must also set the <code>completePath</code> attribute to True.
+</li>
+<li>
+   The <code>preservedata</code> attribute has no effect on a <a href="00000266.htm#1836171"><code>cfgrid</code></a> tag. If you populate the control from a query, you must update the data source with the new data (typically by using a <a href="00000269.htm#1099751"><code>cfgridupdate</code></a> tag) before redisplaying the grid. The grid then displays the updated database information.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001351.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001353.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001352.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 6: Testing the revised Trip Search Results page</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000136.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000138.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 6: Testing the revised Trip Search Results page</h1>
+<p>In this exercise, you will verify that the <code>price</code> and <code>departureDate</code> are now considered in the query.</p>
+<h4>To test the revised Trip Search Results page:</h4>
+<ol>
+<li>
+   Open the tripsearchform.cfm page in the my_app directory in your browser.
+</li>
+<li>
+   In the Departure Date drop-down list box, select Before, enter <strong>1/1/1900</strong> as the date (specify <strong>1900-1-1</strong> on UNIX).
+</li>
+<li>
+   Select Smaller Than, and enter 0 for the price. 
+</li>
+<li>
+   Click the Search button. 
+<p>Because the departure date is considered in the query, there are no rows returned.</p>
+<p><strong>Note: </strong>If you planned to use many more fields as search criteria, the approach used to add departure date and price criteria to the Trip Search form is not the most elegant solution. A generic routine to handle WHERE clause string construction based on specific data types could reduce the code and be a more extensible solution than the one presented here. However, this more extensible approach is beyond the scope of this tutorial.</p></li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000136.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000138.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000137.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

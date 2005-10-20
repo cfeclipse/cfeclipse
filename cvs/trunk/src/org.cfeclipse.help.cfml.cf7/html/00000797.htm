@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXRequest::AttributeExists</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000796.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000798.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXRequest::AttributeExists</h1>
+<h4><a name="wp1099381"></a>Syntax</h4>
+<pre>BOOL CCFXRequest::AttributeExists(LPCSTR lpszName)
+</pre><h4><a name="wp1102776"></a>Description</h4>
+<p>Checks whether the parameter was passed to the tag. Returns True if the parameter is available; False, otherwise.</p>
+<h4><a name="wp1102681"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>lpszName</p>
+    </td>
+    <td>
+<p>Name of the parameter to check (case insensitive)</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1103208"></a>Example</h4>
+<p>The following example checks whether the user passed an attribute named <code>DESTINATION</code> to the tag, and throws an exception if the attribute was not passed:</p>
+<pre>if ( pRequest-&gt;AttributeExists(&quot;DESTINATION&quot;)==FALSE )<br />{<br />   pRequest-&gt;ThrowException(<br />      &quot;Missing DESTINATION parameter&quot;,<br />      &quot;You must pass a DESTINATION parameter in &quot;<br />      &quot;order for this tag to work correctly.&quot; ) ;<br />}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000796.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000798.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000797.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

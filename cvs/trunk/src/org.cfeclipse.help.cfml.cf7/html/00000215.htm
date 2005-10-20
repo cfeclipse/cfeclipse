@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfabort</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000214.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000216.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfabort</h1>
+<h4><a name="wp1344603"></a>Description</h4>
+<p>Stops the processing of a ColdFusion page at the tag location. ColdFusion returns everything that was processed before the tag. The tag is often used with conditional logic to stop processing a page when a condition occurs.</p>
+<h4><a name="wp1097175"></a>Category</h4>
+<p><a href="00000204.htm#2459878">Flow-control tags</a></p>
+<h4><a name="wp3321741"></a>Syntax</h4>
+<pre>&lt;cfabort 
+   showError = &quot;error_message&quot;&gt;
+</pre><h4><a name="wp1872227"></a>See also</h4>
+<p><a href="00000221.htm#1097484">cfbreak</a>, <a href="00000243.htm#1098198">cfexecute</a>, <a href="00000244.htm#1098252">cfexit</a>, <a href="00000274.htm#1100123">cfif</a>, <a href="00000284.htm#1100753">cflocation</a>, <a href="00000290.htm#3301338">cfloop</a>, <a href="00000339.htm#1103819">cfswitch</a>, <a href="00000343.htm#2773591">cfthrow</a>, <a href="00000349.htm#1104557">cftry</a>; <a href="00000876.htm#2734022">cfabort and cfexit</a> in <a href="00000866.htm#2689636">Elements of CFML</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2195276"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>showError</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Error to display, in a standard ColdFusion error page, when tag executes.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2438413"></a>Usage</h4>
+<p>When you use the <code>cfabort</code> and <code>cferror</code> tags together, the <code>cfabort</code> tag halts processing immediately; the <code>cferror</code> tag redirects output to a specified page. </p>
+<p>If this tag does not contain a <code>showError</code> attribute value, processing stops when the tag is reached and ColdFusion returns the page contents up to the line that contains the <code>cfabort</code> tag.</p>
+<p>When you use this tag with the <code>showError</code> attribute, but do not define an error page using <code>cferror</code>, page processing stops when the <code>cfabort</code> tag is reached. The message in <code>showError</code> displays to the client.</p>
+<p>When you use this tag with the <code>showError</code> attribute and an error page using <code>cferror</code>, ColdFusion redirects output to the error page specified in the <code>cferror</code> tag.</p>
+<h4><a name="wp1097185"></a>Example</h4>
+<p>This example shows the use of <code>cfabort </code>to stop processing. In the second example, where cfabort is used, the result never displays.</p>
+<pre>&lt;h3&gt;Example A: Let the instruction complete itself&lt;/h3&gt;
+&lt;!--- first, set a variable ---&gt;
+&lt;cfset myVariable = 3&gt;
+&lt;!--- now, perform a loop that increments this value ---&gt;
+&lt;cfloop from = &quot;1&quot; to = &quot;4&quot; index = &quot;Counter&quot;&gt;
+   &lt;cfset myVariable = myVariable + 1&gt;
+&lt;/cfloop&gt;
+
+&lt;cfoutput&gt;
+&lt;p&gt;   The value of myVariable after incrementing through the loop #Counter# times is:<br />#myVariable#
+&lt;/cfoutput&gt;
+
+&lt;h3&gt;Example B: Use cfabort to halt the instructions with showmessage attribute and cferror&lt;/h3&gt;
+&lt;!--- Reset the variable and show the use of cfabort. ---&gt;
+&lt;cfset myVariable = 3&gt;
+&lt;!--- now, perform a loop that increments this value ---&gt;
+&lt;cfloop from = &quot;1&quot; to = &quot;4&quot; index = &quot;Counter&quot;&gt;
+&lt;!--- on the second time through the loop, cfabort ---&gt;
+   &lt;cfif Counter is 2&gt;
+   &lt;!--- Take out the cferror line to see cfabort error processed by CF error page ---&gt;
+      &lt;cferror type=&quot;request&quot; template=&quot;request_err.cfm&quot;&gt;
+      &lt;cfabort showerror=&quot;CFABORT has been called for no good reason&quot;&gt;
+&lt;!--- Processing is stopped, and subsequent operations are not carried out.---&gt;
+   &lt;cfelse&gt;
+      &lt;cfset myVariable = myVariable + 1&gt;
+   &lt;/cfif&gt; 
+&lt;/cfloop&gt;
+
+&lt;cfoutput&gt;
+&lt;p&gt; The value of myVariable after incrementing through the loop#counter# times is: #myVariable#
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000214.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000216.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000215.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>debug</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000738.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000740.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>debug</h1>
+<h4><a name="wp1181718"></a>Description</h4>
+<p>Writes a log entry with a debugging severity to the ColdFusion MX logger. The entry includes the severity, thread ID, date, time, and a text message.</p>
+<h4><a name="wp1181720"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1200633"></a>Syntax</h4>
+<pre>debug(String <i>message</i>)
+debug(Throwable <i>th</i>)
+debug(String <i>message</i>, Throwable th)
+</pre><h4><a name="wp1181724"></a>See also</h4>
+<p><a href="00000740.htm#1182148">error</a>, <a href="00000741.htm#1182392">fatal</a>, <a href="00000742.htm#1182459">info</a>, <a href="00000743.htm#1182564">warn</a>, <a href="00000720.htm#1179536">getLogger</a>, <a href="00001697.htm#139247">Logging events and using log files</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1182030"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>message</p>
+    </td>
+    <td>
+<p>The message to include in the log entry.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>th</p>
+    </td>
+    <td>
+<p>A throwable object, normally an exception. ColdFusion MX logs the exception information in the exception.log file in the ColdFusion MX logs directory.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1200646"></a>Usage</h4>
+<p>Use this method to send a debugging message to the ColdFusion MX logging subsystem. </p>
+<p>By default, ColdFusion does <strong>not</strong> write debugging messages to the log file. To have debug messages appear in the log file, change the priority entry in <i>cf_root</i>\lib\neo-logging.xml (in the server configuration) or <i>cf_root</i>/WEB-INF\cfusion\lib\neo-logging.xml (in the J2EE configuration. Change the following entry:</p>
+<pre>&lt;var name=&#39;priority&#39;&gt;
+   &lt;string&gt;information&lt;/string&gt;
+&lt;/var&gt;
+</pre><p>to the following:</p>
+<pre>&lt;var name=&#39;priority&#39;&gt;
+   &lt;string&gt;debug&lt;/string&gt;
+&lt;/var&gt;
+</pre><p>With debug priority, ColdFusion MX writes messages with a severity of &quot;debug&quot; to the log file specified in the <code>getLogger</code> method that returned the Logger instance (or the default log file).</p>
+<h4><a name="wp1181739"></a>Example</h4>
+<p>The ColdFusion MX instant messaging gateways use the following line to log information about incoming administrative messages or errors only when debugging priority is on.</p>
+<pre>// code to process incoming administrative messages or errors
+<strong>logger.debug(gatewayType + &quot;Gateway (&quot; + gatewayID + &quot;) admin message: &quot; +<br />      msg.getMessage());</strong>
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000738.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000740.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000739.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

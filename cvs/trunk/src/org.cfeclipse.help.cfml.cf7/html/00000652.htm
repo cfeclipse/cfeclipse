@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ToBase64</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000651.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000653.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ToBase64</h1>
+<h4><a name="wp138530"></a>Description</h4>
+<p>Calculates the Base64 representation of a string or binary object. The Base64 format uses printable characters, allowing binary data to be sent in forms and e-mail, and stored in a database or file.</p>
+<h4><a name="wp138532"></a>Returns</h4>
+<p>The Base64 representation of a string or binary object. </p>
+<h4><a name="wp138533"></a>Category</h4>
+<p><a href="00000356.htm#1098761">Conversion functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp138544"></a>Function syntax</h4>
+<pre><code><strong>ToBase64</strong></code>(<i>string or binary_object[, encoding]</i>)
+</pre><h4><a name="wp138546"></a>See also</h4>
+<ul>
+<li>
+   <a href="00000404.htm#4989676"><code>BinaryEncode</code></a> for converstion of binary data to base64
+</li>
+<li>
+   <a href="00000245.htm#1098395"><code>cffile</code></a> for information about loading and reading binary data
+</li>
+<li>
+   <a href="00000351.htm#2682044"><code>cfwddx</code></a> for information about serializing and deserializing binary data
+</li>
+<li>
+   <a href="00000515.htm#1106300"><code>IsBinary</code></a> and <a href="00000653.htm#138631"><code>ToBinary</code></a> for checking for binary data and converting a Base64 object to binary format
+</li>
+</ul>
+<h4><a name="wp138562"></a>History</h4>
+<p>ColdFusion&#160;MX: Added the <code><i>encoding</i></code> parameter.</p>
+<h4><a name="wp138567"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string or binary_object</p>
+    </td>
+    <td>
+<p>A string, the name of a string, or a binary object.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>encoding </p>
+    </td>
+    <td>
+<p>For a string, defines how characters are represented in a byte array. The following list includes commonly used values:</p>
+<ul>
+<li>
+   utf-8
+</li>
+<li>
+   iso-8859-1 
+</li>
+<li>
+   windows-1252
+</li>
+<li>
+   us-ascii
+</li>
+<li>
+   shift_jis
+</li>
+<li>
+   iso-2022-jp 
+</li>
+<li>
+   euc-jp
+</li>
+<li>
+   euc-kr
+</li>
+<li>
+   big5
+</li>
+<li>
+   euc-cn
+</li>
+<li>
+   utf-16
+</li>
+</ul>
+<p>For more information on character encoding, see:<br /><a href="http://www.w3.org/International/O-charset.html" target="mm_window">www.w3.org/International/O-charset.html</a>. </p>
+<p>The default value is the encoding of the page on which the function is called. See <a href="00000232.htm#2850760">cfcontent</a>. For a binary object, this parameter is ignored.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp138599"></a>Usage</h4>
+<p>Macromedia recommends that you use the <a href="00000404.htm#4989676">BinaryEncode</a> function to convert binary data to Base64-encoded data in all new applications. </p>
+<pre>&lt;h3&gt;ToBase64 Example&lt;/h3&gt;
+&lt;!--- Initialize data. ----&gt;
+&lt;cfset charData = &quot;&quot;&gt;
+&lt;!--- Create string of ASCII characters (32-255); concatenate them ---&gt;
+&lt;cfloop index = &quot;data&quot; from = &quot;32&quot; to = &quot;255&quot;&gt;
+   &lt;cfset ch = chr(data)&gt;
+   &lt;cfset charData = charData &amp; ch&gt;
+&lt;/cfloop&gt;
+&lt;p&gt;
+The following string is the concatenation of all characters (32 to 255) <br />from the ASCII table.&lt;br&gt;
+&lt;cfoutput&gt;#charData#&lt;/cfoutput&gt;
+&lt;/p&gt;
+&lt;!--- Create a Base64 representation of this string. ----&gt;
+&lt;cfset data64 = <strong>toBase64(charData)</strong>&gt;
+
+&lt;!----- Convert string to binary. -------&gt;
+&lt;cfset binaryData = toBinary(data64)&gt;
+&lt;!--- Convert binary back to Base64. ----&gt;
+&lt;cfset another64 = <strong>toBase64(binaryData)</strong>&gt;
+&lt;!---- Compare another64 with data64 to ensure that they are equal. ----&gt;
+&lt;cfif another64 eq data64&gt;
+   &lt;h3&gt;Base64 representations are identical.&lt;/h3&gt;
+&lt;cfelse&gt;
+   &lt;h3&gt;Conversion error.&lt;/h3&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000651.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000653.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000652.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

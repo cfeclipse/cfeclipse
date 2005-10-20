@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>DateAdd</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000436.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000438.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>DateAdd</h1>
+<h4><a name="wp1224569"></a>Description</h4>
+<p>Adds units of time to a date.</p>
+<h4><a name="wp3354490"></a>Returns</h4>
+<p>A date/time object.</p>
+<h4><a name="wp2501420"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a></p>
+<h4><a name="wp1102881"></a>Function syntax</h4>
+<pre><code><strong>DateAdd</strong></code>(&quot;<i>datepart</i>&quot;, <i>number</i>, &quot;<i>date</i>&quot;<i>)</i>
+</pre><h4><a name="wp2587623"></a>See also</h4>
+<p><a href="00000439.htm#1103075"><code>DateConvert</code></a>, <a href="00000442.htm#1103355"><code>DatePart</code></a>, <a href="00000435.htm#1102715"><code>CreateTimeSpan</code></a></p>
+<h4><a name="wp4762708"></a>History</h4>
+<p>ColdFusion MX&#160;6.1: Added the <i>datepart</i> character L or l to represent milliseconds.</p>
+<h4><a name="wp4762662"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>datepart</p>
+    </td>
+    <td>
+<p>String:</p>
+<ul>
+<li>
+   yyyy: Year
+</li>
+<li>
+   q: Quarter
+</li>
+<li>
+   m: Month
+</li>
+<li>
+   y: Day of year
+</li>
+<li>
+   d: Day
+</li>
+<li>
+   w: Weekday
+</li>
+<li>
+   ww: Week
+</li>
+<li>
+   h: Hour
+</li>
+<li>
+   n: Minute
+</li>
+<li>
+   s: Second
+</li>
+<li>
+   l: Millisecond
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>number</p>
+    </td>
+    <td>
+<p>Number of units of <i>datepart</i> to add to <i>date</i> (positive, to get dates in the future; negative, to get dates in the past). Number must be an integer.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>date</p>
+    </td>
+    <td>
+<p>Date/time object, in the range 100 AD-9999 AD.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102899"></a>Usage</h4>
+<p>The <i>datepart</i> specifiers <code>y</code>, <code>d</code>, and <code>w</code> add a number of days to a date.</p>
+<p>When passing a date/time object as a string, you must enclose it in quotation marks. Otherwise, it is interpreted as a numeric representation of a date/time object.</p>
+<h4><a name="wp1102902"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of DateAdd ---&gt;
+&lt;cfparam name=&quot;value&quot; default=&quot;70&quot;&gt;
+&lt;cfparam name=&quot;type&quot; default=&quot;m&quot;&gt;
+
+&lt;!--- if numbers passed, then use those ---&gt;
+&lt;cfif IsDefined(&quot;form.value&quot;)&gt;
+   &lt;cfset value = form.value&gt;
+&lt;/cfif&gt;
+&lt;cfif IsDefined(&quot;form.type&quot;)&gt;
+   &lt;cfset type = form.type&gt;
+&lt;/cfif&gt;
+
+
+&lt;cfquery name=&quot;GetMessages&quot; datasource=&quot;cfdocexamples&quot;&gt;
+SELECT&#160;&#160;&#160;UserName, Subject, Posted
+FROM&#160;&#160;&#160;&#160;&#160;Messages
+&lt;/cfquery&gt;
+
+&lt;p&gt;This example uses DateAdd to determine when a message in
+the database will expire. Currently, messages older
+than &lt;cfoutput&gt;#value#&lt;/cfoutput&gt;
+
+&lt;cfswitch expression=&quot;#type#&quot;&gt;
+   &lt;cfcase value=&quot;yyyy&quot;&gt;years&lt;/cfcase&gt;
+   &lt;cfcase value=&quot;q&quot;&gt;quarters&lt;/cfcase&gt;
+   &lt;cfcase value=&quot;m&quot;&gt;months&lt;/cfcase&gt;
+   &lt;cfcase value=&quot;y&quot;&gt;days of year&lt;/cfcase&gt;   
+   &lt;cfcase value=&quot;w&quot;&gt;weekdays&lt;/cfcase&gt;   
+   &lt;cfcase value=&quot;ww&quot;&gt;weeks&lt;/cfcase&gt;   
+   &lt;cfcase value=&quot;h&quot;&gt;hours&lt;/cfcase&gt;   
+   &lt;cfcase value=&quot;n&quot;&gt;minutes&lt;/cfcase&gt;   
+   &lt;cfcase value=&quot;s&quot;&gt;seconds&lt;/cfcase&gt;      
+   &lt;cfdefaultcase&gt;years&lt;/cfdefaultcase&gt;
+&lt;/cfswitch&gt;
+ are expired.
+
+&lt;table&gt;
+&lt;tr&gt;
+   &lt;td&gt;UserName&lt;/td&gt;
+   &lt;td&gt;Subject&lt;/td&gt;
+   &lt;td&gt;Posted&lt;/td&gt;
+&lt;/tr&gt;
+&lt;cfoutput query=&quot;GetMessages&quot;&gt;
+&lt;tr&gt;
+   &lt;td&gt;#UserName#&lt;/td&gt;
+   &lt;td&gt;#Subject#&lt;/td&gt;
+   &lt;td&gt;#Posted# &lt;cfif DateAdd(type, value, posted) LT Now()&gt;&lt;font color=&quot;red&quot;&gt;EXPIRED&lt;/font&gt;&lt;/cfif&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/cfoutput&gt;
+&lt;/table&gt;
+
+&lt;cfform action=&quot;#CGI.Script_Name#&quot; method=&quot;post&quot;&gt;
+
+Select an expiration value:
+&lt;cfinput type=&quot;Text&quot; name=&quot;value&quot; value=&quot;#value#&quot; message=&quot;Please enter whole numbers only&quot; validate=&quot;integer&quot; required=&quot;Yes&quot;&gt;
+&lt;select name=&quot;type&quot;&gt;
+   &lt;option value=&quot;yyyy&quot;&gt;years
+   &lt;option value=&quot;m&quot; selected&gt;months
+   &lt;option value=&quot;d&quot;&gt;days
+   &lt;option value=&quot;ww&quot;&gt;weeks            
+   &lt;option value=&quot;h&quot;&gt;hours
+   &lt;option value=&quot;n&quot;&gt;minutes
+   &lt;option value=&quot;s&quot;&gt;seconds
+&lt;/select&gt;
+   
+&lt;input type=&quot;Submit&quot; value=&quot;Submit&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000436.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000438.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000437.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

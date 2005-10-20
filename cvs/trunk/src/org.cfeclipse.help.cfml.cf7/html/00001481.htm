@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using Flash with CFCs</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001480.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001482.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using Flash with CFCs</h1>
+<p>CFCs require little modification to work with a Flash application. The <a href="00000263.htm#2852457"><code>cffunction</code></a> tag names the method and contains the CFML logic, the <code>cfargument</code> tag names the arguments, and the <a href="00000326.htm#2498057"><code>cfreturn</code></a> tag returns the result to the Flash application. The name of the CFC file (*.cfc) translates to the service name in ActionScript. </p>
+<p><strong>Note: </strong>For CFC methods to communicate with Flash applications, you must set the <code>cffunction</code> tag's <code>access</code> attribute to <code>remote</code>. </p><p>The following example replicates the <code>helloWorld</code> function that was previously implemented as a ColdFusion page. For more information, see <a href="00001480.htm#1171034">Using the Flash Remoting service with ColdFusion pages</a>.</p>
+<h4>To create a CFC that interacts with a Flash application:</h4>
+<ol>
+<li>
+   Create a CFC and save it as flashComponent.cfc in the helloExamples directory.
+</li>
+<li>
+   Modify the code in flashComponent.cfc so that it appears as follows:
+<pre>
+&lt;cfcomponent name=&quot;flashComponent&quot;&gt;
+	&lt;cffunction name=&quot;helloWorld&quot; access=&quot;remote&quot; returnType=&quot;Struct&quot;&gt;
+  		&lt;cfset tempStruct = StructNew()&gt;
+  		&lt;cfset tempStruct.timeVar = DateFormat(Now ())&gt;
+  		&lt;cfset tempStruct.helloMessage = &quot;Hello World&quot;&gt;
+  		&lt;cfreturn tempStruct&gt;
+	&lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+<p>In this example, the <code>helloWorld</code> function is created. The <code>cfreturn</code> tag returns the result to the Flash application.</p>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<p>The <code>helloWorld</code> service function is now available through the <code>flashComponent</code> service to ActionScript. The following ActionScript example calls this function:</p>
+<pre>import mx.remoting.*;  
+import mx.services.Log;
+import mx.rpc.*; 
+
+// Connect to the Flash component service and create service object
+   var <code><strong>CFCService</strong></code>:Service = new Service(
+         &quot;http://localhost/flashservices/gateway&quot;,
+         null,
+         &quot;<code><strong>helloExamples.flashComponent</strong></code>&quot;,
+         null, 
+         null );
+// Call the service helloWorld() method
+var pc:PendingCall = <code><strong>CFCService.helloWorld</strong></code>();
+// Tell the service what methods handle result and fault conditions
+pc.responder = new RelayResponder( this, &quot;helloWorld_Result&quot;, &quot;helloWorld_Fault&quot; );  
+  
+function helloWorld_Result(re:ResultEvent)
+{
+   // Display successful result
+   messageDisplay.text = re.result.HELLOMESSAGE;
+   timeDisplay.text = re.result.TIMEVAR;
+}
+
+function helloWorld_Fault(fe:FaultEvent)
+{
+   // Display fault returned from service
+   messageDisplay.text = fe.fault;
+}
+</pre><p>In this example, the <code>CFCService</code> object references the <code>flashComponent</code> component in the helloExamples directory. Calling the <code>helloWorld</code> function in this example executes the function that is defined in <code>flashComponent</code>. </p>
+<p>For ColdFusion components, the component file name, including the directory structure from the web root, serves as the service name. Remember to delimit the path directories with periods rather than backslashes.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001480.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001482.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001481.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

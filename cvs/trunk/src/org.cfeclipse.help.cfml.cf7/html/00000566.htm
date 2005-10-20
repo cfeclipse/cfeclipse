@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ListValueCountNoCase</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000565.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000567.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ListValueCountNoCase</h1>
+<h4><a name="wp131768"></a>Description</h4>
+<p>Counts instances of a specified value in a list. The search is case-insensitive. </p>
+<h4><a name="wp131770"></a>Returns</h4>
+<p>The number of instances of <i>value</i> in the list.</p>
+<h4><a name="wp131772"></a>Category</h4>
+<p><a href="00000364.htm#1099435">List functions</a></p>
+<h4><a name="wp131777"></a>Function syntax</h4>
+<pre><code><strong>ListValueCountNoCase</strong></code>(<i>list, value </i>[, <i>delimiters</i> ])
+</pre><h4><a name="wp131779"></a>See also</h4>
+<p><a href="00000565.htm#131683">ListValueCount</a>; <a href="00000889.htm#1100874">Lists</a> in <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i> </p>
+<h4><a name="wp131784"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>list</p>
+    </td>
+    <td>
+<p>A list or a variable that contains one.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>String or number, or a variable that contains one. Item for which to search. The search is case-insensitive. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>delimiters</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Character(s) that separate list elements. The default value is comma. </p>
+<p>If this parameter contains more than one character, ColdFusion processes each occurrence of each character as a delimiter. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp131804"></a>Example</h4>
+<pre>&lt;cfquery name = &quot;SearchByDepartment&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT    Department
+FROM    Employees
+&lt;/cfquery&gt;
+
+&lt;h3&gt;ListValueCountNoCase Example&lt;/h3&gt;
+&lt;p&gt;This example uses ListValueCountNoCase to count employees in a department.
+
+&lt;form action = &quot;listvaluecountnocase.cfm&quot;&gt;
+&lt;p&gt;Select a department:&lt;/p&gt;
+   &lt;select name = &quot;departmentName&quot;&gt;
+         &lt;option value = &quot;Accounting&quot;&gt;
+            Accounting
+         &lt;/OPTION&gt;   
+         &lt;option value = &quot;Administration&quot;&gt;
+            Administration
+         &lt;/OPTION&gt;   
+         &lt;option value = &quot;Engineering&quot;&gt;
+            Engineering
+         &lt;/OPTION&gt;   
+         &lt;option value = &quot;Sales&quot;&gt;
+            Sales
+         &lt;/OPTION&gt;                     
+   &lt;/select&gt;
+   &lt;/select&gt;
+&lt;input type = &quot;Submit&quot; name = &quot;Submit&quot; value = &quot;Search Employee List&quot;&gt;
+&lt;/form&gt;
+&lt;!--- wait to have a string for searching defined ---&gt;
+&lt;cfif IsDefined(&quot;FORM.Submit&quot;) and IsDefined(&quot;FORM.departmentName&quot;)&gt;
+   &lt;cfset myList = ValueList(SearchByDepartment.Department)&gt;
+   &lt;cfset numberInDepartment = ListValueCountNoCase(myList,
+      FORM.departmentName)&gt; 
+       
+   &lt;cfif numberInDepartment is 0&gt;
+      &lt;h3&gt;There are no employees in &lt;cfoutput&gt;#FORM.departmentName#      &lt;/cfoutput&gt;&lt;/h3&gt;
+   &lt;cfelseIf numberInDepartment is 1&gt;
+      &lt;cfoutput&gt;      &lt;p&gt;There is only one person in #FORM.departmentName#.
+      &lt;/cfoutput&gt;
+   &lt;cfelse&gt;
+      &lt;cfoutput&gt;      &lt;p&gt;There are #numberInDepartment# people in #FORM.departmentName#.
+      &lt;/cfoutput&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000565.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000567.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000566.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

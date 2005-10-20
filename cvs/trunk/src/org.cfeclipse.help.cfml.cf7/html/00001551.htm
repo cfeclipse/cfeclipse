@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Securing your web services</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001550.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001552.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Securing your web services</h1>
+<p>You can restrict access to your published web services to control the users allowed to invoke them. You can use your web server to control access to the directories containing your web services, or you can use ColdFusion security in the same way that you would to control access to any ColdFusion page.</p>
+<h3><a name="wp1211070"></a>Controlling access to component CFC files</h3>
+<p>To browse the HTML description of a CFC file, you request the file by specifying a URL to the file in your browser. By default, ColdFusion secures access to all URLs that directly reference a CFC file, and prompts you to enter a password upon the request. Use the ColdFusion RDS password to view the file.</p>
+<p>To disable security on CFC file browsing, use the ColdFusion&#160;MX Administrator to disable the RDS password. </p>
+<p>For more information, see <a href="00001022.htm#1170255">Building and Using ColdFusion Components</a>. </p>
+<h3><a name="wp1204902"></a>Using your web server to control access</h3>
+<p>Most web servers, including IIS and Apache, implement directory access protection using the basic HTTP authentication mechanism. When a client attempts to access one of the resources under a protected directory, and has not properly authenticated, the web server automatically sends back an authentication challenge, typically an HTTP Error 401 Access Denied error. </p>
+<p>In response, the client's browser opens a login prompt containing a username and password field. When the user submits this information, the browser sends it back to the web server. If authentication passes, the web server allows access to the directory. The browser also caches the authentication data as long as it is open, so subsequent requests automatically include the authentication data. </p>
+<p>Web service clients can also pass the username and password information as part of the request. The <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag includes the <code>username</code> and <code>password</code> attributes that let you pass login information to a web server using HTTP basic authentication. You can include these attributes when invoking a web service, as the following example shows:</p>
+<pre>&lt;cfinvoke 
+   webservice = &quot;http://some.cfc?wsdl&quot;
+   returnVariable = &quot;foo&quot;
+   ...
+<strong>   username=&quot;aName&quot;</strong>
+<strong>   </strong><code><strong>password=&quot;aPassword&quot;</strong></code>&gt;
+&lt;cfoutput&gt;#foo#&lt;/cfoutput&gt;
+</pre><p>ColdFusion inserts the username/password string in the <code>authorization</code> request header as a base64 binary encoded string, with a colon separating the username and password. This method of passing the username/password is compatible with the HTTP basic authentication mechanism used by web servers. </p>
+<p>The ColdFusion&#160;MX Administrator lets you predefine web services. As part of defining the web service, you can specify the username and password that ColdFusion includes as part of the request to the web service. Therefore, you do not have to encode this information using the <code>cfinvoke</code> tag. For information on defining a web service in the ColdFusion&#160;MX Administrator, see <a href="00001543.htm#1199304">Configuring web services in the ColdFusion&#160;MX Administrator</a>.</p>
+<h3><a name="wp1204919"></a>Using ColdFusion to control access</h3>
+<p>Instead of letting the web server control access to your web services, you can handle the username/password string in your Application.cfc or Application.cfm file as part of your own security mechanism. In this case, you use the <code>cflogin</code> tag to retrieve the username/password information from the <code>authorization</code> header, decode the binary string, and extract the username and password, as the following excerpt from an Application.cfc <code>onRequestStart</code> method shows: </p>
+<pre>&lt;cflogin&gt;
+   &lt;cfset isAuthorized = false&gt;
+
+   &lt;cfif isDefined(&quot;cflogin&quot;)
+      &lt;!--- verify user name from cflogin.name and password from <br />cflogin.password using your authentication mechanism ---&gt;
+      &gt;
+      &lt;cfset isAuthorized = true&gt; 
+   &lt;/cfif&gt;
+&lt;/cflogin&gt;
+
+&lt;cfif not isAuthorized&gt;
+   &lt;!--- If the user does not pass a username/password, return a 401 error. 
+      The browser then prompts the user for a username/password. ---&gt;
+   &lt;cfheader statuscode=&quot;401&quot;&gt;
+   &lt;cfheader name=&quot;WWW-Authenticate&quot; value=&quot;Basic realm=&quot;&quot;Test&quot;&quot;&quot;&gt;
+   &lt;cfabort&gt;
+&lt;/cfif&gt;
+</pre><p>This example does not show how to perform user verification. For more information on verification, see <a href="00001175.htm#1100022">Securing Applications</a>. </p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001550.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001552.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001551.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

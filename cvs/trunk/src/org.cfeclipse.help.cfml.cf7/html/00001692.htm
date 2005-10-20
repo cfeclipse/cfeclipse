@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Building an event gateway</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001691.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001693.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Building an event gateway</h1>
+<p>This section describes how to build an event gateway. To build a Gateway class, you can start with the EmptyGateway.java file as a template. (In the server configuration, this file is located in the <i>cf_root</i>/gateway/src/examples/ directory; in the J2EE configuration, the file is in the <i>cf_root</i>/WEB-INF/cfusion/gateway/src/examples/ directory.) This file defines a nonfunctional event gateway, but has the basic skeleton code for all Gateway class methods.</p>
+<p>Wherever possible, the following sections use code based on the sample Socket event gateway to show how to implement event gateway features. (In the server configuration, this file is <i>cf_root</i>/gateway/src/examples/socket/SocketGateway.java; in the J2EE configuration, the file is <i>cf_root</i>/WEB-INF/cfusion/gateway/src/examples/socket/SocketGateway.java.)</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001692.htm#117858">Class constructor</a>
+</li>
+<li>
+   <a href="00001693.htm#117863">Providing Gateway class service and information routines</a>
+</li>
+<li>
+   <a href="00001694.htm#119084">Starting, stopping, and restarting the event gateway</a>
+</li>
+<li>
+   <a href="00001695.htm#117859">Responding to incoming messages</a>
+</li>
+<li>
+   <a href="00001696.htm#117854">Responding to a ColdFusion function or listener CFC</a>
+</li>
+<li>
+   <a href="00001697.htm#139247">Logging events and using log files</a>
+</li>
+</ul>
+<h2><a name="wp117858"></a>Class constructor</h2>
+<p>An event gateway can implement any of the following constructors:</p>
+<ul>
+<li>
+   <code>MyGateway(String gatewayID, String configurationFile)</code> 
+</li>
+<li>
+   <code>MyGateway(String gatewayID)</code> 
+</li>
+<li>
+   <code>MyGateway()</code> 
+</li>
+</ul>
+<p>When ColdFusion&#160;MX starts, it calls the constructor for each event gateway instance that you configure in ColdFusion&#160;MX. (ColdFusion also calls the gateway <code>Start</code> method after the event gateway is instantiated.). ColdFusion first attempts to use the two-parameter constructor.</p>
+<p>Because each event gateway instance must have a unique ID, ColdFusion provides redundant support for providing the ID. If the event gateway implements only the default constructor, ColdFusion provides the ID by calling the event gateway's <code>setGatewayID</code> method. </p>
+<p>If the event gateway does not implement the two-parameter constructor, it does not get configuration file information from ColdFusion.</p>
+<p>The constructor normally calls the static GatewayServices.getGatewayServices method to access ColdFusion event gateway services. Although you need not do this, it is a good coding practice.</p>
+<p>A minimal constructor that takes only a gateway ID might look like the following:</p>
+<pre>public MyGateway(String gatewayID) {
+   this.gatewayID = gatewayID;
+   this.gatewayService = GatewayServices.getGatewayServices();
+}
+</pre><p>The gateway constructor must throw a coldfusion.server.ServiceRuntimeException exception if there is an error that otherwise cannot be handled. For example, you should throw this exception if the event gateway requires a configuration file and cannot read the file contents. </p>
+<p>If your gateway uses a configuration file, the constructor should load the file, even if the <code>Start</code> method also loads the file. You should do this because the constructor does not run in an independent thread, and ColdFusion can display an error in the ColdFusion MX Administrator of the file fails to load. If the <code>Start</code> method, which does run in a separate thread, fails to load the file, ColdFusion logs the error, but it cannot provide immediate feedback in the administrator.</p>
+<p>The sample Socket event gateway has a single constructor that takes two parameters. It tries to load a configuration file. If you specify a configuration file in the ColdFusion&#160;MX Administrator, or the file path is invalid, it gets an IO exception. It then uses the default port and logs a message indicating what it did. The following example shows the Gateway constructor code and the <code>loadProperties</code> method it uses:</p>
+<pre>public SocketGateway(String id, String configpath)
+{
+   gatewayID = id;
+   gatewayService = GatewayServices.getGatewayServices();
+   // log things to socket-gateway.log in the CF log directory
+   log = gatewayService.getLogger(&quot;socket-gateway&quot;);
+   propsFilePath=configpath;
+   try
+   {
+      FileInputStream propsFile = new FileInputStream(propsFilePath);
+      properties.load(propsFile);
+      propsFile.close();
+      this.loadProperties();
+    }
+    catch (IOException e)
+   {
+      // Use default value for port and log the status.
+      log.warn(&quot;SocketGateway(&quot; + gatewayID + &quot;) Unable to read configuration 
+         file &#39;&quot; + propsFilePath + &quot;&#39;: &quot; + e.toString() + &quot;.  Using default port
+         &quot; + port + &quot;.&quot;, e);
+   }
+}
+
+private void loadProperties() {
+   String tmp = properties.getProperty(&quot;port&quot;);
+   port = Integer.parseInt(tmp);
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001691.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001693.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001692.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfassociate</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000218.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000220.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfassociate</h1>
+<h4><a name="wp1344621"></a>Description</h4>
+<p>Allows subtag data to be saved with a base tag. Applies only to custom tags. </p>
+<h4><a name="wp1864657"></a>Category</h4>
+<p><a href="00000197.htm#2463072">Application framework tags</a></p>
+<h4><a name="wp1097405"></a>Syntax</h4>
+<pre>&lt;cfassociate <br />   baseTag = &quot;base_tag_name&quot;<br />   dataCollection = &quot;collection_name&quot;&gt;
+</pre><h4><a name="wp1864667"></a>See also		</h4>
+<p><a href="00000217.htm#1097308"><code>cfapplication</code></a><code>, </code><a href="00000242.htm#2022557"><code>cferror</code></a><code>, </code><a href="00000285.htm#1100787"><code>cflock</code></a><code>, </code><a href="00000300.htm#1810047"><code>cfmodule</code></a>; <a href="00001086.htm#1096367">High-level data exchange</a> in <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp2250899"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>baseTag</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Base tag name.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>dataCollection</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>AssocAttribs</p>
+    </td>
+    <td>
+<p>Structure in which base tag stores subtag data.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2250926"></a>Usage</h4>
+<p>Call this tag within a subtag, to save subtag data in the base tag.</p>
+<p>When ColdFusion passes subtag attributes back to the base tag, it saves them in a structure whose default name is <code>AssocAttribs</code>. To segregate subtag attributes (in a base tag that can have multiple subtags), specify a structure name, in the <code>dataCollection</code> attribute. The structure is appended to an array whose name is <i>thistag</i>.collectionName.</p>
+<p>Within the custom tag code, the attributes passed to the tag by using the <code>attributeCollection</code> attribute are saved as independent values, with no indication that they are grouped into a structure by the custom tag's caller. Therefore, in the called tag, if you assign a value to a specific attribute, it replaces the value passed in the <code>attributeCollection</code> attribute that you used when calling the subtag.</p>
+<h4><a name="wp1097415"></a>Example</h4>
+<pre>&lt;!--- Find the context. ---&gt;
+&lt;cfif thisTag.executionMode is &quot;start&quot;&gt;
+ &lt;!--- Associate attributes. ---&gt;
+ &lt;cfassociate baseTag = &quot;CF_TAGBASE&quot;&gt;
+
+ &lt;!--- Define defaults for attributes. ---&gt;
+ &lt;cfparam name = &quot;attributes.happy&quot; default = &quot;yes&quot;&gt;
+ &lt;cfparam name = &quot;attributes.sad&quot; default = &quot;no&quot;&gt;
+...
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000218.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000220.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000219.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

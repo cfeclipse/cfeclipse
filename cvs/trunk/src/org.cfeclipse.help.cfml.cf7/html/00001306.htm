@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Specifying a language</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001305.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001307.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Specifying a language</h1>
+<p>If you install the optional Coldfusion International Search pack, you can specify a language other than English when creating a collection. </p>
+<p>ColdFusion supports Verity Locales in European, Asian, and Middle Eastern languages. For more information about installing Verity Locales, see <i>Installing and Using ColdFusion&#160;MX</i>.</p>
+<p>For English language support, Verity provides two options: English (Basic) and English (Advanced). The default language for Verity collections is English (Basic). Indexing a collection using English (Basic) is faster than using English (Advanced), however, English (Advanced) provides better search results.</p>
+<p>You must specify a language when you create the collection. The language you specify should match the language the documents were authored in. By specifying the language your documents are written in, Verity is able to correctly interpret accented characters, and use variations of word stems and roots. If you have documents in several languages, create separate collections for each of them.</p>
+<p>To specify a language when you are indexing data, select the language from the drop-down list when you create a collection with the ColdFusion&#160;MX Administrator. In CFML, the <a href="00000230.htm#1097667"><code>cfcollection</code></a>, <a href="00000278.htm#1100286"><code>cfindex</code></a>, and <a href="00000330.htm#1103106"><code>cfsearch</code></a> tags have an optional <code>language</code> attribute that you use to specify the language of the collection. </p>
+<p>Use the following table to find the correct value for the <code>language</code> attribute for your collection; for example, the following code creates a collection for simplified Chinese:</p>
+<pre>&lt;cfcollection action = &quot;create&quot; collection = &quot;lei_01&quot;
+  path = &quot;c:\CFusionMX7\verity\collections&quot;
+  <code><strong>language = &quot;simplified_chinese&quot;</strong></code>&gt; 
+</pre><p>The following table lists the languages names and attributes that ColdFusion supports:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Language
+    </th>
+    <th>
+Language attribute
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Arabic</p>
+    </td>
+    <td>
+<p>arabic</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Chinese (simplified)</p>
+    </td>
+    <td>
+<p>simplified_chinese</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Chinese (traditional)</p>
+    </td>
+    <td>
+<p>traditional_chinese</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Czech</p>
+    </td>
+    <td>
+<p>czech</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Danish</p>
+    </td>
+    <td>
+<p>danish</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Dutch</p>
+    </td>
+    <td>
+<p>dutch</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>English (Basic)</p>
+    </td>
+    <td>
+<p>english</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>English (Advanced)</p>
+    </td>
+    <td>
+<p>englishx</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Finnish</p>
+    </td>
+    <td>
+<p>finnish</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>French</p>
+    </td>
+    <td>
+<p>french</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>German</p>
+    </td>
+    <td>
+<p>german</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Greek</p>
+    </td>
+    <td>
+<p>greek</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Hebrew</p>
+    </td>
+    <td>
+<p>hebrew</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Hungarian</p>
+    </td>
+    <td>
+<p>hungarian</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Italian</p>
+    </td>
+    <td>
+<p>italian</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Japanese</p>
+    </td>
+    <td>
+<p>japanese</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Korean</p>
+    </td>
+    <td>
+<p>korean</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Norwegian</p>
+    </td>
+    <td>
+<p>norwegian</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Norwegian (Bokmal)</p>
+    </td>
+    <td>
+<p>bokmal</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Norwegian (Nynorsk)</p>
+    </td>
+    <td>
+<p>nynorsk</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Polish</p>
+    </td>
+    <td>
+<p>polish</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Portuguese</p>
+    </td>
+    <td>
+<p>portuguese</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Russian</p>
+    </td>
+    <td>
+<p>russian</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Spanish</p>
+    </td>
+    <td>
+<p>spanish</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Swedish</p>
+    </td>
+    <td>
+<p>swedish</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Turkish</p>
+    </td>
+    <td>
+<p>turkish</p>
+    </td>
+  </tr>
+</table>
+
+<p>You can register collections in the ColdFusion&#160;MX Administrator or by creating a collection with the <code>cfcollection</code> tag. If you register a given collection with ColdFusion and you specify a <code>language</code> attribute, you do not have to specify the <code>language</code> attribute when using <code>cfindex</code> and <code>cfsearch</code> tags for that collection. If you do not register a given collection with ColdFusion, ColdFusion uses English (Basic), the default language, unless you specify the language in the <code>language</code> attribute for the <code>cfindex</code> and <code>cfsearch</code> tags for that collection.</p>
+<p><strong>Note: </strong>When you search a collection in a language other than English, you must translate operators such as AND and OR into the language of the collection.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001305.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001307.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001306.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

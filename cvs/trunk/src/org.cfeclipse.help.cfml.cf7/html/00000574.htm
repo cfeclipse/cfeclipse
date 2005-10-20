@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSIsCurrency</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000573.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000575.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSIsCurrency</h1>
+<h4><a name="wp132807"></a>Description</h4>
+<p>Determines whether a string is a valid representation of a currency amount in the current locale.</p>
+<h4><a name="wp132809"></a>Returns</h4>
+<p>True, if the parameter is formatted as a valid currency amount, including the appropriate currency indicator. The return value is True for amounts in the local, international, or none currency formats.</p>
+<h4><a name="wp132811"></a>Category</h4>
+<p><a href="00000359.htm#1099219">Display and formatting functions</a>, <a href="00000358.htm#3485787">Decision functions</a>, <a href="00000363.htm#1099325">International functions</a></p>
+<h4><a name="wp132822"></a>Function syntax</h4>
+<pre><code><strong>LSIsCurrency</strong></code>(<i>string</i>)
+</pre><h4><a name="wp132824"></a>See also</h4>
+<p><a href="00000486.htm#4552309">GetLocale</a>, <a href="00000624.htm#136340">SetLocale</a>, <a href="00000570.htm#132017">LSCurrencyFormat</a></p>
+<h4><a name="wp132835"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed formatting behavior: this function might return a different result than in earlier releases. This function uses Java standard locale formatting rules on all platforms; the results might vary depending upon the JVM; for example, Sun JVM 1.4.1 requires euro format the local currency if the current locale's country belongs to the Euro Zone.</p>
+<h4><a name="wp132840"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A currency string or a variable that contains one.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp132851"></a>Usage</h4>
+<p>For examples of ColdFusion code and output that shows differences between earlier ColdFusion releases and ColdFusion&#160;MX in accepting input formats and displaying output, see <a href="00000570.htm#132017">LSCurrencyFormat</a><code>.</code></p>
+<p><strong>Note: </strong>If the locale belongs to a Euro zone country and the currency is a correctly formatted euro value for the locale, this function returns True for all JVMs, including Sun 1.3.1. As a result, with 1.3.1-compliant JVMs, the <code>LSIsCurrency</code> function does not ensure that <a href="00000578.htm#133236">LSParseCurrency</a> returns a value. If a currency uses the older country-specific format for Euro Zone locales, the <code>LSIsCurrency</code> function returns False for newer JVMs, such as Sun 1.4.1, and True for older JVMs, such as Sun 1.3.1.</p><p><strong>Note: </strong>To set the default display format of date, time, number, and currency values, use the <a href="00000624.htm#136340"><code>SetLocale</code></a> function. </p><h4><a name="wp132867"></a>Example</h4>
+<pre>&lt;h3&gt;LSIsCurrency Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;FORM.locale&quot;)&gt;
+&lt;!--- if locale is defined, set locale to that entry ---&gt;
+&lt;cfset NewLocale = SetLocale(FORM.locale)&gt;
+
+&lt;p&gt;Is the value &quot;&lt;cfoutput&gt;#FORM.myValue#&lt;/cfoutput&gt;&quot; <br />a proper currency value for &lt;cfoutput&gt;#GetLocale()#&lt;/cfoutput&gt;?
+&lt;p&gt;Answer: &lt;cfoutput&gt;#<strong>LSIsCurrency(FORM.myValue)</strong>#&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;p&gt;&lt;form action = &quot;LSIsCurrency.cfm&quot;&gt;
+&lt;p&gt;Select a locale for which you would like to check a currency value:
+&lt;!--- check the current locale for server ---&gt;
+&lt;cfset serverLocale = GetLocale()&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000573.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000575.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000574.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using sandbox security</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001765.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001767.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using sandbox security</h1>
+<p>Sandbox security (called Resource security in the Standard Edition) uses the location of your ColdFusion pages to control access to ColdFusion resources. A <i>sandbox</i> is a designated directory of your site to which you apply security restrictions. Sandbox security lets you specify which tags, functions, and resources (for example, files, directories, and data sources) can be used by ColdFusion pages located in and under the designated directory.</p>
+<p>To use sandbox security in the multiserver and J2EE editions, the application server must be running a security manager (<code>java.lang.SecurityManager</code>) and you must define the following JVM arguments (for Macromedia JRun, this is the java.args line in the <i>jrun_root</i>/jvm.config file):</p>
+<pre>-Djava.security.manager 
+  -Djava.security.policy=&quot;<code><i>cf_root</i></code>/WEB-INF/cfusion/lib/coldfusion.policy&quot; 
+  -Djava.security.auth.policy=&quot;<code><i>cf_root</i></code>/WEB-INF/cfusion/lib/neo_jaas.policy&quot; 
+</pre><p><strong>Note: </strong>Sandbox security is not enabled by default. You must enable it on the Security &gt; Sandbox Security page before ColdFusion enforces the settings. </p><p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001766.htm#1122938">Using multiple sandboxes (Enterprise Edition only)</a>
+</li>
+<li>
+   <a href="00001766.htm#1129639">Resources that you can restrict</a>
+</li>
+<li>
+   <a href="00001766.htm#1117493">About directories and permissions</a>
+</li>
+<li>
+   <a href="00001767.htm#1117491">Adding a sandbox (Enterprise Edition only)</a>
+</li>
+<li>
+   <a href="00001768.htm#1114067">Configuring a sandbox</a>
+</li>
+</ul>
+<h2><a name="wp1122938"></a>Using multiple sandboxes (Enterprise Edition only)</h2>
+<p>By default, a subdirectory of a sandbox inherits the settings of the directory one level above it. However, if you define a sandbox for a subdirectory, the subdirectory no longer inherits settings from the parent, completely overriding the parent directory's sandbox settings. For example, consider the following directories:</p>
+<pre>C:\Inetpub\wwwroot
+C:\Inetpub\wwwroot\sales
+C:\Inetpub\wwwroot\rnd
+C:\Inetpub\wwwroot\rnd\dev
+C:\Inetpub\wwwroot\rnd\qa
+</pre><p>If you define a sandbox for the wwwroot directory, the settings also apply to the sales and rnd directories. If you also define a sandbox for the rnd directory, the rnd sandbox settings also apply to the dev and qa directories; the wwwroot and sales directories maintain their original settings; and the rnd settings override the wwwroot directory settings for the rnd directory and its subdirectories.</p>
+<p>This hierarchical arrangement of security permits the configuration of personalized sandboxes for users with different security levels. For example, if you are a web hosting administrator who hosts several clients on a ColdFusion shared server, you can configure a sandbox for each customer. This prevents one customer from accessing the data sources or files of another customer.</p>
+<h2><a name="wp1129639"></a>Resources that you can restrict</h2>
+<p>You can restrict the following resources:</p>
+<p><strong>Data Sources</strong>&#160;Restrict the use of ColdFusion data sources.</p>
+<p><strong>CF Tags</strong>&#160;Restrict the use of ColdFusion tags that manipulate resources on the server (or on an external server), such as files, the registry, Lightweight Directory Access Protocol (LDAP), mail, and the log.</p>
+<p><strong>CF Functions</strong>&#160;Restrict the use of ColdFusion functions that access the file system.</p>
+<p><strong>Files/Dirs</strong>&#160;Enable tags and functions in the sandbox to access files and directories outside of the sandbox.</p>
+<p><strong>Note: </strong>To use the Administrator API when sandbox security is enabled, you must allow access to the <i>cf_web_root</i>/CFIDE/adminapi directory.</p><p><strong>Server/Ports</strong>&#160;Specify the servers, ports, and port ranges that the ColdFusion tags that call third-party resources can use.</p>
+<p>For more information, see the Administrator online Help.</p>
+<p><strong>Note: </strong>When you run ColdFusion&#160;MX in the J2EE configuration on IBM WebSphere, the Files/Dirs and Server/Ports tabs are not enabled.</p><h2><a name="wp1117493"></a>About directories and permissions</h2>
+<p>When you enable access to files outside of the sandbox, you specify the filename. When you enable access to directories outside of the sandbox, you specify <i>directoryname</i>\<i>indicator</i>, where <i>indicator</i> is a dash or asterisk, as follows: </p>
+<ul>
+<li>
+   A backslash followed by a dash (\-) lets tags and functions access all files in the specified directory, and recursively allows access to all files in subdirectories.
+</li>
+<li>
+   A backslash followed by an asterisk (\*) lets tags and functions access all files in the specified directory and also lets tags and functions access a list of subdirectories. However, this option denies access to files in any subdirectories.
+</li>
+</ul>
+<p>You can also specify the actions that ColdFusion tags and functions can perform on files and directories outside the sandbox. The following table shows the relationship between the permissions of a file and a directory:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Permission
+    </th>
+    <th>
+Effect on files
+    </th>
+    <th>
+Effect on directories
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Read</p>
+    </td>
+    <td>
+<p>View the file</p>
+    </td>
+    <td>
+<p>List all files in the directory</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Write</p>
+    </td>
+    <td>
+<p>Write to the file</p>
+    </td>
+    <td>
+<p>Not applicable</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Execute</p>
+    </td>
+    <td>
+<p>Execute the file </p>
+    </td>
+    <td>
+<p>Not applicable</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Delete</p>
+    </td>
+    <td>
+<p>Delete the file</p>
+    </td>
+    <td>
+<p>Delete the directory</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001765.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001767.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001766.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

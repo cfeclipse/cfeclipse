@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating an area chart</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001432.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001434.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating an area chart</h1>
+<p>The example in the following procedure adds an area chart to the salaries analysis page. The chart shows the average salary by start date to the salaries analysis page. It shows the use of a second query of queries to generate a new analysis of the raw data from the GetSalaries query. It also shows the use of additional <a href="00000226.htm#2619630"><code>cfchart</code></a> attributes.</p>
+<h4>To create an area chart:</h4>
+<ol>
+<li>
+   Open the chartdata.cfm file in your editor.
+</li>
+<li>
+   Edit the GetSalaries query so that it appears as follows:
+<pre>
+&lt;!-- Get the raw data from the database. --&gt;
+&lt;cfquery name=&quot;GetSalaries&quot; datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT Departmt.Dept_Name, 
+		Employee.StartDate,
+		Employee.Salary
+	FROM Departmt, Employee
+	WHERE Departmt.Dept_ID = Employee.Dept_ID
+&lt;/cfquery&gt;
+</pre>
+</li>
+<li>
+   Add the following code before the <code>html</code> tag:
+<pre>
+&lt;!--- Convert start date to start year. ---&gt;
+&lt;!--- You must convert the date to a number for the query to work ---&gt;
+&lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;#GetSalaries.RecordCount#&quot;&gt;
+&lt;cfset GetSalaries.StartDate[i]=NumberFormat(DatePart(&quot;yyyy&quot;, 
+GetSalaries.StartDate[i]) ,9999)&gt;
+&lt;/cfloop&gt;
+
+&lt;!--- Query of Queries for average salary by start year. ---&gt;
+&lt;cfquery dbtype = &quot;query&quot; name = &quot;HireSalaries&quot;&gt;
+	SELECT 
+		StartDate,
+		AVG(Salary) AS AvgByStart
+	FROM GetSalaries
+	GROUP BY StartDate
+&lt;/cfquery&gt;
+
+&lt;!--- Round average salaries to thousands. ---&gt; 
+&lt;cfloop index=&quot;i&quot; from=&quot;1&quot; to=&quot;#HireSalaries.RecordCount#&quot;&gt;
+	&lt;cfset HireSalaries.AvgByStart[i]=Round(HireSalaries.AvgByStart[i]/
+1000)*1000&gt;
+&lt;/cfloop&gt;
+</pre>
+</li>
+<li>
+   Add the following <code>cfchart</code> tag before the end of the <code>body</code> tag block:
+<pre>
+&lt;!--- Area-style Line chart, from HireSalaries Query of Queries. ---&gt;
+&lt;cfchart 
+		chartWidth=400
+		BackgroundColor=&quot;##FFFF00&quot;
+		show3D=&quot;yes&quot;
+	&gt;
+	&lt;cfchartseries
+		type=&quot;area&quot; 
+		query=&quot;HireSalaries&quot; 
+		valueColumn=&quot;AvgByStart&quot; 
+		itemColumn=&quot;StartDate&quot;
+	 /&gt;
+&lt;/cfchart&gt;
+&lt;br&gt;
+</pre>
+</li>
+<li>
+   Save the page.
+</li>
+<li>
+   View the chartdata.cfm page in your browser.
+</li>
+</ol>
+<h4><a name="wp1130229"></a>Reviewing the code</h4>
+<p>The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>Employee.StartDate,
+</pre>    </td>
+    <td>
+<p>Add the employee start date to the data in the GetSalaries query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfloop index=&quot;i&quot; from=&quot;1&quot;<br />&#160;&#160;&#160;&#160;to=&quot;#GetSalaries.RecordCount#&quot;&gt;
+&#160;&#160;&lt;cfset GetSalaries.StartDate[i]=<br />&#160;&#160;NumberFormat(DatePart(&quot;yyyy&quot;,<br />&#160;&#160;GetSalaries.StartDate[i]) ,9999)&gt;
+&lt;/cfloop&gt;
+</pre>    </td>
+    <td>
+<p>Use a <a href="00000290.htm#3301338"><code>cfloop</code></a> tag to extract the year of hire from each employee's hire data, and convert the result to a four-digit number.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery dbtype = &quot;query&quot; name =<br />&quot;HireSalaries&quot;&gt;
+&#160;&#160;SELECT 
+&#160;&#160;&#160;&#160;   StartDate,
+&#160;&#160;&#160;&#160;AVG(Salary) AS AvgByStart
+&#160;&#160;FROM GetSalaries
+&#160;&#160;GROUP BY StartDate
+&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Create a second query from the GetSalaries query. This query contains the average salary for each start year. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfloop index=&quot;i&quot; from=&quot;1&quot;<br />&#160;&#160;&#160;to=&quot;#HireSalaries.RecordCount#&quot;&gt;
+&#160;&#160;&lt;cfset HireSalaries.AvgByStart[i] <br />&#160;&#160;=Round(HireSalaries.AvgByStart[i]<br />&#160;&#160;/1000)*1000&gt;
+&lt;/cfloop&gt;
+</pre>    </td>
+    <td>
+<p>Round the salaries to the nearest thousand.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfchart 
+      chartWidth=400
+      BackgroundColor=&quot;##FFFF00&quot;
+      show3D=&quot;yes&quot; &gt;
+   &lt;cfchartseries
+      type=&quot;area&quot; 
+      query=&quot;HireSalaries&quot; 
+      valueColumn=&quot;AvgByStart&quot; 
+      itemColumn=&quot;StartDate&quot;
+    /&gt;
+&lt;/cfchart&gt;
+</pre>    </td>
+    <td>
+<p>Create a line chart using the HireSalaries query. Chart the average salaries against the start date.</p>
+<p>Limit the chart width to 400 pixels, show the chart in three dimensions, and set the background color to white. </p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001432.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001434.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001433.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

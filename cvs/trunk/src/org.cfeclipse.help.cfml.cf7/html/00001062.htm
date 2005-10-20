@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using CFCs in persistent scopes</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001061.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001063.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using CFCs in persistent scopes</h1>
+<p>You can put a CFC instance in the Session or Application scope. This way, the component properties continue to exist while the scope persists. For example, you might want to use a CFC for a shopping cart application, where the shopping cart contents must persist for the length of the user's session. If you put the shopping cart CFC in the Session scope, you can use component properties to store the cart contents. For example, the following line creates an instance of the <code>shoppingCart</code> component in the Session scope:</p>
+<pre>&lt;cfobject name=&quot;Session.myShoppingCart&quot; component=&quot;shoppingCart&quot;&gt;
+</pre><p>Code that manipulates persistent scope CFC properties must be locked, just as all other code that manipulates persistent scope properties must be locked. Therefore, you must lock both of the following types of application code:</p>
+<ul>
+<li>
+   Code that directly manipulates properties of a persistent scope CFC instance
+</li>
+<li>
+   Code that calls methods of a persistent scope CFC instance that manipulate properties of the instance
+</li>
+</ul>
+<p>If you put multiple CFC instances in a single persistent scope, you can create a named lock for each CFC instance. For more information on locking, see <a href="00001147.htm#1159066">Using Persistent Data and Locking</a>.</p>
+<p><strong>Note: </strong>Session scope CFCs cannot be serialized, so you cannot use them with clustered sessions; for example, if you want to support session failover among servers.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001061.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001063.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001062.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

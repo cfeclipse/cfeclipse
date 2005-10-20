@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 6: Inserting values in the edit form</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000177.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000179.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 6: Inserting values in the edit form</h1>
+<p>Notice that when the user clicks the Add button, the maintenanceaction.cfm page navigates to the tripedit.cfm page without passing any arguments. Conversely, when the user clicks the Edit button, the Trip Edit page passes the current record ID. The Trip Edit page must handle both cases. When a <code>RecordID</code> is passed on the URL, the tripedit.cfm page must query the database and fill the form with the data for the corresponding trip. </p>
+<h4>To insert values in the edit form:</h4>
+<ol>
+<li>
+   Open the tripedit.cfm file in your editor.
+</li>
+<li>
+   Enter or copy and paste the following code after the <code>cfquery</code> block that appears at the top of the file:
+<pre>
+&lt;cfif IsDefined(&quot;URL.ID&quot;)&gt;
+	&lt;cfquery name=&quot;TripQuery&quot; datasource=&quot;CompassTravel&quot; maxrows=&quot;1&quot;&gt;
+		SELECT tripName, eventType, tripDescription, tripLocation, 	
+		departureDate, returnDate, price, tripLeader, photo, baseCost,
+		numberPeople, depositRequired, tripID 
+		FROM trips				
+	&lt;cfif IsDefined(&quot;URL.ID&quot;)&gt;
+		WHERE tripID = #url.ID#
+	&lt;/cfif&gt;
+	&lt;/cfquery&gt;
+&lt;!--- Set the local variables ---&gt;		
+	&lt;cfset tripName = &#39;#TripQuery.tripName#&#39;&gt;		
+	&lt;cfset eventType = &#39;#TripQuery.eventType#&#39;&gt;		
+	&lt;cfset tripDescription = &#39;#TripQuery.tripDescription#&#39;&gt;		
+	&lt;cfset tripLocation = &#39;#TripQuery.tripLocation#&#39;&gt;		
+	&lt;cfset departureDate = DateFormat(#TripQuery.departureDate#,
+		&quot;mm/dd/yyyy&quot;)&gt;		
+	&lt;cfset returnDate = DateFormat(#TripQuery.returnDate#,&quot;mm/dd/yyyy&quot;)&gt;		
+	&lt;cfset price = #TripQuery.price#&gt;		
+	&lt;cfset tripLeader = &#39;#TripQuery.tripLeader#&#39;&gt;		
+	&lt;cfset photo = &#39;#TripQuery.photo#&#39;&gt;		
+	&lt;cfset baseCost = #TripQuery.baseCost#&gt;		
+	&lt;cfset numberPeople = #TripQuery.numberPeople#&gt;		
+	&lt;cfif isDefined(&quot;TripQuery.depositRequired&quot;)&gt;
+		&lt;cfset depositRequired = &#39;Yes&#39;&gt;
+		&lt;cfelse&gt;
+		&lt;cfset depositRequired = &#39;No&#39;&gt;
+	&lt;/cfif&gt;
+&lt;cfelse&gt;
+	&lt;cfset tripName = &#39;&#39;&gt;		
+	&lt;cfset tripDescription = &#39;&#39;&gt;		
+	&lt;cfset eventTypeIdentifier = #GetEvents.eventType#&gt;
+	&lt;cfset tripLocation = &#39;&#39;&gt;		
+	&lt;cfset departureDate = &#39;&#39;&gt;		
+	&lt;cfset returnDate = &#39;&#39;&gt;		
+	&lt;cfset price = &#39;&#39;&gt;		
+	&lt;cfset tripLeader = &#39;&#39;&gt;		
+	&lt;cfset photo = &#39;&#39;&gt;		
+	&lt;cfset baseCost = &#39;&#39;&gt;		
+	&lt;cfset numberPeople = &#39;&#39;&gt;		
+	&lt;cfset depositRequired = &#39;Yes&#39;&gt;
+&lt;/cfif&gt;
+</pre>
+</li>
+<li>
+   To make the appropriate values appear in the form, insert the code that is highlighted in the following table:
+<p><strong>Note: </strong>If the user clicks the Add button, the values from the currently displayed trip detail appear in the form; otherwise, all values, except those in the event type field, are blank.</p></li>
+<li>
+   Save the file.
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name= &quot;tripName&quot; 
+   maxlength = &quot;50&quot; 
+   size = &quot;50&quot; 
+   required = &quot;Yes&quot; 
+<code><strong>   value=&quot;tripName&quot;</strong></code>
+   message = &quot;Trip name must not be blank&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Trip Name to be blank if the ID is undefined; otherwise, set the value equal to the Trip Name that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;TD&gt;&lt;cftextarea name=&quot;tripDescription&quot; 
+   required=&quot;Yes&quot; 
+   message=&quot;Trip description must not be blank.&quot;&gt;
+<code><strong>   value=&quot;#tripDescription#&quot;</strong></code>
+   &lt;/cftextarea&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Trip Description to be blank if the ID is undefined; otherwise, set the value equal to the Trip Description that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;td&gt;&lt;cfselect size=&quot;1&quot; name=&quot;eventType&quot; required=&quot;Yes&quot; 
+   message=&quot;Type of event must be selected.&quot;&gt;
+   &lt;cfoutput query=&quot;GetEvents&quot;&gt;
+      &lt;option value= &quot;#GetEvents.eventTypeID#&quot;&gt;#GetEvents.eventType#
+   &lt;/option&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfselect&gt;
+&lt;/td&gt;
+
+</pre>    </td>
+    <td>
+<p>Set the value of the Event Type to be the list of events.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput size=&quot;50&quot; name=&quot;tripLocation&quot; 
+   required=&quot;Yes&quot;
+<code><strong>   value=&quot;#tripLocation#&quot;</strong></code>
+   message=&quot;Trip location must not be blank.&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Trip Location to be blank if the ID is undefined; otherwise, set the value equal to the Trip Location that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;departureDate&quot; 
+   size=&quot;10&quot;
+   required=&quot;Yes&quot; 
+   validate=&quot;date&quot; 
+<code><strong>   value=&quot;#departureDate#&quot;</strong></code>
+   message=&quot;Departure date must be a valid date.&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Departure Date to be blank if the ID is undefined; otherwise, set the value equal to the Departure Date that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;returnDate&quot;
+   size=&quot;10&quot; 
+   required=&quot;Yes&quot; 
+   validate=&quot;date&quot; 
+<code><strong>   value=&quot;#returnDate#&quot;</strong></code>
+   message=&quot;Return date must be a valid date.&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Return Date to be blank if the ID is undefined; otherwise, set the value equal to the Return Date that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;numberPeople&quot; 
+   size=&quot;6&quot;
+   required=&quot;Yes&quot; 
+   validate=&quot;integer&quot; 
+<code><strong>   value=&quot;#numberPeople#&quot;</strong></code>
+   message=&quot;The number of people field must be a number and cannot be blank.&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Number of People to be blank if the ID is undefined; otherwise, set the value equal to the Number of People that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;price&quot;
+   size=&quot;10&quot; 
+   required=&quot;Yes&quot; 
+   validate=&quot;integer&quot; 
+<code><strong>   value=&quot;#price#&quot;</strong></code>
+   message=&quot;Price is required and must be numeric.&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Price to be blank if the ID is undefined; otherwise, set the value equal to the Price that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;baseCost&quot;
+   size=&quot;10&quot; 
+   required=&quot;Yes&quot; 
+   validate=&quot;integer&quot; 
+<code><strong>   value=&quot;#baseCost#&quot;</strong></code>
+   message=&quot;Base cost is required and must be numeric.&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Base Cost to be blank if the ID is undefined; otherwise, set the value equal to the Base Cost that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;depositRequired&quot;
+   type=&quot;checkbox&quot; 
+<code><strong>   value=&quot;#depositRequired#&quot; &gt;</strong></code>
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Deposit Required to be &quot;Yes&quot; if the ID is undefined; otherwise, set the value equal to the Deposit Required that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;tripLeader&quot;
+   maxlength=&quot;50&quot; size=&quot;50&quot; 
+   required=&quot;Yes&quot; 
+<code><strong>   value=&quot;#tripLeader#&quot;</strong></code>
+   message=&quot;A trip leader must be specified.&quot;&gt;&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Trip Leader to be blank if the ID is undefined; otherwise, set the value equal to the Trip Leader that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;TD&gt;&lt;cfinput name=&quot;photo&quot;
+   maxlength=&quot;50&quot; size=&quot;50&quot; 
+   required=&quot;Yes&quot; 
+<code><strong>   value=&quot;#photo#&quot;</strong></code>
+   message=&quot;Valid photo file name must be specified.&quot;&gt;
+&lt;/TD&gt;
+</pre>    </td>
+    <td>
+<p>Set the value of the Photo to be blank if the ID is undefined; otherwise, set the value equal to the Photo that appeared on the Trip Detail page.</p>
+    </td>
+  </tr>
+</table>
+
+</li>
+</ol>
+<h4><a name="wp1155027"></a>Reviewing the code</h4>
+<p>The following table describes the code that ColdFusion uses to properly initialize the Trip Edit form:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code 
+    </th>
+    <th>
+Explanation
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfif IsDefined(&quot;URL.ID&quot;)&gt;
+&lt;cfquery name=&quot;TripQuery&quot; datasource=&quot;CompassTravel&quot;<br />maxrows=&quot;1&quot;&gt;
+   SELECT tripName, eventType, tripDescription,<br />tripLocation, departureDate, returnDate, price,<br />tripLeader, photo, baseCost, numberPeople,<br />depositRequired, tripID 
+   FROM trips            
+   &lt;cfif IsDefined(&quot;URL.ID&quot;)&gt;
+      WHERE tripID = #ID#
+   &lt;/cfif&gt;
+&lt;/cfquery&gt;
+      &lt;!--- Set the local variables ---&gt;      
+&lt;cfset tripName = &#39;#TripQuery.tripName#&#39;&gt;      
+&lt;cfset eventType = #TripQuery.eventType#&gt;      
+      &lt;cfset tripDescription = TripQuery.tripDescription#&#39;&gt;      
+&lt;cfset tripLocation = &#39;#TripQuery.tripLocation#&#39;&gt;      
+&lt;cfset departureDate = DateFormat(#TripQuery.departureDate#,&quot;mm/dd/yyyy&quot;)&gt;      
+&lt;cfset returnDate = DateFormat(#TripQuery.returnDate#,&quot;mm/dd/yyyy&quot;)&gt;      
+...
+&lt;cfelse&gt;
+&lt;cfset tripName = &#39;&#39;&gt;      
+&lt;cfset eventType = &#39;&#39;&gt;      
+</pre><p>...</p>
+<pre>&lt;/cfif&gt;
+</pre><p>&#160;</p>
+    </td>
+    <td>
+<p>The ColdFusion function <code>IsDefined</code> determines whether an ID argument was passed as part of the invoking URL. </p>
+<p>When an ID is passed, it is used in the WHERE clause of the SQL SELECT statement to retrieve the information about the current trip. The application then instantiates local variables from the results of the SQL query. The </p>
+<p>ColdFusion <code>DateFormat</code> function formats the date fields.</p>
+<p>&#160;</p>
+<p>&#160;</p>
+<p>If the user clicks the Add button to add a new trip, there is no ID passed as a URL argument. In this case, the local variables are instantiated to blank.</p>
+    </td>
+  </tr>
+</table>
+
+<h4>To test the modified code:</h4>
+<ol>
+<li>
+   Open the tripdetail.cfm page in your browser.
+</li>
+<li>
+   Do the following tasks:
+<ol><li>Click the Edit button. </li><li>Double the price of the current trip.</li><li>Click Save.</li></ol></li>
+</ol>
+<p>In this lesson you used the SQL DELETE statement, and the <code>cfinsert</code> and <code>cfupdate</code> tags to delete, add, and update data to a table. </p>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000177.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000179.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000178.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

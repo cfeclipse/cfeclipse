@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Examples: using JSP with CFML</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001564.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001566.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Examples: using JSP with CFML</h1>
+<p>The following simple examples show how you can integrate JSP pages, servlets, and ColdFusion pages. They also show how you can use the Request, Application, and Session scopes to share data between ColdFusion pages, JSP pages, and servlets.</p>
+<h3><a name="wp1140616"></a>Calling a JSP page from a ColdFusion page</h3>
+<p>The following page sets Request, Session, and application variables and calls a JSP page, passing it a name parameter:</p>
+<pre>&lt;cfapplication name=&quot;myApp&quot; sessionmanagement=&quot;yes&quot;&gt;
+&lt;cfscript&gt;
+Request.myVariable = &quot;This&quot;;
+Session.myVariable = &quot;is a&quot;;
+Application.myVariable = &quot;test.&quot;;
+GetPageContext().include(&quot;hello.jsp?name=Bobby&quot;);
+&lt;/cfscript&gt;
+</pre><h4><a name="wp1141120"></a>Reviewing the code</h4>
+<p>The following table describes the CFML code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfapplication name=&quot;myApp&quot;<br />   sessionmanagement=&quot;yes&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Specifies the application name as myApp and enables session management. In most applications, this tag is in the Application.cfm page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfscript&gt;
+   Request.myVariable = &quot;This&quot;;
+   Session.myVariable = &quot;is a&quot;;
+   Application.myVariable = &quot;test.&quot;;
+</pre>    </td>
+    <td>
+<p>Sets ColdFusion Request, Session, and Application, scope variables. Uses the same name, myVariable, for each variable.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>   GetPageContext().include<br />      (&quot;hello.jsp?name=Bobby&quot;);
+&lt;/cfscript&gt;
+</pre>    </td>
+    <td>
+<p>Uses the <a href="00000490.htm#4209678"><code>GetPageContext</code></a> function to get the current servlet page context for the ColdFusion page. Uses the <code>include</code> method of the page context object to call the hello.jsp page. Passes the name parameter in the URL. </p>
+    </td>
+  </tr>
+</table>
+
+<p>The hello.jsp page is called by the ColdFusion page. It displays the <code>name</code> parameter in a header and the three variables in the remainder of the body.</p>
+<pre>&lt;%@page import=&quot;java.util.*&quot; %&gt;
+&lt;h2&gt;Hello &lt;%= request.getParameter(&quot;name&quot;)%&gt;!&lt;/h2&gt;
+
+&lt;br&gt;Request.myVariable: &lt;%= request.getAttribute(&quot;myVariable&quot;)%&gt;
+&lt;br&gt;session.myVariable: &lt;%= ((Map)(session.getAttribute(&quot;myApp&quot;))).get(&quot;myVariable&quot;)%&gt;
+&lt;br&gt;Application.myVariable: &lt;%= ((Map)(application.getAttribute(&quot;myApp&quot;))).get(&quot;myVariable&quot;)%&gt;
+</pre><h4><a name="wp1140971"></a>Reviewing the code</h4>
+<p>The following table describes the JSP code and its function (line breaks added for clarity):</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;%@page import=&quot;java.util.*&quot; %&gt;
+</pre>    </td>
+    <td>
+<p>Imports the java.util package. This contains methods required in the JSP page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;h2&gt;Hello &lt;%= request.getParameter<br />   (&quot;name&quot;)%&gt;!&lt;/h2&gt;
+</pre>    </td>
+    <td>
+<p>Displays the name passed as a URL parameter from the ColdFusion page. The parameter name is case-sensitive,</p>
+<p><strong><i>Note</i></strong>: The <code>getParameter</code> request method cannot get all ColdFusion page request parameter values on some application servers. For example, on IBM WebSphere, you cannot use <code>getParameter</code> to get form fields.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;br&gt;request.myVariable: &lt;%= request.<br />   getAttribute(&quot;myvariable&quot;)%&gt;
+</pre>    </td>
+    <td>
+<p>Uses the <code>getAttribute</code> method of the JSP request object to displays the value of the Request scope variable myVariable.</p>
+<p>The JSP page must use all lowercase characters to refer to all request scope variables that it shares with CFML pages. You can use any case on the CFML page, but if you use mixed case to all uppercase on the JSP page, the variable will not get its value ColdFusion page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;br&gt;session.myVariable: <br />&lt;%= ((Map)(session.getAttribute(&quot;myApp&quot;))).<br />get(&quot;myVariable&quot;)%&gt;
+</pre>    </td>
+    <td>
+<p>Uses the <code>getAttribute</code> method of the JSP session object to get the myApp object (the Application scope). Casts this to a Java Map object and uses the get method to obtain the myVariable value for display.</p>
+<p>CFML pages and JSP pages share Session variables independent of the variable name case. The variable on the JSP page can have any case mixture and still receive the value from the ColdFusion page. For example, instead of myVariable, you could use MYVARIABLE or myvariable on this line.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;br&gt;Application.myVariable: &lt;%=<br />((Map)(application.getAttribute(&quot;myApp&quot;)))<br />.get(&quot;myVariable&quot;)%&gt;
+</pre>    </td>
+    <td>
+<p>Uses the <code>getAttribute</code> method of the JSP myApp application object to obtain the value of myVariable in the Application scope.</p>
+<p>CFML pages and JSP pages share Application variables independent of the variable name case. The variable on the JSP page can have any case mixture and still receive the value from the ColdFusion page. For example, instead of myVariable, you could use MYVARIABLE or myvariable on this line.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1141218"></a>Calling a ColdFusion page from a JSP page</h3>
+<p>The following JSP page sets Request, Session, and application variables and calls a ColdFusion page, passing it a name parameter:</p>
+<pre>&lt;%@page import=&quot;java.util.*&quot; %&gt;
+
+&lt;% request.setAttribute(&quot;myvariable&quot;, &quot;This&quot;);%&gt;
+&lt;% ((Map)session.getAttribute(&quot;myApp&quot;)).put(&quot;myVariable&quot;, &quot;is a&quot;);%&gt;
+&lt;% ((Map)application.getAttribute(&quot;myApp&quot;)).put(&quot;myVariable&quot;, &quot;test.&quot;);%&gt;
+
+&lt;jsp:include page=&quot;hello.cfm&quot;&gt; 
+   &lt;jsp:param name=&quot;name&quot; value=&quot;Robert&quot; /&gt;
+&lt;/jsp:include&gt;
+</pre><h4><a name="wp1141371"></a>Reviewing the code</h4>
+<p>The following table describes the JSP code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;%@page import=&quot;java.util.*&quot; %&gt;
+</pre>    </td>
+    <td>
+<p>Imports the java.util package. This contains methods required in the JSP page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;% request.setAttribute(&quot;myvariable&quot;, <br />&quot;This&quot;);%&gt;
+</pre>    </td>
+    <td>
+<p>Uses the <code>setAttribute</code> method of the JSP request object to set the value of the Request scope variable myVariable. </p>
+<p>The JSP page must use all lowercase characters to refer to all request scope variables that it shares with CFML pages. You can use any case on the CFML page, but if you use mixed case to all uppercase on the JSP page, the JSP page will not share it with the ColdFusion page.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;% ((Map)session.getAttribute(&quot;myApp&quot;))<br />.put(&quot;myVariable&quot;, &quot;is a&quot;);%&gt; 
+</pre>    </td>
+    <td>
+<p>Uses the <code>getAttribute</code> method of the JSP session object to get the myApp object (the Application scope). Casts this to a Java Map object and uses the <code>set</code> method to set the myVariable value.</p>
+<p>CFML pages and JSP pages share Session variables independent of the variable name case. The variable on the JSP page can have any case mixture and still share the value with the ColdFusion page. For example, instead of myVariable, you could use MYVARIABLE or myvariable on this line.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;% ((Map)application.getAttribute<br />(&quot;myApp&quot;)).put(&quot;myVariable&quot;,<br />&quot;test.&quot;);%&gt;
+</pre>    </td>
+    <td>
+<p>Uses the <code>getAttribute</code> method of the JSP application object to get myApp object (the Application scope) and casts it to a Map object. It then sets the value of myVariable in the myApp application scope object.</p>
+<p>CFML pages and JSP pages share Application variables independent of the variable name case. The variable on the JSP page can have any case mixture and still share the value with the ColdFusion page. For example, instead of myVariable, you could use MYVARIABLE or myvariable on this line.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;jsp:include page=&quot;hello.cfm&quot;&gt; 
+    &lt;jsp:param name=&quot;name&quot; value=&quot;Robert&quot; /&gt;
+&lt;/jsp:include&gt;
+</pre>    </td>
+    <td>
+<p>Sets the name parameter to Robert and calls the ColdFusion page hello.cfm.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following hello.cfm page is called by the JSP page. It displays the Name parameter in a heading and the three variables in the remainder of the body.</p>
+<pre>&lt;cfapplication name=&quot;myApp&quot; sessionmanagement=&quot;yes&quot;&gt;
+&lt;cfoutput&gt;
+&lt;h2&gt;Hello #URL.name#!&lt;/h2&gt;
+Request.myVariable: #Request.myVariable#&lt;br&gt;
+Session.myVariable: #Session.myVariable#&lt;br&gt;
+Application.myVariable: #Application.myVariable#&lt;br&gt;
+
+&lt;/cfoutput&gt;
+</pre><h4><a name="wp1177917"></a>Reviewing the code</h4>
+<p>The following table describes the CFML code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfapplication name=&quot;myApp&quot;<br />sessionmanagement=&quot;yes&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Specifies the application name as myApp and enables session management. In most applications, this tag is in the Application.cfm page.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+&lt;h2&gt;Hello #URL.name#!&lt;/h2&gt;
+</pre>    </td>
+    <td>
+<p>Displays the name passed using the <code>jsp:param</code> tag on the JSP page. The parameter name is <i>not</i> case-sensitive.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>Request.myVariable:<br />#Request.myVariable#&lt;br&gt;
+Session.myVariable:<br />#Session.myVariable#&lt;br&gt;
+Application.myVariable:<br />#Application.myVariable#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Displays the Request.myVariable, Session. myVariable, and Application.myVariable values. Note that all variable names on CFML pages are case independent.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001564.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001566.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001565.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

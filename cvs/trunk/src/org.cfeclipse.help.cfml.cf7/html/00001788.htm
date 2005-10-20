@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Networking options</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001787.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001790.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Networking options</h1>
+<p>The following sections describe the Verity Spider networking options.</p>
+<h3><a name="wp1030080"></a>-agentname</h3>
+<p><strong>Type</strong>: Web crawling only </p>
+<p><strong>Syntax</strong>: <code>-agentname string</code></p>
+<p>Specifies the value for the agent name field that is part of the HTTP request. Since web servers can be configured to return different versions of the same page depending on the requesting agent, you can use the <code>-agentname</code> option to impersonate a browser client.</p>
+<p>Use double-quotation marks if the name contains a space. Use the <code>-cmdfile</code> option if the agent name you want to use contains forbidden characters, such as slashes or backslashes.</p>
+<h3><a name="wp1000115"></a>-connections</h3>
+<p><strong>Syntax</strong>: <code>-connections num_connections</code></p>
+<p>Specifies the maximum number of simultaneous socket connections to make to websites for indexing. Each connection implies a separate thread.</p>
+<p>The default value is 6.</p>
+<p><strong>Note: </strong>The Verity Spider dynamic flow control makes the most use of all available connections when indexing websites. If you are indexing multiple sites, you might want to increase this number. Increasing the number of connections does not always help, because of such dependencies as your network connection and the capabilities of the remote hosts.</p><h3><a name="wp1000109"></a>-delay</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p><strong>Syntax</strong>: <code>-delay num_milliseconds</code></p>
+<p>Specifies the minimum time between HTTP requests, in milliseconds. The default value is 0 milliseconds for no delay.</p>
+<h3><a name="wp1000103"></a>-header</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p><strong>Syntax</strong>: <code>-header string</code></p>
+<p>Specifies an HTTP header to add to the spidering request; for example:</p>
+<pre>-header &quot;Referer: http://www.verity.com/&quot;
+</pre><p>Verity Spider sends some predefined headers, such as Accept and User-Agent, by default. Special headers are sometimes necessary to correctly index a site.</p>
+<p>For example, earlier versions of Verity Spider did not support the Host header, which is needed for Virtual Host indexing. Also, a Proxy-authentication header was needed to pass a username and password to a proxy server. In the current version of Verity Spider, the Host header is supported by default, and the <code>-proxyauth</code> option is available for proxy server authentication. Therefore, the <code>-header</code> option is maintained only for backwards compatibility and possible future enhancements.</p>
+<p><strong>Note: </strong>Misuse of this option causes spider failure. If this happens, rerun the indexing task with modified <code>-header</code> values.</p><h3><a name="wp1000097"></a>-hostcache</h3>
+<p><strong>Syntax</strong>: <code>-hostcache num_hostnames</code></p>
+<p>Specifies the number of host names to cache to avoid DNS lookups. Without this option, the host cache continues to grow.</p>
+<p>The default value is 256.</p>
+<h3><a name="wp1000091"></a>-noflowctrl</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p>Disables round-robin indexing of websites with network flow control.</p>
+<p>By default, Verity Spider uses round-robin indexing of websites to avoid overwhelming a web server and to improve indexing performance. Verity Spider connects to each web server in a round-robin manner, using up to the value for the <code>-connections</code> option. This means that one URL is fetched from each web server, in turn.</p>
+<p><strong>Note: </strong>Using the <code>-noflowctrl</code> option can result in a significant drop in performance.</p><h3><a name="wp1000085"></a>-noproxy</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p><strong>Syntax</strong>: <code>-noproxy name_1 [name_n] ...</code></p>
+<p>Used in conjunction with the <code>-proxy</code> option, the <code>-noproxy</code> option specifies that Verity Spider directly access the hosts whose names match those specified. By default, when you specify the <br /><code>-proxy</code> option, Verity Spider first tries to access every host with the proxy information. To improve performance, use the <code>-noproxy</code> option for the hosts you know can be accessed without a proxy host. For the name variable, you can use the asterisk (*) wildcard for text strings; for example:</p>
+<pre>&#39;*.verity.com&#39;
+</pre><p>You cannot use the question mark (?) wildcard, and the <code>-regexp</code> option does not let you use regular expressions.</p>
+<p>In Windows, include double-quotation marks around the argument to protect the asterisk special character (*). On UNIX, use single-quotation marks. This is only required when you run the indexing job from a command line. Quotation marks are not necessary within a command file (the <code>-cmdfile</code> option).</p>
+<p><strong>Note: </strong>You must have valid Verity Spider licensing capability to use this option.</p><h3><a name="wp1000079"></a>-proxy</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p><strong>Syntax</strong>: <code>-proxy proxyhost:port</code></p>
+<p>Specifies host and port for proxy server.</p>
+<p><strong>Note: </strong>You must have valid Verity Spider licensing capability to use this option.</p><p>See also <a href="00001788.htm#1000073">-proxyauth</a> for proxy servers that require authentication, and <a href="00001788.htm#1000085">-noproxy</a> for hosts that you know are accessible without having to go through a proxy server.</p>
+<h3><a name="wp1000073"></a>-proxyauth</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p><strong>Syntax</strong>: <code>-proxyauth login:password</code></p>
+<p>Specifies login information for proxy server connections that require authorization to get outside the firewall. Use this option in conjunction with the <code>-proxy</code> option.</p>
+<p><strong>Note: </strong>You must have valid Verity Spider licensing capability to use this option. Information Server V3.7 does not support retrieving documents for viewing through secure proxy servers. Do not use the <code>-proxyauth</code> option for indexing documents that are viewed through Information Server V3.7</p><h3><a name="wp1000067"></a>-retry</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p><strong>Syntax</strong>: <code>-retry num_retries</code></p>
+<p>Specifies the number of times that Verity Spider should attempt to access a URL. Use the <code>-retry</code> option when it is likely that an unstable network connection will give false rejections.</p>
+<p>The default value is 4.</p>
+<h3><a name="wp1000061"></a>-timeout</h3>
+<p><strong>Type</strong>: Web crawling only</p>
+<p><strong>Syntax</strong>: <code>-timeout num_seconds</code></p>
+<p>Specifies the time period, in seconds, that Verity Spider should wait before timing out on a network connection and on accessing data. The data access value is automatically twice the value you specify for the network connection timeout.</p>
+<p>The default value for the network connection time-out is 30 seconds, and therefore the default value for the data access time-out is 60 seconds.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001787.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001790.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001788.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

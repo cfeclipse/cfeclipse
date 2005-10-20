@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Updating an LDAP directory</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001289.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001291.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Updating an LDAP directory</h1>
+<p>The <code>cfldap</code> tag lets you do the following to LDAP directory entries:</p>
+<ul>
+<li>
+   Add
+</li>
+<li>
+   Delete
+</li>
+<li>
+   Add attributes
+</li>
+<li>
+   Delete attributes
+</li>
+<li>
+   Replace attributes
+</li>
+<li>
+   Change the DN (rename the entry)
+</li>
+</ul>
+<p>These actions let you manage LDAP directory contents remotely. </p>
+<p>The following sections show how to build a ColdFusion page that lets you manage an LDAP directory:</p>
+<ul>
+<li>
+   <a href="00001291.htm#1096357">Adding a directory entry</a>
+</li>
+<li>
+   <a href="00001292.htm#1197685">Deleting a directory entry</a>
+</li>
+<li>
+   <a href="00001293.htm#1197742">Updating a directory entry</a>
+</li>
+</ul>
+<p>The form displays directory entries in a table and includes a button that lets you populate the form fields based on the unique user ID. </p>
+<p>The example ColdFusion page does not add or delete entry attributes or change the DN. The sections <a href="00001294.htm#1127874">Adding and deleting attributes of a directory entry</a> and <a href="00001295.htm#1121264">Changing a directory entry's DN</a> describe these operations. </p>
+<p>To keep the code short, this example has limitations that are not appropriate in a production application. In particular, it has the following limitations:</p>
+<ul>
+<li>
+   If you enter an invalid user ID and click either the Update or the Delete button, ColdFusion generates a &quot;No such object&quot; error, because there is no directory entry to update or delete. Your application should verify that the ID exists in the directory before it tries to change or delete its entry.
+</li>
+<li>
+   If you enter a valid user ID in an empty form and click Update, the application deletes all the attributes for the User. The application should ensure that all required attribute fields contain valid entries before updating the directory.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001289.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001291.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001290.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

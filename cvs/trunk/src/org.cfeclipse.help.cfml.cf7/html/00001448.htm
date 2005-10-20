@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Saving printable reports in files</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001447.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001449.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Saving printable reports in files</h1>
+<p>You can use the <code>cfdocument filename</code> attribute to save the generated PDF or SWF output to a file, as the following example shows:</p>
+<pre>&lt;!--- The compasstravel database is part of the Getting Started
+&#160;&#160;&#160;&#160;&#160;&#160;tutorial application, found under the cfdocs directory. ---&gt;
+&lt;cfquery datasource=&quot;compasstravel&quot; name=&quot;compasstrips&quot;&gt;
+SELECT tripName, tripDescription, tripLocation, price
+FROM trips
+ORDER BY price
+&lt;/cfquery&gt;
+<code><strong>&lt;cfdocument format=&quot;pdf&quot; filename=&quot;#GetDirectoryFromPath(GetTemplatePath())#/compasstrips.pdf&quot; overwrite=&quot;yes&quot;&gt;</strong></code> 
+  &lt;cfdocumentsection&gt; 
+    &lt;h1 align=&quot;center&quot;&gt;Compass Travel&lt;/h1&gt;
+    &lt;h2 align=&quot;center&quot;&gt;Destination Guide&lt;/h2&gt;
+    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;cfdocs/getting_started/photos/somewhere.jpg&quot;&gt;&lt;/p&gt;
+  &lt;/cfdocumentsection&gt; 
+  &lt;cfdocumentsection&gt; 
+    &lt;cfdocumentitem type=&quot;header&quot;&gt;
+      &lt;font size=&quot;-3&quot;&gt; &lt;i&gt;Compass Travel Trip Descriptions&lt;/i&gt;&lt;/font&gt;
+   &lt;/cfdocumentitem&gt; 
+    &lt;cfdocumentitem type=&quot;footer&quot;&gt; 
+      &lt;font size=&quot;-3&quot;&gt; &lt;cfoutput&gt;Page #cfdocument.currentpagenumber#&lt;/cfoutput&gt; &lt;/font&gt; 
+    &lt;/cfdocumentitem&gt; 
+    &lt;cfoutput query=&quot;compasstrips&quot;&gt; 
+      &lt;hr&gt;
+      &lt;h2&gt;#tripName#&lt;/h2&gt;
+      &lt;p&gt;&lt;b&gt;#tripLocation#&lt;/b&gt;&lt;/p&gt;
+      &lt;p&gt;Price: #DollarFormat(price)#&lt;/p&gt;
+      &lt;p&gt;#tripDescription#&lt;/p&gt;
+    &lt;/cfoutput&gt; 
+  &lt;/cfdocumentsection&gt; 
+&lt;/cfdocument&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001447.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001449.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001448.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

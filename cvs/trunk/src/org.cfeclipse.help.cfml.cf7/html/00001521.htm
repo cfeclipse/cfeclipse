@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Extracting data with XPath</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001520.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001522.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Extracting data with XPath</h1>
+<p>XPath is a language for addressing parts of an XML document. Like XSL, XPath is a W3C specification. One of the major uses of XPath is in XSL transformations. However, XPath has more general uses. In particular, it can extract data from XML documents, such as complex data set representations. Thus, XPath is another data querying tool.</p>
+<p>XPath uses a pattern called an XPath expression to specify the information to extract from an XML document. For example, the simple XPath expression /employee/name selects the name elements in the employee root element.</p>
+<p>The <code>XmlSearch</code> function uses XPath expressions to extract data from XML document objects. The function takes an XML document object and an XPath expression in string format, and returns an array of XML document objects containing the elements that meet the expression criteria.</p>
+<p>The following example extracts all the elements named last, which contain the employee's last names, from the employeesimple.xml file, and displays the names:</p>
+<pre>&lt;cffile action=&quot;read&quot;
+   file=&quot;C:\inetpub\wwwroot\examples\employeesimple.xml&quot;
+   variable=&quot;myxml&quot;&gt;
+&lt;cfscript&gt;
+   myxmldoc = XmlParse(myxml);
+   selectedElements = XmlSearch(myxmldoc, &quot;/employee/name/last&quot;);
+   for (i = 1; i LTE ArrayLen(selectedElements); i = i + 1)
+      writeoutput(selectedElements[i].XmlText &amp; &quot;&lt;br&gt;&quot;);
+&lt;/cfscript&gt;
+</pre><p>XPath is specified by the World-Wide Web Consortium. For detailed information on XPath, see the W3C website at www.w3.org/TR/xpath. Most books that cover XSLT also discuss XPath.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001520.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001522.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001521.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

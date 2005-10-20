@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Getting a list of session variables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001159.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001161.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Getting a list of session variables</h1>
+<p>Use the <a href="00000646.htm#138035"><code>StructKeyList</code></a> function to get a list of session variables, as follows:</p>
+<pre>&lt;cflock timeout=20 scope=&quot;Session&quot; type=&quot;Readonly&quot;&gt;
+   &lt;cfoutput&gt; #StructKeyList(Session)# &lt;/cfoutput&gt;
+&lt;/cflock&gt;
+</pre><p><strong>Caution: </strong>Always put code that accesses session variables inside <a href="00000285.htm#1100787"><code>cflock</code></a> tags.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001159.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001161.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001160.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

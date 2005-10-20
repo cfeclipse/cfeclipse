@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Custom tag interface</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000816.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000818.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Custom tag interface</h1>
+<pre>public abstract interface CustomTag
+</pre><p>Interface for implementing custom tags. </p>
+<p>Classes that implement this interface can be specified in the <code>CLASS</code> attribute of the Java CFX tag. For example, in a class <i>MyCustomTag</i>, which implements this interface, the following CFML code calls the <code>MyCustomTag.processRequest</code> method: </p>
+<pre>&lt;CFX_MyCustomTag&gt; 
+</pre><p>Other attributes can be passed to the Java CFX tag. Their values are available using the Request object passed to the <code>processRequest</code> method.</p>
+<h2><a name="wp1117837"></a>Methods</h2>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Returns
+    </th>
+    <th>
+Syntax
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>void</p>
+    </td>
+    <td>
+<p><code>processRequest(Request </code><code><i>request</i></code><code>, Response </code><code><i>response)</i></code></p>
+    </td>
+    <td>
+<p>Processes a request originating from the <code>CFX_mycustomtag</code> tag</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000816.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000818.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000817.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

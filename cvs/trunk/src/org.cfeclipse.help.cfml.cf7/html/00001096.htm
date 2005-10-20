@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ZipBrowser example</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001095.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001097.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ZipBrowser example</h1>
+<p>The following example shows the use of the <code>Request</code>, <code>Response</code>, and <code>Query</code> objects. The example uses the java.util.zip package to implement a Java CFX tag called <code>cfx_ZipBrowser</code>, which is a zip file browsing tag. </p>
+<p><strong>Note: </strong>The Java source file that implements cfx_ZipBrowser, ZipBrowser.java, is included in the <i>cf_root</i>/cfx/java/distrib/examples (server configuration) or cf_webapp_root/WEB-INF/cfusion/cfx/java/distrib/examples (J2EE configuration) directory. Compile ZipBrowser.java to implement the tag. </p><p>The tag's <code>archive</code> attribute specifies the fully qualified path of the zip archive to browse. The tag's <code>name</code> attribute must specify the query to return to the calling page. The returned query contains three columns: Name, Size, and Compressed.</p>
+<p>For example, to query an archive at the path C:\logfiles.zip for its contents and output the results, you use the following CFML code:</p>
+<pre>&lt;cfx_ZipBrowser
+   archive=&quot;C:\logfiles.zip&quot;
+   name=&quot;LogFiles&quot; &gt;
+
+&lt;cfoutput query=&quot;LogFiles&quot;&gt;
+#Name#,  #Size#, #Compressed# &lt;BR&gt;
+&lt;/cfoutput&gt;      
+</pre><p>The Java implementation of ZipBrowser is as follows:</p>
+<pre>import com.allaire.cfx.* ;
+import java.util.Hashtable ;
+import java.io.FileInputStream ;
+import java.util.zip.* ;
+
+public class ZipBrowser implements CustomTag&#160;{
+   public void processRequest( Request request, Response response ) 
+      throws Exception&#160;{
+      // validate that required attributes were passed
+      if (  !request.attributeExists( &quot;ARCHIVE&quot; ) ||
+            !request.attributeExists( &quot;NAME&quot; ) )&#160;{
+         throw new Exception( 
+            &quot;Missing attribute (ARCHIVE and NAME are both &quot; +
+            &quot;required attributes for this tag)&quot; ) ;
+      }
+    // get attribute values
+      String strArchive = request.getAttribute( &quot;ARCHIVE&quot; ) ;
+      String strName = request.getAttribute( &quot;NAME&quot; ) ;
+   
+   // create a query to use for returning the list of files
+      String[] columns = { &quot;Name&quot;, &quot;Size&quot;, &quot;Compressed&quot; } ;
+      int iName = 1, iSize = 2, iCompressed = 3 ;
+      Query files = response.addQuery( strName, columns ) ;
+      
+   // read the zip file and build a query from its contents
+      ZipInputStream zin = 
+         new ZipInputStream( new FileInputStream(strArchive) ) ;
+      ZipEntry entry ;
+      while ( ( entry = zin.getNextEntry()) != null )&#160;{
+         // add a row to the results
+         int iRow = files.addRow() ;
+         
+         // populate the row with data
+         files.setData( iRow, iName, 
+            entry.getName() ) ;
+         files.setData( iRow, iSize, 
+            String.valueOf(entry.getSize()) ) ;
+         files.setData( iRow, iCompressed, 
+            String.valueOf(entry.getCompressedSize()) ) ;
+         
+         // finish up with entry
+         zin.closeEntry() ;
+      }
+
+      // close the archive
+      zin.close() ;
+   }
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001095.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001097.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001096.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

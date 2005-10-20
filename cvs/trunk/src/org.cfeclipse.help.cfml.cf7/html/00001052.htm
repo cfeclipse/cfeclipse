@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Passing parameters in direct method invocations</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001051.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001053.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Passing parameters in direct method invocations</h1>
+<p>ColdFusion provides three methods for passing parameters to CFC methods in direct method invocations:</p>
+<ul>
+<li>
+   You can pass the parameters the form of comma-separated <code>name=&quot;value&quot;</code> entries, as in the following CFScript example:
+<pre>
+authorized = securityCFC.getAuth(name=&quot;Almonzo&quot;, Password=&quot;LauRa123&quot;);
+</pre>
+</li>
+<li>
+   You can pass the parameters in an <code>argumentCollection</code> structure. The following code is equivalent to the previous example:
+<pre>
+argsColl = structNew();
+argsColl.username = &quot;Amonzo&quot;;
+argsColl.password = &quot;LauRa123;
+authorized = securityCFC.getAuth(argumentCollection = argsColl);
+</pre>
+</li>
+<li>
+   You can pass positional parameters to a method by separating them with commas. The following example calls the <code>getAuth</code> method, and passes the name and password as positional parameters: 
+<pre>
+authorized = securityCFC.getAuth(&quot;Almonzo&quot;, &quot;LauRa123&quot;);
+</pre>
+<p><strong>Note: </strong>For more information on using positional parameters and component methods in ColdFusion functions, see <a href="00001003.htm#1193711">Creating user-defined functions</a>.</p></li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001051.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001053.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001052.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

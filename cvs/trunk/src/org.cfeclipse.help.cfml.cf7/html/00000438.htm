@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>DateCompare</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000437.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000439.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>DateCompare</h1>
+<h4><a name="wp1224575"></a>Description</h4>
+<p>Performs a full date/time comparison of two dates.</p>
+<h4><a name="wp3354504"></a>Returns</h4>
+<ul>
+<li>
+   -1, if <i>date1</i> is earlier than <i>date2</i>
+</li>
+<li>
+   0, if <i>date1</i> is equal to <i>date2</i>
+</li>
+<li>
+   1, if <i>date1</i> is later than <i>date2</i>
+</li>
+</ul>
+<h4><a name="wp2501430"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a></p>
+<h4><a name="wp1102958"></a>Function syntax</h4>
+<pre><code><strong>DateCompare</strong></code>(&quot;<i>date1&quot;</i>, &quot;<i>date2&quot; </i>[, &quot;<i>datePart&quot;</i>])
+</pre><h4><a name="wp2587598"></a>See also</h4>
+<p><a href="00000423.htm#1224498"><code>CreateDateTime</code></a>, <a href="00000442.htm#1103355"><code>DatePart</code></a></p>
+<h4><a name="wp1281242"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>date1</p>
+    </td>
+    <td>
+<p>Date/time object, in the range 100 AD-9999 AD.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>date2</p>
+    </td>
+    <td>
+<p>Date/time object, in the range 100 AD-9999 AD.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>datePart</p>
+    </td>
+    <td>
+<p>Optional. String. Precision of the comparison. </p>
+<ul>
+<li>
+   s&#160;Precise to the second (default)
+</li>
+<li>
+   n&#160;Precise to the minute
+</li>
+<li>
+   h&#160;Precise to the hour
+</li>
+<li>
+   d&#160;Precise to the day
+</li>
+<li>
+   m&#160;Precise to the month
+</li>
+<li>
+   yyyy&#160;Precise to the year
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1102973"></a>Usage</h4>
+<p>When passing a date/time object as a string, you must enclose it in quotation marks. Otherwise, it is interpreted as a numeric representation of a date/time object.</p>
+<h4><a name="wp1102976"></a>Example</h4>
+<pre>&lt;h3&gt;DateCompare Example&lt;/h3&gt;
+&lt;p&gt;The DateCompare function compares two date/time values.
+&lt;cfif IsDefined(&quot;FORM.date1&quot;)&gt;
+   &lt;cfif IsDate(FORM.date1) and IsDate(FORM.date2)&gt;
+      &lt;cfset comparison = DateCompare(FORM.date1, FORM.date2, FORM.precision)&gt;
+
+&lt;!--- switch on the variable to give various responses ---&gt;
+      &lt;cfswitch expression = #comparison#&gt;
+         &lt;cfcase value = &quot;-1&quot;&gt;
+            &lt;h3&gt;&lt;cfoutput&gt;#DateFormat(FORM.date1)# 
+            #TimeFormat(FORM.date1)#&lt;/cfoutput&gt; (Date 1) is
+            earlier than &lt;cfoutput&gt;#DateFormat(FORM.date2)#
+            #TimeFormat(FORM.date2)#&lt;/cfoutput&gt; (Date 2)&lt;/h3&gt;
+            &lt;I&gt;The dates are not equal&lt;/I&gt;
+         &lt;/cfcase&gt;
+         &lt;cfcase value = &quot;0&quot;&gt;
+            &lt;h3&gt;&lt;cfoutput&gt;#DateFormat(FORM.date1)#
+            #TimeFormat(FORM.date1)#&lt;/cfoutput&gt; (Date 1) is equal
+            to &lt;cfoutput&gt;#DateFormat(FORM.date2)#
+            #TimeFormat(FORM.date2)#&lt;/cfoutput&gt; (Date 2)&lt;/h3&gt;
+            &lt;I&gt;The dates are equal!&lt;/I&gt;
+         &lt;/cfcase&gt;
+         &lt;cfcase value = &quot;1&quot;&gt;
+            &lt;h3&gt;&lt;cfoutput&gt;#DateFormat(FORM.date1)#
+            #TimeFormat(FORM.date1)#&lt;/cfoutput&gt; (Date 1) is later
+            than &lt;cfoutput&gt;#DateFormat(FORM.date2)#
+            #TimeFormat(FORM.date2)#&lt;/cfoutput&gt; (Date 2)&lt;/h3&gt;
+            &lt;I&gt;The dates are not equal&lt;/I&gt;
+         &lt;/cfcase&gt;
+         &lt;CFDEFAULTCASE&gt;
+            &lt;h3&gt;This is the default case&lt;/h3&gt;
+         &lt;/CFDEFAULTCASE&gt;
+      &lt;/cfswitch&gt;
+   &lt;cfelse&gt;
+      &lt;h3&gt;Enter two valid date values&lt;/h3&gt;
+   &lt;/cfif&gt;
+&lt;/cfif&gt;
+
+&lt;form action = &quot;datecompare.cfm&quot; method=&quot;post&quot;&gt;
+&lt;hr size = &quot;2&quot; color = &quot;#0000A0&quot;&gt;
+&lt;p&gt;Date 1
+&lt;br&gt;&lt;input type = &quot;Text&quot; name = &quot;date1&quot; 
+      value = &quot;&lt;cfoutput&gt;#DateFormat(Now())# #TimeFormat(Now())#
+&lt;/cfoutput&gt;&quot;&gt;
+&lt;p&gt;Date 2
+&lt;br&gt;&lt;input type = &quot;Text&quot; name = &quot;date2&quot; 
+      value = &quot;&lt;cfoutput&gt;#DateFormat(Now())# #TimeFormat(Now())#
+&lt;/cfoutput&gt;&quot;&gt;
+&lt;p&gt;Specify precision to the:
+&lt;br&gt;&lt;select name = &quot;precision&quot;&gt;
+         &lt;option value = &quot;s&quot;&gt;
+            Second
+         &lt;/option&gt;   
+         &lt;option value = &quot;n&quot;&gt;
+            Minute
+         &lt;/option&gt;   
+         &lt;option value = &quot;h&quot;&gt;
+            Hour
+         &lt;/option&gt;   
+         &lt;option value = &quot;d&quot;&gt;
+            Day
+         &lt;/option&gt;
+         &lt;option value = &quot;m&quot;&gt;
+            Month
+         &lt;/option&gt;   
+         &lt;option value = &quot;yyyy&quot;&gt;
+            Year
+         &lt;/option&gt;
+   &lt;/select&gt;
+&lt;p&gt;&lt;input type = &quot;Submit&quot; value = &quot;Compare these dates&quot; name = &quot;&quot;&gt; 
+&lt;input type = &quot;reset&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000437.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000439.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000438.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

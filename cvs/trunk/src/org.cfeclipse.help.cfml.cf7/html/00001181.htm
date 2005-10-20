@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Getting the user ID and password</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001180.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001182.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Getting the user ID and password</h1>
+<p>The <a href="00000287.htm#2991147"><code>cflogin</code></a> tag has a built-in cflogin structure that contains two variables, cflogin.username and cflogin.password, if the page is executing in response to any of the following:</p>
+<ul>
+<li>
+   Submission of a login form that contains input fields with the names <code>j_username</code> and <code>j_password</code>.
+</li>
+<li>
+   A request that uses HTTP Basic authentication and, therefore, includes an Authorization header with the user name and password.
+</li>
+<li>
+   A message from the Macromedia Flash Remoting gatewayConnection object that has the <code>setCredentials</code> method set.
+</li>
+<li>
+   A request that uses NTLM or Digest authentication. In this case, the user name and password are hashed using a one-way algorithm before they are put in the Authorization header; ColdFusion gets the user name from the web server and sets the cflogin.password value to the empty string.
+</li>
+</ul>
+<p>You use the first three techniques with application authentication, and the last technique with web server authentication. The cflogin structure provides a consistent interface for determining the user's login ID and password, independent of the technique that you use for displaying the login form. </p>
+<p><strong>Caution: </strong>Login forms send the user name and password without encryption. Basic HTTP authentication sends the user name and password in a base64-encoded string with each request; this format can easily be converted back to plain text. Use these techniques only with https requests, or when you are not concerned about password security. </p><p>The following sections describe how you provide login information to your application for authentication</p>
+<h3><a name="wp1163057"></a>Using a login form to get user information</h3>
+<p>When you build an application that gets the User ID and password using a login form, the <code>cflogin</code> tag checks for the existence of a cflogin structure containing the user's login information. If the structure does not exist, it displays a login form, typically using a <code>cfinclude</code> tag on a login page; the following code shows this use.</p>
+<p>In the Application.cfc <code>onRequestStart</code> method, or a ColdFusion page or CFC method called by the method, you have the following:</p>
+<pre>&lt;cflogin&gt;
+   &lt;cfif NOT IsDefined(&quot;cflogin&quot;)&gt;
+      &lt;cfinclude template=&quot;loginform.cfm&quot;&gt;
+   &lt;/cfif&gt;
+    &lt;cfabort&gt;
+    &lt;cfelse&gt;
+   &lt;!--- Code to authenticate the user based on the cflogin.user and
+      cflogin.password values goes here. ---&gt;
+   &lt;!--- If User is authenticated, determine any roles and use a line like the
+      following to log in the user. ---&gt;
+      &lt;cfloginuser name=&quot;#cflogin.name#&quot; Password = &quot;#cflogin.password#&quot;
+         roles=&quot;#loginQuery.Roles#&quot;&gt;
+&lt;/cflogin&gt;
+</pre><p>A simple login form looks like the following:</p>
+<pre>&lt;cfform name=&quot;loginform&quot; action=&quot;#CGI.script_name#?#CGI.query_string#&quot;
+      method=&quot;Post&quot;&gt;
+   &lt;table&gt;
+      &lt;tr&gt;
+         &lt;td&gt;username:&lt;/td&gt;
+         &lt;td&gt;&lt;cfinput type=&quot;text&quot; name=&quot;j_username&quot; required=&quot;yes&quot; 
+            message=&quot;A username is required&quot;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+         &lt;td&gt;password:&lt;/td&gt;
+         &lt;td&gt;&lt;cfinput type=&quot;password&quot; name=&quot;j_password&quot; required=&quot;yes&quot;
+            message=&quot;A password is required&quot;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+   &lt;/table&gt;
+   &lt;br&gt;
+   &lt;input type=&quot;submit&quot; value=&quot;Log In&quot;&gt;
+&lt;/cfform&gt;
+</pre><h3><a name="wp1163138"></a>Using a browser dialog box to get user information</h3>
+<p>Application authentication does not require you to use a login form; you can rely on the browser to display its standard login dialog box, instead. To do so, your <code>cflogin</code> tag body returns an HTTP status 401 to the browser if the user is not logged in or if the login fails; that is, if it does not have a valid cflogin structure. The browser displays its login dialog box. When the user clicks the login button on the dialog box, the browser returns the login information as an HTTP Authorization header to ColdFusion, which puts the information in the <code>cflogin</code> tag's cflogin structure. </p>
+<p>This technique has the advantage of simplicity; you do not need a login form and the user gets a familiar-looking login page. You must be careful of security issues, however. The browser sends the user name and password in a base64-encoded string, not just when the user logs in, but with each request. Use SSL (Secure Sockets Layer) for all page transactions to protect the user ID and password from unauthorized access. </p>
+<p><strong>Note: </strong>You must ensure that your web server is configured correctly to support browser-based login forms for this use. For example, in IIS 5, you must enable anonymous access and might have to disable Basic authentication and Integrated Windows authentication.</p><p>The following <code>cflogin</code> tag tells the browser to display a login form if the user has not logged in:</p>
+<pre>&lt;cflogin&gt;
+   &lt;cfif NOT IsDefined(&quot;cflogin&quot;)&gt;
+      &lt;cfheader statuscode=&quot;401&quot;&gt;
+      &lt;cfheader name=&quot;www-Authenticate&quot; value=&quot;Basic 
+         realm=&quot;&quot;MM Wizard #args.authtype# Authentication&quot;&quot;&quot;&gt;
+   &lt;/cfif&gt;
+   &lt;cfabort&gt;
+   &lt;cfelse&gt;
+      &lt;!--- code to authenticate the user based on the cflogin.user and
+         cflogin.password values goes here. ---&gt;
+&lt;/cflogin&gt;
+</pre><h3><a name="wp1163041"></a>Logging in a user using Flash Remoting</h3>
+<p>If you are developing a Rich Internet Application with Macromedia Flash and Flash Remoting, your ColdFusion application does not need to be coded specially for a Flash login. The Flash Remoting gateway makes the user ID and password available to the <code>cflogin</code> tag in the <a href="00000287.htm#2991147"><code>cflogin</code></a> structure.</p>
+<p>In your Flash code, you use the ActionScript <code>SetCredentials</code> method to send login information to ColdFusion. Your Flash SWF file displays the user ID and password fields, and uses their contents in the <code>setCredentials</code> method, as follows:</p>
+<pre>if (inited == null)
+{
+   inited = true;
+   NetServices.setDefaultGatewayUrl(&quot;http://localhost/flashservices/gateway&quot;);
+   gatewayConnection = NetServices.createGatewayConnection();
+   gatewayConnection.setCredentials(userID, password);
+   myService = gatewayConnection.getService(&quot;securityTest.thecfc&quot;, this);
+}
+</pre><p>For more information on using Flash Remoting, see <i>Using Flash Remoting MX</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001180.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001182.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001181.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

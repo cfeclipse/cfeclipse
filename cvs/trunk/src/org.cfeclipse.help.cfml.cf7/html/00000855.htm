@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>wddxSerialize</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000854.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000856.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>wddxSerialize</h1>
+<h4><a name="wp1042832"></a>Description</h4>
+<p>Serializes a record set.</p>
+<h4><a name="wp1017552"></a>Syntax</h4>
+<pre><code><i>object</i></code>.wddxSerialize( <code><i>serializer</i></code> )
+</pre><h4><a name="wp1017567"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>object</p>
+    </td>
+    <td>
+<p>Instance name of the WddxRecordset object</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>serializer</p>
+    </td>
+    <td>
+<p>WddxSerializer instance</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1067405"></a>Return value</h4>
+<p>Returns a Boolean True if serialization was successful; False, otherwise.</p>
+<h4><a name="wp1017321"></a>Usage</h4>
+<p>This is an internal function; you do not typically call it.</p>
+<h4><a name="wp1017323"></a>Example</h4>
+<p>This example is from the WddxSerializer <code>serializeValue</code> function:</p>
+<pre>...
+else if (typeof(obj) == &quot;object&quot;)
+{
+if (obj == null)
+{
+// Null values become empty strings
+this.write(&quot;&lt;string&gt;&lt;/string&gt;&quot;);
+}
+else if (typeof(obj.wddxSerialize) == &quot;function&quot;)
+{
+// Object knows how to serialize itself
+bSuccess = obj.wddxSerialize(this);
+}
+...
+</pre><p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000854.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000856.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000855.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Writing SQL and CFML statements to interact with a data source</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000099.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000101.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Writing SQL and CFML statements to interact with a data source</h1>
+<p>After ColdFusion makes a connection to the data source, you can interact with that database by using SQL and ColdFusion. </p>
+<p>To interact with an established data source, you must include SQL statements in your CFML statements; for example:</p>
+<pre>&lt;cfquery name=&quot;queryname&quot; datasource=&quot;namedbfile&quot;&gt;
+   SELECT FirstName, LastName, DepartmentID
+   From Employee
+&lt;/cfquery&gt;
+</pre><p>In this example, the first attribute of the <code>cfquery</code> tag is the name of the query. The second attribute of the <code>cfquery</code> tag defines the name of the data source. The <code>SELECT</code> statement defines the fields (columns) to be retrieved from a table named Employee.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000099.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000101.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000100.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Debugging Settings and Debugging IPs pages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001716.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001718.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Debugging Settings and Debugging IPs pages</h1>
+<p>You use the Debugging Settings and Debugging IPs pages to configure ColdFusion&#160;MX to provide debugging information for every application page requested by a browser. You specify debugging preferences using the pages as follows:</p>
+<ul>
+<li>
+   On the Debugging Settings page, select debugging output options. If debugging is enabled, the output appears in block format after normal page output.
+</li>
+<li>
+   On the Debugging IPs page, restrict access to debugging output. If a debugging option is enabled, debugging output is visible to all users by default.
+</li>
+</ul>
+<p><strong>Note: </strong>Enabling debugging affects performance. You should not enable debugging on a production server.</p><p>The Debugging Settings page provides the following debugging options:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Option
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Enable Robust Exception Information</p>
+    </td>
+    <td>
+<p>Displays detailed information in the exceptions page, including the template's physical path and URI, the line number and snippet, the SQL statement used (if any), the data source name (if any), and the Java stack trace.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Enable Debugging</p>
+    </td>
+    <td>
+<p>Enables the ColdFusion debugging service. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Select Debugging Output Format</p>
+    </td>
+    <td>
+<p>Controls debugging format. Select either of the following formats: </p>
+<ul>
+<li>
+   classic.cfm&#160;The format available in ColdFusion 5 and earlier. It provides a basic view and few browser restrictions. 
+</li>
+<li>
+   dockable.cfm&#160;A dockable tree-based debugging panel. For details about the panel and browser restrictions, see the online Help.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Report Execution Times</p>
+    </td>
+    <td>
+<p>Reports execution times that exceed a specified time limit.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>General Debug Information</p>
+    </td>
+    <td>
+<p>Show general information about the ColdFusion MX version, template, time stamp, user locale, user agent, user IP, and host name.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Database Activity </p>
+    </td>
+    <td>
+<p>Shows the database activity for the SQL Query events and Stored Procedure events in the debugging output. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Exception Information</p>
+    </td>
+    <td>
+<p>Shows all ColdFusion exceptions raised for the request in the debugging output. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Tracing Information</p>
+    </td>
+    <td>
+<p>Shows trace event information in the debugging output. Tracing lets you track program flow and efficiency using the <code>cftrace</code> tag. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Timer Information</p>
+    </td>
+    <td>
+<p>Shows output from the <code>cftimer</code> tag.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Variables</p>
+    </td>
+    <td>
+<p>Displays information about parameters, URL parameters, cookies, sessions, and CGI variables in the debugging output.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Enable Performance Monitoring*</p>
+<p>(Server configuration only)</p>
+    </td>
+    <td>
+<p>Enables the standard NT Performance Monitor application to display information about a running server.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Enable CFSTAT*</p>
+<p>(Server configuration only)</p>
+    </td>
+    <td>
+<p>Shows performance information on platforms that do not support the NT Performance Monitor. For more information, see <a href="00001717.htm#1304018">Using the cfstat utility</a>.</p>
+    </td>
+  </tr>
+</table>
+
+<p class="caption">* Restart ColdFusion&#160;MX after changing this setting.</p>
+<h3><a name="wp1304018"></a>Using the cfstat utility</h3>
+<p>The <code>cfstat</code> command-line utility provides real-time performance metrics for ColdFusion&#160;MX. Using a socket connection to obtain metric data, the <code>cfstat</code> utility displays the information that ColdFusion&#160;MX writes to the System Monitor without actually using the System Monitor application. The following table lists the metrics that the <code>cfstat</code> utility returns:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Metric abbreviation
+    </th>
+    <th>
+Metric name
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Pg/Sec</p>
+    </td>
+    <td>
+<p>Page hits per second</p>
+    </td>
+    <td>
+<p>The number of ColdFusion pages processed per second. You can reduce this by moving static content to HTML pages.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>DB/Sec</p>
+    </td>
+    <td>
+<p>Database accesses per second</p>
+    </td>
+    <td>
+<p>The number of database accesses per second made by ColdFusion&#160;MX. Any difference in complexity and resource load between calls is ignored.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>CP/Sec</p>
+    </td>
+    <td>
+<p>Cache pops per second</p>
+    </td>
+    <td>
+<p>The number of ColdFusion template cache pops per second. A <i>cache pop</i> occurs when ColdFusion&#160;MX ejects a cached template from the template cache to make room for a new template.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Req Q&#39;ed</p>
+    </td>
+    <td>
+<p>Number of queued requests</p>
+    </td>
+    <td>
+<p>The number of requests that are currently waiting for ColdFusion&#160;MX to process them. Lower values, which you can achieve with efficient CFML, are better.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Req Run&#39;g</p>
+    </td>
+    <td>
+<p>Number of running requests</p>
+    </td>
+    <td>
+<p>The number of requests that ColdFusion&#160;MX is currently actively processing.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Req TO&#39;ed</p>
+    </td>
+    <td>
+<p>Number of timed out requests</p>
+    </td>
+    <td>
+<p>The total number of ColdFusion requests that have timed out. Lower values, which you can achieve by aggressive caching, removing unnecessary dynamic operations and third-party events, are better.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>AvgQ Time</p>
+    </td>
+    <td>
+<p>Average queue time</p>
+    </td>
+    <td>
+<p>A running average of the time, in milliseconds, that requests spend waiting for ColdFusion&#160;MX to process them. Lower values, which you can achieve with efficient CFML and enhanced caching, are better.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>AvgReq Time</p>
+    </td>
+    <td>
+<p>Average request time</p>
+    </td>
+    <td>
+<p>A running average of the time, in milliseconds, that ColdFusion&#160;MX spends to process a request (including queued time). Lower values, which you can achieve with efficient CFML, are better.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>AvgDB Time</p>
+    </td>
+    <td>
+<p>Average database transaction time</p>
+    </td>
+    <td>
+<p>A running average of the time that ColdFusion&#160;MX spends on database-related processing of ColdFusion requests.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Bytes In/Sec</p>
+    </td>
+    <td>
+<p>Bytes incoming per second</p>
+    </td>
+    <td>
+<p>The number of bytes that ColdFusion&#160;MX read in the last second (not an average).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Bytes Out/Sec</p>
+    </td>
+    <td>
+<p>Bytes outgoing per second</p>
+    </td>
+    <td>
+<p>The number of bytes that ColdFusion&#160;MX wrote in the last second (not an average).</p>
+    </td>
+  </tr>
+</table>
+
+<p>Before you use the <code>cfstat</code> utility, ensure that you selected the Enable Performance Monitoring check box in the ColdFusion&#160;MX Administrator (on the Debugging &amp; Logging &gt; Debugging Settings page). If you select this check box, you must restart ColdFusion&#160;MX for this change to take effect.</p>
+<h4><a name="wp1282448"></a>cfstat options</h4>
+<p>The <i>cf_root</i>/bin directory contains the <code>cfstat</code> utility. From that directory, type <strong>cfstat</strong> and use the following switches:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Switch
+    </th>
+    <th>
+Description
+    </th>
+    <th>
+Comment
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>-n</p>
+    </td>
+    <td>
+<p>Suppress column headers.</p>
+    </td>
+    <td>
+<p>Useful for saving output to a file.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>-s</p>
+    </td>
+    <td>
+<p>Display output in a single line.</p>
+    </td>
+    <td>
+<p>Display a single line and delay display of the first line so the <code>cfstat</code> utility can display meaningful values in the per-second counters.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>#</p>
+    </td>
+    <td>
+<p>Where # is an integer, display output every # seconds.</p>
+    </td>
+    <td>
+<p>If you do not specify an integer, the <code>cfstat</code> utility returns one line. Specify this switch with or without the -s switch.</p>
+    </td>
+  </tr>
+</table>
+
+<p>This example runs the <code>cfstat</code> utility and displays a new line every 20 seconds:</p>
+<pre>cfstat 20
+</pre><h2><a name="wp1341045"></a>Debugging IP Addresses page</h2>
+<p>You use the Debugging IP Addresses page to restrict debugging output to one or more IP addresses. You can add and remove IP addresses. </p>
+<p><strong>Note: </strong>If you do not specify IP addresses, and debugging options are active, ColdFusion&#160;MX displays debugging output for all users. </p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001716.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001718.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001717.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

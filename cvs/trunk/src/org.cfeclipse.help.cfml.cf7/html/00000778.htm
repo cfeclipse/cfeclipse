@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>SMS Gateway incoming message CFEvent structure</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000777.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000779.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>SMS Gateway incoming message CFEvent structure</h1>
+<p>The SMS gateway puts the following information in a CFEvent instance that it sends to the CFC listener method:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field 
+    </th>
+    <th>
+Value
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>OriginatorID</p>
+    </td>
+    <td>
+<p>Contents of the PDU <code>source_addr</code> field, the address of the device that sent the message.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>CfcMethod</p>
+    </td>
+    <td>
+<p>Listener CFC method name. Value of the configuration file <code>cfc-method</code> entry, or <code>onIncomingMessage</code> if the configuration file does not have this entry.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Data.MESSAGE</p>
+    </td>
+    <td>
+<p>Contents of the <code>short_message</code> field of the PDU.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Data.sourceAddress</p>
+    </td>
+    <td>
+<p>The address of the device that sent this message.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Data.destAddress</p>
+    </td>
+    <td>
+<p>The address to which the message was sent; an address in the range specified by the gateway configuration file <code>address-range</code> setting.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Data.esmClass</p>
+    </td>
+    <td>
+<p>Contents of the PDU esm_class field. Identifies the message type. A number in the range 0-255 representing a Byte value, where bits 2-5 (0-indexed) indicate the message type, and therefore the contents of the data.MESSAGE field, as follows. (Reserved values are omitted.)</p>
+<p><code>xx0000xx</code>&#160;Normal message</p>
+<p><code>xx0001xx</code>&#160;SMSC delivery receipt</p>
+<p><code>xx0010xx</code>&#160;SME Delivery Acknowledgement</p>
+<p><code>xx0100xx</code>&#160;SME Manual/User Acknowledgement</p>
+<p><code>xx0110xx</code>&#160;Conversation abort (Korean CDMA only)</p>
+<p><code>xx1000xx</code>&#160;Intermediate Delivery Notification</p>
+<p>For more information on this field, see the SMPP specification.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Data.protocol</p>
+    </td>
+    <td>
+<p>Contents of the PDU protocol_id field. Meaningful for messages sent from GSM networks only. For more information, see the GSM 03.40 specification.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Data.priority</p>
+    </td>
+    <td>
+<p>Contents of the PDU priority_flag field. A message priority level set by the originating SME, in the range 0-3; 0 is the lowest priority and 3 is the highest priority. The specific priority level meaning depends on the originating network. For more details, see the SMPP specification.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Data.registeredDelivery</p>
+    </td>
+    <td>
+<p>Contents of the PDU registered_delivery field, indicating the type of delivery receipt or acknowledgement that the sender requested. A number in the range 0-32, representing the sum of the following values:</p>
+<p>0&#160;No SMS delivery receipt requested <i>or<br /></i>1&#160; SMSC delivery receipt requested on delivery success or failure <i>or<br /></i>2&#160; SMSC delivery receipt requested on delivery failure only</p>
+<p>Plus</p>
+<p>0&#160;No SME acknowledgement requested <i>or<br /></i>4&#160;SME Delivery Acknowledgement requested <i>or<br /></i>8&#160; SME Manual/User Acknowledgement requested <i>or <br /></i>12<code>&#160;</code>Both Delivery and Manual/User Acknowledgements requested</p>
+<p>Plus</p>
+<p>0&#160;No Intermediate notification requested <i>or<br /></i>16&#160;Intermediate notification requested</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Data.DataCoding</p>
+    </td>
+    <td>
+<p>Contents of the PDU data_coding field. Indicates the character set or the noncharacter data type of the message contents, as follows:</p>
+<p><code>00000000</code>&#160;SMSC Default Alphabet</p>
+<p><code>00000001</code>&#160;IA5 (CCITT T.50)/ASCII (ANSI X3.4)</p>
+<p><code>00000010</code>&#160;Octet unspecified (8-bit binary)</p>
+<p><code>00000011</code>&#160;Latin 1 (ISO-8859-1)</p>
+<p><code>00000100</code>&#160;Octet unspecified (8-bit binary)</p>
+<p><code>00000101</code>&#160;JIS (X 0208-1990)</p>
+<p><code>00000110</code>&#160;Cyrillic (ISO-8859-5)</p>
+<p><code>00000111</code>&#160;Latin/Hebrew (ISO-8859-8)</p>
+<p><code>00001000</code>&#160;UCS2 (ISO/IEC-10646)</p>
+<p><code>00001001</code>&#160;Pictogram Encoding</p>
+<p><code>00001010</code>&#160;ISO-2022-JP (Music Codes)</p>
+<p><code>00001101</code>&#160;Extended Kanji JIS(X 0212-1990)</p>
+<p><code>00001110</code>&#160;KS C 5601</p>
+<p><code>11xxxxxx</code>&#160;GSM control use only; see the GSM 03.38 specification</p>
+<p>For more details, see the SMPP specification.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>data.messageLength</p>
+    </td>
+    <td>
+<p>The length of the short_message field. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>GatewayType</p>
+    </td>
+    <td>
+<p>Always SMS.</p>
+    </td>
+  </tr>
+</table>
+
+<p>For more information on the meanings of some of these fields and how to handle incoming SMS messages an SMS gateway listener CFC method, see <a href="00001672.htm#134440">Handling incoming messages</a> in <a href="00001666.htm#109411">Using the SMS Event Gateway</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000777.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000779.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000778.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

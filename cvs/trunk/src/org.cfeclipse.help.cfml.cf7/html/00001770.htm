@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About multiple server instances</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001769.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001771.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About multiple server instances</h1>
+<p>The ColdFusion&#160;MX Administrator lets you create server instances and clusters. Additionally, you can connect to remote JRun servers and add them to clusters.</p>
+<p>Running multiple instances of ColdFusion&#160;MX has the following advantages:</p>
+<p><strong>Application isolation</strong>&#160;You deploy an independent application to each server instance. Each server instance has separate settings and, because each server instance runs in its own Java Virtual Machine (JVM), problems encountered by one application have no effect on other applications.</p>
+<p><strong>Clustering (load balancing and failover)</strong>&#160;You deploy the same application to each server instance and add the instances to a cluster. The web server connector optimizes performance and stability by automatically balancing load and by switching requests to another server instance when a server instance stops running.</p>
+<p>This chapter describes features that are available only if you have installed the multiserver configuration. The multiserver configuration is a specialized J2EE configuration that installs JRun and deploys ColdFusion&#160;MX as an expanded Enterprise Application Archive (EAR) in the cfusion JRun server. The cfusion server is the only server that can create servers and clusters. The JRun instance creation and clustering options in the ColdFusion&#160;MX Administrator are not available in the server configuration, nor are they available in the J2EE configuration, even if you deploy on JRun.</p>
+<p><strong>Note: </strong>You can also manually deploy ColdFusion&#160;MX on multiple server instances, using your J2EE application server's server creation and deployment facilities, as documented in the ColdFusion MX&#160;6.1 documentation. </p><h2><a name="wp116721"></a>Expanded archive considerations</h2>
+<p>ColdFusion&#160;MX must run from an expanded directory structure. The Instance Manager expands the EAR or WAR file automatically and then deploys the expanded directory structure into the new server instance.</p>
+<p>For more information on deploying ColdFusion&#160;MX in the J2EE configuration, see <i>Installing and Using ColdFusion&#160;MX</i>.</p>
+<h2><a name="wp116670"></a>File location considerations</h2>
+<p>ColdFusion&#160;MX lets you store CFM pages either under the external web server root or under the ColdFusion web application root. The discussions in this chapter assume that you store your CFM pages under the ColdFusion web application root and that you specify a context root for your application. This is different from ColdFusion MX&#160;6.1 documentation, which assumed that you stored CFM pages under the web server root.</p>
+<p>If you use the web server connector to access pages under the ColdFusion web application root and your ColdFusion web application has an empty context root (this is the default), the connector does not automatically serve static content, such as HTML pages and image files. If this is the case, you must define web server mappings so that it can serve files from the ColdFusion web application root.</p>
+<p>For more information on serving CFM pages from the web server root, see <a href="00001750.htm#102311">Web Server Management</a></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001769.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001771.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001770.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Processing a request in ColdFusion</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001202.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001204.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Processing a request in ColdFusion</h1>
+<p>When ColdFusion receives an HTTP request for a ColdFusion page, ColdFusion resolves the request URL to a physical file path and reads the file contents to parse it. A ColdFusion page can be encoded in any character encoding supported by the JVM used by ColdFusion, but might need to be specified so that ColdFusion can identify it.</p>
+<p>The following figure shows an example of a client making a request to ColdFusion: </p>
+<p><br />
+<img src="images/i18n_req.jpg" alt="Client making a request to ColdFusion" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The content of the ColdFusion page on the server can be static data (typically HTML and plain text not processed by ColdFusion), and dynamic content written in CFML. Static content is written directly to the response to the browser, and dynamic content is processed by ColdFusion. </p>
+<p>The default language of a website might be different from that of the person connecting to it. For example, you could connect to an English website from a French computer. When ColdFusion generates a response, the response must be formatted in the way expected by the customer. This includes both the character set of the response and the locale. </p>
+<p>The following sections describe how ColdFusion determines the character set of the files that it processes, and how it determines the character set and locale of its response to the client. </p>
+<ul>
+<li>
+   <a href="00001204.htm#1188401">Determining the character encoding of a ColdFusion page</a>
+</li>
+<li>
+   <a href="00001205.htm#1188970">Determining the page encoding of server output</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001202.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001204.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001203.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Catching errors when consuming web services</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001540.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001542.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Catching errors when consuming web services</h1>
+<p>Web services might throw errors, including SOAP faults, during processing that you can catch in your application. If uncaught, these errors propagate to the browser. </p>
+<p>To catch errors, you specify an error type of application to the ColdFusion <a href="00000225.htm#3395038"><code>cfcatch</code></a> tag, as the following example shows:</p>
+<pre>&lt;<code>cftry</code>&gt;
+   Put your application code here ...
+   &lt;<code>cfcatch</code> <code>type</code>=&quot;application&quot;&gt;
+      &lt;!--- Add exception processing code here ... ---&gt;
+   &lt;/<code>cfcatch</code>&gt;
+   ...
+   &lt;<code>cfcatch</code> <code>type</code>=&quot;Any&quot;&gt;
+      &lt;!--- Add exception processing code appropriate for all other <br />exceptions here ... ---&gt;
+   &lt;/<code>cfcatch</code>&gt;
+&lt;/<code>cftry</code>&gt;
+</pre><p>For more information on error handling, see <a href="00001130.htm#1220254">Handling Errors</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001540.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001542.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001541.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

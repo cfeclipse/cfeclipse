@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Data model</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001417.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001419.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Data model</h1>
+<p>The XForms data model specifies the data that the form submits. It includes information on each displayed control that can submit data, including initial values and validation information. It does not contain information about <code>cfformgroup</code> or <code>cfformitem</code> tags. The data model consists of the following elements and their children:</p>
+<ul>
+<li>
+   One <code>xf:instance</code> element
+</li>
+<li>
+   One <code>xf:submission</code> element
+</li>
+<li>
+   One <code>xf:bind</code> element for each form control that can submit data
+</li>
+</ul>
+<h3><a name="wp131883"></a>xf:instance element</h3>
+<p>The XForms <code>xf:instance</code> element contains information about the form data controls. Any control that can submit data has a corresponding instance element. If the control has an initial value, the instance element contains that value. </p>
+<p>The <code>xf:instance</code> element contains a single <code>cf:data</code> element that contains an element for each data control: <code>cfgrid</code>, most <code>cfinput</code> tag types, <code>cfselect</code>, <code>cfslider</code>, <code>cftextarea</code>, and <code>cftree</code>. Each element name is the corresponding CFML tag's <code>name</code> attribute. For applet and Flash format <code>cfgrid</code> and <code>cftree</code> tags, the element name is the value of the <code>cf_param_name</code> parameter of the tree or grid's Java applet object. Only <code>cfinput</code> tags of types <code>submit</code>, <code>image</code>, <code>reset</code> and <code>button</code> do not have instance data, because they cannot submit data.</p>
+<p>Each element's body contains the initial control data from the CFML tag's <code>value</code> attribute or its equivalent. For example, for a <code>cfselect</code> tag, the <code>xf:instance</code> element body is a comma-delimited list that contains the <code>name</code> attributes of all the <code>option</code> tags with a <code>selected</code> attribute. For <code>submit</code> and <code>image</code> buttons, the body contains the <code>name</code> attribute value.</p>
+<p>The following example shows the <code>xf:instance</code> element for the form shown in the figure in <a href="00001410.htm#116740">About XML skinnable forms</a>:</p>
+<pre>&lt;xf:instance&gt;
+   &lt;cf:data&gt;
+         &lt;firstname/&gt;
+         &lt;lastname/&gt;
+         &lt;email/&gt;
+         &lt;revision&gt;Comment Form revision 12a&lt;/revision&gt;
+         &lt;satisfaction&gt;very satisfied&lt;/satisfaction&gt;
+         &lt;thoughts&gt;We really want to hear from you!&lt;/thoughts&gt;
+   &lt;/cf:data&gt;
+</pre><h3><a name="wp131885"></a>xf:submission element</h3>
+<p>The <code>xf:submission</code> element specifies the action when the form is submitted, and contains the values of the <code>cfform</code> <code>action</code> and <code>method</code> attributes.: </p>
+<p>The following example shows the XML for the form shown in the figure in <a href="00001410.htm#116740">About XML skinnable forms</a>:</p>
+<pre>&lt;xf:submission <br />action=&quot;/_MyStuff/phase1/forms/XForms/FrameExamples/Figure1.cfm&quot; method=&quot;post&quot;/&gt; 
+</pre><h3><a name="wp132122"></a>xf:bind elements</h3>
+<p>The <code>xf:bind</code> elements provide information about the input control behavior, including the control type and any data validation rules. The XML has one bind element for each instance element that can submit data. It does not have bind elements for controls such as <code>cfformitem</code> tags, or <code>cfinput</code> tags with submit, input, reset, or image types. Each element has the following attributes:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>id</p>
+    </td>
+    <td>
+<p>CFML tag <code>name</code> attribute value</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>nodeset</p>
+    </td>
+    <td>
+<p>XPath expression with the path in the XML to the instance element for the control</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>required</p>
+    </td>
+    <td>
+<p>CFML tag <code>required</code> attribute value</p>
+    </td>
+  </tr>
+</table>
+
+<p>Each <code>xf:bind</code> element has an <code>xf:extension</code> element with ColdFusion specific information, including type and validation values. The following table lists the cf namespace elements that are used in this section:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Element
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>cf:attribute name=&quot;type&quot;</p>
+    </td>
+    <td>
+<p>Control type. One of the following: </p>
+<p>CHECKBOX, FILE, IMAGE, PASSWORD, RADIO, SELECT, SUBMIT TEXT, CFSLIDER.</p>
+<p>The TEXT type is used for <code>cfinput</code> <code>type=&quot;text&quot;</code> and <code>cftextinput</code>.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cf:attribute name=&quot;onerror&quot;</p>
+    </td>
+    <td>
+<p>JavaScript function specified by the control's <code>onError</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cfargument name=&quot;maxlength</p>
+    </td>
+    <td>
+<p>Value of the control's <code>maxlength</code> attribute, if any.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cf:validate type=&quot;<i>valiadationtype&quot;</i></p>
+    </td>
+    <td>
+<p>Data validation information. </p>
+<p>Has one attribute, <code>type</code>, the validation type, and one or more <code>cf:argument</code> and <code>cf:trigger</code> children. ColdFusion MX generates a <code>cf:validate</code> element for each of the following:</p>
+<ul>
+<li>
+   <code>cfinput</code> or <code>cftextarea</code> <code>validation</code> attribute
+</li>
+<li>
+   <code>cfinput</code> or <code>cftextarea</code> <code>range</code> attribute 
+</li>
+<li>
+   <code>cfslider</code>: the <code>range</code> and <code>message</code> attributes are specified by a <code>cf:validate type=&quot;range&quot;</code> element
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>cf:argument</p>
+<p>(in the body of a cf:validate element)</p>
+    </td>
+    <td>
+<p>Data validation specification. </p>
+<p>Has one attribute, <code>name</code>, and body text. Each <code>cf:validate</code> element can have multiple <code>cf:argument</code> children, corresponding to the validation-related CFML tag attribute values, such as maximum length, and maximum and minimum range values. The element body contains the CFML attribute value. </p>
+<p>Valid <code>name</code> values are as follows. Unless specified otherwise, the name is identical to the corresponding CFML tag attribute name. </p>
+<ul>
+<li>
+   max
+</li>
+<li>
+   message
+</li>
+<li>
+   min
+</li>
+<li>
+   pattern
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>cf:trigger</p>
+<p>(in the body of a cf:validate element)</p>
+    </td>
+    <td>
+<p>When to do the validation; specifies a form element <code>validateAt</code> attribute value.</p>
+<p>Has one attribute, <code>event</code>, which can be one of the following:</p>
+<ul>
+<li>
+   onBlur
+</li>
+<li>
+   onSubmit
+</li>
+<li>
+   onServer
+</li>
+</ul>
+<p>If a <code>validateAt</code> attribute specifies multiple validation triggers, the XML has one <code>cf:trigger</code> element for each entry in the list.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following example shows the <code>xf:bind</code> element of the form shown in the figure in <a href="00001410.htm#116740">About XML skinnable forms</a>:</p>
+<pre>&lt;xf:bind id=&quot;firstname&quot;
+      nodeset=&quot;//xf:model/xf:instance/cf:data/firstname&quot;
+      required=&quot;true()&quot;&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;type&quot;&gt;TEXT&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;onerror&quot;&gt;_CF_onError&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:bind&gt;
+&lt;xf:bind id=&quot;lastname&quot;
+      nodeset=&quot;//xf:model/xf:instance/cf:data/lastname&quot;
+      required=&quot;true()&quot;&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;type&quot;&gt;TEXT&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;onerror&quot;&gt;_CF_onError&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:bind&gt;
+&lt;xf:bind id=&quot;email&quot;
+      nodeset=&quot;//xf:model/xf:instance/cf:data/email&quot; required=&quot;false()&quot;&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;type&quot;&gt;TEXT&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;onerror&quot;&gt;_CF_onError&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:bind&gt;
+&lt;xf:bind id=&quot;satisfaction&quot;
+      nodeset=&quot;//xf:model/xf:instance/cf:data/satisfaction&quot;
+      required=&quot;false()&quot;&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;type&quot;&gt;SELECT&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;onerror&quot;&gt;_CF_onError&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:bind&gt;
+&lt;xf:bind id=&quot;thoughts&quot;
+      nodeset=&quot;//xf:model/xf:instance/cf:data/thoughts&quot; required=&quot;false()&quot;&gt;
+   &lt;xf:extension&gt;
+      &lt;cf:attribute name=&quot;type&quot;&gt;TEXT&lt;/cf:attribute&gt;
+      &lt;cf:attribute name=&quot;onerror&quot;&gt;_CF_onError&lt;/cf:attribute&gt;
+   &lt;/xf:extension&gt;
+&lt;/xf:bind&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001417.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001419.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001418.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

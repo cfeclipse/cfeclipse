@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About the Evaluate function</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000944.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000946.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About the Evaluate function</h1>
+<p>The <a href="00000458.htm#1104252"><code>Evaluate</code></a> function takes one or more string expressions, dynamically evaluates their contents as expressions from left to right, and returns the result of evaluating the rightmost argument.</p>
+<p>The following example shows the <code>Evaluate</code> function and how it works with ColdFusion variable processing: </p>
+<pre>&lt;cfset myVar2=&quot;myVar&quot;&gt;
+&lt;cfset myVar=&quot;27/9&quot;&gt;
+&lt;cfoutput&gt;
+   #myVar2#&lt;br&gt;
+   #myVar#&lt;br&gt;
+   #Evaluate(&quot;myVar2&quot;)#&lt;br&gt;
+   #Evaluate(&quot;myVar&quot;)#&lt;br&gt;
+   #Evaluate(myVar2)#&lt;br&gt;
+   #Evaluate(myVar)#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><h4><a name="wp2747059"></a>Reviewing the code</h4>
+<p>The following table describes how ColdFusion processes this code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfset myVar2=&quot;myVar&quot;&gt;
+&lt;cfset myVar=&quot;27/9&quot;&gt;
+</pre>    </td>
+    <td>
+<p>Sets the two variables to the following strings:</p>
+<p>myVar</p>
+<p>27/9</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+   #myVar2#&lt;br&gt;
+   #myVar#&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Displays the values assigned to the variables, myVar and 27/9, respectively.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>#Evaluate(&quot;myVar2&quot;)#&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Passes the string &quot;myvar2&quot; (without the quotation marks) to the Evaluate function, which does the following:</p>
+<p>1&#160;Evaluates it as the variable myVar2. </p>
+<p>2&#160;Returns the value of the myVar2 variable, the string &quot;myvar&quot;<br />(without the quotation marks).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>#Evaluate(&quot;myVar&quot;)#&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Passes the string &quot;myvar&quot; (without the quotation marks) to the Evaluate function, which does the following:</p>
+<p>1&#160; Evaluates it as the variable myVar. </p>
+<p>2&#160;Returns the value of the myVar variable, the string &quot;27/9&quot;<br />	(without the quotation marks).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>#Evaluate(myVar2)#&lt;br&gt;
+</pre>    </td>
+    <td>
+<p>Evaluates the variable myVar2 as the string &quot;myVar&quot; and passes the string (without the quotation marks) to the Evaluate function. The rest of the processing is the same as in the previous line.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>#Evaluate(myVar)#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Evaluates the variable myVar as the string &quot;27/9&quot; (without the quotation marks), and passes it to the Evaluate function, which does the following:</p>
+<p>1&#160; Evaluates the string as the expression 27/9</p>
+<p>2&#160;Performs the division.</p>
+<p>3&#160;Returns the resulting value, 3</p>
+    </td>
+  </tr>
+</table>
+
+<p>As you can see, using dynamic expressions can result in substantial expression evaluation overhead, and the code can be confusing. Therefore, you should avoid using dynamic expressions wherever a simpler technique, such as using indexed arrays or structures can serve your purposes.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000944.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000946.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000945.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

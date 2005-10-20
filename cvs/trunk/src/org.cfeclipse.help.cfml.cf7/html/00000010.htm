@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Migrating Windows settings manually</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000009.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000011.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Migrating Windows settings manually</h1>
+<p>If you are upgrading from ColdFusion 4.5 or 5, you can optionally migrate settings later, manually.</p>
+<h4>To migrate settings manually:</h4>
+<ol>
+<li>
+   Close the ColdFusion&#160;MX Administrator, if it is not already closed.
+</li>
+<li>
+   Open the <i>cf_root\</i>lib\adminconfig.xml (server configuration) file in a text editor.
+</li>
+<li>
+   Change the value for <code>runmigrationwizard</code> and <code>runmxmigrationwizard</code> to <code>true</code>, as necessary, so the appropriate lines of the file appear as follows:
+<pre>
+&lt;runmigrationwizard&gt;true&lt;/runmigrationwizard&gt;
+</pre>
+<p>or</p>
+<pre>
+&lt;runmxmigrationwizard&gt;true&lt;/runmxmigrationwizard&gt;
+</pre>
+</li>
+<li>
+   Change the value for <code>migratecf5</code> or <code>migratecf6</code> to <code>true</code>, as necessary, so the appropriate lines of the file appear as follows:
+<pre>
+&lt;migratecf5&gt;true&lt;/migratecf5&gt;
+</pre>
+<p>or</p>
+<pre>
+&lt;migratecf6&gt;true&lt;/migratecf6&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+<li>
+   Restart the ColdFusion&#160;MX Administrator from the Windows Start menu.
+<p>You are prompted again to migrate your settings.</p>
+<p><strong>Caution: </strong>If you migrate your ColdFusion&#160;5 settings later, you might overwrite new ColdFusion&#160;MX&#160;7 settings.</p></li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000009.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000011.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000010.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

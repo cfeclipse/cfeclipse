@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>ListAppend</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000546.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000548.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>ListAppend</h1>
+<h4><a name="wp130311"></a>Description</h4>
+<p>Concatenates a list or element to a list. </p>
+<h4><a name="wp130313"></a>Returns</h4>
+<p>A copy of the list<i>,</i><i> </i>with <i>value</i> appended. If <code>delimiter = &quot;&quot;</code>, returns a copy of the list, unchanged.</p>
+<h4><a name="wp130315"></a>Category</h4>
+<p><a href="00000364.htm#1099435">List functions</a></p>
+<h4><a name="wp130320"></a>Function syntax</h4>
+<pre><code><strong>ListAppend</strong></code>(<i>list</i>, <i>value</i> [, <i>delimiters</i> ])
+</pre><h4><a name="wp130322"></a>See also</h4>
+<p><a href="00000559.htm#131224"><code>ListPrepend</code></a>, <a href="00000556.htm#130994"><code>ListInsertAt</code></a>, <a href="00000555.htm#130923"><code>ListGetAt</code></a>, <a href="00000557.htm#131062"><code>ListLast</code></a>, <a href="00000562.htm#131443"><code>ListSetAt</code></a>; <a href="00000889.htm#1100874">Lists</a> in <a href="00000881.htm#1144176">Using ColdFusion Variables</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp130339"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>list</p>
+    </td>
+    <td>
+<p>A list or a variable that contains one.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>An element or a list of elements.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>delimiters</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one. Character(s) that separate list elements. The default value is comma. </p>
+<p>If this parameter contains more than one character, ColdFusion uses only the first character. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp130359"></a>Usage</h4>
+<p>ColdFusion inserts a delimiter character before <i>value</i>. </p>
+<p>The following table shows examples of <code>ListAppend</code> processing:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Statement 
+    </th>
+    <th>
+Output
+    </th>
+    <th>
+Comment
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>ListAppend(&#39;elem1,elem2&#39;, &#39;&#39; )
+</pre>    </td>
+    <td>
+<p>elem1,elem2,</p>
+    </td>
+    <td>
+<p>Appended element is empty; delimiter is last character in list; list length is 2.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>ListAppend(&#39;&#39;, &#39;elem1,elem2&#39; )
+</pre>    </td>
+    <td>
+<p>elem1,elem2</p>
+    </td>
+    <td>
+<p>List length is 2.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>ListAppend<br />(&quot;one___two&quot;, &quot;three&quot;, &quot;___&quot;)
+</pre>    </td>
+    <td>
+<p>&quot;one___two_three&quot;</p>
+    </td>
+    <td>
+<p>Inserted the first character of <code>delimiters</code> before &quot;three.&quot;</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp130395"></a>Example</h4>
+<pre>&lt;h3&gt;ListAppend Example&lt;/h3&gt;
+&lt;!--- First, query to get some values for our list elements---&gt;
+&lt;cfquery name = &quot;GetParkInfo&quot; datasource = &quot;cfdocexamples&quot;&gt;
+SELECT PARKNAME,CITY,STATE
+FROM PARKS WHERE PARKNAME LIKE 'AL%'
+&lt;/cfquery&gt;
+&lt;cfset temp = ValueList(GetParkInfo.ParkName)&gt;
+&lt;cfoutput&gt;
+&lt;p&gt;The original list: #temp#
+&lt;/cfoutput&gt;
+&lt;!--- now, append a park name to the list ---&gt;
+&lt;cfset temp2 = ListAppend(Temp, &quot;ANOTHER PARK&quot;)&gt;
+...
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000546.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000548.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000547.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

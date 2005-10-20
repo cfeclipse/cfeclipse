@@ -1,0 +1,395 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About Query of Queries</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001264.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001266.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About Query of Queries</h1>
+<p>After you have created a record set with a tag or function, you can retrieve data from the record set in one or more dependent queries. A query that retrieves data from a record set is called a Query of Queries. A typical use of a Query of Queries is to retrieve an entire table into memory with one query, and then access the table data (the record set) with subsequent sorting or filtering queries. In essence, you query the record set as if it were a database table.</p>
+<p><strong>Note: </strong>Because you can generate a record set in ways other than using the <code>cfquery</code> tag, the term <i>In Memory Query</i><strong> </strong>is sometimes used instead of <i>Query of Queries</i>.</p><h2><a name="wp1137262"></a>Benefits of Query of Queries</h2>
+<p>Performing a Query of Queries has many benefits, including the following:</p>
+<ul>
+<li>
+   If you need to access the same tables multiple times, you greatly reduce access time, because the data is already in memory (in the record set). 
+<p>A Query of Queries is ideal for tables of 5,000 to 50,000 rows, and is limited only by the memory of the ColdFusion&#160;MX host computer.</p>
+</li>
+<li>
+   You can perform joins and union operations on results from different data sources. 
+<p>For example, you can perform a union operation on queries from different databases to eliminate duplicates for a mailing list.</p>
+</li>
+<li>
+   You can efficiently manipulate cached query results in different ways. You can query a database once, and then use the results to generate several different summary tables.
+<p>For example, if you need to summarize the total salary by department, by skill, and by job, you can make one query to the database and use its results in three separate queries to generate the summaries.</p>
+</li>
+<li>
+   You can obtain drill-down, master-detail information for which you do not access the database for the details.
+<p>For example, you can select information about departments and employees in a query, and cache the results. You can then display the employees' names. When users select an employee, the application displays the employee's details by selecting information from the cached query, without accessing the database.</p>
+</li>
+<li>
+   You can use a Query of Queries in report definitions to generate subreport data. For more information, see <a href="00001474.htm#119582">Using subreports</a>.
+</li>
+</ul>
+<h2><a name="wp1157965"></a>Performing a Query of Queries</h2>
+<p>There are four steps to perform a Query of Queries. </p>
+<h4>To perform a Query of Queries:</h4>
+<ol>
+<li>
+   Generate a record set through a <i>master query</i>.
+<p>You can write a master query using a tag or function that creates a record set. For more information, see <a href="00001264.htm#1135362">Creating a record set</a>.</p>
+</li>
+<li>
+   Write a <i>detail query</i>--a <code>cfquery</code> tag that specifies <code>dbtype=&quot;query&quot;</code>.
+</li>
+<li>
+   In the detail query, write a SQL statement that retrieves the relevant records. Specify the names of one or more existing queries as the table names in your SQL code. Do not specify a <code>datasource</code> attribute.
+</li>
+<li>
+   If the database content does not change rapidly, use the <code>cachedwithin</code> attribute of the master query to cache the query results between page requests. This way, ColdFusion accesses the database on the first page request, and does not query the database again until the specified time expires. You must use the <a href="00000435.htm#1102715"><code>CreateTimeSpan</code></a> function to specify the <code>cachedwithin</code> attribute value (in days, hours, minutes, seconds format).
+</li>
+</ol>
+<p>The detail query generates a new query result set, identified by the value of the <code>name</code> attribute of the detail query. The following example illustrates the use of a master query and a single detail query that extracts information from the master.</p>
+<h4>To use the results of a query in a query:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;h1&gt;Employee List&lt;/h1&gt;
+&lt;!--- LastNameSearch (normally generated interactively) ---&gt;
+&lt;cfset LastNameSearch=&quot;Doe&quot;&gt;
+
+&lt;!--- Master Query ---&gt;
+&lt;cfquery datasource=&quot;cfdocexamples&quot; name=&quot;master&quot;
+	cachedwithin=#CreateTimeSpan(0,1,0,0)#&gt;
+	SELECT * from Employee
+&lt;/cfquery&gt;
+
+&lt;!--- Detail Query (dbtype=query, no data source) ---&gt;
+&lt;cfquery dbtype=&quot;query&quot; name=&quot;detail&quot;&gt; 
+	SELECT Emp_ID, FirstName, LastName
+	FROM master
+	WHERE LastName=&lt;cfqueryparam value=&quot;#LastNameSearch#&quot; 
+cfsqltype=&quot;cf_sql_char&quot; maxLength=&quot;20&quot;&gt;&lt;/cfquery&gt;
+
+&lt;!--- output the detail query results ---&gt;
+&lt;p&gt;Output using a query of query:&lt;/p&gt;
+&lt;cfoutput query=detail&gt;
+	#Emp_ID#: #FirstName# #LastName#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;p&gt;Columns in the master query:&lt;/p&gt;
+&lt;cfoutput&gt;
+	#master.columnlist#&lt;br&gt;
+&lt;/cfoutput&gt;
+
+&lt;p&gt;Columns in the detail query:&lt;/p&gt;
+&lt;cfoutput&gt;
+	#detail.columnlist#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>
+</li>
+<li>
+   Save the page as query_of_query.cfm in the myapps directory under the <i>web_root</i>.
+</li>
+<li>
+   Display query_of_query.cfm in your browser
+</li>
+</ol>
+<h4><a name="wp1117336"></a>Reviewing the code</h4>
+<p>The master query retrieves the entire Employee table from the cfdocexamples data source. The detail query selects only the three columns to display for employees with the specified last name. The following table describes the code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>cfset LastNameSearch=&quot;Doe&quot;
+</pre>    </td>
+    <td>
+<p>Sets the last name to use in the detail query. In a complete application, this information comes from user interaction.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfquery datasource=&quot;cfdocexamples&quot;<br />name=&quot;master&quot;
+   cachedwithin=#CreateTimeSpan(0,1,0,0)#&gt;
+   SELECT *    from Employee
+&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Queries the cfdocexamples data source and selects all data in the Employees table. Caches the query data between requests to this page, and does not query the database if the cached data is less than an hour old.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfquery dbtype=&quot;query&quot; name=&quot;detail&quot;&gt;
+   SELECT Emp_ID, FirstName, LastName
+   FROM master
+   WHERE LastName=&lt;cfqueryparam<br />   value=&quot;#LastNameSearch#&quot; 
+   cfsqltype=&quot;cf_sql_char&quot; <br />   maxLength=&quot;20&quot;&gt;&lt;/cfquery&gt;
+</pre>    </td>
+    <td>
+<p>Uses the master query as the source of the data in a new query, named detail. This new query selects only entries that match the last name specified by the <code>LastNameSearch</code> variable. The query also selects only three columns of data: employee ID, first name, and last name. The query uses the <a href="00000317.htm#1102474"><code>cfqueryparam</code></a> tag to prevent passing erroneous or harmful code.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput query=detail&gt;
+   #Emp_ID#: #FirstName# #LastName# &lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Uses the detail query to display the list of employee IDs, first names, and last names.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cfoutput&gt;
+   #master.columnlist#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Lists all the columns returned by the master query.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cfoutput&gt;
+   #detail.columnlist#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre>    </td>
+    <td>
+<p>Lists all the columns returned by the detail query.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1133970"></a>Displaying record set data incrementally</h3>
+<p>If your database is large, you can limit the number of rows displayed at one time. The following example shows how to use the <code>currentRow</code> query variable of a Query of Queries to do this. For more information on query variables, see <a href="00001256.htm#1096548">Getting information about query results</a>.</p>
+<h4>To display record set data incrementally:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;QoQ with incremental row return&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h3&gt;QoQ with incremental row return&lt;/h3&gt;
+&lt;!--- define startrow and maxrows to facilitate &#39;next N&#39; style browsing ---&gt;
+&lt;cfparam name = &quot;MaxRows&quot; default = &quot;5&quot;&gt;
+&lt;cfparam name = &quot;StartRow&quot; default = &quot;1&quot;&gt;
+
+&lt;!--- master query: retrieve all info from Employee table ---&gt;
+&lt;cfquery name = &quot;GetSals&quot; datasource = &quot;cfdocexamples&quot;&gt;
+	SELECT * FROM Employee
+	ORDER BY LastName
+&lt;/cfquery&gt;
+
+&lt;!--- detail query: select 3 fields from the master query ---&gt;
+&lt;cfquery name = &quot;GetSals2&quot; dbtype = &quot;query&quot;&gt;
+	SELECT   FirstName, LastName, Salary
+	FROM     GetSals
+	ORDER BY LastName
+&lt;/cfquery&gt;
+
+&lt;!--- build table to display output ---&gt;
+&lt;table cellpadding = 1 cellspacing = 1&gt;
+	&lt;tr&gt;
+	  &lt;td bgcolor = f0f0f0&gt;
+	  &lt;b&gt;&lt;i&gt;&amp;nbsp;&lt;/i&gt;&lt;/b&gt;
+	  &lt;/td&gt;
+
+	  &lt;td bgcolor = f0f0f0&gt;
+	  &lt;b&gt;&lt;i&gt;FirstName&lt;/i&gt;&lt;/b&gt;
+	  &lt;/td&gt;
+
+	  &lt;td bgcolor = f0f0f0&gt;
+	  &lt;b&gt;&lt;i&gt;LastName&lt;/i&gt;&lt;/b&gt;
+	  &lt;/td&gt;
+
+	  &lt;td bgcolor = f0f0f0&gt;
+	  &lt;b&gt;&lt;i&gt;Salary&lt;/i&gt;&lt;/b&gt;
+	  &lt;/td&gt;
+	&lt;/tr&gt;
+	
+&lt;!--- Output the query and define the startrow and maxrows
+	   parameters. Use the query variable currentRow to
+	   keep track of the row you are displaying. ---&gt;
+	&lt;cfoutput query = &quot;GetSals2&quot; startrow = &quot;#StartRow#&quot; maxrows = 
+&quot;#MaxRows#&quot;&gt;
+	&lt;tr&gt;
+	  &lt;td valign = top bgcolor = ffffed&gt;
+		  &lt;b&gt;#GetSals2.currentRow#&lt;/b&gt;
+	  &lt;/td&gt;
+
+	  &lt;td valign = top&gt;
+		  &lt;font size = &quot;-1&quot;&gt;#FirstName#&lt;/font&gt;
+	  &lt;/td&gt;
+
+	  &lt;td valign = top&gt;
+		  &lt;font size = &quot;-1&quot;&gt;#LastName#&lt;/font&gt;
+	  &lt;/td&gt;
+
+	  &lt;td valign = top&gt;
+		  &lt;font size = &quot;-1&quot;&gt;#LSCurrencyFormat(Salary)#&lt;/font&gt;
+	  &lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;/cfoutput&gt;
+&lt;!--- If the total number of records is less than or equal to 
+	the total number of rows, provide a link to the same page, with the 
+	StartRow value incremented by MaxRows (5, in this example) ---&gt;
+	&lt;tr&gt;
+	  &lt;td colspan = 4&gt;
+	  &lt;cfif (startrow + maxrows) lte getsals2.recordcount&gt;
+	    &lt;a href=&quot;qoq_next_row.cfm?startrow=&lt;cfoutput&gt;#Evaluate(StartRow +<br />
+MaxRows)#&lt;/cfoutput&gt;&quot;&gt;See next &lt;cfoutput&gt;#MaxRows#&lt;/cfoutput&gt; 
+	    rows&lt;/a&gt;
+	  &lt;/cfif&gt;	  
+	  &lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as qoq_next_row.cfm in the myapps directory under the <i>web_root</i>.
+</li>
+<li>
+   Display qoq_next_row.cfm in your browser
+</li>
+</ol>
+<h3><a name="wp1134953"></a>Using the cfdump tag with query results</h3>
+<p>As you debug your CFML code, you can use the <code>cfdump</code> tag to quickly display the contents of your query. This tag has the following format:</p>
+<pre>&lt;cfdump var=&quot;#query_name#&quot;&gt;
+</pre><p>For more information on the <a href="00000239.htm#3765824"><code>cfdump</code></a> tag, see <i>CFML Reference</i>.</p>
+<h3><a name="wp1138092"></a>Using Query of Queries with non-SQL record sets</h3>
+<p>A Query of Queries can operate on any CFML tag or function that returns a record set; you are not limited to operating on <a href="00000316.htm#1102316"><code>cfquery</code></a> results. You can perform queries on non-SQL record sets, such as a <a href="00000235.htm#1097918"><code>cfdirectory</code></a> tag, a <a href="00000330.htm#1103106"><code>cfsearch</code></a> tag, a <a href="00000283.htm#1100581"><code>cfldap</code></a> tag, and so on. </p>
+<p>The following example shows how a Query of Queries interacts with the record set of a Verity search. This example assumes that you have a valid Verity collection, called bbb, which contains documents with a target word, film, or its variants (films, filmed, filming). Change the name of the collection and the search criteria to as appropriate for your Verity collection. For more information on Verity, see <a href="00001301.htm#1164916">Building a Search Interface</a>.</p>
+<h4>To use Query of Queries with a Verity record set:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;QoQ and Verity&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;!--- master query: retrieve all documents from the bbb collection 
+that contain 'film' (or its stemmed variants); change values for 
+collection and criteria as needed for your Verity collection ---&gt;
+&lt;cfsearch name = &quot;quick&quot;
+	collection=&quot;bbb&quot; 
+	type = &quot;simple&quot;
+	criteria=&quot;film&quot;&gt;
+
+&lt;h3&gt;Master query dump:&lt;/h3&gt;
+&lt;cfdump var=&quot;#quick#&quot;&gt;
+
+&lt;!--- detail query: retrieve from the master query only those 
+documents with a score greater than a criterion (here, 
+0.7743) ---&gt;
+&lt;cfquery name=&quot;qoq&quot; dbtype=&quot;query&quot;&gt;
+	SELECT * from quick
+	WHERE quick.score &gt; 0.7743
+&lt;/cfquery&gt;
+
+&lt;h3&gt;Detail query dump:&lt;/h3&gt;
+&lt;cfdump var=&quot;#qoq#&quot;&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as qoq_verity.cfm in the myapps directory under the <i>web_root</i>.
+</li>
+<li>
+   Display qoq_verity.cfm in your browser
+</li>
+</ol>
+<p>The next example shows how a Query of Queries combines record sets from a <code>cfdirectory</code> tag, which is limited to retrieval of one file type per use.</p>
+<h4>To use Query of Queries to combine record sets:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Images Folder&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h2&gt;Image Retrieval with QoQ&lt;/h2&gt; 
+&lt;!--- set the images directory ---&gt;
+&lt;cfset dir = (&quot;C:\pix\&quot;)&gt;
+
+&lt;!--- Retrieve all GIFs ---&gt;
+&lt;cfdirectory name=&quot;GetGIF&quot;
+  action=&quot;list&quot;
+  directory=&quot;#dir#&quot;
+  filter=&quot;*.gif&quot;&gt;
+
+&lt;!--- Retrieve all JPGs ---&gt;
+&lt;cfdirectory name=&quot;GetJPG&quot;
+  action=&quot;list&quot;
+  directory=&quot;#dir#&quot;
+  filter=&quot;*.jpg&quot;&gt;
+  
+&lt;!--- Join the queries with a UNION in a QoQ (cfdirectory 
+&#160;&#160;&#160;&#160;&#160;&#160;automatically returns the directory name as &quot;Name&quot;) ---&gt;
+&lt;cfquery dbtype=&quot;query&quot; name=&quot;GetBoth&quot;&gt;
+  SELECT * FROM GetGIF
+  UNION 
+  SELECT * FROM GetJPG
+  ORDER BY Name
+&lt;/cfquery&gt;
+
+&lt;!--- Display output in a linked, ordered list ---&gt;
+&lt;cfoutput&gt;
+  &lt;p&gt;The &lt;strong&gt;#dir#&lt;/strong&gt; directory contains #GetBoth.RecordCount#<br />
+images:&lt;br&gt;
+  &lt;ol&gt;
+    &lt;cfloop query=&quot;GetBoth&quot;&gt;
+      &lt;li&gt;&lt;a href=&quot;../images/#Name#&quot;&gt;#GetBoth.Name#&lt;/a&gt;&lt;br&gt;
+    &lt;/cfloop&gt;  
+  &lt;/ol&gt;
+&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</li>
+<li>
+   Save the page as qoq_cfdirectory.cfm in the myapps directory under the <i>web_root</i>.
+</li>
+<li>
+   Display qoq_cfdirectory.cfm in your browser
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001264.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001266.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001265.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using custom CFML tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000997.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000999.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using custom CFML tags</h1>
+<p>Custom tags written in CFML behave like ColdFusion tags. They can do all of the following: </p>
+<ul>
+<li>
+   Take arguments.
+</li>
+<li>
+   Have tag bodies with beginning and ending tags.
+</li>
+<li>
+   Do specific processing when ColdFusion encounters the beginning tag.
+</li>
+<li>
+   Do processing that is different from the beginning tag processing when ColdFusion encounters the ending tag.
+</li>
+<li>
+   Have any valid ColdFusion page content in their bodies, including both ColdFusion built-in tags and custom tags (referred to as nested tags), or even JSP tags or JavaScript.
+</li>
+<li>
+   Be called recursively; that is, a custom tag can, if designed properly, call itself in the tag body.
+</li>
+<li>
+   Return values to the calling page in a common scope or the calling page's Variables scope, but custom tags do not return values directly, the way functions do.
+</li>
+</ul>
+<p>Although a custom tag and a ColdFusion page that you include using the <a href="00000277.htm#1100248"><code>cfinclude</code></a> tag are both ColdFusion pages, they differ in how they are processed. When a page calls a custom tag, it hands processing off to the custom tag page and waits until the custom tag page completes. When the custom tag finishes, it returns processing (and possibly data) to the calling page; the calling page can then complete its processing. The following figure shows how this works. The arrows indicate the flow of ColdFusion processing the pages.</p>
+<p><br />
+<img src="images/customt2.jpg" alt="Flow control processing in a ColdFusion page" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<h2><a name="wp1164453"></a>Calling custom CFML tags</h2>
+<p>Unlike built-in tags, you can invoke custom CFML tags in the following three ways: </p>
+<ul>
+<li>
+   Call a tag directly.
+</li>
+<li>
+   Call a tag using the <a href="00000300.htm#1810047"><code>cfmodule</code></a> tag.
+</li>
+<li>
+   Use the <a href="00000276.htm#2693767"><code>cfimport</code></a> tag to import a custom tag library directory.
+</li>
+</ul>
+<p>To call a CFML custom tag directly, precede the file name with <code>cf_</code>, omit the .cfm extension, and put the name in angle brackets (&lt;&gt;). For example, use the following line to call the custom tag defined by the file mytag.cfm:</p>
+<pre>&lt;cf_myTag&gt;
+</pre><p>If your tag takes a body, end it with the same tag name preceded with a forward slash (/), as follows:</p>
+<pre>&lt;/cf_myTag&gt;
+</pre><p>For information on using the <code>cfmodule</code> and <code>cfimport</code> tags to call custom CFML tags, see <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a>.</p>
+<h2><a name="wp1171714"></a>Recommended uses</h2>
+<p>ColdFusion custom tags let you abstract complex code and programming logic into simple units. These tags let you maintain a CFML-like design scheme for your code. You can easily distribute your custom tags and share tags with others. For example, the Macromedia ColdFusion Developer's Exchange includes a library of custom tags that perform a wide variety of often-complex jobs; see <a href="http://devex.macromedia.com/developer/gallery/index.cfm" target="mm_window">http://devex.macromedia.com/developer/gallery/index.cfm</a>.</p>
+<p>Consider using CFML custom tags in the following circumstances:</p>
+<ul>
+<li>
+   You need a tag-like structure, which has a body and an end tag, with the body contents changing from invocation to invocation.
+</li>
+<li>
+   You want to associate specific processing with the beginning tag, the ending tag, or both tags.
+</li>
+<li>
+   To use a logical structure in which the tag body uses &quot;child&quot; tags or subtags. This structure is similar to the <a href="00000256.htm#2433198"><code>cfform</code></a> tag, which uses subtags for the individual form fields.
+</li>
+<li>
+   You do not need a function format in which the calling code uses a direct return value.
+</li>
+<li>
+   Your code must be recursive.
+</li>
+<li>
+   Your functionality is complex.
+</li>
+<li>
+   To distribute your code in a convenient form to others.
+</li>
+</ul>
+<p>If you can create either a UDF or a custom CFML tag for a purpose, first consider creating a UDF because invoking it requires less system overhead than using a custom tag. </p>
+<h2><a name="wp1174517"></a>For more information</h2>
+<p>For more information on custom CFML tags, see <a href="00001069.htm#1136373">Creating and Using Custom CFML Tags</a>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000997.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000999.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000998.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

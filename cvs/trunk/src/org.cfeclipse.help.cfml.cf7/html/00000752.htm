@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>IM gateway message sending commands</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000751.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000753.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>IM gateway message sending commands</h1>
+<p>You use the <code>SendGatewayMessage</code> CFML function or the return value of a CFC listener method to send outgoing messages. The ColdFusion&#160;MX&#160;7 IM gateway accepts the following outgoing message commands:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Command
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>submit</p>
+    </td>
+    <td>
+<p>(Default) Sends a normal message to another IM user. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>accept</p>
+    </td>
+    <td>
+<p>Accepts an add buddy request. Adds the buddy to the list of IDs that get your presence information and sends an acceptance message to the buddy ID.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>decline</p>
+    </td>
+    <td>
+<p>Declines an add buddy request and sends a rejection message to the buddy ID.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>noact</p>
+    </td>
+    <td>
+<p>Tells the gateway to take no action. The gateway logs a message that indicates that it took no action, and contains the gateway type, gateway ID, and buddy ID.</p>
+    </td>
+  </tr>
+</table>
+
+<p>The message structure that you return in the gateway listener CFC function or use as the second parameter in the CFML <code>SendGatewayMessage</code> function can have the following fields. The table lists the fields and the commands in which they are used, and describes the field's use.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Commands
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>buddyID</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+    <td>
+<p>The destination user ID</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>command</p>
+    </td>
+    <td>
+<p>All</p>
+    </td>
+    <td>
+<p>The command; defaults to submit if omitted</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>message</p>
+    </td>
+    <td>
+<p>submit</p>
+    </td>
+    <td>
+<p>A text message to send to the destination user</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>reason</p>
+    </td>
+    <td>
+<p>accept, decline</p>
+    </td>
+    <td>
+<p>A text description of the reason for the action or other message to send to the add buddy requestor</p>
+    </td>
+  </tr>
+</table>
+
+<p>In typical use, a ColdFusion application uses the accept, decline, and noact commands in the return value of the <code>onAddBuddyRequest</code> method, and uses the submit command (or no command, because submit is the default command) in <code>SendGatewayMessage</code> CFML functions and the return value of the <code>onIncomingMessage</code> CFC method.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000751.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000753.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000752.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

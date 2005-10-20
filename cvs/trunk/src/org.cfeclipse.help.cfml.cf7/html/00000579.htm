@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSParseDateTime</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000578.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000580.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSParseDateTime</h1>
+<h4><a name="wp133323"></a>Description</h4>
+<p>Converts a string that is a valid date/time representation in the current locale into a date/time object.</p>
+<h4><a name="wp133325"></a>Returns</h4>
+<p>A date/time object.</p>
+<h4><a name="wp133327"></a>Category</h4>
+<p><a href="00000357.htm#1098968">Date and time functions</a>, <a href="00000359.htm#1099219">Display and formatting functions</a>, <a href="00000363.htm#1099325">International functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp133341"></a>Function syntax</h4>
+<pre><code><strong>LSParseDateTime</strong></code>(<i>date/time-string</i>)
+</pre><h4><a name="wp133343"></a>See also</h4>
+<p><a href="00000571.htm#132367"><code>LSDateFormat</code></a>, <a href="00000594.htm#134381"><code>ParseDateTime</code></a>, <a href="00000624.htm#136340"><code>SetLocale</code></a>, <a href="00000486.htm#4552309"><code>GetLocale</code></a>; <a href="00001202.htm#1219089">Locales</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp133357"></a>History</h4>
+<p>ColdFusion&#160;MX: </p>
+<ul>
+<li>
+   Changed formatting behavior: this function might not parse string formats that worked with earlier releases. This function uses Java standard locale formatting rules on all platforms. 
+</li>
+<li>
+   Changed how the <code>date/time-string</code> parameter value is processed: ColdFusion processes the <code>date/time-string</code> parameter value time zone information differently than in earlier releases, as described in the Usage section.
+</li>
+</ul>
+<h4><a name="wp133364"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>date/time-string</p>
+    </td>
+    <td>
+<p>A string a variable that contains one, in a format that is readable in the current locale. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp133375"></a>Usage</h4>
+<p>This function can parse any date, time, or date/time combination that conforms to Java standard locale formatting rules for the current locale.</p>
+<p>The following table lists some of the date/time values you can pass to this function in the English (US) locale. You can also pass only the date or the time parts of these formats: </p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Format
+    </th>
+    <th>
+Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>m/dd/yy h:mm:ss</p>
+    </td>
+    <td>
+<p>1/30/02 7:02:33</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>m/dd/yy h:mm tt</p>
+    </td>
+    <td>
+<p>1/30/02 7:02 AM </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>m/dd/yyyy h:mm</p>
+    </td>
+    <td>
+<p>1/30/2002 7:02 AM </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>mmm dd, yyyy h:mm:ss tt</p>
+    </td>
+    <td>
+<p>Jan 30, 2002 7:02:12 AM </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>mmmm dd, yyyy h:mm:ss tt zzz </p>
+    </td>
+    <td>
+<p>January 30, 2002 7:02:23 AM PST </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ddd, mmm dd, yyyy hh:mm:ss </p>
+    </td>
+    <td>
+<p>Wed, Jan 30, 2002 07:02:12 </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>dddd, mmmm dd, yyyy h:mm:ss tt zzz </p>
+    </td>
+    <td>
+<p>Wednesday, January 30, 2002 7:02:12 AM PST </p>
+    </td>
+  </tr>
+</table>
+
+<p>Valid dates are in the range 100 AD-9999 AD. Two digit years in the range 00-29 are interpreted as being 2000-2029. Two digit years in the range 30-99 are interpreted as being 1930-1999</p>
+<p>This function corrects for differences between the current time zone and any time zone specified in the input parameter. </p>
+<ul>
+<li>
+   If a time zone specified in the <code>date/time-string</code> parameter is different from the time zone setting of the computer, ColdFusion adjusts the time value to its equivalent in the computer time zone.
+</li>
+<li>
+   If a time zone is not specified in the <code>date/time-string</code> parameter, ColdFusion does not adjust the time value. 
+</li>
+</ul>
+<p><strong>Note: </strong>This function does not accept POP dates, which include a time zone offset value.</p><h4><a name="wp133417"></a>Example</h4>
+<pre>&lt;h3&gt;LSParseDateTime Example - returns a locale-specific date/time object&lt;/h3&gt;
+&lt;!--- loop through a list of locales and show date values for Now()---&gt;
+&lt;cfloop LIST = &quot;#Server.Coldfusion.SupportedLocales#&quot;
+index = &quot;locale&quot; delimiters = &quot;,&quot;&gt;
+   &lt;cfset oldlocale = SetLocale(locale)&gt;
+   &lt;cfoutput&gt;&lt;p&gt;&lt;B&gt;&lt;I&gt;#locale#&lt;/I&gt;&lt;/B&gt;&lt;br&gt;
+      &lt;p&gt;Locale-specific formats:
+      &lt;br&gt;#LSDateFormat(Now(), &quot;mmm-dd-yyyy&quot;)# #LSTimeFormat(Now())#&lt;br&gt;
+      #LSDateFormat(Now(), &quot;mmmm d, yyyy&quot;)# #LSTimeFormat(Now())#&lt;br&gt;
+      #LSDateFormat(Now(), &quot;mm/dd/yyyy&quot;)# #LSTimeFormat(Now())#&lt;br&gt;
+      #LSDateFormat(Now(), &quot;d-mmm-yyyy&quot;)# #LSTimeFormat(Now())#&lt;br&gt;
+      #LSDateFormat(Now(), &quot;ddd, mmmm dd, yyyy&quot;)# #LSTimeFormat(Now())#&lt;br&gt;
+      #LSDateFormat(Now(), &quot;d/m/yy&quot;)# #LSTimeFormat(Now())#&lt;br&gt;
+      #LSDateFormat(Now())# #LSTimeFormat(Now())#&lt;br&gt;
+   &lt;p&gt;Standard Date/Time:
+   #<strong>LSParseDateTime(&quot;#LSDateFormat(Now())# #LSTimeFormat(Now())#&quot;)</strong>#&lt;br&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfloop&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000578.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000580.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000579.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

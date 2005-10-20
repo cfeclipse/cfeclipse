@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Setting MIME types</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001794.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001796.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Setting MIME types</h1>
+<p>You can use the MIME type criteria options, <code>-mimeinclude</code>, <code>-indmimeinclude</code>, <code>-mimeexclude</code>, and <code>-indmimeexclude</code>, to include or exclude MIME types.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001795.htm#1029181">Syntax restrictions</a>
+</li>
+<li>
+   <a href="00001796.htm#1017399">MIME types and web crawling</a>
+</li>
+<li>
+   <a href="00001797.htm#1017293">Indexing unknown MIME types</a>
+</li>
+<li>
+   <a href="00001797.htm#1017313">Known MIME types for file system indexing</a>
+</li>
+</ul>
+<h2><a name="wp1029181"></a>Syntax restrictions</h2>
+<p>When you specify MIME type criteria, keep in mind the restrictions described in the following sections.</p>
+<h3><a name="wp1029184"></a>Using the wildcard character (*)</h3>
+<p>The asterisk (*) wildcard character does not operate as a regular expression for the value of the MIME type criteria. Instead, you can only use it to replace the entire MIME type or MIME sub-type.</p>
+<p>For example, the following value is a valid substitute for text/html:</p>
+<pre>text/*
+</pre><p>The following value is NOT a valid substitute for text/html:</p>
+<pre>text/h*
+</pre><h3><a name="wp1017250"></a>Multiple parameter values</h3>
+<p>When you specify a series of parameter values for a single instance of one of the MIME type criteria, and you use-quotation marks, you must enclose each separate parameter value in single-quotation marks. For example:</p>
+<pre>-mimeinclude 'text/plain' 'application/*'
+</pre><p>If you enclose the entire sequence of parameter values, as follows:</p>
+<pre>-mimeinclude 'text/plain application/*'
+</pre><p>Verity Spider considers the entire expression a single value.</p>
+<p>You can also use multiple instances of the MIME type criteria, each with a single parameter value, where quotation marks are necessary only if you use the wildcard character (*). For example:</p>
+<pre>-mimeinclude text/plain
+-mimeinclude 'application/*'.Setting MIME Types
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001794.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001796.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001795.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

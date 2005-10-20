@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSIsNumeric</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000575.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000577.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSIsNumeric</h1>
+<h4><a name="wp132962"></a>Description</h4>
+<p>Determines whether a string is a valid representation of a number in the current locale. </p>
+<h4><a name="wp132964"></a>Returns</h4>
+<p>True, if the string represents a number the current locale; False, otherwise.</p>
+<h4><a name="wp132966"></a>Category</h4>
+<p><a href="00000358.htm#3485787">Decision functions</a>, <a href="00000363.htm#1099325">International functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp132977"></a>Function syntax</h4>
+<pre><code><strong>LSIsNumeric</strong></code>(<i>string</i>)
+</pre><h4><a name="wp132979"></a>See also</h4>
+<p><a href="00000486.htm#4552309"><code>GetLocale</code></a>, <a href="00000624.htm#136340"><code>SetLocale</code></a>; <a href="00001207.htm#1202017">Handling data in ColdFusion&#160;MX</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp132987"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed formatting behavior: this function might return a different result than in earlier releases. This function uses Java standard locale formatting rules on all platforms.</p>
+<h4><a name="wp132992"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>string</p>
+    </td>
+    <td>
+<p>A string or a variable that contains one</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp133003"></a>Usage</h4>
+<p>To set the default display format of date, time, number, and currency values, use the <a href="00000624.htm#136340"><code>SetLocale</code></a> function. </p>
+<h4><a name="wp133008"></a>Example</h4>
+<pre>&lt;h3&gt;LSIsNumeric Example&lt;/h3&gt;
+
+&lt;cfif IsDefined(&quot;FORM.locale&quot;)&gt;
+&lt;!--- if locale is defined, set locale to that entry ---&gt;
+&lt;cfset NewLocale = SetLocale(FORM.locale)&gt;
+
+&lt;p&gt;Is the value &quot;&lt;cfoutput&gt;#FORM.myValue#&lt;/cFOUTPUT&gt;&quot;
+a proper numeric value for &lt;cfoutput&gt;#GetLocale()#&lt;/cfoutput&gt;?
+
+&lt;p&gt;Answer: &lt;cfoutput&gt;#LSIsNumeric(FORM.myValue)#&lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;p&gt;&lt;form action = &quot;LSIsNumeric.cfm&quot;&gt;
+
+&lt;p&gt;Select a locale for which to check a numeric value:
+...
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000575.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000577.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000576.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

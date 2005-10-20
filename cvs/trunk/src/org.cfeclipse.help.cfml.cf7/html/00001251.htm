@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Writing queries using an editor</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001250.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001252.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Writing queries using an editor</h1>
+<p>Dreamweaver MX 2004 and HomeSite+ provide a graphical user interface (GUI) for writing and executing queries. A GUI is useful for developing and testing your queries before you insert them into a ColdFusion application. </p>
+<p>This section contains a brief description of these GUIs. For more information, see the documentation on your specific tool.</p>
+<h2><a name="wp1112130"></a>Writing queries using Dreamweaver MX 2004</h2>
+<p>This section describes how to define a query using the Dreamweaver MX 2004 Recordset dialog box, which allows you to create a record set without having to manually enter SQL statements. Defining a record set using this method can be as easy as selecting a database connection and table from the pop-up menus. </p>
+<h4>To define a record set without writing SQL: </h4>
+<ol>
+<li>
+   In the Dreamweaver Document window, open the page that will use the record set.
+</li>
+<li>
+   To open the Data Bindings panel, select Window &gt; Data Bindings.
+</li>
+<li>
+   In the Data Bindings panel, click the Plus (+) button and choose Recordset (Query) from the pop-up menu. 
+<p>The Simple Recordset dialog box appears: </p>
+<p><br />
+<img src="images/dw_simp8.jpg" alt="The Dreamweaver MX Simple Recordset dialog box" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+<li>
+   Complete the dialog box.
+</li>
+<li>
+   Click the Test button to execute the query and ensure that it retrieves the information you intended.
+<p>If you defined a filter that uses parameters input by users, the Test button displays the Test Value dialog box. Enter a value in the Test Value text box and click OK. If an instance of the record set is successfully created, a table displaying the data from your record set appears. </p>
+</li>
+<li>
+   Click OK to add the record set to the list of available content sources in the Data bindings panel.
+</li>
+</ol>
+<p>If you prefer to write your own SQL statements, or need to create more complex queries then the Simple Recordset dialog box allows, you can define record sets using the Advanced Recordset dialog box </p>
+<h4>Creating an advanced record set by writing SQL:</h4>
+<ol>
+<li>
+   In the Dreamweaver Document window, open the page that will use the record set.
+</li>
+<li>
+   Select Windows &gt; Data Bindings to display the Data Bindings panel.
+</li>
+<li>
+   In the Data Bindings panel, click the Plus (+) button and select Recordset (Query) from the pop-up menu.
+<p>If the Simple Recordset dialog box appears, switch to the Advanced Recordset dialog box by clicking the Advanced button. </p>
+<p>The Advanced Recordset dialog box appears: </p>
+<p><br />
+<img src="images/dw_adv_3.jpg" alt="The Dreamweaver MX Advanced Recordset dialog box" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+<li>
+   Complete the dialog box.
+</li>
+<li>
+   Click the Test button to execute the query and ensure that it retrieves the information you intended.
+<p>If you defined a filter that uses parameters input by users, the Test button displays the Test Value dialog box. Enter a value in the Test Value text field and click OK. If an instance of the record set is successfully created, a table displaying the data from your record set appears. </p>
+</li>
+<li>
+   Click OK to add the record set to the list of available content sources in the Data Bindings panel.
+</li>
+</ol>
+<h2><a name="wp1112141"></a>Writing queries using Macromedia HomeSite+</h2>
+<p>Macromedia HomeSite+ includes the combined features of HomeSite 5 and ColdFusion Studio 5, with additional support for new ColdFusion MX tags. HomeSite+ supports SQL Builder for writing queries. </p>
+<p>SQL Builder is a powerful visual tool for building, testing, and saving SQL statements for use in application data queries. You can copy completed SQL code blocks directly into your ColdFusion applications.</p>
+<h4>To open SQL Builder:</h4>
+<p>Do one of the following:</p>
+<ul>
+<li>
+   Select Tools &gt; SQL Builder from the HomeSite+ menu, select an RDS server, select a database from the drop-down list, and click New Query.
+</li>
+<li>
+   In the Database tab, select an RDS server, right-click a database name or a table, and select New Query.
+</li>
+<li>
+   Open the <a href="00000316.htm#1102316"><code>cfquery</code></a> tag editor, select an RDS server, and click New Query.
+</li>
+</ul>
+<h3><a name="wp1119431"></a>The SQL Builder interface</h3>
+<p>The following figure shows the SQL Builder interface:</p>
+<p><br />
+<img src="images/query_b9.jpg" alt="The SQL Builder interface" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The SQL Builder is divided into the following four sections:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Section
+    </th>
+    <th>
+Use
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Toolbar</p>
+    </td>
+    <td>
+<p>Contains buttons for SQL keywords and commands. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Table pane </p>
+    </td>
+    <td>
+<p>Provides a view of the tables in your query and allows you to create joins between tables.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Properties pane </p>
+    </td>
+    <td>
+<p>Allows you to set the properties of the query, such as the columns that are being selected or the columns that are being updated.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>SQL pane </p>
+    </td>
+    <td>
+<p>Shows you the SQL statement as it is built. </p>
+<p>The SQL pane does not support reverse editing, so any changes you make in this pane will not be made to the query in the Properties pane or the Table pane.</p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1119444"></a>Writing SQL statements</h3>
+<p>SQL Builder opens a SELECT statement by default, since this is the most common type of query. SQL Builder supports the following four types of SQL statements:</p>
+<ul>
+<li>
+   Select (default)
+</li>
+<li>
+   Insert
+</li>
+<li>
+   Update
+</li>
+<li>
+   Delete
+</li>
+</ul>
+<p></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001250.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001252.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001251.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

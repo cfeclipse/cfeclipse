@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Passing data to custom tags</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001073.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001075.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Passing data to custom tags</h1>
+<p>To make your custom tags flexible, you will often want to pass data to them for processing. This section describes how to write custom tags that take tag attributes and other data as input from a calling page. </p>
+<ul>
+<li>
+   <a href="00001074.htm#1123411">Passing values to and from custom tags</a>
+</li>
+<li>
+   <a href="00001075.htm#1108664">Using tag attributes summary</a>
+</li>
+<li>
+   <a href="00001076.htm#1123636">Custom tag example with attributes</a>
+</li>
+<li>
+   <a href="00001077.htm#1112652">Passing custom tag attributes using CFML structures</a>
+</li>
+</ul>
+<h2><a name="wp1123411"></a>Passing values to and from custom tags</h2>
+<p>Because custom tags are individual ColdFusion pages, variables and other data are not automatically shared between a custom tag and the calling page. To pass data from the calling page to the custom tag, you can specify attribute name/value pairs in the custom tag, just as you do for normal HTML and CFML tags.</p>
+<p>For example, to pass the value of the NameYouEntered variable to the cf_getmd tag, you can call the custom tag as follows:</p>
+<pre>&lt;cf_getmd Name=#NameYouEntered#&gt;
+</pre><p>To pass multiple attributes to a custom tag, separate them with a space in the tag as follows:</p>
+<pre>&lt;cf_mytag Firstname=&quot;Thadeus&quot; Lastname=&quot;Jones&quot;&gt;
+</pre><p>In the custom tag, you use the Attributes scope to access attributes passed to the tag. Therefore, in the getmd.cfm page, you refer to the passed attribute as <code>Attributes.Name</code>. The mytag.cfm custom tag page refers to the passed attributes as <code>Attributes.Firstname</code> and <code>Attributes.Lastname</code>.</p>
+<p>The custom tag page can also access variables set in the calling page by prefixing the calling page's local variable with Caller. However, this is not the best way to pass information to a custom tag, because each calling page would be required to create variables with the names required by the custom tag. You can create more flexible custom tags by passing parameters using attributes. </p>
+<p>Variables created within a custom tag are deleted when the processing of the tag terminates. Therefore, if you want to pass information back to the calling page, you must write that information back to the Caller scope of the calling page. You cannot access the custom tag's variables outside the custom tag itself. </p>
+<p>For example, use the following code in the getmd.cfm page to set the variable Doctor on the calling page:</p>
+<pre>&lt;cfset Caller.Doctor=&quot;Doctor &quot; &amp; Attributes.Name&gt;
+</pre><p>If the variable Doctor does not exist in the calling page, this statement creates it. If the variable exists, the custom tag overwrites it. </p>
+<p>The following figure shows the relationship between the variables on the calling page and the custom tag:</p>
+<p><br />
+<img src="images/dwa7_1we.jpg" alt="The relationship between variables in the calling page and the custom tag" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>One common technique used by custom tags is for the custom tag to take as input an attribute containing the name of the variable to use to pass back results. For example, the calling page passes returnHere as the name of the variable to use to pass back results: </p>
+<pre>&lt;cf_mytag resultName=&quot;returnHere&quot;&gt;
+</pre><p>In mytag.cfm, the custom tag passes back its results using the following code:</p>
+<pre>&lt;cfset &quot;Caller.#Attributes.resultName#&quot; = result&gt; 
+</pre><p><strong>Tip: </strong>Be careful not to overwrite variables in the calling page from the custom tag. You should adopt a naming convention to minimize the chance of overwriting variables. For example, prefix the returned variable with customtagname_, where customtagname is the name of the custom tag.</p><p><strong>Note: </strong>Data pertaining to the HTTP request or to the current application is visible in the custom tag page. This includes the variables in the Form, Url, Cgi, Request, Cookies, Server, Application, Session, and Client scopes.</p>
+
+<hr />
+<p align="right"><p align="right"><a href="00001073.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001075.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001074.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Getting started</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001451.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001453.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Getting started</h1>
+<p>Before you get started using ColdFusion&#160;MX reporting, you must install the Report Builder.</p>
+<p>After you install the Report Builder, start it by opening the Report Builder icon in the location you specified at installation time (for example, the desktop or the Start menu).</p>
+<p>The first time you open the Report Builder, the Server Setup Wizard runs. After you complete the Server Setup Wizard, select File &gt; New from the menu bar to define a new report using the Report Creation Wizard. For more information, see <a href="00001453.htm#119140">Basic steps for creating reports</a>.</p>
+<p>This section contains the following discussions:</p>
+<ul>
+<li>
+   <a href="00001452.htm#121300">Installing the Report Builder</a>
+</li>
+<li>
+   <a href="00001452.htm#119442">Setup Wizard</a>
+</li>
+<li>
+   <a href="00001452.htm#119249">User interface usage, tips, and techniques</a>
+</li>
+</ul>
+<h3><a name="wp121300"></a>Installing the Report Builder</h3>
+<p>You can access the Report Builder installer from the following places:</p>
+<p><strong>The </strong>ColdFusion&#160;MX<strong> installation</strong>&#160;Go to the <i>webroot</i>/CFIDE/installers directory.</p>
+<p><strong>The </strong>ColdFusion&#160;MX<strong> CD</strong>&#160;Use the CD Browser to select the ColdFusion&#160;MX reporting option.</p>
+<p><strong>The Macromedia website</strong>&#160;Go to <a href="http://www.macromedia.com/software/coldfusion/reporting/" target="mm_window">www.macromedia.com/software/coldfusion/reporting/</a>.</p>
+<p>When you install the Report Builder, it also registers Windows DLLs that are used by RDS. If these DLLs fail to register properly, the Report Builder generates errors at startup and when using RDS. </p>
+<h3><a name="wp119442"></a>Setup Wizard</h3>
+<p>The first time you start the Report Builder, it runs the Setup Wizard. The Setup Wizard prompts you to define default settings for an associated ColdFusion MX server. These settings include the following:</p>
+<ul>
+<li>
+   Default unit of measurement: Inches, centimeters, or pixels
+</li>
+<li>
+   ColdFusion server (RDS must be enabled on this server). This is the RDS server that the Query Builder and Chart Wizard use to access database data. The Setup Wizard requires the following information:
+<ul><li>Host name or IP address.</li>
+<li>Web server port (typically 80 if using a web server connector, 8500 if using the built-in web server in the server configuration, 8300 if using the built-in web server with the cfusion server in the multiserver configuration, or a J2EE-server-specific web server port number).</li>
+<li>RDS password for the associated ColdFusion server.</li>
+</ul></li>
+<li>
+   Directory path to the webroot used by the associated ColdFusion server (for example, C:\Inetpub\wwwroot or C:\CFusionMX7\wwwroot).
+</li>
+<li>
+   URL for the webroot used by the associated ColdFusion server (for example, http://localhost or http://localhost:8500).
+</li>
+</ul>
+<p>After running the Setup Wizard, the Report Gallery dialog box appears. When you click the Using a Report Wizard radio button, the Report Builder runs the Report Creation Wizard, which prompts you for information and generates a complete report definition automatically.</p>
+<p>For more information on the Report Creation Wizard, see <a href="00001469.htm#126852">Using the Report Creation Wizard</a>.</p>
+<h3><a name="wp119249"></a>User interface usage, tips, and techniques</h3>
+<p>The Report Builder user interface includes the following areas:</p>
+<p><strong>Toolbox</strong>&#160;Contains nonvariable elements placed in a report, including text, shapes, images, subreports, and graphs. To use toolbox elements, click on the element, and then click and drag in the report band to define the element&#39;s size. After you place an element on a report band, you can modify its appearance and behavior by using the Properties sheet.</p>
+<p><strong>Alignment palette</strong>&#160;Use Control-click or Shift-click to select multiple elements in a report band, and then click the appropriate alignment icon. You can also use Control-A to select all elements in a report band.</p>
+<p><strong>Report bands</strong>&#160;Place toolbox elements, query fields, and calculated fields on report bands. The default report bands are report header, page header, column header, detail, column footer, page footer, report footer, and watermark. Page header, page footer, and watermark are closed by default; to open them drag one of the adjacent splitter bars. To define additional bands for groups, select Report &gt; Group Management.</p>
+<p><strong>Properties panel</strong>&#160;Contains display and report characteristics for the selected field. To change a property value, type or select a new value, and press Enter. For complete information on properties, see the online Help. </p>
+<p><strong>Fields and parameters panel</strong>&#160;Contains items for query fields, input parameters, and calculated fields. Use the add, edit, and delete icons to manage these fields. After you define a field, drag the field name to add the field, its associated label, or both, to a report band.</p>
+<p><strong>Text styles tool window</strong>&#160;Contains the text styles that you define for a report. Use the add, edit, and delete icons to manage text styles. After you define text styles, you apply them to text elements on the report instead of specifying font, font size, and so on, for each individual text element. If your report layout, platform, or font availability requirements change, you can modify the text style to apply the changes throughout the report. Additionally, you can specify that a text style is the report's default font and the Report Builder applies it to all text elements you add to a report.</p>
+<p>The following figure shows the main areas of the Report Builder user interface:</p>
+<p><br />
+<img src="images/uieleme3.jpg" alt="The main areas of the Report Builder user interface" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The View menu lets you control whether toolboxes and tool windows appear. Additionally, you can click on a tool window's title to undock it and drag it to another area of the screen. To re-dock a tool window, drag it to the side or corner until a rectangle appears, and then release the mouse&#160;button.</p>
+<p>For more information, see <a href="00001455.htm#118847">Common reporting tasks and techniques</a> and the online&#160;Help.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001451.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001453.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001452.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

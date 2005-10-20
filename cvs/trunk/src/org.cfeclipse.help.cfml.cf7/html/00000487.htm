@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GetLocaleDisplayName</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000486.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000488.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GetLocaleDisplayName</h1>
+<h4><a name="wp5046250"></a>Description</h4>
+<p>Gets a locale value and displays the name in a manner that is appropriate to a specific locale. By default, gets the current locale in the current locale's language.</p>
+<h4><a name="wp5046309"></a>Returns</h4>
+<p>The localized display name of the locale, in the language of the specified locale.</p>
+<h4><a name="wp5046311"></a>Category</h4>
+<p><a href="00000359.htm#1099219">Display and formatting functions</a>, <a href="00000363.htm#1099325">International functions</a>, <a href="00000371.htm#1100017">System functions</a></p>
+<h4><a name="wp5046269"></a>Function syntax</h4>
+<pre><code><strong>GetLocaleDisplayName</strong></code>([<i>locale</i>[, <i>inLocale</i>]])
+</pre><h4><a name="wp5046271"></a>See also</h4>
+<p><a href="00000486.htm#4552309">GetLocale</a>, <a href="00000624.htm#136340">SetLocale</a></p>
+<h4><a name="wp5046276"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this function.</p>
+<h4><a name="wp5046391"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>locale</p>
+    </td>
+    <td>
+<p>The locale whose name you want. The default is the current ColdFusion locale, or if no ColdFusion locale has been set, the JVM locale.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>inlocale</p>
+    </td>
+    <td>
+<p>The locale in which to return the name. The default is the current ColdFusion locale, or if no ColdFusion locale has been set, the JVM locale.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp5046287"></a>Example</h4>
+<p>The following example expands on the <a href="00000486.htm#4552309"><code>GetLocale</code></a> example to show the use of the <code>GetLocaleDisplayName</code> function to display locale names in the current locale and in other locales. It lets you select a locale from all supported locales, changes the ColdFusion MX locale to the selected locales, and displays the old and new locale names.</p>
+<pre>&lt;html&gt;
+&lt;head&gt;
+   &lt;title&gt;Displaying locales&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h3&gt;Example: Changing and Displaying Locales&lt;/h3&gt;
+&lt;cfoutput&gt;
+   &lt;!--- For each new request, the locale gets reset to the JVM locale ---&gt;
+   Initial locale&#39;s ColdFusion name: #GetLocale()#&lt;br&gt;
+   Initial locale&#39;s display name: #GetLocaleDisplayName()#&lt;br&gt;
+   &lt;br&gt;
+   &lt;!--- Do this only if the form was submitted. ---&gt;
+   &lt;cfif IsDefined(&quot;form.mylocale&quot;)&gt;
+      &lt;b&gt;Changing locale to #form.mylocale#&lt;/b&gt;&lt;br&gt;
+      &lt;br&gt;
+      &lt;!--- Set the locale to the submitted value.
+         SetLocale returns the old ColdFusion locale name.  ---&gt;
+      &lt;cfset oldlocale=SetLocale(&quot;#form.mylocale#&quot;)&gt;
+      &lt;!--- Get the current locale&#39;s ColdFusion name.
+         It should have changed. ---&gt;
+      &lt;cfset newlocale=GetLocale()&gt;
+      New locale&#39;s ColdFusion name: #newlocale#&lt;br&gt;
+      New locale&#39;s display name in current locale: #GetLocaleDisplayName()#&lt;br&gt;
+      New locale&#39;s display name in old locale:  
+         #GetLocaleDisplayName(newlocale, oldlocale)#&lt;br&gt;
+      New locale&#39;s display name in en_US:  
+         #GetLocaleDisplayName(newlocale, &quot;en_US&quot;)#&lt;br&gt;
+      &lt;br&gt;
+      Old locale&#39;s display name in current locale:
+         #GetLocaleDisplayName(oldlocale)#&lt;br&gt;
+      Old locale&#39;s display name in en_US:  
+         #GetLocaleDisplayName(oldlocale, &quot;en_US&quot;)#&lt;br&gt;
+   &lt;/cfif&gt;
+
+   &lt;!--- Self-submitting form to select the new locale. ---&gt;
+   &lt;cfform&gt;
+      &lt;h3&gt;Please select the new locale:&lt;/h3&gt;
+      &lt;cfselect name=&quot;mylocale&quot;&gt;
+         &lt;!--- The server.coldfusion.supportedlocales variable is a 
+               list of all supported locale names. Use a list cfloop tag 
+               to create an HTML option tag for each name in the list. ---&gt;
+         &lt;cfloop index=&quot;i&quot; list=&quot;#server.coldfusion.supportedlocales#&quot;&gt;
+         &lt;!--- In the select box, we use the US English display names for 
+               the locales. You can change en_US to your prefered locale. ---&gt;
+            &lt;option value=&quot;#i#&quot;&gt;#GetLocaleDisplayName(i, &quot;en_US&quot;)#&lt;/option&gt;
+         &lt;/cfloop&gt;
+      &lt;/cfselect&gt;&lt;br&gt;
+      &lt;br&gt;
+      &lt;cfinput type=&quot;submit&quot; name=&quot;submitit&quot; value=&quot;Change Locale&quot;&gt;
+   &lt;/cfform&gt;
+&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000486.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000488.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000487.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

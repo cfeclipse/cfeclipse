@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using number signs in strings</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000934.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000936.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using number signs in strings</h1>
+<p>You can put variables or functions freely inside strings by enclosing each variable or expression with number signs; for example:</p>
+<pre>&lt;cfset TheString = &quot;Value is #Form.MyTextField#&quot;&gt;
+&lt;cfset TheString = &quot;The name is #FirstName# #LastName#.&quot;&gt;
+&lt;cfset TheString = &quot;Cos(0) is #Cos(0)#&quot;&gt;
+</pre><p>ColdFusion automatically replaces the text with the value of the variable or the value returned by the function. For example, the following pairs of <a href="00000334.htm#1103445"><code>cfset</code></a> statements produce the same result:</p>
+<pre>&lt;cfset TheString = &quot;Hello, #FirstName#!&quot;&gt;
+&lt;cfset TheString = &quot;Hello, &quot; &amp; FirstName &amp; &quot;!&quot;&gt;
+</pre><p>If number signs are omitted inside the string, the text, rather than the value, appears in the string. For example, the following pairs of <code>cfset</code> statements produce the same result:</p>
+<pre>&lt;cfset TheString = &quot;Hello, FirstName!&quot;&gt;
+&lt;cfset TheString = &quot;Hello, &quot; &amp; &quot;First&quot; &amp; &quot;Name!&quot;&gt;
+</pre><p>As with the <a href="00000309.htm#1101659"><code>cfoutput</code></a> statement, two expressions can be adjacent to each other in strings, as in the following example:</p>
+<pre>&lt;cfset TheString = &quot;Monk is #Left(&quot;Moon&quot;, 2)##Mid(&quot;Monkey&quot;, 3, 2)#&quot;&gt;
+</pre><p>The double-quotation marks around &quot;Moon&quot; and &quot;Monkey&quot; do <i>not</i> need to be escaped (as in &quot;&quot;Moon&quot;&quot; and &quot;&quot;Monkey&quot;&quot;). This is because the text between the number signs is treated as an expression; it is evaluated before its value is inserted inside the string.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000934.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000936.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000935.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

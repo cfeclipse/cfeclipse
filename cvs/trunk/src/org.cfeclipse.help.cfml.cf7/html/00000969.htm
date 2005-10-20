@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About CFScript</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000968.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000970.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About CFScript</h1>
+<p>CFScript is a language within a language. It is a scripting language that is similar to JavaScript but is simpler to use. Also, unlike JavaScript, CFScript only runs on the ColdFusion server; it does not run on the client system. CFScript code can use all the ColdFusion functions and expressions, and has access to all ColdFusion variables that are available in the script's scope.</p>
+<p>CFScript provides a compact and efficient way to write ColdFusion logic. Typical uses of CFScript include the following:</p>
+<ul>
+<li>
+   Simplifying and speeding variable setting
+</li>
+<li>
+   Building compact JavaScript-like flow control structures
+</li>
+<li>
+   Creating user-defined functions
+</li>
+</ul>
+<p>Because you use functions and expressions directly in CFScript, you do not have to surround each&#160;assignment or function in a <a href="00000334.htm#1103445"><code>cfset</code></a> tag. Also, CFScript assignments are often faster than <code>cfset</code> tags.</p>
+<p>CFScript provides a set of decision and flow-control structures that are more familiar than ColdFusion tags to most programmers.</p>
+<p>In addition to variable setting, other operations tend to be slightly faster in CFScript than in tags.</p>
+<p>ColdFusion 5 and later releases let you use CFScript to create user-defined functions, or UDFs (also known as custom functions). You call UDFs in the same manner that you call standard ColdFusion functions. UDFs are to ColdFusion built-in functions what custom tags are to ColdFusion built-in tags. Typical uses of UDFs include data manipulation and mathematical calculation routines.</p>
+<p>You cannot include ColdFusion tags in CFScript. However, a number of functions and CFScript statements are equivalent to commonly used tags. For more information, see <a href="00000970.htm#1160935">CFScript functional equivalents to ColdFusion tags</a>. </p>
+<h2><a name="wp1145910"></a>Comparing tags and CFScript</h2>
+<p>The following examples show how you can use CFML tags and CFScript to do the same thing. Each example takes data submitted from a form and puts it in a structure; if the form does not have a last name and department field, it displays a message.</p>
+<h4>Using CFML tags</h4>
+<pre>&lt;cfif IsDefined(&quot;Form.submit&quot;)&gt;
+     &lt;cfif (Form.lastname NEQ &quot;&quot;) AND (Form.department NEQ &quot;&quot;)&gt; 
+      &lt;cfset employee=structnew()&gt;
+      &lt;cfset employee.firstname=Form.firstname&gt;
+      &lt;cfset employee.lastname=Form.lastname&gt;
+      &lt;cfset employee.email=Form.email&gt;
+      &lt;cfset employee.phone=Form.phone&gt;
+      &lt;cfset employee.department=Form.department&gt;
+      &lt;cfoutput&gt;
+         Adding #Form.firstname# #Form.lastname#&lt;br&gt;
+      &lt;/cfoutput&gt;
+   &lt;cfelse&gt;
+      &lt;cfoutput&gt;
+         You must enter a Last Name and Department.&lt;br&gt;
+      &lt;/cfoutput&gt;
+    &lt;/cfif&gt;
+&lt;/cfif&gt;
+</pre><h4>Using CFScript</h4>
+<pre>&lt;cfscript&gt;
+   if (IsDefined(&quot;Form.submit&quot;))&#160;{
+      if ((Form.lastname NEQ &quot;&quot;) AND (Form.department NEQ &quot;&quot;))&#160;{
+         employee=StructNew();
+         employee.firstname=Form.firstname;
+         employee.lastname=Form.lastname;
+         employee.email=Form.email;
+         employee.phone=Form.phone;
+         employee.department=Form.department;
+         WriteOutput(&quot;Adding #Form.firstname# #Form.lastname# &lt;br&gt;&quot;);
+         }
+      else
+         WriteOutput(&quot;You must enter a Last Name and Department.&lt;br&gt;&quot;);
+      }
+&lt;/cfscript&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000968.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000970.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000969.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,1047 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfinput</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000278.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000280.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfinput</h1>
+<h4><a name="wp1355709"></a>Description</h4>
+<p>Used within the <a href="00000256.htm#2433198"><code>cfform</code></a> tag, to place input controls that support input validation on a form. </p>
+<h4><a name="wp1953359"></a>Category</h4>
+<p><a href="00000205.htm#2459968">Forms tags</a></p>
+<h4><a name="wp1100384"></a>Syntax</h4>
+<pre>&lt;cfinput <br />name = &quot;name&quot;<br />type = &quot;input type&quot;<br />label = &quot;text&quot;<br />style = &quot;style specification&quot;<br />required = &quot;yes&quot; or &quot;no&quot;<br />mask = &quot;masking pattern&quot;<br />validate = &quot;data type&quot;<br />validateAt= one or more of &quot;onBlur&quot;, &quot;onServer&quot;, &quot;onSubmit&quot;<br />message = &quot;text&quot;<br />range = &quot;min_value, max_value&quot;<br />maxlength = &quot;number&quot;<br />pattern = &quot;regexp&quot;<br />onValidate = &quot;script name&quot;<br />onError = &quot;script name&quot;<br />size = &quot;integer&quot;<br />value = &quot;initial value&quot;<br />bind = &quot;bind expression&quot;<br />checked<br />disabled = &quot;true&quot; or &quot;false&quot; or no attribute value<br />src = &quot;image URL&quot;<br />onKeyUp = &quot;JavaScript or ActionScript&quot;<br />onKeyDown = &quot;JavaScript or ActionScript&quot;<br />onMouseUp = &quot;JavaScript or ActionScript&quot;<br />onMouseDown = &quot;JavaScript or ActionScript&quot;<br />onChange = &quot;JavaScript or ActionScript&quot;<br />onClick = &quot;JavaScript or ActionScript&quot;<br />firstDayOfWeek = &quot;day name&quot;<br />dayNames = &quot;days-of-the-week labels&quot;<br />monthNames = &quot;month labels&quot;<br />enabled = &quot;Yes&quot; or &quot;No&quot;<br />visible = &quot;Yes&quot; or &quot;No&quot;<br />toolTip = &quot;Tip text&quot;<br />height = &quot;number of pixels&quot;<br />width = &quot;number of pixels&quot;<br />&gt;
+</pre><h4><a name="wp3770816"></a>See also</h4>
+<p><a href="00000216.htm#1097239"><code>cfapplet</code></a><code>,</code> <a href="00000223.htm#3798877"><code>cfcalendar</code></a><code>,</code> <a href="00000256.htm#2433198"><code>cfform</code></a><code>, </code><a href="00000257.htm#3833404"><code>cfformgroup</code></a><code>, </code><a href="00000258.htm#3768073"><code>cfformitem</code></a><code>, </code><a href="00000266.htm#1836171"><code>cfgrid</code></a><code>, </code><a href="00000331.htm#2553073"><code>cfselect</code></a><code>, </code><a href="00000337.htm#2612389"><code>cfslider</code></a><code>, </code><a href="00000341.htm#2773598"><code>cftextarea</code></a><code>, </code><a href="00000347.htm#1104271"><code>cftree</code></a></p>
+<h4><a name="wp3770839"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: </p>
+<ul>
+<li>
+   Added support for button, file, hidden, image, reset, and submit controls.
+</li>
+<li>
+   Added support for generating Flash and XML controls (specified in the <code>cfform</code> tag).
+</li>
+<li>
+   Added <code>datefield</code> type (Flash forms only) and the supporting <code>daynames</code> and <code>monthnames</code> attributes.
+</li>
+<li>
+   Added <code>bind</code>, <code>enabled</code>, <code>height</code>, <code>label</code>, <code>tooltip</code>, <code>visible</code>, and <code>width</code> attributes for use in Flash forms.
+</li>
+<li>
+   Added support for onBlur and onServer validation, including the <code>validateAt</code> attribute.
+</li>
+<li>
+   Added USdate, range, boolean, email, URL, uuid, guid, maxlength, noblanks, and submitOnce <code>validation</code> attribute values.
+</li>
+<li>
+   Added support for preventing multiple submissions.
+</li>
+<li>
+   Added the <code>mask</code> attribute.
+</li>
+<li>
+   Deprecated the <code>passthrough</code> attribute. The tag now supports all HTML <code>input</code> tag attributes directly.
+</li>
+</ul>
+<p>ColdFusion&#160;MX: Changed the <code>cfform</code> tag <code>preserveData</code> attribute behavior: if it is set to True, ColdFusion checks radio and check box values only if their value matches the posted value for the control. (In earlier releases, if the posted value did not match any of the <code>cfinput</code> check boxes or radio buttons for the control, the <code>checked</code> attribute was used.</p>
+<h4><a name="wp1420208"></a>Attributes</h4>
+<p>The following table lists attributes that ColdFusion uses directly. The tag also supports all HTML <code>form</code> tag attributes that are not on this list, and passes them directly to the browser.</p>
+<p><strong>Note: </strong>Attributes that are not marked as supported in XML are not handled by the skins provided with ColdFusion MX. They are, however, included in the generated XML.</p><table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt;
+Formats
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>name</p>
+    </td>
+    <td>
+<p>Required;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name for form input element.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>text</p>
+    </td>
+    <td>
+<p>The input control type to create: </p>
+<ul>
+<li>
+   button: push button.
+</li>
+<li>
+   checkbox: check box.
+</li>
+<li>
+   file: file selector; not supported in Flash.
+</li>
+<li>
+   hidden: invisible control.
+</li>
+<li>
+   image: clickable button with an image.
+</li>
+<li>
+   password: password entry control; hides input values.
+</li>
+<li>
+   radio: radio button.
+</li>
+<li>
+   reset: form reset button.
+</li>
+<li>
+   submit: form submission button.
+</li>
+<li>
+   text: text entry box.
+</li>
+<li>
+   datefield: Flash only; date entry field with an expanding calendar for selecting dates.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>label</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash and XML</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Label to put next to the control on a Flash form. Not used for button, hidden, image, reset, or submit types. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>style</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>In HTML or XML format, ColdFusion passes the style attribute to the browser or XML.</p>
+<p>In Flash format, must be a style specification in CSS format. For detailed information on specifying Flash styles, see <a href="00001388.htm#131336">Creating Forms in Macromedia Flash</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<p>In XML format, ColdFusion passes the style attribute to the XML. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>required</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>no</p>
+    </td>
+    <td>
+<ul>
+<li>
+   yes: the field must contain data.
+</li>
+<li>
+   no: allows an empty field.
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>mask</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash and HTML</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A mask pattern that controls the character pattern that users can enter, or that the form sends to ColdFusion.</p>
+<p><strong>HTML and Flash:</strong> For tags with <code>type=&quot;text&quot;</code>. Mask characters and the corresponding valid input characters are:</p>
+<ul>
+<li>
+   A = [A-Za-z]
+</li>
+<li>
+   X = [A-Za-z0-9]
+</li>
+<li>
+   9 = [0-9]
+</li>
+<li>
+   ? = Any character
+</li>
+<li>
+   All other characters = insert the literal character
+</li>
+</ul>
+<p><strong>Flash only: </strong>For tags with <code>type=&quot;datefield&quot;</code>. ColdFusion uses the mask pattern to format the selected date. Mask characters are:</p>
+<ul>
+<li>
+   D = day; can use 0-2 mask characters.
+</li>
+<li>
+   M = month; can use 0-4 mask characters.
+</li>
+<li>
+   Y = year; can use 0, 2, or 4 characters.
+</li>
+<li>
+   E = day in week; can use 0-4 characters.
+</li>
+</ul>
+<p>For more information, see <a href="00000279.htm#3761595">Masking input data</a> in Usage.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>validate</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>The type or types of validation to do. Available validation types and algorithms depend on the format. For details, see Usage.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>validateAt</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>onSubmit</p>
+    </td>
+    <td>
+<p>How to do the validation; one or more of the following:</p>
+<ul>
+<li>
+   onSubmit
+</li>
+<li>
+   onServer
+</li>
+<li>
+   onBlur
+</li>
+</ul>
+<p>onBlur and onSubmit are identical in Flash forms. For multiple values, use a comma-delimited list. </p>
+<p>For details, see Usage.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>message</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Message text to display if validation fails.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>range</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Minimum and maximum allowed numeric values. ColdFusion uses this attribute only if you specify <i>range</i> in the <code>validate</code> attribute. </p>
+<p>If you specify a single number or a single number followed by a comma, it is treated as a minimum, with no maximum. If you specify a comma followed by a number, the maximum is set to the specified number, with no minimum.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>maxLength</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Maximum length of text entered, if <code>type</code> <code>=</code> <code>&quot;Text&quot;</code> or <code>&quot;password&quot;</code>. For complete length validation, specify maxLength validation in a <code>validate</code> attribute; otherwise, this attribute prevents users from typing beyond the specified length, but does not prevent them from pasting in a longer value.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>pattern</p>
+    </td>
+    <td>
+<p>Required if <code>validate = &quot;regex&quot;;</code></p>
+<p>HTML and XML format only</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript regular expression pattern to validate input. ColdFusion uses this attribute only if you specify <i>regex</i> in the <code>validate</code> attribute.</p>
+<p>Omit leading and trailing slashes. For examples and syntax, see <a href="00001349.htm#1102770">Building Dynamic Forms with cfform Tags</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>onValidate</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>HTML and XML only</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Custom JavaScript function to validate user input. The form object, input object, and input object values are passed to the routine, which should return True if validation succeeds, and False otherwise. If used, the <code>validate</code> attribute is ignored.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onError</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>HTML and XML only</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Custom JavaScript function to execute if validation fails.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>size</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Size of input control. Ignored, if <code>type</code> <code>=</code> <code>&quot;radio&quot;</code> or <code>&quot;checkbox&quot;</code>. If specified in a Flash form, ColdFusion sets the control width pixel value to 10 times the specified size and ignores the <code>width</code> attribute</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>value</p>
+    </td>
+    <td>
+<p>depends on type setting;</p>
+<p>All </p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>HTML: corresponds to the HTML value attribute. Its use depends on control type.</p>
+<p>Flash: optional; specifies text for button type inputs: button, submit, and image. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>bind</p>
+    </td>
+    <td>
+<p>Optional; Flash only</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>A Flash bind expression that populates the field with information from other form fields. For details, see Usage.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>checked</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>False</p>
+    </td>
+    <td>
+<p>Selects a radio or checkbox control: </p>
+<ul>
+<li>
+   True 
+</li>
+<li>
+   False
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>disabled</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>not disabled</p>
+    </td>
+    <td>
+<p>Disables user input, making the control read-only. To disable input, specify disabled without an attribute or <code>disabled=&quot;Yes&quot;</code> (or any ColdFusion positive Boolean value, such as True). To enable input, omit the attribute or specify <code>disabled=&quot;No&quot;</code> (or any ColdFusion negative Boolean value, such as False).</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>src</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>Flash and HTML</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Applies to Flash button, reset, submit, and image types, and the HTML image type. URL of an image to use on the button. Flash does not support GIF images.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>onKeyUp</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript (HTML/XML) or ActionScript (Flash) to run when the user releases a keyboard key in the control.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onKeyDown</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript (HTML/XML) or ActionScript (Flash) ActionScript to run when the user presses a keyboard key in the control.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>onMouseUp</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript (HTML/XML) or ActionScript (Flash) to run when the user presses a mouse button in the control.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onMouseDown</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript (HTML/XML) or ActionScript (Flash) to run when the user releases a mouse button in the control.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>onChange</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript (HTML/XML) or ActionScript (Flash) to run when the control changes due to user action. In Flash, applies to datefield, password, and text types only.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>onClick</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>JavaScript (HTML/XML) or ActionScript (Flash) to run when the user clicks the control. In Flash, applies to button, checkbox, image, radio, reset, and submit types only.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>dayNames</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>S, M, T, W, Th, F, S</p>
+    </td>
+    <td>
+<p>Applies to <code>datefield</code> type only. A comma-delimited list that sets the names of the weekdays displayed in the calendar. Sunday is the first day; the rest of the weekday names follow in the normal order.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>firstDayOfWeek</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>0</p>
+    </td>
+    <td>
+<p>Applies to <code>datefield</code> type only. Integer in the range 0-6 specifying the first day of the week in the calendar: 0 indicates Sunday; 6 indicates Saturday.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>monthNames</p>
+    </td>
+    <td>
+<p>Optional;</p>
+<p>All</p>
+    </td>
+    <td>
+<p>January, February, March, April, May, June, July, August, September, October, November, December</p>
+    </td>
+    <td>
+<p>Applies to <code>datefield</code> type only. A comma-delimited list of the month names that are displayed at the top of the calendar.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>enabled</p>
+    </td>
+    <td>
+<p>Optional; Flash</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<p>Boolean value specifying whether the control is enabled. A disabled control appears in light gray. The inverse of the <code>disabled</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>visible</p>
+    </td>
+    <td>
+<p>Optional; Flash</p>
+    </td>
+    <td>
+<p>Yes</p>
+    </td>
+    <td>
+<p>Boolean value specifying whether to show the control. Space that would be occupied by an invisible control is blank.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>tooltip</p>
+    </td>
+    <td>
+<p>Optional; Flash</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Text to display when the mouse pointer hovers over the control. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>height</p>
+    </td>
+    <td>
+<p>Optional; see Description</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Applies to most Flash types, HTML image type on some browsers. The height of the control, in pixels. The displayed height might be less than the specified size. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>width</p>
+    </td>
+    <td>
+<p>Optional; see Description</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Applies to most Flash types, HTML image type on some browsers. The width of the control, in pixels. For Flash forms, ColdFusion ignores this attribute if you also specify a <code>size</code> attribute value.</p>
+    </td>
+  </tr>
+</table>
+&lt;em&gt;
+<p><strong>Note: </strong>Attributes that are marked as not supported in XML are not handled by the skins provided with ColdFusion MX. They are, however, included in the generated XML.</p><h4><a name="wp1100423"></a>Usage</h4>
+<p>For this tag to work properly. the browser must be JavaScript-enabled.</p>
+<p>If the <code>cfform</code> <code>preserveData</code> attribute is true and the form posts back to the same page, the posted value of the cfinput control is used, instead of its Value or Checked attribute.</p>
+<p>You can use the keyboard to access and select dates from a <code>datefield</code> Flash input: press Tab to go to the field and press the Spacebar to open the menu. Use the Up, Down, Left, and Right Arrow keys to change the selected date. Use the Home and End keys to reach the first and last enabled date in a month, respectively. Use the Page Up and Page Down keys to reach the previous and next month, respectively. </p>
+<p><strong>Note: </strong>To clear a datefield entry, select the field to open the menu, and click the selected date.</p><p>For more information, see <a href="00000256.htm#2433198">cfform</a>. For information on using JavaScript regular expressions with this tag, see <a href="00001349.htm#1102770">Building Dynamic Forms with cfform Tags</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp3759218"></a>Validation</h4>
+<p>The following sections describe how to do validation in <code>cfinput</code> tags.</p>
+<p><strong>Validation methods&#160;</strong>ColdFusion provides four methods of validation of <code>cfinput</code> <code>text</code> and <code>password</code> fields. </p>
+<p>You can specify one or a combination of the following in the <code>validateAt</code> attribute:</p>
+<ul>
+<li>
+   onSubmit&#160;The form page on the browser includes JavaScript functions that perform validation before the form is submitted to the server. In Flash format forms, this option is identical to onBlur.
+</li>
+<li>
+   onBlur&#160;In HTML format the form page on the browser includes JavaScript functions that perform validation when the field loses the focus. In Flash format, the attribute is equivalent to onSubmit. OnBlur validation uses the same algorithms as onSubmit validation. OnBlur validation was added in ColdFusion&#160;MX&#160;7. 
+</li>
+<li>
+   onServer&#160;ColdFusion performs the validation on the server. Some onServer algorithms vary from the onSubmit algorithms. OnServer Date and Time validation allow more patterns than onSubmit validation. OnServer validation was added in ColdFusion&#160;MX&#160;7, and automatically generates hidden fields to support the validation.
+</li>
+</ul>
+<p>You can also omit a <code>validate</code> attribute and specify the type of validation for the field in a separate hidden form field. This form of validation is equivalent to onServer validation, but it allows you to specify separate messages for each validation that you do on the field. It is backward compatible with previous ColdFusion releases. For more information on hidden form field validation, see <a href="00000256.htm#2433198">cfform</a> and <a href="00001385.htm#1154690">Validating form data using hidden fields</a> in <a href="00001385.htm#1154690">Validating form data using hidden fields</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<p><strong>validation types</strong> You can use the following values in the <code>validate</code> attribute to specify input validation for all validation methods. Most attributes apply only to password or text fields. You can specify multiple validation types in a comma-delimited list, but only some combinations are meaningful.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Type
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>date</p>
+    </td>
+    <td>
+<p> If <code>validateAt=&quot;onServer&quot;</code>, allows any date format that returns True in the <code>IsDate</code> function; otherwise, same as USdate.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>USdate</p>
+    </td>
+    <td>
+<p>A US date of the format mm/dd/yy mm-dd-yy or mm.dd.yy, with 1-2 digit days and months, 1-4 digit years.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>eurodate</p>
+    </td>
+    <td>
+<p>A date of the format dd/mm/yy, with 1-2 digit days and months, 1-4 digit years.. The format can use /, -, or . characters as delimiters.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>time</p>
+    </td>
+    <td>
+<p>Time format hh:mm:ss</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>float <i>or</i> numeric</p>
+    </td>
+    <td>
+<p>A number; allows integers. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>integer</p>
+    </td>
+    <td>
+<p>An integer.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>range</p>
+    </td>
+    <td>
+<p>A numeric range.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>boolean</p>
+    </td>
+    <td>
+<p>A value that can be converted to a Boolean value: Yes, No, True, False, or a number.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>telephone</p>
+    </td>
+    <td>
+<p>Standard U.S. telephone formats. Allows an initial 1 long-distance designator and up to 5-digit extensions, optionally starting with x.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>zipcode</p>
+    </td>
+    <td>
+<p>U.S. 5- or 9-digit ZIP code format #####-####. The separator can be a hyphen (-) or a space.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>creditcard</p>
+    </td>
+    <td>
+<p>Strips blanks and dashes; verifies number using mod10 algorithm. Number must have 13-16 digits.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>ssn <i>or</i> social_security_number</p>
+    </td>
+    <td>
+<p>US. Social Security number format, ###-##-####. The separator can be a hyphen (-) or a space.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>email</p>
+    </td>
+    <td>
+<p>A valid e-mail address of the form name@server.domain. ColdFusion validates the format only; it does not check that entry is a valid active e-mail address.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>URL</p>
+    </td>
+    <td>
+<p>A valid URL pattern; supports http, https, ftp file, mailto, and news URLs. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>guid</p>
+    </td>
+    <td>
+<p>A unique identifier that follows the Microsoft/DCE format, xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx, where x is a hexadecimal number.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>uuid</p>
+    </td>
+    <td>
+<p>A universally unique identifier (UUID) that follows the ColdFusion format, xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx, where x is a hexadecimal number.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>maxlength</p>
+    </td>
+    <td>
+<p> Limits the input to a maximum number of characters.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>noblanks</p>
+    </td>
+    <td>
+<p> Does not allow fields that consist only of blanks.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>regex <i>or</i> regular_expression</p>
+    </td>
+    <td>
+<p>Matches input against the <code>pattern</code> attribute. Valid in HTML and XML format only; ignored in Flash format.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>SubmitOnce</p>
+    </td>
+    <td>
+<p>Used only with submit and image types; prevents the user from submitting the same form multiple times before until the next page loads (for example, submitting an order a second time before getting the first order confirmation). Valid in HTML and XML format only; ignored in Flash format.</p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Validation differences</strong> The preceding table describes the general validation behavior. The underlying validation code must differ depending on the validation method and the form type. As a result, the algorithms used vary in some instances, including the following:</p>
+<ul>
+<li>
+   The validation algorithms used for date/time values varies between onSubmit/OnBlur and OnServer. 
+</li>
+<li>
+   The algorithms used for onSubmit/OnBlur validation in Flash vary from those used for HTML/XML format, and generally follow simpler rules.
+</li>
+</ul>
+<p>The table describes the onSubmit/OnBlur behavior in HTML format. For detailed information on the OnServer validation algorithms, see <a href="00001380.htm#1153249">Data validation types</a> in <a href="00001380.htm#1153249">Data validation types</a> in <i>ColdFusion MX Developer's Guide</i>. </p>
+<p>For more information on validation, including discussions of the advantages and disadvantages of different validation types, see <a href="00001376.htm#1096836">Validating Data</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h4><a name="wp3761595"></a>Masking input data</h4>
+<p>The <code>mask</code> attribute controls the format of data that can be entered into a field. You can combine masking and validation on a field.</p>
+<ul>
+<li>
+   In HTML and Flash form format the mask can control the format of data entered into a <code>text</code> field.
+</li>
+<li>
+   In Flash format, the mask can also control the format of the date chosen using the <code>datefield</code> input control.
+</li>
+</ul>
+<p>In text fields, ColdFusion automatically inserts any literal mask characters, such as - characters in telephone numbers. Users type only the variable part of the field.</p>
+<p>The following pattern enforces entry of a part number of the format EB-1234-c1-098765, where the user starts the entry by typing the first numeric character, such as 3. ColdFusion fills in the preceding EA prefix and all - characters. The user must enters four numbers, followed by two alphanumeric characters, followed by six numbers. </p>
+<pre>&lt;cfinput type=&quot;text&quot; name=&quot;newPart&quot; mask=&quot;EB-9999-XX-999999&quot; /&gt;
+</pre><p><strong>Note: </strong>To force a pattern to be all-uppercase or all-lowercase, use the ColdFusion <code>UCase</code> or <code>LCase</code> functions in the action page.</p><p>For tags with <code>type=</code>&quot;<code>datefield</code>&quot; (and <code>cfcalendar</code> tags), the number of pattern characters determines the format of the output, as follows:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Mask
+    </th>
+    <th>
+Pattern
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>D</p>
+    </td>
+    <td>
+<p>Single- or double-digit day of month, such as 1 or 28</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>DD</p>
+    </td>
+    <td>
+<p>Double-digit day of month, such as 01 or 28</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>M</p>
+    </td>
+    <td>
+<p>Single- or double-digit month, such as 1 or 12</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>MM</p>
+    </td>
+    <td>
+<p>Double-digit month, such as 01 or 12</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>MMM</p>
+    </td>
+    <td>
+<p>Abbreviated month name, such as Jan or Dec</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>MMMM</p>
+    </td>
+    <td>
+<p>Full month name, such as January or December</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>YY</p>
+    </td>
+    <td>
+<p>Two-character year, such as 05</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>YYYY</p>
+    </td>
+    <td>
+<p>Four-character year, such as 2005</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>E</p>
+    </td>
+    <td>
+<p>Single-digit day of week, such as 1 or 7</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>EEE</p>
+    </td>
+    <td>
+<p>Abbreviated day of week name, such as Mon or Sun</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>EEEE</p>
+    </td>
+    <td>
+<p>Full month day of week name, such as Monday or Sunday</p>
+    </td>
+  </tr>
+</table>
+
+<p>The following pattern specifies that the Flash forms sends the date selected using a <code>datefield</code> input control to ColdFusion as text in the format 04/29/2004:</p>
+<pre>&lt;cfinput name=&quot;startDate&quot; type=&quot;datefield&quot; label=&quot;date:&quot; mask=&quot;mm/dd/yyyy&quot;/&gt;
+</pre><h4><a name="wp3778958"></a>Flash form data binding</h4>
+<p>The <code>bind</code> attribute lets you populate form fields using the contents of other form fields. To specify text from another field in a <code>cftextarea</code> <code>bind</code> attribute, use the following format:</p>
+<p>{<i>sourceTagName</i>.text}</p>
+<p>For example, the following line uses the values from the firstName and lastName fields to construct an email address. (The user can change or replace this value with a typed entry.)</p>
+<pre>         &lt;cfinput type=&quot;text&quot; name=&quot;email&quot; label=&quot;email&quot;<br />            bind=&quot;{firstName.text}.{lastName.text}@mm.com&quot;&gt;
+</pre><h4><a name="wp1100428"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of cfinput within a cfform to ensure simple<br />validation of text items. ---&gt;
+&lt;cfform action = &quot;cfinput.cfm&quot;&gt;
+&lt;!--- Phone number validation. ---&gt;
+Phone Number Validation (enter a properly formatted phone number): &lt;br&gt;
+&lt;cfinput 
+   type = &quot;Text&quot; name = &quot;MyPhone&quot; 
+   message = &quot;Enter telephone number, formatted xxx-xxx-xxxx (e.g. 617-761-2000)&quot;
+   validate = &quot;telephone&quot; required = &quot;yes&quot;&gt;
+   &lt;font size = -1 color = red&gt;Required&lt;/font&gt;
+&lt;!--- Zip code validation. ---&gt;
+&lt;p&gt;Zip Code Validation (enter a properly formatted zip code):&lt;br&gt;
+&lt;cfinput 
+   type = &quot;Text&quot; name = &quot;MyZip&quot; 
+   message = &quot;Enter zip code, formatted xxxxx or xxxxx-xxxx&quot; 
+   validate = &quot;zipcode&quot; required = &quot;yes&quot;&gt;
+   &lt;font size = -1 color = red&gt;Required&lt;/font&gt;
+&lt;!--- Range validation. ---&gt;
+&lt;p&gt;Range Validation (enter an integer from 1 to 5): &lt;br&gt;
+&lt;cfinput 
+   type = &quot;Text&quot; name = &quot;MyRange&quot; range = &quot;1,5&quot; 
+   message = &quot;You must enter an integer from 1 to 5&quot; 
+   validate = &quot;integer&quot; required = &quot;no&quot;&gt;
+&lt;!--- Date validation. ---&gt;
+&lt;p&gt;Date Validation (enter a properly formatted date):&lt;br&gt;
+&lt;cfinput 
+   type = &quot;Text&quot; name = &quot;MyDate&quot; 
+   message = &quot;Enter a correctly formatted date (dd/mm/yy)&quot; 
+   validate = &quot;date&quot; required = &quot;no&quot;&gt;
+&lt;input 
+   type = &quot;Submit&quot; name = &quot;&quot; 
+   value = &quot;send my information&quot;&gt;
+&lt;/cfform&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000278.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000280.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000279.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

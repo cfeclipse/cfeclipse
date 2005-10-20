@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cftrace</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000344.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000346.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cftrace</h1>
+<h4><a name="wp2341488"></a>Description</h4>
+<p>Displays and logs debugging data about the state of an application at the time the <code>cftrace</code> tag executes. Tracks runtime logic flow, variable values, and execution time. Displays output at the end of the request or in the debugging section at the end of the request; or, in Dreamweaver MX and later, in the Server Debug tab of the Results window. </p>
+<p>ColdFusion logs <code>cftrace</code> output to the file logs\cftrace.log, in the ColdFusion installation directory.</p>
+<p><strong>Note: </strong>To permit this tag to execute, you must enable debugging in the ColdFusion&#160;MX Administrator. Optionally, to report trace summaries, enable the Trace section.</p><h4><a name="wp2654474"></a>Category</h4>
+<p><a href="00000200.htm#2459702">Debugging tags</a>, <a href="00000209.htm#2460154">Variable manipulation tags</a></p>
+<h4><a name="wp2394562"></a>Syntax</h4>
+<pre>&lt;cftrace <br />   abort = &quot;Yes&quot; or &quot;No&quot;<br />   category = &quot;string&quot;<br />   inline = &quot;Yes&quot; or &quot;No&quot;<br />   text = &quot;string&quot;<br />   type = &quot;format&quot;<br />   var = &quot;variable_name&quot;<br />&lt;/cftrace&gt;
+</pre><h4><a name="wp2394564"></a>See also</h4>
+<p><a href="00000239.htm#3765824"><code>cfdump</code></a>, <a href="00000242.htm#2022557"><code>cferror</code></a>, <a href="00000325.htm#1102913"><code>cfrethrow</code></a>, <a href="00000344.htm#2765717"><code>cftimer</code></a>, <a href="00000349.htm#1104557"><code>cftry</code></a>; <a href="00001208.htm#1096654">Debugging and Troubleshooting Applications</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2394587"></a>History</h4>
+<p>ColdFusion&#160;MX: Added this tag.</p>
+<h4><a name="wp2394589"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>abort</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: calls a <code>cfabort</code> tag when the tag is executed.
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>category</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>User-defined string for identifying trace groups.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>inline</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>No</p>
+    </td>
+    <td>
+<ul>
+<li>
+   Yes: displays trace code in line on the page in the location of the <code>cftrace</code> tag, in addition to the debugging information output. 
+</li>
+<li>
+   No
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>text</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>User-defined string, which can include simple variables, but not complex variables such as arrays. Outputs to the <code>cflog</code> <code>text</code> attribute. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>Information</p>
+    </td>
+    <td>
+<p>Corresponds to the <code>cflog</code> <code>type</code> attribute; displays an appropriate icon:</p>
+<ul>
+<li>
+   Information
+</li>
+<li>
+   Warning
+</li>
+<li>
+   Error 
+</li>
+<li>
+   Fatal Information
+</li>
+</ul>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>var</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>The name of a simple or complex variable to display. </p>
+<p>Useful for displaying a temporary value, or a value that does not display on any CFM page.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2393868"></a>Usage</h4>
+<p>You cannot put application code within this tag. (This avoids problems that can occur if you disable debugging.) </p>
+<p>This tag is useful for debugging CFML code during application development. </p>
+<p>You can display <code>cftrace</code> tag output in the following ways:</p>
+<ul>
+<li>
+   As a section in the debugging output
+</li>
+<li>
+   In-line in an application page, and as a section in debugging output. If you specify in-line tracing, ColdFusion flushes all output up to the <code>cftrace</code> tag, and displays the trace output when it encounters the tag.
+</li>
+</ul>
+<p>This is an example of a log file entry:</p>
+<pre>&quot;Information&quot;,&quot;web-4&quot;,&quot;04/08/02&quot;,&quot;23:21:30&quot;,   ,&quot;[30 ms (1st trace)]      
+[C:\CFusionMX7\wwwroot\generic.cfm @ line: 9] - 
+   [thisPage = /generic.cfm]  &quot;
+&quot;Information&quot;,&quot;web-0&quot;,&quot;04/08/02&quot;,&quot;23:58:58&quot;,   ,&quot;[5187 ms (10)]  
+[C:\CFusionMX7\wwwroot\generic.cfm @ line: 14] - [category]
+   [thisPage = /generic.cfm] [ABORTED] thisPage &quot;
+</pre><p>For a complex variable, ColdFusion lists the variable name and the number of elements in the object; it does not log the contents of the variable.</p>
+<h4><a name="wp2680663"></a>Example</h4>
+<p>The following example traces a FORM variable that is evaluated by a <code>cfif</code> block:</p>
+<pre>&lt;cftrace var=&quot;FORM.variable&quot;
+   text=&quot;doing equivalency check for FORM.variable&quot;
+   category=&quot;form_vars&quot;
+   inline=&quot;true&quot;&gt;
+&lt;cfif isDefined(&quot;FORM.variable&quot;) AND #FORM.variable# EQ 1&gt;
+   &lt;h1&gt;Congratulations, you&#39;re a winner!&lt;/h1&gt;
+&lt;cfelse&gt;
+   &lt;h1&gt;Sorry, you lost!&lt;/h1&gt;
+&lt;/cfif&gt;
+
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000344.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000346.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000345.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

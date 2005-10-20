@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XML structure</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001416.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001418.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XML structure</h1>
+<p>For each CFML tag, ColdFusion MX converts attributes and element values to XML in the XForms <code>xf:model</code> element, or in individual control elements, such as the XForms<code> xf:input</code>, <code>xf:secret</code>, or <code>xf:group</code> elements.</p>
+<p>ColdFusion&#160;MX generates XForms XML in the following format. The numbers on each line indicate the level of nesting of the tags.</p>
+<pre>1   form tag
+2      XForms model element
+3         XForms instance element
+4            cf:data element 
+3         XForms submission element
+3         XForms bind element
+3         XForms bind element
+3      .
+3      .
+3      .
+2      (end of model element)
+2      XForms or ColdFusion extension control element
+2      XForms or ColdFusion extension control element
+         .
+         .
+         .
+1   (end of form)
+</pre><p>The following sections describe the data model and the elements that make up the XForms document.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001416.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001418.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001417.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

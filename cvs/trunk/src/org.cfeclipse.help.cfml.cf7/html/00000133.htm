@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Creating the CFC query</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000132.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000134.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Creating the CFC query</h1>
+<p>The following code shows how to construct the tripLocation SQL WHERE subclause. Specifically, it uses a dynamic SQL SELECT statement built from parameters from the Trip Search page to display the search results. To continue the good coding practice of separating business logic and presentation, you put the code to build the query using dynamic SQL in a function in the CFC that you have been working with.</p>
+<h4>To add the new query to the CFC:</h4>
+<ol>
+<li>
+   Open the file gettrips.cfc file and position the pointer before the closing <code>cfcomponent</code> tag.
+</li>
+<li>
+   Enter the following code, or do the steps in the <a href="00000133.htm#1197613">Let Dreamweaver do it</a> section:
+<pre>
+&lt;cffunction name=&quot;getTripsFromForm&quot; access=&quot;public&quot; returntype=&quot;query&quot;&gt;
+	&lt;cfquery name=&quot;TripResult&quot; datasource=&quot;CompassTravel&quot;&gt;
+		SELECT tripID, tripName, tripLocation, departureDate, 
+			returnDate, price FROM trips
+	&lt;/cfquery&gt;
+	&lt;cfreturn TripResult&gt;
+&lt;/cffunction&gt;
+</pre>
+</li>
+<li>
+   Add the logic for creating the WHERE clause dynamically by entering the highlighted code.
+<pre>
+&lt;cffunction name=&quot;getTripsFromForm&quot; access=&quot;public&quot; returntype=&quot;query&quot;&gt;
+	&lt;!--- Create WHERE clause from data entered via search form ---&gt;	
+	&lt;cfset WhereClause = &quot; 0=0 &quot;&gt; 
+	&lt;!--- Build subclause for trip location ---&gt;		
+	&lt;cfif Form.tripLocationValue GT &quot;&quot;&gt;			
+		&lt;cfif Form.tripLocationOperator EQ &quot;EQUALS&quot;&gt;			
+			&lt;cfset WhereClause = WhereClause &amp; &quot; and tripLocation = &#39;&quot; &amp;<br />
+form.tripLocationValue &amp; &quot;&#39;&quot; &gt;
+		&lt;cfelse&gt;
+			&lt;cfset WhereClause = WhereClause &amp; &quot; and tripLocation like &#39;&quot; &amp; 
+form.tripLocationValue &amp; &quot;%&#39;&quot; &gt;
+		&lt;/cfif&gt;
+	&lt;/cfif&gt; 
+	&lt;cfquery name=&quot;TripResult&quot; datasource=&quot;CompassTravel&quot;&gt;
+		SELECT tripID, tripName, tripLocation, departureDate, 
+			returnDate, price FROM trips
+	&lt;/cfquery&gt;
+	&lt;cfreturn TripResult&gt;
+&lt;/cffunction&gt;
+</pre>
+</li>
+<li>
+   Add the highlighted code to the <code>cfquery</code> block to use the dynamically built WHERE clause in the query:
+<pre>
+	&lt;cfquery name=&quot;TripResult&quot; datasource=&quot;CompassTravel&quot;&gt;
+		SELECT tripID, tripName, tripLocation, departureDate, 
+			returnDate, price FROM trips
+			WHERE #PreserveSingleQuotes(WhereClause)#
+	&lt;/cfquery&gt;
+</pre>
+</li>
+<li>
+   Save the file.
+</li>
+</ol>
+<h4><a name="wp1197613"></a>Let Dreamweaver do it</h4>
+<p>You can use the Dreamweaver Extensions to create the CFC query.</p>
+<h4>To construct the query with Dreamweaver:</h4>
+<ol>
+<li>
+   Click the Bindings tab.
+</li>
+<li>
+   Click the + button.
+</li>
+<li>
+   Select Record set (Query).
+</li>
+<li>
+   In the Name text box, enter <strong>TripResult</strong>.
+</li>
+<li>
+   Click the New Function button.
+</li>
+<li>
+   In the New function name text box, enter <strong>getTripsFromForm</strong> and click OK.
+</li>
+<li>
+   From the Data source list, select CompassTravel.
+</li>
+<li>
+   From the Tables list, select trips.
+</li>
+<li>
+   Click the Selected radio button.
+</li>
+<li>
+   Select tripName, tripLocation, departureDate, returnDate, price, and tripID.
+</li>
+<li>
+   Click OK.
+</li>
+<li>
+   Return to Step 3 in the <a href="00000133.htm#1161821">To add the new query to the CFC:</a> section.
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000132.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000134.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000133.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Caching ColdFusion pages that change infrequently</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001125.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001127.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Caching ColdFusion pages that change infrequently</h1>
+<p>Some ColdFusion pages produce output that changes infrequently. For example, you might have an application that extracts a vendor list from a database or produces a quarterly results summary. Normally, when ColdFusion gets a request for a page in the application, it does all the business logic and display processing that are required to produce the report or generate and display the list. If the results change infrequently, this can be an inefficient use of processor resources and bandwidth.</p>
+<p>The <code>cfcache</code> tag tells ColdFusion to cache the HTML that results from processing a page request in a temporary file on the server. This HTML does not need to be generated each time the page is requested. When ColdFusion gets a request for a cached ColdFusion page, it retrieves the pregenerated HTML page without having to process the ColdFusion page. ColdFusion can also cache the page on the client. If the client browser has its own cached copy of the page from a previous viewing, ColdFusion instructs the browser to use the client's page rather than resending the page.</p>
+<p><strong>Note: </strong>The <code>cfcache</code> tag caching mechanism considers that each URL is a separate page. Therefore, http://www.mySite.com/view.cfm?id=1 and http://www.mySite.com/view.cfm?id=2 result in two separate cached pages. Because ColdFusion caches a separate page for each unique set of URL parameters, the caching mechanism accommodates pages for which different parameters result in different output.</p><h3><a name="wp1178815"></a>Using the cfcache tag</h3>
+<p>You tell ColdFusion to cache the page results by putting a <a href="00000222.htm#1097532"><code>cfcache</code></a> tag on your ColdFusion page before code that outputs text. The tag lets you specify the following information:</p>
+<ul>
+<li>
+   Whether to cache the page results on the server, the client system, or both. The default is both. The default is optimal for pages that are identical for all users. If the pages contain client-specific information, or are secured with ColdFusion user security, set the <code>action</code> attribute in the <code>cfcache</code> tag to <code>ClientCache</code>.
+</li>
+<li>
+   The directory on the server in which to store the cached pages. The default directory is <i>cf_root</i>/cache. It is a good practice to create a separate cache directory for each application. Doing so can prevent the <code>cfcache</code> tag <code>flush</code> action from inappropriately flushing more than one application's caches at a time.
+</li>
+<li>
+   The time span that indicates how long the page lasts in the cache from when it is stored until it is automatically flushed.
+</li>
+</ul>
+<p>You can also specify several attributes for accessing a cached page on the web server, including a user name and password (if required by the web server), the port, and the protocol (HTTP or HTTPS) to use to access the page.</p>
+<p>Place the <code>cfcache</code> tag before any code on your page that generates output, typically at the top of the page body. For example, the following tag tells ColdFusion to cache the page on both the client and the server. On the server, the page is cached in the e:/temp/page_cache directory. ColdFusion retains the cached page for one day.</p>
+<pre>&lt;cfcache timespan=&quot;#CreateTimespan(1, 0, 0, 0)#&quot; directory=&quot;e:/temp/page_cache&quot;&gt;
+</pre><p><strong>Caution: </strong>If an Application.cfm or Application.cfc page displays text (for example, if it includes a header page), use the <code>cfcache</code> tag on the Application.cfm page, in addition to the pages that you cache. Otherwise, ColdFusion displays the Application.cfm page output twice on each cached page. </p><h3><a name="wp1178555"></a>Flushing cached pages</h3>
+<p>ColdFusion automatically flushes any cached page if you change the code on the page. It also automatically flushes pages after the expiration timespan passes.</p>
+<p>You can use the <a href="00000222.htm#1097532"><code>cfcache</code></a> tag with the <code>action=&quot;flush&quot;</code> attribute to immediately flush one or more cached pages. You can optionally specify the directory that contains the cached pages to be flushed and a URL pattern that identifies the pages to flush. If you do not specify a URL pattern, all pages in the directory are flushed. The URL pattern can include asterisk (*) wildcards to specify parts of the URL that can vary.</p>
+<p>When you use the <code>cfcache</code> tag to flush cached pages, ColdFusion deletes the pages cached on the server. If a flushed page is cached on the client system, it is deleted, and a new copy gets cached the next time the client tries to access the ColdFusion page.</p>
+<p>The following example flushes all the pages in the e:/temp/page_cache/monthly directory that start with HR:</p>
+<pre>&lt;cfcache action=&quot;flush&quot; directory=&quot;e:/temp/page_cache/monthly&quot; expirURL=&quot;HR*&quot;&gt;
+</pre><p>If you have a ColdFusion page that updates data that you use in cached pages, the page that does the updating includes a <code>cfcache</code> tag that flushes all pages that use the data.</p>
+<p>For more information on the <a href="00000222.htm#1097532"><code>cfcache</code></a> tag, see <i>CFML Reference</i>.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001125.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001127.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001126.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

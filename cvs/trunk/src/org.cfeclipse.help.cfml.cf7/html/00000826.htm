@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setData</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000825.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000827.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setData</h1>
+<h4><a name="wp1101027"></a>Description</h4>
+<p>Sets a data element in a row and column of a query. Row and column indexes begin with 1. Before calling <code>setData</code> for a given row, call <code>addRow</code> and use the return value as the row index for your call to <code>setData</code>. </p>
+<h4><a name="wp1101061"></a>Category</h4>
+<p><a href="00000819.htm#1096914">Query interface</a></p>
+<h4><a name="wp1101020"></a>Syntax</h4>
+<pre>public void setData(int <code><i>iRow</i></code>, int <code><i>iCol</i></code>, String <code><i>data</i></code>)
+</pre><h4><a name="wp1101114"></a>Throws</h4>
+<p><code>IndexOutOfBoundsException</code>&#160;If an invalid index is passed to the method.</p>
+<h4><a name="wp1107218"></a>See also</h4>
+<p><a href="00000823.htm#1115058"><code>getData</code></a>, <a href="00000820.htm#1112694"><code>addRow</code></a></p>
+<h4><a name="wp1125605"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>iRow</p>
+    </td>
+    <td>
+<p>Row of data element to set (1-based) </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>iCol</p>
+    </td>
+    <td>
+<p>Column of data element to set (1-based)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>data</p>
+    </td>
+    <td>
+<p>New value for data element </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1125624"></a>Example</h4>
+<p>The following example demonstrates the addition of two rows to a query that has three columns, <i>City</i>, <i>State</i>, and <i>Zip</i>: </p>
+<pre>// Define column indexes
+int iCity = 1, iState = 2, iZip = 3 ;
+
+// First row
+int iRow = query.addRow() ;
+query.setData( iRow, iCity, &quot;Minneapolis&quot; ) ;
+query.setData( iRow, iState, &quot;MN&quot; ) ;
+query.setData( iRow, iZip, &quot;55345&quot; ) ;
+
+
+// Second row
+iRow = query.addRow() ;
+query.setData( iRow, iCity, &quot;St. Paul&quot; ) ;
+query.setData( iRow, iState, &quot;MN&quot; ) ;
+query.setData( iRow, iZip, &quot;55105&quot; ) ; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000825.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000827.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000826.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>info</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000741.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000743.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>info</h1>
+<h4><a name="wp1182460"></a>Description</h4>
+<p>Writes a log entry with an information severity to the ColdFusion MX logger. The entry includes the severity, thread ID, date, time, and a text message.</p>
+<h4><a name="wp1182462"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1182464"></a>Syntax</h4>
+<pre>info(String <i>message</i>)
+info(Throwable <i>th</i>)
+info(String <i>message</i>, Throwable th)
+</pre><h4><a name="wp1182466"></a>See also</h4>
+<p><a href="00000739.htm#1181717">debug</a>, <a href="00000740.htm#1182148">error</a>, <a href="00000741.htm#1182392">fatal</a>, <a href="00000743.htm#1182564">warn</a>, <a href="00000720.htm#1179536">getLogger</a>, <a href="00001697.htm#139247">Logging events and using log files</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1182480"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>message</p>
+    </td>
+    <td>
+<p>The message to include in the log entry.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>th</p>
+    </td>
+    <td>
+<p>A throwable object, normally an exception. ColdFusion MX logs the exception information in the exception.log file in the ColdFusion MX logs directory. Not normally used with this method.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1182491"></a>Usage</h4>
+<p>Use this method to send an informational message to the ColdFusion MX logging subsystem. ColdFusion MX will write a messages with a severity of &quot;information&quot; to the log file specified in the <code>getLogger</code> method that returned the Logger instance (or the default log file).</p>
+<p>ColdFusion normally logs all information severity messages, so you should not use this severity for debugging messages or for events that happen frequently.</p>
+<h4><a name="wp1182493"></a>Example</h4>
+<p>The ColdFusion MX example DirectoryWatcherGateway class includes the following line at the top of its <code>loadconfig </code>method that loads the gateway's configuration file. It writes a message including the gateway ID and configuration file.</p>
+<pre><strong>logger.info(&quot;DirectoryWatcher (&quot; + gatewayID + &quot;) Initializing</strong>
+<strong>      DirectoryWatcher gateway with configuration file &quot; + config)</strong>;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000741.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000743.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000742.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

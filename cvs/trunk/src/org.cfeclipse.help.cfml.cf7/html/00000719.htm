@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>addEvent</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000718.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000720.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>addEvent</h1>
+<h4><a name="wp1174239"></a>Description</h4>
+<p>Sends a CFEvent instance to ColdFusion for dispatching to a listener CFC.</p>
+<h4><a name="wp1174241"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1174243"></a>Syntax</h4>
+<pre>boolean addEvent(CFEvent <i>msg</i>)
+</pre><h4><a name="wp1174245"></a>See also</h4>
+<p><a href="00000721.htm#1174314"><code>getMaxQueueSize</code></a>, <a href="00000721.htm#1174314"><code>getMaxQueueSize</code></a>, <a href="00001695.htm#117859">Responding to incoming messages</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1174247"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>msg</p>
+    </td>
+    <td>
+<p>The CFEvent object containing the message to be queued for delivery to the listener CFC.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1174258"></a>Returns</h4>
+<p>True if the event was added to the gateway services queue for delivery, false, otherwise. Therefore, a true response does not indicate that the message was delivered.</p>
+<h4><a name="wp1174260"></a>Usage</h4>
+<p>The event gateway must use this method to send incoming messages to the application for processing.</p>
+<h4><a name="wp1174262"></a>Example</h4>
+<p>The following example from the ColdFusion MX SocketGateway code sends an event to all listener CFCs: </p>
+<pre>for (int i = 0; i &lt; listeners.length; i++) {
+   String path = listeners[i];
+   CFEvent event = new CFEvent(gatewayID);
+   Hashtable mydata = new Hashtable();
+   mydata.put(&quot;MESSAGE&quot;, theInput);
+   event.setData(mydata);
+   event.setGatewayType(&quot;SocketGateway&quot;);
+   event.setOriginatorID(theKey);
+   event.setCfcMethod(cfcEntryPoint);
+   event.setCfcTimeOut(10);
+   if (path != null)
+      event.setCfcPath(path);
+   boolean sent = gatewayService.addEvent(event);
+   if (!sent)
+      log.error(&quot;SocketGateway(&quot; + gatewayID + &quot;) Unable to put message on
+         event queue. Message not sent from &quot; + gatewayID + &quot;, thread &quot; +
+         theKey + &quot;.  Message was &quot; + theInput);
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000718.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000720.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000719.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

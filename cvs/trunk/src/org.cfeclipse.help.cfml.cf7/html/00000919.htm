@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Example: setting default values </title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000918.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000920.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Example: setting default values </h1>
+<p>The following example uses the <code>cfparam</code> tag to see if optional variables exist. If they do exist, processing continues. If they do not exist, the ColdFusion server creates them and sets them to the default values.</p>
+<pre>&lt;cfparam name=&quot;Cookie.SearchString&quot; <code>default</code>=&quot;temple&quot;&gt;
+&lt;cfparam name=&quot;Client.Color&quot; <code>default</code>=&quot;Grey&quot;&gt;
+&lt;cfparam name=&quot;ShowExtraInfo&quot; <code>default</code>=&quot;No&quot;&gt;
+</pre><p>You can use the <code>cfparam</code> tag to set default values for URL and Form variables, instead of using conditional logic. For example, you could include the following code on the action page to ensure that a SelectedDepts variable exists:</p>
+<pre>&lt;cfparam name=&quot;Form.SelectedDepts&quot; default=&quot;Marketing,Sales&quot;&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000918.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000920.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000919.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

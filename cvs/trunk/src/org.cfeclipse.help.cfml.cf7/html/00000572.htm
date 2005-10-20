@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>LSEuroCurrencyFormat</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000571.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000573.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>LSEuroCurrencyFormat</h1>
+<h4><a name="wp132472"></a>Description</h4>
+<p>Formats a number in a locale-specific currency format. </p>
+<h4><a name="wp132474"></a>Returns</h4>
+<p>A formatted currency value. For countries in the Euro currency zone, the function uses the locale's rule's for formatting currency in euros. </p>
+<h4><a name="wp132476"></a>Category</h4>
+<p><a href="00000359.htm#1099219">Display and formatting functions</a>, <a href="00000363.htm#1099325">International functions</a></p>
+<h4><a name="wp132484"></a>Function syntax</h4>
+<pre><code><strong>LSEuroCurrencyFormat</strong></code>(currency-<i>number</i> [, <i>type</i> ])
+</pre><h4><a name="wp132486"></a>See also</h4>
+<p><a href="00000580.htm#133438">LSParseEuroCurrency</a>, <a href="00000570.htm#132017">LSCurrencyFormat</a>, <a href="00000624.htm#136340">SetLocale</a>; <a href="00001207.htm#1224939">Locale-specific content</a> in <a href="00001195.htm#1141005">Developing Globalized Applications</a> <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp132497"></a>History</h4>
+<p>ColdFusion&#160;MX: Changed formatting behavior: this function might return different formatting than in earlier releases. This function uses Java locale formatting rules on all platforms, except that it uses the rule detailed in the Usage section for countries in the Euro currency zone. As a result, it format currencies for non Euro zone locales using the country's currency, not euros.</p>
+<h4><a name="wp132503"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>currency-number</p>
+    </td>
+    <td>
+<p>Currency value. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>type</p>
+    </td>
+    <td>
+<ul>
+<li>
+   local: the currency format used in the locale. (Default.)
+</li>
+<li>
+   international: the international standard currency format of the locale. For example, EUR10.00
+</li>
+<li>
+   none: the currency format used in the locale; no currency symbol
+</li>
+</ul>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp132520"></a>Usage</h4>
+<p>This function uses euro currency formatting rules for all JVM versions, as follows:</p>
+<ul>
+<li>
+   If the country of the current locale belongs to the Euro Zone (whose members have converted to the euro) the formatted output for the local type includes the Euro currency sign (€); for the international type, the output includes the euro currency symbol (EUR). If the value is negative, the format includes a negative sign before the value or parentheses around the value, according to the formatting rules of the current locale. 
+</li>
+<li>
+   If the country of the current locale is not in the Euro Zone, the currency sign or symbol of the current locale displays. If the value is negative, the format includes a negative sign before the value or parentheses around the value, according to the formatting rules of the current locale.
+</li>
+</ul>
+<p>For a list of the locale options that ColdFusion supports, and information on setting the default display format of date, time, number, and currency values, see <a href="00000624.htm#136340">SetLocale</a><code>.</code></p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000571.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000573.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000572.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

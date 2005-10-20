@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Exercise 3: Configuring a database connection</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000114.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000116.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Exercise 3: Configuring a database connection</h1>
+<p>One of the most commonly used and most powerful features of ColdFusion is the ability to connect to and manipulate data from a wide variety of databases. Like most ColdFusion developers, you will probably use this capability often. To be able to connect to a database, you must create a a data source in ColdFusion. A data source contains the information that ColdFusion needs to be able to recognize and communicate with a database.</p>
+<p>ColdFusion&#160;MX&#160;7 includes a Dreamweaver extension that lets you create a data source without having to leave the Dreamweaver environment. If you are not using Dreamweaver, you use the ColdFusion Administrator to create data sources; see<a href="00000115.htm#1157570">Configuring a data source in the Administrator</a> for more information.</p>
+<h2><a name="wp1174506"></a>Using Dreamweaver to configure a data source</h2>
+<p>To create a ColdFusion data source without leaving the Dreamweaver environment, you need the following information:</p>
+<ul>
+<li>
+   The type of connection to use 
+</li>
+<li>
+   The name to call the data source
+</li>
+<li>
+   The location of the database file(s)
+</li>
+</ul>
+<h4>To configure a database connection in Dreamweaver:</h4>
+<ol>
+<li>
+   Ensure that the site that contains the tutorial files is the current site.
+</li>
+<li>
+   Select Create New &gt; ColdFusion. 
+</li>
+<li>
+   On the Databases tab, click the + button.
+</li>
+<li>
+   Select Microsoft Access Connection.
+</li>
+<li>
+   In the CF Data Source Name text box, enter <strong>CompassTravel</strong>.
+</li>
+<li>
+   Specify the Database File as c:\CFusionMX7\wwwroot\cfdocs\getting_started\db\CompassTravel.mdb.
+</li>
+<li>
+   Select the Use Default Username check box.
+</li>
+<li>
+   When prompted for the password for this site, enter the ColdFusion Administrator password you specified when you installed ColdFusion&#160;MX&#160;7.
+</li>
+<li>
+   Click OK.
+</li>
+<li>
+   Continue with <a href="00000116.htm#1173995">Exercise 4: Configuring debugging options</a>.
+</li>
+</ol>
+<h2><a name="wp1157570"></a>Configuring a data source in the Administrator</h2>
+<p>You can use the ColdFusion&#160;MX&#160;7 Administrator to configure a data source. If you are running ColdFusion in a UNIX environment, you must use the ColdFusion&#160;MX&#160;7 Administrator to connect to the PointBase database in the data source.</p>
+<h4>To access the ColdFusion&#160;MX&#160;7 Administrator:</h4>
+<ul>
+<li>
+   Open a browser and go to one of the following URLs:
+<ul><li>External web server users: http://localhost/CFIDE/administrator</li>
+<li>Built-in web server users: http://localhost:8500/CFIDE/administrator</li>
+<li>J2EE server users: http://localhost:<i>portnumber</i>/CFIDE/administrator. If you installed ColdFusion Enterprise Edition with JRun, the default HTTP port is 8300.</li>
+</ul></li>
+</ul>
+<p><strong>Note: </strong>If you are accessing the ColdFusion MX Administrator from a remote client, you must replace localhost with the host name or IP address of the computer where ColdFusion MX is installed.</p><p>The following sections describe how to establish a connection to the sample tutorial database file and how to enable optional debugging settings.</p>
+<h3><a name="wp1157987"></a>Configuring the connection to the sample database file</h3>
+<p>The following procedures describe how to configure a connection to the sample database file (CompassTravel) using the ColdFusion MX Administrator. Prior to building the sample application, you must configure the Compass Travel database connection. </p>
+<p>Perform one of the following procedures. The Microsoft Access procedure is for Windows users. The PointBase procedure is for UNIX and Macintosh OS X users.</p>
+<h4>To define the connection to the sample Microsoft Access database: </h4>
+<ol>
+<li>
+   In the ColdFusion MX Administrator, select Data<strong> </strong>&amp;<strong> </strong>Services &gt; Data<strong> </strong>Sources.
+</li>
+<li>
+   In the Data Source Name box, enter <strong>CompassTravel</strong>.
+</li>
+<li>
+   In the Driver list, select Microsoft Access with Unicode.
+</li>
+<li>
+   Click Add.
+</li>
+<li>
+   Click Browse Server and navigate to the <i>cf_root</i>/cfdocs/getting_started/db/CompassTravel.mdb file.
+</li>
+<li>
+   Click Apply.
+</li>
+<li>
+   Click Show Advanced Settings and ensure that the settings for CLOB and BLOB are enabled (checked).
+</li>
+<li>
+   Click Submit to complete the data source configuration. 
+<p>The ColdFusion MX Administrator verifies the data source connection and the name CompassTravel appears in the Connected Data Sources table.</p>
+</li>
+<li>
+   Ensure that OK appears in the Status column for CompassTravel.
+<p>If the connection to the CompassTravel data source fails, do the following:</p>
+<li>Verify that the name of the data source file does not contain a space. If it does contain a space, delete the data source from the Connected Data Source dialog box. To do this, click the Delete action button associated with the CompassTravel data source name, and then repeat the steps in this procedure to reconfigure this data source. </li><li>Verify that the path specified for the Compass Travel database file is correct.</li></li>
+</ol>
+<h4>To define the sample PointBase database file: </h4>
+<ol>
+<li>
+   In the ColdFusion MX Administrator, select Data &amp; Services &gt; Data Sources.
+<p>The Add New Data Source dialog box appears.</p>
+</li>
+<li>
+   Specify the following:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Action
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Data Source name text box</p>
+    </td>
+    <td>
+<p>Specify the name CompassTravel. </p>
+<p><i>Note</i>: Ensure that the name of the data source file does not contain any spaces. If the name contains a space, the data source connection fails.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Driver drop-down selection box</p>
+    </td>
+    <td>
+<p>Select Other.</p>
+    </td>
+  </tr>
+</table>
+
+</li>
+<li>
+   Click Add to configure the data source name and driver. 
+<p>The Data Source dialog box appears.</p>
+</li>
+<li>
+   Specify the following:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Action
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>JDBC URL</p>
+    </td>
+    <td>
+<p>Enter the following JDBC URL for the Compass Travel PointBase files:</p>
+<p><strong>jdbc:pointbase:compasstravel,database.home=/&lt;home location&gt;/wwwroot/cfdocs/getting_started/db</strong></p>
+<p>The following is the default home location for stand-alone ColdFusion web server configurations:</p>
+<p>/opt/coldfusionmx7/wwwroot/cfdocs/getting_started/db</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Driver Class</p>
+    </td>
+    <td>
+<p>Enter the following driver class:</p>
+<p><strong>com.pointbase.jdbc.jdbcUniversalDriver</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Driver Name</p>
+    </td>
+    <td>
+<p>Specify PointBase.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Username</p>
+    </td>
+    <td>
+<p>Specify PBPUBLIC.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Password</p>
+    </td>
+    <td>
+<p>Specify PBPUBLIC.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>Description</p>
+    </td>
+    <td>
+<p>Enter the following:</p>
+<p><strong>Database file for Compass Travel tutorial</strong></p>
+    </td>
+  </tr>
+</table>
+
+</li>
+<li>
+   Click Show Advanced Settings to make the following settings:
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Field
+    </th>
+    <th>
+Action
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>Maintain Connection</p>
+    </td>
+    <td>
+<p>Disabled (clear)</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>CLOB</p>
+    </td>
+    <td>
+<p>Enabled (checked)</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>BLOB</p>
+    </td>
+    <td>
+<p>Enabled (checked)</p>
+    </td>
+  </tr>
+</table>
+
+</li>
+<li>
+   Click Submit to complete the data source configuration.
+<p>The name CompassTravel appears in the Connected Data Sources dialog box.</p>
+</li>
+<li>
+   Click Verify All Connections to ensure that ColdFusion can access this file. 
+<p>OK appears in the Status column for successful connections. </p>
+<p>If the connection to the compass travel data source fails, do the following:</p>
+<li>Verify that the name of the data source file does not contain a space. If it does contain a space, delete the data source from the Connected Data Source dialog box. To do this, click the Delete action button associated with the CompassTravel data source name, and then repeat the steps in this procedure to reconfigure this data source. </li><li>Verify that the JDBC URL is correct. </li></li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000114.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000116.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000115.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

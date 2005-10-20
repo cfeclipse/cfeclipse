@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>setOriginatorID</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000736.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000738.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>setOriginatorID</h1>
+<h4><a name="wp1176587"></a>Description</h4>
+<p>Identifies the originator of an incoming message.</p>
+<h4><a name="wp1176589"></a>Category</h4>
+<p>Event Gateway Development</p>
+<h4><a name="wp1176591"></a>Syntax</h4>
+<pre>void setOriginatorID(String <i>originatorID</i>)
+</pre><h4><a name="wp1176593"></a>See also</h4>
+<p><a href="00000731.htm#1174665">getOriginatorID</a>, <a href="00000744.htm#1182144">CFML CFEvent structure</a>, <a href="00001688.htm#117767">CFEvent class</a> in <a href="00001684.htm#146437">Creating Custom Event Gateways</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp1178017"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>originatorID</p>
+    </td>
+    <td>
+<p>The gateway or protocol-specific ID of the message originator.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1176597"></a>Example</h4>
+<p>The following code shows the routine from the example JMS gateway that handles incoming messages. It sets the originator ID to the name of the JMS topic that the gateway handles: </p>
+<pre>public void handleMessage(String msg, String topicName, String msgID) {
+   coldfusion.eventgateway.Logger log = getGatewayServices().getLogger();
+   Map data = new HashMap();
+   CFEvent cfMsg = new CFEvent(getGatewayID());
+   data.put(&quot;msg&quot;, msg);
+   data.put(&quot;id&quot;, msgID);
+   cfMsg.setData(data);
+<strong>   cfMsg.setOriginatorID(topicName);</strong>
+   cfMsg.setGatewayType(&quot;JMS&quot;);
+   if (sendMessage(cfMsg)) {
+         log.info(&quot;Added message &#39;&quot; + msgID + &quot;&#39; to queue.&quot;);
+   } else {
+         log.error(&quot;Failed to add message &#39;&quot; + msgID + &quot;&#39; to queue.&quot;);
+   }
+}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000736.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000738.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000737.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>GenerateSecretKey</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000467.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000469.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>GenerateSecretKey</h1>
+<h4><a name="wp4994344"></a>Description</h4>
+<p>Gets a secure key value for use in the <a href="00000457.htm#1104201">Encrypt</a> function. </p>
+<h4><a name="wp4994346"></a>Returns</h4>
+<p>A string containing the encryption key.</p>
+<h4><a name="wp4992283"></a>Category</h4>
+<p><a href="00000368.htm#3542210">Security functions</a>, <a href="00000369.htm#1099887">String functions</a></p>
+<h4><a name="wp4992291"></a>Function syntax</h4>
+<pre><code><strong>GenerateSecretKey</strong></code>(algorithm)
+</pre><h4><a name="wp5052864"></a>See also</h4>
+<p><a href="00000452.htm#1103962">Decrypt</a>, <a href="00000457.htm#1104201">Encrypt</a></p>
+<h4><a name="wp5052872"></a>History</h4>
+<p>ColdFusion&#160;MX&#160;7: Added this function.</p>
+<h4><a name="wp4992306"></a>Parameters</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Parameter
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>algorithm</p>
+    </td>
+    <td>
+<p>The encryption algorithm for which to generate the key. ColdFusion MX installs a cryptography library with the following algorithms:</p>
+<ul>
+<li>
+   AES: the Advanced Encryption Standard specified by the National Institute of Standards and Technology (NIST) FIPS-197.
+</li>
+<li>
+   BLOWFISH: the Blowfish algorithm defined by Bruce Schneier.
+</li>
+<li>
+   DES: the Data Encryption Standard algorithm defined by NIST FIPS-46-3.
+</li>
+</ul>
+<p>DESEDE: the &quot;Triple DES&quot; algorithm defined by NIST FIPS-46-3.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp4992459"></a>Usage</h4>
+<p>You cannot use the <code>GenerateSecretKey</code> function to generate a key for the ColdFusion default encryption algorithm (CFMX_COMPAT) of the <code>Encrypt</code> and <code>Decrypt</code> functions.</p>
+<p>ColdFusion&#160;MX&#160;7 uses the Java Cryptography Extension (JCE) and installs a Sun Java 1.4.2 runtime that includes the Sun JCE default security provider. This provider includes the algorithms listed in the Parameters section. The JCE framework includes facilities for using other provider implementations; however, Macromedia cannot provide technical support for third-party security providers.</p>
+<h4><a name="wp4992323"></a>Example</h4>
+<p>The following example encrypts and decrypts a text string. It lets you specify the encryption algorithm and encoding technique. It also has a field for a key seed to use with the CFMX_COMPAT algorithm. For all other algorithms, it uses the <code>GenerateSecretKey</code> function to generate a secret key.</p>
+<pre>&lt;h3&gt;Decrypt Example&lt;/h3&gt;
+
+&lt;!--- Do the following if the form has been submitted. ---&gt;
+&lt;cfif IsDefined(&quot;Form.myString&quot;)&gt;
+   &lt;cfscript&gt;
+      /* GenerateSecretKey does not generate keys for the CFMX_COMPAT algorithm,
+      &#160;&#160;so we use a key from the form.
+      */
+      if (Form.myAlgorithm EQ &quot;CFMX_COMPAT&quot;)
+         theKey=Form.MyKey;
+      // For all other encryption techniques, generate a secret key.
+      else
+         theKey=<code><strong>generateSecretKey(Form.myAlgorithm);</strong></code>
+      //Encrypt the string.
+      encrypted=encrypt(Form.myString, theKey, Form.myAlgorithm,<br />         Form.myEncoding);
+      //Decrypt it.
+      decrypted=decrypt(encrypted, theKey, Form.myAlgorithm, Form.myEncoding);
+   &lt;/cfscript&gt;
+
+   &lt;!--- Display the values used for encryption and decryption, 
+         and the results. ---&gt;
+   &lt;cfoutput&gt;
+      &lt;b&gt;The algorithm:&lt;/b&gt; #Form.myAlgorithm#&lt;br&gt;
+      &lt;b&gt;The key:&lt;/B&gt; #theKey#&lt;br&gt;
+      &lt;br&gt;
+      &lt;b&gt;The string:&lt;/b&gt; #Form.myString# &lt;br&gt;
+      &lt;br&gt;
+      &lt;b&gt;Encrypted:&lt;/b&gt; #encrypted#&lt;br&gt;
+      &lt;br&gt;
+      &lt;b&gt;Decrypted:&lt;/b&gt; #decrypted#&lt;br&gt;
+   &lt;/cfoutput&gt;
+&lt;/cfif&gt;
+
+&lt;!--- The input form. ---&gt;
+&lt;form action=&quot;#CGI.SCRIPT_NAME#&quot; method=&quot;post&quot;&gt;
+   &lt;b&gt;Select the encoding&lt;/b&gt;&lt;br&gt;
+   &lt;select size=&quot;1&quot; name=&quot;myEncoding&quot; &gt;
+      &lt;option selected&gt;UU&lt;/option&gt;
+      &lt;option&gt;Base64&lt;/option&gt;
+      &lt;option&gt;Hex&lt;/option&gt;
+   &lt;/select&gt;&lt;br&gt;
+   &lt;br&gt;
+   &lt;b&gt;Select the algorithm&lt;/b&gt;&lt;br&gt;
+   &lt;select size=&quot;1&quot; name=&quot;myAlgorithm&quot; &gt;
+      &lt;option selected&gt;CFMX_COMPAT&lt;/option&gt;
+      &lt;option&gt;AES&lt;/option&gt;
+      &lt;option&gt;DES&lt;/option&gt;
+      &lt;option&gt;DESEDE&lt;/option&gt;
+   &lt;/select&gt;&lt;br&gt;
+   &lt;br&gt;
+   &lt;b&gt;Input your key&lt;/b&gt; (used for CFMX_COMPAT encryption only)&lt;br&gt;
+   &lt;input type = &quot;Text&quot; name = &quot;myKey&quot; value = &quot;foobar&quot;&gt;&lt;br&gt;
+   &lt;br&gt;
+   &lt;b&gt;Enter string to encrypt&lt;/b&gt;&lt;br&gt;
+   &lt;textArea name = &quot;myString&quot; cols = &quot;40&quot; rows = &quot;5&quot; WRAP = &quot;VIRTUAL&quot;&gt;This string will be encrypted (you can replace it with more typing).
+   &lt;/textArea&gt;&lt;br&gt;
+   &lt;input type = &quot;Submit&quot; value = &quot;Encrypt my String&quot;&gt;
+&lt;/form&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000467.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000469.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000468.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

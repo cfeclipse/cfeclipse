@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cfsavecontent</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000326.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000328.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cfsavecontent</h1>
+<h4><a name="wp1844411"></a>Description</h4>
+<p>Saves the generated content of the <code>cfsavecontent</code> tag, including the results of evaluating expressions and executing custom tags, in the specified variable.</p>
+<h4><a name="wp1959862"></a>Category</h4>
+<p><a href="00000209.htm#2460154">Variable manipulation tags</a></p>
+<h4><a name="wp1844412"></a>Syntax</h4>
+<pre>&lt;cfsavecontent <br />   variable = &quot;variable name&quot;&gt;<br />   the content<br />&lt;/cfsavecontent&gt;
+</pre><h4><a name="wp1959874"></a>See also</h4>
+<p><a href="00001127.htm#1173434">Caching parts of ColdFusion pages</a> in <a href="00001102.htm#1101532">Designing and Optimizing a ColdFusion&#160;Application</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2281311"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>variable</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of the variable in which to save the generated content of the tag.</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp2281343"></a>Usage</h4>
+<p>This tag requires an end tag.</p>
+<p>You cannot use this tag to suppress output from a tag library.</p>
+<h4><a name="wp2281330"></a>Example</h4>
+<p>The following example uses a custom tag to generate a report and saves the report in the variable CONTENT. It replaces all instances of the word &quot;report&quot; with the phrase &quot;MyCompany Quarterly Report&quot; and outputs the result. </p>
+<pre><strong>&lt;cfsavecontent variable=&quot;content&quot;&gt;</strong>
+<strong>   &lt;CF_OutputBigReport&gt;</strong>
+<strong>&lt;/cfsavecontent&gt;</strong>
+&lt;cfoutput&gt;
+   #replace(content, &quot;report&quot;, &quot;MyCompany Quarterly Report&quot;, &quot;all&quot;)#
+&lt;/cfoutput&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000326.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000328.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000327.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

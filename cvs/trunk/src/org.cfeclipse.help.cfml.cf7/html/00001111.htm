@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Structuring an application</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001110.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001112.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Structuring an application</h1>
+<p>When you design a ColdFusion application, you must structure its contents into directories and files, also known as mapping the directory structure. This activity is an important step in designing a ColdFusion application. Before you start building the application, you must establish a root directory for the application. You can store application pages in subdirectories of the root directory.</p>
+<p>The following sections describe how ColdFusion uses application-specific pages and how you can organize your application pages in a directory structure.</p>
+<h2><a name="wp1162871"></a>How ColdFusion&#160;MX finds and process application definition pages</h2>
+<p>ColdFusion&#160;MX uses the following rules to locate and process the Application.cfc, Application.cfm, and OnRequestEnd.cfm pages that define application-specific elements. The way ColdFusion&#160;MX locates these files helps determine how you structure an application.</p>
+<p>Each time ColdFusion&#160;MX processes a page request it does the following:</p>
+<ol>
+<li>
+   When ColdFusion starts processing the request, it does the following:
+<ul><li>It searches the page's directory for a file named Application.cfc. If one exists, it creates a new instance of the CFC, processes the initial events, and stops searching. (ColdFusion&#160;MX creates a new instance of the CFC and processes its initialization code for each request.)</li>
+<li>If the requested page's directory does not have an Application.cfc file, it checks the directory for an Application.cfm file. If one exists, ColdFusion&#160;MX logically includes the Application.cfm page at the beginning of the requested page and stops searching further.</li>
+<li>If the requested page's directory does not have an Application.cfc or Application.cfm file, ColdFusion&#160;MX searches up the directory tree and checks each directory first for an Application.cfc file and then, if one is not found, for an Application.cfm page, until it reaches the root directory (such as C:\). When it finds an Application.cfc or Application.cfm file, it processes the page and stops searching.</li>
+</ul></li>
+<li>
+   ColdFusion&#160;MX processes the requested page's contents.
+</li>
+<li>
+   When the request ends, ColdFusion&#160;MX does the following:
+<ul><li>If you have an Application.cfc, ColdFusion&#160;MX processes the CFC's <code>onRequestEnd</code> method and releases the CFC instance.</li>
+<li>If you do not have an Application.cfc, but do have an Application.cfm page, ColdFusion&#160;MX looks for an OnRequestEnd.cfm in the same directory as the Application.cfm page ColdFusion uses for the current page. ColdFusion does not search beyond that directory, so it does not run an OnRequestEnd.cfm page that resides in another directory. Also, the OnRequestEnd.cfm page does not run if there is an error or an exception on the application page, or if the application page executes the <a href="00000215.htm#3835579"><code>cfabort</code></a> or <a href="00000244.htm#1098252"><code>cfexit</code></a> tag.</li>
+</ul></li>
+</ol>
+<p>The following rules determine how ColdFusion&#160;MX processes application pages and settings:</p>
+<ul>
+<li>
+   ColdFusion processes only one Application.cfc or Application.cfm page for each request. If a ColdFusion page has a <code>cfinclude</code> tag pointing to an additional ColdFusion page, ColdFusion MX does not search for an Application.cfc or Application.cfm page when it includes the additional page. 
+</li>
+<li>
+   If a ColdFusion page has a <code>cfapplication</code> tag, it first processes any Application.cfc or Application.cfm, and then processes the <code>cfapplication</code> tag. The tag can override the settings from the application files, including the application name and the behaviors set by the <code>cfapplication</code> tag attributes.
+</li>
+<li>
+   You can have multiple Application.cfc files, Application.cfm files, and <code>cfapplication</code> tags that use the same application name. In this case, all pages that have the same name share the same application settings and Application scope and can set and get all the variables in this scope. ColdFusion uses the parameter settings of the <code>cfapplication</code> tag or the most recently processed file, if the settings, such as the session time-out, differ among the files.
+</li>
+</ul>
+<p><strong>Note: </strong>If your application runs on a UNIX platform, which is case-sensitive, you must spell Application.cfc, Application.cfm, and OnRequestEnd.cfm with capital letters, as shown. </p><h2><a name="wp1192106"></a>Defining the directory structure</h2>
+<p>Defining an application directory structure with an application-specific root directory has the following advantages:</p>
+<p><strong>Development</strong>&#160;The application is easier to develop and maintain, because the application page files are well-organized.</p>
+<p><strong>Portability</strong>&#160;You can easily move the application to another server or another part of a server without changing any code in the application page files.</p>
+<p><strong>Application-level settings</strong>&#160;Application pages that are under the same directory can share application-level settings and functions.</p>
+<p><strong>Security</strong>&#160;Application pages that are under the same directory can share web server security settings.</p>
+<p>When you put your application in an application-specific directory hierarchy, you can use a single application definition (Application.cfc or Application.cfm) page in the application root directory, or put different application definition pages that govern individual sections of the application in different directories. </p>
+<p>You can divide your logical web application into multiple ColdFusion applications by using multiple application definition pages with different application names. Alternatively, you can use multiple application definition pages that specify the same application name, but have different code, for different subsections of your application.</p>
+<p>The directory trees in the following figure show two approaches to implementing an application framework:</p>
+<ul>
+<li>
+   In the example on the left, a company named Web Wonders, Inc. uses a single Application.cfc file installed in the application root directory to process all application page requests.
+</li>
+<li>
+   In the example on the right, Bandwidth Associates uses the settings in individual Application.cfc files to create individual ColdFusion applications at the departmental level. Only the Products application pages are processed using the settings in the root Application.cfc file. The Consulting, Marketing, and Sales directories each have their own Application.cfc file.
+<p><br />
+<img src="images/dwa12_01.jpg" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001110.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001112.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001111.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

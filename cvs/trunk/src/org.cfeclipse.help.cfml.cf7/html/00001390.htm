@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Building Flash forms</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001389.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001391.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Building Flash forms</h1>
+<p>You build Flash forms using standard ColdFusion form tags, plus the <code>cfformgroup</code> and <code>cfformitem</code> tags. These tags create the <i>elements</i> of the form, as follows:</p>
+<ul>
+<li>
+   The <code>cfcalendar</code>, <code>cfgrid</code>, <code>cfinput</code>, <code>cfselect</code>, <code>cftextarea</code>, and <code>cftree</code> tags create <i>controls</i> for data display and user input.
+</li>
+<li>
+   The <code>cfformitem</code> tag lets you add formatted or unformatted text, spacers, and horizontal and vertical rules without using HTML.
+</li>
+<li>
+   The <code>cfformgroup</code> tag creates <i>containers</i>, such as horizontally aligned boxes or tabbed navigators, that let you group, organize, and structure the form contents.
+</li>
+</ul>
+<p>Flash forms follow a hierarchical structure of containers and <i>children</i>. </p>
+<ol>
+<li>
+   The <code>cfform</code> tag is the master container, and its contents are child containers and controls. 
+</li>
+<li>
+   The <code>cfformgroup</code> tag defines a container that organizes its child elements.
+</li>
+<li>
+   All other tags create individual controls, including display elements such as rules.
+</li>
+</ol>
+<p>For example, the figure in the <a href="00001389.htm#131065">About Flash forms</a> section has the following hierarchical structure of containers and children. (This outline only shows the structure of the page that is visible in the figure. It omits the structure of the Preferences tab.)</p>
+<pre><code>1   cfform</code>
+2      cfformgroup type=&quot;tabnavigator&quot; -- Tab navigator container
+3         cfformgroup type=&quot;page&quot; -- Tabbed page container, child of tabnavigator
+4            cfformgroup type=&quot;horizontal&quot; -- Aligns its two children horizontally
+5               cfinput type=&quot;text&quot; -- First name input control
+5               cfinput type=&quot;spacer&quot; -- Space between the name input controls
+5               cfinput type=&quot;text&quot; -- Last name input control
+4            cfformitem type=&quot;hrule&quot; -- Displays a rule
+4            cfformitem type=&quot;html&quot; -- Displays formatted text
+4            cffinput type=&quot;text&quot; -- E-mail input control
+4            cfformitem type=&quot;hrule&quot; -- Displays a rule
+4            cfinput type=&quot;text&quot; -- Phone number input control
+4            cfinput type=&quot;spacer&quot; -- Space between the phone and date controls
+4            cfinput type=&quot;datefield&quot; -- Date input control
+3         cfinput type=&quot;page&quot; -- Second tabbed page container for preferences
+         .
+         .
+2      cfformgroup type=&quot;horizontal&quot; -- Follows the tabnavigator in the form
+3      cfinput type=&quot;submit&quot; -- Submit button control
+3      cfinput type=&quot;reset&quot; -- Reset button control
+</pre><p>The following sections describe how you use the various Flash form elements to build a Flash form.</p>
+<ul>
+<li>
+   <a href="00001391.htm#132884">Adding text, images, rules, and space with the cfformitem tag</a>
+</li>
+<li>
+   <a href="00001392.htm#130689">Using the cfformgroup tag to structure forms</a>
+</li>
+<li>
+   <a href="00001393.htm#130712">Controlling sizes in Flash forms</a>
+</li>
+<li>
+   <a href="00001394.htm#135756">Repeating Flash form elements based on query data</a>
+</li>
+<li>
+   <a href="00001395.htm#128868">Creating complex forms with accordion and tab navigator containers</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001389.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001391.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001390.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

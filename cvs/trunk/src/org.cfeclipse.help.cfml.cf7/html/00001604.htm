@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Retrieving messages</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001603.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001605.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Retrieving messages</h1>
+<p>When you use the <a href="00000311.htm#1101854"><code>cfpop</code></a> tag with <code>action=&quot;GetAll&quot;</code>, ColdFusion returns the same columns as with <code>getheaderonly</code>, plus the following additional columns:</p>
+<ul>
+<li>
+   attachments (A tab-delimited list of attachment file names)
+</li>
+<li>
+   attachmentfiles (A tab-delimited list of paths to the attachment files retrieved to the local server, if any. You get the files only if you specify an <code>attachmentpath</code> attribute.)
+</li>
+<li>
+   body
+</li>
+<li>
+   htmlbody
+</li>
+<li>
+   textbody
+</li>
+</ul>
+<p>If the message is multipart, the htmlbody and textbody fields contain the contents of the HTML and plain text parts, and the body field has the first part in the message. If the message has only one part, the body contains the message, and either the htmlbody or textbody field, depending on the message type, also has a copy of the message.</p>
+<h4>To retrieve entire messages:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;POP Mail Message Body Example&lt;/title&gt;&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h2&gt;This example adds retrieval of the message body:&lt;/h2&gt;
+&lt;cfpop server=&quot;mail.company.com&quot;
+	username=#myusername#
+	password=#mypassword#
+	action=&quot;GetAll&quot;
+	name=&quot;Sample&quot;&gt;
+
+&lt;cfoutput query=&quot;Sample&quot;&gt;
+	MessageNumber: #HTMLEditFormat(Sample.messageNumber)# &lt;br&gt;
+	To: #Sample.to# &lt;br&gt;
+	From: #HTMLEditFormat(Sample.from)# &lt;br&gt;
+	Subject: #HTMLEditFormat(Sample.subject)# &lt;br&gt;
+	Date: #HTMLEditFormat(Sample.date)#&lt;br&gt;
+	Cc: #HTMLEditFormat(Sample.cc)# &lt;br&gt;
+	ReplyTo: #HTMLEditFormat(Sample.replyTo)# &lt;br&gt;
+	&lt;br&gt;
+	Body:&lt;br&gt;
+	#Sample.body#&lt;br&gt;
+	&lt;br&gt;
+	Header:&lt;br&gt;
+	#HTMLCodeFormat(Sample.header)#&lt;br&gt;
+	&lt;hr&gt;
+	&lt;/cfoutput&gt;
+
+&lt;/body&gt;
+</pre>
+</li>
+</ol>
+<pre>&lt;/html&gt;
+</pre><ol>
+<li>
+   Edit the following lines so that they refer to valid values for your POP mail server, username, and password:
+<pre>
+&lt;cfpop server=&quot;mail.company.com&quot;
+	username=#myusername#
+	password=#mypassword#
+</pre>
+</li>
+<li>
+   Save the file as header_body.cfm in the myapps directory under your <i>web_root</i> and view it in your web browser:
+</li>
+</ol>
+<p>This example does not use a CFML function to encode the body contents. As a result, the browser displays the formatted message as you would normally see it in a mail program that supports HTML messages.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001603.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001605.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001604.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

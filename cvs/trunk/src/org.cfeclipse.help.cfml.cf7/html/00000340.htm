@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>cftable</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000339.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000341.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>cftable</h1>
+<h4><a name="wp1355917"></a>Description</h4>
+<p>Builds a table in a ColdFusion page. This tag renders data as preformatted text, or, with the <code>HTMLTable</code> attribute, in an HTML table. If you don&#39;t want to write HTML table tag code, or if your data can be presented as preformatted text, use this tag. </p>
+<p>Preformatted text (defined in HTML with the &lt;pre&gt; and &lt;/pre&gt; tags) displays text in a fixed-width font. It displays white space and line breaks exactly as they are written within the pre tags. For more information, see an HTML reference guide.</p>
+<p>To define table column and row characteristics, use the <code><a href="/C:/newton/depot/doc/coldfusion/blackstone/en/src/cfml%20reference/tags-pt3.htm" target="right">cfcol</a></code> tag within this tag.</p>
+<h4><a name="wp1961866"></a>Category</h4>
+<p><a href="00000199.htm#2459638">Data output tags</a></p>
+<h4><a name="wp1103888"></a>Syntax</h4>
+<pre>&lt;cftable <br />   query = &quot;query_name&quot;<br />   maxRows = &quot;maxrows_table&quot;<br />   colSpacing = &quot;number_of_spaces&quot;<br />   headerLines = &quot;number_of_lines&quot;<br />   HTMLTable<br />   border<br />   colHeaders<br />   startRow = &quot;row_number&quot;&gt;<br />   ...<br />&lt;/cftable&gt;
+</pre><h4><a name="wp2810230"></a>See also</h4>
+<p><a href="00000229.htm#1097607">cfcol</a>, <a href="00000232.htm#2850760">cfcontent</a>, <a href="00000286.htm#1842314">cflog</a>, <a href="00000309.htm#1101659">cfoutput</a>, <a href="00000312.htm#1102085">cfprocessingdirective</a>, <a href="00000340.htm#1103885">cftable</a>; <a href="00001254.htm#1096224">Retrieving data</a> in <a href="00001252.htm#1127430">Accessing and Retrieving Data</a> in <i>ColdFusion MX Developer's Guide</i></p>
+<h4><a name="wp2810105"></a>Attributes</h4>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Attribute
+    </th>
+    <th>
+Req/Opt
+    </th>
+    <th>
+Default
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>query</p>
+    </td>
+    <td>
+<p>Required</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Name of <code>cfquery</code> from which to draw data.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>maxRows</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Maximum number of rows to display in the table.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>colSpacing</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>2</p>
+    </td>
+    <td>
+<p>Number of spaces between columns. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>headerLines</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>2</p>
+    </td>
+    <td>
+<p>Number of lines to use for table header (the default leaves one line between header and first row of table).</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>HTMLTable</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Renders data in an HTML 3.0 table.</p>
+<p>If you use this attribute (regardless of its value), ColdFusion renders data in an HTML table. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>border</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Displays border around table. </p>
+<p>If you use this attribute (regardless of its value), ColdFusion displays a border around the table.</p>
+<p>Use this only if you use the <code>HTMLTable</code> attribute.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>colHeaders</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>Displays column heads. If you use this attribute, you must also use the <a href="00000229.htm#1097607"><code>cfcol</code></a> tag <code>header</code> attribute to define them. </p>
+<p>If you use this attribute (regardless of its value), ColdFusion displays column heads. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>startRow</p>
+    </td>
+    <td>
+<p>Optional</p>
+    </td>
+    <td>
+<p>1</p>
+    </td>
+    <td>
+<p>The query result row to put in the first table row. </p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1793167"></a>Usage</h4>
+<p>This tag aligns table data, sets column widths, and defines column heads. </p>
+<p>At least one <a href="00000229.htm#1097607"><code>cfcol</code></a> tag is required within this tag. You must put <code>cfcol</code> and <code>cftable</code> tags adjacent in a page. The only tag that you can nest within this tag is the <code>cfcol</code> tag. You cannot nest <code>cftable</code> tags.</p>
+<p>To display the <code>cfcol</code> <code>header</code> text, you must specify the <code>cfcol</code> <code>header</code> and the <code>cftable</code> <code>colHeader</code> attribute. If you specify either attribute without the other, the header does not display and no error is thrown.</p>
+<h4><a name="wp1103915"></a>Example</h4>
+<pre>&lt;!--- This example shows the use of cfcol and cftable to align information <br />returned from a query. ---&gt;
+&lt;!--- This query selects employee information from cfdocexamples <br />datasource. ---&gt;
+&lt;cfquery name = &quot;GetEmployees&quot; dataSource = &quot;cfdocexamples&quot;&gt;
+   SELECT Emp_ID, FirstName, LastName, EMail, Phone, Department
+   FROM Employees
+&lt;/cfquery&gt;
+
+&lt;html&gt;
+&lt;body&gt;
+&lt;h3&gt;cftable Example&lt;/h3&gt;
+
+&lt;!--- Note use of HTMLTable attribute to display cftable as an HTML table, <br />rather than as PRE formatted information. ---&gt;
+&lt;cftable query = &quot;GetEmployees&quot; 
+   startRow = &quot;1&quot; colSpacing = &quot;3&quot; HTMLTable&gt;
+&lt;!--- Each cfcol tag sets width of a column in table, and specifies header<br />information and text/CFML with which to fill cell. ---&gt;
+   &lt;cfcol header = &quot;&lt;b&gt;ID&lt;/b&gt;&quot;
+      align = &quot;Left&quot;
+      width = 2
+      text  = &quot;#Emp_ID#&quot;&gt;
+      
+   &lt;cfcol header = &quot;&lt;b&gt;Name/Email&lt;/b&gt;&quot;   
+      align = &quot;Left&quot;
+      width = 15
+      text  = &quot;&lt;a href = 'mailto:#Email#'&gt;#FirstName# #LastName#&lt;/A&gt;&quot;&gt;
+
+   &lt;cfcol header = &quot;&lt;b&gt;Phone Number&lt;/b&gt;&quot;
+      align = &quot;Center&quot;
+      width = 15
+      text  = &quot;#Phone#&quot;&gt;
+&lt;/cftable&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000339.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000341.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000340.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

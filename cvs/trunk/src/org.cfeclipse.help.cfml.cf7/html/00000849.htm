@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>WddxRecordset object</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000848.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000850.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>WddxRecordset object</h1>
+<p>Includes functions that you call as needed when constructing a WDDX record set. For more information on using this object, see <a href="00001524.htm#1117865">Using WDDX</a> in <a href="00001505.htm#1158596">Using XML and WDDX</a> in <i>ColdFusion MX Developer's Guide</i>.</p>
+<h2><a name="wp1050479"></a>Functions</h2>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Function syntax
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p><code><i>object</i></code><code>.</code><a href="00000850.htm#1055953"><code>addColumn</code></a><code>(</code><code><i>name</i></code><code>)</code></p>
+    </td>
+    <td>
+<p>Adds a column to all rows in a WddxRecordset instance.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code><i>object</i></code><code>.</code><a href="00000851.htm#1017188"><code>addRows</code></a><code>(</code><code><i>n</i></code><code>)</code></p>
+    </td>
+    <td>
+<p>Adds rows to all columns in a WddxRecordset instance.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code><i>object</i></code><code>.dump(</code><code><i>escapeStrings</i></code><code>)</code></p>
+    </td>
+    <td>
+<p>Displays WddxRecordset object data. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code><i>object</i></code><code>.</code><a href="00000852.htm#1017228"><code>getField</code></a><code>(</code><code><i>row</i></code><code>, </code><code><i>col</i></code><code>)</code></p>
+    </td>
+    <td>
+<p>Returns the element in a row/column position.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code><i>object</i></code><code>.</code><a href="00000853.htm#1017254"><code>getRowCount</code></a><code>()</code></p>
+    </td>
+    <td>
+<p>Indicates the number of rows in a WddxRecordset instance.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><code><i>object</i></code><code>.</code><a href="00000854.htm#1017280"><code>setField</code></a><code>(</code><code><i>row</i></code>, <code><i>col</i></code>, <code><i>value</i></code><code>)</code></p>
+    </td>
+    <td>
+<p>Sets the element in a row/column position.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p><code><i>object</i></code><code>.</code><a href="00000855.htm#1017313"><code>wddxSerialize</code></a><code>(</code><code><i>serializer</i></code><code>)</code></p>
+    </td>
+    <td>
+<p>Serializes a record set.</p>
+    </td>
+  </tr>
+</table>
+:
+<h4><a name="wp1061225"></a>Returns</h4>
+<p>HTML table of the WddxRecordset object data. </p>
+<h4><a name="wp1056282"></a>Usage</h4>
+<p>Convenient for debugging and testing record sets. The boolean parameter <code>escapeStrings</code> determines whether<code> &lt;&gt;&amp; </code>characters in string values are escaped as <code>&amp;lt;&amp;gt;&amp;amp; </code>in HTML. </p>
+<h4><a name="wp1056114"></a>Example</h4>
+<pre>&lt;!--- Create a simple query ---&gt; 
+&lt;cfquery name = &quot;q&quot; datasource =&quot;cfdocexamples&quot;&gt; 
+SELECT Message_Id, Thread_id, Username, Posted 
+FROM messages 
+&lt;/cfquery&gt; 
+&lt;!--- Load the wddx.js file, which includes the dump function ---&gt; 
+&lt;script type=&quot;text/javascript&quot; src=&quot;/CFIDE/scripts/wddx.js&quot;&gt;&lt;/script&gt; 
+&lt;script&gt; 
+// Use WDDX to move from CFML data to JS 
+&lt;cfwddx action=&quot;cfml2js&quot; input=&quot;#q#&quot; topLevelVariable=&quot;qj&quot;&gt; 
+// Dump the record set 
+document.write(qj.dump(true)); 
+&lt;/script&gt; 
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000848.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000850.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000849.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

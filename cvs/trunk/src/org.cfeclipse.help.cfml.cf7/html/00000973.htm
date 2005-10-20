@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using for loops</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000972.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000974.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using for loops</h1>
+<p>The for loop has the following format: </p>
+<pre>for (<code><i>initial-expression</i></code>; <code><i>test-expression</i></code>; <code><i>final-expression</i></code>) <code><i>statement</i></code>
+</pre><p>The i<i>nitial-expression</i> and <i>final-expression</i> can be one of the following:</p>
+<ul>
+<li>
+   A single assignment expression; for example, x=5 or loop=loop+1
+</li>
+<li>
+   Any ColdFusion expression; for example, SetVariable(&quot;a&quot;,a+1)
+</li>
+<li>
+   Empty
+</li>
+</ul>
+<p>The <i>test-expression</i> can be one of the following:</p>
+<ul>
+<li>
+   Any ColdFusion expression; for example: 
+<pre>
+A LT 5
+index LE x
+status EQ &quot;not found&quot; AND index LT end
+</pre>
+</li>
+<li>
+   Empty
+</li>
+</ul>
+<p><strong>Note: </strong>The test expression is re-evaluated before each repeat of the loop. If code inside the loop changes any part of the test expression, it can affect the number of iterations in the loop.</p><p>The <i>statement</i> can be a single semicolon terminated statement or a statement block in curly braces.</p>
+<p>When ColdFusion executes a for loop, it does the following:</p>
+<ol>
+<li>
+   Evaluates the <i>initial expression.</i>
+</li>
+<li>
+   Evaluates the <i>test-expression.</i>
+</li>
+<li>
+   If the <i>test-expression</i> is False, exits the loop and processing continues following the <i>statement.</i>
+<p>If the <i>test-expression</i> is True:</p>
+<li>Executes the <i>statement </i>(or statement block).</li><li>Evaluates the <i>final-expression.</i></li><li>Returns to Step 2.</li></li>
+</ol>
+<p>For loops are most commonly used for processing in which an index variable is incremented each time through the loop, but it is not limited to this use.</p>
+<p>The following simple for loop sets each element in a 10-element array with its index number. </p>
+<pre>for(index=1;
+   index LT 10;
+   index = index + 1)
+   a[index]=index;
+</pre><p>The following, more complex, example demonstrates two features:</p>
+<ul>
+<li>
+   The use of curly braces to group multiple statements into a single block.
+</li>
+<li>
+   An empty condition statement. All loop control logic is in the statement block.
+</li>
+</ul>
+<pre>&lt;cfscript&gt;
+strings=ArrayNew(1);
+ArraySet(strings, 1, 10, &quot;lock&quot;);
+strings[5]=&quot;key&quot;;
+indx=0;
+for( ; ; )&#160;{
+   indx=indx+1;
+   if(Find(&quot;key&quot;,strings[indx],1)) {
+      WriteOutput(&quot;Found key at &quot; &amp; indx &amp; &quot;.&lt;br&gt;&quot;);
+      break;
+      }
+   else if (indx IS ArrayLen(strings))&#160;{
+      WriteOutput(&quot;Exited at &quot; &amp; indx &amp; &quot;.&lt;br&gt;&quot;);
+      break;
+      }
+}
+&lt;/cfscript&gt;
+</pre><p>This example shows one important issue that you must remember when creating loops: you must always ensure that the loop ends. If this example lacked the <code>else</code> <code>if</code> statement, and there was no &quot;key&quot; in the array, ColdFusion would loop forever or until a system error occurred; you would have to stop the server to end the loop.</p>
+<p>The example also shows two issues with index arithmetic: in this form of loop you must make sure to initialize the index, and you must keep track of where the index is incremented. In this case, because the index is incremented at the top of the loop, you must initialize it to 0 so it becomes 1 in the first loop.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000972.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000974.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000973.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

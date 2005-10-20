@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Updating multiple tables</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001249.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001251.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Updating multiple tables</h1>
+<p>The examples in this section all describe how to modify a single database table. However, you might have a database that uses multiple tables to represent information. </p>
+<p>One way to update multiple tables is to use one INSERT statement per table and to wrap all INSERT statements within a database transaction. A transaction contains one or more SQL statements that can be rolled back or committed as a unit. If any single statement in the transaction fails, you can roll back the entire transaction, cancelling any previous writes that occurred within the transaction. You can use the same technique for selects, updates, and deletes. The following example uses the <code>cftransaction</code> tag to wrap multiple SQL statements:</p>
+<pre>&lt;cftransaction&gt;
+
+&lt;cfquery name=&quot;qInsEmp&quot; datasource=&quot;cfdocexamples&quot;&gt;
+INSERT INTO Employees (FirstName,LastName,EMail,Phone,Department)
+VALUES (&#39;Simon&#39;, &#39;Horwith&#39;, &#39;SHORWITH&#39;,&#39;(202)-797-6570&#39;,&#39;Research and Development&#39;)
+&lt;/cfquery&gt;
+
+&lt;cfquery name=&quot;qGetID&quot; datasource=&quot;cfdocexamples&quot;&gt;
+SELECT MAX(Emp_ID) AS New_Employee
+FROM Employees
+&lt;/cfquery&gt;
+
+&lt;/cftransaction&gt;
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001249.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001251.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001250.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>XML document structures</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001509.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001511.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>XML document structures</h1>
+<p>An XML document object is a structure that contains a set of nested XML element structures. The following figure shows a section of the <a href="00000239.htm#3765824"><code>cfdump</code></a> tag output for the document object for the XML in <a href="00001507.htm#1127213">A simple XML document</a>. This figure shows the long version of the dump, which provides complete details about the document object. Initially, ColdFusion displays a short version, with basic information. Click the dump header to change between short, long, and collapsed versions of the dump.</p>
+<p><br />
+<img src="images/xmldump2.jpg" alt="Output of the cfdump tag for an XML document" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>The following code displays this output. It assumes that you save the code in a file under your web root, such as C:\Inetpub\wwwroot\testdocs\employeesimple.xml</p>
+<pre>&lt;cffile action=&quot;read&quot; file=&quot;C:\Inetpub\wwwroot\testdocs\employeesimple.xml&quot;
+   variable=&quot;xmldoc&quot;&gt;
+&lt;cfset mydoc = XmlParse(xmldoc)&gt;
+&lt;cfdump var=&quot;#mydoc#&quot;&gt;
+</pre><h3><a name="wp1120669"></a>The document object structure</h3>
+<p>At the top level, the XML document object has the following three entries:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Entry name
+    </th>
+    <th>
+Type
+    </th>
+    <th>
+Description 
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>XmlRoot </p>
+    </td>
+    <td>
+<p>Element</p>
+    </td>
+    <td>
+<p>The root element of the document.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>XmlComment </p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<p>A string made of the concatenation of all comments on the document, that is, comments in the document prologue and epilog. This string does not include comments inside document elements.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XmlDocType </p>
+    </td>
+    <td>
+<p>XmlNode </p>
+    </td>
+    <td>
+<p>The DocType attribute of the document. This entry only exists if the document specifies a DocType. This value is read-only; you cannot set it after the document object has been created</p>
+<p>This entry does not appear when <a href="00000239.htm#3765824"><code>cfdump</code></a> displays an XML element structure. </p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1119478"></a>The element structure</h3>
+<p>Each XML element has the following entries:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Entry name
+    </th>
+    <th>
+Type
+    </th>
+    <th>
+Description 
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>XmlName</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<p>The name of the element; includes the namesapce prefix. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>XmlNsPrefix</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<p>The prefix of the namespace.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XmlNsURI</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<p>The URI of the namespace. </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>XmlText or</p>
+<p>XmlCdata</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<p>A string made of the concatenation of all text and CData text in the element, but not inside any child elements. When you assign a value to the XmlCdata element, ColdFusion puts the text inside a CDATA information item. When you retrieve information from document object, these element names return identical values.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XmlComment</p>
+    </td>
+    <td>
+<p>String</p>
+    </td>
+    <td>
+<p>A string made of the concatenation of all comments inside the XML element, but not inside any child elements.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>XmlAttributes</p>
+    </td>
+    <td>
+<p>Structure</p>
+    </td>
+    <td>
+<p> All of this element's attributes, as name-value pairs.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XmlChildren</p>
+    </td>
+    <td>
+<p>Array</p>
+    </td>
+    <td>
+<p> All this element's children elements.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>XmlParent</p>
+    </td>
+    <td>
+<p>XmlNode</p>
+    </td>
+    <td>
+<p>The parent DOM node of this element. </p>
+<p>This entry does not appear when <a href="00000239.htm#3765824"><code>cfdump</code></a> displays an XML element structure.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XmlNodes</p>
+    </td>
+    <td>
+<p>Array</p>
+    </td>
+    <td>
+<p>An array of all the XmlNode DOM nodes contained in this element.</p>
+<p>This entry does not appear when <a href="00000239.htm#3765824"><code>cfdump</code></a> displays an XML element structure. </p>
+    </td>
+  </tr>
+</table>
+
+<h3><a name="wp1206333"></a>XML DOM node structure</h3>
+<p>The following table lists the contents of an XML DOM node structure:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Entry name 
+    </th>
+    <th>
+Type 
+    </th>
+    <th>
+Description 
+    </th>
+  </tr>
+  <tr>
+    <td>
+<p>XmlName </p>
+    </td>
+    <td>
+<p>String </p>
+    </td>
+    <td>
+<p>The node name. For nodes such as Element or Attribute, the node name is the element or attribute name.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>XmlType </p>
+    </td>
+    <td>
+<p>String </p>
+    </td>
+    <td>
+<p>The node XML DOM type, such as Element or Text. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>XmlValue </p>
+    </td>
+    <td>
+<p>String </p>
+    </td>
+    <td>
+<p>The node value. This entry is used only for Attribute, CDATA, Comment, and Text type nodes. </p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>The <a href="00000239.htm#3765824"><code>cfdump</code></a> tag does not display XmlNode structures. If you try to dump an XmlNode structure, the <code>cfdump</code> tag displays &quot;Empty Structure.&quot;</p><p>The following table lists the contents of the XmlName and XmlValue fields for each node type that is valid in the XmlType entry. The node types correspond to the objects types in the XML DOM hierarchy.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Node type
+    </th>
+    <th>
+XmlName
+    </th>
+    <th>
+xmlValue
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>CDATA 
+</pre>    </td>
+    <td>
+<pre>#cdata-section 
+</pre>    </td>
+    <td>
+<p>Content of the CDATA section </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>COMMENT 
+</pre>    </td>
+    <td>
+<pre>#comment 
+</pre>    </td>
+    <td>
+<p>Content of the comment </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>ELEMENT 
+</pre>    </td>
+    <td>
+<p>Tag name </p>
+    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>ENTITYREF 
+</pre>    </td>
+    <td>
+<p>Name of entity referenced </p>
+    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>PI (processing instruction)
+</pre>    </td>
+    <td>
+<p>Target entire content excluding the target </p>
+    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>TEXT 
+</pre>    </td>
+    <td>
+<pre>#text 
+</pre>    </td>
+    <td>
+<p>Content of the text node </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>ENTITY 
+</pre>    </td>
+    <td>
+<p>Entity name </p>
+    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>NOTATION 
+</pre>    </td>
+    <td>
+<p>Notation name </p>
+    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>DOCUMENT 
+</pre>    </td>
+    <td>
+<pre>#document 
+</pre>    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>FRAGMENT 
+</pre>    </td>
+    <td>
+<pre>#document-fragment 
+</pre>    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>DOCTYPE 
+</pre>    </td>
+    <td>
+<p>Document type name </p>
+    </td>
+    <td>
+<p>Empty string </p>
+    </td>
+  </tr>
+</table>
+
+<p><strong>Note: </strong>Although XML attributes are nodes on the DOM tree, ColdFusion does not expose them as XML DOM node data structures. To view an element's attributes, use the element structure's XMLAttributes structure.</p><p>The XML document object and all its elements are exposed as DOM node structures. For example, you can use the following variable names to reference nodes in the DOM tree that you created from the XML example in <a href="00001507.htm#1127213">A simple XML document</a>:</p>
+<pre>mydoc.XmlName
+mydoc.XmlValue
+mydoc.XmlRoot.XmlName
+mydoc.employee.XmlType
+mydoc.employee.XmlNodes[1].XmlType
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001509.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001511.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001510.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

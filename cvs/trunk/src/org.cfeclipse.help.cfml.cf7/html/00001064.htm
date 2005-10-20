@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using introspection to get information about components</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001063.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001065.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using introspection to get information about components</h1>
+<p>ColdFusion provides several ways for you to get information about components:</p>
+<ul>
+<li>
+   <a href="00001064.htm#1178643">Requesting a component page from the browser</a> 
+</li>
+<li>
+   <a href="00001065.htm#1200595">Using the ColdFusion component browser</a>
+</li>
+<li>
+   <a href="00001066.htm#1177492">Using the Dreamweaver MX 2004 component panel</a>
+</li>
+<li>
+   <a href="00001067.htm#1230671">Using the GetMetaData function</a>
+</li>
+</ul>
+<p>Development teams can use the information about components as up-to-date API reference information.</p>
+<p><strong>Note: </strong>For information about how to include documentation in CFCs for display using introspection, see <a href="00001035.htm#1216248">Documenting CFCs</a>.</p><h3><a name="wp1178643"></a>Requesting a component page from the browser</h3>
+<p>When you access a CFC directly with a web browser without specifying a component method, the following chain of events occurs:</p>
+<ol>
+<li>
+   The request is redirected to the cfcexplorer.cfc file, which is located in the <i>cf_root</i>/wwwroot/CFIDE/componentutils directory. 
+</li>
+<li>
+   The cfcexplorer component prompts users for the ColdFusion RDS or Administrator password, if necessary. 
+</li>
+<li>
+   The cfcexplorer component renders an HTML description and returns it to the browser. 
+</li>
+</ol>
+<p>The resulting display looks like the following example:</p>
+<p></p>
+<p><img src="images/buildina.jpg" border="0" hspace="0" vspace="0"/>
+</p>
+<p>tests.cfcs.arithCFC<br />Component arithCFC (Arithmetic Functions) </p>
+<p>Miscellaneous functions for doing arithmetic</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>hierarchy:</p>
+    </td>
+    <td>
+<p>WEB-INF.cftags.component<br />tests.cfcs.arithCFC</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>path:</p>
+    </td>
+    <td>
+<p>C:\cfmx\wwwroot\tests\cfcs\arithCFC.cfc</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>properties:</p>
+    </td>
+    <td>
+<p>something</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>methods:</p>
+    </td>
+    <td>
+<p>add, multiply *</p>
+    </td>
+  </tr>
+</table>
+
+<p>* - private method</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>&#160;</p>
+<p><code><strong>Property</strong></code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+<p><code><strong>Hint</strong></code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+<p><code><strong>Type</strong></code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+<p><code><strong>Req.</strong></code></p>
+    </td>
+    <td>
+<p>&#160;</p>
+<p><code><strong>Implemented In</strong></code></p>
+    </td>
+    <td>
+<p><code><strong>Default Value</strong></code></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<p>Prop1 (display name here)</p>
+    </td>
+    <td>
+<p>I just need this for an example</p>
+    </td>
+    <td>
+<p>any </p>
+    </td>
+    <td>
+<p>&#160;</p>
+    </td>
+    <td>
+<p>arithCFC </p>
+    </td>
+    <td>
+<p>- </p>
+    </td>
+  </tr>
+</table>
+
+<p></p>
+<p><code>add (Addition Function) </code></p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><i>remote numeric</i> <strong>add</strong> ( <i>numeric</i> arg1, <i>numeric</i> arg2 ) <br /><br />Adds integers or floating point numbers<br /><br />Output: enabled<br />Parameters:<br />arg1: numeric, optional, argument 1 - must be numeric <br />arg2: numeric, optional, arg2</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<strong>multiply* </strong>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p><i>private numeric</i> <strong>multiply</strong> ( <i>numeric</i> argA, <i>numeric</i> argB ) <br /><br />Output: enabled<br />Parameters:<br />argA: numeric, optional, argA <br />argB: numeric, optional, argB </p>
+    </td>
+  </tr>
+</table>
+
+<p></p>
+<p><img src="images/buildia2.jpg" border="0" hspace="0" vspace="0"/>
+</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001063.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001065.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001064.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

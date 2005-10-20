@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>A user-defined function example</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001013.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001015.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>A user-defined function example</h1>
+<p>The following simple function takes a principal amount, an annual percentage rate, and a loan duration in months and returns the total amount of interest to be paid over the period. You can optionally use the percent sign for the percentage rate, and include the dollar sign and comma separators for the principal amount.</p>
+<p>You could use the <code>TotalInterest</code> function in a <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag of a form's action page, as follows:</p>
+<pre>&lt;cfoutput&gt; 
+   Loan amount: #Form.Principal#&lt;br&gt;
+   Annual percentage rate: #Form.AnnualPercent#&lt;br&gt;
+   Loan duration: #Form.Months# months&lt;br&gt;
+   TOTAL INTEREST: #TotalInterest(Form.Principal, Form.AnnualPercent,<br />      Form.Months)#&lt;br&gt;
+&lt;/cfoutput&gt;
+</pre><h2><a name="wp1176215"></a>Defining the function using CFScript</h2>
+<pre><code>&lt;cfscript&gt;</code>
+<code>function TotalInterest(principal, annualPercent, months)&#160;{</code>
+<code>   Var years = 0;</code>
+<code>   Var interestRate = 0;</code>
+<code>   Var totalInterest = 0;</code>
+   principal = trim(principal);
+<code>   principal = REReplace(principal,&quot;[\$,]&quot;,&quot;&quot;,&quot;ALL&quot;);</code>
+<code>   annualPercent = Replace(annualPercent,&quot;%&quot;,&quot;&quot;,&quot;ALL&quot;);</code>
+<code>   interestRate = annualPercent / 100;</code>
+<code>   years = months / 12;</code>
+<code>   totalInterest = principal*(((1+ interestRate)^years)-1);</code>
+<code>   Return DollarFormat(totalInterest);</code>
+<code>}</code>
+<code>&lt;/cfscript&gt;</code>
+</pre><h4><a name="wp1193359"></a>Reviewing the code</h4>
+<p>The following table describes the code:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>function TotalInterest(principal, annualPercent,
+   months)&#160;{
+</pre>    </td>
+    <td>
+<p>Starts the <code>TotalInterest</code> function definition. Requires three variables: the principal amount, the annual percentage rate, and the loan duration in months.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>Var years = 0;
+Var interestRate = 0;
+Var totalInterest = 0;
+</pre>    </td>
+    <td>
+<p>Declares intermediate variables used in the function and initializes them to 0. All <code>var</code> statements must precede the rest of the function code.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>principal = trim(principal);
+principal = REReplace(principal,&quot;[\$,]&quot;,&quot;&quot;,&quot;ALL&quot;);
+annualPercent = 
+   Replace(annualPercent,&quot;%&quot;,&quot;&quot;,&quot;ALL&quot;);
+interestRate = annualPercent / 100;
+years = months / 12;
+</pre>    </td>
+    <td>
+<p>Removes any leading or trailing spaces from the principal argument. Removes any dollar sign ($) and comma (,) characters from the principal argument to get a numeric value.</p>
+<p>Removes any percent (%) character from the <code>annualPercent</code> argument to get a numeric value, then divides the percentage value by 100 to get the interest rate.</p>
+<p>Converts the loan from months to years.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>   totalInterest = principal*(((1+ interestRate)^years)-1);
+   Return DollarFormat(totalInterest);
+}
+</pre>    </td>
+    <td>
+<p>Calculates the total amount of interest due. It is possible to calculate the value in the <code>Return</code> statement, but this example uses an intermediate totalInterest variable to make the code easier to read. Returns the result formatted as a US currency string.</p>
+<p>Ends the function definition.</p>
+    </td>
+  </tr>
+</table>
+
+<h2><a name="wp1193395"></a>Defining the function using the cffunction tag</h2>
+<p>The following code replaces CFScript statements with their equivalent CFML tags.</p>
+<pre><code>&lt;cffunction name=&quot;TotalInterest&quot;&gt;</code>
+<code>   &lt;cfargument name=&quot;principal&quot; required=&quot;Yes&quot;&gt;</code>
+<code>   &lt;cfargument name=&quot;annualPercent&quot; required=&quot;Yes&quot;&gt; </code>
+<code>   &lt;cfargument name=&quot;months&quot; required=&quot;Yes&quot;&gt;</code>
+<code>   &lt;cfset var years = 0&gt;</code>
+<code>   &lt;cfset var interestRate = 0&gt;</code>
+<code>   &lt;cfset var totalInterest = 0&gt;</code>
+<code>   &lt;cfset principal = trim(principal)&gt;</code>
+<code>   &lt;cfset principal = REReplace(principal,&quot;[\$,]&quot;,&quot;&quot;,&quot;ALL&quot;)&gt;</code>
+<code>   &lt;cfset annualPercent = Replace(annualPercent,&quot;%&quot;,&quot;&quot;,&quot;ALL&quot;)&gt;</code>
+<code>   &lt;cfset interestRate = annualPercent / 100&gt;</code>
+<code>   &lt;cfset years = months / 12&gt;</code>
+<code>   &lt;cfset totalInterest = principal*</code>
+<code>         (((1+ interestRate)^years)-1)&gt;</code>
+<code>   &lt;cfreturn DollarFormat(totalInterest)&gt;</code>
+<code>&lt;/cffunction&gt;</code>
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00001013.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001015.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001014.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

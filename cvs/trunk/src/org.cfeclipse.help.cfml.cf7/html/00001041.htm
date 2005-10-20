@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Invoking CFC methods with the cfinvoke tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001040.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001042.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Invoking CFC methods with the cfinvoke tag</h1>
+<p>The <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag can invoke methods on a CFC instance or invoke CFC methods transiently. You can also use the <code>cfinvoke</code> tag to invoke CFC methods from within a CFC.</p>
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001041.htm#1183565">Invoking methods of a CFC instance</a>
+</li>
+<li>
+   <a href="00001042.htm#1217806">Invoking component methods transiently using the cfinvoke tag</a>
+</li>
+<li>
+   <a href="00001043.htm#1183569">Using the cfinvoke tag within the CFC definition</a>
+</li>
+<li>
+   <a href="00001044.htm#1214624">Invoking methods using dynamic method names</a>
+</li>
+</ul>
+<h3><a name="wp1183565"></a>Invoking methods of a CFC instance</h3>
+<p>To invoke a component method of a CFC instance, use the <a href="00000281.htm#2650065"><code>cfinvoke</code></a> tag and specify the following:</p>
+<ul>
+<li>
+   The CFC instance name, <i>enclosed in number signs</i> (#), in the <code>component</code> attribute.
+</li>
+<li>
+   The method name, in the <code>method</code> attribute.
+</li>
+<li>
+   Any parameters. For information on passing parameters, see <a href="00001051.htm#1215321">Passing parameters to methods using the cfinvoke tag</a>.
+</li>
+<li>
+   If the component method returns a result, the name of the variable that will contain the result in the <code>returnVariable</code> attribute.
+</li>
+</ul>
+<h4>To invoke a method of a component instance using the cfinvoke tag:</h4>
+<ol>
+<li>
+   Create a file named tellTime2.cfc with the following code:
+<pre>
+&lt;cfcomponent&gt;
+	&lt;cffunction name=&quot;getLocalTime&quot; access=&quot;remote&quot;&gt;
+		&lt;cfreturn TimeFormat(now())&gt;
+	&lt;/cffunction&gt;
+	&lt;cffunction name=&quot;getUTCTime&quot; access=&quot;remote&quot;&gt;
+		&lt;cfscript&gt;
+			serverTime=now();
+			utcTime=GetTimeZoneInfo();
+			utcStruct=structNew();
+			utcStruct.Hour=DatePart(&quot;h&quot;, serverTime);
+			utcStruct.Minute=DatePart(&quot;n&quot;, serverTime);
+			utcStruct.Hour=utcStruct.Hour + utcTime.utcHourOffSet;
+			utcStruct.Minute=utcStruct.Minute + utcTime.utcMinuteOffSet;
+			if (utcStruct.Minute LT 10)
+				utcStruct.Minute = &quot;0&quot; &amp; utcStruct.Minute;
+		&lt;/cfscript&gt;
+		&lt;cfreturn utcStruct.Hour &amp; &quot;:&quot; &amp; utcStruct.Minute&gt;
+	&lt;/cffunction&gt;
+&lt;/cfcomponent&gt;
+</pre>
+<p>The example defines two component methods: <code>getLocalTime</code> and <code>getUTCTime</code>. </p>
+</li>
+<li>
+   Create a new ColdFusion page, with the following code and save it in the same directory as the tellTime component:
+<pre>
+&lt;!--- Create the component instance. ---&gt;
+&lt;cfobject component=&quot;tellTime2&quot; name=&quot;tellTimeObj&quot;&gt;
+&lt;!--- Invoke the methods. ---&gt;
+&lt;cfinvoke component=&quot;#tellTimeObj#&quot; method=&quot;getLocalTime&quot;
+	returnvariable=&quot;localTime&quot; &gt;
+&lt;cfinvoke component=&quot;#tellTimeObj#&quot; method=&quot;getUTCTime&quot;
+	returnvariable=&quot;UTCTime&quot; &gt;
+&lt;!--- Display the results. ---&gt;
+&lt;h3&gt;Time Display Page&lt;/h3&gt;
+&lt;cfoutput&gt;
+	Server&#39;s Local Time: #localTime#&lt;br&gt;
+	Calculated UTC Time: #UTCTime#
+&lt;/cfoutput&gt;
+</pre>
+</li>
+</ol>
+<p>This example uses the <a href="00000302.htm#2820239"><code>cfobject</code></a> tag to create an instance of the tellTime component and the <code>cfinvoke</code> tag to invoke the instance's <code>getLocalTime</code> and <code>getUTCTime</code> methods. In this example, the CFC contains the functional logic in the methods, which return a result to the calling page, and the calling page displays the results. This structure separates the logic from the display functions, which usually results in more reusable code.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001040.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001042.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001041.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

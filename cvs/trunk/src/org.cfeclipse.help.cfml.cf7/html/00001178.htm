@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>About user security</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001177.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001179.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>About user security</h1>
+<p>User security lets your application use security rules to determine what it shows. It has two elements:</p>
+<p><strong>Authentication</strong><strong>&#160;</strong>Ensures that a valid user is logged-in, based on an ID and password provided by the user. ColdFusion (or, in some cases if you use web server authentication, the web server) maintains the user ID information while the user is logged-in.</p>
+<p><strong>Authorization</strong><strong>&#160;</strong>Ensures that the logged-in user is allowed to use a page or perform an operation. Authorization is typically based on one or more <i>roles</i> (sometimes called groups) to which the user belongs. For example, in an employee database, all users could be members of either the employee role or the contractor role. They could also be members of roles that identify their department, position in the corporate hierarchy, or job description. For example, someone could be a member of some or all of the following roles:</p>
+<ul>
+<li>
+   Employees
+</li>
+<li>
+   Human Resources
+</li>
+<li>
+   Benefits
+</li>
+<li>
+   Managers
+</li>
+</ul>
+<p>Roles enable you to control access in your application resources without requiring the application to maintain knowledge about individual users. For example, suppose you use ColdFusion for your company's intranet. The Human Resources department maintains a page on the intranet on which all employees can access timely information about the company, such as the latest company policies, upcoming events, and job postings. You want everyone to be able to read the information, but you want only certain authorized Human Resources employees to be able to add, update, or delete information. </p>
+<p>Your application gets the user's roles from the user information data store when the user logs in, and then enables access to specific pages or features based on the roles. Typically, you store user information in a database, LDAP directory, or other secure information store.</p>
+<p>You can also use the user ID for authorization. For example, you might want to let employees view customized information about their salaries, job levels, and performance reviews. You certainly would not want one employee to view sensitive information about another employee, but you would want managers to be able to see, and possibly update, information about their direct reports. By employing both user IDs and roles, you can ensure that only the appropriate people can access or work with sensitive data.</p>
+<p>The following figure shows a typical flow of control for user authentication and authorization. Following sections expand on this diagram to describe how you implement user security in ColdFusion.</p>
+<p><br />
+<img src="images/secureba.jpg" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+<p>This section describes the following topic:</p>
+<ul>
+<li>
+   <a href="00001178.htm#1164376">Authenticating users</a>
+</li>
+</ul>
+<h2><a name="wp1164376"></a>Authenticating users</h2>
+<p>You can use either, or both, of the following forms of authentication to secure your ColdFusion application:</p>
+<ul>
+<li>
+   Web server authentication, where the web server authenticates the user and does not allow access to the website by users without valid login IDs
+</li>
+<li>
+   Application authentication, where the ColdFusion application authenticates the user and does not allow access to the application by users without valid login IDs
+</li>
+</ul>
+<h3><a name="wp1130607"></a>About web server authentication</h3>
+<p>All major web servers support basic HTTP authentication. Some web servers also support other authentication methods, including Digest HTTP authentication and Microsoft NTLM authentication.</p>
+<p><strong>Note: </strong>Macromedia Dreamweaver MX and Studio MX do not support NTLM security with RDS. Therefore, you cannot use RDS with these applications if the ColdFusion RDS servlet (<i>cf_root</i>/CFIDE/main/ide.cfm) is in a directory that is protected using NTLM security.</p><p>In web server authentication, the web server requires the user to log in to access pages in a particular directory, as follows:</p>
+<ol>
+<li>
+   When the user first requests a page in the secured directory, the web server notifies the browser that the requested page requires credentials (a user ID and password).
+<p>Basic HTTP authentication sends the user ID and password in a base64-encoded string with each request. Use SSL (Secure Sockets Layer) for all page transactions, to protect the user ID and password from unauthorized access. For more information on SSL and the keytool utility, see <a href="00001300.htm#1196433">About LDAP Server Security</a>.</p>
+</li>
+<li>
+   The browser prompts the user for the credentials.
+</li>
+<li>
+   The user supplies the credentials and the browser send the information back to the web server along with the original request. 
+</li>
+<li>
+   The web server checks the user ID and password, using its own user authentication mechanism. 
+</li>
+<li>
+   If the user logs in successfully, the browser caches the authentication information and sends it in an HTTP Authorization header with every subsequent page request from the user. 
+</li>
+<li>
+   The web server processes the requested page and all future page requests from the browser that contain the HTTP Authorization header, if it is valid for the requested page.
+</li>
+</ol>
+<p>You can use web server authentication without using any ColdFusion security features. In this case, you configure and manage all user security through the web server's interfaces.</p>
+<p>You can also use web server authentication with ColdFusion application authentication, and thus you can use ColdFusion security for authorization. If the web server uses basic HTML authentication, the ColdFusion <a href="00000287.htm#2991147"><code>cflogin</code></a> tag provides access to the user ID and password that the user entered to log in to the web server. If the web server uses Digest or NTLM authentication, the <code>cflogin</code> tag normally gets the user ID, but not the password. </p>
+<p>As a result, your application can rely on the web server to authenticate the user against its user and password information, and does not have to display a login page. You use the <code>cflogin</code> and <a href="00000288.htm#2873089"><code>cfloginuser</code></a> tags to log the user into the ColdFusion user security system, and use the <a href="00000533.htm#4047189"><code>IsUserInRole</code></a> and <a href="00000469.htm#4046631"><code>GetAuthUser</code></a> functions to ensure user authorization. For more information on this form of security, see <a href="00001183.htm#1139642">A web server authentication security scenario</a>.</p>
+<p><strong>Note: </strong>If a user has logged in using web server authentication and has not logged in using ColdFusion application authentication, the <code>GetAuthUser</code> tag returns the web server user ID. You could use this feature to combine web server authentication with application authorization based on the user's ID.</p><h3><a name="wp1130477"></a>About application authentication</h3>
+<p>With application authentication, you do not rely on the web server to enforce application security. The application performs all user authentication and authorization. The application displays a login page, checks the user's identity and login against its own authorization store, such as an LDAP directory or database, and logs the user into ColdFusion using the <code>cfloginuser</code> tag. The application can then use the <a href="00000533.htm#4047189"><code>IsUserInRole</code></a> and <a href="00000469.htm#4046631"><code>GetAuthUser</code></a> functions to check the user's roles or identity for authorization before running a ColdFusion page or specific code on a page. For an example of application authentication use, see <a href="00001183.htm#1130436">An application authentication security scenario</a>.</p>
+<h3><a name="wp1139988"></a>ColdFusion authentication storage and persistence</h3>
+<p>How ColdFusion application authentication information is maintained by the browser and ColdFusion, and therefore how long it is available, depends on the following:</p>
+<ul>
+<li>
+   Whether the user's browser enables cookies
+</li>
+<li>
+   Whether the application supports the Session scope for login storage
+</li>
+</ul>
+<p><strong>Note: </strong>For detailed information on Session scope, see <a href="00001156.htm#1154679">Configuring and using session variables</a>. Cookie scope contains the cookies that are sent by the browser; for more information on using cookies, see <a href="00000233.htm#3839604"><code>cfcookie</code></a> in <i>CFML Reference</i>.</p><h4><a name="wp1137482"></a>Authentication and cookies</h4>
+<p>Because HTTP is connectionless, a login can last beyond a single web page viewing only if the browser provides a unique identifier that software on the server can use to confirm that the current user is authenticated. Normally, this is done by using memory-only cookies that are automatically destroyed when the user closes all open browser windows. The specific cookies and how they are used depend on whether the application supports the Session scope for login storage.</p>
+<p><strong>Note: </strong>For information on user logins without cookies, see <a href="00001178.htm#1166505">Using ColdFusion security without cookies</a>.</p><h4><a name="wp1137099"></a>Using the Session scope</h4>
+<p>If you do the following, ColdFusion maintains login information in the Session scope instead of the Cookie scope:</p>
+<ul>
+<li>
+   Enable the Session scope in the ColdFusion&#160;MX Administrator and the Application.cfc initialization code or <code>cfapplication</code> tag.
+</li>
+<li>
+   Specify <code>loginStorage=&quot;Session&quot;</code> in the Application.cfc initialization code or <code>cfapplication</code> tag.
+</li>
+</ul>
+<p>When ColdFusion maintains login information in the Session scope, it stores the authentication details in a Session.cfauthorization variable, and ColdFusion uses the session cookie information to identify the user. Session-based authentication has the following advantages over less persistent login storage:</p>
+<ul>
+<li>
+   After the user logs in, the user ID and password are not passed between the server and the browser.
+</li>
+<li>
+   The login information and the session share a single time-out. There is no need to manually synchronize sessions and logins.
+</li>
+<li>
+   If you use server clusters, the Session scope login ID can be available across the cluster. For more information on server clustering, see <i>Configuring and Administering ColdFusion&#160;MX</i>.
+</li>
+</ul>
+<p>If you do not enable the Session scope, the authentication information is not kept in a persistent scope. Instead, the detailed login information is put in a memory-only cookie (CFAUTHORIZATION_applicationName) with a base64-encoded string that contains the user name, password, and application name. The client sends this cookie to the web server each time it makes a page request while the user is logged-in. Use SSL for all page transactions to protect the user ID and password from unauthorized access. </p>
+<h3><a name="wp1166505"></a>Using ColdFusion security without cookies</h3>
+<p>You can implement a limited-lifetime form of ColdFusion security if the user's browser does not support cookies. In this case you do not use the <a href="00000287.htm#2991147"><code>cflogin</code></a> tag, only the <a href="00000288.htm#2873089"><code>cfloginuser</code></a> tag. It is the only time you should use the <code>cfloginuser</code> tag outside a <code>cflogin</code> tag.</p>
+<p>Without browser cookies, the effect of the <code>cfloginuser</code> tag is limited to a single HTTP request. You must provide your own authentication mechanism and call <code>cfloginuser</code> on each page on which you use ColdFusion login identification.</p>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001177.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001179.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001178.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

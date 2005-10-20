@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Building tree controls with the cftree tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001353.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001355.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Building tree controls with the cftree tag</h1>
+<p>The <a href="00000347.htm#1104271"><code>cftree</code></a> tag lets you display hierarchical information within a form in a space-saving collapsible tree populated from data source queries. To build a tree control with the <code>cftree</code> tag, you use individual <code>cftreeitem</code> tags to populate the control..</p>
+<p>You can create trees in three formats: </p>
+<p><strong>Applet</strong>&#160;Creates a Java applet that the client must download. Downloading an applet takes time; therefore, using the <code>cftree</code> tag can be slightly slower than using an HTML form element to retrieve the same information. In addition, browsers must be Java-enabled for the <code>cftree</code> tag to work properly.</p>
+<p><strong>Flash</strong>&#160;Generates a Flash control that you can include in an HTML or Flash format form. For more information on Flash Format see <a href="00001388.htm#131336">Creating Forms in Macromedia Flash</a>.</p>
+<p><strong>Object&#160;</strong>Creates a hierarchical ColdFusion structure that represents the tree data and many of the <code>cftree</code> and <code>cftreeitem</code> attributes.</p>
+<p>The different formats support different sets of features and attributes. This section discusses general techniques that apply to all three formats, and indicates any techniques that do not apply to a specific format. It uses applet format for all examples, which use applet-specific attributes. For details on the features and attributes supported in each format, see the <a href="00000347.htm#1104271"><code>cftree</code></a> entry in <i>CFML Reference</i>. </p>
+<h4>To create and populate a tree control from a query:</h4>
+<ol>
+<li>
+   Create a ColdFusion page with the following content:
+<pre>
+&lt;cfquery name=&quot;engquery&quot; datasource=&quot;cfdocexamples&quot;&gt;
+	SELECT FirstName + &#39; &#39; + LastName AS FullName
+	FROM Employee
+&lt;/cfquery&gt;
+&lt;cfform name=&quot;form1&quot; action=&quot;submit.cfm&quot;&gt;
+&lt;cftree name=&quot;tree1&quot; 
+	required=&quot;Yes&quot; 
+	hscroll=&quot;No&quot;&gt;
+	&lt;cftreeitem value=&quot;FullName&quot;
+		query=&quot;engquery&quot;
+		queryasroot=&quot;Yes&quot;
+		img=&quot;folder,document&quot;&gt;
+&lt;/cftree&gt;
+&lt;/cfform&gt;
+</pre>
+</li>
+<li>
+   Save the page as tree1.cfm and view it in your browser. 
+<p>The following figure shows the output of this CFML page:</p>
+<p><br />
+<img src="images/cftree.jpg" alt="Tree control populated from a query" border="0" hspace="0" vspace="0"/>
+<br />
+</p>
+</li>
+</ol>
+<h4><a name="wp1165283"></a>Reviewing the code</h4>
+<p>The following table describes the highlighted code and its function:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Code
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre>&lt;cftree name=&quot;tree1&quot;
+</pre>    </td>
+    <td>
+<p>Creates a tree and names it tree1.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>required=&quot;Yes&quot; 
+</pre>    </td>
+    <td>
+<p>Specifies that a user must select an item in the tree.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>hscroll=&quot;No&quot; 
+</pre>    </td>
+    <td>
+<p>Does not allow horizontal scrolling.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>&lt;cftreeitem value=&quot;FullName&quot;
+query=&quot;engquery&quot;
+</pre>    </td>
+    <td>
+<p>Creates an item in the tree and puts the results of the query named engquery in it. Because this tag uses a query, it puts one item on the tree per query entry.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>queryasroot=&quot;Yes&quot;
+</pre>    </td>
+    <td>
+<p>Specifies the query name as the root level of the tree control.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>img=&quot;folder,document&quot;
+</pre>    </td>
+    <td>
+<p>Uses the folder and document images that ship with ColdFusion in the tree structure. </p>
+<p>When populating a <a href="00000347.htm#1104271"><code>cftree</code></a> tag with data from a <a href="00000316.htm#1102316"><code>cfquery</code></a> tag, you can specify images or filenames for each level of the tree as a comma-separated list.</p>
+    </td>
+  </tr>
+</table>
+
+<p>This section describes the following topics:</p>
+<ul>
+<li>
+   <a href="00001355.htm#1168448">Grouping output from a query</a>
+</li>
+<li>
+   <a href="00001356.htm#1096437">The cftree form variables</a>
+</li>
+<li>
+   <a href="00001357.htm#1096446">Input validation</a>
+</li>
+<li>
+   <a href="00001358.htm#1096450">Structuring tree controls</a>
+</li>
+<li>
+   <a href="00001359.htm#1096460">Image names in a cftree tag</a>
+</li>
+<li>
+   <a href="00001360.htm#1096473">Embedding URLs in a cftree tag</a>
+</li>
+<li>
+   <a href="00001361.htm#1096499">Specifying the tree item in the URL</a>
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001353.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001355.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001354.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

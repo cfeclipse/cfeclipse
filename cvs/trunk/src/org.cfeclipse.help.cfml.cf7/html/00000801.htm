@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>CCFXRequest::GetAttributeList</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000800.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000802.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>CCFXRequest::GetAttributeList</h1>
+<h4><a name="wp1099401"></a>Syntax</h4>
+<pre>CCFXStringSet*<strong> </strong>CCFXRequest::GetAttributeList(void)
+</pre><h4><a name="wp1102803"></a>Description</h4>
+<p>Gets an array of attribute names passed to the tag. To get the value of one attribute, use <a href="00000800.htm#1098355">CCFXRequest::GetAttribute</a>.</p>
+<h4><a name="wp1104194"></a>Returns</h4>
+<p>Returns an object of class <a href="00000810.htm#1098541">CCFXStringSet class</a> that contains a list of attributes passed to the tag. The memory allocated for the returned string set is freed automatically by ColdFusion after the request is completed. </p>
+<h4><a name="wp1103078"></a>Example</h4>
+<p>The following example gets the list of attributes and iterates over the list, writing each attribute and its value back to the user.</p>
+<pre>LPCSTR lpszName, lpszValue ;<br />CCFXStringSet* pAttribs = pRequest-&gt;GetAttributeList() ;<br />int nNumAttribs = pAttribs-&gt;GetCount() ;<br />&#160;<br />for( int i=1; i&lt;=nNumAttribs; i++ )<br />{<br />               lpszName = pAttribs-&gt;GetString( i ) ;<br />               lpszValue = pRequest-&gt;GetAttribute( lpszName ) ;<br />               pRequest-&gt;Write( lpszName ) ;<br />               pRequest-&gt;Write( &quot; = &quot; ) ;<br />               pRequest-&gt;Write( lpszValue ) ;<br />               pRequest-&gt;Write( &quot;&lt;BR&gt;&quot; ) ;<br />}
+</pre>
+
+<hr />
+<p align="right"><p align="right"><a href="00000800.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000802.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000801.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

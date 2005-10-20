@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using CORBA objects in ColdFusion</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001587.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001589.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using CORBA objects in ColdFusion</h1>
+<p>After you create the object, you can invoke attributes and operations on the object using the syntax described in <a href="00001573.htm#1138673">Creating and using objects</a>. The following sections describe the rules for using CORBA objects in ColdFusion pages. They include information on using methods in ColdFusion, which IDL types you can access from ColdFusion, and the ColdFusion data types that correspond to the supported IDL data types.</p>
+<ul>
+<li>
+   <a href="00001588.htm#1133790">Using CORBA interface methods in ColdFusion</a>
+</li>
+<li>
+   <a href="00001589.htm#1135589">Using IDL types with ColdFusion variables</a>
+</li>
+</ul>
+<h3><a name="wp1133790"></a>Using CORBA interface methods in ColdFusion</h3>
+<p>When you use the <a href="00000302.htm#2820239"><code>cfobject</code></a> tag or the <a href="00000424.htm#1102241"><code>CreateObject</code></a> function to create a CORBA object, ColdFusion creates a handle to a CORBA interface, which is identified by the <code>cfobject</code> <code>name</code> attribute or the <code>CreateObject</code> function return variable. For example, the following CFML creates a handle named myHandle:</p>
+<pre>&lt;cfobject action = &quot;create&quot; type = &quot;CORBA&quot; context = &quot;IOR&quot; <br />class = &quot;d:\temp\tester.ior&quot; name = &quot;myHandle&quot; locale=&quot;visibroker&quot;&gt;
+&lt;cfset myHandle = CreateObject(&quot;CORBA&quot;, &quot;d:\temp\tester.ior&quot;, &quot;IOR&quot;, &quot;visibroker&quot;)
+</pre><p>You use the handle name to invoke all of the interface methods, as in the following CFML:</p>
+<pre>&lt;cfset ret=myHandle.method(foo)&gt;
+</pre><p>The following sections describe how to call CORBA methods correctly in ColdFusion.</p>
+<h4><a name="wp1135144"></a>Method name case considerations</h4>
+<p>Method names in IDL are case-sensitive. However, ColdFusion is case-insensitive. Therefore, do not use methods that differ only in case in IDL.</p>
+<p>For example, the following IDL method declarations correspond to two different methods:</p>
+<pre>testCall(in string a); // method #1
+TestCall(in string a); // method #2
+</pre><p>However, ColdFusion cannot differentiate between the two methods. If you call either method, you cannot be sure which of the two will be invoked.</p>
+<h4><a name="wp1138885"></a>Passing parameters by value (in parameters)</h4>
+<p>CORBA in parameters are always passed by value. When calling a CORBA method with a variable in ColdFusion, specify the variable name without quotation marks, as shown in the following example:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>IDL</p>
+    </td>
+    <td>
+<p>void method(in string a);</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+CFML
+    </td>
+    <td>
+<p>&lt;cfset foo=&quot;my string&quot;&gt;</p>
+<p>&lt;cfset ret=handle.method(foo)&gt;</p>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="wp1137059"></a>Passing variables by reference (out and inout parameters)</h4>
+<p>CORBA out and inout parameters are always passed by reference. As a result, if the CORBA object modifies the value of the variable that you pass when you invoke the method, your ColdFusion page gets the modified value.</p>
+<p>To pass a parameter by reference in ColdFusion, specify the variable name in double-quotation marks in the CORBA method. The following example shows an IDL line that defines a method with a string variable, b, that is passed in and out of the method by reference. It also shows CFML that calls this method.</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>IDL</p>
+    </td>
+    <td>
+<p>void method(in string a, inout string b);</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+CFML
+    </td>
+    <td>
+<p>&lt;cfset foo = &quot;My Initial String&quot;&gt;</p>
+<p>&lt;cfset ret=handle.method(bar, &quot;foo&quot;)&gt;</p>
+<p>&lt;cfoutput&gt;#foo#&lt;/cfoutput&gt;</p>
+    </td>
+  </tr>
+</table>
+
+<p>In this case, the ColdFusion variable foo corresponds to the inout parameter b. When the CFML executes, the following happens:</p>
+<ol>
+<li>
+   ColdFusion calls the method, passing it the variable by reference. 
+</li>
+<li>
+   The CORBA method replaces the value passed in, &quot;My Initial String&quot;, with some other value. Because the variable was passed by reference, this modifies the value of the ColdFusion variable. 
+</li>
+<li>
+   The <a href="00000309.htm#1101659"><code>cfoutput</code></a> tag prints the new value of the foo variable.
+</li>
+</ol>
+<h4><a name="wp1144380"></a>Using methods with return values</h4>
+<p>Use CORBA methods that return values as you would any ColdFusion function; for example:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr bgcolor="#F8F8F8">
+    <td>
+<p>IDL</p>
+    </td>
+    <td>
+<p>double method(out double a);</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+CFML
+    </td>
+    <td>
+<p>&lt;cfset foo=3.1415&gt;</p>
+<p>&lt;cfset ret=handle.method(&quot;foo&quot;)&gt;</p>
+<p>&lt;cfoutput&gt;#ret#&lt;/cfoutput&gt;</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001587.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001589.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001588.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

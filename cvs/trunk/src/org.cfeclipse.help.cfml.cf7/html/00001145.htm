@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Using the cfrethrow tag</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001144.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001146.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Using the cfrethrow tag</h1>
+<p>The <a href="00000325.htm#1102913"><code>cfrethrow</code></a> tag lets you create a hierarchy of error handlers. It tells ColdFusion to exit the current <a href="00000225.htm#3395038"><code>cfcatch</code></a> block and &quot;rethrow&quot; the exception to the next level of error handler. Thus, if an error handler designed for a specific type of error cannot handle the error, it can rethrow the error to a more general-purpose error handler. The <code>cfrethrow</code> tag can only be used in a <code>cfcatch</code> tag body.</p>
+<h3><a name="wp1135491"></a>The cfrethrow tag syntax</h3>
+<p>The following pseudocode shows how you can use the <code>cfrethrow</code> tag to create an error-handling hierarchy:</p>
+<pre>&lt;cftry&gt;
+   &lt;cftry&gt;
+      <i>Code that might throw a database error</i>
+      &lt;cfcatch Type=&quot;Database&quot;&gt;
+         &lt;cfif <i>Error is of type I can Handle</i>&gt;
+            <i>Handle it</i>
+         &lt;cfelse&gt;
+            &lt;cfrethrow&gt;
+         &lt;/cfif
+      &lt;/cfcatch&gt;
+   &lt;/cftry&gt;
+   &lt;cfcatch Type=&quot;Any&quot;&gt;
+      <i>General Error Handling code</i>
+   &lt;/cfcatch&gt;
+&lt;/cftry&gt;
+</pre><p>Although this example uses a Database error as an example, you can use any <code>cfcatch</code> type attribute in the innermost error type. </p>
+<p>Follow these rules when you use the <code>cfrethrow</code> tag:</p>
+<ul>
+<li>
+   Nest <code>cftry</code> tags, with one tag for each level of error handling hierarchy. Each level contains the <code>cfcatch</code> tags for that level of error granularity.
+</li>
+<li>
+   Place the most general error catching code in the outermost <a href="00000349.htm#1104557"><code>cftry</code></a> block.
+</li>
+<li>
+   Place the most specific error catching code in the innermost <code>cftry</code> block.
+</li>
+<li>
+   Place the code that can cause an exception error at the top of the innermost <code>cftry</code> block.
+</li>
+<li>
+   End each <code>cfcatch</code> block except those in the outermost <code>cftry</code> block with a <code>cfrethrow</code> tag.
+</li>
+</ul>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001144.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001146.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001145.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

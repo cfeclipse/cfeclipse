@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Gateway interface</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00000704.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000706.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Gateway interface</h1>
+<pre>coldfusion.eventgateway.Gateway
+</pre><p>Interface for implementing ColdFusion MX event gateways. </p>
+<p>A class that implements this interface defines a ColdFusion MX event gateway type that you can use in ColdFusion MX applications. The class must implement the following methods:</p>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th>
+Signature
+    </th>
+    <th>
+Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+<pre><i><a href="/C:/newton/depot/doc/coldfusion/blackstone/en/src/cfml%20reference/gateways.htm" target="right">GatewayName</a></i><code>([String id[, String<br />configFile]])</code>
+</pre>    </td>
+    <td>
+<p>The gateway constructor.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>String <a href="00000707.htm#1168855">getGatewayID</a>()
+</pre>    </td>
+    <td>
+<p>Returns the gateway ID.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>GatewayHelper <a href="00000708.htm#1171753">getHelper</a>()
+</pre>    </td>
+    <td>
+<p>Returns an instance of the <code>GatewayHelper</code> class for this gateway type. instance, or null if the gateway does not have a GatewayHelper class.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>int <a href="00000709.htm#1171887">getStatus</a>()
+</pre>    </td>
+    <td>
+<p>Gets the event gateway status. </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>String <a href="00000710.htm#1172018">outgoingMessage</a>(coldfusion.<br />eventgateway.CFEvent cfmessage)
+</pre>    </td>
+    <td>
+<p>Handles a message sent by ColdFusion and processes it to send to a message receiver.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>void <a href="00000711.htm#1173100">restart</a>()
+</pre>    </td>
+    <td>
+<p>Restarts a running event gateway.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>void <a href="00000712.htm#1173596">setCFCListeners</a>(String[] <br />listeners)
+</pre>    </td>
+    <td>
+<p>Identifies the CFCs that listen for incoming messages from the event gateway.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>void <a href="00000713.htm#1172009">setGatewayID</a>(String id)
+</pre>    </td>
+    <td>
+<p>Sets the gateway ID that uniquely identifies the Gateway instance.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<pre>void <a href="00000714.htm#1173355">start</a>()
+</pre>    </td>
+    <td>
+<p>Starts the event gateway.</p>
+    </td>
+  </tr>
+  <tr bgcolor="#F8F8F8">
+    <td>
+<pre>void <a href="00000715.htm#1173215">stop</a>()
+</pre>    </td>
+    <td>
+<p>Stops the event gateway.</p>
+    </td>
+  </tr>
+</table>
+
+
+
+<hr />
+<p align="right"><p align="right"><a href="00000704.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00000706.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000705.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+

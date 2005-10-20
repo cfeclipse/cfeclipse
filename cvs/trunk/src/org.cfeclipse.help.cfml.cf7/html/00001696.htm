@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta http-equiv="Content-Style-Type" content="text/css">
+   <script src="pages.js" type="text/javascript" language="Javascript1.2" charset="UTF-8"></script>
+   <title>Responding to a ColdFusion function or listener CFC</title>
+</head>
+<body>
+<p align="right"><p align="right"><a href="00001695.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001697.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<hr />
+<h1>Responding to a ColdFusion function or listener CFC</h1>
+<p>The ColdFusion event gateway services call the event gateway's outgoingMessage method to handle messages generated when an event gateway application listener CFC's listener method returns a message or any CFML code calls a <code>SendGatewayMessage</code> function. This method must send the message to the appropriate external resource.</p>
+<p>The outgoingMessage method's parameter is a CFEvent instance, containing the information about the message to send out. The CFEvent <code>getData</code> method returns a Map object that contains&#160;event gateway-specific information about the message, including any message text. All&#160;CFEvent instances received by the outgoingMessage contain information in the Data and GatewayID fields. </p>
+<p>CFEvent instances returned from listener CFC <code>onIncomingMessage</code> methods include the incoming message's originator ID and other information. However, a gateway that might handle messages from the ColdFusion <code>SendGatewayMessage</code> function cannot rely on this information being available, so it is good practice to require that all outgoing messages include the destination ID in the data Map.</p>
+<p>The <code>outgoingMessage</code> method returns a String value. The CFML <code>sendGatewayMessage</code> function returns this value to the ColdFusion application. The returned string should indicate the status of the message. By convention, ColdFusion event gateway <code>outgoingMessage</code> methods return &quot;OK&quot; if they do not encounter errors and do not have additional information (such as a message ID) to return.</p>
+<p>Because event messages are asynchronous, a positive return normally does not indicate that the message was successful delivered, only that the <code>outgoingMessage</code> method successfully handled the message. In some cases, however, it is possible to make the <code>outgoingMessage</code> method at least partially synchronous. The SMS gateway, for example, provides two <code>outgoingMessage</code> modes:</p>
+<p><strong>Asynchronous mode</strong>&#160;The <code>outgoingMessage</code> method returns when the message is queued internally for delivery to the messaging provider's short message service center (SMSC)</p>
+<p><strong>Synchronous mode</strong>&#160;The method does not return until the message is delivered to the SMSC, or an error occurs.</p>
+<p>This way, an SMS application can get a message ID for later use, such as to compare with a message receipt.</p>
+<h4><a name="wp130046"></a>Example outgoingMessage method</h4>
+<p>The following outgoingMessage method is similar to the version in the SocketGateway class. It does the following: </p>
+<ol>
+<li>
+   Gets the contents of a MESSAGE field of the Data Map returned by the<code> </code>CFEvent class<code> getData</code> method.
+</li>
+<li>
+   Gets the destination from an <code>outDestID</code> field in the data Map. 
+</li>
+<li>
+   Uses the destination's socket server thread to write the message.
+<pre>
+public String outgoingMessage(coldfusion.eventgateway.CFEvent cfmsg) {
+	String retcode=&quot;ok&quot;;
+	// Get the table of data returned from the event handler
+	Map data = cfmsg.getData();
+	String message = (String) data.get(&quot;MESSAGE&quot;);
+	// Find the right socket to write to from the socketRegistry hashtable
+	// and call the socket thread's writeoutput method.
+	// (Get the destination ID from the data map.)
+	if (data.get(&quot;outDestID&quot;) != null)
+		((SocketServerThread)socketRegistry.get(data.get(&quot;outDestID&quot;))).
+				writeOutput(message);
+	else {
+		System.out.println(&quot;cannot send outgoing message. OriginatorID is not
+			available.&quot;);
+		retcode=&quot;failed&quot;;
+		}
+	return retcode;
+}
+</pre>
+</li>
+</ol>
+
+
+<hr />
+<p align="right"><p align="right"><a href="00001695.htm"><img src="images/previous.gif" width="9" height="14" border="0" alt="Previous"></a>&nbsp;&nbsp;<a href="00001697.htm"><img src="images/next.gif" width="9" height="14" border="0" alt="Next"></a>
+</p></p>
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00001696.htm" target="mm_window">View comments in LiveDocs</a></p>
+ </body>
+</html>
+
+
+
