@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Coldfusion Help Plug-in
+Bundle-SymbolicName: org.cfeclipse.help.cfml.cf7; singleton:=true
+Bundle-Version: 0.0.1
+Bundle-Activator: org.cfeclipse.help.cfml.cf7.actions.ViewHelp
+Bundle-Vendor: CFEclipse Crew
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.rohanclan.cfml
+Eclipse-AutoStart: true
