@@ -9,10 +9,10 @@
 	needed dictionaries will be loaded and cached. So, if you put the one 
 	you use	most at the top you'll gain a touch of speed.
 	
-	Also note at present you will only get one SQL file grammer / version
+	Also note at present you will only get one SQL file grammar / version
 	no matter how many CF version you are using. Meaning it is not 
 	possible to configure cfmx701 with SQL Server *and* bd61 with MYSQL 
-	server grammer at the same time.
+	server grammar at the same time.
 -->
 <!DOCTYPE dictionary_config [
 	<!ELEMENT dictionary_config (dictionary+)>
@@ -20,44 +20,44 @@
 	<!ATTLIST dictionary
 		id ID #REQUIRED
 	>
-	<!ELEMENT version (grammer+)>
+	<!ELEMENT version (grammar+)>
 	<!ATTLIST version
 		key ID #REQUIRED
 		label CDATA #REQUIRED
 	>
-	<!ELEMENT grammer EMPTY>
-	<!ATTLIST grammer
+	<!ELEMENT grammar EMPTY>
+	<!ATTLIST grammar
 		location CDATA #REQUIRED
 	>
 ]>
 <dictionary_config>
 	<dictionary id="CF_DICTIONARY">
 		<version key="cfmx701" label="Coldfusion 7.0">
-			<grammer location="cfml.xml" />
-			<grammer location="user.xml" />
+			<grammar location="cfml.xml" />
+			<grammar location="user.xml" />
 		</version>
 		<version key="bd61" label="BlueDragon 6.1">
-			<grammer location="cfmlBD61.xml" />
-			<grammer location="user.xml" />
+			<grammar location="cfmlBD61.xml" />
+			<grammar location="user.xml" />
 		</version>
 	</dictionary>
 
 	<dictionary id="JS_DICTIONARY">
 		<version key="ecma" label="ECMA Javascript">
-			<grammer location="js.xml" />
+			<grammar location="js.xml" />
 		</version>
 	</dictionary>
 
 	<!-- note that this will get loaded into the CFML dictionary -->
 	<dictionary id="SQL_DICTIONARY">
 		<version key="mssql" label="Microsoft(R) SQL Server">
-			<grammer location="sqlkeywords.txt" />
+			<grammar location="sqlkeywords.txt" />
 		</version>
 	</dictionary>
 	
 	<dictionary id="HT_DICTIONARY">
 		<version key="xhtml" label="XHTML">
-			<grammer location="html.xml" />
+			<grammar location="html.xml" />
 		</version>
 	</dictionary>
 	

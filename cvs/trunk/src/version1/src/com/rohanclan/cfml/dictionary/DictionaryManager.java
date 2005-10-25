@@ -63,7 +63,7 @@ public class DictionaryManager
 	
 	/** all the dictionaries */
 	private static Map dictionaries = new HashMap();
-	/** the dictionary cache - for swtiching between grammers */
+	/** the dictionary cache - for swtiching between grammars */
 	private static Map dictionariesCache = new HashMap();
 	
 	/** the dictionary config file in DOM form */
@@ -181,13 +181,13 @@ public class DictionaryManager
 	 * <pre>
 	 * ...
 	 * &lt;version key="cfmx701" label="Coldfusion 7.0"&gt;
-	 * 	&lt;grammer location="cfml.xml" /&gt;
-	 * 	&lt;grammer location="user.xml" /&gt;
+	 * 	&lt;grammar location="cfml.xml" /&gt;
+	 * 	&lt;grammar location="user.xml" /&gt;
 	 * &lt;/version&gt;
 	 * ...
 	 * </pre>
 	 * 
-	 * "key" is the version key you would pass in here to load the Coldfusion 7.0 grammer
+	 * "key" is the version key you would pass in here to load the Coldfusion 7.0 grammar
 	 * @param versionkey
 	 */
 	public static void loadDictionaryByVersion(String versionkey)
@@ -228,15 +228,15 @@ public class DictionaryManager
 			dic = new HTMLSyntaxDictionary();
 		}
 		
-		//get a list of all the grammers to load
-		NodeList grammers = versionNode.getChildNodes();
-		byte nlen = (byte)grammers.getLength();
+		//get a list of all the grammars to load
+		NodeList grammars = versionNode.getChildNodes();
+		byte nlen = (byte)grammars.getLength();
 		
-		//loop over the grammers and add them to the dictionaries
+		//loop over the grammars and add them to the dictionaries
 		Node n = null;
 		for(byte z=0; z<nlen; z++)
 		{
-			n = grammers.item(z);
+			n = grammars.item(z);
 			String filename = n.getAttributes().getNamedItem("location").getNodeValue().trim();
 			dic.loadDictionary(filename);
 		}
