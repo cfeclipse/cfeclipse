@@ -46,6 +46,7 @@ import com.rohanclan.cfml.views.packageview.FolderTypes;
 //import com.rohanclan.cfml.views.snips.SnipTreeViewLabelProvider;
 //import com.rohanclan.cfml.views.snips.SnipVarItem;
 import com.rohanclan.cfml.editors.actions.Encloser;
+
 //import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 //import com.rohanclan.cfml.editors.actions.GetHelpAction;
 
@@ -69,7 +70,7 @@ public class DictionaryView extends ViewPart {
 
 	private DrillDownAdapter drillDownAdapter;
 
-	private Action action1;
+	private Action switchViewAction;
 
 	private Action action2;
 
@@ -101,172 +102,12 @@ public class DictionaryView extends ViewPart {
 		}
 	}
 
-	class ViewContentProvider implements IStructuredContentProvider,
-			ITreeContentProvider {
-		private TreeParent invisibleRoot;
-
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
-
-		public void dispose() {
-		}
-
-		public Object[] getElements(Object parent) {
-			if (parent.equals(getViewSite())) {
-				if (invisibleRoot == null)
-					initialize();
-				return getChildren(invisibleRoot);
-			}
-			return getChildren(parent);
-		}
-
-		public Object getParent(Object child) {
-			if (child instanceof TreeObject) {
-				return ((TreeObject) child).getParent();
-			}
-			return null;
-		}
-
-		public Object[] getChildren(Object parent) {
-			if (parent instanceof TreeParent) {
-				return ((TreeParent) parent).getChildren();
-			}
-			return new Object[0];
-		}
-
-		public boolean hasChildren(Object parent) {
-			if (parent instanceof TreeParent)
-				return ((TreeParent) parent).hasChildren();
-			return false;
-		}
-
-		/*
-		 * We will set up a dummy model to initialize tree heararchy. In a real
-		 * code, you will connect to a real model and expose its hierarchy.
-		 */
-		private void initialize() {
-
-			TreeParent root = new TreeParent("Dictionaries");
-
-			Map dicts = DictionaryManager.getDictionaries();
-			Iterator dictIter = dicts.keySet().iterator();
-
-			while (dictIter.hasNext()) {
-
-				String currObject = dictIter.next().toString();
-				TreeParent dic = new TreeParent(currObject);
-
-				Iterator tagIter = null;
-				TreeParent tags = new TreeParent("tags");
-				Iterator funcIter = null;
-				TreeParent functions = new TreeParent("functions");
-				Iterator scopeIter = null;
-				TreeParent scopes = new TreeParent("scopes");
-
-				SyntaxDictionary syntaxitems = DictionaryManager
-						.getDictionary(currObject);
-
-				/*
-				 * Loop through the tags
-				 */
-				try {
-					//loop through the children I guess
-					tagIter = syntaxitems.getAllTags().iterator();
-
-					while (tagIter.hasNext()) {
-						Tag currTag = (Tag) tagIter.next();
-						TagItem tag = new TagItem(currTag.getName());
-						tag.setDictionary(syntaxitems);
-
-						tags.addChild(tag);
-
-					}
-				} catch (Throwable ex) {
-					System.out
-							.println("Errror whilst trying to get the tags for: "
-									+ currObject.toString());
-					ex.printStackTrace();
-				}
-
-				/*
-				 * Loop through the functions
-				 */
-				try {
-					//loop through the children I guess
-					funcIter = syntaxitems.getAllFunctions().iterator();
-
-					while (funcIter.hasNext()) {
-						Function currFunc = (Function) funcIter.next();
-						FunctionItem func = new FunctionItem(currFunc.getName());
-						func.setDictionary(syntaxitems);
-						functions.addChild(func);
-					}
-				} catch (Throwable ex) {
-					System.out
-							.println("Errror whilst trying to get the functions");
-					ex.printStackTrace();
-				}
-
-				/*
-				 * Loop through the scopes
-				 */
-
-				try {
-					scopeIter = syntaxitems.getAllScopeVars().iterator();
-
-					while (scopeIter.hasNext()) {
-						ScopeVar currScope = (ScopeVar) scopeIter.next();
-						ScopeItem scopeitem = new ScopeItem(currScope
-								.getValue());
-						scopeitem.setDictionary(syntaxitems);
-						scopes.addChild(scopeitem);
-
-					}
-				} catch (Throwable ex) {
-					System.out
-							.println("Errror whilst trying to get the scopes");
-					ex.printStackTrace();
-				}
-
-				if (tags.hasChildren()) {
-					dic.addChild(tags);
-				}
-				if (functions.hasChildren()) {
-					dic.addChild(functions);
-				}
-				if (scopes.hasChildren()) {
-					dic.addChild(scopes);
-				}
-				root.addChild(dic);
-
-			}
-
-			/*
-			 * TreeObject to1 = new TreeObject("Leaf 1"); TreeObject to2 = new
-			 * TreeObject("Leaf 2"); TreeObject to3 = new TreeObject("Leaf 3");
-			 * TreeParent p1 = new TreeParent("Parent 1"); p1.addChild(to1);
-			 * p1.addChild(to2); p1.addChild(to3);
-			 * 
-			 * TreeObject to4 = new TreeObject("Leaf 4"); TreeParent p2 = new
-			 * TreeParent("Parent 2"); p2.addChild(to4);
-			 * 
-			 * TreeParent root = new TreeParent("Root"); root.addChild(p1);
-			 * root.addChild(p2);
-			 * 
-			 * invisibleRoot = new TreeParent(""); invisibleRoot.addChild(root);
-			 */
-
-			invisibleRoot = new TreeParent("");
-			invisibleRoot.addChild(root);
-		}
-	}
-
 	class ViewLabelProvider extends LabelProvider {
 
 		private HashMap folderIcons = new HashMap();
 
 		/**
-		 *  
+		 * 
 		 */
 		public ViewLabelProvider() {
 			super();
@@ -323,39 +164,39 @@ public class DictionaryView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 		try {
-			//	  Create a grid layout object so the text and treeviewer
+			// Create a grid layout object so the text and treeviewer
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
 			layout.verticalSpacing = 0;
 			layout.marginWidth = 0;
 			layout.marginHeight = 0;
 			parent.setLayout(layout);
-			
-			//This is what makes the controls resizable
-	        SashForm sash = new SashForm(parent,SWT.VERTICAL);
-	        GridData sashData = new GridData(GridData.FILL_BOTH);
-	        sashData.horizontalSpan = 2;
-	        sash.setLayoutData(sashData);
-	        
-	        sash.setLayout(new FillLayout());
-	        
-	        // Create a layout with no margins for the containers below
-	        GridLayout containerLayout = new GridLayout();
-	        containerLayout.marginHeight = 0;
-	        containerLayout.marginWidth = 0;
-	        
-	        // Container for the top half of the view
-	        Composite topHalf = new Composite(sash,SWT.BORDER);
-	        topHalf.setLayout(containerLayout);
-	        topHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
-	        
-	        // Container for the bottom half of the view
-	        Composite bottomHalf = new Composite(sash,SWT.BORDER);
-	        bottomHalf.setLayout(containerLayout);
-	        bottomHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
-	        
-	        // The text item to hold the name of the currently selected dictionary item
-			text = new Text(topHalf, SWT.READ_ONLY | SWT.SINGLE | SWT.BORDER);
+
+			// This is what makes the controls resizable
+			SashForm sash = new SashForm(parent, SWT.VERTICAL);
+			GridData sashData = new GridData(GridData.FILL_BOTH);
+			sashData.horizontalSpan = 2;
+			sash.setLayoutData(sashData);
+
+			sash.setLayout(new FillLayout());
+
+			// Create a layout with no margins for the containers below
+			GridLayout containerLayout = new GridLayout();
+			containerLayout.marginHeight = 0;
+			containerLayout.marginWidth = 0;
+
+			// Container for the top half of the view
+			Composite topHalf = new Composite(sash, SWT.BORDER);
+			topHalf.setLayout(containerLayout);
+			topHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+			// Container for the bottom half of the view
+			Composite bottomHalf = new Composite(sash, SWT.BORDER);
+			bottomHalf.setLayout(containerLayout);
+			bottomHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+			// This will allow you to type the tag name and get info on it
+			text = new Text(topHalf, SWT.SINGLE | SWT.BORDER);
 			GridData layoutData = new GridData();
 			layoutData.grabExcessHorizontalSpace = true;
 			layoutData.horizontalAlignment = GridData.FILL;
@@ -364,13 +205,12 @@ public class DictionaryView extends ViewPart {
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
 			drillDownAdapter = new DrillDownAdapter(viewer);
-			viewer.setContentProvider(new ViewContentProvider());
+			viewer.setContentProvider(new DictionaryViewContentProvider());
 			viewer.setLabelProvider(new ViewLabelProvider());
-			viewer.setSorter(new NameSorter());
+			// viewer.setSorter(new NameSorter());
 			viewer.setInput(getViewSite());
 			viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
-			
-		
+
 			// The title block for the preview area
 			previewLabel = new Label(bottomHalf, SWT.WRAP);
 			GridData gridData = new GridData();
@@ -378,18 +218,21 @@ public class DictionaryView extends ViewPart {
 			gridData.horizontalIndent = 5;
 			previewLabel.setLayoutData(gridData);
 			previewLabel.setText("Preview"); //$NON-NLS-1$
-			
-			
+
 			// The text box that contains the preview
-			preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER
-					| SWT.V_SCROLL | SWT.H_SCROLL | SWT.RESIZE);
+			preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI
+					| SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.RESIZE);
 			preview.setLayoutData(new GridData(GridData.FILL_BOTH));
-			preview.setBackground(new Color(Display.getCurrent(),255,255,255));
+			preview
+					.setBackground(new Color(Display.getCurrent(), 255, 255,
+							255));
+
+			// Need to get the buttons for actions here
 
 			makeActions();
 			hookContextMenu();
 			hookDoubleClickAction();
-			//contributeToActionBars();
+			contributeToActionBars();
 			hookListeners();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -416,15 +259,15 @@ public class DictionaryView extends ViewPart {
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
+		manager.add(switchViewAction);
 		manager.add(new Separator());
 		manager.add(action2);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
-		//manager.add(action1);
-		//manager.add(action2);
-		//manager.add(viewinfo);
+		// manager.add(action1);
+		// manager.add(action2);
+		// manager.add(viewinfo);
 		manager.add(viewhelp);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
@@ -433,8 +276,9 @@ public class DictionaryView extends ViewPart {
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
-		//manager.add(action1);
-		//manager.add(action2);
+		// manager.add(action1);
+		// manager.add(action2);
+		manager.add(switchViewAction);
 		manager.add(viewhelp);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
@@ -448,7 +292,7 @@ public class DictionaryView extends ViewPart {
 						.getFirstElement();
 				String urldest = "http://www.cfdocs.org/";
 				String keyword = "";
-				//			Get thecurrent page
+				// Get thecurrent page
 				IWorkbenchPage page = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage();
 				IViewReference ref[] = page.getViewReferences();
@@ -481,7 +325,7 @@ public class DictionaryView extends ViewPart {
 		};
 		viewhelp.setText("View Online Help");
 		viewhelp.setToolTipText("View online help for this tag or function");
-		//viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		// viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 
 		viewinfo = new Action() {
 			public void run() {
@@ -505,15 +349,17 @@ public class DictionaryView extends ViewPart {
 		viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 
-		action1 = new Action() {
+		switchViewAction = new Action() {
 			public void run() {
-				showMessage("Action 1 executed");
+				showMessage("Switching the View");
 			}
 		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		switchViewAction.setText("Switch View");
+		switchViewAction
+				.setToolTipText("Changes the order from categorised to a list of items");
+		switchViewAction.setImageDescriptor(PlatformUI.getWorkbench()
+				.getSharedImages().getImageDescriptor(
+						ISharedImages.IMG_OBJS_INFO_TSK));
 
 		action2 = new Action() {
 			public void run() {
@@ -530,15 +376,15 @@ public class DictionaryView extends ViewPart {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection) selection)
 						.getFirstElement();
-				//showMessage("Double-click detected on "+obj.toString());
+				// showMessage("Double-click detected on "+obj.toString());
 				viewTag(obj);
 			}
 		};
 	}
 
 	protected void hookListeners() {
-		//add a selection listener so we can look at the selected file and
-		//get the help information out
+		// add a selection listener so we can look at the selected file and
+		// get the help information out
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				String name;
@@ -614,43 +460,44 @@ public class DictionaryView extends ViewPart {
 
 					// OK button was pressed. Check the values and do whatever
 					// we need to with them.
-					
-					//Get Info about the editor
-					IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
-					IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-					IDocument doc =  ((ITextEditor)iep).getDocumentProvider().getDocument(iep.getEditorInput());
-					ITextEditor ite = (ITextEditor)iep;
+
+					// Get Info about the editor
+					IStructuredSelection selection = (IStructuredSelection) viewer
+							.getSelection();
+					IEditorPart iep = this.getViewSite().getWorkbenchWindow()
+							.getActivePage().getActiveEditor();
+					IDocument doc = ((ITextEditor) iep).getDocumentProvider()
+							.getDocument(iep.getEditorInput());
+					ITextEditor ite = (ITextEditor) iep;
 					ISelection sel = ite.getSelectionProvider().getSelection();
-					int cursorOffset = ((ITextSelection)sel).getOffset();
-					int selectionLength = ((ITextSelection)sel).getLength();
+					int cursorOffset = ((ITextSelection) sel).getOffset();
+					int selectionLength = ((ITextSelection) sel).getLength();
 					Encloser encloser = new Encloser();
-					//-> this inserts it encloser.enclose(doc,(ITextSelection)sel,selectedMethod.getInsertString(),"");
-					
-					
-					
-					
-					//End Get info about the editor
+					// -> this inserts it
+					// encloser.enclose(doc,(ITextSelection)sel,selectedMethod.getInsertString(),"");
+
+					// End Get info about the editor
 					TagFormatter tf = new TagFormatter(tg.getTag());
-					if(selectionLength > 0){
+					if (selectionLength > 0) {
 						tf.setWrapping(true);
 					}
-					
+
 					Enumeration e = fieldStore.keys();
 					while (e.hasMoreElements()) {
-						//We could pass the attributes back to the tag
-						//Item. or we could do something more radical like have a TagFormatter
+						// We could pass the attributes back to the tag
+						// Item. or we could do something more radical like have
+						// a TagFormatter
 						String attribute = e.nextElement().toString();
 						String value = fieldStore.get(attribute).toString();
 						tf.addAttribute(attribute, value);
 
-						
 						System.out.println(attribute + "," + value);
 					}
 					System.out.println(tf.toString());
-					
-					encloser.enclose(doc,(ITextSelection)sel,tf.getTagStart(),tf.getTagEnd());
-					
-					
+
+					encloser.enclose(doc, (ITextSelection) sel, tf
+							.getTagStart(), tf.getTagEnd());
+
 				}
 
 			} catch (Exception e) {
@@ -661,11 +508,10 @@ public class DictionaryView extends ViewPart {
 		}
 		/*
 		 * else if (obj instanceof FunctionItem){ FunctionItem func =
-		 * (FunctionItem)obj; tagview.setTitle(func.getName()); tagview.open();
-		 *  } else if(obj instanceof ScopeItem){ ScopeItem scopei =
-		 * (ScopeItem)obj; tagview.setTitle(scopei.getName());
-		 * //showMessage(scopei.getName()); tagview.open();
-		 *  } else{ tagview.close(); }
+		 * (FunctionItem)obj; tagview.setTitle(func.getName()); tagview.open(); }
+		 * else if(obj instanceof ScopeItem){ ScopeItem scopei = (ScopeItem)obj;
+		 * tagview.setTitle(scopei.getName()); //showMessage(scopei.getName());
+		 * tagview.open(); } else{ tagview.close(); }
 		 */
 
 	}
