@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<!--	
+cfcalendar
+	disabled = "true, false, or no attribute value"
+	mask = "character pattern"
+	dayNames = "days-of-the-week labels"
+	monthNames = "month labels"
+	onChange = "actionscript to invoke"
+-->
+
+<dialog>
+	<tab name="Main">
+		<field name="name" />
+		<field name="height" />
+		<field name="width" />
+	</tab>
+	<tab name="Date Format">
+		<field name="selectedDate" />
+		<field name="mask" />
+		<field name="startRange" />
+		<field name="endRange" />
+	</tab>
+	<tab name="Other">
+		<field name="disabled" />
+		<field name="mask" />
+		<field name="dayNames" />
+		<field name="monthNames" />
+		<field name="onChange" />
+	</tab>
+</dialog>
