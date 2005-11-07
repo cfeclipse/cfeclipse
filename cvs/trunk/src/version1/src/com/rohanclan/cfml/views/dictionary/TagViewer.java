@@ -17,6 +17,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
@@ -25,6 +26,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
@@ -91,7 +93,17 @@ public class TagViewer extends Dialog {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
+	 * This method will create the dialog. 
+	 * The process will be, 
+	 * 	1) Check to see if there is an xml file layout for this tag
+	 *  2) if no layout, then go and do a default layout
+	 *  3) if there is a layout go and parse the layout, doing a tabbed interface (maybe one there by default with the help comments.
+	 */
 	protected Control createDialogArea(Composite parent) {
+		
+		
 		//Create the composite
 		Composite container = (Composite) super.createDialogArea(parent);
 		
@@ -124,20 +136,23 @@ public class TagViewer extends Dialog {
 	   //WE add a control here which in theory is a new gridlayout? or something??!
 	   
 	    
-	  
-	  
-	    	
-	    	
-	
-		
 	    
 	    
 	    //The Help Tab
 	    TabItem tabHelp = new TabItem(tabFolder, SWT.NONE);
 	    tabHelp.setText("Help");
+	    	
+	    	gl.numColumns = 1;
 	    
+	    	Composite helpContents = new Composite(tabFolder, SWT.NONE);
+	    		helpContents.setLayout(gl);
+	    		Text helpDesc = new Text(helpContents, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.RESIZE);
+	    			helpDesc.setLayoutData(new GridData(GridData.FILL_BOTH));
+	    			helpDesc.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+	    			
+	    			helpDesc.setText(this.tag.getHelp());
 	    
-	    
+	   tabHelp.setControl(helpContents);
 	  
 	    
 	    
@@ -244,6 +259,10 @@ public class TagViewer extends Dialog {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
+	 * This creates the buttons at the bottom (Insert /Cancel)
+	 */
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, "Insert", true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
