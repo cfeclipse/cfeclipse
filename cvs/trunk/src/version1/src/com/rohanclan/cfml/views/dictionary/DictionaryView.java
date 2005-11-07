@@ -2,12 +2,8 @@ package com.rohanclan.cfml.views.dictionary;
 
 //import java.io.File;
 import java.util.Properties;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Enumeration;
-import java.util.Map;
 import java.util.Set;
-
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Display;
@@ -18,7 +14,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.FillLayout;
@@ -29,26 +24,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
-//import org.eclipse.core.runtime.IAdaptable;
-import com.rohanclan.cfml.dictionary.DictionaryManager;
-import com.rohanclan.cfml.dictionary.Function;
-import com.rohanclan.cfml.dictionary.ScopeVar;
-import com.rohanclan.cfml.dictionary.SyntaxDictionary;
-import com.rohanclan.cfml.dictionary.Tag;
-import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.browser.BrowserView;
-//import com.rohanclan.cfml.views.cfcmethods.CFCMethodViewItem;
-//import com.rohanclan.cfml.views.packageview.FolderNode;
-import com.rohanclan.cfml.views.packageview.FolderTypes;
-//import com.rohanclan.cfml.views.snips.SnipDialog;
-//import com.rohanclan.cfml.views.snips.SnipDoubleClickListener;
-//import com.rohanclan.cfml.views.snips.SnipTreeViewContentProvider;
-//import com.rohanclan.cfml.views.snips.SnipTreeViewLabelProvider;
-//import com.rohanclan.cfml.views.snips.SnipVarItem;
 import com.rohanclan.cfml.editors.actions.Encloser;
 
-//import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
-//import com.rohanclan.cfml.editors.actions.GetHelpAction;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
@@ -67,89 +45,24 @@ import com.rohanclan.cfml.editors.actions.Encloser;
 
 public class DictionaryView extends ViewPart {
 	private TreeViewer viewer;
-
 	private DrillDownAdapter drillDownAdapter;
-
 	private Action switchViewAction;
-
 	private Action action2;
-
-	private Action doubleClickAction;
-
 	private Action viewinfo;
-
+	private Action doubleClickAction;
 	private Action viewhelp;
-
 	protected Text text, preview;
-
 	protected Label previewLabel;
-
 	protected LabelProvider labelProvider;
-
 	public static final String ID_DICTIONARY = "com.rohanclan.cfml.views.dictionary";
 
-	/*
-	 * The content provider class is responsible for providing objects to the
-	 * view. It can wrap existing objects in adapters or simply return objects
-	 * as-is. These objects may be sensitive to the current input of the view,
-	 * or ignore it and always show the same content (like Task List, for
-	 * example).
-	 */
+	
 
-	private final class DoubleClickAction implements IDoubleClickListener {
-		public void doubleClick(DoubleClickEvent event) {
-			doubleClickAction.run();
-		}
-	}
+	
 
-	class ViewLabelProvider extends LabelProvider {
+	
 
-		private HashMap folderIcons = new HashMap();
-
-		/**
-		 * 
-		 */
-		public ViewLabelProvider() {
-			super();
-			this.folderIcons.put(FolderTypes.WWWROOT,
-					CFPluginImages.ICON_PVIEW_FOLDER_WWW);
-			this.folderIcons.put(FolderTypes.CFCROOT,
-					CFPluginImages.ICON_PVIEW_FOLDER_CFC);
-			this.folderIcons.put(FolderTypes.CF_ROOT,
-					CFPluginImages.ICON_PVIEW_FOLDER_CUS);
-		}
-
-		public String getText(Object obj) {
-			return obj.toString();
-		}
-
-		public Image getImage(Object obj) {
-			String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-
-			if (obj instanceof FunctionItem) {
-
-				imageKey = CFPluginImages.ICON_FUNC;
-				return CFPluginImages.get(imageKey);
-			} else if (obj instanceof TagItem) {
-				imageKey = CFPluginImages.ICON_TAG;
-				return CFPluginImages.get(imageKey);
-
-			} else if (obj instanceof ScopeItem) {
-				imageKey = CFPluginImages.ICON_SERVER;
-				return CFPluginImages.get(imageKey);
-
-			} else if (obj instanceof TreeParent) {
-				imageKey = ISharedImages.IMG_OBJ_FOLDER;
-
-			}
-
-			return PlatformUI.getWorkbench().getSharedImages().getImage(
-					imageKey);
-		}
-	}
-
-	class NameSorter extends ViewerSorter {
-	}
+	
 
 	/**
 	 * The constructor.
@@ -207,7 +120,7 @@ public class DictionaryView extends ViewPart {
 			drillDownAdapter = new DrillDownAdapter(viewer);
 			viewer.setContentProvider(new DictionaryViewContentProvider());
 			viewer.setLabelProvider(new ViewLabelProvider());
-			// viewer.setSorter(new NameSorter());
+			viewer.setSorter(new NameSorter());
 			viewer.setInput(getViewSite());
 			viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 
@@ -285,6 +198,7 @@ public class DictionaryView extends ViewPart {
 	}
 
 	private void makeActions() {
+		
 		viewhelp = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -295,8 +209,8 @@ public class DictionaryView extends ViewPart {
 				// Get thecurrent page
 				IWorkbenchPage page = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage();
-				IViewReference ref[] = page.getViewReferences();
-				System.out.println(page.getLabel());
+				//IViewReference ref[] = page.getViewReferences();
+				//System.out.println(page.getLabel());
 				/* Now we get the tag that we clicked on */
 				if (obj instanceof TagItem) {
 					TagItem tg = (TagItem) obj;
@@ -347,7 +261,7 @@ public class DictionaryView extends ViewPart {
 		viewinfo.setText("View Info");
 		viewinfo.setToolTipText("View this items informatino");
 		viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+				.getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER));
 
 		switchViewAction = new Action() {
 			public void run() {
@@ -387,8 +301,8 @@ public class DictionaryView extends ViewPart {
 		// get the help information out
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				String name;
-				String desc;
+				//String name;
+				//String desc;
 
 				ISelection selection = event.getSelection();
 				Object obj = ((IStructuredSelection) selection)
@@ -462,15 +376,15 @@ public class DictionaryView extends ViewPart {
 					// we need to with them.
 
 					// Get Info about the editor
-					IStructuredSelection selection = (IStructuredSelection) viewer
-							.getSelection();
+					//IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+							
 					IEditorPart iep = this.getViewSite().getWorkbenchWindow()
 							.getActivePage().getActiveEditor();
 					IDocument doc = ((ITextEditor) iep).getDocumentProvider()
 							.getDocument(iep.getEditorInput());
 					ITextEditor ite = (ITextEditor) iep;
 					ISelection sel = ite.getSelectionProvider().getSelection();
-					int cursorOffset = ((ITextSelection) sel).getOffset();
+					//int cursorOffset = ((ITextSelection) sel).getOffset();
 					int selectionLength = ((ITextSelection) sel).getLength();
 					Encloser encloser = new Encloser();
 					// -> this inserts it
