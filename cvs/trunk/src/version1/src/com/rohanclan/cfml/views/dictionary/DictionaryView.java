@@ -362,7 +362,7 @@ public class DictionaryView extends ViewPart {
 			try {
 				
 				TagItem tg = (TagItem) obj;
-				TagViewer tagview = new TagViewer(this.getViewSite().getShell(), tg);
+				TagEditDialog tagview = new TagEditDialog(this.getViewSite().getShell(), tg);
 				Properties fieldStore = new Properties();
 				
 
