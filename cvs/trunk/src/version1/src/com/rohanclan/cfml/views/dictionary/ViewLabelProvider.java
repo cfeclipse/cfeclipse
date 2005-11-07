@@ -10,7 +10,7 @@ import org.eclipse.ui.PlatformUI;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.packageview.FolderTypes;
 
-class ViewLabelProvider extends LabelProvider {
+public class ViewLabelProvider extends LabelProvider {
 
 	private HashMap folderIcons = new HashMap();
 

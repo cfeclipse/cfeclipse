@@ -56,21 +56,17 @@ public class DictionaryView extends ViewPart {
 	protected LabelProvider labelProvider;
 	public static final String ID_DICTIONARY = "com.rohanclan.cfml.views.dictionary";
 
-	
-
-	
-
-	
-
-	
-
 	/**
 	 * The constructor.
 	 */
 	public DictionaryView() {
 
 	}
-
+	private final class DoubleClickAction implements IDoubleClickListener {
+		public void doubleClick(DoubleClickEvent event) {
+			doubleClickAction.run();
+		}
+	}
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
@@ -98,11 +94,19 @@ public class DictionaryView extends ViewPart {
 			containerLayout.marginHeight = 0;
 			containerLayout.marginWidth = 0;
 
+			
+			//Container for the top buttons
+			Composite topButtons = new Composite(sash, SWT.BORDER);
+			topButtons.setLayout(containerLayout);
+			topButtons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			
 			// Container for the top half of the view
 			Composite topHalf = new Composite(sash, SWT.BORDER);
 			topHalf.setLayout(containerLayout);
 			topHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
 
+		
+			
 			// Container for the bottom half of the view
 			Composite bottomHalf = new Composite(sash, SWT.BORDER);
 			bottomHalf.setLayout(containerLayout);
@@ -288,9 +292,8 @@ public class DictionaryView extends ViewPart {
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection) selection)
-						.getFirstElement();
-				// showMessage("Double-click detected on "+obj.toString());
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				//showMessage("Double-click detected on "+obj.toString());
 				viewTag(obj);
 			}
 		};
@@ -357,17 +360,11 @@ public class DictionaryView extends ViewPart {
 
 		if (obj instanceof TagItem) {
 			try {
-				TagViewer tagview = new TagViewer(this.getViewSite().getShell());
+				
 				TagItem tg = (TagItem) obj;
-				tagview.setTitle(tg.getName());
-				tagview.setTag(tg);
-				Set attribs = tg.getDictionary().getElementAttributes(
-						tg.getName());
-				tagview.setAtributes(attribs);
-				// This will hold the attribute name and value pairs after the
-				// dialog is closed
+				TagViewer tagview = new TagViewer(this.getViewSite().getShell(), tg);
 				Properties fieldStore = new Properties();
-				tagview.setFieldStore(fieldStore);
+				
 
 				// Open the dialog and check if the OK button was pressed
 				if (tagview.open() == IDialogConstants.OK_ID) {

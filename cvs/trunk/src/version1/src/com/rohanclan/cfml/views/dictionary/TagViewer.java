@@ -9,14 +9,17 @@ package com.rohanclan.cfml.views.dictionary;
 
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Properties;
+import java.util.Set;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -24,14 +27,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.rohanclan.cfml.dictionary.Parameter;
+import com.rohanclan.cfml.views.browser.CFBrowser;
 
 /**
  * @author Mark Drew
  * 
- * @author Mark Drew
+ * This is the tag Editor Dialog. Should be renamed somehow
  *  
  */
 public class TagViewer extends Dialog {
@@ -67,8 +73,86 @@ public class TagViewer extends Dialog {
 		comboFields = new Properties();
 		textFields = new Properties();
 	}
+	
+	public TagViewer(Shell parentShell, TagItem tag){
+		super(parentShell);
+		comboFields = new Properties();
+		textFields = new Properties();
+		/*
+		 * This was originally in the view. no idea why. but here it is. Now the action needs to be removed from the view
+		 * 
+		 */
+		this.setTitle(tag.getName());
+		this.setTag(tag);
+		Set attribs = tag.getDictionary().getElementAttributes(tag.getName());
+		this.setAtributes(attribs);
+		this.setFieldStore(new Properties());
 
+	}
+
+	
 	protected Control createDialogArea(Composite parent) {
+		//Create the composite
+		Composite container = (Composite) super.createDialogArea(parent);
+		
+		// A Grid layout
+		GridLayout gl = new GridLayout();
+		gl.numColumns = 2;
+		
+		//A Fill layout
+		FillLayout fl = new FillLayout();
+		container.setLayout(fl);
+		TabFolder tabFolder = new TabFolder(container, SWT.HORIZONTAL);
+		//The Main Tab
+		TabItem tabMain = new TabItem(tabFolder, SWT.NONE);
+	    tabMain.setText("Main");
+	    
+	    Composite mainContents = new Composite(tabFolder, SWT.NONE);
+	    mainContents.setLayout(gl);
+	    
+	    Label label = new Label(mainContents, SWT.HORIZONTAL);
+			label.setText("howdy");
+
+		Text text = new Text(mainContents, SWT.BORDER);
+			text.setText("");
+			
+	    
+	    
+	    
+	    tabMain.setControl(mainContents);
+	    
+	   //WE add a control here which in theory is a new gridlayout? or something??!
+	   
+	    
+	  
+	  
+	    	
+	    	
+	
+		
+	    
+	    
+	    //The Help Tab
+	    TabItem tabHelp = new TabItem(tabFolder, SWT.NONE);
+	    tabHelp.setText("Help");
+	    
+	    
+	    
+	  
+	    
+	    
+		return container;
+	}
+	
+	protected Control createDialogAreax(Composite parent) {
+		
+		/* Sample code for a tab thing
+		 * 
+		 * http://www.java2s.com/ExampleCode/SWT-JFace-Eclipse/CreateaCTabFolderwithminandmaxbuttonsaswellasclosebuttonand.htm
+		 * 
+		 * Samples can also be found here
+		 * http://www.eclipse.org/swt/snippets/
+		 */
 		Composite container = (Composite) super.createDialogArea(parent);
 
 		GridLayout gl = new GridLayout();
@@ -80,7 +164,11 @@ public class TagViewer extends Dialog {
 		FontData[] containerFontData = container.getFont().getFontData();
 		labelFontData.setHeight(containerFontData[0].height);
 		Font labelFont = new Font(parent.getDisplay(), labelFontData);
-
+		
+		
+		
+		
+		
 		if (this.attributes != null) {
 			Iterator i = this.attributes.iterator();
 			while (i.hasNext()) {
@@ -92,12 +180,11 @@ public class TagViewer extends Dialog {
 					
 				}
 				
-				
-				
 				Label label = new Label(container, SWT.HORIZONTAL);
 				
 				label.setText(labelname);
 				label.setFont(labelFont);
+				//label.setToolTipText(pr.getHelp());
 				GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 				gridData.widthHint = 200;
 
