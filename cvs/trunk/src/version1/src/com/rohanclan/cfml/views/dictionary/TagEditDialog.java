@@ -38,6 +38,8 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.Parameter;
@@ -113,53 +115,26 @@ public class TagEditDialog extends Dialog {
 		Document layoutDoc = this.loadLayoutFile(this.title);
 		Composite container = (Composite) super.createDialogArea(parent);
 		FillLayout fl = new FillLayout();
-		
 		container.setLayout(fl);
-		
+		TabFolder tabFolder = new TabFolder(container, SWT.HORIZONTAL);
 		
 		if(layoutDoc != null){
 			//do the default layout
-			System.out.println("--- layout found ---");
-			
-			
+			tabFolder = parseCategories(tabFolder, layoutDoc); 			
 		} else {
 			//do the tab layouts
-			System.out.println("--- layout file not found ---");
-			
-			
-			
+			tabFolder = parseTag(tabFolder);
 			
 		}
 		
 		
 		
 		
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 2;
 		
-		//A Fill layout
-		
-		
-		TabFolder tabFolder = new TabFolder(container, SWT.HORIZONTAL);
-		//The Main Tab
-		TabItem tabMain = new TabItem(tabFolder, SWT.NONE);
-	    tabMain.setText("Main");
-	    
-	    Composite mainContents = new Composite(tabFolder, SWT.NONE);
-	    mainContents.setLayout(gl);
-	    
-	    Label label = new Label(mainContents, SWT.HORIZONTAL);
-			label.setText("howdy");
-
-		Text text = new Text(mainContents, SWT.BORDER);
-			text.setText("");
-	    tabMain.setControl(mainContents);
-	   //WE add a control here which in theory is a new gridlayout? or something??!
-	    
 	    //The Help Tab
 	    TabItem tabHelp = new TabItem(tabFolder, SWT.NONE);
 	    tabHelp.setText("Help");
-	    	
+	    GridLayout gl = new GridLayout();
 	    	gl.numColumns = 1;
 	    
 	    	Composite helpContents = new Composite(tabFolder, SWT.NONE);
@@ -172,6 +147,91 @@ public class TagEditDialog extends Dialog {
 	    
 	   tabHelp.setControl(helpContents);
 		return container;
+	}
+	
+
+	private TabFolder parseCategories(TabFolder tabFolder, Document layout){
+
+		NodeList tabs = layout.getElementsByTagName("tab");
+		GridLayout gl = new GridLayout();
+		gl.numColumns = 2;
+		//Get the tabs
+		for(int t=0; t < tabs.getLength(); t++){
+			TabItem thisTab = new TabItem(tabFolder, SWT.NONE);
+			Node layouttabs = tabs.item(t);
+			thisTab.setText(layouttabs.getAttributes().getNamedItem("name").getNodeValue());
+			
+		    Composite tagContents = new Composite(tabFolder, SWT.NONE);
+		    tagContents.setLayout(gl);
+		    
+		    //Get the fields
+		    NodeList fields = layouttabs.getChildNodes();
+
+		    for(int f=1; f < fields.getLength(); f = f + 2){
+		    Label label = new Label(tagContents, SWT.HORIZONTAL);
+				label.setText(fields.item(f).getAttributes().getNamedItem("name").getNodeValue());
+
+			Text text = new Text(tagContents, SWT.BORDER);
+				text.setText("");
+		    }
+		    thisTab.setControl(tagContents);
+		    
+		    
+		}
+		
+		return tabFolder;
+	}
+	
+	private TabFolder parseTag(TabFolder tabFolder){
+		
+		//Create the main tab
+		TabItem thisTab = new TabItem(tabFolder, SWT.NONE);
+		thisTab.setText("main");
+		 
+		GridLayout gl = new GridLayout();
+	    	gl.numColumns = 2;
+	    
+	    	Composite mainContents = new Composite(tabFolder, SWT.NONE);
+	    	mainContents.setLayout(gl);
+		
+		
+		if (this.attributes != null) {
+			Iterator i = this.attributes.iterator();
+			while (i.hasNext()) {
+				Parameter pr = (Parameter) i.next();
+				
+				String labelname = pr.getName() + " : ";
+				if(pr.isRequired()){
+					labelname = pr.getName() + " *: ";
+					
+				}
+				
+				Label label = new Label(mainContents, SWT.HORIZONTAL);
+				label.setText(labelname);
+				label.setToolTipText(pr.getHelp());
+				GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+				gridData.widthHint = 200;
+
+				if (!pr.getValues().isEmpty()) {
+					addComboField(mainContents, pr.getValues(), gridData, pr
+							.getName());
+				} else {
+					addTextField(mainContents, gridData, pr.getName());
+				}
+			
+				
+				
+			}
+			Label reqlabel = new Label(mainContents, SWT.HORIZONTAL);
+			reqlabel.setText("Labels marked with * are required.");
+			GridData labgridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+			labgridData.horizontalSpan = 2;
+			reqlabel.setLayoutData(labgridData);
+			
+		}
+		thisTab.setControl(mainContents);
+	    
+		return tabFolder;
 	}
 	
 	protected Control createDialogAreax(Composite parent) {
@@ -194,9 +254,6 @@ public class TagEditDialog extends Dialog {
 		FontData[] containerFontData = container.getFont().getFontData();
 		labelFontData.setHeight(containerFontData[0].height);
 		Font labelFont = new Font(parent.getDisplay(), labelFontData);
-		
-		
-		
 		
 		
 		if (this.attributes != null) {

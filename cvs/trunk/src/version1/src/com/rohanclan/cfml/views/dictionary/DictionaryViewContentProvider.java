@@ -59,7 +59,7 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 	private void initialize() {
 		CategoryLoader catloader = new CategoryLoader("root");
 
-		TreeParent root = catloader.getUnsortedCategories();
+		TreeParent root = catloader.getCategories();
 		invisibleRoot = new TreeParent("");
 		invisibleRoot.addChild(root);
 
