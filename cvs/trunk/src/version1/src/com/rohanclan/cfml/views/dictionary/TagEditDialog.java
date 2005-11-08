@@ -218,9 +218,6 @@ public class TagEditDialog extends Dialog {
 				} else {
 					addTextField(mainContents, gridData, pr.getName());
 				}
-			
-				
-				
 			}
 			Label reqlabel = new Label(mainContents, SWT.HORIZONTAL);
 			reqlabel.setText("Labels marked with * are required.");

@@ -4,6 +4,7 @@ package com.rohanclan.cfml.views.dictionary;
 import java.util.Properties;
 import java.util.Enumeration;
 import java.util.Set;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Display;
@@ -14,6 +15,8 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.FillLayout;
@@ -55,6 +58,7 @@ public class DictionaryView extends ViewPart {
 	protected Label previewLabel;
 	protected LabelProvider labelProvider;
 	public static final String ID_DICTIONARY = "com.rohanclan.cfml.views.dictionary";
+	private DictionaryViewFilter viewfilter;
 
 	/**
 	 * The constructor.
@@ -73,32 +77,32 @@ public class DictionaryView extends ViewPart {
 	 */
 	public void createPartControl(Composite parent) {
 		try {
-			// Create a grid layout object so the text and treeviewer
-			GridLayout layout = new GridLayout();
+	    // Create a grid layout object for the view
+		GridLayout layout = new GridLayout();
 			layout.numColumns = 1;
 			layout.verticalSpacing = 0;
 			layout.marginWidth = 0;
 			layout.marginHeight = 0;
 			parent.setLayout(layout);
 
+			
 			// This is what makes the controls resizable
 			SashForm sash = new SashForm(parent, SWT.VERTICAL);
 			GridData sashData = new GridData(GridData.FILL_BOTH);
-			sashData.horizontalSpan = 2;
+			sashData.horizontalSpan = 1;
 			sash.setLayoutData(sashData);
 
 			sash.setLayout(new FillLayout());
 
+			
 			// Create a layout with no margins for the containers below
 			GridLayout containerLayout = new GridLayout();
 			containerLayout.marginHeight = 0;
 			containerLayout.marginWidth = 0;
 
 			
-			//Container for the top buttons
-			Composite topButtons = new Composite(sash, SWT.BORDER);
-			topButtons.setLayout(containerLayout);
-			topButtons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			
+			
 			
 			// Container for the top half of the view
 			Composite topHalf = new Composite(sash, SWT.BORDER);
@@ -146,16 +150,23 @@ public class DictionaryView extends ViewPart {
 
 			// Need to get the buttons for actions here
 
+			
 			makeActions();
 			hookContextMenu();
 			hookDoubleClickAction();
-			contributeToActionBars();
 			hookListeners();
+			//contributeToActionBars();
+			//hookFilters();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
+	private void hookFilters(){
+		this.viewfilter = new DictionaryViewFilter();
+	}
+	
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -193,8 +204,6 @@ public class DictionaryView extends ViewPart {
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
-		// manager.add(action1);
-		// manager.add(action2);
 		manager.add(switchViewAction);
 		manager.add(viewhelp);
 		manager.add(new Separator());
@@ -293,8 +302,16 @@ public class DictionaryView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection) selection).getFirstElement();
-				//showMessage("Double-click detected on "+obj.toString());
-				viewTag(obj);
+				
+				if(viewer.getExpandedState(obj)){
+					
+					viewer.setExpandedState(obj, false);
+				}
+				else{ 
+					viewer.expandToLevel(obj,1);
+				}
+				
+				//viewTag(obj);
 			}
 		};
 	}
@@ -313,31 +330,112 @@ public class DictionaryView extends ViewPart {
 
 				// if the selection is empty clear the label
 				if (event.getSelection().isEmpty()) {
-					text.setText("");
+					//text.setText("");
 					preview.setText("");
 					return;
 				}
 
 				if (obj instanceof TagItem) {
 					TagItem tg = (TagItem) obj;
-					text.setText(tg.getName());
+					//text.setText(tg.getName());
 					preview.setText(tg.getHelp());
 				} else if (obj instanceof FunctionItem) {
 					FunctionItem func = (FunctionItem) obj;
-					text.setText(func.getName());
+					///text.setText(func.getName());
 					preview.setText(func.getHelp());
 				} else if (obj instanceof ScopeItem) {
 					ScopeItem scopei = (ScopeItem) obj;
-					text.setText(scopei.getName());
+					//text.setText(scopei.getName());
 					preview.setText(scopei.getHelp());
 				} else {
-					text.setText("");
+					//text.setText("");
 					preview.setText("");
 				}
 
 			}
 		});
 
+		text.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				System.out.println("seaching for: "  + text.getText());
+				String searchpattern = text.getText();
+				
+				//if there is something to find 
+				if(searchpattern.trim().length() > 1){
+					viewfilter.match = searchpattern;
+					viewer.addFilter(viewfilter);
+					viewer.expandAll();
+				}else if(searchpattern.trim().length() == 0 ){
+				//This doesnt seem to be removing the view.
+					viewer.removeFilter(viewfilter);
+				} else {
+					viewer.removeFilter(viewfilter);
+					
+				}
+				
+				
+			}
+		});
+		
+		
+		
+		/*
+		text.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				//This doesnt seem to get the latest text. The latest text comes after modifiation?
+				//text.g
+				Utils.println("seaching for: "  + text.getText());
+				String searchpattern = text.getText();
+		
+				if(searchpattern.trim().length() > 0){
+					String[] cirfuse = searchpattern.split("\\.");
+					//Here we try the split
+					
+					viewer.addFilter(circfusefilter);
+					if(searchpattern.indexOf(".") != -1){
+						viewer.expandToLevel(3);
+					}else {
+						viewer.expandToLevel(2);
+					}
+					/* ye olde JDKe canne handle it cap'tain
+					 if(searchpattern.contains(".")){
+						viewer.expandToLevel(3);	
+					} else{
+						viewer.expandToLevel(2);
+					}
+					 
+					
+
+					//now we add tests for each
+					if (cirfuse.length == 2){
+						//since there is a dot
+						
+						if(cirfuse[0].length() > 0){
+							circfusefilter.setCircuitmatch(cirfuse[0]);
+						} else {
+							circfusefilter.setCircuitmatch(null);
+						}
+						if(cirfuse[1].length() >0){
+							circfusefilter.setFuseactionmatch(cirfuse[1]);
+						}
+						else {
+							circfusefilter.setFuseactionmatch(null);
+						}
+						
+					} 
+					else if(cirfuse.length == 1){
+						circfusefilter.setCircuitmatch(cirfuse[0]);
+					}
+				} else{
+					viewer.removeFilter(circfusefilter);
+					circfusefilter.setFuseactionmatch(null);
+					circfusefilter.setCircuitmatch(null);
+				}
+
+			}
+		});
+		*/
+		
 	}
 
 	private void hookDoubleClickAction() {
@@ -417,6 +515,8 @@ public class DictionaryView extends ViewPart {
 			}
 
 		}
+		
+		
 		/*
 		 * else if (obj instanceof FunctionItem){ FunctionItem func =
 		 * (FunctionItem)obj; tagview.setTitle(func.getName()); tagview.open(); }
