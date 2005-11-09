@@ -93,6 +93,10 @@ import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
 
 import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.dictionary.SyntaxDictionary;
+import com.rohanclan.cfml.dictionary.Tag;
+import com.rohanclan.cfml.editors.actions.EditTagAction;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import com.rohanclan.cfml.editors.actions.GotoFileAction;
 import com.rohanclan.cfml.editors.actions.JumpToDocPos;
@@ -486,6 +490,32 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			};
 			menu.add(act);
 
+			
+			/*
+			 * Edit this tag action start
+			 */
+			act = new Action("Edit this tag", null){
+				public void run() {
+					SyntaxDictionary cfdic = DictionaryManager.getDictionary("CF_DICTIONARY");
+					
+					int startpos = sel.getOffset();
+					int len = Math.max(sel.getLength(),1);
+					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
+					CFEPartition part = partitioner.findClosestPartition(startpos);
+				
+					Tag tag = cfdic.getTag(part.getType());
+					//launch the editor
+					EditTagAction eta = new EditTagAction(tag, Display.getCurrent().getActiveShell());
+					eta.run();
+					
+					
+				}
+			};
+			menu.add(act);
+			
+			
+			
 			act = new Action("Jump to matching tag", null) {
 			    public void run() {
 			        JumpToMatchingTagAction matchTagAction = new JumpToMatchingTagAction();
