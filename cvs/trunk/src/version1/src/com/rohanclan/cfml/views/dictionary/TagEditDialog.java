@@ -219,7 +219,7 @@ public class TagEditDialog extends Dialog {
 		
 		//Create the main tab
 		TabItem thisTab = new TabItem(tabFolder, SWT.NONE);
-		thisTab.setText("main");
+		thisTab.setText("General");
 		 
 		GridLayout gl = new GridLayout();
 	    	gl.numColumns = 2;
