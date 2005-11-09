@@ -28,6 +28,7 @@ import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 import com.rohanclan.cfml.views.browser.BrowserView;
+import com.rohanclan.cfml.editors.actions.EditTagAction;
 import com.rohanclan.cfml.editors.actions.Encloser;
 
 
@@ -395,64 +396,14 @@ public class DictionaryView extends ViewPart {
 
 	protected void viewTag(Object obj) {
 
+		//This will actually write out the tag to the page.
+		//Thinking about this, instead of a Tag Item, maybe we should just use a Tag? 
+		
 		if (obj instanceof TagItem) {
-			try {
-				
-				TagItem tg = (TagItem) obj;
-				TagEditDialog tagview = new TagEditDialog(this.getViewSite().getShell(), tg);
-				Properties fieldStore = new Properties();
-				
-
-				// Open the dialog and check if the OK button was pressed
-				if (tagview.open() == IDialogConstants.OK_ID) {
-
-					// OK button was pressed. Check the values and do whatever
-					// we need to with them.
-
-					// Get Info about the editor
-					//IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-							
-					IEditorPart iep = this.getViewSite().getWorkbenchWindow()
-							.getActivePage().getActiveEditor();
-					IDocument doc = ((ITextEditor) iep).getDocumentProvider()
-							.getDocument(iep.getEditorInput());
-					ITextEditor ite = (ITextEditor) iep;
-					ISelection sel = ite.getSelectionProvider().getSelection();
-					//int cursorOffset = ((ITextSelection) sel).getOffset();
-					int selectionLength = ((ITextSelection) sel).getLength();
-					Encloser encloser = new Encloser();
-					// -> this inserts it
-					// encloser.enclose(doc,(ITextSelection)sel,selectedMethod.getInsertString(),"");
-
-					// End Get info about the editor
-					TagFormatter tf = new TagFormatter(tg.getTag());
-					if (selectionLength > 0) {
-						tf.setWrapping(true);
-					}
-
-					Enumeration e = fieldStore.keys();
-					while (e.hasMoreElements()) {
-						// We could pass the attributes back to the tag
-						// Item. or we could do something more radical like have
-						// a TagFormatter
-						String attribute = e.nextElement().toString();
-						String value = fieldStore.get(attribute).toString();
-						tf.addAttribute(attribute, value);
-
-						System.out.println(attribute + "," + value);
-					}
-					System.out.println(tf.toString());
-
-					encloser.enclose(doc, (ITextSelection) sel, tf
-							.getTagStart(), tf.getTagEnd());
-
-				}
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+				//Get the original tag (from the branch TagItem)
+				TagItem tg = (TagItem)obj;
+				EditTagAction eta = new EditTagAction(tg.getTag(), this.getViewSite().getShell());
+					eta.run();
 		}
 		
 		

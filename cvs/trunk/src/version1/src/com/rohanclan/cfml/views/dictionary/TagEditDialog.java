@@ -40,6 +40,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.Parameter;
+import com.rohanclan.cfml.dictionary.Tag;
 
 /**
  * @author Mark Drew
@@ -50,7 +51,7 @@ import com.rohanclan.cfml.dictionary.Parameter;
 public class TagEditDialog extends Dialog {
 	protected String title;
 
-	private TagItem tag;
+	private Tag tag;
 
 	private Set attributes;
 
@@ -81,20 +82,15 @@ public class TagEditDialog extends Dialog {
 		textFields = new Properties();
 	}
 	
-	public TagEditDialog(Shell parentShell, TagItem tag){
+	public TagEditDialog(Shell parentShell, Tag tag){
 		super(parentShell);
 		comboFields = new Properties();
 		textFields = new Properties();
-		/*
-		 * This was originally in the view. no idea why. but here it is. Now the action needs to be removed from the view
-		 * 
-		 */
 		this.setTitle(tag.getName());
 		this.setTag(tag);
-		Set attribs = tag.getDictionary().getElementAttributes(tag.getName());
+		Set attribs = tag.getParameters();
 		this.setAtributes(attribs);
 		this.setFieldStore(new Properties());
-
 	}
 
 	
@@ -436,7 +432,6 @@ public class TagEditDialog extends Dialog {
 				Combo c = (Combo)comboFields.get(key);
 				fieldStore.put(key,c.getText());
 			}
-
 			// We're done. Close the dialog
 			this.close();
 		}
@@ -448,7 +443,7 @@ public class TagEditDialog extends Dialog {
 	 * @param tag
 	 *            The tag to set.
 	 */
-	public void setTag(TagItem tag) {
+	public void setTag(Tag tag) {
 		this.tag = tag;
 	}
 
@@ -458,6 +453,10 @@ public class TagEditDialog extends Dialog {
 	 */
 	public void setAtributes(Set attributes) {
 		this.attributes = attributes;
+	}
+
+	public Properties getFieldStore() {
+		return fieldStore;
 	}
 
 }

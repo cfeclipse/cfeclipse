@@ -21,13 +21,26 @@ public class TagFormatter {
 	private Hashtable attribs = new Hashtable();
 	private Tag tagRef;
 	private boolean wrapping  = false;
-	/**
-	 * 
+	
+	
+	/** Pass in a tag, then you can manually add the attributes
+	 * @param tag
 	 */
 	public TagFormatter(Tag tag) {
 		this.tagRef = tag;
-		
 	}
+	
+	
+	/**
+	 * Pass in a tag reference and pass it the attributes that have been filled in (usually from a dialog?)
+	 * @param tag
+	 * @param attribs
+	 */
+	public TagFormatter(Tag tag, Hashtable attribs){
+		this.tagRef = tag;
+		this.attribs = attribs;
+	}
+	
 	/**
 	 * @return Returns the attribs.
 	 */
