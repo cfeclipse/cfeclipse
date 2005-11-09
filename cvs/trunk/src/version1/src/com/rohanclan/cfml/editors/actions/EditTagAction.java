@@ -27,17 +27,18 @@ package com.rohanclan.cfml.editors.actions;
 import java.util.Properties;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
-
 import com.rohanclan.cfml.dictionary.Tag;
+import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.views.dictionary.TagEditDialog;
 import com.rohanclan.cfml.views.dictionary.TagFormatter;
-import com.rohanclan.cfml.views.dictionary.TagItem;
 
 /**
  * This Class is used to call the Edit Tag Dialog and write out the contents to the editor
@@ -47,12 +48,20 @@ import com.rohanclan.cfml.views.dictionary.TagItem;
 public class EditTagAction {
 		protected Tag tag;
 		protected Shell shell;
+		protected IEditorPart editor;
 		
+	
+	/**
+	 * This  Tag Action needs a tag and a shell. 
+	 * @param tag
+	 * @param shell
+	 */
 	public EditTagAction(Tag tag, Shell shell) {
 		this.tag = tag;
 		this.shell = shell;
+		this.editor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 	}
-//
+
 	public void run(){
 			System.out.println("---Starting the EditTagAction ---");
 			//We should be able to pass the attributes if we are editing. think about it later.
@@ -67,58 +76,29 @@ public class EditTagAction {
 				System.out.println("Start of the tag should be " + tf.getTagStart());
 				System.out.println("End of the tag should be " + tf.getTagEnd());
 				
+				//Here is where we actually do the insertion
+				
+					if(editor instanceof ITextEditor){
+							ITextEditor thisEdit = (ITextEditor)editor;
+							IDocument doc =  thisEdit.getDocumentProvider().getDocument(editor.getEditorInput());
+							ISelection sel = thisEdit.getSelectionProvider().getSelection();
+							Encloser encloser = new Encloser();
+							
+							int selectionLength = ((ITextSelection) sel).getLength();
+							if (selectionLength > 0) {
+								tf.setWrapping(true);
+							}
+							
+							encloser.enclose(doc, (ITextSelection) sel, tf.getTagStart(), tf.getTagEnd());
+							
+							//Now set the focus back to the editor
+							editor.setFocus();
+				
+					}
+
 				
 			}
-			
-			/*
-			
-			try {	
-			
-			// Open the dialog and check if the OK button was pressed
-			if (tagview.open() == IDialogConstants.OK_ID) {
-				//Surely here we get the fieldstore
-				Properties fieldStore = tagview.getFieldStore();
-				TagFormatter tf = new TagFormatter(tg.getTag());
-					tf.setAttribs(fieldStore);
-				System.out.println("Start of the tag should be " + tf.getTagStart());
-				System.out.println("End of the tag should be " + tf.getTagEnd());
-					
-				//Now we should be able to do some formatting as it is
-				
-				// OK button was pressed. Check the values and do whatever
-				// we need to with them.
 
-				// Get Info about the editor
-				//IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-						
-				IEditorPart iep = this.shell.getShell().getWorkbenchWindow()
-						.getActivePage().getActiveEditor();
-				IDocument doc = ((ITextEditor) iep).getDocumentProvider()
-						.getDocument(iep.getEditorInput());
-				ITextEditor ite = (ITextEditor) iep;
-				ISelection sel = ite.getSelectionProvider().getSelection();
-				//int cursorOffset = ((ITextSelection) sel).getOffset();
-				int selectionLength = ((ITextSelection) sel).getLength();
-				Encloser encloser = new Encloser();
-				// -> this inserts it
-				//encloser.enclose(doc,(ITextSelection)sel,selectedMethod.getInsertString(),"");
-
-				// End Get info about the editor
-				
-				if (selectionLength > 0) {
-					tf.setWrapping(true);
-				}
-				
-				encloser.enclose(doc, (ITextSelection) sel, tf
-						.getTagStart(), tf.getTagEnd());
-
-			}
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 	}
 
 }
