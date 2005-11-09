@@ -20,8 +20,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -40,10 +38,8 @@ import org.eclipse.swt.widgets.Text;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.Parameter;
-import com.rohanclan.cfml.views.browser.CFBrowser;
 
 /**
  * @author Mark Drew
@@ -128,9 +124,6 @@ public class TagEditDialog extends Dialog {
 		}
 		
 		
-		
-		
-		
 	    //The Help Tab
 	    TabItem tabHelp = new TabItem(tabFolder, SWT.NONE);
 	    tabHelp.setText("Help");
@@ -155,28 +148,68 @@ public class TagEditDialog extends Dialog {
 		NodeList tabs = layout.getElementsByTagName("tab");
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 2;
-		//Get the tabs
-		for(int t=0; t < tabs.getLength(); t++){
-			TabItem thisTab = new TabItem(tabFolder, SWT.NONE);
-			Node layouttabs = tabs.item(t);
-			thisTab.setText(layouttabs.getAttributes().getNamedItem("name").getNodeValue());
-			
-		    Composite tagContents = new Composite(tabFolder, SWT.NONE);
-		    tagContents.setLayout(gl);
-		    
-		    //Get the fields
-		    NodeList fields = layouttabs.getChildNodes();
+		
+		 if(this.attributes != null){
+			//Get the tabs
+			for(int t=0; t < tabs.getLength(); t++){
+				TabItem thisTab = new TabItem(tabFolder, SWT.NONE);
+				Node layouttabs = tabs.item(t);
+				thisTab.setText(layouttabs.getAttributes().getNamedItem("name").getNodeValue());
+				
+			    Composite tagContents = new Composite(tabFolder, SWT.NONE);
+			    tagContents.setLayout(gl);
+			    
+			      //Get the fields
+			    NodeList fields = layouttabs.getChildNodes();
+	
+			    for(int f=1; f < fields.getLength(); f = f + 2){
+			    	// here we get the ACTUAL fields. The logic is that we go and get a field as defined from the xml file. and display it in the right format
+			    	// If it is not defined, it isnt displayed.
+			    	
+			    	/* Try and get he parameter 
+			    	 * Might have to loop again!
+			    	 * */
+			    	Iterator i = this.attributes.iterator();
+			    	while(i.hasNext()){
+			    		Parameter pr = (Parameter)i.next();
+			    		String maskField = fields.item(f).getAttributes().getNamedItem("name").getNodeValue();
+			    		
+			    		
+			    		if(pr.getName().equals(maskField)){
+			    			String labelname = pr.getName() + " : ";
+							if(pr.isRequired()){
+								labelname = pr.getName() + " *: ";
+								
+							}
+							
+							Label label = new Label(tagContents, SWT.HORIZONTAL);
+							label.setText(labelname);
+							label.setToolTipText(pr.getHelp());
+							GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+							gridData.widthHint = 200;
 
-		    for(int f=1; f < fields.getLength(); f = f + 2){
-		    Label label = new Label(tagContents, SWT.HORIZONTAL);
-				label.setText(fields.item(f).getAttributes().getNamedItem("name").getNodeValue());
-
-			Text text = new Text(tagContents, SWT.BORDER);
-				text.setText("");
-		    }
-		    thisTab.setControl(tagContents);
-		    
-		    
+							if (!pr.getValues().isEmpty()) {
+								addComboField(tagContents, pr.getValues(), gridData, pr
+										.getName());
+							} else {
+								addTextField(tagContents, gridData, pr.getName());
+							}
+			    			
+			    		}
+			    	}
+			    	/*
+			    	Label label = new Label(tagContents, SWT.HORIZONTAL);
+					label.setText(fields.item(f).getAttributes().getNamedItem("name").getNodeValue());
+	
+					Text text = new Text(tagContents, SWT.BORDER);
+					text.setText("");
+					*/
+					
+			    }
+			    thisTab.setControl(tagContents);
+			    
+			    
+			}
 		}
 		
 		return tabFolder;
@@ -357,7 +390,7 @@ public class TagEditDialog extends Dialog {
 			combo.add(val.toString());
 		}
 
-		combo.select(defaultitem);
+		//combo.select(defaultitem);
 		// Add the combo and the attribute name to the combo fields properties
 		comboFields.put(field, combo);
 

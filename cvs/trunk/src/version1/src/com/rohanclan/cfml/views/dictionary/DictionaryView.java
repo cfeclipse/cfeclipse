@@ -311,7 +311,7 @@ public class DictionaryView extends ViewPart {
 					viewer.expandToLevel(obj,1);
 				}
 				
-				//viewTag(obj);
+				viewTag(obj);
 			}
 		};
 	}
@@ -377,65 +377,6 @@ public class DictionaryView extends ViewPart {
 			}
 		});
 		
-		
-		
-		/*
-		text.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				//This doesnt seem to get the latest text. The latest text comes after modifiation?
-				//text.g
-				Utils.println("seaching for: "  + text.getText());
-				String searchpattern = text.getText();
-		
-				if(searchpattern.trim().length() > 0){
-					String[] cirfuse = searchpattern.split("\\.");
-					//Here we try the split
-					
-					viewer.addFilter(circfusefilter);
-					if(searchpattern.indexOf(".") != -1){
-						viewer.expandToLevel(3);
-					}else {
-						viewer.expandToLevel(2);
-					}
-					/* ye olde JDKe canne handle it cap'tain
-					 if(searchpattern.contains(".")){
-						viewer.expandToLevel(3);	
-					} else{
-						viewer.expandToLevel(2);
-					}
-					 
-					
-
-					//now we add tests for each
-					if (cirfuse.length == 2){
-						//since there is a dot
-						
-						if(cirfuse[0].length() > 0){
-							circfusefilter.setCircuitmatch(cirfuse[0]);
-						} else {
-							circfusefilter.setCircuitmatch(null);
-						}
-						if(cirfuse[1].length() >0){
-							circfusefilter.setFuseactionmatch(cirfuse[1]);
-						}
-						else {
-							circfusefilter.setFuseactionmatch(null);
-						}
-						
-					} 
-					else if(cirfuse.length == 1){
-						circfusefilter.setCircuitmatch(cirfuse[0]);
-					}
-				} else{
-					viewer.removeFilter(circfusefilter);
-					circfusefilter.setFuseactionmatch(null);
-					circfusefilter.setCircuitmatch(null);
-				}
-
-			}
-		});
-		*/
-		
 	}
 
 	private void hookDoubleClickAction() {
@@ -448,10 +389,8 @@ public class DictionaryView extends ViewPart {
 	}
 
 	/**
-	 * checks what is selected in the tree and then opens the call to the dialog
-	 * box
-	 * 
-	 * @param obj
+	 * Opens the dialog for a tag or function to be inserted
+	 * @param obj This can be either a TagItem or a FunctionItem
 	 */
 
 	protected void viewTag(Object obj) {
