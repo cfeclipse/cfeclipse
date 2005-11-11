@@ -25,18 +25,23 @@
 package com.rohanclan.cfml.editors.actions;
 
 import java.util.Properties;
+import java.util.Set;
 
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
+import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.views.dictionary.TagEditDialog;
 import com.rohanclan.cfml.views.dictionary.TagFormatter;
 
@@ -45,29 +50,83 @@ import com.rohanclan.cfml.views.dictionary.TagFormatter;
  * @author mdrew
  *
  */
-public class EditTagAction {
+public class EditTagAction implements IEditorActionDelegate{
 		protected Tag tag;
 		protected Shell shell;
-		protected IEditorPart editor;
+		protected IEditorPart ieditor;
+		private ITextEditor editor = null;
+		private CFEPartitioner partitioner;
+		private int tagstart;
+		private int taglength;
+		private Set selectedattributes;
+		/*
+		 * constructors
+		 */
+		public EditTagAction(){
+			super();
+		}
+
+		/**
+		 * This  Tag Action needs a tag and a shell. It will setup a a *blank* dialog
+		 * @param tag
+		 * @param shell
+		 */
+		public EditTagAction(Tag tag, Shell shell) {
+			this.tag = tag;
+			this.shell = shell;
+			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		}
 		
+		/** This Tag ACtion needs a tag, a shell and the attibutes of a tag. It will setup a pre-filled dialog
+		 * 
+		 */
+		public EditTagAction(Tag tag, Shell shell, Set attributes){
+			this.tag = tag;
+			this.shell = shell;
+			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+			this.selectedattributes = attributes;
+		}
+		
+		
+		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+
+			this.editor = (ITextEditor)targetEditor;
+			IDocument doc = editor.getDocumentProvider().getDocument(
+					editor.getEditorInput());
+
+			ICFDocument cfd = (ICFDocument) doc;
+
+			this.partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+		}
+		
+		public void run(IAction action) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void selectionChanged(IAction action, ISelection selection) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		public void setTagPosition(int start, int len){
+			this.tagstart = start;
+			this.taglength = len;
+		}
+				
 	
-	/**
-	 * This  Tag Action needs a tag and a shell. 
-	 * @param tag
-	 * @param shell
-	 */
-	public EditTagAction(Tag tag, Shell shell) {
-		this.tag = tag;
-		this.shell = shell;
-		this.editor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-	}
+	
 
 	public void run(){
 			System.out.println("---Starting the EditTagAction ---");
 			//We should be able to pass the attributes if we are editing. think about it later.
-			TagEditDialog tagview = new TagEditDialog(this.shell, this.tag);
-				
 			
+			ITextEditor thisEdit = (ITextEditor)ieditor;
+			IDocument doc =  thisEdit.getDocumentProvider().getDocument(ieditor.getEditorInput());
+			ISelection sel = thisEdit.getSelectionProvider().getSelection();
+			TagEditDialog tagview = new TagEditDialog(this.shell, this.tag);
+			
+						
 			//Do the closing action
 			if(tagview.open() == IDialogConstants.OK_ID){
 				System.out.println("--- Clicked OK and closed ---");
@@ -78,10 +137,8 @@ public class EditTagAction {
 				
 				//Here is where we actually do the insertion
 				
-					if(editor instanceof ITextEditor){
-							ITextEditor thisEdit = (ITextEditor)editor;
-							IDocument doc =  thisEdit.getDocumentProvider().getDocument(editor.getEditorInput());
-							ISelection sel = thisEdit.getSelectionProvider().getSelection();
+					if(ieditor instanceof ITextEditor){
+							
 							Encloser encloser = new Encloser();
 							
 							int selectionLength = ((ITextSelection) sel).getLength();
@@ -92,7 +149,7 @@ public class EditTagAction {
 							encloser.enclose(doc, (ITextSelection) sel, tf.getTagStart(), tf.getTagEnd());
 							
 							//Now set the focus back to the editor
-							editor.setFocus();
+							ieditor.setFocus();
 				
 					}
 
@@ -100,5 +157,31 @@ public class EditTagAction {
 			}
 
 	}
+
+	public ITextEditor getEditor() {
+		return editor;
+	}
+
+	public void setEditor(ITextEditor editor) {
+		this.editor = editor;
+	}
+
+	public IEditorPart getIeditor() {
+		return ieditor;
+	}
+
+	public void setIeditor(IEditorPart ieditor) {
+		this.ieditor = ieditor;
+	}
+
+	public Tag getTag() {
+		return tag;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
+
+	
 
 }

@@ -54,6 +54,7 @@ public class TagEditDialog extends Dialog {
 	private Tag tag;
 
 	private Set attributes;
+	private Set selectedattributes;
 
 	private Properties fieldStore;
 
@@ -457,6 +458,14 @@ public class TagEditDialog extends Dialog {
 
 	public Properties getFieldStore() {
 		return fieldStore;
+	}
+
+	public Set getSelectedattributes() {
+		return selectedattributes;
+	}
+
+	public void setSelectedattributes(Set selectedattributes) {
+		this.selectedattributes = selectedattributes;
 	}
 
 }

@@ -53,6 +53,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
@@ -421,14 +422,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			Action act = new Action("Refresh syntax highlighting", null) {
 				public void run() {
 				   try {
-				       /*
-				  IEditorPart iep = getSite().getPage().getActiveEditor();
-					ITextEditor editor = (ITextEditor) iep;
-					
-					ISelection sel = editor.getSelectionProvider().getSelection();
-					IDocument doc = editor.getDocumentProvider().getDocument(
-							editor.getEditorInput());
-					*/
+				      
+				  
 					CFEPartitioner partitioner = new CFEPartitioner(
 							new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
 					partitioner.connect(doc);
@@ -496,6 +491,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			 */
 			act = new Action("Edit this tag", null){
 				public void run() {
+					
 					SyntaxDictionary cfdic = DictionaryManager.getDictionary("CF_DICTIONARY");
 					
 					int startpos = sel.getOffset();
@@ -503,18 +499,60 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
 					CFEPartition part = partitioner.findClosestPartition(startpos);
-				
-					Tag tag = cfdic.getTag(part.getType());
+					
+					int startoftag = part.getOffset();
+					int starttaglen = part.getLength();
+					
+					
+					
+					String info = "---------------------------\n";
+					info += "(Closest partition: " + part.getType() + " = " + part.getTagName() + " partition length "+ partitioning.length +")\n";
+					//We shall use this attribute to also set the tag editor
+					for (int i=0;i<partitioning.length;i++) {
+					    info += "partition type" + partitioning[i].getType(); 
+					    info += " starting at ";
+					    info += partitioning[i].getOffset();
+					    info += " ending at "; 
+					    info += Integer.toString(partitioning[i].getOffset() + partitioning[i].getLength());
+					    
+					   // starttaglen = starttaglen + partitioning[i].getOffset() + partitioning[i].getLength();
+					    if (partitioning[i].getTagName() != null) {
+					        info += " (";
+					        info += partitioning[i].getOpensPartitionType();
+					        info += ") ";
+					    }
+					    info += "\n";
+					}
+					System.out.println(info);
+					System.out.println("Tag start " + startoftag + " Tag Length " + starttaglen + "is this the start of the partition" + part.isStartPartition());
+					
+					TextSelection selection = new TextSelection(startoftag, starttaglen);
+					editor.getSelectionProvider().setSelection(selection);
+			
+					Tag tag = cfdic.getTag(part.getTagName());
+					
 					//launch the editor
-					EditTagAction eta = new EditTagAction(tag, Display.getCurrent().getActiveShell());
-					eta.run();
+					if(tag != null){
+						EditTagAction eta = new EditTagAction(tag, Display.getCurrent().getActiveShell());
+						
+						eta.run();
+					} 
+					else {
+						System.out.println("No tag found " + part.getTagName());	
+					}
 					
 					
 				}
 			};
-			menu.add(act);
+			//Only display if you are at the start tag
+			int startpos = sel.getOffset();
+			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+			CFEPartition part = partitioner.findClosestPartition(startpos);
+			if((part.getType().equals(CFPartitionScanner.CF_START_TAG_BEGIN) || (part.getType().equals(CFPartitionScanner.CF_TAG_ATTRIBS)))){
+				menu.add(act);
+			}
 			
-			
+				
 			
 			act = new Action("Jump to matching tag", null) {
 			    public void run() {
@@ -529,9 +567,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			 * Start the logic to see if we are in a cfinclude or a cfmodule. get the tag.
 			 * Added the lines below to check the partition type and thus get the cfincluded file
 			 */
-			int startpos = sel.getOffset();
-			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-		    CFEPartition part = partitioner.findClosestPartition(startpos);
+		
 		   
 		    
 			CfmlTagItem cti = null; 

@@ -1,7 +1,7 @@
 /* 
- * $Id: CFEPartition.java,v 1.9 2005-06-14 21:36:11 smilligan Exp $
- * $Revision: 1.9 $
- * $Date: 2005-06-14 21:36:11 $
+ * $Id: CFEPartition.java,v 1.10 2005-11-11 17:47:40 cybersonic Exp $
+ * $Revision: 1.10 $
+ * $Date: 2005-11-11 17:47:40 $
  * 
  * Created Jan 18, 2005 2:08:20 PM
  *
@@ -35,12 +35,14 @@ import org.eclipse.jface.text.Assert;
  * Class description...
  * 
  * @author Stephen Milligan
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public final class CFEPartition extends TypedPosition {
 
     /** The type that the next partition should be */
     private String fNextPartitionType = null;
+    /** The type that the previous partition should be */
+    private String fPreviousPartitionType = null;
     /** The type of partition that this partition opens */
     private String fOpensPseudoPartition = null;
     /** The type of partition that this partition closes */
@@ -194,6 +196,11 @@ public final class CFEPartition extends TypedPosition {
  * ====================================================================
  *
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2005/06/14 21:36:11  smilligan
+ * Added external browser action.
+ *
+ * Fixed partitioner bug with multi-line comments in script, cfscript and cfquery blocks.
+ *
  * Revision 1.8  2005/02/25 23:24:22  chrisbradford
  * Added field and methods for whether the partition is a closer tag
  *
