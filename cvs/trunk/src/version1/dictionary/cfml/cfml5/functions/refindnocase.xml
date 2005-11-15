@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object REFindNoCase(reg_expression, string [, start] [, returnsubexpressions] )
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="refindnocase" returns="Object">
+	<help><![CDATA[
+		Uses a regular expression (RE) to search a string for a pattern,
+		 starting from a specified position. The search is
+		 case-insensitive.
+	]]></help>
+	<parameter name="reg_expression" type="Regex" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			A string or a variable that contains one. String in which
+			to search.
+		]]></help>
+		<values default="1">
+			<value option="1" />
+		</values>
+	</parameter>
+	<parameter name="start" type="Numeric" required="false">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="returnsubexpressions" type="boolean" required="false">
+		<help><![CDATA[
+			True: if the regular expression is found, the first array
+				element contains the length and position, respectively,
+				of the first match.
+				If the regular expression contains parentheses that
+					group subexpressions, each subsequent array element
+					contains the length and position, respectively, of
+					the first occurrence of each group.
+				If the regular expression is not found, the arrays each
+					contain one element with the value 0.
+			False: the function returns the position in the string
+				where the match begins. Default.
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</function>

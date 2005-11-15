@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfreport
+		report = "report_path"
+		orderBy = "result_order"
+		username = "username"
+		password = "password"
+		formula = "formula"
+		...
+	/cfreport
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfreport" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Runs a predefined Crystal Reports report. Applies only to
+		Windows systems. Uses the CFCRYSTAL.exe file to generate
+		reports. Sets parameters in the Crystal Reports engine
+		according to its attribute values.
+	]]></help>
+	<parameter name="report" type="String" required="true">
+		<help><![CDATA[
+			Report path. Store Crystal Reports files in the same
+			directories as CFML page files.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="orderby" type="String" required="false">
+		<help><![CDATA[
+			Orders results according to your specifications.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="username" type="String" required="false">
+		<help><![CDATA[
+			Username required for entry into database from which report
+			is created. Overrides default settings for data source in
+			CFML Administrator.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="password" type="String" required="false">
+		<help><![CDATA[
+			Password that corresponds to username required for database
+			access. Overrides default settings for data source in
+			CFML Administrator.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="formula" type="String" required="false">
+		<help><![CDATA[
+			One or more named formulas. Terminate each formula with a
+			semicolon. Use the format:
+
+			formula = "formulaname1='formula1';formulaname2='formula2';"
+
+			If you use a semicolon in a formula, you must escape it by
+			typing it twice (;;). For example:
+
+			formula = "Name1 = 'Val_1a;;Val_1b';Name2 = 'Val2';"
+		]]></help>
+		<values />
+	</parameter>
+</tag>

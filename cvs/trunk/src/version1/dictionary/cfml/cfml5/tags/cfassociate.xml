@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfassociate
+		baseTag = "base_tag_name"
+		dataCollection = "collection_name"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfassociate" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Allows subtag data to be saved with a base tag. Applies only
+		to custom tags.
+	]]></help>
+	<parameter name="basetag" type="String" required="true">
+		<help><![CDATA[
+			Base tag name
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="datacollection" type="String" required="false">
+		<help><![CDATA[
+			Structure in which base tag stores subtag data
+		]]></help>
+		<values />
+	</parameter>
+</tag>

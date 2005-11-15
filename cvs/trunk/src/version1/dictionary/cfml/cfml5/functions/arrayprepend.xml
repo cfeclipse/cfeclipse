@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean ArrayPrepend(array, value)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arrayprepend" returns="boolean">
+	<help><![CDATA[
+		Inserts an array element at the beginning of an array
+		and shifts the positions of the existing elements to
+		make room.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

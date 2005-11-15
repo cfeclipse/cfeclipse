@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	DateTime Now()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="now" returns="DateTime">
+	<help><![CDATA[
+		Gets the current date and time of the computer running the
+		CFML server.
+	]]></help>
+</function>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric Minute(date)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="minute" returns="Numeric">
+	<help><![CDATA[
+		Extracts the minute value from a date/time object.
+	]]></help>
+	<parameter name="date" type="DateTime" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+</function>

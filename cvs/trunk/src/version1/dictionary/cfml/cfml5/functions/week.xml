@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric Week(date)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="week" returns="Numeric">
+	<help><![CDATA[
+		From a date/time object, determines the week number within
+		the year. An integer in the range 1-53; the ordinal of the
+		week, within the year.
+	]]></help>
+	<parameter name="date" type="DateTime" required="true">
+		<help><![CDATA[
+			A date/time object in the range 100 AD-9999 AD.
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+</function>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfselect 
+		name = "name"
+		required = "boolean"
+		message = "text"
+		onError = "text"
+		size = "integer"
+		multiple = "boolean"
+		query = "queryname"
+		selected = "column_value"
+		value = "text"
+		display = "text"
+		passThrough = "html_attributes"
+
+	zero or more HTML option tags
+	/cfselect
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfselect" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Constructs a drop-down list box form control. Used within a
+		cfform tag.
+
+		You can populate the list from a query, or by using the HTML
+		option tag.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name of the select form element
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="size" type="Numeric" required="false">
+		<help><![CDATA[
+			Number of entries to display at one time. The default, 1,
+			displays a drop-down list. Any other value displays a list
+			box with size number of entries visible at one time.
+		]]></help>
+		<values default="1" />
+	</parameter>
+	<parameter name="required" type="boolean" required="false">
+		<help><![CDATA[
+			If true a list element must be selected when form is submitted.
+			Note: This attribute has no effect if you omit the size
+			attribute or set it to 1 because the browser always submits
+			the displayed item. You can work around this issue format
+			forms by having an initial option tag with value=" " (note the
+			space character between the quotation marks).
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="message" type="String" required="false">
+		<help><![CDATA[
+			Message to display if required="true" and no selection is made.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onerror" type="String" required="false">
+		<help><![CDATA[
+			Custom JavaScript function to execute if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="multiple" type="boolean" required="false">
+		<help><![CDATA[
+			- true: allow selecting multiple elements in drop-down list
+			- false: don't allow selecting multiple elements
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="query" type="String" required="false">
+		<help><![CDATA[
+			Name of query to populate drop-down list.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Query column to use for the value of each list element.
+			Used with query attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="display" type="String" required="false">
+		<help><![CDATA[
+			Query column to use for the display label of each list
+			element. Used with query attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="selected" type="String" required="false">
+		<help><![CDATA[
+			One or more option values to preselect in the selection list.
+			To specify multiple values, use a comma-delimited list. This
+			attribute applies only if selection list items are generated
+			from a query. The cfform preservedata attribute value can
+			override this value.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="passthrough" type="String" required="false">
+		<help><![CDATA[
+			Passes one or more arbitrary attribute-value pairs to the
+			HTML code that is generated for the tag. You can use either
+			of the following formats to include the quotation marks
+			around the attribute value:
+			
+			passthrough="ID=""myID"""
+			passthrough='ID="myID"'
+			
+			The second format, which surrounds all the attribute-value
+			pairs to be passed through in single quotation marks is
+			clearer, particularly when you pass multiple HTML
+			attributes.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

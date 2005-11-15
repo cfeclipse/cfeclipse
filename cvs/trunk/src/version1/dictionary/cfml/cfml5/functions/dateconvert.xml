@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	DateTime DateConvert("conversion-type", "date")
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="dateconvert" returns="DateTime">
+	<help><![CDATA[
+		Converts local time to Coordinated Universal Time (UTC), or UTC
+		to local time. The function uses the daylight savings settings
+		in the executing computer to compute daylight savings time, if
+		required.
+		[type - quicky]
+			local2Utc: Converts local time to UTC time.
+			utc2Local: Converts UTC time to local time
+	]]></help>
+	<parameter name="type" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="local2Utc" />
+			<value option="utc2Local" />
+		</values>
+	</parameter>
+	<parameter name="date" type="DateTime" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+</function>

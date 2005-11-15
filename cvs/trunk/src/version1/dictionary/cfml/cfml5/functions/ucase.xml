@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String UCase(string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="ucase" returns="String">
+	<help><![CDATA[
+		Converts the alphabetic characters in a string to uppercase.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			A string or a variable that contains one
+		]]></help>
+	</parameter>
+</function>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object GetBaseTagData(tagname [, instancenumber ] )
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getbasetagdata" returns="Object">
+	<help><![CDATA[
+		Used within a custom tag. Finds calling (ancestor) tag by
+		name and accesses its data.
+	]]></help>
+	<parameter name="tagname" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="instancenumber" type="Numeric" required="false">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

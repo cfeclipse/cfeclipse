@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfcase
+		value = "value or delimited set of values"
+		delimiters = "delimiter characters"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfcase" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Used only inside the cfswitch tag body. Contains code to
+		execute when the expression specified in the cfswitch tag has
+		one or more specific values.
+	]]></help>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			The value or values that the expression attribute of the
+			cfswitch tag must match. To specify multiple matching
+			values, separate the values with the delimiter character.
+			The value or values must be simple constants or constant
+			expressions, not variables.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="delimiters" type="String" required="false">
+		<help><![CDATA[
+			Specifies the delimiter character or characters that
+			separate multiple values to match. If you specify multiple
+			delimiter characters, you can use any of them to separate
+			the values to be matched.
+		]]></help>
+		<values default=",">
+			<value option="," />
+			<value option=";" />
+			<value option="|" />
+			<value option=":" />
+		</values>
+	</parameter>
+</tag>

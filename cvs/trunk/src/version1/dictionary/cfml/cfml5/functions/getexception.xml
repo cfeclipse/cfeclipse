@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object getException(object)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getexception" returns="Object">
+	<help><![CDATA[
+		Used with the cftry and cfcatch tags. Retrieves a Java
+		exception object from a Java object.
+	]]></help>
+	<parameter name="javaobject" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

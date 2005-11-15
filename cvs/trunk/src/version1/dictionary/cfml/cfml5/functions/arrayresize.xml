@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean ArrayResize(array, minimum_size)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arrayresize" returns="boolean">
+	<help><![CDATA[
+		Resets an array to a specified minimum number of elements.
+		This can improve performance, if used to size an array to its
+		expected maximum. For more than 500 elements, use ArrayResize
+		immediately after using the ArrayNew tag.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="size" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

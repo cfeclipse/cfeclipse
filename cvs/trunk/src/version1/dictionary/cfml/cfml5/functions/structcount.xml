@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric StructCount(structure)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structcount" returns="Numeric">
+	<help><![CDATA[
+		Counts the keys in a structure.
+	]]></help>
+	<parameter name="structure" type="Struct" required="true">
+		<help><![CDATA[
+			Structure to access
+		]]></help>
+	</parameter>
+</function>
