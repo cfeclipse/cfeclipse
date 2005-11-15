@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String ToScript(cfvar, javascriptvar[, outputformat[, asformat]])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="toscript" returns="String">
+	<help><![CDATA[
+		Creates a JavaScript or ActionScript expression that
+		assigns the value of a ColdFusion variable to a JavaScript
+		or ActionScript variable. This function can convert
+		ColdFusion strings, numbers, arrays, structures, and
+		queries to JavaScript or ActionScript syntax that defines
+		equivalent variables and values.
+	]]></help>
+	<parameter name="cfvar" type="Object" required="true">
+		<help><![CDATA[
+			A ColdFusion variable. This can contain one of the following:
+			String, Number, Array, Structure or Query.
+		]]></help>
+	</parameter>
+	<parameter name="javascriptvar" type="String" required="true">
+		<help><![CDATA[
+			A string that specifies the name of the JavaScript variable
+			that the ToScript function creates.
+		]]></help>
+	</parameter>
+	<parameter name="outputformat" type="boolean" required="false">
+		<help><![CDATA[
+			A Boolean value that determines whether to create
+			WDDX (JavaScript) or ActionScript style output for
+			structures and queries.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="asformat" type="boolean" required="false">
+		<help><![CDATA[
+			A Boolean value that specifies whether to use
+			ActionScript shortcuts in the script.
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</function>

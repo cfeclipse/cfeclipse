@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String WriteOutput(string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="writeoutput" returns="String">
+	<help><![CDATA[
+		Appends text to the page-output stream.
+		This function writes to the page-output stream regardless of
+		conditions established by the cfsetting tag.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			A string, or a variable that contains one
+		]]></help>
+	</parameter>
+</function>

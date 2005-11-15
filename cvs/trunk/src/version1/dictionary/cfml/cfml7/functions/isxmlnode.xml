@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean IsXmlNode(value)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="isxmlnode" returns="boolean">
+	<help><![CDATA[
+		Determines whether the function parameter is
+		an XML document object node.
+	]]></help>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+			Name of an XML document object node.
+		]]></help>
+	</parameter>
+</function>

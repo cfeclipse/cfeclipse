@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfdump
+		var = "#variable#"
+		expand = "boolean"
+		label = "text"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfdump" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Outputs the elements, variables and values of most kinds of
+		CFML objects. Useful for debugging. You can display the
+		contents of simple and complex variables, objects, components,
+		user-defined functions, and other elements.
+	]]></help>
+	<parameter name="var" type="Object" required="true">
+		<help><![CDATA[
+			Variable to display. Enclose a variable name in pound
+			signs.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="expand" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: In Internet Explorer and Mozilla, expands views
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="label" type="String" required="false">
+		<help><![CDATA[
+			A string; header for the dump output.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

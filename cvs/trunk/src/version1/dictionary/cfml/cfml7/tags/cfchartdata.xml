@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfchartdata
+		item = "text"
+		value = "number"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfchartdata" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Used with the cfchart and cfchartseries tags. This tag defines
+		chart data points. Its data is submitted to the cfchartseries
+		tag.
+	]]></help>
+	<parameter name="item" type="String" required="true">
+		<help><![CDATA[
+			string; data point name
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			number or expression; data point value
+		]]></help>
+		<values />
+	</parameter>
+</tag>

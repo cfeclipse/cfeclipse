@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean StructIsEmpty(structure)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structisempty" returns="boolean">
+	<help><![CDATA[
+		Determines whether a structure contains data.
+	]]></help>
+	<parameter name="structure" type="Struct" required="true">
+		<help><![CDATA[
+			Structure to test
+		]]></help>
+	</parameter>
+</function>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object GetSOAPRequest()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getsoaprequest" returns="Object">
+	<help><![CDATA[
+		Returns an XML object that contains the entire SOAP
+		request. Usually called from within a web service CFC.
+	]]></help>
+</function>

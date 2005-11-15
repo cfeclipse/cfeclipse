@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String GetContextRoot()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getcontextroot" returns="String">
+	<help><![CDATA[
+		Returns path to the J2EE server context root for the current request.
+	]]></help>
+</function>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cftextarea
+		name = "name"
+		label = "text"
+		required = "boolean"
+		style = "style specification"
+		validate = "data type"
+		validateAt= one or more of "onBlur", "onServer", "onSubmit"
+		message = "text"
+		range = "min_value, max_value"
+		maxlength = "number"
+		pattern = "regexp"
+		onValidate = "script name"
+		onError = "script name"
+		disabled = "true, false, or no attribute value"
+		value = "text"
+		onKeyUp = "JavaScript or ActionScript"
+		onKeyDown = "JavaScript or ActionScript"
+		onMouseUp = "JavaScript or ActionScript"
+		onMouseDown = "JavaScript or ActionScript"
+		onChange = "JavaScript or ActionScript"
+		onClick = "JavaScript or ActionScript"
+		visible = "boolean"
+		enabled = "boolean"
+		tooltip = "Tip text"
+		height = "number of pixels" Flash only
+		width = "number of pixels" Flash only
+	text
+	/cftextarea
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cftextarea" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Puts a multiline text entry box in a cfform tag and
+		controls its display characteristics.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name of the cftextinput control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="id" type="String" required="true">
+		<help><![CDATA[
+			ID for form input element.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="label" type="String" required="false">
+		<help><![CDATA[
+			Label to put beside the control on a form.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="style" type="String" required="false">
+		<help><![CDATA[
+			In HTML or XML format forms, ColdFusion passes the
+			style attribute to the browser or XML.
+			In Flash format forms, must be a style specification in
+			CSS format, with the same syntax and contents as used
+			in Macromedia Flex for the corresponding Flash element.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="required" type="boolean" required="false">
+		<help><![CDATA[
+			- true: the field must contain text.
+			- false: the field can be empty.
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="validate" type="String" required="false">
+		<help><![CDATA[
+			The type or types of validation to do. Available validation
+			types and algorithms depend on the format. For details,
+			see the Usage section of the cfinput tag reference.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="validateat" type="String" required="false">
+		<help><![CDATA[
+			How to do the validation. For Flash format forms, onSubmit
+			and onBlur are identical; validation is done on submit.
+			For multiple values, use a comma-delimited list.
+			For details, see the Usage section of the cfinput tag
+			reference.
+			Default: onSubmit
+		]]></help>
+		<values default="onSubmit">
+			<value option="onSubmit" />
+			<value option="onServer" />
+			<value option="onBlur" />
+		</values>
+	</parameter>
+	<parameter name="message" type="String" required="false">
+		<help><![CDATA[
+			Message text to display if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="range" type="String" required="false">
+		<help><![CDATA[
+			Minimum and maximum numeric allowed values. ColdFusion
+			uses this attribute only if you specify range in the
+			validate attribute.
+			If you specify a single number or a single number a
+			followed by a comma, it is treated as a minimum, with no
+			maximum. If you specify a comma followed by a number,
+			the maximum is set to the specified number, with no
+			minimum.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="maxlength" type="Numeric" required="false">
+		<help><![CDATA[
+			The maximum length of text that can be entered.
+			ColdFusion uses this attribute only if you specify
+			maxlength in the validate attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="pattern" type="String" required="false">
+		<help><![CDATA[
+			JavaScript regular expression pattern to validate input.
+			Omit leading and trailing slashes. ColdFusion uses this
+			attribute only if you specify regex in the validate attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onvalidate" type="String" required="false">
+		<help><![CDATA[
+			Custom JavaScript function to validate user input. The
+			JavaScript DOM form object, input object, and input
+			object value are passed to routine, which should return
+			True if validation succeeds, False otherwise. If you specify
+			this attribute, ColdFusion ignores the validate attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onerror" type="String" required="false">
+		<help><![CDATA[
+			Custom JavaScript function to execute if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="disabled" type="boolean" required="false">
+		<help><![CDATA[
+			Disables user input, making the control read-only. To
+			disable input, specify disabled without an attribute, or
+			disabled="true". To enable input, omit the attribute or
+			specify disabled="false".
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Initial value to display in text control. You can specify an
+			initial value as an attribute or in the tag body, but not in
+			both places. If you specify the value as an attribute, you
+			must put the closing cftextarea tag immediately after the
+			opening cftextarea tag, with no spaces or line feeds between,
+			or place a closing slash at the end of the opening cftextarea
+			tag. For example:
+			<cftextarea name="description" value="Enter a description." />
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="bind" type="String" required="false">
+		<help><![CDATA[
+			Flash only: A Flex bind expression that populates the field with
+			information from other form fields.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onkeyup" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the user releases a keyboard key in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onkeydown" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash)
+			ActionScript to run when the user presses a keyboard
+			key in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onmouseup" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the user presses a mouse button in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onmousedown" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the user releases a mouse button in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onchange" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the control changes due to user action.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onclick" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) to run when the user clicks the
+			control. Not supported for Flash forms.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="enabled" type="boolean" required="false">
+		<help><![CDATA[
+			Flash only: Boolean value specifying whether the control is enabled.
+			A disabled control appears in light gray. The inverse of the
+			diabled attribute.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="visible" type="boolean" required="false">
+		<help><![CDATA[
+			Flash only: Boolean value specifying whether to
+			show the control. Space that would be occupied by an
+			invisible control is blank.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="tooltip" type="String" required="false">
+		<help><![CDATA[
+			Flash only: Text to display when the mouse pointer hovers
+			over the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="height" type="Numeric" required="false">
+		<help><![CDATA[
+			Flash only: The height of the control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="width" type="Numeric" required="false">
+		<help><![CDATA[
+			Flash only: The width of the control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String ValueList(query.column [, delimiter ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="valuelist" returns="String">
+	<help><![CDATA[
+		Inserts a delimiter between each value in an executed query.
+		CFML does not evaluate the arguments.
+		A delimited list of the values of each record returned from an
+		executed query
+	]]></help>
+	<parameter name="column" type="QueryColumn" required="true">
+		<help><![CDATA[
+			Name of an executed query and column. Separate query name
+			and column name with a period.
+		]]></help>
+	</parameter>
+	<parameter name="delimiter" type="String" required="false">
+		<help><![CDATA[
+			A delimiter character to separate column data items.
+			Default: comma (,).
+		]]></help>
+		<values default=",">
+			<value option="," />
+			<value option="|" />
+			<value option=";" />
+			<value option="chr(9)" />
+			<value option="chr(10)" />
+			<value option="chr(13)" />
+		</values>
+	</parameter>
+</function>

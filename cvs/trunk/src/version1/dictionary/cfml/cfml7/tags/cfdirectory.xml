@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfdirectory
+		action = "directory action"
+		directory = "directory name"
+		name = "query name"
+		filter = "list filter"
+		mode = "permission"
+		sort = "sort specification"
+		newDirectory = "new directory name"
+		recurse = "true" or "false"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfdirectory" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Manages interactions with directories.
+		Different combos cause different attributes to be
+		required.
+	]]></help>
+	<return type="cfdirectory" parameter="name" />
+	<parameter name="action" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default="list">
+			<value option="list" />
+			<value option="create" />
+			<value option="delete" />
+			<value option="rename" />
+		</values>
+	</parameter>
+	<parameter name="directory" type="String" required="true">
+		<help><![CDATA[
+			Absolute pathname of directory against which to perform
+			action.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="name" type="variableName" required="true">
+		<help><![CDATA[
+			Name for output record set.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="action" required="false" value="list" />
+		</triggers>
+	</parameter>
+	<parameter name="filter" type="String" required="true">
+		<help><![CDATA[
+			File extension filter applied to returned names. For
+			example: *.cfm. One filter can be applied.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="action" required="false" value="list" />
+		</triggers>
+	</parameter>
+	<parameter name="mode" type="String" required="false">
+		<help><![CDATA[
+			Applies only to UNIX and Linux. Permissions. Octal values
+			of Unix chmod command. Assigned to owner, group, and
+			other, respectively.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="sort" type="String" required="false">
+		<help><![CDATA[
+			Query column(s) by which to sort directory listing.
+			Delimited list of columns from query output.
+		]]></help>
+		<values default="asc">
+			<value option="asc" />
+			<value option="desc" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="action" required="false" value="list" />
+		</triggers>
+	</parameter>
+	<parameter name="newdirectory" type="String" required="false">
+		<help><![CDATA[
+			New name for directory.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="action" required="false" value="rename" />
+		</triggers>
+	</parameter>
+	<parameter name="recurse" type="boolean" required="false">
+		<help><![CDATA[
+			Whether ColdFusion performs the action on subdirectories.
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="action" required="false" value="list" />
+			<selectedValue attributeName="action" required="false" value="delete" />
+		</triggers>
+	</parameter>
+</tag>

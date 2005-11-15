@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String GetLocaleDisplayName([locale[, inLocale]])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getlocaledisplayname" returns="String">
+	<help><![CDATA[
+		Gets a locale value and displays the name in a manner
+		that is appropriate to a specific locale. By default,
+		gets the current locale in the current locale's language.
+	]]></help>
+</function>

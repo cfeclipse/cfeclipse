@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String ListInsertAt(list, position, value [, delimiters ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="listinsertat" returns="String">
+	<help><![CDATA[
+		Inserts an element in a list.
+	]]></help>
+	<parameter name="list" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="position" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="delimiters" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default=",">
+			<value option="," />
+			<value option="|" />
+			<value option=";" />
+			<value option="chr(9)" />
+			<value option="chr(10)" />
+			<value option="chr(13)" />
+		</values>
+	</parameter>
+</function>

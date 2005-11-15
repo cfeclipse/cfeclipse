@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfheader
+		name = "header_name"
+		value = "header_value"
+		charset="charset"
+	OR
+	cfheader
+		statusCode = "status_code"
+		statusText = "status_text"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfheader" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Generates custom HTTP response headers to return to the client.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Header name
+			Required if statusCode not specified
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			HTTP header value
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="charset" type="String" required="false">
+		<help><![CDATA[
+			The character encoding in which to encode the header value.
+
+			For more information on character encodings, see:
+			www.w3.org/International/O-charset.html.
+		]]></help>
+		<values>
+			<value option="utf-8" />
+			<value option="iso-8859-1" />
+			<value option="windows-1252" />
+			<value option="us-ascii" />
+			<value option="shift_jis" />
+			<value option="iso-2022-jp" />
+			<value option="euc-jp" />
+			<value option="euc-kr" />
+			<value option="big5" />
+			<value option="euc-cn" />
+			<value option="utf-16" />
+		</values>
+	</parameter>
+	<parameter name="statuscode" type="Numeric" required="false">
+		<help><![CDATA[
+			HTTP status code
+			Required if name not specified
+  				]]></help>
+		<values />
+	</parameter>
+	<parameter name="statustext" type="String" required="false">
+		<help><![CDATA[
+			Explains status code
+  				]]></help>
+		<values />
+	</parameter>
+</tag>

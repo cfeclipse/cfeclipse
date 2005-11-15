@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfloginuser
+		name = "name"
+		password = "password-string"
+		roles = "roles"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfloginuser" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Identifies an authenticated user to CFML. Specifies the
+		user ID and roles. Used within a cflogin tag.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			A username.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="password" type="String" required="true">
+		<help><![CDATA[
+			A user password.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="roles" type="String" required="true">
+		<help><![CDATA[
+			A comma-delimited list of role identifiers.
+
+			CFML processes spaces in a list element as part of
+			the element.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

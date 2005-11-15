@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String Decrypt(encrypted_string, key[, algorithm[, encoding[, IVorSalt[, iterations]]]])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="decrypt" returns="String">
+	<help><![CDATA[
+		Decrypts a string that is encrypted with the Encrypt function.
+	]]></help>
+	<parameter name="encrypted_string" type="String" required="true">
+		<help><![CDATA[
+			String to decrypt.
+		]]></help>
+	</parameter>
+	<parameter name="key" type="String" required="true">
+		<help><![CDATA[
+			Key or seed used to encrypt the string.
+			* For the CFMX_COMPAT algorithm, any combination of any
+			  number of characters; used as a seed used to generate
+			  a 32-bit encryption key.
+			* For all other algorithms, a key in the format used by the
+			  algorithm. For these algorithms, use the GenerateSecretKey
+			  function to generate the key.
+		]]></help>
+	</parameter>
+	<parameter name="algorithm" type="String" required="false">
+		<help><![CDATA[
+			The algorithm to use to decrypt the string. Must be the same
+			as the algorithm used to encrypt the string.
+			* CFMX_COMPAT: the algorithm used in ColdFusion MX and prior
+			  releases. This algorithm is the least secure option (default).
+			* AES: the Advanced Encryption Standard specified by the
+			  National Institute of Standards and Technology (NIST) FIPS-197.
+			* BLOWFISH: the Blowfish algorithm defined by Bruce Schneier.
+			* DES: the Data Encryption Standard algorithm defined by NIST FIPS-46-3.
+			* DESEDE: the "Triple DES" algorithm defined by NIST FIPS-46-3.
+		]]></help>
+		<values default="CFMX_COMPAT">
+			<value option="CFMX_COMPAT" />
+			<value option="AES" />
+			<value option="BLOWFISH" />
+			<value option="DES" />
+			<value option="DESEDE" />
+		</values>
+	</parameter>
+	<parameter name="encoding" type="String" required="false">
+		<help><![CDATA[
+			The binary encoding used to represent the data as a string.
+			Must be the same as the algorithm used to encrypt the string.
+			* Base64: the Base64 algorithm, as specified by IETF RFC 2045.
+			* Hex: the characters A-F and 0-9 represent the hexadecimal byte values.
+			* UU: the UNIX standard UUEncode algorithm (default).
+			If you specify this parameter, you must also specify the algorithm parameter.
+		]]></help>
+		<values default="UU">
+			<value option="UU" />
+			<value option="Base64" />
+			<value option="Hex" />
+		</values>
+	</parameter>
+	<parameter name="ivorsalt" type="Binary" required="false">
+		<help><![CDATA[
+			Specify this parameter to adjust ColdFusion encryption to match
+			the details of other encryption software. If you specify this
+			parameter, you must also specify the algorithm parameter.
+			* For Block Encryption Algorithms: This is the binary
+			  Initialization Vector value to use with the algorithm. The
+			  algorithm must contain a Feedback Mode other than ECB. This
+			  must be a binary value that is exactly the same size as the
+			  algorithm block size.
+			* For Password Based Encryption Algorithms: This is the binary
+			  Salt value to transform the password into a key.
+		]]></help>
+	</parameter>
+	<parameter name="iterations" type="Numeric" required="false">
+		<help><![CDATA[
+			The number of iterations to transform the password into a
+			binary key. Specify this parameter to adjust ColdFusion
+			encryption to match the details of other encryption software.
+			If you specify this parameter, you must also specify the
+			algorithm parameter with a Password Based Encryption (PBE)
+			algorithm. Do not specify this parameter for Block Encryption
+			Algorithms. You must use the same value to encrypt and
+			decrypt the data.
+			* For Password Based Encryption Algorithms: This is the
+			  binary Salt value to transform the password into a key.
+		]]></help>
+	</parameter>
+</function>

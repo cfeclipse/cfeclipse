@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean IsXML(value)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="isxml" returns="boolean">
+	<help><![CDATA[
+		Determines whether a string is well-formed XML text.
+	]]></help>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			A string containing the XML document text.
+		]]></help>
+	</parameter>
+</function>

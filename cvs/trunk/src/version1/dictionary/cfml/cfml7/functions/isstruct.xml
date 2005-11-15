@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean IsStruct(variable)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="isstruct" returns="boolean">
+	<help><![CDATA[
+		Determines whether a variable is a structure.
+		True, if variable is a CFML structure or is a Java object
+		that implements the java.lang.Map interface. Returns False if the
+		object in variable is a user-defined function (UDF).
+	]]></help>
+	<parameter name="variable" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

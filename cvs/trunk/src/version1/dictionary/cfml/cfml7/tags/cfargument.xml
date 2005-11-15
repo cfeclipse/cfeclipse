@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfargument
+		name = "String"
+		type = "data type"
+		required = "boolean"
+		default = "default value"
+		displayname = "descriptive name"
+		hint = "extended description"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfargument" single="true" xmlstyle="false" allowanyattribute="true">
+	<help><![CDATA[
+		Creates a parameter definition within a component definition.
+		Defines a function argument. Used within a cffunction tag.
+	]]></help>
+	<return type="Any" parameter="name" />
+	<parameter name="name" type="variableName" required="true">
+		<help><![CDATA[
+			An argument name.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			a type name; data type of the argument.
+		]]></help>
+		<values>
+			<value option="Any" />
+			<value option="Array" />
+			<value option="Binary" />
+			<value option="Boolean" />
+			<value option="Date" />
+			<value option="GUID" />
+			<value option="Numeric" />
+			<value option="Query" />
+			<value option="String" />
+			<value option="Struct" />
+			<value option="UUID" />
+			<value option="XML" />
+			<value option="VariableName" />
+			<value option="(component name)"/>
+		</values>
+	</parameter>
+	<parameter name="required" type="boolean" required="false">
+		<help><![CDATA[
+			Whether the parameter is required to execute the component
+			method.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="default" type="String" required="false">
+		<help><![CDATA[
+			If no argument is passed, specifies a default argument
+			value.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="displayname" type="String" required="false">
+		<help><![CDATA[
+			Meaningful only for CFC method parameters. A value to be
+			displayed when using introspection to show information
+			about the CFC.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hint" type="String" required="false">
+		<help><![CDATA[
+			Meaningful only for CFC method parameters. Text to be
+			displayed when using introspection to show information
+			about the CFC. The hint attribute value follows the
+			displayname attribute value in the parameter description
+			line. This attribute can be useful for describing the
+			purpose of the parameter
+		]]></help>
+		<values />
+	</parameter>
+</tag>

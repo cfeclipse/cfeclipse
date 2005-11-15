@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfsearch
+		name = "search_name"
+		collection = "collection_name"
+		category = "category[,category2,...]"
+		categoryTree = "tree_location"
+		status = ""
+		type = "criteria"
+		criteria = "search_expression"
+		maxRows = "number"
+		startRow = "row_number"
+		suggestions = "suggestion_option"
+		contextPassages = "number_of_passages"
+		contextBytes = "number_of_bytes"
+		contextHighlightBegin = "html_string"
+		contextHighlightEnd = "html_string"
+		previousCriteria = "criteria"
+		language = "language"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfsearch" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Searches Verity collections using CFML or K2Server,
+		whichever search engine a collection is registered by.
+		(CFML can also search collections that have not been
+		registered, with the cfcollection tag.)
+
+		A collection must be created and indexed before this tag can
+		return search results.
+	]]></help>
+	<return type="cfsearch" parameter="name" />
+	<parameter name="name" type="variableName" required="true">
+		<help><![CDATA[
+			Name of the search query.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="collection" type="String" required="true">
+		<help><![CDATA[
+			One or more collection names. You can specify more
+			than one collection unless you are performing a
+			category search (that is, specifying category or
+			categoryTree).
+
+			One or more collection names. You can specify more
+			than one collection unless you are performing a
+			category search (that is, specifying category or
+			categoryTree).
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="category" type="String" required="false">
+		<help><![CDATA[
+			A list of categories, separated by commas, to which
+			the search is limited. If specified, and the collection
+			does not have categories enabled, ColdFusion
+			throws an exception.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="categorytree" type="String" required="false">
+		<help><![CDATA[
+			The location in a hierarchical category tree at which
+			to start the search. ColdFusion searches at and
+			below this level. If specified, and the collection does
+			not have categories enabled, ColdFusion throws an
+			exception. Can be used in addition to category
+			attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="status" type="String" required="false">
+		<help><![CDATA[
+			Specifies the name of the structure variable into
+			which ColdFusion places search information, including
+			alternative criteria suggestions (spelling corrections).
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			Used to specify the parser that Verity uses to process
+			the criteria.
+			- simple: STEM and MANY operators are implicitly used.
+			- explicit: operators must be invoked explicitly. Also
+			known as Bool_Plus)
+			- internet: for documents that are mostly WYSIWIG
+			(what-you-see-is-what-you-get) documents. Also
+			known as Internet_advanced.
+			- internet_basic: minimizes search time.
+			- natural: specifies the Query By Example (QBE)
+			parser. Also known as FreeText.
+		]]></help>
+		<values default="simple">
+			<value option="simple" />
+			<value option="explicit" />
+			<value option="internet" />
+			<value option="internet_basic" />
+			<value option="natural" />
+		</values>
+	</parameter>
+	<parameter name="criteria" type="String" required="false">
+		<help><![CDATA[
+			Search criteria. Follows the syntax rules of the type
+			attribute. If you pass a mixed-case entry in this attribute,
+			the search is case-sensitive. If you pass all uppercase or
+			all lowercase, the search is case-insensitive. Follow
+			Verity syntax and delimiter character rules; see Using
+			Verity Search Expressions in Developing CFML MX
+			Applications.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="maxrows" type="Numeric" required="false">
+		<help><![CDATA[
+			Maximum number of rows to return in query results.
+			Default: all
+		]]></help>
+		<values default="all" />
+	</parameter>
+	<parameter name="startrow" type="Numeric" required="false">
+		<help><![CDATA[
+			First row number to get.
+			Default: 1
+		]]></help>
+		<values default="1" />
+	</parameter>
+	<parameter name="suggestions" type="String" required="false">
+		<help><![CDATA[
+			Specifies whether Verity returns spelling suggestions
+			for possibly misspelled words. Use one of the
+			following options:
+			 - always: Verity always returns spelling suggestions.
+			 - never: Verity never returns spelling suggestions.
+			 - positive integer: Verity returns spelling suggestions
+			   if the number of documents retrieved by the search
+			   is less than or equal to the number specified.
+			There is a small performance penalty for retrieving
+			suggestion data.
+			Default: never
+		]]></help>
+		<values default="never">
+			<value option="always" />
+			<value option="never" />
+			<value option="5" />
+			<value option="10" />
+		</values>
+	</parameter>
+	<parameter name="contextpassages" type="Numeric" required="false">
+		<help><![CDATA[
+			The number of passages/sentences Verity returns in
+			the context summary (that is, the context column of
+			the results).
+			Default: 3
+		]]></help>
+		<values default="3" />
+	</parameter>
+	<parameter name="contextbytes" type="Numeric" required="false">
+		<help><![CDATA[
+			The maximum number of bytes Verity returns in the
+			context summary.
+			Default: 300
+		]]></help>
+		<values default="300" />
+	</parameter>
+	<parameter name="contexthighlightbegin" type="String" required="false">
+		<help><![CDATA[
+			The HTML to prepend to search terms in the context
+			summary. Use this attribute in conjunction with
+			contextHighlightEnd to highlight search terms in the
+			context summary.
+			Default: <b>
+		]]></help>
+		<values default="&lt;b&gt;">
+			<value option="&lt;b&gt;" />
+			<value option="&lt;strong&gt;" />
+			<value option="&lt;span class=&quot;highlight&quot;&gt;" />
+		</values>
+	</parameter>
+	<parameter name="contexthighlightend" type="String" required="false">
+		<help><![CDATA[
+			The HTML to prepend to search terms in the context
+			summary. Use this attribute in conjunction with
+			contextHighlightEnd to highlight search terms in the
+			context summary.
+			Default: </b>
+		]]></help>
+		<values default="&lt;/b&gt;">
+			<value option="&lt;/b&gt;" />
+			<value option="&lt;/strong&gt;" />
+			<value option="&lt;/span&gt;" />
+		</values>
+	</parameter>
+	<parameter name="previouscriteria" type="String" required="false">
+		<help><![CDATA[
+			The name of a result set from an existing set of search
+			results. Verity searches the result set for criteria
+			without regard to the previous search score or rank.
+			Use this attribute to implement searching within result
+			sets.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

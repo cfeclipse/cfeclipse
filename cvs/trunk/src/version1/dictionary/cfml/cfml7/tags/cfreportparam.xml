@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfreportparam
+		name = "data name"
+		value = "data value"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfreportparam" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Passes input parameters to a ColdFusion Report Builder
+		report definition. Allowed inside cfreport tag bodies only.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Variable name for data that is passed. The ColdFusion
+			Report Builder report definition must include an input
+			parameter that matches this name.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			Value of the data that is sent.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

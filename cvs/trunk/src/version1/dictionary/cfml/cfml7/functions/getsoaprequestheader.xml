@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object GetSOAPRequestHeader(namespace, name [, asXML])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getsoaprequestheader" returns="Object">
+	<help><![CDATA[
+		Obtains a SOAP request header. Call only from within
+		a CFC web service function that is processing a request
+		as a SOAP web service.
+	]]></help>
+	<parameter name="namespace" type="String" required="true">
+		<help><![CDATA[
+		A String that is the namespace for the header
+		]]></help>
+	</parameter>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+		A String that is the name of the header
+		]]></help>
+	</parameter>
+	<parameter name="asXML" type="boolean" required="false">
+		<help><![CDATA[
+		If True, the header is returned as a CFML XML object;
+		if false (default), the header is returned as a Java object.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</function>

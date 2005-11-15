@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric RandRange(number1, number2[, algorithm])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="randrange" returns="Numeric">
+	<help><![CDATA[
+		Generates a random integer between two specified numbers.
+		Requests for random integers that are greater than 100,000,000
+		result in non-random numbers, to prevent overflow during
+		internal computations.
+	]]></help>
+	<parameter name="number1" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="number2" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="algorithm" type="String" required="false">
+		<help><![CDATA[
+		The algorithm to use to generated the random number.
+		]]></help>
+		<values default="CFMX_COMPAT">
+			<value option="CFMX_COMPAT" />
+			<value option="SHA1PRNG" />
+			<value option="IBMSecureRandom" />
+		</values>
+	</parameter>
+</function>

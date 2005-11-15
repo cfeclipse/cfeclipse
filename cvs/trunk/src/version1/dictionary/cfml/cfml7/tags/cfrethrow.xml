@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfrethrow
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfrethrow" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Rethrows the currently active exception. Preserves the
+		exception's cfcatch.type and cfcatch.tagContext variable
+		values.
+	]]></help>
+</tag>

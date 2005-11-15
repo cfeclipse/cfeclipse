@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String Hash(string[, algorithm[, encoding]] )
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="hash" returns="String">
+	<help><![CDATA[
+		Converts a variable-length string to a 32-byte, hexadecimal
+		string, using the MD5 algorithm. (It is not possible to convert
+		the hash result back to the source string.)
+		32-byte, hexadecimal string
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="algorithm" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default="CFMX_COMPAT">
+			<value option="CFMX_COMPAT" />
+			<value option="MD5" />
+			<value option="SHA" />
+			<value option="SHA-256" />
+			<value option="SHA-384" />
+			<value option="SHA-512" />
+		</values>
+	</parameter>
+	<parameter name="encoding" type="String" required="false">
+		<help><![CDATA[
+			A string specifying the encoding to use when converting
+			the string to byte data used by the hash algorithm.
+			Must be a character encoding name recognized by the
+			Java runtime.
+		]]></help>
+		<values>
+			<value option="utf-8" />
+			<value option="iso-8859-1" />
+			<value option="windows-1252" />
+			<value option="us-ascii" />
+			<value option="shift_jis" />
+			<value option="iso-2022-jp" />
+			<value option="euc-jp" />
+			<value option="euc-kr" />
+			<value option="big5" />
+			<value option="euc-cn" />
+			<value option="utf-16" />
+		</values>
+	</parameter>
+</function>

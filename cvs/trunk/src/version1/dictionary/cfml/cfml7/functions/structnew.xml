@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Struct StructNew()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structnew" returns="Struct">
+	<help><![CDATA[
+		Creates a structure.
+	]]></help>
+</function>

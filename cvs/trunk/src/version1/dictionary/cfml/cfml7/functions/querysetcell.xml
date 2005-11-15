@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean QuerySetCell(query, column_name, value [, row_number ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="querysetcell" returns="boolean">
+	<help><![CDATA[
+		Sets a cell to a value. If no row number is specified,
+		the cell on the last row is set.
+	]]></help>
+	<parameter name="query" type="Query" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="column" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="row" type="Numeric" required="false">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

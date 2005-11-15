@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfgrid
+		name = "name"
+		format = "applet" or "flash" or "xml"
+		height = "integer"
+		width = "integer"
+		query = "query_name"
+		selectMode = "mode"
+		insert = "boolean"
+		delete = "boolean"
+		font = "column_font"
+		fontSize = "size"
+		italic = "boolean"
+		bold = "boolean"
+		textColor = "web color"
+		gridLines = "boolean"
+		rowHeight = "pixels"
+		colHeaders = "boolean"
+		colHeaderFont = "font_name"
+		colHeaderFontSize = "size"
+		colHeaderItalic = "boolean"
+		colHeaderBold = "boolean"
+		colHeaderTextColor = "web color"
+		bgColor = "web color"
+		maxRows = "number"
+	The following works in Flash format only
+		style= "style specification"
+		enabled = "boolean"
+		visible = "boolean"
+		toolTip = "Tip text"
+		onChange = "ActionScript"
+	The following work in applet and XML format only
+		autoWidth = "boolean"
+		vSpace = "integer"
+		hSpace = "integer"
+		align = "value"
+		sort = "boolean"
+		href = "URL"
+		hrefKey = "column_name"
+		target = "URL_target"
+		appendKey = "boolean"
+		highlightHref = "boolean"
+		onValidate = "javascript_function"
+		onError = "text"
+		gridDataAlign = "position"
+		rowHeaders = "boolean"
+		rowHeaderAlign = "position"
+		rowHeaderFont = "font_name"
+		rowHeaderFontSize = "size"
+		rowHeaderItalic = "boolean"
+		rowHeaderBold = "boolean"
+		rowHeaderTextColor = "web color"
+		colHeaderAlign = "position"
+		selectColor = "web color"
+		notSupported = "text"
+		pictureBar = "boolean"
+		insertButton = "text"
+		deleteButton = "text"
+		sortAscendingButton = "text"
+		sortDescendingButton = "text"
+	zero or more cfgridcolumn and cfgridrow tags
+	/cfgrid
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfgrid" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Used within the cfform tag. Puts a grid control (a table of
+		data) in a CFML form. To specify grid columns and row
+		data, use the cfgridcolumn and cfgridrow tags, or use the
+		query attribute, with or without cfgridcolumn tags.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name of grid element.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="format" type="String" required="false">
+		<help><![CDATA[
+			- applet: generates a Java applet.
+			- Flash: generates a Flash grid control.
+			- xml: generates an XMLrepresentation of the grid.
+			In XML format forms, includes the generated XML in the form.
+			In HTML format forms, puts the XML in a string variable
+			with the name specified by the name attribute.
+			Default: applet
+		]]></help>
+		<values default="applet">
+			<value option="applet" />
+			<value option="flash" />
+			<value option="xml" />
+		</values>
+	</parameter>
+	<parameter name="height" type="Numeric" required="false">
+		<help><![CDATA[
+			Control's height, in pixels.
+			Default for applet: 300
+		]]></help>
+		<values default="300" />
+	</parameter>
+	<parameter name="width" type="Numeric" required="false">
+		<help><![CDATA[
+			Control's width, in pixels.
+			Default for applet: 300
+		]]></help>
+		<value default="300" />
+	</parameter>
+	<parameter name="autowidth" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: sets column widths so that all columns display within
+				grid width.
+			No: sets columns to equal widths. User can resize columns.
+				Horizontal scroll bars are not available, because if
+				you specify a column width and set autoWidth = "Yes",
+				CFML sets to this width, if possible
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="vspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Vertical margin above and below control, in pixels.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="hspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Horizontal spacing to left and right of control, in pixels.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="align" type="String" required="false">
+		<help><![CDATA[
+			Alignment of the grid cell contents
+		]]></help>
+		<values>
+			<value option="top" />
+			<value option="left" />
+			<value option="bottom" />
+			<value option="baseline" />
+			<value option="texttop" />
+			<value option="absbottom" />
+			<value option="middle" />
+			<value option="absmiddle" />
+			<value option="right" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="query" type="String" required="false">
+		<help><![CDATA[
+			Name of query associated with grid control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="insert" type="boolean" required="false">
+		<help><![CDATA[
+			User can insert row data in grid.
+			Takes effect only if selectmode="edit"
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="selectmode" required="false" value="edit" />
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="delete" type="boolean" required="false">
+		<help><![CDATA[
+			User can delete row data from grid.
+			Takes effect only if selectmode="edit"
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="selectmode" required="false" value="edit" />
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="sort" type="boolean" required="false">
+		<help><![CDATA[
+			The sort button performs simple text sort on column. User
+			can sort columns by clicking column head or by clicking
+			sort buttons. Not valid with selectmode=browse.
+
+			Yes: sort buttons display on grid control
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+			<selectedValue attributeName="selectMode" required="false" value="edit" />
+			<selectedValue attributeName="selectMode" required="false" value="single" />
+			<selectedValue attributeName="selectMode" required="false" value="row" />
+			<selectedValue attributeName="selectMode" required="false" value="column" />
+		</triggers>
+	</parameter>
+	<parameter name="font" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values default="arial">
+			<value option="arial" />
+			<value option="times" />
+			<value option="courier" />
+			<value option="arialunicodeMS" />
+		</values>
+	</parameter>
+	<parameter name="fontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="italic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="bold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="textcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values default="black">
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="href" type="String" required="false">
+		<help><![CDATA[
+			URL or query column name that contains a URL to hyperlink
+			each grid column with.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="hrefkey" type="String" required="false">
+		<help><![CDATA[
+			The query column to use for the value appended to the href
+			URL of each column, instead of the column's value.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="target" type="String" required="false">
+		<help><![CDATA[
+			Frame in which to open link specified in href.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="appendkey" type="boolean" required="false">
+		<help><![CDATA[
+			When used with href, passes CFTREEITEMKEY variable
+			with the value of the selected tree item in URL to the
+			application page specified in the cfform action
+			attribute
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="highlighthref" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: Highlights links that are associated with a cftreeitem
+				with a URL attribute value.
+			No: Disables highlight.
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="onvalidate" type="String" required="false">
+		<help><![CDATA[
+			JavaScript function to validate user input. The form object,
+			input object, and input object value are passed to the
+			specified routine, which should return True if validation
+			succeeds; False, otherwise.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="onerror" type="String" required="false">
+		<help><![CDATA[
+			JavaScript function to execute if validation fails.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="griddataalign" type="String" required="false">
+		<help><![CDATA[
+			Left: left-aligns data within column.
+			Right: right-aligns data within column.
+			Center: center-aligns data within column.
+		]]></help>
+		<values default="left">
+			<value option="left" />
+			<value option="center" />
+			<value option="right" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="gridlines" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: enables row and column rules in grid control
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="rowheight" type="Numeric" required="false">
+		<help><![CDATA[
+			Minimum row height, in pixels, of grid control. Used with
+			cfgridcolumn type = "Image"; defines space for graphics to
+			display in row.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="rowheaders" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays a column of numeric row labels in grid
+			control
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="rowheaderalign" type="String" required="false">
+		<help><![CDATA[
+			Left: left-aligns data within row header
+			Right: right-aligns data within row header
+			Center: center-aligns data within row header
+		]]></help>
+		<values default="left">
+			<value option="left" />
+			<value option="center" />
+			<value option="right" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="rowheaderfont" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="rowheaderfontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="rowheaderitalic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="rowheaderbold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="rowheadertextcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values default="black">
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="colheaders" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays a column of numeric row labels in grid
+			control
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="colheaderalign" type="String" required="false">
+		<help><![CDATA[
+			Left: left-aligns data within row header
+			Right: right-aligns data within row header
+			Center: center-aligns data within row header
+		]]></help>
+		<values default="left">
+			<value option="left" />
+			<value option="center" />
+			<value option="right" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="colheaderfont" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="colheaderfontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="colheaderitalic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="colheaderbold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="colheadertextcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="bgcolor" type="String" required="false">
+		<help><![CDATA[
+			Background color of grid control.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="selectcolor" type="String" required="false">
+		<help><![CDATA[
+			Background color for a selected item.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="selectmode" type="String" required="false">
+		<help><![CDATA[
+			Selection mode for items in the control.
+			- Edit: user can edit grid data. Selecting a cell opens
+			  the editor for the cell type.
+			- Row: user selections automatically extend to the row
+			  that contains selected cell.
+			- Single: user selections are limited to selected cell.
+			  (Applet only)
+			- Column: user selections automatically extend
+			  to column that contains selected cell.  (Applet only)
+			- Browse: user can only browse grid data.  (Applet only)
+		]]></help>
+		<values>
+			<value option="edit" />
+			<value option="single" />
+			<value option="row" />
+			<value option="column" />
+			<value option="browse" />
+		</values>
+	</parameter>
+	<parameter name="maxrows" type="Numeric" required="false">
+		<help><![CDATA[
+			Maximum number of rows to display in grid.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="notsupported" type="String" required="false">
+		<help><![CDATA[
+			Text to display if a page that contains a Java applet-based
+			cfform control is opened by a browser that does not
+			support Java or has Java support disabled.
+			Default:
+			"<b>Browser must support Java to <br>view ColdFusion Java
+			Applets!</b>"
+		]]></help>
+		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;" />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="picturebar" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: images for Insert, Delete, Sort buttons
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="insertbutton" type="String" required="false">
+		<help><![CDATA[
+			Text for the insert button. Takes effect only if
+			selectmode="edit".
+		]]></help>
+		<values default="Insert">
+			<value option="Insert" />
+			<value option="Add" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="selectmode" required="false" value="edit" />
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="deletebutton" type="String" required="false">
+		<help><![CDATA[
+			Text of Delete button text. Takes effect only if
+			selectmode="edit".
+		]]></help>
+		<values default="Delete">
+			<value option="Delete" />
+			<value option="Remove" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="selectmode" required="false" value="edit" />
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="sortascendingbutton" type="String" required="false">
+		<help><![CDATA[
+			Sort button text
+		]]></help>
+		<values default="A -> Z">
+			<value option="A -> Z" />
+			<value option="Asc" />
+			<value option="Ascending" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="sortdescendingbutton" type="String" required="false">
+		<help><![CDATA[
+			Sort button text
+		]]></help>
+		<values default="Z -> A">
+			<value option="Z -> A" />
+			<value option="Desc" />
+			<value option="Descending" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="xml" />
+			<selectedValue attributeName="format" required="false" value="applet" />
+		</triggers>
+	</parameter>
+	<parameter name="style" type="String" required="false">
+		<help><![CDATA[
+			Flash only: Must be a style specification in CSS format.
+			Ignored for type="text".
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="flash" />
+		</triggers>
+	</parameter>
+	<parameter name="enabled" type="boolean" required="false">
+		<help><![CDATA[
+			Flash only: Boolean value specifying
+			whether the control is enabled. A disabled
+			control appears in light gray.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="flash" />
+		</triggers>
+	</parameter>
+	<parameter name="visible" type="boolean" required="false">
+		<help><![CDATA[
+			Flash only: Boolean value specifying
+			whether to show the control. Space that would
+			be occupied by an invisible control is blank.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="flash" />
+		</triggers>
+	</parameter>
+	<parameter name="tooltip" type="String" required="false">
+		<help><![CDATA[
+			Flash only: text to display when the
+			mouse pointer hovers over the control.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="flash" />
+		</triggers>
+	</parameter>
+	<parameter name="onchange" type="String" required="false">
+		<help><![CDATA[
+			Flash only: ActionScript to run when the control changes
+			due to user action in the control.
+		]]></help>
+		<values />
+		<triggers>
+			<selectedValue attributeName="format" required="false" value="flash" />
+		</triggers>
+	</parameter>
+</tag>

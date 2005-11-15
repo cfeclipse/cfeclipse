@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String MonthAsString(month_number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="monthasstring" returns="String">
+	<help><![CDATA[
+	]]></help>
+	<parameter name="month_number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
