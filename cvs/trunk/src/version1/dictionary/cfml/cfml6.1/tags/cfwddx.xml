@@ -1,78 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfwddx" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Serializes and deserializes CFML data structures to the
-				XML-based WDDX format. The WDDX is an XML vocabulary for
-				describing complex data structures in a standard, generic way.
-				Implementing it lets you use the HTTP protocol to such
-				information among application server platforms, application
-				servers, and browsers.
 
-				This tag generates JavaScript statements to instantiate
-				JavaScript objects equivalent to the contents of a WDDX packet
-				or CFML data structure. Interoperates with Unicode.
-			]]></help>
-			<parameter name="action" required="true" type="String">
-				<help><![CDATA[
-					cfml2wddx: serialize CFML to WDDX
-					wddx2cfml: deserialize WDDX to CFML
-					cfml2js: serialize CFML to JavaScript
-					wddx2js: deserialize WDDX to JavaScript
-				]]></help>
-				<values>
-					<value option="cfml2wddx"/>
-					<value option="wddx2cfml"/>
-					<value option="cfml2js"/>
-					<value option="wddx2js"/>
-				</values>
-			</parameter>
-			<parameter name="input" required="true" type="String">
-				<help><![CDATA[
-					A value to process
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="output" required="false" type="String">
-				<help><![CDATA[
-					Name of variable for output. If action = "WDDX2JS" or
-					"CFML2JS", and this attribute is omitted, result is output
-					in HTML stream.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="toplevelvariable" required="false" type="String">
-				<help><![CDATA[
-					Name of top-level JavaScript object created by
-					deserialization. The object is an instance of the
-					WddxRecordset object.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="usetimezoneinfo" required="false" type="boolean">
-				<help><![CDATA[
-					Whether to output time-zone information when serializing
-					CFML to WDDX.
-						- Yes: the hour-minute offset, represented in ISO8601
-							format, is output.
-						- No: the local time is output.
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="validate" required="false" type="boolean">
-				<help><![CDATA[
-					Applies if action = "wddx2cfml" or "wddx2js".
-						- Yes: validates WDDX input with an XML parser using
-							WDDX DTD. If parser processes input without error,
-							packet is deserialized. Otherwise, an error is
-							thrown.
-						- No: no input validation
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-		</tag>
+<!--
+	cfwddx
+		action = "action"
+		input = "inputdata"
+		output = "resultvariablename"
+		topLevelVariable = "toplevelvariablenameforjavascript"
+		useTimeZoneInfo = "boolean"
+		validate = "boolean"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfwddx" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Serializes and deserializes CFML data structures to the
+		XML-based WDDX format. The WDDX is an XML vocabulary for
+		describing complex data structures in a standard, generic way.
+		Implementing it lets you use the HTTP protocol to such
+		information among application server platforms, application
+		servers, and browsers.
+
+		This tag generates JavaScript statements to instantiate
+		JavaScript objects equivalent to the contents of a WDDX packet
+		or CFML data structure. Interoperates with Unicode.
+	]]></help>
+	<return type="Any" parameter="output" />
+	<parameter name="action" type="String" required="true">
+		<help><![CDATA[
+			cfml2wddx: serialize CFML to WDDX
+			wddx2cfml: deserialize WDDX to CFML
+			cfml2js: serialize CFML to JavaScript
+			wddx2js: deserialize WDDX to JavaScript
+		]]></help>
+		<values>
+			<value option="cfml2wddx" />
+			<value option="wddx2cfml" />
+			<value option="cfml2js" />
+			<value option="wddx2js" />
+		</values>
+	</parameter>
+	<parameter name="input" type="String" required="true">
+		<help><![CDATA[
+			A value to process
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="output" type="variableName" required="false">
+		<help><![CDATA[
+			Name of variable for output. If action = "WDDX2JS" or
+			"CFML2JS", and this attribute is omitted, result is output
+			in HTML stream.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="toplevelvariable" type="String" required="false">
+		<help><![CDATA[
+			Name of top-level JavaScript object created by
+			deserialization. The object is an instance of the
+			WddxRecordset object.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="usetimezoneinfo" type="boolean" required="false">
+		<help><![CDATA[
+			Whether to output time-zone information when serializing
+			CFML to WDDX.
+				- Yes: the hour-minute offset, represented in ISO8601
+					format, is output.
+				- No: the local time is output.
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="validate" type="boolean" required="false">
+		<help><![CDATA[
+			Applies if action = "wddx2cfml" or "wddx2js".
+				- Yes: validates WDDX input with an XML parser using
+					WDDX DTD. If parser processes input without error,
+					packet is deserialized. Otherwise, an error is
+					thrown.
+				- No: no input validation
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</tag>

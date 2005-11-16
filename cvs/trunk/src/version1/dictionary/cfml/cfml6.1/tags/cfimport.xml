@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfimport" single="true" xmlstyle="false">
-			<help><![CDATA[
-				You can use the cfimport tag to import either of the following:
 
-				* All CFML pages in a directory, as a tag custom tag
-				library.
-				* A Java Server Page (JSP) tag library. A JSP tag library is a
-				packaged set of tag handlers that conform to the JSP 1.1 tag
-				extension API.
-			]]></help>
-			<parameter name="taglib" required="true" type="String">
-				<help><![CDATA[
-					Tag library URI. The path must be relative to the web root
-					(and start with /), the current page location, or a
-					directory specified in the Administrator CFML
-					mappings page.
+<!--
+	cfimport
+		taglib = "taglib-location"
+		prefix = "custom"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfimport" single="true" xmlstyle="false">
+	<help><![CDATA[
+		You can use the cfimport tag to import either of the following:
 
-					A directory in which custom CFML tags are stored. In
-					this case, all the cfm pages in this directory are treated
-					as custom tags in a tag library.
-					A path to a JAR in a web-application; for example,
-					"/WEB-INF/lib/sometags.jar"
-					A path to a tag library descriptor; for example,
-					"/sometags.tld"
-					Note: You must put JSP custom tag libraries in the
-					/WEB-IN/lib directory. This limitation does not apply to
-					CFML pages.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="prefix" required="true" type="String">
-				<help><![CDATA[
-					Prefix by which to access the imported custom CFML tags JSP
-					tags.
+		* All CFML pages in a directory, as a tag custom tag
+		library.
+		* A Java Server Page (JSP) tag library. A JSP tag library is a
+		packaged set of tag handlers that conform to the JSP 1.1 tag
+		extension API.
+	]]></help>
+	<parameter name="taglib" type="String" required="true">
+		<help><![CDATA[
+			Tag library URI. The path must be relative to the web root
+			(and start with /), the current page location, or a
+			directory specified in the Administrator CFML
+			mappings page.
 
-					If you import a CFML custom tag directory and specify an
-					empty value, "", for this attribute, you can call the
-					custom tags without using a prefix. You must specify and
-					use a prefix for a JSP tag library.
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+			A directory in which custom CFML tags are stored. In
+			this case, all the cfm pages in this directory are treated
+			as custom tags in a tag library.
+			A path to a JAR in a web-application; for example,
+			"/WEB-INF/lib/sometags.jar"
+			A path to a tag library descriptor; for example,
+			"/sometags.tld"
+			Note: You must put JSP custom tag libraries in the
+			/WEB-IN/lib directory. This limitation does not apply to
+			CFML pages.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="prefix" type="String" required="true">
+		<help><![CDATA[
+			Prefix by which to access the imported custom CFML tags JSP
+			tags.
+
+			If you import a CFML custom tag directory and specify an
+			empty value, "", for this attribute, you can call the
+			custom tags without using a prefix. You must specify and
+			use a prefix for a JSP tag library.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

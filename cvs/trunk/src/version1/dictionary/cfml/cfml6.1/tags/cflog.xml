@@ -1,60 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cflog" single="false" xmlstyle="false">
-			<help><![CDATA[
-				Writes a message to a log file.
-			]]></help>
-			<parameter name="text" required="true" type="String">
-				<help><![CDATA[
-					Message text to log.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="log" required="false" type="String">
-				<help><![CDATA[
-					If you omit the file attribute, writes messages to standard
-					log file. Ignored, if you specify file attribute.
 
-					Application: writes to Application.log, normally used for
-						application-specific messages.
-					Scheduler: writes to Scheduler.log, normally used to log
-						the execution of scheduled tasks.
-				]]></help>
-				<values>
-					<value option="Application"/>
-					<value option="Scheduler"/>
-				</values>
-			</parameter>
-			<parameter name="file" required="false" type="String">
-				<help><![CDATA[
-					Message file. Specify only the main part of the filename.
-					For example, to log to the Testing.log file, specify
-					"Testing".
+<!--
+	cflog
+		text = "text"
+		log = "log type"
+		file = "filename"
+		type = "message type"
+		application = "application name yes or no"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cflog" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Writes a message to a log file.
+	]]></help>
+	<parameter name="text" type="String" required="true">
+		<help><![CDATA[
+			Message text to log.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="log" type="String" required="false">
+		<help><![CDATA[
+			If you omit the file attribute, writes messages to standard
+			log file. Ignored, if you specify file attribute.
 
-					The file must be located in the default log directory. You
-					cannot specify a directory path. If the file does not
-					exist, it is created automatically, with the suffix .log.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="type" required="false" type="String">
-				<help><![CDATA[
-					Type (severity) of the message
-				]]></help>
-				<values>
-					<value option="information"/>
-					<value option="warning"/>
-					<value option="error"/>
-					<value option="fatal information"/>
-				</values>
-			</parameter>
-			<parameter name="application" required="false" type="boolean">
-				<help><![CDATA[
-					log application name, if it is specified in a cfapplication
-					tag.
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-		</tag>
+			Application: writes to Application.log, normally used for
+				application-specific messages.
+			Scheduler: writes to Scheduler.log, normally used to log
+				the execution of scheduled tasks.
+		]]></help>
+		<values>
+			<value option="Application" />
+			<value option="Scheduler" />
+		</values>
+	</parameter>
+	<parameter name="file" type="String" required="false">
+		<help><![CDATA[
+			Message file. Specify only the main part of the filename.
+			For example, to log to the Testing.log file, specify
+			"Testing".
+
+			The file must be located in the default log directory. You
+			cannot specify a directory path. If the file does not
+			exist, it is created automatically, with the suffix .log.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			Type (severity) of the message
+		]]></help>
+		<values>
+			<value option="information" />
+			<value option="warning" />
+			<value option="error" />
+			<value option="fatal" />
+		</values>
+	</parameter>
+	<parameter name="application" type="boolean" required="false">
+		<help><![CDATA[
+			log application name, if it is specified in a cfapplication
+			tag.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</tag>

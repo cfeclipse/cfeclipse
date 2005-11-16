@@ -1,257 +1,298 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="1" name="cfgridcolumn" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Used with the cfgrid tag in a cfform. Use this tag to specify
-				column data in a cfgrid control. The font and alignment
-				attributes used in cfgridcolumn override global font or
-				alignment settings defined in cfgrid.
-			]]></help>
-			<parameter name="name" required="true" type="String">
-				<help><![CDATA[
-					Name of grid column element. If grid uses a query, column
-					name must specify name of a query column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="header" required="false" type="boolean">
-				<help><![CDATA[
-					Column header text. Used only if cfgrid colHeaders = "Yes".
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="width" required="false" type="Numeric">
-				<help><![CDATA[
-					Column width, in pixels.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="font" required="false" type="String">
-				<help><![CDATA[
-					Font of data in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="fontsize" required="false" type="Numeric">
-				<help><![CDATA[
-					Size of text in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="italic" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in italics
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="bold" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in bold
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="bgcolor" required="false" type="String">
-				<help><![CDATA[
-					Background color of control. For a hex value, use the form:
-					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-					signs or none.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="textcolor" required="false" type="String">
-				<help><![CDATA[
-					Text color for control. For a hex value, use the form:
-					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-					signs or none.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="href" required="false" type="String">
-				<help><![CDATA[
-					URL o r query column name that contains a URL to hyperlink
-					each grid column with.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="hrefkey" required="false" type="String">
-				<help><![CDATA[
-					The query column to use for the value appended to the href
-					URL of each column, instead of the column's value.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="target" required="false" type="String">
-				<help><![CDATA[
-					Frame in which to open link specified in href.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="select" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: user can select the column in grid control.
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="display" required="false" type="boolean">
-				<help><![CDATA[
-					No: hides column
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="type" required="false" type="String">
-				<help><![CDATA[
-					image: grid displays image that corresponds to value in
-					column (a built-in CFML image name, or an image in
-					cfide\classes directory or subdirectory referenced with
-					relative URL). If image is larger than column cell, it is
-					clipped to fit. Built-in image names
-				]]></help>
-				<values>
-					<value option="cd"/>
-					<value option="computer"/>
-					<value option="document"/>
-					<value option="element"/>
-					<value option="folder"/>
-					<value option="floppy"/>
-					<value option="fixed"/>
-					<value option="remote"/>
-				</values>
-			</parameter>
-			<parameter name="headerfont" required="false" type="String">
-				<help><![CDATA[
-					Font of data in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="headerfontsize" required="false" type="Numeric">
-				<help><![CDATA[
-					Size of text in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="headeritalic" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in italics
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="headerbold" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in bold
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="headertextcolor" required="false" type="String">
-				<help><![CDATA[
-					Text color for control. For a hex value, use the form:
-					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-					signs or none.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="dataalign" required="false" type="String">
-				<help><![CDATA[
-					Column data alignment
-				]]></help>
-				<values>
-					<value option="left"/>
-					<value option="right"/>
-					<value option="center"/>
-				</values>
-			</parameter>
-			<parameter name="headeralign" required="false" type="String">
-				<help><![CDATA[
-					Column header text alignment
-				]]></help>
-				<values>
-					<value option="left"/>
-					<value option="right"/>
-					<value option="center"/>
-				</values>
-			</parameter>
-			<parameter name="numberformat" required="false" type="String">
-				<help><![CDATA[
-					Format for displaying numeric data in grid. See
-					numberFormat mask characters.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="values" required="false" type="String">
-				<help><![CDATA[
-					Formats cells in column as drop-down list boxes; specify
-					items in drop-down list. Example:
-					values = "arthur, scott, charles, 1-20, mabel"
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="valuesdisplay" required="false" type="String">
-				<help><![CDATA[
-					Maps elements in values attribute to string to display in
-					drop-down list. Delimited strings and/or numeric range(s).
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="valuesdelimiter" required="false" type="String">
-				<help><![CDATA[
-					Maps elements in values attribute to string to display in
-					drop-down list. Delimited strings and/or numeric range(s).
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+
+<!--
+	cfgridcolumn
+		name = "column_name"
+		header = "header"
+		width = "column_width"
+		type = "type"
+		display = "boolean"
+		select = "boolean"
+		font = "column_font"
+		fontSize = "size"
+		italic = "boolean"
+		bold = "boolean"
+		textColor = "web color" or "expression"
+		bgColor = "web color" or "expression"
+		dataAlign = "position"
+		href = "URL"
+		hrefKey = "column_name"
+		target = "URL_target"
+		headerFont = "font_name"
+		headerFontSize = "size"
+		headerItalic = "boolean"
+		headerBold = "boolean"
+		headerTextColor = "web color"
+		headerAlign = "position"
+		numberFormat = "format"
+		values = "Comma-separated strings and/or numeric range"
+		valuesDisplay = "Comma-separated strings and/or numeric range"
+		valuesDelimiter = "delimiter character"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfgridcolumn" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Used with the cfgrid tag in a cfform. Use this tag to specify
+		column data in a cfgrid control. The font and alignment
+		attributes used in cfgridcolumn override global font or
+		alignment settings defined in cfgrid.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name of grid column element. If grid uses a query, column
+			name must specify name of a query column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="header" type="boolean" required="false">
+		<help><![CDATA[
+			Column header text. Used only if cfgrid colHeaders = "Yes".
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="width" type="Numeric" required="false">
+		<help><![CDATA[
+			Column width, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="font" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values default="arial">
+			<value option="arial" />
+			<value option="times" />
+			<value option="courier" />
+			<value option="arialunicodeMS" />
+		</values>
+	</parameter>
+	<parameter name="fontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="italic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="bold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="bgcolor" type="String" required="false">
+		<help><![CDATA[
+			Background color of control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="textcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="href" type="String" required="false">
+		<help><![CDATA[
+			URL o r query column name that contains a URL to hyperlink
+			each grid column with.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hrefkey" type="String" required="false">
+		<help><![CDATA[
+			The query column to use for the value appended to the href
+			URL of each column, instead of the column's value.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="target" type="String" required="false">
+		<help><![CDATA[
+			Frame in which to open link specified in href.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="select" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: user can select the column in grid control.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="display" type="boolean" required="false">
+		<help><![CDATA[
+			No: hides column
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			image: grid displays image that corresponds to value in
+			column (a built-in CFML image name, or an image in
+			cfide\classes directory or subdirectory referenced with
+			relative URL). If image is larger than column cell, it is
+			clipped to fit. Built-in image names
+		]]></help>
+		<values>
+			<value option="cd" />
+			<value option="computer" />
+			<value option="document" />
+			<value option="element" />
+			<value option="folder" />
+			<value option="floppy" />
+			<value option="fixed" />
+			<value option="remote" />
+		</values>
+	</parameter>
+	<parameter name="headerfont" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="headerfontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="headeritalic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="headerbold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="headertextcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="dataalign" type="String" required="false">
+		<help><![CDATA[
+			Column data alignment
+		]]></help>
+		<values>
+			<value option="left" />
+			<value option="right" />
+			<value option="center" />
+		</values>
+	</parameter>
+	<parameter name="headeralign" type="String" required="false">
+		<help><![CDATA[
+			Column header text alignment
+		]]></help>
+		<values>
+			<value option="left" />
+			<value option="right" />
+			<value option="center" />
+		</values>
+	</parameter>
+	<parameter name="numberformat" type="String" required="false">
+		<help><![CDATA[
+			Format for displaying numeric data in grid. See
+			numberFormat mask characters.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="values" type="String" required="false">
+		<help><![CDATA[
+			Formats cells in column as drop-down list boxes; specify
+			items in drop-down list. Example:
+			values = "arthur, scott, charles, 1-20, mabel"
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="valuesdisplay" type="String" required="false">
+		<help><![CDATA[
+			Maps elements in values attribute to string to display in
+			drop-down list. Delimited strings and/or numeric range(s).
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="valuesdelimiter" type="String" required="false">
+		<help><![CDATA[
+			Maps elements in values attribute to string to display in
+			drop-down list. Delimited strings and/or numeric range(s).
+		]]></help>
+		<values>
+			<value option="," />
+			<value option=";" />
+			<value option="|" />
+			<value option=":" />
+		</values>
+	</parameter>
+</tag>

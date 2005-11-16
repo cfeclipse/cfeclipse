@@ -1,107 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfmailparam" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Attaches a file or adds a header to an e-mail message. Can only
-				be used in the cfmail tag. You can use more than one
-				cfmailparam tag within a cfmail tag.
-			]]></help>
-			<parameter name="file" required="true" type="String">
-				<help><![CDATA[
-					Attaches file to a message. Mutually exclusive with name
-					attribute. The file is MIME encoded before sending.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="type" required="false" type="String">
-				<help><![CDATA[
-					The MIME media type of the part. Can be a can be valid MIME
-					media type
-				]]></help>
-				<values>
-					<value option="text/plain"/>
-					<value option="text/html"/>
-					<value option="html"/>
-					<value option="plain"/>
-					<value option="text"/>
-				</values>
-			</parameter>
-			<parameter name="name" required="true" type="String">
-				<help><![CDATA[
-					Name of header. Case-insensitive. Mutually exclusive with
-					file attribute.
-					The values listed are from rfc2822
-				]]></help>
-				<values>
-					<value option="Message-Context"/>
-					<value option="Apparently-To"/>
-					<value option="Approved-By"/>
-					<value option="Fax"/>
-					<value option="Telefax"/>
-					<value option="For-Approval"/>
-					<value option="For-Comment"/>
-					<value option="For-Handling"/>
-					<value option="Mail-System-Version"/>
-					<value option="Mailer"/>
-					<value option="Originating-Client"/>
-					<value option="X-Mailer "/>
-					<value option="X-Newsreader"/>
-					<value option="X-MimeOLE"/>
-					<value option="User-Agent"/>
-					<value option="Originator-Info"/>
-					<value option="Phone"/>
-					<value option="X-Envelope-From"/>
-					<value option="Envelope-To"/>
-					<value option="X-Envelope-To"/>
-					<value option="X-Face"/>
-					<value option="X-RCPT-TO"/>
-					<value option="X-Sender"/>
-					<value option="X-X-Sender"/>
-					<value option="Posted-To"/>
-					<value option="X-Admin"/>
-					<value option="Errors-To"/>
-					<value option="Return-Receipt-To"/>
-					<value option="Read-Receipt-To"/>
-					<value option="X-Confirm-reading-to"/>
-					<value option="Return-Receipt-Requested"/>
-					<value option="Register-Mail-Reply-Requested-By"/>
-					<value option="Abuse-Reports-To"/>
-					<value option="X-Complaints-To"/>
-					<value option="X-Report-Abuse-To"/>
-					<value option="Content-Alias"/>
-					<value option="Delivered-To"/>
-					<value option="X-Loop"/>
-					<value option="Translated-By"/>
-					<value option="Translation-Of"/>
-					<value option="X-UIDL"/>
-					<value option="X-URI"/>
-					<value option="X-URL"/>
-					<value option="X-IMAP"/>
-					<value option="X-OriginalArrivalTime"/>
-					<value option="Precedence"/>
-					<value option="X-MSMail-Priority"/>
-					<value option="X-Priority"/>
-					<value option="Content-Length"/>
-					<value option="Content-Conversion"/>
-					<value option="Content-Class"/>
-					<value option="Content-SGML-Entity"/>
-					<value option="X-MIME-Autoconverted"/>
-					<value option="List-Digest"/>
-					<value option="Mailing-List"/>
-					<value option="X-Mailing-List"/>
-					<value option="List-Software"/>
-					<value option="List-URL"/>
-					<value option="X-Listserver"/>
-					<value option="X-List-Host"/>
-					<value option="Fcc"/>
-					<value option="Speech-Act"/>
-					<value option="Status"/>
-					<value option="X-No-Archive"/>
-				</values>
-			</parameter>
-			<parameter name="value" required="false" type="String">
-				<help><![CDATA[
-					Value of the header.
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+
+<!--
+	cfmailparam
+		file = "file-name"
+		type ="media type"
+		contentID = "content ID"
+		disposition = "disposition type"
+   	or
+   	cfmailparam
+   		name = "header-name"
+   		value = "header-value"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfmailparam" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Attaches a file or adds a header to an e-mail message. Can only
+		be used in the cfmail tag. You can use more than one
+		cfmailparam tag within a cfmail tag.
+	]]></help>
+	<parameter name="file" type="String" required="true">
+		<help><![CDATA[
+			Attaches file to a message. Mutually exclusive with name
+			attribute. The file is MIME encoded before sending.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			The MIME media type of the part. Can be a can be valid MIME
+			media type
+		]]></help>
+		<values>
+			<value option="text/plain" />
+			<value option="text/html" />
+			<value option="html" />
+			<value option="plain" />
+			<value option="text" />
+		</values>
+	</parameter>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name of header. Case-insensitive. Mutually exclusive with
+			file attribute.
+			The values listed are from rfc2822
+		]]></help>
+		<values>
+			<value option="Message-Context" />
+			<value option="Apparently-To" />
+			<value option="Approved-By" />
+			<value option="Fax" />
+			<value option="Telefax" />
+			<value option="For-Approval" />
+			<value option="For-Comment" />
+			<value option="For-Handling" />
+			<value option="Mail-System-Version" />
+			<value option="Mailer" />
+			<value option="Originating-Client" />
+			<value option="X-Mailer " />
+			<value option="X-Newsreader" />
+			<value option="X-MimeOLE" />
+			<value option="User-Agent" />
+			<value option="Originator-Info" />
+			<value option="Phone" />
+			<value option="X-Envelope-From" />
+			<value option="Envelope-To" />
+			<value option="X-Envelope-To" />
+			<value option="X-Face" />
+			<value option="X-RCPT-TO" />
+			<value option="X-Sender" />
+			<value option="X-X-Sender" />
+			<value option="Posted-To" />
+			<value option="X-Admin" />
+			<value option="Errors-To" />
+			<value option="Return-Receipt-To" />
+			<value option="Read-Receipt-To" />
+			<value option="X-Confirm-reading-to" />
+			<value option="Return-Receipt-Requested" />
+			<value option="Register-Mail-Reply-Requested-By" />
+			<value option="Abuse-Reports-To" />
+			<value option="X-Complaints-To" />
+			<value option="X-Report-Abuse-To" />
+			<value option="Content-Alias" />
+			<value option="Delivered-To" />
+			<value option="X-Loop" />
+			<value option="Translated-By" />
+			<value option="Translation-Of" />
+			<value option="X-UIDL" />
+			<value option="X-URI" />
+			<value option="X-URL" />
+			<value option="X-IMAP" />
+			<value option="X-OriginalArrivalTime" />
+			<value option="Precedence" />
+			<value option="X-MSMail-Priority" />
+			<value option="X-Priority" />
+			<value option="Content-Length" />
+			<value option="Content-Conversion" />
+			<value option="Content-Class" />
+			<value option="Content-SGML-Entity" />
+			<value option="X-MIME-Autoconverted" />
+			<value option="List-Digest" />
+			<value option="Mailing-List" />
+			<value option="X-Mailing-List" />
+			<value option="List-Software" />
+			<value option="List-URL" />
+			<value option="X-Listserver" />
+			<value option="X-List-Host" />
+			<value option="Fcc" />
+			<value option="Speech-Act" />
+			<value option="Status" />
+			<value option="X-No-Archive" />
+		</values>
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Value of the header.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="contentID" type="String" required="false">
+		<help><![CDATA[
+			The Identifier for the attached file. This ID should
+			be globally unique and is used to identify the file in
+			an IMG or other tag in the mail body that references
+			the file content.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="disposition" type="String" required="false">
+		<help><![CDATA[
+			How the attached file is to be handled. Can be one
+			of the following:
+			 - attachment: present the file as an attachment
+			 - inline: display the file contents in the message
+		]]></help>
+		<values default="attachment">
+			<value option="attachment" />
+			<value option="inline" />
+		</values>
+	</parameter>
+</tag>

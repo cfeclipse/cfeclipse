@@ -1,504 +1,575 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="1" name="cfgrid" single="false" xmlstyle="false">
-			<help><![CDATA[
-				Used within the cfform tag. Puts a grid control (a table of
-				data) in a CFML form. To specify grid columns and row
-				data, use the cfgridcolumn and cfgridrow tags, or use the
-				query attribute, with or without cfgridcolumn tags.
-			]]></help>
-			<parameter name="name" required="true" type="String">
-				<help><![CDATA[
-					Name of grid element.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="height" required="false" type="Numeric">
-				<help><![CDATA[
-					Control's height, in pixels.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="width" required="false" type="Numeric">
-				<help><![CDATA[
-					Control's width, in pixels.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="autowidth" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: sets column widths so that all columns display within
-						grid width.
-					No: sets columns to equal widths. User can resize columns.
-						Horizontal scroll bars are not available, because if
-						you specify a column width and set autoWidth = "Yes",
-						CFML sets to this width, if possible
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="vspace" required="false" type="Numeric">
-				<help><![CDATA[
-					Vertical margin above and below control, in pixels.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="hspace" required="false" type="Numeric">
-				<help><![CDATA[
-					Horizontal spacing to left and right of control, in pixels.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="align" required="false" type="String">
-				<help><![CDATA[
-					Alignment of the grid cell contents
-				]]></help>
-				<values>
-					<value option="top"/>
-					<value option="left"/>
-					<value option="bottom"/>
-					<value option="baseline"/>
-					<value option="texttop"/>
-					<value option="absbottom"/>
-					<value option="middle"/>
-					<value option="absmiddle"/>
-					<value option="right"/>
-				</values>
-			</parameter>
-			<parameter name="query" required="false" type="String">
-				<help><![CDATA[
-					Name of query associated with grid control.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="insert" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: user can insert row data in grid. Takes effect only if
-					selectmode="edit"
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="delete" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: user can delete row data from grid. Takes effect only
-					if selectmode="edit"
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="sort" required="false" type="boolean">
-				<help><![CDATA[
-					The sort button performs simple text sort on column. User
-					can sort columns by clicking column head or by clicking
-					sort buttons. Not valid with selectmode=browse.
 
-					Yes: sort buttons display on grid control
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="font" required="false" type="String">
-				<help><![CDATA[
-					Font of data in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="fontsize" required="false" type="Numeric">
-				<help><![CDATA[
-					Size of text in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="italic" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in italics
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="bold" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in bold
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="textcolor" required="false" type="String">
-				<help><![CDATA[
-					Text color for control. For a hex value, use the form:
-					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-					signs or none.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="href" required="false" type="String">
-				<help><![CDATA[
-					URL o r query column name that contains a URL to hyperlink
-					each grid column with.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="hrefkey" required="false" type="String">
-				<help><![CDATA[
-					The query column to use for the value appended to the href
-					URL of each column, instead of the column's value.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="target" required="false" type="String">
-				<help><![CDATA[
-					Frame in which to open link specified in href.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="appendkey" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: when used with href, passes CFTREEITEMKEY variable
-						with the value of the selected tree item in URL to the
-						application page specified in the cfform action
-						attribute
-					No
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="highlighthref" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: highlights links that are associated with a cftreeitem
-						with a URL attribute value
-					No: disables highlight
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="onvalidate" required="false" type="String">
-				<help><![CDATA[
-					JavaScript function to validate user input. The form object,
-					input object, and input object value are passed to the
-					specified routine, which should return True if validation
-					succeeds; False, otherwise.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="onerror" required="false" type="String">
-				<help><![CDATA[
-					JavaScript function to execute if validation fails.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="griddataalign" required="false" type="String">
-				<help><![CDATA[
-					Left: left-aligns data within column.
-                    Right: right-aligns data within column.
-                    Center: center-aligns data within column.
-				]]></help>
-				<values>
-					<value option="left"/>
-					<value option="center"/>
-					<value option="right"/>
-				</values>
-			</parameter>
-			<parameter name="gridlines" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: enables row and column rules in grid control
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="rowheight" required="false" type="Numeric">
-				<help><![CDATA[
-					Minimum row height, in pixels, of grid control. Used with
-					cfgridcolumn type = "Image"; defines space for graphics to
-					display in row.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="rowheaders" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays a column of numeric row labels in grid
-					control
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="rowheaderalign" required="false" type="String">
-				<help><![CDATA[
-					Left: left-aligns data within row header
-                    Right: right-aligns data within row header
-                    Center: center-aligns data within row header
-				]]></help>
-				<values>
-					<value option="left"/>
-					<value option="center"/>
-					<value option="right"/>
-				</values>
-			</parameter>
-			<parameter name="rowheaderfont" required="false" type="String">
-				<help><![CDATA[
-					Font of data in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="rowheaderfontsize" required="false" type="Numeric">
-				<help><![CDATA[
-					Size of text in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="rowheaderitalic" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in italics
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="rowheaderbold" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in bold
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="rowheadertextcolor" required="false" type="String">
-				<help><![CDATA[
-					Text color for control. For a hex value, use the form:
-					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-					signs or none.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="colheaders" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays a column of numeric row labels in grid
-					control
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="colheaderalign" required="false" type="String">
-				<help><![CDATA[
-					Left: left-aligns data within row header
-                    Right: right-aligns data within row header
-                    Center: center-aligns data within row header
-				]]></help>
-				<values>
-					<value option="left"/>
-					<value option="center"/>
-					<value option="right"/>
-				</values>
-			</parameter>
-			<parameter name="colheaderfont" required="false" type="String">
-				<help><![CDATA[
-					Font of data in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="colheaderfontsize" required="false" type="Numeric">
-				<help><![CDATA[
-					Size of text in column.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="colheaderitalic" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in italics
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="colheaderbold" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: displays grid control text in bold
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="colheadertextcolor" required="false" type="String">
-				<help><![CDATA[
-					Text color for control. For a hex value, use the form:
-					textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-					signs or none.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="bgcolor" required="false" type="String">
-				<help><![CDATA[
-					Background color of grid control.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="selectcolor" required="false" type="String">
-				<help><![CDATA[
-					Background color for a selected item.
-				]]></help>
-				<values>
-					<value option="black"/>
-					<value option="red"/>
-					<value option="blue"/>
-					<value option="magenta"/>
-					<value option="cyan"/>
-					<value option="orange"/>
-					<value option="darkgray"/>
-					<value option="pink"/>
-					<value option="white"/>
-					<value option="lightgray"/>
-					<value option="yellow"/>
-				</values>
-			</parameter>
-			<parameter name="selectmode" required="false" type="String">
-				<help><![CDATA[
-					Selection mode for items in grid control.
+<!--
+	cfgrid
+		name = "name"
+		height = "integer"
+		width = "integer"
+		autoWidth = "boolean"
+		vSpace = "integer"
+		hSpace = "integer"
+		align = "value"
+		query = "query_name"
+		insert = "boolean"
+		delete = "boolean"
+		sort = "boolean"
+		font = "column_font"
+		fontSize = "size"
+		italic = "boolean"
+		bold = "boolean"
+		textColor = "web color"
+		href = "URL"
+		hrefKey = "column_name"
+		target = "URL_target"
+		appendKey = "boolean"
+		highlightHref = "boolean"
+		onValidate = "javascript_function"
+		onError = "text"
+		gridDataAlign = "position"
+		gridLines = "boolean"
+		rowHeight = "pixels"
+		rowHeaders = "boolean"
+		rowHeaderAlign = "position"
+		rowHeaderFont = "font_name"
+		rowHeaderFontSize = "size"
+		rowHeaderItalic = "boolean"
+		rowHeaderBold = "boolean"
+		rowHeaderTextColor = "web color"
+		colHeaders = "boolean"
+		colHeaderAlign = "position"
+		colHeaderFont = "font_name"
+		colHeaderFontSize = "size"
+		colHeaderItalic = "boolean"
+		colHeaderBold = "boolean"
+		colHeaderTextColor = "web color"
+		bgColor = "web color"
+		selectColor = "web color"
+		selectMode = "mode"
+		maxRows = "number"
+		notSupported = "text"
+		pictureBar = "boolean"
+		insertButton = "text"
+		deleteButton = "text"
+		sortAscendingButton = "text"
+		sortDescendingButton = "text"
+	zero or more cfgridcolumn and cfgridrow tags
+	/cfgrid
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfgrid" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Used within the cfform tag. Puts a grid control (a table of
+		data) in a CFML form. To specify grid columns and row
+		data, use the cfgridcolumn and cfgridrow tags, or use the
+		query attribute, with or without cfgridcolumn tags.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name of grid element.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="height" type="Numeric" required="false">
+		<help><![CDATA[
+			Control's height, in pixels.
+			Default for applet: 300
+		]]></help>
+		<values default="300" />
+	</parameter>
+	<parameter name="width" type="Numeric" required="false">
+		<help><![CDATA[
+			Control's width, in pixels.
+			Default for applet: 300
+		]]></help>
+		<value default="300" />
+	</parameter>
+	<parameter name="autowidth" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: sets column widths so that all columns display within
+				grid width.
+			No: sets columns to equal widths. User can resize columns.
+				Horizontal scroll bars are not available, because if
+				you specify a column width and set autoWidth = "Yes",
+				CFML sets to this width, if possible
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="vspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Vertical margin above and below control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Horizontal spacing to left and right of control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="align" type="String" required="false">
+		<help><![CDATA[
+			Alignment of the grid cell contents
+		]]></help>
+		<values>
+			<value option="top" />
+			<value option="left" />
+			<value option="bottom" />
+			<value option="baseline" />
+			<value option="texttop" />
+			<value option="absbottom" />
+			<value option="middle" />
+			<value option="absmiddle" />
+			<value option="right" />
+		</values>
+	</parameter>
+	<parameter name="query" type="String" required="false">
+		<help><![CDATA[
+			Name of query associated with grid control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="insert" type="boolean" required="false">
+		<help><![CDATA[
+			User can insert row data in grid.
+			Takes effect only if selectmode="edit"
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="delete" type="boolean" required="false">
+		<help><![CDATA[
+			User can delete row data from grid.
+			Takes effect only if selectmode="edit"
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="sort" type="boolean" required="false">
+		<help><![CDATA[
+			The sort button performs simple text sort on column. User
+			can sort columns by clicking column head or by clicking
+			sort buttons. Not valid with selectmode=browse.
 
-					Edit: user can edit grid data. Selecting a cell opens the
-						editor for the cell type.
-					Single: user selections are limited to selected cell.
-					Row: user selections automatically extend to the row that
-						contains selected cell.
-					Column: user selections automatically extend to column
-						that contains selected cell.
-					Browse: user can only browse grid data
-				]]></help>
-				<values>
-					<value option="edit"/>
-					<value option="single"/>
-					<value option="row"/>
-					<value option="column"/>
-					<value option="browse"/>
-				</values>
-			</parameter>
-			<parameter name="maxrows" required="false" type="Numeric">
-				<help><![CDATA[
-					Maximum number of rows to display in grid.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="notsupported" required="false" type="String">
-				<help><![CDATA[
-					Message to display if page that contains Java applet-based
-					form control is opened by browser that does not support
-					Java, or has Java support disabled. For example:
-
-					notSupported = "<b> Browser must support Java to view
-					CFML Java Applets</b>"
-
-					If no message is specified, this message displays:
-
-					<b>Browser must support Java to <br> view CFML Java
-					Applets!</b>
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="picturebar" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: images for Insert, Delete, Sort buttons
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="insertbutton" required="false" type="String">
-				<help><![CDATA[
-					Text for the insert button. Takes effect only if
-					selectmode="edit".
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="deletebutton" required="false" type="String">
-				<help><![CDATA[
-					Text of Delete button text. Takes effect only if
-					selectmode="edit".
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="sortascendingbutton" required="false" type="String">
-				<help><![CDATA[
-					Sort button text
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="sortdescendingbutton" required="false" type="String">
-				<help><![CDATA[
-					Sort button text
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+			Yes: sort buttons display on grid control
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="font" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values default="arial">
+			<value option="arial" />
+			<value option="times" />
+			<value option="courier" />
+			<value option="arialunicodeMS" />
+		</values>
+	</parameter>
+	<parameter name="fontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="italic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="bold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="textcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values default="black">
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="href" type="String" required="false">
+		<help><![CDATA[
+			URL or query column name that contains a URL to hyperlink
+			each grid column with.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hrefkey" type="String" required="false">
+		<help><![CDATA[
+			The query column to use for the value appended to the href
+			URL of each column, instead of the column's value.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="target" type="String" required="false">
+		<help><![CDATA[
+			Frame in which to open link specified in href.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="appendkey" type="boolean" required="false">
+		<help><![CDATA[
+			When used with href, passes CFTREEITEMKEY variable
+			with the value of the selected tree item in URL to the
+			application page specified in the cfform action
+			attribute
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="highlighthref" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: Highlights links that are associated with a cftreeitem
+				with a URL attribute value.
+			No: Disables highlight.
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="onvalidate" type="String" required="false">
+		<help><![CDATA[
+			JavaScript function to validate user input. The form object,
+			input object, and input object value are passed to the
+			specified routine, which should return True if validation
+			succeeds; False, otherwise.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onerror" type="String" required="false">
+		<help><![CDATA[
+			JavaScript function to execute if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="griddataalign" type="String" required="false">
+		<help><![CDATA[
+			Left: left-aligns data within column.
+			Right: right-aligns data within column.
+			Center: center-aligns data within column.
+		]]></help>
+		<values default="left">
+			<value option="left" />
+			<value option="center" />
+			<value option="right" />
+		</values>
+	</parameter>
+	<parameter name="gridlines" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: enables row and column rules in grid control
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="rowheight" type="Numeric" required="false">
+		<help><![CDATA[
+			Minimum row height, in pixels, of grid control. Used with
+			cfgridcolumn type = "Image"; defines space for graphics to
+			display in row.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="rowheaders" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays a column of numeric row labels in grid
+			control
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="rowheaderalign" type="String" required="false">
+		<help><![CDATA[
+			Left: left-aligns data within row header
+			Right: right-aligns data within row header
+			Center: center-aligns data within row header
+		]]></help>
+		<values default="left">
+			<value option="left" />
+			<value option="center" />
+			<value option="right" />
+		</values>
+	</parameter>
+	<parameter name="rowheaderfont" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="rowheaderfontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="rowheaderitalic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="rowheaderbold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="rowheadertextcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values default="black">
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="colheaders" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays a column of numeric row labels in grid
+			control
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="colheaderalign" type="String" required="false">
+		<help><![CDATA[
+			Left: left-aligns data within row header
+			Right: right-aligns data within row header
+			Center: center-aligns data within row header
+		]]></help>
+		<values default="left">
+			<value option="left" />
+			<value option="center" />
+			<value option="right" />
+		</values>
+	</parameter>
+	<parameter name="colheaderfont" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="colheaderfontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="colheaderitalic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="colheaderbold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="colheadertextcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="bgcolor" type="String" required="false">
+		<help><![CDATA[
+			Background color of grid control.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="selectcolor" type="String" required="false">
+		<help><![CDATA[
+			Background color for a selected item.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="selectmode" type="String" required="false">
+		<help><![CDATA[
+			Selection mode for items in the control.
+			- Edit: user can edit grid data. Selecting a cell opens
+			  the editor for the cell type.
+			- Row: user selections automatically extend to the row
+			  that contains selected cell.
+			- Single: user selections are limited to selected cell.
+			- Column: user selections automatically extend
+			  to column that contains selected cell.
+			- Browse: user can only browse grid data.
+		]]></help>
+		<values>
+			<value option="edit" />
+			<value option="single" />
+			<value option="row" />
+			<value option="column" />
+			<value option="browse" />
+		</values>
+	</parameter>
+	<parameter name="maxrows" type="Numeric" required="false">
+		<help><![CDATA[
+			Maximum number of rows to display in grid.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="notsupported" type="String" required="false">
+		<help><![CDATA[
+			Text to display if a page that contains a Java applet-based
+			cfform control is opened by a browser that does not
+			support Java or has Java support disabled.
+			Default:
+			"<b>Browser must support Java to <br>view ColdFusion Java
+			Applets!</b>"
+		]]></help>
+		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;" />
+	</parameter>
+	<parameter name="picturebar" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: images for Insert, Delete, Sort buttons
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="insertbutton" type="String" required="false">
+		<help><![CDATA[
+			Text for the insert button. Takes effect only if
+			selectmode="edit".
+		]]></help>
+		<values default="Insert">
+			<value option="Insert" />
+			<value option="Add" />
+		</values>
+	</parameter>
+	<parameter name="deletebutton" type="String" required="false">
+		<help><![CDATA[
+			Text of Delete button text. Takes effect only if
+			selectmode="edit".
+		]]></help>
+		<values default="Delete">
+			<value option="Delete" />
+			<value option="Remove" />
+		</values>
+	</parameter>
+	<parameter name="sortascendingbutton" type="String" required="false">
+		<help><![CDATA[
+			Sort button text
+		]]></help>
+		<values default="A -> Z">
+			<value option="A -> Z" />
+			<value option="Asc" />
+			<value option="Ascending" />
+		</values>
+	</parameter>
+	<parameter name="sortdescendingbutton" type="String" required="false">
+		<help><![CDATA[
+			Sort button text
+		]]></help>
+		<values default="Z -> A">
+			<value option="Z -> A" />
+			<value option="Desc" />
+			<value option="Descending" />
+		</values>
+	</parameter>
+</tag>

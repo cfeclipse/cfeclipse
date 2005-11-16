@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cflocation" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Stops execution of the current page and opens a CFML page or HTML file.
-			]]></help>
-			<parameter name="url" required="true" type="String">
-				<help><![CDATA[
-					URL of HTML file or CFML page to open.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="addtoken" required="false" type="boolean">
-				<help><![CDATA[
-					clientManagement must be enabled (see cfapplication).
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-		</tag>
+
+<!--
+	cflocation
+		url = "URL"
+		addToken = "boolean"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cflocation" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Stops execution of the current page and opens a CFML page or HTML file.
+	]]></help>
+	<parameter name="URL" type="String" required="true">
+		<help><![CDATA[
+			URL of HTML file or CFML page to open.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="addtoken" type="boolean" required="false">
+		<help><![CDATA[
+			clientManagement must be enabled (see cfapplication).
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</tag>

@@ -1,95 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cffunction" single="false" xmlstyle="false">
-			<help><![CDATA[
-				Defines a function that you can call in CFML. Required to
-				defined CFML component methods.
-			]]></help>
-			<parameter name="name" required="true" type="String">
-				<help><![CDATA[
-					A string; a component method that is used within the
-					cfcomponent tag.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="returntype" required="false" type="String">
-				<help><![CDATA[
-					String; a type name; data type of the function return value
-					Required for a web service; Optional, otherwise.
-				]]></help>
-				<values>
-					<value option="any"/>
-					<value option="array"/>
-					<value option="binary"/>
-					<value option="boolean"/>
-					<value option="date"/>
-					<value option="guid"/>
-					<value option="numeric"/>
-					<value option="query"/>
-					<value option="string"/>
-					<value option="struct"/>
-					<value option="uuid"/>
-					<value option="void"/>
-				</values>
-			</parameter>
-			<parameter name="roles" required="false" type="String">
-				<help><![CDATA[
-					A comma-delimited list of CFML security roles that
-					can invoke the method. Only users who are logged in with
-					the specified roles can execute the function. If this
-					attribute is omitted, all users can invoke the method
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="access" required="false" type="String">
-				<help><![CDATA[
-					The client security context from which the method can be
-					invoked:
 
-					private: available only to the component that declares the
-						method and any components that extend the component in
-						which it is defined
-					package: available only to the component that declares the
-						method, components that extend the component, or any
-						other components in the package
-					public: available to a locally executing page or component
-						method
-					remote: available to a locally or remotely executing page
-						or component method, or a remote client through a URL,
-						Flash, or a web service. To publish the function as a
-						web service, this option is required.
-				]]></help>
-				<values>
-					<value option="private"/>
-					<value option="package"/>
-					<value option="public"/>
-					<value option="remote"/>
-				</values>
-			</parameter>
-			<parameter name="output" required="false" type="boolean">
-				<help><![CDATA[
-					Specifies under which conditions the function can generate
-					HTML output.
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="displayname" required="false" type="String">
-				<help><![CDATA[
-					Meaningful only for CFC method parameters. A value to be
-					displayed in parentheses following the function name when
-					using introspection to show information about the CFC
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="hint" required="false" type="String">
-				<help><![CDATA[
-					Meaningful only for CFC method parameters. Text to be
-					displayed when using introspection to show information
-					about the CFC. The hint attribute value follows the syntax
-					line in the function description
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+<!--
+	cffunction
+		name = "methodName"
+		returnType = "dataType"
+		roles = "securityRoles"
+		access = "methodAccess"
+		output = "boolean"
+		displayName = "name"
+		hint = "hint text"
+		description = "function description"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cffunction" single="false" xmlstyle="false" allowanyattribute="true">
+	<help><![CDATA[
+		Defines a function that you can call in CFML. Required to
+		defined CFML component methods.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			A string; a component method that is used within the
+			cfcomponent tag.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="returntype" type="String" required="false">
+		<help><![CDATA[
+			String; a type name; data type of the function return value
+			Required for a web service; Optional, otherwise.
+		]]></help>
+		<values default="Any">
+			<value option="Any" />
+			<value option="Array" />
+			<value option="Binary" />
+			<value option="boolean" />
+			<value option="date" />
+			<value option="guid" />
+			<value option="Numeric" />
+			<value option="Query" />
+			<value option="String" />
+			<value option="Struct" />
+			<value option="UUID" />
+			<value option="variablename" />
+			<value option="void" />
+		</values>
+	</parameter>
+	<parameter name="roles" type="String" required="false">
+		<help><![CDATA[
+			A comma-delimited list of CFML security roles that
+			can invoke the method. Only users who are logged in with
+			the specified roles can execute the function. If this
+			attribute is omitted, all users can invoke the method
+		]]></help>
+		<values default="" />
+	</parameter>
+	<parameter name="access" type="String" required="false">
+		<help><![CDATA[
+			The client security context from which the method can be
+			invoked:
+
+			private: available only to the component that declares the
+				method and any components that extend the component in
+				which it is defined
+			package: available only to the component that declares the
+				method, components that extend the component, or any
+				other components in the package
+			public: available to a locally executing page or component
+				method
+			remote: available to a locally or remotely executing page
+				or component method, or a remote client through a URL,
+				Flash, or a web service. To publish the function as a
+				web service, this option is required.
+		]]></help>
+		<values default="public">
+			<value option="private" />
+			<value option="package" />
+			<value option="public" />
+			<value option="remote" />
+		</values>
+	</parameter>
+	<parameter name="output" type="boolean" required="false">
+		<help><![CDATA[
+			Specifies under which conditions the function can generate
+			HTML output.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="displayname" type="String" required="false">
+		<help><![CDATA[
+			Meaningful only for CFC method parameters. A value to be
+			displayed in parentheses following the function name when
+			using introspection to show information about the CFC
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hint" type="String" required="false">
+		<help><![CDATA[
+			Meaningful only for CFC method parameters. Text to be
+			displayed when using introspection to show information
+			about the CFC. The hint attribute value follows the syntax
+			line in the function description
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="description" type="String" required="false">
+		<help><![CDATA[
+			Supplies a short text description of the function.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

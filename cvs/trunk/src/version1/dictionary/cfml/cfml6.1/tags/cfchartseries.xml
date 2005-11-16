@@ -1,103 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="1" name="cfchartseries" single="false" xmlstyle="false">
-			<help><![CDATA[
-				Used with the cfchart tag. This tag defines the style in which
-				chart data displays: bar, line, pie, and so on.
-			]]></help>
-			<parameter name="type" required="true" type="String">
-				<help><![CDATA[
-					Sets the chart display style
-				]]></help>
-				<values>
-					<value option="bar"/>
-					<value option="line"/>
-					<value option="pyramid"/>
-					<value option="area"/>
-					<value option="cone"/>
-					<value option="curve"/>
-					<value option="cylinder"/>
-					<value option="step"/>
-					<value option="scatter"/>
-					<value option="pie"/>
-				</values>
-			</parameter>
-			<parameter name="query" required="false" type="String">
-				<help><![CDATA[
-					Name of CFML query from which to get data.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="itemcolumn" required="false" type="String">
-				<help><![CDATA[
-					Name of a column in the query specified in the query
-					attribute; contains the item label for a data point to
-					graph.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="valuecolumn" required="false" type="String">
-				<help><![CDATA[
-					Name of a column in the query specified in the query
-					attribute; contains data values to graph.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="serieslabel" required="false" type="String">
-				<help><![CDATA[
-					Text of data series label
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="seriescolor" required="false" type="String">
-				<help><![CDATA[
-					Color of the main element (such as the bars) of a chart.
-					For a pie chart, the color of the first slice.
 
-					Hex value or supported named color; see name list in the
-					cfchart Usage section.
-					For a hex value, use the form "##xxxxxx", where x = 0-9 or
-					A-F; use two pound signs or none.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="paintstyle" required="false" type="String">
-				<help><![CDATA[
-					Sets the paint display style of the data series.
-				]]></help>
-				<values>
-					<value option="plain"/>
-					<value option="raise"/>
-					<value option="shade"/>
-					<value option="light"/>
-				</values>
-			</parameter>
-			<parameter name="markerstyle" required="false" type="String">
-				<help><![CDATA[
-					Applies to chartseries type attribute values line, curve
-					and scatter, and show3D attribute value no.
-				]]></help>
-				<values>
-					<value option="rectangle"/>
-					<value option="triangle"/>
-					<value option="diamond"/>
-					<value option="circle"/>
-					<value option="letter"/>
-					<value option="mcross"/>
-					<value option="snow"/>
-					<value option="rcross"/>
-				</values>
-			</parameter>
-			<parameter name="colorlist" required="false" type="String">
-				<help><![CDATA[
-					Applies if chartseries type attribute = "pie". Sets pie
-					slice colors.
+<!--
+	cfchartseries
+		type = "type"
+		query = "queryName"
+		itemColumn = "QueryColumn"
+		valueColumn = "QueryColumn"
+		seriesLabel = "Label Text"
+		seriesColor = "Hex value or Web color"
+		paintStyle = "plain, raise, shade, light"
+		markerStyle = "style"
+		colorlist = "list"
+		dataLabelStyle = "style"
+	/cfchartseries
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfchartseries" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Used with the cfchart tag. This tag defines the style in which
+		chart data displays: bar, line, pie, and so on.
+	]]></help>
+	<parameter name="type" type="String" required="true">
+		<help><![CDATA[
+			Sets the chart display style
+		]]></help>
+		<values>
+			<value option="bar" />
+			<value option="line" />
+			<value option="pyramid" />
+			<value option="area" />
+			<value option="cone" />
+			<value option="curve" />
+			<value option="cylinder" />
+			<value option="step" />
+			<value option="scatter" />
+			<value option="pie" />
+		</values>
+	</parameter>
+	<parameter name="query" type="String" required="false">
+		<help><![CDATA[
+			Name of CFML query from which to get data.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="itemcolumn" type="String" required="false">
+		<help><![CDATA[
+			Name of a column in the query specified in the query
+			attribute; contains the item label for a data point to
+			graph.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="valuecolumn" type="String" required="false">
+		<help><![CDATA[
+			Name of a column in the query specified in the query
+			attribute; contains data values to graph.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="serieslabel" type="String" required="false">
+		<help><![CDATA[
+			Text of data series label
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="seriescolor" type="String" required="false">
+		<help><![CDATA[
+			Color of the main element (such as the bars) of a chart.
+			For a pie chart, the color of the first slice.
 
-					Comma-delimited list of hex values or supported, named web
-					colors; see name list in the cfchart Usage section.
+			Hex value or supported named color; see name list in the
+			cfchart Usage section.
+			For a hex value, use the form "##xxxxxx", where x = 0-9 or
+			A-F; use two pound signs or none.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="paintstyle" type="String" required="false">
+		<help><![CDATA[
+			Sets the paint display style of the data series.
+		]]></help>
+		<values default="plain">
+			<value option="plain" />
+			<value option="raise" />
+			<value option="shade" />
+			<value option="light" />
+		</values>
+	</parameter>
+	<parameter name="markerstyle" type="String" required="false">
+		<help><![CDATA[
+			Applies to chartseries type attribute values line, curve
+			and scatter, and show3D attribute value no.
+		]]></help>
+		<values default="rectangle">
+			<value option="rectangle" />
+			<value option="triangle" />
+			<value option="diamond" />
+			<value option="circle" />
+			<value option="letter" />
+			<value option="mcross" />
+			<value option="snow" />
+			<value option="rcross" />
+		</values>
+	</parameter>
+	<parameter name="colorlist" type="String" required="false">
+		<help><![CDATA[
+			Applies if chartseries type attribute = "pie". Sets pie
+			slice colors.
 
-					For a hex value, use the form "##xxxxxx", where x = 0-9 or
-					A-F; use two pound signs or none.
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+			Comma-delimited list of hex values or supported, named web
+			colors; see name list in the cfchart Usage section.
+
+			For a hex value, use the form "##xxxxxx", where x = 0-9 or
+			A-F; use two pound signs or none.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

@@ -1,40 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfparam" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Tests for a parameter's existence, tests its data type, and, if
-				a default value is not assigned, optionally provides one.
-			]]></help>
-			<parameter name="name" required="true" type="String">
-				<help><![CDATA[
-					Name of parameter to test (such as "Client.Email " or
-					"Cookie.BackgroundColor "). If omitted, and if the
-					parameter does not exist, an error is thrown.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="type" required="false" type="String">
-				<help><![CDATA[
-					The parameter data type
-				]]></help>
-				<values>
-					<value option="any"/>
-					<value option="array"/>
-					<value option="binary"/>
-					<value option="boolean"/>
-					<value option="date"/>
-					<value option="guid"/>
-					<value option="numeric"/>
-					<value option="query"/>
-					<value option="string"/>
-					<value option="struct"/>
-					<value option="uuid"/>
-					<value option="variable_name"/>
-				</values>
-			</parameter>
-			<parameter name="default" required="false" type="Object">
-				<help><![CDATA[
-					Value to set parameter to if it does not exist.
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+
+<!--
+	cfparam
+		name = "param_name"
+		type = "data_type"
+		default = "value"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfparam" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Tests for a parameter's existence, tests its data type, and, if
+		a default value is not assigned, optionally provides one.
+	]]></help>
+	<return type="Any" parameter="name" />
+	<parameter name="name" type="variableName" required="true">
+		<help><![CDATA[
+			Name of parameter to test (such as "client.email" or
+			"cookie.backgroundColor"). If omitted, and if the
+			parameter does not exist, an error is thrown.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			The valid format for the data; one of the following.
+			* any: any type of value.
+			* array: an array of values.
+			* binary: a binary value.
+			* boolean: a Boolean value: yes, no, true, false, or a number.
+			* date or time: a date-time value.
+			* guid: a Universally Unique Identifier of the form "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" where 'X' is a hexadecimal number.
+			* numeric: a numeric value
+			* query: a query object.
+			* string: a string value or single character.
+			* struct: a structure.
+			* UUID: a ColdFusion Universally Unique Identifier, formatted 'XXXXXXXX-XXXX-XXXX-XXXXXXXXXXXXXXX', where 'X' is a hexadecimal number. See CreateUUID.
+			* variableName: a string formatted according to ColdFusion variable naming conventions.
+		]]></help>
+		<values default="Any">
+			<value option="Any" />
+			<value option="Array" />
+			<value option="Binary" />
+			<value option="boolean" />
+			<value option="date" />
+			<value option="Numeric" />
+			<value option="guid" />
+			<value option="Query" />
+			<value option="String" />
+			<value option="Struct" />
+			<value option="UUID" />
+			<value option="variablename" />
+		</values>
+	</parameter>
+	<parameter name="default" type="Object" required="false">
+		<help><![CDATA[
+			Value to set parameter to if it does not exist. Any
+			expression used for the default attribute is evaluated,
+			even if the parameter exists.
+			The result is not assigned if the parameter exists,
+			but if the expression has side effects, they still occur.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

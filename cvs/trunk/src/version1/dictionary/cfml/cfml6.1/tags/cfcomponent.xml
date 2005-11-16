@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfcomponent" single="false" xmlstyle="false">
-			<help><![CDATA[
-				Creates and defines a component object; encloses functionality
-				that you build in CFML and enclose within cffunction tags.
-				This tag contains one or more cffunction tags that define
-				methods. Code within the body of this tag, other than
-				cffunction tags, is executed when the component is
-				instantiated.
-			]]></help>
-			<parameter name="extends" required="false" type="String">
-				<help><![CDATA[
-					Name of parent component from which to inherit methods and
-					properties.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="output" required="false" type="boolean">
-				<help><![CDATA[
-					Specifies whether constructor code in the component can
-					generate HTML output; does not affect output in the body
-					of cffunction tags in the component.
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="displayname" required="false" type="String">
-				<help><![CDATA[
-					A string to be displayed when using introspection to show
-					information about the CFC. The information appears on the
-					heading, following the component name.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="hint" required="false" type="String">
-				<help><![CDATA[
-					Text to be displayed when using introspection to show
-					information about the CFC. The hint attribute value
-					appears below the component name heading. This attribute
-					can be useful for describing the purpose of the parameter.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="name" required="false" type="String">
-				<help><![CDATA[
-					Name for the component
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+
+<!--
+	cfcomponent
+		extends ="anotherComponent"
+		output = "boolean"
+		displayname = "text string"
+		hint = "text string"
+		
+	    [variable declarations cffunction ...]
+	/cfcomponent
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfcomponent" single="false" xmlstyle="false" allowanyattribute="true">
+	<help><![CDATA[
+		Creates and defines a component object; encloses functionality
+		that you build in CFML and enclose within cffunction tags.
+		This tag contains one or more cffunction tags that define
+		methods. Code within the body of this tag, other than
+		cffunction tags, is executed when the component is
+		instantiated.
+	]]></help>
+	<parameter name="extends" type="String" required="false">
+		<help><![CDATA[
+			Name of parent component from which to inherit methods and
+			properties.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="output" type="boolean" required="false">
+		<help><![CDATA[
+			Specifies whether constructor code in the component can
+			generate HTML output; does not affect output in the body
+			of cffunction tags in the component.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="displayname" type="String" required="false">
+		<help><![CDATA[
+			A string to be displayed when using introspection to show
+			information about the CFC. The information appears on the
+			heading, following the component name.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hint" type="String" required="false">
+		<help><![CDATA[
+			Text to be displayed when using introspection to show
+			information about the CFC. The hint attribute value
+			appears below the component name heading. This attribute
+			can be useful for describing the purpose of the parameter.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="name" type="String" required="false">
+		<help><![CDATA[
+			Name for the component
+		]]></help>
+		<values />
+	</parameter>
+</tag>

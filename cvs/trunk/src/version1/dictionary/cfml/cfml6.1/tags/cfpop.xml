@@ -1,112 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfpop" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Retrieves or deletes e-mail messages from a POP mail server.
-			]]></help>
-			<parameter name="server" required="true" type="String">
-				<help><![CDATA[
-					POP server identifier:
-						A host name; for example, "biff.upperlip.com"
-						An IP address; for example, "192.1.2.225"
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="port" required="false" type="Numeric">
-				<help><![CDATA[
-					POP port
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="username" required="false" type="String">
-				<help><![CDATA[
-					Overrides username.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="password" required="false" type="String">
-				<help><![CDATA[
-					Overrides password
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="action" required="false" type="String">
-				<help><![CDATA[
-					getHeaderOnly: returns message header information only
-    	            getAll: returns message header information, message text,
-    	            	and attachments if attachmentPath is specified
-        	        delete: deletes messages on POP server
-				]]></help>
-				<values>
-					<value option="getHeaderOnly"/>
-					<value option="getAll"/>
-					<value option="delete"/>
-				</values>
-			</parameter>
-			<parameter name="name" required="false" type="String">
-				<help><![CDATA[
-					Name for query object that contains the retrieved message
-					information.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="messagenumber" required="false" type="Numeric">
-				<help><![CDATA[
-					Message number or comma-delimited list of message numbers
-					to get or delete. Invalid message numbers are ignored.
-					Ignored if uid is specified.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="uid" required="false" type="String">
-				<help><![CDATA[
-					UID or a comma-delimited list of UIDs to get or delete.
-					Invalid UIDs are ignored.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="attachmentpath" required="false" type="String">
-				<help><![CDATA[
-					If action="getAll", specifies a directory in which to save
-					any attachments. If the directory does not exist,
-					CFML creates it.
 
-					If you omit this attribute, CFML does not save any
-					attachments. If you specify a relative path, the path root
-					is the CFML temporary directory, which is returned by
-					the GetTempDirectory function.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="timeout" required="false" type="Numeric">
-				<help><![CDATA[
-					Maximum time, in seconds, to wait for mail processing
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="maxrows" required="false" type="Numeric">
-				<help><![CDATA[
-					Number of messages to return or delete, starting with the
-					number in startRow. Ignored if messageNumber or uid is
-					specified.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="startrow" required="false" type="Numeric">
-				<help><![CDATA[
-					First row number to get or delete. Ignored if messageNumber
-					or uid is specified.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="generateuniquefilenames" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: Generate unique filenames for files attached to an
-					e-mail message, to avoid naming conflicts when files are
-					saved
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-		</tag>
+<!--
+	cfpop
+		server = "servername"
+		port = "port_number"
+		username = "username"
+		password = "password"
+		action = "action"
+		name = "queryname"
+		messageNumber = "number"
+		uid = "number"
+		attachmentPath = "path"
+		timeout = "seconds"
+		maxRows = "number"
+		startRow = "number"
+		generateUniqueFilenames = "boolean"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfpop" single="true" xmlstyle="false">
+	<return type="cfpop" parameter="name" />
+	<help><![CDATA[
+		Retrieves or deletes e-mail messages from a POP mail server.
+	]]></help>
+	<parameter name="server" type="String" required="true">
+		<help><![CDATA[
+			POP server identifier:
+				A host name; for example, "biff.upperlip.com"
+				An IP address; for example, "192.1.2.225"
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="port" type="Numeric" required="false">
+		<help><![CDATA[
+			POP port
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="username" type="String" required="false">
+		<help><![CDATA[
+			Overrides username.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="password" type="String" required="false">
+		<help><![CDATA[
+			Overrides password
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="action" type="String" required="false">
+		<help><![CDATA[
+			getHeaderOnly: returns message header information only
+			getAll: returns message header information, message text,
+				and attachments if attachmentPath is specified
+			delete: deletes messages on POP server
+		]]></help>
+		<values>
+			<value option="getHeaderOnly" />
+			<value option="getAll" />
+			<value option="delete" />
+		</values>
+	</parameter>
+	<parameter name="name" type="variableName" required="false">
+		<help><![CDATA[
+			Name for query object that contains the retrieved message
+			information.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="messagenumber" type="Numeric" required="false">
+		<help><![CDATA[
+			Message number or comma-delimited list of message numbers
+			to get or delete. Invalid message numbers are ignored.
+			Ignored if uid is specified.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="uid" type="String" required="false">
+		<help><![CDATA[
+			UID or a comma-delimited list of UIDs to get or delete.
+			Invalid UIDs are ignored.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="attachmentpath" type="String" required="false">
+		<help><![CDATA[
+			If action="getAll", specifies a directory in which to save
+			any attachments. If the directory does not exist,
+			CFML creates it.
+
+			If you omit this attribute, CFML does not save any
+			attachments. If you specify a relative path, the path root
+			is the CFML temporary directory, which is returned by
+			the GetTempDirectory function.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="timeout" type="Numeric" required="false">
+		<help><![CDATA[
+			Maximum time, in seconds, to wait for mail processing
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="maxrows" type="Numeric" required="false">
+		<help><![CDATA[
+			Number of messages to return or delete, starting with the
+			number in startRow. Ignored if messageNumber or uid is
+			specified.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="startrow" type="Numeric" required="false">
+		<help><![CDATA[
+			First row number to get or delete. Ignored if messageNumber
+			or uid is specified.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="generateuniquefilenames" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: Generate unique filenames for files attached to an
+			e-mail message, to avoid naming conflicts when files are
+			saved
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</tag>

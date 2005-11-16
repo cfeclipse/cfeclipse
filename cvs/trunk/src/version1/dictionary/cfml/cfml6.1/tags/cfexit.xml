@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfexit" single="true" xmlstyle="false">
-			<help><![CDATA[
-				This tag aborts processing of the currently executing CFML
-				custom tag, exits the page within the currently executing CFML
-				custom tag, or re-executes a section of code within the
-				currently executing CFML custom tag.
-			]]></help>
-			<parameter name="method" required="false" type="String">
-				<help><![CDATA[
-					exittag: aborts processing of currently executing tag
-					exittemplate: exits page of currently executing tag
-					loop: reexecutes body of currently executing tag
-				]]></help>
-				<values>
-					<value option="exittag"/>
-					<value option="exittemplate"/>
-					<value option="loop"/>
-				</values>
-			</parameter>
-		</tag>
+
+<!--
+	cfexit
+		method = "method"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfexit" single="true" xmlstyle="false">
+	<help><![CDATA[
+		This tag aborts processing of the currently executing CFML
+		custom tag, exits the page within the currently executing CFML
+		custom tag, or re-executes a section of code within the
+		currently executing CFML custom tag.
+	]]></help>
+	<parameter name="method" type="String" required="false">
+		<help><![CDATA[
+			exittag: aborts processing of currently executing tag
+			exittemplate: exits page of currently executing tag
+			loop: reexecutes body of currently executing tag
+		]]></help>
+		<values>
+			<value option="exittag" />
+			<value option="exittemplate" />
+			<value option="loop" />
+		</values>
+	</parameter>
+</tag>

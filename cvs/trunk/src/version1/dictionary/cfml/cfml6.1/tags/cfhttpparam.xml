@@ -1,93 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfhttpparam" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Allowed inside cfhttp tag bodies only. Required for cfhttp POST
-				operations. Optional for all others. Specifies parameters to
-				build an HTTP request.
-			]]></help>
-			<parameter name="type" required="true" type="String">
-				<help><![CDATA[
-					Information type
-					* Header: The parameter specifies an HTTP header.
-						CFML does not URL encode the header.
-					* CGI: Specifies an HTTP header. CFML URL encodes
-						the header by default.
-					* Body: Specifies the body of the HTTP request. CFML
-						does not URL encode the body contents.
-					* XML: Identifies the request as having a content-type of
-						text/xml. Specifies that the value attribute contains
-						the body of the HTTP request. Used to send XML to the
-						destination URL. CFML does not URL encode the XML
-						data.
-					* File: Tells CFML to send the contents of the
-						specified file. CFML does not URL encode the
-						file contents
-					* URL: Specifies a URL query string name-value pair to
-						append to the cfhttp url attribute. CFML URL
-						encodes the query string.
-					* FormField: Specifies a form field to send. CFML
-						URL encodes the Form field by default.
-					* Cookie: Specifies a cookie to send as an HTTP header.
-						CFML URL encodes the cookie.
-				]]></help>
-				<values>
-					<value option="header"/>
-					<value option="cgi"/>
-					<value option="body"/>
-					<value option="xml"/>
-					<value option="file"/>
-					<value option="url"/>
-					<value option="formfield"/>
-					<value option="cookie"/>
-				</values>
-			</parameter>
-			<parameter name="name" required="false" type="String">
-				<help><![CDATA[
-					Variable name for data that is passed. Ignored for Body
-					and XML types. For File type, specifies the filename to
-					send in the request.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="value" required="false" type="String">
-				<help><![CDATA[
-					Value of the data that is sent. Ignored for File type. The
-					value must contain string data or data that CFML can
-					convert to a string for all type attributes except Body.
-					Body types can have string or binary values.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="file" required="false" type="String">
-				<help><![CDATA[
-					Applies to File type; ignored for all other types. The
-					absolute path to the file that is sent in the request body.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="encoded" required="false" type="boolean">
-				<help><![CDATA[
-					Applies to FormField and CGI types; ignored for all other
-					types. Specifies whether to URLEncode the form field or
-					header.
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="mimetype" required="false" type="String">
-				<help><![CDATA[
-					Applies to File type; invalid for all other types.
-					Specifies the MIME media type of the file contents.
-					The content type can include an identifier for the
-					character encoding of the file; for example, text/html;
-					charset=ISO-8859-1 indicates that the file is HTML text in
-					the ISO Latin-1 character encoding.
-				]]></help>
-				<values>
-					<value option="text/plain"/>
-					<value option="text/html"/>
-				</values>
-			</parameter>
-		</tag>
+
+<!--
+	cfhttpparam
+		type = "transaction type"
+		name = "data name"
+		value = "data value"
+		file = "filename"
+		encoded = "boolean"
+		mimeType = "MIME type designator"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfhttpparam" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Allowed inside cfhttp tag bodies only. Required for cfhttp POST
+		operations. Optional for all others. Specifies parameters to
+		build an HTTP request.
+	]]></help>
+	<parameter name="type" type="String" required="true">
+		<help><![CDATA[
+			Information type
+			* Header: The parameter specifies an HTTP header.
+				(ColdFusion does not URL encode the header)
+			* Body: Specifies the body of the HTTP request.
+				(ColdFusion does not URL encode the body contents)
+			* XML: Identifies the request as having a content-type of
+				text/xml. Specifies that the value attribute contains
+				the body of the HTTP request. Used to send XML to the
+				destination URL. CFML does not URL encode the XML
+				data.
+			* CGI: Specifies an HTTP header. CFML URL encodes
+				the header by default.
+			* File: Tells CFML to send the contents of the
+				specified file. CFML does not URL encode the
+				file contents
+			* URL: Specifies a URL query string name-value pair to
+				append to the cfhttp url attribute. CFML URL
+				encodes the query string.
+			* FormField: Specifies a form field to send. CFML
+				URL encodes the Form field by default.
+			* Cookie: Specifies a cookie to send as an HTTP header.
+				CFML URL encodes the cookie.
+		]]></help>
+		<values>
+			<value option="header" compatibility="new" />
+			<value option="body" compatibility="new" />
+			<value option="xml" compatibility="new" />
+			<value option="cgi" />
+			<value option="file" />
+			<value option="url" />
+			<value option="formfield" />
+			<value option="cookie" />
+		</values>
+	</parameter>
+	<parameter name="name" type="String" required="false">
+		<help><![CDATA[
+			Variable name for data that is passed. Ignored for Body
+			and XML types. For File type, specifies the filename to
+			send in the request.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Value of the data that is sent. Ignored for File type. The
+			value must contain string data or data that CFML can
+			convert to a string for all type attributes except Body.
+			Body types can have string or binary values.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="file" type="String" required="false">
+		<help><![CDATA[
+			Applies to File type; ignored for all other types. The
+			absolute path to the file that is sent in the request body.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="encoded" type="boolean" required="false">
+		<help><![CDATA[
+			Applies to FormField and CGI types; ignored for all other
+			types. Specifies whether to URLEncode the form field or
+			header.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="mimetype" type="String" required="false">
+		<help><![CDATA[
+			Applies to File type; invalid for all other types.
+			Specifies the MIME media type of the file contents.
+			The content type can include an identifier for the
+			character encoding of the file; for example, text/html;
+			charset=ISO-8859-1 indicates that the file is HTML text in
+			the ISO Latin-1 character encoding.
+		]]></help>
+		<values>
+			<value option="text/plain" />
+			<value option="text/html" />
+		</values>
+	</parameter>
+</tag>

@@ -1,61 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfstoredproc" single="false" xmlstyle="false">
-			<help><![CDATA[
-				Executes a stored procedure in a server database. It
-				specifies database connection information and identifies
-				the stored procedure.
-			]]></help>
-			<parameter name="procedure" required="true" type="String">
-				<help><![CDATA[
-					Name of stored procedure on database server.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="datasource" required="true" type="String">
-				<help><![CDATA[
-					Name of data source that points to database that contains
-					stored procedure.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="username" required="false" type="String">
-				<help><![CDATA[
-					Overrides username in data source setup.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="password" required="false" type="String">
-				<help><![CDATA[
-					Overrides password in data source setup.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="blockfactor" required="false" type="Numeric">
-				<help><![CDATA[
-					Maximum number of rows to get at a time from server.
-					Range is 1 to 100.
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="debug" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: Lists debug information on each statement
-					No: does not
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-			<parameter name="returncode" required="false" type="boolean">
-				<help><![CDATA[
-					Yes: Tag populates cfstoredproc.statusCode with status
-						code returned by stored procedure.
-					No: does not
-				]]></help>
-				<values>
-					<value option="true" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-<value option="false" xml:base="http://localhost:8501/converter/inc/value_boolean.xml"/>
-				</values>
-			</parameter>
-		</tag>
+
+<!--
+	cfstoredproc
+		procedure = "procedure name"
+		dataSource = "ds_name"
+		username = "username"
+		password = "password"
+		blockFactor = "blocksize"
+		debug = "boolean"
+		returnCode = "boolean"
+		result = "result_name"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfstoredproc" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Executes a stored procedure in a server database. It
+		specifies database connection information and identifies
+		the stored procedure.
+	]]></help>
+	<return type="cfstoredproc" name="cfstoredproc" />
+	<parameter name="procedure" type="String" required="true">
+		<help><![CDATA[
+			Name of stored procedure on database server.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="datasource" type="String" required="true">
+		<help><![CDATA[
+			Name of data source that points to database that contains
+			stored procedure.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="username" type="String" required="false">
+		<help><![CDATA[
+			Overrides username in data source setup.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="password" type="String" required="false">
+		<help><![CDATA[
+			Overrides password in data source setup.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="blockfactor" type="Numeric" required="false">
+		<help><![CDATA[
+			Maximum number of rows to get at a time from server.
+			Range is 1 to 100.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="debug" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: Lists debug information on each statement
+			No: does not
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="returncode" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: Tag populates cfstoredproc.statusCode with status
+				code returned by stored procedure.
+			No: does not
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</tag>

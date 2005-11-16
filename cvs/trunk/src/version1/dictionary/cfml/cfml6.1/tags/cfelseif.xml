@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfelseif" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Used as a control block in a cfif tag block to handle any case
-				not identified by the cfif tag or a cfelseif tag.
-			]]></help>
-		</tag>
+
+<!--
+	cfelseif
+		expression
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfelseif" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Used as a control block in a cfif tag block to handle any case
+		not identified by the cfif tag or a cfelseif tag.
+	]]></help>
+</tag>

@@ -1,76 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfobject" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Creates a CFML object, of a specified type.
 
-				The tag syntax depends on the object type. Some types use the
-				type attribute; others do not.
-			]]></help>
-			<parameter name="type" required="false" type="String">
-				<help><![CDATA[
+<!--
+	cfobject
+		type = "com"
+		action = "action"
+		class = "program_ID"
+		name = "text"
+		context = "context"
+		server = "server_name"
 
-				]]></help>
-				<values>
-					<value option="com"/>
-					<value option="corba"/>
-					<value option="java"/>
-				</values>
-			</parameter>
-			<parameter name="action" required="true" type="String">
-				<help><![CDATA[
+	cfobject
+		name = "variable name"
+		component = "component name"
 
-				]]></help>
-				<values>
-					<value option="create"/>
-					<value option="connect"/>
-				</values>
-			</parameter>
-			<parameter name="class" required="true" type="String">
-				<help><![CDATA[
+	cfobject
+		type = "corba"
+		context = "context"
+		class = "file or naming service"
+		name = "text"
+		locale = "type-value arguments"
 
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="name" required="true" type="String">
-				<help><![CDATA[
+	cfobject
+		type = "Java"
+		action = "Create"
+		class = "Java class"
+		name = "object name"
 
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="context" required="true" type="String">
-				<help><![CDATA[
+	cfobject
+		webservice= "http://....?wsdl" or "name set in Administrator"
+		name = "myobjectname"
+	=============================================================
+	cfobject
+		type = "com" "Java" "corba"
+		action = "action"
+		class = "program_ID"
+		name = "text"
+		context = "context"
+		server = "server_name"
+		component = "component name"
+		locale = "type-value arguments"
+		webservice= "http://....?wsdl" or "name set in Administrator"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfobject" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Creates a CFML object, of a specified type.
 
-				]]></help>
-				<values>
-					<value option="inproc"/>
-					<value option="local"/>
-					<value option="remote"/>
-					<value option="ior"/>
-					<value option="nameservice"/>
-				</values>
-			</parameter>
-			<parameter name="server" required="false" type="String">
-				<help><![CDATA[
+		The tag syntax depends on the object type. Some types use the
+		type attribute; others do not.
+	]]></help>
+	<return type="Any" parameter="name" />
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
 
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="component" required="true" type="String">
-				<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="com" />
+			<value option="corba" />
+			<value option="java" />
+		</values>
+	</parameter>
+	<parameter name="action" type="String" required="true">
+		<help><![CDATA[
 
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="locale" required="false" type="String">
-				<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="create" />
+			<value option="connect" />
+		</values>
+	</parameter>
+	<parameter name="class" type="String" required="true">
+		<help><![CDATA[
 
-				]]></help>
-				<values/>
-			</parameter>
-			<parameter name="webservice" required="true" type="URL">
-				<help><![CDATA[
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="name" type="variableName" required="true">
+		<help><![CDATA[
 
-				]]></help>
-				<values/>
-			</parameter>
-		</tag>
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="context" type="String" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values>
+			<value option="inproc" />
+			<value option="local" />
+			<value option="remote" />
+			<value option="ior" />
+			<value option="nameservice" />
+		</values>
+	</parameter>
+	<parameter name="server" type="String" required="false">
+		<help><![CDATA[
+
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="component" type="String" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="locale" type="String" required="false">
+		<help><![CDATA[
+
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="webservice" type="URL" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values />
+	</parameter>
+</tag>
