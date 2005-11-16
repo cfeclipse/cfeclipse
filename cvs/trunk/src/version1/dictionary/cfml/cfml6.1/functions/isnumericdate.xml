@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="isnumericdate" returns="boolean">
-			<help><![CDATA[
-				Evaluates whether a real number is a valid representation of a
-				date (date/time object).
-			]]></help>
-			<parameter name="number" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	boolean IsNumericDate(number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="isnumericdate" returns="boolean">
+	<help><![CDATA[
+		Evaluates whether a real number is a valid representation of a
+		date (date/time object).
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

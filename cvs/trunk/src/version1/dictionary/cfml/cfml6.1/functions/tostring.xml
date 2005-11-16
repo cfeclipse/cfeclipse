@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="tostring" returns="String">
-			<help><![CDATA[
-				Converts a value to a string.
-			]]></help>
-			<parameter name="any_value" required="true" type="Object">
-				<help><![CDATA[
-					Value to convert to a string
-				]]></help>
-			</parameter>
-			<parameter name="encoding" required="false" type="String">
-				<help><![CDATA[
-					The character encoding (character set) of the string.
-				]]></help>
-				<values>
-					<value option="utf-8"/>
-					<value option="iso-8859-1"/>
-					<value option="windows-1252"/>
-					<value option="us-ascii"/>
-					<value option="shift_jis"/>
-					<value option="iso-2022-jp"/>
-					<value option="euc-jp"/>
-					<value option="euc-kr"/>
-					<value option="big5"/>
-					<value option="euc-cn"/>
-					<value option="utf-16"/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	String ToString(any_value[, encoding])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="tostring" returns="String">
+	<help><![CDATA[
+		Converts a value to a string.
+	]]></help>
+	<parameter name="any_value" type="Object" required="true">
+		<help><![CDATA[
+			Value to convert to a string
+		]]></help>
+	</parameter>
+	<parameter name="encoding" type="String" required="false">
+		<help><![CDATA[
+			The character encoding (character set) of the string.
+		]]></help>
+		<values>
+			<value option="utf-8" />
+			<value option="iso-8859-1" />
+			<value option="windows-1252" />
+			<value option="us-ascii" />
+			<value option="shift_jis" />
+			<value option="iso-2022-jp" />
+			<value option="euc-jp" />
+			<value option="euc-kr" />
+			<value option="big5" />
+			<value option="euc-cn" />
+			<value option="utf-16" />
+		</values>
+	</parameter>
+</function>

@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="structfindkey" returns="Array">
-			<help><![CDATA[
-				Searches recursively through a substructure of nested arrays,
-				structures, and other elements, for structures whose values
-				match the search key in the value parameter.
-			]]></help>
-			<parameter name="top" required="true" type="Object">
-				<help><![CDATA[
-					CFML object (structure or array) from which to start
-					search. This attribute requires an object, not a name of
-					an object.
-				]]></help>
-			</parameter>
-			<parameter name="value" required="true" type="String">
-				<help><![CDATA[
-					String or a variable that contains one for which to search.
-				]]></help>
-			</parameter>
-			<parameter name="scope" required="true" type="String">
-				<help><![CDATA[
-					* one: returns one matching key. Default.
-					* all: returns all matching keys
-				]]></help>
-				<values>
-					<value option="one"/>
-					<value option="all"/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	Array StructFindKey(top, value, scope)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structfindkey" returns="Array">
+	<help><![CDATA[
+		Searches recursively through a substructure of nested arrays,
+		structures, and other elements, for structures whose values
+		match the search key in the value parameter.
+	]]></help>
+	<parameter name="top" type="Object" required="true">
+		<help><![CDATA[
+			CFML object (structure or array) from which to start
+			search. This attribute requires an object, not a name of
+			an object.
+		]]></help>
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			String or a variable that contains one for which to search.
+		]]></help>
+	</parameter>
+	<parameter name="scope" type="String" required="true">
+		<help><![CDATA[
+			* one: returns one matching key. Default.
+			* all: returns all matching keys
+		]]></help>
+		<values>
+			<value option="one" />
+			<value option="all" />
+		</values>
+	</parameter>
+</function>

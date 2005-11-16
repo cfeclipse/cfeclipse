@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="xmltransform" returns="String">
-			<help><![CDATA[
-				Applies an Extensible Stylesheet Language Transformation (XSLT)
-				to an XML document object that is represented as a string
-				variable. An XSLT converts an XML document to another format
-				or representation by applying an Extensible Stylesheet
-				Language (XSL) stylesheet to it.
-			]]></help>
-			<parameter name="xmlstring" required="true" type="String">
-				<help><![CDATA[
-					A string that represents the XML document, or a parsed
-					object representation of it.
-				]]></help>
-			</parameter>
-			<parameter name="xslstring" required="true" type="String">
-				<help><![CDATA[
-					XSLT transformation to apply.
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	String XmlTransform(xml, xslstring)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="xmltransform" returns="String">
+	<help><![CDATA[
+		Applies an Extensible Stylesheet Language Transformation (XSLT)
+		to an XML document object that is represented as a string
+		variable. An XSLT converts an XML document to another format
+		or representation by applying an Extensible Stylesheet
+		Language (XSL) stylesheet to it.
+	]]></help>
+	<parameter name="xml" type="String" required="true">
+		<help><![CDATA[
+		An XML document in string format, or an XML document object.
+		]]></help>
+	</parameter>
+	<parameter name="xslstring" type="String" required="true">
+		<help><![CDATA[
+			XSLT transformation to apply.
+		]]></help>
+	</parameter>
+</function>

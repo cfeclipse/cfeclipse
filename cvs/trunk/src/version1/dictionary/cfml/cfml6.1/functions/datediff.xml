@@ -1,42 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="datediff" returns="Numeric">
-			<help><![CDATA[
-				Determines the integer number of units by which date1 is less
-				than date2.
-				[datepart - quicky]
-				yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day
-				w: Weekday; ww: Week; h: Hour; n: Minute; s: Second;
-				l: Millisecond
-			]]></help>
-			<parameter name="datepart" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-				<values>
-					<value option="yyyy"/>
-					<value option="q"/>
-					<value option="m"/>
-					<value option="y"/>
-					<value option="d"/>
-					<value option="w"/>
-					<value option="ww"/>
-					<value option="h"/>
-					<value option="n"/>
-					<value option="s"/>
-					<value option="l"/>
-				</values>
-			</parameter>
-			<parameter name="date1" required="true" type="DateTime">
-				<help><![CDATA[
-				]]></help>
-				<values>
-					<value option="Now()"/>
-				</values>
-			</parameter>
-			<parameter name="date2" required="true" type="DateTime">
-				<help><![CDATA[
-				]]></help>
-				<values>
-					<value option="Now()"/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	Numeric DateDiff("datepart", "date1", "date2")
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="datediff" returns="Numeric">
+	<help><![CDATA[
+		Determines the integer number of units by which date1 is less
+		than date2.
+		[datepart - quicky]
+		yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day
+		w: Weekday; ww: Week; h: Hour; n: Minute; s: Second;
+		l: Millisecond
+	]]></help>
+	<parameter name="datepart" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="yyyy" />
+			<value option="q" />
+			<value option="m" />
+			<value option="y" />
+			<value option="d" />
+			<value option="w" />
+			<value option="ww" />
+			<value option="h" />
+			<value option="n" />
+			<value option="s" />
+			<value option="l" />
+		</values>
+	</parameter>
+	<parameter name="date1" type="DateTime" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+	<parameter name="date2" type="DateTime" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+</function>

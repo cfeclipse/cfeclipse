@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="abs" returns="Numeric">
-			<help><![CDATA[
-				Absolute-value function. The absolute value of a number is
-				the number without its sign.
-			]]></help>
-			<parameter name="number" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	Numeric Abs(number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="abs" returns="Numeric">
+	<help><![CDATA[
+		Absolute-value function. The absolute value of a number is
+		the number without its sign.
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

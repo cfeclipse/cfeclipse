@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="lsparsenumber" returns="Numeric">
-			<help><![CDATA[
-				Converts a string that is a valid numeric representation in
-				the current locale into a formatted number.
-			]]></help>
-			<parameter name="string" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	Numeric LSParseNumber(string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="lsparsenumber" returns="Numeric">
+	<help><![CDATA[
+		Converts a string that is a valid numeric representation in
+		the current locale into a formatted number.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

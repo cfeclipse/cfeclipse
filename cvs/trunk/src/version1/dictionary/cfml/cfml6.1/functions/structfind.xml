@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="structfind" returns="Object">
-			<help><![CDATA[
-				Determines the value associated with a key in a structure.
-			]]></help>
-			<parameter name="structure" required="true" type="Struct">
-				<help><![CDATA[
-					Structure that contains the value to return
-				]]></help>
-			</parameter>
-			<parameter name="key" required="true" type="String">
-				<help><![CDATA[
-					Key whose value to return
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	Object StructFind(structure, key)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structfind" returns="Object">
+	<help><![CDATA[
+		Determines the value associated with a key in a structure.
+	]]></help>
+	<parameter name="structure" type="Struct" required="true">
+		<help><![CDATA[
+			Structure that contains the value to return
+		]]></help>
+	</parameter>
+	<parameter name="key" type="String" required="true">
+		<help><![CDATA[
+			Key whose value to return
+		]]></help>
+	</parameter>
+</function>

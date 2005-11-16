@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="xmlelemnew" returns="Object">
-			<help><![CDATA[
-				Creates an XML document object element
-			]]></help>
-			<parameter name="xmlobj" required="true" type="Object">
-				<help><![CDATA[
-					The name of an XML object. An XML document or an element.
-				]]></help>
-			</parameter>
-			<parameter name="childname" required="true" type="String">
-				<help><![CDATA[
-					The name of the element to create. This element becomes a
-					child element of xmlObj in the tree
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	Object XmlElemNew(xmlObj, childName)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="xmlelemnew" returns="Object">
+	<help><![CDATA[
+		Creates an XML document object element
+	]]></help>
+	<parameter name="xmlobj" type="Object" required="true">
+		<help><![CDATA[
+			The name of an XML object. An XML document or an element.
+		]]></help>
+	</parameter>
+	<parameter name="childname" type="String" required="true">
+		<help><![CDATA[
+			The name of the element to create. This element becomes a
+			child element of xmlObj in the tree.
+		]]></help>
+	</parameter>
+</function>

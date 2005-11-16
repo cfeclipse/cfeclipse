@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="formatbasen" returns="String">
-			<help><![CDATA[
-				String Converts number to a string, in the base specified by
-				radix. For example: #FormatBaseN(1024,16)#
-			]]></help>
-			<parameter name="number" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="radix" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	String FormatBaseN(number, radix)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="formatbasen" returns="String">
+	<help><![CDATA[
+		String Converts number to a string, in the base specified by
+		radix. For example: #FormatBaseN(1024,16)#
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="radix" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

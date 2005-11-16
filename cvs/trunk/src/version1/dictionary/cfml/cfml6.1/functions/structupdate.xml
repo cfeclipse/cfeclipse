@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="structupdate" returns="boolean">
-			<help><![CDATA[
-				Updates a key with a value.
-			]]></help>
-			<parameter name="structure" required="true" type="Struct">
-				<help><![CDATA[
-					Structure to update
-				]]></help>
-			</parameter>
-			<parameter name="key" required="true" type="String">
-				<help><![CDATA[
-					Key, the value of which to update
-				]]></help>
-			</parameter>
-			<parameter name="value" required="true" type="Object">
-				<help><![CDATA[
-					New value
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	boolean StructUpdate(structure, key, value)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structupdate" returns="boolean">
+	<help><![CDATA[
+		Updates a key with a value.
+	]]></help>
+	<parameter name="structure" type="Struct" required="true">
+		<help><![CDATA[
+			Structure to update
+		]]></help>
+	</parameter>
+	<parameter name="key" type="String" required="true">
+		<help><![CDATA[
+			Key, the value of which to update
+		]]></help>
+	</parameter>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+			New value
+		]]></help>
+	</parameter>
+</function>

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="arraymin" returns="Numeric">
-			<help><![CDATA[
-				Returns the smallest numeric value in an array. If the array
-				parameter value is an empty array, returns zero.
-				All elements must contain values that can be automatically
-				converted to numeric values.
-			]]></help>
-			<parameter name="array" required="true" type="Array">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	Numeric ArrayMin(array)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arraymin" returns="Numeric">
+	<help><![CDATA[
+		Returns the smallest numeric value in an array. If the array
+		parameter value is an empty array, returns zero.
+		All elements must contain values that can be automatically
+		converted to numeric values.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

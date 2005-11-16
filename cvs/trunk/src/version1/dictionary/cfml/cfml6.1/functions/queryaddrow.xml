@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="queryaddrow" returns="Numeric">
-			<help><![CDATA[
-				Adds a specified number of empty rows to a query.
-			]]></help>
-			<parameter name="query" required="true" type="Query">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="number" required="false" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	Numeric QueryAddRow(query [, number ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="queryaddrow" returns="Numeric">
+	<help><![CDATA[
+		Adds a specified number of empty rows to a query.
+	]]></help>
+	<parameter name="query" type="Query" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="number" type="Numeric" required="false">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

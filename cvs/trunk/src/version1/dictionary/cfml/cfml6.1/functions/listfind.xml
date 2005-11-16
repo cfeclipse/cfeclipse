@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="listfind" returns="Numeric">
-			<help><![CDATA[
-				Determines the index of the first list element in which a
-				specified value occurs. Case-sensitive
-			]]></help>
-			<parameter name="list" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="value" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="delimiters" required="false" type="String">
-				<help><![CDATA[
-				]]></help>
-				<values>
-					<value option=","/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	Numeric ListFind(list, value [, delimiters ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="listfind" returns="Numeric">
+	<help><![CDATA[
+		Determines the index of the first list element in which a
+		specified value occurs. Case-sensitive
+	]]></help>
+	<parameter name="list" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="delimiters" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default=",">
+			<value option="," />
+			<value option="|" />
+			<value option=";" />
+			<value option="chr(9)" />
+			<value option="chr(10)" />
+			<value option="chr(13)" />
+		</values>
+	</parameter>
+</function>

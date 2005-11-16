@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="decrypt" returns="String">
-			<help><![CDATA[
-				Decrypts a string that is encrypted with the Encrypt function.
-			]]></help>
-			<parameter name="encrypted_string" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="seed" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	String Decrypt(encrypted_string, seed)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="decrypt" returns="String">
+	<help><![CDATA[
+		Decrypts a string that is encrypted with the Encrypt function.
+	]]></help>
+	<parameter name="encrypted_string" type="String" required="true">
+		<help><![CDATA[
+			String to decrypt.
+		]]></help>
+	</parameter>
+	<parameter name="key" type="String" required="true">
+		<help><![CDATA[
+			String. Seed used to generate 32-bit encryption key.
+			Can be any combination of any number of characters.
+		]]></help>
+	</parameter>
+</function>

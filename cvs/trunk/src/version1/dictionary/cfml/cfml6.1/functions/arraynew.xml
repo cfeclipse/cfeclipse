@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="arraynew" returns="Array">
-			<help><![CDATA[
-				Creates an array of 1-3 dimensions. Index array elements
-				with square brackets: [ ].
-				CFML arrays expand dynamically as data is added.
-			]]></help>
-			<parameter name="dimension" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-				<values>
-					<value option="1"/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	Array ArrayNew(dimension)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arraynew" returns="Array">
+	<help><![CDATA[
+		Creates an array of 1-3 dimensions. Index array elements
+		with square brackets: [ ].
+		CFML arrays expand dynamically as data is added.
+	]]></help>
+	<parameter name="dimension" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values default="1">
+			<value option="1" />
+		</values>
+	</parameter>
+</function>

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="lsparsedatetime" returns="DateTime">
-			<help><![CDATA[
-				Converts a string that is a valid date/time representation in
-				the current locale into a date/time object.
-			]]></help>
-			<parameter name="dt_string" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	DateTime LSParseDateTime(date/time-string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="lsparsedatetime" returns="DateTime">
+	<help><![CDATA[
+		Converts a string that is a valid date/time representation in
+		the current locale into a date/time object.
+	]]></help>
+	<parameter name="dt_string" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

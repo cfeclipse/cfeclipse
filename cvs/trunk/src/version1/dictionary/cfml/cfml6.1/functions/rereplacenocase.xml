@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="rereplacenocase" returns="String">
-			<help><![CDATA[
-				Uses a regular expression to search a string for a string
-				pattern and replace it with another. The search is
-				case-insensitive.
-			]]></help>
-			<parameter name="string" required="true" type="String">
-				<help><![CDATA[
-					A string or a variable that contains one
-				]]></help>
-			</parameter>
-			<parameter name="reg_expression" required="true" type="Regex">
-				<help><![CDATA[
-					Regular expression to replace.
-				]]></help>
-			</parameter>
-			<parameter name="substring" required="true" type="String">
-				<help><![CDATA[
-					A string or a variable that contains one. Replaces
-					reg_expression
-				]]></help>
-			</parameter>
-			<parameter name="scope" required="false" type="String">
-				<help><![CDATA[
-					* one: Replace the first occurrence of the regular
-						expression. Default.
-					* all: Replace all occurrences of the regular expression.
-				]]></help>
-				<values>
-					<value option="one"/>
-					<value option="all"/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	String REReplaceNoCase(string, reg_expression, substring [, scope ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="rereplacenocase" returns="String">
+	<help><![CDATA[
+		Uses a regular expression to search a string for a string
+		pattern and replace it with another. The search is
+		case-insensitive.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			A string or a variable that contains one
+		]]></help>
+	</parameter>
+	<parameter name="reg_expression" type="Regex" required="true">
+		<help><![CDATA[
+			Regular expression to replace.
+		]]></help>
+	</parameter>
+	<parameter name="substring" type="String" required="true">
+		<help><![CDATA[
+			A string or a variable that contains one. Replaces
+			reg_expression
+		]]></help>
+	</parameter>
+	<parameter name="scope" type="String" required="false">
+		<help><![CDATA[
+			* one: Replace the first occurrence of the regular
+				expression. Default.
+			* all: Replace all occurrences of the regular expression.
+		]]></help>
+		<values>
+			<value option="one" />
+			<value option="all" />
+		</values>
+	</parameter>
+</function>

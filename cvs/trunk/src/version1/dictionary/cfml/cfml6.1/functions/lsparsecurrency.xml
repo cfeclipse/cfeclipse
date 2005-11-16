@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="lsparsecurrency" returns="String">
-			<help><![CDATA[
-				Converts a locale-specific currency string into a formatted
-				number. Attempts conversion by comparing the string with each
-				the three supported currency formats (none, local,
-				international) and using the first that matches.
-			]]></help>
-			<parameter name="string" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	String LSParseCurrency(string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="lsparsecurrency" returns="String">
+	<help><![CDATA[
+		Converts a locale-specific currency string into a formatted
+		number. Attempts conversion by comparing the string with each
+		the three supported currency formats (none, local,
+		international) and using the first that matches.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	ODBCDate CreateODBCDate(date)
+	Numeric Month(date)
 -->
 <function xmlns="http://www.cfeclipse.org/version1/dictionary"
-	name="createodbcdate" returns="ODBCDate">
+	name="month" returns="Numeric">
 	<help><![CDATA[
-		Creates an ODBC date object.
+		Extracts the month value from a date/time object.
 	]]></help>
 	<parameter name="date" type="DateTime" required="true">
 		<help><![CDATA[

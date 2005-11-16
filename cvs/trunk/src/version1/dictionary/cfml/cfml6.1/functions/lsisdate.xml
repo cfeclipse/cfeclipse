@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="lsisdate" returns="boolean">
-			<help><![CDATA[
-				Determines whether a string is a valid representation of a
-				date/time value in the current locale.
-			]]></help>
-			<parameter name="string" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	boolean LSIsDate(string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="lsisdate" returns="boolean">
+	<help><![CDATA[
+		Determines whether a string is a valid representation of a
+		date/time value in the current locale.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

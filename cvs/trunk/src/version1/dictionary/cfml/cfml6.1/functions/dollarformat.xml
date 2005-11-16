@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="dollarformat" returns="String">
-			<help><![CDATA[
-				Formats a string in U.S. format. (For other currencies, use
-				LSCurrencyFormat or LSEuroCurrencyFormat.)
-			]]></help>
-			<parameter name="number" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	String DollarFormat(number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="dollarformat" returns="String">
+	<help><![CDATA[
+		Formats a string in U.S. format. (For other currencies, use
+		LSCurrencyFormat or LSEuroCurrencyFormat.)
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

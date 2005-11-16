@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="structdelete" returns="boolean">
-			<help><![CDATA[
-				Removes an element from a structure.
-			]]></help>
-			<parameter name="structure" required="true" type="String">
-				<help><![CDATA[
-					Structure or a variable that contains one. Contains element
-					to remove
-				]]></help>
-			</parameter>
-			<parameter name="key" required="true" type="String">
-				<help><![CDATA[
-					Element to remove
-				]]></help>
-			</parameter>
-			<parameter name="indicatenotexisting" required="false" type="boolean">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	boolean StructDelete(structure, key [, indicatenotexisting ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structdelete" returns="boolean">
+	<help><![CDATA[
+		Removes an element from a structure.
+	]]></help>
+	<parameter name="structure" type="String" required="true">
+		<help><![CDATA[
+			Structure or a variable that contains one. Contains element
+			to remove
+		]]></help>
+	</parameter>
+	<parameter name="key" type="String" required="true">
+		<help><![CDATA[
+			Element to remove
+		]]></help>
+	</parameter>
+	<parameter name="indicatenotexisting" type="boolean" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</function>

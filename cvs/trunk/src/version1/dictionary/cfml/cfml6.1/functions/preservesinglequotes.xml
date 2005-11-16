@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="preservesinglequotes" returns="void">
-			<help><![CDATA[
-				Prevents CFML from automatically escaping single
-				quotation mark characters that are contained in a variable.
-				CFML does not evaluate the argument.
 
-				CFML MX: automatically escapes simple-variable,
-				array-variable, and structure-variable references within a
-				cfquery tag body or block.
-			]]></help>
-			<parameter name="variable" required="true" type="String">
-				<help><![CDATA[
-					Variable that contains a string in which to preserve
-					single quotation marks.
-				]]></help>
-			</parameter>
-		</function>
+<!--
+	void PreserveSingleQuotes(variable)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="preservesinglequotes" returns="void">
+	<help><![CDATA[
+		Prevents CFML from automatically escaping single
+		quotation mark characters that are contained in a variable.
+		CFML does not evaluate the argument.
+
+		Note: ColdFusion automatically escapes simple-variable,
+		array-variable, and structure-variable references within a
+		cfquery tag body or block.
+	]]></help>
+	<parameter name="variable" type="String" required="true">
+		<help><![CDATA[
+			Variable that contains a string in which to preserve
+			single quotation marks.
+		]]></help>
+	</parameter>
+</function>

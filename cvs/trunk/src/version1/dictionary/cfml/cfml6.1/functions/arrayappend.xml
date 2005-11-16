@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="arrayappend" returns="boolean">
-			<help><![CDATA[
-				Appends an array element to an array.
-			]]></help>
-			<parameter name="array" required="true" type="Array">
-				<help><![CDATA[
-				The array to which the element should be appended.
-				]]></help>
-			</parameter>
-			<parameter name="value" required="true" type="Any">
-				<help><![CDATA[
-				The element to append. Can be any type.
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	boolean ArrayAppend(array, value)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arrayappend" returns="boolean">
+	<help><![CDATA[
+		Appends an array element to an array.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+			The array to which the element should be appended.
+		]]></help>
+	</parameter>
+	<parameter name="value" type="Any" required="true">
+		<help><![CDATA[
+			The element to append. Can be any type.
+		]]></help>
+	</parameter>
+</function>

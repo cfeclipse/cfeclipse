@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="setvariable" returns="void">
-			<help><![CDATA[
-				This function is no longer required in well-formed CFML
-				pages. Sets a variable in the name parameter to the value of the
-				value parameter.
-			]]></help>
-			<parameter name="name" required="true" type="String">
-				<help><![CDATA[
-					Variable name
-				]]></help>
-			</parameter>
-			<parameter name="value" required="true" type="String">
-				<help><![CDATA[
-					A string, the name of a string, or a number
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	void SetVariable(name, value)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="setvariable" returns="void">
+	<help><![CDATA[
+		This function is no longer required in well-formed CFML
+		pages. Sets a variable in the name parameter to the value of the
+		value parameter.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Variable name
+		]]></help>
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			A string, the name of a string, or a number
+		]]></help>
+	</parameter>
+</function>

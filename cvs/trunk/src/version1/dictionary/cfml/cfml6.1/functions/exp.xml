@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="exp" returns="Numeric">
-			<help><![CDATA[
-				Calculates the exponent whose base is e that represents number.
-				The constant e equals 2.71828182845904, the base of the natural
-				logarithm. This function is the inverse of Log, the natural
-				logarithm of number.
-			]]></help>
-			<parameter name="number" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	Numeric Exp(number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="exp" returns="Numeric">
+	<help><![CDATA[
+		Calculates the exponent whose base is e that represents number.
+		The constant e equals 2.71828182845904, the base of the natural
+		logarithm. This function is the inverse of Log, the natural
+		logarithm of number.
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

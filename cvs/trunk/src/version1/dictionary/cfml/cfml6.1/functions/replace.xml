@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="replace" returns="String">
-			<help><![CDATA[
-				Replaces occurrences of substring1 in a string with substring2,
-				in a specified scope. The search is case-sensitive.
-			]]></help>
-			<parameter name="string" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="substring1" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="substring2" required="true" type="String">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="scope" required="false" type="String">
-				<help><![CDATA[
-					* one: replace the first occurrence (default)
-					* all: replace all occurrences
-				]]></help>
-				<values>
-					<value option="one"/>
-					<value option="all"/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	String Replace(string, substring1, substring2 [, scope ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="replace" returns="String">
+	<help><![CDATA[
+		Replaces occurrences of substring1 in a string with substring2,
+		in a specified scope. The search is case-sensitive.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="substring1" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="substring2" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="scope" type="String" required="false">
+		<help><![CDATA[
+			* one: replace the first occurrence (default)
+			* all: replace all occurrences
+		]]></help>
+		<values>
+			<value option="one" />
+			<value option="all" />
+		</values>
+	</parameter>
+</function>

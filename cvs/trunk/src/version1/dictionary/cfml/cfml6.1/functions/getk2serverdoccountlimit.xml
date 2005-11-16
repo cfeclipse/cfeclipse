@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="getk2serverdoccountlimit" returns="Numeric">
-			<help><![CDATA[
-				** CFML MX 6.1: This function is deprecated. **
-				Gets the maximum number of documents that the CFML
-				registered K2 Server is permitted to return from a search.
-				This function is used primarily by the CFML Verity and
-				K2Server Administrator pages. This function uses Verity
-				K2Server Release K2.2.0.
-			]]></help>
-		</function>
+
+<!--
+	Numeric GetK2ServerDocCountLimit()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getk2serverdoccountlimit" returns="Numeric" compatibility="deprecated">
+	<help><![CDATA[
+		This function is deprecated.
+		
+		Gets the maximum number of documents that the CFML
+		registered K2 Server is permitted to return from a search.
+		This function is used primarily by the CFML Verity and
+		K2Server Administrator pages. This function uses Verity
+		K2Server Release K2.2.0.
+	]]></help>
+</function>

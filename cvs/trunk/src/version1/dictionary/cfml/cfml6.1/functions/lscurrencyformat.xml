@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="lscurrencyformat" returns="String">
-			<help><![CDATA[
-				Formats a number in a locale-specific currency format. For
-				countries that use the euro, the result depends on the JVM.
-				[type - quicky]
-				local: the currency format and currency symbol used locally.
-					- With JDK 1.3, the default for Euro Zone: local currency.
-					- With JDK 1.4, the default for Euro Zone: euro.
-				international: the international standard currency format
-				none: the local currency format; no currency symbol
-			]]></help>
-			<parameter name="number" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-			<parameter name="type" required="false" type="String">
-				<help><![CDATA[
-				]]></help>
-				<values>
-					<value option="local"/>
-					<value option="international"/>
-					<value option="none"/>
-				</values>
-			</parameter>
-		</function>
+
+<!--
+	String LSCurrencyFormat(number [, type ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="lscurrencyformat" returns="String">
+	<help><![CDATA[
+		Formats a number in a locale-specific currency format. For
+		countries that use the euro, the result depends on the JVM.
+		[type - quicky]
+		local: the currency format and currency symbol used locally.
+			- With JDK 1.3, the default for Euro Zone: local currency.
+			- With JDK 1.4, the default for Euro Zone: euro.
+		international: the international standard currency format
+		none: the local currency format; no currency symbol
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="local" />
+			<value option="international" />
+			<value option="none" />
+		</values>
+	</parameter>
+</function>

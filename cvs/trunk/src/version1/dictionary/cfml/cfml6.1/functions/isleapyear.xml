@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="isleapyear" returns="boolean">
-			<help><![CDATA[
-				Determines whether a year is a leap year.
-			]]></help>
-			<parameter name="year" required="true" type="Numeric">
-				<help><![CDATA[
-				]]></help>
-			</parameter>
-		</function>
+
+<!--
+	boolean IsLeapYear(year)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="isleapyear" returns="boolean">
+	<help><![CDATA[
+		Determines whether a year is a leap year.
+	]]></help>
+	<parameter name="year" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
