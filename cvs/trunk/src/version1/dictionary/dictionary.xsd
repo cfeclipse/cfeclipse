@@ -223,6 +223,8 @@
 			<xs:enumeration value="URL" />
 			<xs:enumeration value="UUID" />
 			<xs:enumeration value="void" />
+			<xs:enumeration value="xml" />
+			<xs:enumeration value="variableName" />
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
