@@ -32,8 +32,16 @@
 ]>
 <dictionary_config>
 	<dictionary id="CF_DICTIONARY">
-		<version key="cfmx701" label="Coldfusion 7.0">
-			<grammar location="cfml.xml" />
+		<version key="cfmx701" label="Coldfusion 7.01">
+			<grammar location="cfml7.xml" />
+			<grammar location="user.xml" />
+		</version>
+		<version key="cfmx61" label="Coldfusion 6.1">
+			<grammar location="cfml61.xml" />
+			<grammar location="user.xml" />
+		</version>
+		<version key="cfmx5" label="Coldfusion 5.0">
+			<grammar location="cfml5.xml" />
 			<grammar location="user.xml" />
 		</version>
 		<version key="bd61" label="BlueDragon 6.1">
