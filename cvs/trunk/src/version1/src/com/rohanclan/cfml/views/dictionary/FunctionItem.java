@@ -7,6 +7,8 @@
  */
 package com.rohanclan.cfml.views.dictionary;
 
+import com.rohanclan.cfml.dictionary.Function;
+
 
 class FunctionItem extends DictionaryItem{
   
@@ -19,7 +21,10 @@ class FunctionItem extends DictionaryItem{
     public String getHelp(){
 
       return super.getDictionary().getFunctionHelp(super.getName());
-        
     }
    
+    public Function getFunction(){
+    	
+    	return super.getDictionary().getFunction(super.getName());
+    }
 }

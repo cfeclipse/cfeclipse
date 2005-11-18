@@ -8,6 +8,9 @@ import java.util.Set;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -56,6 +59,7 @@ public class DictionaryView extends ViewPart {
 	private Action doubleClickAction;
 	private Action viewhelp;
 	protected Text text, preview;
+	protected AttributesTable attrTable;
 	protected Label previewLabel;
 	protected LabelProvider labelProvider;
 	public static final String ID_DICTIONARY = "com.rohanclan.cfml.views.dictionary";
@@ -132,7 +136,9 @@ public class DictionaryView extends ViewPart {
 			viewer.setSorter(new NameSorter());
 			viewer.setInput(getViewSite());
 			viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
-
+			
+			
+/*
 			// The title block for the preview area
 			previewLabel = new Label(bottomHalf, SWT.WRAP);
 			GridData gridData = new GridData();
@@ -141,16 +147,38 @@ public class DictionaryView extends ViewPart {
 			previewLabel.setLayoutData(gridData);
 			previewLabel.setText("Preview"); //$NON-NLS-1$
 
+			
 			// The text box that contains the preview
 			preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI
 					| SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.RESIZE);
 			preview.setLayoutData(new GridData(GridData.FILL_BOTH));
-			preview
-					.setBackground(new Color(Display.getCurrent(), 255, 255,
-							255));
+			preview.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
+			
+			//Try a table viewer
+			String[] columns = new String[2];
+			columns[0] = "attribute";
+			columns[1] = "value";
+			
+			AttributesTable attribTable2 = new AttributesTable();
+			
+			
+			attribTable  = new TableViewer(bottomHalf, SWT.RESIZE);
+			attribTable.setUseHashlookup(true);
+			attribTable.setColumnProperties(columns);
+			
+*/
+			
+			
+			attrTable = new AttributesTable(bottomHalf);
+			
+			
+		
+					
+			
 			// Need to get the buttons for actions here
 
+			
 			
 			makeActions();
 			hookContextMenu();
@@ -229,6 +257,7 @@ public class DictionaryView extends ViewPart {
 				if (obj instanceof TagItem) {
 					TagItem tg = (TagItem) obj;
 					keyword = tg.getName();
+					
 				} else if (obj instanceof FunctionItem) {
 					FunctionItem fi = (FunctionItem) obj;
 					keyword = fi.getName();
@@ -264,6 +293,7 @@ public class DictionaryView extends ViewPart {
 				if (obj instanceof TagItem) {
 					TagItem tg = (TagItem) obj;
 					desc = tg.getDictionary().getTag(tg.getName()).getHelp();
+					
 				} else if (obj instanceof FunctionItem) {
 					FunctionItem fi = (FunctionItem) obj;
 					desc = fi.getDictionary().getFunctionHelp(fi.getName());
@@ -335,22 +365,27 @@ public class DictionaryView extends ViewPart {
 					preview.setText("");
 					return;
 				}
+				else{
+					attrTable.setAttributes(obj);
+				
+				}
 
 				if (obj instanceof TagItem) {
 					TagItem tg = (TagItem) obj;
 					//text.setText(tg.getName());
-					preview.setText(tg.getHelp());
+					//preview.setText(tg.getHelp());
+					//attrTable.setAttributes(obj);
 				} else if (obj instanceof FunctionItem) {
 					FunctionItem func = (FunctionItem) obj;
 					///text.setText(func.getName());
-					preview.setText(func.getHelp());
+					//preview.setText(func.getHelp());
 				} else if (obj instanceof ScopeItem) {
 					ScopeItem scopei = (ScopeItem) obj;
 					//text.setText(scopei.getName());
-					preview.setText(scopei.getHelp());
+					//preview.setText(scopei.getHelp());
 				} else {
 					//text.setText("");
-					preview.setText("");
+					//preview.setText("");
 				}
 
 			}
