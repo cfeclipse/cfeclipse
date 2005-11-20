@@ -362,7 +362,7 @@ public class DictionaryView extends ViewPart {
 				// if the selection is empty clear the label
 				if (event.getSelection().isEmpty()) {
 					//text.setText("");
-					preview.setText("");
+					//preview.setText("");
 					return;
 				}
 				else{

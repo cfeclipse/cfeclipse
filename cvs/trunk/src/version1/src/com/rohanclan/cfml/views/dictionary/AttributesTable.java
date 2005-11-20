@@ -3,6 +3,8 @@ package com.rohanclan.cfml.views.dictionary;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -26,6 +28,7 @@ public class AttributesTable {
 	private Table table;
 	private TableViewer tableViewer;
 	private Button closeButton;
+	private TableEditor editor;
 	
 	private  AttributesList attributesList = new AttributesList();
 	
@@ -77,17 +80,44 @@ public class AttributesTable {
 	private void fillAttributes(Set attribs){
 		//We clear them first
 		//TableEditor editor = new TableEditor(table);
+		// TODO: Clear the table of Editors. Which for some reason dont dispose with the command below
 		table.removeAll();
 		
 		if(attribs != null){
-			Iterator iter = attribs.iterator();
-			int counter = 0;
 			
+			Iterator iter = attribs.iterator();
 			while(iter.hasNext()){
 				Parameter param = (Parameter)iter.next();
 				TableItem tedit =   new TableItem(table, SWT.BORDER); 
-				tedit.setText(new String[]{counter + " " + param.getName(),"size" + param.getValues(), param.getType()});
+				editor = new TableEditor(table);
+				//Add a static attribute name label
+				Label attName = new Label(table, SWT.NONE);
+				attName.setText(param.getName());
+				editor.setEditor(attName, tedit, 0);
 				
+				/*
+				Text attName = new Text(table, SWT.NONE|SWT.READ_ONLY);
+				attName.setText(param.getName());
+				editor.grabHorizontal = true;
+				*/
+				 
+				 
+				 editor = new TableEditor(table);
+			      CCombo combo = new CCombo(table, SWT.NONE);
+			      combo.add("testing");
+			      //editor.grabHorizontal = true;
+			      editor.setEditor(combo, tedit, 1);
+			      
+			     //Add static attribute type label
+			      Label atttype = new Label(table, SWT.NONE);
+			      atttype.setText(param.getType());
+					editor.setEditor(atttype, tedit, 2);
+			      
+			      
+			     
+				
+				//tedit.setText(new String[]{counter + " " + param.getName(),"size" + param.getValues(), param.getType()});
+				/* TODO: Use this to populate attribute drop down if required
 				if(param.getValues().size() > 0){
 					Iterator paramIter = param.getValues().iterator();
 					CCombo combo = new CCombo(table, SWT.NONE);
@@ -97,22 +127,7 @@ public class AttributesTable {
 					}
 					tedit.setData(combo);
 				}
-					
-				
-				//tedit.setData(param.getName());
-				//Text attLabel = new Text(table, SWT.NONE|SWT.READ_ONLY);
-					//attLabel.setText(param.getName());
-				// CCombo combo = new CCombo(table, SWT.NONE);
-				 	//Now we set the content of the combo box
-
-			      
-					//Text text = new Text(table, SWT.NONE);
-				//		text.setText(param.getName());
-					//	tedit.setEditor(text);
-						
-					
-				//
-				counter = counter+1;
+				*/
 			}
 		}
 		
