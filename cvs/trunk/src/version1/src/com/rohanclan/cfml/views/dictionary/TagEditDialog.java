@@ -10,6 +10,7 @@ package com.rohanclan.cfml.views.dictionary;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -54,7 +55,7 @@ public class TagEditDialog extends Dialog {
 	private Tag tag;
 
 	private Set attributes;
-	private Set selectedattributes;
+	private Map selectedattributes;
 
 	private Properties fieldStore;
 
@@ -387,6 +388,9 @@ public class TagEditDialog extends Dialog {
 			combo.add(val.toString());
 		}
 
+		if(selectedattributes != null && selectedattributes.containsKey(field)){
+			combo.setText(selectedattributes.get(field).toString());
+		}
 		//combo.select(defaultitem);
 		// Add the combo and the attribute name to the combo fields properties
 		comboFields.put(field, combo);
@@ -399,6 +403,13 @@ public class TagEditDialog extends Dialog {
 		text.setLayoutData(gridData);
 		text.setText("");
 		// Add the text and the attribute name to the combo fields properties
+		//Now go and find if there is an attribute for it...
+		
+		if(selectedattributes != null && selectedattributes.containsKey(field)){
+			text.setText(selectedattributes.get(field).toString());
+		}
+		
+		
 		textFields.put(field, text);
 
 	}
@@ -411,7 +422,7 @@ public class TagEditDialog extends Dialog {
 	 * This creates the buttons at the bottom (Insert /Cancel)
 	 */
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, "Insert", true);
+		createButton(parent, IDialogConstants.OK_ID, "OK", true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
 	}
@@ -460,11 +471,11 @@ public class TagEditDialog extends Dialog {
 		return fieldStore;
 	}
 
-	public Set getSelectedattributes() {
+	public Map getSelectedattributes() {
 		return selectedattributes;
 	}
 
-	public void setSelectedattributes(Set selectedattributes) {
+	public void setSelectedattributes(Map selectedattributes) {
 		this.selectedattributes = selectedattributes;
 	}
 

@@ -27,6 +27,7 @@ package com.rohanclan.cfml.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 //import java.util.HashSet;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -116,6 +117,46 @@ public class CFDocUtils {
 		return attribs;
 	}
 	
+	/**
+	 * Parses the start tag for a given tag, might not actually require the tagname attribute
+	 * 
+	 * @param tagname the name of the tag
+	 * @param starttag the string that makes up an opener tag
+	 * @return a set of strings containing the attributes and values for that start tag
+	 */
+	public static Map parseStartTag(String tagname, String starttag){
+		//Set attribs = new HashSet();
+		
+		Map attribs = new HashMap();
+		starttag = starttag.replace("<", "");
+		starttag = starttag.replace(">", "");
+		starttag = starttag.replace(tagname, "");
+		//remove what we dont need
+		
+		//Split the string up
+		StringTokenizer st2 = new StringTokenizer(starttag," ");
+		System.out.println("Parsing tag " + tagname + " with attributes_" + starttag+"_ items are: "+ st2.countTokens());
+		while(st2.hasMoreTokens()){
+			
+			String[] fullattrib = st2.nextToken().split("=");
+				String attribName = fullattrib[0];
+				String attribValue = fullattrib[1];
+				
+				if(attribValue.startsWith("\"")){
+					//remove the first char
+					attribValue = attribValue.substring(1, attribValue.length());					
+				}
+				if(attribValue.endsWith("\"")){
+					//remove the last char
+					attribValue = attribValue.substring(0, attribValue.length()-1);
+					
+				}
+			attribs.put(attribName, attribValue);
+		}
+				
+		return attribs;
+		
+	}
 	/**
 	 * Checks a attribute value string to make sure it's valid.
 	 * Rules for value attribute are:

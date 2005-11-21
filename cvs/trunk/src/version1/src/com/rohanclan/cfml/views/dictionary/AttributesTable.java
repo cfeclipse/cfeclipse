@@ -9,6 +9,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.*;
 
@@ -47,14 +48,14 @@ public class AttributesTable {
 		table = new Table(parent, SWT.BORDER|SWT.FULL_SELECTION);
 			table.setLayoutData(new GridData(GridData.FILL_BOTH));
 			TableColumn tc1 = new TableColumn(table, SWT.LEFT);
-			TableColumn tc2 = new TableColumn(table, SWT.LEFT);
+			//TableColumn tc2 = new TableColumn(table, SWT.LEFT);
 			TableColumn tc3 = new TableColumn(table, SWT.LEFT);
 			tc1.setText(this.ATTRIBUTE_COLUMN);
-			tc2.setText(this.ATTRIBUTE_VALUE);
+			//tc2.setText(this.ATTRIBUTE_VALUE);
 			tc3.setText(this.ATTRIBUTE_TYPE);
 			
 			tc1.setWidth(100);
-			tc2.setWidth(100);
+			//tc2.setWidth(100);
 			tc3.setWidth(100);
 			
 			table.setHeaderVisible(true);
@@ -78,28 +79,52 @@ public class AttributesTable {
 		
 	}
 	private void fillAttributes(Set attribs){
-		//We clear them first
-		//TableEditor editor = new TableEditor(table);
-		// TODO: Clear the table of Editors. Which for some reason dont dispose with the command below
-		table.removeAll();
+		removeAttributes();
+		
 		
 		if(attribs != null){
-			
 			Iterator iter = attribs.iterator();
 			while(iter.hasNext()){
-				Parameter param = (Parameter)iter.next();
-				TableItem tedit =   new TableItem(table, SWT.BORDER); 
-				editor = new TableEditor(table);
-				//Add a static attribute name label
-				Label attName = new Label(table, SWT.NONE);
-				attName.setText(param.getName());
-				editor.setEditor(attName, tedit, 0);
 				
 				/*
+				 * I am doing  a simple display this time since the attributes dont seem to get disposed
+				 * 
+				 */
+				Parameter param = (Parameter)iter.next();
+				TableItem tedit =   new TableItem(table, SWT.NONE);
+				
+				String paramName = param.getName();
+				
+				if(param.isRequired()){
+					
+					paramName = paramName + "*";
+					
+				}
+				
+				
+				
+				tedit.setText(new String[]{paramName,param.getType()});
+				
+				//Need to find out if this param is required
+				//param.isRequired()
+				
+				
+				
+				//Object[] labels = new Object[]{param.getName(), param.getType()};
+				//editor = new TableEditor(table);
+				//Add a static attribute name label
+				/*
+				Text attName = new Text(table, SWT.NONE);
+				attName.setText(param.getName());
+				editor.grabHorizontal = true;
+				editor.setEditor(attName, tedit, 0);
+				
+				
+				
 				Text attName = new Text(table, SWT.NONE|SWT.READ_ONLY);
 				attName.setText(param.getName());
 				editor.grabHorizontal = true;
-				*/
+				
 				 
 				 
 				 editor = new TableEditor(table);
@@ -107,12 +132,12 @@ public class AttributesTable {
 			      combo.add("testing");
 			      //editor.grabHorizontal = true;
 			      editor.setEditor(combo, tedit, 1);
-			      
-			     //Add static attribute type label
+			   
+			      //Add static attribute type label
 			      Label atttype = new Label(table, SWT.NONE);
 			      atttype.setText(param.getType());
 					editor.setEditor(atttype, tedit, 2);
-			      
+			      */
 			      
 			     
 				
@@ -134,6 +159,17 @@ public class AttributesTable {
 	}
 	
 	
+	private void removeAttributes(){
+//		First remove all the attributes, maybe another function?
+		
+		table.removeAll();
+		for(int i=0; i < table.getItems().length; i++){
+			table.remove(i);
+		}
+	
+		
+		
+	}
 	
 	
 	

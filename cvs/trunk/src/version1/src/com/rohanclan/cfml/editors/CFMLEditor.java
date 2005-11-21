@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 //import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -496,38 +497,49 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				public void run() {
 					
 					SyntaxDictionary cfdic = DictionaryManager.getDictionary("CF_DICTIONARY");
+					/*
+					 * Since we are already in a start tag, we find the start and the end 
+					 * 
+					 */
 					
 					int startpos = sel.getOffset();
+					//Find the length just in case
 					int len = Math.max(sel.getLength(),1);
-					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
-					CFEPartition part = partitioner.findClosestPartition(startpos);
 					
-					int startoftag = part.getOffset();
-					int starttaglen = part.getLength();
-					int endoftag = part.getOffset();
-					//String tagat = "<application sesssionmanagement=\"true\">";
-					//
-				
-					System.out.println("The nearest tag is" +  part.getTagName());
-					 try {
+					//default start and end are at the cursor
+					int startoftag = sel.getOffset();
+					int endoftag = sel.getOffset();
+					int lengthoftag = endoftag - startoftag;
+					
+					try {
 						startoftag = doc.search(startpos, "<", false, true, false);
 						endoftag = doc.search(startpos, ">", true, true, false);
+						lengthoftag = endoftag - startoftag + 1;
 					} catch (BadLocationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
-					int tagnamelength = part.getTagName().length();
-					TextSelection selection = new TextSelection(startoftag+tagnamelength+1, endoftag - startoftag - tagnamelength - 2);
-					
+					TextSelection selection = new TextSelection(startoftag, lengthoftag);
 					editor.getSelectionProvider().setSelection(selection);
-					
 					TextSelection seli = (TextSelection)editor.getSelectionProvider().getSelection();
 					
-					Map tagattribs = CFDocUtils.parseForAttributes(seli.getText());
+					//Now we have the whole start tag, we can then pass the tagname and 
+					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+					CFEPartition part = partitioner.findClosestPartition(startpos);
 					
-					System.out.println(tagattribs);
+				
+					Map tagattribs = CFDocUtils.parseStartTag(part.getTagName(), seli.getText());
+								 
+					Tag tag = cfdic.getTag(part.getTagName());
+					if(tag != null){
+						EditTagAction eta = new EditTagAction(tag, Display.getCurrent().getActiveShell(),tagattribs);
+					
+						eta.run();
+					} 
+					else {
+						System.out.println("No tag found " + part.getTagName());	
+					}
 					
 					/*
 					String info = "---------------------------\n";
@@ -553,17 +565,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					
 					*/
 			
-					Tag tag = cfdic.getTag(part.getTagName());
 					
-					//launch the editor
-					if(tag != null){
-						EditTagAction eta = new EditTagAction(tag, Display.getCurrent().getActiveShell());
-						
-						eta.run();
-					} 
-					else {
-						System.out.println("No tag found " + part.getTagName());	
-					}
+				
+					
 					
 					
 				}

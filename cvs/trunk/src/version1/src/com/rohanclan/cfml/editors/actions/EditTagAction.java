@@ -24,6 +24,7 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -58,7 +59,8 @@ public class EditTagAction implements IEditorActionDelegate{
 		private CFEPartitioner partitioner;
 		private int tagstart;
 		private int taglength;
-		private Set selectedattributes;
+		private Map selectedattributes;
+		private boolean replace = false;
 		/*
 		 * constructors
 		 */
@@ -80,11 +82,13 @@ public class EditTagAction implements IEditorActionDelegate{
 		/** This Tag ACtion needs a tag, a shell and the attibutes of a tag. It will setup a pre-filled dialog
 		 * 
 		 */
-		public EditTagAction(Tag tag, Shell shell, Set attributes){
+		public EditTagAction(Tag tag, Shell shell, Map attributes){
 			this.tag = tag;
 			this.shell = shell;
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 			this.selectedattributes = attributes;
+			//Since we are passing values, has to be pre-filled
+			this.replace = true;
 		}
 		
 		
@@ -118,27 +122,39 @@ public class EditTagAction implements IEditorActionDelegate{
 	
 
 	public void run(){
-			System.out.println("---Starting the EditTagAction ---");
-			//We should be able to pass the attributes if we are editing. think about it later.
+			//We should be able to pass the attributes if we are editing.
 			
 			ITextEditor thisEdit = (ITextEditor)ieditor;
 			IDocument doc =  thisEdit.getDocumentProvider().getDocument(ieditor.getEditorInput());
 			ISelection sel = thisEdit.getSelectionProvider().getSelection();
 			TagEditDialog tagview = new TagEditDialog(this.shell, this.tag);
+			tagview.setSelectedattributes(this.selectedattributes);
 			
 						
 			//Do the closing action
 			if(tagview.open() == IDialogConstants.OK_ID){
-				System.out.println("--- Clicked OK and closed ---");
 				Properties fieldStore = tagview.getFieldStore();
 				TagFormatter tf = new TagFormatter(this.tag, fieldStore);
-				System.out.println("Start of the tag should be " + tf.getTagStart());
-				System.out.println("End of the tag should be " + tf.getTagEnd());
 				
 				//Here is where we actually do the insertion
 				
 					if(ieditor instanceof ITextEditor){
 							
+							if(replace){
+								System.out.println("replacing...." + tf.getTagStart());
+								int selstart = ((ITextSelection) sel).getOffset();
+								int selectionLength = ((ITextSelection) sel).getLength();
+								
+								try {
+									doc.replace(selstart, selectionLength, tf.getTagStart());
+								} catch (BadLocationException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								ieditor.setFocus();
+								
+							} else {
+							//we surround the selection
 							Encloser encloser = new Encloser();
 							
 							int selectionLength = ((ITextSelection) sel).getLength();
@@ -150,7 +166,7 @@ public class EditTagAction implements IEditorActionDelegate{
 							
 							//Now set the focus back to the editor
 							ieditor.setFocus();
-				
+							}
 					}
 
 				
