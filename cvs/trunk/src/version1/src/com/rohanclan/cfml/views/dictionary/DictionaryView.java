@@ -89,6 +89,8 @@ public class DictionaryView extends ViewPart {
 			layout.marginWidth = 0;
 			layout.marginHeight = 0;
 			parent.setLayout(layout);
+			
+			
 
 			
 			// This is what makes the controls resizable
@@ -184,7 +186,7 @@ public class DictionaryView extends ViewPart {
 			hookContextMenu();
 			hookDoubleClickAction();
 			hookListeners();
-			//contributeToActionBars();
+			contributeToActionBars();
 			//hookFilters();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -303,7 +305,7 @@ public class DictionaryView extends ViewPart {
 			}
 		};
 		viewinfo.setText("View Info");
-		viewinfo.setToolTipText("View this items informatino");
+		viewinfo.setToolTipText("View this items information");
 		viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER));
 
