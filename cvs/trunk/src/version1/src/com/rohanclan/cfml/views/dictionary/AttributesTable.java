@@ -37,6 +37,7 @@ public class AttributesTable {
 	private final String ATTRIBUTE_COLUMN = "attribute";
 	private final String ATTRIBUTE_VALUE = "value";
 	private final String ATTRIBUTE_TYPE = "type";
+	private final String ATTRIBUTE_DESC = "description";
 	
 	private String[] columnNames = new String[]{
 			ATTRIBUTE_COLUMN,
@@ -50,13 +51,22 @@ public class AttributesTable {
 			TableColumn tc1 = new TableColumn(table, SWT.LEFT);
 			//TableColumn tc2 = new TableColumn(table, SWT.LEFT);
 			TableColumn tc3 = new TableColumn(table, SWT.LEFT);
+			TableColumn tc4 = new TableColumn(table, SWT.LEFT);
+			
+			
 			tc1.setText(this.ATTRIBUTE_COLUMN);
 			//tc2.setText(this.ATTRIBUTE_VALUE);
 			tc3.setText(this.ATTRIBUTE_TYPE);
+			tc4.setText(this.ATTRIBUTE_DESC);
+			
+			
+			
+			
 			
 			tc1.setWidth(100);
 			//tc2.setWidth(100);
 			tc3.setWidth(100);
+			tc4.setWidth(150);
 			
 			table.setHeaderVisible(true);
 			
@@ -103,8 +113,7 @@ public class AttributesTable {
 				
 				
 				
-				tedit.setText(new String[]{paramName,param.getType()});
-				
+				tedit.setText(new String[]{paramName,param.getType(), param.getHelp()});
 				//Need to find out if this param is required
 				//param.isRequired()
 				

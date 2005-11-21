@@ -311,7 +311,14 @@ public class DictionaryView extends ViewPart {
 
 		switchViewAction = new Action() {
 			public void run() {
+				
+				
+				
+				
 				showMessage("Switching the View");
+				
+				
+				
 			}
 		};
 		switchViewAction.setText("Switch View");
