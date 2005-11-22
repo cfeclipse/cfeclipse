@@ -31,6 +31,7 @@ import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 import com.rohanclan.cfml.views.browser.BrowserView;
+import com.rohanclan.cfml.editors.actions.EditFunctionAction;
 import com.rohanclan.cfml.editors.actions.EditTagAction;
 import com.rohanclan.cfml.editors.actions.Encloser;
 
@@ -241,7 +242,13 @@ public class DictionaryView extends ViewPart {
 		drillDownAdapter.addNavigationActions(manager);
 	}
 
+	/**
+	 * Create the actions
+	 */
 	private void makeActions() {
+		/**
+		 * Get external help action
+		 */
 		
 		viewhelp = new Action() {
 			public void run() {
@@ -286,6 +293,9 @@ public class DictionaryView extends ViewPart {
 		viewhelp.setToolTipText("View online help for this tag or function");
 		// viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 
+		/**
+		 * View the info on an item (depricated?)
+		 */
 		viewinfo = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -309,11 +319,11 @@ public class DictionaryView extends ViewPart {
 		viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER));
 
+		/**
+		 * Change the layout of how the tags are displayed
+		 */
 		switchViewAction = new Action() {
 			public void run() {
-				
-				
-				
 				
 				showMessage("Switching the View");
 				
@@ -449,8 +459,12 @@ public class DictionaryView extends ViewPart {
 				EditTagAction eta = new EditTagAction(tg.getTag(), this.getViewSite().getShell());
 					eta.run();
 		}
-		
-		
+		else if(obj instanceof FunctionItem){
+				FunctionItem fn = (FunctionItem)obj;
+				EditFunctionAction efa = new EditFunctionAction(fn.getFunction(), this.getViewSite().getShell());
+					efa.run();
+					
+		}
 		/*
 		 * else if (obj instanceof FunctionItem){ FunctionItem func =
 		 * (FunctionItem)obj; tagview.setTitle(func.getName()); tagview.open(); }

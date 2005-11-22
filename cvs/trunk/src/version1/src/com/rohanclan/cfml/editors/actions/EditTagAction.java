@@ -103,15 +103,7 @@ public class EditTagAction implements IEditorActionDelegate{
 			this.partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 		}
 		
-		public void run(IAction action) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void selectionChanged(IAction action, ISelection selection) {
-			// TODO Auto-generated method stub
-			
-		}
+		
 		
 		public void setTagPosition(int start, int len){
 			this.tagstart = start;
@@ -198,6 +190,15 @@ public class EditTagAction implements IEditorActionDelegate{
 		this.tag = tag;
 	}
 
+	public void run(IAction action) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void selectionChanged(IAction action, ISelection selection) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
