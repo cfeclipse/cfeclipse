@@ -30,6 +30,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+
+import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.browser.BrowserView;
 import com.rohanclan.cfml.editors.actions.EditFunctionAction;
 import com.rohanclan.cfml.editors.actions.EditTagAction;
@@ -63,6 +66,7 @@ public class DictionaryView extends ViewPart {
 	protected AttributesTable attrTable;
 	protected Label previewLabel;
 	protected LabelProvider labelProvider;
+	private String viewtype = "standard";
 	public static final String ID_DICTIONARY = "com.rohanclan.cfml.views.dictionary";
 	private DictionaryViewFilter viewfilter;
 
@@ -134,7 +138,7 @@ public class DictionaryView extends ViewPart {
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
 			drillDownAdapter = new DrillDownAdapter(viewer);
-			viewer.setContentProvider(new DictionaryViewContentProvider());
+			viewer.setContentProvider(new DictionaryViewContentProvider(viewtype));
 			viewer.setLabelProvider(new ViewLabelProvider());
 			viewer.setSorter(new NameSorter());
 			viewer.setInput(getViewSite());
@@ -289,9 +293,10 @@ public class DictionaryView extends ViewPart {
 				}
 			}
 		};
-		viewhelp.setText("View Online Help");
+		//viewhelp.setText("View Online Help");
 		viewhelp.setToolTipText("View online help for this tag or function");
-		// viewinfo.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		//viewinfo.setImageDescriptor(CFPluginImages.get(CFPluginImages.ICON_ALERT));
+		
 
 		/**
 		 * View the info on an item (depricated?)
@@ -326,7 +331,8 @@ public class DictionaryView extends ViewPart {
 			public void run() {
 				
 				showMessage("Switching the View");
-				
+				//here we switch the content provider
+				//viewer.setContentProvider()
 				
 				
 			}

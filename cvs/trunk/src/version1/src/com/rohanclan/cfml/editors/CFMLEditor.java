@@ -540,36 +540,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					else {
 						System.out.println("No tag found " + part.getTagName());	
 					}
-					
-					/*
-					String info = "---------------------------\n";
-					info += "(Closest partition: " + part.getType() + " = " + part.getTagName() + " partition length "+ partitioning.length +")\n";
-					//We shall use this attribute to also set the tag editor
-					for (int i=0;i<partitioning.length;i++) {
-					    info += "partition type" + partitioning[i].getType(); 
-					    info += " starting at ";
-					    info += partitioning[i].getOffset();
-					    info += " ending at "; 
-					    info += Integer.toString(partitioning[i].getOffset() + partitioning[i].getLength());
-					    
-					   // starttaglen = starttaglen + partitioning[i].getOffset() + partitioning[i].getLength();
-					    if (partitioning[i].getTagName() != null) {
-					        info += " (";
-					        info += partitioning[i].getOpensPartitionType();
-					        info += ") ";
-					    }
-					    info += "\n";
-					}
-					System.out.println(info);
-					System.out.println("Tag start " + startoftag + " Tag Length " + starttaglen + "is this the start of the partition" + part.isStartPartition());
-					
-					*/
-			
-					
 				
-					
-					
-					
 				}
 			};
 			//Only display if you are at the start tag

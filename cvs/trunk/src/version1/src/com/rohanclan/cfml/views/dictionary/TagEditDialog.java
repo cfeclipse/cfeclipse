@@ -170,6 +170,9 @@ public class TagEditDialog extends Dialog {
 			    	Iterator i = this.attributes.iterator();
 			    	while(i.hasNext()){
 			    		Parameter pr = (Parameter)i.next();
+			    		System.out.println(pr.getName() + " bob " + fields.item(f).getAttributes().getNamedItem("name").getNodeValue());
+			    		
+			    	
 			    		String maskField = fields.item(f).getAttributes().getNamedItem("name").getNodeValue();
 			    		
 			    		

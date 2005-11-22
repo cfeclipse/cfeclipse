@@ -34,6 +34,7 @@ public class FunctionFormatter {
 		
 		function.append(this.funcRef.getName() + "(");
 		
+		if(this.funcRef.getParameters() != null){
 		Iterator iter = this.funcRef.getParameters().iterator();
 		//Enumeration attiterator = this.attribs.keys();
 		
@@ -70,9 +71,10 @@ public class FunctionFormatter {
 		
 		//now loop through the items
 		
-		
+		}
 		function.append(")");
 		return function.toString();
+	
 	}
 	
 	

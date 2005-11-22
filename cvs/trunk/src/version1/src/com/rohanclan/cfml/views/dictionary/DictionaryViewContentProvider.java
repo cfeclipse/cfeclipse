@@ -13,7 +13,13 @@ import org.eclipse.jface.viewers.Viewer;
 class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeContentProvider {
 	
 	private TreeParent invisibleRoot;
-
+	private String type = "standard";
+	
+	public DictionaryViewContentProvider(String viewtype) {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 	}
 
@@ -64,4 +70,6 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 		invisibleRoot.addChild(root);
 
 	}
+
+	
 }
