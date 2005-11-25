@@ -39,11 +39,12 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
+
+import com.rohanclan.cfml.dialogs.TagEditDialog;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
-import com.rohanclan.cfml.views.dictionary.TagEditDialog;
 import com.rohanclan.cfml.views.dictionary.TagFormatter;
 
 /**
