@@ -179,6 +179,20 @@ public class Tag extends Procedure {
 		return anyAttribute;
 	}
 	
+	/**
+	 * Is this tag a custom tag
+	 * @return
+	 */ 
+
+	public boolean isCustomTag(){
+		boolean iscustom = false;
+		
+		if(this.name.toLowerCase().startsWith("cf_") || this.name.toLowerCase().startsWith("cfx_")){
+			iscustom = true;
+		}
+		return iscustom;
+	}
+	
 	public String toString()
 	{
 		return name;
