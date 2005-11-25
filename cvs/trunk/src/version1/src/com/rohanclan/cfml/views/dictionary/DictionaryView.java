@@ -34,6 +34,8 @@ import org.eclipse.swt.SWT;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.browser.BrowserView;
+import com.rohanclan.cfml.dictionary.Tag;
+import com.rohanclan.cfml.editors.actions.EditCustomTagAction;
 import com.rohanclan.cfml.editors.actions.EditFunctionAction;
 import com.rohanclan.cfml.editors.actions.EditTagAction;
 import com.rohanclan.cfml.editors.actions.Encloser;
@@ -58,15 +60,18 @@ public class DictionaryView extends ViewPart {
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
 	private Action switchViewAction;
-	private Action action2;
+	private Action editTagAction;
 	private Action viewinfo;
 	private Action doubleClickAction;
 	private Action viewhelp;
+	private Action addCTagAction;
+	
 	protected Text text, preview;
 	protected AttributesTable attrTable;
 	protected Label previewLabel;
 	protected LabelProvider labelProvider;
 	private String viewtype = "standard";
+	private DictionaryViewContentProvider contentprovider = new DictionaryViewContentProvider(viewtype);
 	public static final String ID_DICTIONARY = "com.rohanclan.cfml.views.dictionary";
 	private DictionaryViewFilter viewfilter;
 
@@ -138,53 +143,16 @@ public class DictionaryView extends ViewPart {
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
 			drillDownAdapter = new DrillDownAdapter(viewer);
-			viewer.setContentProvider(new DictionaryViewContentProvider(viewtype));
+			viewer.setContentProvider(contentprovider);
 			viewer.setLabelProvider(new ViewLabelProvider());
 			viewer.setSorter(new NameSorter());
 			viewer.setInput(getViewSite());
 			viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
-			
-			
-/*
-			// The title block for the preview area
-			previewLabel = new Label(bottomHalf, SWT.WRAP);
-			GridData gridData = new GridData();
-			gridData.horizontalSpan = 2;
-			gridData.horizontalIndent = 5;
-			previewLabel.setLayoutData(gridData);
-			previewLabel.setText("Preview"); //$NON-NLS-1$
-
-			
-			// The text box that contains the preview
-			preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI
-					| SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.RESIZE);
-			preview.setLayoutData(new GridData(GridData.FILL_BOTH));
-			preview.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-
-			
-			//Try a table viewer
-			String[] columns = new String[2];
-			columns[0] = "attribute";
-			columns[1] = "value";
-			
-			AttributesTable attribTable2 = new AttributesTable();
-			
-			
-			attribTable  = new TableViewer(bottomHalf, SWT.RESIZE);
-			attribTable.setUseHashlookup(true);
-			attribTable.setColumnProperties(columns);
-			
-*/
-			
+			viewer.expandToLevel(2);
 			
 			attrTable = new AttributesTable(bottomHalf);
 			
 			
-		
-					
-			
-			// Need to get the buttons for actions here
-
 			
 			
 			makeActions();
@@ -225,14 +193,30 @@ public class DictionaryView extends ViewPart {
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(switchViewAction);
 		manager.add(new Separator());
-		manager.add(action2);
+		//manager.add(action2);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
-		// manager.add(action1);
-		// manager.add(action2);
+		//Somehow we have to know what this item is
+		
+		ISelection selection = viewer.getSelection();
+		Object obj = ((IStructuredSelection) selection).getFirstElement();
+		
+		System.out.println(obj.getClass());
+		if(obj instanceof TagItem){
+			Tag thistag = ((TagItem)obj).getTag();
+			
+			if(thistag.isCustomTag()){
+				manager.add(editTagAction);
+			}
+		}
+		else if(obj instanceof TreeParent && ((TreeParent)obj).getName().equals("Tags")){
+			manager.add(addCTagAction);
+		}
+		
 		// manager.add(viewinfo);
 		manager.add(viewhelp);
+		
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 		// Other plug-ins can contribute there actions here
@@ -241,7 +225,7 @@ public class DictionaryView extends ViewPart {
 
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(switchViewAction);
-		manager.add(viewhelp);
+		
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 	}
@@ -293,7 +277,7 @@ public class DictionaryView extends ViewPart {
 				}
 			}
 		};
-		//viewhelp.setText("View Online Help");
+		viewhelp.setText("View Online Help");
 		viewhelp.setToolTipText("View online help for this tag or function");
 		//viewinfo.setImageDescriptor(CFPluginImages.get(CFPluginImages.ICON_ALERT));
 		
@@ -329,10 +313,17 @@ public class DictionaryView extends ViewPart {
 		 */
 		switchViewAction = new Action() {
 			public void run() {
-				
-				showMessage("Switching the View");
-				//here we switch the content provider
-				//viewer.setContentProvider()
+				if(viewtype.equals("standard")){
+					contentprovider.changeSorting(viewtype);
+					viewer.setContentProvider(contentprovider);
+					viewer.expandToLevel(2);
+					viewtype = "category";
+				}else{
+					contentprovider.changeSorting(viewtype);
+					viewer.setContentProvider(contentprovider);
+					viewer.expandToLevel(2);
+					viewtype = "standard";
+				}
 				
 				
 			}
@@ -344,14 +335,30 @@ public class DictionaryView extends ViewPart {
 				.getSharedImages().getImageDescriptor(
 						ISharedImages.IMG_OBJS_INFO_TSK));
 
-		action2 = new Action() {
+		editTagAction = new Action() {
 			public void run() {
-				showMessage("Action 2 executed");
+			
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				editTag(obj);
 			}
 		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+		
+		editTagAction.setText("Edit this custom tag");
+		editTagAction.setToolTipText("Allows you to edit this custom tag with the visual tag editor");
+		editTagAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		
+		
+		addCTagAction = new Action() {
+			public void run() {
+				editTag(null);
+			}
+		};
+		
+		addCTagAction.setText("Add a custom tag");
+		addCTagAction.setToolTipText("Allows you to define a new custom tag");
+		addCTagAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 				.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 
 		doubleClickAction = new Action() {
@@ -460,7 +467,6 @@ public class DictionaryView extends ViewPart {
 		//Thinking about this, instead of a Tag Item, maybe we should just use a Tag? 
 		
 		if (obj instanceof TagItem) {
-				//Get the original tag (from the branch TagItem)
 				TagItem tg = (TagItem)obj;
 				EditTagAction eta = new EditTagAction(tg.getTag(), this.getViewSite().getShell());
 					eta.run();
@@ -471,14 +477,23 @@ public class DictionaryView extends ViewPart {
 					efa.run();
 					
 		}
-		/*
-		 * else if (obj instanceof FunctionItem){ FunctionItem func =
-		 * (FunctionItem)obj; tagview.setTitle(func.getName()); tagview.open(); }
-		 * else if(obj instanceof ScopeItem){ ScopeItem scopei = (ScopeItem)obj;
-		 * tagview.setTitle(scopei.getName()); //showMessage(scopei.getName());
-		 * tagview.open(); } else{ tagview.close(); }
-		 */
-
+	}
+	/**
+	 * Edits a custom tag, and writes the XML to the user.xml (which one.. we dont know!
+	 * @param obj
+	 */
+	protected void editTag(Object obj){
+		
+		if(obj instanceof TagItem){
+			Tag tg = ((TagItem)obj).getTag();
+			EditCustomTagAction ecta = new EditCustomTagAction(tg, this.getViewSite().getShell());
+				ecta.run();
+		}
+		else if (obj == null){
+			EditCustomTagAction ecta = new EditCustomTagAction(this.getViewSite().getShell());
+			ecta.run();
+		}
+		
 	}
 
 	/**

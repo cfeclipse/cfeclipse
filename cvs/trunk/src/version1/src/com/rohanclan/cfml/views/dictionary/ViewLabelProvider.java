@@ -49,6 +49,9 @@ public class ViewLabelProvider extends LabelProvider {
 		} else if (obj instanceof TreeParent) {
 			imageKey = ISharedImages.IMG_OBJ_FOLDER;
 
+		} else if (obj instanceof TreeCustomTag) {
+			imageKey = CFPluginImages.ICON_PVIEW_FOLDER_CUS;
+			return CFPluginImages.get(imageKey);
 		}
 
 		return PlatformUI.getWorkbench().getSharedImages().getImage(

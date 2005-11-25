@@ -76,7 +76,7 @@ public class AttributesTable {
 		
 		//you are setting my attributes
 		
-		System.out.println(object.getClass());
+		//System.out.println(object.getClass());
 		if(object instanceof TagItem){
 			Tag tag = ((TagItem)object).getTag();
 			this.fillAttributes(tag.getParameters());

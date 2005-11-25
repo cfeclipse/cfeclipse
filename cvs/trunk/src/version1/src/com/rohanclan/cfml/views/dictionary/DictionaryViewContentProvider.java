@@ -64,11 +64,27 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 	 */
 	private void initialize() {
 		CategoryLoader catloader = new CategoryLoader("root");
-
-		TreeParent root = catloader.getUnsortedCategories();
+		TreeParent root = null;
+		if(this.type.equals("standard")){
+			root = catloader.getUnsortedCategories();
+		} else{
+			root = catloader.getCategories();
+		}
 		invisibleRoot = new TreeParent("");
 		invisibleRoot.addChild(root);
 
+	}
+	public void changeSorting(String sortype){
+		CategoryLoader catloader = new CategoryLoader("root");
+		TreeParent root = null;
+		if(sortype.equals("standard")){
+			root = catloader.getUnsortedCategories();
+		} else{
+			root = catloader.getCategories();
+		}
+		invisibleRoot = new TreeParent("");
+		invisibleRoot.addChild(root);
+		
 	}
 
 	
