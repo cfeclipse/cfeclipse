@@ -163,6 +163,10 @@ public class CFPluginImages {
 	/** Collapse code icon */
 	public static final String ICON_COLLAPSE = "collapsed.gif";
 	
+	/** Dictionary Sorting icons */
+	public static final String DIC_CATEGORISE = "dic_cat.gif";
+	public static final String DIC_UNCATEGORISE = "dic_uncat.gif";
+	
 	public static final String ICON_PVIEW_FOLDER_WWW = "folder-www.png";
 	public static final String ICON_PVIEW_FOLDER_CFC = "folder-cfc.png";
 	public static final String ICON_PVIEW_FOLDER_CUS = "folder-custom.png";
@@ -252,6 +256,10 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_WWW);
 			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_CFC);
 			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_CUS);
+			
+			addImageToRegistry(MODEL_OBJECTS, DIC_CATEGORISE);
+			addImageToRegistry(MODEL_OBJECTS, DIC_UNCATEGORISE);
+			
 		}
 	}
 	

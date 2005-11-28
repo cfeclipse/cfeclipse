@@ -25,6 +25,10 @@ public class ViewLabelProvider extends LabelProvider {
 				CFPluginImages.ICON_PVIEW_FOLDER_CFC);
 		this.folderIcons.put(FolderTypes.CF_ROOT,
 				CFPluginImages.ICON_PVIEW_FOLDER_CUS);
+		
+		this.folderIcons.put(ToolbarIcons.DIC_CAT, CFPluginImages.DIC_CATEGORISE);
+		this.folderIcons.put(ToolbarIcons.DIC_UNCAT, CFPluginImages.DIC_UNCATEGORISE);
+		
 	}
 
 	public String getText(Object obj) {

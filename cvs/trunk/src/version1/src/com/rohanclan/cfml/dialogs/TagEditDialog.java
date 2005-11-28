@@ -53,16 +53,11 @@ import com.rohanclan.cfml.dictionary.Tag;
  */
 public class TagEditDialog extends Dialog {
 	protected String title;
-
 	private Tag tag;
-
 	private Set attributes;
 	private Map selectedattributes;
-
 	private Properties fieldStore;
-
 	private Properties comboFields;
-
 	private Properties textFields;
 
 	/**

@@ -1,6 +1,7 @@
 package com.rohanclan.cfml.editors.actions;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
@@ -19,7 +20,6 @@ public class EditCustomTagAction  implements IEditorActionDelegate{
 	protected IEditorPart ieditor;
 	private ITextEditor editor = null;
 	private CFEPartitioner partitioner;
-	protected EditCustomTagDialog ectd;
 	
 	/**
 	 * Constructor
@@ -37,7 +37,6 @@ public class EditCustomTagAction  implements IEditorActionDelegate{
 		
 		this.shell = shell;
 	}
-	
 	/**
 	 * Edit existing
 	 * @param tag
@@ -50,13 +49,21 @@ public class EditCustomTagAction  implements IEditorActionDelegate{
 	
 	
 	public void run(){
-		if(this.tag != null){
-		ectd = new EditCustomTagDialog(this.shell, this.tag);
+		EditCustomTagDialog ectd;
 		
+		if(this.tag != null){
+			ectd = new EditCustomTagDialog(this.shell, this.tag);
+			ectd.open();
 		} else {
 			ectd = new EditCustomTagDialog(this.shell);
+			ectd.open();
 		}
-		ectd.open();
+		
+		if(ectd.open() == IDialogConstants.OK_ID){
+			System.out.println("Clicked ok");
+			
+		}
+		
 		
 	}
 	
@@ -71,11 +78,13 @@ public class EditCustomTagAction  implements IEditorActionDelegate{
 		this.partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 		
 	}
-	public void run(IAction action) {
+
+	public void selectionChanged(IAction action, ISelection selection) {
 		// TODO Auto-generated method stub
 		
 	}
-	public void selectionChanged(IAction action, ISelection selection) {
+
+	public void run(IAction action) {
 		// TODO Auto-generated method stub
 		
 	}
