@@ -266,6 +266,7 @@ public class DictionaryView extends ViewPart {
 		viewhelp.setToolTipText("View online help for this tag or function");
 		//viewinfo.setImageDescriptor(CFPluginImages.get(CFPluginImages.ICON_ALERT));
 		
+		
 
 		/**
 		 * View the info on an item (depricated?)
@@ -300,12 +301,14 @@ public class DictionaryView extends ViewPart {
 			public void run() {
 				if(viewtype.equals("standard")){
 					viewtype = "category";
+					switchViewAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.DIC_UNCATEGORISE));
 					contentprovider.changeSorting(viewtype);
 					viewer.setContentProvider(contentprovider);
 					viewer.expandToLevel(2);
 					
 				}else{
 					viewtype = "standard";
+					switchViewAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.DIC_CATEGORISE));
 					contentprovider.changeSorting(viewtype);
 					viewer.setContentProvider(contentprovider);
 					viewer.expandToLevel(2);
@@ -319,10 +322,8 @@ public class DictionaryView extends ViewPart {
 		switchViewAction
 				.setToolTipText("Changes the order from categorised to a list of items");
 	
+		switchViewAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.DIC_CATEGORISE));
 		
-		switchViewAction.setImageDescriptor(PlatformUI.getWorkbench()
-				.getSharedImages().getImageDescriptor(
-						CFPluginImages.DIC_CATEGORISE));
 
 		editTagAction = new Action() {
 			public void run() {
