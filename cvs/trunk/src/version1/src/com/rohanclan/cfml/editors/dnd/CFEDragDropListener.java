@@ -25,7 +25,14 @@
 package com.rohanclan.cfml.editors.dnd;
 
 import java.io.File;
+import java.io.IOException;
 
+import javax.print.Doc;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.swt.custom.StyledText;
@@ -42,6 +49,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.PartInitException;
+
+import com.rohanclan.cfml.util.ResourceUtils;
+import com.rohanclan.cfml.util.WorkspaceUtils;
 /**
  * @author Stephen Milligan
  *
@@ -240,8 +250,7 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 		    TextSelection sel = (TextSelection)viewer.getSelectionProvider().getSelection();
 		    // Offset of the drop point in viewer co-ordinates
 		    int dropOffset = sel.getOffset();
-		    
-		    
+		    		    
 		    // Delete the text from the old location
 		    if (!isInternalDrag 
 		            && (event.detail & DND.DROP_MOVE) != 0) {
@@ -294,14 +303,32 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 	  
 	    Object result = fileTransfer.nativeToJava(event.currentDataType);
 	    String[] filenames = (String[])result;
+	    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IFile thisFile = root.getFile(new Path(filenames[0]));
+	    File dropped = (File)thisFile;
+					
+		File target = null;
+		
+			try {
+				ResourceUtils.getRelativePath(dropped, target);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	   
+	
+	  
 	    for (int i=0;i<filenames.length;i++) {
+	    		
 	        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-	        JavaFileEditorInput input = new JavaFileEditorInput(new File(filenames[i]));
+	        //JavaFileEditorInput input = new JavaFileEditorInput(new File(filenames[i]));
 	        try {
-	            page.openEditor(input,"com.rohanclan.cfml.editors.CFMLEditor");
+	        	System.out.println("Actually doing the drop "  + filenames[1]);
+	        	//page.openEditor(input,"com.rohanclan.cfml.editors.CFMLEditor");
 	        }
-	        catch (PartInitException e) {
-	            e.printStackTrace();
+	        catch (Exception e) {
+	        	System.out.println("There has been an error of type: " + e.getMessage());
+	            //e.printStackTrace();
 	        }
 	    }
 	    return;
