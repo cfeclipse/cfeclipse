@@ -191,9 +191,9 @@ public class DictionaryView extends ViewPart {
 		if(obj instanceof TagItem){
 			Tag thistag = ((TagItem)obj).getTag();
 			
-			if(thistag.isCustomTag()){
+			//if(thistag.isCustomTag()){
 				manager.add(editTagAction);
-			}
+			//}
 		}
 		else if(obj instanceof TreeParent && ((TreeParent)obj).getName().equals("Tags")){
 			manager.add(addCTagAction);
