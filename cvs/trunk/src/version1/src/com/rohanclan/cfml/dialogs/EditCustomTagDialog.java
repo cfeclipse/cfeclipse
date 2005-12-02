@@ -1,6 +1,7 @@
 package com.rohanclan.cfml.dialogs;
 
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -26,6 +27,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
+import com.rohanclan.cfml.dictionary.Parameter;
 import com.rohanclan.cfml.dictionary.Tag;
 
 
@@ -54,7 +56,9 @@ public class EditCustomTagDialog extends Dialog {
 		
 		public EditCustomTagDialog(Shell parentShell){
 			super(parentShell);
-			this.title = "New Custom Taggger";
+			this.title = "New Custom Tag";
+			this.tag = new Tag("cf_newtag", true);
+			
 		}
 		
 		public EditCustomTagDialog(Shell parentShell, Tag tag){
@@ -113,7 +117,7 @@ public class EditCustomTagDialog extends Dialog {
 			mainTab.setText("Tag");
 			
 			GridLayout gl = new GridLayout();
-			gl.numColumns = 2;
+			//gl.numColumns = 2;
 			
 			Composite mainContents = new Composite(tabFolder, SWT.NONE);
 			mainContents.setLayout(gl);
@@ -121,7 +125,7 @@ public class EditCustomTagDialog extends Dialog {
 			//Set the tag name
 			displayTagName(mainContents);
 			displayTagInfo(mainContents);
-			//displayAttributes(mainContents);
+			displayAttributes(mainContents);
 			
 			
 			mainTab.setControl(mainContents);
@@ -159,16 +163,19 @@ public class EditCustomTagDialog extends Dialog {
 				{
 					GridData attributesListLData = new GridData();
 					attributesListLData.widthHint = 170;
+					attributesListLData.heightHint = 100;
 					attributesListLData.verticalAlignment = GridData.FILL;
-					attributesList = new List(attrubutesGroup, SWT.NONE|SWT.BORDER);
+					attributesList = new List(attrubutesGroup, SWT.NONE|SWT.BORDER|SWT.V_SCROLL);
 					attributesList.setLayoutData(attributesListLData);
-					attributesList.add("anrgument");
-					attributesList.add("anrgument1");
-					attributesList.add("anrgument2");
-					attributesList.add("anrgument3");
-					attributesList.add("anrgument4");
-					attributesList.add("anrgument5");
-					attributesList.add("anrgument6");
+					
+					Iterator iter = this.tag.getParameters().iterator();
+					
+					while(iter.hasNext()){
+						Parameter param = (Parameter)iter.next();
+						attributesList.add(param.getName());
+					}
+					
+					
 					attributesList.addMouseListener(new MouseAdapter() {
 						public void mouseDown(MouseEvent evt) {
 							attributesListMouseDown(evt);
@@ -242,11 +249,13 @@ public class EditCustomTagDialog extends Dialog {
 				{
 					isXMLcheck = new Button(TagInfo, SWT.CHECK | SWT.LEFT);
 					isXMLcheck.setText("Is XML Style?");
+					isXMLcheck.setSelection(this.tag.isXMLStyle());
 				}
 				
 				{
 					isSingleCheck = new Button(TagInfo, SWT.CHECK | SWT.LEFT);
 					isSingleCheck.setText("Is Single?");
+					isSingleCheck.setSelection(this.tag.isSingle());
 				}
 				
 			}
@@ -263,9 +272,9 @@ public class EditCustomTagDialog extends Dialog {
 			{
 				tagName = new Text(mainContents, SWT.NONE|SWT.BORDER);
 				GridData tagNameLData = new GridData();
-				tagNameLData.widthHint = 400;
+				tagNameLData.widthHint = 200;
 				tagName.setLayoutData(tagNameLData);
-				tagName.setText("Enter Tag Name");
+				tagName.setText(this.tag.getName());
 			}
 		}
 			
