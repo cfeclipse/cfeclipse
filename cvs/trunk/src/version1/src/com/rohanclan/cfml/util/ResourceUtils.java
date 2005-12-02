@@ -24,6 +24,8 @@
  */
 package com.rohanclan.cfml.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -221,5 +223,68 @@ public class ResourceUtils {
         }
         description.setNatureIds(newNatures);
         project.setDescription(description, null);
+    }
+    
+    /**
+     * Reaturns the path of a file or directory relative to a directory,
+     * in native format.
+     * @return The relative path.
+     *     It never starts with separator char (/ on UN*X).
+     * @throws IOException if the two paths has no common parent directory
+     *   (such as <code>C:\foo.txt</code> and <code>D:\foo.txt</code>), or
+     *   the the paths are malformed.
+     */
+    public static String getRelativePath(File fromDir, File toFileOrDir)
+            throws IOException {
+        char sep = File.separatorChar;
+        String ofrom = fromDir.getCanonicalPath();
+        String oto = toFileOrDir.getCanonicalPath();
+        boolean needSepEndForDirs;
+        if (!ofrom.endsWith(File.separator)) {
+            ofrom += sep;
+            needSepEndForDirs = false;
+        } else {
+            needSepEndForDirs = true;
+        }
+        boolean otoEndsWithSep;
+        if (!oto.endsWith(File.separator)) {
+            oto += sep;
+            otoEndsWithSep = false;
+        } else {
+            otoEndsWithSep = true;
+        }
+        String from = ofrom.toLowerCase();
+        String to = oto.toLowerCase();
+        
+        StringBuffer path = new StringBuffer(oto.length());
+
+        int fromln = from.length();
+        goback: while (true) {
+            if (to.regionMatches(0, from, 0, fromln)) {
+                File fromf = new File(ofrom.substring(
+                        0, needSepEndForDirs ? fromln : fromln - 1));
+                File tof = new File(oto.substring(
+                        0, needSepEndForDirs ? fromln : fromln - 1));
+                if (fromf.equals(tof)) {
+                    break goback;
+                }
+            }
+            path.append(".." + sep);
+            fromln--;
+            while (fromln > 0 && from.charAt(fromln - 1) != sep) {
+                fromln--;
+            }
+            if (fromln == 0) {
+                throw new IOException(
+                        "Could not find common parent directory in these "
+                        + "paths: " + ofrom + " and " + oto);
+            }
+        }
+        path.append(oto.substring(fromln));
+        if (!otoEndsWithSep && path.length() != 0) {
+            path.setLength(path.length() - 1);
+        }
+
+        return path.toString();
     }
 }
