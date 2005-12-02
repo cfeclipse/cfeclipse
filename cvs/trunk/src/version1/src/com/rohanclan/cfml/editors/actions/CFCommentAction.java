@@ -24,16 +24,69 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.FindReplaceDocumentAdapter;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.Region;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.IEditorActionDelegate;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.texteditor.ITextEditor;
+
+import com.rohanclan.cfml.editors.ICFDocument;
+import com.rohanclan.cfml.editors.partitioner.CFEPartition;
+import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
+import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+
 /**
  * @author Rob
  *
  * The adds cold fusion style comments around the selected text (or just sticks
  * in the comments if no text is selected) 
  */
-public class CFCommentAction extends GenericEncloserAction {
+public class CFCommentAction extends GenericEncloserAction implements IEditorActionDelegate{
+	protected ITextEditor editor = null;
 	
-	public CFCommentAction()
-	{
-		super("<!--- "," --->");
+	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+		if(targetEditor instanceof ITextEditor){
+			editor = (ITextEditor)targetEditor;
+		}
 	}
+	
+	public void run(IAction action){
+		//checks to see if you can edit the document
+		try {
+			if(editor != null && editor.isEditable()){
+				//Get the document
+				IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+				ISelection sel = editor.getSelectionProvider().getSelection();
+				String parttype = doc.getPartition(((ITextSelection)sel).getOffset()).getType();
+			    
+				
+				//if we already are in a comment parition, remove it, else add it
+				if(parttype.equals(CFPartitionScanner.CF_COMMENT)){
+					//Now find and replace the comment strings
+					FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
+				
+					finder.find(((ITextSelection)sel).getOffset(), "<!---", false, false, false, false);
+					finder.replace("", false);
+					
+					finder.find(((ITextSelection)sel).getOffset(), "--->", true, false, false, false);
+					finder.replace("", false);
+					
+					
+				}
+				else{
+					//Add the comments
+					this.enclose(doc,(ITextSelection)sel,"<!---"," --->");
+				}
+			}
+		} catch (BadLocationException e) {
+			e.printStackTrace(System.err);
+		}
+	}
+	public void selectionChanged(IAction action, ISelection selection){;}
 }
