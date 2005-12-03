@@ -30,6 +30,7 @@ import java.io.IOException;
 import javax.print.Doc;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
@@ -46,6 +47,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.PartInitException;
@@ -306,11 +308,16 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 	    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IFile thisFile = root.getFile(new Path(filenames[0]));
 	    File dropped = (File)thisFile;
+	    
+	   // IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					
-		File target = null;
-		
+	    String pth = (
+				(IResource)((FileEditorInput)editor.getEditorInput()
+			).getFile()).getProject().toString();
+
+		File target = (File)((FileEditorInput)editor.getEditorInput()).getFile();
 			try {
-				ResourceUtils.getRelativePath(dropped, target);
+				System.out.println(	ResourceUtils.getRelativePath(dropped, target).toString());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
