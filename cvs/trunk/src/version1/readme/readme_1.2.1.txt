@@ -2,10 +2,17 @@ CFEclipse 1.2.1
 
 Here is a list of the changes in this release
 
-NEW FEATURES
-	* Added Insert Tag dialogs from the dictionary view (Issue 52)
-	* Added Edit this Tag function in the editor
+ENHANCEMENTS
+	* (Enh: 52) Added Insert Tag dialogs from the dictionary view
+	* (Enh: 52) Added Edit this Tag function in the editor
 
-BUGS FIXED
-	* 
+FEATURES
+	* (Feat: 233) right click edit/open file works for cfinclude and cfmodule
+	* (Feat: 278) Comment/Uncoment with shortcut
+	
+BUGS
+
+	
+	
+	
 
