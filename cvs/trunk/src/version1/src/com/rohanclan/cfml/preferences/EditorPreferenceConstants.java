@@ -104,6 +104,9 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for bracket matching style */
 	public static final String P_BRACKET_MATCHING_STYLE = "cfeclipse.editor.bracketMatchingStyle";
 	
+	/** Preference key identifier for the editor toolbar */
+	public static final String P_SHOW_EDITOR_TOOLBAR = "cfeclipse.editor.showToolbar";
+	
 	
 	
 	
@@ -162,6 +165,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_SELECTION_BACKGROUND_SYSTEM_DEFAULT,false);
 		store.setDefault(P_WARN_READ_ONLY_FILES,true);
 		store.setDefault(P_BRACKET_MATCHING_STYLE,BRACKET_MATCHING_BOLD);
+		store.setDefault(P_SHOW_EDITOR_TOOLBAR, true);
 	}
 	
 	

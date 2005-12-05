@@ -66,15 +66,24 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -85,6 +94,8 @@ import org.eclipse.ui.IFileEditorInput;
 //import org.eclipse.ui.PlatformUI;
 //import org.eclipse.ui.contexts.EnabledSubmission;
 //import org.eclipse.ui.contexts.IWorkbenchContextSupport;
+import org.eclipse.ui.contexts.EnabledSubmission;
+import org.eclipse.ui.contexts.IWorkbenchContextSupport;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.part.FileEditorInput;
@@ -116,6 +127,7 @@ import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
 import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import com.rohanclan.cfml.editors.ui.CFMLEditorToolbar;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 //import com.rohanclan.cfml.plugindebug.DebugSettings;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
@@ -258,9 +270,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	public void createPartControl(Composite parent) {
 	    
 	    
-
-		//this.parent = parent;
-	    
+		/*Check the preferences, and add a toolbar
+		if(getPreferenceStore().getBoolean(EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR)){
+			CFMLEditorToolbar editorWithToolbar = new CFMLEditorToolbar();
+			parent = editorWithToolbar.getTabs(parent);
+		}
+		*/
 		super.createPartControl(parent);
 		this.setBackgroundColor();
 		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
@@ -288,7 +303,28 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			}
 		});
 		this.fProjectionSupport.install();
+		//Object lay = parent.getLayoutData();
 
+		//System.out.println(lay.getClass());
+		
+		 
+		    
+		    //one.setToolTipText("This is tab one");
+		  //  one.setControl(getTabOneControl(tabFolder));
+
+		    
+		    //two.setToolTipText("This is tab two");
+		  //  two.setControl(getTabTwoControl(tabFolder));
+
+		
+		    //three.setToolTipText("This is tab three");
+		  //  three.setControl(getTabThreeControl(tabFolder));
+
+		   
+		    //four.setToolTipText("This is tab four");
+		
+		
+		
 		projectionViewer.doOperation(ProjectionViewer.TOGGLE);
 
 		this.foldingSetter = new CodeFoldingSetter(this);
