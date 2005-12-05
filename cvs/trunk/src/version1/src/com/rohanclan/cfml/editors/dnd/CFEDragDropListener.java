@@ -44,6 +44,7 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -61,7 +62,7 @@ import com.rohanclan.cfml.util.WorkspaceUtils;
  * within the editor and to and from it.
  * 
  */
-public class CFEDragDropListener implements DropTargetListener, DragSourceListener {
+public class CFEDragDropListener  implements DropTargetListener, DragSourceListener {
 
     /**
      * The text editor on which the listener is installed.
@@ -301,27 +302,30 @@ public class CFEDragDropListener implements DropTargetListener, DragSourceListen
 	 * 
 	 * @param event
 	 */
-	private void handleFileDrop(DropTargetEvent event) { 
+	private void handleFileDrop(DropTargetEvent event) {
+		/*
+		 * Changing this method to handle files dropped on the text editor to 
+		 * be linked, so files with the extension .css and .js for example create linked style and script blocks
+		 * 
+		 * Will also try and handle images, so an image is dropped. If it gets extended, there might be a need to get a bit clever
+		 * and call different classes to handle info
+		 * 
+		 */
 	  
 	    Object result = fileTransfer.nativeToJava(event.currentDataType);
 	    String[] filenames = (String[])result;
+	    System.out.println("The File " + filenames[0]);
 	    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IFile thisFile = root.getFile(new Path(filenames[0]));
-	    File dropped = (File)thisFile;
+		//File dropped = (File)root.getFile(new Path(filenames[0]));
+	    String droppedPath = thisFile.getRawLocation().toString();
+	    System.out.println("Dropped Path " + droppedPath);
+		String targetPath = (	(IResource)((FileEditorInput)editor.getEditorInput()).getFile()).getRawLocation().toString();
+	    	System.out.println("The path : " + targetPath);
 	    
-	   // IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					
-	    String pth = (
-				(IResource)((FileEditorInput)editor.getEditorInput()
-			).getFile()).getProject().toString();
-
-		File target = (File)((FileEditorInput)editor.getEditorInput()).getFile();
-			try {
-				System.out.println(	ResourceUtils.getRelativePath(dropped, target).toString());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		//File target = (File)((FileEditorInput)editor.getEditorInput()).getFile();
+				//System.out.println(	ResourceUtils.getRelativePath(dropped, target).toString());
+			
 	   
 	
 	  
