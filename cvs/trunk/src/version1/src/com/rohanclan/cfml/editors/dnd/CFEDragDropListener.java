@@ -54,6 +54,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.PartInitException;
 
+import com.rohanclan.cfml.util.RelativePath;
 import com.rohanclan.cfml.util.ResourceUtils;
 import com.rohanclan.cfml.util.WorkspaceUtils;
 /**
@@ -314,6 +315,8 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 		 */
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		String files[] = (String[])event.data;
+		
+		
 		for(int i=0; i < files.length; i++){
 			File dropped = new File(files[i]);
 			//IPath dPath = new IPath();
@@ -328,6 +331,12 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
+				//Figure out the relative paths
+				RelativePath relpather = new RelativePath();
+				
+				relPath =  relpather.getRelativePath(target, dropped);
+				
 				
 				System.out.println("Dropped File: " + dropped.getAbsolutePath());
 				System.out.println("Target File:  " + target.getAbsolutePath());
