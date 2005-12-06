@@ -33,6 +33,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
@@ -311,11 +312,34 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 		 * and call different classes to handle info
 		 * 
 		 */
-	  
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		String files[] = (String[])event.data;
+		for(int i=0; i < files.length; i++){
+			File dropped = new File(files[i]);
+			//IPath dPath = new IPath();
+			
+			if(dropped.isFile()){
+				String currentpath = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getLocation().toString();
+				File target = new File(currentpath);
+				String relPath = "";
+				
+				try {
+					relPath = ResourceUtils.getRelativePath(target, dropped);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				System.out.println("Dropped File: " + dropped.getAbsolutePath());
+				System.out.println("Target File:  " + target.getAbsolutePath());
+				System.out.println("Relative path:" + relPath);
+			}
+		}
+		
 	    Object result = fileTransfer.nativeToJava(event.currentDataType);
+	    
 	    String[] filenames = (String[])result;
-	    System.out.println("The File " + filenames[0]);
-	    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+	    /*System.out.println("The File " + filenames[0]);
+	    
 		IFile thisFile = root.getFile(new Path(filenames[0]));
 		//File dropped = (File)root.getFile(new Path(filenames[0]));
 	    String droppedPath = thisFile.getRawLocation().toString();
