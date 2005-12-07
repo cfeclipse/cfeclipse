@@ -270,12 +270,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	public void createPartControl(Composite parent) {
 	    
 	    
-		/*Check the preferences, and add a toolbar
+		/*Check the preferences, and add a toolbar */
 		if(getPreferenceStore().getBoolean(EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR)){
 			CFMLEditorToolbar editorWithToolbar = new CFMLEditorToolbar();
 			parent = editorWithToolbar.getTabs(parent);
 		}
-		*/
+		
 		super.createPartControl(parent);
 		this.setBackgroundColor();
 		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
