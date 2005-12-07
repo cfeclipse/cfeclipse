@@ -42,6 +42,7 @@ public class CFMLEditorToolbar {
 		parentLayout.numColumns=1;
 		cfeditor.getParent().setLayout(parentLayout);
 		
+		//Get the toolbars
 		cfeditor =  makeTabs(cfeditor);
 			
 		GridData cfeditorLData = new GridData();
