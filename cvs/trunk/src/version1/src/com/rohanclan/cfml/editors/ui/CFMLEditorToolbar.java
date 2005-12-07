@@ -15,7 +15,9 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 /**
- * This will be the class that builds the toolbar in the CFEditor dialog.
+ * This  class builds the toolbar in the CFEditor dialog.
+ * 
+ * It has been externalised from CFMLEditor so that it is only called if a preference is set
  * 
  * @author mdrew
  *
@@ -28,42 +30,33 @@ public class CFMLEditorToolbar {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * this method sets the layout, with the toolbar at the top, and the editor at the bottom
+	 * @param cfeditor
+	 * @return
+	 */
 	public Composite getTabs(Composite cfeditor){
-		//Make a new composite
-		//Display display = Display.getDefault();
-		//Shell shell = new Shell(display);
-		//Composite tabbedisp = new Composite(shell, SWT.NONE);
 		
-		GridLayout thisLayout = new GridLayout();
-		thisLayout.makeColumnsEqualWidth = true;
-		cfeditor.setLayout(thisLayout);
+		GridLayout parentLayout = new GridLayout();
+		parentLayout.makeColumnsEqualWidth = true;
+		parentLayout.numColumns=1;
+		cfeditor.getParent().setLayout(parentLayout);
 		
-		Composite child = new Composite(cfeditor, 0);
-       	child.setLayoutData(new GridData(4, 4, true, false, 1, 1));
-       	GridLayout clayout = new GridLayout();
-       	clayout.numColumns = 1;
-	        clayout.horizontalSpacing = 0;
-	        clayout.marginHeight = 0;
-	        clayout.marginWidth = 0;
-	        clayout.verticalSpacing = 0;
-	        child.setLayout(clayout);
-	        child =  makeTabs(child);
-		
-		
-		/*
-		{
-			GridData cfeditorLData = new GridData();
-			cfeditorLData.verticalSpan = 2;
-			cfeditorLData.grabExcessHorizontalSpace = true;
-			cfeditorLData.grabExcessVerticalSpace = true;
-			cfeditor.setLayoutData(cfeditorLData);
-		}
-		*/
-	      
-	      //makeTabs(parent);
+		cfeditor =  makeTabs(cfeditor);
+			
+		GridData cfeditorLData = new GridData();
+		cfeditorLData.grabExcessHorizontalSpace = true;
+		cfeditorLData.grabExcessVerticalSpace = true;
+		cfeditor.setLayoutData(cfeditorLData);
+
 		return cfeditor;
 	}
 
+	/**
+	 * This method builds the top navigation, it will be from an XML file so that the actions can be modified
+	 * @param parent
+	 * @return
+	 */
 	private Composite makeTabs(Composite parent) {
 		CTabFolder cTabFolder1 = new CTabFolder(parent, SWT.NONE);
 			{
@@ -84,6 +77,7 @@ public class CFMLEditorToolbar {
 					}
 				}
 			}
+			cTabFolder1.setSelection(0);
 			return parent;
 	}
 	
