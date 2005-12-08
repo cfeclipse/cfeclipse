@@ -41,6 +41,8 @@ import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.dialogs.TagEditDialog;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
@@ -62,6 +64,8 @@ public class EditTagAction implements IEditorActionDelegate{
 		private int taglength;
 		private Map selectedattributes;
 		private boolean replace = false;
+		private SyntaxDictionary dictionary;
+		
 		/*
 		 * constructors
 		 */
@@ -78,6 +82,7 @@ public class EditTagAction implements IEditorActionDelegate{
 			this.tag = tag;
 			this.shell = shell;
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+			this.dictionary =  DictionaryManager.getDictionary("CF_DICTIONARY");
 		}
 		
 		/** This Tag ACtion needs a tag, a shell and the attibutes of a tag. It will setup a pre-filled dialog
@@ -92,6 +97,13 @@ public class EditTagAction implements IEditorActionDelegate{
 			this.replace = true;
 		}
 		
+		public EditTagAction(String tag, Shell shell){
+			this.shell = shell;
+			this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
+			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+			this.tag = this.dictionary.getTag(tag);
+			
+		}
 		
 		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
 

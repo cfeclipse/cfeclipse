@@ -10,6 +10,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.dialogs.EditCustomTagDialog;
+import com.rohanclan.cfml.dictionary.DictionaryManager;
+import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
@@ -20,6 +22,7 @@ public class EditCustomTagAction  implements IEditorActionDelegate{
 	protected IEditorPart ieditor;
 	private ITextEditor editor = null;
 	private CFEPartitioner partitioner;
+	private SyntaxDictionary dictionary;
 	
 	/**
 	 * Constructor
@@ -36,6 +39,7 @@ public class EditCustomTagAction  implements IEditorActionDelegate{
 	public EditCustomTagAction(Shell shell){
 		
 		this.shell = shell;
+		this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
 	}
 	/**
 	 * Edit existing
@@ -45,8 +49,16 @@ public class EditCustomTagAction  implements IEditorActionDelegate{
 	public EditCustomTagAction(Tag tag, Shell shell){
 		this.tag = tag;
 		this.shell = shell;
+		this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
 	}
 	
+
+	public EditCustomTagAction(String tag, Shell shell){
+		this.shell = shell;
+		this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
+		this.tag = this.dictionary.getTag(tag);
+		
+	}
 	
 	public void run(){
 		EditCustomTagDialog ectd;
