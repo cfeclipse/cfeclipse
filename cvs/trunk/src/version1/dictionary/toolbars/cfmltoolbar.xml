@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tabs>
 	<tab name="CFML Basic">
-			<button name="Server Variables" type="other" value="class" /> 
+			<button name="Server Variables" type="other" value="class" image="server.gif" /> 
 			<button name="CFQuery" type="cftag" value="cfquery" />
-			<button name="CFOutput" type="cftag" value="cfoutput" />
+			<button name="CFOutput" type="cftag" value="cfoutput" image="output.gif" />
 			<button name="CFInsert" type="cftag" value="cfinsert" />
 			<button name="CFUpdate" type="cftag" value="cfupdate" />
 			<button name="CFTable" type="cftag" value="cftable" />
@@ -12,12 +12,43 @@
 			<button name="CFLocation" type="cftag" value="cflocation" />
 			<button name="CFSet" type="cftag" value="cfset" />
 			<button name="CFParam" type="cftag" value="cfparam" />
-			<button name="CFComment" type="custom" value="com.rohanclan.cfml.editors.actions.CFCommentAction" />
-			<button name="Surround with Hash/Pound signs" type="other" value="hash" />
-			
+			<button name="CFDump" type="cftag" value="cfdump" image="dump.gif" />
+			<button name="CFComment" type="custom" value="com.rohanclan.cfml.editors.actions.CFCommentAction" image="comment.gif" />
+			<button name="Surround with Hash/Pound signs" type="other" value="hash" image="hash.gif" />
 	</tab>
-	<tab name="CF Flow"></tab>
-	<tab name="CFForm"></tab>
+	<tab name="CF Flow">
+			<button name="CFTry" type="cftag" value="cftry" />
+			<button name="CFCatch" type="cftag" value="cfcatch" />
+			<button name="CFThrow" type="cftag" value="cthrow" />
+			<button name="CFLock" type="cftag" value="cflock" />
+			<button name="CFSwitch" type="cftag" value="cfswitch" />
+			<button name="CFCase" type="cftag" value="cfcase" />
+			<button name="CFDefaultCase" type="cftag" value="cfdefaultcase" />
+			<button name="CFScript" type="cftag" value="cfscript" />
+			<button name="CFIf" type="cftag" value="cfif" />
+			<button name="CFElse" type="cftag" value="cfelse" />
+			<button name="CFElseif" type="cftag" value="cfelseif" />
+			<button name="CFBreak" type="cftag" value="cfbreak" />
+			<button name="CFAbort" type="cftag" value="cfabort" />
+			<button name="CFExit" type="cftag" value="cfexit" />
+			<button name="CFLoop" type="cftag" value="cfloop" />
+	</tab>
+	<tab name="CFForm">
+		 <button name="CFForm" type="cftag" value="cfform" />
+		 <button name="CFApplet" type="cftag" value="cfapplet" />
+		 <button name="CFText" type="cftag" value="cftext" />
+		 <button name="CFRadio" type="cftag" value="cfradio" />
+		 <button name="CFCheck" type="cftag" value="cfcheck" />
+		 <button name="CFSelect" type="cftag" value="cfselect" />
+		 <button name="CFTree" type="cftag" value="cftree" />
+		 <button name="CFTreeItem" type="cftag" value="cftreeitem" />
+		 <button name="CFGrid" type="cftag" value="cfgrid" image="table.gif" />
+		 <button name="CFGridColumn" type="cftag" value="cfgridcolumn" />
+		 <button name="CFGridRow" type="cftag" value="cfgridrow" />
+		 <button name="CFCFGridUpdate" type="cftag" value="cfgridupdate" />
+		 <button name="CFSlider" type="cftag" value="cfslider" />
+		
+	</tab>
 	<tab name="CFML Advanced"></tab>
 	<tab name="CFChart"></tab>
 	
