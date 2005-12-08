@@ -1,41 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tabs>
 	<tab name="CFML Basic">
-		<buttons>
-			<!-- 
-		Button7_Cmd=tagCFTable
-		Button8_Cmd=tagCFCol
-		Button9_Cmd=cmdSeparator
-		Button10_Cmd=tagCFInclude
-		Button11_Cmd=tagCFLocation
-		Button12_Cmd=cmdSeparator
-		Button13_Cmd=tagCFSet
-		Button14_Cmd=tagCFParam
-		Button15_Cmd=tagCFComment
-		Button16_Cmd=cmdSurroundWithPounds
-		 -->
-			<button name="Server Variables" type="servervars" value="servervars"> 
-				<image>ICON_TAG</image>
-			</button>
-			<button name="CFQuery" type="cftag" value="cfquery">
-				<image>ICON_TAG</image>
-			</button>
-			<button name="CFOutput" type="cftag" value="cfoutput">
-				<image>ICON_TAG</image>
-			</button>
-			<button name="CFInsert" type="cftag" value="cfinsert">
-				<image>ICON_TAG</image>
-			</button>
-			<button name="CFUpdate" type="cftag" value="cfupdate">
-				<image>ICON_TAG</image>
-			</button>
-			<button name="CFTable" type="cftag" value="cftable">
-				<image>ICON_TAG</image>
-			</button>
-			<button name="CFCol" type="cftag" value="cfcol">
-				<image>ICON_TAG</image>
-			</button>
-		</buttons>
+			<button name="Server Variables" type="other" value="class" /> 
+			<button name="CFQuery" type="cftag" value="cfquery" />
+			<button name="CFOutput" type="cftag" value="cfoutput" />
+			<button name="CFInsert" type="cftag" value="cfinsert" />
+			<button name="CFUpdate" type="cftag" value="cfupdate" />
+			<button name="CFTable" type="cftag" value="cftable" />
+			<button name="CFCol" type="cftag" value="cfcol" />
+			<button name="CFInclude" type="cftag" value="cfinclude" />
+			<button name="CFLocation" type="cftag" value="cflocation" />
+			<button name="CFSet" type="cftag" value="cfset" />
+			<button name="CFParam" type="cftag" value="cfparam" />
+			<button name="CFComment" type="custom" value="com.rohanclan.cfml.editors.actions.CFCommentAction" />
+			<button name="Surround with Hash/Pound signs" type="other" value="hash" />
+			
 	</tab>
 	<tab name="CF Flow"></tab>
 	<tab name="CFForm"></tab>
