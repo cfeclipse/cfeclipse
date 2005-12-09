@@ -124,9 +124,16 @@ public class CFMLEditorToolbar {
 					
 					ToolItem toolItem1 = new ToolItem(toolBar1, SWT.NONE);
 					toolItem1.setData(buttonValue);
-					toolItem1.setText(buttonName);
+					
+					
+					if(attribs.getNamedItem("image") !=null){
+						toolItem1.setToolTipText(buttonName);
+						toolItem1.setImage(CFPluginImages.get(attribs.getNamedItem("image").getNodeValue()));
+					} else {
+						toolItem1.setText(buttonName);
+					}
 					//toolItem1.setToolTipText("cfoutput");
-					//toolItem1.setImage(CFPluginImages.get(CFPluginImages.ICON_TAG));
+					//
 					
 					if(buttonType.equals("cftag")){
 						toolItem1.addSelectionListener(new SelectionAdapter() {
@@ -185,7 +192,7 @@ public class CFMLEditorToolbar {
 		
 			ToolItem toolItem1 = new ToolItem(toolBar1, SWT.NONE);
 			toolItem1.setToolTipText("cfoutput");
-			toolItem1.setImage(CFPluginImages.get(CFPluginImages.ICON_TAG));
+			toolItem1.setImage(CFPluginImages.get("element.gif"));
 			
 			
 			toolItem1.addSelectionListener(new SelectionAdapter() {
