@@ -10989,6 +10989,7 @@
 			<value option="read_uncommitted"/>
 			<value option="read_committed"/>
 			<value option="repeatable_read"/>
+			<value option="serializable"/>
 		</values>
 	</parameter>
 </tag>
