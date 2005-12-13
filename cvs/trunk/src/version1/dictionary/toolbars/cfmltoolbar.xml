@@ -3,7 +3,7 @@
 	<tab name="CFML Basic">
 			<button name="Server Variables" type="other" value="class" image="server.gif" /> 
 			<button name="CFQuery" type="cftag" value="cfquery" />
-			<button name="CFOutput" type="cftag" value="cfoutput" image="output.gif" />
+			<button name="CFOutput" type="cftag" value="cfoutput" />
 			<button name="CFInsert" type="cftag" value="cfinsert" />
 			<button name="CFUpdate" type="cftag" value="cfupdate" />
 			<button name="CFTable" type="cftag" value="cftable" />
@@ -13,7 +13,7 @@
 			<button name="CFSet" type="cftag" value="cfset" />
 			<button name="CFParam" type="cftag" value="cfparam" />
 			<button name="CFDump" type="cftag" value="cfdump" image="dump.gif" />
-			<button name="CFComment" type="custom" value="com.rohanclan.cfml.editors.actions.CFCommentAction" image="comment.gif" />
+			<button name="CFComment" type="custom" value="com.rohanclan.cfml.editors.actions.CFCommentAction"/>
 			<button name="Surround with Hash/Pound signs" type="other" value="hash" image="hash.gif" />
 	</tab>
 	<tab name="CF Flow">
@@ -48,6 +48,18 @@
 		 <button name="CFCFGridUpdate" type="cftag" value="cfgridupdate" />
 		 <button name="CFSlider" type="cftag" value="cfslider" />
 		
+	</tab>
+	<tab name="CFC">
+		<button name="CFComponent" type="cftag" value="cfcomponent"/>
+		<button name="CFProperty" type="cftag" value="cfproperty"/>
+		<button name="CFFunction" type="cftag" value="cffunction"/>
+		<button name="CFArgument" type="cftag" value="cfargument"/>
+		<button name="CFReturn" type="cftag" value="cfreturn"/>
+	</tab>
+	<tab name="CFDocument">
+		<button name="CFDocument" type="cftag" value="cfdocument" />
+		<button name="CFDocumentItem" type="cftag" value="cfdocumentitem"/>
+		<button name="CFDocumentSection" type="cftag" value="cfdocumentsection "/>
 	</tab>
 	<tab name="CFML Advanced"></tab>
 	<tab name="CFChart"></tab>
