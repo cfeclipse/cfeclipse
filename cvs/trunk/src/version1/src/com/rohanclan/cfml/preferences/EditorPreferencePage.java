@@ -40,6 +40,8 @@ public class EditorPreferencePage extends PreferencePage
 			"Editor Background", EditorPreferenceConstants.P_COLOR_BACKGROUND, null
 		}, {
 			"Line numbers",  EditorPreferenceConstants.P_LINE_NUMBER_COLOR, null
+		},{
+			"Editor toolbars",  EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR, null
 		}, {
 			"Current line highlight",  EditorPreferenceConstants.P_CURRENT_LINE_COLOR, null
 		}, {
@@ -147,6 +149,7 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_LINE_NUMBER_COLOR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_USE_WIDE_CARET));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR));
@@ -223,6 +226,8 @@ public class EditorPreferencePage extends PreferencePage
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER, 0);
 		label = "Show lin&e numbers";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS, 0);
+		label = "Show Editor Toolbar";
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR, 0);
 		label = "Hi&ghlight current line";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_HIGHLIGHT_CURRENT_LINE, 0);
 		label = "Tab indents current line";

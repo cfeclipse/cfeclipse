@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tabs>
 	<tab name="CFML Basic">
-			<button name="Server Variables" type="other" value="class" image="server.gif" /> 
-			<button name="CFQuery" type="cftag" value="cfquery" />
-			<button name="CFOutput" type="cftag" value="cfoutput" />
-			<button name="CFInsert" type="cftag" value="cfinsert" />
-			<button name="CFUpdate" type="cftag" value="cfupdate" />
-			<button name="CFTable" type="cftag" value="cftable" />
-			<button name="CFCol" type="cftag" value="cfcol" />
-			<button name="CFInclude" type="cftag" value="cfinclude" />
-			<button name="CFLocation" type="cftag" value="cflocation" />
-			<button name="CFSet" type="cftag" value="cfset" />
-			<button name="CFParam" type="cftag" value="cfparam" />
+			<button name="Server Variables" type="other" value="class" image="server.png" /> 
+			<button name="CFQuery" type="cftag" value="cfquery" image="database.png"/>
+			<button name="CFOutput" type="cftag" value="cfoutput" image="out.png"/>
+			<button name="CFInsert" type="cftag" value="cfinsert" image="insert.png" />
+			<button name="CFUpdate" type="cftag" value="cfupdate" image="update.png"/>
+			<button name="CFTable" type="cftag" value="cftable" image="cftable.png" />
+			<button name="CFCol" type="cftag" value="cfcol" image="cfcol.png" />
+			<button name="CFInclude" type="cftag" value="cfinclude" image="cfinclude.png" />
+			<button name="CFLocation" type="cftag" value="cflocation" image="location.png" />
+			<button name="CFSet" type="cftag" value="cfset" image="set.png" />
+			<button name="CFParam" type="cftag" value="cfparam"  image="param.png" />
 			<button name="CFDump" type="cftag" value="cfdump" image="dump.gif" />
-			<button name="CFComment" type="custom" value="com.rohanclan.cfml.editors.actions.CFCommentAction"/>
-			<button name="Surround with Hash/Pound signs" type="other" value="hash" image="hash.gif" />
+			<button name="CFComment" type="custom" value="com.rohanclan.cfml.editors.actions.CFCommentAction" image="comment.png"/>
+			<button name="Surround with Hash/Pound signs" type="custom" value="com.rohanclan.cfml.editors.actions.CFVariableAction" image="hash.png" />
 	</tab>
 	<tab name="CF Flow">
 			<button name="CFTry" type="cftag" value="cftry" />

@@ -171,9 +171,29 @@ public class CFPluginImages {
 	public static final String ICON_PVIEW_FOLDER_CFC = "folder-cfc.png";
 	public static final String ICON_PVIEW_FOLDER_CUS = "folder-custom.png";
 	
+	
+	
+	/** Editor toolbar icons */
+	public static final String T_DATABASE = "database.png";
+	public static final String T_COMMENT = "comment.png";
+	public static final String T_HASH = "hash.png";
+	public static final String T_OUT = "out.png";
+	public static final String T_SET = "set.png";
+	public static final String T_COL = "cfcol.png";
+	public static final String T_INCLUDE  = "cfinclude.png";
+	public static final String T_TABLE = "cftable.png";
+	public static final String T_INSERT = "insert.png";
+	public static final String T_LOCATION = "location.png";
+	public static final String T_PARAM = "param.png";
+	public static final String T_SERVER = "server.png";
+	public static final String T_UPDATE = "update.png";
+	
+	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
 	public static final String TOOLBAR 		 = "ctool16";
+	public static final String EDITORTOOLBAR   = "toolbars";
+	
 	
 	private CFPluginImages(){;}
 	
@@ -259,6 +279,23 @@ public class CFPluginImages {
 			
 			addImageToRegistry(MODEL_OBJECTS, DIC_CATEGORISE);
 			addImageToRegistry(MODEL_OBJECTS, DIC_UNCATEGORISE);
+			
+			
+			
+			/** Add editor items */
+			addImageToRegistry(EDITORTOOLBAR, T_DATABASE);
+			addImageToRegistry(EDITORTOOLBAR, T_COMMENT);
+			addImageToRegistry(EDITORTOOLBAR, T_HASH);
+			addImageToRegistry(EDITORTOOLBAR, T_OUT);
+			addImageToRegistry(EDITORTOOLBAR, T_SET);
+			addImageToRegistry(EDITORTOOLBAR, T_COL);
+			addImageToRegistry(EDITORTOOLBAR, T_INCLUDE);
+			addImageToRegistry(EDITORTOOLBAR, T_TABLE);
+			addImageToRegistry(EDITORTOOLBAR, T_INSERT);
+			addImageToRegistry(EDITORTOOLBAR, T_LOCATION);
+			addImageToRegistry(EDITORTOOLBAR, T_PARAM);
+			addImageToRegistry(EDITORTOOLBAR, T_SERVER);
+			addImageToRegistry(EDITORTOOLBAR, T_UPDATE);
 			
 		}
 	}

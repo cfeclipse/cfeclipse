@@ -33,8 +33,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-//import org.eclipse.ui.internal.WorkbenchPage;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspace;
@@ -66,36 +65,18 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-//import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IFileEditorInput;
-//import org.eclipse.ui.IWorkbenchPage;
-//import org.eclipse.ui.PlatformUI;
-//import org.eclipse.ui.contexts.EnabledSubmission;
-//import org.eclipse.ui.contexts.IWorkbenchContextSupport;
-import org.eclipse.ui.contexts.EnabledSubmission;
-import org.eclipse.ui.contexts.IWorkbenchContextSupport;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.part.FileEditorInput;
@@ -129,11 +110,10 @@ import com.rohanclan.cfml.editors.partitioner.PartitionTypes;
 import com.rohanclan.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import com.rohanclan.cfml.editors.ui.CFMLEditorToolbar;
 import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
-//import com.rohanclan.cfml.plugindebug.DebugSettings;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
 import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
-import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.util.CFDocUtils;
+import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 
 /**
@@ -270,12 +250,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	public void createPartControl(Composite parent) {
 	    
 	    
-		/*Check the preferences, and add a toolbar 
+		/* TODO: hook this up to a button
+		 * Check the preferences, and add a toolbar */
 		if(getPreferenceStore().getBoolean(EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR)){
 			CFMLEditorToolbar editorWithToolbar = new CFMLEditorToolbar();
 			parent = editorWithToolbar.getTabs(parent);
 		}
-		*/
+		
 		super.createPartControl(parent);
 		this.setBackgroundColor();
 		this.fSourceViewerDecorationSupport.install(getPreferenceStore());

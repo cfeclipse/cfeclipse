@@ -120,6 +120,7 @@ public class CFMLEditorToolbar {
 					if(attribs.getNamedItem("image") !=null){
 						toolItem1.setToolTipText(buttonName);
 						toolItem1.setImage(CFPluginImages.get(attribs.getNamedItem("image").getNodeValue()));
+						
 					} else {
 						toolItem1.setText(buttonName);
 					}
