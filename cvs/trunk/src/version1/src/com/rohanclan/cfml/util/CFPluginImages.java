@@ -171,22 +171,36 @@ public class CFPluginImages {
 	public static final String ICON_PVIEW_FOLDER_CFC = "folder-cfc.png";
 	public static final String ICON_PVIEW_FOLDER_CUS = "folder-custom.png";
 	
-	
-	
 	/** Editor toolbar icons */
+	public static final String ICON_OUTPUT = "output.gif";
+	public static final String T_INSERT = "addrepo_rep.gif";
+	public static final String T_UPDATE = "update_rep.gif";
+	public static final String T_SET = "set.gif";
+	public static final String T_COMMENT = "comment.gif";
+	public static final String T_HASH = "hash.gif";
+	public static final String T_TRY = "try.gif";
+	public static final String T_CATCH = "catch.gif";
+	public static final String T_THROW = "throw.gif";
+	public static final String T_LOCK = "lock.gif";
+	public static final String T_EXIT = "exit.gif";
+	public static final String T_DOCUMENT = "document.gif";
+	public static final String T_DOCUMENT_ITEM = "document_item.gif";
+	public static final String T_DOCUMENT_SECTION = "document_section.gif";
+	public static final String T_SCHEDULE = "time.gif";
+	public static final String T_SEARCH = "search.gif";
+	
 	public static final String T_DATABASE = "database.png";
-	public static final String T_COMMENT = "comment.png";
-	public static final String T_HASH = "hash.png";
-	public static final String T_OUT = "out.png";
-	public static final String T_SET = "set.png";
+	
+	
+	public static final String T_OUT = "out.gif";
 	public static final String T_COL = "cfcol.png";
 	public static final String T_INCLUDE  = "cfinclude.png";
 	public static final String T_TABLE = "cftable.png";
-	public static final String T_INSERT = "insert.png";
+	
 	public static final String T_LOCATION = "location.png";
 	public static final String T_PARAM = "param.png";
 	public static final String T_SERVER = "server.png";
-	public static final String T_UPDATE = "update.png";
+	
 	
 	
 	// directory offsets
@@ -272,6 +286,8 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_EXPAND);
 			addImageToRegistry(TOOLBAR,ICON_COLLAPSE);
 			addImageToRegistry(TOOLBAR,ICON_INSERT_SNIP);
+			addImageToRegistry(TOOLBAR, ICON_OUTPUT);
+			
 			
 			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_WWW);
 			addImageToRegistry(MODEL_OBJECTS, ICON_PVIEW_FOLDER_CFC);
@@ -283,19 +299,29 @@ public class CFPluginImages {
 			
 			
 			/** Add editor items */
+			addImageToRegistry(TOOLBAR, T_INCLUDE);
+			addImageToRegistry(TOOLBAR, T_INSERT);
+			addImageToRegistry(TOOLBAR, T_UPDATE);
+			addImageToRegistry(TOOLBAR, T_SET);
+			addImageToRegistry(TOOLBAR, T_COMMENT);
+			addImageToRegistry(TOOLBAR, T_HASH);
+			addImageToRegistry(TOOLBAR, T_TRY);
+			addImageToRegistry(TOOLBAR, T_CATCH);
+			addImageToRegistry(TOOLBAR, T_THROW);
+			addImageToRegistry(TOOLBAR, T_LOCK);
+			addImageToRegistry(TOOLBAR, T_EXIT);
+			addImageToRegistry(TOOLBAR, T_DOCUMENT);
+			addImageToRegistry(TOOLBAR, T_DOCUMENT_ITEM);
+			addImageToRegistry(TOOLBAR, T_DOCUMENT_SECTION);
+			addImageToRegistry(TOOLBAR, T_SCHEDULE);
+			addImageToRegistry(TOOLBAR, T_SEARCH);
+			
+			
 			addImageToRegistry(EDITORTOOLBAR, T_DATABASE);
-			addImageToRegistry(EDITORTOOLBAR, T_COMMENT);
-			addImageToRegistry(EDITORTOOLBAR, T_HASH);
-			addImageToRegistry(EDITORTOOLBAR, T_OUT);
-			addImageToRegistry(EDITORTOOLBAR, T_SET);
-			addImageToRegistry(EDITORTOOLBAR, T_COL);
-			addImageToRegistry(EDITORTOOLBAR, T_INCLUDE);
-			addImageToRegistry(EDITORTOOLBAR, T_TABLE);
-			addImageToRegistry(EDITORTOOLBAR, T_INSERT);
 			addImageToRegistry(EDITORTOOLBAR, T_LOCATION);
 			addImageToRegistry(EDITORTOOLBAR, T_PARAM);
 			addImageToRegistry(EDITORTOOLBAR, T_SERVER);
-			addImageToRegistry(EDITORTOOLBAR, T_UPDATE);
+			
 			
 		}
 	}
