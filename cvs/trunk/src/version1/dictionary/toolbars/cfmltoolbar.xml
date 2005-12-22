@@ -68,7 +68,7 @@
 		<button name="CFApplication" type="cftag" value="cfapplication" image="application.gif"/>
 		<button name="CFError" type="cftag" value="cferror" image="error.gif"/>
 		<button name="CFDirectory" type="cftag" value="cfdirectory" image="dir.gif"/>
-		<button name="CFFile" type="cftag" value="cffile" image="file.gif"/>
+		<button name="CFFile" type="cftag" value="cffile" image="cffile.gif"/>
 		<button name="CFMail" type="cftag" value="cfmail" image="mail.gif"/>
 		<button name="CFPOP" type="cftag" value="cfpop" image="pop.gif"/>
 		<button name="CFHTTP" type="cftag" value="cfhttp" image="globe.gif"/>

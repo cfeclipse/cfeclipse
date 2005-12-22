@@ -205,6 +205,7 @@ public class CFPluginImages {
 	public static final String T_INDEX = "index.gif";
 	public static final String T_REPORT = "report.gif";
 	public static final String T_HTTPPARAM = "httpparam.gif";
+	public static final String T_FILE = "cffile.gif";
 	
 	public static final String T_DATABASE = "database.png";
 	
@@ -349,6 +350,7 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR, T_INDEX);
 			addImageToRegistry(TOOLBAR, T_REPORT);
 			addImageToRegistry(TOOLBAR, T_HTTPPARAM);
+			addImageToRegistry(TOOLBAR, T_FILE);
 			
 			addImageToRegistry(EDITORTOOLBAR, T_DATABASE);
 			addImageToRegistry(EDITORTOOLBAR, T_LOCATION);
