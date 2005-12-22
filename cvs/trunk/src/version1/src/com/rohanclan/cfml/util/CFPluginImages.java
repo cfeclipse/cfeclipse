@@ -188,6 +188,23 @@ public class CFPluginImages {
 	public static final String T_DOCUMENT_SECTION = "document_section.gif";
 	public static final String T_SCHEDULE = "time.gif";
 	public static final String T_SEARCH = "search.gif";
+	public static final String T_SWITCH = "switch.gif";
+	public static final String T_CASE = "case.gif";
+	public static final String T_DEFAULTCASE = "defaultcase.gif";
+	public static final String T_IF = "if.gif";
+	public static final String T_ELSE = "else.gif";
+	public static final String T_ELSEIF = "elseif.gif";
+	public static final String T_APPLICATION = "application.gif";
+	public static final String T_POP = "pop.gif";
+	public static final String T_FTP = "ftp.gif";
+	public static final String T_COOKIE = "cookie.gif";
+	public static final String T_HEADER = "header.gif";
+	public static final String T_CONTENT = "content.gif";
+	public static final String T_MAIL = "mail.gif";
+	public static final String T_LDAP = "ldap.gif";
+	public static final String T_INDEX = "index.gif";
+	public static final String T_REPORT = "report.gif";
+	public static final String T_HTTPPARAM = "httpparam.gif";
 	
 	public static final String T_DATABASE = "database.png";
 	
@@ -315,7 +332,23 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR, T_DOCUMENT_SECTION);
 			addImageToRegistry(TOOLBAR, T_SCHEDULE);
 			addImageToRegistry(TOOLBAR, T_SEARCH);
-			
+			addImageToRegistry(TOOLBAR, T_SWITCH);
+			addImageToRegistry(TOOLBAR, T_CASE);
+			addImageToRegistry(TOOLBAR, T_DEFAULTCASE);
+			addImageToRegistry(TOOLBAR, T_IF);
+			addImageToRegistry(TOOLBAR, T_ELSE);
+			addImageToRegistry(TOOLBAR, T_ELSEIF);
+			addImageToRegistry(TOOLBAR, T_APPLICATION);
+			addImageToRegistry(TOOLBAR, T_POP);
+			addImageToRegistry(TOOLBAR, T_FTP);
+			addImageToRegistry(TOOLBAR, T_COOKIE);
+			addImageToRegistry(TOOLBAR, T_HEADER);
+			addImageToRegistry(TOOLBAR, T_CONTENT);
+			addImageToRegistry(TOOLBAR, T_MAIL);
+			addImageToRegistry(TOOLBAR, T_LDAP);
+			addImageToRegistry(TOOLBAR, T_INDEX);
+			addImageToRegistry(TOOLBAR, T_REPORT);
+			addImageToRegistry(TOOLBAR, T_HTTPPARAM);
 			
 			addImageToRegistry(EDITORTOOLBAR, T_DATABASE);
 			addImageToRegistry(EDITORTOOLBAR, T_LOCATION);
