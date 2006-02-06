@@ -23,8 +23,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.editors.actions.DynamicActionRunner;
-import com.rohanclan.cfml.editors.actions.EditTagAction;
+import com.rohanclan.cfml.editors.actions.*;
 import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
@@ -57,10 +56,10 @@ public class CFMLEditorToolbar {
 		
 		
 		GridLayout parentLayout = new GridLayout();
-		//parentLayout.makeColumnsEqualWidth = true;
+		parentLayout.makeColumnsEqualWidth = true;
 		parentLayout.numColumns=1;
-		//parentLayout.marginLeft = 0;
-		//parentLayout.marginRight = 0;
+		parentLayout.marginLeft = 0;
+		parentLayout.marginRight = 0;
 		
 		
 		parent.setLayout(parentLayout);
@@ -142,6 +141,16 @@ public class CFMLEditorToolbar {
 								public void widgetSelected(SelectionEvent evt) {
 									ToolItem item = (ToolItem)evt.getSource();
 									DynamicActionRunner darunner = new DynamicActionRunner(item.getData().toString());
+								}
+							});
+					}
+					else if(buttonType.equals("snippet")){
+						
+						 toolItem1.addSelectionListener(new SelectionAdapter() {
+								public void widgetSelected(SelectionEvent evt) {
+									ToolItem item = (ToolItem)evt.getSource();
+									InsertSnippetAction iSA = new InsertSnippetAction(item.getData().toString(), shell);
+									iSA.run();
 								}
 							});
 					}
