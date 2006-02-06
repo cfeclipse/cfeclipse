@@ -2,11 +2,9 @@
 <dialog>
 
 <tab name="General">
-	
+	<field name="name"/>
 	<field name="extends"/>
-	
 	<field name="displayName"/>
-	
 	<field name="hint"/>
 	
 </tab>
