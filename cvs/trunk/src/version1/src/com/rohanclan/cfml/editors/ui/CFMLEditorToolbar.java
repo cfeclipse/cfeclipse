@@ -57,10 +57,10 @@ public class CFMLEditorToolbar {
 		
 		
 		GridLayout parentLayout = new GridLayout();
-		parentLayout.makeColumnsEqualWidth = true;
+		//parentLayout.makeColumnsEqualWidth = true;
 		parentLayout.numColumns=1;
-		parentLayout.marginLeft = 0;
-		parentLayout.marginRight = 0;
+		//parentLayout.marginLeft = 0;
+		//parentLayout.marginRight = 0;
 		
 		
 		parent.setLayout(parentLayout);
