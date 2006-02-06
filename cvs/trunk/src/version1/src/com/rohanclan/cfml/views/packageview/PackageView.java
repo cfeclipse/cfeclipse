@@ -46,7 +46,7 @@ import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
  * 
  * TODO: This PackageView will be re-modelled to display the current project's CFC's as a dot notated packages.
  * With the help of a new parser, it should be able to parse all the CFC's and give us all the methods and method signatures
- * 
+ * On Save actions should trigger this view. (or whatever action the Java perspective uses to update the Package Explorer
  */
 
 public class PackageView extends ViewPart {
@@ -71,6 +71,7 @@ public class PackageView extends ViewPart {
 	 * (like Task List, for example).
 	 */
 	 
+	
 	class NameSorter extends ViewerSorter {
 		
 		public int compare(Viewer viewer, Object e1, Object e2) {
