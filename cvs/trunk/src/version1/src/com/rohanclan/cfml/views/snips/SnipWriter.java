@@ -114,6 +114,9 @@ public class SnipWriter {
 	}
 	
 	public void writeFolder (String folderName) {
+		/**
+		 * This bit of code is throwing an exception when you first install CFE. This cases a NPE.
+		 */
 		File newFolder = new File(parentFolder.toString() + File.separator + folderName);
 		newFolder.mkdir();
 	}
