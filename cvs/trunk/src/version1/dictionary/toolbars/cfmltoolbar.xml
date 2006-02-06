@@ -85,6 +85,13 @@
 		<button name="CFSchedule" type="cftag" value="cfschedule" image="time.gif"/>
 	</tab>
 	<!--
+		Sample use of snippets
+	
+	<tab name="Snippets">
+		<button name="test" type="snippet" value="toolSnip"/>
+		<button name="testing2" type="snippet" value="toolSnip2"/>
+	</tab>
+	
 	<tab name="CFChart">
 		<button name="CFChart" type="cftag" value="cfchart"/>
 		<button name="CFChartData" type="cftag" value="cfchartdata"/>
