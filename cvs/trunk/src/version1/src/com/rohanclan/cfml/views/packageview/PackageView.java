@@ -43,6 +43,10 @@ import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
  * in order to ensure that objects of the same type are
  * presented in the same way everywhere.
  * <p>
+ * 
+ * TODO: This PackageView will be re-modelled to display the current project's CFC's as a dot notated packages.
+ * With the help of a new parser, it should be able to parse all the CFC's and give us all the methods and method signatures
+ * 
  */
 
 public class PackageView extends ViewPart {
