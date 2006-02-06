@@ -32,9 +32,11 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.CFMLPlugin;
@@ -58,7 +60,40 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 	{
 
 	}
-	
+	//used from the toolbars
+	public InsertSnippetAction(String triggerText, Shell shell){
+		SnipKeyCombos keyCombos = new SnipKeyCombos();
+		
+		editor = (ITextEditor)Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		ISelection sel = editor.getSelectionProvider().getSelection();
+		String snippet = "";
+		
+		String fileName = keyCombos.getKeyCombo(triggerText);
+		
+		
+		
+		
+		 SnipReader snipReader = new SnipReader();
+		  IFile activeFile = null;
+		  if (this.editor.getEditorInput() instanceof IFileEditorInput) {
+			 	activeFile = ((IFileEditorInput) this.editor.getEditorInput()).getFile();
+		  }
+		
+		  	
+		  
+		   snipReader.read(keyCombos.getSnippetFolder() + fileName);
+		  
+		  
+		    start = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,shell);
+	        end = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,shell);
+	   
+	  
+	        Encloser encloser = new Encloser();
+	        encloser.enclose(doc, (ITextSelection)sel, start, end);
+	        
+		   
+	}
 
 	
 	public void run()
@@ -122,6 +157,8 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    if (stringArray.length > 1) {
 			        loopcount = Integer.parseInt(stringArray[1].trim());
 			    }
+			   
+			    //Here starts the actual triggering of a snippet using the trigger text
 			    
 			    String fileName = keyCombos.getKeyCombo(trigger);
 			   
