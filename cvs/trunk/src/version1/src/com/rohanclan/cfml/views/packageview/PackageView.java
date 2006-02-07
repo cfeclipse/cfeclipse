@@ -25,6 +25,9 @@ import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 
 import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
+import com.rohanclan.cfml.views.packageview.objects.FileNode;
+import com.rohanclan.cfml.views.packageview.objects.FolderNode;
+import com.rohanclan.cfml.views.packageview.objects.TreeObject;
 
 
 /**

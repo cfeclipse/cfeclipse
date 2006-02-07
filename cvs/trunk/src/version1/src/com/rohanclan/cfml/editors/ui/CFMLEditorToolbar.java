@@ -99,6 +99,9 @@ public class CFMLEditorToolbar {
 			Node tabgroup = tabs.item(t);
 			String tabname = tabgroup.getAttributes().getNamedItem("name").getNodeValue();
 		
+			
+			//TODO: Before we add a tab, we would need to check that it has children
+			//This would help so that we have a snippets tab with no children at first.
 			CTabItem cTabItem1 = new CTabItem(cTabFolder1, SWT.FILL);
 			cTabItem1.setText(tabname);
 			

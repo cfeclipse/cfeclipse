@@ -4,16 +4,16 @@
  * To change the template for this generated file go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-package com.rohanclan.cfml.views.packageview;
+package com.rohanclan.cfml.views.packageview.objects;
 
 import org.eclipse.core.runtime.IAdaptable;
 
 
-class TreeObject implements IAdaptable {
+public class TreeObject implements IAdaptable {
 	private String name;
 	private TreeParent parent;
 	
-	protected TreeObject(String name) {
+	public TreeObject(String name) {
 		this.name = name;
 	}
 

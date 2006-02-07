@@ -16,6 +16,10 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import com.rohanclan.cfml.CFMLPlugin;
+import com.rohanclan.cfml.views.packageview.objects.FileNode;
+import com.rohanclan.cfml.views.packageview.objects.FolderNode;
+import com.rohanclan.cfml.views.packageview.objects.TreeObject;
+import com.rohanclan.cfml.views.packageview.objects.TreeParent;
 
 
 class ViewContentProvider implements IStructuredContentProvider, 
@@ -78,10 +82,18 @@ class ViewContentProvider implements IStructuredContentProvider,
 		}
 		
 		private TreeObject addResource(IResource currRes) {
-			if(currRes instanceof IFile)
-				return addFile((IFile)currRes);
-			else if(currRes instanceof IFolder)
+			if(currRes instanceof IFile){
+				String extension = ((IFile)currRes).getFileExtension();
+				if(extension.equalsIgnoreCase("cfc")){
+					return addFile((IFile)currRes);
+				}else {
+					return null;
+				}
+				
+			}
+			else if(currRes instanceof IFolder){
 				return addFolder((IFolder)currRes);
+			}
 			
 			return new TreeObject(currRes.getName());
 		}
@@ -96,7 +108,7 @@ class ViewContentProvider implements IStructuredContentProvider,
 			try {
 				IResource children[] = currProject.members();
 				for(int i = 0; i < children.length; i++) {
-					projNode.addChild(addResource(children[i]));
+						projNode.addChild(addResource(children[i]));
 				}
 			
 			} catch(CoreException ex) {

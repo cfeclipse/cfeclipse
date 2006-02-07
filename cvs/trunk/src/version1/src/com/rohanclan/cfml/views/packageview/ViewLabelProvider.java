@@ -15,6 +15,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 import com.rohanclan.cfml.util.CFPluginImages;
+import com.rohanclan.cfml.views.packageview.objects.FileNode;
+import com.rohanclan.cfml.views.packageview.objects.FolderNode;
 
 
 class ViewLabelProvider extends LabelProvider {
