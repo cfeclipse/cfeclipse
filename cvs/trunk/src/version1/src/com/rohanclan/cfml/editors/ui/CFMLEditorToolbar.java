@@ -91,7 +91,10 @@ public class CFMLEditorToolbar {
 		
 		//Create the root tabfolder
 		CTabFolder cTabFolder1 = new CTabFolder(parent, SWT.NONE);
-		
+		/*
+		 * TODO: Re-factor this as normal XML parsing (as done in the fusebox plugin)
+		 * TODO: Add Snippet type to trigger snippets
+		 */
 		NodeList tabs = toolbarXML.getElementsByTagName("tab");
 		
 		//Loop through the items making some nice tabs
