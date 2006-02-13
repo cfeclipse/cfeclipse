@@ -1127,9 +1127,9 @@
       </view>
       <view
             class="com.rohanclan.cfml.views.packageview.PackageView"
-            icon="icons/sample.gif"
+            icon="icons/obj16/cfc.gif"
             category="com.rohanclan.cfml"
-            name="Package View"
+            name="Component Explorer"
             id="com.rohanclan.cfml.views.packageview.PackageView"/>
       <view
             class="com.rohanclan.cfml.views.dictionary.DictionaryView"
