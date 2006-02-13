@@ -14,6 +14,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
+import com.rohanclan.cfml.parser.docitems.TagItem;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.packageview.objects.FileNode;
 import com.rohanclan.cfml.views.packageview.objects.FolderNode;
@@ -55,6 +56,12 @@ class ViewLabelProvider extends LabelProvider {
 		else if(obj instanceof FileNode) {
 			ImageDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getImageDescriptor(((FileNode)obj).getName());
 			return desc.createImage();
+		}
+		else if(obj instanceof TagItem){
+			return CFPluginImages.get((String)this.folderIcons.get(((FolderNode)obj).getFolderType()));
+			
+		//	return desc.createImage();
+			
 		}
 		
 		return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);

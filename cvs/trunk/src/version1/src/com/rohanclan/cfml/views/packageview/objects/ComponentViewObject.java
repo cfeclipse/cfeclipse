@@ -3,34 +3,26 @@ package com.rohanclan.cfml.views.packageview.objects;
 
 import java.util.ArrayList;
 
+import com.rohanclan.cfml.util.CFPluginImages;
+
 /**
  * @author markd
  * This is a the base class that is used to create component view objects
  * It has child nodes and parent nodes
  */
 public class ComponentViewObject {
-	private ArrayList children;
 	private ComponentViewObject parent;
+	private String name; //The name display
+	private String image = CFPluginImages.ICON_PACKAGE;
 	
-	/**
-	 * @return Returns the children.
-	 */
-	public ArrayList getChildren() {
-		return children;
+	
+	public ComponentViewObject() {
+		super();
 	}
-	/**
-	 * @param children The children to set.
-	 */
-	public void setChildren(ArrayList children) {
-		this.children = children;
+	public ComponentViewObject(String name) {
+		this.name = name;
 	}
 	
-	/**
-	 * @param child Child to add to the collection
-	 */
-	public void addChild(ComponentViewObject child){
-		children.add(child);
-	}
 	
 	/**
 	 * @return Returns the parent.
@@ -43,6 +35,22 @@ public class ComponentViewObject {
 	 */
 	public void setParent(ComponentViewObject parent) {
 		this.parent = parent;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	public String toString(){
+		return getName();
 	}
 	
 }

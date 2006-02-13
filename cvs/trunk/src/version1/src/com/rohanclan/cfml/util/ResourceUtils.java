@@ -24,8 +24,11 @@
  */
 package com.rohanclan.cfml.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -139,6 +142,26 @@ public class ResourceUtils {
         }
         return natureArray;
     }
+    /**
+     * Converts and Input Stream into a String Object (used for a number of parsers)
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    public static String getStringFromInputStream(InputStream is) throws IOException{
+		int k;
+		InputStream in = is;
+		StringBuffer stringFromIS = new StringBuffer();
+		int aBuffSize = 1123123;     		
+		
+		byte buff[] = new byte[aBuffSize]; 
+		OutputStream xOutputStream = new ByteArrayOutputStream(aBuffSize); 
+		while ( (k=in.read(buff) ) != -1){
+			xOutputStream.write(buff,0,k);
+		}
+		stringFromIS.append(xOutputStream.toString()); 
+		return stringFromIS.toString();
+	 }
 
     /**
      * Checks whether a project has the supplied nature applied to it.

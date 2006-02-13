@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 
-public class TreeParent extends TreeObject {
+public class TreeParent extends ComponentViewObject {
 	private ArrayList children;
 	
 	public TreeParent(String name) {
@@ -18,20 +18,21 @@ public class TreeParent extends TreeObject {
 		children = new ArrayList();
 	}
 	
-	public void addChild(TreeObject child) {
-	
+	public void addChild(ComponentViewObject child) {
+		if(child != null){
 			children.add(child);
 			child.setParent(this);
+		}
 	
 	}
 
-	public void removeChild(TreeObject child) {
+	public void removeChild(ComponentViewObject child) {
 		children.remove(child);
 		child.setParent(null);
 	}
 	
-	public TreeObject [] getChildren() {
-		return (TreeObject [])children.toArray(new TreeObject[children.size()]);
+	public ArrayList getChildren() {
+		return children;
 	}
 	
 	public boolean hasChildren() {

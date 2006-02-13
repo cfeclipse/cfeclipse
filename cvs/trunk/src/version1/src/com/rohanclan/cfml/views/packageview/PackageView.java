@@ -1,5 +1,8 @@
 package com.rohanclan.cfml.views.packageview;
 
+
+import org.eclipse.core.internal.resources.ProjectContentTypes;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -15,7 +18,13 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
@@ -24,7 +33,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
+import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.packageview.objects.FileNode;
 import com.rohanclan.cfml.views.packageview.objects.FolderNode;
 import com.rohanclan.cfml.views.packageview.objects.TreeObject;
@@ -54,10 +65,12 @@ import com.rohanclan.cfml.views.packageview.objects.TreeObject;
 
 public class PackageView extends ViewPart {
 	private TreeViewer viewer;
+	private Combo projcombo;
 	private DrillDownAdapter drillDownAdapter;
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
+	private Action refresh;
 	
 	private Action makeFolderWWWRoot;
 	private Action makeFolderCFCRoot;
@@ -99,9 +112,43 @@ public class PackageView extends ViewPart {
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
+	
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 3;
+		layout.verticalSpacing = 2;
+		layout.marginWidth = 0;
+		layout.marginHeight = 2;
+		parent.setLayout(layout);
+		
+		Label projlabel = new Label(parent, SWT.HORIZONTAL);
+		projlabel.setText("Project:");
+		
+		projcombo = new Combo(parent, SWT.DROP_DOWN | SWT.READ_ONLY);
+		GridData layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		projcombo.setLayoutData(layoutData);
+		
+		//Set the contents of the project list
+		IProject[] projects = CFMLPlugin.getWorkspace().getRoot().getProjects();
+		for(int i = 0; i < projects.length;i++){
+			if(projects[i].isOpen()){
+				projcombo.add(projects[i].getName());
+			}
+		}
+		projcombo.select(0);
+		projcombo.setToolTipText("Select a project to view the components");
+		
+		layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		layoutData.grabExcessVerticalSpace = true;
+		layoutData.horizontalSpan = 3;
+		layoutData.horizontalAlignment = GridData.FILL;
+		layoutData.verticalAlignment = GridData.FILL;
+		
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		drillDownAdapter = new DrillDownAdapter(viewer);
-		viewer.setContentProvider(new ViewContentProvider());
+		viewer.getControl().setLayoutData(layoutData);
+		viewer.setContentProvider(new ViewContentProvider(projcombo.getText()));
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
@@ -109,9 +156,28 @@ public class PackageView extends ViewPart {
 		hookContextMenu();
 		hookDoubleClickAction();
 		contributeToActionBars();
+		hookListeners();
 		
 	}
 
+	
+	private void hookListeners(){
+		projcombo.addSelectionListener(
+		  new SelectionAdapter()
+		  {
+		    public void widgetSelected(SelectionEvent e)
+		    {
+		      projcombo.getText();
+		      refresh.run();
+		      viewer.expandToLevel(2);
+		    }
+		  }
+		 );
+		
+		
+	}
+	
+	
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -152,13 +218,24 @@ public class PackageView extends ViewPart {
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action1);
-		manager.add(action2);
+		manager.add(refresh);
+		//manager.add(action2);
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 	}
 
 	private void initMakeActions() {
+		refresh = new Action() {
+			public void run() {
+			   ViewContentProvider contentprovider = new ViewContentProvider(projcombo.getText());
+				
+				viewer.setContentProvider(contentprovider);
+			}
+		};
+		refresh.setText("Refresh View");
+		refresh.setToolTipText("Refresh the Component Tree");
+		refresh.setImageDescriptor( CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH));
+		/*
 		this.makeFolderCF_Root = new Action() {
 			public void run() {
 				setFolderType(FolderTypes.CF_ROOT);
@@ -190,6 +267,7 @@ public class PackageView extends ViewPart {
 		};		
 		this.makeFolderWWWRoot.setText("Make webserver root folder");
 		this.makeFolderWWWRoot.setToolTipText("Make webserver root folder");
+		*/
 	}
 	
 	/**
@@ -214,7 +292,7 @@ public class PackageView extends ViewPart {
 		
 		return selecteditem;
 	}	
-	
+	/*
 	protected void setFolderType(String folderType) {
 		TreeObject selectedItem = getSelectedDocItem();
 		
@@ -228,7 +306,7 @@ public class PackageView extends ViewPart {
 		viewer.update(selectedItem, null);
 		
 	}
-	
+	*/
 	private void initActions() {
 		initMakeActions();
 		action1 = new Action() {

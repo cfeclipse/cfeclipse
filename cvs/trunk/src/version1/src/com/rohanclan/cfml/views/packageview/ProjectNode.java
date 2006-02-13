@@ -19,7 +19,6 @@ import com.rohanclan.cfml.views.packageview.objects.TreeParent;
  */
 public class ProjectNode extends TreeParent
 {
-
 	IProject srcProject;
 	
 	public ProjectNode(IProject prj) {
