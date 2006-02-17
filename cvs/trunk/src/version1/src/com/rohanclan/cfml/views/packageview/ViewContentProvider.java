@@ -62,14 +62,17 @@ class ViewContentProvider implements IStructuredContentProvider,
 		}
 		public Object [] getChildren(Object parent) {
 			
-			return ((ComponentViewObject)parent).getChildren().toArray();
+			return ((IComponentViewObject)parent).getChildren().toArray();
 		}
 
 		/* (non-Javadoc)
 		 * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.Object)
 		 */
 		public boolean hasChildren(Object parent) {
-			return ((ComponentViewObject)parent).hasChildren();
+			if(parent != null){
+			return ((IComponentViewObject)parent).hasChildren();
+			}
+			return false;
 		}
 		
 		

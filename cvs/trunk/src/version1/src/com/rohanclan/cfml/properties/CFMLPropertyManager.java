@@ -76,6 +76,7 @@ public class CFMLPropertyManager {
 		return store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
 	}
 	
+
 	public String defaultSnippetsPath() {
 		return preferenceManager.snippetsPath();
 	}
@@ -109,4 +110,17 @@ public class CFMLPropertyManager {
 			System.err.println("Failed to save property store " + e.getMessage());
 		}
 	}
+	
+	public void setComponentRoot(String root){
+		store.setValue("componentRoot", root);
+		try{
+			store.save();
+		}
+		catch (IOException e) {
+			System.err.println("Failed to save property store " + e.getMessage());
+		}
+	
+	}
+	
+	
 }

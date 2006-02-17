@@ -34,10 +34,12 @@ public class ProjectPropertyPage extends PropertyPage {
 	private static final String CFML_DICTIONARY_TITLE = "&CFML Language Version";
 
 	//private static final int TEXT_FIELD_WIDTH = 50;
-
+	private static final String PROJECT_COMPONENT_ROOT_PROP = "componentRoot";
+	private static final String PROJECT_COMPONENT_ROOT = "Component Root:";
 	
 	private DirectoryFieldEditor snippetsPathField;
 	private StringFieldEditor projectURLField;
+	private StringFieldEditor projectComponentRootField;
 	private CFMLPropertyManager propertyManager;
 	private RadioGroupFieldEditor cfmlSyntaxField;
 
@@ -81,6 +83,25 @@ public class ProjectPropertyPage extends PropertyPage {
 		separator.setLayoutData(gridData);
 	}
 
+	private void addComponentRootSection(Composite parent){
+		Composite composite = createDefaultComposite(parent);
+		//PROJECT_COMPONENT_ROOT_PROP
+		projectComponentRootField = new StringFieldEditor(PROJECT_COMPONENT_ROOT_PROP,PROJECT_COMPONENT_ROOT,composite);
+		
+		try {
+			QualifiedName propertyName = new QualifiedName("", PROJECT_COMPONENT_ROOT_PROP);
+			String componentRoot = ((IResource)getElement()).getPersistentProperty(propertyName);
+			if(componentRoot == null || componentRoot == ""){
+				componentRoot = ((IResource) getElement()).getName();
+			}
+			projectComponentRootField.setStringValue(componentRoot);
+		} catch (CoreException e) {
+			projectComponentRootField.setStringValue(((IResource) getElement()).getName());
+		}
+		
+		
+	}
+	
 	private void addSnippetsSection(Composite parent) {
 		Composite composite = createDefaultComposite(parent);
 		snippetsPathField = new DirectoryFieldEditor("", "Path to snippets directory", composite);
@@ -158,6 +179,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		addSeparator(composite);
 		addSnippetsSection(composite);
 		addURLSection(composite);
+		addComponentRootSection(composite);
 		addCFMLSyntaxSection(composite);
 		return composite;
 	}
@@ -181,6 +203,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		// Populate the owner text field with the default value
 		snippetsPathField.setStringValue(DEFAULT_SNIPPETS_PATH);
 		projectURLField.setStringValue(DEFAULT_PROJECT_URL);
+		projectComponentRootField.setStringValue(((IResource) getElement()).getName());
 		this.cfmlSyntaxField.loadDefault();
 	}
 	
@@ -207,6 +230,17 @@ public class ProjectPropertyPage extends PropertyPage {
 			propertyManager.setProjectURL(projectURLField.getStringValue());
 		} catch (CoreException e) {
 			//e.printStackTrace(System.err);
+			return false;
+		}
+		
+		//Component Root
+		try {
+			((IResource)getElement()).setPersistentProperty(
+					new QualifiedName("",PROJECT_COMPONENT_ROOT_PROP),
+					projectComponentRootField.getStringValue()
+					);
+			propertyManager.setComponentRoot(projectComponentRootField.getStringValue());
+		} catch (CoreException e) {
 			return false;
 		}
 		

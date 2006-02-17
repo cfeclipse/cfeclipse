@@ -18,7 +18,7 @@ public class TreeParent extends ComponentViewObject {
 		children = new ArrayList();
 	}
 	
-	public void addChild(ComponentViewObject child) {
+	public void addChild(IComponentViewObject child) {
 		if(child != null){
 			children.add(child);
 			child.setParent(this);
@@ -26,7 +26,7 @@ public class TreeParent extends ComponentViewObject {
 	
 	}
 
-	public void removeChild(ComponentViewObject child) {
+	public void removeChild(IComponentViewObject child) {
 		children.remove(child);
 		child.setParent(null);
 	}

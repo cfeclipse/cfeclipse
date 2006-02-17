@@ -16,8 +16,8 @@ import org.eclipse.ui.PlatformUI;
 
 import com.rohanclan.cfml.parser.docitems.TagItem;
 import com.rohanclan.cfml.util.CFPluginImages;
-import com.rohanclan.cfml.views.packageview.objects.FileNode;
-import com.rohanclan.cfml.views.packageview.objects.FolderNode;
+import com.rohanclan.cfml.views.packageview.objects.*;
+
 
 
 class ViewLabelProvider extends LabelProvider {
@@ -37,33 +37,10 @@ class ViewLabelProvider extends LabelProvider {
 	}
 	public Image getImage(Object obj) {
 		String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-		if(obj instanceof ProjectNode) {
-			if(((ProjectNode)obj).getProject().isOpen()) {
-				imageKey = org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT;
-			}
-			else
-				imageKey = org.eclipse.ui.ide.IDE.SharedImages.IMG_OBJ_PROJECT_CLOSED;
+		if (obj instanceof IComponentViewObject){
+			imageKey = ((IComponentViewObject)obj).getImage();
+			return CFPluginImages.get(imageKey);
 		}
-		else if(obj instanceof FolderNode) {
-			FolderNode fNode = (FolderNode)obj;
-			
-			if(this.folderIcons.containsKey(((FolderNode)obj).getFolderType())) {
-				return CFPluginImages.get((String)this.folderIcons.get(((FolderNode)obj).getFolderType()));
-			}
-
-			imageKey = ISharedImages.IMG_OBJ_FOLDER;
-		}
-		else if(obj instanceof FileNode) {
-			ImageDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry().getImageDescriptor(((FileNode)obj).getName());
-			return desc.createImage();
-		}
-		else if(obj instanceof TagItem){
-			return CFPluginImages.get((String)this.folderIcons.get(((FolderNode)obj).getFolderType()));
-			
-		//	return desc.createImage();
-			
-		}
-		
 		return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
 	}
 }

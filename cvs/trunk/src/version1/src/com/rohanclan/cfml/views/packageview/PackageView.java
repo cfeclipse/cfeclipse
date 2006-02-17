@@ -37,7 +37,6 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.actions.GenericOpenFileAction;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.packageview.objects.FileNode;
-import com.rohanclan.cfml.views.packageview.objects.FolderNode;
 import com.rohanclan.cfml.views.packageview.objects.TreeObject;
 
 
@@ -91,12 +90,12 @@ public class PackageView extends ViewPart {
 	class NameSorter extends ViewerSorter {
 		
 		public int compare(Viewer viewer, Object e1, Object e2) {
-			if(e1 instanceof FolderNode && !(e2 instanceof FolderNode)) {
+			/*if(e1 instanceof FolderNode && !(e2 instanceof FolderNode)) {
 				return -1;
 			}
 			else if(e2 instanceof FolderNode && !(e1 instanceof FolderNode)) {
 				return 1;
-			}
+			}*/
 			return super.compare(viewer, e1, e2);
 		}
 }

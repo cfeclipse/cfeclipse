@@ -81,6 +81,7 @@ public class CFPluginImages {
 	public static final String ICON_PARAM_DARK    = "param_dark.gif";
 	/** the package icon (the little gift wrapped thing */
 	public static final String ICON_PACKAGE = "package.gif";
+	public static final String ICON_PACKAGE_OFF = "package_off.gif";
 	/** generic value icon the three bars with the arrow */
 	public static final String ICON_VALUE	= "value.gif";
 	/** generic class icon the rounded C */
@@ -268,6 +269,7 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_TEMPLATE_SNIP);
 			addImageToRegistry(MODEL_OBJECTS,ICON_DW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE_OFF);
 			addImageToRegistry(MODEL_OBJECTS,ICON_VALUE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_CLASS);
 			addImageToRegistry(MODEL_OBJECTS,ICON_TABLE);
