@@ -1,10 +1,20 @@
 package com.rohanclan.cfml.views.packageview.objects;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.w3c.dom.NodeList;
 
+import com.rohanclan.cfml.parser.CFDocument;
+import com.rohanclan.cfml.parser.CFNodeList;
+import com.rohanclan.cfml.parser.CFParser;
+import com.rohanclan.cfml.parser.docitems.DocItem;
+import com.rohanclan.cfml.parser.docitems.TagItem;
 import com.rohanclan.cfml.util.CFPluginImages;
+import com.rohanclan.cfml.util.ResourceUtils;
 
 /**
  * @author mark
@@ -22,8 +32,42 @@ public class ComponentNode implements IComponentViewObject {
 		this.file = cfcfile;
 		this.name = cfcfile.getName();
 		this.children = new ArrayList();
+		initFunctions(cfcfile);
 	}
 	
+	private void initFunctions(IFile cfcfile){
+		//This parses the file and adds a  new node as a child
+		
+		String inputString = "";
+		try {
+			inputString  =ResourceUtils.getStringFromInputStream(cfcfile.getContents());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		CFParser parser = new CFParser();
+		CFDocument doc = parser.parseDoc(inputString);
+		
+		//Now we just want to add the nodes!
+		DocItem docroot = doc.getDocumentRoot();
+		CFNodeList nodes;
+		nodes = docroot.selectNodes("//cffunction");
+		Iterator iter = nodes.iterator();
+		while(iter.hasNext()){
+			TagItem thisTag = (TagItem)iter.next();
+			FunctionNode funcnode = new FunctionNode(thisTag); 
+			children.add(funcnode);
+			
+		}
+		//Iterate over the nodes
+		
+		
+		System.out.println(this);
+		
+	}
 	public ComponentNode(String name) {
 		this.name = name;
 	}
