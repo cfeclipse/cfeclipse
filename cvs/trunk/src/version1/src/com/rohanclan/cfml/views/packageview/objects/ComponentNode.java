@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.w3c.dom.NodeList;
 
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFNodeList;
@@ -27,10 +26,11 @@ public class ComponentNode implements IComponentViewObject {
 	private ArrayList children; //functions in this Component
 	private String image = CFPluginImages.ICON_CLASS;
 	private IComponentViewObject parent;
+	private String extendDetails;
 	
 	public ComponentNode(IFile cfcfile){
 		this.file = cfcfile;
-		this.name = cfcfile.getName();
+		this.name = cfcfile.getName().replaceAll("." + cfcfile.getFileExtension(), "");
 		this.children = new ArrayList();
 		initFunctions(cfcfile);
 	}
@@ -59,6 +59,7 @@ public class ComponentNode implements IComponentViewObject {
 		while(iter.hasNext()){
 			TagItem thisTag = (TagItem)iter.next();
 			FunctionNode funcnode = new FunctionNode(thisTag); 
+			funcnode.setParent(this);
 			children.add(funcnode);
 			
 		}
@@ -104,7 +105,8 @@ public class ComponentNode implements IComponentViewObject {
 	}
 	
 	public boolean hasChildren(){
-		return false;
+		
+		return this.children.size()>0;
 	}
 	
 	public String toString(){
@@ -147,5 +149,23 @@ public class ComponentNode implements IComponentViewObject {
 	public String getPackageName() {
 		String packageName = this.parent.getPackageName() + "." + getName();
 		return packageName;
+	}
+	
+	public String getCreateObjectSnippet(){
+		String snippet =  "CreateObject(\"component\", \""+ getPackageName() +"\")";
+		return snippet;
+		
+	}
+	
+	public String getDetails(){
+		String details = "Details for " + toString() +"\n\n";
+		details += "\nName: " + getPackageName();
+		details += "\nPath: " + this.file.getFullPath();
+		//details += "\nExtends: ";
+		
+
+		
+		return details;
+		
 	}
 }

@@ -25,8 +25,12 @@
 package com.rohanclan.cfml.views.packageview.objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import com.rohanclan.cfml.parser.CFNodeList;
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.TagItem;
+import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
  * @author markd
@@ -35,62 +39,162 @@ import com.rohanclan.cfml.parser.docitems.TagItem;
 public class FunctionNode implements IComponentViewObject{
 	private ArrayList children;
 	private TagItem functionTag;
+	private String functionName;
+	private String accessType = "public";
+	private IComponentViewObject parent;
+	
+	//Images for this item
+	private String imgRemote = CFPluginImages.ICON_METHOD_REMOTE;
+	private String imgPublic = CFPluginImages.ICON_METHOD_PUBLIC;
+	private String imgPackage = CFPluginImages.ICON_METHOD_PACKAGE;
+	private String imgPrivate = CFPluginImages.ICON_METHOD_PRIVATE;
+	
+	
 	
 	
 	public FunctionNode(TagItem function){
 		this.functionTag = function;
-		
-		
+		this.functionName = this.functionTag.getAttributeValue("name");
+		this.accessType = function.getAttributeValue("access");
+		this.children = new ArrayList();
+		initAttributes(function);
 	}
 	
+	private void initAttributes(TagItem function){
+		CFNodeList args = function.selectNodes("//cfargument");
+		Iterator argiter = args.iterator();
+		while(argiter.hasNext()){
+			CfmlTagItem argTag = (CfmlTagItem) argiter.next();
+			ArgumentNode argNode = new ArgumentNode(argTag);
+			argNode.setParent(this);
+			this.children.add(argNode);
+		}
+	}
 	
 	public ArrayList getChildren() {
 		return children;
 	}
 
 	public String getImage() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//here we decide which image we return
+		 if (accessType.toLowerCase().equals("private")){
+			return imgPrivate;
+		}
+		else if (accessType.toLowerCase().equals("package")){
+			return imgPackage;
+		}
+		else if(accessType.toLowerCase().equals("remote")){
+			return imgRemote;
+		}
+		else if (accessType.toLowerCase().equals("public")){
+				return imgPublic;
+		}
+		 //Some error
+		return CFPluginImages.ICON_ALERT;
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.functionName;
 	}
 
 	public String getPackageName() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent.getPackageName();
 	}
 
 	public IComponentViewObject getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.parent;
 	}
 
 	public boolean hasChildren() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.children.size()>0;
 	}
 
 	public void setChildren(ArrayList children) {
-		// TODO Auto-generated method stub
-		
+		this.children = children;
 	}
 
 	public void setImage(String image) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
+		this.functionName = name;
 	}
 
 	public void setParent(IComponentViewObject parent) {
-		// TODO Auto-generated method stub
+		this.parent = parent;
+	}
+	public String toString(){
+		String functionNameString = this.functionName + "(";
+		for(int i = 0; i < this.children.size(); i++){
+			functionNameString += ((ArgumentNode)this.children.get(i)).getName();
+			if((i+1) < this.children.size()){
+				functionNameString += ",";
+			}
+		}
+		functionNameString += ")";
+		return functionNameString;
+	}
+	
+	/**
+	 * This function returns the string creates a cfinvoke item
+	 * 	<cfinvoke 
+		 component="ggcc7.controller.mailer"
+		 method="ExistsInCache"
+		 returnvariable="ExistsInCacheRet">
+			<cfinvokeargument name="name" value="enter_value_here"/>
+		</cfinvoke>
+	 * @return
+	 */
+	public String getInvokeSnippet(){
+		String snippet = "<cfinvoke component=\"" + getPackageName() + "\" \n";
+			  snippet += "\tmethod=\"" + getName() +"\" \n";
+			  snippet += "\treturnvariable=\"ret" + getName() +"\"> \n";
+		//Loop through the arguments
+			  for(int i = 0; i < this.children.size(); i++){
+				  snippet += "\t\t<cfinvokeargument name=\"" + ((ArgumentNode)this.children.get(i)).getName()  +"\" value=\"enter_value_here\"/>\n";
+				}
+			  snippet += "</cfinvoke>";
+		return snippet;
+	}
+	
+	public String getCreateObjectSnippet(){
+		String snippet = "CreateObject(\"component\", \""+ getPackageName() +"\")." + getName() + "(";
+		for(int i = 0; i < this.children.size(); i++){
+			  snippet += ((ArgumentNode)this.children.get(i)).getName();
+			  if((i+1) < this.children.size()){
+				  snippet+=", ";
+			  }
+			}
+		snippet += ")";
 		
+		return snippet;
+		
+	}
+	
+	public String getDetails(){
+		String details = "Details for " + toString() +"\n\n";
+		details += "\nName: " + getName();
+		details += "\nAccess: " + this.accessType;
+		details += "\nReturn Type: " + this.functionTag.getAttributeValue("returntype");
+		details += "\nOutput Allowed: " + this.functionTag.getAttributeValue("output"); 
+		details += "\nRoles: " + this.functionTag.getAttributeValue("roles"); 
+		/*
+		 Details for return funcname(attribs)
+		 
+		 Name: name
+		 Access: acces
+		 Return Type:
+		 Output Allowed:
+		 Roles: 
+		 
+		 Implemented in
+		 Inherited: 
+		  
+		 */	
+			
+		return details;
 	}
 
 }
