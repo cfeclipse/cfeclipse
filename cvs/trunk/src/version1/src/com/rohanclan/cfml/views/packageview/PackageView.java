@@ -404,9 +404,8 @@ public class PackageView extends ViewPart {
 				try {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-					String rootURL = "";
-					//	= propMan.projectURL();
-					//We could use some URL thingy?
+					String rootURL = propMan.projectURL();
+					
 					URL projURL = new URL(rootURL);
 					
 					 browser.setUrl("http://" + projURL.getHost() + "/CFIDE/componentutils/cfcexplorer.cfc?METHOD=getcfcinhtml&NAME=" + obj.getPackageName());
