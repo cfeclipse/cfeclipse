@@ -5,28 +5,15 @@
  */
 package com.rohanclan.cfml.views.packageview;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import com.rohanclan.cfml.CFMLPlugin;
-import com.rohanclan.cfml.parser.CFDocument;
-import com.rohanclan.cfml.parser.CFNodeList;
-import com.rohanclan.cfml.parser.CFParser;
-import com.rohanclan.cfml.parser.docitems.DocItem;
-import com.rohanclan.cfml.parser.docitems.TagItem;
-import com.rohanclan.cfml.util.ResourceUtils;
-import com.rohanclan.cfml.views.packageview.objects.*;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
+import com.rohanclan.cfml.views.packageview.objects.IComponentViewObject;
+import com.rohanclan.cfml.views.packageview.objects.ProjectNode;
+import com.rohanclan.cfml.views.packageview.objects.RootNode;
 
 
 
