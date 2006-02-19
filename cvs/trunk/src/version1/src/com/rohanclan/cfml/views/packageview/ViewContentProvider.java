@@ -32,7 +32,7 @@ import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 class ViewContentProvider implements IStructuredContentProvider, 
 										   ITreeContentProvider {
-		private TreeParent invisibleRoot;
+		private RootNode invisibleRoot;
 		private String project;	
 		
 		public ViewContentProvider(String project){
@@ -55,8 +55,8 @@ class ViewContentProvider implements IStructuredContentProvider,
 			//return getChildren(parent);
 		}
 		public Object getParent(Object child) {
-			if (child instanceof TreeObject) {
-				return ((TreeObject)child).getParent();
+			if (child instanceof IComponentViewObject) {
+				return ((IComponentViewObject)child).getParent();
 			}
 			return null;
 		}
@@ -80,7 +80,7 @@ class ViewContentProvider implements IStructuredContentProvider,
 		 * 1. This is where we add the root.
 		 */
 		private void initialize() {
-			invisibleRoot = new TreeParent("");
+			invisibleRoot = new RootNode();
 			
 			IProject project = CFMLPlugin.getWorkspace().getRoot().getProject(this.project);
 			
