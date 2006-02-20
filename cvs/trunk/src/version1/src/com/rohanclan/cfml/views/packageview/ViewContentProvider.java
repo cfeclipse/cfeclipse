@@ -84,6 +84,14 @@ class ViewContentProvider implements IStructuredContentProvider,
 			*/
 		}
 
+		public String getProject() {
+			return project;
+		}
+
+		public void setProject(String project) {
+			this.project = project;
+		}
+
 	
 		
 		

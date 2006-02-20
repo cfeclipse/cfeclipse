@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 
@@ -27,10 +28,12 @@ public class ComponentNode implements IComponentViewObject {
 	private String image = CFPluginImages.ICON_CLASS;
 	private IComponentViewObject parent;
 	private String extendDetails;
+	private long modStamp;
 	
 	public ComponentNode(IFile cfcfile){
 		this.file = cfcfile;
 		this.name = cfcfile.getName().replaceAll("." + cfcfile.getFileExtension(), "");
+		this.modStamp = ((File)cfcfile).getModificationStamp();
 		this.children = new ArrayList();
 		initFunctions(cfcfile);
 	}

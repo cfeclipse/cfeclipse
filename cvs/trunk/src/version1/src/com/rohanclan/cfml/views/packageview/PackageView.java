@@ -189,9 +189,11 @@ public class PackageView extends ViewPart {
 		  {
 		    public void widgetSelected(SelectionEvent e)
 		    {
-		      projcombo.getText();
-		      refresh.run();
-		      viewer.expandToLevel(2);
+		    	if(!((ViewContentProvider)viewer.getContentProvider()).getProject().equals(projcombo.getText())){
+			      projcombo.getText();
+			      refresh.run();
+			      viewer.expandToLevel(2);
+			    }
 		    }
 		  }
 		 );
