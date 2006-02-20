@@ -689,9 +689,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.CFComment"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+M">
+            keySequence="M1+M2+M">
       </keyBinding>
 	<!-- comment based on section (i.e. js comments in js blocks, etc) -->
       <command
@@ -702,9 +702,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.AutoComment"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+C">
+            keySequence="M1+M2+C">
       </keyBinding>
 	<!-- enclose in pound ... er ... hash signs -->
       <command
@@ -715,9 +715,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.CFVariable"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+3">
+            keySequence="M1+3">
       </keyBinding>
 	<!-- enclose in single quotes -->
       <command
@@ -728,9 +728,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.CFSingleQuote"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+&apos;">
+            keySequence="M1+&apos;">
       </keyBinding>
 	<!-- enclose in double quotes -->
       <command
@@ -741,9 +741,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+&apos;">
+            keySequence="M1+M2+&apos;">
       </keyBinding>
 	<!-- enclose in cfoutputs -->
       <command
@@ -754,9 +754,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.CFOutput"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+O">
+            keySequence="M1+M2+O">
       </keyBinding>
 	<!-- enclose in cfdump -->
       <command
@@ -767,9 +767,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.CFDump"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+D">
+            keySequence="M1+M2+D">
       </keyBinding>
 	<!-- enclose in cfscript -->
       <command
@@ -780,9 +780,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.CFScript"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+R">
+            keySequence="M1+M2+R">
       </keyBinding>
 	<!-- to lower case -->
       <command
@@ -793,9 +793,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.ToLowerCase"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+L">
+            keySequence="M1+M2+L">
       </keyBinding>
 	<!-- to upper case -->
       <command
@@ -806,9 +806,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.ToUpperCase"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+U">
+            keySequence="M1+M2+U">
       </keyBinding>
       <!-- Insert Color -->
       <command
@@ -819,9 +819,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.InsertColor"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+Z">
+            keySequence="M1+M2t+Z">
       </keyBinding>
       
 	<!-- insert date -->
@@ -840,9 +840,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.InsertBR"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Enter">
+            keySequence="M1+Enter">
       </keyBinding>
       <!-- insert an html nbsp action (for Michael Wolfe) -->
       <command
@@ -853,9 +853,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.InsertNBSP"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+space">
+            keySequence="M1+M2+space">
       </keyBinding>
       <!-- insert an html p action (for Michael Wolfe) -->
       <command
@@ -866,9 +866,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.PTag"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+P">
+            keySequence="M1+M2+P">
       </keyBinding>
       <!-- insert an html strong action (for Brian Sadler) -->
       <command
@@ -879,9 +879,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.StrongTag"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+B">
+            keySequence="M1+B">
       </keyBinding>
       <!-- insert an html em action (for Brian Sadler) -->
       <command
@@ -892,9 +892,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.EmTag"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+I">
+            keySequence="M1+I">
       </keyBinding>
       <!-- Reload the syntax dictionaries -->
       <command
@@ -905,9 +905,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+F5">
+            keySequence="M1+F5">
       </keyBinding>
       <!-- refresh the browser -->
       <command
@@ -918,7 +918,7 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.RefreshBrowser"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="F5">
       </keyBinding>
@@ -931,9 +931,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+F5">
+            keySequence="M1+M2+F5">
       </keyBinding>
       <!-- browse to current page -->
       <command
@@ -944,9 +944,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Shift+F5">
+            keySequence="M2+F5">
       </keyBinding>
       <!-- insert a snippet -->
       <command
@@ -957,9 +957,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.InsertSnippet"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Shift+.">
+            keySequence="M1+j">
       </keyBinding>
       <!-- repeat last tag -->
       <command
@@ -970,9 +970,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.LastAction"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+Q">
+            keySequence="M1+Q">
       </keyBinding>
       <!-- jump to matching tag -->
       <command
@@ -983,9 +983,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+M">
+            keySequence="M1+M">
       </keyBinding>
       <!-- Go and Get Help -->
       <command
@@ -996,7 +996,7 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.GetHelp"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="F1">
       </keyBinding>
@@ -1008,9 +1008,10 @@
             id="com.rohanclan.cfml.editors.actions.LoadScribblePad">
       </command>
       <keyBinding
-            keySequence="F8"
             commandId="com.rohanclan.cfml.editors.actions.LoadScribblePad"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="F8">
       </keyBinding>
 	<!-- this will toggle the expand/collapse state of  the selected block -->
       <command
@@ -1021,9 +1022,9 @@
       </command>
       <keyBinding
             commandId="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="Ctrl+\">
+            keySequence="M1+\">
       </keyBinding>
 	<!-- This will expand selected block -->
       <command
@@ -1033,8 +1034,8 @@
             id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
       </command>
       <keyBinding
-            keySequence="Ctrl++"
-            contextId="org.eclipse.ui.textEditorScope"
+            keySequence="M1++"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             commandId="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
@@ -1046,8 +1047,8 @@
             id="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection">
       </command>
       <keyBinding
-            keySequence="Ctrl+-"
-            contextId="org.eclipse.ui.textEditorScope"
+            keySequence="M1+-"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             commandId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
@@ -1061,7 +1062,7 @@
       </command>
       <keyBinding
             keySequence="F12"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             commandId="com.rohanclan.cfml.editors.actions.ExternalBrowserActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding> 
@@ -1074,8 +1075,8 @@
             id="com.rohanclan.cfml.editors.actions.NewFileActionID">
       </command>
       <keyBinding
-            keySequence="Ctrl+Shift+N"
-            contextId="org.eclipse.ui.textEditorScope"
+            keySequence="M1+n"
+            contextId="com.rohanclan.cfml.cfmleditorcontext"
             commandId="com.rohanclan.cfml.editors.actions.NewFileActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
@@ -1472,4 +1473,11 @@
             <perspectiveShortcut id="com.rohanclan.cfml.perspective.CFML"/>
         </perspectiveExtension>
   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="com.rohanclan.cfml.cfmleditorcontext"
+            name="CFML Editor context"
+            parentId="org.eclipse.ui.textEditorScope"/>
+   </extension>
 </plugin>

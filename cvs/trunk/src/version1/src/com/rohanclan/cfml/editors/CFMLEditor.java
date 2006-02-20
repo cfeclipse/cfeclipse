@@ -77,6 +77,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.part.FileEditorInput;
@@ -116,6 +117,7 @@ import com.rohanclan.cfml.util.CFDocUtils;
 import com.rohanclan.cfml.util.CFPluginImages;
 import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
 
+
 /**
  * @author Rob
  * 
@@ -130,6 +132,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
     //private static final Logger logger = Logger.getLogger(CFMLEditor.class);
     //private final boolean DEBUG = DebugSettings.EDITORS;
     
+	public static final String EDITOR_CONTEXT = "com.rohanclan.cfml.cfmleditorcontext";
+	
 	protected ColorManager colorManager;
 
 	protected CFConfiguration configuration;
@@ -258,6 +262,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		}
 		
 		super.createPartControl(parent);
+		IKeyBindingService service = this.getSite().getKeyBindingService();
+		service.setScopes(new String[]{EDITOR_CONTEXT});
 		this.setBackgroundColor();
 		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
 
