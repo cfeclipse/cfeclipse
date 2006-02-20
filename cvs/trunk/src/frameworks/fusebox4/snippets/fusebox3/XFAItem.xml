@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>XFAItem</name>
+<help>Inserts an XFA</help>
+<starttext><![CDATA[#XFA.$${XFA}]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

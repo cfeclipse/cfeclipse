@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>fuseaction</name>
+<help>Adds a fuseaction/case statement</help>
+<starttext><![CDATA[<!--- $${fuseaction description} --->
+<cfcase value="$${fuseaction}">
+]]></starttext>
+<endtext><![CDATA[</cfcase>]]></endtext>
+</snippet>
