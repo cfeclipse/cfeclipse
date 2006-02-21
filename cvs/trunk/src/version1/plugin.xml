@@ -821,7 +821,7 @@
             commandId="com.rohanclan.cfml.editors.actions.InsertColor"
             contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2t+Z">
+            keySequence="M1+M2+Z">
       </keyBinding>
       
 	<!-- insert date -->
