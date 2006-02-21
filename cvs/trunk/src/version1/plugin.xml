@@ -855,7 +855,7 @@
             commandId="com.rohanclan.cfml.editors.actions.InsertNBSP"
             contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+space">
+            keySequence="M1+M2+Space">
       </keyBinding>
       <!-- insert an html p action (for Michael Wolfe) -->
       <command
@@ -959,7 +959,7 @@
             commandId="com.rohanclan.cfml.editors.actions.InsertSnippet"
             contextId="com.rohanclan.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+j">
+            keySequence="M1+J">
       </keyBinding>
       <!-- repeat last tag -->
       <command
@@ -1075,7 +1075,7 @@
             id="com.rohanclan.cfml.editors.actions.NewFileActionID">
       </command>
       <keyBinding
-            keySequence="M1+n"
+            keySequence="M1+N"
             contextId="com.rohanclan.cfml.cfmleditorcontext"
             commandId="com.rohanclan.cfml.editors.actions.NewFileActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
