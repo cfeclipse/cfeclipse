@@ -138,9 +138,19 @@ public class TagItem extends DocItem {
 	 * @return the string value of the attribute if it exists; if not, null. 
 	 */
 	public String getAttributeValue(String attrName) {
+		return getAttributeValue(attrName, null);		
+	}
+	
+	/**
+	 * Gets the string-based value of an attribute
+	 * @param attrName
+	 * @param defaultValue
+	 * @return the string value of the attribute if it exists; if not, the default value passed in. 
+	 */
+	public String getAttributeValue(String attrName, String defaultValue) {
 		AttributeItem attr = this.getAttributeObj(attrName);
 		if(attr == null) {
-			return null;
+			return defaultValue;
 		}
 		return attr.getValue();		
 	}

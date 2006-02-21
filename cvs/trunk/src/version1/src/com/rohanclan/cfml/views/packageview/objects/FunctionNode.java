@@ -55,7 +55,7 @@ public class FunctionNode implements IComponentViewObject{
 	public FunctionNode(TagItem function){
 		this.functionTag = function;
 		this.functionName = this.functionTag.getAttributeValue("name");
-		this.accessType = function.getAttributeValue("access");
+		this.accessType = function.getAttributeValue("access", "public");
 		this.children = new ArrayList();
 		initAttributes(function);
 	}
@@ -177,7 +177,7 @@ public class FunctionNode implements IComponentViewObject{
 		String details = "Details for " + toString() +"\n\n";
 		details += "\nName: " + getName();
 		details += "\nAccess: " + this.accessType;
-		details += "\nReturn Type: " + this.functionTag.getAttributeValue("returntype");
+		details += "\nReturn Type: " + this.functionTag.getAttributeValue("returntype", "any");
 		details += "\nOutput Allowed: " + this.functionTag.getAttributeValue("output"); 
 		details += "\nRoles: " + this.functionTag.getAttributeValue("roles"); 
 		/*

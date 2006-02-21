@@ -43,7 +43,7 @@ public class PackageNode implements IComponentViewObject{
 					else if(children[i] instanceof IFile){
 						IFile file = (IFile)children[i];
 						System.out.println("this is the file " + file.getFileExtension());
-						if(file.getFileExtension().equalsIgnoreCase("cfc")){
+						if("cfc".equalsIgnoreCase(file.getFileExtension())){
 							ComponentNode component = new ComponentNode(file);
 							component.setParent(this);
 							folderChildren.add(component);
