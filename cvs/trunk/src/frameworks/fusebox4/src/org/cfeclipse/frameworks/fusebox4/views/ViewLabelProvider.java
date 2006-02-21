@@ -25,7 +25,7 @@ public class ViewLabelProvider extends LabelProvider {
 		
 		IFBXObject fobj = (IFBXObject)obj;
 		
-		if(obj instanceof FBXObject){
+		if(obj instanceof IFBXObject){
 			return PluginImages.get(fobj.getIcon());
 		}
 		

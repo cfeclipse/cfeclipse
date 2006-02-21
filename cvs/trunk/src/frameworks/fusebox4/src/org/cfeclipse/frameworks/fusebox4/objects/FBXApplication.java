@@ -13,6 +13,7 @@ import org.cfeclipse.frameworks.fusebox4.util.PluginImages;
 import org.cfeclipse.frameworks.fusebox4.util.Utils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.ui.PlatformUI;
+import org.w3c.dom.Node;
 
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 
@@ -22,47 +23,36 @@ import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class FBXApplication extends FBXObject{
+public class FBXApplication implements IFBXObject{
 	private ArrayList children;
 	private String name;
-	private IFile circuitFile;
+	private IFile fuseboxFile;
 	private String appRootPath;
 	private String icon =  PluginImages.ICON_FUSEBOX4;
+	private IFBXObject parent;
 	
-	
-	
-	public FBXApplication(String name) {
+	public FBXApplication(String name, IFBXObject parent) {
 		this.name = name;
 		children = new ArrayList();
+		initFusebox();
+	}
+	/**
+	 * This method goes and gets the actual fusebox.xml.cfm or fusebox.xml file and parses it, creating children on the first level
+	 */
+	private void initFusebox(){
+		
+		
 	}
 	
 	/**
-	 * @return Returns the circuitFile.
+	 * This method gets the right fusebox file
 	 */
-	public IFile getCircuitFile() {
-		return circuitFile;
-	}
-	/**
-	 * @param circuitFile The circuitFile to set.
-	 */
-	public void setCircuitFile(IFile circuitFile) {
-		this.circuitFile = circuitFile;
+	private IFile getFuseboxFile(){
+		
+		return null;
 	}
 	
 	
-	
-	public void addChild(FBXCircuit child) {
-		children.add(child);
-		child.setParent(this);
-	}
-	public void addCircuit(FBXCircuit child){
-		children.add(child);
-		child.setParent(this);
-	}
-	public void removeChild(FBXCircuit child) {
-		children.remove(child);
-		child.setParent(null);
-	}
 	
 	public Object [] getChildren() {
 		return (Object [])children.toArray(new FBXCircuit[children.size()]);
@@ -83,13 +73,7 @@ public class FBXApplication extends FBXObject{
 	public String getName() {
 		return name;
 	}
-	public String toString(){
-		if(this.hasError()){
-			return this.getError();
-		} else {
-			return getName() + " (FBX Ver: " + this.getVersion() + ")";
-		}
-	}
+	
 	/**
 	 * @param name The name to set.
 	 */
@@ -110,40 +94,119 @@ public class FBXApplication extends FBXObject{
 		this.appRootPath = appRootPath;
 	}
 	
-	/**
-	 * This function adds the right files to the file system and whould
-	 * "pre-render" it to add an item
-	 * @param circuit
-	 */
-	public void addCircuit(String name, String path, boolean createFolders){
-		/*
-		 * Actions:
-		 *  1. Check there is a Circuits file
-		 * 	2. Add entry to circuits file
-		 *  3. Create subfolder with default files 
-		 * 
-		 */
-//		1.Check there is a Circtuis file
-		if(getCircuitFile() !=null){
-			//We have a circuits file, lets open it, and add something along the lines of
-			// <cfset f
-			OpenFileAction ofa = new OpenFileAction();
-			ofa.setFile(getCircuitFile());
-			ofa.run();
-			
-			//Need to insert something at the END of the document
-			GenericEncloserAction gea = new GenericEncloserAction();
-			gea.setActiveEditor(null, PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor());
-			gea.setEnclosingStrings("\n<cfset fusebox.circuits." + name + " = \"" + path + "\">\n"," ");
-			gea.run();
-			
-			//Here we could parse it then
-			
-		Utils.println("<cfset fusebox.circuits." + name + " = \"" + path + "\">");
-		Utils.println("create circuit: " + name + " in " + path + " and create circuit files?"  + createFolders);
+	
+
+	public int getVersion() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setVersion(int version) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	public String getError() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean hasError() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setError(String error) {
+		// TODO Auto-generated method stub
 		
-		}
+	}
+
+	public void setError(int errorid) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	public int getErrorid() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setErrorid(int errorid) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getFusedoc() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setFusedoc(String fusedoc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getExtension() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setExtension(String extension) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addListener(IDeltaListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removeListener(IDeltaListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addChild(FBXFuse child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removeChild(FBXFuse child) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Node getXmlNode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setXmlNode(Node xmlNode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getIcon() {
+		return this.icon;
+	}
+
+	public void setIcon(String icon) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public IFBXObject getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setParent(IFBXObject parent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getLabel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

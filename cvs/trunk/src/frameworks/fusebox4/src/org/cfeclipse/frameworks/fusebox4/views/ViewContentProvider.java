@@ -6,35 +6,21 @@
  */
 package org.cfeclipse.frameworks.fusebox4.views;
 
-import org.cfeclipse.frameworks.fusebox4.objects.FBXApplication;
 import org.cfeclipse.frameworks.fusebox4.objects.FBXRoot;
 import org.cfeclipse.frameworks.fusebox4.objects.IFBXObject;
-import org.cfeclipse.frameworks.fusebox4.parsers.FBX4parser;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
+import org.cfeclipse.frameworks.fusebox4.parsers.FBXParser;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-
-import com.rohanclan.cfml.CFMLPlugin;
-
-
 
 class ViewContentProvider implements IStructuredContentProvider, 
 										   ITreeContentProvider {
     
     private FBXRoot invisibleRoot;
-    private IProject project;
 	private String projectname;
 	
 		public ViewContentProvider(String project){
-			this.projectname = projectname;
-			this.project = CFMLPlugin.getWorkspace().getRoot().getProject(projectname);
-			
-			//Now we get the actual project
+			this.projectname = project;
 		}
     
     
@@ -66,16 +52,11 @@ class ViewContentProvider implements IStructuredContentProvider,
 				return ((IFBXObject)parent).hasChildren();
 			return false;
 		}
-/*
- * We will set up a dummy model to initialize tree heararchy.
- * In a real code, you will connect to a real model and
- * expose its hierarchy.
- */
+
 		
 		private void initialize() {
 			invisibleRoot = new FBXRoot("");
-			
-			FBX4parser parser = new FBX4parser();
-		invisibleRoot.addChild(parser.parse(project));
+			FBXParser parser = new FBXParser(this.projectname, invisibleRoot);
+			invisibleRoot.addChild(parser.parse());
 		}
 	}

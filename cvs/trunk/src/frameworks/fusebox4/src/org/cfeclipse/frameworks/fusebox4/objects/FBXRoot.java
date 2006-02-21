@@ -20,16 +20,16 @@ public class FBXRoot extends FBXObject{
 	public FBXRoot(String name) {
 		children = new ArrayList();
 	}
-	public void addChild(FBXApplication child) {
+	public void addChild(IFBXObject child) {
 		children.add(child);
 		child.setParent(this);
 	}
-	public void removeChild(FBXApplication child) {
+	public void removeChild(IFBXObject child) {
 		children.remove(child);
 		child.setParent(null);
 	}
 	public Object [] getChildren() {
-		return (Object [])children.toArray(new FBXApplication[children.size()]);
+		return (Object [])children.toArray(new IFBXObject[children.size()]);
 	}
 	public boolean hasChildren() {
 		return children.size()>0;

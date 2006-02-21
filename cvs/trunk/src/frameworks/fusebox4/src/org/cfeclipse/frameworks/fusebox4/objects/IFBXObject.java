@@ -14,17 +14,6 @@ import org.w3c.dom.Node;
  */
 public interface IFBXObject {
 
-	//Not sure if this needs a constructor
-	/**
-	 * @return Returns the version.
-	 */
-	public abstract int getVersion();
-
-	/**
-	 * @param version The version to set.
-	 */
-	public abstract void setVersion(int version);
-
 	/**
 	 * @return Returns the error.
 	 */
