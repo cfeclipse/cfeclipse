@@ -128,9 +128,26 @@ public class CFDocUtils {
 		//Set attribs = new HashSet();
 		
 		Map attribs = new HashMap();
-		starttag = starttag.replace("<", "");
-		starttag = starttag.replace(">", "");
-		starttag = starttag.replace(tagname, "");
+		// Remove the tag name and <
+		int attribStart = -1;
+		for (int i=0;i<tagname.length();i++) {
+			char c = tagname.charAt(i);
+			if (Character.isWhitespace(c)) {
+				attribStart = i;
+				break;
+			}
+		}
+		if (attribStart < 0) {
+			attribStart = tagname.length()-1;
+		}
+		starttag = starttag.substring(attribStart);
+		
+		if (starttag.endsWith("/>")) {
+			starttag = starttag.substring(0,starttag.length()-1);
+		} else if (starttag.endsWith(">")) {
+			starttag = starttag.substring(0,starttag.length()-1);
+		}
+		System.out.println("Start Tag is " + starttag);
 		//remove what we dont need
 		
 		//Split the string up

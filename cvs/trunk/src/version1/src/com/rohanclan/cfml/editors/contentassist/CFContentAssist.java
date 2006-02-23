@@ -313,7 +313,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 */
 	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
 			int offset) {
-	    
+	    System.out.println("computing proposals");
         DefaultAssistState assistState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
         assistState.setPrevDelim(0);	// TODO: Bodge job, need to assign correct previous delim position
         assistState.setDataSoFar(assistState.getDataSoFar().trim());

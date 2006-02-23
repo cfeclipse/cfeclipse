@@ -14,18 +14,18 @@ public class DictionaryViewFilter extends ViewerFilter {
 		
 		if(element instanceof TreeParent){
 			
-			
-			System.out.println("Found Tree Parent " + element.toString().contains(this.match));
-			return element.toString().contains(this.match);
+			boolean found = element.toString().indexOf(this.match) > 0;
+			System.out.println("Found Tree Parent " + found);
+			return found;
 		}	
 		if(element instanceof TagItem){
 			System.out.println("Tag Item Match");
-			return ((TagItem)element).getName().contains(this.match);
+			return ((TagItem)element).getName().indexOf(this.match) > 0;
 			
 		}
 		if(element instanceof FunctionItem){
 			System.out.println("Function Item");
-			return ((FunctionItem)element).getName().contains(this.match);
+			return ((FunctionItem)element).getName().indexOf(this.match) > 0;
 		}
 		
 		
