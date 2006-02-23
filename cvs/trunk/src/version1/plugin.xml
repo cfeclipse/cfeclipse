@@ -1180,6 +1180,12 @@
             name="CFML Colours"
             id="com.rohanclan.cfml.preferences.CFMLColorsPreferencePage">
       </page>
+      <page
+            class="com.rohanclan.cfml.preferences.SQLColorsPreferencePage"
+            category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
+            name="SQL Colours"
+            id="com.rohanclan.cfml.preferences.SQLColorsPreferencePage">
+      </page>
        <page
             class="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"

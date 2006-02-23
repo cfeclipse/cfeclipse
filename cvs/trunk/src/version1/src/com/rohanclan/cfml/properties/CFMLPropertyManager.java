@@ -51,8 +51,8 @@ public class CFMLPropertyManager {
 		}
 		catch (Exception e) 
 		{
-			System.err.println("CFMLPropertyManager::CFMLPropertyManager() - Couldn't load property store");
-			e.printStackTrace();
+			//System.err.println("CFMLPropertyManager::CFMLPropertyManager() - Couldn't load property store");
+			//e.printStackTrace();
 		} 
 		this.preferenceManager = new CFMLPreferenceManager();
 	}
