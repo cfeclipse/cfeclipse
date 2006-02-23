@@ -54,7 +54,6 @@ public class RootNode implements IComponentViewObject{
 	}
 
 	public String getPackageName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

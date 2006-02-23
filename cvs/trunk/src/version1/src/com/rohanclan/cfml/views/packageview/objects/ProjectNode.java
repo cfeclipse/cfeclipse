@@ -22,10 +22,19 @@ public class ProjectNode implements IComponentViewObject  {
 	public ProjectNode(IProject project){
 		this.project = project;
 
+		
 		//Set up the packagename
 		try {
 			QualifiedName propertyName = new QualifiedName("", "componentRoot");
-			packageName = project.getProject().getPersistentProperty(propertyName);
+		
+			String pname = project.getProject().getPersistentProperty(propertyName);
+			if(pname != null){
+				this.packageName = pname;
+			}else{
+				this.packageName = project.getName();
+			}
+			
+			
 		} catch (CoreException e) {}
 		//Setup the Children
 		initChildren();
@@ -112,9 +121,6 @@ public class ProjectNode implements IComponentViewObject  {
 		}
 		return this.project.getName();
 	}
-	/* (non-Javadoc)
-	 * @see com.rohanclan.cfml.views.packageview.objects.IComponentViewObject#setName(java.lang.String)
-	 */
 	public void setName(String name) {
 		// TODO Auto-generated method stub
 		
