@@ -45,7 +45,7 @@ public class CfmlTagItem extends TagItem {
 	 */
 	public boolean IsSane() {
 		Set attributes = syntax.getElementAttributes(this.itemName);
-		
+		//TODO: Warning This keeps throwing a null pointer exception
 		Object[] params = attributes.toArray();
 		for(int i = 0; i < params.length; i++)
 		{
