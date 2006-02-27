@@ -31,8 +31,9 @@ public class FBXApplication implements IFBXObject{
 	private String icon =  PluginImages.ICON_FUSEBOX4;
 	private IFBXObject parent;
 	
-	public FBXApplication(String name, IFBXObject parent) {
-		this.name = name;
+	public FBXApplication(String path, IFBXObject parent) {
+		this.appRootPath = path;
+		this.parent = parent;
 		children = new ArrayList();
 		initFusebox();
 	}

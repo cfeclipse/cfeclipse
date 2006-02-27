@@ -56,7 +56,7 @@ class ViewContentProvider implements IStructuredContentProvider,
 		
 		private void initialize() {
 			invisibleRoot = new FBXRoot("");
-			FBXParser parser = new FBXParser(this.projectname, invisibleRoot);
+			FBXParser parser = new FBX4Parser(this.projectname, invisibleRoot);
 			invisibleRoot.addChild(parser.parse());
 		}
 	}

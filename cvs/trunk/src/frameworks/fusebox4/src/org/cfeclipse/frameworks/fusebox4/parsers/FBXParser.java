@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
  * @author markd
  * This is the new fusebox parser. Leaner and meaner
  * TODO: Use http://java.sun.com/j2se/1.4.2/docs/api/org/xml/sax/Locator.html
+ * This means using sax parser which is a different way of doing things
  *       So that we can find the file location. 
  * 	
  */
@@ -18,7 +19,7 @@ public class FBXParser implements ContentHandler{
 	
 	private String projectName; //The project name that we will be parsing (where we will get the parse data from)
 	private IFBXObject root;
-	
+	private Stack 
 	public FBXParser(String projectName, IFBXObject parent){
 		this.projectName = projectName;
 		this.root = parent;

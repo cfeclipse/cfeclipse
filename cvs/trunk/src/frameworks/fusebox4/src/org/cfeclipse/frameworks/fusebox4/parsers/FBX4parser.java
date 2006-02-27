@@ -34,34 +34,26 @@ import org.xml.sax.SAXException;
  */
 public class FBX4parser {
 
-	
 	protected javax.xml.parsers.DocumentBuilderFactory factory;
 	protected javax.xml.parsers.DocumentBuilder builder;
 
 	private Document document=null;
 	private IProject project;
-	private IFile circuitFile;
-	private File circuitFile2;
-	
+	private FBXRoot rootItem;
+
 	//The files below sometimes are called without the .cfm extension. Try using the file reader for the options
 	private String scriptFileDelimiter = "cfm";
-	private String fbxcircuits = "fusebox.xml";
-	private String fbxswitch = "circuit.xml";
-	private String altfbxcircuits = "fusebox.xml" + "." + scriptFileDelimiter;
-	private String altfbxswitch = "circuit.xml" + "." + scriptFileDelimiter;
+	private String fuseboxFile = "fusebox.xml";
+	private String circuitFile = "circuit.xml";
+	private String altFuseboxFile = "fusebox.xml" + "." + scriptFileDelimiter;
+	private String altCircuitFile = "circuit.xml" + "." + scriptFileDelimiter;
 	
-	
-	
-    private String fbxpath = "/";
+	private String fbxpath = "/";
     private int version = 4;
     //These are properties from the fusebox.xml.cfm file
     //I need to add a check for different versions of the fusebox.xml.cfm file
     
-   
-	
-	//private String snipDescription, snipStartBlock, snipEndBlock;
-	
-	File snippetFile;
+   File snippetFile;
 	
 	/**
 	 * The constructor
@@ -83,19 +75,9 @@ public class FBX4parser {
 		}
 	}
 	
-	/**
-	 * The constructor, we need a project (not sure if this is ever used)
-	 */
-	public FBX4parser(IProject project) {
-		super();
+	public FBXApplication parse(IProject project, FBXRoot rootItem) {
 		this.project = project;
-	}
-	
-	
-	
-	
-	public FBXApplication parse(IProject project) {
-		this.project = project;
+		this.rootItem = rootItem;
 		
 		//Get the assigned root path
 		QualifiedName qname = new QualifiedName("", "FBXROOTPATH");
@@ -114,9 +96,11 @@ public class FBX4parser {
 		//This is where we call the file reader.
 		
 		FileReader fl = new FileReader(fbxpath, project);
-		fl.getFilePath(fbxcircuits, altfbxcircuits);
+		fl.getFilePath(this.fuseboxFile, this.altFuseboxFile);
 		
-		IFile cirFile = project.getFile(fbxpath + fbxcircuits);
+		//IFile cirFile = project.getFile(fbxpath + fbxcircuits);
+		//The finder should do the functions below
+		
 		if(!cirFile.exists()){ /* if we dont have an upper case */
 			cirFile = project.getFile(fbxpath + fbxcircuits.toLowerCase());
 			if(!cirFile.exists()){
@@ -124,9 +108,9 @@ public class FBX4parser {
 				Utils.println("FBX4parser:getCircuits: circuit file not found");
 			}
 		} 
-			
+		//Dont we get the root?
 		//Create the application
-		FBXApplication app = new FBXApplication(project.getName());
+		FBXApplication app = new FBXApplication(project.getProjectRelativePath().toString(), this.rootItem);
 			if(cirFile != null){
 				this.circuitFile = cirFile;
 				app.setCircuitFile(cirFile);
@@ -150,9 +134,8 @@ public class FBX4parser {
 				Utils.println("FBX4parser:getCircuits: circuit file not found");
 			}
 		} 
-			
+	
 		//Create the application
-		FBXApplication app = new FBXApplication(project.getName());
 			if(cirFile != null){
 				this.circuitFile = cirFile;
 				app.setCircuitFile(cirFile);
