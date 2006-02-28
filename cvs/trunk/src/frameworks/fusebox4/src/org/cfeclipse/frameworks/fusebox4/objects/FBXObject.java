@@ -55,6 +55,7 @@ public class FBXObject implements IFBXObject {
 	
 	public FBXObject(){
 		super();
+		this.children = new ArrayList();
 	}
 	
 	public FBXObject(String itemname){
@@ -208,14 +209,14 @@ public class FBXObject implements IFBXObject {
 	/* (non-Javadoc)
 	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#addChild(org.cfeclipse.frameworks.fusebox4.objects.FBXFuse)
 	 */
-	public void addChild(FBXFuse child) {
+	public void addChild(IFBXObject child) {
 		children.add(child);
 		//child.setParent(this);
 	}
 	/* (non-Javadoc)
 	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#removeChild(org.cfeclipse.frameworks.fusebox4.objects.FBXFuse)
 	 */
-	public void removeChild(FBXFuse child) {
+	public void removeChild(IFBXObject child) {
 		children.remove(child);
 		child.setParent(null);
 	}
@@ -230,7 +231,7 @@ public class FBXObject implements IFBXObject {
 	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#hasChildren()
 	 */
 	public boolean hasChildren() {
-		return children.size()>0;
+		return this.children.size()>0;
 	}
 
 	/* (non-Javadoc)
@@ -285,7 +286,7 @@ public class FBXObject implements IFBXObject {
 	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#toString()
 	 */
 	public String toString(){
-		return "un_named item";
+		return this.name;
 	}	
 	/* (non-Javadoc)
 	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#getLabel()

@@ -8,19 +8,22 @@ package org.cfeclipse.frameworks.fusebox4.views;
 
 import org.cfeclipse.frameworks.fusebox4.objects.FBXRoot;
 import org.cfeclipse.frameworks.fusebox4.objects.IFBXObject;
-import org.cfeclipse.frameworks.fusebox4.parsers.FBXParser;
+import org.cfeclipse.frameworks.fusebox4.parsers.FBX4parser;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+
+import com.rohanclan.cfml.CFMLPlugin;
 
 class ViewContentProvider implements IStructuredContentProvider, 
 										   ITreeContentProvider {
     
     private FBXRoot invisibleRoot;
-	private String projectname;
-	
+	private IProject project;
 		public ViewContentProvider(String project){
-			this.projectname = project;
+			this.project = CFMLPlugin.getWorkspace().getRoot().getProject(project);
+			
 		}
     
     
@@ -56,7 +59,7 @@ class ViewContentProvider implements IStructuredContentProvider,
 		
 		private void initialize() {
 			invisibleRoot = new FBXRoot("");
-			FBXParser parser = new FBX4Parser(this.projectname, invisibleRoot);
-			invisibleRoot.addChild(parser.parse());
+			FBX4parser parser = new FBX4parser();
+			invisibleRoot.addChild(parser.parse(this.project, invisibleRoot));
 		}
 	}

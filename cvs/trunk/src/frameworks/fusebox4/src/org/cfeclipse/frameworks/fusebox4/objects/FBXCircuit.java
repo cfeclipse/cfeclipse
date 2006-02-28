@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.cfeclipse.frameworks.fusebox4.util.*;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.w3c.dom.Node;
 
 /**
  * @author markd
@@ -18,20 +19,23 @@ import org.eclipse.core.resources.IProject;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class FBXCircuit extends FBXObject{
+public class FBXCircuit implements IFBXObject{
 	private ArrayList children;
 	private IProject project;
 	private String circuitName;
 	private String circuitValue;
-	private FBXApplication parent;
+	private IFBXObject parent;
 	private IFile circuitFile;
 	private IFile switchFile;
 	private boolean isRoot;
 	private boolean createFolders = false;
 	private String icon = PluginImages.ICON_FBX4_CIRCUIT;
+	private Node xmlNode;
 	
 
-	
+	public FBXCircuit(){
+		children = new ArrayList();
+	}
 	
 	public FBXCircuit(String name) {
 		children = new ArrayList();
@@ -85,12 +89,7 @@ public class FBXCircuit extends FBXObject{
 	public boolean hasChildren() {
 			return children.size()>0;
 	}
-	/**
-	 * @param parent The parent to set.
-	 */
-	public void setParent(FBXApplication parent) {
-		this.parent = parent;
-	}
+
 	/**
 	 * @return Returns the circuitNalue.
 	 */
@@ -113,11 +112,13 @@ public class FBXCircuit extends FBXObject{
 	 * @return Returns the circuitName.
 	 */
 	public String getName() {
-		if(hasError()){
-			return circuitName + " " + getError();
-		} else {
-			return circuitName;
+		if(this.xmlNode!=null){
+			return this.xmlNode.getAttributes().getNamedItem("alias").getNodeValue();
 		}
+		return "default";
+		
+		//We try and return the alias
+		
 		
 	}
 	public String toString(){
@@ -148,7 +149,7 @@ public class FBXCircuit extends FBXObject{
 		this.children = children;
 	}
 	public void addChildren(ArrayList children){
-		this.children.addAll(children);
+		this.children.add(children);
 	}
 	/**
 	 * @return Returns the project.
@@ -204,5 +205,139 @@ public class FBXCircuit extends FBXObject{
 	 */
 	public void setCreateFolders(boolean createFolders) {
 		this.createFolders = createFolders;
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#getError()
+	 */
+	public String getError() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#hasError()
+	 */
+	public boolean hasError() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#setError(java.lang.String)
+	 */
+	public void setError(String error) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#setError(int)
+	 */
+	public void setError(int errorid) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#getErrorid()
+	 */
+	public int getErrorid() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#setErrorid(int)
+	 */
+	public void setErrorid(int errorid) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#getFusedoc()
+	 */
+	public String getFusedoc() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#setFusedoc(java.lang.String)
+	 */
+	public void setFusedoc(String fusedoc) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#getExtension()
+	 */
+	public String getExtension() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#setExtension(java.lang.String)
+	 */
+	public void setExtension(String extension) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#addListener(org.cfeclipse.frameworks.fusebox4.objects.IDeltaListener)
+	 */
+	public void addListener(IDeltaListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#removeListener(org.cfeclipse.frameworks.fusebox4.objects.IDeltaListener)
+	 */
+	public void removeListener(IDeltaListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#setName(java.lang.String)
+	 */
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#addChild(org.cfeclipse.frameworks.fusebox4.objects.IFBXObject)
+	 */
+	public void addChild(IFBXObject child) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#removeChild(org.cfeclipse.frameworks.fusebox4.objects.IFBXObject)
+	 */
+	public void removeChild(IFBXObject child) {
+		// TODO Auto-generated method stub
+		
+	}
+	public Node getXmlNode() {
+		return this.xmlNode;
+	}
+
+	public void setXmlNode(Node xmlNode) {
+		this.xmlNode = xmlNode;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#setIcon(java.lang.String)
+	 */
+	public void setIcon(String icon) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.frameworks.fusebox4.objects.IFBXObject#getParent()
+	 */
+	public IFBXObject getParent() {
+		return this.parent;
+	}
+	public void setParent(IFBXObject parent) {
+		this.parent = parent;
+	}
+
+	public String getLabel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

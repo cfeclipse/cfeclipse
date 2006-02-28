@@ -59,9 +59,7 @@ public class FileReader {
 			} catch (CoreException e1) {
 				
 				e1.printStackTrace();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			} 
 		}
 		return fileContents;
 	}
@@ -74,9 +72,16 @@ public class FileReader {
 	public IFile getFilePath(String file, String alternate){
 		//This will go and get the proper path for a file, upper or lower, and we can put a list of 
 		//Accepted endings too, to deal with circuit.xml ¦¦ circuit.xml.cfm as well as fusebox.xml ¦¦ fusebox.xml.cfm
-		Utils.println("looking for " + stringPath + file);
 		IFile mainFile = project.getFile(stringPath + file);
 		
+		/*
+		if(!cirFile.exists()){  if we dont have an upper case 
+			cirFile = project.getFile(fbxpath + fbxcircuits.toLowerCase());
+			if(!cirFile.exists()){
+				cirFile = null;
+				Utils.println("FBX4parser:getCircuits: circuit file not found");
+			}
+		}*/ 
 		
 		if(!mainFile.exists()){ /* we havent found it so try lowercase */
 			mainFile = project.getFile(stringPath + file.toLowerCase());
@@ -84,7 +89,6 @@ public class FileReader {
 				//Utils.println("FileReader:getFilePath: file not found:" + mainFile);
 //				Now we do a check for the alternate
 				IFile altFile = project.getFile(stringPath + alternate);
-				Utils.println("altFile file :" + stringPath + alternate + " or " + altFile);
 				
 				if(!altFile.exists()){
 					altFile = project.getFile(stringPath + alternate.toLowerCase());

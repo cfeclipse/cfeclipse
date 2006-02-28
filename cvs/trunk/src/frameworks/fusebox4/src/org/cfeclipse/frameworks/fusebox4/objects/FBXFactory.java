@@ -4,7 +4,27 @@ public class FBXFactory {
 
 	public IFBXObject getObject(String fbxtype){
 		IFBXObject obj = null;
-		if(fbxtype.equalsIgnoreCase("fuseaction")){
+		//Fusebox items mostly
+		if(fbxtype.equalsIgnoreCase("circuit")){
+			obj = new FBXCircuit();
+		}
+		else if(fbxtype.equalsIgnoreCase("circuits")){
+			obj = new FBXCircuits();
+		}
+		else if(fbxtype.equalsIgnoreCase("parameters")){
+			obj = new FBXParameters();
+		}
+		else if(fbxtype.equalsIgnoreCase("parameter")){
+			obj = new FBXParameter();
+		}
+		else if(fbxtype.equalsIgnoreCase("plugins")){
+			obj = new FBXPlugins();
+		}
+		else if(fbxtype.equalsIgnoreCase("phase")){
+			obj = new FBXPhase();
+		}
+		//Circuit items mostly
+		else if(fbxtype.equalsIgnoreCase("fuseaction")){
 			obj = new FBXFuseAction();
 		} 
 		else if (fbxtype.equalsIgnoreCase("prefuseaction")){

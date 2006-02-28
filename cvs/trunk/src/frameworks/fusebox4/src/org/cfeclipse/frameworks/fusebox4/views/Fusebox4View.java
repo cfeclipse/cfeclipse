@@ -80,7 +80,7 @@ public class Fusebox4View extends ViewPart {
 	 * (like Task List, for example).
 	 */
 	 
-	class NameSorter extends ViewerSorter {
+/*	class NameSorter extends ViewerSorter {
 		
 		public int compare(Viewer viewer, Object e1, Object e2) {
 			
@@ -93,7 +93,7 @@ public class Fusebox4View extends ViewPart {
 			return super.compare(viewer, e1, e2);
 		}
 }
-
+*/
 	/**
 	 * The constructor.
 	 */
@@ -152,7 +152,7 @@ public class Fusebox4View extends ViewPart {
 		drillDownAdapter = new DrillDownAdapter(viewer);
 		viewer.setContentProvider(new ViewContentProvider(projcombo.getText()));
 		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setSorter(new NameSorter());
+		//viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
 		
 		layoutData = new GridData();
@@ -407,7 +407,7 @@ public class Fusebox4View extends ViewPart {
 			{
 	          IStructuredSelection selection = (IStructuredSelection)event.getSelection(); 
               Iterator structIter = selection.iterator(); 
-              text.setText(selection.getClass().toString());
+             // text.setText(selection.getClass().toString());
               
               
               while(structIter.hasNext()) 

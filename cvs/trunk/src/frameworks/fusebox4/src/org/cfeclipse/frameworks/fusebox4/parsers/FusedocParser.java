@@ -60,10 +60,7 @@ public class FusedocParser {
 			} catch (CoreException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			} 
 			
 			//I was going to regex this but lets try it simply
 		

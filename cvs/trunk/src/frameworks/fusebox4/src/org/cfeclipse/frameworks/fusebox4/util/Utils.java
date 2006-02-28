@@ -38,19 +38,23 @@ public class Utils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String getStringFromInputStream(InputStream is) throws IOException{
-		int k;
-		InputStream in = is;
-		StringBuffer stringFromIS = new StringBuffer();
-		int aBuffSize = 1123123;     		
-		
-		byte buff[] = new byte[aBuffSize]; 
-		OutputStream xOutputStream = new ByteArrayOutputStream(aBuffSize); 
-		while ( (k=in.read(buff) ) != -1){
-			xOutputStream.write(buff,0,k);
+	public static String getStringFromInputStream(InputStream is){
+		try {
+			int k;
+			InputStream in = is;
+			StringBuffer stringFromIS = new StringBuffer();
+			int aBuffSize = 1123123;     		
+			
+			byte buff[] = new byte[aBuffSize]; 
+			OutputStream xOutputStream = new ByteArrayOutputStream(aBuffSize); 
+			while ( (k=in.read(buff) ) != -1){
+				xOutputStream.write(buff,0,k);
+			}
+			stringFromIS.append(xOutputStream.toString()); 
+			return stringFromIS.toString();
+		} catch (IOException e) {
+			return "";
 		}
-		stringFromIS.append(xOutputStream.toString()); 
-		return stringFromIS.toString();
 	 }
 	
 	/**

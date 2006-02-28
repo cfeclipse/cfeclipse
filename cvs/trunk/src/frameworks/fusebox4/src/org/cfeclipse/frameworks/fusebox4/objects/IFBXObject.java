@@ -79,9 +79,9 @@ public interface IFBXObject {
 
 	public abstract void setName(String name);
 
-	public abstract void addChild(FBXFuse child);
+	public abstract void addChild(IFBXObject child);
 
-	public abstract void removeChild(FBXFuse child);
+	public abstract void removeChild(IFBXObject child);
 
 	public abstract Object[] getChildren();
 
@@ -104,5 +104,6 @@ public interface IFBXObject {
 	public abstract String toString();
 
 	public abstract String getLabel();
+	
 
 }

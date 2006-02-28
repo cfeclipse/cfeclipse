@@ -93,7 +93,7 @@ public class PluginImages {
 	
 	public static final String ICON_REFRESH = "refresh.gif";
 	public static final String MODEL_OBJECTS = "fusebox";
-	public static final String MODEL_OBJECTS4 = "fusebox4";
+	
 	
 	
 	public static void initPluginImages()

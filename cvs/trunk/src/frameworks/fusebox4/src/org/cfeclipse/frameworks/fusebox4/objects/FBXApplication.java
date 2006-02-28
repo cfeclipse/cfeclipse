@@ -30,6 +30,7 @@ public class FBXApplication implements IFBXObject{
 	private String appRootPath;
 	private String icon =  PluginImages.ICON_FUSEBOX4;
 	private IFBXObject parent;
+	private Node xmlNode;
 	
 	public FBXApplication(String path, IFBXObject parent) {
 		this.appRootPath = path;
@@ -56,7 +57,7 @@ public class FBXApplication implements IFBXObject{
 	
 	
 	public Object [] getChildren() {
-		return (Object [])children.toArray(new FBXCircuit[children.size()]);
+		return children.toArray();
 	}
 	public boolean hasChildren() {
 		return children.size()>0;
@@ -73,6 +74,9 @@ public class FBXApplication implements IFBXObject{
 	 */
 	public String getName() {
 		return name;
+	}
+	public String toString(){
+		return getName();
 	}
 	
 	/**
@@ -167,24 +171,22 @@ public class FBXApplication implements IFBXObject{
 		
 	}
 
-	public void addChild(FBXFuse child) {
+	public void addChild(IFBXObject child) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void removeChild(FBXFuse child) {
+	public void removeChild(IFBXObject child) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	public Node getXmlNode() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.xmlNode;
 	}
 
 	public void setXmlNode(Node xmlNode) {
-		// TODO Auto-generated method stub
-		
+		this.xmlNode = xmlNode;
 	}
 
 	public String getIcon() {
