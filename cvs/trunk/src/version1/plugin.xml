@@ -113,6 +113,16 @@
                   name="output">
             </separator>
          </menu>
+        <!-- Word Wrap -->
+        <action
+               class="com.rohanclan.cfml.editors.actions.WordWrapAction"
+               icon="icons/ctool16/wordwrap.gif"
+               id="com.rohanclan.cfml.editors.actions.wordWrapAction"
+               label="Word Wrap"
+               state="false"
+               style="toggle"
+               toolbarPath="BasicCFEditorText"
+               tooltip="Enable/Disable word wrap"/>
 		<!-- cfcomment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFComment"

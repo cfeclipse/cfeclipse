@@ -65,6 +65,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DropTarget;
@@ -233,6 +234,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 	}
 
+	public StyledText getTextWidget() {
+		return this.getSourceViewer().getTextWidget();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 * 
