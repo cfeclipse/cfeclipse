@@ -67,7 +67,6 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 		editor = (ITextEditor)Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 		ISelection sel = editor.getSelectionProvider().getSelection();
-		String snippet = "";
 		
 		String fileName = keyCombos.getKeyCombo(triggerText);
 		
@@ -235,6 +234,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    
 				// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
 				CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);
+				
 			}
 		}
 	}

@@ -60,6 +60,11 @@ public class Encloser
 				}
 				
 				cmtpart.append(start);
+				// dont go past end of file.
+				if( offset == doc.getLength())
+				{
+					len = 0;
+				}
 				cmtpart.append(doc.get(offset,len));
 				cmtpart.append(end);
 				
