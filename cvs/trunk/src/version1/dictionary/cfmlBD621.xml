@@ -6153,94 +6153,6 @@
 	</parameter>
 </tag>
 <!--
-	cfreport
-		report = "report_path"
-		dataSource = "ds_name"
-		type = "type"
-		timeout = "number of seconds"
-		orderBy = "result_order"
-		username = "username"
-		password = "password"
-		formula = "formula"
-	cfreportparam tags [optional]
-	/cfreport
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfreport" single="false" xmlstyle="false">
-	<help><![CDATA[
-		Runs a predefined Crystal Reports report. Applies only to
-		Windows systems. Uses the CFCRYSTAL.exe file to generate
-		reports. Sets parameters in the Crystal Reports engine
-		according to its attribute values.
-	]]></help>
-	<parameter name="report" type="String" required="true">
-		<help><![CDATA[
-			Report path. Store Crystal Reports files in the same
-			directories as CFML page files.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="datasource" type="String" required="false">
-		<help><![CDATA[
-			Name of registered or native data source.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="type" type="String" required="false">
-		<help><![CDATA[
-			* standard (not valid for Crystal Reports 8.0)
-			* netscape
-			* microsoft
-		]]></help>
-		<values default="standard">
-			<value option="standard"/>
-			<value option="netscape"/>
-			<value option="microsoft"/>
-		</values>
-	</parameter>
-	<parameter name="timeout" type="Numeric" required="false">
-		<help><![CDATA[
-			Maximum time, in seconds, in which a connection must be
-			made to a Crystal Report.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="orderby" type="String" required="false">
-		<help><![CDATA[
-			Orders results according to your specifications.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="username" type="String" required="false">
-		<help><![CDATA[
-			Username required for entry into database from which report
-			is created. Overrides default settings for data source in
-			CFML Administrator.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="password" type="String" required="false">
-		<help><![CDATA[
-			Password that corresponds to username required for database
-			access. Overrides default settings for data source in
-			CFML Administrator.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="formula" type="String" required="false">
-		<help><![CDATA[
-			One or more named formulas. Terminate each formula with a
-			semicolon. Use the format:
-
-			formula = "formulaname1='formula1';formulaname2='formula2';"
-
-			If you use a semicolon in a formula, you must escape it by
-			typing it twice (;;). For example:
-
-			formula = "Name1 = 'Val_1a;;Val_1b';Name2 = 'Val2';"
-		]]></help>
-		<values/>
-	</parameter>
-</tag>
-<!--
 	cfrethrow
 --><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfrethrow" single="true" xmlstyle="false">
 	<help><![CDATA[
@@ -6701,7 +6613,7 @@
 <!--
 	cfset
 		var variable_name = expression
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfset" single="true" xmlstyle="false">
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfset" single="true" allowanyattribute="true" xmlstyle="false">
 	<help><![CDATA[
 		Sets a value in CFML. Used to create a variable, if it
 		does not exist, and assign it a value. Also used to call
