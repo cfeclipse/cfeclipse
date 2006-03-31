@@ -187,7 +187,7 @@ public class TagItem extends DocItem {
 				//
 				// Should really raise an exception?
 				parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
-											"Unknown cf tag \'<cf" + itemName + ">\'."));
+											"Unknown cf tag \'<" + itemName + ">\'."));
 		    }
 			return true;	// Let's say it's a single tag.
 		}

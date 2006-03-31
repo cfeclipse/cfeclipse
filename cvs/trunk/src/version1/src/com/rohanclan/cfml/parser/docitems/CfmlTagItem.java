@@ -57,7 +57,7 @@ public class CfmlTagItem extends TagItem {
 			if(currParam.isRequired() && !itemAttributes.containsKey(currParam.getName()))
 			{
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <cf" + itemName + "> tag."));
+						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <" + itemName + "> tag."));
 			}
 		}
 		return super.IsSane();

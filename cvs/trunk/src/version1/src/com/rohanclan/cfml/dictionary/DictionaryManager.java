@@ -112,7 +112,8 @@ public class DictionaryManager
 		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 		String cfdictversion  = propertyManager.getCurrentDictionary();
 		long time = System.currentTimeMillis();
-		System.out.println("Dictionaries initialized start");
+		//System.out.println("Dictionaries initialized start");
+		
 		
 		//get the dictionary config file into a DOM
 		loadDictionaryConfig();
@@ -121,7 +122,9 @@ public class DictionaryManager
 		
 		//load the default dictionaries into the cache
 		//this is kind of weak but it'll do pig... it'll do...
-		//String cfdictversion = getFirstVersion(CFDIC);
+		if (cfdictversion.trim().length()  == 0) {
+			cfdictversion = getFirstVersion(CFDIC);
+		}
 		String htdictversion = getFirstVersion(HTDIC);
 		String jsdictversion = getFirstVersion(JSDIC);
 		
@@ -137,7 +140,7 @@ public class DictionaryManager
 		loadDictionaryFromCache(htdictversion,HTDIC);
 		loadDictionaryFromCache(jsdictversion,JSDIC);
 				
-		System.out.println("Dictionaries initialized in " + (System.currentTimeMillis() - time) + " ms");
+		//System.out.println("Dictionaries initialized in " + (System.currentTimeMillis() - time) + " ms");
 	}
 	
 	/**
@@ -326,9 +329,9 @@ public class DictionaryManager
 	 */
 	public static SyntaxDictionary getDictionary(String key)
 	{	
-		System.out.println("Getting dictionary " + key);
+		///System.out.println("Getting dictionary " + key);
 		SyntaxDictionary dict = (SyntaxDictionary)dictionaries.get(key);
-		System.out.println("GOT: " + dict);
+		//System.out.println("GOT: " + dict);
 		return dict;
 	}
 	
