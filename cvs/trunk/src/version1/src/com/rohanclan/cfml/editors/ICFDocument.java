@@ -316,6 +316,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 * @see com.rohanclan.cfml.editors.ICFEFileDocument
 	 */
     public CFEContentAssistManager getContentAssistManager() {
+    	
         if (this.getResource() instanceof ExternalFile) {
             return CFMLPlugin.getDefault().getGlobalCAM();
         }
@@ -341,6 +342,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
     
     protected CFEContentAssistManager getCAM()
     {
+    	
         try {
             refreshCAM();
         }

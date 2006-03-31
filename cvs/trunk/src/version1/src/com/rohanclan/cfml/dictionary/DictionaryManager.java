@@ -42,6 +42,7 @@ import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.editors.SQLSyntaxDictionary;
 import com.rohanclan.cfml.editors.HTMLSyntaxDictionary;
 import com.rohanclan.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
+import com.rohanclan.cfml.properties.CFMLPropertyManager;
 
 /**
  * @author Rob
@@ -108,8 +109,10 @@ public class DictionaryManager
 	 */
 	public static void initDictionaries()
 	{
+		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		String cfdictversion  = propertyManager.getCurrentDictionary();
 		long time = System.currentTimeMillis();
-		System.out.println("Dictionaries initialized start");
+		//System.out.println("Dictionaries initialized start");
 		
 		//get the dictionary config file into a DOM
 		loadDictionaryConfig();
@@ -118,9 +121,11 @@ public class DictionaryManager
 		
 		//load the default dictionaries into the cache
 		//this is kind of weak but it'll do pig... it'll do...
-		String cfdictversion = getFirstVersion(CFDIC);
+		//String cfdictversion = getFirstVersion(CFDIC);
 		String htdictversion = getFirstVersion(HTDIC);
 		String jsdictversion = getFirstVersion(JSDIC);
+		
+		//System.out.println("Loading CF dictionary " + cfdictversion);
 		
 		//load the dictionary into the cache
 		loadDictionaryByVersion(cfdictversion);
@@ -252,6 +257,7 @@ public class DictionaryManager
 	 */
 	public static synchronized void loadDictionaryFromCache(String cachekey, String livekey)
 	{
+		
 		if(dictionariesCache.containsKey(cachekey) && dictionaries.containsKey(livekey))
 		{
 			//Object tdic = dictionaries.get(livekey);
@@ -320,7 +326,8 @@ public class DictionaryManager
 	 * @return the dictionary
 	 */
 	public static SyntaxDictionary getDictionary(String key)
-	{
+	{	
+		
 		return (SyntaxDictionary)dictionaries.get(key);
 	}
 	

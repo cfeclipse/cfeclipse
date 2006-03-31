@@ -89,6 +89,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public CFEContentAssistManager getGlobalCAM()
 	{
+		
 		if(this.camInstance == null)
 		{
 			throw new IllegalArgumentException("CFMLPlugin::getGlobalCAM() camInstance is null");
@@ -178,9 +179,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
      * Setups up the Content Assist Manager
      * 
      */
-    private void setupCAM() {
+    public void setupCAM() {
         this.camInstance = new CFEContentAssistManager();
-        
         CFMLTagAssist cfmlAssistor = new CFMLTagAssist(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
         HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(DictionaryManager.getDictionary(DictionaryManager.HTDIC));
 

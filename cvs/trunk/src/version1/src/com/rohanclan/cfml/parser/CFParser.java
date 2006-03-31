@@ -42,6 +42,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
+import sun.security.krb5.internal.p;
+
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
@@ -766,6 +768,7 @@ public class CFParser {
 	private void addTagItemToTree(ParseItemMatch match, Stack matchStack, boolean isACloser, TagItem newItem) {
 		//
 		//	Either the syntax dictionary says it closes itself or the user has specified it will
+		
 		try {
 			if(newItem.hasClosingTag() && !isACloser) 
 			{	// Not a closing item, it's an opener so on the stack it goes.
@@ -774,7 +777,7 @@ public class CFParser {
 			else
 			{ 	// It's a closing item, so we get the parent item and add this item to it's children.
 				DocItem top = (DocItem)matchStack.pop();
-				
+
 				top.addChild(newItem);
 				matchStack.push(top);
 			}	
@@ -935,6 +938,7 @@ public class CFParser {
 						switch(match.getMatchType())
 						{
 							case MATCHER_CFMLTAG:
+								
 								handleCFTag(tagName, match, matchStack,
 											stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
 								break;
@@ -1229,7 +1233,7 @@ public class CFParser {
 			if(!inQuotes && currChar == '>')
 			{
 				finalOffset = currPos;
-				
+				//System.out.println("Parser found a cfml tag: " + inData.substring(currDocOffset, currPos+1));
 				parseState.addMatch(new ParseItemMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
 												getLineNumber(currDocOffset), MATCHER_CFMLTAG));
 				break;
@@ -1434,20 +1438,26 @@ public class CFParser {
 	 */
 	public ArrayList finalDocTreeTraversal(DocItem startNode)
 	{
+		
 		ArrayList messages = new ArrayList();
 		
 		//
 		// Perform sanity check. Method adds to the object's message list which we shall gather next.
+		
 		startNode.IsSane();
+		
 		messages.addAll(startNode.getParseState().getMessages());
+		
 		if(startNode.hasChildren())
 		{
 			CFNodeList children = startNode.getChildNodes();
 			Iterator nodeIter = children.iterator();
-			
+			//System.out.println("Node " + startNode.toString() + " has " + children.size() + " children");
 			while(nodeIter.hasNext())
 			{
-				messages.addAll(finalDocTreeTraversal((DocItem)nodeIter.next()));
+				DocItem item = (DocItem)nodeIter.next();
+				
+				messages.addAll(finalDocTreeTraversal(item));
 			}
 		}
 		return messages;
@@ -1463,7 +1473,7 @@ public class CFParser {
 			
 			this.setData2Parse(inData);
 			ArrayList matches = tagMatchingAttempts(inData);
-			//System.out.println("=============> Beginning match dump");
+			//System.out.println("=============> Beginning match dump" );
 			//Util.dumpMatches(parserState.getMatches());
 			//System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(parserState.getMatches());

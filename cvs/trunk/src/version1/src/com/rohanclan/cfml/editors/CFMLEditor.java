@@ -63,6 +63,7 @@ import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -79,8 +80,12 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
+import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AnnotationPreference;
@@ -169,7 +174,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		//On save parsing should apparently go into a builder.
 		if (getPreferenceStore().getBoolean(
 				EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
-
 			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer()))
 					.listenToTextChanges(false);
 			RTrimAction trimAction = new RTrimAction();
@@ -252,8 +256,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		configureInsertMode(SMART_INSERT, false);
-		setInsertMode(INSERT);
-
+		setInsertMode(INSERT);		
 	}
 
 	public void createPartControl(Composite parent) {
@@ -902,4 +905,5 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		return this.fSourceViewerDecorationSupport;
 	}
 
+	
 }

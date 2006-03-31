@@ -44,8 +44,8 @@
 			<grammar location="cfml5.xml" />
 			<grammar location="user.xml" />
 		</version>
-		<version key="bd61" label="BlueDragon 6.1">
-			<grammar location="cfmlBD61.xml" />
+		<version key="bd621" label="BlueDragon 6.2.1">
+			<grammar location="cfmlBD621.xml" />
 			<grammar location="user.xml" />
 		</version>
 	</dictionary>

@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 
+import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 
@@ -245,7 +246,8 @@ public class ProjectPropertyPage extends PropertyPage {
 		}
 		
 		this.cfmlSyntaxField.store();
-
+		DictionaryManager.loadDictionaryFromCache(propertyManager.getCurrentDictionary(),DictionaryManager.CFDIC);
+		CFMLPlugin.getDefault().setupCAM();
 		return true;
 	}
 

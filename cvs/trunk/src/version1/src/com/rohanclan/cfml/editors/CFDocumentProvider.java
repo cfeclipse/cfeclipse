@@ -93,7 +93,7 @@ public class CFDocumentProvider extends FileDocumentProvider
 				currentDict = DictionaryManager.getFirstVersion(DictionaryManager.CFDIC);
 			
 			DictionaryManager.loadDictionaryFromCache(
-				pm.getCurrentDictionary(),
+				currentDict,
 				DictionaryManager.CFDIC
 			);
 			/////

@@ -183,7 +183,7 @@ public class TagItem extends DocItem {
 		if(tag == null)
 		{
 		    if (itemName.indexOf("_") != 2) {
-				System.err.println("TagItem::hasClosingTag() - The tag I've retrieved is null! Tag name is \'" + itemName + "\' Line number: " + this.lineNumber);
+				//System.err.println("TagItem::hasClosingTag() - The tag I've retrieved is null! Tag name is \'" + itemName + "\' Line number: " + this.lineNumber);
 				//
 				// Should really raise an exception?
 				parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
