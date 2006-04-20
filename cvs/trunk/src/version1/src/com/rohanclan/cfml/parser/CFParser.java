@@ -42,8 +42,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
-import sun.security.krb5.internal.p;
-
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.parser.cfmltagitems.CfmlComment;
