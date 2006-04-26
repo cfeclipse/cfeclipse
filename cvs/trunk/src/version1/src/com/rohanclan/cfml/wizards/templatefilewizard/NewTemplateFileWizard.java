@@ -92,7 +92,9 @@ public class NewTemplateFileWizard extends Wizard implements INewWizard {
 		snipReader = new SnipReader();
 		try 
 		{
-			snipBase = new Path(propertyManager.snippetsPath());
+			IResource resource = getContainingResource();
+			
+			snipBase = new Path(propertyManager.snippetsPath(resource.getProject()));
 			
 		} 
 		catch (Exception e) 
@@ -123,6 +125,12 @@ public class NewTemplateFileWizard extends Wizard implements INewWizard {
 		}
 	}
 
+	private IResource getContainingResource() {
+		final String containerName = page.getContainerName();
+		final String fileName = page.getFileName();
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		return root.findMember(new Path(containerName));
+	}
 	/**
 	 * This method is called when 'Finish' button is pressed in
 	 * the wizard. We will create an operation and run it
@@ -131,8 +139,7 @@ public class NewTemplateFileWizard extends Wizard implements INewWizard {
 	public boolean performFinish() {
 		final String containerName = page.getContainerName();
 		final String fileName = page.getFileName();
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IResource resource = root.findMember(new Path(containerName));
+		IResource resource = getContainingResource();
 		
 		if (!resource.exists() || !(resource instanceof IContainer)) 
 		{

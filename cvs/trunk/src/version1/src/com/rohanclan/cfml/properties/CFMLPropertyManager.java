@@ -25,6 +25,8 @@
 package com.rohanclan.cfml.properties;
 
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceStore;
 import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
@@ -37,17 +39,17 @@ import java.io.IOException;
  * This controls the properies for the per project settings
  */
 public class CFMLPropertyManager {
-	private PreferenceStore store;
+	//private PreferenceStore store;
 	private CFMLPreferenceManager preferenceManager;
 	
 	public CFMLPropertyManager() 
 	{
 		super();
-		this.store = CFMLPlugin.getDefault().getPropertyStore();
+		//this.store = CFMLPlugin.getDefault().getPropertyStore();
 	
 		try 
 		{
-			store.load();
+			//store.load();
 		}
 		catch (Exception e) 
 		{
@@ -57,22 +59,25 @@ public class CFMLPropertyManager {
 		this.preferenceManager = new CFMLPreferenceManager();
 	}
 	
-	public PreferenceStore getStore()
+	public IPreferenceStore getStore(IProject project)
 	{
-		return store;
+		return new ProjectPropertyStore(project);
 	}
 	
-	public void initializeDefaultValues() {
+	public void initializeDefaultValues(IProject project) {
+		IPreferenceStore store = new ProjectPropertyStore(project);
         store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
         store.setDefault(CFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.defaultProjectURL());
 	}
 	
-	public String getCurrentDictionary()
+	public String getCurrentDictionary(IProject project)
 	{
+		IPreferenceStore store = new ProjectPropertyStore(project);
 		return store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
 	}
 	
-	public String snippetsPath() {
+	public String snippetsPath(IProject project) {
+		IPreferenceStore store = new ProjectPropertyStore(project);
 		return store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
 	}
 	
@@ -81,18 +86,13 @@ public class CFMLPropertyManager {
 		return preferenceManager.snippetsPath();
 	}
 	
-	public void setSnippetsPath(String path) {
+	public void setSnippetsPath(String path, IProject project) {
+		IPreferenceStore store = new ProjectPropertyStore(project);
 		store.setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH,path);
-		try {
-			store.save();
-		}
-		catch (IOException e) {
-			System.err.println("Failed to save property store " + e.getMessage());
-			e.printStackTrace();
-		}
 	}
 	
-	public String projectURL() {
+	public String projectURL(IProject project) {
+		IPreferenceStore store = new ProjectPropertyStore(project);
 		return store.getString(CFMLPreferenceConstants.P_PROJECT_URL).trim();
 	}
 	
@@ -101,24 +101,14 @@ public class CFMLPropertyManager {
 		return preferenceManager.defaultProjectURL();
 	}
 	
-	public void setProjectURL(String path) {
+	public void setProjectURL(String path, IProject project) {
+		IPreferenceStore store = new ProjectPropertyStore(project);
 		store.setValue(CFMLPreferenceConstants.P_PROJECT_URL,path);
-		try {
-			store.save();
-		}
-		catch (IOException e) {
-			System.err.println("Failed to save property store " + e.getMessage());
-		}
 	}
 	
-	public void setComponentRoot(String root){
+	public void setComponentRoot(String root, IProject project){
+		IPreferenceStore store = new ProjectPropertyStore(project);
 		store.setValue("componentRoot", root);
-		try{
-			store.save();
-		}
-		catch (IOException e) {
-			System.err.println("Failed to save property store " + e.getMessage());
-		}
 	
 	}
 	

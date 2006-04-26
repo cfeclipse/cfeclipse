@@ -229,7 +229,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		TextEditorPreferenceConstants.initializeDefaultValues(getPreferenceStore());
 		try {
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-        	propertyManager.initializeDefaultValues();
 		}
 		catch (Exception e) {
 			// do nothing

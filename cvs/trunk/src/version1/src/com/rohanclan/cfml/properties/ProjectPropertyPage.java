@@ -161,7 +161,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	    //this.cfmlSyntaxField.setPreferencePage(this);
 	    this.cfmlSyntaxField.setEnabled(true, parent);
 	    //this.cfmlSyntaxField.setPreferenceStore(this.propStore);
-	    this.cfmlSyntaxField.setPreferenceStore(propertyManager.getStore());
+	    this.cfmlSyntaxField.setPreferenceStore(propertyManager.getStore((IProject)getElement()));
 	    this.cfmlSyntaxField.load();
 	}
 	
@@ -216,7 +216,7 @@ public class ProjectPropertyPage extends PropertyPage {
 				new QualifiedName("", SNIPPETS_PATH_PROPERTY),
 				snippetsPathField.getStringValue()
 			);
-			propertyManager.setSnippetsPath(snippetsPathField.getStringValue());
+			propertyManager.setSnippetsPath(snippetsPathField.getStringValue(),(IProject)getElement());
 		} 
 		catch (CoreException e) 
 		{
@@ -228,7 +228,7 @@ public class ProjectPropertyPage extends PropertyPage {
 				new QualifiedName("", PROJECT_URL_PROPERTY),
 				projectURLField.getStringValue()
 			);
-			propertyManager.setProjectURL(projectURLField.getStringValue());
+			propertyManager.setProjectURL(projectURLField.getStringValue(),(IProject)getElement());
 		} catch (CoreException e) {
 			//e.printStackTrace(System.err);
 			return false;
@@ -240,13 +240,13 @@ public class ProjectPropertyPage extends PropertyPage {
 					new QualifiedName("",PROJECT_COMPONENT_ROOT_PROP),
 					projectComponentRootField.getStringValue()
 					);
-			propertyManager.setComponentRoot(projectComponentRootField.getStringValue());
+			propertyManager.setComponentRoot(projectComponentRootField.getStringValue(),(IProject)getElement());
 		} catch (CoreException e) {
 			return false;
 		}
 		
 		this.cfmlSyntaxField.store();
-		DictionaryManager.loadDictionaryFromCache(propertyManager.getCurrentDictionary(),DictionaryManager.CFDIC);
+		DictionaryManager.loadDictionaryFromCache(propertyManager.getCurrentDictionary((IProject)getElement()),DictionaryManager.CFDIC);
 		CFMLPlugin.getDefault().setupCAM();
 		return true;
 	}

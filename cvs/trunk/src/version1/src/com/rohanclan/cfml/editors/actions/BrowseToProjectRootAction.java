@@ -34,6 +34,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 //import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.CFMLEditor;
@@ -74,10 +75,10 @@ public class BrowseToProjectRootAction implements IEditorActionDelegate {
 		
 
 	    try {
-	        
+	        FileEditorInput input = (FileEditorInput)editor.getEditorInput();
 	        //IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			//ISelection sel = editor.getSelectionProvider().getSelection();
-			String projectURL = propertyManager.projectURL();
+			String projectURL = propertyManager.projectURL(input.getFile().getProject());
 			// System.out.println("currentpath: " + currentpath + "; currentfile: " + currentfile + "; URLpath: " + URLpath);
 			
 	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);

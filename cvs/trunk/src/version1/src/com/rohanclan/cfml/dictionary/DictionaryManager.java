@@ -32,8 +32,17 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.IPage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -109,8 +118,9 @@ public class DictionaryManager
 	 */
 	public static void initDictionaries()
 	{
-		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-		String cfdictversion  = propertyManager.getCurrentDictionary();
+		
+		String cfdictversion  = getInitialDictVersion();
+		
 		long time = System.currentTimeMillis();
 		//System.out.println("Dictionaries initialized start");
 		
@@ -122,7 +132,7 @@ public class DictionaryManager
 		
 		//load the default dictionaries into the cache
 		//this is kind of weak but it'll do pig... it'll do...
-		if (cfdictversion.trim().length()  == 0) {
+		if (cfdictversion.trim().length() == 0) {
 			cfdictversion = getFirstVersion(CFDIC);
 		}
 		String htdictversion = getFirstVersion(HTDIC);
@@ -141,6 +151,35 @@ public class DictionaryManager
 		loadDictionaryFromCache(jsdictversion,JSDIC);
 				
 		//System.out.println("Dictionaries initialized in " + (System.currentTimeMillis() - time) + " ms");
+	}
+	
+	private static String getInitialDictVersion() {
+		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		if (workbench == null) {
+			return "";
+		}
+		IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+		if (window == null) {
+			return "";
+		}
+		IWorkbenchPage page = window.getActivePage();
+		if (page == null) {
+			return "";
+		}
+		IEditorPart part = page.getActiveEditor();
+		if (part == null) {
+			return "";
+		}
+		IEditorInput input = part.getEditorInput();
+		if (input == null) {
+			return "";
+		}
+		if (input instanceof FileEditorInput) {
+			FileEditorInput fInput = (FileEditorInput)input;
+			return propertyManager.getCurrentDictionary(fInput.getFile().getProject());
+		}
+		return "";
 	}
 	
 	/**
@@ -260,6 +299,19 @@ public class DictionaryManager
 	public static synchronized void loadDictionaryFromCache(String cachekey, String livekey)
 	{
 		
+		loadDictionaryFromCache(cachekey,livekey,false);
+	}
+	
+	/**
+	 * Takes a Syntax dictionary from the cache and puts it into the live dictionary. 
+	 * Doesn't try to load dictionary if retry is true. 
+	 * @param cachekey
+	 * @param livekey
+	 * @param retry - Indicates if we have already tried to load the dictionary into the cache.
+	 */
+	private static synchronized void loadDictionaryFromCache(String cachekey, String livekey, boolean retry)
+	{
+		
 		if(dictionariesCache.containsKey(cachekey) && dictionaries.containsKey(livekey))
 		{
 			//Object tdic = dictionaries.get(livekey);
@@ -273,10 +325,15 @@ public class DictionaryManager
 		}
 		else if(!dictionariesCache.containsKey(cachekey) && cachekey != null && cachekey.length() > 0)
 		{
+			if (retry) {
+				// We've already tried to load the dictionary, so something must be broken.
+				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error!","Dictionary " + cachekey + " could not be loaded.\n This may cause CFEclipse to work unpredictably or, in some cases, not at all.\n\nTry closing Eclipse and starting it from the command line with -clean as a command line argument.");
+				throw new IllegalArgumentException("Problem loading version node "+cachekey+" from dictionaryconfig.xml");
+			}
 			//the dictionary is not in the cache, lets try to load it...
 			loadDictionaryByVersion(cachekey);
 			//try again..
-			loadDictionaryFromCache(cachekey, livekey);
+			loadDictionaryFromCache(cachekey, livekey, true);
 		}
 		else if(cachekey != null || cachekey.length() > 0)
 		{

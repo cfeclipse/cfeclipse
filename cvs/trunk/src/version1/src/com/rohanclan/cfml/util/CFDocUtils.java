@@ -86,7 +86,7 @@ public class CFDocUtils {
 		}
 		return set1;
 	}
-	
+
 	/**
 	 * Parses a string looking for attributes
 	 * 
@@ -95,6 +95,7 @@ public class CFDocUtils {
 	 */
 	public static Map parseForAttributes(String string2Scan) {
 		Map attribs = new HashMap();
+		
 		StringTokenizer st2 = new StringTokenizer(string2Scan," ");
 		if(st2.hasMoreTokens())
 			st2.nextToken();

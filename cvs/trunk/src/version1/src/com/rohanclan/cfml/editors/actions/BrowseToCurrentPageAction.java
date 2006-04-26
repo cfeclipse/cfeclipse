@@ -77,9 +77,10 @@ public class BrowseToCurrentPageAction implements IEditorActionDelegate {
 	        
 	        //IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			//ISelection sel = editor.getSelectionProvider().getSelection();
-			String currentpath = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getProjectRelativePath().toString();
+	    	FileEditorInput input = (FileEditorInput)editor.getEditorInput();
+			String currentpath = ( (IResource) input.getFile() ).getProjectRelativePath().toString();
 			//String currentfile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
-			String URLpath = propertyManager.projectURL();
+			String URLpath = propertyManager.projectURL(input.getFile().getProject());
 			// System.out.println("currentpath: " + currentpath + "; currentfile: " + currentfile + "; URLpath: " + URLpath);
 			
 			String calculatedURL = URLpath + "/" + currentpath;
