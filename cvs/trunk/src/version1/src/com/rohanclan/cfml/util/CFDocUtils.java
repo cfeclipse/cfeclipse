@@ -26,13 +26,10 @@ package com.rohanclan.cfml.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-//import java.util.HashSet;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-//import org.eclipse.core.internal.utils.Assert;
 import com.rohanclan.cfml.dictionary.Parameter;
 
 /**
@@ -86,7 +83,7 @@ public class CFDocUtils {
 		}
 		return set1;
 	}
-
+	
 	/**
 	 * Parses a string looking for attributes
 	 * 
@@ -95,10 +92,12 @@ public class CFDocUtils {
 	 */
 	public static Map parseForAttributes(String string2Scan) {
 		Map attribs = new HashMap();
-		
+		//This should return a neat map of items
 		StringTokenizer st2 = new StringTokenizer(string2Scan," ");
-		if(st2.hasMoreTokens())
-			st2.nextToken();
+		System.out.println("Has more tokens " + st2.hasMoreTokens());
+		//TODO: Removed as it seemed to ignore if there was one. not sure why this was doing this?
+		//if(st2.hasMoreTokens())
+		//	st2.nextToken();
 
 		String[] fullAttrib;
 		while(st2.hasMoreTokens()) {
@@ -120,58 +119,36 @@ public class CFDocUtils {
 	
 	/**
 	 * Parses the start tag for a given tag, might not actually require the tagname attribute
-	 * 
+	 * TODO: This brings an index out of bounds exception
 	 * @param tagname the name of the tag
 	 * @param starttag the string that makes up an opener tag
 	 * @return a set of strings containing the attributes and values for that start tag
 	 */
 	public static Map parseStartTag(String tagname, String starttag){
+		//TODO: re-write the parsing
 		//Set attribs = new HashSet();
 		
 		Map attribs = new HashMap();
 		// Remove the tag name and <
-		int attribStart = -1;
-		for (int i=0;i<tagname.length();i++) {
-			char c = tagname.charAt(i);
-			if (Character.isWhitespace(c)) {
-				attribStart = i;
-				break;
-			}
-		}
-		if (attribStart < 0) {
-			attribStart = tagname.length()-1;
-		}
-		starttag = starttag.substring(attribStart);
 		
-		if (starttag.endsWith("/>")) {
-			starttag = starttag.substring(0,starttag.length()-1);
-		} else if (starttag.endsWith(">")) {
-			starttag = starttag.substring(0,starttag.length()-1);
+		//top and tail the tag.
+		if(starttag.startsWith("<")){
+			starttag  = starttag.replaceFirst("<", "");
 		}
-		System.out.println("Start Tag is " + starttag);
-		//remove what we dont need
+		if(starttag.endsWith("/>")){
+			starttag = starttag.substring(0, starttag.length()-2);
+			//Trim 
+		}
+		if(starttag.endsWith(">")){
+			starttag = starttag.substring(0, starttag.length()-1);
+		}
 		
-		//Split the string up
-		StringTokenizer st2 = new StringTokenizer(starttag," ");
-		System.out.println("Parsing tag " + tagname + " with attributes_" + starttag+"_ items are: "+ st2.countTokens());
-		while(st2.hasMoreTokens()){
-			
-			String[] fullattrib = st2.nextToken().split("=");
-				String attribName = fullattrib[0];
-				String attribValue = fullattrib[1];
-				
-				if(attribValue.startsWith("\"")){
-					//remove the first char
-					attribValue = attribValue.substring(1, attribValue.length());					
-				}
-				if(attribValue.endsWith("\"")){
-					//remove the last char
-					attribValue = attribValue.substring(0, attribValue.length()-1);
-					
-				}
-			attribs.put(attribName, attribValue);
+		//remove the tagname
+		if(starttag.startsWith(tagname)){
+			starttag = starttag.replaceFirst(tagname, "");
+			starttag = starttag.trim();
 		}
-				
+		attribs = parseForAttributes(starttag);
 		return attribs;
 		
 	}
