@@ -559,7 +559,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 					CFEPartition part = partitioner.findClosestPartition(startpos);
 					
-				
+					
 					Map tagattribs = CFDocUtils.parseStartTag(part.getTagName(), seli.getText());
 								 
 					Tag tag = cfdic.getTag(part.getTagName());

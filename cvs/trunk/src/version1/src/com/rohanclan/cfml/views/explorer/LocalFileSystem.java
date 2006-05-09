@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.io.File;
 // Removed this because it doesn't work on OS X
 //import javax.swing.filechooser.*;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -133,7 +134,7 @@ public class LocalFileSystem implements IFileProvider {
 		if (file != null) {
 			return new FileEditorInput(file);
 		}
-        return new JavaFileEditorInput(new File(filename));
+        return new JavaFileEditorInput((IFileStore)new File(filename));
    
     }
     
