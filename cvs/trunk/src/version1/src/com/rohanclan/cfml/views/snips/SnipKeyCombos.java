@@ -44,7 +44,7 @@ public class SnipKeyCombos {
     
     public SnipKeyCombos() {
         CFMLPropertyManager propertyManager = new CFMLPropertyManager(); 
-        this.snippetFilePath = propertyManager.snippetsPath();
+        this.snippetFilePath = propertyManager.defaultSnippetsPath();
         this.keyComboFilePath = this.snippetFilePath + "/keyCombos.properties";
         loadKeyCombos();
     }

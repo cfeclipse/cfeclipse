@@ -406,7 +406,7 @@ public class PackageView extends ViewPart {
 				try {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-					String rootURL = propMan.projectURL();
+					String rootURL = propMan.defaultProjectURL();
 					
 					URL projURL = new URL(rootURL);
 					

@@ -133,7 +133,7 @@ public class SnipTreeView extends ViewPart
 		try 
 		{
 			//snipBase = CFMLPlugin.getDefault().getStateLocation();
-			snipBase = new Path(propertyManager.snippetsPath());
+			snipBase = new Path(propertyManager.defaultSnippetsPath());
 			
 		} 
 		catch (Exception e) 
@@ -667,7 +667,7 @@ public class SnipTreeView extends ViewPart
     {
 
     	if (event.getProperty().equals(CFMLPreferenceConstants.P_SNIPPETS_PATH)) {
-    		snipBase = new Path(propertyManager.snippetsPath());
+    		snipBase = new Path(propertyManager.defaultSnippetsPath());
     		treeViewer.setInput(getRootInput());
     	}
     }
