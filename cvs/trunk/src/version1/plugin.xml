@@ -26,7 +26,7 @@
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.eclipse.core.filesystem"/>
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
