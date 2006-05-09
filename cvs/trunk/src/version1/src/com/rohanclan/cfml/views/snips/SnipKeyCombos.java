@@ -30,6 +30,13 @@ import java.util.Enumeration;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
+
 import com.rohanclan.cfml.properties.CFMLPropertyManager;
 
 /**
@@ -44,8 +51,14 @@ public class SnipKeyCombos {
     
     public SnipKeyCombos() {
         CFMLPropertyManager propertyManager = new CFMLPropertyManager(); 
-        this.snippetFilePath = propertyManager.defaultSnippetsPath();
-        this.keyComboFilePath = this.snippetFilePath + "/keyCombos.properties";
+        try {
+			IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+			IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
+	        this.snippetFilePath = propertyManager.snippetsPath(p);
+	        this.keyComboFilePath = this.snippetFilePath + "/keyCombos.properties";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         loadKeyCombos();
     }
 

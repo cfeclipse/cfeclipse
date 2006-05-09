@@ -39,6 +39,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -405,8 +406,9 @@ public class PackageView extends ViewPart {
 				
 				try {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					IProject p = ((FileEditorInput)page.getActiveEditor().getEditorInput()).getFile().getProject();
 					BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-					String rootURL = propMan.defaultProjectURL();
+					String rootURL = propMan.projectURL(p);
 					
 					URL projURL = new URL(rootURL);
 					

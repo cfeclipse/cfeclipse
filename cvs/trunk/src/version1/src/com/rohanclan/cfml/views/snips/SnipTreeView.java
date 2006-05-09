@@ -40,12 +40,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 //import com.rohanclan.cfml.util.XMLConfigFile;
 import org.eclipse.core.runtime.IPath;
 import com.rohanclan.cfml.CFMLPlugin;
@@ -56,6 +58,7 @@ import java.io.File;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 
 
 import org.eclipse.ui.IFileEditorInput;
@@ -132,8 +135,10 @@ public class SnipTreeView extends ViewPart
 		CFMLPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
 		try 
 		{
+			IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+			IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
 			//snipBase = CFMLPlugin.getDefault().getStateLocation();
-			snipBase = new Path(propertyManager.defaultSnippetsPath());
+			snipBase = new Path(propertyManager.snippetsPath(p));
 			
 		} 
 		catch (Exception e) 
@@ -667,8 +672,15 @@ public class SnipTreeView extends ViewPart
     {
 
     	if (event.getProperty().equals(CFMLPreferenceConstants.P_SNIPPETS_PATH)) {
-    		snipBase = new Path(propertyManager.defaultSnippetsPath());
-    		treeViewer.setInput(getRootInput());
+    		try {
+    			IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+    			IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
+    			snipBase = new Path(propertyManager.snippetsPath(p));
+        		treeViewer.setInput(getRootInput());	
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    		
     	}
     }
 	/*
