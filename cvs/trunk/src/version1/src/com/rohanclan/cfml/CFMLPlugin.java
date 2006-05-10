@@ -42,6 +42,7 @@ import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.actions.LastActionManager;
 import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
+import com.rohanclan.cfml.editors.contentassist.CFMLComponentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLFunctionAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLScopeAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLTagAssist;
@@ -191,6 +192,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
         this.camInstance.registerRootAssist(new CFContentAssist());
         this.camInstance.registerRootAssist(new CFMLScopeAssist());
         this.camInstance.registerRootAssist(new CFMLFunctionAssist());
+        this.camInstance.registerRootAssist(new CFMLComponentAssist());
 
         this.camInstance.registerTagAssist(cfmlAssistor);
         this.camInstance.registerAttributeAssist(cfmlAssistor);
