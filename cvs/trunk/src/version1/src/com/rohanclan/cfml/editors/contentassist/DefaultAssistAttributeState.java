@@ -90,7 +90,7 @@ public class DefaultAssistAttributeState extends DefaultAssistTagState
 
     /**
      * Sets the attribute for the state that this represents.
-     * 
+     * TODO: Make sure this works with cfset 
      * @param attributeText The name of the attribute
      */
     public void setAttribute(String attributeText)
