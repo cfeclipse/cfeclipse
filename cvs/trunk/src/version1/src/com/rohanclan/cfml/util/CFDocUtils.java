@@ -94,7 +94,7 @@ public class CFDocUtils {
 		Map attribs = new HashMap();
 		//This should return a neat map of items
 		StringTokenizer st2 = new StringTokenizer(string2Scan," ");
-		System.out.println("Has more tokens " + st2.hasMoreTokens());
+		//System.out.println("Has more tokens " + st2.hasMoreTokens());
 		//TODO: Removed as it seemed to ignore if there was one. not sure why this was doing this?
 		//if(st2.hasMoreTokens())
 		//	st2.nextToken();

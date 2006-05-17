@@ -26,6 +26,7 @@ package com.rohanclan.cfml.parser;
 
 //import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 import com.rohanclan.cfml.parser.docitems.DocItem;
@@ -57,6 +58,12 @@ public class CFDocument {
 	 * List of variables in the document. Not used at the moment.
 	 */
 	public ArrayList docVariables;	
+	
+	/**
+	 * List of variables in the document, created in CFParser
+	 */
+	
+	public HashMap variableMap = new HashMap();
 	
 	/**
 	 * Not sure what this is for!
@@ -136,5 +143,21 @@ public class CFDocument {
 	 * @deprecated Don't use at this does nothing!
 	 */
 	public CFDocument(IDocument eclipseDocument) {
+	}
+
+	public ArrayList getDocVariables() {
+		return docVariables;
+	}
+
+	public void setDocVariables(ArrayList docVariables) {
+		this.docVariables = docVariables;
+	}
+
+	public HashMap getVariableMap() {
+		return variableMap;
+	}
+
+	public void setVariableMap(HashMap variableMap) {
+		this.variableMap = variableMap;
 	}
 }

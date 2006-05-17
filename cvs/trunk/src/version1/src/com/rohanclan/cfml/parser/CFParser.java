@@ -1471,17 +1471,27 @@ public class CFParser {
 			
 			this.setData2Parse(inData);
 			ArrayList matches = tagMatchingAttempts(inData);
-			//System.out.println("=============> Beginning match dump" );
-			//Util.dumpMatches(parserState.getMatches());
-			//System.out.println("=============> Finishing match dump");
+//			System.out.println("=============> Beginning match dump" );
+//			Util.dumpMatches(parserState.getMatches());
+//			System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(parserState.getMatches());
-			parserState.addMessages(finalDocTreeTraversal(docTree. getDocumentRoot()));
+			
+			
+			
+			parserState.addMessages(finalDocTreeTraversal(docTree.getDocumentRoot()));
 			processParseResultMessages();
 			
+			//This should parse a document and setup all the variables;
+			VariablesParser vParser = new VariablesParser(docTree,inData);
+			docTree.setVariableMap(vParser.getVariableMap());
+
 		} catch(Exception excep) 
 		{
-			//System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
+			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
 		}
+		
+		
+		
 		return docTree;		
 	}
 	

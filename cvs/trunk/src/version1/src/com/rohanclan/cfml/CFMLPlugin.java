@@ -42,10 +42,12 @@ import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.editors.actions.LastActionManager;
 import com.rohanclan.cfml.editors.contentassist.CFContentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFEContentAssistManager;
+import com.rohanclan.cfml.editors.contentassist.CFMLArgumentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLComponentAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLFunctionAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLScopeAssist;
 import com.rohanclan.cfml.editors.contentassist.CFMLTagAssist;
+import com.rohanclan.cfml.editors.contentassist.CFMLVariableAssist;
 import com.rohanclan.cfml.editors.contentassist.HTMLTagAssistContributor;
 import com.rohanclan.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
@@ -192,7 +194,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
         this.camInstance.registerRootAssist(new CFContentAssist());
         this.camInstance.registerRootAssist(new CFMLScopeAssist());
         this.camInstance.registerRootAssist(new CFMLFunctionAssist());
-        this.camInstance.registerRootAssist(new CFMLComponentAssist());
+      //  this.camInstance.registerRootAssist(new CFMLComponentAssist()); //finds the components in a project, removed as we might use a new CFML Varscope parser
+        this.camInstance.registerRootAssist(new CFMLVariableAssist()); //finds the arguments in a cfc that you are talking about
 
         this.camInstance.registerTagAssist(cfmlAssistor);
         this.camInstance.registerAttributeAssist(cfmlAssistor);
