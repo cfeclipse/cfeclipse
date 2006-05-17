@@ -128,6 +128,10 @@ public class CFMLVariableAssist
         
         //Find arguments in the document variable map
        Object chosenTag =  varMap.get(varName);
+       
+       //TODO: for scopes such as FORM, URL and ATTRIBUTES, we need to do something different, since we will go and search for them tags that are CFPARAM
+       
+       
        boolean isScope = false;
        //if the variable exists
        if(chosenTag != null){
@@ -181,6 +185,25 @@ public class CFMLVariableAssist
            		}
     	   }
        }
+       //We havent found it, but we need to check if there is something like FORM. URL. etc...
+       //We might need to loop through them
+       
+       if(varName.equalsIgnoreCase("FORM") || varName.equalsIgnoreCase("URL") || varName.equalsIgnoreCase("ATTRIBUTES") ){
+    	   isScope = true;
+    	   Set formScopes = new HashSet();
+    	   Iterator hashIter = varMap.keySet().iterator();
+    	   while(hashIter.hasNext()){
+    		   String key = (String)hashIter.next();
+    		   if(key.toUpperCase().startsWith(varName.toUpperCase())){
+    			   
+    			   formScopes.add(key);
+    		   }
+    	   }
+    	   scopeProposals = formScopes;
+       }
+       
+       
+       
        
        if(scopeProposals != null){
     	   //Create the scope proposals
@@ -225,9 +248,6 @@ public class CFMLVariableAssist
      */
     private Set parseSQL(String sqlin){
     	Set columnProposals = new HashSet();
-    	
-    	
-    	
     	//Find the end of "SELECT" and the start of "FROM"
     	//if you dont find SELECT run away
     	int selectStartPos = sqlin.toLowerCase().indexOf("select", 0);
