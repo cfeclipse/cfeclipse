@@ -77,10 +77,12 @@ public class CFMLVariableAssist
     	/*
          * Only show content assist if the trigger was .
          */
-        if (state.getTriggerData() != '.') {
-            return null;
+        if (state.getTriggerData() == ' ') {
+            return getPageVariables(state, doc);
         }
-    
+        else if(state.getTriggerData() != '.'){
+        	return null;
+        }
         else {
         	String allData = state.getDataSoFar();
         	
@@ -117,7 +119,7 @@ public class CFMLVariableAssist
 
     	CFParser parser = new CFParser();
         CFDocument cfdoc = parser.parseDoc(state.getIDocument().get());
-        
+        System.out.println(cfdoc.dumpVariables());
         //Get the variables:
         HashMap varMap = cfdoc.getVariableMap();
         ICompletionProposal[] proposals = null;
@@ -187,8 +189,7 @@ public class CFMLVariableAssist
        }
        //We havent found it, but we need to check if there is something like FORM. URL. etc...
        //We might need to loop through them
-       
-       if(varName.equalsIgnoreCase("FORM") || varName.equalsIgnoreCase("URL") || varName.equalsIgnoreCase("ATTRIBUTES") ){
+       else{
     	   isScope = true;
     	   Set formScopes = new HashSet();
     	   Iterator hashIter = varMap.keySet().iterator();
@@ -277,4 +278,26 @@ public class CFMLVariableAssist
     	return columnProposals;
     }
     
+    
+    public ICompletionProposal[] getPageVariables(IAssistState state, ICFDocument doc){
+    	CFParser parser = new CFParser();
+        CFDocument cfdoc = parser.parseDoc(state.getIDocument().get());
+        System.out.println(cfdoc.dumpVariables());
+        //Get the variables:
+        HashMap varMap = cfdoc.getVariableMap();
+        ICompletionProposal[] proposals = new ICompletionProposal[varMap.size()];
+        
+        Iterator keyIter = varMap.keySet().iterator();
+        int propIter = 0;
+        while(keyIter.hasNext()){
+        	
+        	String key = (String)keyIter.next();
+        //Loop through the vars and we are ok
+        	CompletionProposal proposal = new CompletionProposal(key, state.getOffset(), 0, key.toString().length());
+        	
+        	proposals[propIter] = proposal;
+        	propIter++;
+        }
+        return proposals;
+    }
 }
