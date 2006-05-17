@@ -27,8 +27,10 @@ package com.rohanclan.cfml.parser;
 //import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Stack;
 
+import com.rohanclan.cfml.parser.docitems.CfmlTagItem;
 import com.rohanclan.cfml.parser.docitems.DocItem;
 //import com.rohanclan.cfml.parser.exception.InvalidChildItemException;
 
@@ -155,6 +157,30 @@ public class CFDocument {
 
 	public HashMap getVariableMap() {
 		return variableMap;
+	}
+	/**
+	 * Utility function to view what variables the document currently has.
+	 * @return
+	 */
+	public String dumpVariables(){
+		String vars = "---------------------\n";
+		
+		Iterator mapIter = variableMap.keySet().iterator();
+		while(mapIter.hasNext()){
+			String keyItem = mapIter.next().toString();
+			vars += "Key: " + keyItem +"\t\t=\t";
+			if(variableMap.get(keyItem) instanceof CfmlTagItem){
+				CfmlTagItem tag = (CfmlTagItem)variableMap.get(keyItem);
+				vars += tag.getName() + "\n";
+			}
+			else{
+				vars += variableMap.get(keyItem).getClass() + "\n";
+			}
+		}
+		vars += "---------------------";
+		return vars;
+		
+		
 	}
 
 	public void setVariableMap(HashMap variableMap) {
