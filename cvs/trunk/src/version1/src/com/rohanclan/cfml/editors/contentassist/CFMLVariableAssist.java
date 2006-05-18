@@ -75,8 +75,9 @@ public class CFMLVariableAssist
 
     	
     	/*
-         * Only show content assist if the trigger was .
+         * TODO: Only show this if you the trigger is #, you are in a cfset or cfscript.
          */
+    	
         if (state.getTriggerData() == ' ') {
             return getPageVariables(state, doc);
         }
