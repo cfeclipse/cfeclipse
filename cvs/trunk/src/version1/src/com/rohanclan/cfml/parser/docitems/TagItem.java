@@ -44,7 +44,7 @@ public class TagItem extends DocItem {
 	 * Name / value attributes
 	 * Name is always lower case.
 	 */
-	protected HashMap itemAttributes;
+	protected HashMap<Object, Object> itemAttributes;
 	/** Optional. 
 	   *  
 	   *  The matching item for this DocItem. For example CFML tags quite often have a matching closing tag, as do HTML tags. One example:
@@ -170,7 +170,7 @@ public class TagItem extends DocItem {
 	public TagItem(int line, int startDocPos, int endDocPos, String name)
 	{
 		super(line, startDocPos, endDocPos, name);
-		itemAttributes = new HashMap();
+		itemAttributes = new HashMap<Object, Object>();
 	}
 	/**
 	 * Indicates whether or  not this tag <b>requires</b> a closing tag.

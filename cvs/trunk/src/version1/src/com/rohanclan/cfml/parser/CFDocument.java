@@ -59,7 +59,7 @@ public class CFDocument {
 	/**
 	 * List of variables in the document. Not used at the moment.
 	 */
-	public ArrayList docVariables;	
+	public ArrayList<Variable> docVariables;	
 	
 	/**
 	 * List of variables in the document, created in CFParser
@@ -109,7 +109,7 @@ public class CFDocument {
 	{
 		if(docVariables == null)
 		{
-			docVariables = new ArrayList();
+			docVariables = new ArrayList<Variable>();
 		}
 		docVariables.add(newVar);
 	}
@@ -151,7 +151,7 @@ public class CFDocument {
 		return docVariables;
 	}
 
-	public void setDocVariables(ArrayList docVariables) {
+	public void setDocVariables(ArrayList<Variable> docVariables) {
 		this.docVariables = docVariables;
 	}
 
@@ -163,12 +163,13 @@ public class CFDocument {
 	 * @return
 	 */
 	public String dumpVariables(){
+		System.out.println("\nDump Variables:");
+
 		String vars = "---------------------\n";
-		
 		Iterator mapIter = variableMap.keySet().iterator();
 		while(mapIter.hasNext()){
 			String keyItem = mapIter.next().toString();
-			vars += "Key: " + keyItem +"\t\t=\t";
+			vars += "Key: " + keyItem +"\t=\t";
 			if(variableMap.get(keyItem) instanceof CfmlTagItem){
 				CfmlTagItem tag = (CfmlTagItem)variableMap.get(keyItem);
 				vars += tag.getName() + "\n";

@@ -238,7 +238,6 @@ public class CFParser {
 	 */
 	protected int getLineNumber(int docOffset)/* throws BadLocationException */
 	{
-		int retval = 0;
 		/*
 		 * Line number calculation simply goes through the lineOffset var looking for when the 
 		 * line offset is greater than the docOffset passed.
@@ -334,7 +333,7 @@ public class CFParser {
 	 */
 	protected ArrayList stripAttributes(String inData, int lineNum, int offset)
 	{
-		ArrayList attributes = new ArrayList();
+		ArrayList<AttributeItem> attributes = new ArrayList<AttributeItem>();
 		Matcher matcher;
 		Pattern pattern;
 		String attributeName,attributeValue;
@@ -408,7 +407,7 @@ public class CFParser {
 			    // and remove them if there is an opener below them.
 			    try {
 				boolean foundCloser = false;
-			    ArrayList removals = new ArrayList();
+			    ArrayList<TagItem> removals = new ArrayList<TagItem>();
 			    Object[] items = matchStack.toArray();
 			    //System.out.println("Looking on stack for opening " + closerName + ". Closer found on line: " + this.getLineNumber(match.getStartPos()));
 			    for (int i=items.length-1;i>0;i--) {

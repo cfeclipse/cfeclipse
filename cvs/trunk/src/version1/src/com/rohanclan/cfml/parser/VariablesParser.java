@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.rohanclan.cfml.parser.docitems.DocItem;
 import com.rohanclan.cfml.parser.docitems.TagItem;
+import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagSet;
 
 /**
  * 
@@ -21,10 +22,10 @@ import com.rohanclan.cfml.parser.docitems.TagItem;
  *
  */
 public class VariablesParser {
-	private HashMap variableMap;
+	private HashMap<String, TagItem> variableMap;
 
 	public VariablesParser(CFDocument document, String docText) {
-		variableMap = new HashMap();
+		variableMap = new HashMap<String, TagItem>();
 		parseForVariables(document.getDocumentRoot());
 	}
 	
@@ -39,10 +40,8 @@ public class VariablesParser {
 	        	if(cfItem instanceof TagItem){
 	        		addItem((TagItem)cfItem);
 	        		
-//	        		As a test use the attribute name, if there is one
 		        	if(((TagItem)cfItem).hasChildren()){
 		        		parseForVariables((TagItem)cfItem);
-		        		
 		        	}
 	        	}
 	        	
@@ -62,18 +61,21 @@ public class VariablesParser {
 			//Call the script parser
 		}
 		else if(tagname.equalsIgnoreCase("cfset")){
-			//Call the cfset parser
+			CfmlTagSet setTag = new CfmlTagSet(tag.getLineNumber(), tag.getStartPosition(), tag.getEndPosition(), tag.getName());
+			System.out.println("Parsing cfset");
+			for (int i = 0; i < setTag.getAttributes().length; i++) {
+				System.out.println(setTag.getAttributes()[i].getName() + " = " + setTag.getAttributes()[i].getValue());
+			}
 		}
 		else if(tagname.equalsIgnoreCase("cfinvoke")){
 			if(tag.getAttributeValue("returnvariable") != null){
-				this.variableMap.put(tag.getAttributeValue("returnattribute"), tag);
+				this.variableMap.put(tag.getAttributeValue("returnvariable"), tag);
 			}
 		}
 		else if(tagname.equalsIgnoreCase("cfobject")){
 			if(tag.getAttributeValue("name") != null){
 				this.variableMap.put(tag.getAttributeValue("name"), tag);
 			}
-			
 		}
 		else if(tagname.equalsIgnoreCase("cfreturn")){
 			//Ignore
