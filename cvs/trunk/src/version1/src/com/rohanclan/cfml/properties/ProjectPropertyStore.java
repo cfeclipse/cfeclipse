@@ -326,7 +326,6 @@ public class ProjectPropertyStore implements IPreferenceStore
      */
     public String getString(String name) {
         String retVal = "";
-        System.err.println("lookin: " + name);
         if(this.contains(name))
         {
             retVal = getProperty(getQName(name));
