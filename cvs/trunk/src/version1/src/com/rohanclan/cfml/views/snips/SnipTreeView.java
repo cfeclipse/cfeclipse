@@ -55,6 +55,8 @@ import com.rohanclan.cfml.properties.CFMLPropertyManager;
 import com.rohanclan.cfml.preferences.CFMLPreferenceConstants;
 import com.rohanclan.cfml.editors.actions.GenericEncloserAction;
 import java.io.File;
+
+import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.core.resources.IFile;
@@ -133,12 +135,17 @@ public class SnipTreeView extends ViewPart
 
 		// This ensures that we are notified when the properties are saved
 		CFMLPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
+		
 		try 
 		{
-			IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-			IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
+			//Snippets arent per-project, so we need to get the Plugin Preference Store not the Project one
+			
+			//IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+			//IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
 			//snipBase = CFMLPlugin.getDefault().getStateLocation();
-			snipBase = new Path(propertyManager.snippetsPath(p));
+			snipBase = new Path(propertyManager.defaultSnippetsPath());
+		
+			
 			
 		} 
 		catch (Exception e) 

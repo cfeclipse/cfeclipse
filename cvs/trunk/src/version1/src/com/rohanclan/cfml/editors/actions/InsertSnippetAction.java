@@ -102,10 +102,15 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 		
 	public void run(IAction action) 
 	{
-	    //System.out.println("YEP");
-		if(editor != null && editor.isEditable())
+	  if(editor != null && editor.isEditable())
 		{
-		    SnipKeyCombos keyCombos = new SnipKeyCombos();
+		  
+			
+		  
+		  SnipKeyCombos keyCombos = new SnipKeyCombos();
+		  
+		  
+		  
 		    String sequence = "";
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
@@ -148,6 +153,8 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    e.printStackTrace();
 			}
 			
+			
+			
 			if (sequence.length() > 0) {
 			    
 			    String[] stringArray = sequence.split("\\*");
@@ -161,6 +168,8 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    
 			    String fileName = keyCombos.getKeyCombo(trigger);
 			   
+			    
+			    
 			    SnipReader snipReader = new SnipReader();
 			    
 			    IFile activeFile = null;
@@ -178,6 +187,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			        indentString = doc.get().substring(lineOffset,lastSpaceOffset);
 			    }
 			    catch (Exception e) {
+			    	
 			        // do nothing
 			        //System.err.println("Insert snippet failed to get insert string.");
 			    }
@@ -201,6 +211,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			        else {
 			            snippet = start+end;
 			        }
+			        
 			        if (snippet != null && snippet.length() > 0 ) {
 					    
 						this.enclose(doc,(ITextSelection)sel,snippet,"");

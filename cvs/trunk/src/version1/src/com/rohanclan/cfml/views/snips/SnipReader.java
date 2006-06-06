@@ -42,6 +42,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 
 import com.rohanclan.cfml.preferences.CFMLPreferenceManager;
+import com.rohanclan.cfml.properties.CFMLPropertyManager;
 /**
  * @author Stephen Milligan
  */
@@ -80,8 +81,19 @@ public class SnipReader {
 	
 	
 	public void read(String fileName) {
-		this.snippetFile = new File(fileName);		
-		if (snippetFile.exists()) {
+		
+		this.snippetFile = new File(fileName);
+		/*	Mark D 06/06/06: Added some more checking for the path of the snippets.
+		 * 	Hopefully this will make it backwards compatible and it will work for all users now
+		 *  I couldnt get it working without this. 
+		 *	 
+		 */
+		if(!snippetFile.exists()){
+			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+			this.snippetFile = new File(propertyManager.defaultSnippetsPath() + fileName);
+		}
+		
+				if (snippetFile.exists()) {
 
 			try {
 				FileInputStream fis = new FileInputStream(snippetFile);

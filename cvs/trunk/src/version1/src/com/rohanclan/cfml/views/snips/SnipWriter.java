@@ -42,7 +42,13 @@ public class SnipWriter {
 	 */
 	public SnipWriter(File parentFolder, String snippetType, IPath snipBase) {
 		super();
-		this.parentFolder = parentFolder;
+		
+		//if the parentFolder is null, then we are at the root surely?
+		if(parentFolder == null){
+			this.parentFolder = (File)snipBase;
+		}else{
+			this.parentFolder = parentFolder;
+		}
 		this.snippetType = snippetType;
 		this.snipBase = snipBase;
 		if (snippetType == SnipTreeView.DREAMWEAVER_SNIP_TYPE) {
