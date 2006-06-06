@@ -34,11 +34,13 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.ISyntaxDictionary;
+import com.rohanclan.cfml.dictionary.ScopeVar;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.parser.CFDocument;
 import com.rohanclan.cfml.parser.CFParser;
 import com.rohanclan.cfml.parser.docitems.TagItem;
+import com.rohanclan.cfml.util.CFPluginImages;
 
 /**
  * Provides "arguments" assistance When you press the '.'
@@ -111,7 +113,12 @@ public class CFMLVariableAssist
         }
     }
     /**
-     * This function finds the function you are in, then finds the arguments for that function.
+     * @param state
+     * @param doc
+     * @return
+     */
+    /**
+     * @param varName
      * @param state
      * @param doc
      * @return
@@ -154,6 +161,9 @@ public class CFMLVariableAssist
            			}else{
            				
            				//Go and get the proposals for this item, which is one set for the items, and another for the columns
+           				//TODO: Add icons to this. so maybe we do a generic scope thing that adds scopeProposals with icons
+           				
+           				
            				scopeProposals =  ((ISyntaxDictionary)this.sourceDict).getFilteredScopeVars("QUERY");
            				//Get the contents of the SQL and parse them
            				//get the end of leTag
@@ -195,7 +205,11 @@ public class CFMLVariableAssist
     	   Set formScopes = new HashSet();
     	   Iterator hashIter = varMap.keySet().iterator();
     	   while(hashIter.hasNext()){
-    		   String key = (String)hashIter.next();
+    		   
+    		   
+    		   Object keyObj = hashIter.next();
+    		 
+    		   String key = (String)keyObj;
     		   if(key.toUpperCase().startsWith(varName.toUpperCase())){
     			   
     			   formScopes.add(key);
@@ -215,19 +229,39 @@ public class CFMLVariableAssist
     	   
     	   int scopeCounter = 0;
     	   while(scopeIter.hasNext()){
-    		   String scopeItem = scopeIter.next().toString();
+    		   //Does it just return things?
+    		  
+    		   Object scopeKey = scopeIter.next();
+    		   String scopeItem = scopeKey.toString();
+    		   
+    		   System.out.println("The item we are adding is a + " + scopeKey.getClass());  
     		   
     		   
-    		   
-    		   if(isScope){
-    			   //get the second one in SCOPE.VARIABLE
-    			   scopeItem = scopeItem.substring(scopeItem.indexOf(".") + 1, scopeItem.length());
+    		   //Here we check what type these items are
+    		   CompletionProposal proposal = null;
+    		   if(scopeKey instanceof ScopeVar){
+    			   //Lets find the help and assign some help to it
+    			   ScopeVar sVar = (ScopeVar)scopeKey;
+        			  
+    			  scopeItem = scopeItem.substring(scopeItem.indexOf(".") + 1, scopeItem.length());
     			   
-    			   //Get help from the scope
+    			   proposal = new CompletionProposal(scopeItem.toString(),
+    					   state.getOffset(),
+	    	                0,
+	    	                scopeItem.toString().length(),
+	    	                CFPluginImages.get(CFPluginImages.ICON_VALUE),
+	    	                scopeItem.toString(),
+	    	                null,
+	    	                sVar.getHelp());
+    			   
+    		   } else {
+        		   proposal = new CompletionProposal(scopeItem.toString(), state.getOffset(), 0, scopeItem.toString().length());
+    			   
     		   }
-    		   CompletionProposal proposal = new CompletionProposal(scopeItem.toString(), state.getOffset(), 0, scopeItem.toString().length());
     		   proposals[scopeCounter] = proposal;
     		   scopeCounter++;
+    		   
+    		   
     	   }
     		
     	   
