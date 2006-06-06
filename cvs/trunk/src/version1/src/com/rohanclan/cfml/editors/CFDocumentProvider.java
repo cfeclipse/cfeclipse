@@ -86,12 +86,18 @@ public class CFDocumentProvider extends FileDocumentProvider
 		
 		if(document != null) 
 		{
-			FileEditorInput input = (FileEditorInput)element;
+			
+			//REMOVED the following lines as we would never know which project it is in.
+			
+			//FileEditorInput input = (FileEditorInput)element;
+			
+			
 			//try to load the proper dictionary syntax for this document			
 			CFMLPropertyManager pm = new CFMLPropertyManager();
-			String currentDict = pm.getCurrentDictionary(input.getFile().getProject());
-			if(currentDict == null || currentDict == "") 
-				currentDict = DictionaryManager.getFirstVersion(DictionaryManager.CFDIC);
+			//How do we know which project this goes to?
+			//String currentDict = pm.getCurrentDictionary(input.getFile().getProject());
+			//if(currentDict == null || currentDict == "") 
+			String currentDict = DictionaryManager.getFirstVersion(DictionaryManager.CFDIC);
 			
 			DictionaryManager.loadDictionaryFromCache(
 				currentDict,
