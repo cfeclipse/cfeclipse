@@ -420,7 +420,7 @@ public class NewCFMLWizardPage extends WizardPage {
 
 		}
 
-		/*int dotLoc = fileName.lastIndexOf('.');
+		int dotLoc = fileName.lastIndexOf('.');
 
 		if (dotLoc != -1) {
 
@@ -428,13 +428,13 @@ public class NewCFMLWizardPage extends WizardPage {
 
 			if (ext.equalsIgnoreCase("cfm") == false) {
 
-				updateStatus("File extension must be \"cfm\""); //File extension does NOT have to be cfm
+				setMessage("File extension for ColdFusion files should be \"cfm\""); //File extension does NOT have to be cfm
 
 				return;
 
 			}
 
-		}*/
+		}
 
 		updateStatus(null);
 
