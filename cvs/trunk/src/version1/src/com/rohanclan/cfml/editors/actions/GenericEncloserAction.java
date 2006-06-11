@@ -24,9 +24,14 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
+import org.eclipse.ui.IEditorInput;
 //import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -81,6 +86,11 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 		
 	public void run(IAction action) 
 	{
+		
+//		IEditorInput input = editor.getEditorInput();
+//		FileEditorInput fInput = (FileEditorInput)input;
+		
+//		System.out.println("Is this readonly" + fInput.getFile().isReadOnly());
 		if(editor != null  && editor.isEditable())
 		{
 			/*
@@ -90,6 +100,11 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 			 *System.out.println("you may edit this? But I shouldnt be able to 
 			 * save you: " + editor.isEditable());
 			 */
+			
+			
+			
+			
+//			EFS.getStore(null);
 			
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();

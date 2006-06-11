@@ -90,6 +90,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.IEditorStatusLine;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
@@ -261,7 +262,11 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		configureInsertMode(SMART_INSERT, false);
-		setInsertMode(INSERT);		
+		setInsertMode(INSERT);	
+		
+		//TODO: Add the file path location to the status line
+		
+		
 	}
 
 	public void createPartControl(Composite parent) {
