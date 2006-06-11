@@ -6,8 +6,12 @@
  */
 package com.rohanclan.cfml.editors.actions;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IFile;
 //import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IPathVariableManager;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -68,16 +72,33 @@ public class LocateInTreeAction implements IEditorActionDelegate {
 				} else if (input instanceof FileEditorInput){
 					FileEditorInput fInput = (FileEditorInput)input;
 					path = fInput.getPath();
+				
 				}
+				
 				
 				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 				IFile workspaceFile = root.getFileForLocation(path);
+				
 				if (workspaceFile != null) {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					ResourceNavigator navigator = (ResourceNavigator)page.showView("org.eclipse.ui.views.ResourceNavigator");
 					navigator.getViewer().setSelection(new StructuredSelection(workspaceFile),true);
 				} else {
-					AlertUtils.alertUser("The current file is not part of a project in the project tree.");
+					try{
+						if(input instanceof FileEditorInput){
+							FileEditorInput fInput = (FileEditorInput)input;
+							IFile theFile = fInput.getFile();
+							
+							IFile nonWorkspaceFile = root.getFileForLocation(theFile.getFullPath());
+							
+							IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+							ResourceNavigator navigator = (ResourceNavigator)page.showView("org.eclipse.ui.views.ResourceNavigator");
+							navigator.getViewer().setSelection(new StructuredSelection(theFile),true);
+						}
+					}
+					catch (Exception e) {
+						AlertUtils.alertUser("The current file is not part of a project in the project tree.");
+					}
 				}
 			}
 			catch(Exception e) {
