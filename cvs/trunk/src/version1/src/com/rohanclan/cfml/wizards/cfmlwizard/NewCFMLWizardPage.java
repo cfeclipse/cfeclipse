@@ -420,6 +420,9 @@ public class NewCFMLWizardPage extends WizardPage {
 
 		}
 
+		
+		// TODO: This might turn into an error. It allows you to create files that dont end in .cfm 
+		
 		int dotLoc = fileName.lastIndexOf('.');
 
 		if (dotLoc != -1) {
