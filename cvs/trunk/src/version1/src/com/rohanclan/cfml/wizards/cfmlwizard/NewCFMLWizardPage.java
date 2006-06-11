@@ -428,7 +428,7 @@ public class NewCFMLWizardPage extends WizardPage {
 
 			if (ext.equalsIgnoreCase("cfm") == false) {
 
-				setMessage("File extension for ColdFusion files should be \"cfm\""); //File extension does NOT have to be cfm
+				setMessage("File extension for ColdFusion files should be \"cfm\"", 2); //File extension does NOT have to be cfm
 
 				return;
 
