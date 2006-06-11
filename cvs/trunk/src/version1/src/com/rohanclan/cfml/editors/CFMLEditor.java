@@ -172,18 +172,23 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 */
 	public void doSave(IProgressMonitor monitor) {
 		//On save parsing should apparently go into a builder.
-		if (getPreferenceStore().getBoolean(
-				EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
-			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer()))
-					.listenToTextChanges(false);
+
+		// Trim trailing spaces if the option is turned on
+		if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
+			// Turn off undo manager for text changes
+			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(false);
+
+			// Perform Trim Trailing Spaces
 			RTrimAction trimAction = new RTrimAction();
 			trimAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
 			trimAction.run(null);
+
+			// Turn the undo manager back on
 			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer()))
 					.listenToTextChanges(true);
 		}
-		try {
 
+		try {
 			super.doSave(monitor);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -33,6 +33,11 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+/* Java standard imports ******************************/
+// Regex classes for the core RTrim functionality
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import com.rohanclan.cfml.editors.codefolding.CodeFoldingSetter;
 
 /**
@@ -66,53 +71,49 @@ public class RTrimAction implements IEditorActionDelegate {
 		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
 		ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
 
-		int currentLine = 0;
-		int originalCursorOffset = sel.getOffset();
-		int cursorOffset = originalCursorOffset;
-		int originalSelectionLength = sel.getLength();
-		int selectionLength = originalSelectionLength;
+		// Get the current cursor position / selection so we can keep it in place
+		int cursorOffset = sel.getOffset();
+		int selectionLength = sel.getLength();
+
+		// Compile the rTrim regex and create a matcher to perform the replacement
+		Pattern trimPattern = Pattern.compile("[\\t ]+$", Pattern.CANON_EQ);
+		Matcher trimmer = trimPattern.matcher("");
+
 		String oldText;
-		int	lineEnd;
-		
+		String newText;
+
 		//We only try this if we can!
 		if(editor != null && editor.isEditable()){
 		try {
-			//foldingSetter.takeSnapshot();
+			// foldingSetter.takeSnapshot();
 
+			// Loop over each line, performing the right trim
+			int currentLine = 0;
 			while (currentLine < doc.getNumberOfLines()) {
 				int offset = doc.getLineOffset(currentLine);
 				int length = doc.getLineLength(currentLine);
 				oldText = doc.get(offset, length);
-				
-				//-- Starts at the end of the line, looking for the first non-first 'white space'
-				//-- it then breaks out. No point in carrying on, as we have found our true line end
-				for (lineEnd=oldText.length(); lineEnd > 0; --lineEnd ){
-					if ( oldText.charAt(lineEnd-1) != '\t' && oldText.charAt(lineEnd-1) != ' ' ){
-						break;
-					}
-				}
-				
-				//-- Only replace the line if the lengths are different
-				if ( lineEnd != oldText.length() ) {
-					String newText = oldText.substring(0, lineEnd);
+
+				trimmer.reset(oldText);
+				newText = trimmer.replaceAll("");
+
+				// Replace the old line if the length is different
+				if (newText.length() != length) {
 					doc.replace(offset, length, newText);
 
-					if (offset + length <= cursorOffset) {
-						if (oldText.length() != newText.length()) {
-							cursorOffset -= oldText.length() - newText.length();
-						}
-					} else if (offset <= cursorOffset + selectionLength	&& selectionLength > 0) {
-						selectionLength -= oldText.length() - newText.length();
-					}	else if (offset + length == cursorOffset + 2) { // Check if the cursor is at the end of the line.
-						cursorOffset -= 2;
+					// Update the cursor offset for the characters removed
+					if (offset < cursorOffset) { 
+						cursorOffset -= (length - newText.length());
 					}
 				}
+
 				currentLine++;
 			}
 
 			TextSelection selection = new TextSelection(doc, cursorOffset, selectionLength);
 			editor.getSelectionProvider().setSelection(selection);
-			//foldingSetter.restoreSnapshot();
+
+			// foldingSetter.restoreSnapshot();
 		} catch (Exception blx) {
 			blx.printStackTrace();
 		}
@@ -120,6 +121,5 @@ public class RTrimAction implements IEditorActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
-		;
 	}
 }

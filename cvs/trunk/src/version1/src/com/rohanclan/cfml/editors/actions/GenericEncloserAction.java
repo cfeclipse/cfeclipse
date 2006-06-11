@@ -87,9 +87,11 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 			 * to fix the fact that you can run this function on readonly files, we 
 			 * are going to check the document here The resutlts of editor.isEditable() 
 			 * dont seem to tally up with the method definition
-			 * System.out.println("you may edit this? But I shouldnt be able to 
+			 *System.out.println("you may edit this? But I shouldnt be able to 
 			 * save you: " + editor.isEditable());
 			 */
+			
+			System.out.println("you may edit this? But I shouldnt be able to save you: " + editor);
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
 			this.enclose(doc,(ITextSelection)sel,start,end);
