@@ -105,6 +105,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
 		indentTagStrategy.setAutoClose_SingleQuotes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES));
 		indentTagStrategy.setAutoClose_Hashes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES));
+		indentTagStrategy.setAutoClose_Brackets(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_BRACKETS));
+		indentTagStrategy.setAutoClose_Parens(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_PARENS));
 		indentTagStrategy.setAutoClose_Tags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS));
 		indentTagStrategy.setAutoInsert_CloseTags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS));
 		indentTagStrategy.setUseSmartIndent(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_USE_SMART_INDENT));
@@ -758,40 +760,48 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
     {
 // System.out.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
+		System.out.println("The Property we are setting is: " + event.getNewValue());
+    	Boolean setting = false;
+    	if(event.getNewValue().equals("true")) setting = true;
     	
 		if(prop.equals(EditorPreferenceConstants.P_INSIGHT_DELAY)) {
 			int delay = preferenceManager.insightDelay();
 			assistant.enableAutoActivation(true);			
 			assistant.setAutoActivationDelay(delay);
-    			//System.err.println("Insight delay set to " + delay);
+   			//System.err.println("Insight delay set to " + delay);
         }
         else if(prop.equals(EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS) || prop.equals(EditorPreferenceConstants.P_TAB_WIDTH)) {
-	    		tabWidth = preferenceManager.tabWidth();
-	    		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
-	        	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
-	        	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
-	        	
+    		tabWidth = preferenceManager.tabWidth();
+    		boolean tabsAsSpaces = preferenceManager.insertSpacesForTabs();    		
+        	indentCFScriptStrategy.setIndentString(tabWidth,tabsAsSpaces);
+        	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES)) {
-        		indentTagStrategy.setAutoClose_DoubleQuotes(((Boolean)event.getNewValue()).booleanValue());
+        	indentTagStrategy.setAutoClose_DoubleQuotes(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES)) {
-        		indentTagStrategy.setAutoClose_SingleQuotes(((Boolean)event.getNewValue()).booleanValue());
+        	indentTagStrategy.setAutoClose_SingleQuotes(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES)) {
-        		indentTagStrategy.setAutoClose_Hashes(((Boolean)event.getNewValue()).booleanValue());
+        	indentTagStrategy.setAutoClose_Hashes(setting);
+        }
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_BRACKETS)) {
+    		indentTagStrategy.setAutoClose_Brackets(setting);
+        }
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_PARENS)) {
+    		indentTagStrategy.setAutoClose_Parens(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS)) {
-        		indentTagStrategy.setAutoClose_Tags(((Boolean)event.getNewValue()).booleanValue());
+        	indentTagStrategy.setAutoClose_Tags(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
-    		indentTagStrategy.setAutoInsert_CloseTags(((Boolean)event.getNewValue()).booleanValue());
-    }
+    		indentTagStrategy.setAutoInsert_CloseTags(setting);
+        }
         else if(prop.equals(AutoIndentPreferenceConstants.P_USE_SMART_INDENT)) {
-    		indentTagStrategy.setUseSmartIndent(((Boolean)event.getNewValue()).booleanValue());
-    }
+    		indentTagStrategy.setUseSmartIndent(setting);
+        }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
-        	int indentValue = ((Boolean)event.getNewValue()).booleanValue() ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
+        	int indentValue = setting ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
         	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
         }
         else if(prop.equals(EditorPreferenceConstants.P_TAB_INDENTS_CURRENT_LINE)) {
@@ -800,12 +810,12 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         	indentCFScriptStrategy.setTabIndentSingleLine(state);
         }
         else if(prop.equals(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
-	        	//boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
-	        	try {
-	        		CFMLPlugin.getWorkspace().getRoot().deleteMarkers(null, true, IResource.DEPTH_INFINITE);
-	        	}catch(CoreException ex) {
-	        		ex.printStackTrace();
-	        	}
+        	//boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
+        	try {
+        		CFMLPlugin.getWorkspace().getRoot().deleteMarkers(null, true, IResource.DEPTH_INFINITE);
+        	}catch(CoreException ex) {
+        		ex.printStackTrace();
+        	}
         }
     }
 }

@@ -26,6 +26,12 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for closing "#" */
 	public static final String P_AUTOCLOSE_HASHES = "__autoCloseHashes";
 
+	/** Preference key identifier for closing "[" */
+	public static final String P_AUTOCLOSE_BRACKETS = "__autoCloseBrackets";
+
+	/** Preference key identifier for closing "(" */
+	public static final String P_AUTOCLOSE_PARENS = "__autoCloseParens";
+
 	/** Preference key identifier for inserting a closing tag */
 	public static final String P_AUTOINSERT_CLOSE_TAGS = "__autoInsertCloseTags";
 
@@ -45,6 +51,8 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_AUTOCLOSE_SINGLE_QUOTES - true</li>
 	 * <li>P_AUTOCLOSE_TAGS - true</li>
 	 * <li>P_AUTOCLOSE_HASHES - true</li>
+	 * <li>P_AUTOCLOSE_BRACKETS - true</li>
+	 * <li>P_AUTOCLOSE_PARENS - true</li>
 	 * <li>P_AUTOINSERT_CLOSE_TAGS - true</li>
 	 * <li>P_AUTOINDENT_ONTAGCLOSE - false</li>
 	 * </ul>
@@ -55,6 +63,8 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_AUTOCLOSE_SINGLE_QUOTES, true);
 		store.setDefault(P_AUTOCLOSE_TAGS, true);
 		store.setDefault(P_AUTOCLOSE_HASHES, true);
+		store.setDefault(P_AUTOCLOSE_BRACKETS, true);
+		store.setDefault(P_AUTOCLOSE_PARENS, true);
 		store.setDefault(P_AUTOINSERT_CLOSE_TAGS, true);
 		store.setDefault(P_AUTOINDENT_ONTAGCLOSE,false);
 		store.setDefault(P_USE_SMART_INDENT,true);

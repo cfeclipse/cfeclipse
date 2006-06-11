@@ -30,7 +30,6 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
 
-import com.rohanclan.cfml.CFMLPlugin;
 import com.rohanclan.cfml.dictionary.DictionaryManager;
 import com.rohanclan.cfml.dictionary.SyntaxDictionary;
 import com.rohanclan.cfml.dictionary.Tag;
@@ -38,7 +37,6 @@ import com.rohanclan.cfml.editors.CFMLEditor;
 import com.rohanclan.cfml.editors.ICFDocument;
 import com.rohanclan.cfml.editors.partitioner.CFEPartition;
 import com.rohanclan.cfml.editors.partitioner.CFEPartitioner;
-import com.rohanclan.cfml.preferences.EditorPreferenceConstants;
 
 /**
  * This represents a tag-based auto-indent strategy. It not only does the
@@ -73,10 +71,17 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	/** Auto-close hashes (#) */
 	private boolean autoClose_Hashes = true;
 
+	/** Auto-insert a closing bracket */
+	private boolean autoClose_Brackets = true;
+	
+	/** Auto-insert closing parenthesis */
+	private boolean autoClose_Parens = true;
+
 	/** Auto-insert a closing tag */
 	private boolean autoInsert_CloseTags = true;
 
-	/** Use smart indent */
+
+	/** Use smart indent */ 
 	private boolean useSmartIndent = true;
 
 	/** When to trigger the auto-indent strategy when the user is in a tag */
@@ -563,6 +568,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			case '\b':
 				// handleDelete(doc, docCommand);
 				return;
+
 			case '!':
 				if (doc.getChar(docCommand.offset - 1) == '<'
 						&& doc.getLength() > docCommand.offset + 1
@@ -570,6 +576,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					handleHTMLComment(doc, docCommand);
 				}
 				return;
+
 			case '>':
 				if (!this.autoInsert_CloseTags) {
 					if (doc.getLength() > docCommand.offset
@@ -583,9 +590,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			case '<':
 				if (!this.autoClose_Tags)
 					return;
-
 				handleOpenChevron(docCommand);
 				return;
+
 			case '\"':
 				if (!this.autoClose_DoubleQuotes) {
 					// User doesn't want us to do this
@@ -593,22 +600,58 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				}
 				handleQuotes(doc, docCommand, firstCommandChar);
 				return;
+
 			// Handle opening/closing quotes
 			case '\'':
 				if (!this.autoClose_SingleQuotes)
 					return;
 				handleQuotes(doc, docCommand, firstCommandChar);
 				return;
+
 			// Handle opening/closing quotes
 			case '#':
 				if (!this.autoClose_Hashes)
 					return;
 				handleHashes(doc, docCommand);
 				return;
+
+			// Opening / Closing Brackets
+			case '[':
+				if (! this.isAutoClose_Brackets()) {
+					if (doc.getLength() > docCommand.offset
+							&& doc.getChar(docCommand.offset + 1) == '>')
+						stepThrough(docCommand);
+				}
+				else {
+					handleOpenBracket(docCommand);
+				}
+				return;
+			case ']':
+				if (this.isAutoClose_Brackets())
+					handleClosingBracket(doc, docCommand);
+				return;
+
+			// Opening / Closing Parens
+			case '(':
+				if (! this.isAutoClose_Parens()) {
+					if (doc.getLength() > docCommand.offset
+							&& doc.getChar(docCommand.offset + 1) == '>')
+						stepThrough(docCommand);
+				}
+				else {
+					handleOpenParen(docCommand);
+				}
+				return;
+			case ')':
+				if (this.isAutoClose_Brackets())
+					handleClosingParen(doc, docCommand);
+				return;
+
 			// handle tabs
 			case '\t':
 				singleLineIndent(doc, docCommand);
 				return;
+
 			default:
 				// Check to make sure that the text entered isn't a LF/CRLF and
 				// that
@@ -840,10 +883,10 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param docCommand
 	 * @return
 	 */
+	/* TODO: Evaluate whether this method is necessary or not */
 	private boolean isTagStartOnLine(IDocument doc, DocumentCommand command) {
 		int position = command.offset - 1;
 		String docData = doc.get();
-		boolean openerFound = false;
 		//
 		// First, search backwards. We should hit a '<' before we hit a '>'.
 		int i = position;
@@ -1023,18 +1066,15 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	}
 
 	/**
-	 * Handles the insertion of quotes by the user. If the user has opened
-	 * quotes then it inserts a closing quote after the opened quote and does
-	 * not move the caret. If the user is closing some quotes it steps through
+	 * Handles the insertion of hashes by the user. If the user has opened
+	 * hashes then it inserts a closing hash after the opened hash and does
+	 * not move the caret. If the user is closing some hashes it steps through
 	 * the existing quote.
 	 * 
 	 * @param doc -
 	 *            The document that the command is being performed in
 	 * @param docCommand -
 	 *            the command to modify
-	 * @param quoteChar -
-	 *            the quote character that triggered this. This allows us to
-	 *            handle " and ' quotes.
 	 * @throws BadLocationException -
 	 *             ack.
 	 */
@@ -1057,6 +1097,74 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		docCommand.caretOffset = docCommand.offset + 1;
 		docCommand.shiftsCaret = false;
 		return;
+	}
+
+	/**
+	 * Handles the insertion of an opening bracket by inserting a closing bracket,
+	 * leaving the cursor between them.
+	 * 
+	 * @param docCommand -
+	 *            the command to modify
+	 */
+	private void handleOpenBracket(DocumentCommand docCommand) {
+		docCommand.text += "]";
+		docCommand.shiftsCaret = false;
+		docCommand.caretOffset = docCommand.offset + 1;
+	}
+
+	/**
+	 * Handles the insertion of a closing bracket by making the cursor
+	 * step through an existing closing bracket.
+	 * 
+	 * @param docCommand
+	 */
+	private void handleClosingBracket(IDocument doc, DocumentCommand docCommand) {
+		char nextChar = (char) 0;
+		try {
+			nextChar = doc.getChar(docCommand.offset);
+		} catch (BadLocationException bex) {
+			// do nothing
+		}
+
+		if (nextChar == ']') {
+			docCommand.text = "";
+			docCommand.shiftsCaret = false;
+			docCommand.caretOffset = docCommand.offset + 1;
+		}
+	}
+
+	/**
+	 * Handles the insertion of an opening parenthesis by inserting a 
+	 * closing parenthesis, leaving the cursor between them.
+	 * 
+	 * @param docCommand -
+	 *            the command to modify
+	 */
+	private void handleOpenParen(DocumentCommand docCommand) {
+		docCommand.text += ")";
+		docCommand.shiftsCaret = false;
+		docCommand.caretOffset = docCommand.offset + 1;
+	}
+
+	/**
+	 * Handles the insertion of a closing parenthesis by making the cursor
+	 * step through an existing closing parenthesis.
+	 * 
+	 * @param docCommand
+	 */
+	private void handleClosingParen(IDocument doc, DocumentCommand docCommand) {
+		char nextChar = (char) 0;
+		try {
+			nextChar = doc.getChar(docCommand.offset);
+		} catch (BadLocationException bex) {
+			// do nothing
+		}
+
+		if (nextChar == ')') {
+			docCommand.text = "";
+			docCommand.shiftsCaret = false;
+			docCommand.caretOffset = docCommand.offset + 1;
+		}
 	}
 
 	/**
@@ -1122,6 +1230,34 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void setAutoClose_SingleQuotes(boolean autoClose_SingleQuotes) {
 		this.autoClose_SingleQuotes = autoClose_SingleQuotes;
+	}
+
+	/**
+	 * @return the autoClose_Brackets
+	 */
+	public boolean isAutoClose_Brackets() {
+		return autoClose_Brackets;
+	}
+
+	/**
+	 * @param autoClose_Brackets the autoClose_Brackets to set
+	 */
+	public void setAutoClose_Brackets(boolean autoClose_Brackets) {
+		this.autoClose_Brackets = autoClose_Brackets;
+	}
+
+	/**
+	 * @return the autoClose_Parens
+	 */
+	public boolean isAutoClose_Parens() {
+		return autoClose_Parens;
+	}
+
+	/**
+	 * @param autoClose_Parens the autoClose_Parens to set
+	 */
+	public void setAutoClose_Parens(boolean autoClose_Parens) {
+		this.autoClose_Parens = autoClose_Parens;
 	}
 
 	/**
