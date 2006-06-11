@@ -91,7 +91,6 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 			 * save you: " + editor.isEditable());
 			 */
 			
-			System.out.println("you may edit this? But I shouldnt be able to save you: " + editor);
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
 			this.enclose(doc,(ITextSelection)sel,start,end);

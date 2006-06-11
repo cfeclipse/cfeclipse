@@ -106,7 +106,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 		{
 		  
 			
-		  
+		 
 		  SnipKeyCombos keyCombos = new SnipKeyCombos();
 		  
 		  
@@ -119,6 +119,8 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			int lastSpaceOffset = -1;
 			//int nextSpaceOffset = -1;
 			FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
+			
+			
 			try {
 			    IRegion lastSpace = finder.find(cursorOffset-1,"[^\\*0-9a-zA-Z_-]",false,false,false,true);
 			    
@@ -129,13 +131,13 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			        lastSpaceOffset = lastSpace.getOffset()+1;
 			    }
 			    
-			    //System.out.println("Last Space at" + lastSpaceOffset);
-			    //System.out.println("Cursot at" + cursorOffset);
+			   // System.out.println("Last Space at" + lastSpaceOffset);
+			   // System.out.println("Cursot at" + cursorOffset);
 			    
 			    if (cursorOffset > lastSpaceOffset) {
 			        // ok, it could be valid, but we need to check what comes after the cursor.
 			        if (cursorOffset != doc.getLength()) {
-			            //System.out.println("yep");
+			            System.out.println("yep");
 			            IRegion nextSpace = finder.find(cursorOffset-1,"[^\\*0-9a-zA-Z_-]",true,false,false,true);
 			            if (nextSpace != null
 			                    && nextSpace.getOffset() == cursorOffset) {
@@ -152,8 +154,6 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			catch (Exception e) {
 			    e.printStackTrace();
 			}
-			
-			
 			
 			if (sequence.length() > 0) {
 			    
@@ -176,8 +176,9 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 				if (this.editor.getEditorInput() instanceof IFileEditorInput) {
 					activeFile = ((IFileEditorInput) this.editor.getEditorInput()).getFile();
 				}
+			
 				
-			    snipReader.read(keyCombos.getSnippetFolder() + fileName);
+			    snipReader.read(fileName);
 			    
 			    
 			    String indentString = "";
@@ -187,7 +188,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			        indentString = doc.get().substring(lineOffset,lastSpaceOffset);
 			    }
 			    catch (Exception e) {
-			    	
+			    	System.err.println(e);
 			        // do nothing
 			        //System.err.println("Insert snippet failed to get insert string.");
 			    }
@@ -195,7 +196,9 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    if (indentString.length() > 0) {
 			        snipReader.performIndent(indentString);
 			    }
-
+			   
+			    
+			    
 			    
 			    String snippet = "";
 			    
