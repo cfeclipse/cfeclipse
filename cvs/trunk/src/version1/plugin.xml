@@ -1498,4 +1498,56 @@
             name="CFML Editor context"
             parentId="org.eclipse.ui.textEditorScope"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.intro">
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            id="com.rohanclan.cfml.intro"/>
+      <introProductBinding
+            introId="com.rohanclan.cfml.intro"
+            productId="org.eclipse.platform.ide"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.config">
+      <config
+            content="introContent.xml"
+            id="com.rohanclan.cfml.introConfigId"
+            introId="com.rohanclan.cfml.intro">
+         <presentation home-page-id="root">
+            <implementation
+                  kind="html"
+                  os="win32,linux,macosx"
+                  style="content/shared.css"/>
+         </presentation>
+      </config>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="CFEclipse">
+         <property
+               name="windowImages"
+               value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
+         <property
+               name="aboutImage"
+               value="icons/icons/start_cfeclipse.bmp"/>
+         <property
+               name="startupForegroundColor"
+               value="C8D5EA"/>
+         <property
+               name="startupProgressRect"
+               value="0,280,455,15"/>
+         <property
+               name="startupMessageRect"
+               value="7,220,441,20"/>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini"/>
+         <property
+               name="aboutText"
+               value="Eclipse is an awesome IDE for Coldfusion. It is. Really."/>
+      </product>
+   </extension>
 </plugin>
