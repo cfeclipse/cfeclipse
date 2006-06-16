@@ -165,7 +165,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_SELECTION_BACKGROUND_SYSTEM_DEFAULT,false);
 		store.setDefault(P_WARN_READ_ONLY_FILES,true);
 		store.setDefault(P_BRACKET_MATCHING_STYLE,BRACKET_MATCHING_BOLD);
-		store.setDefault(P_SHOW_EDITOR_TOOLBAR, false);
+		store.setDefault(P_SHOW_EDITOR_TOOLBAR, true);
 	}
 	
 	
