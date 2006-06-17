@@ -3,7 +3,7 @@
 <plugin
    id="com.rohanclan.cfml"
    name="CFML Plug-in"
-   version="1.2.5"
+   version="1.2.6"
    provider-name="The CFEclipse Crew"
    class="com.rohanclan.cfml.CFMLPlugin">
 
@@ -27,6 +27,8 @@
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.ui.intro"/>
+      <import plugin="org.eclipse.ui.intro.universal"/>
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
@@ -1532,10 +1534,10 @@
                value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
          <property
                name="aboutImage"
-               value="icons/icons/start_cfeclipse.bmp"/>
+               value="icons/icons/start_cfeclipse.gif"/>
          <property
                name="startupForegroundColor"
-               value="C8D5EA"/>
+               value="8080C0"/>
          <property
                name="startupProgressRect"
                value="0,280,455,15"/>
@@ -1549,5 +1551,11 @@
                name="aboutText"
                value="Eclipse is an awesome IDE for Coldfusion. It is. Really."/>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            configId="org.eclipse.ui.intro.universalConfig"
+            content="intro/sample.xml"/>
    </extension>
 </plugin>

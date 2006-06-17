@@ -21,8 +21,9 @@
       location="com.rohanclan.cfml"
       startupProgressRect="0,280,455,15"
       startupMessageRect="7,220,441,20"
-      startupForegroundColor="C8D5EA" />
+      startupForegroundColor="8080C0" />
    <launcher name="CFEclipse">
+      <macosx icon="/com.rohanclan.cfml/icons/icons/cfelogo.icns"/>
       <solaris/>
       <win useIco="true">
          <ico path="/com.rohanclan.cfml/icons/icons/cfeclipse.ico"/>
@@ -40,7 +41,6 @@
    <intro introId="org.eclipse.ui.intro.universal"/>
 
    <plugins>
-      <plugin id="XMLCompiler"/>
       <plugin id="com.ibm.icu"/>
       <plugin id="com.rohanclan.afae"/>
       <plugin id="com.rohanclan.cfml"/>
@@ -110,5 +110,9 @@
       <plugin id="org.eclipse.update.core.win32" fragment="true"/>
       <plugin id="org.eclipse.update.ui"/>
    </plugins>
+
+   <features>
+      <feature id="cfeclipse_feature" version="1.0.0"/>
+   </features>
 
 </product>

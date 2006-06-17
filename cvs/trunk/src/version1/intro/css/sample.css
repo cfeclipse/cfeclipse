@@ -1,0 +1,3 @@
+
+a#com.rohanclan.cfml-introLink img { background-image : url(graphics/sample.gif); }
+a#com.rohanclan.cfml-introLink:hover img { background-image : url(graphics/sample_hov.gif); }
