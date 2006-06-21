@@ -22,10 +22,10 @@ import com.rohanclan.cfml.parser.cfmltagitems.CfmlTagSet;
  *
  */
 public class VariablesParser {
-	private HashMap<String, TagItem> variableMap;
+	private HashMap variableMap;
 
 	public VariablesParser(CFDocument document, String docText) {
-		variableMap = new HashMap<String, TagItem>();
+		variableMap = new HashMap();
 		parseForVariables(document.getDocumentRoot());
 	}
 	

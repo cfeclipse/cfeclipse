@@ -761,7 +761,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 // System.out.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
 		System.out.println("The Property we are setting is: " + event.getNewValue());
-    	Boolean setting = false;
+    	boolean setting = false;
     	if(event.getNewValue().equals("true")) setting = true;
     	
 		if(prop.equals(EditorPreferenceConstants.P_INSIGHT_DELAY)) {

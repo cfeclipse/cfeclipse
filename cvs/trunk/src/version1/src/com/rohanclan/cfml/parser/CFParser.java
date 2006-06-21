@@ -333,7 +333,7 @@ public class CFParser {
 	 */
 	protected ArrayList stripAttributes(String inData, int lineNum, int offset)
 	{
-		ArrayList<AttributeItem> attributes = new ArrayList<AttributeItem>();
+		ArrayList attributes = new ArrayList();
 		Matcher matcher;
 		Pattern pattern;
 		String attributeName,attributeValue;
@@ -407,7 +407,7 @@ public class CFParser {
 			    // and remove them if there is an opener below them.
 			    try {
 				boolean foundCloser = false;
-			    ArrayList<TagItem> removals = new ArrayList<TagItem>();
+			    ArrayList removals = new ArrayList();
 			    Object[] items = matchStack.toArray();
 			    //System.out.println("Looking on stack for opening " + closerName + ". Closer found on line: " + this.getLineNumber(match.getStartPos()));
 			    for (int i=items.length-1;i>0;i--) {

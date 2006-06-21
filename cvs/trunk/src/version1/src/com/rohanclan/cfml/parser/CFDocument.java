@@ -59,7 +59,7 @@ public class CFDocument {
 	/**
 	 * List of variables in the document. Not used at the moment.
 	 */
-	public ArrayList<Variable> docVariables;	
+	public ArrayList docVariables;	
 	
 	/**
 	 * List of variables in the document, created in CFParser
@@ -109,7 +109,7 @@ public class CFDocument {
 	{
 		if(docVariables == null)
 		{
-			docVariables = new ArrayList<Variable>();
+			docVariables = new ArrayList();
 		}
 		docVariables.add(newVar);
 	}
@@ -151,7 +151,7 @@ public class CFDocument {
 		return docVariables;
 	}
 
-	public void setDocVariables(ArrayList<Variable> docVariables) {
+	public void setDocVariables(ArrayList docVariables) {
 		this.docVariables = docVariables;
 	}
 
