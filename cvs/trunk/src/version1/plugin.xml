@@ -75,7 +75,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="CFEclipse"
+            name="%perspective.name.CFEclipse"
             icon="icons/obj16/default.gif"
             class="com.rohanclan.cfml.perspective.CFPerspective"
             id="com.rohanclan.cfml.perspective.CFML">
@@ -87,7 +87,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            name="CFML Editor"
+            name="%editor.name.CFML_Editor"
             extensions="cfc,cfm,cfml,html,htm,xhtml"
             icon="icons/obj16/default.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
@@ -105,7 +105,7 @@
             targetID="com.rohanclan.cfml.editors.CFMLEditor"
             id="com.rohanclan.cfml.editors.CFMLEditorActions">
          <menu
-               label="&amp;CFML"
+               label="%menu.label.CFML"
                path="window"
                id="com.rohanclan.cfml.cfmlmenu">
             <separator
@@ -120,17 +120,17 @@
                class="com.rohanclan.cfml.editors.actions.WordWrapAction"
                icon="icons/ctool16/wordwrap.gif"
                id="com.rohanclan.cfml.editors.actions.wordWrapAction"
-               label="Word Wrap"
+               label="%action.label.WordWrap"
                state="false"
                style="toggle"
                toolbarPath="BasicCFEditorText"
-               tooltip="Enable/Disable word wrap"/>
+               tooltip="%action.tooltip.WordWrap"/>
 		<!-- cfcomment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFComment"
-               label="&amp;Comment"
+               label="%action.label.Comment"
                icon="icons/ctool16/comment.gif"
-               tooltip="Insert a CFML comment"
+               tooltip="%action.tooltip.Comment"
                class="com.rohanclan.cfml.editors.actions.CFCommentAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
@@ -139,9 +139,9 @@
 		<!-- smart comment -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.AutoComment"
-               label="&amp;Auto Comment"
+               label="%action.label.AutoComment"
                icon="icons/ctool16/smartcomment.gif"
-               tooltip="Insert comment based on section"
+               tooltip="%action.tooltip.AutoComment"
                class="com.rohanclan.cfml.editors.actions.AutoCommentAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
@@ -150,9 +150,9 @@
 		<!-- Surround with #s -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFVariable"
-               label="&amp;Variable"
+               label="%action.label.Variable"
                icon="icons/ctool16/hash.gif"
-               tooltip="Surround with hash/number signs"
+               tooltip="%action.tooltip.Variable"
                class="com.rohanclan.cfml.editors.actions.CFVariableAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorText"
@@ -161,9 +161,9 @@
 		<!-- Surround with single quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFSingleQuote"
-               label="&amp;Single Quotes"
+               label="%action.label.SingleQuotes"
                icon="icons/ctool16/squote.gif"
-               tooltip="Surround with single quotes"
+               tooltip="%action.tooltip.SingleQuotes"
                class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorText"
@@ -172,9 +172,9 @@
 		<!-- Surround with double quotes -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDoubleQuote"
-               label="&amp;Double Quotes"
+               label="%action.label.DoubleQuotes"
                icon="icons/ctool16/dquote.gif"
-               tooltip="Surround with double quotes"
+               tooltip="%action.tooltip.DoubleQuotes"
                class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorText"
@@ -183,9 +183,9 @@
 		<!-- Surround with simple cfoutputs -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFOutput"
-               label="CF &amp;Output"
+               label="%action.label.CFOutput"
                icon="icons/ctool16/output.gif"
-               tooltip="Surround with cfoutput"
+               tooltip="%action.tooltip.CFOutput"
                class="com.rohanclan.cfml.editors.actions.CFOutputAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorCommand"
@@ -194,9 +194,9 @@
 		<!-- Surround with a simple cfdump -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFDump"
-               label="CF D&amp;ump"
+               label="%action.label.CFDump"
                icon="icons/ctool16/dump.gif"
-               tooltip="Surround with simple cfdump"
+               tooltip="%action.tooltip.CFDump"
                class="com.rohanclan.cfml.editors.actions.CFDumpAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorCommand"
@@ -205,9 +205,9 @@
 		<!-- Surround with a cfscript -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.CFScript"
-               label="CF S&amp;cript"
+               label="%action.label.CFScript"
                icon="icons/ctool16/script.gif"
-               tooltip="Surround with cfscript"
+               tooltip="%action.tooltip.CFScript"
                class="com.rohanclan.cfml.editors.actions.CFScriptAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.CFScriptAction">
@@ -215,9 +215,9 @@
 		<!-- to lower case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToLowerCase"
-               label="To L&amp;ower"
+               label="%action.label.ToLower"
                icon="icons/ctool16/tolower.gif"
-               tooltip="Lower case selected text"
+               tooltip="%action.tooltip.ToLower"
                class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
@@ -226,9 +226,9 @@
 		<!-- to upper case -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.ToUpperCase"
-               label="To U&amp;pper"
+               label="%action.label.ToUpper"
                icon="icons/ctool16/toupper.gif"
-               tooltip="Upper case selected text"
+               tooltip="%action.tooltip.ToUpper"
                class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                toolbarPath="BasicCFEditorText"
@@ -237,9 +237,9 @@
 		<!-- insert date -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertDate"
-               label="Insert Date"
+               label="%action.label.InsertDate"
                icon="icons/ctool16/time.gif"
-               tooltip="Insert the current date"
+               tooltip="%action.tooltip.InsertDate"
                class="com.rohanclan.cfml.editors.actions.InsertDateAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.InsertDateAction">
@@ -247,9 +247,9 @@
          <!-- insert color -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertColor"
-               label="Insert Color"
+               label="%action.label.InsertColor"
      		   icon="icons/ctool16/palette.gif"
-               tooltip="Insert a color"
+               tooltip="%action.tooltip.InsertColor"
                class="com.rohanclan.cfml.editors.actions.InsertColorAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.InsertColorAction">
@@ -257,25 +257,25 @@
          <!-- insert an html br action (for Brian Sadler) -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertBR"
-               label="Insert BR"
-               tooltip="Insert a BR tag"
+               label="%action.label.InsertBR"
+               tooltip="%action.tooltip.InsertBR"
                class="com.rohanclan.cfml.editors.actions.InsertBRAction"
                id="com.rohanclan.cfml.editors.actions.InsertBRAction">
          </action>
          <!-- insert an html nbsp action (for Michael Wolfe) -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.InsertNBSP"
-               label="Insert nbsp Entity Reference"
-               tooltip="Insert an nbsp Entity Reference"
+               label="%action.label.InsertEntity"
+               tooltip="%action.tooltip.InsertEntity"
                class="com.rohanclan.cfml.editors.actions.InsertNBSPAction"
                id="com.rohanclan.cfml.editors.actions.InsertNBSPAction">
          </action>
          <!-- insert an html strong tag action (for Michael Wolfe) -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.StrongTag"
-               label="Insert strong tag"
+               label="%action.label.InsertStrong"
 			   icon="icons/ctool16/bold.gif"
-               tooltip="Insert a strong tag"
+               tooltip="%action.tooltip.InsertStrong"
                class="com.rohanclan.cfml.editors.actions.StrongTagAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                id="com.rohanclan.cfml.editors.actions.StrongTagAction">
@@ -283,9 +283,9 @@
          <!-- insert an html em tag action (for Michael Wolfe) -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.EmTag"
-               label="Insert em tag"
+               label="%action.label.InsertEm"
 			   icon="icons/ctool16/italic.gif"
-               tooltip="Insert an em tag"
+               tooltip="%action.tooltip.InsertEm"
                class="com.rohanclan.cfml.editors.actions.EmTagAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                id="com.rohanclan.cfml.editors.actions.EmTagAction">
@@ -293,9 +293,9 @@
          <!-- insert an html p tag action (for Michael Wolfe) -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.PTag"
-               label="Insert p tag"
+               label="%action.label.InsertP"
 			   icon="icons/ctool16/paragraph.gif"
-               tooltip="Insert a p tag"
+               tooltip="%action.tooltip.InsertP"
                class="com.rohanclan.cfml.editors.actions.PTagAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                id="com.rohanclan.cfml.editors.actions.PTagAction">
@@ -303,9 +303,9 @@
          <!-- repeat last tag (for Brian Sadler) -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.LastAction"
-               label="Repeat last tag"
+               label="%action.label.RepeatLastTag"
      		   icon="icons/ctool16/repeattag.gif"
-               tooltip="Repeat last tag"
+               tooltip="%action.tooltip.RepeatLastTag"
                class="com.rohanclan.cfml.editors.actions.LastActionAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                toolbarPath="BasicCFEditorCommand"
@@ -314,7 +314,7 @@
          <!-- jump to matching tag -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction"
-               label="Jump to matching tag"
+               label="%action.label.JumpToMatchingTag"
                class="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction"
                menubarPath="com.rohanclan.cfml.cfmlmenu/output"
                id="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction">
@@ -322,90 +322,90 @@
          <!-- Trim trailing spaces from lines -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.RTrim"
-               label="Tirm trailing spaces"
-               tooltip="Trim trailing spaces from lines."
+               label="%action.label.TrimSpaces"
+               tooltip="%action.tooltip.TrimSpaces"
                class="com.rohanclan.cfml.editors.actions.RTrimAction"
                id="com.rohanclan.cfml.editors.actions.RTrimAction">
          </action>
          <!-- Fold the selected text -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection"
-               label="Add folding markers"
-               tooltip="Add folding markers and collapse the selected text"
+               label="%action.label.AddFoldingMarkers"
+               tooltip="%action.tooltip.AddFoldingMarkers"
                class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
          </action>
          <!-- Remove folding markers from the selected text -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection"
-               label="Clear folding markers."
-               tooltip="Clear folding markers from the selected text"
+               label="%action.label.ClearFoldingMarkers"
+               tooltip="%action.tooltip.ClearFoldingMarkers"
                class="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection">
          </action>
          <!-- Collapse the selected text -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection"
-               label="Collapse the selected text."
-               tooltip="Collapse any folding markers in and around the selected text"
+               label="%action.label.CollapseText"
+               tooltip="%action.tooltip.CollapseText"
                class="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection">
          </action>
          <!-- Expand the selected text -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection"
-               label="Expand the selected text."
-               tooltip="Expand any folding markers in and around the selected text"
+               label="%action.label.ExpandSelected"
+               tooltip="%action.tooltip.ExpandSelected"
                class="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
          </action>
          <!-- Expand all markers -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers"
-               label="Expand all"
-               tooltip="Expand all folding markers"
+               label="%action.label.ExpandAll"
+               tooltip="%action.tooltip.ExpandAll"
                class="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers">
          </action>
          <!-- Collapse all markers -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers"
-               label="Collapse all"
-               tooltip="Collapse all"
+               label="%action.label.CollapseAll"
+               tooltip="%action.tooltip.CollapseAll"
                class="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers">
          </action>
          <!-- Expand matching markers -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
-               label="Expand matching"
-               tooltip="Expand any folding markers of a particular type"
+               label="%action.label.ExpandMatching"
+               tooltip="%action.tooltip.ExpandMatching"
                class="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
          </action>
          <!-- Collapse matching markers -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
-               label="Collapse matching"
-               tooltip="Collapse any folding markers of a particular type"
+               label="%action.label.CollapseMatching"
+               tooltip="%action.tooltip.CollapseMatching"
                class="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
          </action>
          <!-- Toggle the expand/collapse state of the selected text -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection"
-               label="Expand/collapse the selected text"
-               tooltip="Expand or collapse any folding markers in and around the selected text"
+               label="%action.label.ExpandCollapse"
+               tooltip="%action.tooltip.ExpandCollapse"
                class="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelectionAction"
                id="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection">
          </action>
          <!-- Reload the syntax dictionaries -->
          <action
                toolbarPath="BasicCFEditorCommand"
-               label="Reload Dictionaries"
+               label="%action.label.ReloadDic"
                icon="icons/ctool16/dictsearch.gif"
                class="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction"
-               tooltip="Reload syntax dictionaries"
+               tooltip="%action.tooltip.ReloadDic"
                definitionId="com.rohanclan.cfml.editors.actions.ReloadDictionaries"
                menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
                id="com.rohanclan.cfml.editors.actions.ReloadDictionariesAction">
@@ -414,9 +414,9 @@
          <!-- refresh the browser view action -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.RefreshBrowser"
-               label="Refresh"
+               label="%action.label.Refresh"
                icon="icons/ctool16/refresh.gif"
-               tooltip="Refresh Browser View"
+               tooltip="%action.tooltip.Refresh"
                class="com.rohanclan.cfml.editors.actions.RefreshBrowserAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.RefreshBrowserAction">
@@ -424,9 +424,9 @@
          <!-- browse to root project URL action -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot"
-               label="Browse to Project Root URL"
+               label="%action.label.BrowsetoRoot"
                icon="icons/ctool16/home.gif"
-               tooltip="Browse to Project Root URL"
+               tooltip="%action.tooltip.BrowsetoRoot"
                class="com.rohanclan.cfml.editors.actions.BrowseToProjectRootAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.BrowseToProjectRootAction">
@@ -434,9 +434,9 @@
          <!-- browse to current page action -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage"
-               label="Browse to Current Page"
+               label="%action.label.BrowseToCurrent"
                icon="icons/ctool16/globe.gif"
-               tooltip="Browse to Current Page"
+               tooltip="%action.tooltip.BrowseToCurrent"
                class="com.rohanclan.cfml.editors.actions.BrowseToCurrentPageAction"
                toolbarPath="BasicCFEditorCommand"
                id="com.rohanclan.cfml.editors.actions.BrowseToCurrentPageAction">
@@ -444,9 +444,9 @@
          <!-- insert snippet action -->
          <action
                toolbarPath="BasicCFEditorCommand"
-               label="InsertSnippet"
+               label="%action.label.InsertSnippet"
                class="com.rohanclan.cfml.editors.actions.InsertSnippetAction"
-               tooltip="Insert a snippet"
+               tooltip="%action.tooltip.InsertSnippet"
                icon="icons/ctool16/insertsnip.gif"
                definitionId="com.rohanclan.cfml.editors.actions.InsertSnippet"
                id="com.rohanclan.cfml.editors.actions.InsertSnippetAction">
@@ -455,9 +455,9 @@
          <action
          	   toolbarPath="BasicCFEditorCommand"
                definitionId="com.rohanclan.cfml.editors.actions.GetHelp"
-               label="Get Tag Help"
+               label="%action.label.GetTagHelp"
                icon="icons/ctool16/help.gif"
-               tooltip="Get tag and function help"
+               tooltip="%action.tooltip.GetTagHelp"
                class="com.rohanclan.cfml.editors.actions.GetHelpAction"
                id="com.rohanclan.cfml.editors.actions.GetHelpAction">
          </action>
@@ -465,25 +465,25 @@
          <action
          	   toolbarPath="BasicCFEditorCommand"
                definitionId="com.rohanclan.cfml.editors.actions.LoadScribblePad"
-               label="Load scribble pad"
+               label="%action.label.LoadScribble"
                icon="icons/ctool16/scribble.gif"
-               tooltip="Load the scribble pad"
+               tooltip="%action.tooltip.LoadScribble"
                class="com.rohanclan.cfml.editors.actions.LoadScribblePadAction"
                id="com.rohanclan.cfml.editors.actions.LoadScribbleAction">
          </action>
           <!-- Locate in project tree -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
-               label="Locate in Navigator View"
-               tooltip="Locate file in Navigator View"
+               label="%action.label.LocateInNavigator"
+               tooltip="%action.tooltip.LocateInNavigator"
                class="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
                id="com.rohanclan.cfml.editors.actions.LocateInTreeAction">
          </action>
           <!-- Locate in file system -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
-               label="Locate in File Explorer View"
-               tooltip="Locate file in File Explorer View"
+               label="%action.label.LocateInExplorer"
+               tooltip="%action.tooltip.LocateInExplorer"
                class="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
                id="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction">
          </action>
@@ -493,9 +493,9 @@
          <action
                toolbarPath="BasicCFEditorCommand"
                menubarPath="com.rohanclan.cfml.cfmlmenu/maingroup"
-               label="&amp;Browse"
+               label="%action.label.Browse"
                class="com.rohanclan.cfml.editors.actions.ExternalBrowserAction"
-               tooltip="Open in external browser."
+               tooltip="%action.tooltip.Browse"
                icon="icons/ctool16/globe.gif"
                id="com.rohanclan.cfml.editors.actions.ExternalBrowserAction"
                definitionId="com.rohanclan.cfml.editors.actions.ExternalBrowserActionID">
@@ -505,9 +505,9 @@
           <!-- Launch new file dialog -->
          <action
                definitionId="com.rohanclan.cfml.editors.actions.NewFileActionID"
-               label="Create &amp;new file"
+               label="%action.label.CreateNewFile"
                icon="icons/obj16/new.gif"
-               tooltip="Create new file"
+               tooltip="%action.tooltip.CreateNewFile"
                toolbarPath="CFEditorResourceCommand"
                class="com.rohanclan.cfml.editors.actions.NewFileAction"
                id="com.rohanclan.cfml.editors.actions.NewFileAction">
@@ -535,19 +535,19 @@
             targetID="#CFMLEditorContext"
             id="org.eclipse.ui.articles.action.contribution.popup.editor">
          <action
-               label="CF Comment"
+               label="%action.label.CFComment"
                class="com.rohanclan.cfml.editors.actions.CFCommentAction"
                menubarPath="additions"
                id="com.rohanclan.cfml.editors.actions.CFComment">
          </action>
          <action
-               label="Trim trailing spaces"
+               label="%RTrim"
                class="com.rohanclan.cfml.editors.actions.RTrimAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu"
                id="com.rohanclan.cfml.editors.actions.RTrim">
          </action>
          <menu
-               label="Selection"
+               label="%menu.label.Selection"
                path="additions"
                id="com.rohanclan.cfml.editors.contribution.subMenu">
             <separator
@@ -561,44 +561,44 @@
             </separator>
          </menu>
          <action
-               label="To Lower Case"
+               label="%action.label.ToLower"
                class="com.rohanclan.cfml.editors.actions.ToLowerCaseAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text"
                id="com.rohanclan.cfml.editors.actions.ToLowerCase">
          </action>
          <action
-               label="To Upper Case"
+               label="%action.label.ToUpper"
                class="com.rohanclan.cfml.editors.actions.ToUpperCaseAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text"
                id="com.rohanclan.cfml.editors.actions.ToUpperCase">
          </action>
 		<!-- ////// -->
          <action
-               label="Wrap In #s"
+               label="%action.label.45"
                class="com.rohanclan.cfml.editors.actions.CFVariableAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
                id="com.rohanclan.cfml.editors.actions.CFVariable">
          </action>
          <action
-               label="Wrap In &apos;s"
+               label="%action.label.46"
                class="com.rohanclan.cfml.editors.actions.CFSingleQuoteAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
                id="com.rohanclan.cfml.editors.actions.CFSingleQuote">
          </action>
          <action
-               label="Wrap In &quot;s"
+               label="%action.label.47"
                class="com.rohanclan.cfml.editors.actions.CFDoubleQuoteAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
                id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
          </action>
          <action
-               label="Repeat last tag"
+               label="%action.label.48"
                class="com.rohanclan.cfml.editors.actions.LastActionAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu/text1"
                id="com.rohanclan.cfml.editors.actions.LastTag">
          </action>
          <menu
-               label="File"
+               label="%menu.label.2"
                path="additions"
                id="com.rohanclan.cfml.editors.contribution.subMenu1">
             <separator
@@ -606,49 +606,49 @@
             </separator>
          </menu>
          <action
-               label="Locate in Navigator View"
+               label="%action.label.49"
                class="com.rohanclan.cfml.editors.actions.LocateInTreeAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu1/text"
                id="com.rohanclan.cfml.editors.actions.LocateInTreeAction">
          </action>
          <action
-               label="Locate in File Explorer Viiew"
+               label="%action.label.50"
                class="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.subMenu1/text"
                id="com.rohanclan.cfml.editors.actions.LocateInFileSystemAction">
          </action>
          <action
-               label="Remove folding markers"
+               label="%action.label.51"
                class="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelectionAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.UnFoldSelection">
          </action>
          <action
-               label="Add folding markers"
+               label="%action.label.52"
                class="com.rohanclan.cfml.editors.actions.codefolding.FoldSelectionAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.FoldSelection">
          </action>
          <action
-               label="Expand All"
+               label="%action.label.53"
                class="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.ExpandAllMarkers">
          </action>
          <action
-               label="Collapse All"
+               label="%action.label.54"
                class="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.CollapseAllMarkers">
          </action>
          <action
-               label="Expand Matching"
+               label="%action.label.55"
                class="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
          </action>
          <action
-               label="Collapse Matching"
+               label="%action.label.56"
                class="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
                menubarPath="com.rohanclan.cfml.editors.contribution.folding"
                id="com.rohanclan.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
@@ -662,14 +662,14 @@
 		>
 			<action
 				enablesFor="1"
-				label="Apply CFE Nature"
+				label="%action.label.57"
 				class="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"
-				tooltip="Associated the project with CFEclipse"
+				tooltip="%action.tooltip.40"
 				menubarPath="com.rohanclan.cfml.menu1"
 				id="com.rohanclan.cfml.ui.actions.ApplyCFENatureAction"
 			/>
 			<menu
-				label="New Submenu"
+				label="%menu.label.3"
 				path="additions"
 				id="com.rohanclan.cfml.menu1"
 			>
@@ -688,14 +688,14 @@
       </activeKeyConfiguration>
       -->
       <category
-            name="CFML Editor"
-            description="CFML Editor key bindings"
+            name="%category.name.0"
+            description="%category.description.0"
             id="com.rohanclan.cfml.commandCategory">
       </category>
 	<!-- this will always make a cf type comment -->
       <command
-            name="Insert Comment"
-            description="Insert a CFML comment."
+            name="%command.name.0"
+            description="%command.description.0"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFComment">
       </command>
@@ -707,8 +707,8 @@
       </keyBinding>
 	<!-- comment based on section (i.e. js comments in js blocks, etc) -->
       <command
-            name="Insert Auto Comment"
-            description="Insert a comment based on section."
+            name="%command.name.1"
+            description="%command.description.1"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.AutoComment">
       </command>
@@ -720,8 +720,8 @@
       </keyBinding>
 	<!-- enclose in pound ... er ... hash signs -->
       <command
-            name="CF Variable"
-            description="Surround with pound/number signs"
+            name="%command.name.2"
+            description="%command.description.2"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFVariable">
       </command>
@@ -733,8 +733,8 @@
       </keyBinding>
 	<!-- enclose in single quotes -->
       <command
-            name="Single Quotes"
-            description="Surround with Single Quotes"
+            name="%command.name.3"
+            description="%command.description.3"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFSingleQuote">
       </command>
@@ -746,8 +746,8 @@
       </keyBinding>
 	<!-- enclose in double quotes -->
       <command
-            name="Double Quotes"
-            description="Surround with double quotes"
+            name="%command.name.4"
+            description="%command.description.4"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFDoubleQuote">
       </command>
@@ -759,8 +759,8 @@
       </keyBinding>
 	<!-- enclose in cfoutputs -->
       <command
-            name="CF Outputs"
-            description="Surround with cfoutputs"
+            name="%command.name.5"
+            description="%command.description.5"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFOutput">
       </command>
@@ -772,8 +772,8 @@
       </keyBinding>
 	<!-- enclose in cfdump -->
       <command
-            name="CF Dump"
-            description="Surround with a simple cfdump"
+            name="%command.name.6"
+            description="%command.description.6"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFDump">
       </command>
@@ -785,8 +785,8 @@
       </keyBinding>
 	<!-- enclose in cfscript -->
       <command
-            name="CF Script"
-            description="Surround with a cfscript"
+            name="%command.name.7"
+            description="%command.description.7"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.CFScript">
       </command>
@@ -798,8 +798,8 @@
       </keyBinding>
 	<!-- to lower case -->
       <command
-            name="To Lower"
-            description="Lower case selected text"
+            name="%command.name.8"
+            description="%command.description.8"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.ToLowerCase">
       </command>
@@ -811,8 +811,8 @@
       </keyBinding>
 	<!-- to upper case -->
       <command
-            name="To Upper"
-            description="Upper case selected text"
+            name="%command.name.9"
+            description="%command.description.9"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.ToUpperCase">
       </command>
@@ -824,8 +824,8 @@
       </keyBinding>
       <!-- Insert Color -->
       <command
-            name="Insert Color"
-            description="Insert a color"
+            name="%command.name.10"
+            description="%command.description.10"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.InsertColor">
       </command>
@@ -838,15 +838,15 @@
       
 	<!-- insert date -->
       <command
-            name="Insert Date"
-            description="Insert the current date"
+            name="%command.name.11"
+            description="%command.description.11"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.InsertDate">
       </command>
       <!-- insert an html br action (for Brian Sadler) -->
       <command
-            name="Insert br Tag"
-            description="Insert a br tag"
+            name="%command.name.12"
+            description="%command.description.12"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.InsertBR">
       </command>
@@ -858,8 +858,8 @@
       </keyBinding>
       <!-- insert an html nbsp action (for Michael Wolfe) -->
       <command
-            name="Insert nbsp Entity Reference"
-            description="Insert an nbsp Entity Reference"
+            name="%command.name.13"
+            description="%command.description.13"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.InsertNBSP">
       </command>
@@ -871,8 +871,8 @@
       </keyBinding>
       <!-- insert an html p action (for Michael Wolfe) -->
       <command
-            name="Insert p Tag"
-            description="Insert a p tag"
+            name="%command.name.14"
+            description="%command.description.14"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.PTag">
       </command>
@@ -884,8 +884,8 @@
       </keyBinding>
       <!-- insert an html strong action (for Brian Sadler) -->
       <command
-            name="Insert strong Tag"
-            description="Insert a strong tag"
+            name="%command.name.15"
+            description="%command.description.15"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.StrongTag">
       </command>
@@ -897,8 +897,8 @@
       </keyBinding>
       <!-- insert an html em action (for Brian Sadler) -->
       <command
-            name="Insert em Tag"
-            description="Insert an em tag"
+            name="%command.name.16"
+            description="%command.description.16"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.EmTag">
       </command>
@@ -910,8 +910,8 @@
       </keyBinding>
       <!-- Reload the syntax dictionaries -->
       <command
-            name="Reload Dictionaries"
-            description="Reload syntax dictionaries"
+            name="%command.name.17"
+            description="%command.description.17"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.ReloadDictionaries">
       </command>
@@ -923,8 +923,8 @@
       </keyBinding>
       <!-- refresh the browser -->
       <command
-            name="Refresh Browser"
-            description="Refresh Browser View"
+            name="%command.name.18"
+            description="%command.description.18"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.RefreshBrowser">
       </command>
@@ -936,8 +936,8 @@
       </keyBinding>
       <!-- browse to project root URL -->
       <command
-            name="Browse to Project Root URL"
-            description="Browse to Project Root URL"
+            name="%command.name.19"
+            description="%command.description.19"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.BrowseToProjectRoot">
       </command>
@@ -949,8 +949,8 @@
       </keyBinding>
       <!-- browse to current page -->
       <command
-            name="Browse to Current Page"
-            description="Browse to Current Page"
+            name="%command.name.20"
+            description="%command.description.20"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.BrowseToCurrentPage">
       </command>
@@ -962,8 +962,8 @@
       </keyBinding>
       <!-- insert a snippet -->
       <command
-            name="Insert Snippet"
-            description="Insert Snippet"
+            name="%command.name.21"
+            description="%command.description.21"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.InsertSnippet">
       </command>
@@ -975,8 +975,8 @@
       </keyBinding>
       <!-- repeat last tag -->
       <command
-            name="Repeat last tag"
-            description="Repeat last tag"
+            name="%command.name.22"
+            description="%command.description.22"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.LastAction">
       </command>
@@ -988,8 +988,8 @@
       </keyBinding>
       <!-- jump to matching tag -->
       <command
-            name="Jump to matching tag"
-            description="Jump to matching tag"
+            name="%command.name.23"
+            description="%command.description.23"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.JumpToMatchingTagAction">
       </command>
@@ -1001,8 +1001,8 @@
       </keyBinding>
       <!-- Go and Get Help -->
       <command
-            name="Get Help"
-            description="Goes to http://www.cfdocs.org to get the tag or function reference"
+            name="%command.name.24"
+            description="%command.description.24"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.GetHelp">
       </command>
@@ -1014,8 +1014,8 @@
       </keyBinding>
       <!-- Fire up the scribble pad -->
       <command
-            name="Open scribble pad"
-            description="Opens up the scribble pad file."
+            name="%command.name.25"
+            description="%command.description.25"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.LoadScribblePad">
       </command>
@@ -1027,8 +1027,8 @@
       </keyBinding>
 	<!-- this will toggle the expand/collapse state of  the selected block -->
       <command
-            name="Toggle selection"
-            description="Toggle the collapse/expand state of the selected text"
+            name="%command.name.26"
+            description="%command.description.26"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.codefolding.ToggleSelection">
       </command>
@@ -1040,8 +1040,8 @@
       </keyBinding>
 	<!-- This will expand selected block -->
       <command
-            name="Expand selection"
-            description="Expand the selected text"
+            name="%command.name.27"
+            description="%command.description.27"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.codefolding.ExpandSelection">
       </command>
@@ -1053,8 +1053,8 @@
       </keyBinding>
 	<!-- This will collapse selected block -->
       <command
-            name="Collapse selection"
-            description="Collapse the selected text"
+            name="%command.name.28"
+            description="%command.description.28"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.codefolding.CollapseSelection">
       </command>
@@ -1067,8 +1067,8 @@
 
       <!-- Open in external browser -->
       <command
-            name="Browse"
-            description="Open in external browser."
+            name="%command.name.29"
+            description="%command.description.29"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.ExternalBrowserActionID">
       </command>
@@ -1081,8 +1081,8 @@
 	
 
       <command
-            name="New file"
-            description="Launch the new file dialog."
+            name="%command.name.30"
+            description="%command.description.30"
             categoryId="com.rohanclan.cfml.commandCategory"
             id="com.rohanclan.cfml.editors.actions.NewFileActionID">
       </command>
@@ -1114,25 +1114,25 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="CFML"
+            name="%category.name.1"
             id="com.rohanclan.cfml">
       </category>
       <view
-            name="Snip Tree View"
+            name="%view.name.0"
             icon="icons/ctool16/library.gif"
             category="com.rohanclan.cfml"
             class="com.rohanclan.cfml.views.snips.SnipTreeView"
             id="com.rohanclan.cfml.views.snips.sniptreeview">
       </view>
       <view
-            name="Browser View"
+            name="%view.name.1"
             icon="icons/ctool16/globe.gif"
             category="com.rohanclan.cfml"
             class="com.rohanclan.cfml.views.browser.BrowserView"
             id="com.rohanclan.cfml.views.browser">
       </view>
       <view
-            name="Methods View"
+            name="%view.name.2"
             icon="icons/obj16/bean.gif"
             category="com.rohanclan.cfml"
             class="com.rohanclan.cfml.views.cfcmethods.CFCMethodsView"
@@ -1142,25 +1142,25 @@
             class="com.rohanclan.cfml.views.packageview.PackageView"
             icon="icons/obj16/cfc.gif"
             category="com.rohanclan.cfml"
-            name="Component Explorer"
+            name="%view.name.3"
             id="com.rohanclan.cfml.views.packageview.PackageView"/>
       <view
             class="com.rohanclan.cfml.views.dictionary.DictionaryView"
             icon="icons/ctool16/dictionaries.gif"
             category="com.rohanclan.cfml"
-            name="Dictionary View"
+            name="%view.name.4"
             id="com.rohanclan.cfml.views.dictionary.DictionaryView"/>
       <view
             class="com.rohanclan.cfml.views.explorer.FileExplorerView"
             icon="icons/obj16/explorer.gif"
             category="com.rohanclan.cfml"
-            name="File Explorer View"
+            name="%view.name.5"
             id="com.rohanclan.cfml.views.explorer.FileExplorerView"/>
       <view
             icon="icons/obj16/document.gif"
             class="com.rohanclan.cfml.views.explorer.ftp.FtpLogView"
             category="com.rohanclan.cfml"
-            name="Ftp Log View"
+            name="%view.name.6"
             id="com.rohanclan.cfml.views.explorer.ftp.FtpLogView"/>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
@@ -1183,56 +1183,56 @@
          point="org.eclipse.ui.preferencePages">
       <page
             class="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="CFEclipse"
+            name="%page.name.0"
             id="com.rohanclan.cfml.preferences.CFMLPreferencePage">
       </page>
       <page
             class="com.rohanclan.cfml.preferences.CFMLColorsPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="CFML Colours"
+            name="%page.name.1"
             id="com.rohanclan.cfml.preferences.CFMLColorsPreferencePage">
       </page>
       <page
             class="com.rohanclan.cfml.preferences.SQLColorsPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="SQL Colours"
+            name="%page.name.2"
             id="com.rohanclan.cfml.preferences.SQLColorsPreferencePage">
       </page>
        <page
             class="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="HTML Colours"
+            name="%page.name.3"
             id="com.rohanclan.cfml.preferences.HTMLColorsPreferencePage">
       </page>
       <page
             class="com.rohanclan.cfml.preferences.ParserPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="File parser"
+            name="%page.name.4"
             id="com.rohanclan.cfml.preferences.ParserPreferencePage"/>
       <page
             class="com.rohanclan.cfml.preferences.AutoIndentPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="Auto-insertion and closing"
+            name="%page.name.5"
             id="com.rohanclan.cfml.preferences.AutoIndentPreferencePage"/>
       <page
             class="com.rohanclan.cfml.preferences.ScribblePadPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="Scribble pad"
+            name="%page.name.6"
             id="com.rohanclan.cfml.preferences.ScribblePreferencePage"/>
       <page
             class="com.rohanclan.cfml.preferences.EditorPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="Editor"
+            name="%page.name.7"
             id="com.rohanclan.cfml.preferences.EditorPreferencePage"/>
       <page
             class="com.rohanclan.cfml.preferences.AnnotationPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="Annotations"
+            name="%page.name.8"
             id="com.rohanclan.cfml.preferences.AnnotationPreferencePage"/>
       <page
             class="com.rohanclan.cfml.preferences.FoldingPreferencePage"
             category="com.rohanclan.cfml.preferences.CFMLPreferencePage"
-            name="Code Folding"
+            name="%page.name.9"
             id="com.rohanclan.cfml.preferences.FoldingPreferencePage"/>
    </extension>
    
@@ -1240,7 +1240,7 @@
          point="org.eclipse.ui.propertyPages">
       <page
             objectClass="org.eclipse.core.resources.IProject"
-            name="CFEclipse Properties"
+            name="%page.name.10"
             class="com.rohanclan.cfml.properties.ProjectPropertyPage"
             nameFilter="*"
             id="com.rohanclan.cfml.properties.samplePropertyPage">
@@ -1251,10 +1251,10 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            name="CFEclipse"
+            name="%category.name.2"
             id="com.rohanclan.cfml.category1">
       </category>
-      <wizard name="CFML Project"
+      <wizard name="%wizard.name.0"
 			icon="icons/obj16/default.gif"
 
 			class="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
@@ -1264,10 +1264,10 @@
 			project="true" 
 			finalPerspective="com.rohanclan.cfml.perspective.CFML"
 			id="com.rohanclan.cfml.wizards.NewProject">
-			<description>Create a new CFML Project</description>
+			<description>%wizard.description.0</description>
 	 </wizard>
       <wizard
-            name="CFML Page"
+            name="%wizard.name.1"
             icon="icons/obj16/default.gif"
             category="com.rohanclan.cfml.category1"
             class="com.rohanclan.cfml.wizards.cfmlwizard.NewCFMLWizard"
@@ -1275,10 +1275,10 @@
             finalPerspective="CFML"
             project="true"
             id="com.rohanclan.cfml.wizards.cfmlwizard.NewCFMLWizard">
-            <description>Create a new blank CFML file</description>
+            <description>%wizard.description.1</description>
       </wizard>
       <wizard
-            name="CFC"
+            name="%wizard.name.2"
             icon="icons/obj16/class.gif"
             category="com.rohanclan.cfml.category1"
             class="com.rohanclan.cfml.wizards.cfcwizard.NewCFCWizard"
@@ -1286,10 +1286,10 @@
             finalPerspective="CFML"
             project="true"
             id="com.rohanclan.cfml.wizards.cfcwizard.NewCFCWizard">
-            <description>Create a new CFC</description>
+            <description>%wizard.description.2</description>
       </wizard>
       <wizard
-            name="File From Template"
+            name="%wizard.name.3"
             icon="icons/ctool16/insertsnip.gif"
             category="com.rohanclan.cfml.category1"
             class="com.rohanclan.cfml.wizards.templatefilewizard.NewTemplateFileWizard"
@@ -1297,7 +1297,7 @@
             finalPerspective="CFML"
             project="true"
             id="com.rohanclan.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
-            <description>Create a new file from a template snip</description>
+            <description>%wizard.description.3</description>
       </wizard>
    </extension>
    <extension
@@ -1314,82 +1314,82 @@
          point="org.eclipse.ui.ide.resourceFilters">
       <filter pattern="*.bak">
          <description>
-            Backup filefilter
+            %filter.description.0
          </description>
       </filter>
       <filter pattern="*.cfc">
          <description>
-            CFC filter
+            %filter.description.1
          </description>
       </filter>
       <filter pattern="*.cfm">
          <description>
-            CFML Filter
+            %filter.description.2
          </description>
       </filter>
       <filter pattern="*.cfml">
          <description>
-            CFML Filter
+            %filter.description.3
          </description>
       </filter>
       <filter pattern="*.css">
          <description>
-            CFML Filter
+            %filter.description.4
          </description>
       </filter>
       <filter pattern="*.gif">
          <description>
-            Gif filter
+            %filter.description.5
          </description>
       </filter>
       <filter pattern="*.htm">
          <description>
-            HTML filter
+            %filter.description.6
          </description>
       </filter>
       <filter pattern="*.html">
          <description>
-            HTML filter
+            %filter.description.7
          </description>
       </filter>
       <filter pattern="*.js">
          <description>
-            HTML filter
+            %filter.description.8
          </description>
       </filter>
       <filter pattern="*.lck">
          <description>
-            Dreamweaver lock file filter
+            %filter.description.9
          </description>
       </filter>
       <filter pattern="*.log">
          <description>
-            Log file filter
+            %filter.description.10
          </description>
       </filter>
       <filter pattern="*.project">
          <description>
-            Project file filter
+            %filter.description.11
          </description>
       </filter>
       <filter pattern="*.properties">
          <description>
-            Properties file filter
+            %filter.description.12
          </description>
       </filter>
       <filter pattern="*.swf">
          <description>
-            SWF filter
+            %filter.description.13
          </description>
       </filter>
       <filter pattern="*.txt">
          <description>
-            Text file filter
+            %filter.description.14
          </description>
       </filter>
       <filter pattern="*.xml">
          <description>
-            Text file filter
+            %filter.description.15
          </description>
       </filter>
    </extension>
@@ -1458,7 +1458,7 @@
 			overviewRulerPreferenceKey="parserproblem.rulers.overview"
 			presentationLayer="4"
 			highlightPreferenceValue="false"
-			label="Parser problem"
+			label="%specification.label.0"
 			colorPreferenceValue="255,0,128"
 			verticalRulerPreferenceValue="true"
 			overviewRulerPreferenceValue="true"
@@ -1476,7 +1476,7 @@
 			overviewRulerPreferenceKey="parserwarning.rulers.overview"
 			presentationLayer="4"
 			highlightPreferenceValue="false"
-			label="Parser warning"
+			label="%specification.label.1"
 			colorPreferenceValue="244,200,45"
 			verticalRulerPreferenceValue="true"
 			overviewRulerPreferenceValue="true"
@@ -1497,7 +1497,7 @@
          point="org.eclipse.ui.contexts">
       <context
             id="com.rohanclan.cfml.cfmleditorcontext"
-            name="CFML Editor context"
+            name="%context.name.0"
             parentId="org.eclipse.ui.textEditorScope"/>
    </extension>
    <extension
@@ -1528,7 +1528,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.ui.ide.workbench"
-            name="CFEclipse">
+            name="%product.name.0">
          <property
                name="windowImages"
                value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
