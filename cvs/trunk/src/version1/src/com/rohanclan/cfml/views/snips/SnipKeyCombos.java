@@ -27,6 +27,7 @@ package com.rohanclan.cfml.views.snips;
 
 import java.util.Properties;
 import java.util.Enumeration;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,15 +51,11 @@ public class SnipKeyCombos {
     private static String HEADER_TEXT = "These key combos are used by the cfeclipse plugin.";
     
     public SnipKeyCombos() {
-        CFMLPropertyManager propertyManager = new CFMLPropertyManager(); 
-        try {
-			IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-			IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
-	        this.snippetFilePath = propertyManager.snippetsPath(p);
-	        this.keyComboFilePath = this.snippetFilePath + "/keyCombos.properties";
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		this.snippetFilePath = new File(propertyManager.defaultSnippetsPath()).toString();
+		this.keyComboFilePath = this.snippetFilePath + "/keyCombos.properties";
+		
+       
         loadKeyCombos();
     }
 

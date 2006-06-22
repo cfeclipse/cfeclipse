@@ -136,22 +136,8 @@ public class SnipTreeView extends ViewPart
 		// This ensures that we are notified when the properties are saved
 		CFMLPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
 		
-		try 
-		{
-			//Snippets arent per-project, so we need to get the Plugin Preference Store not the Project one
-			
-			//IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-			//IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
-			//snipBase = CFMLPlugin.getDefault().getStateLocation();
-			snipBase = new Path(propertyManager.defaultSnippetsPath());
+		snipBase = new Path(propertyManager.defaultSnippetsPath());
 		
-			
-			
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace(System.err);
-		}
 
 		if(tmpAction == null)
 			tmpAction = new GenericEncloserAction();
@@ -679,14 +665,11 @@ public class SnipTreeView extends ViewPart
     {
 
     	if (event.getProperty().equals(CFMLPreferenceConstants.P_SNIPPETS_PATH)) {
-    		try {
-    			IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-    			IProject p = ((FileEditorInput)editor.getEditorInput()).getFile().getProject();
-    			snipBase = new Path(propertyManager.snippetsPath(p));
-        		treeViewer.setInput(getRootInput());	
-    		} catch (Exception e) {
-    			e.printStackTrace();
-    		}
+    		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+			snipBase = new Path(propertyManager.defaultSnippetsPath());
+    		treeViewer.setInput(getRootInput());	
+    		
+    		
     		
     	}
     }

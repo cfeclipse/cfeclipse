@@ -90,17 +90,13 @@ public class NewTemplateFileWizard extends Wizard implements INewWizard {
 		setNeedsProgressMonitor(true);
 		propertyManager = new CFMLPropertyManager();
 		snipReader = new SnipReader();
-		try 
-		{
-			IResource resource = getContainingResource();
+		
+		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		
+		
+			snipBase = new Path(propertyManager.defaultSnippetsPath());
 			
-			snipBase = new Path(propertyManager.snippetsPath(resource.getProject()));
-			
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace(System.err);
-		}
+		
 		
 	}
 	
