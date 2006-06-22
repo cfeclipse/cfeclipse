@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -64,6 +65,7 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -76,16 +78,22 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.part.EditorActionBarContributor;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AnnotationPreference;
@@ -264,10 +272,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);	
 		
-		//TODO: Add the file path location to the status line
-		
-		
+//		TODO: Add the file path location to the status line
+	
+	
 	}
+	
+	
+
 
 	public void createPartControl(Composite parent) {
 	    
@@ -379,7 +390,20 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
             
 
 			e.printStackTrace();
+			
 		}
+		
+		setStatusLine();
+		
+	}
+	private void setStatusLine(){
+		
+		//		Sets the current file path to the status line
+		IEditorInput input= getEditorInput();
+		IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
+		getEditorSite().getActionBars().getStatusLineManager().setMessage(original.getLocation().toString());
+		
+		//this.getEditorSite().getWorkbenchWindow().getShell().setToolTipText(original.getLocation().toString());
 		
 	}
 
