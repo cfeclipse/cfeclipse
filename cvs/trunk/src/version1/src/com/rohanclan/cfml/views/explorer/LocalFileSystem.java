@@ -134,8 +134,15 @@ public class LocalFileSystem implements IFileProvider {
 		if (file != null) {
 			return new FileEditorInput(file);
 		}
-        return new JavaFileEditorInput((IFileStore)new File(filename));
+		
+		File fl = new File(filename);
+		
+		IFileStore fs = (IFileStore)fl;
+		
+        return new JavaFileEditorInput(fs);
    
+        
+        
     }
     
     
