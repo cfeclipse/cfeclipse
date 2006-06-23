@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.io.File;
 // Removed this because it doesn't work on OS X
 //import javax.swing.filechooser.*;
+import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -126,21 +127,23 @@ public class LocalFileSystem implements IFileProvider {
    
     public IEditorInput getEditorInput(String filename) {
 
-		
+		//More info can be found in the original opening of an ExternalFileAction
+    	//org.eclipse.ui.internal.editors.text.OpenExternalFileAction
+    	
+    	
+    	
+    	
 		IPath path = new Path(filename);
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		//This returns a null if the file isnt already in the workspace
 		IFile file = root.getFileForLocation(path);
-		
 		if (file != null) {
 			return new FileEditorInput(file);
 		}
-		
-		File fl = new File(filename);
-		
-		IFileStore fs = (IFileStore)fl;
-		
-        return new JavaFileEditorInput(fs);
-   
+		//This is truly an external file, so lets get the store for it and open it!
+		IFileStore fileStore= EFS.getLocalFileSystem().getStore(path);
+        return new JavaFileEditorInput(fileStore);
+        
         
         
     }
