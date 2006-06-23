@@ -55,8 +55,10 @@ public class RemoteFile {
     	if (fPermissions == null) {
         	return true;
         }
+    	
+    	//TODO: Make sure that you can write this file, otherwise its always returning false for a person
         if (fPermissions.length() >= 6 
-                && fPermissions.charAt(5) == 'w') {
+                && (fPermissions.charAt(5) == 'w'  || fPermissions.charAt(2) == 'w')) {
             return true;
         }
         return false;

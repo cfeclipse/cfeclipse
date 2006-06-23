@@ -51,6 +51,8 @@ public class CFPerspective implements IPerspectiveFactory {
 		//this is the main editor - used as a base to place views
 		String editorid = layout.getEditorArea();
 		
+		layout.addShowInPart(IPageLayout.ID_RES_NAV);
+		
 		//view to the left of the editor
 		IFolderLayout left = layout.createFolder(
 			"left", IPageLayout.LEFT, (float)0.25, editorid

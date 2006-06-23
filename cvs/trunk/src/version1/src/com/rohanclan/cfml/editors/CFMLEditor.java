@@ -84,6 +84,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -95,6 +96,8 @@ import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.EditorActionBarContributor;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.IDocumentProvider;
@@ -140,8 +143,17 @@ import com.rohanclan.cfml.views.contentoutline.CFContentOutlineView;
  * the image manager and syntax dictionaries.
  */
 public class CFMLEditor extends AbstractDecoratedTextEditor implements
-		IPropertyChangeListener {
-    /**
+		IPropertyChangeListener, IShowInSource {
+    public ShowInContext getShowInContext() {
+		// TODO Auto-generated method stub
+    //getEditorInput()
+    	
+    	ShowInContext context = new ShowInContext(getEditorInput(), getSelectionProvider().getSelection());
+    	
+		return context;
+	}
+
+	/**
      * Logger for this class
      */
     //private static final Logger logger = Logger.getLogger(CFMLEditor.class);
@@ -398,13 +410,18 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	}
 	private void setStatusLine(){
 		
+		try{
 		//		Sets the current file path to the status line
 		IEditorInput input= getEditorInput();
 		IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
 		getEditorSite().getActionBars().getStatusLineManager().setMessage(original.getLocation().toString());
 		
 		//this.getEditorSite().getWorkbenchWindow().getShell().setToolTipText(original.getLocation().toString());
-		
+		}
+		catch (Exception e){
+			//TODO:
+			System.err.println(e);
+		}
 	}
 
 	public IVerticalRuler verticalRuler() {

@@ -83,6 +83,7 @@ public class ViewContentProvider implements IStructuredContentProvider, ITreeCon
 
     private IProject[] getProjects()
     {
+    	//We should only return open projects
         return CFMLPlugin.getWorkspace().getRoot().getProjects();
     }
 
@@ -98,7 +99,9 @@ public class ViewContentProvider implements IStructuredContentProvider, ITreeCon
         
         for(int i = 0; i < projects.length; i++) 
         {
-            invisibleRoot.addChild( new ProjectNode(projects[i]) ); 
+        	if(projects[i].isOpen())
+        		invisibleRoot.addChild( new ProjectNode(projects[i]) ); 
+        
         }
         
     }
