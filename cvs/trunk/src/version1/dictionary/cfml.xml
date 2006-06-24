@@ -6275,7 +6275,6 @@
 				<help><![CDATA[
 					URL of HTML file or CFML page to open.
 				]]></help>
-				<values/>
 			</parameter>
 			<parameter name="addtoken" type="boolean" required="false">
 				<help><![CDATA[

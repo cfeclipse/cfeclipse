@@ -3033,6 +3033,7 @@
 	cfformgroup
 		type = "group type"
 		label = "label"
+		id = "id"
 		style = "style specification"
 		selectedIndex = "page number">
 		width = "pixels"
@@ -3045,6 +3046,7 @@
 	/cfformgroup
 	or
 	cfformgroup
+		id = "id"
 		type = "repeater"
 		query = "query object"
 		startrow = "row number"
@@ -3132,6 +3134,11 @@
 			vdividedbox, tile, accordion, and tabnavigator types.
 		]]></help>
 		<values/>
+	</parameter>
+	<parameter name="id" type="String" required="false">
+		<help><![CDATA[
+			ID for form input element.
+		]]></help>
 	</parameter>
 	<parameter name="style" type="String" required="false">
 		<help><![CDATA[
@@ -6710,7 +6717,6 @@
 		<help><![CDATA[
 			URL of HTML file or CFML page to open.
 		]]></help>
-		<values/>
 	</parameter>
 	<parameter name="addtoken" type="boolean" required="false">
 		<help><![CDATA[
