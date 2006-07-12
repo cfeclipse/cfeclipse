@@ -5,7 +5,7 @@
 		expr
 -->
 <tag xmlns="http://www.cfeclipse.org/version1/dictionary"
-	name="cfreturn" single="true" xmlstyle="false">
+	name="cfreturn" allowanyattribute="true" single="true" xmlstyle="false">
 	<help><![CDATA[
 		Returns result values from a component method. Contains an
 		expression returned as result of the function.

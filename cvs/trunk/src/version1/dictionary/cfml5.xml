@@ -812,7 +812,7 @@
 <!--
 	cfelseif
 		expression
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfelseif" single="true" xmlstyle="false">
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfelseif" allowanyattribute="true" single="true" xmlstyle="false">
 	<help><![CDATA[
 		Used as a control block in a cfif tag block to handle any case
 		not identified by the cfif tag or a cfelseif tag.
@@ -3026,7 +3026,7 @@
 	cfif expression
 	   [HTML and CFML tags]
 	/cfif
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfif" single="false" xmlstyle="false">
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfif" allowanyattribute="true" single="false" xmlstyle="false">
 	<help><![CDATA[
 		Creates simple and compound conditional statements in CFML.
 		Tests an expression, variable, function return value, or
@@ -3741,7 +3741,7 @@
 	<help><![CDATA[
 		Stops execution of the current page and opens a CFML page or HTML file.
 	]]></help>
-	<parameter name="URL" type="String" required="true">
+	<parameter name="url" type="String" required="true">
 		<help><![CDATA[
 			URL of HTML file or CFML page to open.
 		]]></help>
@@ -5705,7 +5705,7 @@
 	cfsetting
 		enableCFoutputOnly = "boolean"
 		showDebugOutput = "boolean"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfsetting" single="false" hybrid="true" xmlstyle="false">
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfsetting" single="true" hybrid="true" xmlstyle="false">
 	<help><![CDATA[
 		Controls aspects of page processing, such as the output of
 		HTML code in pages.
@@ -6532,11 +6532,9 @@
 	]]></help>
 	<parameter name="action" type="String" required="false">
 		<help><![CDATA[
-			<ul>
-			<li>begin: the start of the block of code to execute</li>
-			<li>commit: commits a pending transaction</li>
-			<li>rollback: rolls back a pending transaction</li>
-			</ul>
+			begin: the start of the block of code to execute
+			commit: commits a pending transaction
+			rollback: rolls back a pending transaction
 		]]></help>
 		<values default="begin">
 			<value option="begin"/>
@@ -6552,6 +6550,7 @@
 			<value option="read_uncommitted"/>
 			<value option="read_committed"/>
 			<value option="repeatable_read"/>
+			<value option="serializable"/>
 		</values>
 	</parameter>
 </tag>
