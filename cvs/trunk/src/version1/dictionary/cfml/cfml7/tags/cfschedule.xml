@@ -85,7 +85,7 @@
 		]]></help>
 		<values />
 	</parameter>
-	<parameter name="URL" type="URL" required="false">
+	<parameter name="url" type="URL" required="false">
 		<help><![CDATA[
 			URL of the page to execute.
 		]]></help>

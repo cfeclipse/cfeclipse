@@ -381,7 +381,7 @@
 			<value option="sliced" />
 		</values>
 	</parameter>
-	<parameter name="URL" type="URL" required="false"><!-- maybe should be string now? -->
+	<parameter name="url" type="URL" required="false"><!-- maybe should be string now? -->
 		<help><![CDATA[
 			URL to open if the user clicks item in a data series; the
 			onClick destination page.

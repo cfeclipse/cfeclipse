@@ -37,7 +37,7 @@
 		server.
 	]]></help>
 	<return type="cfhttp" name="cfhttp" parameter="result" />
-	<parameter name="URL" type="URL" required="true">
+	<parameter name="url" type="URL" required="true">
 		<help><![CDATA[
 			Address of the resource on the server which will handle
 			the request. The URL must include the hostname or IP
