@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfset
+		var variable_name = expression
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfset" allowanyattribute="true" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Sets a value in CFML. Used to create a variable, if it
+		does not exist, and assign it a value. Also used to call
+		functions.
+	]]></help>
+</tag>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfdump
+		eval = "variable"
+
+	cfdump
+		var = "#variable#"
+		label = "text"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfdump" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Outputs the elements, variables and values of most kinds of
+		CFML objects. Useful for debugging. You can display the
+		contents of simple and complex variables, objects, components,
+		user-defined functions, and other elements.
+	]]></help>
+	<parameter name="eval" type="Object" required="false">
+		<help><![CDATA[
+			Variable to evaluate and display, plus label to use.
+			Do not enclose variable name in hash marks.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="var" type="Object" required="false">
+		<help><![CDATA[
+			Variable to display. Enclose a variable name in hash marks.
+		]]></help>
+																	<values />
+	</parameter>
+	<parameter name="label" type="String" required="false">
+		<help><![CDATA[
+			A string; header for the dump output.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

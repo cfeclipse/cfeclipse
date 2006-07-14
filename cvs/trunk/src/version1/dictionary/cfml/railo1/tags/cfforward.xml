@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfforward
+		url = "URL"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfforward" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Leads the request to a different page.
+
+		(This tag acts like the tag cflocation except that 
+		the relocation is done directly on the server.)
+		Analog to the method getPageContext().forward()(Java-Doc PageContext).
+	]]></help>
+	<parameter name="URL" type="String" required="true">
+		<help><![CDATA[
+			URL of HTML file or CFML page to open.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

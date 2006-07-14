@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	string Serialize(mixed m)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="serialize" returns="string">
+	<help><![CDATA[
+		Counterpiece to Evaluate function.
+		Serializes an object to a string.
+		A serialized string can be re-loaded with the evaluate function.
+	]]></help>
+	<parameter name="m" type="mixed" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

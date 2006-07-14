@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cftrace
+		abort = "boolean"
+		category = "String"
+		inline = "boolean"
+		text = "String"
+		type = "format"
+		var = "variable_name"
+	/cftrace
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cftrace" single="false" hybrid="true" xmlstyle="false">
+	<help><![CDATA[
+		Displays and logs debugging data about the state of an
+		application at the time the cftrace tag executes. Tracks
+		runtime logic flow, variable values, and execution time.
+		Displays output at the end of the request or in the debugging
+		section at the end of the request;
+
+		CFML logs cftrace output to the file logs\cftrace.log, in
+		the CFML installation directory.
+
+		Note: To permit this tag to execute, you must enable debugging
+		in the CFML Administrator. Optionally, to report trace
+		summaries, enable the Trace section.
+	]]></help>
+	<parameter name="abort" type="boolean" required="false">
+		<help><![CDATA[
+			Calls cfabort tag when the tag is executed
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="category" type="String" required="false">
+		<help><![CDATA[
+			User-defined string for identifying trace groups
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="inline" type="boolean" required="false">
+		<help><![CDATA[
+			Displays trace code in line on the page in the
+			location of the cftrace tag, addition to the debugging
+			information output.
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="text" type="String" required="false">
+		<help><![CDATA[
+			User-defined string, which can include simple variable,
+			but not complex variables such as arrays. Outputs to cflog
+			text attribute
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			Corresponds to the cflog type attribute; displays an
+			appropriate icon.
+
+			* Information
+			* Warning
+			* Error
+			* Fatal Information
+		]]></help>
+		<values default="information">
+			<value option="information" />
+			<value option="warning" />
+			<value option="error" />
+			<value option="fatal information" />
+		</values>
+	</parameter>
+	<parameter name="var" type="String" required="false">
+		<help><![CDATA[
+			The name of a simple or complex variable to display.
+
+			Useful for displaying a temporary value, or a value that
+			does not display on any CFM page.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cftransaction
+		action = "begin" or "commit" or "rollback"
+		isolation = "read_uncommitted" or "read_committed" or "repeatable_read"
+	/cftransaction
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cftransaction" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Instructs the database management system to treat multiple
+		database operations as a single transaction. Provides database
+		commit and rollback processing.
+	]]></help>
+	<parameter name="action" type="String" required="false">
+		<help><![CDATA[
+			begin: the start of the block of code to execute
+			commit: commits a pending transaction
+			rollback: rolls back a pending transaction
+		]]></help>
+		<values default="begin">
+			<value option="begin" />
+			<value option="commit" />
+			<value option="rollback" />
+		</values>
+	</parameter>
+	<parameter name="isolation" type="String" required="false">
+		<help><![CDATA[
+			ODBC lock type.
+		]]></help>
+		<values>
+			<value option="read_uncommitted" />
+			<value option="read_committed" />
+			<value option="repeatable_read" />
+			<value option="serializable"/>
+		</values>
+	</parameter>
+</tag>

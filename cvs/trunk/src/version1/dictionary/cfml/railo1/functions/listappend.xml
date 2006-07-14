@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String ListAppend(list, value [, delimiters ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="listappend" returns="String">
+	<help><![CDATA[
+		Concatenates a list or element to a list.
+	]]></help>
+	<parameter name="list" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			An element or a list of elements.
+		]]></help>
+	</parameter>
+	<parameter name="delimiters" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default=",">
+			<value option="," />
+			<value option="|" />
+			<value option="_" />
+			<value option=";" />
+			<value option=":" />
+		</values>
+	</parameter>
+</function>

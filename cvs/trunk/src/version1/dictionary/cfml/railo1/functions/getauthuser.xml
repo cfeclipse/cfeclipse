@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String GetAuthUser()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getauthuser" returns="String">
+	<help><![CDATA[
+		Gets the name of an authenticated user.
+	]]></help>
+</function>

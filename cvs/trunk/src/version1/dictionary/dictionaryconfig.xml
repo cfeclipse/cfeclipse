@@ -48,6 +48,10 @@
 			<grammar location="cfmlBD621.xml" />
 			<grammar location="user.xml" />
 		</version>
+		<version key="railo1" label="Railo 1.0">
+			<grammar location="railo1.xml" />
+			<grammar location="user.xml" />
+		</version>
 	</dictionary>
 
 	<dictionary id="JS_DICTIONARY">

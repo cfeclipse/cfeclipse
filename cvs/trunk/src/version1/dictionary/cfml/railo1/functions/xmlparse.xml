@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object XmlParse(xmlString [, caseSensitive ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="xmlparse" returns="Object">
+	<help><![CDATA[
+		Converts an XML document that is represented as a string
+		variable into an XML document object.
+	]]></help>
+	<parameter name="xmlstring" type="String" required="true">
+		<help><![CDATA[
+			An XML document object string
+		]]></help>
+	</parameter>
+	<parameter name="casesensitive" type="boolean" required="false">
+		<help><![CDATA[
+			Maintains the case of document elements and attributes.
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+ 			<value option="false" />
+		</values>
+	</parameter>
+</function>

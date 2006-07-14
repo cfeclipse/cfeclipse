@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	mixed GetVariable(name)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getvariable" returns="mixed">
+	<help><![CDATA[
+		Returns an object which corresponds to the original name.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			String name of the variable.
+		]]></help>
+	</parameter>
+
+</function>

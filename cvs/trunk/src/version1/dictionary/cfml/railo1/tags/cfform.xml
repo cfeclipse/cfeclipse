@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfform
+		name = "name"
+		action = "form_action"
+		preserveData = "boolean"
+		onSubmit = "javascript"
+		onReset = "javascript"
+		target = "window_name"
+		encType = "type"
+		codeBase = "URL"
+		archive = "URL"
+		scriptSrc = "path"
+		id = "HTML id"
+		class = "css class"
+		style = "css style"
+		passThrough = "HTML_attribute(s)"
+		
+		...
+	/cfform
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfform" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Builds a form with CFML custom control tags; these provide
+		more functionality than standard HTML form input elements.
+	]]></help>
+	<parameter name="name" type="String" required="false">
+		<help><![CDATA[
+			A name for the form.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="action" type="String" required="false">
+		<help><![CDATA[
+			Name of CFML page to execute when the form is
+			submitted for processing.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="method" type="String" required="false">
+		<help><![CDATA[
+			The method the browser uses to send the form data
+			to the server:
+			- post: Send the data using the HTTP post method,
+			This method sends the data in a separate message
+			to the server.
+			- get: Send the data using the HTTP get method,
+			which puts the form field contents in the URL
+			query string.
+		]]></help>
+		<values default="post">
+			<value option="post" />
+			<value option="get" />
+		</values>
+	</parameter>
+	<parameter name="onload" type="String" required="false">
+		<help><![CDATA[
+			JavaScript to execute when the form loads.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onsubmit" type="String" required="false">
+		<help><![CDATA[
+			JavaScript function to execute after input validation. Use
+			for preprocessing data before form is submitted
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="scriptsrc" type="String" required="false">
+		<help><![CDATA[
+			Lets the user control the URL of the script file; useful
+			if you do not keep the file in the /cfide directory.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="style" type="String" required="false">
+		<help><![CDATA[
+			CSS Style passed through to <FORM>.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onreset" type="String" required="false">
+		<help><![CDATA[
+			JavaScript to execute when the user clicks a reset button.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="enctype" type="String" required="false">
+		<help><![CDATA[
+			MIME type passed through to <FORM>.
+		]]></help>
+		<values default="application/x-www-form-urlencoded">
+			<value option="application/x-www-form-urlencoded" />
+			<value option="multipart/form-data" />
+			<value option="text/plain" />
+		</values>
+	</parameter>
+	<parameter name="id" type="String" required="false">
+		<help><![CDATA[
+			HTML id passed through to <FORM>.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="target" type="String" required="false">
+		<help><![CDATA[
+			Target window or frame passed through to <FORM>.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="class" type="String" required="false">
+		<help><![CDATA[
+			Form CSS class passed through to <FORM>.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="passthrough" type="String" required="false">
+		<help><![CDATA[
+			Passes arbitrary attribute-value pairs to the HTML code
+			that is generated for the tag. You can use either of the
+			following formats:
+			
+			passthrough="title=""myTitle"""
+			passthrough='title="mytitle"'
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="enablecab" type="String" required="false" compatibility="deprecated">
+		<help><![CDATA[
+			This attribute is deprecated.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean IsDebugMode()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="isdebugmode" returns="boolean">
+	<help><![CDATA[
+		Determines whether debugging output is enabled.
+	]]></help>
+</function>

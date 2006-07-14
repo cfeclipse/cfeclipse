@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	array ArrayReverse(array a)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arrayreverse" returns="boolean">
+	<help><![CDATA[
+		Reverses the order of the elements in the original array.
+		This function takes an array and returns a new array 
+		with the values of the original array in reverse order.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+			Name of an array
+		]]></help>
+	</parameter>
+</function>

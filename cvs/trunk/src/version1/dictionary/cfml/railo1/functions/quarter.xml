@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric Quarter(date)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="quarter" returns="Numeric">
+	<help><![CDATA[
+		Calculates the quarter of the year in which a date falls.
+	]]></help>
+	<parameter name="date" type="DateTime" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+</function>

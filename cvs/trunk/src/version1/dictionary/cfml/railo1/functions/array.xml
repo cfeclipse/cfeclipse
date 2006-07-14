@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Array Array([mixed m[, mixed m[, ...]]])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="array" returns="Array">
+	<help><![CDATA[
+		Like the arrayNew function, the array function creates a new 
+		one dimensional array. The difference is you can immediately
+		set the values of the created array by using this function.
+		Example: array('string',1,array(1,2,3),now())
+	]]></help>
+	<parameter name="expression" type="mixed" required="true">
+		<help><![CDATA[
+			A comma delimited list of array elements elements.
+			eg: 'string',1,array(1,2,3),now()
+		]]></help>
+	</parameter>
+</function>

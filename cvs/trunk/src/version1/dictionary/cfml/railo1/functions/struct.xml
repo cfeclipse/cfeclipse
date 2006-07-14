@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Struct Struct(key: mixed m[, key=mixed m[, ... ]])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="struct" returns="Struct">
+	<help><![CDATA[
+		Like the StructNew function, the Struct function creates a new structure.
+		The difference is that you can immediately initialize the 
+		contents of the structure by using this function.
+		Example: struct(key1:"value 1', key2:struct(), key3: struct)
+	]]></help>
+	<parameter name="expression" type="mixed" required="true">
+		<help><![CDATA[
+			A comma delimited list of key-value pairs.
+			eg: key1:"value 1', key2:struct(), key3: struct
+		]]></help>
+	</parameter>
+</function>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	void dump(mixed m[ ,string label])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="dump" returns="void">
+	<help><![CDATA[
+		Analogous to the tag cfdump.
+	]]></help>
+	<parameter name="m" type="Object" required="true">
+		<help><![CDATA[
+			The object to dump.
+		]]></help>
+	</parameter>
+	<parameter name="label" type="String" required="false">
+		<help><![CDATA[
+			Label to apply to the dumped output.
+		]]></help>
+	</parameter>
+</function>

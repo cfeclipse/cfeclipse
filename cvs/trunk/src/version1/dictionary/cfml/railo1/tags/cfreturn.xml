@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfreturn
+		expr
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfreturn" allowanyattribute="true" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Returns result values from a component method. Contains an
+		expression returned as result of the function.
+		An expression; the result of the function from which this tag
+		is called.
+	]]></help>
+</tag>

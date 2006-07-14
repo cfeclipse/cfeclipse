@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String ListQualify(list, qualifier [, delimiters ] [, elements ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="listqualify" returns="String">
+	<help><![CDATA[
+		Inserts a string at the beginning and end of list elements.
+	]]></help>
+	<parameter name="list" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="qualifier" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="delimiters" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default=",">
+			<value option="," />
+			<value option="|" />
+			<value option=";" />
+			<value option="chr(9)" />
+			<value option="chr(10)" />
+			<value option="chr(13)" />
+		</values>
+	</parameter>
+	<parameter name="elements" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="all" />
+			<value option="char" />
+		</values>
+	</parameter>
+</function>

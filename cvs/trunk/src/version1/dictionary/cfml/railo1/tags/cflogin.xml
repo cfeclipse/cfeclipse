@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cflogin
+		idletimeout = "value"
+		applicationToken = "token"
+		cookieDomain = "domain"
+		...
+	/cflogin
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cflogin" single="false" xmlstyle="false">
+	<help><![CDATA[
+		A container for user login and authentication code. CFML
+		runs the code in this tag if a user is not already logged in.
+		You put code in the tag that authenticates the user and
+		identifies the user with a set of roles. Used with cfloginuser
+		tag.
+		NOTE: Railo does not support NTLM.
+	]]></help>
+</tag>

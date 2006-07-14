@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfwhile
+		expression
+		...
+	/cfwhile
+
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfwhile" allowanyattribute="true" single="false" xmlstyle="false">
+	<help><![CDATA[
+		This tag is a simplification of the tag <cfloop condition="expression">,
+		analogous to the cfscript while loop.
+		Example:
+		<cfset count=0>
+		<cfwhile count LT 10>
+		   <cfset count=count+1>
+		   <cfoutput>#count#</cfoutput>
+		</cfwhile>
+	]]></help>
+</tag>

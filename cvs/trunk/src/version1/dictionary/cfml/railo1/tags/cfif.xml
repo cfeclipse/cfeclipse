@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfif expression
+	   [HTML and CFML tags]
+	/cfif
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfif" allowanyattribute="true" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Creates simple and compound conditional statements in CFML.
+		Tests an expression, variable, function return value, or
+		string. Used, optionally, with the cfelse and cfelseif tags.
+	]]></help>
+</tag>

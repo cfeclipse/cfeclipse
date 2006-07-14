@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfindex
+		collection = "collection_name"
+		action = "action"
+		type = "type"
+		title = "title"
+		key = "ID"
+		body = "body"
+		custom1 = "custom_value"
+		custom2 = "custom_value"
+		URLpath = "URL"
+		extensions = "file_extensions"
+		query = "query_name"
+		recurse = "boolean"
+		language = "language"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfindex" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Populates a Verity search engine collection with an index of
+		documents on a file system or of CFML query result sets.
+
+		A collection must exist before it can be populated.
+	]]></help>
+	<parameter name="collection " type="String" required="true">
+		<help><![CDATA[
+			Name of a collection that is registered by CFML; for
+				example, "personnel"
+			Name and absolute path of a collection that is not
+			registered by CFML; for example:
+			"e:\collections\personnel"
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="action" type="String" required="false">
+		<help><![CDATA[
+			- update: updates a collection and adds key to the index.
+			- delete: removes collection documents as specified by
+			the key attribute.
+			- purge: deletes all of the documents in a collection.
+			Causes the collection to be taken offline, preventing
+			searches.
+			- refresh: deletes all of the documents in a collection,
+			and then performs an update.
+		]]></help>
+		<values>
+			<value option="update" />
+			<value option="delete" />
+			<value option="purge" />
+			<value option="refresh" />
+		</values>
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			file: using the key attribute value of the query result as
+				input, applies action value to filenames or filepaths.
+			path: using the key attribute value of the query result as
+				input, applies action to filenames or filepaths that
+				pass the extensions filter
+			custom: If action = "update" or "delete": applies action to
+				custom entities in query results.
+		]]></help>
+		<values>
+			<value option="file" />
+			<value option="path" />
+			<value option="custom" />
+		</values>
+	</parameter>
+	<parameter name="title" type="String" required="false">
+		<help><![CDATA[
+			* Title for collection
+			* Query column name for type and a valid query name
+			Permits searching collections by title or displaying a
+			separate title from the key
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="key" type="String" required="false">
+		<help><![CDATA[
+			* Absolute path and filename, if type = "file"
+			* Absolute path, if type = "path"
+			* A query column name (typically, the primary key column
+				name), if type = "custom"
+			* A query column name, if type = any other value
+
+			This attribute is required for the actions listed, unless
+			you intend for its value to be an empty string.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="body" type="String" required="false">
+		<help><![CDATA[
+			* ASCII text to index
+			* Query column name(s), if name is specified in query
+
+			You can specify columns in a delimited list. For example:
+			"emp_name, dept_name, location"
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="custom1" type="String" required="false">
+		<help><![CDATA[
+			Custom field in which you can store data during an indexing
+			operation. Specify a query column name for type, and a
+			query name.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="custom2" type="String" required="false">
+		<help><![CDATA[
+			Custom field in which you can store data during an indexing
+			operation. Specify a query column name for type, and a
+			query name.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="urlpath" type="URL" required="false">
+		<help><![CDATA[
+			If type="file" or "path", specifies the URL path. When the
+			collection is searched with cfsearch, this pathname is
+			prefixed to filenames and returned as the url attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="extensions" type="String" required="false">
+		<help><![CDATA[
+			Delimited list of file extensions that CFML uses to
+			index files, if type = "Path".
+			"*." returns files with no extension.
+
+			For example: the following code returns files with a
+			listed extension or no extension:
+			extensions = ".htm, .html, .cfm, .cfml, "*."
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="query" type="String" required="false">
+		<help><![CDATA[
+			Query against which collection is generated
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="recurse" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: if type = "path", directories below the path
+				specified in key are included in indexing operation
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="language" type="String" required="false">
+		<help><![CDATA[
+			For options, see cfcollection. Requires the appropriate
+			Verity Locales language pack (Western Europe, Asia,
+			Multilanguage, Eastern Europe/Middle Eastern).
+		]]></help>
+		<values default="english" />
+	</parameter>
+	<parameter name="status" type="String" required="false">
+		<help><![CDATA[
+			The name of the structure into which ColdFusion MX
+			returns status information.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String Mid(string, start, count)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="mid" returns="String">
+	<help><![CDATA[
+		Extracts a substring from a string.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			The string from which the substring will be extracted.
+			]]></help>
+	</parameter>
+	<parameter name="start" type="Numeric" required="true">
+		<help><![CDATA[
+		The position of the first character to retrieve.
+		]]></help>
+	</parameter>
+	<parameter name="count" type="Numeric" required="true">
+		<help><![CDATA[
+		The number of characters to retrieve.
+		]]></help>
+	</parameter>
+</function>

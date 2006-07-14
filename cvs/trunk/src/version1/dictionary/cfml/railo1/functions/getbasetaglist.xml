@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String GetBaseTagList()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getbasetaglist" returns="String">
+	<help><![CDATA[
+		Gets ancestor tag names, starting with the parent tag.
+	]]></help>
+</function>

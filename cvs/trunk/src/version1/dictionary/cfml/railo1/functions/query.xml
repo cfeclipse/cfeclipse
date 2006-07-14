@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Query Query(array column1[, array column2[, ... ]])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="query" returns="Query">
+	<help><![CDATA[
+		Creates an query object and immediately sets the values.
+
+		Example:
+			MyQuery = query(lastName:array('Jordan','Bryant'),age:array(42,24))
+
+		Equivalent to:
+			MyQuery = QueryNew('lastName,age')
+			QueryAddRow(MyQuery)
+			QuerySetCell(MyQuery,'lastName','Jordan')
+			QuerySetCell(MyQuery,'age',42)
+			QueryAddRow(MyQuery)
+			QuerySetCell(MyQuery,'lastName','Bryant')
+			QuerySetCell(MyQuery,'age',24)
+	]]></help>
+	<parameter name="expression" type="mixed" required="true">
+		<help><![CDATA[
+			A list of named array values for each column in the array.
+			column1:[array], column2:[array], etc.
+		]]></help>
+	</parameter>
+</function>

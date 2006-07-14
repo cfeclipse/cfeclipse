@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	array ArraySlice(array a, int offset [, number length])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arrayslice" returns="boolean">
+	<help><![CDATA[
+		arraySlice returns a part of the original array, set by offset and length.
+
+		If offset is positive, the sequence begins with this offset
+		taken from the beginning of the array.
+		if offset is negative or 0 the offset starts with elements 
+		taken from before the end of the array.
+
+		If length is positive, the returned array is of this length. 
+		If length is negative, the returned array contains all values 
+		from offset to length elements before the end of the original array.
+		If length is not specified, the returned array contains all
+		elements starting from offset to the end of the original array. 
+
+		Example:
+		<cfscript>
+			input = array("a", "b", "c", "d", "e");
+			
+			dump(arraySlice(input, 3)); // returns "c", "d", und "e"
+			dump(arraySlice(input, 3, -1)); // returns "c", "d"
+			dump(arraySlice(input, -1, 1)); // returns "d"
+			dump(arraySlice(input, 0, 1)); // returns "f"
+			dump(arraySlice(input, 1, 1)); // returns "a"
+		</cfscript>
+	]]></help>
+	<parameter name="a" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="offset" type="Numeric" required="true">
+		<help><![CDATA[
+			If positive, the sequence is taken from the start.
+			If negative, or zero, the sequence is taken from the end.
+		]]></help>
+	</parameter>
+	<parameter name="length" type="Numeric" required="false">
+		<help><![CDATA[
+			If not specified, length is all elements from the offset to the end.
+		]]></help>
+	</parameter>
+</function>

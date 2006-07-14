@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Array XmlSearch(xmlDoc, xPathString)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="xmlsearch" returns="Array">
+	<help><![CDATA[
+	]]></help>
+	<parameter name="xmldoc" type="Object" required="true">
+		<help><![CDATA[
+			XML document object
+		]]></help>
+	</parameter>
+	<parameter name="xpathstring" type="String" required="true">
+		<help><![CDATA[
+			XPath expression
+		]]></help>
+	</parameter>
+</function>

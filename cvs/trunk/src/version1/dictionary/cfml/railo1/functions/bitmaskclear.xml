@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric BitMaskClear(number, start, length)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="bitmaskclear" returns="Numeric">
+	<help><![CDATA[
+		Performs a bitwise mask clear operation.
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="start" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="length" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean ArraySwap(array, position1, position2)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arrayswap" returns="boolean">
+	<help><![CDATA[
+		Swaps array values of an array at specified positions. This
+		function is more efficient than multiple cfset tags
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="position1" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="position2" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
