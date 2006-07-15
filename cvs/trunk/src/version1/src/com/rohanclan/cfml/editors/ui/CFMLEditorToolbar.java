@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -67,7 +68,7 @@ public class CFMLEditorToolbar {
 		GridData cfeditorLData = new GridData(GridData.FILL);
 		cfeditorLData.grabExcessHorizontalSpace = true;
 		cfeditorLData.grabExcessVerticalSpace = true;
-		cfeditorLData.horizontalAlignment = GridData.FILL;
+		cfeditorLData.horizontalAlignment =  GridData.FILL;
 		cfeditorLData.verticalAlignment = GridData.FILL;
 		cfeditorLData.horizontalIndent = 0;
 		cfeditor.setLayoutData(cfeditorLData);
@@ -90,7 +91,10 @@ public class CFMLEditorToolbar {
 		loadToolbars();
 		
 		//Create the root tabfolder
-		CTabFolder cTabFolder1 = new CTabFolder(parent, SWT.NONE);
+		CTabFolder cTabFolder1 = new CTabFolder(parent, SWT.H_SCROLL | SWT.SCROLL_PAGE);
+		GridData gd = new GridData();
+		gd.horizontalAlignment = SWT.FILL;
+		cTabFolder1.setLayoutData(gd);
 		/*
 		 * TODO: Re-factor this as normal XML parsing (as done in the fusebox plugin)
 		 * TODO: Add Snippet type to trigger snippets
@@ -108,7 +112,7 @@ public class CFMLEditorToolbar {
 			CTabItem cTabItem1 = new CTabItem(cTabFolder1, SWT.FILL);
 			cTabItem1.setText(tabname);
 			
-			ToolBar toolBar1 = new ToolBar(cTabFolder1, SWT.FILL|SWT.HORIZONTAL);
+			ToolBar toolBar1 = new ToolBar(cTabFolder1, SWT.FILL|SWT.HORIZONTAL|SWT.SCROLL_PAGE);
 			cTabItem1.setControl(toolBar1);
 			
 			for (Node child = tabgroup.getFirstChild(); child != null; child = child.getNextSibling()){
