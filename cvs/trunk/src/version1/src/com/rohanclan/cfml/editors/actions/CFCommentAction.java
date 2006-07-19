@@ -34,6 +34,7 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.testing.ITestHarness;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import com.rohanclan.cfml.editors.ICFDocument;
@@ -69,6 +70,9 @@ public class CFCommentAction extends GenericEncloserAction implements IEditorAct
 				//if we already are in a comment parition, remove it, else add it
 				if(parttype.equals(CFPartitionScanner.CF_COMMENT)){
 					//Now find and replace the comment strings
+					
+					//This doesnt actually work right if you have nested comments.
+					//Maybe use the partitioner here to find the ending part
 					FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
 				
 					finder.find(((ITextSelection)sel).getOffset(), "<!---", false, false, false, false);
@@ -78,10 +82,19 @@ public class CFCommentAction extends GenericEncloserAction implements IEditorAct
 					finder.replace("", false);
 					
 					
+					
 				}
 				else{
-					//Add the comments
-					this.enclose(doc,(ITextSelection)sel,"<!---"," --->");
+					ITextSelection selectioner = (ITextSelection)sel;
+					System.out.println("selection " + selectioner.getLength());
+					
+					this.enclose(doc,(ITextSelection)sel,"<!--- "," --->");
+					
+					//move the caret somewhere.
+					if(selectioner.getLength() == 0){
+						editor.setHighlightRange(selectioner.getOffset() + "<!--- ".length(), 1, true);
+					}
+					
 				}
 			}
 		} catch (BadLocationException e) {
