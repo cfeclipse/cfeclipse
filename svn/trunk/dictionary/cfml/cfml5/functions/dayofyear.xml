@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric DayOfYear(date)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="dayofyear" returns="Numeric">
+	<help><![CDATA[
+		Determines the day of the year, in a date.
+	]]></help>
+	<parameter name="date" type="DateTime" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+</function>

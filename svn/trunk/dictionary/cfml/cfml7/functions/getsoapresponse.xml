@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object GetSOAPResponse(webservice)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getsoapresponse" returns="Object">
+	<help><![CDATA[
+		Returns an XML object that contains the entire
+		SOAP response after invoking a web service.
+	]]></help>
+	<parameter name="webservice" type="String" required="true">
+		<help><![CDATA[
+			A webservice object as returned from the cfobject
+			tag or the CreateObject function.
+		]]></help>
+	</parameter>
+</function>

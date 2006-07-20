@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	GetTemplatePath
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="gettemplatepath" returns="String" compatibility="deprecated">
+	<help><![CDATA[
+		This function is deprecated.
+		
+		Use the GetBaseTemplatePath function instead.
+	]]></help>
+</function>

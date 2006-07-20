@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric Log10(number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="log10" returns="Numeric">
+	<help><![CDATA[
+		Calculates the logarithm of number, to base 10.
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

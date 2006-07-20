@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric Val(string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="val" returns="Numeric">
+	<help><![CDATA[
+		Converts numeric characters that occur at the beginning of a
+		string to a number. If conversion fails, returns zero.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			A string or a variable that contains one
+		]]></help>
+	</parameter>
+</function>

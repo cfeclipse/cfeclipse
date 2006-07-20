@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric QueryAddColumn(query, column-name[, datatype], array-name)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="queryaddcolumn" returns="Numeric">
+	<help><![CDATA[
+		Adds a column to a query and populates its rows with the
+		contents of a one-dimensional array. Pads query columns,
+		if necessary, to ensure that all columns have the same number
+		of rows.
+	]]></help>
+	<parameter name="query" type="Query" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="column_name" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="datatype" type="String" required="false">
+		<help><![CDATA[
+			Column data type.
+		]]></help>
+		<values>
+			<value option="Integer" />
+			<value option="BigInt" />
+			<value option="Double" />
+			<value option="Decimal" />
+			<value option="VarChar" />
+			<value option="Binary" />
+			<value option="Bit" />
+			<value option="Time" />
+			<value option="Data" />
+		</values>
+	</parameter>
+	<parameter name="array_name" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
