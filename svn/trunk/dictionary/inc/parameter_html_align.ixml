@@ -1,4 +1,4 @@
-<parameter name="align" type="String" required="false">
+<parameter name="align" type="String" required="false" category="Align">
 	<help>Defines the text alignment in cells</help>
 	<values>
 		<value option="right" />
