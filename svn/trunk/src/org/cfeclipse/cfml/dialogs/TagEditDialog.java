@@ -8,18 +8,24 @@
 package org.cfeclipse.cfml.dialogs;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.dialogs.objects.Category;
+import org.cfeclipse.cfml.dialogs.objects.CategoryList;
 import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.Tag;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -46,8 +52,12 @@ import org.w3c.dom.NodeList;
 /**
  * @author Mark Drew
  * 
- * This is the tag Editor Dialog. Should be renamed somehow
- *  
+ * This is the tag Editor Dialog. 
+ * 
+ * Rather complicated as it gets a tag, 
+ * Gets the layout file for it (if it has one)
+ * TODO: If no layout file has been found, use the categories, currently only for HTML tags as they have a number of scary attributes
+ * Does the layout of it. 
  */
 public class TagEditDialog extends Dialog {
 	protected String title;
@@ -100,7 +110,8 @@ public class TagEditDialog extends Dialog {
 	 *  3) if there is a layout go and parse the layout, doing a tabbed interface (maybe one there by default with the help comments.
 	 */
 	protected Control createDialogArea(Composite parent) {
-
+		
+		//Go get the layout file
 		Document layoutDoc = this.loadLayoutFile(this.title);
 		Composite container = (Composite) super.createDialogArea(parent);
 		FillLayout fl = new FillLayout();
@@ -112,7 +123,9 @@ public class TagEditDialog extends Dialog {
 			tabFolder = parseCategories(tabFolder, layoutDoc); 			
 		} else {
 			//do the tab layouts
-			tabFolder = parseTag(tabFolder);
+			//Since we havent found it.. see if the tag has categories in itself!
+			tabFolder = parseTagCategories(tabFolder);
+		//	tabFolder = parseTag(tabFolder);
 			
 		}
 		
@@ -149,7 +162,6 @@ public class TagEditDialog extends Dialog {
 		}
 
 	private TabFolder parseCategories(TabFolder tabFolder, Document layout){
-
 		//This seems to be looping strangely. so maybe get something esle.
 		NodeList tabs = layout.getElementsByTagName("tab");
 		
@@ -261,7 +273,7 @@ public class TagEditDialog extends Dialog {
 				}
 				
 				Label label = new Label(mainContents, SWT.HORIZONTAL);
-				label.setText(labelname);
+				label.setText(labelname + "category" + pr.getCategory());
 				label.setToolTipText(pr.getHelp());
 				GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 				gridData.widthHint = 200;
@@ -284,6 +296,89 @@ public class TagEditDialog extends Dialog {
 	    
 		return tabFolder;
 	}
+	
+	private TabFolder parseTagCategories(TabFolder tabFolder){
+			    CategoryList cl = getParameterCategories();
+		
+			    
+			  
+			    
+			//Now create the tabs initially:
+		    Iterator tabIter = cl.getCategories().iterator();
+		    while(tabIter.hasNext()){
+		    	Category cat = (Category)tabIter.next();
+		    	TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		    	tabItem.setText(cat.getName());
+			    
+		    	//Layout for the fields in this tab
+		    	GridLayout gl = new GridLayout();
+				gl.numColumns = 2;
+				
+				//composite, field and label
+				Composite mainContents = new Composite(tabFolder, SWT.NONE);
+		    	mainContents.setLayout(gl);    
+		    	
+		    	//Loop through the category getting the parameters
+		    	Iterator tagIter = cat.getParams().iterator();
+		    	while(tagIter.hasNext()){
+		    		Parameter pr = (Parameter)tagIter.next();
+		    		String labelname = pr.getName() + " : ";
+					if(pr.isRequired()){
+						labelname = pr.getName() + " *: ";
+						
+					}
+					Label label = new Label(mainContents, SWT.HORIZONTAL);
+					label.setText(labelname);
+					label.setToolTipText(pr.getHelp());
+					GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+					gridData.widthHint = 200;
+
+					if (!pr.getValues().isEmpty()) {
+						addComboField(mainContents, pr.getValues(), gridData, pr
+								.getName(), "");
+					} else {
+						addTextField(mainContents, gridData, pr.getName(), "");
+					}
+		    		
+		    	}
+		    	
+				
+				tabItem.setControl(mainContents);
+		    	
+		    }
+		    
+		return tabFolder;
+	}
+	
+	private CategoryList getParameterCategories(){
+		CategoryList cl = new CategoryList();
+		
+		
+		if (this.attributes != null) {
+		
+			Iterator i = this.attributes.iterator();
+			while(i.hasNext()){
+				Parameter pr = (Parameter) i.next();
+				Category cat = null;
+				
+				if(!cl.hasCategory(pr.getCategory())){
+					cat = new Category(pr.getCategory());
+					
+					//add the Parameter
+					cat.addParameter(pr);
+					cl.addCategory(cat);
+				}
+				else {
+					cat = cl.getCategory(pr.getCategory());
+					cat.addParameter(pr);
+				}
+				
+			}
+		}
+		System.out.println(cl);
+		return cl;
+	}
+	
 	
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
@@ -314,9 +409,9 @@ public class TagEditDialog extends Dialog {
 			factory.setCoalescing(true);
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
-			URL local = Platform.asLocalURL(layoutConfigURL);
+			URL local = FileLocator.toFileURL(layoutConfigURL);
 			
-			URL configurl = Platform.resolve(new URL(local, tagname + ".xml"));
+			URL configurl = FileLocator.resolve(new URL(local, tagname + ".xml"));
 						
 			layoutDoc = builder.parse(configurl.getFile());
 			
@@ -336,21 +431,26 @@ public class TagEditDialog extends Dialog {
 	}
 	
 	private void addComboField(Composite parent, Set items, GridData gridData,
-			String field, String defaultVal) {
-		int defaultitem = 0;
+		String field, String defaultVal) {
 		Iterator i = items.iterator();
 		Combo combo = new Combo(parent, SWT.DROP_DOWN);
 		combo.setLayoutData(gridData);
-
+		int selected = -1;
+		int itemcounter = 0;
 		while (i.hasNext()) {
 			Object val = (Object) i.next();
 			combo.add(val.toString());
+			if(val.toString().equals(defaultVal)){
+				selected = itemcounter;
+			}
+			itemcounter++;
 		}
 
+		//Not sure what this is doing.
 		if(selectedattributes != null && selectedattributes.containsKey(field)){
 			combo.setText(selectedattributes.get(field).toString());
 		}
-		combo.setText(defaultVal);
+		combo.select(selected);
 		//combo.select(defaultitem);
 		// Add the combo and the attribute name to the combo fields properties
 		comboFields.put(field, combo);
