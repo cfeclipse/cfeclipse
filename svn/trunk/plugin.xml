@@ -512,7 +512,33 @@
                class="org.cfeclipse.cfml.editors.actions.NewFileAction"
                id="org.cfeclipse.cfml.editors.actions.NewFileAction">
          </action>
-
+		 <!-- Edit Tag Action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               icon="icons/obj16/default.gif"
+               id="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               label="%action.label.EditTagAction"
+               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               toolbarPath="CFEditorResourceCommand"
+               tooltip="%action.tooltip.EditTagAction">
+         </action>
+         <menu
+               id="org.cfeclipse.cfml.cfcmenu"
+               label="%menu.label.CFC"
+               path="window">
+            <separator name="maingroup"/>
+         </menu>
+         <action
+               class="org.cfeclipse.cfml.editors.actions.InsertGetAndSetAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertGetAndSet"
+               icon="icons/obj16/default.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertGetAndSet"
+               label="%action.label.InsertGetAndSet"
+               menubarPath="org.cfeclipse.cfml.cfcmenu/maingroup"
+               toolbarPath="CFEditorResourceCommand"
+               tooltip="%action.tooltip.InsertGetAndSet">
+         </action>
           <!-- Highlight bracket pair 
          <action
          	   toolbarPath="BasicCFEditorCommand"
@@ -1092,7 +1118,23 @@
             commandId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
+      <!-- edit tag command -->
+      <commmand 
+      		name="%command.name.EditTag"
+      		description="%command.description.EditTag"
+      		categoryID="org.cfeclipse.cfml.commandCategory"
+      		id="org.cfeclipse.cfml.editors.actions.EditTagAction">
+      </commmand>
+      <keyBinding
+            commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
+            contectsId="org.cfeclipse.cfml.cfmleditorcontext"
+            contextId="org.cfeclipse.cfml.cfmleditorcontext"
+            keyConfigurationID="org.cfeclipse.ui.defaultAcceleratorConfiguration"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="M1+T">
+      	</keyBinding>
       
+    
 
       <!-- Find a matching bracket pair
       <command
@@ -1271,8 +1313,8 @@
             icon="icons/obj16/default.gif"
             category="org.cfeclipse.cfml.category1"
             class="org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard"
-            preferredPerspectives="CFML"
-            finalPerspective="CFML"
+            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
             project="true"
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard">
             <description>%wizard.description.1</description>
@@ -1282,8 +1324,8 @@
             icon="icons/obj16/class.gif"
             category="org.cfeclipse.cfml.category1"
             class="org.cfeclipse.cfml.wizards.cfcwizard.NewCFCWizard"
-            preferredPerspectives="CFML"
-            finalPerspective="CFML"
+            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
             project="true"
             id="org.cfeclipse.cfml.wizards.cfcwizard.NewCFCWizard">
             <description>%wizard.description.2</description>
@@ -1293,12 +1335,22 @@
             icon="icons/ctool16/insertsnip.gif"
             category="org.cfeclipse.cfml.category1"
             class="org.cfeclipse.cfml.wizards.templatefilewizard.NewTemplateFileWizard"
-            preferredPerspectives="CFML"
-            finalPerspective="CFML"
+            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
             project="true"
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
             <description>%wizard.description.3</description>
       </wizard>
+      <wizard
+            category="org.cfeclipse.cfml.category1"
+            class="org.cfeclipse.cfml.wizards.templateprojectwizard.NewTemplateProjectWizard"
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+            hasPages="true"
+            icon="icons/ctool16/insertsnip.gif"
+            id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateProjectWizard"
+            name="%wizard.name.4"
+            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+            project="true"/>
    </extension>
    <extension
          id="CFENature"
