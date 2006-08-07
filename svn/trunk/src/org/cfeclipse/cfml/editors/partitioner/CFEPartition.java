@@ -188,6 +188,14 @@ public final class CFEPartition extends TypedPosition {
 	    };
 	    return info;
     }
+
+	public String getPreviousPartitionType() {
+		return fPreviousPartitionType;
+	}
+
+	public void setPreviousPartitionType(String previousPartitionType) {
+		fPreviousPartitionType = previousPartitionType;
+	}
 }
 
 

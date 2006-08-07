@@ -68,6 +68,8 @@ public class EditTagAction implements IEditorActionDelegate{
 		 * constructors
 		 */
 		public EditTagAction(){
+			// Re-Write this to try and set everything up, called a self init function maybe
+			
 			super();
 		}
 
@@ -102,6 +104,7 @@ public class EditTagAction implements IEditorActionDelegate{
 			this.tag = this.dictionary.getTag(tag);
 			
 		}
+		
 		
 		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
 

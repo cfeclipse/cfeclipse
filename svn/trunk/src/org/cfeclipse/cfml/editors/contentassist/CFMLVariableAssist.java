@@ -80,7 +80,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
          * TODO: Only show this if you the trigger is #, you are in a cfset or cfscript.
          */
     	
-        if (state.getTriggerData() == ' ') {
+        if (state.getTriggerData() == ' ' || state.getTriggerData() == '#' || state.getTriggerData() == '>') {
             return getPageVariables(state, doc);
         }
         else if(state.getTriggerData() != '.'){
@@ -268,7 +268,9 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
        }
        //We go and calculate some proposals, for say CFQUERY there is something in the scopes already
        
+       //Before we return the proposals, we should filter them!
        
+       System.out.println(state.getDataSoFar());
         
     	return proposals;
     }

@@ -70,7 +70,6 @@ import org.eclipse.ui.ide.IDE;
 
 public class NewTemplateFileWizard extends Wizard implements INewWizard {
 	private NewTemplateFileWizardPage page;
-	private NewTemplateFileWizardPageTwo pageTwo;
 	private ISelection selection;
 
 	/** the root directory */
@@ -122,7 +121,6 @@ public class NewTemplateFileWizard extends Wizard implements INewWizard {
 
 	private IResource getContainingResource() {
 		final String containerName = page.getContainerName();
-		final String fileName = page.getFileName();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		return root.findMember(new Path(containerName));
 	}
@@ -144,7 +142,6 @@ public class NewTemplateFileWizard extends Wizard implements INewWizard {
 		IContainer container = (IContainer) resource;
 		final IFile file = container.getFile(new Path(fileName));
 		
-		InputStream stream = openContentStream();
 		if (file.exists()) {
 		    boolean overwrite = MessageDialog.openQuestion(this.getShell(), "File exists", "File already exists. Do you want to overwrite the existing file?");
 			if (!overwrite) {

@@ -90,9 +90,9 @@ public class TagFormatter {
 		 }
 		 //Here we check what ending we have
 		 if(this.tagRef.isXMLStyle() && !isWrapping()){
-		 	 tag.append("/>\n");
+		 	 tag.append("/>");
 		 } else{
-		 	 tag.append(">\n");
+		 	 tag.append(">");
 		 }
 		
 		 //TODO: check that there is a string we are enclosing

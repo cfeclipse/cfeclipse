@@ -41,6 +41,7 @@ import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
 import org.cfeclipse.cfml.editors.actions.GenericEncloserAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
+import org.cfeclipse.cfml.editors.actions.InsertGetAndSetAction;
 import org.cfeclipse.cfml.editors.actions.JumpToDocPos;
 import org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction;
 import org.cfeclipse.cfml.editors.actions.RTrimAction;
@@ -565,12 +566,11 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 			
 			/*
+			 * TODO: re-write this so the edit this tag action can be called from different places
 			 * Edit this tag action start
 			 */
 			act = new Action("Edit this tag", null){
 				public void run() {
-					
-					SyntaxDictionary cfdic = DictionaryManager.getDictionary("CF_DICTIONARY");
 					/*
 					 * Since we are already in a start tag, we find the start and the end 
 					 * 
@@ -604,28 +604,46 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					
 					
 					Map tagattribs = CFDocUtils.parseStartTag(part.getTagName(), seli.getText());
-								 
-					Tag tag = cfdic.getTag(part.getTagName());
+					//find you which dictionary this belongs to!
+				
+					Tag tag = null;
+					SyntaxDictionary dic = EditableTags.getDictionary(part.getType());
+					
+					if(dic != null){
+						tag = dic.getTag(part.getTagName());
+					}
+					
 					if(tag != null){
 						EditTagAction eta = new EditTagAction(tag, Display.getCurrent().getActiveShell(),tagattribs);
 					
 						eta.run();
 					} 
-					else {
-						System.out.println("No tag found " + part.getTagName());	
-					}
-				
 				}
 			};
 			//Only display if you are at the start tag
 			int startpos = sel.getOffset();
 			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 			CFEPartition part = partitioner.findClosestPartition(startpos);
-			if((part.getType().equals(CFPartitionScanner.CF_START_TAG_BEGIN) || (part.getType().equals(CFPartitionScanner.CF_TAG_ATTRIBS)))){
+			if(	EditableTags.isEditable(part.getType())){
 				menu.add(act);
 			}
 			
+			act = new Action("Genrate Getters and Setters", null){
+					public void run(){
+						InsertGetAndSetAction insertGetSet = new InsertGetAndSetAction();
+						insertGetSet.setActiveEditor(null, getSite().getPage().getActiveEditor());
+						insertGetSet.run(null);
+					}
+				};
+			
+			if(part.getTagName().equalsIgnoreCase("cfproperty")){
+				menu.add(act);
+			}
+			
+			
+			
 				
+			
 			
 			act = new Action("Jump to matching tag", null) {
 			    public void run() {

@@ -36,7 +36,7 @@ import org.cfeclipse.cfml.editors.HTMLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.SQLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -100,9 +100,9 @@ public class DictionaryManager
 			factory.setCoalescing(true);
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
-			URL local = Platform.asLocalURL(dictionaryConfigURL);
+			URL local = FileLocator.toFileURL(dictionaryConfigURL);
 			
-			URL configurl = Platform.resolve(new URL(local, "dictionaryconfig.xml"));
+			URL configurl = FileLocator.resolve(new URL(local, "dictionaryconfig.xml"));
 						
 			dictionaryConfig = builder.parse(configurl.getFile());
 		} 
@@ -120,7 +120,7 @@ public class DictionaryManager
 		
 		String cfdictversion  = getInitialDictVersion();
 		
-		long time = System.currentTimeMillis();
+		//long time = System.currentTimeMillis();
 		//System.out.println("Dictionaries initialized start");
 		
 		

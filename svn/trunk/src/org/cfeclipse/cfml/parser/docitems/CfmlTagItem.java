@@ -46,33 +46,38 @@ public class CfmlTagItem extends TagItem {
 	 * @see org.cfeclipse.cfml.parser.docitems.DocItem#IsSane()
 	 */
 	public boolean IsSane() {
-		Set attributes = syntax.getElementAttributes(this.itemName);
+		/*Set attributes = syntax.getElementAttributes(this.itemName);
 		//TODO: Warning This keeps throwing a null pointer exception with cffile, cfdirectory and cflocation. 
 		
 		if (attributes == null) {
-			return super.IsSane();
+			return super.IsSane();  
 		}
+		//Looping through all the attributes the tag has..
 		Object[] params = attributes.toArray();
 		for(int i = 0; i < params.length; i++)
 		{
-			
-			/*
-			 * Some test cases 
-			 * <cffile action="read" addnewline="true" />
-			 * 
-			 * 
-			 * 
-			 * 
-			 */
-			
 			Parameter currParam = (Parameter)params[i];
-			System.out.println("attr " + currParam.getName() + " triggered?" + (currParam.isTriggered(itemAttributes) & Parameter.PARAM_REQUIRED) + " required string " + Parameter.PARAM_REQUIRED);
-				
-			if( ( (currParam.isTriggered(itemAttributes) & Parameter.PARAM_REQUIRED) == Parameter.PARAM_REQUIRED) && 
-						!itemAttributes.containsKey(currParam.getName().toLowerCase()) )
+		//	System.out.println("attr " + currParam.getName() + " triggered?" + (currParam.isTriggered(itemAttributes) & Parameter.PARAM_REQUIRED) + " required string " + Parameter.PARAM_REQUIRED);
+			int triggeredReq = currParam.isTriggered(itemAttributes) & Parameter.PARAM_REQUIRED;
+			if( triggeredReq == Parameter.PARAM_REQUIRED )
+				//&&  !itemAttributes.containsKey(currParam.getName())
 			{
+				// 
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <" + itemName + "> tag."));
+			}
+		}
+		return super.IsSane();*/
+		Set attributes = syntax.getElementAttributes(this.itemName);
+		
+		Object[] params = attributes.toArray();
+		for(int i = 0; i < params.length; i++)
+		{
+			Parameter currParam = (Parameter)params[i];
+			if(currParam.isRequired() && !itemAttributes.containsKey(currParam.getName()))
+			{
+				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <cf" + itemName + "> tag."));
 			}
 		}
 		return super.IsSane();

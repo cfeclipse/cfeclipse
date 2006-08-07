@@ -126,6 +126,7 @@ public class Parameter implements Comparable {
 	protected String defaultValue = "";
 	protected Set values;
 	protected boolean required = false;
+	protected String category ="General";
 		
 	public Parameter(String name)
 	{
@@ -151,6 +152,13 @@ public class Parameter implements Comparable {
 		this.defaultValue = defaultValue;
 	}
 	
+	public Parameter(String name, String type, boolean required, String defaultValue, String category)
+	{
+		this(name,type);
+		this.required = required;
+		this.defaultValue = defaultValue;
+		this.category = category;
+	}
 	/**
 	 * Checks to see if this parameter (attribute) is required
 	 * @return
@@ -270,6 +278,10 @@ public class Parameter implements Comparable {
 		}
 		
 		return 0;
+	}
+
+	public String getCategory() {
+		return category;
 	}
 	
 }
