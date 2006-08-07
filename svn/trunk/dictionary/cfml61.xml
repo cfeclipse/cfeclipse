@@ -4908,7 +4908,7 @@
 	<help><![CDATA[
 		Stops execution of the current page and opens a CFML page or HTML file.
 	]]></help>
-	<parameter name="URL" type="String" required="true">
+	<parameter name="url" type="String" required="true">
 		<help><![CDATA[
 			URL of HTML file or CFML page to open.
 		]]></help>
