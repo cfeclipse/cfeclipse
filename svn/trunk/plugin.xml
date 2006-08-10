@@ -15,7 +15,7 @@
          <export name="*"/>
       </library>
    </runtime>
-   
+   <!-- random comment -->
    <requires>
 	  <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
