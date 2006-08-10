@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cftextinput
+		name = "name"
+		value = "text"
+		required = "boolean"
+		range = "min_value, max_value"
+		validate = "data_type"
+		pattern = "Java regular expression"
+		onValidate = "script_name"
+		message = "text"
+		onError = "text"
+		size = "integer"
+		font = "font_name"
+		fontSize = "integer"
+		italic = "boolean"
+		bold = "boolean"
+		height = "integer"
+		width = "integer"
+		vSpace = "integer"
+		hSpace = "integer"
+		align = "alignment"
+		bgColor = "color"
+		textColor = "color"
+		maxLength = "integer"
+		notSupported = "text"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cftextinput" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Puts a single-line text entry box in a cfform tag and controls
+		its display characteristics.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name for the cftextinput control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Initial value to display in text control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="required" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: the user must enter or change text
+			No
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="range" type="String" required="false">
+		<help><![CDATA[
+			Minimum-maximum value range, delimited by a comma.
+			Valid only for numeric data.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="validate" type="String" required="false">
+		<help><![CDATA[
+			date: verifies format mm/dd/yy.
+			eurodate: verifies date format dd/mm/yyyy.
+			time: verifies time format hh:mm:ss.
+			float: verifies floating point format.
+			integer: verifies integer format.
+			telephone: verifies telephone format ###-###-####. The
+				separator can be a blank. Area code and exchange must
+				begin with digit 1 - 9.
+			zipcode: verifies, in U.S. formats only, 5- or 9-digit
+				format #####-####. The separator can be a blank.
+			creditcard: strips blanks and dashes; verifies number using
+				mod10 algorithm. Number must have 13-16 digits.
+			social_security_number: verifies format ###-##-####. The
+				separator can be a blank.
+			regular_expression: matches input against pattern
+				attribute.
+		]]></help>
+		<values>
+			<value option="date" />
+			<value option="eurodate" />
+			<value option="time" />
+			<value option="float" />
+			<value option="integer" />
+			<value option="telephone" />
+			<value option="zipcode" />
+			<value option="creditcard" />
+			<value option="social_security_number" />
+			<value option="regular_expression" />
+		</values>
+	</parameter>
+	<parameter name="onvalidate" type="String" required="false">
+		<help><![CDATA[
+			Custom JavaScript function to validate user input. The form
+			object, input object, and input object value are passed to
+			routine, which should return True if validation succeeds,
+			False otherwise. The validate attribute is ignored.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="pattern" type="Regex" required="false">
+		<help><![CDATA[
+			JavaScript regular expression pattern to validate input.
+			Omit leading and trailing slashes
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="message" type="String" required="false">
+		<help><![CDATA[
+			Message text to display if validation fails
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onerror" type="String" required="false">
+		<help><![CDATA[
+			Custom JavaScript function to execute if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="size" type="Numeric" required="false">
+		<help><![CDATA[
+			Number of characters displayed before horizontal scroll
+			bar displays.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="font" type="String" required="false">
+		<help><![CDATA[
+			Font name for data in tree control.
+		]]></help>
+		<values default="arial">
+			<value option="arial" />
+			<value option="times" />
+			<value option="courier" />
+			<value option="arialunicodeMS" />
+		</values>
+	</parameter>
+	<parameter name="fontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Font size for text in tree control, in points.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="italic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays tree control text in italics
+			No: it does not
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="bold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays tree control text in bold
+			No: it does not
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="height" type="Numeric" required="false">
+		<help><![CDATA[
+			Tree control height, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="width" type="Numeric" required="false">
+		<help><![CDATA[
+			Tree control width, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="vspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Vertical margin above and below tree control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Horizontal spacing to left and right of tree control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="align" type="String" required="false">
+		<help><![CDATA[
+			* top
+			* left
+			* bottom
+			* baseline
+			* texttop
+			* absbottom
+			* middle
+			* absmiddle
+			* right
+		]]></help>
+		<values>
+			<value option="top" />
+			<value option="left" />
+			<value option="bottom" />
+			<value option="baseline" />
+			<value option="texttop" />
+			<value option="absbottom" />
+			<value option="middle" />
+			<value option="absmiddle" />
+			<value option="right" />
+		</values>
+	</parameter>
+	<parameter name="bgcolor" type="String" required="false">
+		<help><![CDATA[
+			Background color of control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="gray" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="textcolor" type="String" required="false">
+		<help><![CDATA[
+			Text color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="gray" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="maxlength" type="Numeric" required="false">
+		<help><![CDATA[
+			The maximum length of text entered.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="notsupported" type="String" required="false">
+		<help><![CDATA[
+			Text to display if a page that contains a Java applet-based
+			cfform control is opened by a browser that does not
+			support Java or has Java support disabled.
+			Default:
+			"<b>Browser must support Java to <br>view ColdFusion Java
+			Applets!</b>"
+		]]></help>
+		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;" />
+	</parameter>
+</tag>

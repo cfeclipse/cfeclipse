@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String ReplaceNoCase(string, substring1, substring2 [, scope ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="replacenocase" returns="String">
+	<help><![CDATA[
+		Replaces occurrences of substring1 with substring2, in the
+		specified scope. The search is case-insensitive.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			A string (or variable that contains one) within which to
+			replace substring
+		]]></help>
+	</parameter>
+	<parameter name="substring1" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="substring2" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="scope" type="String" required="false">
+		<help><![CDATA[
+			* one: Replace the first occurrence (default)
+			* all: Replace all occurrences
+		]]></help>
+		<values>
+			<value option="one" />
+			<value option="all" />
+		</values>
+	</parameter>
+</function>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>button</name>
+<help>Creates a simple input button</help>
+<starttext><![CDATA[<input type="button" name="$${Name}" value="$${Value}" onclick="]]></starttext>
+<endtext><![CDATA[">]]></endtext>
+</snippet>

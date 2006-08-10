@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfflush
+		interval = "integer number of bytes"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfflush" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Flushes currently available data to the client.
+	]]></help>
+	<parameter name="interval" type="Numeric" required="false">
+		<help><![CDATA[
+			Flushes output each time this number of bytes becomes
+			available. HTML headers, and data that is already
+			available when the tag is executed, are omitted from the
+			count.
+		]]></help>
+		<values />
+	</parameter>
+</tag>
