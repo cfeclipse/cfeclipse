@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Map.Entry;
+
+import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 
 
 /**
@@ -168,6 +171,42 @@ public class Parameter implements Comparable {
 		return required;
 	}
 	
+	/**
+	 * Returns whether this tag is required comparing it to the attributes that are in there
+	 * Have to check with the triggers of this parameter... wherever they come from!
+	 * @author Mark Drew
+	 * 
+	 * @param availParams
+	 * @return wheter its required
+	 */
+	public boolean isReqpuired(HashMap availParams){
+	
+		//If this doesnt have triggers and is required, return true
+		if(triggers.isEmpty() || triggers == null){
+			return required;
+		}
+		
+		boolean r_Required = required;
+		
+		Iterator trigIter = triggers.iterator();
+		while(trigIter.hasNext()){
+			HashMap mTriggers = ((Trigger)trigIter.next()).triggerParams;
+			Iterator mTriggerIter = mTriggers.keySet().iterator();
+			while(mTriggerIter.hasNext()){
+				Object attrib = mTriggerIter.next();
+				if(availParams.containsKey(attrib)){
+					AttributeItem obj = (AttributeItem)availParams.get(attrib);
+					if(obj.getValue().equalsIgnoreCase(mTriggers.get(attrib).toString())){
+						return  false;
+						
+					}
+					
+				}
+			}
+		}
+		
+		return required;
+	}
 	
 	/**
 	 * Returns the currently active trigger or null.
