@@ -5818,7 +5818,7 @@
 			<value option="java"/>
 		</values>
 	</parameter>
-	<parameter name="action" type="String" required="true">
+	<parameter name="action" type="String" required="false">
 		<help><![CDATA[
 
 		]]></help>
@@ -5826,12 +5826,21 @@
 			<value option="create"/>
 			<value option="connect"/>
 		</values>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="true"/>
+			<selectedValue attributeName="type" value="java" required="true"/>
+		</triggers>
 	</parameter>
-	<parameter name="class" type="String" required="true">
+	<parameter name="class" type="String" required="false">
 		<help><![CDATA[
 
 		]]></help>
 		<values/>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="true"/>
+			<selectedValue attributeName="type" value="corba" required="true"/>
+			<selectedValue attributeName="type" value="java" required="true"/>
+		</triggers>
 	</parameter>
 	<parameter name="name" type="variableName" required="true">
 		<help><![CDATA[
@@ -5839,7 +5848,7 @@
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="context" type="String" required="true">
+	<parameter name="context" type="String" required="false">
 		<help><![CDATA[
 
 		]]></help>
@@ -5850,14 +5859,21 @@
 			<value option="ior"/>
 			<value option="nameservice"/>
 		</values>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="false"/>
+			<selectedValue attributeName="type" value="corba" required="true"/>
+		</triggers>
 	</parameter>
 	<parameter name="server" type="String" required="false">
 		<help><![CDATA[
 
 		]]></help>
 		<values/>
+		<triggers>
+			<selectedValue attributeName="context" value="remote" required="true"/>
+		</triggers>
 	</parameter>
-	<parameter name="component" type="String" required="true">
+	<parameter name="component" type="String" required="false">
 		<help><![CDATA[
 
 		]]></help>
@@ -5868,8 +5884,11 @@
 
 		]]></help>
 		<values/>
+		<triggers>
+			<selectedValue attributeName="type" value="corba" required="false"/>
+		</triggers>
 	</parameter>
-	<parameter name="webservice" type="URL" required="true">
+	<parameter name="webservice" type="URL" required="false">
 		<help><![CDATA[
 
 		]]></help>
