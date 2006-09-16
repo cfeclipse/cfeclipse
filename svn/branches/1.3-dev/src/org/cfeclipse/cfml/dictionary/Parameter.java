@@ -29,9 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Map.Entry;
 
-import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 
 
 /**
@@ -46,6 +44,11 @@ public class Parameter implements Comparable {
 	public static final int	PARAM_TRIGGERED		= 0x1;
 	/** The Parameter is required (generally and'ed with PARAM_TRIGGERED to indicate that it is triggered & required */ 
 	public static final int PARAM_REQUIRED 		= 0x2;
+	
+	/** The Parameters is NOT required  */
+	public static final int PARAM_NOTREQUIRED 	=0x3;
+	
+	
 	
 	/** Is this parameter required by default (ignoring any 
 	protected boolean paramRequired = false;
@@ -66,6 +69,11 @@ public class Parameter implements Comparable {
 	public void addTrigger(Trigger newTriggerSet) {
 		//System.out.println("Parameter::addTriger() - Param \' " + this.name + "\' now has " + this.triggers.size() + "\' triggers");
 		this.triggers.add(newTriggerSet);
+	}
+	
+	public ArrayList getTriggers(){
+		
+		return this.triggers;
 	}
 	
 	/**
@@ -114,6 +122,44 @@ public class Parameter implements Comparable {
 				activeTrigger = currTrigger;
 				//System.out.println("Param required");
 				return trigVal;
+			}
+		}
+		
+		activeTrigger = null;
+		//System.out.println("Param not triggered");
+		return PARAM_NOTTRIGGERED;	// Fell through to here, available parameters didn't match any triggers.
+	}
+	
+	/**
+	 * Returns whether this parameter is required comparing it to the attributes that are in there
+	 * Have to check with the triggers of this parameter... wherever they come from!
+	 * @author Mark Drew
+	 * 
+	 * @param availParams
+	 * @return wheter its required
+	 */
+	public int isRequired(HashMap availParams){
+		
+		if(this.triggers.size() == 0 && this.required)
+		{
+			activeTrigger = null;
+			//System.out.println(" no params, triggered & required");
+			return PARAM_REQUIRED | PARAM_TRIGGERED;
+		}
+		
+		
+		Iterator trigIter = triggers.iterator();
+		
+		while(trigIter.hasNext())
+		{
+			Trigger currTrigger =(Trigger)trigIter.next(); 
+			int trigVal = currTrigger.WillTrigger(availParams);
+			
+			
+			if((trigVal & PARAM_TRIGGERED) == PARAM_TRIGGERED && currTrigger.isRequired)
+			{
+				activeTrigger = currTrigger;
+				return PARAM_REQUIRED | PARAM_TRIGGERED;
 			}
 		}
 		
@@ -171,42 +217,7 @@ public class Parameter implements Comparable {
 		return required;
 	}
 	
-	/**
-	 * Returns whether this tag is required comparing it to the attributes that are in there
-	 * Have to check with the triggers of this parameter... wherever they come from!
-	 * @author Mark Drew
-	 * 
-	 * @param availParams
-	 * @return wheter its required
-	 */
-	public boolean isReqpuired(HashMap availParams){
-	
-		//If this doesnt have triggers and is required, return true
-		if(triggers.isEmpty() || triggers == null){
-			return required;
-		}
-		
-		boolean r_Required = required;
-		
-		Iterator trigIter = triggers.iterator();
-		while(trigIter.hasNext()){
-			HashMap mTriggers = ((Trigger)trigIter.next()).triggerParams;
-			Iterator mTriggerIter = mTriggers.keySet().iterator();
-			while(mTriggerIter.hasNext()){
-				Object attrib = mTriggerIter.next();
-				if(availParams.containsKey(attrib)){
-					AttributeItem obj = (AttributeItem)availParams.get(attrib);
-					if(obj.getValue().equalsIgnoreCase(mTriggers.get(attrib).toString())){
-						return  false;
-						
-					}
-					
-				}
-			}
-		}
-		
-		return required;
-	}
+
 	
 	/**
 	 * Returns the currently active trigger or null.
