@@ -9,7 +9,7 @@
   		<!ENTITY value_boolean SYSTEM "inc/value_boolean.xml">
 	]>
  -->
-<dictionary xmlns="http://www.cfeclipse.org/version1/dictionary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary http://cfeclipse.tigris.org/version1/dictionary/dictionary.xsd">
+<dictionary xmlns="http://www.cfeclipse.org/version1/dictionary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://www.cfeclipse.org/version1/dictionary.xsd http://cfeclipse.tigris.org/version1/dictionary/dictionary.xsd">
 	<tags>
 <!--
 	cfabort
@@ -1761,16 +1761,16 @@
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="name" type="variableName" required="true">
+	<parameter name="name" type="variableName" required="false">
 		<help><![CDATA[
 			Name for output record set.
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
+			<selectedValue attributeName="action" required="true" value="list"/>
 		</triggers>
 	</parameter>
-	<parameter name="filter" type="String" required="true">
+	<parameter name="filter" type="String" required="false">
 		<help><![CDATA[
 			File extension filter applied to returned names. For
 			example: *.cfm. One filter can be applied.
@@ -2432,17 +2432,21 @@
 			<value option="write"/>
 		</values>
 	</parameter>
-	<parameter name="file" type="String" required="true">
+	<parameter name="file" type="String" required="false">
 		<help><![CDATA[
 			Pathname of the file.
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="delete" required="true"/>
-			<selectedValue attributeName="action" value="read" required="true"/>
-			<selectedValue attributeName="action" value="readBinary" required="true"/>
-			<selectedValue attributeName="action" value="write" required="true"/>
-			<selectedValue attributeName="action" value="append" required="true"/>
+		<!-- keep all of them, check which ones are NOT required
+			 status="required|optional|error"/>
+		-->
+			
+			<selectedValue attributeName="action" value="append" required="true" status="required"/>
+			<selectedValue attributeName="action" value="delete" required="true" status="required"/>
+			<selectedValue attributeName="action" value="read" required="true" status="required"/>
+			<selectedValue attributeName="action" value="readBinary" required="true" status="required"/>
+			<selectedValue attributeName="action" value="write" required="true" status="required"/>
 		</triggers>
 	</parameter>
 	<parameter name="mode" type="String" required="false">
@@ -2453,22 +2457,21 @@
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="false"/>
-			<selectedValue attributeName="action" value="copy" required="false"/>
-			<selectedValue attributeName="action" value="move" required="false"/>
-			<selectedValue attributeName="action" value="rename" required="false"/>
-			<selectedValue attributeName="action" value="write" required="false"/>
-			<selectedValue attributeName="action" value="upload" required="false"/>
+			<selectedValue attributeName="action" value="append" required="true" status="optional"/>
+			<selectedValue attributeName="action" value="copy" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="move" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="upload" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="write" required="false" status="optional"/>
 		</triggers>
 	</parameter>
-	<parameter name="output" type="String" required="true">
+	<parameter name="output" type="String" required="false">
 		<help><![CDATA[
 			String to add to the file
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="true"/>
-			<selectedValue attributeName="action" value="write" required="true"/>
+			<selectedValue attributeName="action" value="append" required="true" status="required"/>
+			<selectedValue attributeName="action" value="write" required="true" status="required"/>
 		</triggers>
 	</parameter>
 	<parameter name="addnewline" type="boolean" required="false">
@@ -2480,9 +2483,8 @@
 			<value option="false"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="true"/>
-			<selectedValue attributeName="action" value="write" required="false"/>
-			<!-- <selectedValue attributeName="action" value="" required="false" /> -->
+			<selectedValue attributeName="action" value="append" required="true" status="optional"/>
+			<selectedValue attributeName="action" value="write" required="false" status="optional"/>
 		</triggers>
 	</parameter>
 	<parameter name="attributes" type="String" required="false">
@@ -2500,12 +2502,11 @@
 			<value option="temporary" compatibility="deprecated"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="false"/>
-			<selectedValue attributeName="action" value="copy" required="false"/>
-			<selectedValue attributeName="action" value="move" required="false"/>
-			<selectedValue attributeName="action" value="rename" required="false"/>
-			<selectedValue attributeName="action" value="write" required="false"/>
-			<selectedValue attributeName="action" value="upload" required="false"/>
+			<selectedValue attributeName="action" value="append" required="true" status="optional"/>
+			<selectedValue attributeName="action" value="move" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="rename" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="upload" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="write" required="false" status="optional"/>
 		</triggers>
 	</parameter>
 	<parameter name="charset" type="String" required="false">
@@ -2530,47 +2531,46 @@
 			<value option="utf-16"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="false"/>
-			<selectedValue attributeName="action" value="move" required="false"/>
-			<selectedValue attributeName="action" value="read" required="false"/>
-			<selectedValue attributeName="action" value="write" required="false"/>
+			<selectedValue attributeName="action" value="append" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="read" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="write" required="false" status="optional"/>
 		</triggers>
 	</parameter>
-	<parameter name="source" type="String" required="true">
+	<parameter name="source" type="String" required="false">
 		<help><![CDATA[
 			Pathname of the file (durring copy).
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="copy" required="true"/>
-			<selectedValue attributeName="action" value="move" required="true"/>
-			<selectedValue attributeName="action" value="rename" required="true"/>
+			<selectedValue attributeName="action" value="copy" required="true" status="required"/>
+			<selectedValue attributeName="action" value="move" required="true" status="required"/>
+			<selectedValue attributeName="action" value="rename" required="true" status="required"/>
 		</triggers>
 	</parameter>
-	<parameter name="destination" type="String" required="true">
+	<parameter name="destination" type="String" required="false">
 		<help><![CDATA[
 			Pathname of a directory or file on web server
 			(durring copy).
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="copy" required="true"/>
-			<selectedValue attributeName="action" value="move" required="true"/>
-			<selectedValue attributeName="action" value="rename" required="true"/>
-			<selectedValue attributeName="action" value="upload" required="true"/>
+			<selectedValue attributeName="action" value="copy" required="true" status="required"/>
+			<selectedValue attributeName="action" value="move" required="true" status="required"/>
+			<selectedValue attributeName="action" value="rename" required="true" status="required"/>
+			<selectedValue attributeName="action" value="upload" required="true" status="required"/>
 		</triggers>
 	</parameter>
-	<parameter name="variable" type="variableName" required="true">
+	<parameter name="variable" type="variableName" required="false">
 		<help><![CDATA[
 			Name of variable to contain contents of text file.
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="read" required="true"/>
-			<selectedValue attributeName="action" value="readBinary" required="true"/>
+			<selectedValue attributeName="action" value="read" required="true" status="required"/>
+			<selectedValue attributeName="action" value="readBinary" required="true" status="required"/>
 		</triggers>
 	</parameter>
-	<parameter name="filefield" type="String" required="true">
+	<parameter name="filefield" type="String" required="false">
 		<help><![CDATA[
 			Name of form field used to select the file.
 
@@ -2578,7 +2578,7 @@
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="upload" required="true"/>
+			<selectedValue attributeName="action" value="upload" required="true" status="required"/>
 		</triggers>
 	</parameter>
 	<parameter name="nameconflict" type="String" required="false">
@@ -2593,10 +2593,10 @@
 			<value option="makeunique"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="upload" required="false"/>
+			<selectedValue attributeName="action" value="upload" required="false" status="optional"/>
 		</triggers>
 	</parameter>
-	<parameter name="accept" type="String" required="true">
+	<parameter name="accept" type="String" required="false">
 		<help><![CDATA[
 			Limits the MIME types to accept. Comma-delimited list. For
 			example, to permit JPG and Microsoft Word file uploads:
@@ -2605,10 +2605,10 @@
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="upload" required="false"/>
+			<selectedValue attributeName="action" value="upload" required="false" status="optional"/>
 		</triggers>
 	</parameter>
-	<parameter name="result" type="variableName" required="true">
+	<parameter name="result" type="variableName" required="false">
 		<help><![CDATA[
 			Allows you to specify a name for the variable in which cffile
 			returns the result (or status) parameters. If you do not specify
@@ -2616,7 +2616,7 @@
 		]]></help>
 		<values default="cffile"/>
 		<triggers>
-			<selectedValue attributeName="action" value="upload" required="false"/>
+			<selectedValue attributeName="action" value="upload" required="false" status="optional"/>
 		</triggers>
 	</parameter>
 	<parameter name="fixnewline" required="false" type="String">
@@ -2631,8 +2631,8 @@
 			<value option="false"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="write" required="false"/>
-			<selectedValue attributeName="action" value="append" required="false"/>
+			<selectedValue attributeName="action" value="append" required="false" status="optional"/>
+			<selectedValue attributeName="action" value="write" required="false" status="optional"/>
 		</triggers>
 	</parameter>
 </tag>
