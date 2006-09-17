@@ -2457,7 +2457,7 @@
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="true" status="optional"/>
+			<selectedValue attributeName="action" value="append" required="false" status="optional"/>
 			<selectedValue attributeName="action" value="copy" required="false" status="optional"/>
 			<selectedValue attributeName="action" value="move" required="false" status="optional"/>
 			<selectedValue attributeName="action" value="upload" required="false" status="optional"/>
@@ -2483,7 +2483,7 @@
 			<value option="false"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="true" status="optional"/>
+			<selectedValue attributeName="action" value="append" required="false" status="optional"/>
 			<selectedValue attributeName="action" value="write" required="false" status="optional"/>
 		</triggers>
 	</parameter>
@@ -2502,7 +2502,7 @@
 			<value option="temporary" compatibility="deprecated"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="true" status="optional"/>
+			<selectedValue attributeName="action" value="append" required="false" status="optional"/>
 			<selectedValue attributeName="action" value="move" required="false" status="optional"/>
 			<selectedValue attributeName="action" value="rename" required="false" status="optional"/>
 			<selectedValue attributeName="action" value="upload" required="false" status="optional"/>
