@@ -187,8 +187,7 @@ public class NewCFCWizard extends Wizard implements INewWizard {
 	private StringBuffer createStringBuffer() {
 		StringBuffer sb = new StringBuffer();
 		
-		sb.append("<cfcomponent name=\"");
-		sb.append(page.getCFCBean().getName() + "\"");
+		sb.append("<cfcomponent");
 		
 		if(page.getCFCBean().getDisplayName().trim().length() > 0)
 		sb.append(" displayname=\"" + page.getCFCBean().getDisplayName().trim() + "\"");
@@ -197,8 +196,11 @@ public class NewCFCWizard extends Wizard implements INewWizard {
 		sb.append(" hint=\"" + page.getCFCBean().getHint().trim() + "\"");
 		
 		if(page.getCFCBean().getExtendCFC().trim().length() > 0)
-		sb.append(" extends=\"" + page.getCFCBean().getExtendCFC().trim() + "\"");
-		
+			sb.append(" extends=\"" + page.getCFCBean().getExtendCFC().trim() + "\"");
+			
+		if(page.getCFCBean().getOutput().trim().length() > 0)
+			sb.append(" output=\"" + page.getCFCBean().getOutput().trim() + "\"");
+			
 		sb.append(">");
 		
 		sb.append("\n\n");

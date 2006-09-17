@@ -21,6 +21,7 @@ public class CFCBean {
 	private String extendCfc;
 	private String hint;
 	private String displayName;
+	private String output;
 	
 	// cfc property tags
 	private List propertyBeans;
@@ -34,7 +35,7 @@ public class CFCBean {
 		functionBeans = new ArrayList();
 	}
 	
-	public CFCBean(String name, String path, String extendCfc, String hint, String displayName)
+	public CFCBean(String name, String path, String extendCfc, String hint, String displayName, String output)
 	{
 		this();
 		
@@ -43,6 +44,7 @@ public class CFCBean {
 		this.extendCfc = extendCfc;
 		this.hint = hint;
 		this.displayName = displayName;
+		this.output = output;
 	}
 		
 	/**
@@ -131,6 +133,20 @@ public class CFCBean {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * @return Returns the output.
+	 */
+	public String getOutput() {
+		return output;
+	}
+	
+	/**
+	 * @param output The output to set.
+	 */
+	public void setOutput(String output) {
+		this.output = output;
 	}
 	
 	/**
