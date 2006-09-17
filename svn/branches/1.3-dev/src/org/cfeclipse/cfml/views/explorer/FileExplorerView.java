@@ -13,8 +13,11 @@ import org.cfeclipse.cfml.views.explorer.ftp.FtpConnectionDialog;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -34,6 +37,12 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.IShowInTarget;
+import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 
 
@@ -46,7 +55,7 @@ import org.eclipse.ui.part.ViewPart;
  * The explorer view is suposed to be a faithful replication
  * of the file explorer tab in Homesite/CFStudio.
  */
-public class FileExplorerView extends ViewPart {
+public class FileExplorerView extends ViewPart implements IShowInTarget {
 	public final static String ID_FILE_EXPLORER = "org.cfeclipse.cfml.views.explorer.FileExplorerView";
 
     private MenuItem disconnectItem,connectItem,manageItem;
@@ -181,7 +190,24 @@ public class FileExplorerView extends ViewPart {
     	
     }
     
+    public boolean show(ShowInContext context) {
+    	String filePath;
     
+        if (fileViewer == null || context == null)
+           return false;
+        ISelection sel = context.getSelection();
+        Object input = context.getInput();
+        if (input instanceof JavaFileEditorInput) {
+        	filePath = ((JavaFileEditorInput)input).getPath(input).toString();
+        }
+		else {
+			filePath = ((FileEditorInput)input).getFile().getRawLocation().toString();
+		}
+		
+        
+        showFile(filePath);
+        return false;
+     }
     private void createMenuItems(Menu menu) {
 
         manageItem = new MenuItem(menu,SWT.CASCADE);

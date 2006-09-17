@@ -539,6 +539,14 @@
                toolbarPath="CFEditorResourceCommand"
                tooltip="%action.tooltip.InsertGetAndSet">
          </action>
+         <action
+               class="org.cfeclipse.cfml.editors.actions.CreateUnitTestAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CreateUnitTestAction"
+               icon="icons/ctool16/report.gif"
+               id="org.cfeclipse.cfml.editors.actions.CreateUnitTestAction"
+               label="Create Test Case"
+               menubarPath="org.cfeclipse.cfml.cfcmenu/maingroup"
+               toolbarPath="CFEditorResourceCommand"/>
           <!-- Highlight bracket pair 
          <action
          	   toolbarPath="BasicCFEditorCommand"
@@ -567,7 +575,7 @@
                id="org.cfeclipse.cfml.editors.actions.CFComment">
          </action>
          <action
-               label="%RTrim"
+               label="%action.label.RTrim"
                class="org.cfeclipse.cfml.editors.actions.RTrimAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu"
                id="org.cfeclipse.cfml.editors.actions.RTrim">
@@ -622,26 +630,6 @@
                class="org.cfeclipse.cfml.editors.actions.LastActionAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.LastTag">
-         </action>
-         <menu
-               label="%menu.label.2"
-               path="additions"
-               id="org.cfeclipse.cfml.editors.contribution.subMenu1">
-            <separator
-                  name="text">
-            </separator>
-         </menu>
-         <action
-               label="%action.label.49"
-               class="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu1/text"
-               id="org.cfeclipse.cfml.editors.actions.LocateInTreeAction">
-         </action>
-         <action
-               label="%action.label.50"
-               class="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu1/text"
-               id="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction">
          </action>
          <action
                label="%action.label.51"
@@ -1544,6 +1532,10 @@
             targetID="org.eclipse.ui.resourcePerspective">
             <perspectiveShortcut id="org.cfeclipse.cfml.perspective.CFML"/>
         </perspectiveExtension>
+       <perspectiveExtension targetID = "org.cfeclipse.cfml.perspective.CFML">
+     	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
+     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
+      </perspectiveExtension>
   </extension>
    <extension
          point="org.eclipse.ui.contexts">
