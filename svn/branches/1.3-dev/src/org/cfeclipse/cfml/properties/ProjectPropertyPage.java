@@ -245,9 +245,12 @@ public class ProjectPropertyPage extends PropertyPage {
 			return false;
 		}
 		
+		System.out.println("doing the syntax dictionary save");
 		this.cfmlSyntaxField.store();
 		DictionaryManager.loadDictionaryFromCache(propertyManager.getCurrentDictionary((IProject)getElement()),DictionaryManager.CFDIC);
 		CFMLPlugin.getDefault().setupCAM();
+		DictionaryManager.initDictionaries();
+		
 		return true;
 	}
 
