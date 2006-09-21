@@ -11,14 +11,25 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
+import org.cfeclipse.cfml.preferences.BrowserPreferencePage;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
+import org.cfeclipse.cfml.properties.ProjectPropertyPage;
 import org.cfeclipse.cfml.util.AlertUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.preference.IPreferencePage;
+import org.eclipse.jface.preference.PreferenceDialog;
+import org.eclipse.jface.preference.PreferenceManager;
+import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -26,8 +37,13 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.internal.dialogs.PropertyDialog;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -61,12 +77,86 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
      */
     public void run(IAction action) {
         try {
-            
+        	
             IEditorInput input = this.editor.getEditorInput();
             String filePath = "";
             if (input instanceof FileEditorInput) {
                 
                 FileEditorInput fileInput = (FileEditorInput)input;
+                filePath = fileInput.getFile().getFullPath().toString();
+               
+            //Try and get the workbench preferneces and project properties for the url!
+                String browserAppPath = "";
+                String primaryBrowserPath = CFMLPlugin.getDefault().getPluginPreferences().getString(BrowserPreferenceConstants.P_PRIMARY_BROWSER_PATH);
+                String secondaryBrowserPath = CFMLPlugin.getDefault().getPluginPreferences().getString(BrowserPreferenceConstants.P_SECONDARY_BROWSER_PATH);
+                
+                browserAppPath = primaryBrowserPath;
+                if(action.getActionDefinitionId().equals("org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2")){
+                	browserAppPath = secondaryBrowserPath;
+                	
+                }
+                //Check that the application exists
+                File BrowserApp = new File(browserAppPath);
+                if(!BrowserApp.exists()){
+                	MessageBox msg = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_INFORMATION | SWT.YES | SWT.NO);
+                    msg.setText("Oops!");
+                    msg.setMessage("The Browser application cannot be found in " + browserAppPath + " Would you like to edit your preferences now?");
+                    int result = msg.open();
+                    if (result == SWT.YES) {
+                    	IPreferencePage page = new BrowserPreferencePage();
+                    	page.setTitle("Browsers");
+                    	page.setDescription("You can define the  primary and secondary browsers that are launched when you press F12(primary) and Shift+F12(secondary)");
+                    	   PreferenceManager mgr = new PreferenceManager();
+                    	   IPreferenceNode node = new PreferenceNode("1", page);
+                    	   mgr.addToRoot(node);
+                    	   PreferenceDialog dialog = new PreferenceDialog(this.editor.getSite().getShell(), mgr);
+                    	   dialog.create();
+                    	   dialog.setMessage(page.getTitle());
+                    	   dialog.open();
+                    }
+                    return;
+                }
+                
+                CFMLPropertyManager manager = new CFMLPropertyManager();
+                String URLpath = manager.projectURL(fileInput.getFile().getProject());
+                //Check that the url exists, have set the default to nothing so that if it is blank we can show em an error
+                System.out.println("The Path is |" + URLpath.length() + "|");
+                if(URLpath.length() == 0){
+                	MessageBox msg = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_ERROR | SWT.OK);
+                    msg.setText("Oops!");
+                    msg.setMessage("The URL for your project has not been defined, edit the CFEclipse properties for this project and enter the URL for this file");
+                   int result = msg.open();
+                   /* if (result == SWT.YES) {
+                    	 IWorkbench wb = PlatformUI.getWorkbench();
+                    	 ISelection sel = (ISelection)fileInput.getFile().getProject();
+                    	   
+                    	   PropertyPage page = new ProjectPropertyPage();
+                    	   PreferenceManager mgr = new PreferenceManager();
+                    	   IPreferenceNode node = new PreferenceNode("1", page);
+                    	   mgr.addToRoot(node);
+                    	   PropertyDialog dialog = new PropertyDialog(this.editor.getSite().getShell(), mgr, sel);
+                    	   dialog.create();
+                    	   dialog.setMessage(page.getTitle());
+                    	   dialog.open();
+                    }*/
+                   return;
+                	
+                }
+                
+                
+                
+                
+                
+                
+                String[] cmd = new String[] {
+                		browserAppPath
+                         ,URLpath+ fileInput.getFile().getFullPath().removeFirstSegments(1)
+                     }; 
+                
+                Runtime.getRuntime().exec(cmd);
+            } 
+                /*System.out.println(cmd[0] + cmd[1]);
+                
                 FileInputStream in;
                 try {
                     in = new FileInputStream(fileInput.getFile().getProject().getLocation().toFile()+"/cfeclipse.properties");
@@ -114,8 +204,8 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
             
            //Process p =  Runtime.getRuntime().exec(cmd);
         	  Runtime.getRuntime().exec(cmd);
-           
-        } catch (Exception e) {
+         */  
+       } catch (Exception e) {
             e.printStackTrace();
         }
     }

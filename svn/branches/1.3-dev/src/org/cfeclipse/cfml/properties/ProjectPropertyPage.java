@@ -30,7 +30,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	private static String DEFAULT_SNIPPETS_PATH = "";
 	private static final String PROJECT_URL_TITLE = "Project URL:";
 	private static final String PROJECT_URL_PROPERTY = CFMLPreferenceConstants.P_PROJECT_URL;
-	private static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
+	private static final String DEFAULT_PROJECT_URL = "";
 	
 	private static final String CFML_DICTIONARY_TITLE = "&CFML Language Version";
 

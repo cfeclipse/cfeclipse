@@ -501,7 +501,17 @@
                definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
          </action>
 
-
+		<!-- open in secondary external browser -->
+ 		<action
+               toolbarPath="BasicCFEditorCommand"
+               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               label="Browse in secondary browser"
+               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="%action.tooltip.Browse"
+               icon="icons/ctool16/globe.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction2"
+               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
+         </action>
           <!-- Launch new file dialog -->
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
@@ -1092,8 +1102,23 @@
             commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding> 
-	
+      
+      <!-- Open in secondary external browser -->
+       <command
+            name="Browse in secondary browser"
+            description="%command.description.29"
+            categoryId="org.cfeclipse.cfml.commandCategory"
+            id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
+      </command>
+      
+	  <keyBinding
+            keySequence="M2+F12"
+            contextId="org.cfeclipse.cfml.cfmleditorcontext"
+            commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
 
+	 
       <command
             name="%command.name.30"
             description="%command.description.30"
@@ -1107,12 +1132,12 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- edit tag command -->
-      <commmand 
-      		name="%command.name.EditTag"
-      		description="%command.description.EditTag"
-      		categoryID="org.cfeclipse.cfml.commandCategory"
-      		id="org.cfeclipse.cfml.editors.actions.EditTagAction">
-      </commmand>
+      <command
+            categoryID="org.cfeclipse.cfml.commandCategory"
+            description="%command.description.EditTag"
+            id="org.cfeclipse.cfml.editors.actions.EditTagAction"
+            name="%command.name.EditTag">
+      </command>
       <keyBinding
             commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
             contectsId="org.cfeclipse.cfml.cfmleditorcontext"
@@ -1264,6 +1289,11 @@
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             name="%page.name.9"
             id="org.cfeclipse.cfml.preferences.FoldingPreferencePage"/>
+      <page
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
+            id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
+            name="Browser"/>
    </extension>
    
    <extension
@@ -1572,7 +1602,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.ui.ide.workbench"
-            name="%product.name.0">
+            name="CFEclipse">
          <property
                name="windowImages"
                value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
@@ -1601,5 +1631,13 @@
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
             content="intro/sample.xml"/>
+   </extension>
+   <extension
+         id="org.cfeclipse.cfml.builders.componentbuilder"
+         name="CF Component Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder hasNature="true">
+         <run class="org.cfeclipse.cfml.builders.CFComponentBuilder"/>
+      </builder>
    </extension>
 </plugin>
