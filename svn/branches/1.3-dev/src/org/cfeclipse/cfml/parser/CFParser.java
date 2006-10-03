@@ -689,6 +689,7 @@ public class CFParser {
 		// If not then it's a child element and so we add it to the child list of the top element
 		// of the stack.
 	    
+		//TODO: this badly parses things like <cfif ListGetAt(i,1,"=") neq "errorType">
 	    tagName = tagName.substring(1, tagName.length());
 		TagItem newItem;
 		//System.out.println("CFParser::handleCFTag found " + tagName);
@@ -1474,12 +1475,13 @@ public class CFParser {
 //			System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(parserState.getMatches());
 			
-			
-			
-			parserState.addMessages(finalDocTreeTraversal(docTree.getDocumentRoot()));
+			DocItem documentRoot = docTree.getDocumentRoot();
+			ArrayList list = finalDocTreeTraversal(documentRoot);
+			parserState.addMessages(list);
 			processParseResultMessages();
 			
-			//This should parse a document and setup all the variables;
+			//This should parse a document and setup all the variables
+			// Only up to the cursor position though
 			VariablesParser vParser = new VariablesParser(docTree,inData);
 			docTree.setVariableMap(vParser.getVariableMap());
 

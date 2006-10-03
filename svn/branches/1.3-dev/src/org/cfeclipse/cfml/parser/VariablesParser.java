@@ -3,6 +3,7 @@ package org.cfeclipse.cfml.parser;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagSet;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
@@ -28,17 +29,24 @@ public class VariablesParser {
 	public VariablesParser(CFDocument document, String docText) {
 		variableMap = new HashMap();
 		parseForVariables(document.getDocumentRoot());
+		
+		
 	}
 	
 	private void parseForVariables(DocItem item){
-
+			//We should only parse the variables up to the cursor
+		
+		
 			CFNodeList nodelist =  item.getChildNodes();
 		
 	        Iterator iter = nodelist.iterator();
+	        
 	        while(iter.hasNext()){
 	        	
 	        	Object cfItem = iter.next();
+	        	
 	        	if(cfItem instanceof TagItem){
+	        	
 	        		addItem((TagItem)cfItem);
 	        		
 		        	if(((TagItem)cfItem).hasChildren()){
@@ -57,25 +65,34 @@ public class VariablesParser {
 	 * @param tag
 	 */
 	private void addItem(TagItem tag){
+		
+		VariableParserItem vpi = null;
+		
+		
 		String tagname = tag.getName();
+		
+		
+		
 		if(tagname.equalsIgnoreCase("cfscript")){
 			//Call the script parser
 		}
 		else if(tagname.equalsIgnoreCase("cfset")){
 			CfmlTagSet setTag = new CfmlTagSet(tag.getLineNumber(), tag.getStartPosition(), tag.getEndPosition(), tag.getName());
-			System.out.println("Parsing cfset");
+		//	System.out.println("Parsing cfset");
 			for (int i = 0; i < setTag.getAttributes().length; i++) {
 				System.out.println(setTag.getAttributes()[i].getName() + " = " + setTag.getAttributes()[i].getValue());
 			}
 		}
 		else if(tagname.equalsIgnoreCase("cfinvoke")){
 			if(tag.getAttributeValue("returnvariable") != null){
-				this.variableMap.put(tag.getAttributeValue("returnvariable"), tag);
+				vpi = new VariableParserItem(tag.getAttributeValue("returnvariable"), tag.getLineNumber(), tag);
+				this.variableMap.put(tag.getAttributeValue("returnvariable"), vpi);
 			}
 		}
 		else if(tagname.equalsIgnoreCase("cfobject")){
 			if(tag.getAttributeValue("name") != null){
-				this.variableMap.put(tag.getAttributeValue("name"), tag);
+				vpi = new VariableParserItem(tag.getAttributeValue("name"), tag.getLineNumber(), tag);
+				this.variableMap.put(tag.getAttributeValue("name"), vpi);
 			}
 		}
 		else if(tagname.equalsIgnoreCase("cfreturn")){
@@ -86,12 +103,14 @@ public class VariablesParser {
 			//More cases above.
 			
 			if(tag.getAttributeValue("name") !=null){
-				this.variableMap.put(tag.getAttributeValue("name"), tag);
+				vpi = new VariableParserItem(tag.getAttributeValue("name"), tag.getLineNumber(), tag);
+				this.variableMap.put(tag.getAttributeValue("name"), vpi);
 			}
 			
 			//There are more tags that use the result scope, so we can put the same thing up there:
 			if(tag.getAttributeValue("result") != null){
-				this.variableMap.put(tag.getAttributeValue("result"), tag);
+				vpi = new VariableParserItem(tag.getAttributeValue("result"), tag.getLineNumber(), tag);
+				this.variableMap.put(tag.getAttributeValue("result"), vpi);
 			}
 			
 		}
