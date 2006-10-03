@@ -29,6 +29,7 @@
       <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.ui.intro"/>
       <import plugin="org.eclipse.ui.intro.universal"/>
+      <import plugin="org.apache.ant"/>
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
@@ -1132,20 +1133,6 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- edit tag command -->
-      <command
-            categoryID="org.cfeclipse.cfml.commandCategory"
-            description="%command.description.EditTag"
-            id="org.cfeclipse.cfml.editors.actions.EditTagAction"
-            name="%command.name.EditTag">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
-            contectsId="org.cfeclipse.cfml.cfmleditorcontext"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationID="org.cfeclipse.ui.defaultAcceleratorConfiguration"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+T">
-      	</keyBinding>
       
     
 
@@ -1294,6 +1281,12 @@
             class="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             name="Browser"/>
+      <page
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfml.preferences.ApplicationTemplatesPreferencePage"
+            id="org.cfeclipse.cfml.preferences.ApplicationTemplatesPreferencePage"
+            name="Application Templates">
+      </page>
    </extension>
    
    <extension
@@ -1359,16 +1352,17 @@
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
             <description>%wizard.description.3</description>
       </wizard>
-      <wizard
+     <wizard
+            name="New Project From Template"
+            icon="icons/obj16/default.gif"
             category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.templateprojectwizard.NewTemplateProjectWizard"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            hasPages="true"
-            icon="icons/ctool16/insertsnip.gif"
-            id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateProjectWizard"
-            name="%wizard.name.4"
+            class="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjectFromTemplateWizard"
             preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            project="true"/>
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+            project="true"
+            id="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjecFromTemplateWizard">
+            <description>This wizard creates a new project using one of the templates defined</description>
+      </wizard>
    </extension>
    <extension
          id="CFENature"
