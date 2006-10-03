@@ -38,12 +38,16 @@ public class PartitionHelper {
 	
 	public boolean isCFTag(){
 		
-		return true;
+		if(part.getTagName().startsWith("cf"))
+			return true;
+		
+		return false;
 	}
 	
 	public boolean isHTMLTag(){
-		
-		return true;
+		if(!part.getTagName().startsWith("cf"))
+			return true;
+		return false;
 	}
 	
 	
