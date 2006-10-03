@@ -65,6 +65,7 @@ public class CFMLPreferenceManager {
 		ParserPreferenceConstants.setDefaults(store);
 		ScribblePadPreferenceConstants.setDefaults(store);
 		BrowserPreferenceConstants.setDefaults(store);
+		ApplicationTemplatesPreferenceConstants.setDefaults(store);
 	}
 	
 	/**
