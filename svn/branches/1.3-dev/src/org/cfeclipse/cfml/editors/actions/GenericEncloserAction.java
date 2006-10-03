@@ -107,7 +107,7 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 			//move the cursor to before the end of the new insert
 			int offset = ((ITextSelection)sel).getOffset();
 			offset += ((ITextSelection)sel).getLength();
-			offset += start.length();
+			offset += start.length()+1;
 			editor.setHighlightRange(offset,0,true);
 
 			// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
