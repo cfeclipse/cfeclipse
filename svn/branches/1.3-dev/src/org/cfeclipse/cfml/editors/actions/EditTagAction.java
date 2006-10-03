@@ -32,13 +32,17 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
+import org.cfeclipse.cfml.util.CFDocUtils;
 import org.cfeclipse.cfml.views.dictionary.TagFormatter;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITypedRegion;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
@@ -68,8 +72,6 @@ public class EditTagAction implements IEditorActionDelegate{
 		 * constructors
 		 */
 		public EditTagAction(){
-			// Re-Write this to try and set everything up, called a self init function maybe
-			
 			super();
 		}
 
@@ -109,12 +111,16 @@ public class EditTagAction implements IEditorActionDelegate{
 		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
 
 			this.editor = (ITextEditor)targetEditor;
+	
+			if(targetEditor != null){
+		
 			IDocument doc = editor.getDocumentProvider().getDocument(
 					editor.getEditorInput());
 
 			ICFDocument cfd = (ICFDocument) doc;
 
 			this.partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+			}
 		}
 		
 		
@@ -129,7 +135,7 @@ public class EditTagAction implements IEditorActionDelegate{
 
 	public void run(){
 			//We should be able to pass the attributes if we are editing.
-			
+		
 			ITextEditor thisEdit = (ITextEditor)ieditor;
 			IDocument doc =  thisEdit.getDocumentProvider().getDocument(ieditor.getEditorInput());
 			ISelection sel = thisEdit.getSelectionProvider().getSelection();
@@ -205,8 +211,44 @@ public class EditTagAction implements IEditorActionDelegate{
 	}
 
 	public void run(IAction action) {
-		// TODO Auto-generated method stub
+
+		//to run we want to set:
+			// ieditor
+			// shell
+			// tag
+			// dictionary
+			// maybe selected items
 		
+		String tagname = "";
+		this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
+		this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		this.shell = this.ieditor.getSite().getShell();
+		
+		
+		ITextEditor thisEdit = (ITextEditor)this.ieditor;
+		IDocument doc =  thisEdit.getDocumentProvider().getDocument(this.ieditor.getEditorInput());
+		ISelection sel = thisEdit.getSelectionProvider().getSelection();
+		
+		
+		int selstart = ((ITextSelection) sel).getOffset();
+		int selectionLength = ((ITextSelection) sel).getLength();
+		
+//		default start and end are at the cursor
+	
+		
+		//find the start and end of a tag from where we are... we could use the partitioner
+		
+		
+		CFEPartitioner partitioner = (CFEPartitioner)doc.getDocumentPartitioner();
+		CFEPartition part = partitioner.findClosestPartition(selstart);
+		
+		System.err.println("the partition type " + part.getType());
+		System.err.println("the partition name " + part.getTagName());
+		this.tag = this.dictionary.getTag(part.getTagName());
+		
+
+
+		run();
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
