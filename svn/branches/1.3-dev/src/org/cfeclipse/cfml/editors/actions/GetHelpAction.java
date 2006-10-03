@@ -88,7 +88,7 @@ public class GetHelpAction implements IEditorActionDelegate {
 		 */
 		
 		
-		String urldest = "http://www.techfeed.net/cfQuickDocs/?"; //TODO: Change this help url out.
+		String urldest = "http://www.cfeclipse.org/cfdocs/?query="; //TODO: Change this help url out.
 		String query = "";
 		
 		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
