@@ -61,15 +61,19 @@ public class CfmlTagItem extends TagItem {
 			suggestedAttributes.put(attributeName, attributeValue.getValue());
 			
 		}
-		
-		
-		//this.itemAttributes; //Who is setting this? it is badly set, lets create our own hashmap
-		
-	
-		Set attributes = syntax.getElementAttributes(this.itemName);
 
-		//Check to find all required attributes.
+		
+		Set attributes = syntax.getElementAttributes(this.itemName);
+		
+		
+		
+		if(attributes == null){
+			return super.IsSane();
+		}
+		
 		Object[] params = attributes.toArray();
+		
+		
 		for(int i = 0; i < params.length; i++)
 		{
 			Parameter currParam = (Parameter)params[i];
@@ -86,23 +90,13 @@ public class CfmlTagItem extends TagItem {
 						"The attribute \'" + currParam.getName() + "\' is required for the <cf" + itemName + "> tag."));
 			}
 			else if (!currParam.getTriggers().isEmpty()  && currParam.isTriggered(suggestedAttributes) == 0 && itemAttributes.containsKey(currParam.getName())) {
-				
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 						"The attribute \'" + currParam.getName() + "\' is not valid for the <cf" + itemName + "> tag."));
 			}
 			//now check for items that shouldnt be there, i.e. are NOT triggered
 			
+			
 		}
-		
-		
-		
-		//Check 2: check to see if the suggested attributes have been triggered.
-		
-		//Now I have checked for all the required attributes, lets check if any of the suggested attributes have triggers, 
-		//if they have a trigger, see if its amongst the ones I have written
-		
-		
-		
 		return super.IsSane();
 	
 	}
