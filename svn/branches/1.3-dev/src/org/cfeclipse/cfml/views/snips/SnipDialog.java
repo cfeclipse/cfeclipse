@@ -34,10 +34,16 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -78,7 +84,7 @@ public class SnipDialog extends Dialog{
         String options[];
 
         GridLayout gl = new GridLayout();
-        gl.numColumns = 2;
+        gl.numColumns = 3;
         
         container.setLayout(gl);
         FontData labelFontData = new FontData();
@@ -117,7 +123,7 @@ public class SnipDialog extends Dialog{
        String[] items = item.getValues();
        
        combo = new Combo(parent, SWT.DROP_DOWN);
-
+       //need to figure out how to span... unles we just put a blank label
        combo.setLayoutData(gridData);
        
        ComboModifyListener modifyListener = new ComboModifyListener(combo);
@@ -127,6 +133,8 @@ public class SnipDialog extends Dialog{
        item.setCombo(combo);
        combo.setItems(items);
        combo.select(0);
+       Label invLabel = new Label(parent, SWT.NONE);
+       invLabel.setText("");
    }
    
    
@@ -134,12 +142,49 @@ public class SnipDialog extends Dialog{
 
       String[] items = item.getValues();
       
-      text = new Text(parent, SWT.BORDER);
+      final Text text = new Text(parent, SWT.BORDER );
 
       text.setLayoutData(gridData);
       
       item.setText(text);
       text.setText(items[0]);
+      
+      final Button button = new Button(parent, SWT.NONE | SWT.MULTI);
+       button.setText(">");
+       button.addMouseListener(new MouseListener(){
+    	   
+    
+    	
+		public void mouseDown(MouseEvent e) {
+			
+			if(button.getText().equals(">")){
+				System.out.println(text.getSize());
+				text.setSize(text.getSize().x, text.getSize().y + 40);
+				
+				button.setText("V");
+			}
+			else {
+			//	text.setSize(textwidth, textheight);
+				text.setSize(text.getSize().x, text.getSize().y - 40);
+				button.setText(">");
+			}
+			
+		}
+
+		public void mouseDoubleClick(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void mouseUp(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+    	   
+    	   
+       });
      
   }
     

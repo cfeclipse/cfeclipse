@@ -80,7 +80,12 @@ public class SnipReader {
 	
 	public void read(String fileName) {
 		
-		this.snippetFile = new File(fileName);
+		if(fileName != null){
+			this.snippetFile = new File(fileName);
+		}
+		else {
+			this.snippetFile = new File("");
+		}
 		/*	
 		 * 	Mark D 06/06/06: Added some more checking for the path of the snippets.
 		 * 	Hopefully this will make it backwards compatible and it will work for all users now
