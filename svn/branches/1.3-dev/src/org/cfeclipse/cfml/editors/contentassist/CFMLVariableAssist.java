@@ -261,7 +261,6 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     		   CompletionProposal proposal = null;
     		  
     		   if(scopeKey instanceof ScopeVar){
-    			  // System.out.println("It is a scope variable " + scopeKey);
     			   //Lets find the help and assign some help to it
     			   ScopeVar sVar = (ScopeVar)scopeKey;
         			  
