@@ -141,6 +141,9 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
      */
     public ICompletionProposal[] getArguments(String varName, IAssistState state, ICFDocument doc){
 
+    	//System.out.println("Starting the proposal constructor for " + varName);
+    	
+    	
     	//TODO: Break this out into methods, the flow is maddening!
     	
     	
@@ -164,6 +167,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
        boolean isScope = false;
        //if the variable exists
        if(chosenTag != null){
+    	 //  System.out.println("Found Chosen Tag" + chosenTag);
     	   //Lets check we have a pre-defined scope for this type
     	   if(chosenTag instanceof TagItem){
            	TagItem leTag = (TagItem)chosenTag;
@@ -220,7 +224,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
        //We havent found it, but we need to check if there is something like FORM. URL. etc...
        //We might need to loop through them
        else{
-    	  
+    	   //System.out.println("No Tag Found");
     	   isScope = true;
     	   Set formScopes = new HashSet();
     	   Iterator hashIter = varMap.keySet().iterator();
@@ -238,7 +242,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     	   scopeProposals = formScopes;
        }
        
-      
+      //System.out.println("finding scope proposals " + scopeProposals);
        
        if(scopeProposals != null){
     	   //Create the scope proposals
@@ -257,6 +261,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     		   CompletionProposal proposal = null;
     		  
     		   if(scopeKey instanceof ScopeVar){
+    			  // System.out.println("It is a scope variable " + scopeKey);
     			   //Lets find the help and assign some help to it
     			   ScopeVar sVar = (ScopeVar)scopeKey;
         			  
@@ -273,10 +278,16 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     			   
     		   } else {
     			   //Need to remove the  text that has already been entered (textSoFar)
-    			   //String replacementString = name.substring(currentlen, name.length());
+    			   String replacementString = scopeItem.toString();
+    			   int repItemsPos = scopeItem.toString().indexOf(".");
+    			   String repItems = scopeItem.toString().substring(repItemsPos+1);
     			   
     			//   System.out.println(state.getAttributeText().trim());
-        		   proposal = new CompletionProposal(scopeItem.toString(), state.getOffset(), 0, scopeItem.toString().length());
+    			//   System.out.println("Not a scope var " + scopeItem.toString() + " " + repItems);
+    			   
+    			   
+    			   
+        		   proposal = new CompletionProposal(repItems, state.getOffset(), 0, repItems.length());
     			   
     		   }
     		   proposals[scopeCounter] = proposal;
