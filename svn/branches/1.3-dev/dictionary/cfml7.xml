@@ -5783,7 +5783,7 @@
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="id" type="String" required="true">
+	<parameter name="id" type="String" required="false">
 		<help><![CDATA[
 			ID for form input element.
 		]]></help>
