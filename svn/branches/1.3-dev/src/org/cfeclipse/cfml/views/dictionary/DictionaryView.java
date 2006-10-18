@@ -147,7 +147,7 @@ public class DictionaryView extends ViewPart {
 			hookDoubleClickAction();
 			hookListeners();
 			contributeToActionBars();
-			//hookFilters();
+			hookFilters();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -417,12 +417,11 @@ public class DictionaryView extends ViewPart {
 
 		text.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
-				System.out.println("seaching for: "  + text.getText());
 				String searchpattern = text.getText();
 				
 				//if there is something to find 
 				if(searchpattern.trim().length() > 1){
-					viewfilter.match = searchpattern;
+					viewfilter.matchstring = searchpattern;
 					viewer.addFilter(viewfilter);
 					viewer.expandAll();
 				}else if(searchpattern.trim().length() == 0 ){
