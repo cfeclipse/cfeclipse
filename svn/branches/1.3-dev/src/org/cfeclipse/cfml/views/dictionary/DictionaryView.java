@@ -22,6 +22,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ModifyEvent;
@@ -126,6 +127,25 @@ public class DictionaryView extends ViewPart {
 			layoutData.grabExcessHorizontalSpace = true;
 			layoutData.horizontalAlignment = GridData.FILL;
 			text.setLayoutData(layoutData);
+			text.addModifyListener(new ModifyListener() {
+
+				public void modifyText(ModifyEvent e) {
+					//This doesnt seem to get the latest text. The latest text comes after modifiation?
+					//text.g
+					String searchpattern = text.getText();
+			
+					if(searchpattern.trim().length() > 0){
+						viewfilter.setMatch(searchpattern);
+						viewer.addFilter(viewfilter);
+						viewer.expandToLevel(3);
+						
+						//We pass the items to the filter
+					
+					}
+						
+					
+				}
+			});
 
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
@@ -421,7 +441,7 @@ public class DictionaryView extends ViewPart {
 				
 				//if there is something to find 
 				if(searchpattern.trim().length() > 1){
-					viewfilter.matchstring = searchpattern;
+					viewfilter.setMatch(searchpattern);
 					viewer.addFilter(viewfilter);
 					viewer.expandAll();
 				}else if(searchpattern.trim().length() == 0 ){
