@@ -1,6 +1,10 @@
 package org.cfeclipse.cfml.preferences;
 
+import java.util.Map;
+import java.util.Properties;
+
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.PreferencePage;
@@ -21,10 +25,15 @@ public class BrowserPreferencePage extends FieldEditorPreferencePage implements
 	}
 
 	public void createFieldEditors() {
-		// TODO Auto-generated method stub
+		
+		if(System.getProperty("os.name").equals("Mac OS X")){
+			addField(new DirectoryFieldEditor(BrowserPreferenceConstants.P_PRIMARY_BROWSER_PATH, "Primary Browser", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(BrowserPreferenceConstants.P_SECONDARY_BROWSER_PATH, "Secondary Browser", getFieldEditorParent()));
+		}
+		else {
 		addField(new FileFieldEditor(BrowserPreferenceConstants.P_PRIMARY_BROWSER_PATH, "Primary Browser",getFieldEditorParent()));
 		addField(new FileFieldEditor(BrowserPreferenceConstants.P_SECONDARY_BROWSER_PATH, "Secondary Browser",getFieldEditorParent()));
-		
+		}
 	}
 
 	public void init(IWorkbench workbench) {

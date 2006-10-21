@@ -142,18 +142,27 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
                    return;
                 	
                 }
-                
-                
-                
-                
-                
-                
                 String[] cmd = new String[] {
                 		browserAppPath
                          ,URLpath+ fileInput.getFile().getFullPath().removeFirstSegments(1)
                      }; 
                 
-                Runtime.getRuntime().exec(cmd);
+                if(System.getProperty("os.name").equals("Mac OS X")){
+                	//Need to get the application etc.
+                	String app = browserAppPath.split("/")[browserAppPath.split("/").length-1];
+                	 Runtime.getRuntime().exec(new String[]{"open", "-a", app, URLpath+ fileInput.getFile().getFullPath().removeFirstSegments(1)}); 
+                	
+                }
+                else {
+                	
+                	Runtime.getRuntime().exec(cmd);
+                }
+                
+                
+                
+                
+                //
+               
             } 
                 /*System.out.println(cmd[0] + cmd[1]);
                 
@@ -233,34 +242,3 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
     }
 
 }
-
-
-/* 
- * CVS LOG
- * ====================================================================
- *
- * $Log: ExternalBrowserAction.java,v $
- * Revision 1.4  2005/07/25 01:29:38  rohanr2
- * trying to clean up the asserts and the unused variable warnings... I just commented out the parts that had unused variables and replaced all asserts with IllegalArgumentExceptions. I only got through about half the code base.
- *
- * Revision 1.3  2005/06/14 21:36:11  smilligan
- * Added external browser action.
- *
- * Fixed partitioner bug with multi-line comments in script, cfscript and cfquery blocks.
- *
- * Revision 1.2  2005/05/12 22:34:06  smilligan
- * Made a few changes so that external files are now opened in their project context if they are part of a project.
- *
- * Revision 1.1  2005/03/15 04:50:44  smilligan
- * Added open in external browser action.
- *
- * Revision 1.2  2005/03/08 04:32:57  smilligan
- * *** empty log message ***
- *
- * Revision 1.1  2005/03/08 04:21:34  smilligan
- * *** empty log message ***
- *
- * Revision 1.1  2005/03/05 19:15:27  smilligan
- * *** empty log message ***
- *
- */
