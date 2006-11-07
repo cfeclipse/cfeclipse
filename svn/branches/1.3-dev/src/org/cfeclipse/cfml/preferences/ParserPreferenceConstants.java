@@ -24,6 +24,9 @@ public class ParserPreferenceConstants extends AbstractPreferenceConstants {
 
 	/** Should we report parse errors */
 	public static final String P_PARSE_REPORT_ERRORS = "__parseReportErrors";
+	
+	/** Should we parse variables */
+	public static final String P_PARSE_VARIABLES = "__parseVariables";
 
 
 
@@ -40,6 +43,7 @@ public class ParserPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_PARSE_DOCFSCRIPT,false); 
 		store.setDefault(P_PARSE_DOCFML,true); 
 		store.setDefault(P_PARSE_REPORT_ERRORS,true); 
+		store.setDefault(P_PARSE_VARIABLES, true);
 	}
 
 }

@@ -37,7 +37,7 @@ public class ParserPreferencePage
 	{
 		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_PARSE_DOCFSCRIPT, "Parse CFScript (WARNING: HIGHLY EXPERIMENTAL.It WILL report incorrect ERRORS.)", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS, "Report parse errors", getFieldEditorParent()));
-
+		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_PARSE_VARIABLES, "Parse Variables as you type", getFieldEditorParent()));
 	}
 	
 	 protected void performDefaults() 
