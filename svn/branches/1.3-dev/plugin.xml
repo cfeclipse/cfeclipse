@@ -3,7 +3,7 @@
 <plugin
    id="org.cfeclipse.cfml"
    name="CFML Plug-in"
-   version="1.2.9"
+   version="1.2.9.5"
    provider-name="The CFEclipse Crew"
    class="org.cfeclipse.cfml.CFMLPlugin">
 
@@ -12,6 +12,9 @@
          <export name="*"/>
       </library>
       <library name="lib/log4j-1.2.9.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/ant.jar">
          <export name="*"/>
       </library>
    </runtime>
@@ -26,10 +29,10 @@
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.ui.intro"/>
-      <import plugin="org.eclipse.ui.intro.universal"/>
-      <import plugin="org.apache.ant"/>
+      <!-- <import plugin="org.apache.ant"/> -->
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.ui.browser"/>
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
@@ -534,6 +537,8 @@
                toolbarPath="CFEditorResourceCommand"
                tooltip="%action.tooltip.EditTagAction">
          </action>
+         
+         <!--
          <menu
                id="org.cfeclipse.cfml.cfcmenu"
                label="%menu.label.CFC"
@@ -558,6 +563,9 @@
                label="Create Test Case"
                menubarPath="org.cfeclipse.cfml.cfcmenu/maingroup"
                toolbarPath="CFEditorResourceCommand"/>
+               
+         -->      
+               
           <!-- Highlight bracket pair 
          <action
          	   toolbarPath="BasicCFEditorCommand"
@@ -1133,6 +1141,18 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- edit tag command -->
+      <command 
+      		name="%command.name.EditTag"
+      		description="%command.description.EditTag"
+      		categoryID="org.cfeclipse.cfml.commandCategory"
+      		id="org.cfeclipse.cfml.editors.actions.EditTagAction">
+      </command>
+      <keyBinding
+            commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
+            contextId="org.cfeclipse.cfml.cfmleditorcontext"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="M1+T">
+      	</keyBinding>
       
     
 
@@ -1281,12 +1301,6 @@
             class="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             name="Browser"/>
-      <page
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            class="org.cfeclipse.cfml.preferences.ApplicationTemplatesPreferencePage"
-            id="org.cfeclipse.cfml.preferences.ApplicationTemplatesPreferencePage"
-            name="Application Templates">
-      </page>
    </extension>
    
    <extension
@@ -1352,6 +1366,21 @@
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
             <description>%wizard.description.3</description>
       </wizard>
+       <wizard
+            name="%wizard.name.4"
+            icon="icons/obj16/cfunit.gif"
+            category="org.cfeclipse.cfml.category1"
+            class="org.cfeclipse.cfml.wizards.cfunit.NewCFUnitWizard"
+            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+            project="true"
+            id="org.cfeclipse.cfml.wizards.cfunit.NewCFUnitWizard">
+            <description>%wizard.description.4</description>
+      </wizard>
+      
+      
+      
+      <!--
      <wizard
             name="New Project From Template"
             icon="icons/obj16/default.gif"
@@ -1363,6 +1392,30 @@
             id="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjecFromTemplateWizard">
             <description>This wizard creates a new project using one of the templates defined</description>
       </wizard>
+      -->
+     <wizard
+           canFinishEarly="false"
+           category="org.cfeclipse.cfml.category1"
+           class="org.cfeclipse.cfml.wizards.projectfromtemplate.ProjectFromTemplate"
+           finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+           hasPages="true"
+           icon="icons/ctool16/application.gif"
+           id="org.cfeclipse.cfml.ptemplate"
+           name="New Project From Template2"
+           preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+           project="true"/>
+      <!--
+     <wizard
+           category="org.cfeclipse.cfml.category1"
+           class="org.cfeclipse.cfml.wizards.applicationcfcwizard.ApplicationCFCWizard"
+           finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+           icon="icons/ctool16/application.gif"
+           id="org.cfeclipse.cfml.wizards.applicationcfc.ApplicationCFCWizard"
+           name="New Application.cfc"
+           preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+           project="false">
+     </wizard>
+     -->
    </extension>
    <extension
          id="CFENature"
@@ -1576,7 +1629,10 @@
       <introProductBinding
             introId="org.cfeclipse.cfml.intro"
             productId="org.eclipse.platform.ide"/>
+   
+   
    </extension>
+   
    <extension
          point="org.eclipse.ui.intro.config">
       <config
