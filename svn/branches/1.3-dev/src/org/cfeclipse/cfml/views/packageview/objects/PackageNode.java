@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.CoreException;
 public class PackageNode extends TreeParent
 {
     private IResource folder;
-    private TreeParent parent;
 
     public PackageNode(IFolder folder)
     {
@@ -81,13 +80,9 @@ public class PackageNode extends TreeParent
      *  }
      */
     // todo: look in cvs and revert this back.
-    public String getPackageName()
-    {
-        return getName();
-    }
 
     public String toString()
     {
-        return getPackageName();
+        return getName();
     }
 }

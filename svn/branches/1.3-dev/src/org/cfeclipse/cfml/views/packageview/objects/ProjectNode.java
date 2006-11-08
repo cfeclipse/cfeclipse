@@ -26,24 +26,8 @@ public class ProjectNode extends TreeParent
         this.project = project;
 
         // Set up the packagename
-        try
-        {
-            QualifiedName propertyName = new QualifiedName("", "componentRoot");
-
-            String pname = project.getProject().getPersistentProperty(propertyName);
-            if (pname != null)
-            {
-                this.setName(pname);
-                this.packageName = pname;
-            }
-            else
-            {
-                this.packageName = project.getName();
-            }
-
-        }
-        catch (CoreException e)
-        {}
+        System.out.println("Getting the project mapping root");
+       
         
         this.addChild( new TreeObject("working") );
     }
@@ -51,6 +35,29 @@ public class ProjectNode extends TreeParent
     public String getImage()
     {
         return CFPluginImages.ICON_FOLDER;
+    }
+    
+    public String getName(){
+    	String PackageName = project.getName();
+    	
+    	 try
+         {
+         	
+             QualifiedName propertyName = new QualifiedName("", "componentRoot");
+
+             String pname = project.getProject().getPersistentProperty(propertyName);
+             if (pname != null)
+             {
+                 this.setName(pname);
+                 PackageName = pname;
+                 this.packageName = PackageName;
+             }
+           
+
+         }
+         catch (CoreException e)
+         {}
+    	return PackageName;
     }
     
 
@@ -70,7 +77,6 @@ public class ProjectNode extends TreeParent
      */
     public String getPackageName()
     {
-    	System.out.println("Getting the package name from the ProjectNode");
         return packageName;
     }
 

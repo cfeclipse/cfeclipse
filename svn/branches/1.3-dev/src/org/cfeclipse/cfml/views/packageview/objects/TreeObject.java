@@ -37,7 +37,7 @@ public class TreeObject implements IAdaptable {
 	    {
 		 System.out.println("doing the package in TreeObject");
 	    	String packageName = "";
-	    	packageName = parent.getPackageName() + getName() + "."; 
+	    	packageName = parent.getPackageName() + getName(); 
 	        return packageName;
 	    }
 	 

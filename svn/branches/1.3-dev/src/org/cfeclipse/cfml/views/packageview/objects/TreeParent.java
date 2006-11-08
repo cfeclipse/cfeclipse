@@ -45,9 +45,8 @@ public class TreeParent extends TreeObject
 	
 	 public String getPackageName()
 	    {
-		 	System.out.println("Doing the package in TreeParent");
 	    	String packageName = "";
-	    	packageName = parent.getPackageName() + getName() + "."; 
+	    	packageName = parent.getPackageName()+ "." + getName(); 
 	        return packageName;
 	    }
 	
