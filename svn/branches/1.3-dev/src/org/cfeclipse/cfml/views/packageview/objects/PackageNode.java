@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.CoreException;
 public class PackageNode extends TreeParent
 {
     private IResource folder;
+    private TreeParent parent;
 
     public PackageNode(IFolder folder)
     {

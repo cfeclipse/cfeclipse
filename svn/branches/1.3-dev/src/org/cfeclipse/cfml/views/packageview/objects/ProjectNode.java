@@ -70,6 +70,7 @@ public class ProjectNode extends TreeParent
      */
     public String getPackageName()
     {
+    	System.out.println("Getting the package name from the ProjectNode");
         return packageName;
     }
 
