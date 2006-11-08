@@ -226,6 +226,7 @@ public class PackageViewTree extends TreeViewer
         {
             public void run()
             {
+            	System.out.println("Component Node");
                 ISelection selection = viewer.getSelection();
                 ComponentNode obj = (ComponentNode) ((IStructuredSelection) selection).getFirstElement();
                 insert(obj.getCreateObjectSnippet());
@@ -348,6 +349,9 @@ public class PackageViewTree extends TreeViewer
                     FunctionNode fnode = (FunctionNode) obj;
                     insert(fnode.getInvokeSnippet());
                 }
+                else {
+                	viewer.expandToLevel(obj, 1);
+                }
 
             }
         };
@@ -378,7 +382,6 @@ public class PackageViewTree extends TreeViewer
     {
         //showMessage(getSelectedDocItem().getClass().toString());
         //WE need to find out what item this is
-        System.out.println(getSelectedDocItem().getClass().toString());
         if (getSelectedDocItem() instanceof FunctionNode)
         {
             manager.add(funcCreateObject);
