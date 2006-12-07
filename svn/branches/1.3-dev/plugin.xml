@@ -14,9 +14,6 @@
       <library name="lib/log4j-1.2.9.jar">
          <export name="*"/>
       </library>
-      <library name="lib/ant.jar">
-         <export name="*"/>
-      </library>
    </runtime>
    <!-- random comment -->
    <requires>
@@ -494,28 +491,28 @@
          
          
 		<!-- external browser -->
-         <action
-               toolbarPath="BasicCFEditorCommand"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
-               label="%action.label.Browse"
-               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
-               tooltip="%action.tooltip.Browse"
-               icon="icons/ctool16/globe.gif"
-               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
-         </action>
-
-		<!-- open in secondary external browser -->
  		<action
                toolbarPath="BasicCFEditorCommand"
                menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
                label="Browse in secondary browser"
                class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
                tooltip="%action.tooltip.Browse"
-               icon="icons/ctool16/globe.gif"
+               icon="icons/ctool16/browser_secondary.gif"
                id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction2"
                definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
          </action>
+         <action
+               toolbarPath="BasicCFEditorCommand"
+               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               label="%action.label.Browse"
+               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="%action.tooltip.Browse"
+               icon="icons/ctool16/browser_primary.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
+         </action>
+
+		<!-- open in secondary external browser -->
           <!-- Launch new file dialog -->
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
@@ -1224,6 +1221,21 @@
             category="org.cfeclipse.cfml"
             name="%view.name.6"
             id="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"/>
+      <view
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.Toolbar"
+            icon="icons/obj16/tools.gif"
+            id="org.cfeclipse.cfml.views.Toolbar"
+            name="Toolbar"/>
+      
+            <!--
+      <view
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.snipex.SnipEx"
+            icon="icons/obj16/snip.gif"
+            id="org.cfeclipse.cfml.views.snipex.SnipEx"
+            name="SnipEx"/>
+            -->
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- help -->
@@ -1366,17 +1378,6 @@
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
             <description>%wizard.description.3</description>
       </wizard>
-       <wizard
-            name="%wizard.name.4"
-            icon="icons/obj16/cfunit.gif"
-            category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.cfunit.NewCFUnitWizard"
-            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="true"
-            id="org.cfeclipse.cfml.wizards.cfunit.NewCFUnitWizard">
-            <description>%wizard.description.4</description>
-      </wizard>
       
       
       
@@ -1392,7 +1393,7 @@
             id="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjecFromTemplateWizard">
             <description>This wizard creates a new project using one of the templates defined</description>
       </wizard>
-      -->
+     TODO:  Add this back in
      <wizard
            canFinishEarly="false"
            category="org.cfeclipse.cfml.category1"
@@ -1404,6 +1405,7 @@
            name="New Project From Template2"
            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
            project="true"/>
+           -->
       <!--
      <wizard
            category="org.cfeclipse.cfml.category1"
@@ -1613,6 +1615,15 @@
      	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
      	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
       </perspectiveExtension>
+       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+          <view
+                id="org.cfeclipse.cfml.views.snipex.SnipEx"
+                ratio="0.5"
+                relationship="right"
+                relative="org.eclipse.ui.views.TaskList"/>
+       </perspectiveExtension>
+       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+       </perspectiveExtension>
   </extension>
    <extension
          point="org.eclipse.ui.contexts">
