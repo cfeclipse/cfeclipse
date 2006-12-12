@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://www.cfeclipse.org/update">
+      CFEclipse Update Site
+   </description>
+   <feature url="features/cfeclipse_121_feature_1.2.1.jar" id="cfeclipse_121_feature" version="1.2.1" os="aix,hpux,linux,macosx,qnx,solaris,win32" arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64">
+      <category name="Stable"/>
+   </feature>
+   <feature url="features/cfeclipse_1296_feature_1.2.9.6.jar" id="cfeclipse_1296_feature" version="1.2.9.6" os="aix,hpux,linux,macosx,qnx,solaris,win32" arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64">
+      <category name="Cutting Edge"/>
+   </feature>
+   <category-def name="Stable" label="Stable"/>
+   <category-def name="Cutting Edge" label="Cutting Edge"/>
+</site>
