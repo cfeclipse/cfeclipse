@@ -12,6 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyListener;
 
 public class CFUnitViewTesterPanel extends Canvas implements Observer {
@@ -33,15 +34,28 @@ public class CFUnitViewTesterPanel extends Canvas implements Observer {
 		
 		setFileName( NO_FILE_TEXT );
 		
+		// Hande changes to the test name
 		testName.addModifyListener( new ModifyListener() {
 			public void modifyText(ModifyEvent e)  {
 				testNameChanged();
 			}
 		});
 		
+		// If the user hit "ENTER" the test will execute
+		testName.addKeyListener(
+			new org.eclipse.swt.events.KeyListener() {
+				public void keyPressed(KeyEvent e) {
+					if(e.keyCode == SWT.CR) {
+						CFUnitTestCase.getInstence().run();
+					}
+					System.out.println(e.keyCode);
+				}
+				public void keyReleased(KeyEvent e) {}
+			}
+		);
 		
-		
-		CFUnitTestCase.getInstence().addObserver(this); // Begin observing the test Model
+		// Begin observing the test Model
+		CFUnitTestCase.getInstence().addObserver(this); 
 	}
 	
 	public void update(Observable o, Object arg) {
