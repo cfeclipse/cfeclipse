@@ -9,13 +9,17 @@ import org.cfeclipse.cfml.cfunit.CFUnitTestResult;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -23,9 +27,9 @@ import org.eclipse.swt.graphics.Image;
 public class CFUnitViewTestList extends Canvas implements Observer {
 	
 	private List tests;
-	private Label details;
 	private Label title;
 	private Label labelIcon;
+	private Composite innerScrollpane;
 	
 	private final Image blankIcon = CFUnitView.getIcon( CFUnitView.ICON_NONE );
 	private final Image errorIcon = CFUnitView.getIcon( CFUnitView.ICON_ERROR );
@@ -61,12 +65,12 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 		title.setLayoutData ( new GridData( GridData.FILL_HORIZONTAL ) );
 		
 		// Test Details
-		details = new Label(this, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		details.setText ("");
-		data = new GridData( GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL );
+		Composite d = createDetailsPane( this );
+		
+	    data = new GridData( GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL );
 		data.horizontalSpan = 2;
-		details.setBackground( new Color(this.getDisplay(), 255, 255, 255) );
-		details.setLayoutData (data);
+		d.setBackground( new Color(getDisplay(), 255, 255, 255) );
+		d.setLayoutData (data);
 		
 		// 
 		addDisposeListener(new DisposeListener() {
@@ -127,6 +131,7 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 		int index = tests.getSelectionIndex();
 		
 		if(index != -1) {
+			clearDetails();
 			CFUnitTestResult result = results[ index ];
 			
 			String[] selection = tests.getSelection();
@@ -146,14 +151,20 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 					labelIcon.setImage( blankIcon );
 			}
 			
+			
 			String[] d = result.getDetails();
-			String output = "";
-					
+			
 			for(int i = 0; i < d.length; i++ ) {
-				output = output+ d[i] + '\n';
+				Label l = new Label(innerScrollpane, SWT.NONE);
+				l.setBackground( new Color(getDisplay(), 255, 255, 255) );
+				l.setText( d[i] );
+				l.addMouseListener(new DetailsSelectionListener());
+				
 			}
 			
-			details.setText( output );
+			innerScrollpane.setSize(innerScrollpane.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			innerScrollpane.layout();
+			
 		} else {
 			clearDetails();
 		}
@@ -162,11 +173,51 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 	public void clearDetails() {
 		labelIcon.setImage( blankIcon );
 		title.setText( "" );
-		details.setText( "" );
+		
+		try {
+			org.eclipse.swt.widgets.Control[] c = innerScrollpane.getChildren();
+			
+			for(int i = 0; i < c.length; i++ ) {
+				c[i].dispose();
+			}
+		} catch(Throwable e) {
+			System.err.println(e);
+		}
+		
 	}
 	
 	private void disposeIcons() {
 		errorIcon.dispose();
 		failureIcon.dispose();
+	}
+	
+	private Composite createDetailsPane(Composite parent) {
+		final ScrolledComposite scrollpane = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		
+		innerScrollpane = new Composite(scrollpane, SWT.NONE);
+	    innerScrollpane.setLayout( new FillLayout( SWT.VERTICAL ) );
+		innerScrollpane.setBackground( new Color(getDisplay(), 255, 255, 255) );
+		scrollpane.setContent( innerScrollpane );
+		
+		Label details = new Label(innerScrollpane, SWT.NONE);
+		details.setText("");
+		details.setBackground( new Color(getDisplay(), 255, 255, 255) );
+		
+		innerScrollpane.setSize(innerScrollpane.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		
+		return scrollpane;
+	}
+	
+	
+	public class DetailsSelectionListener implements MouseListener {
+		public DetailsSelectionListener() {}
+		
+		public void mouseDoubleClick(MouseEvent e) {
+			//Label l = (Label)e.widget;
+			// TODO: Check to see if label text is a file location, if so open the file and go to the specified line
+		}
+		public void mouseDown(MouseEvent e) {}
+		public void mouseUp(MouseEvent e) {}
+		
 	}
 }
