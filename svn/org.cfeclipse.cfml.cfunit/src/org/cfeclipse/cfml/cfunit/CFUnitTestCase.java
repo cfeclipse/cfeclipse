@@ -1,12 +1,15 @@
 package org.cfeclipse.cfml.cfunit;
 
 import java.util.Observable;
+import java.lang.Exception;
 
 import java.net.URL;
 import java.net.URLConnection;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
+import org.cfeclipse.cfml.CFMLPlugin;
 
 /**
  * The test model object. This is used to store the state of the current test. 
@@ -20,9 +23,6 @@ public class CFUnitTestCase extends Observable {
 	public final static int STATE_UNTESTED = 1; // The test has been set but not tested
 	public final static int STATE_TESTING = 3; // The test is currently being tested
 	public final static int STATE_TESTED = 2; // The test has been tested
-	
-	// TODO: This needs to be a configurable property
-	private final static String FACADE_URL = "http://localhost/cfunit/bin/net/sourceforge/cfunit/framework/CFEclipseFacade.cfc";
 	
 	static private CFUnitTestCase instence;
 	
@@ -63,6 +63,10 @@ public class CFUnitTestCase extends Observable {
 		notifyObservers();
 	}
 	
+	/**
+	 * Runs this test case and updates the results collection.
+	 * @return True is executed successfully, false otherwise.
+	 */
 	public boolean run() { 
 		if(!getName().trim().equals("")) {
 
@@ -113,6 +117,10 @@ public class CFUnitTestCase extends Observable {
 		}
 	}
 	
+	/**
+	 * Gets the URL to be used to execute the current test case.
+	 * @return The test case executable URL
+	 */
 	private URL getURL() {
 		
 		String name = getName();
@@ -128,12 +136,26 @@ public class CFUnitTestCase extends Observable {
 				}
 								
 			} else {
-				url = new URL( FACADE_URL + "?method=execute&test=" + name );	
+				
+				String facade_url = CFMLPlugin.getDefault().getPreferenceStore().getString("CFUnitFacadeLocation");
+				
+				if( !facade_url.trim().equals("") ) {
+					if( facade_url.indexOf(".cfc") == -1 ) {
+						url = new URL( "http://" + facade_url + "/CFEclipseFacade.cfc?method=execute&test=" + name );
+					} else {
+						url = new URL( "http://" + facade_url + "?method=execute&test=" + name );
+					}
+				} else {
+					addCriticalErrorResult( new Exception( "No CFUnit Facde URL Set\nTo set this preference click 'Window' > 'Preferences...', then select 'CFEclipse' > 'CFUnit'" ) );
+					notifyObservers();
+					return null;
+				}
+					
 			}
 			
 			return url;
 			
-		} catch(java.lang.Exception e) {
+		} catch(Exception e) {
 			addCriticalErrorResult( e );
 			notifyObservers();
 			return null;

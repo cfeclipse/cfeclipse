@@ -26,5 +26,13 @@
             id="org.cfeclipse.cfml.cfunit.views.CFUnitTest"
             name="CFUnit"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfml.cfunit.preferences.CFUnitPreferencesPage"
+            id="org.cfeclipse.cfml.cfunit.prefrences.CFMLTempPage"
+            name="CFUnit"/>
+   </extension>
 
 </fragment>
