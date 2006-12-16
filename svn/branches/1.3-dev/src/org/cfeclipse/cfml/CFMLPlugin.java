@@ -52,7 +52,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * 
- * The CFEclipse plugin itself.
+ * The CFEclipse plugin itself. 
  * 
  * Also see 'Simple plug-in example' in the Platform Plug-in Developer Guide 
  * that comes with the SDK version of Eclipse.
