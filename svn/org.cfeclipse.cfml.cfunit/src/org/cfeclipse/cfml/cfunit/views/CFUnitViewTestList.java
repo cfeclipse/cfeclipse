@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import org.cfeclipse.cfml.cfunit.CFUnitTestCase;
 import org.cfeclipse.cfml.cfunit.CFUnitTestResult;
+import org.cfeclipse.cfml.views.explorer.LocalFileSystem;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -23,6 +24,12 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.jface.text.IDocument;
+
+import org.eclipse.core.runtime.Path;
 
 public class CFUnitViewTestList extends Canvas implements Observer {
 	
@@ -30,6 +37,10 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 	private Label title;
 	private Label labelIcon;
 	private Composite innerScrollpane;
+	
+	private Label lastDetailsLabel;
+	private final Color COLOR_HIGHLIGHT = new Color(this.getDisplay(), 236, 236, 236);
+	private final Color COLOR_WHITE = new Color(this.getDisplay(), 255, 255, 255);
 	
 	private final Image blankIcon = CFUnitView.getIcon( CFUnitView.ICON_NONE );
 	private final Image errorIcon = CFUnitView.getIcon( CFUnitView.ICON_ERROR );
@@ -69,7 +80,7 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 		
 	    data = new GridData( GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL );
 		data.horizontalSpan = 2;
-		d.setBackground( new Color(getDisplay(), 255, 255, 255) );
+		d.setBackground( COLOR_WHITE );
 		d.setLayoutData (data);
 		
 		// 
@@ -156,7 +167,7 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 			
 			for(int i = 0; i < d.length; i++ ) {
 				Label l = new Label(innerScrollpane, SWT.NONE);
-				l.setBackground( new Color(getDisplay(), 255, 255, 255) );
+				l.setBackground( COLOR_WHITE );
 				l.setText( d[i] );
 				l.addMouseListener(new DetailsSelectionListener());
 				
@@ -201,7 +212,7 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 		
 		Label details = new Label(innerScrollpane, SWT.NONE);
 		details.setText("");
-		details.setBackground( new Color(getDisplay(), 255, 255, 255) );
+		details.setBackground( COLOR_WHITE );
 		
 		innerScrollpane.setSize(innerScrollpane.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
@@ -212,11 +223,53 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 	public class DetailsSelectionListener implements MouseListener {
 		public DetailsSelectionListener() {}
 		
-		public void mouseDoubleClick(MouseEvent e) {
-			//Label l = (Label)e.widget;
-			// TODO: Check to see if label text is a file location, if so open the file and go to the specified line
+		public void mouseDown(MouseEvent e) {
+			Label l = (Label)e.widget;
+			String line = l.getText().trim();
+			
+			// Unhighlight last row			
+			if(lastDetailsLabel != null) {
+				lastDetailsLabel.setBackground( COLOR_WHITE );
+			}
+			
+			// Get the file name/line number
+			int li = line.lastIndexOf(':');
+			String fileName = line.substring(0, li);
+			Path path = new Path( fileName );
+			
+			if( path.isValidPath(fileName) ) {
+				int lineNumber;
+				
+				try {
+					lineNumber = Integer.parseInt( line.substring(li+1, line.length()) );
+				} catch(NumberFormatException nfe) {
+					return;
+				}
+				
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				try {
+					// Open the file
+					LocalFileSystem fs = new LocalFileSystem();
+					org.eclipse.ui.IEditorPart editor = page.openEditor(fs.getEditorInput( fileName ),"org.cfeclipse.cfml.editors.CFMLEditor");
+		            
+					// Select the line number
+					ITextEditor textEditor = (ITextEditor)editor;
+					lineNumber--; // document is 0 based
+					IDocument document = textEditor.getDocumentProvider().getDocument(textEditor.getEditorInput());
+					textEditor.selectAndReveal( document.getLineOffset(lineNumber), document.getLineLength(lineNumber));
+					page.activate(textEditor);
+					
+				} catch (Exception ex) {
+		            ex.printStackTrace();
+		        }
+				
+				// Highlight this row
+				l.setBackground( COLOR_HIGHLIGHT );
+				lastDetailsLabel = l;
+			}
 		}
-		public void mouseDown(MouseEvent e) {}
+		
+		public void mouseDoubleClick(MouseEvent e) {}
 		public void mouseUp(MouseEvent e) {}
 		
 	}
