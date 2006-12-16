@@ -36,7 +36,7 @@ import org.cfeclipse.cfml.editors.HTMLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.SQLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
-import org.eclipse.core.runtime.FileLocator;
+import org.cfeclipse.cfml.util.FileLocator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -100,9 +100,7 @@ public class DictionaryManager
 			factory.setCoalescing(true);
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
-			URL local = FileLocator.toFileURL(dictionaryConfigURL);
-			
-			URL configurl = FileLocator.resolve(new URL(local, "dictionaryconfig.xml"));
+			URL configurl = FileLocator.LocateURL(dictionaryConfigURL, "dictionaryconfig.xml");
 						
 			dictionaryConfig = builder.parse(configurl.getFile());
 		} 
