@@ -41,17 +41,17 @@ import org.eclipse.core.internal.utils.Policy;
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.internal.resources.MarkerInfo;
 import org.eclipse.core.internal.resources.Workspace;
+//between 3.1 and 3.2, assert moved packages.  in 3.1 it is in internal, in 3.2 it is in runtime.  blindly include them all, just to be safe.  
+// I'm not sure if this will actually work when you compile with 3.1 if it will work in 3.2, but at least we can cross compile
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.cfeclipse.cfml.util.EclipseAssert;
 
 /**
  * @author Stephen Milligan
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class ExternalFile extends File {
 
@@ -75,7 +75,7 @@ public class ExternalFile extends File {
 	 * @see IResource#createMarker(String)
 	 */
 	public IMarker createMarker(String type) throws CoreException {
-		Assert.isNotNull(type,"ExternalFile::createMarker()");
+		EclipseAssert.isNotNull(type,"ExternalFile::createMarker()");
 		final ISchedulingRule rule = workspace.getRuleFactory().markerRule(this);
 		try {
 			workspace.prepareOperation(rule, null);
