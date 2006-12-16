@@ -175,7 +175,7 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
         final Table fileTable = fileViewer.getTable();
         
         fileViewer.addDoubleClickListener(new FileDoubleClickListener(fileProvider)); 
-
+        
         fileViewer.setSorter(new Sorter());
         fileViewer.setLabelProvider(new FileLabelProvider());
         fileViewer.setContentProvider(fileProvider);

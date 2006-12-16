@@ -36,6 +36,7 @@ import org.cfeclipse.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.ShowWhitespaceRule;
 import org.cfeclipse.cfml.preferences.CFMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
@@ -101,6 +102,8 @@ public class CFTagScanner extends RuleBasedScanner {
 		rules[1] = new SingleLineRule("'", "'", string);
 		rules[2] = new NumberRule(cfnumber);
 		
+		//TODO: Point this to the correct dictionary now.
+		//Needs to get the current dictionary for THIS project
 		CFSyntaxDictionary cfd = (CFSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.CFDIC);
 		
 		Set set = cfd.getOperators();

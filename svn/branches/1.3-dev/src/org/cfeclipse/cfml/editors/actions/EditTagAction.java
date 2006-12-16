@@ -31,6 +31,7 @@ import org.cfeclipse.cfml.dialogs.TagEditDialog;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
+import org.cfeclipse.cfml.editors.EditableTags;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
@@ -73,6 +74,7 @@ public class EditTagAction implements IEditorActionDelegate{
 		 */
 		public EditTagAction(){
 			super();
+		
 		}
 
 		/**
@@ -81,6 +83,7 @@ public class EditTagAction implements IEditorActionDelegate{
 		 * @param shell
 		 */
 		public EditTagAction(Tag tag, Shell shell) {
+			
 			this.tag = tag;
 			this.shell = shell;
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
@@ -91,6 +94,7 @@ public class EditTagAction implements IEditorActionDelegate{
 		 * 
 		 */
 		public EditTagAction(Tag tag, Shell shell, Map attributes){
+			
 			this.tag = tag;
 			this.shell = shell;
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
@@ -100,6 +104,7 @@ public class EditTagAction implements IEditorActionDelegate{
 		}
 		
 		public EditTagAction(String tag, Shell shell){
+			
 			this.shell = shell;
 			this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
@@ -109,7 +114,7 @@ public class EditTagAction implements IEditorActionDelegate{
 		
 		
 		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-
+			
 			this.editor = (ITextEditor)targetEditor;
 	
 			if(targetEditor != null){
@@ -134,8 +139,8 @@ public class EditTagAction implements IEditorActionDelegate{
 	
 
 	public void run(){
-			//We should be able to pass the attributes if we are editing.
 		
+			//We should be able to pass the attributes if we are editing.
 			ITextEditor thisEdit = (ITextEditor)ieditor;
 			IDocument doc =  thisEdit.getDocumentProvider().getDocument(ieditor.getEditorInput());
 			ISelection sel = thisEdit.getSelectionProvider().getSelection();
@@ -211,13 +216,55 @@ public class EditTagAction implements IEditorActionDelegate{
 	}
 
 	public void run(IAction action) {
-
+		//TODO: THIS IS WHAT IS CALLED FROM A KEY BINDING!
 		//to run we want to set:
 			// ieditor
 			// shell
 			// tag
 			// dictionary
 			// maybe selected items
+		
+		
+		/* Code from right click action ... 
+		 * 
+		 * 	int startpos = sel.getOffset();
+					//Find the length just in case
+					int len = Math.max(sel.getLength(),1);
+					
+					//default start and end are at the cursor
+					int startoftag = sel.getOffset();
+					int endoftag = sel.getOffset();
+					int lengthoftag = endoftag - startoftag;
+					
+					try {
+						startoftag = doc.search(startpos, "<", false, true, false);
+						endoftag = doc.search(startpos, ">", true, true, false);
+						lengthoftag = endoftag - startoftag + 1;
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					TextSelection selection = new TextSelection(startoftag, lengthoftag);
+					editor.getSelectionProvider().setSelection(selection);
+					TextSelection seli = (TextSelection)editor.getSelectionProvider().getSelection();
+					
+					//Now we have the whole start tag, we can then pass the tagname and 
+					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+					CFEPartition part = partitioner.findClosestPartition(startpos);
+					
+					
+					Map tagattribs = CFDocUtils.parseStartTag(part.getTagName(), seli.getText());
+					//find you which dictionary this belongs to!
+				
+					Tag tag = null;
+					SyntaxDictionary dic = EditableTags.getDictionary(part.getType());
+					
+		 * 
+		 * 
+		 */
+		
+		
 		
 		String tagname = "";
 		this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");

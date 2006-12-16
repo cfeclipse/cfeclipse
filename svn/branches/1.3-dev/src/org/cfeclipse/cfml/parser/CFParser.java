@@ -56,11 +56,13 @@ import org.cfeclipse.cfml.parser.docitems.CfmlCustomTag;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
+import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
@@ -1310,6 +1312,8 @@ public class CFParser {
 					}
 					else if(next2Chars.compareToIgnoreCase("cf") == 0)
 					{
+						
+						//TODO: saving a <cfscript> tag with no contents causes a heap error
 						//
 						// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 						// container *only* for things to go in the document tree.
@@ -1482,10 +1486,15 @@ public class CFParser {
 			processParseResultMessages();
 			
 			//This should parse a document and setup all the variables
-			// Only up to the cursor position though
-			VariablesParser vParser = new VariablesParser(docTree,inData);
-			docTree.setVariableMap(vParser.getVariableMap());
-
+			//TODO: Make sure the variable parser only parses up to the cursor
+			//need to get preferences
+			IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
+			if(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_VARIABLES)){
+				VariablesParser vParser = new VariablesParser(docTree,inData);
+				docTree.setVariableMap(vParser.getVariableMap());
+			}
+			
+			
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());

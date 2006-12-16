@@ -1,3 +1,5 @@
+ 
+
 package org.cfeclipse.cfml.views.dictionary;
 
 //import java.io.File;
@@ -446,8 +448,10 @@ public class DictionaryView extends ViewPart {
 					viewer.expandAll();
 				}else if(searchpattern.trim().length() == 0 ){
 				//This doesnt seem to be removing the view.
+					System.out.println("Filter is blank");
 					viewer.removeFilter(viewfilter);
 				} else {
+					System.out.println("Filter is also blank");
 					viewer.removeFilter(viewfilter);
 					
 				}
