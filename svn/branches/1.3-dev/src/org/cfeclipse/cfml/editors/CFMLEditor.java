@@ -120,7 +120,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
-
+import org.eclipse.ui.texteditor.StatusTextEditor;
 
 
 /**
@@ -183,7 +183,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void doSave(IProgressMonitor monitor) {
-		//On save parsing should apparently go into a builder.
+		//TODO: On save parsing should apparently go into a builder.
 
 		// Trim trailing spaces if the option is turned on
 		if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
@@ -275,7 +275,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);	
 		
-//		TODO: Add the file path location to the status line
 	
 	
 	}
