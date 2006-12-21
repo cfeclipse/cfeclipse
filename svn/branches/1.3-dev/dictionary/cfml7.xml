@@ -8247,6 +8247,15 @@
 			<value option="false"/>
 		</values>
 	</parameter>
+	<parameter name="dbvarname" type="String" required="false">
+		<help><![CDATA[
+			Stored procedure variable name.  Directly matches to the name
+			of the procedure parameter.
+		]]></help>
+		<values/>
+	</parameter>	
+	
+	
 </tag>
 <!--
 	cfprocresult
