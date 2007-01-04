@@ -34,5 +34,37 @@
             id="org.cfeclipse.cfml.cfunit.prefrences.CFMLTempPage"
             name="CFUnit"/>
    </extension>
-
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.cfeclipse.cfml.commandCategory"
+            id="org.cfeclipse.cfml.cfunit.editor.actions.RefreshTest"
+            name="Refesh CFUnit Test"/>
+      <keyBinding
+            commandId="org.cfeclipse.cfml.cfunit.editor.actions.RefreshTest"
+            contextId="org.cfeclipse.cfml.cfmleditorcontext"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="F9"/>
+   </extension>
+  
+	<extension
+	    point = "org.eclipse.ui.editorActions">
+      <editorContribution
+            targetID="org.cfeclipse.cfml.editors.CFMLEditor"
+            id="org.cfeclipse.cfml.editors.CFMLEditorActions">
+                
+	         <action
+	               definitionId="org.cfeclipse.cfml.cfunit.editor.actions.RefreshTest"
+	               label="Refresh CFUnit"
+	               icon="icons/obj16/cfunit_redo.png"
+	               tooltip="Refresh the current CFUnit test"
+	               class="org.cfeclipse.cfml.cfunit.editor.actions.RefreshTestAction"
+	               toolbarPath="BasicCFEditorCommand"
+	               id="org.cfeclipse.cfml.cfunit.editor.actions.RefreshTestAction">
+	          </action>
+	              
+	      </editorContribution>
+	 </extension>
+	
 </fragment>

@@ -10,6 +10,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
 public class CFUnitView extends ViewPart {
+	public final static String ID_CFUNIT = "org.cfeclipse.cfml.cfunit.views.CFUnitTest";
 	
 	public static final int ICON_NONE = 0;
 	public static final int ICON_LOGO = 1;
