@@ -45,7 +45,7 @@
             commandId="org.cfeclipse.cfml.cfunit.editor.actions.RefreshTest"
             contextId="org.cfeclipse.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="F9"/>
+            keySequence="M1+F9"/>
    </extension>
   
 	<extension
