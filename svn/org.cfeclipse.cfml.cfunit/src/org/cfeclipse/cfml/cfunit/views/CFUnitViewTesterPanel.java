@@ -48,7 +48,6 @@ public class CFUnitViewTesterPanel extends Canvas implements Observer {
 					if(e.keyCode == SWT.CR) {
 						CFUnitTestCase.getInstence().run();
 					}
-					System.out.println(e.keyCode);
 				}
 				public void keyReleased(KeyEvent e) {}
 			}
