@@ -7338,7 +7338,7 @@
 		be used in the cfmail tag. You can use more than one
 		cfmailparam tag within a cfmail tag.
 	]]></help>
-	<parameter name="file" type="String" required="true">
+	<parameter name="file" type="String" required="false">
 		<help><![CDATA[
 			Attaches file to a message. Mutually exclusive with name
 			attribute. The file is MIME encoded before sending.
@@ -7358,7 +7358,7 @@
 			<value option="text"/>
 		</values>
 	</parameter>
-	<parameter name="name" type="String" required="true">
+	<parameter name="name" type="String" required="false">
 		<help><![CDATA[
 			Name of header. Case-insensitive. Mutually exclusive with
 			file attribute.
@@ -8732,7 +8732,7 @@
 			<value option="value desc"/>
 		</values>
 	</parameter>
-	<parameter name="directory" type="String" required="true">
+	<parameter name="directory" type="String" required="false">
 		<help><![CDATA[
 			Absolute pathname of directory against which to perform
 			action.
