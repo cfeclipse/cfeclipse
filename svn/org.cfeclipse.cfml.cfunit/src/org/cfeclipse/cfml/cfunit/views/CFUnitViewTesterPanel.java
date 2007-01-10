@@ -5,15 +5,19 @@ import java.util.Observable;
 
 import org.cfeclipse.cfml.cfunit.CFUnitTestCase;
 
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class CFUnitViewTesterPanel extends Canvas implements Observer {
 	private final static String NO_FILE_TEXT = new String( "" );
@@ -26,13 +30,24 @@ public class CFUnitViewTesterPanel extends Canvas implements Observer {
 	
 	public CFUnitViewTesterPanel(Composite parent) {
 		super(parent, SWT.NONE );
-		setLayout( new FillLayout() );		
+		GridLayout layout= new GridLayout();
+		layout.numColumns = 2;
+		layout.makeColumnsEqualWidth = false;
+		setLayout(layout);
 				
 		testName = new Text(this, SWT.BORDER | SWT.SINGLE);
-		testName.setBounds( this.getBounds() );
 		testName.setBackground( BASE_COLOR );
+		testName.setLayoutData( new GridData( GridData.FILL_HORIZONTAL ) );
 		
 		setFileName( NO_FILE_TEXT );
+		
+		Button exeButton = new Button(this, SWT.PUSH);
+		exeButton.setImage( CFUnitView.getIcon( CFUnitView.ICON_RUN ) );
+		exeButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				CFUnitTestCase.getInstence().run();
+			}
+		});
 		
 		// Hande changes to the test name
 		testName.addModifyListener( new ModifyListener() {

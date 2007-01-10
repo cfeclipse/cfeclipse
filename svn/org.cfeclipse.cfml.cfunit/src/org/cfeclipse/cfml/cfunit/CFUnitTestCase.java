@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.dialogs.MessageDialog;
 
 /**
  * The test model object. This is used to store the state of the current test. 
@@ -55,12 +57,14 @@ public class CFUnitTestCase extends Observable {
 	}
 	
 	public void setTest(String test) {
-		setName( test );
-		setState( STATE_UNTESTED );
-		setRunCount( 0 );
-		clear();
-		
-		notifyObservers();
+		if(!test.equals(  getName() )) {
+			setName( test );
+			setState( STATE_UNTESTED );
+			setRunCount( 0 );
+			clear();
+			
+			notifyObservers();
+		}
 	}
 	
 	/**
@@ -278,4 +282,38 @@ public class CFUnitTestCase extends Observable {
 	public CFUnitTestResult[] getResults() {
 		return results;
 	}
+	
+
+	/**
+	 * Get the full path name of a resource based on its name and 
+	 * location. For example, if a resource was 
+	 * "/myProject/subfolder/SomeObject.cfc", this method would return 
+	 * "myProject.subfolder.SomeObject"
+	 * 
+	 * @param resource The resource to get the name from
+	 * @return The full path-based name of the resource
+	 */
+	public static String getResourceFullName(IResource resource) {
+		if(!resource.getFileExtension().equals("cfc")) {
+			MessageDialog.openError(null, "Selected file not a CFC", "The selected file was not a ColdFusion Component (CFC). A unit test must be a CFC that extends a TestCase. Please refer to the CFUnit web site (http://cfunit.sourceforge.net/) for help documents and information on how to set up unit tests.");
+			return "";
+			
+		} else {
+			String path = resource.getName();
+			
+			org.eclipse.core.resources.IContainer pathPart = resource.getParent();
+			while(pathPart != null) {
+				if(!pathPart.getName().trim().equals("")) {
+					path = pathPart.getName()+'.'+path;
+				}
+				pathPart = pathPart.getParent();
+			}
+			
+			// Remove the file extention
+			path = path.substring(0, path.indexOf( resource.getFileExtension() )-1);
+			
+			return path;
+		}
+	}
+	
 }
