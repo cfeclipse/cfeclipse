@@ -2,7 +2,7 @@ html {
   height: 100%;
 }
 
-body {
+body,body.subpage {
   height: 100%;
 
   margin: 0;
@@ -11,9 +11,12 @@ body {
 
   font: 400 0.8em verdana, arial, sans-serif;
   line-height: 170%;
-
   background: #666 url(/assets/img/bg/header_new.jpg) repeat-x top left;
   color: #EEE;
+}
+
+body.subpage {
+   background: #666;
 }
 
 h1 {   
