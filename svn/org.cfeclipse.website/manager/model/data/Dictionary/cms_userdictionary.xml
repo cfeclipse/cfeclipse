@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<cms_user>
+		<userid>
+			<label>userid</label>
+			<comment/>
+			<maxlength>0</maxlength>
+			<notProvided>The userid field is required but was not provided.</notProvided>
+			<invalidType>The userid field does not contain valid data.  This field must be a numeric value.</invalidType>
+		</userid>
+		<username>
+			<label>username</label>
+			<comment/>
+			<maxlength>45</maxlength>
+			<notProvided>The username field is required but was not provided.</notProvided>
+			<invalidType>The username field does not contain valid data.  This field must be a string value.</invalidType>
+			<invalidLength>The username field is too long.  This field must be no more than 45 bytes long.</invalidLength>
+		</username>
+		<password>
+			<label>password</label>
+			<comment/>
+			<maxlength>45</maxlength>
+			<notProvided>The password field is required but was not provided.</notProvided>
+			<invalidType>The password field does not contain valid data.  This field must be a string value.</invalidType>
+			<invalidLength>The password field is too long.  This field must be no more than 45 bytes long.</invalidLength>
+		</password>
+		<DisplayName>
+			<label>DisplayName</label>
+			<comment/>
+			<maxlength>100</maxlength>
+			<notProvided>The DisplayName field is required but was not provided.</notProvided>
+			<invalidType>The DisplayName field does not contain valid data.  This field must be a string value.</invalidType>
+			<invalidLength>The DisplayName field is too long.  This field must be no more than 100 bytes long.</invalidLength>
+		</DisplayName>
+		<bActive>
+			<label>bActive</label>
+			<comment/>
+			<maxlength>0</maxlength>
+			<notProvided>The bActive field is required but was not provided.</notProvided>
+			<invalidType>The bActive field does not contain valid data.  This field must be a numeric value.</invalidType>
+		</bActive>
+		<bAdmin>
+			<label>bAdmin</label>
+			<comment/>
+			<maxlength>0</maxlength>
+			<notProvided>The bAdmin field is required but was not provided.</notProvided>
+			<invalidType>The bAdmin field does not contain valid data.  This field must be a numeric value.</invalidType>
+		</bAdmin>
+		<dtLastLogin>
+			<label>dtLastLogin</label>
+			<comment/>
+			<maxlength>0</maxlength>
+			<invalidType>The dtLastLogin field does not contain valid data.  This field must be a date value.</invalidType>
+		</dtLastLogin>
+		<email>
+			<label>email</label>
+			<comment/>
+			<maxlength>255</maxlength>
+			<notProvided>The email field is required but was not provided.</notProvided>
+			<invalidType>The email field does not contain valid data.  This field must be a string value.</invalidType>
+			<invalidLength>The email field is too long.  This field must be no more than 255 bytes long.</invalidLength>
+		</email>
+	</cms_user>
