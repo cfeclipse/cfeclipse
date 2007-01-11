@@ -65,11 +65,13 @@
 		
 		<event-handler name="download">
 			<broadcasts>
+				<message name="setValue">
+					<argument name="section" value="download" />
+				</message>
 			</broadcasts>
 			<views>
-				<include name="body" template="dsp_subpage_layout1.cfm">
-					<value name="section" value="download"/>
-				</include>
+				<include name="topnav" template="nav_top_subpage.cfm" />
+				<include name="body" template="dsp_subpage_layout1.cfm" />
 			</views>
 			<results>
 				<result do="layout.subpage" />
@@ -82,19 +84,10 @@
 					<argument name="section" value="support" />
 				</message>
 			</broadcasts>
-			<views/>
-			<results>
-				<result do="layout.subpage" />
-			</results>
-		</event-handler>
-	
-		<event-handler name="documentation">
-			<broadcasts>
-				<message name="setValue">
-					<argument name="section" value="documentation" />
-				</message>
-			</broadcasts>
-			<views/>
+			<views>
+				<include name="topnav" template="nav_top_subpage.cfm" />
+				<include name="body" template="dsp_support.cfm" />
+			</views>
 			<results>
 				<result do="layout.subpage" />
 			</results>
@@ -106,7 +99,9 @@
 					<argument name="section" value="news" />
 				</message>
 			</broadcasts>
-			<views/>
+			<views>
+				<include name="topnav" template="nav_top_subpage.cfm" />
+			</views>
 			<results>
 				<result do="layout.subpage" />
 			</results>
@@ -115,13 +110,30 @@
 		<event-handler name="testimonials">
 			<broadcasts>
 				<message name="setValue">
-					<argument name="xfa.section" value="testimonials" />
+					<argument name="section" value="testimonials" />
 				</message>
 			</broadcasts>
-			<views/>
+			<views>
+				<include name="topnav" template="nav_top_subpage.cfm" />
+			</views>
 			<results>
 				<result do="layout.subpage" />
 			</results>
+		</event-handler>
+		
+		<event-handler name="about">
+			<broadcasts>
+				<message name="setValue">
+					<argument name="section" value="about" />
+				</message>
+			</broadcasts>
+			<views>
+				<include name="topnav" template="nav_top_subpage.cfm" />
+			</views>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+			
 		</event-handler>
 		
 		
