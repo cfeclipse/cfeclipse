@@ -1,0 +1,658 @@
+
+<!-- Warning:  this file is generated.  It may be overwritten at any time. -->
+<modelglue>
+	<event-handlers>
+		
+		
+			
+			<event-handler name="cms_article_type.list" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericList">
+								
+									<argument name="criteria" value="" />
+								
+									<argument name="object" value="cms_article_type" />
+								
+									<argument name="queryName" value="cms_article_typeQuery" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="dspcms_article_typeList.cfm" append="true">
+							
+								<value name="xe.view" value="cms_article_type.view" overwrite="true" />
+							
+								<value name="xe.delete" value="cms_article_type.delete" overwrite="true" />
+							
+								<value name="xe.edit" value="cms_article_type.edit" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article_type.edit" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericRead">
+								
+									<argument name="recordName" value="cms_article_typeRecord" />
+								
+									<argument name="criteria" value="type_id" />
+								
+									<argument name="object" value="cms_article_type" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="frmcms_article_type.cfm" append="true">
+							
+								<value name="xe.commit" value="cms_article_type.commit" overwrite="true" />
+							
+								<value name="xe.list" value="cms_article_type.list" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article_type.view" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericRead">
+								
+									<argument name="recordName" value="cms_article_typeRecord" />
+								
+									<argument name="criteria" value="type_id" />
+								
+									<argument name="object" value="cms_article_type" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="dspcms_article_type.cfm" append="true">
+							
+								<value name="xe.list" value="cms_article_type.list" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article_type.Commit" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericCommit">
+								
+									<argument name="recordName" value="cms_article_typeRecord" />
+								
+									<argument name="criteria" value="type_id" />
+								
+									<argument name="object" value="cms_article_type" />
+								
+									<argument name="validationName" value="cms_article_typeValidation" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+						
+							<result name="commit" do="cms_article_type.list" redirect="true" append="" preserveState="false" />
+						
+					
+						
+							<result name="validationError" do="cms_article_type.edit" redirect="false" append="type_id" preserveState="false" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article_type.delete" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericDelete">
+								
+									<argument name="criteria" value="type_id" />
+								
+									<argument name="object" value="cms_article_type" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+							<result name="" do="cms_article_type.list" redirect="true" append="" preserveState="false" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article.list" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericList">
+								
+									<argument name="criteria" value="" />
+								
+									<argument name="object" value="cms_article" />
+								
+									<argument name="queryName" value="cms_articleQuery" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="dspcms_articleList.cfm" append="true">
+							
+								<value name="xe.view" value="cms_article.view" overwrite="true" />
+							
+								<value name="xe.delete" value="cms_article.delete" overwrite="true" />
+							
+								<value name="xe.edit" value="cms_article.edit" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article.edit" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericList">
+								
+									<argument name="criteria" value="" />
+								
+									<argument name="object" value="cms_article_type" />
+								
+									<argument name="queryName" value="cms_article_typeList" />
+								
+							</message>
+						
+							<message name="ModelGlue.genericList">
+								
+									<argument name="criteria" value="" />
+								
+									<argument name="object" value="cms_user" />
+								
+									<argument name="queryName" value="cms_userList" />
+								
+							</message>
+						
+					
+						
+							<message name="ModelGlue.genericRead">
+								
+									<argument name="recordName" value="cms_articleRecord" />
+								
+									<argument name="criteria" value="art_id" />
+								
+									<argument name="object" value="cms_article" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="frmcms_article.cfm" append="true">
+							
+								<value name="xe.commit" value="cms_article.commit" overwrite="true" />
+							
+								<value name="xe.list" value="cms_article.list" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article.view" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericRead">
+								
+									<argument name="recordName" value="cms_articleRecord" />
+								
+									<argument name="criteria" value="art_id" />
+								
+									<argument name="object" value="cms_article" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="dspcms_article.cfm" append="true">
+							
+								<value name="xe.list" value="cms_article.list" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article.Commit" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericCommit">
+								
+									<argument name="recordName" value="cms_articleRecord" />
+								
+									<argument name="criteria" value="art_id" />
+								
+									<argument name="object" value="cms_article" />
+								
+									<argument name="validationName" value="cms_articleValidation" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+						
+							<result name="commit" do="cms_article.list" redirect="true" append="" preserveState="false" />
+						
+					
+						
+							<result name="validationError" do="cms_article.edit" redirect="false" append="art_id" preserveState="false" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_article.delete" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericDelete">
+								
+									<argument name="criteria" value="art_id" />
+								
+									<argument name="object" value="cms_article" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+							<result name="" do="cms_article.list" redirect="true" append="" preserveState="false" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_user.list" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericList">
+								
+									<argument name="criteria" value="" />
+								
+									<argument name="object" value="cms_user" />
+								
+									<argument name="queryName" value="cms_userQuery" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="dspcms_userList.cfm" append="true">
+							
+								<value name="xe.view" value="cms_user.view" overwrite="true" />
+							
+								<value name="xe.delete" value="cms_user.delete" overwrite="true" />
+							
+								<value name="xe.edit" value="cms_user.edit" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_user.edit" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericRead">
+								
+									<argument name="recordName" value="cms_userRecord" />
+								
+									<argument name="criteria" value="userid" />
+								
+									<argument name="object" value="cms_user" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="frmcms_user.cfm" append="true">
+							
+								<value name="xe.commit" value="cms_user.commit" overwrite="true" />
+							
+								<value name="xe.list" value="cms_user.list" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_user.view" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericRead">
+								
+									<argument name="recordName" value="cms_userRecord" />
+								
+									<argument name="criteria" value="userid" />
+								
+									<argument name="object" value="cms_user" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+						<view name="body" template="dspcms_user.cfm" append="true">
+							
+								<value name="xe.list" value="cms_user.list" overwrite="true" />
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_user.Commit" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericCommit">
+								
+									<argument name="recordName" value="cms_userRecord" />
+								
+									<argument name="criteria" value="userid" />
+								
+									<argument name="object" value="cms_user" />
+								
+									<argument name="validationName" value="cms_userValidation" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+						
+							<result name="commit" do="cms_user.list" redirect="true" append="" preserveState="false" />
+						
+					
+						
+							<result name="validationError" do="cms_user.edit" redirect="false" append="userid" preserveState="false" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+			
+			<event-handler name="cms_user.delete" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericDelete">
+								
+									<argument name="criteria" value="userid" />
+								
+									<argument name="object" value="cms_user" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
+							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+							<result name="" do="cms_user.list" redirect="true" append="" preserveState="false" />
+						
+					
+				</results>
+			</event-handler>
+		
+		
+		
+	</event-handlers>
+</modelglue>
+	
