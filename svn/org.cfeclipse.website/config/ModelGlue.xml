@@ -1,0 +1,156 @@
+<!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
+[<!ENTITY appName "cfeclipse_org_new">]
+>
+<modelglue>
+	<controllers>
+		<controller name="MyController" type="&appName;.controller.Controller">
+			<message-listener message="OnRequestStart" function="OnRequestStart" />
+			<message-listener message="OnQueueComplete" function="OnQueueComplete" />
+			<message-listener message="OnRequestEnd" function="OnRequestEnd" />
+			<message-listener message="getRandTestimonials" function="getRandTestimonials" />
+			<message-listener message="getContent" function="getContent" />
+			<message-listener message="setValue" function="setValue" />
+		</controller>
+	</controllers>
+  
+	<event-handlers>
+		<event-handler name="page.index">
+			<broadcasts>
+				<message name="getRandTestimonials"/>
+				<!-- get the content for the homepage -->
+				<message name="getContent">
+					<argument name="type" value="Homepage" />
+					<argument name="queryName" value="qHPContent" />
+				</message>
+				<!-- get 3 random features -->
+				<message name="getContent">
+					<argument name="type" value="Feature" />
+					<argument name="queryName" value="qRandFeatures" />
+					<argument name="random" value="true" />
+					<argument name="maxrows" value="3" />
+				</message>
+				
+				<!-- get top 5 news  -->
+				<message name="getContent">
+					<argument name="type" value="News" />
+					<argument name="queryName" value="qNews" />
+					<argument name="maxrows" value="5" />
+					<argument name="orderby" value="dtCreated" />
+					<argument name="orderdir" value="desc" />
+				</message>
+				
+			</broadcasts>
+			<views>
+				<include name="topnav" template="nav_top_homepage.cfm" />
+				<include name="body" template="dsp_main.cfm" />
+			</views>
+			<results>
+				
+			</results>
+		</event-handler>
+<!--
+	SUBPAGES
+-->		
+		<event-handler name="features">
+			<broadcasts>
+				<message name="setValue">
+					<argument name="section" value="features" />
+				</message>
+			</broadcasts>
+			<views/>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+		</event-handler>
+		
+		<event-handler name="download">
+			<broadcasts>
+			</broadcasts>
+			<views>
+				<include name="body" template="dsp_subpage_layout1.cfm">
+					<value name="section" value="download"/>
+				</include>
+			</views>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+		</event-handler>
+		
+		<event-handler name="support">
+			<broadcasts>
+				<message name="setValue">
+					<argument name="section" value="support" />
+				</message>
+			</broadcasts>
+			<views/>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+		</event-handler>
+	
+		<event-handler name="documentation">
+			<broadcasts>
+				<message name="setValue">
+					<argument name="section" value="documentation" />
+				</message>
+			</broadcasts>
+			<views/>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+		</event-handler>
+
+		<event-handler name="news">
+			<broadcasts>
+				<message name="setValue">
+					<argument name="section" value="news" />
+				</message>
+			</broadcasts>
+			<views/>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+		</event-handler>	
+		
+		<event-handler name="testimonials">
+			<broadcasts>
+				<message name="setValue">
+					<argument name="xfa.section" value="testimonials" />
+				</message>
+			</broadcasts>
+			<views/>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+		</event-handler>
+		
+		
+		
+<!--
+	LAYOUTS
+-->
+		<event-handler name="layout.subpage">
+			<broadcasts />
+			<results />
+			<views>
+				<include name="template" template="lay_sub.cfm" />
+			</views>
+		</event-handler>
+
+		<event-handler name="layout.homepage">
+			<broadcasts />
+			<results />
+			<views>
+				<include name="topnav" template="nav_top_homepage.cfm" />
+				<include name="body" template="lay_main.cfm" />
+			</views>
+		</event-handler>
+		
+		<event-handler name="exception">
+			<broadcasts />
+			<views>
+				<include name="body" template="dspException.cfm" />
+			</views>
+		</event-handler>
+	</event-handlers>
+</modelglue>
