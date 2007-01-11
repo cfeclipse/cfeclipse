@@ -8,8 +8,8 @@
       <li><a href="#myself#download" title="Download">Download</a></li>
       <li><a href="#myself#features" title="Features">Features</a></li>
       <li><a href="#myself#support" title="Support">Support</a></li>
-      <li><a href="#myself#documentation" title="Documentation">Documentation</a></li>
       <li><a href="#myself#news" title="News">News</a></li>
+	  <li><a href="#myself#about" title="About">About</a></li>
     </ul>
   </div>
   <div id="myHeader">
