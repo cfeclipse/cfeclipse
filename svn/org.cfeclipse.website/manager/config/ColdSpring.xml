@@ -1,0 +1,46 @@
+<!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
+[<!ENTITY appName "cfeclipse_manager">]
+>
+<beans>
+  <!-- This is your Model-Glue configuration -->
+	<bean id="modelGlueConfiguration" class="ModelGlue.unity.framework.ModelGlueConfiguration">
+		<!-- Be sure to change reload to false when you go to production! -->
+		<property name="reload"><value>true</value></property>
+		<!-- Rescaffold is overridden by reload - if reload is false, rescaffold's setting doesn't matter -->
+		<property name="rescaffold"><value>true</value></property>
+		<!-- Be sure to change debug to false when you go to production! -->
+		<property name="debug"><value>false</value></property>
+		<property name="defaultEvent"><value>page.index</value></property>
+		<property name="reloadPassword"><value>true</value></property>
+		<property name="viewMappings"><value>/cfeclipse_org_new/manager/views</value></property>
+		<property name="generatedViewMapping"><value>/cfeclipse_org_new/manager/views/generated</value></property>
+		<property name="configurationPath"><value>config/ModelGlue.xml</value></property>
+		<property name="scaffoldPath"><value>config/scaffolds/Scaffolds.xml</value></property>
+		<property name="statePrecedence"><value>form</value></property>
+		<property name="reloadKey"><value>init</value></property>
+		<property name="eventValue"><value>event</value></property>
+		<property name="defaultTemplate"><value>index.cfm</value></property>
+		<property name="defaultExceptionHandler"><value>exception</value></property>
+		<property name="defaultCacheTimeout"><value>5</value></property>
+		<property name="defaultScaffolds"><value>list,edit,view,commit,delete</value></property>
+	</bean>
+  
+  <!-- This is your Reactor configuration -->
+	<bean id="reactorConfiguration" class="reactor.config.config">
+		<constructor-arg name="pathToConfigXml"><value>/cfeclipse_org_new/manager/config/Reactor.xml</value></constructor-arg>
+		<property name="project"><value>&appName;</value></property>
+		<property name="dsn"><value>cfeclipse</value></property>
+		<property name="type"><value>mysql</value></property>
+		<property name="mapping"><value>/cfeclipse_org_new/manager/model/data</value></property>
+		<property name="mode"><value>development</value></property>
+	</bean>
+  <!-- Put definitions for your own beans and services here -->
+
+	<bean id="ormAdapter" class="ModelGlue.unity.orm.ReactorAdapter">
+		<constructor-arg name="framework"><ref bean="ModelGlue" /></constructor-arg>
+	</bean>
+	
+	<bean id="ormService" class="reactor.reactorFactory">
+	   <constructor-arg name="configuration"><ref bean="reactorConfiguration" /></constructor-arg>
+	</bean>
+</beans>

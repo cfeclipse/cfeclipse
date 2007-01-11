@@ -1,0 +1,1 @@
+<cfsilent><cfapplication name="ModelGlueApplicationTemplate" sessionmanagement="true"/></cfsilent>

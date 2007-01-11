@@ -1,0 +1,75 @@
+<!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
+[<!ENTITY appName "cfeclipse_org_new">]
+>
+<modelglue>
+	<controllers>
+		<controller name="MyController" type="&appName;.controller.Controller">
+			<message-listener message="OnRequestStart" function="OnRequestStart" />
+			<message-listener message="OnQueueComplete" function="OnQueueComplete" />
+			<message-listener message="OnRequestEnd" function="OnRequestEnd" />
+		</controller>
+	</controllers>
+  
+	<event-handlers>
+		<event-handler name="page.index">
+			<broadcasts /> 
+			<results>
+				<result do="view.template" />
+			</results>
+			<views>
+				<include name="body" template="dspIndex.cfm" />
+				<include name="nav" template="navMain.cfm" />
+			</views>
+		</event-handler>
+
+<!--
+	SCAFFOLDS
+-->
+		<scaffold object="cms_article_type" alias="cms_article_type">
+			
+			<views>
+				<include name="nav" template="navMain.cfm" />
+			</views>
+			<results>
+				<result do="view.template" />
+			</results>
+		</scaffold>
+
+		<scaffold object="cms_article" alias="cms_article">
+			
+			<views>
+				<include name="nav" template="navMain.cfm" />
+			</views>
+			<results>
+				<result do="view.template" />
+			</results>
+		</scaffold>
+							
+		<scaffold object="cms_user" alias="cms_user">
+			
+			<views>
+				<include name="nav" template="navMain.cfm" />
+			</views>
+			<results>
+				<result do="view.template" />
+			</results>
+		</scaffold>
+<!--
+	VIEW TEMPLATES
+-->		
+		<event-handler name="view.template">
+			<broadcasts />
+			<results />
+			<views>
+				<include name="template" template="dspTemplate.cfm" />
+			</views>
+		</event-handler>
+
+		<event-handler name="exception">
+			<broadcasts />
+			<views>
+				<include name="body" template="dspException.cfm" />
+			</views>
+		</event-handler>
+	</event-handlers>
+</modelglue>
