@@ -157,7 +157,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	    return new CFAnnotationHover();
 	}
 	
-	
+
 	/**
 	 * This defines what sections (partitions) are valid for the document
 	 */
