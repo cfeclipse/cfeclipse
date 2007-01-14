@@ -33,6 +33,12 @@ public class CFCBean {
 	public CFCBean(){
 		propertyBeans = new ArrayList();
 		functionBeans = new ArrayList();
+		this.name = "";
+		this.path = "";
+		this.extendCfc = "";
+		this.hint = "";
+		this.displayName = "";
+		this.output = "";
 	}
 	
 	public CFCBean(String name, String path, String extendCfc, String hint, String displayName, String output)
@@ -170,10 +176,19 @@ public class CFCBean {
 		return propertyBeans;
 	}
 	
+	
 	/**
 	 * @param propertyBeans The propertyBeans to set.
 	 */
 	public void setPropertyBeans(List propertyBeans) {
 		this.propertyBeans = propertyBeans;
+	}
+
+	public boolean hasProperties() {
+		return !propertyBeans.isEmpty();
+	}
+
+	public boolean hasFunctions() {
+		return !functionBeans.isEmpty();
 	}
 }
