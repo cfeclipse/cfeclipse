@@ -483,7 +483,7 @@ public class DictionaryView extends ViewPart {
 		
 		if (obj instanceof TagItem) {
 				TagItem tg = (TagItem)obj;
-				EditTagAction eta = new EditTagAction(tg.getTag(), this.getViewSite().getShell());
+				EditTagAction eta = new EditTagAction(tg.getTag().getName(), this.getViewSite().getShell());
 					eta.run();
 		}
 		else if(obj instanceof FunctionItem){

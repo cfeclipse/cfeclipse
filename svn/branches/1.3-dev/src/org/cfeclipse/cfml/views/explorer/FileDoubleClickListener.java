@@ -6,6 +6,7 @@
  */
 package org.cfeclipse.cfml.views.explorer;
 
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.ui.IEditorInput;
@@ -32,12 +33,14 @@ public class FileDoubleClickListener implements IDoubleClickListener {
     public void doubleClick(DoubleClickEvent e) {
         IEditorInput input = contentProvider.getEditorInput(e.getSelection().toString());
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+      
+    //Why is this null?
         try {
-            
-            page.openEditor(input,"org.cfeclipse.cfml.editors.CFMLEditor");
+           page.openEditor(input, "org.cfeclipse.cfml.editors.CFMLEditor");
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+        //System.out.println("Oooops!");
+        	ex.printStackTrace();
         }
     }
 

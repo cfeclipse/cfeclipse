@@ -35,8 +35,6 @@ public class VariablesParser {
 	
 	private void parseForVariables(DocItem item){
 			//We should only parse the variables up to the cursor
-		
-		
 			CFNodeList nodelist =  item.getChildNodes();
 		
 	        Iterator iter = nodelist.iterator();

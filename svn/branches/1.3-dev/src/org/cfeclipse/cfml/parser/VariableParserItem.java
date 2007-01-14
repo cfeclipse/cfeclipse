@@ -45,4 +45,7 @@ public class VariableParserItem {
 		this.variable = variable;
 	}
 	
+	public String toString(){
+		return variable + " : " + tagItem.getName();
+	}
 }
