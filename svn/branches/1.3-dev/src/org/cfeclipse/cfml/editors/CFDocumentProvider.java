@@ -87,9 +87,11 @@ public class CFDocumentProvider extends FileDocumentProvider
 			
 			//FileEditorInput input = (FileEditorInput)element;
 			
+			//This is what is WRONG! We need to know what project the document is in so we can get the right library...
 			
 			//try to load the proper dictionary syntax for this document			
 			CFMLPropertyManager pm = new CFMLPropertyManager();
+			
 			//How do we know which project this goes to?
 			//String currentDict = pm.getCurrentDictionary(input.getFile().getProject());
 			//if(currentDict == null || currentDict == "") 
