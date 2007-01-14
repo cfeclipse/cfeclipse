@@ -59,7 +59,7 @@ public class TagEditDialog extends Dialog {
 	protected String title;
 	private Tag tag;
 	private Set attributes;
-	private Map selectedattributes;
+	private Map selectedattributes; //This should be an array list, we need to keep it in order right? Worry about that later.
 	private Properties fieldStore;
 	private Properties comboFields;
 	private Properties textFields;
@@ -168,7 +168,7 @@ public class TagEditDialog extends Dialog {
 		
 		Element dialog = layout.getDocumentElement();
 		
-		stepThrough(dialog);
+		//stepThrough(dialog);
 		
 		 if(this.attributes != null){
 			//Get the tabs
