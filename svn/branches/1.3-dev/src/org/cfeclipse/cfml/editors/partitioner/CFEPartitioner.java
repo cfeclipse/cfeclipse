@@ -1005,6 +1005,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
     
     
     /**
+     * TODO: This uses up a LOT of memory
      * Called when the document content changes. Updates partitions based on the
      * area of text that has changed.
      */
