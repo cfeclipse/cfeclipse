@@ -90,23 +90,35 @@ public class TagFormatter {
 		tag.append("<" + tagname);
 		
 		//Loop through the attributes in order
-		for (Iterator iter = this.attributeOrder.iterator(); iter.hasNext();) {
-			String element = (String) iter.next();
-
-			String attribute = element;
-		 	String value = attribs.get(element).toString();
-		    
-		 	if(value.length() > 0){
-		 	tag.append(" " + attribute);
-		    //So we can check for blanks
-		    tag.append("=\"" + value + "\"");
-		 	}
+		if(this.attributeOrder != null){
+			for (Iterator iter = this.attributeOrder.iterator(); iter.hasNext();) {
+				String element = (String) iter.next();
+	
+				String attribute = element;
+			 	String value = attribs.get(element).toString();
+			    
+			 	if(value.length() > 0){
+			 	tag.append(" " + attribute);
+			    //So we can check for blanks
+			    tag.append("=\"" + value + "\"");
+			 	}
+			}
+		}
+		else{ //Not being called from edit, and we dont have initial items
+			Hashtable attributes = getAttribs();
 			
-			
-			
+			 for (Enumeration e = attributes.keys (); e.hasMoreElements ();) {
+			 	String attribute = e.nextElement ().toString ();
+			 	String value = attributes.get(attribute).toString();
+			    
+			 	if(value.length() > 0){
+			 	tag.append(" " + attribute);
+			    //So we can check for blanks
+			    tag.append("=\"" + value + "\"");
+			 	}
+			 }
 			
 		}
-		
 		/*//Here we loop through the attributes that have been added
 		Hashtable attributes = getAttribs();
 		

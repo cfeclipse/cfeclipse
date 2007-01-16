@@ -7,6 +7,7 @@ import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.actions.EditCustomTagAction;
 import org.cfeclipse.cfml.editors.actions.EditFunctionAction;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
+import org.cfeclipse.cfml.editors.actions.InsertTagAction;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.jface.action.Action;
@@ -483,7 +484,7 @@ public class DictionaryView extends ViewPart {
 		
 		if (obj instanceof TagItem) {
 				TagItem tg = (TagItem)obj;
-				EditTagAction eta = new EditTagAction(tg.getTag().getName(), this.getViewSite().getShell());
+				InsertTagAction eta = new InsertTagAction(tg.getTag(), this.getViewSite().getShell());
 					eta.run();
 		}
 		else if(obj instanceof FunctionItem){
