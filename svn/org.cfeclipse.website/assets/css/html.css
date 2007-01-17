@@ -11,7 +11,7 @@ body,body.subpage {
 
   font: 400 0.8em verdana, arial, sans-serif;
   line-height: 170%;
-  background: #666 url(/assets/img/bg/header_new.jpg) repeat-x top left;
+  background: #666 url(img/bg/header_new.jpg) repeat-x top left;
   color: #EEE;
 }
 
@@ -109,7 +109,7 @@ ol span {
 }
 
 ul {
-  list-style-image: url(/assets/img/bg/bullet.gif);
+  list-style-image: url(img/bg/bullet.gif);
 }
 
 del {
@@ -205,21 +205,21 @@ blockquote {
   padding-left: 27px;
   
   background-color: #444;  
-  background-image: url(/assets/img/icons/quote.gif);
+  background-image: url(img/icons/quote.gif);
   background-repeat: no-repeat;
   background-position: 5px 50%;  
 }
 
 blockquote.exclamation {
-  background-image: url(/assets/img/icons/exclamation.gif);
+  background-image: url(img/icons/exclamation.gif);
 }
 
 blockquote.stop {
-  background-image: url(/assets/img/icons/stop.gif);
+  background-image: url(img/icons/stop.gif);
 }
 
 blockquote.go {
-  background-image: url(/assets/img/icons/go.gif);
+  background-image: url(img/icons/go.gif);
 }
 
 

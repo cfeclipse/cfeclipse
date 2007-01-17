@@ -157,7 +157,7 @@
 #subpage_menu {
 	height: 37px;
 	background-color: red;
-	background: #000 url(/assets/img/bg/gradient_sub_header.jpg) repeat-x top left;
+	background: #000 url(img/bg/gradient_sub_header.jpg) repeat-x top left;
 }
 #subpage_menu ul {
   margin: 0;
@@ -243,12 +243,12 @@ ul.sideMenu {
   padding-left: 35px;
   font: 400 0.55em verdana, arial, sans-serif; 
   color: #FFF;  
-  background: url(/assets/img/bg/bullet.gif) no-repeat 10px 0px;
+  background: url(img/bg/bullet.gif) no-repeat 10px 0px;
 }
 
 .sideMenu li.here ul li a:hover {
   color: #9FF3FF;
-  background: #5F5F5F url(/assets/img/bg/bullet.gif) no-repeat 10px 0px;
+  background: #5F5F5F url(img/bg/bullet.gif) no-repeat 10px 0px;
 }
 
 
@@ -316,7 +316,7 @@ div.wide3 {
   clear: both;
   
   margin-top: -3.8em;
-  background: #000 url(/assets/img/bg/footer.jpg) repeat-x top left;
+  background: #000 url(img/bg/footer.jpg) repeat-x top left;
 }
 
 /* Sets the width of the footer content */
@@ -415,7 +415,7 @@ div.wide3 {
 
 .gradient {
   margin-bottom: 2em;
-  background: #555 url(/assets/img/bg/gradient.jpg) repeat-x bottom left; 
+  background: #555 url(img/bg/gradient.jpg) repeat-x bottom left; 
 }
 
 .testimonial {
