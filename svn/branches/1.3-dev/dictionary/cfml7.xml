@@ -261,7 +261,7 @@
 		Defines a function argument. Used within a cffunction tag.
 	]]></help>
 	<return type="Any" parameter="name"/>
-	<parameter name="name" type="variableName" required="true">
+	<parameter name="name" type="variablename" required="true">
 		<help><![CDATA[
 			An argument name.
 		]]></help>
@@ -4941,7 +4941,7 @@
 	<help><![CDATA[
 		Generates custom HTTP response headers to return to the client.
 	]]></help>
-	<parameter name="name" type="String" required="true">
+	<parameter name="name" type="String" required="false">
 		<help><![CDATA[
 			Header name
 			Required if statusCode not specified

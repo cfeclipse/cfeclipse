@@ -3454,7 +3454,7 @@
 	<help><![CDATA[
 		Generates custom HTTP response headers to return to the client.
 	]]></help>
-	<parameter name="name" type="String" required="true">
+	<parameter name="name" type="String" required="false">
 		<help><![CDATA[
 			Header name
 			Required if statusCode not specified
