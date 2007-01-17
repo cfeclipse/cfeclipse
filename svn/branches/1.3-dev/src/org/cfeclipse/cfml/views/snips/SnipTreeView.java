@@ -565,10 +565,20 @@ public class SnipTreeView extends ViewPart
 
 		//SnipWriter writer = new SnipWriter(selectedfile,snippetType,snipBase);
 		MessageBox deleteDialog = new MessageBox(this.getViewSite().getShell(),SWT.YES | SWT.NO);
-		deleteDialog.setMessage("Are you sure you want to delete this folder?");
-		if (deleteDialog.open() == SWT.YES) {
-			selectedfile.delete();
-			reloadSnippets();
+		
+		if(selectedfile.listFiles().length > 0){
+			MessageBox warndialog = new MessageBox(this.getViewSite().getShell(),SWT.ICON_WARNING);
+			warndialog.setMessage("You must delete the snippets in this folder first");
+		}
+		else {
+		
+			deleteDialog.setMessage("Are you sure you want to delete this folder?");
+			if (deleteDialog.open() == SWT.YES) {
+				
+				selectedfile.delete();
+				reloadSnippets();
+			}
+		
 		}
 
 	}
