@@ -2,6 +2,7 @@ package org.cfeclipse.cfml.editors.partitioner;
 
 import java.util.Map;
 
+import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.util.CFDocUtils;
 import org.eclipse.jface.text.TextSelection;
@@ -48,6 +49,12 @@ public class PartitionHelper {
 		if(!part.getTagName().startsWith("cf"))
 			return true;
 		return false;
+	}
+	
+	public Tag getTag(){
+		// TODO: implement this method
+		return null;
+		
 	}
 	
 	
