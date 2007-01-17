@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Struct GetFunctionList()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getfunctionlist" returns="Struct">
+	<help><![CDATA[
+		Displays a list of the functions that are available in
+		CFML.
+	]]></help>
+</function>

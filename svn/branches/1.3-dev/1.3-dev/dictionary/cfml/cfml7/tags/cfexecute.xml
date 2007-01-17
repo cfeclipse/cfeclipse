@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfexecute
+		name = " ApplicationName "
+		arguments = "CommandLine Arguments"
+		outputFile = "Output file name"
+	   	variable = "variable name"
+	   	timeout = "Timeout interval"
+	   	...
+	/cfexecute
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfexecute" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Executes a CFML developer-specified process on a server
+		computer.
+	]]></help>
+	<return type="String" parameter="variable" />
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Absolute path of the application to execute.
+
+			On Windows, you must specify an extension; for example,
+			C:\myapp.exe.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="arguments" type="Object" required="false">
+		<help><![CDATA[
+			Command-line variables passed to application. If specified
+			as string, it is processed as follows:
+			* Windows: passed to process control subsystem for parsing.
+			* UNIX: tokenized into an array of arguments. The default
+				token separator is a space; you can delimit arguments
+				that have embedded spaces with double quotation marks.
+			If passed as array, it is processed as follows:
+			* Windows: elements are concatenated into a string of
+				tokens, separated by spaces. Passed to process control
+				subsystem for parsing.
+			* UNIX: elements are copied into an array of exec()
+				arguments
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="outputfile" type="String" required="false">
+		<help><![CDATA[
+			File to which to direct program output. If no outputfile or
+			variable attribute is specified, output is displayed on
+			the page from which it was called.
+
+			If not an absolute path (starting a with a drive letter and
+			a colon, or a forward or backward slash), it is relative
+			to the CFML temporary directory, which is returned
+			by the GetTempDirectory function.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="variable" type="variableName" required="false">
+		<help><![CDATA[
+			Variable in which to put program output. If no outputfile
+			or variable attribute is specified, output is displayed on
+			page from which it was called.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="timeout" type="Numeric" required="false">
+		<help><![CDATA[
+			Length of time, in seconds, that CFML waits for
+			output from the spawned program.
+		]]></help>
+		<values default="0" />
+	</parameter>
+</tag>

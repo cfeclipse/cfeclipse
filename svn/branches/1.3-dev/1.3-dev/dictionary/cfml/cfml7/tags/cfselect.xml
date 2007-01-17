@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfselect
+		name = "name"
+		label = "label"
+		style = "style specification"
+		size = "integer"
+		required = "boolean"
+		message = "text"
+		onError = "text"
+		multiple = "boolean"
+		query = "queryname"
+		value = "text"
+		display = "text"
+		group = "query column name
+		queryPosition = "above" or "below"
+		selected = "value or list"
+		onKeyUp = "JavaScript or ActionScript"
+		onKeyDown = "JavaScript or ActionScript"
+		onMouseUp = "JavaScript or ActionScript"
+		onMouseDown = "JavaScript or ActionScript"
+		onChange = "JavaScript or ActionScript"
+		onClick = "JavaScript or ActionScript"
+		visible = "boolean"
+		enabled = "boolean"
+		tooltip = "Tip text"
+		height = "number of pixels" Flash only
+		width = "number of pixels" Flash only
+
+	zero or more HTML option tags
+	/cfselect
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfselect" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Constructs a drop-down list box form control. Used within a
+		cfform tag.
+
+		You can populate the list from a query, or by using the HTML
+		option tag.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name of the select form element
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="id" type="String" required="true">
+		<help><![CDATA[
+			ID for form input element.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="label" type="String" required="false">
+		<help><![CDATA[
+			Label to put next to the control on a Flash or XML-format form.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="style" type="String" required="false">
+		<help><![CDATA[
+			In HTML or XML format forms, ColdFusion passes the
+			style attribute to the browser or XML.
+			In Flash format, must be a style specification in CSS
+			format, with the same syntax and contents as used in
+			Macromedia Flex for the corresponding Flash element.
+			Post alpha we will document specifics.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="size" type="Numeric" required="false">
+		<help><![CDATA[
+			Number of entries to display at one time. The default, 1,
+			displays a drop-down list. Any other value displays a list
+			box with size number of entries visible at one time.
+		]]></help>
+		<values default="1" />
+	</parameter>
+	<parameter name="required" type="boolean" required="false">
+		<help><![CDATA[
+			If true a list element must be selected when form is submitted.
+			Note: This attribute has no effect if you omit the size
+			attribute or set it to 1 because the browser always submits
+			the displayed item. You can work around this issue format
+			forms by having an initial option tag with value=" " (note the
+			space character between the quotation marks).
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="message" type="String" required="false">
+		<help><![CDATA[
+			Message to display if required="true" and no selection is made.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onerror" type="String" required="false">
+		<help><![CDATA[
+			Custom JavaScript function to execute if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="multiple" type="boolean" required="false">
+		<help><![CDATA[
+			- true: allow selecting multiple elements in drop-down list
+			- false: don't allow selecting multiple elements
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="query" type="String" required="false">
+		<help><![CDATA[
+			Name of query to populate drop-down list.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Query column to use for the value of each list element.
+			Used with query attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="display" type="String" required="false">
+		<help><![CDATA[
+			Query column to use for the display label of each list
+			element. Used with query attribute.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="group" type="String" required="false">
+		<help><![CDATA[
+			Query column to use to group the items in the drop-down
+			list into a two-level hierarchical list..
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="queryposition" type="String" required="false">
+		<help><![CDATA[
+			If you populate the options list with a query and use HTML
+			option child tags to specify additional entries, determines
+			the location of the items from the query relative to the items
+			from the option tags:
+			 - above: Put the query items above the options items.
+			 - below: Put the query items below the options items.
+			Default: above
+		]]></help>
+		<values default="above">
+			<value option="above" />
+			<value option="below" />
+		</values>
+	</parameter>
+	<parameter name="selected" type="String" required="false">
+		<help><![CDATA[
+			One or more option values to preselect in the selection list.
+			To specify multiple values, use a comma-delimited list. This
+			attribute applies only if selection list items are generated
+			from a query. The cfform preservedata attribute value can
+			override this value.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onkeyup" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the user releases a keyboard key in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onkeydown" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash)
+			ActionScript to run when the user depresses a keyboard
+			key in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onmouseup" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the user presses a mouse button in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onmousedown" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the user releases a mouse button in the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onchange" type="String" required="false">
+		<help><![CDATA[
+			JavaScript (HTML/XML) or ActionScript (Flash) to run
+			when the control changes due to user action.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onclick" type="String" required="false">
+		<help><![CDATA[
+			JavaScript to run when the user clicks the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="enabled" type="boolean" required="false">
+		<help><![CDATA[
+			Flash only: Boolean value specifying whether to show the control.
+			Space that would be occupied by an invisible control is
+			blank.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="visible" type="boolean" required="false">
+		<help><![CDATA[
+			Flash only: Boolean value specifying whether to show the control.
+			Space that would be occupied by an invisible control is
+			blank.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="tooltip" type="String" required="false">
+		<help><![CDATA[
+			Flash only: Text to display when the mouse pointer hovers over the control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="height" type="Numeric" required="false">
+		<help><![CDATA[
+			The height of the control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="width" type="Numeric" required="false">
+		<help><![CDATA[
+			The width of the control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="passthrough" type="String" required="false" compatibility="deprecated">
+		<help><![CDATA[
+			This attribute is deprecated.
+			
+			Passes arbitrary attribute-value pairs to the HTML code
+			that is generated for the tag. You can use either of the
+			following formats:
+			
+			passthrough="title=""myTitle"""
+			passthrough='title="mytitle"'
+		]]></help>
+		<values />
+	</parameter>
+</tag>

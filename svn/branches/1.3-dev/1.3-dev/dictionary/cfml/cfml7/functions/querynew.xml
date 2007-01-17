@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Query QueryNew(columnlist [, columntypelist])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="querynew" returns="Query">
+	<help><![CDATA[
+		Creates an empty query (query object).
+	]]></help>
+	<parameter name="columnlist" type="String" required="true">
+		<help><![CDATA[
+			A string or a variable that contains one. Delimited list
+			of column names, or an empty string.
+		]]></help>
+	</parameter>
+	<parameter name="columntypelist" type="String" required="false">
+		<help><![CDATA[
+			Comma-delimited list specifying column data types.
+		]]></help>
+		<values>
+			<value option="Integer" />
+			<value option="BigInt" />
+			<value option="Double" />
+			<value option="Decimal" />
+			<value option="VarChar" />
+			<value option="Binary" />
+			<value option="Bit" />
+			<value option="Time" />
+			<value option="Data" />
+		</values>
+	</parameter>
+</function>
