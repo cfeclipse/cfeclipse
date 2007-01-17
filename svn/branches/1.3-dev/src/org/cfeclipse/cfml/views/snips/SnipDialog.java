@@ -142,7 +142,7 @@ public class SnipDialog extends Dialog{
 
       String[] items = item.getValues();
       
-      final Text text = new Text(parent, SWT.BORDER );
+      final Text text = new Text(parent, SWT.BORDER);
 
       text.setLayoutData(gridData);
       
@@ -160,7 +160,6 @@ public class SnipDialog extends Dialog{
 			if(button.getText().equals(">")){
 				System.out.println(text.getSize());
 				text.setSize(text.getSize().x, text.getSize().y + 40);
-				
 				button.setText("V");
 			}
 			else {
