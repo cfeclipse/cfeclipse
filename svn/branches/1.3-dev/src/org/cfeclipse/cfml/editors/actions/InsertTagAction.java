@@ -23,12 +23,20 @@ import org.eclipse.ui.texteditor.ITextEditor;
 public class InsertTagAction {
 	private Tag tag;
 	private Shell shell;
+	private String tagname;
+	
 	
 	public InsertTagAction(Tag tag, Shell shell) {
 		this.tag = tag;
 		this.shell = shell;
 	}
 
+	//If we dont know the ACTUAL tag, we can pass in the name
+	public InsertTagAction(String tagname, Shell shell) {
+		this.tagname = tagname;
+		this.shell = shell;
+	}
+	
 	public void run() {
 		
 		//This function opens up the tag edit dialog to insert, no need to do much other stuff really
@@ -38,8 +46,18 @@ public class InsertTagAction {
 		ISelection sel = thisEdit.getSelectionProvider().getSelection();
 		final ITextSelection textSelection = (ITextSelection) thisEdit.getSelectionProvider().getSelection();
 		
+		Tag tagToOpen = null;
+		if(this.tag !=null){
+			tagToOpen = this.tag;
+		}
+		else if(this.tagname !=null ) {
+			//Get the tag
+			tagToOpen = DictionaryManager.getDictionary("CF_DICTIONARY").getTag(this.tagname);
+			
+		}
 		
-		TagEditDialog tagview = new TagEditDialog(shell, this.tag);
+		
+		TagEditDialog tagview = new TagEditDialog(shell, tagToOpen);
 		
 			if(tagview.open() == IDialogConstants.OK_ID){
 				Properties fieldStore = tagview.getFieldStore();  	//The new items
@@ -50,7 +68,7 @@ public class InsertTagAction {
 				/*
 				 * Pass in the attributes into a Tag Formatter
 				 */
-				TagFormatter tf = new TagFormatter(this.tag, fieldStore);
+				TagFormatter tf = new TagFormatter(tagToOpen, fieldStore);
 				
 				//Here is where we actually do the insertion
 				

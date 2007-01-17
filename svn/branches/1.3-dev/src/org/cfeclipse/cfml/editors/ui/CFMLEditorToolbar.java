@@ -9,6 +9,7 @@ import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.actions.DynamicActionRunner;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
 import org.cfeclipse.cfml.editors.actions.InsertSnippetAction;
+import org.cfeclipse.cfml.editors.actions.InsertTagAction;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -139,7 +140,7 @@ public class CFMLEditorToolbar {
 						toolItem1.addSelectionListener(new SelectionAdapter() {
 							public void widgetSelected(SelectionEvent evt) {
 								ToolItem item = (ToolItem)evt.getSource();
-								EditTagAction ecta = new EditTagAction(item.getData().toString(), shell);
+								InsertTagAction ecta = new InsertTagAction(item.getData().toString(), shell);
 								ecta.run();
 							}
 						});
