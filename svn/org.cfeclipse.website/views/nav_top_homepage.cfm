@@ -15,8 +15,8 @@
   <div id="myHeader">
      
 	  <div id="title">
-		  <img src="/assets/img/spacer.gif" width="1" height="40" /><br/>
-		  <img src="/assets/img/cfeclipse.gif" />
+		  <img src="assets/img/spacer.gif" width="1" height="40" /><br/>
+		  <img src="assets/img/cfeclipse.gif" />
 	  </div>
   </div>
 </cfoutput>

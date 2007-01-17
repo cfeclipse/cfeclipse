@@ -14,9 +14,9 @@
   <meta name="robots" content="index, follow, noarchive" />
   <meta name="googlebot" content="noarchive" />
 
-  <link rel="stylesheet" type="text/css" href="/assets/css/html.css" media="screen, projection, tv " />
-  <link rel="stylesheet" type="text/css" href="/assets/css/layout.css" media="screen, projection, tv" />
-  <link rel="stylesheet" type="text/css" href="/assets/css/print.css" media="print" />
+  <link rel="stylesheet" type="text/css" href="assets/css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="assets/css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="assets/css/print.css" media="print" />
 
 </head>
 

@@ -1,7 +1,7 @@
 <cfset myself = ViewState.getValue('myself') />
 <cfset section = ViewState.getValue('section') />
 <div id="subpage_menu">
-	<div style="float:left;"><img src="/assets/img/gradient_sub_header.jpg" alt="CFEclipse Sub Page Logo" /></div>
+	<div style="float:left;"><img src="assets/img/gradient_sub_header.jpg" alt="CFEclipse Sub Page Logo" /></div>
 	<cfoutput>
 	<ul class="floatRight">
 		<li><a href="#myself#page.index" title="Home" class="#iif(section EQ "home", DE('here'), DE('not_here'))#">Home</a></li>
