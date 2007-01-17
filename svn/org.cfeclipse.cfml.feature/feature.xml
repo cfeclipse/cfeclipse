@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="cfeclipse_1296_feature"
-      label="CFEclipse 1.3 Beta RC1"
-      version="1.2.9.6"
+      id="org.cfeclipse.cfml.feature"
+      label="CFEclipse 1.3"
+      version="1.3"
       provider-name="CFEclipse Crew"
       os="aix,hpux,linux,macosx,qnx,solaris,win32"
       arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64">
