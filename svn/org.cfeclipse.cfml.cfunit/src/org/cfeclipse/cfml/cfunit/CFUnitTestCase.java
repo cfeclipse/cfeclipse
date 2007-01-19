@@ -90,15 +90,17 @@ public class CFUnitTestCase extends Observable {
 			        
 			        int i = 0;
 			        while ((line = in.readLine()) != null) {
-			        	if( line.charAt(0) == '[' & line.charAt( line.length()-1) == ']' ) {
-			        		test = new CFUnitTestResult( line.substring(1, line.length()-1) );
-			        		results[i] = test;
-			        		i++;
-							
-			        	} else {
-			        		if( test != null) {
-			        			test.appendDetails( line );
-			        		}
+			        	if(line.trim().length() > 0) {
+				        	if( line.charAt(0) == '[' & line.charAt( line.length()-1) == ']' ) {
+				        		test = new CFUnitTestResult( line.substring(1, line.length()-1) );
+				        		results[i] = test;
+				        		i++;
+								
+				        	} else {
+				        		if( test != null) {
+				        			test.appendDetails( line );
+				        		}
+				        	}
 			        	}
 			        }
 			        
