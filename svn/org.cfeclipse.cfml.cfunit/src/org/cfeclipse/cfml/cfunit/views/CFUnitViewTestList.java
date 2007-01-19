@@ -106,28 +106,30 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 				
 				String state;
 				
-				switch( results[i].getType() ) {
-					case CFUnitTestResult.SUCCESS:
-						state = "Success";
-						break;
-					case CFUnitTestResult.ERROR:
-						state = "Error";
-						if(selection == -1) selection = i;
-						break;
-					case CFUnitTestResult.FAILURE:
-						state = "Failure";
-						if(selection == -1) selection = i;
-						break;
-					case CFUnitTestResult.NWERROR:
-						state = "Network Error";
-						if(selection == -1) selection = i;
-						break;
-					default:
-						state = "Unknown";
-						if(selection == -1) selection = i;
-				}
+				if(results[i] != null) {
+					switch( results[i].getType() ) {
+						case CFUnitTestResult.SUCCESS:
+							state = "Success";
+							break;
+						case CFUnitTestResult.ERROR:
+							state = "Error";
+							if(selection == -1) selection = i;
+							break;
+						case CFUnitTestResult.FAILURE:
+							state = "Failure";
+							if(selection == -1) selection = i;
+							break;
+						case CFUnitTestResult.NWERROR:
+							state = "Network Error";
+							if(selection == -1) selection = i;
+							break;
+						default:
+							state = "Unknown";
+							if(selection == -1) selection = i;
+					}
 				
-				list[i] = results[i].getName() + " - " + state;
+					list[i] = results[i].getName() + " - " + state;
+				}
 			}
 		}
 		
