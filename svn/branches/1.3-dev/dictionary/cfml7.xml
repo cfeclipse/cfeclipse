@@ -12083,9 +12083,9 @@
 					intra-letter order
 		]]></help>
 		<values>
-			<value option="numeric"/>
-			<value option="text"/>
-			<value option="textnocase"/>
+			<value option="&quot;numeric&quot;"/>
+			<value option="&quot;text&quot;"/>
+			<value option="&quot;textnocase&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="sort_order" type="String" required="false">
@@ -12100,9 +12100,9 @@
 					for letters
 				- from larger to smaller, for numbers
 		]]></help>
-		<values default="asc">
-			<value option="asc"/>
-			<value option="desc"/>
+		<values default="&quot;asc&quot;">
+			<value option="&quot;asc&quot;"/>
+			<value option="&quot;desc&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -12151,12 +12151,12 @@
 	<parameter name="delimiter" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option="_"/>
-			<value option=";"/>
-			<value option=":"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;_&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;:&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -12218,9 +12218,9 @@
 			- base64: data is encoded using the Base64 algorithm.
 		]]></help>
 		<values>
-			<value option="hex"/>
-			<value option="uu"/>
-			<value option="base64"/>
+			<value option="&quot;hex&quot;"/>
+			<value option="&quot;uu&quot;"/>
+			<value option="&quot;base64&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -12245,9 +12245,9 @@
 			- base64: use the Base64 algorithm to convert the data.
 		]]></help>
 		<values>
-			<value option="hex"/>
-			<value option="uu"/>
-			<value option="base64"/>
+			<value option="&quot;hex&quot;"/>
+			<value option="&quot;uu&quot;"/>
+			<value option="&quot;base64&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -12428,17 +12428,17 @@
 			A string specifying encoding of the input data.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+			<value option="&quot;utf-8&quot;"/>
+			<value option="&quot;iso-8859-1&quot;"/>
+			<value option="&quot;windows-1252&quot;"/>
+			<value option="&quot;us-ascii&quot;"/>
+			<value option="&quot;shift_jis&quot;"/>
+			<value option="&quot;iso-2022-jpv"/>
+			<value option="&quot;euc-jp&quot;"/>
+			<value option="&quot;euc-kr&quot;"/>
+			<value option="&quot;big5&quot;"/>
+			<value option="&quot;euc-cn&quot;"/>
+			<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -12458,17 +12458,17 @@
 			The character encoding that was used to encode the string into binary format.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+			<value option="&quot;utf-8&quot;"/>
+			<value option="&quot;iso-8859-1&quot;"/>
+			<value option="&quot;windows-1252&quot;"/>
+			<value option="&quot;us-ascii&quot;"/>
+			<value option="&quot;shift_jis&quot;"/>
+			<value option="&quot;iso-2022-jpv"/>
+			<value option="&quot;euc-jp&quot;"/>
+			<value option="&quot;euc-kr&quot;"/>
+			<value option="&quot;big5&quot;"/>
+			<value option="&quot;euc-cn&quot;"/>
+			<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -12646,49 +12646,49 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="component"/>
-			<value option="corba"/>
-			<value option="com"/>
-			<value option="java"/>
-			<value option="webservice"/>
+			<value option="&quot;component&quot;"/>
+			<value option="&quot;corba&quot;"/>
+			<value option="&quot;com&quot;"/>
+			<value option="&quot;java&quot;"/>
+			<value option="&quot;webservice&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="context" type="String" required="true">
 		<help><![CDATA[
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="corba" required="true" index="1"/>
-			<selectedValue attributeName="type" value="com" required="true" index="2"/>
+			<selectedValue attributeName="type" value="&quot;corba&quot;" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;com&quot;" required="true" index="2"/>
 		</triggers>
 	</parameter>
 	<parameter name="class" type="String" required="true">
 		<help><![CDATA[
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="com" required="true" index="1"/>
-			<selectedValue attributeName="type" value="corba" required="true" index="2"/>
-			<selectedValue attributeName="type" value="java" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;com&quot;" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;corba&quot;" required="true" index="2"/>
+			<selectedValue attributeName="type" value="&quot;java&quot;" required="true" index="1"/>
 		</triggers>
 	</parameter>
 	<parameter name="locale" type="String" required="true">
 		<help><![CDATA[
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="corba" required="true" index="3"/>
+			<selectedValue attributeName="type" value="&quot;corba&quot;" required="true" index="3"/>
 		</triggers>
 	</parameter>
 	<parameter name="servername" type="String" required="true">
 		<help><![CDATA[
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="com" required="true" index="3"/>
+			<selectedValue attributeName="type" value="&quot;com&quot;" required="true" index="3"/>
 		</triggers>
 	</parameter>
 	<parameter name="component_name" type="String" required="true">
 		<help><![CDATA[
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="component" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;component&quot;" required="true" index="1"/>
 		</triggers>
 	</parameter>
 	<parameter name="urltowsdl" type="String" required="true">
@@ -12696,7 +12696,7 @@
 			WSDL file URL; location of web service
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="webservice" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;webservice&quot;" required="true" index="1"/>
 		</triggers>
 	</parameter>
 	<parameter name="portname" type="String" required="false">
@@ -12709,7 +12709,7 @@
 			in the WSDL.
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="webservice" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;webservice&quot;" required="true" index="1"/>
 		</triggers>
 	</parameter>
 </function>
@@ -12831,17 +12831,17 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="yyyy"/>
-			<value option="q"/>
-			<value option="m"/>
-			<value option="y"/>
-			<value option="d"/>
-			<value option="w"/>
-			<value option="ww"/>
-			<value option="h"/>
-			<value option="n"/>
-			<value option="s"/>
-			<value option="l"/>
+			<value option="&quot;yyyy&quot;"/>
+			<value option="&quot;q&quot;"/>
+			<value option="&quot;m&quot;"/>
+			<value option="&quot;y&quot;"/>
+			<value option="&quot;d&quot;"/>
+			<value option="&quot;w&quot;"/>
+			<value option="&quot;ww&quot;"/>
+			<value option="&quot;h&quot;"/>
+			<value option="&quot;n&quot;"/>
+			<value option="&quot;s&quot;"/>
+			<value option="&quot;l&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="number" type="Numeric" required="true">
@@ -12887,17 +12887,17 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="yyyy"/>
-			<value option="q"/>
-			<value option="m"/>
-			<value option="y"/>
-			<value option="d"/>
-			<value option="w"/>
-			<value option="ww"/>
-			<value option="h"/>
-			<value option="n"/>
-			<value option="s"/>
-			<value option="l"/>
+			<value option="&quot;yyyy&quot;"/>
+			<value option="&quot;q&quot;"/>
+			<value option="&quot;m&quot;"/>
+			<value option="&quot;y&quot;"/>
+			<value option="&quot;d&quot;"/>
+			<value option="&quot;w&quot;"/>
+			<value option="&quot;ww&quot;"/>
+			<value option="&quot;h&quot;"/>
+			<value option="&quot;n&quot;"/>
+			<value option="&quot;s&quot;"/>
+			<value option="&quot;l&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -12917,8 +12917,8 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="local2Utc"/>
-			<value option="utc2Local"/>
+			<value option="&quot;local2Utc&quot;"/>
+			<value option="&quot;utc2Local&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="date" type="DateTime" required="true">
@@ -12944,17 +12944,17 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="yyyy"/>
-			<value option="q"/>
-			<value option="m"/>
-			<value option="y"/>
-			<value option="d"/>
-			<value option="w"/>
-			<value option="ww"/>
-			<value option="h"/>
-			<value option="n"/>
-			<value option="s"/>
-			<value option="l"/>
+			<value option="&quot;yyyy&quot;"/>
+			<value option="&quot;q&quot;"/>
+			<value option="&quot;m&quot;"/>
+			<value option="&quot;y&quot;"/>
+			<value option="&quot;d&quot;"/>
+			<value option="&quot;w&quot;"/>
+			<value option="&quot;ww&quot;"/>
+			<value option="&quot;h&quot;"/>
+			<value option="&quot;n&quot;"/>
+			<value option="&quot;s&quot;"/>
+			<value option="&quot;l&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="date1" type="DateTime" required="true">
@@ -12994,10 +12994,10 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="short"/>
-			<value option="medium"/>
-			<value option="long"/>
-			<value option="full"/>
+			<value option="&quot;short&quot;"/>
+			<value option="&quot;medium&quot;"/>
+			<value option="&quot;long&quot;"/>
+			<value option="&quot;full&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -13015,17 +13015,17 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="yyyy"/>
-			<value option="q"/>
-			<value option="m"/>
-			<value option="y"/>
-			<value option="d"/>
-			<value option="w"/>
-			<value option="ww"/>
-			<value option="h"/>
-			<value option="n"/>
-			<value option="s"/>
-			<value option="l"/>
+			<value option="&quot;yyyy&quot;"/>
+			<value option="&quot;q&quot;"/>
+			<value option="&quot;m&quot;"/>
+			<value option="&quot;y&quot;"/>
+			<value option="&quot;d&quot;"/>
+			<value option="&quot;w&quot;"/>
+			<value option="&quot;ww&quot;"/>
+			<value option="&quot;h&quot;"/>
+			<value option="&quot;n&quot;"/>
+			<value option="&quot;s&quot;"/>
+			<value option="&quot;l&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="date" type="DateTime" required="true">
@@ -13188,12 +13188,12 @@
 			* DES: the Data Encryption Standard algorithm defined by NIST FIPS-46-3.
 			* DESEDE: the "Triple DES" algorithm defined by NIST FIPS-46-3.
 		]]></help>
-		<values default="CFMX_COMPAT">
-			<value option="CFMX_COMPAT"/>
-			<value option="AES"/>
-			<value option="BLOWFISH"/>
-			<value option="DES"/>
-			<value option="DESEDE"/>
+		<values default="&quot;CFMX_COMPAT&quot;">
+			<value option="&quot;CFMX_COMPAT&quot;"/>
+			<value option="&quot;AES&quot;"/>
+			<value option="&quot;BLOWFISH&quot;"/>
+			<value option="&quot;DES&quot;"/>
+			<value option="&quot;DESEDE&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="encoding" type="String" required="false">
@@ -13205,10 +13205,10 @@
 			* UU: the UNIX standard UUEncode algorithm (default).
 			If you specify this parameter, you must also specify the algorithm parameter.
 		]]></help>
-		<values default="UU">
-			<value option="UU"/>
-			<value option="Base64"/>
-			<value option="Hex"/>
+		<values default="&quot;UU&quot;">
+			<value option="&quot;UU&quot;"/>
+			<value option="&quot;Base64&quot;"/>
+			<value option="&quot;Hex&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="ivorsalt" type="Binary" required="false">
@@ -13325,12 +13325,12 @@
 			* DES: the Data Encryption Standard algorithm defined by NIST FIPS-46-3.
 			* DESEDE: the "Triple DES" algorithm defined by NIST FIPS-46-3.
 		]]></help>
-		<values default="CFMX_COMPAT">
-			<value option="CFMX_COMPAT"/>
-			<value option="AES"/>
-			<value option="BLOWFISH"/>
-			<value option="DES"/>
-			<value option="DESEDE"/>
+		<values default="&quot;CFMX_COMPAT&quot;">
+			<value option="&quot;CFMX_COMPAT&quot;"/>
+			<value option="&quot;AES&quot;"/>
+			<value option="&quot;BLOWFISH&quot;"/>
+			<value option="&quot;DES&quot;"/>
+			<value option="&quot;DESEDE&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="encoding" type="String" required="false">
@@ -13342,10 +13342,10 @@
 			* UU: the UNIX standard UUEncode algorithm (default).
 			If you specify this parameter, you must also specify the algorithm parameter.
 		]]></help>
-		<values default="UU">
-			<value option="UU"/>
-			<value option="Base64"/>
-			<value option="Hex"/>
+		<values default="&quot;UU&quot;">
+			<value option="&quot;UU&quot;"/>
+			<value option="&quot;Base64&quot;"/>
+			<value option="&quot;Hex&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="ivorsalt" type="Binary" required="false">
@@ -13561,11 +13561,11 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="CFMX_COMPAT"/>
-			<value option="AES"/>
-			<value option="BLOWFISH"/>
-			<value option="DES"/>
-			<value option="DESEDE"/>
+			<value option="&quot;CFMX_COMPAT&quot;"/>
+			<value option="&quot;AES&quot;"/>
+			<value option="&quot;BLOWFISH&quot;"/>
+			<value option="&quot;DES&quot;"/>
+			<value option="&quot;DESEDE&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -13650,8 +13650,8 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="form"/>
-			<value option="url"/>
+			<value option="&quot;form&quot;"/>
+			<value option="&quot;url&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -13802,10 +13802,10 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="perf_monitor"/>
-			<value option="simple_load"/>
-			<value option="prev_req_time"/>
-			<value option="avg_req_time"/>
+			<value option="&quot;perf_monitor&quot;"/>
+			<value option="&quot;simple_load&quot;"/>
+			<value option="&quot;prev_req_time&quot;"/>
+			<value option="&quot;avg_req_time&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14021,11 +14021,11 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option=","/>
-			<value option="|"/>
-			<value option="_"/>
-			<value option=";"/>
-			<value option=":"/>
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;_&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;:&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14045,13 +14045,13 @@
 	<parameter name="algorithm" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default="CFMX_COMPAT">
-			<value option="CFMX_COMPAT"/>
-			<value option="MD5"/>
-			<value option="SHA"/>
-			<value option="SHA-256"/>
-			<value option="SHA-384"/>
-			<value option="SHA-512"/>
+		<values default="&quot;CFMX_COMPAT&quot;">
+			<value option="&quot;CFMX_COMPAT&quot;"/>
+			<value option="&quot;MD5&quot;"/>
+			<value option="&quot;SHA&quot;"/>
+			<value option="&quot;SHA-256&quot;"/>
+			<value option="&quot;SHA-384&quot;"/>
+			<value option="&quot;SHA-512&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="encoding" type="String" required="false">
@@ -14062,17 +14062,17 @@
 			Java runtime.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+			<value option="&quot;utf-8&quot;"/>
+			<value option="&quot;iso-8859-1&quot;"/>
+			<value option="&quot;windows-1252&quot;"/>
+			<value option="&quot;us-ascii&quot;"/>
+			<value option="&quot;shift_jis&quot;"/>
+			<value option="&quot;iso-2022-jp&quot;"/>
+			<value option="&quot;euc-jp&quot;"/>
+			<value option="&quot;euc-kr&quot;"/>
+			<value option="&quot;big5&quot;"/>
+			<value option="&quot;euc-cn&quot;"/>
+			<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14462,34 +14462,34 @@
 			The valid format for the data.
 		]]></help>
 		<values>
-			<value option="Any"/>
-			<value option="Array"/>
-			<value option="Binary"/>
-			<value option="boolean"/>
-			<value option="creditcard"/>
-			<value option="date"/>
-			<value option="time"/>
-			<value option="email"/>
-			<value option="eurodate"/>
-			<value option="float"/>
-			<value option="Numeric"/>
-			<value option="guid"/>
-			<value option="integer"/>
-			<value option="Query"/>
-			<value option="range"/>
-			<value option="Regex"/>
-			<value option="regular_expression"/>
-			<value option="ssn"/>
-			<value option="social_security_number"/>
-			<value option="String"/>
-			<value option="Struct"/>
-			<value option="telephone"/>
-			<value option="URL"/>
-			<value option="UUID"/>
-			<value option="usdate"/>
-			<value option="variablename"/>
-			<value option="xml"/>
-			<value option="zipcode"/>
+			<value option="&quot;Any&quot;"/>
+			<value option="&quot;Array&quot;"/>
+			<value option="&quot;Binary&quot;"/>
+			<value option="&quot;boolean&quot;"/>
+			<value option="&quot;creditcard&quot;"/>
+			<value option="&quot;date&quot;"/>
+			<value option="&quot;time&quot;"/>
+			<value option="&quot;email&quot;"/>
+			<value option="&quot;eurodate&quot;"/>
+			<value option="&quot;float&quot;"/>
+			<value option="&quot;Numeric&quot;"/>
+			<value option="&quot;guid&quot;"/>
+			<value option="&quot;integer&quot;"/>
+			<value option="&quot;Query&quot;"/>
+			<value option="&quot;range&quot;"/>
+			<value option="&quot;Regex&quot;"/>
+			<value option="&quot;regular_expression&quot;"/>
+			<value option="&quot;ssn&quot;"/>
+			<value option="&quot;social_security_number&quot;"/>
+			<value option="&quot;String&quot;"/>
+			<value option="&quot;Struct&quot;"/>
+			<value option="&quot;telephone&quot;"/>
+			<value option="&quot;URL&quot;"/>
+			<value option="&quot;UUID&quot;"/>
+			<value option="&quot;usdate&quot;"/>
+			<value option="&quot;variablename&quot;"/>
+			<value option="&quot;xml&quot;"/>
+			<value option="&quot;zipcode&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="value" type="Object" required="true">
@@ -14502,7 +14502,7 @@
 			The minimum valid value; used only for range validation.
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="range" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;range&quot;" required="true" index="1"/>
 		</triggers>
 	</parameter>
 	<parameter name="max" type="Numeric" required="true">
@@ -14510,7 +14510,7 @@
 			The maximum valid value; used only for range validation.
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="range" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;range&quot;" required="true" index="1"/>
 		</triggers>
 	</parameter>
 	<parameter name="pattern" type="String" required="true">
@@ -14519,8 +14519,8 @@
 			used only for regex or regular_expression validation.
 		]]></help>
 		<triggers>
-			<selectedValue attributeName="type" value="Regex" required="true" index="1"/>
-			<selectedValue attributeName="type" value="regular_expression" required="true" index="2"/>
+			<selectedValue attributeName="type" value="&quot;Regex&quot;" required="true" index="1"/>
+			<selectedValue attributeName="type" value="&quot;regular_expression&quot;" required="true" index="2"/>
 		</triggers>
 	</parameter>
 </function>
@@ -14704,11 +14704,11 @@
 		<help><![CDATA[
 		]]></help>
 		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option="_"/>
-			<value option=";"/>
-			<value option=":"/>
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;_&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;:&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14761,13 +14761,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14789,13 +14789,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14817,13 +14817,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14845,13 +14845,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14873,13 +14873,13 @@
 	<parameter name="delimiters" type="String" required="false" default=",">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14896,13 +14896,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14923,13 +14923,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14954,13 +14954,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -14977,13 +14977,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15000,13 +15000,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15027,13 +15027,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15054,13 +15054,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="elements" type="String" required="false">
@@ -15085,13 +15085,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15116,13 +15116,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15156,13 +15156,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15179,13 +15179,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15207,13 +15207,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15235,13 +15235,13 @@
 	<parameter name="delimiters" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
-			<value option="chr(9)"/>
-			<value option="chr(10)"/>
-			<value option="chr(13)"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
+			<value option="&quot;chr(9)&quot;"/>
+			<value option="&quot;chr(10)&quot;"/>
+			<value option="&quot;chr(13)&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15304,9 +15304,9 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="local"/>
-			<value option="international"/>
-			<value option="none"/>
+			<value option="&quot;local&quot;"/>
+			<value option="&quot;international&quot;"/>
+			<value option="&quot;none&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15332,10 +15332,10 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="short"/>
-			<value option="medium"/>
-			<value option="long"/>
-			<value option="full"/>
+			<value option="&quot;short&quot;"/>
+			<value option="&quot;medium&quot;"/>
+			<value option="&quot;long&quot;"/>
+			<value option="&quot;full&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15357,9 +15357,9 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="local"/>
-			<value option="international"/>
-			<value option="none"/>
+			<value option="&quot;local&quot;"/>
+			<value option="&quot;international&quot;"/>
+			<value option="&quot;none&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15497,9 +15497,9 @@
 		<help><![CDATA[
 		]]></help>
 		<values>
-			<value option="short"/>
-			<value option="medium"/>
-			<value option="long"/>
+			<value option="&quot;short&quot;"/>
+			<value option="&quot;medium&quot;"/>
+			<value option="&quot;long&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15670,9 +15670,9 @@
 			  offset from UTC. ColdFusion applies the offset and returns
 			  a value with the UTC time.
 		]]></help>
-		<values default="standard">
-			<value option="standard"/>
-			<value option="pop"/>
+		<values default="&quot;standard&quot;">
+			<value option="&quot;standard&quot;"/>
+			<value option="&quot;pop&quot;"/>
 		</values>
 	</parameter>
 </function>
