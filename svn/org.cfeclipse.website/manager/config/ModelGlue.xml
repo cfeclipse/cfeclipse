@@ -3,10 +3,11 @@
 >
 <modelglue>
 	<controllers>
-		<controller name="MyController" type="&appName;.controller.Controller">
+		<controller name="MyController" type="&appName;.manager.controller.Controller">
 			<message-listener message="OnRequestStart" function="OnRequestStart" />
 			<message-listener message="OnQueueComplete" function="OnQueueComplete" />
 			<message-listener message="OnRequestEnd" function="OnRequestEnd" />
+			<message-listener message="doLogout" function="doLogout" />
 		</controller>
 	</controllers>
   
@@ -22,6 +23,34 @@
 			</views>
 		</event-handler>
 
+		
+		<!-- login page -->
+		<event-handler name="login">
+			<broadcasts/>
+			<views>
+				<include name="main" template="frm_login.cfm"/>
+				
+			</views>
+			<results>
+				
+			</results>
+			
+		</event-handler>
+		<!-- login page -->
+		<event-handler name="logout">
+			<broadcasts>
+					<message name="doLogout"/>
+			</broadcasts>
+			<views>
+				<include name="main" template="dsp_logout.cfm"/>
+				
+			</views>
+			<results>
+				
+			</results>
+			
+		</event-handler>
+		
 <!--
 	SCAFFOLDS
 -->
@@ -34,7 +63,15 @@
 				<result do="view.template" />
 			</results>
 		</scaffold>
-
+		<scaffold object="cms_page" alias="cms_page">
+			
+			<views>
+				<include name="nav" template="navMain.cfm" />
+			</views>
+			<results>
+				<result do="view.template" />
+			</results>
+		</scaffold>
 		<scaffold object="cms_article" alias="cms_article">
 			
 			<views>
@@ -61,7 +98,7 @@
 			<broadcasts />
 			<results />
 			<views>
-				<include name="template" template="dspTemplate.cfm" />
+				<include name="template" template="lay_main.cfm" />
 			</views>
 		</event-handler>
 
