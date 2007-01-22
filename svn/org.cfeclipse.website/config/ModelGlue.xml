@@ -10,6 +10,7 @@
 			<message-listener message="getRandTestimonials" function="getRandTestimonials" />
 			<message-listener message="getContent" function="getContent" />
 			<message-listener message="setValue" function="setValue" />
+			<message-listener message="getPage" function="getPage" />
 		</controller>
 	</controllers>
   
@@ -51,99 +52,26 @@
 <!--
 	SUBPAGES
 -->		
-		<event-handler name="features">
+		<event-handler name="page">
 			<broadcasts>
-				<message name="setValue">
-					<argument name="section" value="features" />
-				</message>
-			</broadcasts>
-			<views/>
-			<results>
-				<result do="layout.subpage" />
-			</results>
-		</event-handler>
-		
-		<event-handler name="download">
-			<broadcasts>
-				<message name="setValue">
-					<argument name="section" value="download" />
-				</message>
+				<message name="getPage" />
 			</broadcasts>
 			<views>
-				<include name="topnav" template="nav_top_subpage.cfm" />
-				<include name="body" template="dsp_subpage_layout1.cfm" />
+				<include name="body" template="dsp_subpage.cfm" />
 			</views>
 			<results>
 				<result do="layout.subpage" />
 			</results>
 		</event-handler>
-		
-		<event-handler name="support">
-			<broadcasts>
-				<message name="setValue">
-					<argument name="section" value="support" />
-				</message>
-			</broadcasts>
-			<views>
-				<include name="topnav" template="nav_top_subpage.cfm" />
-				<include name="body" template="dsp_support.cfm" />
-			</views>
-			<results>
-				<result do="layout.subpage" />
-			</results>
-		</event-handler>
-
-		<event-handler name="news">
-			<broadcasts>
-				<message name="setValue">
-					<argument name="section" value="news" />
-				</message>
-			</broadcasts>
-			<views>
-				<include name="topnav" template="nav_top_subpage.cfm" />
-			</views>
-			<results>
-				<result do="layout.subpage" />
-			</results>
-		</event-handler>	
-		
-		<event-handler name="testimonials">
-			<broadcasts>
-				<message name="setValue">
-					<argument name="section" value="testimonials" />
-				</message>
-			</broadcasts>
-			<views>
-				<include name="topnav" template="nav_top_subpage.cfm" />
-			</views>
-			<results>
-				<result do="layout.subpage" />
-			</results>
-		</event-handler>
-		
-		<event-handler name="about">
-			<broadcasts>
-				<message name="setValue">
-					<argument name="section" value="about" />
-				</message>
-			</broadcasts>
-			<views>
-				<include name="topnav" template="nav_top_subpage.cfm" />
-			</views>
-			<results>
-				<result do="layout.subpage" />
-			</results>
-			
-		</event-handler>
-		
-		
 		
 <!--
 	LAYOUTS
 -->
 		<event-handler name="layout.subpage">
 			<broadcasts />
-			<results />
+			<results>
+				
+			</results>
 			<views>
 				<include name="template" template="lay_sub.cfm" />
 			</views>

@@ -44,21 +44,16 @@
 	   <constructor-arg name="configuration"><ref bean="reactorConfiguration" /></constructor-arg>
 	</bean>
 	
-	
-		<bean id="copyrightConfig" class="ModelGlue.Bean.CommonBeans.SimpleConfig">
-		<property name="config">
-			<map>
-				<entry key="year">
-					<value>2007</value>
-				</entry>
-				<entry key="company">
-					<value>Mark Drew Inc. PLC. SA. PTY. Ltd.</value>
-				</entry>
-				<entry key="link">
-					<value>http://www.markdrew.co.uk</value>
-				</entry>
-				
-			</map>
-		</property>
+	<bean id="pageService" class="&appName;.model.PageService">
+		<property name="dsn"><value>cfeclipse</value></property>
 	</bean>
+	
+	<!-- individual page objects -->
+	<bean id="Page" class="&appName;.model.Page" singleton="false">
+		<property name="dsn"><value>cfeclipse</value></property>
+	</bean>
+	
+	
+	
+	
 </beans>
