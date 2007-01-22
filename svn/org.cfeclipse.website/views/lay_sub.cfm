@@ -1,4 +1,5 @@
-<cfset section = ViewState.getValue('section', 'home')>
+<cfset oPage = ViewState.getValue('PageObject')>
+<cfset section = oPage.getPageName()>
 <cfset myself = ViewState.getValue('myself')>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -27,9 +28,8 @@
 <div id="subpage_content">
 
     <div class="subpage_block_black"></div>
-	
-<div id="subpage_menu">
-	<div style="float:left;"><img src="assets/img/gradient_sub_header.jpg" alt="CFEclipse Sub Page Logo" /></div>
+  <div id="subpage_menu">
+ 	 <div id="subpage_logo"></div>
 	<cfoutput>
 	<ul class="floatRight">
 		<li><a href="#myself#page.index" title="Home" class="#iif(section EQ "home", DE('here'), DE('not_here'))#">Home</a></li>
@@ -39,8 +39,9 @@
 	    <li><a href="#myself#page&page=news" title="News" class="#iif(section EQ "news", DE('here'), DE('not_here'))#">News</a></li>
 		<li><a href="#myself#page&page=about" title="About" class="#iif(section EQ "about", DE('here'), DE('not_here'))#">About</a></li>
 	</ul>
-	</cfoutput>
-</div>
+	</cfoutput> 
+	 
+</div>  
 		  
    <div class="subpage_block_black"></div>
 
