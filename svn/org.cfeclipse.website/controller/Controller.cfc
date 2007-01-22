@@ -3,11 +3,22 @@
 		Any function set up to listen for the onRequestStart message happens before any of the <event-handlers>.
 		This is a good place to put things like session defaults.
 	--->
+
+	<cfset variables.pageservice = "">
+	<!---START: getter and setter for variables.PageService --->
+<cffunction name="getPageService" output="false" returntype="any">
+	<cfreturn variables.PageService>
+</cffunction>
+
+<cffunction name="setPageService" output="false" returntype="void">
+	<cfargument name="PageService" type="any">
+	<cfset variables.PageService = arguments.PageService>
+</cffunction>
+<!--- END: getter and setter for variables.PageService --->
 	
 	<cffunction name="onRequestStart" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
 	  <cfset variables.dsn = getModelGlue().getBean('reactorConfiguration').getDSN()>	
-	
 	</cffunction>
 
 	<!--- 
@@ -85,27 +96,15 @@
 	<cffunction name="getPage" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
 	  
-	  	<cfset arguments.event.setValue('section', arguments.event.getValue('page', ""))>
+	  	<cfset pagename = arguments.event.getValue('page', "")>
+	  	<cfset arguments.event.setValue("pageObject", variables.pageservice.getPage(pagename))>
 	  
-	  		
-	  
-	  
-	  
-	  
-	  
-	 </cffunction>
+	  </cffunction>
+	 
 
 
-	<cffunction name="getParentPages" access="private" returntype="string" hint="returns a comma delimited list of parent pages, recursing upwards">
-	
-	
-	</cffunction>
-	
-	<cffunction name="getChildPages" access="private" returntype="struct" hint="returns a structure of child pages">
-	
-	
-	
-	</cffunction>
 
+	
+	
 
 </cfcomponent>
