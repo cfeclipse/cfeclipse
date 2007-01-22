@@ -156,8 +156,17 @@
 }
 #subpage_menu {
 	height: 37px;
+	width: 850px;
 	background-color: red;
-	background: #000 url(/assets/img/bg/gradient_sub_header.jpg) repeat-x top left;
+	background: #555555 url(/assets/img/bg/gradient_sub_header.jpg) repeat-x top left;
+	
+}
+
+#subpage_logo {
+	background: #000 url(/assets/img/gradient_sub_header.jpg) no-repeat top left;
+	height: 37px;
+	width: 300px;
+	float: left;
 }
 #subpage_menu ul {
   margin: 0;
