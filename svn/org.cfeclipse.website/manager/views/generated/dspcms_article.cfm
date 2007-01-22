@@ -85,6 +85,17 @@
 	        </cfoutput>
         </div>
     
+        <div class="formfield">
+          <cfoutput>
+	        <label for="cms_page"><b>Cms_page:</b>
+	        </label>
+					<cfset targetObject = cms_articleRecord.getcms_page() />
+	        <div>
+	       		#targetObject.getpagename()#
+	        </div>
+	        </cfoutput>
+        </div>
+      
 </fieldset>
 </div>
 </cfform>

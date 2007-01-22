@@ -184,6 +184,22 @@
 	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="bPublished" validation="#validation#" />
         </div>
     
+        <div class="formfield">
+	        <label for="art_page_id" <cfif structKeyExists(validation, "cms_page")>class="error"</cfif>><b>Cms_page:</b>
+	        </label>
+	        <cfset valueQuery = viewstate.getValue("cms_pageList") />
+	        <div>
+        
+          <select name="art_page_id" id="art_page_id" >
+            
+            <cfoutput query="valueQuery">
+              <option value="#valueQuery.pageid#" <cfif cms_articleRecord.getart_page_id() eq valueQuery.pageid>selected</cfif>>#valueQuery.pagename#</option>
+            </cfoutput>
+          </select>
+	        </div>
+	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="cms_page" validation="#validation#" />
+        </div>
+      
 <cfoutput>
 <div class="controls">
  	<input type="submit" value="Save" />
