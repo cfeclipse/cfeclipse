@@ -171,7 +171,7 @@
 
         <blockquote class="go">
           <p>
-			<cfoutput><a href="#myself#testimonials">Show your support by sending a testimonial to the CFEclipse team.</a></cfoutput>
+			<cfoutput><a href="#myself#page&page=testimonials">Show your support by sending a testimonial to the CFEclipse team.</a></cfoutput>
           </p>
         </blockquote>
 

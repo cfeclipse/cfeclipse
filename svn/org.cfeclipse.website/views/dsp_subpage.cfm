@@ -26,7 +26,7 @@
 
 <h2 class="clear"><cfoutput>#visCrumbtail#</cfoutput></h2>
 <p>
-	<cfoutput>#oPage.getDescription()#</cfoutput>
+	<cfoutput>#PAragraphFormat(oPage.getDescription())#</cfoutput>
 </p>
 <cfinclude template="pagelayouts/#oPage.getLayout('lay_25_75')#.cfm">
 </div>
