@@ -207,7 +207,7 @@ blockquote {
   background-color: #444;  
   background-image: url(/assets/img/icons/quote.gif);
   background-repeat: no-repeat;
-  background-position: 5px 50%;  
+  background-position: 1px;
 }
 
 blockquote.exclamation {
