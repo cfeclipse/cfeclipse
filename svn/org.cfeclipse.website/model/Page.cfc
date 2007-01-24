@@ -69,7 +69,7 @@
 
 <!---START: getter and setter for variables.description --->
 <cffunction name="getdescription" output="false" returntype="string">
-	<cfreturn variables.description>
+	<cfreturn variables.description />
 </cffunction>
 
 <cffunction name="setdescription" output="false" returntype="void">

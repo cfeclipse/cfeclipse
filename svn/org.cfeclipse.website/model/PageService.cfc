@@ -30,6 +30,7 @@
 					from cms_page
 					WHERE pagename = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.pagename#">
 				</cfquery>
+
 			
 				<cfif q_GetPage.recordcount>
 					<cfset oPage = variables.BeanFactory.getBean("Page")>
