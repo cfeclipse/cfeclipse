@@ -52,6 +52,21 @@
 	  	
 	</cffunction>
 	
+	<cffunction name="getTestimonials" access="public" returnType="void" output="false">
+	  <cfargument name="event" type="any">
+	  
+	 	 <cfset var dsn = getModelGlue().GETIOCCONTAINER().getBean('reactorConfiguration').getDSN()>
+	  	<cfset var qryRandTestimonials = "">
+	  	
+	  	<cfquery name="qryRandTestimonials" datasource="#dsn#">
+			SELECT * FROM cms_testimonial
+			WHERE bPublished = 1
+			ORDER BY orderid
+		</cfquery>
+		<cfset arguments.event.setValue('qryTestimonials', qryRandTestimonials)>	  	
+	  	
+	</cffunction>
+	
 	<cffunction name="getContent" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
 	  
@@ -98,6 +113,12 @@
 	  
 	  	<cfset pagename = arguments.event.getValue('page', "")>
 	  	<cfset arguments.event.setValue("pageObject", variables.pageservice.getPage(pagename))>
+	  	
+	  	<!--- TODO:  bit of a hack this, will need to fix up--->
+	  	<cfif pagename EQ "testimonials">
+				<cfset getTestimonials(arguments.event)>
+			
+		</cfif>
 	  
 	  </cffunction>
 	 
