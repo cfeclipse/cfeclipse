@@ -1,5 +1,5 @@
 <cfset myself = ViewState.getValue('myself')>
-
+<cfset qBanners = ViewState.getValue('qBanners')>
 <cfoutput>
 <!-- MAIN MENU: Top horizontal menu of the site.  Use class="here" to turn the current page tab on -->
   <div id="mainMenu">
@@ -15,8 +15,17 @@
   <div id="myHeader">
      
 	  <div id="title">
-		  <img src="/assets/img/spacer.gif" width="1" height="40" /><br/>
-		  <img src="/assets/img/cfeclipse.gif" />
+		
+<!--- 		T_CONTENT	ART_DESCRIPTION	ART_ID	ART_IMG	ART_PAGE_ID	ART_TITLE	ART_TYPE_ID	BPUBLISHED	USERID --->
+		 <!--- <img src="/assets/img/spacer.gif" width="1" height="40" /><br /> --->
+		<cfloop query="qBanners">
+			<cfif Len(#art_content#)>
+			<a href="#myself##art_content#" id="bannerlink"><img src="#art_img#" alt="#art_description#" border="0"/></a>
+			<cfelse>
+			<img src="#art_img#" alt="#art_description#" border="0"/>
+			</cfif>
+		</cfloop>
+
 	  </div>
   </div>
 </cfoutput>
