@@ -50,6 +50,10 @@ public class CFPerspective implements IPerspectiveFactory {
 		//this is the main editor - used as a base to place views
 		String editorid = layout.getEditorArea();
 		
+		//layout.addActionSet("org.eclipse.debug.ui.debugActionSet");
+		//layout.addActionSet("org.eclipse.debug.ui.launchActionSet");
+		//layout.addActionSet("org.eclipse.debug.ui.breakpointActionSet");
+		
 		layout.addShowInPart(IPageLayout.ID_RES_NAV);
 		
 		//view to the left of the editor
