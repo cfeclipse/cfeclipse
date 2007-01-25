@@ -40,6 +40,14 @@
 					<argument name="orderdir" value="desc" />
 				</message>
 				
+				
+				<!-- get a random banner -->
+				<message name="getContent">
+					<argument name="type" value="Banner" />
+					<argument name="queryName" value="qBanners" />
+					<argument name="random" value="true" />
+					<argument name="maxrows" value="1" />
+				</message>
 			</broadcasts>
 			<views>
 				<include name="topnav" template="nav_top_homepage.cfm" />
