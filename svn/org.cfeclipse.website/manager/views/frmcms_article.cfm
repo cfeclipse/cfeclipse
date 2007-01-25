@@ -164,7 +164,12 @@
       <div class="formfield">
 	        <label for="dtCreated" <cfif structKeyExists(validation, "dtCreated")>class="error"</cfif>><b>Dtcreated:</b></label>
 	        <div>
-	        <cfdump var="#cms_articleRecord.getVariables()#">
+		      
+		      	<cfset dtCreatedValue = cms_articleRecord.getdtCreated()>
+		      	<cfif NOT Len(dtCreatedValue)>
+					<cfset dtCreatedValue = Now()>	
+				</cfif>
+		      
 		        <cfinput 
 									type="text" 
 									class="input" 
@@ -172,7 +177,7 @@
 									id="dtCreated" 
 									name="dtCreated" 
 									
-										value="#cms_articleRecord.getdtCreated()#" 
+										value="#dtCreatedValue#" 
 									
 						/>
 		      
