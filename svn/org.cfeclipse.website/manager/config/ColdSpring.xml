@@ -32,7 +32,7 @@
 		<property name="dsn"><value>cfeclipse</value></property>
 		<property name="type"><value>mysql</value></property>
 		<property name="mapping"><value>/cfeclipse_org_new/manager/model/data</value></property>
-		<property name="mode"><value>development</value></property>
+		<property name="mode"><value>production</value></property>
 	</bean>
   <!-- Put definitions for your own beans and services here -->
 
