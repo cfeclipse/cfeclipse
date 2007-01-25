@@ -55,20 +55,6 @@
       
         <div class="formfield">
           <cfoutput>
-	        <label for="dtcreated"><b>Dtcreated:</b></label>
-	        <span class="input">#cms_articleRecord.getdtcreated()#</span>
-	        </cfoutput>
-        </div>
-    
-        <div class="formfield">
-          <cfoutput>
-	        <label for="dtDisplay"><b>Dt Display:</b></label>
-	        <span class="input">#cms_articleRecord.getdtDisplay()#</span>
-	        </cfoutput>
-        </div>
-    
-        <div class="formfield">
-          <cfoutput>
 	        <label for="cms_user"><b>Cms_user:</b>
 	        </label>
 					<cfset targetObject = cms_articleRecord.getcms_user() />

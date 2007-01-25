@@ -58,6 +58,13 @@
 		<cfreturn variables.layout/>
 	</cfif>
 	
+	<cfif NOT ArrayLen(getChildPages())>
+		<cfreturn "lay_100">	
+	</cfif>
+	<!--- also we can do a default --->
+	
+	
+	
 	<cfreturn arguments.defaultLayout>
 </cffunction>
 

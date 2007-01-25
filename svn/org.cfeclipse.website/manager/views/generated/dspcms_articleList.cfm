@@ -21,12 +21,6 @@
 	 		<th>Art_img</th>
     
 		  <cfset displayedColumns = displayedColumns + 1 />
-	 		<th>Dtcreated</th>
-    
-		  <cfset displayedColumns = displayedColumns + 1 />
-	 		<th>Dt Display</th>
-    
-		  <cfset displayedColumns = displayedColumns + 1 />
 	 		<th>B Published</th>
     
 	<th>&nbsp;</th>
@@ -45,10 +39,6 @@
 			 		<td><a href="#viewEvent##keystring#">#htmlEditFormat(art_title)#</a></td>
 				
 			 		<td><a href="#viewEvent##keystring#">#htmlEditFormat(art_img)#</a></td>
-				
-			 		<td><a href="#viewEvent##keystring#">#dateFormat(dtcreated, "m/d/yyyy")# #timeFormat(dtcreated, "h:mm TT")#</a></td>
-				
-			 		<td><a href="#viewEvent##keystring#">#dateFormat(dtDisplay, "m/d/yyyy")# #timeFormat(dtDisplay, "h:mm TT")#</a></td>
 				
 			 		<td><a href="#viewEvent##keystring#">#htmlEditFormat(bPublished)#</a></td>
 				

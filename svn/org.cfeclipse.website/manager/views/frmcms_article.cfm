@@ -41,7 +41,7 @@
 	        <label for="art_title" <cfif structKeyExists(validation, "art_title")>class="error"</cfif>><b>Art_title:</b></label>
 	        <div>
 	        
-		        <cfinput 
+		        <cfinput size="50" 
 									type="text" 
 									class="input" 
 									maxLength="255" 
@@ -60,7 +60,7 @@
 	        <label for="art_description" <cfif structKeyExists(validation, "art_description")>class="error"</cfif>><b>Art_description:</b></label>
 	        <div>
 	        
-		        <textarea class="input" id="art_description" name="art_description"><cfoutput>#cms_articleRecord.getart_description()#</cfoutput></textarea>
+		        <textarea class="input" id="art_description" name="art_description" cols="80" rows="5"><cfoutput>#cms_articleRecord.getart_description()#</cfoutput></textarea>
 		      
 	        </div>
 	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="art_description" validation="#validation#" />
@@ -70,7 +70,7 @@
 	        <label for="art_content" <cfif structKeyExists(validation, "art_content")>class="error"</cfif>><b>Art_content:</b></label>
 	        <div>
 	        
-		        <textarea class="input" id="art_content" name="art_content"><cfoutput>#cms_articleRecord.getart_content()#</cfoutput></textarea>
+		        <textarea class="input" id="art_content" name="art_content" cols="80" rows="10"><cfoutput>#cms_articleRecord.getart_content()#</cfoutput></textarea>
 		      
 	        </div>
 	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="art_content" validation="#validation#" />
