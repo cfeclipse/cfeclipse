@@ -1,5 +1,5 @@
 <!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
-[<!ENTITY appName "cfeclipse_org_new">]
+[<!ENTITY appName "cfeclipse_org">]
 >
 <beans>
   <!-- This is your Model-Glue configuration -->
@@ -53,7 +53,15 @@
 		<property name="dsn"><value>cfeclipse</value></property>
 	</bean>
 	
-	
+	<bean id="googleConfig" class="ModelGlue.Bean.CommonBeans.SimpleConfig">
+      <property name="config">
+         <map>
+            <entry key="production">
+               <value>false</value>
+            </entry>
+          </map>
+      </property>
+   </bean>
 	
 	
 </beans>
