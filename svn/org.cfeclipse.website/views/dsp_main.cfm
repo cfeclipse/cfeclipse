@@ -98,7 +98,7 @@
 		 <!---  <cfdump var="#ViewState.getValue('qRandFeatures')#"> --->
 		   <blockquote class="go">
           <p>
-			CFEclipse has a wealth of features to enable every CFML developer to blah de blah de blah
+			CFEclipse has a wealth of features to appeal to ColdFusion developers
           </p>
         </blockquote>
 		 
@@ -110,12 +110,12 @@
 						<p>#ART_TITLE#</p>
 						
 						<cfif Len(art_img)>
-						<a href="#ViewState.getValue('myself')#features##feature_#art_id#">
+						<a href="#ViewState.getValue('myself')#page&page=features##feature_#art_id#">
 							<img alt="Code Folding" src="#art_img#"  />
 						</a>
 						<cfelse>
 						<span style="text-align: justify;">
-						<a href="#ViewState.getValue('myself')#features##feature_#art_id#">
+						<a href="#ViewState.getValue('myself')#page&page=features##feature_#art_id#">
 							#ART_DESCRIPTION#
 						</a>
 						</span>
@@ -201,6 +201,16 @@
   </div>
 
 </div>
+
+<cfif ViewState.getValue('google_production','false')>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-259985-2";
+urchinTracker();
+</script>
+</cfif>
+
 
 </body>
 

@@ -19,6 +19,14 @@
 	<cffunction name="onRequestStart" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
 	  <cfset variables.dsn = getModelGlue().getBean('reactorConfiguration').getDSN()>	
+	  
+	  <cfset stConfig = getModelGlue().getBean("googleConfig").getConfig() />
+   		<cfloop collection="#stConfig#" item="conf">
+    		  <cfset arguments.event.setValue("google_" & conf, stConfig[conf])>
+   		</cfloop>
+	  
+	  
+	  
 	</cffunction>
 
 	<!--- 

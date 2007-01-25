@@ -161,7 +161,24 @@
 	        </div>
 	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="cms_page" validation="#validation#" />
         </div>
-      
+      <div class="formfield">
+	        <label for="dtCreated" <cfif structKeyExists(validation, "dtCreated")>class="error"</cfif>><b>Dtcreated:</b></label>
+	        <div>
+	        <cfdump var="#cms_articleRecord.getVariables()#">
+		        <cfinput 
+									type="text" 
+									class="input" 
+									maxLength="50" 
+									id="dtCreated" 
+									name="dtCreated" 
+									
+										value="#cms_articleRecord.getdtCreated()#" 
+									
+						/>
+		      
+	        </div>
+	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="dtCreated" validation="#validation#" />
+        </div>
 <cfoutput>
 <div class="controls">
  	<input type="submit" value="Save" />
