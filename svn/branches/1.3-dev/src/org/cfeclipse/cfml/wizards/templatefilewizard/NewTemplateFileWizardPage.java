@@ -104,6 +104,7 @@ public class NewTemplateFileWizardPage extends WizardPage {
 
 		containerText = new Text(parent, SWT.BORDER | SWT.SINGLE);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		//gd.horizontalSpan = 2;
 		containerText.setLayoutData(gd);
 		containerText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -135,6 +136,7 @@ public class NewTemplateFileWizardPage extends WizardPage {
 		gd = new GridData();
 		gd.horizontalSpan = 3;
 		gd.grabExcessHorizontalSpace = true;
+		gd.grabExcessVerticalSpace = true;
 		gd.horizontalAlignment = GridData.FILL;
 		treeLabel.setLayoutData(gd);
 
