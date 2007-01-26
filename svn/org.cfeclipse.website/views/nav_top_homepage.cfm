@@ -6,10 +6,10 @@
     <ul class="floatRight">
 	  <li><a href="#myself#page.index" title="Home" class="here">Home</li>
       <li><a href="#myself#page&page=download" title="Download">Download</a></li>
-      <li><a href="#myself#page&page=features" title="Features">Features</a></li>
-      <li><a href="#myself#page&page=support" title="Support">Support</a></li>
-      <li><a href="#myself#page&page=news" title="News">News</a></li>
-	  <li><a href="#myself#page&page=about" title="About">About</a></li>
+   <!---    <li><a href="#myself#page&page=features" title="Features">Features</a></li> --->
+      <!--- <li><a href="#myself#page&page=support" title="Support">Support</a></li> --->
+     <!---  <li><a href="#myself#page&page=news" title="News">News</a></li>
+	  <li><a href="#myself#page&page=about" title="About">About</a></li> --->
     </ul>
   </div>
   <div id="myHeader">

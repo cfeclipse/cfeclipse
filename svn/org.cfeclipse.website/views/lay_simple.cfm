@@ -1,8 +1,3 @@
-<!--
-	Site design inspired by http://fullahead.org
--->
-<cfset oPage = ViewState.getValue('PageObject')>
-<cfset section = oPage.getPageName()>
 <cfset myself = ViewState.getValue('myself')>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -33,18 +28,7 @@
     <div class="subpage_block_black"></div>
   <div id="subpage_menu">
  	 <div id="subpage_logo"></div>
-
-	<cfoutput>#ViewCollection.getView("topnav")#</cfoutput>
-	<!--- <cfoutput>
-	<ul class="floatRight">
-		<li><a href="#myself#page.index" title="Home" class="#iif(section EQ "home", DE('here'), DE('not_here'))#">Home</a></li>
-	    <li><a href="#myself#page&page=download" title="Download" class="#iif(section EQ "download", DE('here'), DE('not_here'))#">Download</a></li>
-	    <li><a href="#myself#page&page=features" title="Features" class="#iif(section EQ "features", DE('here'), DE('not_here'))#">Features</a></li>
-	    <li><a href="#myself#page&page=support" title="Support" class="#iif(section EQ "support", DE('here'), DE('not_here'))#">Support</a></li>
-	    <li><a href="#myself#page&page=news" title="News" class="#iif(section EQ "news", DE('here'), DE('not_here'))#">News</a></li>
-		<li><a href="#myself#page&page=about" title="About" class="#iif(section EQ "about", DE('here'), DE('not_here'))#">About</a></li>
-	</ul>
-	</cfoutput>  --->
+<cfoutput>#ViewCollection.getView('topnav')#</cfoutput>
 	 
 </div>  
 		  
