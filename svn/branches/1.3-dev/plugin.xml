@@ -77,7 +77,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="%perspective.name.CFEclipse"
-            icon="icons/obj16/default.gif"
+            icon="icons/icons/cfeclipse_16x16.png"
             class="org.cfeclipse.cfml.perspective.CFPerspective"
             id="org.cfeclipse.cfml.perspective.CFML">
       </perspective>
