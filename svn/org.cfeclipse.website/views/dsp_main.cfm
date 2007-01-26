@@ -39,21 +39,33 @@
     <!-- 25 percent width column, aligned to the left -->
     <div class="width25 floatLeft leftColumn">
 
-      <h1>News</h1>
+     <h1>News</h1>
 
       <ul class="sideMenu">
+	<li class="here">
+          <ul>
+            <li><!--- <a href="" title="Jump to News"> --->CFEclipse 1.3 Released!<!--- </a> ---></li>
+			<li class="andy">
+				<strong>After nearly a year in development, CFEclipse 1.3 has finally been released!</strong>
+				You can download it using Eclipse's Update Software feature, follow instructions in the Download page
+			</li>
+          </ul>
+        </li>
+		
+		 <li>&nbsp;</li>
+		
         <li class="here">
           <ul>
-            <li><a href="" title="Jump to News">Beta 1.3 Fixed for Eclipse 3.1</a></li>
+            <li><!--- <a href="" title="Jump to News"> --->Beta 1.3 Fixed for Eclipse 3.1<!--- </a> ---></li>
 			<li class="andy">Some users mentioned that they were having problems with the update of CFEclipse Beta 1.3 to run on Eclipse 3.1, the errors have been fixed and an updated package is available from the beta page.</li>
           </ul>
         </li>
-		<li>&nbsp;</li>
-        <li class="here">
-		  <ul>
+		 <li>&nbsp;</li>
+        <!--- <li class="here"> --->
+		 <!---  <ul>
 			<li><a href="" title="CFEclipse Updated">CFEclipse Updated!</a></li>
 			<li class="andy">Dean Harmon has helped the CFEclipse crew by submitting a patch so that CFEclipse 1.3 can now run on Eclipse 3.1. This is major news as now CFEclipse can work nicely with Flex Builder. You can download it over at the beta section.</li>
-		  </ul>
+		  </ul> --->
       </ul>
 
      <p>&nbsp;</p>
@@ -95,14 +107,14 @@
 						<p>#ART_TITLE#</p>
 						
 						<cfif Len(art_img)>
-						<a href="#ViewState.getValue('myself')#page&page=features##feature_#art_id#">
+					<!--- 	<a href="#ViewState.getValue('myself')#page&page=features##feature_#art_id#"> --->
 							<img alt="Code Folding" src="#art_img#"  />
-						</a>
+					<!--- 	</a> --->
 						<cfelse>
 						<span style="text-align: justify;">
-						<a href="#ViewState.getValue('myself')#page&page=features##feature_#art_id#">
+					<!--- 	<a href="#ViewState.getValue('myself')#page&page=features##feature_#art_id#"> --->
 							#ART_DESCRIPTION#
-						</a>
+						<!--- </a> --->
 						</span>
 						</cfif>
 
@@ -154,12 +166,12 @@
        
         
 
-        <blockquote class="go">
+       <!---  <blockquote class="go">
           <p>
 			<cfoutput><a href="#myself#page&page=testimonials">Show your support by sending a testimonial to the CFEclipse team.</a></cfoutput>
           </p>
         </blockquote>
-
+ --->
       </div>
 	
 
