@@ -28,8 +28,8 @@
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="org.eclipse.ui.intro"/>
       <!-- <import plugin="org.apache.ant"/> -->
-      <import plugin="org.eclipse.core.filesystem"/>
-      <import plugin="org.eclipse.ui.browser"/>
+      <import plugin="org.eclipse.core.filesystem" optional="true"/> 
+	  <import plugin="org.eclipse.ui.browser"/>
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
@@ -1247,6 +1247,7 @@
             category="org.cfeclipse.cfml"
             name="%view.name.6"
             id="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"/>
+      <!-- 
       <view
             category="org.cfeclipse.cfml"
             class="org.cfeclipse.cfml.views.Toolbar"
@@ -1254,14 +1255,23 @@
             id="org.cfeclipse.cfml.views.Toolbar"
             name="Toolbar"/>
       
-            <!--
+     
       <view
             category="org.cfeclipse.cfml"
             class="org.cfeclipse.cfml.views.snipex.SnipEx"
             icon="icons/obj16/snip.gif"
             id="org.cfeclipse.cfml.views.snipex.SnipEx"
             name="SnipEx"/>
-            -->
+           
+            
+        <view
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.variables.VariablesView"
+            icon="icons/ctool16/set.gif"
+            id="org.cfeclipse.cfml.views.variables"
+            name="Variables"/>
+		-->
+
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- help -->
