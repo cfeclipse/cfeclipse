@@ -1354,11 +1354,12 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            objectClass="org.eclipse.core.resources.IProject"
-            name="%page.name.10"
             class="org.cfeclipse.cfml.properties.ProjectPropertyPage"
+            icon="icons/icons/cfeclipse_16x16.png"
+            id="org.cfeclipse.cfml.properties.samplePropertyPage"
+            name="%page.name.10"
             nameFilter="*"
-            id="org.cfeclipse.cfml.properties.samplePropertyPage">
+            objectClass="org.eclipse.core.resources.IProject">
       </page>
    </extension>
    
@@ -1370,7 +1371,7 @@
             id="org.cfeclipse.cfml.category1">
       </category>
       <wizard name="%wizard.name.0"
-			icon="icons/obj16/default.gif"
+			icon="icons/icons/cfeclipse_16x16.png"
 
 			class="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
 		
