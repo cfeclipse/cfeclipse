@@ -1,5 +1,5 @@
 <!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
-[<!ENTITY appName "cfeclipse_org_new">]
+[<!ENTITY appName "cfeclipse_org">]
 >
 <modelglue>
 	<controllers>
@@ -66,6 +66,7 @@
 			</broadcasts>
 			<views>
 				<include name="body" template="dsp_subpage.cfm" />
+				<include name="topnav" template="nav_top_subpage.cfm" />
 			</views>
 			<results>
 				<result do="layout.subpage" />
@@ -84,7 +85,17 @@
 				<include name="template" template="lay_sub.cfm" />
 			</views>
 		</event-handler>
-
+		
+		<event-handler name="layout.simple">
+			<broadcasts />
+			<results>
+				
+			</results>
+			<views>
+				<include name="template" template="lay_simple.cfm" />
+			</views>
+		</event-handler>
+		
 		<event-handler name="layout.homepage">
 			<broadcasts />
 			<results />
@@ -98,7 +109,13 @@
 			<broadcasts />
 			<views>
 				<include name="body" template="dspException.cfm" />
+				<include name="topnav" template="nav_top_subpage.cfm" />
 			</views>
+			<results>
+				<result do="layout.simple"/>
+				
+			</results>
+			
 		</event-handler>
 	</event-handlers>
 </modelglue>
