@@ -1,3 +1,6 @@
+<!--
+	Site design inspired by http://fullahead.org
+-->
 <cfset qMainContent = ViewState.getValue('qHPContent')>
 <cfset qFeatureList = ViewState.getValue('qRandFeatures')>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -25,27 +28,9 @@
 
 <!-- CONTENT: Holds all site content except for the footer.  This is what causes the footer to stick to the bottom -->
 <div id="content">
-	
-	
-
-  <!-- HEADER: Holds title, subtitle and header images -->
-  <!--<div id="header">
-
-    <div id="title">
-     
-      <img src="/assets/img/backup/cfe_logo.gif">
-    </div>
-
-    <img src="/assets/img/bg/header_new.jpg" alt="left slice" class="left" />
-    <img src="/assets/img/bg/header_new.jpg" alt="right slice" class="right" />
-
-  </div>-->
 
 	<cfoutput>#ViewCollection.getView("topnav")#</cfoutput>
   
-
-
-
 
   <!-- PAGE CONTENT BEGINS: This is where you would define the columns (number, width and alignment) -->
   <div id="page">

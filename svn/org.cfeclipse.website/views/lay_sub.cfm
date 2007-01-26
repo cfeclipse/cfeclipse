@@ -1,3 +1,6 @@
+<!--
+	Site design inspired by http://fullahead.org
+-->
 <cfset oPage = ViewState.getValue('PageObject')>
 <cfset section = oPage.getPageName()>
 <cfset myself = ViewState.getValue('myself')>
@@ -47,7 +50,6 @@
 
   <!-- PAGE CONTENT BEGINS: This is where you would define the columns (number, width and alignment) -->
   <div id="page">
-
 		<cfoutput>#ViewCollection.getView('body')#</cfoutput>
   </div> <!-- END page -->
 
