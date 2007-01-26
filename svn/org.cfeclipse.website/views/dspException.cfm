@@ -2,11 +2,17 @@
 
 <cfset exception = viewstate.getValue("exception") />
 
-<h2>There was a problem with your request!</h2>
+<h2>Something has gone amiss! Whilst we sort it out, you can see for yourself what the error was:</h2>
 
 <p>
 	The server says: <cfoutput> <em>#exception.detail#</em></cfoutput>
 
+
+</p>
+
+<p>
+
+	Please email <a href="mailto:mark.drew@gmail.com?subject=help! I spotted an error on the cfeclipse website!"> the administrator </a>to let them know of the error!
 </p>
 
 <!--- <cfoutput>
