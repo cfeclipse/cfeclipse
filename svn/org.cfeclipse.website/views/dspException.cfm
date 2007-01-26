@@ -1,8 +1,15 @@
-<h3>Oops!</h3>
+<h1>DOH!</h1>
 
 <cfset exception = viewstate.getValue("exception") />
 
-<cfoutput>
+<h2>There was a problem with your request!</h2>
+
+<p>
+	The server says: <cfoutput> <em>#exception.detail#</em></cfoutput>
+
+</p>
+
+<!--- <cfoutput>
 <table>
 	<tr>
 		<td valign="top"><b>Message</b></td>
@@ -27,4 +34,4 @@
 		</td>
 	</tr>
 </table>
-</cfoutput>
+</cfoutput> --->
