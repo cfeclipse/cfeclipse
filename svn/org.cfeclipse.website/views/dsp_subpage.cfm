@@ -1,4 +1,4 @@
-<div class="gradient">
+<!---<div class="gradient"> --->
 <cfset oPage = ViewState.getValue('pageObject')>
 <cfset crumbtail = oPage.getParentPages()>
 <cfset layout = oPage.getLayout()>
@@ -29,4 +29,4 @@
 	<cfoutput>#ParagraphFormat(oPage.getDescription())#</cfoutput>
 </p>
 <cfinclude template="pagelayouts/#oPage.getLayout('lay_25_75')#.cfm">
-</div>
+<!---</div> --->
