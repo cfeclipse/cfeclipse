@@ -24,8 +24,8 @@
 		
 		</cfif>
 			<cfif Len(art_title)><h2>#art_title#</h2></cfif>
-			<cfif Len(art_description)><h3>#art_description#</h3></cfif>
-			<p>#art_content#</p>
+			<cfif Len(art_description)><h3>#ParagraphFormat(art_description)#</h3></cfif>
+			<p>#ParagraphFormat(art_content)#</p>
 		
   </div>
 </cfoutput>
