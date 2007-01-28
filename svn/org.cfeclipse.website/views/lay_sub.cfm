@@ -31,24 +31,13 @@
 <div id="subpage_content">
 
     <div class="subpage_block_black"></div>
-  <div id="subpage_menu">
- 	 <div id="subpage_logo"></div>
+	<div id="subpage_menu">
 
-	<cfoutput>#ViewCollection.getView("topnav")#</cfoutput>
-	<!--- <cfoutput>
-	<ul class="floatRight">
-		<li><a href="#myself#page.index" title="Home" class="#iif(section EQ "home", DE('here'), DE('not_here'))#">Home</a></li>
-	    <li><a href="#myself#page&page=download" title="Download" class="#iif(section EQ "download", DE('here'), DE('not_here'))#">Download</a></li>
-	    <li><a href="#myself#page&page=features" title="Features" class="#iif(section EQ "features", DE('here'), DE('not_here'))#">Features</a></li>
-	    <li><a href="#myself#page&page=support" title="Support" class="#iif(section EQ "support", DE('here'), DE('not_here'))#">Support</a></li>
-	    <li><a href="#myself#page&page=news" title="News" class="#iif(section EQ "news", DE('here'), DE('not_here'))#">News</a></li>
-		<li><a href="#myself#page&page=about" title="About" class="#iif(section EQ "about", DE('here'), DE('not_here'))#">About</a></li>
-	</ul>
-	</cfoutput>  --->
-	 
-</div>  
+		<cfoutput>#ViewCollection.getView("topnav")#</cfoutput>
+		<div id="subpage_logo" />
+	</div>  
 		  
-   <div class="subpage_block_black"></div>
+   <!--- <div class="subpage_block_black"></div> --->
 
   <!-- PAGE CONTENT BEGINS: This is where you would define the columns (number, width and alignment) -->
   <div id="page">
