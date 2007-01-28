@@ -109,11 +109,13 @@
 		<cfset var aChildPages = ArrayNew(1)>	
 			
 				<cfquery name="q_getChildren" datasource="#variables.dsn#">
-					SELECT pageid, pagename, parentpage
+					SELECT pageid, pagename, parentpage, orderid
 					from cms_page
 					WHERE parentpage = (
 						SELECT pageid FROM cms_page WHERE pagename = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.pagename#">
 					)
+					AND bPublished=1
+					ORDER BY orderid
 				</cfquery>
 				
 				<cfif q_getChildren.recordcount>
