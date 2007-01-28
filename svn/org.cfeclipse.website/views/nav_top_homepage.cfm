@@ -1,11 +1,16 @@
 <cfset myself = ViewState.getValue('myself')>
 <cfset qBanners = ViewState.getValue('qBanners')>
+<cfset aMainPages = ViewState.getValue('mainNav')>
 <cfoutput>
 <!-- MAIN MENU: Top horizontal menu of the site.  Use class="here" to turn the current page tab on -->
   <div id="mainMenu">
     <ul class="floatRight">
 	  <li><a href="#myself#page.index" title="Home" class="here">Home</li>
-      <li><a href="#myself#page&page=download" title="Download">Download</a></li>
+	  
+	  <!--- get subpages --->
+	  <cfloop from="1" to="#ArrayLen(aMainPages)#" index="p">
+      <li><a href="#myself#page&page=#aMainPages[p]#" title="#aMainPages[p]#">#aMainPages[p]#</a></li>
+	  </cfloop>
    <!---    <li><a href="#myself#page&page=features" title="Features">Features</a></li> --->
       <!--- <li><a href="#myself#page&page=support" title="Support">Support</a></li> --->
      <!---  <li><a href="#myself#page&page=news" title="News">News</a></li>
