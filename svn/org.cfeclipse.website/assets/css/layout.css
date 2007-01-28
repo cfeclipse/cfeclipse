@@ -21,7 +21,7 @@
 #content,
 #width {
   /* max-width hack for IE since it doesn't understand the valid css property */
-  width: expression(document.body.clientWidth > 1000 ? "1000px" : "94%");  
+	width: expression(document.body.clientWidth > 1000 ? "1000px" : "94%");  
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -155,17 +155,19 @@
 	background-color: black;
 }
 #subpage_menu {
-	height: 37px;
-	width: 850px;
-	background-color: red;
-	background: #555555 url(/assets/img/bg/gradient_sub_header.jpg) repeat-x top left;
+	height:120px;
+	width: 100%;
+	background: #666 url(/assets/img/sub_header_background.gif) repeat-x top left;
+/*	background-color: red; */
+/*	background: #555555 url(/assets/img/sub_header_background.gif) repeat-x top left; */
 	
 }
 
 #subpage_logo {
-	background: #000 url(/assets/img/gradient_sub_header.jpg) no-repeat top left;
-	height: 37px;
-	width: 300px;
+	margin-top: 38px;
+	height: 43px;
+	width: 211px;
+	background: url(/assets/img/sub_header_logo.gif) no-repeat top left;
 	float: left;
 }
 #subpage_menu ul {
