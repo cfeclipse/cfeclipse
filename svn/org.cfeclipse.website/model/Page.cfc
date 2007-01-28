@@ -85,6 +85,12 @@
 </cffunction>
 <!--- END: getter and setter for variables.description --->
 
+
+<!--- get the user, for news sections --->
+
+
+
+
 	<cffunction name="getParentPages" access="public" returntype="string" hint="returns a comma delimited list of parent pages, recursing upwards">
 			<cfargument name="pagename"  default="#variables.pagename#" hint="the id of the page we want to find its parent from">
 			<cfargument name="pagelist" default="" type="string" hint="the list of strings that we are passing in">
@@ -138,13 +144,14 @@
 		<cfset var qryContentQuery = 0>
 	 	
 	 	<cfquery name="qryContentQuery" datasource="#variables.dsn#">
-		 	SELECT     cms_article.*
+		 	SELECT     cms_article.* , cms_user.username, cms_user.DisplayName, cms_user.email
 			FROM         cms_article 
 			
 			
 			INNER JOIN
                       cms_article_type ON cms_article.art_type_id = cms_article_type.type_id
-		 	
+		 	INNER JOIN 
+		 			cms_user ON cms_article.userid = cms_user.userid
 		 	WHERE cms_article.bPublished = 1
 			<!--- AND dtDisplay <= <cfqueryparam cfsqltype="cf_sql_timestamp" value="#Now()#"> --->
 			AND cms_article.art_page_id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#variables.pageid#">

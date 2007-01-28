@@ -31,13 +31,3 @@
 </cfoutput>
 		</cfloop>
 </div>
-
-
-					<cffunction name="getname" output="false" access="public" returntype="string">
-							<cfreturn variables.name>
-						</cffunction>
-					
-						<cffunction name="setname" output="false" access="public" returntype="void">
-							<cfargument name="name" required="true" type="string}">
-							<cfset variables.name = arguments.name>
-						</cffunction>
