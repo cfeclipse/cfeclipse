@@ -82,6 +82,7 @@
 				
 			</results>
 			<views>
+				<include name="topnav" template="nav_top_subpage.cfm" />
 				<include name="template" template="lay_sub.cfm" />
 			</views>
 		</event-handler>
