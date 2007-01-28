@@ -25,7 +25,9 @@
     		  <cfset arguments.event.setValue("google_" & conf, stConfig[conf])>
    		</cfloop>
 	  
-	  
+	  <!--- get the navigation --->
+	  <cfset arguments.event.setValue('section', arguments.event.getValue('page'))>
+	  <cfset arguments.event.setValue('mainNav', variables.pageservice.getPage("home").getChildPages())>
 	  
 	</cffunction>
 
