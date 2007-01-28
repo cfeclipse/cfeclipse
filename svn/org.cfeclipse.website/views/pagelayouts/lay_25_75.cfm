@@ -6,8 +6,6 @@
 			<cfoutput><li><a href="#ViewState.getValue('myself')#page&page=#aChildren[p]#">#aChildren[p]#</a></li></cfoutput>
 			 </cfloop>	
 		</ul>
-		  
-		
       </div>
 	
 
@@ -16,10 +14,12 @@
        	
 		<cfloop query="qContent">
 		<cfoutput>
-		<p>
-			<h2>#art_title#</h2>
+		<blockquote>
+		<cfif Len(art_title)><h2>#art_title#</h2></cfif>
+		<cfif Len(art_description)><h3>#art_description#</h3></cfif>
          #art_content#
-        </p>
+		</blockquote>
+
 		</cfoutput>
 		</cfloop>
       </div>
