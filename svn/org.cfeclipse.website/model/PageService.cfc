@@ -29,6 +29,7 @@
 					SELECT pageid, pagename, parentpage, layout, pagedescription
 					from cms_page
 					WHERE pagename = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.pagename#">
+					AND bPublished = 1
 				</cfquery>
 
 			
@@ -40,6 +41,8 @@
 					<cfset oPage.setLayout(q_getPage.layout)>
 					<cfset oPage.setDescription(q_getPage.pagedescription)>
 					<cfset r_oPage = oPage>
+				<cfelse>
+					<cfthrow errorcode="404" detail="The page you requested was not found">
 				</cfif>
 	
 					
