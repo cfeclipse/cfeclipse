@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	CreateObject(type, class, context, serverName)
+	CreateObject(type, component-name)
+	CreateObject(type, context, class, locale)
+	CreateObject(type, class)
+	CreateObject(type, urltowsdl [, portname])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="createobject" returns="Object">
+<help><![CDATA[
+		The CreateObject function takes different arguments depending on the value of the first argument:
+
+		CreateObject('com', class, context, serverName)
+		CreateObject('component', component-name)
+		CreateObject('corba', context, class, locale)
+		CreateObject('java', class)
+		CreateObject('webservice', urltowsdl, [, portname])
+	]]></help>
+
+	<parameter name="type" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="component" />
+			<value option="corba" />
+			<value option="com" />
+			<value option="java" />
+			<value option="webservice" />
+		</values>
+	</parameter>
+	<parameter name="context" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="corba" required="true" index="1" />
+			<selectedValue attributeName="type" value="com" required="true" index="2" />
+		</triggers>
+	</parameter>
+	<parameter name="class" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="true" index="1" />
+			<selectedValue attributeName="type" value="corba" required="true" index="2" />
+			<selectedValue attributeName="type" value="java" required="true" index="1" />
+		</triggers>
+	</parameter>
+	<parameter name="locale" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="corba" required="true" index="3" />
+		</triggers>
+	</parameter>
+	<parameter name="servername" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="true" index="3" />
+		</triggers>
+	</parameter>
+	<parameter name="component_name" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="component" required="true" index="1" />
+		</triggers>
+	</parameter>
+	<parameter name="urltowsdl" type="String" required="true">
+		<help><![CDATA[
+			WSDL file URL; location of web service
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="webservice" required="true" index="1" />
+		</triggers>
+	</parameter>
+	<parameter name="portname" type="String" required="false">
+		<help><![CDATA[
+			The port name for the web service. This value is case-sensitive
+			and corresponds to the port element's name attribute under the
+			service element.
+			Specify this parameter if the web service contains multiple ports.
+			If no port name is specified, ColdFusion uses the first port found
+			in the WSDL.
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="webservice" required="true" index="1" />
+		</triggers>
+	</parameter>
+</function>

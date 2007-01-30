@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfchart
+		format = "flash, jpg, png"
+		chartHeight = "integer number of pixels"
+		chartWidth = "integer number of pixels"
+		scaleFrom = "integer minimum value"
+		scaleTo = "integer maximum value"
+		showXGridlines = "boolean"
+		showYGridlines = "boolean"
+		gridlines = "integer number of lines"
+		seriesPlacement = "default, cluster, stacked, percent"
+		foregroundColor = "Hex value or Web color"
+		backgroundColor = "Hex value or Web color"
+		dataBackgroundColor = "Hex value or Web color"
+		showBorder = "boolean"
+		font = "font name"
+		fontSize = "integer font size"
+		fontBold = "boolean"
+		fontItalic = "boolean"
+		labelFormat = "number, currency, percent, date"
+		xAxisTitle = "title text"
+		yAxisTitle = "title text"
+		xAxisType = "scale or category"
+		yAxisType = "scale or category"
+		sortXAxis = "boolean"
+		show3D = "boolean"
+		xOffset = "number between -1 and 1"
+		yOffset = "number between -1 and 1"
+		rotated = "boolean"
+		showLegend = "boolean"
+		tipStyle = "MouseDown, MouseOver, none"
+		tipBGColor = "hex value or web color"
+		showMarkers = "boolean"
+		markerSize = "integer number of pixels"
+		pieSliceStyle = "solid, sliced"
+		url = "onClick destination page"
+		name = "String"
+		title = "title of chart"
+		style = "Style of chart"
+	/cfchart
+
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfchart" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Generates and displays a chart.
+	]]></help>
+	<parameter name="format" type="String" required="false">
+		<help><![CDATA[
+			File format in which to save graph.
+		]]></help>
+		<values default="false">
+			<value option="flash" />
+			<value option="jpg" />
+			<value option="png" />
+		</values>
+	</parameter>
+	<parameter name="chartheight" type="Numeric" required="false">
+		<help><![CDATA[
+			Chart height; integer number of pixels
+		]]></help>
+		<values default="240" />
+	</parameter>
+	<parameter name="chartwidth" type="Numeric" required="false">
+		<help><![CDATA[
+			Chart width; integer number of pixels
+		]]></help>
+		<values default="320" />
+	</parameter>
+	<parameter name="scalefrom" type="Numeric" required="false">
+		<help><![CDATA[
+			Y-axis minimum value; integer
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="scaleto" type="Numeric" required="false">
+		<help><![CDATA[
+			Y-axis max value; integer
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="showxgridlines" type="boolean" required="false">
+		<help><![CDATA[
+			yes: display X-axis gridlines
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="showygridlines" type="boolean" required="false">
+		<help><![CDATA[
+			yes: display Y-axis gridlines
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="gridlines" type="Numeric" required="false">
+		<help><![CDATA[
+			Number of grid lines to display on value axis, including
+			axis; positive integer.
+		]]></help>
+		<values default="10" />
+	</parameter>
+	<parameter name="seriesplacement" type="String" required="false">
+		<help><![CDATA[
+			Applies to charts that have more than one data series.
+			Relative positions of series.
+		]]></help>
+		<values default="default">
+			<value option="default" />
+			<value option="cluster" />
+			<value option="stacked" />
+			<value option="percent" />
+		</values>
+	</parameter>
+	<parameter name="foregroundcolor" type="String" required="false">
+		<help><![CDATA[
+			color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values default="black">
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="backgroundcolor" type="String" required="false">
+		<help><![CDATA[
+			Color of the area between the data background and the chart
+			border, around labels and around the legend. Hexadecimal
+			value or supported named color. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values>
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="databackgroundcolor" type="String" required="false">
+		<help><![CDATA[
+			color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values default="white">
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="showborder" type="boolean" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="font" type="String" required="false">
+		<help><![CDATA[
+			Font of data in column.
+		]]></help>
+		<values default="arial">
+			<value option="arial" />
+			<value option="times" />
+			<value option="courier" />
+			<value option="arialunicodeMS" />
+		</values>
+	</parameter>
+	<parameter name="fontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of text in column.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="fontitalic" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in italics
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="fontbold" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: displays grid control text in bold
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="labelformat" type="String" required="false">
+		<help><![CDATA[
+			Format for Y-axis labels.
+		]]></help>
+		<values default="number">
+			<value option="number" />
+			<value option="currency" />
+			<value option="percent" />
+			<value option="date" />
+		</values>
+	</parameter>
+	<parameter name="xaxistitle" type="String" required="false">
+		<help><![CDATA[
+			text; X-axis title
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="yaxistitle" type="String" required="false">
+		<help><![CDATA[
+			text; X-axis title
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="xaxistype" type="String" required="false">
+		<help><![CDATA[
+			* category The axis indicates the data category. Data is
+			sorted according to the sortXAxis attribute.
+			* scale The axis is numeric. All cfchartdata item attribute
+			values must numeric. The X axis is automatically sorted
+			numerically.
+		]]></help>
+		<values default="category">
+			<value option="category" />
+			<value option="scale" />
+		</values>
+	</parameter>
+	<parameter name="yaxistype" type="String" required="false">
+		<help><![CDATA[
+			Currently has no effect, as Y axis is always used for data
+			values. Valid values are category and scale
+		]]></help>
+		<values default="category">
+			<value option="category" />
+			<value option="scale" />
+		</values>
+	</parameter>
+	<parameter name="sortxaxis" type="boolean" required="false">
+		<help><![CDATA[
+			Display column labels in alphabetic order along X-axis.
+			Ignored if the xAxisType attribute is scale.
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="show3d" type="boolean" required="false">
+		<help><![CDATA[
+			Display chart with three-dimensional appearance.
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="xoffset" type="Numeric" required="false">
+		<help><![CDATA[
+			Applies if show3D="yes". Number of units by which to
+			display the chart as angled, horizontally
+		]]></help>
+		<values default="0.1" />
+	</parameter>
+	<parameter name="yoffset" type="Numeric" required="false">
+		<help><![CDATA[
+			Applies if show3D="yes". Number of units by which to
+			display the chart as angled, horizontally.
+		]]></help>
+		<values default="0.1" />
+	</parameter>
+	<parameter name="rotated" type="boolean" required="false" compatibility="deprecated">
+		<help><![CDATA[
+			This attribute is deprecated.
+			
+			yes: rotate chart 90 degrees. For a horizontal bar chart,
+			use this option.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="showlegend" type="boolean" required="false">
+		<help><![CDATA[
+			yes: if chart contains more than one data series, display
+			legend
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="tipstyle" type="String" required="false">
+		<help><![CDATA[
+			Determines the action that opens a popup window to display
+			information about the current chart element.
+			* mouseDown: display if the user positions the cursor at the element
+			and clicks the mouse. Applies only to Flash format graph files.
+			* mouseOver: displays if the user positions the cursor at the element
+			* none: suppresses display
+		]]></help>
+		<values default="mouseOver">
+			<value option="mouseDown" />
+			<value option="mouseOver" />
+			<value option="none" />
+		</values>
+	</parameter>
+	<parameter name="tipbgcolor" type="String" required="false">
+		<help><![CDATA[
+			color for control. For a hex value, use the form:
+			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
+			signs or none.
+		]]></help>
+		<values default="white">
+			<value option="black" />
+			<value option="red" />
+			<value option="blue" />
+			<value option="magenta" />
+			<value option="cyan" />
+			<value option="orange" />
+			<value option="darkgray" />
+			<value option="pink" />
+			<value option="white" />
+			<value option="lightgray" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="showmarkers" type="boolean" required="false">
+		<help><![CDATA[
+			Applies to chartseries type attribute values line, curve
+			and scatter.
+			yes: display markers at data points
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="markersize" type="Numeric" required="false">
+		<help><![CDATA[
+			Size of data point marker. in pixels. Integer.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="pieslicestyle" type="String" required="false">
+		<help><![CDATA[
+			Applies to chartseries type attribute value pie.
+		]]></help>
+		<values default="sliced">
+			<value option="solid" />
+			<value option="sliced" />
+		</values>
+	</parameter>
+	<parameter name="URL" type="URL" required="false"><!-- maybe should be string now? -->
+		<help><![CDATA[
+			URL to open if the user clicks item in a data series; the
+			onClick destination page.
+
+			You can specify variables within the URL string;
+			ColdFusion passes current values of the variables.
+			* $VALUE$: the value of the selected row. If none, the value is an empty string.
+			* $ITEMLABEL$: the label of the selected item. If none, the value is an empty string.
+			* $SERIESLABEL$: the label of the selected series. If none, the value is an empty string.
+		]]></help>
+		<values>
+			<value option="$VALUE$" />
+			<value option="$ITEMLABEL$" />
+			<value option="$SERIESLABEL$" />
+		</values>
+	</parameter>
+	<parameter name="name" type="String" required="false">
+		<help><![CDATA[
+			Page variable name. String. Generates the the graph as
+			binary data and assigns it to the specified variable.
+			Suppresses chart display. You can use the name value in
+			the cffile tag to write the chart to a file.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="style" type="String" required="false">
+		<help><![CDATA[
+			XML file or string to use to specify the style of the chart.
+		]]></help>
+		<values>
+			<value option="beige" />
+			<value option="blue" />
+			<value option="default" />
+			<value option="red" />
+			<value option="silver" />
+			<value option="yellow" />
+		</values>
+	</parameter>
+	<parameter name="title" type="String" required="false">
+		<help><![CDATA[
+			Title of the chart.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

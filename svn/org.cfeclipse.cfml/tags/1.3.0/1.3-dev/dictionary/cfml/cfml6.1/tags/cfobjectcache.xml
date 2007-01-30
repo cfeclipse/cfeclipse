@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfobjectcache
+		action = "clear"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfobjectcache" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Flushes the query cache.
+	]]></help>
+	<parameter name="action" type="String" required="true">
+		<help><![CDATA[
+			clear: Clears queries from the cache in the Application
+			scope
+		]]></help>
+		<values default="clear">
+			<value option="clear" />
+		</values>
+	</parameter>
+</tag>

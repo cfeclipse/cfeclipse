@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric ListValueCount(list, value [, delimiters ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="listvaluecount" returns="Numeric">
+	<help><![CDATA[
+		Counts instances of a specified value in a list. The search is
+		case-sensitive.
+	]]></help>
+	<parameter name="list" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="delimiters" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default=",">
+			<value option="," />
+			<value option="|" />
+			<value option=";" />
+			<value option="chr(9)" />
+			<value option="chr(10)" />
+			<value option="chr(13)" />
+		</values>
+	</parameter>
+</function>

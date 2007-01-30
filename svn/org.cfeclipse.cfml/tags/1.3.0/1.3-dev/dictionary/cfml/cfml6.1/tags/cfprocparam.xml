@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfprocparam
+		type = "in" or "out" or "inout"
+		variable = "variable name"
+		value = "parameter value"
+		CFSQLType = "parameter datatype"
+		maxLength = "length"
+		scale = "decimal places"
+		null = "boolean"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfprocparam" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Defines stored procedure parameters. This tag is nested within
+		a cfstoredproc tag.
+	]]></help>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			in: The parameter is used to send data to the database
+				system only. Passes the parameter by value.
+			out: The parameter is used to receive data from the
+				database system only. Passes the parameter as a bound
+				variable.
+			inout: The parameter is used to send and receive data.
+				Passes the parameter as a bound variable.
+		]]></help>
+		<values default="in">
+			<value option="in" />
+			<value option="out" />
+			<value option="inout" />
+		</values>
+	</parameter>
+	<parameter name="variable" type="String" required="false">
+		<help><![CDATA[
+			CFML variable name; references the value that the
+			output parameter has after the stored procedure is called.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Value that CFML passes to the stored procedure.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="cfsqltype" type="String" required="true">
+		<help><![CDATA[
+			SQL type to which the parameter (any type) is bound.
+			CFML supports the following values, where the last
+			element of the name corresponds to the SQL data type.
+			Different database systems might support different subsets
+			of this list. See your DBMS documentation for information
+			on supported parameter types.
+		]]></help>
+		<values>
+			<value option="CF_SQL_BIGINT" />
+			<value option="CF_SQL_BIT" />
+			<value option="CF_SQL_CHAR" />
+			<value option="CF_SQL_BLOB" />
+			<value option="CF_SQL_CLOB" />
+			<value option="CF_SQL_DATE" />
+			<value option="CF_SQL_DECIMAL" />
+			<value option="CF_SQL_DOUBLE" />
+			<value option="CF_SQL_FLOAT" />
+			<value option="CF_SQL_IDSTAMP" />
+			<value option="CF_SQL_INTEGER" />
+			<value option="CF_SQL_LONGVARCHAR" />
+			<value option="CF_SQL_MONEY" />
+			<value option="CF_SQL_MONEY4" />
+			<value option="CF_SQL_NUMERIC" />
+			<value option="CF_SQL_REAL" />
+			<value option="CF_SQL_REFCURSOR" />
+			<value option="CF_SQL_SMALLINT" />
+			<value option="CF_SQL_TIME" />
+			<value option="CF_SQL_TIMESTAMP" />
+			<value option="CF_SQL_TINYINT" />
+			<value option="CF_SQL_VARCHAR" />
+		</values>
+	</parameter>
+	<parameter name="maxlength" type="Numeric" required="false">
+		<help><![CDATA[
+			Maximum length of a string or character IN or INOUT value
+			attribute. A maxLength of 0 allows any length. The
+			maxLength attribute is not required when specifying
+			type=out.
+		]]></help>
+		<values default="0" />
+	</parameter>
+	<parameter name="scale" type="Numeric" required="false">
+		<help><![CDATA[
+			Number of decimal places in numeric parameter. A scale of 0
+			allows any number of decimal places.
+		]]></help>
+		<values default="0" />
+	</parameter>
+	<parameter name="null" type="boolean" required="false">
+		<help><![CDATA[
+			Whether the parameter is passed in as a null value. Not
+			used with OUT type parameters.
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+</tag>

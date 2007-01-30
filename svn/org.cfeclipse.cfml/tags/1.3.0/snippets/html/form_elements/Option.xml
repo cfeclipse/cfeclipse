@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>Option</name>
+<help>Option for a select element (dropdown)</help>
+<starttext><![CDATA[<option value="$${Value}">$${Display}</option>]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

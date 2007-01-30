@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric ArrayAvg(array)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arrayavg" returns="Numeric">
+	<help><![CDATA[
+		Calculates the average of the values in an array.
+		All elements in the array must contain values that can be
+		automatically converted to numeric.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

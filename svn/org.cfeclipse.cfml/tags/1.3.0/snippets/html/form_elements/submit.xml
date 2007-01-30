@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>submit</name>
+<help>A submit button</help>
+<starttext><![CDATA[<input type="submit" value="$${Value}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

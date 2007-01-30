@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric BitAnd(number1, number2)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="bitand" returns="Numeric">
+	<help><![CDATA[
+		Performs a bitwise logical AND operation.
+	]]></help>
+	<parameter name="number1" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="number2" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
