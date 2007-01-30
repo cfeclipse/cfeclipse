@@ -31,6 +31,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.print.DocFlavor.INPUT_STREAM;
+
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
@@ -40,14 +42,18 @@ import org.cfeclipse.cfml.external.ExternalFile;
 import org.cfeclipse.cfml.external.ExternalMarkerAnnotationModel;
 import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
+import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
+import org.cfeclipse.cfml.properties.ProjectPropertyStore;
 import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
@@ -95,7 +101,15 @@ public class CFDocumentProvider extends FileDocumentProvider
 			//How do we know which project this goes to?
 			//String currentDict = pm.getCurrentDictionary(input.getFile().getProject());
 			//if(currentDict == null || currentDict == "") 
+			
 			String currentDict = DictionaryManager.getFirstVersion(DictionaryManager.CFDIC);
+			
+				if(element instanceof FileEditorInput){
+					IProject project = ((FileEditorInput)element).getFile().getProject();
+					currentDict = pm.getCurrentDictionary(project);
+				}
+			
+			
 			
 			DictionaryManager.loadDictionaryFromCache(
 				currentDict,
