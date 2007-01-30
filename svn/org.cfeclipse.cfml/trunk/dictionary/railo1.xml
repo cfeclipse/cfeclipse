@@ -30,99 +30,21 @@
 	</parameter>
 </tag>
 <!--
-	cfapplet
-		appletSource = "applet_name"
-		name = "form_variable_name"
-		height = "height_in_pixels"
-		width = "width_in_pixels"
-		vSpace = "space_above_and_below_in_pixels"
-		hSpace = "space_on_each_side_in_pixels"
-		align = "alignment_option"
-		notSupported = "message_to_display_for_nonJava_browser"
-		param_1 = "applet_parameter_name"
-		param_2 = "applet_parameter_name"
-		param_n = "applet_parameter_name"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfapplet" single="true" xmlstyle="false">
-	<help><![CDATA[
-		This tag references a registered custom Java applet. To
-		register a Java applet, in the CFML Administrator, click
-		Extensions \ Java Applets.
+	cfadmin
 
-		Using this tag within a cfform tag is optional. If you use it
-		within cfform, and the method attribute is defined in the
-		Administrator, the return value is incorporated into the
-		form.
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfadmin" single="true" xmlstyle="false">
+	<help><![CDATA[
+		The tag cfadmin is used in the web and server 
+		administrator to manage and edit Railo settings.
+		A detailed description for this tag is not yet available.
 	]]></help>
-	<parameter name="appletsource" type="String" required="true">
-		<help><![CDATA[
-			Name of registered applet
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="name" type="String" required="true">
-		<help><![CDATA[
-			Form variable name for applet
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="height" type="Numeric" required="false">
-		<help><![CDATA[
-			Control's height, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="width" type="Numeric" required="false">
-		<help><![CDATA[
-			Control's width, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="vspace" type="Numeric" required="false">
-		<help><![CDATA[
-			Vertical margin above and below control, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="hspace" type="Numeric" required="false">
-		<help><![CDATA[
-			Horizontal spacing to left and right of control, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="align" type="String" required="false">
-		<help><![CDATA[
-			Alignment
-		]]></help>
-		<values>
-			<value option="top"/>
-			<value option="left"/>
-			<value option="bottom"/>
-			<value option="baseline"/>
-			<value option="texttop"/>
-			<value option="absbottom"/>
-			<value option="middle"/>
-			<value option="absmiddle"/>
-			<value option="right"/>
-		</values>
-	</parameter>
-	<parameter name="notsupported" type="String" required="false">
-		<help><![CDATA[
-			Text to display if a page that contains a Java applet-based
-			cfform control is opened by a browser that does not
-			support Java or has Java support disabled.
-			Default:
-			"<b>Browser must support Java to <br>view ColdFusion Java
-			Applets!</b>"
-		]]></help>
-		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;"/>
-	</parameter>
 </tag>
 <!--
 	cfapplication
 		name = "application_name"
 		loginStorage = "cookie" or "session"
 		clientManagement = "boolean"
-		clientStorage = "datasource_name" or "Registry" or "Cookie"
+		clientStorage = "Cookie"
 		setClientCookies = "boolean"
 		sessionManagement = "boolean"
 		sessionTimeout = #CreateTimeSpan(days, hours, minutes, seconds)#
@@ -144,6 +66,14 @@
 		]]></help>
 		<values/>
 	</parameter>
+	<parameter name="loginstorage" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default="cookie">
+			<value option="cookie"/>
+			<value option="session"/>
+		</values>
+	</parameter>
 	<parameter name="clientmanagement" type="boolean" required="false">
 		<help><![CDATA[
 			enables client variables
@@ -155,19 +85,13 @@
 	</parameter>
 	<parameter name="clientstorage" type="String" required="false">
 		<help><![CDATA[
-			How client variables are stored
-			* datasource_name: in ODBC or native data source.
-				You must create storage repository in the
-				Administrator.
-			* registry: in the system registry.
+			Railo only supports cookie storage for client variables
 			* cookie: on client computer in a cookie. Scalable.
 				If client disables cookies in the browser, client
 				variables do not work
 		]]></help>
-		<values default="registry">
+		<values default="cookie">
 			<value option="cookie"/>
-			<value option="registry"/>
-			<value option="datasource_name"/>
 		</values>
 	</parameter>
 	<parameter name="setclientcookies" type="boolean" required="false">
@@ -219,6 +143,84 @@
 	</parameter>
 </tag>
 <!--
+	cfargument
+		name = "String"
+		type = "data type"
+		required = "boolean"
+		default = "default value"
+		displayname = "descriptive name"
+		hint = "extended description"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfargument" single="true" xmlstyle="false" allowanyattribute="true">
+	<help><![CDATA[
+		Creates a parameter definition within a component definition.
+		Defines a function argument. Used within a cffunction tag.
+	]]></help>
+	<return type="Any" parameter="name"/>
+	<parameter name="name" type="variableName" required="true">
+		<help><![CDATA[
+			An argument name.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			a type name; data type of the argument.
+		]]></help>
+		<values>
+			<value option="Any"/>
+			<value option="Array"/>
+			<value option="Binary"/>
+			<value option="Boolean"/>
+			<value option="Date"/>
+			<value option="GUID"/>
+			<value option="Numeric"/>
+			<value option="Query"/>
+			<value option="String"/>
+			<value option="Struct"/>
+			<value option="UUID"/>
+			<value option="XML"/>
+			<value option="VariableName"/>
+			<value option="(component name)"/>
+		</values>
+	</parameter>
+	<parameter name="required" type="boolean" required="false">
+		<help><![CDATA[
+			Whether the parameter is required to execute the component
+			method.
+		]]></help>
+		<values>
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+	<parameter name="default" type="String" required="false">
+		<help><![CDATA[
+			If no argument is passed, specifies a default argument
+			value.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="displayname" type="String" required="false">
+		<help><![CDATA[
+			Meaningful only for CFC method parameters. A value to be
+			displayed when using introspection to show information
+			about the CFC.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="hint" type="String" required="false">
+		<help><![CDATA[
+			Meaningful only for CFC method parameters. Text to be
+			displayed when using introspection to show information
+			about the CFC. The hint attribute value follows the
+			displayname attribute value in the parameter description
+			line. This attribute can be useful for describing the
+			purpose of the parameter
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
 	cfassociate
 		baseTag = "base_tag_name"
 		dataCollection = "collection_name"
@@ -246,109 +248,6 @@
 	<help><![CDATA[
 		Used within a cfloop tag. Breaks out of a loop.
 	]]></help>
-</tag>
-<!--
-	cfcache
-		action = "cache" or "flush" or "clientCache" or "optimal"
-		directory = "directory_name"
-		cacheDirectory = "directory_name_for_cached_pages"
-		expireURL = "wildcarded_URL_reference"
-		username = "username"
-		password = "password"
-		port = "port_number"
-		protocol = "protocol"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfcache" single="true" xmlstyle="false">
-	<help><![CDATA[
-		Stores a copy of a page on the server and/or client computer,
-		to improve page rendering performance. To do this, the tag
-		creates temporary files that contain the static HTML returned
-		from a CFML page.
-
-		Use this tag if it is not necessary to get dynamic content each
-		time a user accesses a page.
-		You can use this tag for simple URLs and for URLs that contain
-		URL parameters.
-	]]></help>
-	<parameter name="action" type="String" required="false">
-		<help><![CDATA[
-			* cache: server-side and client-side caching.
-			* flush: refresh cached page(s).
-			* clientcache: browser-side caching only. To cache a personalized page, use this option.
-			* servercache: server-side caching only. Not recommended.
-			* optimal: same as "cache".
-		]]></help>
-		<values>
-			<value option="cache"/>
-			<value option="flush"/>
-			<value option="clientcache"/>
-			<value option="servercache"/>
-			<value option="optimal"/>
-		</values>
-	</parameter>
-	<parameter name="directory" type="String" required="false">
-		<help><![CDATA[
-			Absolute path of cache directory.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="Timespan" type="Timespan" required="false">
-		<help><![CDATA[
-			Absolute path of cache directory.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="expireurl" type="String" required="false">
-		<help><![CDATA[
-			Used with action = "flush". A URL reference. CFML
-			matches it against the mappings in the specified cache
-			directory. Can include wildcards. For example:
-			"*/view.cfm?id=*".
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="username" type="String" required="false">
-		<help><![CDATA[
-			A username
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="password" type="String" required="false">
-		<help><![CDATA[
-			A password
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="port" type="Numeric" required="false">
-		<help><![CDATA[
-			Remote port to which to connect
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="protocol" type="String" required="false">
-		<help><![CDATA[
-			Protocol that is used to create URL from cache.
-		]]></help>
-		<values>
-			<value option="http://"/>
-			<value option="https://"/>
-		</values>
-	</parameter>
-	<parameter name="cachedirectory" type="String" required="false">
-		<help><![CDATA[
-			Specifies the fully qualified path of the directory
-			where pages are to be cached. The default is the directory
-			of the current page.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="timeout" type="Timespan" required="false">
-		<help><![CDATA[
-			DateTime that specifies the oldest acceptable cached page.
-			If the cached page is older than the specified datetime,
-			ColdFusion refreshes the page.
-		]]></help>
-		<values/>
-	</parameter>
 </tag>
 <!--
 	cfcase
@@ -468,6 +367,7 @@
 		collection = "collection_name"
 		path = "path_to_verity_collection"
 		language = "language"
+		name = "queryname"
 --><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfcollection" single="true" xmlstyle="false">
 	<help><![CDATA[
 		Creates, registers, and administers Verity search engine
@@ -481,6 +381,7 @@
 		the k2server.ini file is registered. Other collections are
 		unregistered.
 	]]></help>
+	<return type="cfcollection" parameter="name"/>
 	<parameter name="action" type="String" required="true">
 		<help><![CDATA[
 			create: registers the collection with CFML.
@@ -493,16 +394,21 @@
 					delete collection directories
 			optimize: optimizes the structure and contents of the
 				collection for searching; recovers space.
+			list: returns a query result set, named from the name
+				attribute value, of the attributes of the collections
+				that are registered by CFML and K2 Server.
 			map: creates a map to the collection. It is not necessary
 				to specify this value.
 			repair: fixes data corruption in a collection.
 		]]></help>
-		<values>
+		<values default="list">
+			<value option="categorylist"/>
 			<value option="create"/>
 			<value option="repair"/>
 			<value option="delete"/>
 			<value option="map"/>
 			<value option="optimize"/>
+			<value option="list"/>
 		</values>
 	</parameter>
 	<parameter name="collection" type="String" required="false">
@@ -524,6 +430,72 @@
 			pack.
 		]]></help>
 		<values default="english"/>
+	</parameter>
+	<parameter name="name" type="variableName" required="false">
+		<help><![CDATA[
+			Name for the query results returned by the list action.
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
+	cfcomponent
+		extends ="anotherComponent"
+		output = "boolean"
+		displayname = "text string"
+		hint = "text string"
+		
+	    [variable declarations cffunction ...]
+	/cfcomponent
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfcomponent" single="false" xmlstyle="false" allowanyattribute="true">
+	<help><![CDATA[
+		Creates and defines a component object; encloses functionality
+		that you build in CFML and enclose within cffunction tags.
+		This tag contains one or more cffunction tags that define
+		methods. Code within the body of this tag, other than
+		cffunction tags, is executed when the component is
+		instantiated.
+	]]></help>
+	<parameter name="extends" type="String" required="false">
+		<help><![CDATA[
+			Name of parent component from which to inherit methods and
+			properties.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="output" type="boolean" required="false">
+		<help><![CDATA[
+			Specifies whether constructor code in the component can
+			generate HTML output; does not affect output in the body
+			of cffunction tags in the component.
+		]]></help>
+		<values>
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+	<parameter name="displayname" type="String" required="false">
+		<help><![CDATA[
+			A string to be displayed when using introspection to show
+			information about the CFC. The information appears on the
+			heading, following the component name.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="hint" type="String" required="false">
+		<help><![CDATA[
+			Text to be displayed when using introspection to show
+			information about the CFC. The hint attribute value
+			appears below the component name heading. This attribute
+			can be useful for describing the purpose of the parameter.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="name" type="String" required="false">
+		<help><![CDATA[
+			Name for the component
+		]]></help>
+		<values/>
 	</parameter>
 </tag>
 <!--
@@ -716,23 +688,23 @@
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="name" type="variableName" required="true">
+	<parameter name="name" type="variableName" required="false">
 		<help><![CDATA[
 			Name for output record set.
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
+			<selectedValue attributeName="action" value="list" required="true"/>
 		</triggers>
 	</parameter>
-	<parameter name="filter" type="String" required="true">
+	<parameter name="filter" type="String" required="false">
 		<help><![CDATA[
 			File extension filter applied to returned names. For
 			example: *.cfm. One filter can be applied.
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
+			<selectedValue attributeName="action" value="list" required="false"/>
 		</triggers>
 	</parameter>
 	<parameter name="mode" type="String" required="false">
@@ -742,6 +714,9 @@
 			other, respectively.
 		]]></help>
 		<values/>
+		<triggers>
+			<selectedValue attributeName="action" value="create" required="false"/>
+		</triggers>
 	</parameter>
 	<parameter name="sort" type="String" required="false">
 		<help><![CDATA[
@@ -753,7 +728,7 @@
 			<value option="desc"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
+			<selectedValue attributeName="action" value="list" required="false"/>
 		</triggers>
 	</parameter>
 	<parameter name="newdirectory" type="String" required="false">
@@ -762,14 +737,16 @@
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" required="false" value="rename"/>
+			<selectedValue attributeName="action" value="rename" required="false"/>
 		</triggers>
 	</parameter>
 </tag>
 <!--
 	cfdump
+		eval = "variable"
+
+	cfdump
 		var = "#variable#"
-		expand = "boolean"
 		label = "text"
 --><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfdump" single="true" xmlstyle="false">
 	<help><![CDATA[
@@ -778,21 +755,18 @@
 		contents of simple and complex variables, objects, components,
 		user-defined functions, and other elements.
 	]]></help>
-	<parameter name="var" type="Object" required="true">
+	<parameter name="eval" type="Object" required="false">
 		<help><![CDATA[
-			Variable to display. Enclose a variable name in pound
-			signs.
+			Variable to evaluate and display, plus label to use.
+			Do not enclose variable name in hash marks.
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="expand" type="boolean" required="false">
+	<parameter name="var" type="Object" required="false">
 		<help><![CDATA[
-			Yes: In Internet Explorer and Mozilla, expands views
+			Variable to display. Enclose a variable name in hash marks.
 		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
+																	<values/>
 	</parameter>
 	<parameter name="label" type="String" required="false">
 		<help><![CDATA[
@@ -812,7 +786,7 @@
 <!--
 	cfelseif
 		expression
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfelseif" single="true" xmlstyle="false">
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfelseif" allowanyattribute="true" single="true" xmlstyle="false">
 	<help><![CDATA[
 		Used as a control block in a cfif tag block to handle any case
 		not identified by the cfif tag or a cfelseif tag.
@@ -842,16 +816,10 @@
 			validation: errors recognized by sever-side type
 				validation.
 			request: any encountered error.
-			monitor: Dynamically invoked by the CFML language processor
-				when it first detects an exception condition, before it
-				searches for cftry/cfcatch or cferror handlers for the
-				exception.
+			monitor: deprecated.
 		]]></help>
 		<values>
 			<value option="exception"/>
-			<value option="validation"/>
-			<value option="request"/>
-			<value option="monitor"/>
 		</values>
 	</parameter>
 	<parameter name="template" type="String" required="true">
@@ -904,6 +872,7 @@
 		name = " ApplicationName "
 		arguments = "CommandLine Arguments"
 		outputFile = "Output file name"
+	   	variable = "variable name"
 	   	timeout = "Timeout interval"
 	   	...
 	/cfexecute
@@ -912,6 +881,7 @@
 		Executes a CFML developer-specified process on a server
 		computer.
 	]]></help>
+	<return type="String" parameter="variable"/>
 	<parameter name="name" type="String" required="true">
 		<help><![CDATA[
 			Absolute path of the application to execute.
@@ -948,6 +918,14 @@
 			a colon, or a forward or backward slash), it is relative
 			to the CFML temporary directory, which is returned
 			by the GetTempDirectory function.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="variable" type="variableName" required="false">
+		<help><![CDATA[
+			Variable in which to put program output. If no outputfile
+			or variable attribute is specified, output is displayed on
+			page from which it was called.
 		]]></help>
 		<values/>
 	</parameter>
@@ -1013,6 +991,7 @@
 			<value option="append"/>
 			<value option="copy"/>
 			<value option="delete"/>
+			<value option="info"/>
 			<value option="move"/>
 			<value option="read"/>
 			<value option="readbinary"/>
@@ -1021,7 +1000,7 @@
 			<value option="write"/>
 		</values>
 	</parameter>
-	<parameter name="file" type="String" required="true">
+	<parameter name="file" type="String" required="false">
 		<help><![CDATA[
 			Pathname of the file.
 		]]></help>
@@ -1032,6 +1011,7 @@
 			<selectedValue attributeName="action" value="readBinary" required="true"/>
 			<selectedValue attributeName="action" value="write" required="true"/>
 			<selectedValue attributeName="action" value="append" required="true"/>
+			<selectedValue attributeName="action" value="info" required="true"/>
 		</triggers>
 	</parameter>
 	<parameter name="mode" type="String" required="false">
@@ -1050,7 +1030,7 @@
 			<selectedValue attributeName="action" value="upload" required="false"/>
 		</triggers>
 	</parameter>
-	<parameter name="output" type="String" required="true">
+	<parameter name="output" type="String" required="false">
 		<help><![CDATA[
 			String to add to the file
 		]]></help>
@@ -1069,9 +1049,8 @@
 			<value option="false"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="append" required="true"/>
+			<selectedValue attributeName="action" value="append" required="false"/>
 			<selectedValue attributeName="action" value="write" required="false"/>
-			<!-- <selectedValue attributeName="action" value="" required="false" /> -->
 		</triggers>
 	</parameter>
 	<parameter name="attributes" type="String" required="false">
@@ -1085,8 +1064,8 @@
 			<value option="readonly"/>
 			<value option="hidden"/>
 			<value option="normal"/>
-			<value option="system"/>
-			<value option="temporary"/>
+			<value option="system" compatibility="deprecated"/>
+			<value option="temporary" compatibility="deprecated"/>
 		</values>
 		<triggers>
 			<selectedValue attributeName="action" value="append" required="false"/>
@@ -1125,7 +1104,7 @@
 			<selectedValue attributeName="action" value="write" required="false"/>
 		</triggers>
 	</parameter>
-	<parameter name="source" type="String" required="true">
+	<parameter name="source" type="String" required="false">
 		<help><![CDATA[
 			Pathname of the file (durring copy).
 		]]></help>
@@ -1136,7 +1115,7 @@
 			<selectedValue attributeName="action" value="rename" required="true"/>
 		</triggers>
 	</parameter>
-	<parameter name="destination" type="String" required="true">
+	<parameter name="destination" type="String" required="false">
 		<help><![CDATA[
 			Pathname of a directory or file on web server
 			(durring copy).
@@ -1149,7 +1128,7 @@
 			<selectedValue attributeName="action" value="upload" required="true"/>
 		</triggers>
 	</parameter>
-	<parameter name="variable" type="variableName" required="true">
+	<parameter name="variable" type="variableName" required="false">
 		<help><![CDATA[
 			Name of variable to contain contents of text file.
 		]]></help>
@@ -1157,9 +1136,10 @@
 		<triggers>
 			<selectedValue attributeName="action" value="read" required="true"/>
 			<selectedValue attributeName="action" value="readBinary" required="true"/>
+			<selectedValue attributeName="action" value="info" required="true"/>
 		</triggers>
 	</parameter>
-	<parameter name="filefield" type="String" required="true">
+	<parameter name="filefield" type="String" required="false">
 		<help><![CDATA[
 			Name of form field used to select the file.
 
@@ -1182,10 +1162,10 @@
 			<value option="makeunique"/>
 		</values>
 		<triggers>
-			<selectedValue attributeName="action" value="upload" required="false"/>
+			<selectedValue attributeName="action" value="upload" required="true"/>
 		</triggers>
 	</parameter>
-	<parameter name="accept" type="String" required="true">
+	<parameter name="accept" type="String" required="false">
 		<help><![CDATA[
 			Limits the MIME types to accept. Comma-delimited list. For
 			example, to permit JPG and Microsoft Word file uploads:
@@ -1194,7 +1174,7 @@
 		]]></help>
 		<values/>
 		<triggers>
-			<selectedValue attributeName="action" value="upload" required="false"/>
+			<selectedValue attributeName="action" value="upload" required="true"/>
 		</triggers>
 	</parameter>
 </tag>
@@ -1268,19 +1248,6 @@
 			<value option="get"/>
 		</values>
 	</parameter>
-	<parameter name="preservedata" type="boolean" required="false">
-		<help><![CDATA[
-			When the cfform action attribute posts back to the same
-			page as the form, this determines whether to override the
-			control values with the submitted values.
-			 - false: values specified in the control tag attributes are used
-			 - true: corresponding submitted values are used
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
 	<parameter name="onload" type="String" required="false">
 		<help><![CDATA[
 			JavaScript to execute when the form loads.
@@ -1293,20 +1260,6 @@
 			for preprocessing data before form is submitted
 		]]></help>
 		<values/>
-	</parameter>
-	<parameter name="codebase" type="String" required="false">
-		<help><![CDATA[
-			URL of downloadable JRE plug-in (for Internet Explorer only).
-			Default: /CFIDE/classes/cf-j2re-win.cab
-		]]></help>
-		<values default="/CFIDE/classes/cf-j2re-win.cab"/>
-	</parameter>
-	<parameter name="archive" type="String" required="false">
-		<help><![CDATA[
-			URL of downloadable Java classes for CFML controls.
-			Default: /CFIDE/classes/cfapplets.jar
-		]]></help>
-		<values default="/CFIDE/classes/cfapplets.jar"/>
 	</parameter>
 	<parameter name="scriptsrc" type="String" required="false">
 		<help><![CDATA[
@@ -1369,6 +1322,24 @@
 	<parameter name="enablecab" type="String" required="false" compatibility="deprecated">
 		<help><![CDATA[
 			This attribute is deprecated.
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
+	cfforward
+		url = "URL"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfforward" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Leads the request to a different page.
+
+		(This tag acts like the tag cflocation except that 
+		the relocation is done directly on the server.)
+		Analog to the method getPageContext().forward()(Java-Doc PageContext).
+	]]></help>
+	<parameter name="URL" type="String" required="true">
+		<help><![CDATA[
+			URL of HTML file or CFML page to open.
 		]]></help>
 		<values/>
 	</parameter>
@@ -1650,976 +1621,114 @@
 	</parameter>
 </tag>
 <!--
-	cfgrid
-		name = "name"
-		height = "integer"
-		width = "integer"
-		autoWidth = "boolean"
-		vSpace = "integer"
-		hSpace = "integer"
-		align = "value"
-		query = "query_name"
-		insert = "boolean"
-		delete = "boolean"
-		sort = "boolean"
-		font = "column_font"
-		fontSize = "size"
-		italic = "boolean"
-		bold = "boolean"
-		textColor = "web color"
-		href = "URL"
-		hrefKey = "column_name"
-		target = "URL_target"
-		appendKey = "boolean"
-		highlightHref = "boolean"
-		onValidate = "javascript_function"
-		onError = "text"
-		gridDataAlign = "position"
-		gridLines = "boolean"
-		rowHeight = "pixels"
-		rowHeaders = "boolean"
-		rowHeaderAlign = "position"
-		rowHeaderFont = "font_name"
-		rowHeaderFontSize = "size"
-		rowHeaderItalic = "boolean"
-		rowHeaderBold = "boolean"
-		rowHeaderTextColor = "web color"
-		colHeaders = "boolean"
-		colHeaderAlign = "position"
-		colHeaderFont = "font_name"
-		colHeaderFontSize = "size"
-		colHeaderItalic = "boolean"
-		colHeaderBold = "boolean"
-		colHeaderTextColor = "web color"
-		bgColor = "web color"
-		selectColor = "web color"
-		selectMode = "mode"
-		maxRows = "number"
-		notSupported = "text"
-		pictureBar = "boolean"
-		insertButton = "text"
-		deleteButton = "text"
-		sortAscendingButton = "text"
-		sortDescendingButton = "text"
-	zero or more cfgridcolumn and cfgridrow tags
-	/cfgrid
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfgrid" single="false" xmlstyle="false">
+	cffunction
+		name = "methodName"
+		returnType = "dataType"
+		roles = "securityRoles"
+		access = "methodAccess"
+		output = "boolean"
+		displayName = "name"
+		hint = "hint text"
+		description = "function description"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cffunction" single="false" xmlstyle="false" allowanyattribute="true">
 	<help><![CDATA[
-		Used within the cfform tag. Puts a grid control (a table of
-		data) in a CFML form. To specify grid columns and row
-		data, use the cfgridcolumn and cfgridrow tags, or use the
-		query attribute, with or without cfgridcolumn tags.
+		Defines a function that you can call in CFML. Required to
+		defined CFML component methods.
 	]]></help>
 	<parameter name="name" type="String" required="true">
 		<help><![CDATA[
-			Name of grid element.
+			A string; a component method that is used within the
+			cfcomponent tag.
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="height" type="Numeric" required="false">
+	<parameter name="returntype" type="String" required="false">
 		<help><![CDATA[
-			Control's height, in pixels.
-			Default for applet: 300
+			String; a type name; data type of the function return value
+			Required for a web service; Optional, otherwise.
 		]]></help>
-		<values default="300"/>
-	</parameter>
-	<parameter name="width" type="Numeric" required="false">
-		<help><![CDATA[
-			Control's width, in pixels.
-			Default for applet: 300
-		]]></help>
-		<value default="300"/>
-	</parameter>
-	<parameter name="autowidth" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: sets column widths so that all columns display within
-				grid width.
-			No: sets columns to equal widths. User can resize columns.
-				Horizontal scroll bars are not available, because if
-				you specify a column width and set autoWidth = "Yes",
-				CFML sets to this width, if possible
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
+		<values default="Any">
+			<value option="Any"/>
+			<value option="Array"/>
+			<value option="Binary"/>
+			<value option="boolean"/>
+			<value option="date"/>
+			<value option="guid"/>
+			<value option="Numeric"/>
+			<value option="Query"/>
+			<value option="String"/>
+			<value option="Struct"/>
+			<value option="UUID"/>
+			<value option="variablename"/>
+			<value option="void"/>
 		</values>
 	</parameter>
-	<parameter name="vspace" type="Numeric" required="false">
+	<parameter name="roles" type="String" required="false">
 		<help><![CDATA[
-			Vertical margin above and below control, in pixels.
+			A comma-delimited list of CFML security roles that
+			can invoke the method. Only users who are logged in with
+			the specified roles can execute the function. If this
+			attribute is omitted, all users can invoke the method
 		]]></help>
-		<values/>
+		<values default=""/>
 	</parameter>
-	<parameter name="hspace" type="Numeric" required="false">
+	<parameter name="access" type="String" required="false">
 		<help><![CDATA[
-			Horizontal spacing to left and right of control, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="align" type="String" required="false">
-		<help><![CDATA[
-			Alignment of the grid cell contents
-		]]></help>
-		<values>
-			<value option="top"/>
-			<value option="left"/>
-			<value option="bottom"/>
-			<value option="baseline"/>
-			<value option="texttop"/>
-			<value option="absbottom"/>
-			<value option="middle"/>
-			<value option="absmiddle"/>
-			<value option="right"/>
-		</values>
-	</parameter>
-	<parameter name="query" type="String" required="false">
-		<help><![CDATA[
-			Name of query associated with grid control.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="insert" type="boolean" required="false">
-		<help><![CDATA[
-			User can insert row data in grid.
-			Takes effect only if selectmode="edit"
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="delete" type="boolean" required="false">
-		<help><![CDATA[
-			User can delete row data from grid.
-			Takes effect only if selectmode="edit"
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="sort" type="boolean" required="false">
-		<help><![CDATA[
-			The sort button performs simple text sort on column. User
-			can sort columns by clicking column head or by clicking
-			sort buttons. Not valid with selectmode=browse.
+			The client security context from which the method can be
+			invoked:
 
-			Yes: sort buttons display on grid control
+			private: available only to the component that declares the
+				method and any components that extend the component in
+				which it is defined
+			package: available only to the component that declares the
+				method, components that extend the component, or any
+				other components in the package
+			public: available to a locally executing page or component
+				method
+			remote: available to a locally or remotely executing page
+				or component method, or a remote client through a URL,
+				Flash, or a web service. To publish the function as a
+				web service, this option is required.
 		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="font" type="String" required="false">
-		<help><![CDATA[
-			Font of data in column.
-		]]></help>
-		<values default="arial">
-			<value option="arial"/>
-			<value option="times"/>
-			<value option="courier"/>
-			<value option="arialunicodeMS"/>
-		</values>
-	</parameter>
-	<parameter name="fontsize" type="Numeric" required="false">
-		<help><![CDATA[
-			Size of text in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="italic" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in italics
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="bold" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in bold
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="textcolor" type="String" required="false">
-		<help><![CDATA[
-			Text color for control. For a hex value, use the form:
-			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-			signs or none.
-		]]></help>
-		<values default="black">
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="href" type="String" required="false">
-		<help><![CDATA[
-			URL or query column name that contains a URL to hyperlink
-			each grid column with.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="hrefkey" type="String" required="false">
-		<help><![CDATA[
-			The query column to use for the value appended to the href
-			URL of each column, instead of the column's value.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="target" type="String" required="false">
-		<help><![CDATA[
-			Frame in which to open link specified in href.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="appendkey" type="boolean" required="false">
-		<help><![CDATA[
-			When used with href, passes CFTREEITEMKEY variable
-			with the value of the selected tree item in URL to the
-			application page specified in the cfform action
-			attribute
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="highlighthref" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: Highlights links that are associated with a cftreeitem
-				with a URL attribute value.
-			No: Disables highlight.
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="onvalidate" type="String" required="false">
-		<help><![CDATA[
-			JavaScript function to validate user input. The form object,
-			input object, and input object value are passed to the
-			specified routine, which should return True if validation
-			succeeds; False, otherwise.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="onerror" type="String" required="false">
-		<help><![CDATA[
-			JavaScript function to execute if validation fails.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="griddataalign" type="String" required="false">
-		<help><![CDATA[
-			Left: left-aligns data within column.
-			Right: right-aligns data within column.
-			Center: center-aligns data within column.
-		]]></help>
-		<values default="left">
-			<value option="left"/>
-			<value option="center"/>
-			<value option="right"/>
-		</values>
-	</parameter>
-	<parameter name="gridlines" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: enables row and column rules in grid control
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="rowheight" type="Numeric" required="false">
-		<help><![CDATA[
-			Minimum row height, in pixels, of grid control. Used with
-			cfgridcolumn type = "Image"; defines space for graphics to
-			display in row.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="rowheaders" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays a column of numeric row labels in grid
-			control
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="rowheaderalign" type="String" required="false">
-		<help><![CDATA[
-			Left: left-aligns data within row header
-			Right: right-aligns data within row header
-			Center: center-aligns data within row header
-		]]></help>
-		<values default="left">
-			<value option="left"/>
-			<value option="center"/>
-			<value option="right"/>
-		</values>
-	</parameter>
-	<parameter name="rowheaderfont" type="String" required="false">
-		<help><![CDATA[
-			Font of data in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="rowheaderfontsize" type="Numeric" required="false">
-		<help><![CDATA[
-			Size of text in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="rowheaderitalic" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in italics
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="rowheaderbold" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in bold
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="rowheadertextcolor" type="String" required="false">
-		<help><![CDATA[
-			Text color for control. For a hex value, use the form:
-			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-			signs or none.
-		]]></help>
-		<values default="black">
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="colheaders" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays a column of numeric row labels in grid
-			control
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="colheaderalign" type="String" required="false">
-		<help><![CDATA[
-			Left: left-aligns data within row header
-			Right: right-aligns data within row header
-			Center: center-aligns data within row header
-		]]></help>
-		<values default="left">
-			<value option="left"/>
-			<value option="center"/>
-			<value option="right"/>
-		</values>
-	</parameter>
-	<parameter name="colheaderfont" type="String" required="false">
-		<help><![CDATA[
-			Font of data in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="colheaderfontsize" type="Numeric" required="false">
-		<help><![CDATA[
-			Size of text in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="colheaderitalic" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in italics
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="colheaderbold" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in bold
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="colheadertextcolor" type="String" required="false">
-		<help><![CDATA[
-			Text color for control. For a hex value, use the form:
-			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-			signs or none.
-		]]></help>
-		<values>
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="bgcolor" type="String" required="false">
-		<help><![CDATA[
-			Background color of grid control.
-		]]></help>
-		<values>
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="selectcolor" type="String" required="false">
-		<help><![CDATA[
-			Background color for a selected item.
-		]]></help>
-		<values>
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="selectmode" type="String" required="false">
-		<help><![CDATA[
-			Selection mode for items in the control.
-			- Edit: user can edit grid data. Selecting a cell opens
-			  the editor for the cell type.
-			- Row: user selections automatically extend to the row
-			  that contains selected cell.
-			- Single: user selections are limited to selected cell.
-			- Column: user selections automatically extend
-			  to column that contains selected cell.
-			- Browse: user can only browse grid data.
-		]]></help>
-		<values>
-			<value option="edit"/>
-			<value option="single"/>
-			<value option="row"/>
-			<value option="column"/>
-			<value option="browse"/>
-		</values>
-	</parameter>
-	<parameter name="maxrows" type="Numeric" required="false">
-		<help><![CDATA[
-			Maximum number of rows to display in grid.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="notsupported" type="String" required="false">
-		<help><![CDATA[
-			Text to display if a page that contains a Java applet-based
-			cfform control is opened by a browser that does not
-			support Java or has Java support disabled.
-			Default:
-			"<b>Browser must support Java to <br>view ColdFusion Java
-			Applets!</b>"
-		]]></help>
-		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;"/>
-	</parameter>
-	<parameter name="picturebar" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: images for Insert, Delete, Sort buttons
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="insertbutton" type="String" required="false">
-		<help><![CDATA[
-			Text for the insert button. Takes effect only if
-			selectmode="edit".
-		]]></help>
-		<values default="Insert">
-			<value option="Insert"/>
-			<value option="Add"/>
-		</values>
-	</parameter>
-	<parameter name="deletebutton" type="String" required="false">
-		<help><![CDATA[
-			Text of Delete button text. Takes effect only if
-			selectmode="edit".
-		]]></help>
-		<values default="Delete">
-			<value option="Delete"/>
-			<value option="Remove"/>
-		</values>
-	</parameter>
-	<parameter name="sortascendingbutton" type="String" required="false">
-		<help><![CDATA[
-			Sort button text
-		]]></help>
-		<values default="A -&gt; Z">
-			<value option="A -&gt; Z"/>
-			<value option="Asc"/>
-			<value option="Ascending"/>
-		</values>
-	</parameter>
-	<parameter name="sortdescendingbutton" type="String" required="false">
-		<help><![CDATA[
-			Sort button text
-		]]></help>
-		<values default="Z -&gt; A">
-			<value option="Z -&gt; A"/>
-			<value option="Desc"/>
-			<value option="Descending"/>
-		</values>
-	</parameter>
-</tag>
-<!--
-	cfgridcolumn
-		name = "column_name"
-		header = "header"
-		width = "column_width"
-		type = "type"
-		display = "boolean"
-		select = "boolean"
-		font = "column_font"
-		fontSize = "size"
-		italic = "boolean"
-		bold = "boolean"
-		textColor = "web color" or "expression"
-		bgColor = "web color" or "expression"
-		dataAlign = "position"
-		href = "URL"
-		hrefKey = "column_name"
-		target = "URL_target"
-		headerFont = "font_name"
-		headerFontSize = "size"
-		headerItalic = "boolean"
-		headerBold = "boolean"
-		headerTextColor = "web color"
-		headerAlign = "position"
-		numberFormat = "format"
-		values = "Comma-separated strings and/or numeric range"
-		valuesDisplay = "Comma-separated strings and/or numeric range"
-		valuesDelimiter = "delimiter character"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfgridcolumn" single="true" xmlstyle="false">
-	<help><![CDATA[
-		Used with the cfgrid tag in a cfform. Use this tag to specify
-		column data in a cfgrid control. The font and alignment
-		attributes used in cfgridcolumn override global font or
-		alignment settings defined in cfgrid.
-	]]></help>
-	<parameter name="name" type="String" required="true">
-		<help><![CDATA[
-			Name of grid column element. If grid uses a query, column
-			name must specify name of a query column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="header" type="boolean" required="false">
-		<help><![CDATA[
-			Column header text. Used only if cfgrid colHeaders = "Yes".
-		]]></help>
-		<values>
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="width" type="Numeric" required="false">
-		<help><![CDATA[
-			Column width, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="font" type="String" required="false">
-		<help><![CDATA[
-			Font of data in column.
-		]]></help>
-		<values default="arial">
-			<value option="arial"/>
-			<value option="times"/>
-			<value option="courier"/>
-			<value option="arialunicodeMS"/>
-		</values>
-	</parameter>
-	<parameter name="fontsize" type="Numeric" required="false">
-		<help><![CDATA[
-			Size of text in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="italic" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in italics
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="bold" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in bold
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="bgcolor" type="String" required="false">
-		<help><![CDATA[
-			Background color of control. For a hex value, use the form:
-			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-			signs or none.
-		]]></help>
-		<values>
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="textcolor" type="String" required="false">
-		<help><![CDATA[
-			Text color for control. For a hex value, use the form:
-			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-			signs or none.
-		]]></help>
-		<values>
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="href" type="String" required="false">
-		<help><![CDATA[
-			URL o r query column name that contains a URL to hyperlink
-			each grid column with.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="hrefkey" type="String" required="false">
-		<help><![CDATA[
-			The query column to use for the value appended to the href
-			URL of each column, instead of the column's value.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="target" type="String" required="false">
-		<help><![CDATA[
-			Frame in which to open link specified in href.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="select" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: user can select the column in grid control.
-		]]></help>
-		<values>
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="display" type="boolean" required="false">
-		<help><![CDATA[
-			No: hides column
-		]]></help>
-		<values>
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="type" type="String" required="false">
-		<help><![CDATA[
-			image: grid displays image that corresponds to value in
-			column (a built-in CFML image name, or an image in
-			cfide\classes directory or subdirectory referenced with
-			relative URL). If image is larger than column cell, it is
-			clipped to fit. Built-in image names
-		]]></help>
-		<values>
-			<value option="cd"/>
-			<value option="computer"/>
-			<value option="document"/>
-			<value option="element"/>
-			<value option="folder"/>
-			<value option="floppy"/>
-			<value option="fixed"/>
+		<values default="public">
+			<value option="private"/>
+			<value option="package"/>
+			<value option="public"/>
 			<value option="remote"/>
 		</values>
 	</parameter>
-	<parameter name="headerfont" type="String" required="false">
+	<parameter name="output" type="boolean" required="false">
 		<help><![CDATA[
-			Font of data in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="headerfontsize" type="Numeric" required="false">
-		<help><![CDATA[
-			Size of text in column.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="headeritalic" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: displays grid control text in italics
+			Specifies under which conditions the function can generate
+			HTML output.
 		]]></help>
 		<values>
 			<value option="true"/>
 			<value option="false"/>
 		</values>
 	</parameter>
-	<parameter name="headerbold" type="boolean" required="false">
+	<parameter name="displayname" type="String" required="false">
 		<help><![CDATA[
-			Yes: displays grid control text in bold
-		]]></help>
-		<values>
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="headertextcolor" type="String" required="false">
-		<help><![CDATA[
-			Text color for control. For a hex value, use the form:
-			textColor = "##xxxxxx", where x = 0-9 or A-F; use two hash
-			signs or none.
-		]]></help>
-		<values>
-			<value option="black"/>
-			<value option="red"/>
-			<value option="blue"/>
-			<value option="magenta"/>
-			<value option="cyan"/>
-			<value option="orange"/>
-			<value option="darkgray"/>
-			<value option="pink"/>
-			<value option="white"/>
-			<value option="lightgray"/>
-			<value option="yellow"/>
-		</values>
-	</parameter>
-	<parameter name="dataalign" type="String" required="false">
-		<help><![CDATA[
-			Column data alignment
-		]]></help>
-		<values>
-			<value option="left"/>
-			<value option="right"/>
-			<value option="center"/>
-		</values>
-	</parameter>
-	<parameter name="headeralign" type="String" required="false">
-		<help><![CDATA[
-			Column header text alignment
-		]]></help>
-		<values>
-			<value option="left"/>
-			<value option="right"/>
-			<value option="center"/>
-		</values>
-	</parameter>
-	<parameter name="numberformat" type="String" required="false">
-		<help><![CDATA[
-			Format for displaying numeric data in grid. See
-			numberFormat mask characters.
+			Meaningful only for CFC method parameters. A value to be
+			displayed in parentheses following the function name when
+			using introspection to show information about the CFC
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="values" type="String" required="false">
+	<parameter name="hint" type="String" required="false">
 		<help><![CDATA[
-			Formats cells in column as drop-down list boxes; specify
-			items in drop-down list. Example:
-			values = "arthur, scott, charles, 1-20, mabel"
+			Meaningful only for CFC method parameters. Text to be
+			displayed when using introspection to show information
+			about the CFC. The hint attribute value follows the syntax
+			line in the function description
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="valuesdisplay" type="String" required="false">
+	<parameter name="description" type="String" required="false">
 		<help><![CDATA[
-			Maps elements in values attribute to string to display in
-			drop-down list. Delimited strings and/or numeric range(s).
+			Supplies a short text description of the function.
 		]]></help>
 		<values/>
-	</parameter>
-	<parameter name="valuesdelimiter" type="String" required="false">
-		<help><![CDATA[
-			Maps elements in values attribute to string to display in
-			drop-down list. Delimited strings and/or numeric range(s).
-		]]></help>
-		<values>
-			<value option=","/>
-			<value option=";"/>
-			<value option="|"/>
-			<value option=":"/>
-		</values>
-	</parameter>
-</tag>
-<!--
-	cfgridrow
-		data = "col1, col2, ..."
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfgridrow" single="true" xmlstyle="false">
-	<help><![CDATA[
-		Lets you define a cfgrid that does not use a query as source
-		for row data. If a query attribute is specified in cfgrid, the
-		cfgridrow tags are ignored.
-	]]></help>
-	<parameter name="data" type="String" required="true">
-		<help><![CDATA[
-			Delimited list of column values. If a value contains a
-			comma, it must be escaped with another comma
-		]]></help>
-		<values/>
-	</parameter>
-</tag>
-<!--
-	cfgridupdate
-		grid = "gridname"
-		dataSource = "data source name"
-		dbType = "type"
-		dbServer = "dbms"
-		dbName = "database name"
-		tableName = "table name"
-		connectString = "connection string"
-		username = "data source username"
-		password = "data source password"
-		tableOwner = "table owner"
-		tableQualifier = "qualifier"
-		provider = "COMProvider" 
-		providerDSN = "datasource" 
-		keyOnly = "boolean"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfgridupdate" single="true" xmlstyle="false">
-	<help><![CDATA[
-		Used within a cfgrid tag. Updates data sources directly from
-		edited grid data. This tag provides a direct interface with
-		your data source.
-
-		This tag applies delete row actions first, then insert row
-		actions, then update row actions. If it encounters an error,
-		it stops processing rows.
-	]]></help>
-	<parameter name="grid" type="String" required="true">
-		<help><![CDATA[
-			Name of cfgrid form element that is the source for the
-			update action.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="datasource" type="String" required="true">
-		<help><![CDATA[
-			Name of data source for the update action.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="tablename" type="String" required="true">
-		<help><![CDATA[
-			Table in which to insert form fields.
-
-			ORACLE drivers: must be uppercase.
-			Sybase driver: case-sensitive. Must be the same case used
-				when table was created
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="username" type="String" required="false">
-		<help><![CDATA[
-			Overrides username specified in ODBC setup.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="password" type="String" required="false">
-		<help><![CDATA[
-			Overrides password specified in ODBC setup.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="tableowner" type="String" required="false">
-		<help><![CDATA[
-			Table owner, if supported.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="tablequalifier" type="String" required="false">
-		<help><![CDATA[
-			For data sources that support table qualifiers, use this
-			field to specify qualifier for table. The purpose of table
-			qualifiers varies among drivers. For SQL Server and
-			Oracle, qualifier refers to name of database that contains
-			table. For Intersolv dBASE driver, qualifier refers to
-			directory where DBF files are located.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="keyonly" type="boolean" required="false">
-		<help><![CDATA[
-			Applies to the update action:
-			Yes: the WHERE criteria are limited to the key values
-			No: the WHERE criteria include key values and the original
-				values of changed fields
-		]]></help>
-		<values>
-			<value option="true"/>
-			<value option="false"/>
-		</values>
 	</parameter>
 </tag>
 <!--
@@ -2635,7 +1744,7 @@
 	<help><![CDATA[
 		Generates custom HTTP response headers to return to the client.
 	]]></help>
-	<parameter name="name" type="String" required="false">
+	<parameter name="name" type="String" required="true">
 		<help><![CDATA[
 			Header name
 			Required if statusCode not specified
@@ -2707,13 +1816,18 @@
 		method = "method_name"
 		proxyServer = "hostname"
 		proxyPort = "port_number"
+		proxyUser = "username"
+		proxyPassword = "password"
 		username = "username"
 		password = "password"
 		userAgent = "user_agent"
+		charset = "character encoding"
 		resolveURL = "boolean"
 		throwOnError = "yes" or no"
 		redirect = "boolean"
 		timeout = "timeout_period"
+		getasbinary = "boolean"
+		multipart = "boolean"
 		path = "path"
 		file = "filename"
 		name = "queryname"
@@ -2729,7 +1843,7 @@
 		server.
 	]]></help>
 	<return type="cfhttp" name="cfhttp"/>
-	<parameter name="URL" type="URL" required="true">
+	<parameter name="url" type="URL" required="true">
 		<help><![CDATA[
 			Address of the resource on the server which will handle
 			the request. The URL must include the hostname or IP
@@ -2763,10 +1877,37 @@
 			* POST Sends information to the server for processing.
 			  Requires one or more cfhttpparam tags. Often used for
 			  submitting form-like data.
+			* PUT Requests the server to store the message body at the
+			  specified URL. Use this method to send files to the
+			  server.
+			* DELETE Requests the server to delete the specified URL.
+			* HEAD Identical to the GET method, but the server does
+			  not send a message body in the response. Use this
+			  method for testing hypertext links for validity and
+			  accessibility, determining the type or modification
+			  time of a document, or determining the type of server.
+			* TRACE Requests that the server echo the received HTTP
+			  headers back to the sender in the response body. Trace
+			  requests cannot have bodies. This method enables the
+			  CFML application to see what is being received
+			  at the server, and use that data for testing or
+			  diagnostic information.
+			* OPTIONS A request for information about the
+			  communication options available for the server or the
+			  specified URL. This method enables the CFML
+			  application to determine the options and requirements
+			  associated with a URL, or the capabilities of a server,
+			  without requesting any additional activity by the
+			  server.
 		]]></help>
 		<values default="get">
 			<value option="get"/>
 			<value option="post"/>
+			<value option="put"/>
+			<value option="delete"/>
+			<value option="head"/>
+			<value option="trace"/>
+			<value option="options"/>
 		</values>
 	</parameter>
 	<parameter name="proxyserver" type="String" required="false">
@@ -2780,6 +1921,18 @@
 			The port to use on The proxy server.
 		]]></help>
 		<values default="80"/>
+	</parameter>
+	<parameter name="proxyuser" type="String" required="false">
+		<help><![CDATA[
+			The user ID to send to the proxy server.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="proxypassword" type="String" required="false">
+		<help><![CDATA[
+			The user's password on the proxy server.
+		]]></help>
+		<values/>
 	</parameter>
 	<parameter name="username" type="String" required="false">
 		<help><![CDATA[
@@ -2800,6 +1953,28 @@
 			CFML application appear to be a browser.
 		]]></help>
 		<values default="ColdFusion"/>
+	</parameter>
+	<parameter name="charset" type="String" required="false">
+		<help><![CDATA[
+			TThe character encoding of the request, including the URL
+			query string and form or file data, and the response.
+
+			For more information on character encodings, see:
+			www.w3.org/International/O-charset.html.
+		]]></help>
+		<values>
+			<value option="utf-8"/>
+			<value option="iso-8859-1"/>
+			<value option="windows-1252"/>
+			<value option="us-ascii"/>
+			<value option="shift_jis"/>
+			<value option="iso-2022-jp"/>
+			<value option="euc-jp"/>
+			<value option="euc-kr"/>
+			<value option="big5"/>
+			<value option="euc-cn"/>
+			<value option="utf-16"/>
+		</values>
 	</parameter>
 	<parameter name="resolveurl" type="boolean" required="false">
 		<help><![CDATA[
@@ -2847,6 +2022,22 @@
 			considers the request to have failed.
 		]]></help>
 		<values/>
+	</parameter>
+	<parameter name="getasbinary" type="String" required="false">
+		<help><![CDATA[
+			* No If CFML does not recognize the response body
+				type as text, convert it to a CFML object.
+			* Auto If CFML does not recognize the response body
+				type as text, convert it to CFML Binary type data.
+			* Yes Always convert the response body content into
+				CFML Binary type data, even if CFML
+				recognizes the response body type as text.
+		]]></help>
+		<values default="auto">
+			<value option="auto"/>
+			<value option="false"/>
+			<value option="true"/>
+		</values>
 	</parameter>
 	<parameter name="delimiter" type="String" required="false">
 		<help><![CDATA[
@@ -2976,6 +2167,15 @@
 	<parameter name="type" type="String" required="true">
 		<help><![CDATA[
 			Information type
+			* Header: The parameter specifies an HTTP header.
+				(ColdFusion does not URL encode the header)
+			* Body: Specifies the body of the HTTP request.
+				(ColdFusion does not URL encode the body contents)
+			* XML: Identifies the request as having a content-type of
+				text/xml. Specifies that the value attribute contains
+				the body of the HTTP request. Used to send XML to the
+				destination URL. CFML does not URL encode the XML
+				data.
 			* CGI: Specifies an HTTP header. CFML URL encodes
 				the header by default.
 			* File: Tells CFML to send the contents of the
@@ -2990,6 +2190,9 @@
 				CFML URL encodes the cookie.
 		]]></help>
 		<values>
+			<value option="header" compatibility="new"/>
+			<value option="body" compatibility="new"/>
+			<value option="xml" compatibility="new"/>
 			<value option="cgi"/>
 			<value option="file"/>
 			<value option="url"/>
@@ -3021,17 +2224,89 @@
 		]]></help>
 		<values/>
 	</parameter>
+	<parameter name="encoded" type="boolean" required="false">
+		<help><![CDATA[
+			Applies to FormField and CGI types; ignored for all other
+			types. Specifies whether to URLEncode the form field or
+			header.
+		]]></help>
+		<values>
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+	<parameter name="mimetype" type="String" required="false">
+		<help><![CDATA[
+			Applies to File type; invalid for all other types.
+			Specifies the MIME media type of the file contents.
+			The content type can include an identifier for the
+			character encoding of the file; for example, text/html;
+			charset=ISO-8859-1 indicates that the file is HTML text in
+			the ISO Latin-1 character encoding.
+		]]></help>
+		<values>
+			<value option="text/plain"/>
+			<value option="text/html"/>
+		</values>
+	</parameter>
 </tag>
 <!--
 	cfif expression
 	   [HTML and CFML tags]
 	/cfif
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfif" single="false" xmlstyle="false">
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfif" allowanyattribute="true" single="false" xmlstyle="false">
 	<help><![CDATA[
 		Creates simple and compound conditional statements in CFML.
 		Tests an expression, variable, function return value, or
 		string. Used, optionally, with the cfelse and cfelseif tags.
 	]]></help>
+</tag>
+<!--
+	cfimport
+		taglib = "taglib-location"
+		prefix = "custom"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfimport" single="true" xmlstyle="false">
+	<help><![CDATA[
+		You can use the cfimport tag to import either of the following:
+
+		* All CFML pages in a directory, as a tag custom tag
+		library.
+		* A Java Server Page (JSP) tag library. A JSP tag library is a
+		packaged set of tag handlers that conform to the JSP 1.1 tag
+		extension API.
+	]]></help>
+	<parameter name="taglib" type="String" required="true">
+		<help><![CDATA[
+			Tag library URI. The path must be relative to the web root
+			(and start with /), the current page location, or a
+			directory specified in the Administrator CFML
+			mappings page.
+
+			A directory in which custom CFML tags are stored. In
+			this case, all the cfm pages in this directory are treated
+			as custom tags in a tag library.
+			A path to a JAR in a web-application; for example,
+			"/WEB-INF/lib/sometags.jar"
+			A path to a tag library descriptor; for example,
+			"/sometags.tld"
+			Note: You must put JSP custom tag libraries in the
+			/WEB-IN/lib directory. This limitation does not apply to
+			CFML pages.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="prefix" type="String" required="true">
+		<help><![CDATA[
+			Prefix by which to access the imported custom CFML tags JSP
+			tags.
+
+			If you import a CFML custom tag directory and specify an
+			empty value, "", for this attribute, you can call the
+			custom tags without using a prefix. You must specify and
+			use a prefix for a JSP tag library.
+		]]></help>
+		<values/>
+	</parameter>
 </tag>
 <!--
 	cfinclude
@@ -3238,6 +2513,18 @@
 		or text boxes on a form. Provides input validation for the
 		specified control type.
 	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name for form input element.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="id" type="String" required="false">
+		<help><![CDATA[
+			ID for form input element.
+		]]></help>
+		<values/>
+	</parameter>
 	<parameter name="type" type="String" required="false">
 		<help><![CDATA[
 			text: creates a text entry box control
@@ -3252,9 +2539,15 @@
 			<value option="password"/>
 		</values>
 	</parameter>
-	<parameter name="name" type="String" required="true">
+	<parameter name="style" type="String" required="false">
 		<help><![CDATA[
-			Name for form input element.
+			Style for form input element.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="class" type="String" required="false">
+		<help><![CDATA[
+			Stylesheet class for form input element.
 		]]></help>
 		<values/>
 	</parameter>
@@ -3454,6 +2747,170 @@
 
 			The database table key field must be present in the form.
 			It may be hidden.
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
+	cfinvoke
+		component = "component name or reference"
+		method = "method name"
+		returnVariable = "variable name"
+		argumentCollection = "argument collection"
+	OR
+	cfinvoke
+		method = "method name"
+		returnVariable = "variable name"
+		argumentCollection = "argument collection"
+	OR
+	cfinvoke
+		webservice = "URLtoWSDL_location"
+		method = "operation_name"
+		username = user name"
+		password = "password"
+		timeout = "request timeout in seconds"
+		proxyServer = "WSDL proxy server URL
+		proxyPort = "port on proxy server"
+		proxyUser = "user id for proxy server"
+		proxyPassword = "password for proxy server"
+		inputParam1 = "value1"
+		inputParam2 = "value2"
+		...
+		returnVariable = "var_name"
+	OR
+	cfinvoke
+		component = "#mystringname for instantiated component#"
+		method = "method name"
+		returnVariable = "variable name"
+		argumentCollection = "argument collection"
+	OR
+	cfinvoke
+		webservice = "#my stringname for instantiated web service#"
+		timeout = "request timeout in seconds"
+		proxyServer = "WSDL proxy server url
+		proxyPort = "numeric port on proxy server"
+		proxyUser = "string user id for proxy server"
+		proxyPassword = "string user password for proxy server"
+	=============================================================
+	cfinvoke
+		webservice = "URLtoWSDL_location"
+		method = "operation_name"
+		username = user name"
+		password = "password"
+		timeout = "request timeout in seconds"
+		proxyServer = "WSDL proxy server URL
+		proxyPort = "port on proxy server"
+		proxyUser = "user id for proxy server"
+		proxyPassword = "password for proxy server"
+		returnVariable = "var_name"
+		component = "component name or reference"
+		argumentCollection = "argument collection"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfinvoke" single="false" xmlstyle="false" hybrid="true" allowanyattribute="true">
+	<help><![CDATA[
+		Does either of the following:
+
+		* Invokes a component method from within a CFML page or
+			component.
+		* Invokes a web service.
+		Different attribute combonations make some attributes required
+		at sometimes and not at others.
+	]]></help>
+	<return type="Any" parameter="returnVariable"/>
+	<parameter name="component" type="String" required="false">
+		<help><![CDATA[
+			String or component object; a reference to a component, or
+			component to instantiate.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="method" type="String" required="true">
+		<help><![CDATA[
+			Name of a method. For a web service, the name of an
+			operation.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="returnvariable" type="variableName" required="false">
+		<help><![CDATA[
+			Name of a variable for the invocation result.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="argumentcollection" type="String" required="false">
+		<help><![CDATA[
+			Name of a structure; associative array of arguments to pass
+			to the method.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="username" type="String" required="false">
+		<help><![CDATA[
+			Overrides username specified in Administrator > Web Services
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="password" type="String" required="false">
+		<help><![CDATA[
+			Overrides passowrd specified in Administrator > Web Services
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="webservice" type="URL" required="false">
+		<help><![CDATA[
+			The URL of the WSDL file for the web service.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="timeout" type="Numeric" required="false">
+		<help><![CDATA[
+			The timeout for the web service request, in seconds
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="proxyserver" type="String" required="false">
+		<help><![CDATA[
+			The proxy server required to access the webservice URL.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="proxyport" type="Numeric" required="false">
+		<help><![CDATA[
+			The port to use on The proxy server.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="proxyuser" type="String" required="false">
+		<help><![CDATA[
+			The user ID to send to the proxy server.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="proxypassword" type="String" required="false">
+		<help><![CDATA[
+			The user's password on the proxy server.
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
+	cfinvokeargument
+		name="argument name"
+		value="argument value"
+		omit = "boolean"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfinvokeargument" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Passes the name and value of a parameter to a component method
+		or a web service. This tag is used within the cfinvoke tag.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Argument name
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="value" type="String" required="true">
+		<help><![CDATA[
+			Argument value
 		]]></help>
 		<values/>
 	</parameter>
@@ -3807,6 +3264,9 @@
 	<parameter name="throwontimeout" type="boolean" required="false">
 		<help><![CDATA[
 			How timeout conditions are handled.
+			If false, the following return variables may be used:
+			cflock.succeeded - Could the lock be applied;
+			cflock.errortext - Raised exception.
 		]]></help>
 		<values default="true">
 			<value option="true"/>
@@ -3891,6 +3351,65 @@
 	</parameter>
 </tag>
 <!--
+	cflogin
+		idletimeout = "value"
+		applicationToken = "token"
+		cookieDomain = "domain"
+		...
+	/cflogin
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cflogin" single="false" xmlstyle="false">
+	<help><![CDATA[
+		A container for user login and authentication code. CFML
+		runs the code in this tag if a user is not already logged in.
+		You put code in the tag that authenticates the user and
+		identifies the user with a set of roles. Used with cfloginuser
+		tag.
+		NOTE: Railo does not support NTLM.
+	]]></help>
+</tag>
+<!--
+	cfloginuser
+		name = "name"
+		password = "password-string"
+		roles = "roles"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfloginuser" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Identifies an authenticated user to CFML. Specifies the
+		user ID and roles. Used within a cflogin tag.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			A username.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="password" type="String" required="true">
+		<help><![CDATA[
+			A user password.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="roles" type="String" required="true">
+		<help><![CDATA[
+			A comma-delimited list of role identifiers.
+
+			CFML processes spaces in a list element as part of
+			the element.
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
+	cflogout
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cflogout" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Logs the current user out. Removes knowledge of the user ID,
+		password, and roles from the server. If you do not use this
+		tag, the user is automatically logged out when the session
+		ends.
+	]]></help>
+</tag>
+<!--
 	cfloop
 		index = "parameter_name"
 		from = "beginning_value"
@@ -3917,6 +3436,14 @@
 		delimiters = "item_delimiter"
 		...
 	/cfloop
+
+	cfloop
+		file = "file_name"
+		index = "line_no"
+		startline = "beginning_value"
+		endline = "ending_value"
+		... HTML or CFML code ...
+	/cfloop
 	===============================================
 	cfloop
 		index = "parameter_name"
@@ -3931,6 +3458,9 @@
 		delimiters = "item_delimiter"
 		collection = "Object"
 		item = "String"
+		file = "file_name"
+		startline = "Numeric"
+		endline = "Numeric"
 		... HTML or CFML code ...
 	/cfloop
 --><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfloop" single="false" xmlstyle="false">
@@ -3939,7 +3469,7 @@
 		as required may not be depending on your loop type.
 		Loop forms:
 		[query] [condition] [index + from + to ] [index + list]
-		[collection + item ]
+		[collection + item ] [file + index + startline + endline]
 	]]></help>
 	<parameter name="index" type="String" required="false">
 		<help><![CDATA[
@@ -4011,7 +3541,7 @@
 	<parameter name="collection" type="Object" required="false">
 		<help><![CDATA[
 			The collection attribute is used with the item attribute.
-			often to loop over a structure
+			often to loop over a structure or array.
 		]]></help>
 		<values/>
 	</parameter>
@@ -4019,6 +3549,24 @@
 		<help><![CDATA[
 			The item attribute is used with the collection attribute.
 			often to loop over a structure
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="file" type="String" required="false">
+		<help><![CDATA[
+			The filename of the file to loop through.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="startline" type="Numeric" required="false">
+		<help><![CDATA[
+			First line of file that is looped through.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="endline" type="Numeric" required="false">
+		<help><![CDATA[
+			Last line of file that is looped through.
 		]]></help>
 		<values/>
 	</parameter>
@@ -4030,6 +3578,12 @@
 		cc = "copy_to"
 		bcc = "blind_copy_to"
 		subject = "msg_subject"
+		replyto = "reply_to_addr"
+	 	failto = "fail_message_addr"
+	 	username = "user name"
+	 	password = "password"
+	 	wraptext = "column number"
+	 	charset = "character encoding"
 	 	type = "msg_type"
 	 	mimeattach = "path"
 	 	query = "query_name"
@@ -4041,6 +3595,7 @@
 	 	port = "port_id"
 	 	mailerid = "headerid"
 	 	timeout = "seconds"
+	 	spoolenable = "boolean"
 
 	[(Optional) Mail message body and/or cfhttpparam tags]
 	/cfmail
@@ -4079,6 +3634,68 @@
 			Message subject. Can be dynamically generated.
 		]]></help>
 		<values/>
+	</parameter>
+	<parameter name="replyto" type="String" required="false">
+		<help><![CDATA[
+			Address(es) to which the recipient is directed to send
+			replies.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="failto" type="String" required="false">
+		<help><![CDATA[
+			Address to which mailing systems should send delivery
+			failure notifications. Sets the mail envelope reverse-path
+			value.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="username" type="String" required="false">
+		<help><![CDATA[
+			A user name to send to SMTP servers that require
+			authentication. Requires a password attribute
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="password" type="String" required="false">
+		<help><![CDATA[
+			A password to send to SMTP servers that require
+			authentication. Requires a username attribute.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="wraptext" type="Numeric" required="false">
+		<help><![CDATA[
+			Specifies the maximum line length, in characters of the
+			mail text. If a line has more than the specified number of
+			characters, replaces the last white space character, such
+			as a tab or space, preceding the specified position with
+			a line break. If there are no white space characters,
+			inserts a line break at the specified position. A common
+			value for this attribute is 72.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="charset" type="String" required="false">
+		<help><![CDATA[
+			The character encoding in which the part text is encoded.
+
+			For more information on character encodings, see:
+			www.w3.org/International/O-charset.html.
+		]]></help>
+		<values>
+			<value option="utf-8"/>
+			<value option="iso-8859-1"/>
+			<value option="windows-1252"/>
+			<value option="us-ascii"/>
+			<value option="shift_jis"/>
+			<value option="iso-2022-jp"/>
+			<value option="euc-jp"/>
+			<value option="euc-kr"/>
+			<value option="big5"/>
+			<value option="euc-cn"/>
+			<value option="utf-16"/>
+		</values>
 	</parameter>
 	<parameter name="type" type="String" required="false">
 		<help><![CDATA[
@@ -4176,6 +3793,17 @@
 		]]></help>
 		<values/>
 	</parameter>
+	<parameter name="spoolenable" type="boolean" required="false">
+		<help><![CDATA[
+			Specifies whether to spool mail or always send it
+			Immediately. Overrides the CFML MX Administrator
+			Spool mail messages to disk for delivery setting.
+		]]></help>
+		<values>
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
 	<parameter name="debug" type="boolean" required="false">
 		<help><![CDATA[
 			* Yes: sends debugging output to standard output. By
@@ -4194,6 +3822,7 @@
 <!--
 	cfmailparam
 		file = "file-name"
+		type ="media type"
 		contentID = "content ID"
 		disposition = "disposition type"
    	or
@@ -4212,6 +3841,19 @@
 			attribute. The file is MIME encoded before sending.
 		]]></help>
 		<values/>
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			The MIME media type of the part. Can be a can be valid MIME
+			media type
+		]]></help>
+		<values>
+			<value option="text/plain"/>
+			<value option="text/html"/>
+			<value option="html"/>
+			<value option="plain"/>
+			<value option="text"/>
+		</values>
 	</parameter>
 	<parameter name="name" type="String" required="true">
 		<help><![CDATA[
@@ -4315,6 +3957,63 @@
 	</parameter>
 </tag>
 <!--
+	cfmailpart
+		type="mime type"
+		charset="character encoding"
+		wraptext="number"
+	[Mail part contents]
+	/cfmailpart
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfmailpart" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Specifies one part of a multipart e-mail message. Can only be
+		used in the cfmail tag. You can use more than one cfmailpart
+		tag within a cfmail tag.
+	]]></help>
+	<parameter name="type" type="String" required="true">
+		<help><![CDATA[
+			The MIME media type of the part. Can be a can be valid MIME
+			media type
+		]]></help>
+		<values>
+			<value option="text/plain"/>
+			<value option="text/html"/>
+		</values>
+	</parameter>
+	<parameter name="wraptext" type="Numeric" required="false">
+		<help><![CDATA[
+			Specifies the maximum line length, in characters of the
+			mail text. If a line has more than the specified number of
+			characters, replaces the last white space character, such
+			as a tab or space, preceding the specified position with a
+			line break. If there are no white space characters,
+			inserts a line break at the specified position. A common
+			value for this attribute is 72.
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="charset" type="String" required="false">
+		<help><![CDATA[
+			The character encoding in which the part text is encoded.
+
+			For more information on character encodings, see:
+			www.w3.org/International/O-charset.html.
+		]]></help>
+		<values>
+			<value option="utf-8"/>
+			<value option="iso-8859-1"/>
+			<value option="windows-1252"/>
+			<value option="us-ascii"/>
+			<value option="shift_jis"/>
+			<value option="iso-2022-jp"/>
+			<value option="euc-jp"/>
+			<value option="euc-kr"/>
+			<value option="big5"/>
+			<value option="euc-cn"/>
+			<value option="utf-16"/>
+		</values>
+	</parameter>
+</tag>
+<!--
 	cfmodule
 		template = "path"
 		name = "tag_name"
@@ -4360,6 +4059,131 @@
 			once.
 		]]></help>
 		<values/>
+	</parameter>
+</tag>
+<!--
+	cfobject
+		type = "com"
+		action = "action"
+		class = "program_ID"
+		name = "text"
+		context = "context"
+		server = "server_name"
+
+	cfobject
+		name = "variable name"
+		component = "component name"
+
+	cfobject
+		type = "Java"
+		action = "Create"
+		class = "Java class"
+		name = "object name"
+
+	cfobject
+		webservice= "http://....?wsdl" or "name set in Administrator"
+		name = "myobjectname"
+	=============================================================
+	cfobject
+		type = "com" "Java" "corba"
+		action = "action"
+		class = "program_ID"
+		name = "text"
+		context = "context"
+		server = "server_name"
+		component = "component name"
+		locale = "type-value arguments"
+		webservice= "http://....?wsdl" or "name set in Administrator"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfobject" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Creates a CFML object, of a specified type.
+
+		The tag syntax depends on the object type. Some types use the
+		type attribute; others do not.
+	]]></help>
+	<return type="Any" parameter="name"/>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+
+		]]></help>
+		<values>
+			<value option="com"/>
+			<value option="java"/>
+		</values>
+	</parameter>
+	<parameter name="action" type="String" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values>
+			<value option="create"/>
+			<value option="connect"/>
+		</values>
+	</parameter>
+	<parameter name="class" type="String" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="name" type="variableName" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="context" type="String" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values>
+			<value option="inproc"/>
+			<value option="local"/>
+			<value option="remote"/>
+			<value option="ior"/>
+			<value option="nameservice"/>
+		</values>
+	</parameter>
+	<parameter name="server" type="String" required="false">
+		<help><![CDATA[
+
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="component" type="String" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="locale" type="String" required="false">
+		<help><![CDATA[
+
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="webservice" type="URL" required="true">
+		<help><![CDATA[
+
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
+	cfobjectcache
+		action = "clear"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfobjectcache" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Flushes the query cache.
+	]]></help>
+	<parameter name="action" type="String" required="true">
+		<help><![CDATA[
+			clear: Clears queries from the cache in the Application
+			scope
+		]]></help>
+		<values default="clear">
+			<value option="clear"/>
+		</values>
 	</parameter>
 </tag>
 <!--
@@ -4605,7 +4429,12 @@
 </tag>
 <!--
 	cfprocessingdirective
+		pageencoding = "page-encoding literal string"
+	/
+	or
+	cfprocessingdirective
 		suppressWhiteSpace = "boolean"
+		pageEncoding = "page-encoding literal string"
     [CFML tags]
     /cfprocessingdirective
 --><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfprocessingdirective" single="false" xmlstyle="true">
@@ -4630,142 +4459,30 @@
 			<value option="false"/>
 		</values>
 	</parameter>
-</tag>
-<!--
-	cfprocparam
-		type = "in" or "out" or "inout"
-		variable = "variable name"
-		value = "parameter value"
-		CFSQLType = "parameter datatype"
-		maxLength = "length"
-		scale = "decimal places"
-		null = "boolean"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfprocparam" single="true" xmlstyle="false">
-	<help><![CDATA[
-		Defines stored procedure parameters. This tag is nested within
-		a cfstoredproc tag.
-	]]></help>
-	<parameter name="type" type="String" required="false">
+	<parameter name="pageencoding" type="String" required="false">
 		<help><![CDATA[
-			in: The parameter is used to send data to the database
-				system only. Passes the parameter by value.
-			out: The parameter is used to receive data from the
-				database system only. Passes the parameter as a bound
-				variable.
-			inout: The parameter is used to send and receive data.
-				Passes the parameter as a bound variable.
-		]]></help>
-		<values default="in">
-			<value option="in"/>
-			<value option="out"/>
-			<value option="inout"/>
-		</values>
-	</parameter>
-	<parameter name="variable" type="String" required="false">
-		<help><![CDATA[
-			CFML variable name; references the value that the
-			output parameter has after the stored procedure is called.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="value" type="String" required="false">
-		<help><![CDATA[
-			Value that CFML passes to the stored procedure.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="cfsqltype" type="String" required="true">
-		<help><![CDATA[
-			SQL type to which the parameter (any type) is bound.
-			CFML supports the following values, where the last
-			element of the name corresponds to the SQL data type.
-			Different database systems might support different subsets
-			of this list. See your DBMS documentation for information
-			on supported parameter types.
+			A string literal; cannot be a variable. Identifies the
+			character encoding of the current CFML page. This attribute
+			affects the entire page, not just the cfprocessing tag body.
+			The value may be enclosed in single or double quotation
+			marks, or none.
+
+			For more information on character encodings, see:
+			www.w3.org/International/O-charset.html.
 		]]></help>
 		<values>
-			<value option="CF_SQL_BIGINT"/>
-			<value option="CF_SQL_BIT"/>
-			<value option="CF_SQL_CHAR"/>
-			<value option="CF_SQL_BLOB"/>
-			<value option="CF_SQL_CLOB"/>
-			<value option="CF_SQL_DATE"/>
-			<value option="CF_SQL_DECIMAL"/>
-			<value option="CF_SQL_DOUBLE"/>
-			<value option="CF_SQL_FLOAT"/>
-			<value option="CF_SQL_IDSTAMP"/>
-			<value option="CF_SQL_INTEGER"/>
-			<value option="CF_SQL_LONGVARCHAR"/>
-			<value option="CF_SQL_MONEY"/>
-			<value option="CF_SQL_MONEY4"/>
-			<value option="CF_SQL_NUMERIC"/>
-			<value option="CF_SQL_REAL"/>
-			<value option="CF_SQL_REFCURSOR"/>
-			<value option="CF_SQL_SMALLINT"/>
-			<value option="CF_SQL_TIME"/>
-			<value option="CF_SQL_TIMESTAMP"/>
-			<value option="CF_SQL_TINYINT"/>
-			<value option="CF_SQL_VARCHAR"/>
+			<value option="utf-8"/>
+			<value option="iso-8859-1"/>
+			<value option="windows-1252"/>
+			<value option="us-ascii"/>
+			<value option="shift_jis"/>
+			<value option="iso-2022-jp"/>
+			<value option="euc-jp"/>
+			<value option="euc-kr"/>
+			<value option="big5"/>
+			<value option="euc-cn"/>
+			<value option="utf-16"/>
 		</values>
-	</parameter>
-	<parameter name="maxlength" type="Numeric" required="false">
-		<help><![CDATA[
-			Maximum length of a string or character IN or INOUT value
-			attribute. A maxLength of 0 allows any length. The
-			maxLength attribute is not required when specifying
-			type=out.
-		]]></help>
-		<values default="0"/>
-	</parameter>
-	<parameter name="scale" type="Numeric" required="false">
-		<help><![CDATA[
-			Number of decimal places in numeric parameter. A scale of 0
-			allows any number of decimal places.
-		]]></help>
-		<values default="0"/>
-	</parameter>
-	<parameter name="null" type="boolean" required="false">
-		<help><![CDATA[
-			Whether the parameter is passed in as a null value. Not
-			used with OUT type parameters.
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-</tag>
-<!--
-	cfprocresult
-		name = "query_name"
-		resultSet = "1-n"
-		maxRows = "maxrows"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfprocresult" single="true" xmlstyle="false">
-	<return type="query" parameter="name"/>
-	<help><![CDATA[
-		Associates a query object with a result set returned by a
-		stored procedure. Other CFML tags, such as cfoutput and
-		cftable, use this query object to access the result set. This
-		tag is nested within a cfstoredproc tag.
-	]]></help>
-	<parameter name="name" type="variableName" required="true">
-		<help><![CDATA[
-			Name for the query result set.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="resultset" type="Numeric" required="false">
-		<help><![CDATA[
-			Names one result set, if stored procedure returns more than
-			one.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="maxrows" type="Numeric" required="false">
-		<help><![CDATA[
-			Maximum number of rows returned in result set.
-		]]></help>
-		<values/>
 	</parameter>
 </tag>
 <!--
@@ -4776,14 +4493,9 @@
 		username = "username"
 		password = "password"
 		maxRows = "number"
-		blockFactor = "blocksize"
-		timeout = "seconds"
 		cachedAfter = "date"
 		cachedWithin = "Timespan"
-	Either of the following:
-		debug = "boolean"
-	or
-		debug
+		psq = "Boolean"
 	>
 		[SQL statement(s)]
 	/cfquery
@@ -4835,24 +4547,6 @@
 		]]></help>
 		<values default="-1"/>
 	</parameter>
-	<parameter name="blockfactor" type="Numeric" required="false">
-		<help><![CDATA[
-			Maximum rows to get at a time from server. Range: 1 - 100.
-			Might not be supported by some database systems.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="timeout" type="Numeric" required="false">
-		<help><![CDATA[
-			Maximum number of seconds that each action of a query is
-			permitted to execute before returning an error. The
-			cumulative time may exceed this value.
-
-			For JDBC statements, CFML sets this attribute. For
-			other drivers, check driver documentation.
-		]]></help>
-		<values/>
-	</parameter>
 	<parameter name="cachedafter" type="DateTime" required="false">
 		<help><![CDATA[
 			Date value (for example, April 16, 1999, 4-16-99). If date
@@ -4881,16 +4575,16 @@
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="debug" type="boolean" required="false">
+	<parameter name="psq" type="Boolean" required="false">
 		<help><![CDATA[
-			Yes: If debugging is enabled, but the Administrator
-				Database Activity option is not enabled, displays SQL
-				submitted to datasource and number of records returned
-				by query.
-			No: If the Administrator Database Activity option is
-				enabled, suppresses display.
+			Preserve Single Quotes.
+			Works in same way as function - if set to true,
+			the default behaviour of escaping single quotes
+			is over-ridden.
+			It is also possible to globally set this value
+			in the Railo administrtor under services / datasource
 		]]></help>
-		<values default="false">
+		<values>
 			<value option="true"/>
 			<value option="false"/>
 		</values>
@@ -5030,10 +4724,13 @@
 		action = "delete"
 		branch = "branch"
 		entry = "key or value"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfregistry" single="true" xmlstyle="false">
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfregistry" single="true" xmlstyle="false" compatibility="deprecated">
 	<help><![CDATA[
 		Reads, writes, and deletes keys and values in the system registry.
 		Provides persistent storage of client variables.
+		Deprecated for the UNIX platform.
+		Note: For this tag to execute, it must be enabled in the ColdFusion MX
+		Administrator.
 	]]></help>
 	<return type="cfregistry" parameter="name"/>
 	<return type="String" parameter="variable"/>
@@ -5073,6 +4770,15 @@
 			<selectedValue attributeName="action" required="true" value="get"/>
 		</triggers>
 	</parameter>
+	<parameter name="value" type="String" required="false">
+		<help><![CDATA[
+			Value to set into the registry branch
+		]]></help>
+		<values/>
+		<triggers>
+			<selectedValue attributeName="action" required="true" value="set"/>
+		</triggers>
+	</parameter>
 	<parameter name="type" type="String" required="false">
 		<help><![CDATA[
 			* string: returns string values.
@@ -5086,6 +4792,11 @@
 			<value option="key"/>
 			<value option="Any"/>
 		</values>
+		<triggers>
+			<selectedValue attributeName="action" required="true" value="get"/>
+			<selectedValue attributeName="action" required="true" value="getAll"/>
+			<selectedValue attributeName="action" required="true" value="set"/>
+		</triggers>
 	</parameter>
 	<parameter name="name" type="variableName" required="false">
 		<help><![CDATA[
@@ -5113,135 +4824,9 @@
 			<value option="value asc"/>
 			<value option="value desc"/>
 		</values>
-	</parameter>
-	<parameter name="directory" type="String" required="true">
-		<help><![CDATA[
-			Absolute pathname of directory against which to perform
-			action.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="name" type="String" required="true">
-		<help><![CDATA[
-			Name for output record set.
-		]]></help>
-		<values/>
 		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
+			<selectedValue attributeName="action" required="true" value="getAll"/>
 		</triggers>
-	</parameter>
-	<parameter name="filter" type="String" required="true">
-		<help><![CDATA[
-			File extension filter applied to returned names. For
-			example: *.cfm. One filter can be applied.
-		]]></help>
-		<values/>
-		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
-		</triggers>
-	</parameter>
-	<parameter name="mode" type="String" required="false">
-		<help><![CDATA[
-			Applies only to UNIX and Linux. Permissions. Octal values
-			of Unix chmod command. Assigned to owner, group, and
-			other, respectively.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="sort" type="String" required="false">
-		<help><![CDATA[
-			Query column(s) by which to sort directory listing.
-			Delimited list of columns from query output.
-		]]></help>
-		<values default="asc">
-			<value option="asc"/>
-			<value option="desc"/>
-		</values>
-		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
-		</triggers>
-	</parameter>
-	<parameter name="newdirectory" type="String" required="false">
-		<help><![CDATA[
-			New name for directory.
-		]]></help>
-		<values/>
-		<triggers>
-			<selectedValue attributeName="action" required="false" value="rename"/>
-		</triggers>
-	</parameter>
-	<parameter name="recurse" type="boolean" required="false">
-		<help><![CDATA[
-			Whether ColdFusion performs the action on subdirectories.
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-		<triggers>
-			<selectedValue attributeName="action" required="false" value="list"/>
-			<selectedValue attributeName="action" required="false" value="delete"/>
-		</triggers>
-	</parameter>
-</tag>
-<!--
-	cfreport
-		report = "report_path"
-		orderBy = "result_order"
-		username = "username"
-		password = "password"
-		formula = "formula"
-		...
-	/cfreport
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfreport" single="false" xmlstyle="false">
-	<help><![CDATA[
-		Runs a predefined Crystal Reports report. Applies only to
-		Windows systems. Uses the CFCRYSTAL.exe file to generate
-		reports. Sets parameters in the Crystal Reports engine
-		according to its attribute values.
-	]]></help>
-	<parameter name="report" type="String" required="true">
-		<help><![CDATA[
-			Report path. Store Crystal Reports files in the same
-			directories as CFML page files.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="orderby" type="String" required="false">
-		<help><![CDATA[
-			Orders results according to your specifications.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="username" type="String" required="false">
-		<help><![CDATA[
-			Username required for entry into database from which report
-			is created. Overrides default settings for data source in
-			CFML Administrator.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="password" type="String" required="false">
-		<help><![CDATA[
-			Password that corresponds to username required for database
-			access. Overrides default settings for data source in
-			CFML Administrator.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="formula" type="String" required="false">
-		<help><![CDATA[
-			One or more named formulas. Terminate each formula with a
-			semicolon. Use the format:
-
-			formula = "formulaname1='formula1';formulaname2='formula2';"
-
-			If you use a semicolon in a formula, you must escape it by
-			typing it twice (;;). For example:
-
-			formula = "Name1 = 'Val_1a;;Val_1b';Name2 = 'Val2';"
-		]]></help>
-		<values/>
 	</parameter>
 </tag>
 <!--
@@ -5251,6 +4836,17 @@
 		Rethrows the currently active exception. Preserves the
 		exception's cfcatch.type and cfcatch.tagContext variable
 		values.
+	]]></help>
+</tag>
+<!--
+	cfreturn
+		expr
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfreturn" allowanyattribute="true" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Returns result values from a component method. Contains an
+		expression returned as result of the function.
+		An expression; the result of the function from which this tag
+		is called.
 	]]></help>
 </tag>
 <!--
@@ -5356,7 +4952,7 @@
 		]]></help>
 		<values/>
 	</parameter>
-	<parameter name="URL" type="URL" required="false">
+	<parameter name="url" type="URL" required="false">
 		<help><![CDATA[
 			URL of the page to execute.
 		]]></help>
@@ -5705,7 +5301,8 @@
 	cfsetting
 		enableCFoutputOnly = "boolean"
 		showDebugOutput = "boolean"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfsetting" single="false" hybrid="true" xmlstyle="false">
+		requestTimeOut = "value in seconds"
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfsetting" single="true" hybrid="true" xmlstyle="false">
 	<help><![CDATA[
 		Controls aspects of page processing, such as the output of
 		HTML code in pages.
@@ -5731,6 +5328,14 @@
 			<value option="true"/>
 			<value option="false"/>
 		</values>
+	</parameter>
+	<parameter name="requesttimeout" type="Numeric" required="false">
+		<help><![CDATA[
+			Integer; number of seconds. Time limit, after which
+			CFML processes the page as an unresponsive thread.
+			Overrides the timeout set in the CFML Administrator.
+		]]></help>
+		<values/>
 	</parameter>
 </tag>
 <!--
@@ -5998,77 +5603,6 @@
 			Applets!</b>"
 		]]></help>
 		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;"/>
-	</parameter>
-</tag>
-<!--
-	cfstoredproc
-		procedure = "procedure name"
-		dataSource = "ds_name"
-		username = "username"
-		password = "password"
-		blockFactor = "blocksize"
-		debug = "boolean"
-		returnCode = "boolean"
-		result = "result_name"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfstoredproc" single="false" xmlstyle="false">
-	<help><![CDATA[
-		Executes a stored procedure in a server database. It
-		specifies database connection information and identifies
-		the stored procedure.
-	]]></help>
-	<return type="cfstoredproc" name="cfstoredproc"/>
-	<parameter name="procedure" type="String" required="true">
-		<help><![CDATA[
-			Name of stored procedure on database server.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="datasource" type="String" required="true">
-		<help><![CDATA[
-			Name of data source that points to database that contains
-			stored procedure.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="username" type="String" required="false">
-		<help><![CDATA[
-			Overrides username in data source setup.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="password" type="String" required="false">
-		<help><![CDATA[
-			Overrides password in data source setup.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="blockfactor" type="Numeric" required="false">
-		<help><![CDATA[
-			Maximum number of rows to get at a time from server.
-			Range is 1 to 100.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="debug" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: Lists debug information on each statement
-			No: does not
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="returncode" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: Tag populates cfstoredproc.statusCode with status
-				code returned by stored procedure.
-			No: does not
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
 	</parameter>
 </tag>
 <!--
@@ -6462,6 +5996,7 @@
 		detail = "detail_description "
 		errorCode = "error_code "
 		extendedInfo = "additional_information"
+	 	object = "java_except_object"
 --><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfthrow" single="true" xmlstyle="false">
 	<help><![CDATA[
 		Throws a developer-specified exception, which can be caught
@@ -6518,6 +6053,102 @@
 		]]></help>
 		<values/>
 	</parameter>
+	<parameter name="object" type="Object" required="false">
+		<help><![CDATA[
+			Requires the value of the cfobject tag name attribute.
+
+			Throws a Java exception from a CFML tag.
+
+			This attribute is mutually exclusive with all other
+			attributes of this tag.
+		]]></help>
+		<values/>
+	</parameter>
+</tag>
+<!--
+	cftrace
+		abort = "boolean"
+		category = "String"
+		inline = "boolean"
+		text = "String"
+		type = "format"
+		var = "variable_name"
+	/cftrace
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cftrace" single="false" hybrid="true" xmlstyle="false">
+	<help><![CDATA[
+		Displays and logs debugging data about the state of an
+		application at the time the cftrace tag executes. Tracks
+		runtime logic flow, variable values, and execution time.
+		Displays output at the end of the request or in the debugging
+		section at the end of the request;
+
+		CFML logs cftrace output to the file logs\cftrace.log, in
+		the CFML installation directory.
+
+		Note: To permit this tag to execute, you must enable debugging
+		in the CFML Administrator. Optionally, to report trace
+		summaries, enable the Trace section.
+	]]></help>
+	<parameter name="abort" type="boolean" required="false">
+		<help><![CDATA[
+			Calls cfabort tag when the tag is executed
+		]]></help>
+		<values default="false">
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+	<parameter name="category" type="String" required="false">
+		<help><![CDATA[
+			User-defined string for identifying trace groups
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="inline" type="boolean" required="false">
+		<help><![CDATA[
+			Displays trace code in line on the page in the
+			location of the cftrace tag, addition to the debugging
+			information output.
+		]]></help>
+		<values default="false">
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+	<parameter name="text" type="String" required="false">
+		<help><![CDATA[
+			User-defined string, which can include simple variable,
+			but not complex variables such as arrays. Outputs to cflog
+			text attribute
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="type" type="String" required="false">
+		<help><![CDATA[
+			Corresponds to the cflog type attribute; displays an
+			appropriate icon.
+
+			* Information
+			* Warning
+			* Error
+			* Fatal Information
+		]]></help>
+		<values default="information">
+			<value option="information"/>
+			<value option="warning"/>
+			<value option="error"/>
+			<value option="fatal information"/>
+		</values>
+	</parameter>
+	<parameter name="var" type="String" required="false">
+		<help><![CDATA[
+			The name of a simple or complex variable to display.
+
+			Useful for displaying a temporary value, or a value that
+			does not display on any CFM page.
+		]]></help>
+		<values/>
+	</parameter>
 </tag>
 <!--
 	cftransaction
@@ -6532,11 +6163,9 @@
 	]]></help>
 	<parameter name="action" type="String" required="false">
 		<help><![CDATA[
-			<ul>
-			<li>begin: the start of the block of code to execute</li>
-			<li>commit: commits a pending transaction</li>
-			<li>rollback: rolls back a pending transaction</li>
-			</ul>
+			begin: the start of the block of code to execute
+			commit: commits a pending transaction
+			rollback: rolls back a pending transaction
 		]]></help>
 		<values default="begin">
 			<value option="begin"/>
@@ -6552,401 +6181,7 @@
 			<value option="read_uncommitted"/>
 			<value option="read_committed"/>
 			<value option="repeatable_read"/>
-		</values>
-	</parameter>
-</tag>
-<!--
-	cftree
-		name = "name"
-		required = "boolean"
-		delimiter = "delimiter"
-		completePath = "boolean"
-		appendKey = "boolean"
-		highlightHref = "boolean"
-		onValidate = "script_name"
-		message = "text"
-		onError = "text"
-		lookAndFeel = "motif" or "windows" or "metal"
-		font = "font"
-		fontSize = "size"
-		italic = "boolean"
-		bold = "boolean"
-		height = "integer"
-		width = "integer"
-		vSpace = "integer"
-		hSpace = "integer"
-		align = "alignment"
-		border = "boolean"
-		hScroll = "boolean"
-		vScroll = "boolean"
-		notSupported = "text"
-	...
-	/cftree
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cftree" single="false" xmlstyle="false">
-	<help><![CDATA[
-		Inserts a tree control in a form. Validates user selections.
-		Used within a cftree tag block. You can use a CFML query
-		to supply data to the tree.
-	]]></help>
-	<parameter name="name" type="String" required="true">
-		<help><![CDATA[
-			Name for tree control.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="required" type="boolean" required="false">
-		<help><![CDATA[
-			- true: user must select an item in tree control
-			- false: they do not
-			Default: false
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="delimiter" type="String" required="false">
-		<help><![CDATA[
-			Character to separate elements in form variable path.
-			Default: \\
-		]]></help>
-		<values default="\\">
-			<value option="\\"/>
-			<value option=","/>
-			<value option=";"/>
-			<value option="|"/>
-			<value option=":"/>
-		</values>
-	</parameter>
-	<parameter name="completepath" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: passes the root part of treename.path form variable
-				when cftree is submitted
-			No, or omitted: root level of form variable is not passed;
-				path value starts with the first node
-			For the preserveData attribute of cfform to work with the
-			tree, you must set this attribute to Yes.
-			If you specify a root name for a tree item with cftreeitem
-			queryasroot, that value is returned. If you do not specify
-			a root name, CFML returns the query name as the root.
-			Default: false
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="appendkey" type="boolean" required="false">
-		<help><![CDATA[
-			- true: if you use cftreeitem href attributes, ColdFusion
-			  appends a CFTREEITEMKEY query string variable with
-			  the value of the selected tree item to the cfform action URL.
-			- false: do not append the tree item value to the URL.
-			Default: true
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="highlighthref" type="boolean" required="false">
-		<help><![CDATA[
-			- true: highlights as a link the displayed value for any
-			  cftreeitem tag that specifies a href attribute.
-			- false: disables highlighting.
-			Default: true
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="onvalidate" type="String" required="false">
-		<help><![CDATA[
-			JavaScript function to validate user input. The form object,
-			input object, and input object value are passed to the
-			specified routine, which should return True if validation
-			succeeds; False, otherwise.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="message" type="String" required="false">
-		<help><![CDATA[
-			Message to display if validation fails.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="onerror" type="String" required="false">
-		<help><![CDATA[
-			JavaScript function to execute if validation fails.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="lookandfeel" type="String" required="false">
-		<help><![CDATA[
-			- motif: renders slider in Motif style
-			- windows: renders slider in Windows style
-			- metal: renders slider in Java Swing style
-			If platform does not support style option, tag defaults to
-			platform default style.
-			Default: windows
-		]]></help>
-		<values default="windows">
-			<value option="motif"/>
-			<value option="windows"/>
-			<value option="metal"/>
-		</values>
-	</parameter>
-	<parameter name="font" type="String" required="false">
-		<help><![CDATA[
-			Font name for data in tree control.
-		]]></help>
-		<values default="arial">
-			<value option="arial"/>
-			<value option="times"/>
-			<value option="courier"/>
-			<value option="arialunicodeMS"/>
-		</values>
-	</parameter>
-	<parameter name="fontsize" type="Numeric" required="false">
-		<help><![CDATA[
-			Font size for text in tree control, in points.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="italic" type="boolean" required="false">
-		<help><![CDATA[
-			- true: displays tree control text in italics
-			- false: it does not
-			Default: false
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="bold" type="boolean" required="false">
-		<help><![CDATA[
-			- true: displays tree control text in bold
-			- false: it does not
-			Default: false
-		]]></help>
-		<values default="false">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="height" type="Numeric" required="false">
-		<help><![CDATA[
-			Tree control height, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="width" type="Numeric" required="false">
-		<help><![CDATA[
-			Tree control width, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="vspace" type="Numeric" required="false">
-		<help><![CDATA[
-			Vertical margin above and below tree control, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="hspace" type="Numeric" required="false">
-		<help><![CDATA[
-			Horizontal spacing to left and right of tree control, in pixels.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="align" type="String" required="false">
-		<help><![CDATA[
-			Alignment of the tree control applet object.
-		]]></help>
-		<values>
-			<value option="top"/>
-			<value option="left"/>
-			<value option="bottom"/>
-			<value option="baseline"/>
-			<value option="texttop"/>
-			<value option="absbottom"/>
-			<value option="middle"/>
-			<value option="absmiddle"/>
-			<value option="right"/>
-		</values>
-	</parameter>
-	<parameter name="border" type="boolean" required="false">
-		<help><![CDATA[
-			- true: display a border around the tree control.
-			- false: no border
-			Default: true
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="hscroll" type="boolean" required="false">
-		<help><![CDATA[
-			- true: permits horizontal scrolling
-			- false: no horizontal scrolling
-			Default: true
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="vscroll" type="boolean" required="false">
-		<help><![CDATA[
-			- true: permits vertical scrolling
-			- false: no vertical scrolling
-			Default: true
-		]]></help>
-		<values default="true">
-			<value option="true"/>
-			<value option="false"/>
-		</values>
-	</parameter>
-	<parameter name="notsupported" type="String" required="false">
-		<help><![CDATA[
-			Text to display if a page that contains a Java applet-based
-			cfform control is opened by a browser that does not
-			support Java or has Java support disabled.
-			Default:
-			"<b>Browser must support Java to <br>view ColdFusion Java
-			Applets!</b>"
-		]]></help>
-		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;"/>
-	</parameter>
-</tag>
-<!--
-	cftreeitem
-		value = "text"
-		display = "text"
-		parent = "parent_name"
-		img = "filename"
-		imgopen = "filename"
-		href = "URL"
-		target = "URL_target"
-		query = "queryname"
-		queryAsRoot = "boolean"
-		expand = "boolean"
---><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cftreeitem" single="true" xmlstyle="false">
-	<help><![CDATA[
-		Populates a form tree control, created with the cftree tag,
-		with elements. To display icons, you can use the img values
-		that CFML provides, or reference your own icons.
-	]]></help>
-	<parameter name="value" type="String" required="true">
-		<help><![CDATA[
-			Value passed when cfform is submitted. When populating a
-			tree with data from a cfquery, specify columns in a
-			delimited list. Example: value = "dept_id,emp_id"
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="display" type="String" required="false">
-		<help><![CDATA[
-			Tree item label. When populating a tree with data from a
-			query, specify names in a delimited list. Example:
-			display = "dept_name,emp_name"
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="parent" type="String" required="false">
-		<help><![CDATA[
-			Value for tree item parent.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="img" type="String" required="false">
-		<help><![CDATA[
-			Image name, filename, or file URL for tree item icon.
-
-			You can specify a custom image. To do so, include path and
-			file extension; for example:
-
-			img = "../images/page1.gif"
-
-			To specify more than one image in a tree, or an image at
-			the second or subsequent level, use commas to separate
-			names, corresponding to level; for example:
-
-			img = "folder,document"
-			img = ",document" (example of second level)
-		]]></help>
-		<values>
-			<value option="cd"/>
-			<value option="computer"/>
-			<value option="document"/>
-			<value option="element"/>
-			<value option="folder"/>
-			<value option="floppy"/>
-			<value option="fixed"/>
-			<value option="remote"/>
-		</values>
-	</parameter>
-	<parameter name="imgopen" type="String" required="false">
-		<help><![CDATA[
-			Icon displayed with open tree item. You can specify icon
-			filename with a relative path. You can use a CFML
-			image.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="href" type="String" required="false">
-		<help><![CDATA[
-			URL to associate with tree item or query column for a tree
-			that is populated from a query. If href is a query column,
-			its value is the value populated by query. If href is not
-			recognized as a query column, it is assumed that its text
-			is an HTML href.
-
-			When populating a tree with data from a query, HREFs can be
-			specified in delimited list; for example:
-
-			href = "http://dept_svr,http://emp_svr"
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="target" type="String" required="false">
-		<help><![CDATA[
-			Target attribute of href URL. When populating a tree with
-			data from a query, specify target in delimited list:
-
-			target = "FRAME_BODY,_blank"
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="query" type="String" required="false">
-		<help><![CDATA[
-			Query name to generate data for the treeitem.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="queryAsRoot" type="String" required="false">
-		<help><![CDATA[
-			Defines query as the root level. This avoids having to
-			create another parent cftreeitem.
-
-				* Yes
-				* No
-				* String to use as the root name
-			If you do not specify a root name, CFML returns the
-			query name as the root.
-		]]></help>
-		<values/>
-	</parameter>
-	<parameter name="expand" type="boolean" required="false">
-		<help><![CDATA[
-			Yes: expands tree to show tree item children
-			No: keeps tree item collapsed
-		]]></help>
-		<values>
-			<value option="true"/>
-			<value option="false"/>
+			<value option="serializable"/>
 		</values>
 	</parameter>
 </tag>
@@ -7122,6 +6357,53 @@
 		</values>
 	</parameter>
 </tag>
+<!--
+	cfwhile
+		expression
+		...
+	/cfwhile
+
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfwhile" allowanyattribute="true" single="false" xmlstyle="false">
+	<help><![CDATA[
+		This tag is a simplification of the tag <cfloop condition="expression">,
+		analogous to the cfscript while loop.
+		Example:
+		<cfset count=0>
+		<cfwhile count LT 10>
+		   <cfset count=count+1>
+		   <cfoutput>#count#</cfoutput>
+		</cfwhile>
+	]]></help>
+</tag>
+<!--
+	cfxml
+		variable="xmlVarName"
+		caseSensitive="boolean"
+	/cfxml
+--><tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfxml" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Creates a CFML XML document object that contains the
+		markup in the tag body. This tag can include XML and CFML tags.
+		CFML processes the CFML code in the tag body, then assigns
+		the resulting text to an XML document object variable.
+	]]></help>
+	<return type="xml" parameter="variable"/>
+	<parameter name="variable" type="variableName" required="true">
+		<help><![CDATA[
+			Name of an xml variable
+		]]></help>
+		<values/>
+	</parameter>
+	<parameter name="casesensitive" type="boolean" required="false">
+		<help><![CDATA[
+			Maintains the case of document elements and attributes
+		]]></help>
+		<values default="false">
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+</tag>
 	</tags>
 
 	<functions>
@@ -7146,6 +6428,22 @@
 	<parameter name="number" type="Numeric" required="true">
 		<help><![CDATA[
 			The value to be converted into an angle. Must be between -1 and 1.
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Array Array([mixed m[, mixed m[, ...]]])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="array" returns="Array">
+	<help><![CDATA[
+		Like the arrayNew function, the array function creates a new 
+		one dimensional array. The difference is you can immediately
+		set the values of the created array by using this function.
+		Example: array('string',1,array(1,2,3),now())
+	]]></help>
+	<parameter name="expression" type="mixed" required="true">
+		<help><![CDATA[
+			A comma delimited list of array elements elements.
+			eg: 'string',1,array(1,2,3),now()
 		]]></help>
 	</parameter>
 </function>
@@ -7276,6 +6574,41 @@
 	</parameter>
 </function>
 <!--
+	Array ArrayMerge(array a1, array a2[, boolean leaveIndex])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="arraymerge" returns="Array">
+	<help><![CDATA[
+		This function merges two arrays to a single one.
+		The third parameter (leaveIndex) defines whether 
+		the merged arrays will maintain their index values 
+		or if the second array will simply append to the first one.
+		If both arrays contain the same index and you specified 
+		the parameter leaveIndex to true, the corresponding 
+		index in the resulting array will always contain the 
+		value of the index of the first array.
+		Example:
+		<cfdump var="#arraymerge(array(1,2,3),array('a','b','c','d'),true)#">
+		Output: {1,2,3,d}
+		<cfdump var="#arraymerge(array(1,2,3),array('a','b','c','d'),false)#">
+		Output: {1,2,3,a,b,c,d}
+	]]></help>
+	<parameter name="a1" type="Array" required="true">
+		<help><![CDATA[
+			The first array to merge.
+		]]></help>
+	</parameter>
+	<parameter name="a2" type="Array" required="true">
+		<help><![CDATA[
+			The second array to merge.
+		]]></help>
+	</parameter>
+	<parameter name="leaveIndex" type="Boolean" required="true">
+		<help><![CDATA[
+			If true, only indexes not in a1 will be applied from a2.
+			If false, the indexes of a2 will be increased by the length of a1.
+		]]></help>
+	</parameter>
+</function>
+<!--
 	Numeric ArrayMin(array)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="arraymin" returns="Numeric">
 	<help><![CDATA[
@@ -7341,6 +6674,20 @@
 	</parameter>
 </function>
 <!--
+	array ArrayReverse(array a)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="arrayreverse" returns="boolean">
+	<help><![CDATA[
+		Reverses the order of the elements in the original array.
+		This function takes an array and returns a new array 
+		with the values of the original array in reverse order.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+			Name of an array
+		]]></help>
+	</parameter>
+</function>
+<!--
 	boolean ArraySet(array, start_pos, end_pos, value)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="arrayset" returns="boolean">
 	<help><![CDATA[
@@ -7362,6 +6709,50 @@
 	</parameter>
 	<parameter name="value" type="Object" required="true">
 		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	array ArraySlice(array a, int offset [, number length])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="arrayslice" returns="boolean">
+	<help><![CDATA[
+		arraySlice returns a part of the original array, set by offset and length.
+
+		If offset is positive, the sequence begins with this offset
+		taken from the beginning of the array.
+		if offset is negative or 0 the offset starts with elements 
+		taken from before the end of the array.
+
+		If length is positive, the returned array is of this length. 
+		If length is negative, the returned array contains all values 
+		from offset to length elements before the end of the original array.
+		If length is not specified, the returned array contains all
+		elements starting from offset to the end of the original array. 
+
+		Example:
+		<cfscript>
+			input = array("a", "b", "c", "d", "e");
+			
+			dump(arraySlice(input, 3)); // returns "c", "d", und "e"
+			dump(arraySlice(input, 3, -1)); // returns "c", "d"
+			dump(arraySlice(input, -1, 1)); // returns "d"
+			dump(arraySlice(input, 0, 1)); // returns "f"
+			dump(arraySlice(input, 1, 1)); // returns "a"
+		</cfscript>
+	]]></help>
+	<parameter name="a" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="offset" type="Numeric" required="true">
+		<help><![CDATA[
+			If positive, the sequence is taken from the start.
+			If negative, or zero, the sequence is taken from the end.
+		]]></help>
+	</parameter>
+	<parameter name="length" type="Numeric" required="false">
+		<help><![CDATA[
+			If not specified, length is all elements from the offset to the end.
 		]]></help>
 	</parameter>
 </function>
@@ -7472,6 +6863,17 @@
 	</parameter>
 </function>
 <!--
+	String ArrayToStruct(array a)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="arraytostruct" returns="String">
+	<help><![CDATA[
+		Converts an array to a structure.
+	]]></help>
+	<parameter name="a" type="Array" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
 	Numeric Asc(string)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="asc" returns="Numeric">
 	<help><![CDATA[
@@ -7502,6 +6904,19 @@
 		is number.
 	]]></help>
 	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Numeric Beat()
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="beat" returns="Numeric">
+	<help><![CDATA[
+		Converts a time object to the time zone independent "Swatch Beat Time".
+		The current timezone is taken as a basis for conversion.
+		If no time is entered, the current time is used.
+	]]></help>
+	<parameter name="t" type="DateTime" required="true">
 		<help><![CDATA[
 		]]></help>
 	</parameter>
@@ -7821,6 +7236,70 @@
 	</parameter>
 </function>
 <!--
+	CreateObject(type, class, context, serverName)
+	CreateObject(type, component-name)
+	CreateObject(type, context, class, locale)
+	CreateObject(type, class)
+	CreateObject(type, urltowsdl)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="createobject" returns="Object">
+<help><![CDATA[
+		The CreateObject function takes different arguments depending on the value of the first argument:
+
+		CreateObject('com', class, context, serverName)
+		CreateObject('component', component-name)
+		CreateObject('java', class)
+		CreateObject('webservice', urltowsdl)
+	]]></help>
+
+	<parameter name="type" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="component"/>
+			<value option="com"/>
+			<value option="java"/>
+			<value option="webservice"/>
+		</values>
+	</parameter>
+	<parameter name="context" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="true" index="2"/>
+		</triggers>
+	</parameter>
+	<parameter name="class" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="true" index="1"/>
+			<selectedValue attributeName="type" value="java" required="true" index="1"/>
+		</triggers>
+	</parameter>
+	<parameter name="servername" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="com" required="true" index="3"/>
+		</triggers>
+	</parameter>
+	<parameter name="component_name" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="component" required="true" index="1"/>
+		</triggers>
+	</parameter>
+	<parameter name="urltowsdl" type="String" required="true">
+		<help><![CDATA[
+			WSDL file URL; location of web service
+		]]></help>
+		<triggers>
+			<selectedValue attributeName="type" value="webservice" required="true" index="1"/>
+		</triggers>
+	</parameter>
+</function>
+<!--
 	ODBCDate CreateODBCDate(date)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="createodbcdate" returns="ODBCDate">
 	<help><![CDATA[
@@ -7931,7 +7410,8 @@
 		Adds units of time to a date.
 		[datepart - quicky]
 		yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day
-		w: Weekday; ww: Week; h: Hour; n: Minute; s: Second
+		w: Weekday; ww: Week; h: Hour; n: Minute; s: Second;
+		l: Millisecond
 	]]></help>
 	<parameter name="datepart" type="String" required="true">
 		<help><![CDATA[
@@ -7947,6 +7427,7 @@
 			<value option="h"/>
 			<value option="n"/>
 			<value option="s"/>
+			<value option="l"/>
 		</values>
 	</parameter>
 	<parameter name="number" type="Numeric" required="true">
@@ -8113,7 +7594,8 @@
 		Extracts a part from a date value as a numeric.
 		[datepart - quicky]
 		yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day
-		w: Weekday; ww: Week; h: Hour; n: Minute; s: Second
+		w: Weekday; ww: Week; h: Hour; n: Minute; s: Second;
+		l: Millisecond
 	]]></help>
 	<parameter name="datepart" type="String" required="true">
 		<help><![CDATA[
@@ -8129,6 +7611,7 @@
 			<value option="h"/>
 			<value option="n"/>
 			<value option="s"/>
+			<value option="l"/>
 		</values>
 	</parameter>
 	<parameter name="date" type="DateTime" required="true">
@@ -8173,6 +7656,18 @@
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="dayofweekasstring" returns="String">
 	<help><![CDATA[
 		Determines the day of the week as a string from 1-7
+	]]></help>
+	<parameter name="day_of_week" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	String DayOfWeekShortAsString(day_of_week)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="dayofweekshortasstring" returns="String">
+	<help><![CDATA[
+		Determines the day of the week as a string from 1-7,
+		and returns abbreviated name.
 	]]></help>
 	<parameter name="day_of_week" type="Numeric" required="true">
 		<help><![CDATA[
@@ -8311,6 +7806,23 @@
 	</parameter>
 </function>
 <!--
+	void dump(mixed m[ ,string label])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="dump" returns="void">
+	<help><![CDATA[
+		Analogous to the tag cfdump.
+	]]></help>
+	<parameter name="m" type="Object" required="true">
+		<help><![CDATA[
+			The object to dump.
+		]]></help>
+	</parameter>
+	<parameter name="label" type="String" required="false">
+		<help><![CDATA[
+			Label to apply to the dumped output.
+		]]></help>
+	</parameter>
+</function>
+<!--
 	Object Duplicate(variable_name)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="duplicate" returns="Object">
 	<help><![CDATA[
@@ -8319,6 +7831,21 @@
 	]]></help>
 	<parameter name="variable" type="Object" required="true">
 		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	String Echo(string)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="echo" returns="String">
+	<help><![CDATA[
+		Alias for writeOutput function.
+		Appends text to the page-output stream.
+		This function writes to the page-output stream regardless of
+		conditions established by the cfsetting tag.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			A string, or a variable that contains one
 		]]></help>
 	</parameter>
 </function>
@@ -8520,6 +8047,13 @@
 	</parameter>
 </function>
 <!--
+	String GetAuthUser()
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getauthuser" returns="String">
+	<help><![CDATA[
+		Gets the name of an authenticated user.
+	]]></help>
+</function>
+<!--
 	Object GetBaseTagData(tagname [, instancenumber ] )
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getbasetagdata" returns="Object">
 	<help><![CDATA[
@@ -8577,15 +8111,18 @@
 	</parameter>
 </function>
 <!--
-	Object getException(object)
---><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getexception" returns="Object">
+	String GetEncoding(scope_name)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getencoding" returns="String">
 	<help><![CDATA[
-		Used with the cftry and cfcatch tags. Retrieves a Java
-		exception object from a Java object.
+		Returns the encoding (character set) of the Form or URL scope.
 	]]></help>
-	<parameter name="javaobject" type="Object" required="true">
+	<parameter name="scope_name" type="String" required="true">
 		<help><![CDATA[
 		]]></help>
+		<values>
+			<value option="form"/>
+			<value option="url"/>
+		</values>
 	</parameter>
 </function>
 <!--
@@ -8596,6 +8133,18 @@
 	]]></help>
 	<parameter name="path" type="String" required="true">
 		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Struct GetFunctionData(string functionName)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getfunctiondata" returns="Struct">
+	<help><![CDATA[
+		Writes a detailed description of the specified function.
+	]]></help>
+	<parameter name="functionName" type="String" required="true">
+		<help><![CDATA[
+			Name of the function to display data about.
 		]]></help>
 	</parameter>
 </function>
@@ -8632,8 +8181,10 @@
 </function>
 <!--
 	Numeric GetK2ServerDocCount()
---><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getk2serverdoccount" returns="Numeric">
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getk2serverdoccount" returns="Numeric" compatibility="deprecated">
 	<help><![CDATA[
+		This function is deprecated.
+		
 		Determines the number of documents that can be searched by the
 		CFML registered K2 Server. This function is used
 		primarily by the CFML Verity and K2Server Administrator
@@ -8644,8 +8195,10 @@
 </function>
 <!--
 	Numeric GetK2ServerDocCountLimit()
---><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getk2serverdoccountlimit" returns="Numeric">
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getk2serverdoccountlimit" returns="Numeric" compatibility="deprecated">
 	<help><![CDATA[
+		This function is deprecated.
+		
 		Gets the maximum number of documents that the CFML
 		registered K2 Server is permitted to return from a search.
 		This function is used primarily by the CFML Verity and
@@ -8662,6 +8215,19 @@
 		currency values in a CFML application session, you use
 		the SetLocale function.
 	]]></help>
+</function>
+<!--
+	Object GetMetaData(object)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getmetadata" returns="Object">
+	<help><![CDATA[
+		Gets metadata (the methods, properties, and parameters of a
+		component) associated with an object that is deployed on the
+		CFML server.
+	]]></help>
+	<parameter name="Object" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
 </function>
 <!--
 	Object GetMetricData(mode)
@@ -8692,6 +8258,31 @@
 	</parameter>
 </function>
 <!--
+	Object GetPageContext()
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getpagecontext" returns="Object">
+	<help><![CDATA[
+		Gets the current CFML MX PageContext object that
+		provides access to page attributes and configuration, request
+		and response objects.
+	]]></help>
+</function>
+<!--
+	Struct GetProfileSections(iniFile)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getprofilesections" returns="Struct">
+	<help><![CDATA[
+		Gets all the sections of an initialization file.
+		An initialization file, as a struct whose format is as follows:
+			- Each initialization file section name is a key in the
+			  struct
+			- Each list of entries in a section of an initialization
+			  file is a value in the struct
+	]]></help>
+	<parameter name="inifile" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
 	String GetProfileString(iniPath, section, entry)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getprofilestring" returns="String">
 	<help><![CDATA[
@@ -8713,6 +8304,33 @@
 		<help><![CDATA[
 		]]></help>
 	</parameter>
+</function>
+<!--
+	Struct GetTagData(string nameSpace, string functionName)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="gettagdata" returns="Struct">
+	<help><![CDATA[
+		Writes a detailed description of the specified tag.
+		Example:
+		getTagData('cf','abort')
+	]]></help>
+	<parameter name="nameSpace" type="String" required="true">
+		<help><![CDATA[
+			The name-space of the tag.
+		]]></help>
+		<values default="cf"/>
+	</parameter>
+	<parameter name="tagName" type="String" required="true">
+		<help><![CDATA[
+			Name of the function to display data about.
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Struct GetTagList()
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="gettaglist" returns="Struct">
+	<help><![CDATA[
+		Displays a list of the tags that are available in Railo.
+	]]></help>
 </function>
 <!--
 	String GetTempDirectory()
@@ -8743,8 +8361,10 @@
 </function>
 <!--
 	GetTemplatePath
---><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="gettemplatepath" returns="String">
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="gettemplatepath" returns="String" compatibility="deprecated">
 	<help><![CDATA[
+		This function is deprecated.
+		
 		Use the GetBaseTemplatePath function instead.
 	]]></help>
 </function>
@@ -8797,6 +8417,19 @@
 			<value option=":"/>
 		</values>
 	</parameter>
+</function>
+<!--
+	mixed GetVariable(name)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="getvariable" returns="mixed">
+	<help><![CDATA[
+		Returns an object which corresponds to the original name.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			String name of the variable.
+		]]></help>
+	</parameter>
+
 </function>
 <!--
 	String Hash(string)
@@ -9045,8 +8678,10 @@
 </function>
 <!--
 	boolean IsK2ServerABroker()
---><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isk2serverabroker" returns="boolean">
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isk2serverabroker" returns="boolean" compatibility="deprecated">
 	<help><![CDATA[
+		This function is deprecated.
+		
 		Determines whether the K2Server version is K2 Broker. For more
 		information, see GetK2ServerDocCountLimit. This function is
 		used primarily by the CFML Verity and K2Server
@@ -9056,8 +8691,10 @@
 </function>
 <!--
 	boolean IsK2ServerDocCountExceeded()
---><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isk2serverdoccountexceeded" returns="boolean">
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isk2serverdoccountexceeded" returns="boolean" compatibility="deprecated">
 	<help><![CDATA[
+		This function is deprecated.
+		
 		Determines whether the number of documents that can be searched
 		by the CFML registered K2 Server exceed the limit.
 		Depends on the K2Server platform limit; see
@@ -9066,8 +8703,10 @@
 </function>
 <!--
 	boolean IsK2ServerOnline()
---><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isk2serveronline" returns="boolean">
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isk2serveronline" returns="boolean" compatibility="deprecated">
 	<help><![CDATA[
+		This function is deprecated.
+		
 		Determines whether the K2Server is running and available to
 		perform a search. This function is used primarily by the
 		CFML Verity and K2Server Administrator pages. This
@@ -9111,6 +8750,31 @@
 	</parameter>
 </function>
 <!--
+	boolean IsNull(mixed m)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isnull" returns="boolean">
+	<help><![CDATA[
+		Determines whether a value is null or not
+	]]></help>
+	<parameter name="m" type="mixed" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	boolean IsObject(value)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isobject" returns="boolean">
+	<help><![CDATA[
+		Determines whether a value is an object.
+		True, if the value represents a CFML object. False if
+		the value is any other type of data, such as an integer, string,
+		date, or struct.
+	]]></help>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
 	boolean IsQuery(value)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isquery" returns="boolean">
 	<help><![CDATA[
@@ -9147,10 +8811,58 @@
 	</parameter>
 </function>
 <!--
+	boolean IsUserInRole("role_name")
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isuserinrole" returns="String">
+	<help><![CDATA[
+		Determines whether an authenticated user belongs to the
+		specified Role.
+	]]></help>
+	<parameter name="role_name" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
 	boolean IsWDDX(value)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="iswddx" returns="boolean">
 	<help><![CDATA[
 		Determines whether a value is a well-formed WDDX packet.
+	]]></help>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	boolean IsXmlDoc(value)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isxmldoc" returns="boolean">
+	<help><![CDATA[
+		Determines whether a function parameter is an Extended Markup
+		language (XML) document object.
+	]]></help>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	boolean IsXmlElem(value)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isxmlelem" returns="boolean">
+	<help><![CDATA[
+		Determines whether a function parameter is an Extended Markup
+		language (XML) document object element.
+	]]></help>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	boolean IsXmlRoot(value)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isxmlroot" returns="boolean">
+	<help><![CDATA[
+		Determines whether a function parameter is the root element of
+		an Extended Markup language (XML) document object.
 	]]></help>
 	<parameter name="value" type="Object" required="true">
 		<help><![CDATA[
@@ -10031,7 +9743,7 @@
 		locale-specific format.
 		[mask - quicky]
 		h,hh,H,HH: Hours; m,mm: Minutes; s,ss: Seconds;
-		t: A or P; tt: AM or PM
+		l: Milliseconds; t: A or P; tt: AM or PM
 		"short" = h:mm tt; "medium" = h:mm:ss tt
 	]]></help>
 	<parameter name="time" type="DateTime" required="true">
@@ -10153,11 +9865,37 @@
 	</parameter>
 </function>
 <!--
+	String MonthShortAsString(month_number)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="monthshortasstring" returns="String">
+	<help><![CDATA[
+		Returns the abbreviated name of a month.
+	]]></help>
+	<parameter name="month_number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
 	DateTime Now()
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="now" returns="DateTime">
 	<help><![CDATA[
 		Gets the current date and time of the computer running the
 		CFML server.
+	]]></help>
+</function>
+<!--
+	DateTime NowServer()
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="nowserver" returns="DateTime">
+	<help><![CDATA[
+		Gets the current date and time of the server, regardless
+		of the timezone configuration in the Railo administrator.
+	]]></help>
+</function>
+<!--
+	null NullValue()
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="nullvalue" returns="null">
+	<help><![CDATA[
+		Returns null.
 	]]></help>
 </function>
 <!--
@@ -10182,6 +9920,8 @@
 	</parameter>
 	<parameter name="mask" type="String" required="false">
 		<help><![CDATA[
+		Railo supports the keyword "roman"
+		which converts the number into roman numerals.
 		]]></help>
 	</parameter>
 </function>
@@ -10266,6 +10006,31 @@
 	</parameter>
 </function>
 <!--
+	Query Query(array column1[, array column2[, ... ]])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="query" returns="Query">
+	<help><![CDATA[
+		Creates an query object and immediately sets the values.
+
+		Example:
+			MyQuery = query(lastName:array('Jordan','Bryant'),age:array(42,24))
+
+		Equivalent to:
+			MyQuery = QueryNew('lastName,age')
+			QueryAddRow(MyQuery)
+			QuerySetCell(MyQuery,'lastName','Jordan')
+			QuerySetCell(MyQuery,'age',42)
+			QueryAddRow(MyQuery)
+			QuerySetCell(MyQuery,'lastName','Bryant')
+			QuerySetCell(MyQuery,'age',24)
+	]]></help>
+	<parameter name="expression" type="mixed" required="true">
+		<help><![CDATA[
+			A list of named array values for each column in the array.
+			column1:[array], column2:[array], etc.
+		]]></help>
+	</parameter>
+</function>
+<!--
 	Numeric QueryAddColumn(query, column-name, array-name)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="queryaddcolumn" returns="Numeric">
 	<help><![CDATA[
@@ -10298,6 +10063,25 @@
 		]]></help>
 	</parameter>
 	<parameter name="number" type="Numeric" required="false">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	mixed QueryGetCell(query q, string columnName[, number rowNumber])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="querygetcell" returns="mixed">
+	<help><![CDATA[
+		Returns a value from a query object
+	]]></help>
+	<parameter name="q" type="Query" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="columnName" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="rowNumber" type="Numeric" required="false">
 		<help><![CDATA[
 		]]></help>
 	</parameter>
@@ -10337,6 +10121,30 @@
 	<parameter name="row" type="Numeric" required="false">
 		<help><![CDATA[
 		]]></help>
+	</parameter>
+</function>
+<!--
+	boolean QuerySort(query q, string columnName[, string direction])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="querysort" returns="boolean">
+	<help><![CDATA[
+		Sorts a query object according to the specified column name and direction.
+		By default direction is ascending (asc). 
+	]]></help>
+	<parameter name="q" type="Query" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="columnName" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="direction" type="String" required="false">
+		<help><![CDATA[
+		]]></help>
+		<values default="asc">
+			<value option="asc"/>
+			<value option="desc"/>
+		</values>
 	</parameter>
 </function>
 <!--
@@ -10485,6 +10293,17 @@
 			<value option="true"/>
 			<value option="false"/>
 		</values>
+	</parameter>
+</function>
+<!--
+	void ReleaseComObject(objectName)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="releasecomobject" returns="void">
+	<help><![CDATA[
+		Releases a COM Object and frees up resources that it used.
+	]]></help>
+	<parameter name="objectName" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
 	</parameter>
 </function>
 <!--
@@ -10762,6 +10581,52 @@
 	</parameter>
 </function>
 <!--
+	string Serialize(mixed m)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="serialize" returns="string">
+	<help><![CDATA[
+		Counterpiece to Evaluate function.
+		Serializes an object to a string.
+		A serialized string can be re-loaded with the evaluate function.
+	]]></help>
+	<parameter name="m" type="mixed" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	void SetEncoding(scope_name,charset)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="setencoding" returns="void">
+	<help><![CDATA[
+		Sets the character encoding (character set) of Form and URL
+		scope variable values; used when the character encoding of
+		the input to a form, or the character encoding of a URL, is
+		not in UTF-8 encoding.
+	]]></help>
+	<parameter name="scope_name" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="charset" type="String" required="true">
+		<help><![CDATA[
+			The character encoding in which text in the scope
+			variables is encoded.
+		]]></help>
+		<values>
+			<value option="utf-8"/>
+			<value option="iso-8859-1"/>
+			<value option="windows-1252"/>
+			<value option="us-ascii"/>
+			<value option="shift_jis"/>
+			<value option="iso-2022-jp"/>
+			<value option="euc-jp"/>
+			<value option="euc-kr"/>
+			<value option="big5"/>
+			<value option="euc-cn"/>
+			<value option="utf-16"/>
+		</values>
+	</parameter>
+</function>
+<!--
 	String SetLocale(new_locale)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="setlocale" returns="String">
 	<help><![CDATA[
@@ -10936,6 +10801,22 @@
 	<parameter name="String" type="String" required="true">
 		<help><![CDATA[
 			A string or a variable that contains one
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Struct Struct(key: mixed m[, key=mixed m[, ... ]])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="struct" returns="Struct">
+	<help><![CDATA[
+		Like the StructNew function, the Struct function creates a new structure.
+		The difference is that you can immediately initialize the 
+		contents of the structure by using this function.
+		Example: struct(key1:"value 1', key2:struct(), key3: struct)
+	]]></help>
+	<parameter name="expression" type="mixed" required="true">
+		<help><![CDATA[
+			A comma delimited list of key-value pairs.
+			eg: key1:"value 1', key2:struct(), key3: struct
 		]]></help>
 	</parameter>
 </function>
@@ -11437,7 +11318,7 @@
 	</parameter>
 </function>
 <!--
-	String URLDecode(urlEncodedString)
+	String URLDecode(urlEncodedString[, charset])
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="urldecode" returns="String">
 	<help><![CDATA[
 		Decodes a URL-encoded string.
@@ -11446,9 +11327,27 @@
 		<help><![CDATA[
 		]]></help>
 	</parameter>
+	<parameter name="charset" type="String" required="false">
+		<help><![CDATA[
+			The character encoding in which the string is encoded.
+		]]></help>
+		<values>
+			<value option="utf-8"/>
+			<value option="iso-8859-1"/>
+			<value option="windows-1252"/>
+			<value option="us-ascii"/>
+			<value option="shift_jis"/>
+			<value option="iso-2022-jp"/>
+			<value option="euc-jp"/>
+			<value option="euc-kr"/>
+			<value option="big5"/>
+			<value option="euc-cn"/>
+			<value option="utf-16"/>
+		</values>
+	</parameter>
 </function>
 <!--
-	String URLEncodedFormat(string)
+	String URLEncodedFormat(string [, charset ])
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="urlencodedformat" returns="String">
 	<help><![CDATA[
 		Generates a URL-encoded string. For example, it replaces spaces
@@ -11460,6 +11359,43 @@
 		<help><![CDATA[
 			A string or a variable that contains one
 		]]></help>
+	</parameter>
+	<parameter name="charset" type="String" required="false">
+		<help><![CDATA[
+			The character encoding in which the string is encoded.
+		]]></help>
+		<values>
+			<value option="utf-8"/>
+			<value option="iso-8859-1"/>
+			<value option="windows-1252"/>
+			<value option="us-ascii"/>
+			<value option="shift_jis"/>
+			<value option="iso-2022-jp"/>
+			<value option="euc-jp"/>
+			<value option="euc-kr"/>
+			<value option="big5"/>
+			<value option="euc-cn"/>
+			<value option="utf-16"/>
+		</values>
+	</parameter>
+</function>
+<!--
+	URL URLSessionFormat(request_URL)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="urlsessionformat" returns="URL">
+	<help><![CDATA[
+		Depending on whether a client computer accepts cookies, this
+		function does the following:
+		* If the client does not accept cookies: automatically appends
+			all required client identification information to a URL
+		* If the client accepts cookies: does not append information
+	]]></help>
+	<parameter name="requesturl" type="URL" required="true">
+		<help><![CDATA[
+			URL of a CFML page
+		]]></help>
+		<values>
+			<value option="cgi.script_name"/>
+		</values>
 	</parameter>
 </function>
 <!--
@@ -11523,6 +11459,36 @@
 	</parameter>
 </function>
 <!--
+	String Wrap(string, limit[, strip])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="wrap" returns="String">
+	<help><![CDATA[
+		Wraps text so that each line has a specified maximum number
+		of characters.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+			String or variable that contains one. The text to wrap.
+		]]></help>
+	</parameter>
+	<parameter name="limit" type="Numeric" required="true">
+		<help><![CDATA[
+			Positive integer maximum number of characters to allow on
+			a line.
+		]]></help>
+	</parameter>
+	<parameter name="strip" type="boolean" required="false">
+		<help><![CDATA[
+			whether to remove all existing newline and carriage return
+			characters in the input string with spaces before wrapping
+			the text. Default: False.
+		]]></help>
+		<values default="false">
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+</function>
+<!--
 	String WriteOutput(string)
 --><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="writeoutput" returns="String">
 	<help><![CDATA[
@@ -11533,6 +11499,138 @@
 	<parameter name="String" type="String" required="true">
 		<help><![CDATA[
 			A string, or a variable that contains one
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Numeric XmlChildPos(elem, childName, N)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="xmlchildpos" returns="Numeric">
+	<help><![CDATA[
+		Gets the position of a child element within an XML document
+		object.
+		The position, in an XmlChildren array, of the Nth child that
+		has the specified name.
+	]]></help>
+	<parameter name="elem" type="Node" required="true">
+		<help><![CDATA[
+			XML element within which to search
+		]]></help>
+	</parameter>
+	<parameter name="childname" type="String" required="true">
+		<help><![CDATA[
+			XML child element for which to search
+		]]></help>
+	</parameter>
+	<parameter name="n" type="Numeric" required="true">
+		<help><![CDATA[
+			Index of XMLchild element for which to search
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Object XmlElemNew(xmlObj, childName)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="xmlelemnew" returns="Object">
+	<help><![CDATA[
+		Creates an XML document object element
+	]]></help>
+	<parameter name="xmlobj" type="Object" required="true">
+		<help><![CDATA[
+			The name of an XML object. An XML document or an element.
+		]]></help>
+	</parameter>
+	<parameter name="childname" type="String" required="true">
+		<help><![CDATA[
+			The name of the element to create. This element becomes a
+			child element of xmlObj in the tree.
+		]]></help>
+	</parameter>
+</function>
+<!--
+	String XmlFormat(string)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="xmlformat" returns="String">
+	<help><![CDATA[
+		Escapes special XML characters in a string, so that the
+		string is safe to use with XML.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
+<!--
+	Object XmlNew([caseSensitive])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="xmlnew" returns="Object">
+	<help><![CDATA[
+		Creates an XML document object.
+	]]></help>
+	<parameter name="casesensitive" type="boolean" required="false">
+		<help><![CDATA[
+			Maintains the case of document elements and attributes.
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+</function>
+<!--
+	Object XmlParse(xmlString [, caseSensitive ])
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="xmlparse" returns="Object">
+	<help><![CDATA[
+		Converts an XML document that is represented as a string
+		variable into an XML document object.
+	]]></help>
+	<parameter name="xmlstring" type="String" required="true">
+		<help><![CDATA[
+			An XML document object string
+		]]></help>
+	</parameter>
+	<parameter name="casesensitive" type="boolean" required="false">
+		<help><![CDATA[
+			Maintains the case of document elements and attributes.
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true"/>
+ 			<value option="false"/>
+		</values>
+	</parameter>
+</function>
+<!--
+	Array XmlSearch(xmlDoc, xPathString)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="xmlsearch" returns="Array">
+	<help><![CDATA[
+	]]></help>
+	<parameter name="xmldoc" type="Object" required="true">
+		<help><![CDATA[
+			XML document object
+		]]></help>
+	</parameter>
+	<parameter name="xpathstring" type="String" required="true">
+		<help><![CDATA[
+			XPath expression
+		]]></help>
+	</parameter>
+</function>
+<!--
+	String XmlTransform(xml, xslstring)
+--><function xmlns="http://www.cfeclipse.org/version1/dictionary" name="xmltransform" returns="String">
+	<help><![CDATA[
+		Applies an Extensible Stylesheet Language Transformation (XSLT)
+		to an XML document object that is represented as a string
+		variable. An XSLT converts an XML document to another format
+		or representation by applying an Extensible Stylesheet
+		Language (XSL) stylesheet to it.
+	]]></help>
+	<parameter name="xml" type="String" required="true">
+		<help><![CDATA[
+		An XML document in string format, or an XML document object.
+		]]></help>
+	</parameter>
+	<parameter name="xslstring" type="String" required="true">
+		<help><![CDATA[
+			XSLT transformation to apply.
 		]]></help>
 	</parameter>
 </function>
@@ -11570,36 +11668,32 @@
 
 	<scopes>
 <scopes xmlns="http://www.cfeclipse.org/version1/dictionary">
-	<!-- Updated by Jordan Clark: jclark@imagineeringstudio.com -->
+	<!-- Updated by Peter Boughton; cf@bpsite.co.uk -->
 
 	
 	<!-- Server scope variables -->
-	<scope value="Server.ColdFusion.ProductName" type="String"><help><![CDATA[ 
-		ColdFusion product name, usually "ColdFusion Server"
+	<scope value="Server.Railo.Version" type="String"><help><![CDATA[ 
+		Railo version.
+		For example: 1.0.0.027
 	]]></help></scope>
-	<scope value="Server.ColdFusion.ProductVersion" type="String"><help><![CDATA[ 
-		ColdFusion product release information. Comma seperated list
-		of build numbers, first number is the major build number.
-		For example: 5,0,0,12345
+	<scope value="Server.Railo.State" type="String"><help><![CDATA[ 
+		Railo state information:
+		For example: "final"
 	]]></help></scope>
-	<scope value="Server.ColdFusion.ProductLevel" type="String"><help><![CDATA[ 
-		ColdFusion product level information, for example:
-		"Professional", "Enterprise", or "Developer"
+	<scope value="Server.Railo.Realease-date" type="DateTime"><help><![CDATA[ 
+		Timestamp of release date of this version.
+		For example: {ts '2006-02-28 00:00:00'}
 	]]></help></scope>
-	<scope value="Server.ColdFusion.SerialNumber" type="String"><help><![CDATA[ 
-		ColdFusion serial number.
+	<scope value="Server.Java.Version" type="Numeric"><help><![CDATA[ 
+		Java Version.
+		For example: 1.5.0_06
 	]]></help></scope>
-	<scope value="Server.ColdFusion.SupportedLocales" type="String"><help><![CDATA[ 
-		Locales supported by ColdFusion, comma seperated.
-	]]></help></scope>
-	<scope value="Server.ColdFusion.Expiration" type="DateTime"><help><![CDATA[ 
-		Expiration date of ColdFusion.
+	<scope value="Server.Java.Vendor" type="String"><help><![CDATA[ 
+		The vendor of the Java installation.
+		For example: Sun Microsystems Inc.
 	]]></help></scope>
 	<scope value="Server.OS.Name" type="String"><help><![CDATA[ 
 		Server operating system name.
-	]]></help></scope>
-	<scope value="Server.OS.AdditionalInformation" type="String"><help><![CDATA[ 
-		Information about the host operating system.
 	]]></help></scope>
 	<scope value="Server.OS.Version" type="Numeric"><help><![CDATA[ 
 		Operating system version.
@@ -11607,8 +11701,31 @@
 	<scope value="Server.OS.Arch" type="String"><help><![CDATA[ 
 		The computer architecture, Windows computers are: x86
 	]]></help></scope>
-	<scope value="Server.OS.BuildNumber" type="String"><help><![CDATA[ 
-		Build number of the host operating system.
+	<scope value="Server.ColdFusion.ProductName" type="String"><help><![CDATA[ 
+		CFML Server product name. ie: Railo.
+	]]></help></scope>
+	<scope value="Server.ColdFusion.ProductVersion" type="String"><help><![CDATA[ 
+		Version of ColdFusion that current Railo verision is compatible with.
+		For example: 6,1,0,0
+	]]></help></scope>
+	<scope value="Server.ColdFusion.ProductLevel" type="String"><help><![CDATA[ 
+		Product level information, for example:
+		"Professional", "Enterprise", "Community", or "Developer"
+	]]></help></scope>
+	<scope value="Server.ColdFusion.SerialNumber" type="String"><help><![CDATA[ 
+		Serial Number. "Not accessible."
+	]]></help></scope>
+	<scope value="Server.ColdFusion.ProductContextCount" type="String"><help><![CDATA[ 
+		"inf"
+	]]></help></scope>
+	<scope value="Server.Separator.Line" type="String"><help><![CDATA[ 
+		Line seperator (newline and/or carriage return)
+	]]></help></scope>
+	<scope value="Server.Separator.File" type="String"><help><![CDATA[ 
+		File path seperator (\ on windows, / on everything else)
+	]]></help></scope>
+	<scope value="Server.Separator.Path" type="String"><help><![CDATA[ 
+		Path seperator (;)
 	]]></help></scope>
 	
 	
@@ -11655,7 +11772,8 @@
 	<scope value="Session.SessionID" type="String"><help><![CDATA[ 
 		A unique identifier for the session. ColdFusion session
 		management: a combination of the application name and CFID
-		and CFToken values. 
+		and CFToken values. J2EE session management: the jsessionid
+		value.
 	]]></help></scope>
 	
 	
@@ -11904,11 +12022,13 @@
 	<scope value="CFDIRECTORY.DateLastModified" type="DateTime"><help><![CDATA[ 
 		Returns the date an entry was last modified.
 	]]></help></scope>
-	<scope value="CFDIRECTORY.Mode" type="String"><help><![CDATA[ 
-		File mode for solaris.
+	<scope value="CFDIRECTORY.Mode" type="String" compatibility="deprecated"><help><![CDATA[ 
+		(Deprecated) Empty value for backward compatibility with
+		ColdFusion 5 on UNIX.
 	]]></help></scope>
 	<scope value="CFDIRECTORY.Name" type="String"><help><![CDATA[ 
-		Returns the directory or file entry name.
+		Returns the directory or file entry name. ( "." and ".."
+		aren't returned since 6.0)
 	]]></help></scope>
 	<scope value="CFDIRECTORY.Size" type="Numeric"><help><![CDATA[ 
 		Returns the size of directory or file entry.
@@ -12060,6 +12180,14 @@
 		Body of message.
 		(only when action="getall")
 	]]></help></scope>
+	<scope value="CFPOP.TextBody" type="String"><help><![CDATA[ 
+		Text Body of message.
+		(only when action="getall")
+	]]></help></scope>
+	<scope value="CFPOP.HtmlBody" type="String"><help><![CDATA[ 
+		HTML Body of message.
+		(only when action="getall")
+	]]></help></scope>
 	<scope value="CFPOP.CC" type="String"><help><![CDATA[ 
 		CC value from message header.
 	]]></help></scope>
@@ -12094,6 +12222,10 @@
 	<scope value="CFPOP.RecordCount" type="Numeric"><help><![CDATA[ 
 		Total number of records in the query.
 	]]></help></scope>
+	<scope value="CFPOP.UID" type="Numeric"><help><![CDATA[ 
+		Unique identifier for the e-mail message file.
+		(mail header X-UID field)
+	]]></help></scope>
 	
 	
 	<!-- Any Query -->
@@ -12111,6 +12243,17 @@
 	<!-- cfhttp variables -->
 	<!-- CFHTTP prefix can be renamed with RESULT attribute -->
 	<!-- REFERENCE: http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&file=00000272.htm -->
+	<scope value="CFHTTP.CharSet" type="String"><help><![CDATA[ 
+		Response character character set (character encoding)
+		specified by the response Content-Type header.
+	]]></help></scope>
+	<scope value="CFHTTP.ErrorDetail" type="String"><help><![CDATA[ 
+		If the connection to the HTTP server fails, contains details
+		about the failure. For instance: "Unknown host: my.co.com";
+		otherwise, the empty string. Macromedia recommends that you
+		check this variable for an error condition before checking
+		other variables.
+	]]></help></scope>
 	<scope value="CFHTTP.FileContent" type="String"><help><![CDATA[ 
 		Response body; for example: the contents of a html page
 		retrieved by a GET operation. Empty if you save the response
@@ -12137,6 +12280,13 @@
 		The HTTP status_code header value followed by the HTTP
 		Explanation header value.
 		Example: 200 OK
+	]]></help></scope>
+	<scope value="CFHTTP.Text" type="boolean"><help><![CDATA[ 
+		Boolean; True if the response body content type is text.
+		ColdFusion recognizes the response body as text if: The
+		header does not specify a content type, or it starts with
+		"text" or "message" or the full content
+		type="application/octet-stream".
 	]]></help></scope>
 	
 	
@@ -12542,7 +12692,7 @@
 	<scope value="CFCATCH.Type" type="String"><help><![CDATA[ 
 		The exception's type, possible values: Application, Database,
 		Template, Security, Object, MissingInclude, Expression, Lock,
-		or a Custom Type.
+		SearchEngine or a Custom Type.
 	]]></help></scope>
 	<scope value="CFCATCH.Detail" type="String"><help><![CDATA[ 
 		A detailed message from the CFML compiler. This message,
@@ -12569,8 +12719,8 @@
 	<scope value="CFCATCH.TagContext" type="Array"><help><![CDATA[ 
 		Array of tag information structures.
 	]]></help></scope>
-	<scope value="CFCATCH.TagContext[x].Column" type="Numeric"><help><![CDATA[ 
-		The column on the line where the tag is located.
+	<scope value="CFCATCH.TagContext[x].Column" type="Numeric" compatibility="obsolete"><help><![CDATA[ 
+		Obsolete (retained for backwards compatibility). Always 0.
 	]]></help></scope>
 	<scope value="CFCATCH.TagContext[x].ID" type="String"><help><![CDATA[ 
 		The tag in which the exception occurred. Exceptions in
@@ -12580,6 +12730,9 @@
 	]]></help></scope>
 	<scope value="CFCATCH.TagContext[x].Line" type="Numeric"><help><![CDATA[ 
 		The line on the page in which the tag is located.
+	]]></help></scope>
+	<scope value="CFCATCH.TagContext[x].Raw_Trace" type="String"><help><![CDATA[ 
+		The raw Java stack trace for the error.
 	]]></help></scope>
 	<scope value="CFCATCH.TagContext[x].Template" type="String"><help><![CDATA[ 
 		The pathname of the application page that contains the tag.
@@ -12628,6 +12781,20 @@
 		value of CFCATCH.SQLState is -1.
 		Available for database exceptions.
 	]]></help></scope>
+	<scope value="CFCATCH.SQL" type="String"><help><![CDATA[ 
+		The SQL statement sent to the data source.
+		Available for database exceptions.
+	]]></help></scope>
+	<scope value="CFCATCH.QueryError" type="String"><help><![CDATA[ 
+		The error message as reported by the database driver.
+		Available for database exceptions.
+	]]></help></scope>
+	<scope value="CFCATCH.Where" type="String"><help><![CDATA[ 
+		If the query uses the cfqueryparam tag, query parameter
+		name-value pairs.
+		Available for database exceptions.
+	]]></help></scope>
+	
 	
 	<!-- CFERROR variables -->
 	<!-- REFERENCE: http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&file=00001138.htm -->
@@ -12693,10 +12860,15 @@
 		Error message associated with the exception.
 		Available for Exception type errors.
 	]]></help></scope>
+	<scope value="CFERROR.RootCause" type="java object"><help><![CDATA[ 
+		Java servlet exception reported by the JVM as the cause of
+		the "root cause" of the exception.
+		Available for Exception type errors.
+	]]></help></scope>
 	<scope value="CFERROR.Type" type="String"><help><![CDATA[ 
 		Exception type, possible values: Application, Database,
 		Template, Security, Object, MissingInclude, Expression, Lock,
-		or a Custom Type.
+		SearchEngine or a Custom Type.
 	]]></help></scope>
 	<scope value="CFERROR.TagContext" type="Array"><help><![CDATA[ 
 		Array of structures containing information for each tag in
@@ -12704,8 +12876,8 @@
 		currently open.
 		Available for Exception type errors.
 	]]></help></scope>
-	<scope value="CFERROR.TagContext[x].Column" type="Numeric"><help><![CDATA[ 
-		The column on the line where the tag is located.
+	<scope value="CFERROR.TagContext[x].Column" type="Numeric" compatibility="obsolete"><help><![CDATA[ 
+		Obsolete (retained for backwards compatibility). Always 0.
 	]]></help></scope>
 	<scope value="CFERROR.TagContext[x].ID" type="String"><help><![CDATA[ 
 		The tag in which the exception occurred. Exceptions in CFScript
@@ -12790,10 +12962,15 @@
 		Error message associated with the exception.
 		Available for Exception type errors.
 	]]></help></scope>
+	<scope value="ERROR.RootCause" type="java object"><help><![CDATA[ 
+		Java servlet exception reported by the JVM as the cause of
+		the "root cause" of the exception.
+		Available for Exception type errors.
+	]]></help></scope>
 	<scope value="ERROR.Type" type="String"><help><![CDATA[ 
 		Exception type, possible values: Application, Database,
 		Template, Security, Object, MissingInclude, Expression, Lock,
-		or a Custom Type.
+		SearchEngine or a Custom Type.
 	]]></help></scope>
 	<scope value="ERROR.TagContext" type="Array"><help><![CDATA[ 
 		Array of structures containing information for each tag in
@@ -12801,8 +12978,8 @@
 		currently open.
 		Available for Exception type errors.
 	]]></help></scope>
-	<scope value="ERROR.TagContext[x].Column" type="Numeric"><help><![CDATA[ 
-		The column on the line where the tag is located.
+	<scope value="ERROR.TagContext[x].Column" type="Numeric" compatibility="obsolete"><help><![CDATA[ 
+		Obsolete (retained for backwards compatibility). Always 0.
 	]]></help></scope>
 	<scope value="ERROR.TagContext[x].ID" type="String"><help><![CDATA[ 
 		The tag in which the exception occurred. Exceptions in CFScript
@@ -12811,6 +12988,9 @@
 	]]></help></scope>
 	<scope value="ERROR.TagContext[x].Line" type="Numeric"><help><![CDATA[ 
 		The line on the page in which the tag is located. (int)
+	]]></help></scope>
+	<scope value="ERROR.TagContext[x].Raw_Trace" type="String"><help><![CDATA[ 
+		The raw Java stack trace for the error.
 	]]></help></scope>
 	<scope value="ERROR.TagContext[x].Template" type="String"><help><![CDATA[ 
 		The pathname of the application page that contains the tag.

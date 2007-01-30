@@ -44,8 +44,16 @@
 			<grammar location="cfml5.xml" />
 			<grammar location="user.xml" />
 		</version>
+		<version key="bd70" label="BlueDragon 7.0">
+			<grammar location="cfmlBD70.xml" />
+			<grammar location="user.xml" />
+		</version>
 		<version key="bd621" label="BlueDragon 6.2.1">
 			<grammar location="cfmlBD621.xml" />
+			<grammar location="user.xml" />
+		</version>
+		<version key="railo1" label="Railo 1.0">
+			<grammar location="railo1.xml" />
 			<grammar location="user.xml" />
 		</version>
 	</dictionary>
