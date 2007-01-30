@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>page_shell</name>
+<help>Your basic run-of-the-mill html page shell</help>
+<starttext><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="$${Content:text/html};charset=$${Charset:utf-8}">
+	<title>$${Title}</title>
+</head>
+<body>
+	]]></starttext>
+<endtext><![CDATA[
+</body>
+</html>]]></endtext>
+</snippet>

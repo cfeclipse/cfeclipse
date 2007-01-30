@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>cfifelse</name>
+<help>simple if else statement</help>
+<starttext><![CDATA[<cfif ]]></starttext>
+<endtext><![CDATA[>
+
+<cfelse>
+
+</cfif>]]></endtext>
+</snippet>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfinvoke
+		component = "component name or reference"
+		method = "method name"
+		returnVariable = "variable name"
+		argumentCollection = "argument collection"
+	OR
+	cfinvoke
+		method = "method name"
+		returnVariable = "variable name"
+		argumentCollection = "argument collection"
+	OR
+	cfinvoke
+		webservice = "URLtoWSDL_location"
+		method = "operation_name"
+		username = user name"
+		password = "password"
+		timeout = "request timeout in seconds"
+		proxyServer = "WSDL proxy server URL
+		proxyPort = "port on proxy server"
+		proxyUser = "user id for proxy server"
+		proxyPassword = "password for proxy server"
+		inputParam1 = "value1"
+		inputParam2 = "value2"
+		...
+		returnVariable = "var_name"
+	OR
+	cfinvoke
+		component = "#mystringname for instantiated component#"
+		method = "method name"
+		returnVariable = "variable name"
+		argumentCollection = "argument collection"
+	OR
+	cfinvoke
+		webservice = "#my stringname for instantiated web service#"
+		timeout = "request timeout in seconds"
+		proxyServer = "WSDL proxy server url
+		proxyPort = "numeric port on proxy server"
+		proxyUser = "string user id for proxy server"
+		proxyPassword = "string user password for proxy server"
+	=============================================================
+	cfinvoke
+		webservice = "URLtoWSDL_location"
+		method = "operation_name"
+		username = user name"
+		password = "password"
+		timeout = "request timeout in seconds"
+		proxyServer = "WSDL proxy server URL
+		proxyPort = "port on proxy server"
+		proxyUser = "user id for proxy server"
+		proxyPassword = "password for proxy server"
+		returnVariable = "var_name"
+		component = "component name or reference"
+		argumentCollection = "argument collection"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfinvoke" single="false" xmlstyle="false" hybrid="true" allowanyattribute="true">
+	<help><![CDATA[
+		Does either of the following:
+
+		* Invokes a component method from within a CFML page or
+			component.
+		* Invokes a web service.
+		Different attribute combonations make some attributes required
+		at sometimes and not at others.
+	]]></help>
+	<return type="Any" parameter="returnVariable" />
+	<parameter name="component" type="String" required="false">
+		<help><![CDATA[
+			String or component object; a reference to a component, or
+			component to instantiate.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="method" type="String" required="true">
+		<help><![CDATA[
+			Name of a method. For a web service, the name of an
+			operation.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="returnvariable" type="variableName" required="false">
+		<help><![CDATA[
+			Name of a variable for the invocation result.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="argumentcollection" type="String" required="false">
+		<help><![CDATA[
+			Name of a structure; associative array of arguments to pass
+			to the method.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="username" type="String" required="false">
+		<help><![CDATA[
+			Overrides username specified in Administrator > Web Services
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="password" type="String" required="false">
+		<help><![CDATA[
+			Overrides passowrd specified in Administrator > Web Services
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="webservice" type="URL" required="false">
+		<help><![CDATA[
+			The URL of the WSDL file for the web service.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="timeout" type="Numeric" required="false">
+		<help><![CDATA[
+			The timeout for the web service request, in seconds
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="proxyserver" type="String" required="false">
+		<help><![CDATA[
+			The proxy server required to access the webservice URL.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="proxyport" type="Numeric" required="false">
+		<help><![CDATA[
+			The port to use on The proxy server.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="proxyuser" type="String" required="false">
+		<help><![CDATA[
+			The user ID to send to the proxy server.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="proxypassword" type="String" required="false">
+		<help><![CDATA[
+			The user's password on the proxy server.
+		]]></help>
+		<values />
+	</parameter>
+</tag>
