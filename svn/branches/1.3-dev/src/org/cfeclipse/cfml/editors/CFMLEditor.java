@@ -44,6 +44,8 @@ import org.cfeclipse.cfml.editors.actions.GotoFileAction;
 import org.cfeclipse.cfml.editors.actions.InsertGetAndSetAction;
 import org.cfeclipse.cfml.editors.actions.JumpToDocPos;
 import org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction;
+import org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction;
+import org.cfeclipse.cfml.editors.actions.LocateInTreeAction;
 import org.cfeclipse.cfml.editors.actions.RTrimAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
@@ -503,6 +505,18 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 * @param menu
 	 */
 	protected void addTagSpecificMenuItems(IMenuManager menu) {
+		
+		//Find out which version of Eclipse we are running in:
+		boolean inEclipse32 = false;
+		final String version = System.getProperty("osgi.framework.version"); //$NON-NLS-1$
+		   if (version != null && version.startsWith("3.2")) //$NON-NLS-1$
+		   {
+		       inEclipse32 = true;
+		   }
+		
+
+		
+		
 		//all this mess is really just to get the offset and a handle to the
 		//CFDocument object attached to the Document...
 		try {
@@ -534,6 +548,32 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 
 
+			//Add programatically the locate in File Explorer and navigator for Eclipse 3.1 users
+			
+			if(!inEclipse32){
+				
+				act = new Action("Show in File Explorer", null){
+					public void run(){
+						LocateInFileSystemAction action = new LocateInFileSystemAction();
+						action.run(null);
+					}
+				};
+					menu.add(act);
+					
+					
+				act = new Action("Show in Navigator", null){
+					public void run(){
+						LocateInTreeAction action = new LocateInTreeAction();
+						action.run(null);
+					}
+				};
+					menu.add(act);
+				
+				
+			}
+			
+			
+			
 			act = new Action("Show partition info", null) {
 				public void run() {
 				    /*
