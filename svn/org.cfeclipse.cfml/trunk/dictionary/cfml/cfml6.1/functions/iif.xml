@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String IIf(condition, string_expression1, string_expression2)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="iif" returns="String">
+	<help><![CDATA[
+		Evaluates a Boolean conditional dynamic expression. Depending
+		on whether the expression is true or false, dynamically
+		evaluates one of two string expressions and returns the result.
+	]]></help>
+	<parameter name="condition" type="boolean" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="expression1" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="expression2" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

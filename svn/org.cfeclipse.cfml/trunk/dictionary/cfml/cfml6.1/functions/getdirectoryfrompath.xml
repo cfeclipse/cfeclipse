@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String GetDirectoryFromPath(path)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getdirectoryfrompath" returns="String">
+	<help><![CDATA[
+		Extracts a directory from an absolute path.
+		Returns the absolute path, without the filename.
+	]]></help>
+	<parameter name="path" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

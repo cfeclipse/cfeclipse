@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object GetTimeZoneInfo()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="gettimezoneinfo" returns="Object">
+	<help><![CDATA[
+		Gets local time zone information for the computer on which it
+		is called, relative to Universal Time Coordinated (UTC). UTC is
+		the mean solar time of the meridian of Greenwich, England.
+	]]></help>
+	<parameter name="text" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
