@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.CoreException;
 public class ComponentNode extends TreeParent
 {
     private IFile file;
-
+    private TreeParent parent;
 
     public ComponentNode(IFile cfcfile)
     {
@@ -32,6 +32,14 @@ public class ComponentNode extends TreeParent
         expand(cfcfile);
     }
 
+    public void setParent(TreeParent parent){
+    	this.parent = parent;
+    }
+
+    public TreeParent getParent(){
+    	return this.parent;
+    	
+    }
     private void expand(IFile cfcfile)
     {
         this.clearChildren();
@@ -94,18 +102,33 @@ public class ComponentNode extends TreeParent
         return CFPluginImages.ICON_CFC;
     }
     
+    public String getName(){
+    	
+    	String componentName = file.getName().replaceAll(".cfc$", "");
+    	return componentName;
+    }
+    
     public String toString()
     {
         return getName();
     }
+    public String getPackageName(){
+    	
+    	System.out.println(parent.getClass());
+    	String packagename = parent.getPackageName();
+    	packagename = packagename + "." + this.getName();
+    	return packagename;
+    }
 
     public String getCreateObjectSnippet()
     {
-        String snippet = "CreateObject(\"component\", \"" + "\")";
+        String snippet = "CreateObject(\"component\", \"" + this.getPackageName() + "\")";
         return snippet;
 
     }
 
+   
+    
     public String getDetails()
     {
         String details = "Details for " + toString() + "\n\n";

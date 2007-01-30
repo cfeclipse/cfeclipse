@@ -30,6 +30,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.cfeclipse.cfml.dictionary.Parameter;
 
@@ -92,30 +94,57 @@ public class CFDocUtils {
 	 * @returns A Set of strings containing the names of the attributes found.
 	 */
 	public static Map parseForAttributes(String string2Scan) {
+		
+		/*
+		 * Original regEx before escaping:
+		 * \s*(\w+)\s*=\s*('(?:[^']*(?:'')?[^']*)*'|"(?:[^"]*(?:"")?[^"]*)*")
+		 */
+		String regExForAtributes = "\\s*(\\w+)\\s*=\\s*('(?:[^']*(?:'')?[^']*)*'|\"(?:[^\"]*(?:\"\")?[^\"]*)*\")";
+		
+		//Do a reg ex rather than just a split
+		 Pattern pattern = Pattern.compile(regExForAtributes);
+		 Matcher matcher = pattern.matcher(string2Scan);
+		 
 		Map attribs = new HashMap();
-		//This should return a neat map of items
-		StringTokenizer st2 = new StringTokenizer(string2Scan," ");
-		//System.out.println("Has more tokens " + st2.hasMoreTokens());
-		//TODO: Removed as it seemed to ignore if there was one. not sure why this was doing this?
-		//if(st2.hasMoreTokens())
-		//	st2.nextToken();
-
-		String[] fullAttrib;
-		while(st2.hasMoreTokens()) {
-		    fullAttrib = st2.nextToken().split("=");
-		    if (fullAttrib.length > 1 && fullAttrib[1].length() > 1) {
-		    	String attribName = fullAttrib[0];
-			    String attribValue = fullAttrib[1];
-			    
-			    if(!CFDocUtils.isValidAttributeValue(attribValue))
-			    	continue;
-			    
-			    attribValue = attribValue.substring(1, attribValue.length()-1);
-			    
-			    attribs.put(attribName, attribValue);
-		    }
-		}
+		 
+		 //For each attribute/value pairs we find, we creaate a new attribute.
+		  while (matcher.find()) {
+			  String fullAttributeAndValue = matcher.group();
+			  String[] strings = parseAttribute(fullAttributeAndValue);
+			  
+			  System.out.println(strings[0] + strings[1]);
+			  String attribName = strings[0];
+			  String attribValue = strings[1];
+				
+			  attribs.put(attribName, attribValue);
+			  
+		  }	  
+		 
+		
 		return attribs;
+		
+		
+	
+		
+	}
+	
+	private static String[] parseAttribute(String fullAttribute){
+		String[] parsedAttribute = {"",""};
+		//To split a var="something" we just need to find the location of the first "=" and we split it like that
+		String dirtyAttributeName = fullAttribute.substring(0, fullAttribute.indexOf("="));
+		String dirtyAttributeValue = fullAttribute.substring(fullAttribute.indexOf("=")+1, fullAttribute.length());
+		
+		parsedAttribute[0] = dirtyAttributeName.trim();
+		String cleanAttributeValue = dirtyAttributeValue.trim();
+		
+	//	remove starting " and ending "
+		if(cleanAttributeValue.startsWith("\"") && cleanAttributeValue.endsWith("\"")){
+			cleanAttributeValue = cleanAttributeValue.substring(1, cleanAttributeValue.length()-1);
+		}
+		
+		parsedAttribute[1] = cleanAttributeValue;
+		
+		return parsedAttribute;
 	}
 	
 	/**

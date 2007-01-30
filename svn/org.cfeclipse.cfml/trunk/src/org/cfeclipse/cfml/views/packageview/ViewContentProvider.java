@@ -11,6 +11,8 @@ import org.cfeclipse.cfml.views.packageview.objects.ProjectNode;
 import org.cfeclipse.cfml.views.packageview.objects.TreeObject;
 import org.cfeclipse.cfml.views.packageview.objects.TreeParent;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectNature;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -100,7 +102,19 @@ public class ViewContentProvider implements IStructuredContentProvider, ITreeCon
         for(int i = 0; i < projects.length; i++) 
         {
         	if(projects[i].isOpen())
-        		invisibleRoot.addChild( new ProjectNode(projects[i]) ); 
+        		invisibleRoot.addChild( new ProjectNode(projects[i]) );
+//				try {
+//					IProjectNature nature = projects[i].getNature("org.cfeclipse.cfml.natures.CFENature");
+//					
+//					if(nature != null){
+//						 
+//					}
+//				} catch (CoreException e) {
+//					//Nature not found
+//				}
+        		
+        	
+        		
         
         }
         

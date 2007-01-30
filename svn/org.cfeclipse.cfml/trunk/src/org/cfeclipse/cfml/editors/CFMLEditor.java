@@ -44,6 +44,8 @@ import org.cfeclipse.cfml.editors.actions.GotoFileAction;
 import org.cfeclipse.cfml.editors.actions.InsertGetAndSetAction;
 import org.cfeclipse.cfml.editors.actions.JumpToDocPos;
 import org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction;
+import org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction;
+import org.cfeclipse.cfml.editors.actions.LocateInTreeAction;
 import org.cfeclipse.cfml.editors.actions.RTrimAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
@@ -120,7 +122,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
-
+import org.eclipse.ui.texteditor.StatusTextEditor;
 
 
 /**
@@ -183,7 +185,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void doSave(IProgressMonitor monitor) {
-		//On save parsing should apparently go into a builder.
+		//TODO: On save parsing should apparently go into a builder.
 
 		// Trim trailing spaces if the option is turned on
 		if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
@@ -275,7 +277,6 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);	
 		
-//		TODO: Add the file path location to the status line
 	
 	
 	}
@@ -476,6 +477,25 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		//addAction(menu,ITextEditorActionConstants.UPPER_CASE);
 		//addAction(menu,ITextEditorActionConstants.LOWER_CASE);
 	}
+	
+	
+	
+	private CFEPartition getPartitionAtCursor(){
+		final IEditorPart iep = getSite().getPage().getActiveEditor();
+		final ITextEditor editor = (ITextEditor) iep;
+		final IDocument doc = editor.getDocumentProvider().getDocument(
+				editor.getEditorInput());
+
+		final ICFDocument cfd = (ICFDocument) doc;
+		final ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
+				.getSelection();
+		int startpos = sel.getOffset();
+		int len = Math.max(sel.getLength(),1);
+		CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+		
+		CFEPartition part = partitioner.findClosestPartition(startpos);
+		return part;
+	}
 
 	/**
 	 * Add menu items based on the tag that was right clicked on... doesnt work as
@@ -485,6 +505,18 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 * @param menu
 	 */
 	protected void addTagSpecificMenuItems(IMenuManager menu) {
+		
+		//Find out which version of Eclipse we are running in:
+		boolean inEclipse32 = false;
+		final String version = System.getProperty("osgi.framework.version"); //$NON-NLS-1$
+		   if (version != null && version.startsWith("3.2")) //$NON-NLS-1$
+		   {
+		       inEclipse32 = true;
+		   }
+		
+
+		
+		
 		//all this mess is really just to get the offset and a handle to the
 		//CFDocument object attached to the Document...
 		try {
@@ -516,6 +548,32 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 
 
+			//Add programatically the locate in File Explorer and navigator for Eclipse 3.1 users
+			
+			if(!inEclipse32){
+				
+				act = new Action("Show in File Explorer", null){
+					public void run(){
+						LocateInFileSystemAction action = new LocateInFileSystemAction();
+						action.run(null);
+					}
+				};
+					menu.add(act);
+					
+					
+				act = new Action("Show in Navigator", null){
+					public void run(){
+						LocateInTreeAction action = new LocateInTreeAction();
+						action.run(null);
+					}
+				};
+					menu.add(act);
+				
+				
+			}
+			
+			
+			
 			act = new Action("Show partition info", null) {
 				public void run() {
 				    /*
@@ -571,63 +629,24 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			 */
 			act = new Action("Edit this tag", null){
 				public void run() {
-					/*
-					 * Since we are already in a start tag, we find the start and the end 
-					 * 
-					 */
-					
-					int startpos = sel.getOffset();
-					//Find the length just in case
-					int len = Math.max(sel.getLength(),1);
-					
-					//default start and end are at the cursor
-					int startoftag = sel.getOffset();
-					int endoftag = sel.getOffset();
-					int lengthoftag = endoftag - startoftag;
-					
-					try {
-						startoftag = doc.search(startpos, "<", false, true, false);
-						endoftag = doc.search(startpos, ">", true, true, false);
-						lengthoftag = endoftag - startoftag + 1;
-					} catch (BadLocationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					TextSelection selection = new TextSelection(startoftag, lengthoftag);
-					editor.getSelectionProvider().setSelection(selection);
-					TextSelection seli = (TextSelection)editor.getSelectionProvider().getSelection();
-					
-					//Now we have the whole start tag, we can then pass the tagname and 
-					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-					CFEPartition part = partitioner.findClosestPartition(startpos);
-					
-					
-					Map tagattribs = CFDocUtils.parseStartTag(part.getTagName(), seli.getText());
-					//find you which dictionary this belongs to!
 				
-					Tag tag = null;
-					SyntaxDictionary dic = EditableTags.getDictionary(part.getType());
-					
-					if(dic != null){
-						tag = dic.getTag(part.getTagName());
-					}
-					
-					if(tag != null){
-						EditTagAction eta = new EditTagAction(tag, Display.getCurrent().getActiveShell(),tagattribs);
-					
+						EditTagAction eta = new EditTagAction();
 						eta.run();
-					} 
+					 
 				}
 			};
+			
 			//Only display if you are at the start tag
 			int startpos = sel.getOffset();
 			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 			CFEPartition part = partitioner.findClosestPartition(startpos);
+			
 			if(	EditableTags.isEditable(part.getType())){
 				menu.add(act);
 			}
 			
+			
+			//This is not only for
 			act = new Action("Genrate Getters and Setters", null){
 					public void run(){
 						InsertGetAndSetAction insertGetSet = new InsertGetAndSetAction();
@@ -635,6 +654,14 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 						insertGetSet.run(null);
 					}
 				};
+			
+			/*	TODO: Setup the Generate Getters and Setters, 
+			 * 	This might actually go into the suggest stuff
+			 *	Add More checks:
+			 *		1) If we are in a CFC
+			 *		2) If the cursor is in a cfproperty tag
+			 *		3) or if we are in a cfset tag who's parent tag is a cfcomponent tag  
+			 */	
 			
 			if(part.getTagName().equalsIgnoreCase("cfproperty")){
 				menu.add(act);

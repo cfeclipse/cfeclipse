@@ -1,3 +1,5 @@
+ 
+
 package org.cfeclipse.cfml.views.dictionary;
 
 //import java.io.File;
@@ -5,6 +7,7 @@ import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.actions.EditCustomTagAction;
 import org.cfeclipse.cfml.editors.actions.EditFunctionAction;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
+import org.cfeclipse.cfml.editors.actions.InsertTagAction;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.jface.action.Action;
@@ -22,6 +25,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ModifyEvent;
@@ -126,6 +130,25 @@ public class DictionaryView extends ViewPart {
 			layoutData.grabExcessHorizontalSpace = true;
 			layoutData.horizontalAlignment = GridData.FILL;
 			text.setLayoutData(layoutData);
+			text.addModifyListener(new ModifyListener() {
+
+				public void modifyText(ModifyEvent e) {
+					//This doesnt seem to get the latest text. The latest text comes after modifiation?
+					//text.g
+					String searchpattern = text.getText();
+			
+					if(searchpattern.trim().length() > 0){
+						viewfilter.setMatch(searchpattern);
+						viewer.addFilter(viewfilter);
+						viewer.expandToLevel(3);
+						
+						//We pass the items to the filter
+					
+					}
+						
+					
+				}
+			});
 
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
@@ -147,7 +170,7 @@ public class DictionaryView extends ViewPart {
 			hookDoubleClickAction();
 			hookListeners();
 			contributeToActionBars();
-			//hookFilters();
+			hookFilters();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -417,18 +440,19 @@ public class DictionaryView extends ViewPart {
 
 		text.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
-				System.out.println("seaching for: "  + text.getText());
 				String searchpattern = text.getText();
 				
 				//if there is something to find 
 				if(searchpattern.trim().length() > 1){
-					viewfilter.match = searchpattern;
+					viewfilter.setMatch(searchpattern);
 					viewer.addFilter(viewfilter);
 					viewer.expandAll();
 				}else if(searchpattern.trim().length() == 0 ){
 				//This doesnt seem to be removing the view.
+					System.out.println("Filter is blank");
 					viewer.removeFilter(viewfilter);
 				} else {
+					System.out.println("Filter is also blank");
 					viewer.removeFilter(viewfilter);
 					
 				}
@@ -460,7 +484,7 @@ public class DictionaryView extends ViewPart {
 		
 		if (obj instanceof TagItem) {
 				TagItem tg = (TagItem)obj;
-				EditTagAction eta = new EditTagAction(tg.getTag(), this.getViewSite().getShell());
+				InsertTagAction eta = new InsertTagAction(tg.getTag(), this.getViewSite().getShell());
 					eta.run();
 		}
 		else if(obj instanceof FunctionItem){

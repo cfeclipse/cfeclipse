@@ -37,8 +37,12 @@ public class EditableTags {
 
 	public static SyntaxDictionary getDictionary(String partType){
 		
+		//Make sure we are getting the right dictionary here
 		if(partType.equals(CFPartitionScanner.CF_START_TAG_BEGIN)){
+			//Need to at least print out which dictionary we are getting
+			System.out.println(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
 			return DictionaryManager.getDictionary(DictionaryManager.CFDIC);
+			
 		}
 		else if(partType.equals(CFPartitionScanner.CF_TAG_ATTRIBS)){
 			return DictionaryManager.getDictionary(DictionaryManager.CFDIC);

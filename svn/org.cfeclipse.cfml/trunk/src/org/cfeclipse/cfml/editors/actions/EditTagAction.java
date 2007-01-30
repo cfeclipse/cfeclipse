@@ -24,22 +24,35 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.cfeclipse.cfml.dialogs.TagEditDialog;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
+import org.cfeclipse.cfml.editors.EditableTags;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
+import org.cfeclipse.cfml.parser.docitems.AttributeItem;
+import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.util.CFDocUtils;
 import org.cfeclipse.cfml.views.dictionary.TagFormatter;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITypedRegion;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
@@ -58,18 +71,14 @@ public class EditTagAction implements IEditorActionDelegate{
 		protected IEditorPart ieditor;
 		private ITextEditor editor = null;
 		private CFEPartitioner partitioner;
-		private int tagstart;
-		private int taglength;
 		private Map selectedattributes;
-		private boolean replace = false;
+		private boolean replace = true;
 		private SyntaxDictionary dictionary;
-		
+		private static final Logger logger = Logger.getLogger(EditTagAction.class);
 		/*
 		 * constructors
 		 */
 		public EditTagAction(){
-			// Re-Write this to try and set everything up, called a self init function maybe
-			
 			super();
 		}
 
@@ -78,17 +87,20 @@ public class EditTagAction implements IEditorActionDelegate{
 		 * @param tag
 		 * @param shell
 		 */
-		public EditTagAction(Tag tag, Shell shell) {
+		/*public EditTagAction(Tag tag, Shell shell) {
+			System.out.println("Hello World 1");
+			
 			this.tag = tag;
 			this.shell = shell;
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 			this.dictionary =  DictionaryManager.getDictionary("CF_DICTIONARY");
-		}
+		}*/
 		
 		/** This Tag ACtion needs a tag, a shell and the attibutes of a tag. It will setup a pre-filled dialog
 		 * 
-		 */
+		 *//*
 		public EditTagAction(Tag tag, Shell shell, Map attributes){
+			System.out.println("Hello World 2");
 			this.tag = tag;
 			this.shell = shell;
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
@@ -96,9 +108,10 @@ public class EditTagAction implements IEditorActionDelegate{
 			//Since we are passing values, has to be pre-filled
 			this.replace = true;
 		}
-		
+		*/
 		public EditTagAction(String tag, Shell shell){
 			this.shell = shell;
+			//Make sure that this is the way to get the right dictionary for this file
 			this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
 			this.ieditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 			this.tag = this.dictionary.getTag(tag);
@@ -107,75 +120,190 @@ public class EditTagAction implements IEditorActionDelegate{
 		
 		
 		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-
+			
 			this.editor = (ITextEditor)targetEditor;
+	
+			if(targetEditor != null){
+		
 			IDocument doc = editor.getDocumentProvider().getDocument(
 					editor.getEditorInput());
 
 			ICFDocument cfd = (ICFDocument) doc;
 
 			this.partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+			}
 		}
 		
 		
 		
 		public void setTagPosition(int start, int len){
-			this.tagstart = start;
-			this.taglength = len;
+		//	this.tagstart = start;
+		//	this.taglength = len;
 		}
 				
 	
-	
-
-	public void run(){
-			//We should be able to pass the attributes if we are editing.
+		
+	//Called from the keybinding	
+	public void run(IAction action) {
 			
-			ITextEditor thisEdit = (ITextEditor)ieditor;
-			IDocument doc =  thisEdit.getDocumentProvider().getDocument(ieditor.getEditorInput());
-			ISelection sel = thisEdit.getSelectionProvider().getSelection();
-			TagEditDialog tagview = new TagEditDialog(this.shell, this.tag);
-			tagview.setSelectedattributes(this.selectedattributes);
+		run();
+	}
+
+	//called directly from right click
+	public void run(){
+	
+		//Get the editor, and the various bits we need such as the document, the selection and the shell
+		IEditorPart activeEditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		ITextEditor thisEdit = (ITextEditor)activeEditor;
+		IDocument doc =  thisEdit.getDocumentProvider().getDocument(thisEdit.getEditorInput());
+		ISelection sel = thisEdit.getSelectionProvider().getSelection();
+		final ITextSelection textSelection = (ITextSelection) thisEdit.getSelectionProvider().getSelection();
+		Shell shell = activeEditor.getEditorSite().getShell();
+		ICFDocument cfd = (ICFDocument) doc;
+		CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+		
+		int selstart = textSelection.getOffset();
+		
+		//Find the closest partition, so that we can then get the start and end of the START tag (where all the attributes are)	
+		CFEPartition currentPartition = partitioner.findClosestPartition(selstart);
+		
+		if (currentPartition == null) {
+			return; //Just quit, we dont know where we are in the document
+        }
+		
+		if (currentPartition.isMidPartition() || currentPartition.isEndPartition()) {
+			  CFEPartition prevPartition = partitioner.getPreviousPartition(currentPartition.getOffset());
+	            while (prevPartition != null && (!prevPartition.isStartPartition())) {
+	                prevPartition = partitioner.getPreviousPartition(prevPartition.getOffset());
+	            }
+		 
+	            currentPartition = prevPartition;
+	  }
+		
+		/*
+		 * Found the start, now find the end
+		 * This is done by looping, getting the next partition until we find the close of the tag
+		 */
+		 String tagName = currentPartition.getTagName();
+	      int stackDepth = 0;
+
+		CFEPartition endPartition = partitioner.getNextPartition(currentPartition.getOffset());
+		
+		/*
+		 * Find the ending of the start tag
+		 */
+		while(endPartition!=null){
+            if (endPartition.isStartPartition() && currentPartition.getTagName().equalsIgnoreCase(endPartition.getTagName())) {
+              //  System.out.println("Encountered nested start tag before end tag");
+                stackDepth++;
+                endPartition = partitioner.getNextPartition(endPartition.getOffset());
+                continue;
+            }
+            if (stackDepth > 0) {
+               // System.out.println("Found match for nested tag; removing from stack");
+                stackDepth--;
+                endPartition = partitioner.getNextPartition(endPartition.getOffset());
+                continue;
+            }
+            if (endPartition.isCloser() && tagName.equalsIgnoreCase(endPartition.getTagName())) {
+                     break;
+            }
+           break;
+		}
+		
+		
+		/*
+		 * Set the selection
+		 */
+		int tagStart = currentPartition.getOffset();
+		int tagEnd = endPartition.getOffset() + endPartition.getLength() - currentPartition.getOffset()+1;
+		
+		TextSelection selection = new TextSelection(tagStart, tagEnd);
+		ISelectionProvider selectionProvider = thisEdit.getSelectionProvider();
+		selectionProvider.setSelection(selection);
+		
+		
+		/*
+		 * Get the actual textual content of the tag
+		 */
+		String tagText = "";
+		try {
+			
+			tagText = doc.get(selection.getOffset(), selection.getLength());
+		} catch (BadLocationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		/*
+		 * Get the attributes as a map
+		 * TODO: I am not sure if map's keep the ordering... need to check this
+		 */
+		Map attributeMap = CFDocUtils.parseStartTag(currentPartition.getTagName(), tagText);
+
+		
+		/*
+		 * Now open the TagEditDialog, we know the tag name (as a string) and the tag attributes (as a map)
+		 * So, we go and get the tag from the dictionary
+		 */
+		Tag tagToEdit = DictionaryManager.getDictionary("CF_DICTIONARY").getTag(currentPartition.getTagName());
+				
+		
+		/*
+		 * Setup the tageditor dialog
+		 */
+		TagEditDialog tagview = new TagEditDialog(shell, tagToEdit);
+		tagview.setSelectedattributes(attributeMap);
 			
 						
-			//Do the closing action
+			/*
+			 * Once the editor closes, we do this
+			 */
 			if(tagview.open() == IDialogConstants.OK_ID){
-				Properties fieldStore = tagview.getFieldStore();
-				TagFormatter tf = new TagFormatter(this.tag, fieldStore);
+				Properties fieldStore = tagview.getFieldStore();  	//The new items
+				ArrayList propOrder = new ArrayList();				//The order of the itmes
+				Properties attributesToRender = new Properties();	//The attributes that we are going to be formatting
+				
+				//Put the original attributes in
+				Set oldFieldSet = attributeMap.keySet();
+				for (Iterator iter = oldFieldSet.iterator(); iter.hasNext();) {
+					String oldElement = (String) iter.next();
+					propOrder.add(oldElement);
+					
+				}
+				attributesToRender.putAll(attributeMap);
+
+				//Loop through the new ones
+				Set newFieldsSet = fieldStore.keySet();
+				for (Iterator iter = newFieldsSet.iterator(); iter.hasNext();) {
+					String element = (String) iter.next();
+					
+					if(attributesToRender.containsKey(element)){
+						attributesToRender.setProperty(element, fieldStore.getProperty(element));
+					}
+					else{
+						propOrder.add(element);
+						attributesToRender.put(element, fieldStore.getProperty(element));
+					}
+				}
+				
+			
+				
+				/*
+				 * Pass in the attributes into a Tag Formatter
+				 */
+				TagFormatter tf = new TagFormatter(tagToEdit, attributesToRender, propOrder);
 				
 				//Here is where we actually do the insertion
 				
-					if(ieditor instanceof ITextEditor){
-							
-							if(replace){
-								System.out.println("replacing...." + tf.getTagStart());
-								int selstart = ((ITextSelection) sel).getOffset();
-								int selectionLength = ((ITextSelection) sel).getLength();
-								
-								try {
-									doc.replace(selstart, selectionLength, tf.getTagStart());
-								} catch (BadLocationException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								ieditor.setFocus();
-								
-							} else {
-							//we surround the selection
-							Encloser encloser = new Encloser();
-							
-							int selectionLength = ((ITextSelection) sel).getLength();
-							if (selectionLength > 0) {
-								tf.setWrapping(true);
-							}
-							
-							encloser.enclose(doc, (ITextSelection) sel, tf.getTagStart(), tf.getTagEnd());
-							
-							//Now set the focus back to the editor
-							ieditor.setFocus();
-							}
+					if(thisEdit instanceof ITextEditor){
+						try {
+							cfd.replace(selection.getOffset(), selection.getLength(), tf.getTagStart());
+						} catch (BadLocationException e) {
+							e.printStackTrace();
+						}
+						thisEdit.setFocus();
 					}
-
-				
 			}
 
 	}
@@ -204,10 +332,109 @@ public class EditTagAction implements IEditorActionDelegate{
 		this.tag = tag;
 	}
 
-	public void run(IAction action) {
-		// TODO Auto-generated method stub
+	//public void run(IAction action) {
+		//TODO: THIS IS WHAT IS CALLED FROM A KEY BINDING!
+		//to run we want to set:
+			// ieditor
+			// shell
+			// tag
+			// dictionary
+			// maybe selected items
 		
-	}
+		
+		/* Code from right click action ... 
+		 * 
+		 * 	int startpos = sel.getOffset();
+					//Find the length just in case
+					int len = Math.max(sel.getLength(),1);
+					
+					//default start and end are at the cursor
+					int startoftag = sel.getOffset();
+					int endoftag = sel.getOffset();
+					int lengthoftag = endoftag - startoftag;
+					
+					try {
+						startoftag = doc.search(startpos, "<", false, true, false);
+						endoftag = doc.search(startpos, ">", true, true, false);
+						lengthoftag = endoftag - startoftag + 1;
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					TextSelection selection = new TextSelection(startoftag, lengthoftag);
+					editor.getSelectionProvider().setSelection(selection);
+					TextSelection seli = (TextSelection)editor.getSelectionProvider().getSelection();
+					
+					//Now we have the whole start tag, we can then pass the tagname and 
+					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+					CFEPartition part = partitioner.findClosestPartition(startpos);
+					
+					
+					Map tagattribs = CFDocUtils.parseStartTag(part.getTagName(), seli.getText());
+					//find you which dictionary this belongs to!
+				
+					Tag tag = null;
+					SyntaxDictionary dic = EditableTags.getDictionary(part.getType());
+					
+		 * 
+		 * 
+		 */
+		
+		//Get the editor, then get the rest of the stuff;....
+		/*
+		
+		 System.out.println(action);
+		
+		this.dictionary = DictionaryManager.getDictionary("CF_DICTIONARY");
+		
+		this.shell = this.ieditor.getSite().getShell();
+		
+		
+		ITextEditor thisEdit = (ITextEditor)this.ieditor;
+		IDocument doc =  thisEdit.getDocumentProvider().getDocument(this.ieditor.getEditorInput());
+		ISelection sel = thisEdit.getSelectionProvider().getSelection();
+		ICFDocument cfd = (ICFDocument) doc;
+		final ITextSelection textSelection = (ITextSelection) thisEdit.getSelectionProvider().getSelection();
+		
+		int selstart = textSelection.getOffset();
+		
+		// We dont need the length... the cursor is within a tag (hopefully) if it is not, then we just escape....
+		// 
+		// int selectionLength = ((ITextSelection) sel).getLength();
+		
+		
+		
+		CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+		CFEPartition[] startTagPartitions = partitioner.getStartTagPartitions(selstart);
+		for (int i = 0; i < startTagPartitions.length; i++) {
+			System.out.println("Getting the partition types: " + startTagPartitions[i].getType());
+		}
+		
+		
+		
+		CFEPartition part = partitioner.findClosestPartition(selstart);
+		
+		
+		
+		
+		
+//		default start and end are at the cursor
+	
+		
+		//find the start and end of a tag from where we are... we could use the partitioner
+		
+		
+	
+		
+		System.err.println("the partition type " + part.getType());
+		System.err.println("the partition name " + part.getTagName());
+		this.tag = this.dictionary.getTag(part.getTagName());
+		*/
+
+
+	//	run();
+	//}
 
 	public void selectionChanged(IAction action, ISelection selection) {
 		// TODO Auto-generated method stub

@@ -38,6 +38,7 @@ import org.cfeclipse.cfml.editors.contentassist.CFMLTagAssist;
 import org.cfeclipse.cfml.editors.contentassist.HTMLTagAssistContributor;
 import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 
 
@@ -45,6 +46,9 @@ import org.eclipse.core.runtime.CoreException;
  * @author Administrator
  */
 public class CFENature implements IContentAssistContributorNature {
+	
+	public String CFENATURE = "org.cfeclipse.cfml.natures.CFENature";
+	
 
     public Date getLastUpdateDate() {
         //Assert.isNotNull(this.lastUpdate,"CFENature::getLastUpdateDate()");
@@ -123,9 +127,18 @@ public class CFENature implements IContentAssistContributorNature {
     
     public static void removeNature(IProject proj) {
         // placeholder 
+    	
     }
     
     public static void applyNature(IProject proj) throws CoreException {
+    	IProjectDescription description = proj.getDescription();
+    	String[] natureIds = description.getNatureIds();
+    	
+    	//System.out.println(natureIds);
+    	//natureIds[natureIds.length] = "org.cfeclipse.cfml.natures.CFENature";
+    	
+    	///proj.getDescription().setNatureIds(natureIds);
+    	
         // placeholder 
     }
     

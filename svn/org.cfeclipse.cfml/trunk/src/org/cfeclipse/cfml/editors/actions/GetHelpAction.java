@@ -25,7 +25,12 @@
 package org.cfeclipse.cfml.editors.actions;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.partitioner.PartitionHelper;
 import org.cfeclipse.cfml.views.browser.BrowserView;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
@@ -37,6 +42,8 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -67,100 +74,51 @@ public class GetHelpAction implements IEditorActionDelegate {
 		
 	public void run(IAction action) 
 	{
-		//The site thatwe are using to search
-		//String urldest = "http://www.google.com/search?q=";
 		/*
 		 * These are the new URL's to use
 		 * http://cfdocs.cfeclipse.org/index.cfm?item=cfabort
 		 * http://cfdocs.cfeclipse.org/index.cfm?item=cfabort&version=5.0
-		 * 
+		 *  CFQuickDocs doesnt do versioning?
+		 *  
 		 */
-		String urldest = "http://www.cfdocs.org/";
-		String theFullURL = ""; //this is where we go
-		String keyword = "";
-
 		
-		//Get thecurrent slection, then we can go forth and back and get the info
-		//get the document and selection and pass it to the word manipulator
-		//so it can extract and rewrite what we want (super class)
+		
+		/*
+		 * if the selection hasnt got any characters in length, lets try and find it using our partition, if it has, use that
+		 */
+		
+		
+		String urldest = "http://www.cfeclipse.org/cfdocs/?query="; //TODO: Change this help url out.
+		String query = "";
+		
 		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
 		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();
-		String query = sel.getText();
-		//System.out.println("query["+query+"]");
-		if(query.length() > 0){
-			//System.out.println("selection is not empty");
-			//There is some selected text, we can go and find it now
-			theFullURL = urldest + query;
-		} else {
-			//System.out.println("selection is empty, lets find the tag");
-			//so no selection.. we just go to the site at the moment (should look up if we are in a tag)
-			//find the previous ocurrance of "<"
-			// If there is no SELECTION, we find the tag that we are in by doing the following.. maybe a new method?
-			
-			try {
-
-				int cursorOffset = sel.getOffset()-1;
-				
-				FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
-				IRegion region = finder.find(cursorOffset,"[^a-z_]",false,false,false,true);
-
-				
-				int keywordStart = 0;
-				if (region != null) {
-				    keywordStart = region.getOffset()+1;
-				}
-				
-				//System.out.println("Keyword starts at: "  + keywordStart);
-				
-				region = finder.find(cursorOffset,"[^a-z_]",true,false,false,true);
-				int keywordEnd = doc.getLength()-1;
-				if (region != null) {
-				    keywordEnd = region.getOffset() -1;
-				}
-				//System.out.println("Keyword ends at: " + keywordEnd);
-				
-				
-				if(keywordEnd < cursorOffset) {
-				    keywordEnd = cursorOffset;
-				}
-				
-				//if we have found it...
-				if(keywordStart != -1 && keywordEnd > keywordStart){
-						int keywordLength = keywordEnd - keywordStart + 1;
-						keyword = doc.get(keywordStart, keywordLength);
-					
-				
-				} else {
-					keyword = "";
-				
-				}
-				
-				
-				theFullURL = urldest + keyword;
-				
-			} catch (BadLocationException e) {
-				e.printStackTrace();
-			}
-
+		
+		if(sel.getLength() > 0){
+			query = sel.getText(); 
 		}
-		
-		if (theFullURL.length() == 0 || urldest.length() == theFullURL.length()) {
-		    theFullURL = "http://livedocs.macromedia.com";
+		else {
+			PartitionHelper ph = new PartitionHelper((ICFDocument)doc, sel.getOffset());
+			query = ph.getTagName();
 		}
+	
+		String theFullURL = urldest + query;
 		
-		//Get thecurrent page
-		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		
-		
-		//IViewReference ref[] = page.getViewReferences();
-		
-		try {
-		   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-		   browser.setUrl(theFullURL, BrowserView.HELP_TAB);
-		   browser.setFocus(BrowserView.HELP_TAB);
+		IExtensionRegistry extReg = Platform.getExtensionRegistry();
+		if(extReg.getExtensions("com.adobe.coldfusion_help_7").length > 0){
+			IWorkbenchHelpSystem helpsys = Workbench.getInstance().getHelpSystem();
+			helpsys.search(query);
 		}
-		catch(Exception e) {
-		    e.printStackTrace();
+		else{
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				try {
+				   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+				   browser.setUrl(theFullURL, BrowserView.HELP_TAB);
+				   browser.setFocus(BrowserView.HELP_TAB);
+				}
+				catch(Exception e) {
+				    e.printStackTrace();
+				}
 		}
 	}
 

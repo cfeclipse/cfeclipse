@@ -54,6 +54,7 @@ import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
@@ -86,9 +87,11 @@ public class CFDocumentProvider extends FileDocumentProvider
 			
 			//FileEditorInput input = (FileEditorInput)element;
 			
+			//This is what is WRONG! We need to know what project the document is in so we can get the right library...
 			
 			//try to load the proper dictionary syntax for this document			
 			CFMLPropertyManager pm = new CFMLPropertyManager();
+			
 			//How do we know which project this goes to?
 			//String currentDict = pm.getCurrentDictionary(input.getFile().getProject());
 			//if(currentDict == null || currentDict == "") 
@@ -190,19 +193,6 @@ public class CFDocumentProvider extends FileDocumentProvider
 			((ICFDocument) document).parseDocument();	
 		}
 		
-		if(element instanceof JavaFileEditorInput) 
-		{
-			try 
-			{
-				saveExternalFile((JavaFileEditorInput)element,document);
-			}
-			catch (IOException e) 
-			{
-				Status status = new Status(IStatus.ERROR,"org.cfeclipse.cfml",IStatus.OK,e.getMessage(),e);
-				throw new CoreException(status);
-			}
-		}
-		
 		if(element instanceof RemoteFileEditorInput)  
 		{
 			try 
@@ -214,13 +204,25 @@ public class CFDocumentProvider extends FileDocumentProvider
 				Status status = new Status(IStatus.ERROR,"org.cfeclipse.cfml",IStatus.OK,e.getMessage(),e);
 				throw new CoreException(status);
 			}
+		} else if(!(element instanceof FileEditorInput) && element instanceof IPathEditorInput)
+		{
+			try 
+			{
+				saveExternalFile((IPathEditorInput)element,document);
+			}
+			catch (IOException e) 
+			{
+				Status status = new Status(IStatus.ERROR,"org.cfeclipse.cfml",IStatus.OK,e.getMessage(),e);
+				throw new CoreException(status);
+			}
 		}
+				
 		super.doSaveDocument(monitor, element, document, overwrite);
 	}
 	
-	private void saveExternalFile(JavaFileEditorInput input, IDocument doc) throws IOException 
+	private void saveExternalFile(IPathEditorInput input, IDocument doc) throws IOException 
 	{
-		FileWriter writer = new FileWriter(input.getPath(input).toFile());
+		FileWriter writer = new FileWriter(input.getPath().toFile());
 		writer.write(doc.get());
 		writer.close();
 	}

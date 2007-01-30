@@ -45,6 +45,10 @@ public class FunctionNode extends TreeParent
     private String imgPublic = CFPluginImages.ICON_METHOD_PUBLIC;
     private String imgPackage = CFPluginImages.ICON_METHOD_PACKAGE;
     private String imgPrivate = CFPluginImages.ICON_METHOD_PRIVATE;
+    
+    private ComponentNode parent;
+    
+
 
     public FunctionNode(TagItem function)
     {
@@ -71,6 +75,9 @@ public class FunctionNode extends TreeParent
         }
     }
     
+    public void setParent(ComponentNode parent){
+    	this.parent = parent;
+    }
 
     public String getImage()
     {
@@ -95,19 +102,10 @@ public class FunctionNode extends TreeParent
         return CFPluginImages.ICON_ALERT;
     }
 
-    private String getPackageName()
+    public String getPackageName()
     {
-        TreeParent parent = this.getParent();
-        while( parent != null && !(parent instanceof PackageNode))
-        {
-            parent = parent.getParent();
-        }
-        if( parent == null )
-        {
-            return null;
-        }
-        
-        return ((PackageNode) parent).getName();
+    	
+        return this.getParent().getPackageName();
     }
     
     public String toString()

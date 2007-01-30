@@ -79,6 +79,16 @@ public class GotoFileAction implements IEditorActionDelegate {
 	 */
 	public void run(IAction action) 
 	{
+		
+		/* This needs to be slightly refactored. So from the cursor we find which tag it is
+		 * If its a cfinclude/cfmodule template we are sorted and all is fine and we open template
+		 * 
+		 * Might add more functions, like opening a component by com.somthing.something
+		 * 
+		 * Other tags we might want to open are href, links from css, script etc.
+		 * 
+		 */
+	
 		//try
 		//{
 			if(editor != null)

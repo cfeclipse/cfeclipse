@@ -1,4 +1,4 @@
-CFEclipse 1.2.1
+CFEclipse 1.3
 
 Here is a list of the changes in this release
 
@@ -10,8 +10,6 @@ FEATURES
 	* (Feat: 233) right click edit/open file works for cfinclude and cfmodule
 	* (Feat: 278) Comment/Uncoment with shortcut
 	
-BUGS
-
 	
 	
 	

@@ -6,8 +6,11 @@
  */
 package org.cfeclipse.cfml.views.dictionary;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Properties;
 
 import org.cfeclipse.cfml.dictionary.Tag;
 
@@ -22,6 +25,7 @@ public class TagFormatter {
 	private Hashtable attribs = new Hashtable();
 	private Tag tagRef;
 	private boolean wrapping  = false;
+	private ArrayList attributeOrder;
 	
 	
 	/** Pass in a tag, then you can manually add the attributes
@@ -42,6 +46,15 @@ public class TagFormatter {
 		this.attribs = attribs;
 	}
 	
+	public TagFormatter(Tag tagToEdit, Properties fieldStore, ArrayList propOrder) {
+		// TODO Auto-generated constructor stub
+		this.tagRef = tagToEdit;
+		this.attribs = fieldStore;
+		this.attributeOrder = propOrder;
+		
+	}
+
+
 	/**
 	 * @return Returns the attribs.
 	 */
@@ -75,7 +88,38 @@ public class TagFormatter {
 		StringBuffer tag = new StringBuffer();
 		String tagname = this.tagRef.getName();
 		tag.append("<" + tagname);
-		//Here we loop through the attributes that have been added
+		
+		//Loop through the attributes in order
+		if(this.attributeOrder != null){
+			for (Iterator iter = this.attributeOrder.iterator(); iter.hasNext();) {
+				String element = (String) iter.next();
+	
+				String attribute = element;
+			 	String value = attribs.get(element).toString();
+			    
+			 	if(value.length() > 0){
+			 	tag.append(" " + attribute);
+			    //So we can check for blanks
+			    tag.append("=\"" + value + "\"");
+			 	}
+			}
+		}
+		else{ //Not being called from edit, and we dont have initial items
+			Hashtable attributes = getAttribs();
+			
+			 for (Enumeration e = attributes.keys (); e.hasMoreElements ();) {
+			 	String attribute = e.nextElement ().toString ();
+			 	String value = attributes.get(attribute).toString();
+			    
+			 	if(value.length() > 0){
+			 	tag.append(" " + attribute);
+			    //So we can check for blanks
+			    tag.append("=\"" + value + "\"");
+			 	}
+			 }
+			
+		}
+		/*//Here we loop through the attributes that have been added
 		Hashtable attributes = getAttribs();
 		
 		 for (Enumeration e = attributes.keys (); e.hasMoreElements ();) {
@@ -87,7 +131,7 @@ public class TagFormatter {
 		    //So we can check for blanks
 		    tag.append("=\"" + value + "\"");
 		 	}
-		 }
+		 }*/
 		 //Here we check what ending we have
 		 if(this.tagRef.isXMLStyle() && !isWrapping()){
 		 	 tag.append("/>");

@@ -24,6 +24,12 @@
  */
 package org.cfeclipse.cfml.wizards.cfcwizard;
 
+import java.util.Iterator;
+import java.util.TreeSet;
+
+import org.cfeclipse.cfml.dictionary.DictionaryManager;
+import org.cfeclipse.cfml.dictionary.Value;
+import org.cfeclipse.cfml.editors.CFSyntaxDictionary;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -35,13 +41,17 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -61,6 +71,7 @@ public class NewCFCWizardPage extends WizardPage {
 	private Text cfcPath;
 	private Text cfcHint;
 	private Text cfcDisplayName;
+	private Text cfcOutput;
 	
 	private ISelection selection;
 	
@@ -76,7 +87,7 @@ public class NewCFCWizardPage extends WizardPage {
 		setDescription("New CF Component wizard.");
 		this.selection = selection;
 		
-		this.cfcBean = new CFCBean("", "", "", "", "");
+		this.cfcBean = new CFCBean("", "", "", "", "", "");
 	}
 
 	/**
@@ -169,6 +180,19 @@ public class NewCFCWizardPage extends WizardPage {
 			}
 		});
 		
+		label = new Label(container, SWT.NULL);
+		label.setText("&Output:");
+		this.cfcOutput = new Text(container, SWT.BORDER | SWT.SINGLE);
+		gd = new GridData(GridData.BEGINNING);
+		gd.widthHint = 150;
+		gd.horizontalSpan = 2;
+		this.cfcOutput.setLayoutData(gd);
+		this.cfcOutput.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				dialogChanged();
+			}
+		});
+		
 		initialize();
 		dialogChanged();
 		setControl(container);
@@ -203,6 +227,9 @@ public class NewCFCWizardPage extends WizardPage {
 		
 		this.cfcBean.setName("NewCFComponent");
 		this.cfcName.setText(this.cfcBean.getName());
+		
+		this.cfcBean.setOutput("false");
+		this.cfcOutput.setText(this.cfcBean.getOutput());
 	}
 	
 	/**
@@ -271,11 +298,13 @@ public class NewCFCWizardPage extends WizardPage {
 		String extend = this.cfcExtends.getText();
 		String hint = this.cfcHint.getText();
 		String displayName = this.cfcDisplayName.getText();
+		String output = this.cfcOutput.getText();
 		
 		this.cfcBean.setDisplayName(displayName);
 		this.cfcBean.setExtendCFC(extend);
 		this.cfcBean.setHint(hint);
 		this.cfcBean.setName(fileName);
+		this.cfcBean.setOutput(output);
 		this.cfcBean.setPath(containerName);
 
 		if(containerName.length() == 0) {

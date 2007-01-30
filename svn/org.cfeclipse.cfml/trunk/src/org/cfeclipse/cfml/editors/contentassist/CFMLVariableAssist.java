@@ -34,10 +34,14 @@ import org.cfeclipse.cfml.dictionary.ISyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.ScopeVar;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFParser;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
@@ -75,24 +79,35 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     public ICompletionProposal[] getTagProposals(IAssistState state) {
     	ICFDocument doc = (ICFDocument)state.getIDocument();
 
+    	//Check what partition we are in.
     	
-    	/*
-         * TODO: Only show this if you the trigger is #, you are in a cfset or cfscript.
-         */
+    	
+    	
     	
         if (state.getTriggerData() == ' ' || state.getTriggerData() == '#' || state.getTriggerData() == '>') {
             return getPageVariables(state, doc);
         }
         else if(state.getTriggerData() != '.'){
-        	return null;
+        	String paritionSection = "";
+        	//could return everything that is in the map here.
+        	try {
+    			ITypedRegion partition = doc.getPartition(state.getOffset());
+    			paritionSection = partition.getType();
+    		} catch (BadLocationException e) {
+    			e.printStackTrace();
+    		}
+        
+    		return null;
         }
         else {
+        	
         	String allData = state.getDataSoFar();
         	
         	if(allData.endsWith(".")){
         		allData = allData.substring(0, allData.length()-1);
         	}
         	
+        	System.out.println(allData);
         	String VarName = "";
         	
         	StringBuffer buf = new StringBuffer();
@@ -105,6 +120,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
         	VarName = buf.toString();
         	
         	//Check that the variable is in the Map, otherwise return nothing
+        	
         	
         	//Here we find out where we are in the document.
         	ICompletionProposal[] result = getArguments(VarName, state, doc);
@@ -125,9 +141,15 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
      */
     public ICompletionProposal[] getArguments(String varName, IAssistState state, ICFDocument doc){
 
+    	//System.out.println("Starting the proposal constructor for " + varName);
+    	
+    	
+    	//TODO: Break this out into methods, the flow is maddening!
+    	
+    	
     	CFParser parser = new CFParser();
         CFDocument cfdoc = parser.parseDoc(state.getIDocument().get());
-        System.out.println(cfdoc.dumpVariables());
+       
         //Get the variables:
         HashMap varMap = cfdoc.getVariableMap();
         ICompletionProposal[] proposals = null;
@@ -145,6 +167,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
        boolean isScope = false;
        //if the variable exists
        if(chosenTag != null){
+    	 //  System.out.println("Found Chosen Tag" + chosenTag);
     	   //Lets check we have a pre-defined scope for this type
     	   if(chosenTag instanceof TagItem){
            	TagItem leTag = (TagItem)chosenTag;
@@ -201,6 +224,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
        //We havent found it, but we need to check if there is something like FORM. URL. etc...
        //We might need to loop through them
        else{
+    	   //System.out.println("No Tag Found");
     	   isScope = true;
     	   Set formScopes = new HashSet();
     	   Iterator hashIter = varMap.keySet().iterator();
@@ -208,7 +232,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     		   
     		   
     		   Object keyObj = hashIter.next();
-    		 
+    		
     		   String key = (String)keyObj;
     		   if(key.toUpperCase().startsWith(varName.toUpperCase())){
     			   
@@ -218,8 +242,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     	   scopeProposals = formScopes;
        }
        
-       
-       
+      //System.out.println("finding scope proposals " + scopeProposals);
        
        if(scopeProposals != null){
     	   //Create the scope proposals
@@ -234,11 +257,9 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     		   Object scopeKey = scopeIter.next();
     		   String scopeItem = scopeKey.toString();
     		   
-    		   System.out.println("The item we are adding is a + " + scopeKey.getClass());  
-    		   
-    		   
     		   //Here we check what type these items are
     		   CompletionProposal proposal = null;
+    		  
     		   if(scopeKey instanceof ScopeVar){
     			   //Lets find the help and assign some help to it
     			   ScopeVar sVar = (ScopeVar)scopeKey;
@@ -255,7 +276,17 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
 	    	                sVar.getHelp());
     			   
     		   } else {
-        		   proposal = new CompletionProposal(scopeItem.toString(), state.getOffset(), 0, scopeItem.toString().length());
+    			   //Need to remove the  text that has already been entered (textSoFar)
+    			   String replacementString = scopeItem.toString();
+    			   int repItemsPos = scopeItem.toString().indexOf(".");
+    			   String repItems = scopeItem.toString().substring(repItemsPos+1);
+    			   
+    			//   System.out.println(state.getAttributeText().trim());
+    			//   System.out.println("Not a scope var " + scopeItem.toString() + " " + repItems);
+    			   
+    			   
+    			   
+        		   proposal = new CompletionProposal(repItems, state.getOffset(), 0, repItems.length());
     			   
     		   }
     		   proposals[scopeCounter] = proposal;
@@ -270,7 +301,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
        
        //Before we return the proposals, we should filter them!
        
-       System.out.println(state.getDataSoFar());
+       
         
     	return proposals;
     }
@@ -319,16 +350,16 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     public ICompletionProposal[] getPageVariables(IAssistState state, ICFDocument doc){
     	CFParser parser = new CFParser();
         CFDocument cfdoc = parser.parseDoc(state.getIDocument().get());
-        System.out.println(cfdoc.dumpVariables());
         //Get the variables:
         HashMap varMap = cfdoc.getVariableMap();
         ICompletionProposal[] proposals = new ICompletionProposal[varMap.size()];
-        
+       
         Iterator keyIter = varMap.keySet().iterator();
         int propIter = 0;
         while(keyIter.hasNext()){
         	
         	String key = (String)keyIter.next();
+        	 
         //Loop through the vars and we are ok
         	CompletionProposal proposal = new CompletionProposal(key, state.getOffset(), 0, key.toString().length());
         	

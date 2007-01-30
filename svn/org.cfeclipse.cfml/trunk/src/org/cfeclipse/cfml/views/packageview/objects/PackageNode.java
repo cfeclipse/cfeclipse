@@ -80,13 +80,9 @@ public class PackageNode extends TreeParent
      *  }
      */
     // todo: look in cvs and revert this back.
-    public String getPackageName()
-    {
-        return getName();
-    }
 
     public String toString()
     {
-        return getPackageName();
+        return getName();
     }
 }

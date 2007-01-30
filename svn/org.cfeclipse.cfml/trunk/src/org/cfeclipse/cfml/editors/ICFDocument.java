@@ -179,7 +179,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	{
 		//build the xpath
 		String attrString = "[#startpos<" + startpos + " and #endpos>" + endpos + "]";
-		//System.out.println(attrString);
+		//System.out.println(this.getClass() + " Finding the tag in the document" + attrString);
 		CFDocument docRoot = getCFDocument();
 		try {
 			CFNodeList matchingNodes = docRoot.getDocumentRoot().selectNodes(
@@ -200,6 +200,10 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		
 		return null;
 	}
+	
+	
+	//NEED to add a function which is getTagAt(int startpos)
+	
 	
 	/**
 	 * Gets the tag name at the given position (i.e. include,set,module,etc)

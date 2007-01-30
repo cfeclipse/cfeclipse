@@ -8,14 +8,11 @@
 package org.cfeclipse.cfml.dialogs;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,8 +22,7 @@ import org.cfeclipse.cfml.dialogs.objects.Category;
 import org.cfeclipse.cfml.dialogs.objects.CategoryList;
 import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.Tag;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Platform;
+import org.cfeclipse.cfml.util.FileLocator;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
@@ -63,7 +59,7 @@ public class TagEditDialog extends Dialog {
 	protected String title;
 	private Tag tag;
 	private Set attributes;
-	private Map selectedattributes;
+	private Map selectedattributes; //This should be an array list, we need to keep it in order right? Worry about that later.
 	private Properties fieldStore;
 	private Properties comboFields;
 	private Properties textFields;
@@ -172,7 +168,7 @@ public class TagEditDialog extends Dialog {
 		
 		Element dialog = layout.getDocumentElement();
 		
-		stepThrough(dialog);
+		//stepThrough(dialog);
 		
 		 if(this.attributes != null){
 			//Get the tabs
@@ -247,7 +243,7 @@ public class TagEditDialog extends Dialog {
 		
 		return tabFolder;
 	}
-	
+	/*
 	private TabFolder parseTag(TabFolder tabFolder){
 		
 		//Create the main tab
@@ -296,7 +292,7 @@ public class TagEditDialog extends Dialog {
 	    
 		return tabFolder;
 	}
-	
+	*/
 	private TabFolder parseTagCategories(TabFolder tabFolder){
 			    CategoryList cl = getParameterCategories();
 		
@@ -409,10 +405,8 @@ public class TagEditDialog extends Dialog {
 			factory.setCoalescing(true);
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
-			URL local = FileLocator.toFileURL(layoutConfigURL);
-			
-			URL configurl = FileLocator.resolve(new URL(local, tagname + ".xml"));
-						
+			URL configurl = FileLocator.LocateURL(layoutConfigURL, tagname + ".xml");
+									
 			layoutDoc = builder.parse(configurl.getFile());
 			
 			

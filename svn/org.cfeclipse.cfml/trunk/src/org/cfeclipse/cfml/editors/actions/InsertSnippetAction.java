@@ -62,8 +62,10 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 	}
 	//used from the toolbars
 	public InsertSnippetAction(String triggerText, Shell shell){
-		SnipKeyCombos keyCombos = new SnipKeyCombos();
 		
+		
+		
+		SnipKeyCombos keyCombos = new SnipKeyCombos();
 		editor = (ITextEditor)Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 		ISelection sel = editor.getSelectionProvider().getSelection();
@@ -154,6 +156,12 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			catch (Exception e) {
 			    e.printStackTrace();
 			}
+		
+			
+			if(sequence.length() == 0){
+				System.out.println("no trigger text has been passed in");
+				
+			}
 			
 			if (sequence.length() > 0) {
 			    
@@ -182,7 +190,7 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 			    
 			    
 			    String indentString = "";
-			    try {
+			    try { 
 			        int lineNumber = doc.getLineOfOffset(lastSpaceOffset);
 			        int lineOffset = doc.getLineOffset(lineNumber);
 			        indentString = doc.get().substring(lineOffset,lastSpaceOffset);

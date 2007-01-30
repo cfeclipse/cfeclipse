@@ -29,6 +29,8 @@ package org.cfeclipse.cfml.parser.docitems;
 //import java.util.HashMap;
 //import java.util.Map;
 //import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.cfeclipse.cfml.dictionary.Parameter;
@@ -46,41 +48,57 @@ public class CfmlTagItem extends TagItem {
 	 * @see org.cfeclipse.cfml.parser.docitems.DocItem#IsSane()
 	 */
 	public boolean IsSane() {
-		/*Set attributes = syntax.getElementAttributes(this.itemName);
-		//TODO: Warning This keeps throwing a null pointer exception with cffile, cfdirectory and cflocation. 
+		//staticLookups
+
 		
-		if (attributes == null) {
-			return super.IsSane();  
+		HashMap suggestedAttributes = new HashMap();
+		
+		Set suggAttribSet = itemAttributes.keySet();
+		
+		for (Iterator iter = suggAttribSet.iterator(); iter.hasNext();) {
+			String attributeName = (String) iter.next();
+			AttributeItem attributeValue = (AttributeItem)itemAttributes.get(attributeName);
+			suggestedAttributes.put(attributeName, attributeValue.getValue());
+			
 		}
-		//Looping through all the attributes the tag has..
-		Object[] params = attributes.toArray();
-		for(int i = 0; i < params.length; i++)
-		{
-			Parameter currParam = (Parameter)params[i];
-		//	System.out.println("attr " + currParam.getName() + " triggered?" + (currParam.isTriggered(itemAttributes) & Parameter.PARAM_REQUIRED) + " required string " + Parameter.PARAM_REQUIRED);
-			int triggeredReq = currParam.isTriggered(itemAttributes) & Parameter.PARAM_REQUIRED;
-			if( triggeredReq == Parameter.PARAM_REQUIRED )
-				//&&  !itemAttributes.containsKey(currParam.getName())
-			{
-				// 
-				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <" + itemName + "> tag."));
-			}
-		}
-		return super.IsSane();*/
+
+		
 		Set attributes = syntax.getElementAttributes(this.itemName);
 		
+		
+		
+		if(attributes == null){
+			return super.IsSane();
+		}
+		
 		Object[] params = attributes.toArray();
+		
+		
 		for(int i = 0; i < params.length; i++)
 		{
 			Parameter currParam = (Parameter)params[i];
+			
 			if(currParam.isRequired() && !itemAttributes.containsKey(currParam.getName()))
 			{
-				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+					this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <cf" + itemName + "> tag."));
 			}
+			
+			if(!currParam.getTriggers().isEmpty()  && currParam.isRequired(suggestedAttributes) == 3 && !itemAttributes.containsKey(currParam.getName())){
+				
+				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+						"The attribute \'" + currParam.getName() + "\' is required for the <cf" + itemName + "> tag."));
+			}
+			else if (!currParam.getTriggers().isEmpty()  && currParam.isTriggered(suggestedAttributes) == 0 && itemAttributes.containsKey(currParam.getName())) {
+				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+						"The attribute \'" + currParam.getName() + "\' is not valid for the <cf" + itemName + "> tag."));
+			}
+			//now check for items that shouldnt be there, i.e. are NOT triggered
+			
+			
 		}
 		return super.IsSane();
+	
 	}
 	/**
 	 * Determines whether the child is valid or not.

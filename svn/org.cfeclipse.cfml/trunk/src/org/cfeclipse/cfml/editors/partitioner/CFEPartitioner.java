@@ -1005,6 +1005,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
     
     
     /**
+     * TODO: This uses up a LOT of memory
      * Called when the document content changes. Updates partitions based on the
      * area of text that has changed.
      */
@@ -1330,14 +1331,17 @@ public class CFEPartitioner implements IDocumentPartitioner,
             int index = fDocument.computeIndexInCategory(fPositionCategory, offset);
             Position[] category = fDocument.getPositions(fPositionCategory);
             if (index == 0) {
+            	System.out.println("No previous partition found");
                 return null;
             }
-            //System.out.println("Previous partition found at index " + (index - 1));
+            System.out.println("Previous partition found at index " + (index - 1));
             return (CFEPartition) category[index - 1];
         }
         catch (BadLocationException e) {
+        	System.out.println("Previous partition not found");
             return null;
         } catch (BadPositionCategoryException e) {
+        	System.out.println("Previous partition not found");
             return null;
         }
     }

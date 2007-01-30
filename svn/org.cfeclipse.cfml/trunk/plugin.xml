@@ -3,7 +3,7 @@
 <plugin
    id="org.cfeclipse.cfml"
    name="CFML Plug-in"
-   version="1.2.9"
+   version="1.3.0"
    provider-name="The CFEclipse Crew"
    class="org.cfeclipse.cfml.CFMLPlugin">
 
@@ -26,9 +26,10 @@
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
-      <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.ui.intro"/>
-      <import plugin="org.eclipse.ui.intro.universal"/>
+      <!-- <import plugin="org.apache.ant"/> -->
+      <import plugin="org.eclipse.core.filesystem" optional="true"/> 
+	  <import plugin="org.eclipse.ui.browser"/>
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
@@ -76,7 +77,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="%perspective.name.CFEclipse"
-            icon="icons/obj16/default.gif"
+            icon="icons/icons/cfeclipse_16x16.png"
             class="org.cfeclipse.cfml.perspective.CFPerspective"
             id="org.cfeclipse.cfml.perspective.CFML">
       </perspective>
@@ -490,18 +491,28 @@
          
          
 		<!-- external browser -->
+ 		<action
+               toolbarPath="BasicCFEditorCommand"
+               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               label="Browse in secondary browser"
+               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="%action.tooltip.Browse"
+               icon="icons/ctool16/browser_secondary.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction2"
+               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
+         </action>
          <action
                toolbarPath="BasicCFEditorCommand"
                menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
                label="%action.label.Browse"
                class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
                tooltip="%action.tooltip.Browse"
-               icon="icons/ctool16/globe.gif"
+               icon="icons/ctool16/browser_primary.gif"
                id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
                definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
          </action>
 
-
+		<!-- open in secondary external browser -->
           <!-- Launch new file dialog -->
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
@@ -523,6 +534,21 @@
                toolbarPath="CFEditorResourceCommand"
                tooltip="%action.tooltip.EditTagAction">
          </action>
+         <action
+               class="org.cfeclipse.cfml.editors.actions.GotoFileAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.GotoFileAction"
+               icon="icons/obj16/default.gif"
+               id="org.cfeclipse.cfml.editors.actions.GotoFileAction"
+               label="%action.label.GotoFileAction"
+              
+               >
+               <!-- menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               toolbarPath="CFEditorResourceCommand"
+               tooltip="%action.tooltip.EditTagAction"
+               -->
+         </action>
+         
+         <!--
          <menu
                id="org.cfeclipse.cfml.cfcmenu"
                label="%menu.label.CFC"
@@ -539,6 +565,17 @@
                toolbarPath="CFEditorResourceCommand"
                tooltip="%action.tooltip.InsertGetAndSet">
          </action>
+         <action
+               class="org.cfeclipse.cfml.editors.actions.CreateUnitTestAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CreateUnitTestAction"
+               icon="icons/ctool16/report.gif"
+               id="org.cfeclipse.cfml.editors.actions.CreateUnitTestAction"
+               label="Create Test Case"
+               menubarPath="org.cfeclipse.cfml.cfcmenu/maingroup"
+               toolbarPath="CFEditorResourceCommand"/>
+               
+         -->      
+               
           <!-- Highlight bracket pair 
          <action
          	   toolbarPath="BasicCFEditorCommand"
@@ -567,7 +604,7 @@
                id="org.cfeclipse.cfml.editors.actions.CFComment">
          </action>
          <action
-               label="%RTrim"
+               label="%action.label.RTrim"
                class="org.cfeclipse.cfml.editors.actions.RTrimAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu"
                id="org.cfeclipse.cfml.editors.actions.RTrim">
@@ -622,26 +659,6 @@
                class="org.cfeclipse.cfml.editors.actions.LastActionAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.LastTag">
-         </action>
-         <menu
-               label="%menu.label.2"
-               path="additions"
-               id="org.cfeclipse.cfml.editors.contribution.subMenu1">
-            <separator
-                  name="text">
-            </separator>
-         </menu>
-         <action
-               label="%action.label.49"
-               class="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu1/text"
-               id="org.cfeclipse.cfml.editors.actions.LocateInTreeAction">
-         </action>
-         <action
-               label="%action.label.50"
-               class="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu1/text"
-               id="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction">
          </action>
          <action
                label="%action.label.51"
@@ -1104,8 +1121,23 @@
             commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding> 
-	
+      
+      <!-- Open in secondary external browser -->
+       <command
+            name="Browse in secondary browser"
+            description="%command.description.29"
+            categoryId="org.cfeclipse.cfml.commandCategory"
+            id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
+      </command>
+      
+	  <keyBinding
+            keySequence="M2+F12"
+            contextId="org.cfeclipse.cfml.cfmleditorcontext"
+            commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </keyBinding>
 
+	 
       <command
             name="%command.name.30"
             description="%command.description.30"
@@ -1119,22 +1151,33 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- edit tag command -->
-      <commmand 
+      <command 
       		name="%command.name.EditTag"
       		description="%command.description.EditTag"
-      		categoryID="org.cfeclipse.cfml.commandCategory"
+      		categoryId="org.cfeclipse.cfml.commandCategory"
       		id="org.cfeclipse.cfml.editors.actions.EditTagAction">
-      </commmand>
+      		
+      </command>
       <keyBinding
             commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
-            contectsId="org.cfeclipse.cfml.cfmleditorcontext"
             contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationID="org.cfeclipse.ui.defaultAcceleratorConfiguration"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="M1+T">
       	</keyBinding>
       
-    
+    <command 
+      		name="%command.name.GotoFile"
+      		description="%command.description.GotoFile"
+      		categoryId="org.cfeclipse.cfml.commandCategory"
+      		id="org.cfeclipse.cfml.editors.actions.GotoFileAction">
+      		
+      </command>
+      <keyBinding
+            commandId="org.cfeclipse.cfml.editors.actions.GotoFileAction"
+            contextId="org.cfeclipse.cfml.cfmleditorcontext"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="M1+G">
+      	</keyBinding>
 
       <!-- Find a matching bracket pair
       <command
@@ -1204,6 +1247,31 @@
             category="org.cfeclipse.cfml"
             name="%view.name.6"
             id="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"/>
+      <!-- 
+      <view
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.Toolbar"
+            icon="icons/obj16/tools.gif"
+            id="org.cfeclipse.cfml.views.Toolbar"
+            name="Toolbar"/>
+      
+     
+      <view
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.snipex.SnipEx"
+            icon="icons/obj16/snip.gif"
+            id="org.cfeclipse.cfml.views.snipex.SnipEx"
+            name="SnipEx"/>
+           
+            
+        <view
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.variables.VariablesView"
+            icon="icons/ctool16/set.gif"
+            id="org.cfeclipse.cfml.views.variables"
+            name="Variables"/>
+		-->
+
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- help -->
@@ -1276,16 +1344,22 @@
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             name="%page.name.9"
             id="org.cfeclipse.cfml.preferences.FoldingPreferencePage"/>
+      <page
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
+            id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
+            name="Browser"/>
    </extension>
    
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            objectClass="org.eclipse.core.resources.IProject"
-            name="%page.name.10"
             class="org.cfeclipse.cfml.properties.ProjectPropertyPage"
+            icon="icons/icons/cfeclipse_16x16.png"
+            id="org.cfeclipse.cfml.properties.samplePropertyPage"
+            name="%page.name.10"
             nameFilter="*"
-            id="org.cfeclipse.cfml.properties.samplePropertyPage">
+            objectClass="org.eclipse.core.resources.IProject">
       </page>
    </extension>
    
@@ -1297,7 +1371,7 @@
             id="org.cfeclipse.cfml.category1">
       </category>
       <wizard name="%wizard.name.0"
-			icon="icons/obj16/default.gif"
+			icon="icons/icons/cfeclipse_16x16.png"
 
 			class="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
 		
@@ -1315,7 +1389,7 @@
             class="org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard"
             preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
             finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="true"
+            project="false"
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard">
             <description>%wizard.description.1</description>
       </wizard>
@@ -1326,7 +1400,7 @@
             class="org.cfeclipse.cfml.wizards.cfcwizard.NewCFCWizard"
             preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
             finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="true"
+            project="false"
             id="org.cfeclipse.cfml.wizards.cfcwizard.NewCFCWizard">
             <description>%wizard.description.2</description>
       </wizard>
@@ -1337,20 +1411,50 @@
             class="org.cfeclipse.cfml.wizards.templatefilewizard.NewTemplateFileWizard"
             preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
             finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="true"
+            project="false"
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
             <description>%wizard.description.3</description>
       </wizard>
-      <wizard
+      
+      
+      
+      <!--
+     <wizard
+            name="New Project From Template"
+            icon="icons/obj16/default.gif"
             category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.templateprojectwizard.NewTemplateProjectWizard"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            hasPages="true"
-            icon="icons/ctool16/insertsnip.gif"
-            id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateProjectWizard"
-            name="%wizard.name.4"
+            class="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjectFromTemplateWizard"
             preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            project="true"/>
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+            project="true"
+            id="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjecFromTemplateWizard">
+            <description>This wizard creates a new project using one of the templates defined</description>
+      </wizard>
+     TODO:  Add this back in
+     <wizard
+           canFinishEarly="false"
+           category="org.cfeclipse.cfml.category1"
+           class="org.cfeclipse.cfml.wizards.projectfromtemplate.ProjectFromTemplate"
+           finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+           hasPages="true"
+           icon="icons/ctool16/application.gif"
+           id="org.cfeclipse.cfml.ptemplate"
+           name="New Project From Template2"
+           preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+           project="true"/>
+           -->
+      <!--
+     <wizard
+           category="org.cfeclipse.cfml.category1"
+           class="org.cfeclipse.cfml.wizards.applicationcfcwizard.ApplicationCFCWizard"
+           finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+           icon="icons/ctool16/application.gif"
+           id="org.cfeclipse.cfml.wizards.applicationcfc.ApplicationCFCWizard"
+           name="New Application.cfc"
+           preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+           project="false">
+     </wizard>
+     -->
    </extension>
    <extension
          id="CFENature"
@@ -1544,6 +1648,19 @@
             targetID="org.eclipse.ui.resourcePerspective">
             <perspectiveShortcut id="org.cfeclipse.cfml.perspective.CFML"/>
         </perspectiveExtension>
+       <perspectiveExtension targetID = "org.cfeclipse.cfml.perspective.CFML">
+     	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
+     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
+      </perspectiveExtension>
+       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+          <view
+                id="org.cfeclipse.cfml.views.snipex.SnipEx"
+                ratio="0.5"
+                relationship="right"
+                relative="org.eclipse.ui.views.TaskList"/>
+       </perspectiveExtension>
+       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+       </perspectiveExtension>
   </extension>
    <extension
          point="org.eclipse.ui.contexts">
@@ -1560,7 +1677,10 @@
       <introProductBinding
             introId="org.cfeclipse.cfml.intro"
             productId="org.eclipse.platform.ide"/>
+   
+   
    </extension>
+   
    <extension
          point="org.eclipse.ui.intro.config">
       <config
@@ -1580,7 +1700,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.ui.ide.workbench"
-            name="%product.name.0">
+            name="CFEclipse">
          <property
                name="windowImages"
                value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
@@ -1609,5 +1729,13 @@
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
             content="intro/sample.xml"/>
+   </extension>
+   <extension
+         id="org.cfeclipse.cfml.builders.componentbuilder"
+         name="CF Component Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder hasNature="true">
+         <run class="org.cfeclipse.cfml.builders.CFComponentBuilder"/>
+      </builder>
    </extension>
 </plugin>

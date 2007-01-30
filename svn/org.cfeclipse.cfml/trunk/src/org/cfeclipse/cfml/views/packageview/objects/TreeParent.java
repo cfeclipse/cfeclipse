@@ -11,6 +11,8 @@ import org.eclipse.ui.ISharedImages;
  */
 public class TreeParent extends TreeObject 
 {
+	private TreeParent parent;
+	
 	private ArrayList children;
 	public TreeParent(String name) {
 		super(name);
@@ -40,5 +42,21 @@ public class TreeParent extends TreeObject
 		}
 		children.clear();
 	}
+	
+	 public String getPackageName()
+	    {
+	    	String packageName = "";
+	    	packageName = parent.getPackageName()+ "." + getName(); 
+	        return packageName;
+	    }
+	
+	public void setParent(TreeParent parent) {
+		this.parent = parent;
+	}
+	public TreeParent getParent(){
+		return parent;
+	}
+	
+	
 }
 

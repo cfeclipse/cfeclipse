@@ -128,6 +128,7 @@ public class PackageView extends ViewPart
         gd.verticalAlignment = SWT.FILL;
         packageTreeView.getTree().setLayoutData(gd);
         packageTreeView.setInput(getViewSite());
+        
     }
     
     
@@ -189,9 +190,7 @@ public class PackageView extends ViewPart
         {
             public void run()
             {
-                //todo 
-                //ViewContentProvider contentprovider = new ViewContentProvider(this, viewSite);
-                //viewer.setContentProvider(contentprovider);
+            	packageTreeView.refresh();
             }	
         };
         acRefreshTree.setText("Refresh View");
@@ -205,6 +204,7 @@ public class PackageView extends ViewPart
         tbm.add(acRemoteCFCFilterPublic);
         tbm.add(acRemoteCFCFilterPackage);
         tbm.add(acRemoteCFCFilterPrivate);
+        tbm.add(acRefreshTree);
   
         // this forces the toolbar to get the actions that we just added.  
         // I think it should do it by default, (and it took me like 2 days to figure this one 

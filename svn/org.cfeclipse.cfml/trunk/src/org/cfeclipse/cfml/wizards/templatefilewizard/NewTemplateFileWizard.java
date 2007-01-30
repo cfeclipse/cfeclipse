@@ -107,11 +107,9 @@ public class NewTemplateFileWizard extends Wizard implements INewWizard {
 		{
 			page = new NewTemplateFileWizardPage(selection);
 			//pageTwo = new NewCfmlWizardPageTwo(selection);
-			System.out.println("running from the wizard");
 			addPage(page);
 			
 			//addPage(pageTwo);
-			System.out.println(selection);
 		}
 		else
 		{

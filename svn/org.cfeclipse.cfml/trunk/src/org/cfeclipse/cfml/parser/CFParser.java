@@ -56,11 +56,13 @@ import org.cfeclipse.cfml.parser.docitems.CfmlCustomTag;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
+import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
@@ -120,8 +122,9 @@ public class CFParser {
 	 * <code>REG_ATTRIBUTES</code> - regular expression for getting the attributes out of a tag match.
 	 * \s*(\w*)="(\w*)"
 	 */
-	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)\\s*=\\s*('[^']*'|\"[^\"]*\")"; 
-	
+	//static protected final String REG_ATTRIBUTES = "\\s*(\\w*)\\s*=\\s*('[^']*'|\"[^\"]*\")"; 
+	//Reg Ex provided by : David Hammond and Rob Wilkerson kills issue #15
+	static protected final String REG_ATTRIBUTES = "\\s*(\\w+)\\s*=\\s*('[^']*'|\"[^\"]*\")";
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
@@ -689,6 +692,7 @@ public class CFParser {
 		// If not then it's a child element and so we add it to the child list of the top element
 		// of the stack.
 	    
+		//TODO: this badly parses things like <cfif ListGetAt(i,1,"=") neq "errorType">
 	    tagName = tagName.substring(1, tagName.length());
 		TagItem newItem;
 		//System.out.println("CFParser::handleCFTag found " + tagName);
@@ -1308,6 +1312,8 @@ public class CFParser {
 					}
 					else if(next2Chars.compareToIgnoreCase("cf") == 0)
 					{
+						
+						//TODO: saving a <cfscript> tag with no contents causes a heap error
 						//
 						// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 						// container *only* for things to go in the document tree.
@@ -1474,15 +1480,23 @@ public class CFParser {
 //			System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(parserState.getMatches());
 			
-			
-			
-			parserState.addMessages(finalDocTreeTraversal(docTree.getDocumentRoot()));
+			DocItem documentRoot = docTree.getDocumentRoot();
+			ArrayList list = finalDocTreeTraversal(documentRoot);
+			parserState.addMessages(list);
 			processParseResultMessages();
 			
-			//This should parse a document and setup all the variables;
-			VariablesParser vParser = new VariablesParser(docTree,inData);
-			docTree.setVariableMap(vParser.getVariableMap());
-
+			//This should parse a document and setup all the variables
+			//TODO: Make sure the variable parser only parses up to the cursor
+			//need to get preferences
+			IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
+			if(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_VARIABLES)){
+				
+				System.out.println("calling the variables parser!");
+				VariablesParser vParser = new VariablesParser(docTree,inData);
+				docTree.setVariableMap(vParser.getVariableMap());
+			}
+			
+			
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
