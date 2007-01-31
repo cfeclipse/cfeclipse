@@ -46,6 +46,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.ui.editors.text.TextEditorPreferenceConstants;
+import org.eclipse.ui.internal.PartService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -62,6 +63,7 @@ import org.osgi.framework.BundleContext;
  */
 public class CFMLPlugin extends AbstractUIPlugin {
 
+	
 
 	/** Singleton instance so that everything can access the plugin */
 	private static CFMLPlugin plugin;
@@ -174,6 +176,12 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			//lots of bad things can happen...
 			e.printStackTrace(System.err);
 		}
+		
+		
+		EditorPartListener editorListener = new EditorPartListener();
+		this.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(editorListener);
+		
+	
 	}
 
 	/**

@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.EditorPartListener;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
@@ -109,6 +110,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.IPartService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.part.FileEditorInput;
@@ -134,7 +136,13 @@ import org.eclipse.ui.texteditor.StatusTextEditor;
 public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		IPropertyChangeListener, IShowInSource {
 	
-	
+	/*
+	 * 
+	 * Need to check that we gain focus to show path
+	 * getActionBarContributor
+	 * 
+	 * 
+	 */
 	
     public ShowInContext getShowInContext() {
 		// TODO Auto-generated method stub
@@ -250,6 +258,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		// getting the document filename when a new document is opened.
 		IResourceChangeListener listener = new MyResourceChangeReporter();
 		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
+		
+		
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore()
@@ -277,6 +287,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);	
 		
+
 	
 	
 	}
@@ -403,7 +414,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	private void partActivated(){
 		System.out.println("I am activated" + this.getPartName());
 	}
-	private void setStatusLine(){
+	public void setStatusLine(){
 		
 		try{
 		//		Sets the current file path to the status line
@@ -888,6 +899,10 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		CFMLPlugin.getDefault().getPreferenceStore().removePropertyChangeListener(
 				this);
 		CFMLPlugin.getDefault().getLastActionManager().removeAction(this);
+		
+		//Remove the listener
+		
+		
 		super.dispose();
 	}
 
