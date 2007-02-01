@@ -202,7 +202,6 @@ public class OutlineLabelProvider extends LabelProvider {
 								if(aval != null && aval.length() > 0)
 								{
 										sb.append(" " + p.getName() + ": " + aval);	
-									
 								}
 							}
 						}
