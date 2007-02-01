@@ -837,7 +837,7 @@
             commandId="org.cfeclipse.cfml.editors.actions.CFScript"
             contextId="org.cfeclipse.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+R">
+            keySequence="M1+M3+R">
       </keyBinding>
 	<!-- to lower case -->
       <command
