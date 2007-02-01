@@ -170,7 +170,9 @@ public class OutlineLabelProvider extends LabelProvider {
 		{
 			StringBuffer sb = new StringBuffer("");			
 			String tname = ((TagItem)element).getName(); 
-			sb.append( tname );
+			if(!tname.equalsIgnoreCase("cffunction")){
+				sb.append( tname );
+			}
 			
 			//this is a yucky hack... some items look stupid if not kid gloved
 			if(hasSpecialNeeds(tname))
@@ -199,7 +201,8 @@ public class OutlineLabelProvider extends LabelProvider {
 								String aval = ((TagItem)element).getAttributeValue(p.getName());
 								if(aval != null && aval.length() > 0)
 								{
-									sb.append(" " + p.getName() + ": " + aval);
+										sb.append(" " + p.getName() + ": " + aval);	
+									
 								}
 							}
 						}
