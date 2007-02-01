@@ -147,6 +147,8 @@
   margin-right: 0;
 }
 
+
+
 /**************************************************************
    Subpage Nav block
  *************************************************************
@@ -199,6 +201,21 @@
 }
 #subpage_menu li a.last {
   margin-right: 0;
+}
+
+#subpage_menu li a.nostyle {
+	display: inline;
+	colour: white;
+	font-size: small;
+	padding: 0;
+	margin: 2px;
+	margin-top: 3px;
+	margin-right: 3px;
+	font: 400 1em verdana, sans-serif;
+}#subpage_menu li a:hover.nostyle {
+	colour: white;
+	font-size: small;
+	border: 0;
 }
 
 
