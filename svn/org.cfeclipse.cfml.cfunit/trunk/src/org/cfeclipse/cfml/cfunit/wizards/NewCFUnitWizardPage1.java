@@ -421,7 +421,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 			if (result.length == 1) {
 				
 				// Convert the path to a dot-nation location which can be used by ColdFusion
-				String path = ((Path)result[0]).toString().replace("/", ".");
+				String path = ((Path)result[0]).toString().replace('/', '.');
 					
 				if( path.startsWith(".") ) {
 					path = path.substring(1);					
@@ -544,12 +544,12 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 			
 		// If the location contains cfcunit switch it to whatever name 
 		// is now selected (which may be the same)
-		} else if(oldLocation.contains(".cfcunit.")) {
+		} else if(oldLocation.matches(".*\\.cfcunit\\..*")) {
 			cfunitLocation.setText( oldLocation.replaceAll(".cfcunit.", newPathPart) );			
 		
 		// If the location contains cfunit switch it to whatever name 
 		// is now selected (which may be the same)
-		} else if(oldLocation.contains(".cfunit.")) {
+		} else if(oldLocation.matches(".*\\.cfcunit\\..*")) {
 			cfunitLocation.setText( oldLocation.replaceAll(".cfunit.", newPathPart) );
 		}
 		

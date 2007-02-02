@@ -53,7 +53,7 @@ public class CFUnitTestResult extends Observable {
 			if(newLine.trim().length() > 0) {
 				if( newLine.equals("FAILURE") ) {
 					setType( FAILURE );
-				} else if(newLine.contains("ERROR")) {
+				} else if(newLine.matches(".*ERROR.*")) {
 					setType( ERROR );
 				}
 			}

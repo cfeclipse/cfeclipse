@@ -92,7 +92,7 @@ public class RefreshTestAction implements IEditorActionDelegate {
 			// If the CFC extends a TestCase, return the current document's name
 			String sc = tag.getAttributeValue("extends");
 			if(sc != null) {
-				if(sc.contains(".TestCase")) {
+				if(sc.matches(".*\\.TestCase.*")) {
 					return CFUnitTestCase.getResourceFullName( icfd.getResource() );
 				}
 			}
