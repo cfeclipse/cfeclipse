@@ -56,7 +56,11 @@ public class CategoryLoader {
 	
 	private Document categoryXML = null;
 	
-	/* get the dictionary so its ready for us to grab items out of it */
+	/* get the dictionary so its ready for us to grab items out of it 
+	 * TODO: Change it so it gets the current file's dictionary... we might have to have a listener when 
+	 * we change a document, and an error if there isnt one.
+	 * 
+	 * */
 	SyntaxDictionary cfdic = DictionaryManager.getDictionary("CF_DICTIONARY");
 	
 	
@@ -64,6 +68,8 @@ public class CategoryLoader {
 		//Create the root 
 		this.cattags = new TreeParent(name);
 		this.fulltags = new TreeParent(name);
+		
+		
 		
 		initialize();
 	}

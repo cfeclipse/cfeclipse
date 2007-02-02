@@ -1,5 +1,6 @@
 package org.cfeclipse.cfml.views.dictionary;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -63,6 +64,12 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 	 * 
 	 */
 	private void initialize() {
+		
+		//pass in the current site
+		
+		
+		
+		
 		CategoryLoader catloader = new CategoryLoader("root");
 		TreeParent root = null;
 		if(this.type.equals("standard")){

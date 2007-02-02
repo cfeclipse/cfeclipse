@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
@@ -140,10 +141,10 @@ public class DictionaryView extends ViewPart {
 					if(searchpattern.trim().length() > 0){
 						viewfilter.setMatch(searchpattern);
 						viewer.addFilter(viewfilter);
-						viewer.expandToLevel(3);
-						
-						//We pass the items to the filter
-					
+						viewer.expandToLevel(5);
+					}
+					else{
+						viewer.removeFilter(viewfilter);
 					}
 						
 					
@@ -153,7 +154,12 @@ public class DictionaryView extends ViewPart {
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
 			drillDownAdapter = new DrillDownAdapter(viewer);
+			
+			
+		
 			viewer.setContentProvider(contentprovider);
+			
+			
 			viewer.setLabelProvider(new ViewLabelProvider());
 			viewer.setSorter(new NameSorter());
 			viewer.setInput(getViewSite());
