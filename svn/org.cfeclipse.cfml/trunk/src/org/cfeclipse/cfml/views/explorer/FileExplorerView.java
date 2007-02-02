@@ -7,11 +7,22 @@
 package org.cfeclipse.cfml.views.explorer;
 
 import java.io.File;
+import java.text.Collator;
+import java.util.Locale;
 
+
+import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
+import org.cfeclipse.cfml.net.RemoteFile;
+import org.cfeclipse.cfml.views.dictionary.DictionaryView;
+import org.cfeclipse.cfml.views.dictionary.TagItem;
 import org.cfeclipse.cfml.views.explorer.ftp.FtpConnectionDialog;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -36,7 +47,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
@@ -59,6 +74,12 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 	public final static String ID_FILE_EXPLORER = "org.cfeclipse.cfml.views.explorer.FileExplorerView";
 
     private MenuItem disconnectItem,connectItem,manageItem;
+    
+    private Action createFile;
+	private Action createDirectory;
+	private Action deleteItem;
+	
+    
     
     protected IFileProvider fileProvider = null;
     
@@ -131,7 +152,7 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
         containerLayout.numColumns = 2;
         container.setLayout(containerLayout);
         
-        // Combo viewer
+        // Select Site or local path
         comboViewer = new ComboViewer(container, SWT.READ_ONLY);
         comboViewer.addSelectionChangedListener(new ComboSelectionListener(this));
         comboViewer.setLabelProvider(new ComboLabelProvider());
@@ -169,10 +190,18 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
         
         directoryTreeViewer.setInput(new LocalFileSystem());
         
-
+//Create the columns
+        
+        
+        
+        
+        
         FileContentProvider fileProvider = new FileContentProvider(this);
         fileViewer = new TableViewer(sash, SWT.BORDER);
         final Table fileTable = fileViewer.getTable();
+        
+      
+        
         
         fileViewer.addDoubleClickListener(new FileDoubleClickListener(fileProvider)); 
         
@@ -180,17 +209,108 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
         fileViewer.setLabelProvider(new FileLabelProvider());
         fileViewer.setContentProvider(fileProvider);
         fileViewer.setComparer(new FileComparer());
+        
         final Table table = fileViewer.getTable();
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        
+        
+        //Add the columns and sort out the column stuff
+        TableColumn filenameColumn = new TableColumn(fileViewer.getTable(), SWT.NONE);
+        filenameColumn.setWidth(200);
+        filenameColumn.setText("Name");
+        
+        TableColumn fileSizeColumn = new TableColumn(fileViewer.getTable(), SWT.NONE);
+        fileSizeColumn.setWidth(50);
+        fileSizeColumn.setText("Size");
+        
+       /* Listener sortListener = new Listener() {
+            public void handleEvent(Event e) {
+                TableItem[] items = table.getItems();
+                Collator collator = Collator.getInstance(Locale.getDefault());
+                TableColumn column = (TableColumn)e.widget;
+                int index = column == filenameColumn ? 0 : 1;
+                for (int i = 1; i < items.length; i++) {
+                    String value1 = items[i].getText(index);
+                    for (int j = 0; j < i; j++){
+                        String value2 = items[j].getText(index);
+                        if (collator.compare(value1, value2) < 0) {
+                            String[] values = {items[i].getText(0), items[i].getText(1)};
+                            items[i].dispose();
+                            TableItem item = new TableItem(table, SWT.NONE, j);
+                            item.setText(values);
+                            items = table.getItems();
+                            break;
+                        }
+                    }
+                }
+                table.setSortColumn(column);
+            }
+        };
+        filenameColumn.addListener(SWT.Selection, sortListener);
+        fileSizeColumn.addListener(SWT.Selection, sortListener);
+        */
+        
+        
+        table.setLinesVisible(true);
+        table.setHeaderVisible(true);
+        table.setSortColumn(filenameColumn);
+        //table.setSortDirection(SWT.UP);
+        
         fileViewer.setInput(DirectoryContentProvider.localFS);
         
-        createActions();
         initializeToolBar();
         initializeMenu();
+        initializeRightClick();
+        hookContextMenu();
     	
     }
     
-    public boolean show(ShowInContext context) {
+    
+	private void hookContextMenu() {
+		MenuManager menuMgr = new MenuManager("#PopupMenu");
+		menuMgr.setRemoveAllWhenShown(true);
+		menuMgr.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager manager) {
+				FileExplorerView.this.fillContextMenu(manager);
+			}
+		});
+		Menu menu = menuMgr.createContextMenu(directoryTreeViewer.getControl());
+		directoryTreeViewer.getControl().setMenu(menu);
+		getSite().registerContextMenu(menuMgr, directoryTreeViewer);
+	}
+	
+    
+    private void fillContextMenu(IMenuManager manager) {
+		//Somehow we have to know what this item is
+		manager.add(createFile);
+		
+	}
+    
+    private void initializeRightClick() {
+		// TODO Auto-generated method stub
+    	createFile = new Action() {
+			public void run() {
+			
+				ISelection selection = directoryTreeViewer.getSelection();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				
+				if(obj instanceof RemoteFile){
+					RemoteFile rem = (RemoteFile)obj;
+					System.out.println(rem.getAbsolutePath());
+				}
+				System.out.println(obj.getClass());
+				
+			}
+		};
+		
+		createFile.setText("Create File");
+		//editTagAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+		//		.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		
+	}
+
+	public boolean show(ShowInContext context) {
     	String filePath;
     
         if (fileViewer == null || context == null)
@@ -268,9 +388,6 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     }
 
     
-    
-    private void createActions() {
-    }
 
     private void initializeToolBar() {
         IToolBarManager tbm = getViewSite().getActionBars().getToolBarManager();

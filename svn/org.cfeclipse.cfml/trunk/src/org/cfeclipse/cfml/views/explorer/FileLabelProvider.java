@@ -23,30 +23,48 @@ class FileLabelProvider extends LabelProvider implements ITableLabelProvider {
     Pattern p = Pattern.compile("(.)+(htm|html|cfc|cfm|cfml)$");
     
     public String getColumnText(Object element, int columnIndex) {
-        
-	        if (element instanceof RemoteFile) {
-	            return ((RemoteFile)element).getName();
-	        }
+        	String nameReturn = "";
+        	Object[] item = (Object[])element;
+        	
+    		if(columnIndex == 0){
+    			String[] fullpath = item[columnIndex].toString().split("[\\\\/]");
+    			nameReturn = fullpath[fullpath.length-1];
+    			 if (item[columnIndex] instanceof RemoteFile) {
+    				 nameReturn = ((RemoteFile)item[columnIndex]).getName();
+    		       }
+    		}	
+    		else {
+    			nameReturn = item[columnIndex].toString();
+    		}
 	        
-	        String[] fullpath = element.toString().split("[\\\\/]");
-	        return fullpath[fullpath.length-1];
-        
+	        return nameReturn;
     }
     
     
     
     public Image getColumnImage(Object element, int columnIndex) {
-      
-	        String filename = element.toString();
-	        if (element instanceof RemoteFile) {
-	            filename = ((RemoteFile)element).getName();
+    	Object[] item = (Object[])element;
+    		
+    		if(columnIndex == 1){
+    			return null;
+    		}
+    		
+	        String filename = item[columnIndex].toString();
+	        
+	        if (item[columnIndex] instanceof RemoteFile) {
+	            filename = ((RemoteFile)item[columnIndex]).getName();
 	        }
 	        Matcher m = p.matcher(filename);
 	        if (m.matches()) {
-	            return addPermissionIcon(element,CFPluginImages.get(CFPluginImages.ICON_DEFAULT));
+	        	String extension = filename.substring(filename.length()-3, filename.length());
+	        	String icon_default = CFPluginImages.ICON_DEFAULT;
+	        	if(extension.equalsIgnoreCase("cfc")){
+	        		icon_default = CFPluginImages.ICON_CFC;
+	        	}
+	            return addPermissionIcon(item[columnIndex],CFPluginImages.get(icon_default)); //cfm icon
 	        }
 	        else {
-	            return addPermissionIcon(element,CFPluginImages.get(CFPluginImages.ICON_DOCUMENT));
+	            return addPermissionIcon(item[columnIndex],CFPluginImages.get(CFPluginImages.ICON_DOCUMENT));
 	        }
         
     }
