@@ -15739,15 +15739,15 @@
 			Column data type.
 		]]></help>
 		<values>
-			<value option="Integer"/>
-			<value option="BigInt"/>
-			<value option="Double"/>
-			<value option="Decimal"/>
-			<value option="VarChar"/>
-			<value option="Binary"/>
-			<value option="Bit"/>
-			<value option="Time"/>
-			<value option="Data"/>
+			<value option="&quot;Integer&quot;"/>
+			<value option="&quot;BigInt&quot;"/>
+			<value option="&quot;Double&quot;"/>
+			<value option="&quot;Decimal&quot;"/>
+			<value option="&quot;VarChar&quot;"/>
+			<value option="&quot;Binary&quot;"/>
+			<value option="&quot;Bit&quot;"/>
+			<value option="&quot;Time&quot;"/>
+			<value option="&quot;Data&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="array_name" type="Array" required="true">
@@ -15787,15 +15787,15 @@
 			Comma-delimited list specifying column data types.
 		]]></help>
 		<values>
-			<value option="Integer"/>
-			<value option="BigInt"/>
-			<value option="Double"/>
-			<value option="Decimal"/>
-			<value option="VarChar"/>
-			<value option="Binary"/>
-			<value option="Bit"/>
-			<value option="Time"/>
-			<value option="Data"/>
+				<value option="&quot;Integer&quot;"/>
+				<value option="&quot;BigInt&quot;"/>
+				<value option="&quot;Double&quot;"/>
+				<value option="&quot;Decimal&quot;"/>
+				<value option="&quot;VarChar&quot;"/>
+				<value option="&quot;Binary&quot;"/>
+				<value option="&quot;Bit&quot;"/>
+				<value option="&quot;Time&quot;"/>
+				<value option="&quot;Data&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15837,10 +15837,10 @@
 	<parameter name="delimiter" type="String" required="false">
 		<help><![CDATA[
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
 			<value option="chr(9)"/>
 			<value option="chr(10)"/>
 			<value option="chr(13)"/>
@@ -15857,10 +15857,10 @@
 		<help><![CDATA[
 		The algorithm to use to generated the random number.
 	]]></help>
-		<values default="CFMX_COMPAT">
-			<value option="CFMX_COMPAT"/>
-			<value option="SHA1PRNG"/>
-			<value option="IBMSecureRandom"/>
+		<values default="&quot;CFMX_COMPAT&quot;">
+			<value option="&quot;CFMX_COMPAT&quot;"/>
+			<value option="&quot;SHA1PRNG&quot;"/>
+			<value option="&quot;IBMSecureRandom&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -15879,11 +15879,10 @@
 		<help><![CDATA[
 			The algorithm to use to generated the random number.
 		]]></help>
-		<values default="CFMX_COMPAT">
-			<value option="CFMX_COMPAT"/>
-			<value option="SHA1PRNG"/>
-			<value option="IBMSecureRandom"/>
-		</values>
+		<values default="&quot;CFMX_COMPAT&quot;">
+			<value option="&quot;CFMX_COMPAT&quot;"/>
+			<value option="&quot;SHA1PRNG&quot;"/>
+			<value option="&quot;IBMSecureRandom&quot;"/>
 	</parameter>
 </function>
 <!--
@@ -15907,10 +15906,10 @@
 		<help><![CDATA[
 		The algorithm to use to generated the random number.
 		]]></help>
-		<values default="CFMX_COMPAT">
-			<value option="CFMX_COMPAT"/>
-			<value option="SHA1PRNG"/>
-			<value option="IBMSecureRandom"/>
+		<values default="&quot;CFMX_COMPAT&quot;">
+			<value option="&quot;CFMX_COMPAT&quot;"/>
+			<value option="&quot;SHA1PRNG&quot;"/>
+			<value option="&quot;IBMSecureRandom&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16072,8 +16071,8 @@
 			* all: replace all occurrences
 		]]></help>
 		<values>
-			<value option="one"/>
-			<value option="all"/>
+			<value option="&quot;one&quot;"/>
+			<value option="&quot;all&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16125,8 +16124,8 @@
 			* all: Replace all occurrences
 		]]></help>
 		<values>
-			<value option="one"/>
-			<value option="all"/>
+			<value option="&quot;one&quot;"/>
+			<value option="&quot;all&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16161,8 +16160,8 @@
 			* all: Replace all occurrences of the regular expression.
 		]]></help>
 		<values>
-			<value option="one"/>
-			<value option="all"/>
+			<value option="&quot;one&quot;"/>
+			<value option="&quot;all&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16197,8 +16196,8 @@
 			* all: Replace all occurrences of the regular expression.
 		]]></help>
 		<values>
-			<value option="one"/>
-			<value option="all"/>
+			<value option="&quot;one&quot;"/>
+			<value option="&quot;all&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16322,17 +16321,17 @@
 			variables is encoded.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+			<value option="&quot;utf-8&quot;"/>
+			<value option="&quot;iso-8859-1&quot;"/>
+			<value option="&quot;windows-1252&quot;"/>
+			<value option="&quot;us-ascii&quot;"/>
+			<value option="&quot;shift_jis&quot;"/>
+			<value option="&quot;iso-2022-jp&quot;"/>
+			<value option="&quot;euc-jp&quot;"/>
+			<value option="&quot;euc-kr&quot;"/>
+			<value option="&quot;big5&quot;"/>
+			<value option="&quot;euc-cn&quot;"/>
+			<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16351,34 +16350,34 @@
 			The name of a locale; for example, "English (US)"
 		]]></help>
 		<values>
-			<value option="Chinese (China)"/>
-			<value option="Chinese (Hong Kong)"/>
-			<value option="Chinese (Taiwan)"/>
-			<value option="Dutch (Belgian)"/>
-			<value option="Dutch (Standard)"/>
-			<value option="English (Australian)"/>
-			<value option="English (Canadian)"/>
-			<value option="English (New Zealand)"/>
-			<value option="English (US)"/>
-			<value option="English (UK)"/>
-			<value option="French (Belgian)"/>
-			<value option="French (Canadian)"/>
-			<value option="French (Standard)"/>
-			<value option="French (Swiss)"/>
-			<value option="German (Austrian)"/>
-			<value option="German (Standard)"/>
-			<value option="German (Swiss)"/>
-			<value option="Italian (Standard)"/>
-			<value option="Italian (Swiss)"/>
-			<value option="Japanese"/>
-			<value option="Korean"/>
-			<value option="Norwegian (Bokmal)"/>
-			<value option="Norwegian (Nynorsk)"/>
-			<value option="Portuguese (Brazilian)"/>
-			<value option="Portuguese (Standard)"/>
-			<value option="Spanish (Modern)"/>
-			<value option="Spanish (Standard)"/>
-			<value option="Swedish"/>
+			<value option="&quot;Chinese (China)&quot;"/>
+			<value option="&quot;Chinese (Hong Kong)&quot;"/>
+			<value option="&quot;Chinese (Taiwan)&quot;"/>
+			<value option="&quot;Dutch (Belgian)&quot;"/>
+			<value option="&quot;Dutch (Standard)&quot;"/>
+			<value option="&quot;English (Australian)&quot;"/>
+			<value option="&quot;English (Canadian)&quot;"/>
+			<value option="&quot;English (New Zealand)&quot;"/>
+			<value option="&quot;English (US)&quot;"/>
+			<value option="&quot;English (UK)&quot;"/>
+			<value option="&quot;French (Belgian)&quot;"/>
+			<value option="&quot;French (Canadian)&quot;"/>
+			<value option="&quot;French (Standard)&quot;"/>
+			<value option="&quot;French (Swiss)&quot;"/>
+			<value option="&quot;German (Austrian)&quot;"/>
+			<value option="&quot;German (Standard)&quot;"/>
+			<value option="&quot;German (Swiss)&quot;"/>
+			<value option="&quot;Italian (Standard)&quot;"/>
+			<value option="&quot;Italian (Swiss)&quot;"/>
+			<value option="&quot;Japanese&quot;"/>
+			<value option="&quot;Korean&quot;"/>
+			<value option="&quot;Norwegian (Bokmal)&quot;"/>
+			<value option="&quot;Norwegian (Nynorsk)&quot;"/>
+			<value option="&quot;Portuguese (Brazilian)&quot;"/>
+			<value option="&quot;Portuguese (Standard)&quot;"/>
+			<value option="&quot;Spanish (Modern)&quot;"/>
+			<value option="&quot;Spanish (Standard)&quot;"/>
+			<value option="&quot;Swedish&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16790,9 +16789,9 @@
 			Character that separates keys in list. Default: comma.
 		]]></help>
 		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
 			<value option="chr(9)"/>
 			<value option="chr(10)"/>
 			<value option="chr(13)"/>
@@ -16825,9 +16824,9 @@
 			* textnocase
 		]]></help>
 		<values>
-			<value option="numeric"/>
-			<value option="text"/>
-			<value option="textnocase"/>
+			<value option="&quot;numeric&quot;"/>
+			<value option="&quot;text&quot;"/>
+			<value option="&quot;textnocase&quot;"/>
 		</values>
 	</parameter>
 	<parameter name="sortorder" type="String" required="true">
@@ -16902,10 +16901,10 @@
 			Masking characters that determine the format
 		]]></help>
 		<values>
-			<value option="short"/>
-			<value option="medium"/>
-			<value option="long"/>
-			<value option="full"/>
+			<value option="&quot;short&quot;"/>
+			<value option="&quot;medium&quot;"/>
+			<value option="&quot;long&quot;"/>
+			<value option="&quot;full&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -16929,17 +16928,17 @@
 			byte array.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+			<value option="&quot;utf-8&quot;"/>
+			<value option="&quot;iso-8859-1&quot;"/>
+			<value option="&quot;windows-1252&quot;"/>
+			<value option="&quot;us-ascii&quot;"/>
+			<value option="&quot;shift_jis&quot;"/>
+			<value option="&quot;iso-2022-jp&quot;"/>
+			<value option="&quot;euc-jp&quot;"/>
+			<value option="&quot;euc-kr&quot;"/>
+			<value option="&quot;big5&quot;"/>
+			<value option="&quot;euc-cn&quot;"/>
+			<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -17020,17 +17019,17 @@
 			The character encoding (character set) of the string.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+			<value option="&quot;utf-8&quot;"/>
+			<value option="&quot;iso-8859-1&quot;"/>
+			<value option="&quot;windows-1252&quot;"/>
+			<value option="&quot;us-ascii&quot;"/>
+			<value option="&quot;shift_jis&quot;"/>
+			<value option="&quot;iso-2022-jp&quot;"/>
+			<value option="&quot;euc-jp&quot;"/>
+			<value option="&quot;euc-kr&quot;"/>
+			<value option="&quot;big5&quot;"/>
+			<value option="&quot;euc-cn&quot;"/>
+			<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -17073,17 +17072,17 @@
 			The character encoding in which the string is encoded.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+			<value option="&quot;utf-8&quot;"/>
+			<value option="&quot;iso-8859-1&quot;"/>
+			<value option="&quot;windows-1252&quot;"/>
+			<value option="&quot;us-ascii&quot;"/>
+			<value option="&quot;shift_jis&quot;"/>
+			<value option="&quot;iso-2022-jp&quot;"/>
+			<value option="&quot;euc-jp&quot;"/>
+			<value option="&quot;euc-kr&quot;"/>
+			<value option="&quot;big5&quot;"/>
+			<value option="&quot;euc-cn&quot;"/>
+			<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -17106,17 +17105,17 @@
 			The character encoding in which the string is encoded.
 		]]></help>
 		<values>
-			<value option="utf-8"/>
-			<value option="iso-8859-1"/>
-			<value option="windows-1252"/>
-			<value option="us-ascii"/>
-			<value option="shift_jis"/>
-			<value option="iso-2022-jp"/>
-			<value option="euc-jp"/>
-			<value option="euc-kr"/>
-			<value option="big5"/>
-			<value option="euc-cn"/>
-			<value option="utf-16"/>
+				<value option="&quot;utf-8&quot;"/>
+				<value option="&quot;iso-8859-1&quot;"/>
+				<value option="&quot;windows-1252&quot;"/>
+				<value option="&quot;us-ascii&quot;"/>
+				<value option="&quot;shift_jis&quot;"/>
+				<value option="&quot;iso-2022-jp&quot;"/>
+				<value option="&quot;euc-jp&quot;"/>
+				<value option="&quot;euc-kr&quot;"/>
+				<value option="&quot;big5&quot;"/>
+				<value option="&quot;euc-cn&quot;"/>
+				<value option="&quot;utf-16&quot;"/>
 		</values>
 	</parameter>
 </function>
@@ -17172,10 +17171,10 @@
 			A delimiter character to separate column data items.
 			Default: comma (,).
 		]]></help>
-		<values default=",">
-			<value option=","/>
-			<value option="|"/>
-			<value option=";"/>
+		<values default="&quot;,&quot;">
+			<value option="&quot;,&quot;"/>
+			<value option="&quot;|&quot;"/>
+			<value option="&quot;;&quot;"/>
 			<value option="chr(9)"/>
 			<value option="chr(10)"/>
 			<value option="chr(13)"/>
