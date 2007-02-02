@@ -8,9 +8,10 @@ body,body.subpage {
   margin: 0;
   padding: 0;
   text-align: center;
-
+   background: #666 url(/assets/img/bg/header_new.jpg) repeat-x top left;
   font: 400 0.8em verdana, arial, sans-serif;
   line-height: 170%;
+  
   color: #EEE;
 }
 
@@ -236,7 +237,7 @@ img.floatRight {
 img.floatLeft {
   margin: 5px 15px 10px 0px;
 }
-
+/*
 a img {  
   border: 2px solid #8BE6FA;
 }
@@ -246,5 +247,5 @@ a:hover img {
   border: 2px solid #FFF !important;
   border: 2px solid #8BE6FA;
 }
-
+*/
 
