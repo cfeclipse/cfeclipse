@@ -76,6 +76,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -144,7 +145,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 * 
 	 */
 	
-    public ShowInContext getShowInContext() {
+ 
+
+	public ShowInContext getShowInContext() {
 		// TODO Auto-generated method stub
     //getEditorInput()
     	
@@ -162,6 +165,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	public static final String EDITOR_CONTEXT = "org.cfeclipse.cfml.cfmleditorcontext";
 	public static final String EDITOR_HYPERLINKS_ENABLED = AbstractDecoratedTextEditorPreferenceConstants.EDITOR_HYPERLINKS_ENABLED;
 	
+	public static final String ID = "org.cfeclipse.cfml.editors.CFMLEditor";
 	protected ColorManager colorManager;
 
 	protected CFConfiguration configuration;
