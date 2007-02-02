@@ -170,6 +170,8 @@ public class OutlineLabelProvider extends LabelProvider {
 		{
 			StringBuffer sb = new StringBuffer("");			
 			String tname = ((TagItem)element).getName(); 
+			
+			//Added this as we dont need to display the function since it already has an icon
 			if(!tname.equalsIgnoreCase("cffunction")){
 				sb.append( tname );
 			}
