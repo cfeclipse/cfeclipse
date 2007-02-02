@@ -9,17 +9,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-GB">
 
 <head>
-  <title>CFEclipse.org</title>
+  <title>CFEclipse: The ColdFusion IDE for Eclipse</title>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-  <meta name="author" content="CFEclipse.org" />
-  <meta name="keywords" content="" />
+  <meta name="author" content="CFEclipse Crew, Mark Drew, Andy Allan" />
+  <meta name="keywords" content="CFEclipse, ColdFusion, Eclipse, plugin, IDE, Editor" />
   <meta name="description" content="" />
   <meta name="robots" content="index, follow, noarchive" />
   <meta name="googlebot" content="noarchive" />
 
-  <link rel="stylesheet" type="text/css" href="assets/css/html.css" media="screen, projection, tv " />
-  <link rel="stylesheet" type="text/css" href="assets/css/layout.css" media="screen, projection, tv" />
-  <link rel="stylesheet" type="text/css" href="assets/css/print.css" media="print" />
+  <link rel="stylesheet" type="text/css" href="/assets/css/html.css" media="screen, projection, tv " />
+  <link rel="stylesheet" type="text/css" href="/assets/css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="/assets/css/print.css" media="print" />
 
 </head>
 
