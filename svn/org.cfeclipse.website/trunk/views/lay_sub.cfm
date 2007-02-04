@@ -4,6 +4,7 @@
 <cfset oPage = ViewState.getValue('PageObject')>
 <cfset section = oPage.getPageName()>
 <cfset myself = ViewState.getValue('myself')>
+<cfset stMetaData = ViewState.getValue('metadata')>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
@@ -11,12 +12,14 @@
 
 <head>
 
-  <title>CFEclipse.org</title>
+  <title>CFEclipse: <cfoutput>#oPage.getPageName()#</cfoutput></title>
 
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-  <meta name="author" content="CFEclipse.org" />
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
+<cfloop collection="#stMetaData#" item="name">
+<cfoutput>
+  <meta name="#name#" content="#stMetaData[name]#" /></cfoutput>
+
+</cfloop>
   <meta name="robots" content="index, follow, noarchive" />
   <meta name="googlebot" content="noarchive" />
 
@@ -30,11 +33,10 @@
 <!-- CONTENT: Holds all site content except for the footer.  This is what causes the footer to stick to the bottom -->
 <div id="subpage_content">
 
-    <div class="subpage_block_black"></div>
+  
 	<div id="subpage_menu">
-
 		<cfoutput>#ViewCollection.getView("topnav")#</cfoutput>
-		<div id="subpage_logo" />
+		<div id="subpage_logo"></div>
 	</div>  
 		  
    <!--- <div class="subpage_block_black"></div> --->

@@ -1,19 +1,24 @@
+<cfset qMainContent = ViewState.getValue('qHPContent')>
+<cfset qFeatureList = ViewState.getValue('qRandFeatures')>
+<cfset stMetaData = ViewState.getValue('metadata')>
+<cfset qNews = ViewState.getValue('qNews')>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
 	Site design inspired by http://fullahead.org
 -->
-<cfset qMainContent = ViewState.getValue('qHPContent')>
-<cfset qFeatureList = ViewState.getValue('qRandFeatures')>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-GB">
 
 <head>
   <title>CFEclipse: The ColdFusion IDE for Eclipse</title>
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-  <meta name="author" content="CFEclipse Crew, Mark Drew, Andy Allan" />
-  <meta name="keywords" content="CFEclipse, ColdFusion, Eclipse, plugin, IDE, Editor" />
-  <meta name="description" content="" />
+<cfloop collection="#stMetaData#" item="name">
+<cfoutput>
+  <meta name="#name#" content="#stMetaData[name]#" /></cfoutput>
+
+</cfloop>
   <meta name="robots" content="index, follow, noarchive" />
   <meta name="googlebot" content="noarchive" />
 
@@ -25,7 +30,6 @@
 
 
 <body>
-
 <!-- CONTENT: Holds all site content except for the footer.  This is what causes the footer to stick to the bottom -->
 <div id="content">
 
@@ -38,38 +42,23 @@
 
     <!-- 25 percent width column, aligned to the left -->
     <div class="width25 floatLeft leftColumn">
-
      <h1>News</h1>
-
-      <ul class="sideMenu">
-	<li class="here">
-          <ul>
-            <li><!--- <a href="" title="Jump to News"> --->CFEclipse 1.3 Released!<!--- </a> ---></li>
-			<li class="andy">
-				<strong>After nearly a year in development, CFEclipse 1.3 has finally been released!</strong>
-				You can download it using Eclipse's Update Software feature, follow instructions in the Download page
-			</li>
-          </ul>
-        </li>
-		
-		 <li>&nbsp;</li>
-		
-        <li class="here">
-          <ul>
-            <li><!--- <a href="" title="Jump to News"> --->Beta 1.3 Fixed for Eclipse 3.1<!--- </a> ---></li>
-			<li class="andy">Some users mentioned that they were having problems with the update of CFEclipse Beta 1.3 to run on Eclipse 3.1, the errors have been fixed and an updated package is available from the beta page.</li>
-          </ul>
-        </li>
-		 <li>&nbsp;</li>
-        <!--- <li class="here"> --->
-		 <!---  <ul>
-			<li><a href="" title="CFEclipse Updated">CFEclipse Updated!</a></li>
-			<li class="andy">Dean Harmon has helped the CFEclipse crew by submitting a patch so that CFEclipse 1.3 can now run on Eclipse 3.1. This is major news as now CFEclipse can work nicely with Flex Builder. You can download it over at the beta section.</li>
-		  </ul> --->
-      </ul>
-
-     <p>&nbsp;</p>
-
+	<cfloop query="qNews">
+	<cfoutput>
+	<div class="newsSnippet">
+		<h2>#art_title#</h2>
+		<p>#art_description#</p>
+	</div>
+	 <p>&nbsp;</p>
+	</cfoutput>
+	<!--- <div class="newsSnippet">
+		<h2><a href="##">Beta 1.3 Fixed for Eclipse 3.1</a></h2>
+		<p>
+		Some users mentioned that they were having problems with the update of CFEclipse Beta 1.3 to run on Eclipse 3.1, the errors have been fixed and an updated package is available from the beta page.
+		</p>
+	
+	</div> --->
+	</cfloop>
     </div>
 
 

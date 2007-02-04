@@ -25,7 +25,7 @@
 		 <!--- <img src="/assets/img/spacer.gif" width="1" height="40" /><br /> --->
 		<cfloop query="qBanners">
 			<cfif Len(#art_content#)>
-			<a href="#myself##art_content#" id="bannerlink"><img src="#art_img#" alt="#art_description#" border="0"/></a>
+			<a href="#myself##art_content#" id="bannerlink" class="nostyle"><img src="#art_img#" alt="#art_description#" border="0"/></a>
 			<cfelse>
 			<img src="#art_img#" alt="#art_description#" border="0"/>
 			</cfif>
