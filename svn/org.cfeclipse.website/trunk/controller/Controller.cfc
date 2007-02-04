@@ -5,16 +5,29 @@
 	--->
 
 	<cfset variables.pageservice = "">
+	<cfset variables.ArticleService = "">
 	<!---START: getter and setter for variables.PageService --->
-<cffunction name="getPageService" output="false" returntype="any">
-	<cfreturn variables.PageService>
-</cffunction>
+	<cffunction name="getPageService" output="false" returntype="any">
+		<cfreturn variables.PageService>
+	</cffunction>
+	
+	<cffunction name="setPageService" output="false" returntype="void">
+		<cfargument name="PageService" type="any">
+		<cfset variables.PageService = arguments.PageService>
+	</cffunction>
+	<!--- END: getter and setter for variables.PageService --->
 
-<cffunction name="setPageService" output="false" returntype="void">
-	<cfargument name="PageService" type="any">
-	<cfset variables.PageService = arguments.PageService>
-</cffunction>
-<!--- END: getter and setter for variables.PageService --->
+	<cffunction name="getArticleService" output="false" returntype="any">
+		<cfreturn variables.ArticleService>
+	</cffunction>
+	
+	<cffunction name="setArticleService" output="false" returntype="void">
+	<cfargument name="ArticleService" type="any">
+		<cfset variables.ArticleService = arguments.ArticleService>
+	
+	</cffunction>
+
+
 	
 	<cffunction name="onRequestStart" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
@@ -24,11 +37,15 @@
    		<cfloop collection="#stConfig#" item="conf">
     		  <cfset arguments.event.setValue("google_" & conf, stConfig[conf])>
    		</cfloop>
+	
+	<cfset stMetaData = getModelGlue().getBean("metadata").getConfig()>
+    <cfset arguments.event.setValue("metadata", stMetaData)>
 	  
 	  <!--- get the navigation --->
 	  <cfset arguments.event.setValue('section', arguments.event.getValue('page'))>
 	  <cfset arguments.event.setValue('mainNav', variables.pageservice.getPage("home").getChildPages())>
 	  
+	
 	</cffunction>
 
 	<!--- 
@@ -81,13 +98,31 @@
 	  <cfargument name="event" type="any">
 	  
 	 	<!--- arguments you can pass into this from the calling message --->
+	 	<cfset var page_id = arguments.event.getArgument("pageid", "")>
 	 	<cfset var content_type = arguments.event.getArgument("type" ,"")>
 		<cfset var retQuery = arguments.event.getArgument("queryName", "content")> <!--- Default this to "content" --->
 		
 		<cfset var random = arguments.event.getArgument("random", "false")>
 		<cfset var maxrows = arguments.event.getArgument("maxrows", 1000)>
-	 	<cfset var qryContentQuery = 0>
+		<cfset var orderby = arguments.event.getArgument("orderby", "")>
+		<cfset var orderdirection = arguments.event.getArgument("orderdirection", "")>
+		
+		
+		<cfset var qryContentQuery = 0>
+	
+		
+		<cfinvoke component="#variables.ArticleService#" 
+			method="getArticles" 
+			returnvariable="qryContentQuery"> 
+				<cfinvokeargument name="pageid" value="#page_id#"/>
+				<cfinvokeargument name="type" value="#content_type#"/>
+				<cfinvokeargument name="orderByField" value="#orderby#"/>
+				<cfinvokeargument name="orderByOrder" value="#orderdirection#"/>
+				<cfinvokeargument name="limit" value="#maxrows#"/>
+				<cfinvokeargument name="random" value="#random#"/>
+		</cfinvoke>
 	 	
+	 	<!--- 
 	 	<cfquery name="qryContentQuery" datasource="#variables.dsn#" result="qryContentResult">
 		 	SELECT     cms_article.*
 			FROM         cms_article INNER JOIN
@@ -102,10 +137,9 @@
 			ORDER BY RAND() Limit #maxrows#
 			</cfif>
 		</cfquery>
-	 		
+	 		 --->
 	 	
 		<cfset arguments.event.setValue(retQuery, qryContentQuery)> 
-		<cfset arguments.event.setValue("result_" & retQuery, qryContentResult)>	
 	</cffunction>
 	
 	<cffunction name="setValue" access="public" returnType="void" output="false">
