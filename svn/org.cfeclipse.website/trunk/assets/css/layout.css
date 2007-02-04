@@ -157,14 +157,15 @@
 #subpage_menu {
 	height:120px;
 	width: 100%;
-	background: #666 url(/assets/img/sub_header_background.jpg) repeat-x top left;
+
 /*	background-color: red; */
 /*	background: #555555 url(/assets/img/sub_header_background.gif) repeat-x top left; */
 	
 }
 
 #subpage_logo {
-	margin-top: 38px;
+	margin-top: 2px;
+	margin-left: 15px;
 	height: 43px;
 	width: 211px;
 	background: url(/assets/img/sub_header_logo.gif) no-repeat top left;
@@ -174,6 +175,37 @@
   margin: 0;
   padding: 0;
 }
+#leftnav li{
+	display:inline;
+	font-family:verdana,sans-serif;
+	font-size:1em;
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:400;
+	line-height:normal;
+	margin:3px 3px 2px 2px;
+	padding:0pt;
+}
+/*
+li #topnav {
+	display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li #topnav a {
+  float: left;
+  margin: 0 2px;
+  padding: 5px 0.5em;
+
+  font: 400 1.6em "trebuchet ms", serif;
+  text-decoration: none;
+  text-transform: lowercase;
+  color: #FFF;
+}
+*/
 #subpage_menu li {
   display: inline;
   list-style: none;
@@ -214,6 +246,26 @@
 	border: 0;
 }
 
+/**************************************************************
+   .newsSnippet: The homepage News items
+ **************************************************************/
+.newsSnippet{
+	background:#555555 url(/assets/img/bg/gradient.jpg) repeat-x scroll left bottom;margin-bottom:2em;
+}
+.newsSnippet h2 {
+	display: block;
+	padding: 5px 5px 0;
+	color:#65EBFF;
+	font-weight:400;
+}
+.newsSnippet h2 a {
+	color:#65EBFF;
+}
+.newsSnippet p {
+	font: 400 0.8em verdana, arial, sans-serif; 
+	color: white;
+	padding: 5px;	
+}
 /**************************************************************
    .sideMenu: The side bar menu
  **************************************************************/

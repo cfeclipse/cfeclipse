@@ -16,7 +16,7 @@ body,body.subpage {
 }
 
 body.subpage {
-   background: #555;
+	background: #666 url(/assets/img/bg/sub_header_background.jpg) repeat-x top left;
 }
 
 h1 {   
@@ -237,15 +237,15 @@ img.floatRight {
 img.floatLeft {
   margin: 5px 15px 10px 0px;
 }
-/*
+
 a img {  
-  border: 2px solid #8BE6FA;
+ /* border: 2px solid #8BE6FA; */
 }
 
 a:hover img {  
-  /* Fixes IE bug - IE doesn't correctly apply the style on a:hover so need to mask it */
+  /* Fixes IE bug - IE doesn't correctly apply the style on a:hover so need to mask it
   border: 2px solid #FFF !important;
-  border: 2px solid #8BE6FA;
+  border: 2px solid #8BE6FA; */
 }
-*/
+
 
