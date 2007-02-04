@@ -1,5 +1,5 @@
 <!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
-[<!ENTITY appName "cfeclipse_org_new.">]
+[<!ENTITY appName "cfeclipse_org.">]
 >
 <modelglue>
 	<controllers>
