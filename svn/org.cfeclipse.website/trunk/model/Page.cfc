@@ -5,6 +5,7 @@
 	<cfset variables.layout = "">
 	<cfset variables.dsn = "">
 	<cfset variables.description = "">
+	<cfset variables.articleService = "">
 	
 <!---START: getter and setter for variables.dsn --->
 <cffunction name="getdsn" output="false" returntype="string">
@@ -86,6 +87,16 @@
 <!--- END: getter and setter for variables.description --->
 
 
+<cffunction name="setArticleService" returntype="void" access="public" output="false">
+	<cfargument name="articleService" required="true">
+	<cfset variables.articleService = arguments.articleService>
+</cffunction>
+
+<cffunction name="getArticleService" returntype="any" access="public" output="false">
+	
+	<cfreturn variables.articleService />
+</cffunction>
+
 <!--- get the user, for news sections --->
 
 
@@ -140,9 +151,23 @@
 
 	<cffunction name="getContent" access="public" returntype="query" hint="returns an array of contnent (to loop thorugh)">
 		<cfargument name="type" default="" hint="content type to filter by">
-		<cfset var r_aContent = ArrayNew(1)>
+		<cfargument name="orderByField" default="">
+		<cfargument name="orderByOrder" default="ASC">
+		<cfargument name="limit" default="">
 		<cfset var qryContentQuery = 0>
 	 	
+	 	
+		<cfinvoke component="#variables.articleService#" 
+			method="getArticles" 
+			returnvariable="qryContentQuery"> 
+				<cfinvokeargument name="pageid" value="#variables.pageid#"/>
+				<cfinvokeargument name="type" value="#arguments.type#"/>
+				<cfinvokeargument name="orderByField" value="#arguments.orderByField#"/>
+				<cfinvokeargument name="orderByOrder" value="#arguments.orderByOrder#"/>
+				<cfinvokeargument name="limit" value="#arguments.limit#"/>
+		</cfinvoke>
+	 	
+	 	<!--- 
 	 	<cfquery name="qryContentQuery" datasource="#variables.dsn#">
 		 	SELECT     cms_article.* , cms_user.username, cms_user.DisplayName, cms_user.email
 			FROM         cms_article 
@@ -158,9 +183,15 @@
 			<cfif Len(content_type)>
 			AND cms_article_type.type_name = <cfqueryparam cfsqltype="cf_sql_varchar" value="#content_type#">
 			</cfif>
-
+			
+			<cfif Len(arguments.orderByField)>
+			ORDER BY #arguments.orderByField# #arguments.orderByOrder#
+			</cfif>
+			<cfif Len(arguments.limit)>
+				LIMIT #arguments.limit#
+			</cfif>
 		</cfquery>
-	 		
+	 		 --->
 		
 		<cfreturn qryContentQuery />
 	</cffunction>

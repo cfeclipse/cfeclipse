@@ -41,6 +41,9 @@
 					<cfset oPage.setLayout(q_getPage.layout)>
 					<cfset oPage.setDescription(q_getPage.pagedescription)>
 					<cfset r_oPage = oPage>
+					
+				
+					
 				<cfelse>
 					<cfthrow errorcode="404" detail="The page you requested was not found">
 				</cfif>
