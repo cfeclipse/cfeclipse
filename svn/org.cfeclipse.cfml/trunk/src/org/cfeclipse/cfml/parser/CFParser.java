@@ -1116,7 +1116,9 @@ public class CFParser {
 		int currPos = currDocOffset;
 		String nextChars = ""; // </cfscript>
 		String closingText = "</cfscript>";
-		//System.out.println("CFParser::matchingCFScript() - Matching CFScript");
+		//
+		System.out.println("CFParser::matchingCFScript() - Matching CFScript");
+		
 		for(; currPos < inData.length(); currPos++)
 		{
 			if(inData.length() - currPos + 1 > closingText.length())
@@ -1148,8 +1150,8 @@ public class CFParser {
 			int scriptStart = currDocOffset + "<cfscript>".length();
 			String cfScriptData = inData.substring(currDocOffset, finalOffset);
 			cfScriptData = cfScriptData.trim();
-			//System.out.println("CFScript data:");
-			//System.out.println(cfScriptData);
+			System.out.println("CFScript data:");
+			System.out.println(cfScriptData);
 			//
 			// We cheat now. We're actually creating a tag match for a <cfscript> block and pass all
 			// of the data in so we have a tag called "<cfscript>...". But this breaks if it's empty,
@@ -1317,6 +1319,9 @@ public class CFParser {
 						//
 						// The following handles a CFScript tag. A CFScript tag is NOT part of the document tree as it is a 
 						// container *only* for things to go in the document tree.
+						System.out.println("Data that we are matching " + data);
+						System.out.println("Data that we are parsing " + inData);
+						System.out.println("current Position "  + currPos);
 						if(data.length() - currPos > "<cfscript>".length() && 
 						   data.substring(currPos, currPos + "<cfscript>".length()).compareToIgnoreCase("<cfscript>") == 0)
 						{

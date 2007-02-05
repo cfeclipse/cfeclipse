@@ -231,38 +231,10 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
         fileSizeColumn.setWidth(50);
         fileSizeColumn.setText("Size");
         
-       /* Listener sortListener = new Listener() {
-            public void handleEvent(Event e) {
-                TableItem[] items = table.getItems();
-                Collator collator = Collator.getInstance(Locale.getDefault());
-                TableColumn column = (TableColumn)e.widget;
-                int index = column == filenameColumn ? 0 : 1;
-                for (int i = 1; i < items.length; i++) {
-                    String value1 = items[i].getText(index);
-                    for (int j = 0; j < i; j++){
-                        String value2 = items[j].getText(index);
-                        if (collator.compare(value1, value2) < 0) {
-                            String[] values = {items[i].getText(0), items[i].getText(1)};
-                            items[i].dispose();
-                            TableItem item = new TableItem(table, SWT.NONE, j);
-                            item.setText(values);
-                            items = table.getItems();
-                            break;
-                        }
-                    }
-                }
-                table.setSortColumn(column);
-            }
-        };
-        filenameColumn.addListener(SWT.Selection, sortListener);
-        fileSizeColumn.addListener(SWT.Selection, sortListener);
-        */
-        
-        
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
         table.setSortColumn(filenameColumn);
-        //table.setSortDirection(SWT.UP);
+       // table.setSortDirection(SWT.UP);
         
         fileViewer.setInput(DirectoryContentProvider.localFS);
         
@@ -291,6 +263,7 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     private void fillContextMenu(IMenuManager manager) {
 		//Somehow we have to know what this item is
 		manager.add(createFile);
+		manager.add(createDirectory);
 		
 	}
     
@@ -341,8 +314,40 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 		};
 		
 		createFile.setText("Create File");
-		//editTagAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-		//		.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		createFile.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FILE));
+		
+		
+		createDirectory = new Action() {
+			public void run() {
+				ISelection selection = directoryTreeViewer.getSelection();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				if(obj instanceof RemoteFile){
+					RemoteFile rem = (RemoteFile)obj;
+					System.out.println(rem.getAbsolutePath());
+				} 
+				else if(obj instanceof File){
+					File lfile = (File)obj;
+					if(lfile.isDirectory()){
+						FileCreateDialog fcd = new FileCreateDialog(null);
+						fcd.filename = "";
+						fcd.message = "Please enter a directory name:";
+						if(fcd.open() == IDialogConstants.OK_ID){ 
+							String filePath = lfile.getAbsoluteFile() + lfile.separator +   fcd.filename;
+						
+							File newFolder = new File(filePath);
+							newFolder.mkdir();
+							directoryTreeViewer.refresh();
+							
+							
+						}
+					}
+				}
+			}
+		};
+		createDirectory.setText("Create Directory");
+		createDirectory.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER));
+		
+		
 		
 	}
 
