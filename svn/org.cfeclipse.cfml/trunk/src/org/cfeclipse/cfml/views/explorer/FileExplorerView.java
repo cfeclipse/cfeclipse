@@ -7,11 +7,13 @@
 package org.cfeclipse.cfml.views.explorer;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.Collator;
 import java.util.Locale;
 
 
 import org.cfeclipse.cfml.dictionary.Tag;
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.RemoteFile;
 import org.cfeclipse.cfml.views.dictionary.DictionaryView;
@@ -24,6 +26,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -46,10 +49,12 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
@@ -78,7 +83,7 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     private Action createFile;
 	private Action createDirectory;
 	private Action deleteItem;
-	
+	private Shell shell;
     
     
     protected IFileProvider fileProvider = null;
@@ -151,6 +156,8 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
         GridLayout containerLayout = new GridLayout();
         containerLayout.numColumns = 2;
         container.setLayout(containerLayout);
+        this.shell = parent.getShell();
+        
         
         // Select Site or local path
         comboViewer = new ComboViewer(container, SWT.READ_ONLY);
@@ -298,8 +305,37 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 				if(obj instanceof RemoteFile){
 					RemoteFile rem = (RemoteFile)obj;
 					System.out.println(rem.getAbsolutePath());
+				} 
+				else if(obj instanceof File){
+					File lfile = (File)obj;
+
+					if(lfile.isDirectory()){
+						FileCreateDialog fcd = new FileCreateDialog(null);
+						System.out.println("about to open");
+						if(fcd.open() == IDialogConstants.OK_ID){ 
+
+							String filePath = lfile.getAbsoluteFile() + lfile.separator +   fcd.filename;
+							File newFile = new File(filePath);
+							
+							if(!newFile.exists()){
+								try {
+									newFile.createNewFile();
+									fileViewer.refresh();
+									
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							else {
+								MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error!","File already exits!");
+								
+							}
+
+						}
+					}
 				}
-				System.out.println(obj.getClass());
+				
 				
 			}
 		};
@@ -426,3 +462,4 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     }
     
 }
+ 
