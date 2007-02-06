@@ -107,6 +107,7 @@
 		<cfset var orderby = arguments.event.getArgument("orderby", "")>
 		<cfset var orderdirection = arguments.event.getArgument("orderdirection", "")>
 		
+		<cfset var rss = arguments.event.getArgument("rss", "")>
 		
 		<cfset var qryContentQuery = 0>
 	
@@ -120,6 +121,8 @@
 				<cfinvokeargument name="orderByOrder" value="#orderdirection#"/>
 				<cfinvokeargument name="limit" value="#maxrows#"/>
 				<cfinvokeargument name="random" value="#random#"/>
+				<cfinvokeargument name="rss" value="#rss#"/>
+				
 		</cfinvoke>
 	 	
 	 	<!--- 

@@ -27,6 +27,7 @@
 		<cfargument name="orderByOrder" default="ASC">
 		<cfargument name="limit" default="">
 		<cfargument name="random" default="false">
+		<cfargument name="rss" default="">
 		
 		<cfset var r_aContent = ArrayNew(1)>
 		<cfset var qryContentQuery = 0>
@@ -35,7 +36,7 @@
 	 		
 		
 	 	<cfquery name="qryContentQuery" datasource="#variables.dsn#" result="qNews">
-		 	SELECT     cms_article.* , cms_user.username, cms_user.DisplayName, cms_user.email
+		 	SELECT     cms_article.* , cms_user.username, cms_user.DisplayName, cms_user.email, cms_page.pagename
 			FROM         cms_article 
 			
 			
@@ -43,6 +44,8 @@
                       cms_article_type ON cms_article.art_type_id = cms_article_type.type_id
 		 	INNER JOIN 
 		 			cms_user ON cms_article.userid = cms_user.userid
+		 	INNER JOIN
+		 			cms_page ON cms_article.art_page_id = cms_page.pageid
 		 	WHERE cms_article.bPublished = 1
 		 	
 			<!--- AND dtDisplay <= <cfqueryparam cfsqltype="cf_sql_timestamp" value="#Now()#"> --->
@@ -52,6 +55,11 @@
 			
 			<cfif Len(arguments.type)>
 			AND cms_article_type.type_name = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.type#">
+			</cfif>
+			
+			<cfif Len(arguments.rss)>
+			AND cms_article.brss = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.rss#">
+			
 			</cfif>
 			
 			<cfif Len(arguments.orderByField)>
