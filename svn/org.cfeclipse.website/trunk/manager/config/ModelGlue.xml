@@ -1,9 +1,9 @@
 <!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
-[<!ENTITY appName "cfeclipse_org_new">]
+[<!ENTITY appDotPath "cfeclipse_org.manager">]
 >
 <modelglue>
 	<controllers>
-		<controller name="MyController" type="&appName;.manager.controller.Controller">
+		<controller name="MyController" type="&appDotPath;.controller.Controller">
 			<message-listener message="OnRequestStart" function="OnRequestStart" />
 			<message-listener message="OnQueueComplete" function="OnQueueComplete" />
 			<message-listener message="OnRequestEnd" function="OnRequestEnd" />

@@ -1,1 +1,1 @@
-<cfsilent><cfapplication name="ModelGlueApplicationTemplate" sessionmanagement="true"/></cfsilent>
+<cfsilent><cfapplication name="cfeclipse_manager" sessionmanagement="true"/></cfsilent>

@@ -1,5 +1,10 @@
 <!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
-[<!ENTITY appName "cfeclipse_manager">]
+[
+	<!ENTITY appName "cfeclipse_manager"> 
+	<!ENTITY appPath "/cfeclipse_org/manager">
+	<!ENTITY appDotPath "cfeclipse_org.manager.">
+	
+	]
 >
 <beans>
   <!-- This is your Model-Glue configuration -->
@@ -12,8 +17,8 @@
 		<property name="debug"><value>true</value></property>
 		<property name="defaultEvent"><value>page.index</value></property>
 		<property name="reloadPassword"><value>true</value></property>
-		<property name="viewMappings"><value>/cfeclipse_org_new/manager/views</value></property>
-		<property name="generatedViewMapping"><value>/cfeclipse_org_new/manager/views/generated</value></property>
+		<property name="viewMappings"><value>&appPath;/views</value></property>
+		<property name="generatedViewMapping"><value>&appPath;/views/generated</value></property>
 		<property name="configurationPath"><value>config/ModelGlue.xml</value></property>
 		<property name="scaffoldPath"><value>config/scaffolds/Scaffolds.xml</value></property>
 		<property name="statePrecedence"><value>form</value></property>
@@ -27,11 +32,11 @@
   
   <!-- This is your Reactor configuration -->
 	<bean id="reactorConfiguration" class="reactor.config.config">
-		<constructor-arg name="pathToConfigXml"><value>/cfeclipse_org_new/manager/config/Reactor.xml</value></constructor-arg>
+		<constructor-arg name="pathToConfigXml"><value>&appPath;/config/Reactor.xml</value></constructor-arg>
 		<property name="project"><value>&appName;</value></property>
 		<property name="dsn"><value>cfeclipse</value></property>
 		<property name="type"><value>mysql</value></property>
-		<property name="mapping"><value>/cfeclipse_org_new/manager/model/data</value></property>
+		<property name="mapping"><value>&appPath;/model/data</value></property>
 		<property name="mode"><value>production</value></property>
 	</bean>
   <!-- Put definitions for your own beans and services here -->
@@ -44,5 +49,5 @@
 	   <constructor-arg name="configuration"><ref bean="reactorConfiguration" /></constructor-arg>
 	</bean>
 	
-	<bean id="UserLogin" class="cfeclipse_org_new.manager.model.UserLogin" singleton="false"></bean>
+	<bean id="UserLogin" class="&appDotPath;model.UserLogin" singleton="false"></bean>
 </beans>
