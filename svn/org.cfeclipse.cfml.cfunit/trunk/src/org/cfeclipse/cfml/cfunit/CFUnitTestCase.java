@@ -26,26 +26,19 @@ public class CFUnitTestCase extends Observable {
 	public final static int STATE_TESTING = 3; // The test is currently being tested
 	public final static int STATE_TESTED = 2; // The test has been tested
 	
-	static private CFUnitTestCase instence;
-	
 	private String name;
 	private int state;
-	//private int errorCount;
-	//private int failureCount;
 	private int runCount;
 	private CFUnitTestResult[] results;
 	private String[] metadata;
- 	
-	private CFUnitTestCase() {
+	
+	public CFUnitTestCase() {
 		reset();
 	}
 	
-	public static CFUnitTestCase getInstence() {
-		if(instence == null) {
-			instence = new CFUnitTestCase();
-		}
-		
-		return instence;
+	public CFUnitTestCase(String n) {
+		reset();
+		setName( n );
 	}
 	
 	public void reset() {
@@ -54,17 +47,6 @@ public class CFUnitTestCase extends Observable {
 		setRunCount( 0 );
 		
 		notifyObservers();
-	}
-	
-	public void setTest(String test) {
-		if(!test.equals(  getName() )) {
-			setName( test );
-			setState( STATE_UNTESTED );
-			setRunCount( 0 );
-			clear();
-			
-			notifyObservers();
-		}
 	}
 	
 	/**
@@ -240,7 +222,11 @@ public class CFUnitTestCase extends Observable {
 	}
 	
 	public int getTestCount() {
-		return results.length;
+		if(results != null) {
+			return results.length;
+		} else {
+			return 0;
+		}
 	}
 	
 	public int getErrorCount() {
@@ -318,4 +304,7 @@ public class CFUnitTestCase extends Observable {
 		}
 	}
 	
+	public String toString() {
+		return getName();
+	}
 }

@@ -5,6 +5,8 @@ import java.util.Observer;
 
 import org.cfeclipse.cfml.cfunit.CFUnitTestCase;
 import org.cfeclipse.cfml.cfunit.CFUnitTestResult;
+import org.cfeclipse.cfml.cfunit.CFUnitTestSuite;
+
 import org.cfeclipse.cfml.views.explorer.LocalFileSystem;
 
 import org.eclipse.swt.SWT;
@@ -27,13 +29,18 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.dialogs.MessageDialog;
 
 import org.eclipse.core.runtime.Path;
 
 public class CFUnitViewTestList extends Canvas implements Observer {
 	
-	private List tests;
+	private TreeViewer tests;
 	private Label title;
 	private Label labelIcon;
 	private Composite innerScrollpane;
@@ -57,17 +64,26 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 		GridData data;
 		
 		// Test List 
-		tests = new List(this, SWT.BORDER | SWT.SINGLE);
-		data = new GridData( GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL );
-		data.horizontalSpan = 2;
-		tests.setLayoutData( data );
+		Composite treePanel = new Composite(this, SWT.BORDER);
+		treePanel.setLayout( new FillLayout() );
+		GridData gd = new GridData( GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL );
+		gd.horizontalSpan = 2;
+		treePanel.setLayoutData( gd );
 		
-		tests.addSelectionListener( new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
-				handleSelection();
+		tests = new TreeViewer(treePanel, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL);
+		DrillDownAdapter drillDownAdapter = new DrillDownAdapter( tests );
+		tests.setContentProvider(new CFUnitViewTestListContent());
+		tests.setLabelProvider(new CFUnitViewTestListLabels());
+		tests.setInput( CFUnitTestSuite.getInstence() );
+
+		tests.addSelectionChangedListener(
+			new ISelectionChangedListener() {
+				public void selectionChanged(SelectionChangedEvent event) {
+					String n = event.getSelection().toString();
+					handleSelection( n.substring(1, n.length()-1 ) );
+				}
 			}
-			public void widgetDefaultSelected(SelectionEvent e) {}
-		});
+		);
 		
 		// Title Bar
 		labelIcon = new Label(this, SWT.NONE);
@@ -90,65 +106,22 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 			}
 		});
 		
-		CFUnitTestCase.getInstence().addObserver(this); // Begin observing the test Model
+		CFUnitTestSuite.getInstence().addObserver(this); // Begin observing the test Model
 	}
 	
 	public void update(Observable o, Object arg) {
-		int selection = -1;
-		CFUnitTestCase tc = (CFUnitTestCase)o;
-		
-		clearDetails();
-		CFUnitTestResult[] results = tc.getResults();
-		String[] list = new String[ results.length ];
-		
-		if(results != null) {
-			for(int i = 0; i < results.length; i++ ) {
-				
-				String state;
-				
-				if(results[i] != null) {
-					switch( results[i].getType() ) {
-						case CFUnitTestResult.SUCCESS:
-							state = "Success";
-							break;
-						case CFUnitTestResult.ERROR:
-							state = "Error";
-							if(selection == -1) selection = i;
-							break;
-						case CFUnitTestResult.FAILURE:
-							state = "Failure";
-							if(selection == -1) selection = i;
-							break;
-						case CFUnitTestResult.NWERROR:
-							state = "Network Error";
-							if(selection == -1) selection = i;
-							break;
-						default:
-							state = "Unknown";
-							if(selection == -1) selection = i;
-					}
-				
-					list[i] = results[i].getName() + " - " + state;
-				}
-			}
-		}
-		
-		tests.setItems( list );
-		tests.select( selection );
-		handleSelection();
+		tests.refresh();
 	}
 	
-	private void handleSelection() {
-		CFUnitTestResult[] results = CFUnitTestCase.getInstence().getResults();
+	private void handleSelection( String name ) {
 		
-		int index = tests.getSelectionIndex();
-		
-		if(index != -1) {
-			clearDetails();
-			CFUnitTestResult result = results[ index ];
+		CFUnitTestResult result = CFUnitTestSuite.getTestResult( name );
+				
+		if(result != null) {
 			
-			String[] selection = tests.getSelection();
-			title.setText( selection[0] );
+			clearDetails();
+
+			title.setText( name );
 			
 			switch( result.getType() ) {
 				case CFUnitTestResult.ERROR:
@@ -177,9 +150,6 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 			
 			innerScrollpane.setSize(innerScrollpane.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 			innerScrollpane.layout();
-			
-		} else {
-			clearDetails();
 		}
 	}
 
@@ -275,4 +245,5 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 		public void mouseUp(MouseEvent e) {}
 		
 	}
+
 }

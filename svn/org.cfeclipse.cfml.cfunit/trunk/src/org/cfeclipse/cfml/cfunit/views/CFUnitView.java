@@ -2,6 +2,7 @@ package org.cfeclipse.cfml.cfunit.views;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.cfunit.CFUnitTestCase;
+import org.cfeclipse.cfml.cfunit.CFUnitTestSuite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
 import org.eclipse.ui.part.ViewPart;
@@ -42,7 +43,7 @@ public class CFUnitView extends ViewPart {
 		gridLayout.numColumns = 1;
 		parent.setLayout(gridLayout);
 		
-		CFUnitTestCase.getInstence().setTest("");
+		CFUnitTestSuite.getInstence().setTest("");
 		
 		CFUnitViewCounterPanel fCounterPanel = new CFUnitViewCounterPanel(parent);
 		fCounterPanel.setLayoutData( new GridData(GridData.FILL_HORIZONTAL));
@@ -81,7 +82,7 @@ public class CFUnitView extends ViewPart {
 		// Set up run menu action
 		actionRun = new Action("Run Test") {
 			public void run() {
-				CFUnitTestCase.getInstence().run();
+				CFUnitTestSuite.getInstence().run();
 			}
 		};
 		actionRun.setToolTipText("Executes the current test case");
@@ -117,8 +118,7 @@ public class CFUnitView extends ViewPart {
 	 * selects a file it will update the global instance of TestCase.
 	 */
 	private void browseFiles() {
-		CFUnitTestCase testcase = CFUnitTestCase.getInstence();
-		
+	
 		ResourceListSelectionDialog listSelection = null;
 		
 		try {
@@ -138,7 +138,7 @@ public class CFUnitView extends ViewPart {
 			
 			if(result.length == 1) {
 				IResource resource = (IResource)result[0];
-				testcase.setTest( CFUnitTestCase.getResourceFullName( resource ) );
+				CFUnitTestSuite.getInstence().setTest( CFUnitTestCase.getResourceFullName( resource ) );
 				actionAutoload.setChecked( false );
 			}
 		}
@@ -193,7 +193,7 @@ public class CFUnitView extends ViewPart {
 		return ImageDescriptor.createFromFile( CFUnitView.class, ICONS_PATH + name );
 	}
 	
-	private void showMessage(String message) {
+	public static void showMessage(String message) {
 		MessageDialog.openInformation(null, "CFUnit View", message);
 	}
 }

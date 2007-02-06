@@ -53,7 +53,7 @@ public class CFUnitTestResult extends Observable {
 			if(newLine.trim().length() > 0) {
 				if( newLine.equals("FAILURE") ) {
 					setType( FAILURE );
-				} else if(newLine.matches(".*ERROR.*")) {
+				} else if(newLine.matches(".*ERROR.*")) { 
 					setType( ERROR );
 				}
 			}
@@ -77,7 +77,22 @@ public class CFUnitTestResult extends Observable {
 	}
 	
 	public String toString() {
-		return getName();
+		String desc;
+		switch( getType() ) {
+			case CFUnitTestResult.ERROR:
+				desc = " (Error)";
+				break;
+			case CFUnitTestResult.FAILURE:
+				desc = " (Failure)";
+				break;
+			case CFUnitTestResult.NWERROR:
+				desc = " (Network Error)";
+				break;
+			default:
+				desc = "";
+		}
+		
+		return getName()+desc;
 	}
 	
 }

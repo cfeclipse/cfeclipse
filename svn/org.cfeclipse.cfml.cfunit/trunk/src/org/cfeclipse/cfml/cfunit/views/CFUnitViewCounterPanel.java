@@ -3,7 +3,8 @@ package org.cfeclipse.cfml.cfunit.views;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.cfeclipse.cfml.cfunit.CFUnitTestCase;
+import org.cfeclipse.cfml.cfunit.CFUnitTestSuite;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
@@ -38,7 +39,7 @@ public class CFUnitViewCounterPanel extends Canvas implements Observer {
 			}
 		});
 		
-		CFUnitTestCase.getInstence().addObserver(this); // Begin observing the test Model
+		CFUnitTestSuite.getInstence().addObserver(this); // Begin observing the test Model
 	}
 	
 	private void createRunCountPanel(Composite parent) {
@@ -99,10 +100,9 @@ public class CFUnitViewCounterPanel extends Canvas implements Observer {
 	}
 	
 	public void update(Observable o, Object arg) {
-		CFUnitTestCase tc = (CFUnitTestCase)o;
-		setRunValue( tc.getRunCount() );
-		setErrorValue( tc.getErrorCount() );
-		setFailureValue( tc.getFailureCount() );
+		setRunValue( CFUnitTestSuite.getRunCount() );
+		setErrorValue( CFUnitTestSuite.getErrorCount() );
+		setFailureValue( CFUnitTestSuite.getFailureCount() );
 	}
 	
 	private void disposeIcons() {
@@ -111,7 +111,7 @@ public class CFUnitViewCounterPanel extends Canvas implements Observer {
 	}
 	
 	public void setRunValue(int value) {
-	     fNumberOfRuns.setText( String.valueOf( value )+'/'+String.valueOf( CFUnitTestCase.getInstence().getTestCount() ) );
+	     fNumberOfRuns.setText( String.valueOf( value )+'/'+String.valueOf( CFUnitTestSuite.getTestCount() ) );
 	}
 	 
 	public void setErrorValue(int value) {

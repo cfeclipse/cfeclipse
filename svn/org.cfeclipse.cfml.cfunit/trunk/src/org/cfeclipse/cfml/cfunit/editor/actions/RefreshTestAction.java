@@ -2,6 +2,7 @@ package org.cfeclipse.cfml.cfunit.editor.actions;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.cfunit.CFUnitTestCase;
+import org.cfeclipse.cfml.cfunit.CFUnitTestSuite;
 import org.cfeclipse.cfml.cfunit.views.CFUnitView;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
@@ -34,7 +35,7 @@ public class RefreshTestAction implements IEditorActionDelegate {
 				String tc = retrieveTestCase( cfe );
 				
 				if(tc != null) {
-					CFUnitTestCase.getInstence().setTest( tc );
+					CFUnitTestSuite.getInstence().setTest( tc );
 				}
 			}
 		}
@@ -50,7 +51,7 @@ public class RefreshTestAction implements IEditorActionDelegate {
 	    }
 		
 		
-		CFUnitTestCase cfunit = CFUnitTestCase.getInstence();
+		CFUnitTestSuite cfunit = CFUnitTestSuite.getInstence();
 		cfunit.run();
 	}
 
@@ -92,7 +93,7 @@ public class RefreshTestAction implements IEditorActionDelegate {
 			// If the CFC extends a TestCase, return the current document's name
 			String sc = tag.getAttributeValue("extends");
 			if(sc != null) {
-				if(sc.matches(".*\\.TestCase.*")) {
+				if(sc.matches(".*\\.TestCase.*")) { 
 					return CFUnitTestCase.getResourceFullName( icfd.getResource() );
 				}
 			}

@@ -3,7 +3,7 @@ package org.cfeclipse.cfml.cfunit.views;
 import java.util.Observer;
 import java.util.Observable;
 
-import org.cfeclipse.cfml.cfunit.CFUnitTestCase;
+import org.cfeclipse.cfml.cfunit.CFUnitTestSuite;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
@@ -45,7 +45,7 @@ public class CFUnitViewTesterPanel extends Canvas implements Observer {
 		exeButton.setImage( CFUnitView.getIcon( CFUnitView.ICON_RUN ) );
 		exeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				CFUnitTestCase.getInstence().run();
+				CFUnitTestSuite.getInstence().run();
 			}
 		});
 		
@@ -61,7 +61,7 @@ public class CFUnitViewTesterPanel extends Canvas implements Observer {
 			new org.eclipse.swt.events.KeyListener() {
 				public void keyPressed(KeyEvent e) {
 					if(e.keyCode == SWT.CR) {
-						CFUnitTestCase.getInstence().run();
+						CFUnitTestSuite.getInstence().run();
 					}
 				}
 				public void keyReleased(KeyEvent e) {}
@@ -69,22 +69,25 @@ public class CFUnitViewTesterPanel extends Canvas implements Observer {
 		);
 		
 		// Begin observing the test Model
-		CFUnitTestCase.getInstence().addObserver(this); 
+		CFUnitTestSuite.getInstence().addObserver(this); 
 	}
 	
 	public void update(Observable o, Object arg) {
-		CFUnitTestCase tc = (CFUnitTestCase)o;
-		setFileName( tc.getName() );
-		
-		if( tc.getErrorCount() > 0 ) {
-			testName.setBackground( ERROR_COLOR );
-		} else if ( tc.getFailureCount() > 0 ) {
-			testName.setBackground( FAILURE_COLOR );
-		} else if ( tc.getRunCount() > 0 ) {
-			testName.setBackground( SUCCESS_COLOR );
-		} else {
-			testName.setBackground( BASE_COLOR );
-		}
+		//if(o instanceof CFUnitTestSuite) {
+			//CFUnitTestSuite tc = (CFUnitTestSuite)o;
+			setFileName( CFUnitTestSuite.getInstence().getLabel() );
+			
+			if( CFUnitTestSuite.getErrorCount() > 0 ) {
+				testName.setBackground( ERROR_COLOR );
+			} else if ( CFUnitTestSuite.getFailureCount() > 0 ) {
+				testName.setBackground( FAILURE_COLOR );
+			} else if ( CFUnitTestSuite.getRunCount() > 0 ) {
+				testName.setBackground( SUCCESS_COLOR );
+			} else {
+				testName.setBackground( BASE_COLOR );
+			}
+			
+		//}
 	}
 	
 	public void resetFile() {
@@ -99,7 +102,7 @@ public class CFUnitViewTesterPanel extends Canvas implements Observer {
 	}
 	
 	public void testNameChanged() {
-		CFUnitTestCase.getInstence().setTest( testName.getText() );
+		CFUnitTestSuite.getInstence().setTest( testName.getText() );
 		testName.setBackground( BASE_COLOR );
 	}
 }
