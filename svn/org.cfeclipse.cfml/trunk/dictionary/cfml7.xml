@@ -15883,6 +15883,7 @@
 			<value option="&quot;CFMX_COMPAT&quot;"/>
 			<value option="&quot;SHA1PRNG&quot;"/>
 			<value option="&quot;IBMSecureRandom&quot;"/>
+		</values>
 	</parameter>
 </function>
 <!--
