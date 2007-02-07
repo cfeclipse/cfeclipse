@@ -1493,7 +1493,7 @@ public class CFParser {
 			IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
 			if(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_VARIABLES)){
 				
-				System.out.println("calling the variables parser!");
+				//System.out.println("calling the variables parser!");
 				VariablesParser vParser = new VariablesParser(docTree,inData);
 				docTree.setVariableMap(vParser.getVariableMap());
 			}
