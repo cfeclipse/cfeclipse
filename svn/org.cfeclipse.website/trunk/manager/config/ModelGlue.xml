@@ -8,6 +8,7 @@
 			<message-listener message="OnQueueComplete" function="OnQueueComplete" />
 			<message-listener message="OnRequestEnd" function="OnRequestEnd" />
 			<message-listener message="doLogout" function="doLogout" />
+			<message-listener message="saveRSS" function="saveRSS" />
 		</controller>
 	</controllers>
   
@@ -72,7 +73,8 @@
 				<result do="view.template" />
 			</results>
 		</scaffold>
-		<scaffold object="cms_article" alias="cms_article">
+		
+		<scaffold object="cms_article" alias="cms_article" type="list,view,edit,delete">
 			
 			<views>
 				<include name="nav" template="navMain.cfm" />
@@ -81,7 +83,68 @@
 				<result do="view.template" />
 			</results>
 		</scaffold>
+		
+		<!--
+		<message name="saveRSS" />
+		 -->
+		
+	
+			
+		<event-handler name="cms_article.Commit" access="public">
+				<broadcasts>
+					
+						
+							<message name="ModelGlue.genericCommit">
+								
+									<argument name="recordName" value="cms_articleRecord" />
+								
+									<argument name="criteria" value="art_id" />
+								
+									<argument name="object" value="cms_article" />
+								
+									<argument name="validationName" value="cms_articleValidation" />
+								
+							</message>
+						
+					
+				</broadcasts>
+				<views>
+					
+						<view name="nav" template="navMain.cfm" append="false">
 							
+						</view>
+					
+				</views>
+				<results>
+					
+						
+							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
+						
+					
+						
+							<result name="commit" do="saveRSS" redirect="true" append="" preserveState="false" />
+						
+					
+						
+							<result name="validationError" do="cms_article.edit" redirect="false" append="art_id" preserveState="false" />
+						
+					
+				</results>
+			</event-handler>
+			
+			<event-handler name="saveRSS">
+				<broadcasts>
+					<message name="saveRSS" />
+				</broadcasts>
+				<views>
+			
+				</views>	
+				<results>
+					<result name="" do="cms_article.list" redirect="true" append="" preserveState="false" />
+				</results>
+			</event-handler>
+				
+					
 		<scaffold object="cms_user" alias="cms_user">
 			
 			<views>

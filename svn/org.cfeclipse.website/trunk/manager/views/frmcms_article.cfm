@@ -184,6 +184,24 @@
 	        </div>
 	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="dtCreated" validation="#validation#" />
         </div>
+		<div class="formfield">
+	        <label for="bRss" <cfif structKeyExists(validation, "bRss")>class="error"</cfif>><b>B Rss:</b></label>
+	        <div>
+	        
+		        <cfinput 
+									type="text" 
+									class="input" 
+									 
+									id="bRss" 
+									name="bRss" 
+									
+										value="#cms_articleRecord.getbRss()#" 
+									
+						/>
+		      
+	        </div>
+	        <cfmodule template="/ModelGlue/customtags/validationErrors.cfm" property="bRss" validation="#validation#" />
+        </div>
 <cfoutput>
 <div class="controls">
  	<input type="submit" value="Save" />

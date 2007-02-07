@@ -98,6 +98,10 @@
 	--->
 	<cffunction name="onQueueComplete" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
+	  
+	  
+	 
+	  
 	</cffunction>
 
 	<!--- 
@@ -105,5 +109,28 @@
 	--->
 	<cffunction name="onRequestEnd" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
+	  
+	   
+		
+	  
+	  
 	</cffunction>
+	
+	<cffunction name="saveRSS" access="public" returnType="void" output="false">
+	  <cfargument name="event" type="any">
+		
+		<cfset stCriteria = StructNew()>
+		<cfset stCriteria.BPublished = 1>
+		<cfset stCriteria.BRss = 1>
+		<cfset cmsArticlesALL = getModelGlue().getORMAdapter().list('cms_article', stCriteria ,"DTCREATED", false)>
+		<cfdump var="#cmsArticlesALL#">
+		
+		
+		 <cfdump var="#event.getAllValues()#">
+	 	<cfabort>
+	
+	</cffunction>
+	
+	
+	
 </cfcomponent>
