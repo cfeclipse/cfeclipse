@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<rss version="2.0">
+	<channel>
+		<title>CFEclipse.org</title>
+		<link>http://www.cfeclipse.org/</link>
+		<description>News about CFEclipse</description>
+		<language>en-us</language>
+		<copyright>Copyright 2004-2007CFEclipse.org</copyright>
+		<lastBuildDate>Wed, 07 Feb 2007 16:50:29 EST</lastBuildDate>
+		
+		
+		<item>
+			<title>03 Getting to grip with tasks</title>
+			<description>Making todo lists and annotating tasks</description>
+			<link>http://127.0.0.1/index.cfm?event=page&pageTV&contentid=13</link>
+			<author>Mark Drew</author>
+			<pubDate>Tue, 06 Feb 2007 13:06:39</pubDate>
+		</item>
+		
+		<item>
+			<title>02 Getting Started: Getting CFEclipse</title>
+			<description>Installing and starting out using CFEclipse</description>
+			<link>http://127.0.0.1/index.cfm?event=page&pageTV&contentid=12</link>
+			<author>Mark Drew</author>
+			<pubDate>Tue, 06 Feb 2007 11:36:51</pubDate>
+		</item>
+		
+		<item>
+			<title>01 Getting Started: Downloading Eclipse</title>
+			<description></description>
+			<link>http://127.0.0.1/index.cfm?event=page&pageTV&contentid=11</link>
+			<author>Mark Drew</author>
+			<pubDate>Tue, 06 Feb 2007 11:22:31</pubDate>
+		</item>
+		
+		
+	</channel>
+
+
+
+
+</rss>
+		
+		
