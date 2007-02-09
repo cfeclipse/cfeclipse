@@ -11,6 +11,9 @@
       <library name="Fusebox3View.jar">
          <export name="*"/>
       </library>
+      <library name="lib/jdom.jar">
+         <export name="*"/>
+      </library>
    </runtime>
 
    <requires>
@@ -36,6 +39,12 @@
             class="org.cfeclipse.frameworks.fusebox.views.FBX3View"
             id="org.cfeclipse.frameworks.fusebox.views">
       </view>
+      <view
+            category="org.cfeclipse.frameworks.fusebox"
+            class="org.cfeclipse.frameworks.fusebox.views.FuseboxExplorerView"
+            icon="icons/sample.gif"
+            id="org.cfeclipse.frameworks.fusebox.views.FuseboxExplorerView"
+            name="FuseboxExplorerView"/>
      <!--
       <view
             name="FBX3 Project"
@@ -55,6 +64,13 @@
                relationship="stack"
                id="org.cfeclipse.frameworks.fusebox.views.application.FBX3View">
          </view>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="org.cfeclipse.frameworks.fusebox.views.FuseboxExplorerView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList"/>
       </perspectiveExtension>
    </extension>
    <extension
