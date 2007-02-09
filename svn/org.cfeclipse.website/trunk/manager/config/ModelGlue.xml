@@ -9,18 +9,23 @@
 			<message-listener message="OnRequestEnd" function="OnRequestEnd" />
 			<message-listener message="doLogout" function="doLogout" />
 			<message-listener message="saveRSS" function="saveRSS" />
+			<message-listener message="getContent" function="getContent" />
+			<message-listener message="getPages" function="getPages" />
 		</controller>
 	</controllers>
   
 	<event-handlers>
 		<event-handler name="page.index">
-			<broadcasts /> 
+			<broadcasts>
+				
+			</broadcasts>
 			<results>
 				<result do="view.template" />
 			</results>
 			<views>
 				<include name="body" template="dspIndex.cfm" />
 				<include name="nav" template="navMain.cfm" />
+				
 			</views>
 		</event-handler>
 
@@ -109,26 +114,12 @@
 					
 				</broadcasts>
 				<views>
-					
-						<view name="nav" template="navMain.cfm" append="false">
-							
-						</view>
-					
+						<view name="nav" template="navMain.cfm" append="false" />
 				</views>
 				<results>
-					
-						
 							<result name="" do="view.template" redirect="false" append="" preserveState="true" />
-						
-					
-						
 							<result name="commit" do="saveRSS" redirect="true" append="" preserveState="false" />
-						
-					
-						
 							<result name="validationError" do="cms_article.edit" redirect="false" append="art_id" preserveState="false" />
-						
-					
 				</results>
 			</event-handler>
 			
@@ -158,9 +149,20 @@
 	VIEW TEMPLATES
 -->		
 		<event-handler name="view.template">
-			<broadcasts />
+			<broadcasts>
+				<message name="modelglue.GenericList">
+					<argument name="object" value="cms_Page" />
+					<argument name="queryName" value="qPageList" />
+				</message>
+				<message name="modelglue.GenericList">
+					<argument name="object" value="cms_article" />
+					<argument name="queryName" value="qArticleList" />
+				</message>
+			</broadcasts>
+				
 			<results />
 			<views>
+				<include name="contentTree" template="nav_content_tree.cfm" />
 				<include name="template" template="lay_main.cfm" />
 			</views>
 		</event-handler>
