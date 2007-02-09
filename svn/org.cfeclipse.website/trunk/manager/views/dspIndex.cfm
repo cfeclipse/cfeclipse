@@ -1,1 +1,1 @@
-Model-Glue is up and running!
+<h2>CFEclipse Manager</h2>

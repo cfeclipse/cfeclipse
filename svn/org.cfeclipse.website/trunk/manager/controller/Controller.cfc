@@ -37,53 +37,30 @@
 				
 		
 		</cfif>
-
-
-	
-
-
-
-	  <!--- 
-	  <!--- forward any event that isnt an attempt to login --->
-		<cfif pageevent NEQ "logout" OR pageevent NEQ "login">
-			
-		<!--- 	<cfif  NOT session.userlogin.isLoggedIn()> --->
-			<!--- FORWARD THEM TO THE LOGIN PAGE --->
-				<cflocation url="index.cfm?event=login">
-		<!--- 	</cfif> --->
-			
-		 </cfif> --->
-		
-		<!--- 
-		  <cfif NOT  arguments.event.valueExists('j_username') AND NOT arguments.event.valueExists('j_password')>
-			<!--- still attempting to access a page --->
-			  
-		  
-		  
-		  
-			<!--- check which request we are in --->
-			<cfif arguments.event.getValue('event') NEQ "login" AND NOT session.userLogin.isLoggedIn()>
-			<cfdump var="#arguments.event.getAllValues()#" label="notloggedin">
-			
-			
-			
-			
-			</cfif>
-			
-		
-	  </cfif>
-	   --->
-	 
-	 
-	  <!--- <cfset reactor = getModelGLue().getOrmService()>
-	  <cfset page = reactor.createRecord('cms_Page')>
-	  <cfset page.setPageId(1)>
-	  <cfset page.load()>
-	  <cfdump var="#page.getParent().getPageID()#">
-	  <cfdump var="#page.GETCHILDPAGESITERATOR().getArray()#" label="getChildren">
-		<cfabort> --->
 	  
 	</cffunction>
+	
+	<cffunction name="getPageService" output="false" returntype="any">
+		<cfreturn variables.PageService>
+	</cffunction>
+	
+	<cffunction name="setPageService" output="false" returntype="void">
+		<cfargument name="PageService" type="any">
+		<cfset variables.PageService = arguments.PageService>
+	</cffunction>
+	<!--- END: getter and setter for variables.PageService --->
+
+	<cffunction name="getArticleService" output="false" returntype="any">
+		<cfreturn variables.ArticleService>
+	</cffunction>
+	
+	<cffunction name="setArticleService" output="false" returntype="void">
+	<cfargument name="ArticleService" type="any">
+		<cfset variables.ArticleService = arguments.ArticleService>
+	
+	</cffunction>
+	
+	
 	<cffunction name="doLogout" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
 	  
@@ -116,21 +93,129 @@
 	  
 	</cffunction>
 	
+	
+	
 	<cffunction name="saveRSS" access="public" returnType="void" output="false">
 	  <cfargument name="event" type="any">
 		
 		<cfset stCriteria = StructNew()>
 		<cfset stCriteria.BPublished = 1>
 		<cfset stCriteria.BRss = 1>
-		<cfset cmsArticlesALL = getModelGlue().getORMAdapter().list('cms_article', stCriteria ,"DTCREATED", false)>
-		<cfdump var="#cmsArticlesALL#">
+		<cfset dsn = getModelGlue().getBean('reactorConfiguration').getDSN()>
 		
+		<cfquery name="qryContentQuery" datasource="#dsn#" result="qNews">
+		 	SELECT     cms_article.* , cms_user.username, cms_user.DisplayName, cms_user.email, cms_page.pagename
+			FROM         cms_article 
+			
+			
+			INNER JOIN
+                      cms_article_type ON cms_article.art_type_id = cms_article_type.type_id
+		 	INNER JOIN 
+		 			cms_user ON cms_article.userid = cms_user.userid
+		 	INNER JOIN
+		 			cms_page ON cms_article.art_page_id = cms_page.pageid
+		 	WHERE cms_article.bPublished = 1
+		 
+			AND cms_article.brss = 1
+			
+			ORDER BY dtCreated DESC
+		</cfquery>
+
+
+		<cfsavecontent variable="rssOutput"><?xml version="1.0" encoding="ISO-8859-1" ?>
+<rss version="2.0">
+	<channel>
+		<title>CFEclipse.org</title>
+		<link>http://www.cfeclipse.org/</link>
+		<description>News about CFEclipse</description>
+		<language>en-us</language>
+		<copyright>Copyright 2004-<cfoutput>#DateFormat(Now(), "yyyy")#</cfoutput>CFEclipse.org</copyright>
+		<lastBuildDate><cfoutput>#dateFormat(Now(), "ddd, dd mmm yyyy")# #TimeFormat(Now(), "HH:mm:ss")# EST</cfoutput></lastBuildDate>
+		<!--- items to go here --->
+		<cfoutput query="qryContentQuery">
+		<item>
+			<title>#XMLFormat(ART_TITLE)#</title>
+			<description>#XMLFormat(art_description)#</description>
+			<link>http://#CGI.SERVER_NAME#/index.cfm?event=page&page#pagename#&contentid=#art_id#</link>
+			<author>#DisplayName#</author>
+			<pubDate>#xmlFormat(dateFormat(DTCREATED, "ddd, dd mmm yyyy"))# #XmlFormat(TimeFormat(DTCREATED, "HH:mm:ss"))#</pubDate>
+		</item>
+		</cfoutput>
 		
-		 <cfdump var="#event.getAllValues()#">
-	 	<cfabort>
+	</channel>
+
+
+
+
+</rss>
+		
+		</cfsavecontent>
+		<cfset rssFilePath =expandpath("../rss.xml")>
+		<cffile action="write" file="#rssFilePath#" output="#rssOutput#">
+		
+	</cffunction>
+	
+	
+	<cffunction name="getPages" access="public" returntype="void" output="false">
+		  <cfargument name="event" type="any">
+		
+		<cfdump var="#variables#">
+		<cfabort>
+	
+		
 	
 	</cffunction>
 	
+	<cffunction name="getContent" access="public" returnType="void" output="false">
+	  <cfargument name="event" type="any">
+	  
+	 	<!--- arguments you can pass into this from the calling message --->
+	 	<cfset var page_id = arguments.event.getArgument("pageid", "")>
+	 	<cfset var content_type = arguments.event.getArgument("type" ,"")>
+		<cfset var retQuery = arguments.event.getArgument("queryName", "content")> <!--- Default this to "content" --->
+		
+		<cfset var random = arguments.event.getArgument("random", "false")>
+		<cfset var maxrows = arguments.event.getArgument("maxrows", 1000)>
+		<cfset var orderby = arguments.event.getArgument("orderby", "")>
+		<cfset var orderdirection = arguments.event.getArgument("orderdirection", "")>
+		
+		<cfset var rss = arguments.event.getArgument("rss", "")>
+		
+		<cfset var qryContentQuery = 0>
+	
+		
+		<cfinvoke component="#variables.ArticleService#" 
+			method="getArticles" 
+			returnvariable="qryContentQuery"> 
+				<cfinvokeargument name="pageid" value="#page_id#"/>
+				<cfinvokeargument name="type" value="#content_type#"/>
+				<cfinvokeargument name="orderByField" value="#orderby#"/>
+				<cfinvokeargument name="orderByOrder" value="#orderdirection#"/>
+				<cfinvokeargument name="limit" value="#maxrows#"/>
+				<cfinvokeargument name="random" value="#random#"/>
+				<cfinvokeargument name="rss" value="#rss#"/>
+				
+		</cfinvoke>
+	 	
+	 	<!--- 
+	 	<cfquery name="qryContentQuery" datasource="#variables.dsn#" result="qryContentResult">
+		 	SELECT     cms_article.*
+			FROM         cms_article INNER JOIN
+                      cms_article_type ON cms_article.art_type_id = cms_article_type.type_id
+		 	WHERE cms_article.bPublished = 1
+			<!--- AND dtDisplay <= <cfqueryparam cfsqltype="cf_sql_timestamp" value="#Now()#"> --->
+			
+			<cfif Len(content_type)>
+			AND cms_article_type.type_name = <cfqueryparam cfsqltype="cf_sql_varchar" value="#content_type#">
+			</cfif>
+			<cfif random>
+			ORDER BY RAND() Limit #maxrows#
+			</cfif>
+		</cfquery>
+	 		 --->
+	 	
+		<cfset arguments.event.setValue(retQuery, qryContentQuery)> 
+	</cffunction>
 	
 	
 </cfcomponent>

@@ -18,6 +18,7 @@
 
   <link rel="stylesheet" type="text/css" href="/assets/css/html.css" media="screen, projection, tv " />
   <link rel="stylesheet" type="text/css" href="/assets/css/layout.css" media="screen, projection, tv" />
+  <link rel="stylesheet" type="text/css" href="assets/css/tree.css" media="screen, projection, tv" />
   <link rel="stylesheet" type="text/css" href="/assets/css/print.css" media="print" />
 
 </head>
@@ -26,7 +27,6 @@
 <!-- CONTENT: Holds all site content except for the footer.  This is what causes the footer to stick to the bottom -->
 <div id="subpage_content">
 
-    <div class="subpage_block_black"></div>
   <div id="subpage_menu">
  	 <div id="subpage_logo"></div>
 	<cfoutput>
@@ -41,12 +41,13 @@
 	 
 </div>  
 		  
-   <div class="subpage_block_black"></div>
 
   <!-- PAGE CONTENT BEGINS: This is where you would define the columns (number, width and alignment) -->
   <div id="page">
-
-		<cfoutput>#ViewCollection.getView('body')#</cfoutput>
+ 		<cfoutput>#ViewCollection.getView('contentTree')#</cfoutput>
+		<div>
+			<cfoutput>#ViewCollection.getView('body')#</cfoutput>
+		</div>
   </div> <!-- END page -->
 
 </div> <!-- end subpage_content -->
