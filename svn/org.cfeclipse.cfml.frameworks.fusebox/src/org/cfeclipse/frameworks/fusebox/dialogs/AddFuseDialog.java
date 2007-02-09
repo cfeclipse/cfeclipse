@@ -1,0 +1,143 @@
+/*
+ * Created on 19-Jan-2005
+ *
+ * The MIT License
+ * Copyright (c) 2004 Mark Drew
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a 
+ * copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation 
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software 
+ * is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ * SOFTWARE.
+ **/
+package org.cfeclipse.frameworks.fusebox.dialogs;
+
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+
+/**
+ * @author Administrator
+ * 19-Jan-2005
+ * fusebox3cfe2
+ * Description: Adds a Swtch statement to the 
+ */
+public class AddFuseDialog  extends Dialog{
+	private String title = "Add a fuseaction";
+	//The Widgets
+	private Text fuseaction;
+	
+	
+	//The return value
+	private String fuseactionName;
+	/**
+	 * @param parentShell
+	 */
+	public AddFuseDialog(Shell parentShell) {
+		super(parentShell);
+		// TODO Auto-generated constructor stub
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
+	 */
+	protected Control createDialogArea(Composite parent) {
+		// TODO Auto-generated method stub
+		
+	Composite container = (Composite) super.createDialogArea(parent);
+	
+	
+	 GridLayout gl = new GridLayout();
+     gl.numColumns = 2;
+     
+     container.setLayout(gl);
+     gl.makeColumnsEqualWidth = true;
+     FontData labelFontData = new FontData();
+     labelFontData.setStyle(SWT.BOLD);
+     FontData[] containerFontData = container.getFont().getFontData();
+     //labelFontData.setHeight(containerFontData[0].height);
+     Font labelFont = new Font(parent.getDisplay(), labelFontData);
+     
+     Label label = new Label(container,SWT.NONE);
+     label.setText("Fuseaction Name:");
+           
+     fuseaction = new Text(container, SWT.BORDER);
+	
+	
+     return super.createDialogArea(parent);
+	}
+	
+	protected void configureShell(Shell newShell) {
+        super.configureShell(newShell);
+        newShell.setText(this.title);
+    }
+	
+	 protected void buttonPressed(int buttonId) {
+	       if (buttonId == IDialogConstants.OK_ID) {
+	       		
+		       	if(fuseaction.getText().length() > 0){
+		       		//the button has been pressed
+		       		fuseactionName = fuseaction.getText();
+		       		super.buttonPressed(buttonId);
+		       	}
+		       	else {
+		       		showMessage("Please enter a name for this fuseaction");
+		       		fuseaction.setFocus();
+		       	}
+	        }
+	        else{
+	        	super.buttonPressed(buttonId);
+	        }
+	       
+	       
+	   }
+	 
+	 private void showMessage(String message) {
+		MessageDialog.openInformation(super.getShell(),
+			"Cant add blank fuseaction", message);
+	}
+	 
+	 
+	 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
+	 */
+	protected void createButtonsForButtonBar(Composite parent) {
+		// TODO Auto-generated method stub
+		super.createButtonsForButtonBar(parent);
+	}
+	
+	/**
+		 * @return Returns the fuseactionName.
+		 */
+		public String getFuseactionName() {
+			return fuseactionName;
+		}
+		/**
+		 * @param fuseactionName The fuseactionName to set.
+		 */
+		public void setFuseactionName(String fuseactionName) {
+			this.fuseactionName = fuseactionName;
+		}
+}

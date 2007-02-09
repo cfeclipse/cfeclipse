@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="org.cfeclipse.frameworks.fusebox"
+   name="Fusebox 3 View Plug-in"
+   version="0.0.2.4"
+   provider-name=""
+   class="org.cfeclipse.frameworks.fusebox.FuseboxPlugin">
+
+   <runtime>
+      <library name="Fusebox3View.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.cfeclipse.cfml"/>
+   </requires>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Fusebox"
+            id="org.cfeclipse.frameworks.fusebox">
+      </category>
+      <view
+            name="Fusebox"
+            icon="icons/fusebox/fbx_switch.gif"
+            category="org.cfeclipse.frameworks.fusebox"
+            class="org.cfeclipse.frameworks.fusebox.views.FBX3View"
+            id="org.cfeclipse.frameworks.fusebox.views">
+      </view>
+     <!--
+      <view
+            name="FBX3 Project"
+            icon="icons/fusebox3/fusebox.gif"
+            category="org.cfeclipse.frameworks.fusebox3"
+            class="org.cfeclipse.frameworks.fusebox3.views.project.FBX3ProjectView"
+            id="org.cfeclipse.frameworks.fusebox3.views.project">
+      </view>
+      -->
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               relative="org.eclipse.ui.views.ResourceNavigator"
+               relationship="stack"
+               id="org.cfeclipse.frameworks.fusebox.views.application.FBX3View">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+     
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="org.cfeclipse.frameworks.fusebox3.preferences">
+            
+            <menu
+		         id="org.cfeclipse.frameworks.fusebox.actions"
+		         label="Fusebox"
+		         path="fusebox">
+		      <separator name="fuseboxgrp1"/>
+		      </menu>
+         <action
+               enablesFor="*"
+               label="Create Fusebox Core Files"
+               icon="icons/fusebox/fbx_switch.gif"
+               class="org.cfeclipse.frameworks.fusebox.actions.CreateCoreFilesAction"
+               tooltip="Creates the files required for the root of a fusebox application"
+               menubarPath="org.cfeclipse.frameworks.fusebox.actions/fuseboxgrp1"
+               id="org.cfeclipse.frameworks.fusebox.actions.CreateCoreFiles"/>
+            
+         <action
+               enablesFor="*"
+               label="Set as Fusebox Root"
+               icon="icons/fusebox/fusebox.gif"
+               class="org.cfeclipse.frameworks.fusebox.actions.SetFBXRootAction"
+               tooltip="Set this folder as the root of a fusebox application"
+               menubarPath="org.cfeclipse.frameworks.fusebox.actions/fuseboxgrp1"
+               id="org.cfeclipse.frameworks.fusebox.actions.SetFBXRoot"/>
+        
+         
+      </objectContribution>
+      
+      
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFolder"
+            nameFilter="*"
+            id="org.cfeclipse.frameworks.fusebox3.preferences">
+            
+            <menu
+		         id="org.cfeclipse.frameworks.fusebox.actions"
+		         label="Fusebox"
+		         path="fusebox">
+		      <separator name="fuseboxgrp1"/>
+		      </menu>
+         <action
+               enablesFor="*"
+               label="Create Fusebox Core Files"
+               icon="icons/fusebox/fbx_switch.gif"
+               class="org.cfeclipse.frameworks.fusebox.actions.CreateCoreFilesAction"
+               tooltip="Creates the files required for the root of a fusebox application"
+               menubarPath="org.cfeclipse.frameworks.fusebox.actions/fuseboxgrp1"
+               id="org.cfeclipse.frameworks.fusebox.actions.CreateCoreFiles"/>
+            
+         <action
+               enablesFor="*"
+               label="Set as Fusebox Root"
+               icon="icons/fusebox/fusebox.gif"
+               class="org.cfeclipse.frameworks.fusebox.actions.SetFBXRootAction"
+               tooltip="Set this folder as the root of a fusebox application"
+               menubarPath="org.cfeclipse.frameworks.fusebox.actions/fuseboxgrp1"
+               id="org.cfeclipse.frameworks.fusebox.actions.SetFBXRoot"/>
+         <action
+               enablesFor="*"
+               label="Create Circuit Files"
+               icon="icons/fusebox/fbx_circuit.gif"
+               class="org.cfeclipse.frameworks.fusebox.actions.CreateCircuitFilesAction"
+               tooltip="Adds the minimum required files for a Fusebox circuit (fbx_Switch and fbx_Settings)"
+               menubarPath="org.cfeclipse.frameworks.fusebox.actions/fuseboxgrp1"
+               id="org.cfeclipse.frameworks.fusebox.actions.CreateCircuitFiles"/>
+         
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            objectClass="org.eclipse.core.resources.IProject"
+            class="org.cfeclipse.frameworks.fusebox.properties.FuseboxPropertyPage"
+            nameFilter="*"
+            icon="icons/fusebox3/fusebox.gif"
+            name="Fusebox Project Properties"
+            id="org.cfeclipse.frameworks.fusebox.properties.FuseboxPropertyPage"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension 
+      	targetID="com.rohanclan.cfml.perspective.CFPerspective">
+         <view
+               relationship="stack"
+               relative="com.rohanclan.cfml.views.snips.SnipTreeView"
+               id="org.cfeclipse.frameworks.fusebox.views.FBX3View"/>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Fusebox"
+            id="org.cfeclipse.frameworks.fusebox"/>
+      <wizard
+            class="org.cfeclipse.frameworks.fusebox.wizards.Fusebox3application"
+            icon="icons/fusebox/fusebox.gif"
+            category="org.cfeclipse.frameworks.fusebox"
+            name="Fusebox 3 Application Wizard"
+            id="org.cfeclipse.frameworks.fusebox.wizards.Fusebox3application"/>
+      <category
+            name="Fusebox 4"
+            id="org.cfeclipse.frameworks.fusebox.wizards.Fusebox4application"/>
+      <wizard
+            class="org.cfeclipse.frameworks.fusebox.wizards.Fusebox4application"
+            icon="icons/sample.gif"
+            category="org.cfeclipse.frameworks.fusebox.wizards.Fusebox4application"
+            name="Fusebox 4 Wizard"
+            id="org.cfeclipse.frameworks.fusebox.wizards.Fusebox4application"/>
+   </extension>
+   
+   
+
+</plugin>

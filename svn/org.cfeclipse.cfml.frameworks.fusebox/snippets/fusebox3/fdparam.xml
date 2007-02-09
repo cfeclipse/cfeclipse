@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>fdparam</name>
+<help>I add a fusdoc string tag</help>
+<starttext><![CDATA[<$${type:string|struct|array|uuid} name="$${name}" description="$${description}" />]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

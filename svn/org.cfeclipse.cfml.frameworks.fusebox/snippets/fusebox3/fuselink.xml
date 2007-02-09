@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>fuselink</name>
+<help></help>
+<starttext><![CDATA[#CGI.SCRIPT_NAME#?fuseaction=$${circuit}.$${fuseaction}]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

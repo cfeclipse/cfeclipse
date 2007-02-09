@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>fuse</name>
+<help>Adds a an include</help>
+<starttext><![CDATA[<!--- $${comment} --->
+<cfinclude template="$${fuse}">
+]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

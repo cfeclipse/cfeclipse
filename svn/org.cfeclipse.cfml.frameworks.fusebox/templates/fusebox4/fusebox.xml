@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fusebox>
+	<circuits>
+	</circuits>
+
+	<classes>
+	</classes>
+
+
+	<parameters>
+		<parameter name="fuseactionVariable" value="fuseaction" />
+		<parameter name="defaultFuseaction" value="main.welcome" />
+		<parameter name="precedenceFormOrUrl" value="form"/>
+		<parameter name="mode" value="development"/>
+		<parameter name="password" value=""/>
+		<parameter name="parseWithComments" value="false" />
+		<parameter name="conditionalParse" value="false" />
+		<parameter name="allowLexicon" value="true" />
+		<parameter name="useAssertions" value="true" />
+		<parameter name="ignoreBadGrammar" value="true"/>
+		<parameter name="scriptlanguage" value="cfmx" />
+		<parameter name="scriptFileDelimiter" value="cfm"/>
+		<parameter name="maskedFileDelimiters" value="htm,cfm,cfml,php,php4,asp,aspx"/>
+		<parameter name="characterEncoding" value="utf-8"/>
+	</parameters>
+
+	<globalfuseactions>
+		<preprocess>
+		</preprocess>
+		<postprocess>
+		</postprocess>
+	</globalfuseactions>
+
+	<plugins>
+		<phase name="preProcess">
+		</phase>
+		<phase name="preFuseaction">
+		</phase>
+		<phase name="postFuseaction">
+		</phase>
+		<phase name="fuseactionException">
+		</phase>
+		<phase name="postProcess">
+		</phase>
+		<phase name="processError">
+		</phase>
+	</plugins>
+
+</fusebox>
