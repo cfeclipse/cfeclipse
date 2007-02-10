@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -33,7 +34,9 @@ import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import org.eclipse.core.runtime.Path;
@@ -71,7 +74,7 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 		treePanel.setLayoutData( gd );
 		
 		tests = new TreeViewer(treePanel, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL);
-		DrillDownAdapter drillDownAdapter = new DrillDownAdapter( tests );
+		new DrillDownAdapter( tests );
 		tests.setContentProvider(new CFUnitViewTestListContent());
 		tests.setLabelProvider(new CFUnitViewTestListLabels());
 		tests.setInput( CFUnitTestSuite.getInstence() );
@@ -84,6 +87,22 @@ public class CFUnitViewTestList extends Canvas implements Observer {
 				}
 			}
 		);
+		
+		tests.addDoubleClickListener(
+			new IDoubleClickListener() {
+				public void doubleClick(DoubleClickEvent event) {
+					
+					String n = event.getSelection().toString();
+					
+					CFUnitTestCase tc = CFUnitTestSuite.getTestCase( n.substring(1, n.length()-1 ) );
+					if(tc != null) {
+						Display display = Display.getCurrent();
+						display.asyncExec( tc );
+					}					
+				}
+			}
+		);
+		
 		
 		// Title Bar
 		labelIcon = new Label(this, SWT.NONE);

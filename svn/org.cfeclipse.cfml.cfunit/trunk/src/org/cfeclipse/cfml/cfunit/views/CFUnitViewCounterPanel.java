@@ -111,7 +111,11 @@ public class CFUnitViewCounterPanel extends Canvas implements Observer {
 	}
 	
 	public void setRunValue(int value) {
-	     fNumberOfRuns.setText( String.valueOf( value )+'/'+String.valueOf( CFUnitTestSuite.getTestCount() ) );
+		if(value > 0) {
+			fNumberOfRuns.setText( String.valueOf( value )+'/'+String.valueOf( CFUnitTestSuite.getTestCount() ) );
+		} else {
+			fNumberOfRuns.setText("---/---");
+		}
 	}
 	 
 	public void setErrorValue(int value) {

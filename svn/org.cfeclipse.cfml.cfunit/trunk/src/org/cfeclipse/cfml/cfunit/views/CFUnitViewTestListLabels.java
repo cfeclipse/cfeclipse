@@ -13,13 +13,15 @@ import org.eclipse.jface.viewers.IColorProvider;
 public class CFUnitViewTestListLabels extends LabelProvider implements IColorProvider {
 	private static final Color ERROR_COLOR = new Color(null, 255, 0, 0);
 	private static final Color FAILURE_COLOR = new Color(null, 255, 153, 0);
+	private static final Color SUCCESS_COLOR = new Color(null, 0, 153, 0);
 	private static final Color BASES_COLOR = new Color(null, 0, 0, 0);
 	private static final Color INACTIVE_COLOR = new Color(null, 204, 204, 204);
 	private static final Color WHITE = new Color(null, 255, 255, 255);
 	
 	private static final Image blankIcon = CFUnitView.getIcon( CFUnitView.ICON_NONE );
-	private static final Image errorIcon = CFUnitView.getIcon( CFUnitView.ICON_ERROR );
-	private static final Image failureIcon = CFUnitView.getIcon( CFUnitView.ICON_FAILURE );
+	private static final Image errorIcon = CFUnitView.getIcon( CFUnitView.ICON_LIGHT_RED );
+	private static final Image failureIcon = CFUnitView.getIcon( CFUnitView.ICON_LIGHT_YELLOW );
+	private static final Image successIcon = CFUnitView.getIcon( CFUnitView.ICON_LIGHT_GREEN );
 	private static final Image nwErrorIcon = CFUnitView.getIcon( CFUnitView.ICON_NWERROR );
 	
 	public Image getImage(Object element) {
@@ -36,6 +38,9 @@ public class CFUnitViewTestListLabels extends LabelProvider implements IColorPro
 				case CFUnitTestResult.NWERROR:
 					return nwErrorIcon;
 
+				case CFUnitTestResult.SUCCESS:
+					return successIcon;
+
 				default:
 					return blankIcon;
 			}
@@ -46,6 +51,8 @@ public class CFUnitViewTestListLabels extends LabelProvider implements IColorPro
 				return errorIcon;
 			} else if( tc.getFailureCount() > 0 ) {
 				return failureIcon;
+			} else if( tc.getRunCount() > 0 ) {
+				return successIcon;				
 			}
 		}
 		
@@ -67,6 +74,9 @@ public class CFUnitViewTestListLabels extends LabelProvider implements IColorPro
 				case CFUnitTestResult.NWERROR:
 					return ERROR_COLOR;
 
+				case CFUnitTestResult.SUCCESS:
+					return SUCCESS_COLOR;
+					
 				default:
 					return BASES_COLOR;
 			}
@@ -79,6 +89,8 @@ public class CFUnitViewTestListLabels extends LabelProvider implements IColorPro
 				return ERROR_COLOR;
 			} else if( tc.getFailureCount() > 0 ) {
 				return FAILURE_COLOR;
+			} else if( tc.getRunCount() > 0 ) {
+				return SUCCESS_COLOR;		
 			}
 		}
 			

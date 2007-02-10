@@ -19,7 +19,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
  * 
  * @author Robert Blackburn
  */
-public class CFUnitTestCase extends Observable {
+public class CFUnitTestCase extends Observable implements Runnable {
 	
 	public final static int STATE_NONE = 0; // No test is set
 	public final static int STATE_UNTESTED = 1; // The test has been set but not tested
@@ -53,9 +53,10 @@ public class CFUnitTestCase extends Observable {
 	 * Runs this test case and updates the results collection.
 	 * @return True is executed successfully, false otherwise.
 	 */
-	public boolean run() { 
+	public void run() { 
+		clear();
 		if(!getName().trim().equals("")) {
-
+			
 			try {
 				URL url = getURL();
 				
@@ -93,15 +94,15 @@ public class CFUnitTestCase extends Observable {
 			} catch(java.io.IOException e) {
 				addCriticalErrorResult( e );
 				notifyObservers();
-				return false;
+				return;
 			}
 			
 			setChanged();
 			notifyObservers();
-			return true;
+			return;
 		} else {
 			clear();			
-			return false;
+			return;
 		}
 	}
 	
@@ -305,6 +306,11 @@ public class CFUnitTestCase extends Observable {
 	}
 	
 	public String toString() {
-		return getName();
+		if( getRunCount() > 0 ){
+			int successCount = getRunCount()- (getErrorCount()+getFailureCount());
+			return getName() + " ("+successCount+"/"+getFailureCount()+"/"+getErrorCount()+")";
+		} else {
+			return getName();
+		}
 	}
 }

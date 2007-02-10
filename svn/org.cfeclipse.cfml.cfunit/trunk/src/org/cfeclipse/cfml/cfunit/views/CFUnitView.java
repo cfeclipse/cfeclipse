@@ -32,6 +32,10 @@ public class CFUnitView extends ViewPart {
 	public static final int ICON_LINK = 6;
 	public static final int ICON_SEARCH = 7;
 	
+	public static final int ICON_LIGHT_RED = 8;
+	public static final int ICON_LIGHT_GREEN = 9;
+	public static final int ICON_LIGHT_YELLOW = 10;
+	
 	private static final String ICONS_PATH = "../../../../../../icons/obj16/";
 	
 	private Action actionRun;
@@ -184,6 +188,18 @@ public class CFUnitView extends ViewPart {
 				
 			case ICON_SEARCH:
 				name = "system-search.png";
+				break;
+				
+			case ICON_LIGHT_RED:
+				name = "light_red.png";
+				break;
+				
+			case ICON_LIGHT_GREEN:
+				name = "light_green.png";
+				break;
+				
+			case ICON_LIGHT_YELLOW:
+				name = "light_yellow.png";
 				break;
 				
 			default:
