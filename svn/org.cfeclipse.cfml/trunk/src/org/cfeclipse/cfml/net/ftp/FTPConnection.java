@@ -112,7 +112,35 @@ public class FTPConnection implements IFileProvider {
             AlertUtils.alertUser(e);
         }
     }
+    
+    public void mkdir(String remoteFolder) {
+        connect();
 
+        try {
+            ftpClient.mkdir(remoteFolder);
+        } catch (Exception e) {
+            AlertUtils.alertUser(e);
+        }
+    }
+
+    public void delete(String remotefile) {
+        connect();
+
+        try {
+            ftpClient.delete(remotefile);
+        } catch (Exception e) {
+            AlertUtils.alertUser(e);
+        }
+    }
+    public void rmdir(String remotefile) {
+        connect();
+
+        try {
+            ftpClient.rmdir(remotefile);
+        } catch (Exception e) {
+            AlertUtils.alertUser(e);
+        }
+    }
     public void disconnect() {
         try {
             if (isConnected()) {
