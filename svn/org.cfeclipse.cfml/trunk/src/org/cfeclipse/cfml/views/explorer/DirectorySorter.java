@@ -12,8 +12,10 @@ import org.eclipse.jface.viewers.ViewerSorter;
 
 class DirectorySorter extends ViewerSorter {
     public int compare(Viewer viewer, Object e1, Object e2) {
-        Object item1 = e1;
-        Object item2 = e2;
-        return 0;
+    	String[] item1 = e1.toString().split("/");
+        String[]  item2 = e2.toString().split("/");
+        String dir1 = item1[item1.length-1];
+        String dir2 = item2[item2.length-1];
+        return dir1.compareToIgnoreCase(dir2);
     }
 }
