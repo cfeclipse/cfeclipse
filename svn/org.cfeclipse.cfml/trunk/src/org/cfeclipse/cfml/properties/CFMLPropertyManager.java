@@ -27,6 +27,7 @@ package org.cfeclipse.cfml.properties;
 
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -67,6 +68,11 @@ public class CFMLPropertyManager {
 		IPreferenceStore store = new ProjectPropertyStore(project);
         store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
         store.setDefault(CFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.defaultProjectURL());
+	}
+	
+	public String getCurrentDictionary(IFile file){
+		IPreferenceStore store = new ProjectPropertyStore(file.getProject());
+		return store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
 	}
 	
 	public String getCurrentDictionary(IProject project)
