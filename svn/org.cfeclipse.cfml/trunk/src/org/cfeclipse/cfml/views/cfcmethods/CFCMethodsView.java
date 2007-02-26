@@ -392,9 +392,11 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			selectedMethod = (CFCMethodViewItem)selection.getFirstElement();
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			try  {
+				//TODO: Need to test if the editor is already open and then redirect
 				IEditorPart iep = IDE.openEditor(page,CFCMethodsFile,true);
 				//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 				ITextEditor ite = (ITextEditor)iep;
+				System.out.println(selectedMethod.getDocumentOffset());
 				ite.setHighlightRange(selectedMethod.getDocumentOffset(),0,true);
 				ite.setFocus();}
 			catch (Exception e) {
@@ -422,6 +424,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 			try  {
 				IEditorPart iep = IDE.openEditor(page,CFCMethodsFile,true);
 				//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+				
 				ITextEditor ite = (ITextEditor)iep;
 				ite.selectAndReveal(selectedMethod.getDocumentOffset(),selectedMethod.getSize(ite));
 				ite.setFocus();

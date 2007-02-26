@@ -36,7 +36,7 @@ public class CFCMethodsComparator implements Comparator {
         if (o1 instanceof TagItem && o1 instanceof TagItem) {
             TagItem t1 = (TagItem)o1;
             TagItem t2 = (TagItem)o2;
-            return t1.getAttributeValue("name").compareTo(t2.getAttributeValue("name"));
+            return t1.getAttributeValue("name").compareToIgnoreCase(t2.getAttributeValue("name"));
         }
         return 0; 
     }
