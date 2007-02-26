@@ -14,6 +14,9 @@
       <library name="lib/log4j-1.2.9.jar">
          <export name="*"/>
       </library>
+      <library name="lib/jdom.jar">
+         <export name="*"/>
+      </library>
    </runtime>
    <!-- random comment -->
    <requires>
@@ -1335,6 +1338,11 @@
             class="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             name="Browser"/>
+      <page
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfml.preferences.CFMLTemplatePreferencePage"
+            id="org.cfeclipse.cfml.preferences.Templates"
+            name="Templates"/>
    </extension>
    
    <extension
@@ -1347,6 +1355,13 @@
             nameFilter="*"
             objectClass="org.eclipse.core.resources.IProject">
       </page>
+      <page
+            class="org.cfeclipse.cfml.properties.MappingsPropertyPage"
+            icon="icons/icons/cfeclipse_16x16.png"
+            id="org.cfeclipse.cfml.properties.MappingsPropertyPage"
+            name="CFEMappings"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IProject"/>
    </extension>
    
 	<!-- Chris Queeners area -->
