@@ -3,13 +3,28 @@
 package org.cfeclipse.cfml.views.dictionary;
 
 //import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Map;
+
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.dictionary.DictionaryManager;
+import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
+import org.cfeclipse.cfml.editors.CFDocumentProvider;
+import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFSyntaxDictionary;
+import org.cfeclipse.cfml.editors.SQLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.actions.EditCustomTagAction;
 import org.cfeclipse.cfml.editors.actions.EditFunctionAction;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
 import org.cfeclipse.cfml.editors.actions.InsertTagAction;
+
+import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.browser.BrowserView;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -38,17 +53,27 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.jdom.Document;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 
 
 
 public class DictionaryView extends ViewPart {
+	
+
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
 	private Action switchViewAction;
@@ -70,9 +95,49 @@ public class DictionaryView extends ViewPart {
 	/**
 	 * The constructor.
 	 */
+
+	
+	private IPartListener2 partListener2 = new IPartListener2() {
+          
+		public void partActivated(IWorkbenchPartReference ref) {
+                if (ref.getPart(true) instanceof IEditorPart) {
+                    editorActivated(getViewSite().getPage().getActiveEditor());
+                }   
+                  
+            }
+
+            public void partBroughtToTop(IWorkbenchPartReference ref) {
+                   // editorActivated(getViewSite().getPage().getActiveEditor());
+            }
+
+            public void partClosed(IWorkbenchPartReference ref) {}
+
+            public void partDeactivated(IWorkbenchPartReference ref) {}
+
+            public void partOpened(IWorkbenchPartReference ref) {
+           //         editorActivated(getViewSite().getPage().getActiveEditor());
+            }
+
+            public void partHidden(IWorkbenchPartReference ref) {}
+
+            public void partVisible(IWorkbenchPartReference ref) {
+                  //  editorActivated(getViewSite().getPage().getActiveEditor());
+            }
+
+            public void partInputChanged(IWorkbenchPartReference ref) {}
+
+    };
+    
 	public DictionaryView() {
 
 	}
+	
+	//Dispose of the listener 
+	public void dispose() {
+		getSite().getPage().removePartListener(partListener2);
+		super.dispose();
+	}
+	
 	private final class DoubleClickAction implements IDoubleClickListener {
 		public void doubleClick(DoubleClickEvent event) {
 			doubleClickAction.run();
@@ -168,8 +233,7 @@ public class DictionaryView extends ViewPart {
 			
 			attrTable = new AttributesTable(bottomHalf);
 			
-			
-			
+			getSite().getPage().addPartListener(partListener2);
 			
 			makeActions();
 			hookContextMenu();
@@ -182,7 +246,68 @@ public class DictionaryView extends ViewPart {
 		}
 		
 	}
+	/**
+	 * This function returns a default dictionary or the one from the file passed in
+	 * @param file
+	 * @return
+	 */
 
+	 private void editorActivated(IEditorPart editor) {
+	        //Check whether this view is active or not... dunno why
+	    	if (!getViewSite().getPage().isPartVisible(this))
+	        	return;
+	        
+	        if(editor !=null){
+	        	
+		        IEditorInput input = editor.getEditorInput();
+		        
+		        if (editor instanceof CFMLEditor) {
+		        	CFMLEditor cfeditor = (CFMLEditor) editor;
+		        	IDocumentProvider documentProvider = cfeditor.getDocumentProvider();
+		        	System.out.println(documentProvider.getClass());
+					if (documentProvider instanceof CFDocumentProvider) {
+						CFDocumentProvider cfdocProvider = (CFDocumentProvider) documentProvider;
+						
+					}
+				}
+		        System.out.println(editor.getClass());
+		        IFile file = ResourceUtil.getFile(input);
+		        if (file != null){
+		        	getContentProviderByFile(file);
+		        	//Tell the content provider to use the dictionary from the file, if there is no file, use the default SyntaxDictionary
+		        	/*if(!file.getProject().getName().equals(currentProjectName)){
+		        		
+		        		System.out.println("setting  the project");
+		//        		Check if we have changed projects
+		        		currentProject = file.getProject();
+		        		currentProjectName = currentProject.getName();
+		        		projLabel.setText(currentProject.getName());
+		            	viewer.setContentProvider(new FrameworksContentProvider(getViewSite(), currentProject));
+		            	viewer.expandToLevel(2);
+		            //	
+		            //	
+		        		
+		        	}*/
+		        }
+	        }
+	    }
+	 
+	 
+	 
+	 private DictionaryViewContentProvider getContentProviderByFile(IFile file){
+		 CFMLPropertyManager propMan = new CFMLPropertyManager();
+		 String currentDictionary = propMan.getCurrentDictionary(file);
+	//SyntaxDictionary dictionary = DictionaryManager.getDictionaries()getDictionary(key)(currentDictionary);
+	
+		
+		  Map dictionaries = DictionaryManager.getDictionaries();
+		 //Object object = DictionaryManager.getDictionaries().get("CF_DICTIONARY");
+		// CFSyntaxDictionary cfmlDict = (CFSyntaxDictionary)object;
+		// String p_cfml_dictionary = CFMLPreferenceConstants.P_CFML_DICTIONARY;
+		 System.out.println(dictionaries);
+		 return null;
+	 }
+	 
 	private void hookFilters(){
 		this.viewfilter = new DictionaryViewFilter();
 	}

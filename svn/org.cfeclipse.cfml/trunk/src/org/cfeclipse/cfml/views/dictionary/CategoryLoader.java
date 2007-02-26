@@ -68,12 +68,14 @@ public class CategoryLoader {
 		//Create the root 
 		this.cattags = new TreeParent(name);
 		this.fulltags = new TreeParent(name);
-		
-		
-		
 		initialize();
 	}
 	
+	public CategoryLoader(String name, String Dictionary){
+		this.cattags = new TreeParent(name);
+		this.fulltags = new TreeParent(name);
+		initialize();
+	}
 	
 	/**
 	 * This method is called internally to prepare the cattags and fulltags trees

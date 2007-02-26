@@ -218,6 +218,7 @@ public class DictionaryManager
 		return options;
 	}
 	
+	
 	/**
 	 * Loads a syntax file into the cache by the key defined in the dictionary config file.
 	 * for example
@@ -235,6 +236,20 @@ public class DictionaryManager
 	 */
 	public static void loadDictionaryByVersion(String versionkey)
 	{
+		SyntaxDictionary dic = getDictionaryByVersion(versionkey);
+		
+		if(dic == null){
+			throw new IllegalArgumentException("Problem loading version node "+versionkey+" from dictionaryconfig.xml");
+		}
+		//add finally add them to the cache
+		addDictionaryToCache(versionkey, dic);
+	}
+
+	/**
+	 * @param versionkey
+	 * @return
+	 */
+	private static SyntaxDictionary getDictionaryByVersion(String versionkey) {
 		if(dictionaryConfig == null)
 			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml");
 		
@@ -244,8 +259,8 @@ public class DictionaryManager
 		
 		if(versionNode == null)
 		{
-			return;
-			//throw new IllegalArgumentException("Problem loading version node "+versionkey+" from dictionaryconfig.xml");
+			return null;
+//			
 		}
 		
 		//get the dictype from the parent node
@@ -283,9 +298,7 @@ public class DictionaryManager
 			String filename = n.getAttributes().getNamedItem("location").getNodeValue().trim();
 			dic.loadDictionary(filename);
 		}
-		
-		//add finally add them to the cache
-		addDictionaryToCache(versionkey, dic);
+		return dic;
 	}
 	
 	/**
@@ -365,6 +378,7 @@ public class DictionaryManager
 	{
 		dictionariesCache.put(key,sd);
 	}
+	
 	
 	/**
 	 * Add a dictionary to the manager

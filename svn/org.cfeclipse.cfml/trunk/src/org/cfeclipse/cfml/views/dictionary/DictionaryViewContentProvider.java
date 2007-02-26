@@ -18,7 +18,11 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 	
 	public DictionaryViewContentProvider(String viewtype) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.type = viewtype;
+	}
+	
+	public DictionaryViewContentProvider(String viewtype, String CFMXversion){
+		super();
 	}
 	
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
