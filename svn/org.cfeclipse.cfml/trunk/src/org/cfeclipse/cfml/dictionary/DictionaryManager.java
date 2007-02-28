@@ -24,8 +24,12 @@
  */
 package org.cfeclipse.cfml.dictionary;
  
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -47,6 +51,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -246,10 +253,62 @@ public class DictionaryManager
 	}
 
 	/**
+	 * Alternate version using JDOM
 	 * @param versionkey
 	 * @return
 	 */
-	private static SyntaxDictionary getDictionaryByVersion(String versionkey) {
+	public static SyntaxDictionary getDictionaryByVersionAlt(String versionkey){
+		SAXBuilder builder = new SAXBuilder();
+		
+		
+		
+		URL dictionaryConfigURL = null;
+		
+			try {
+				dictionaryConfigURL = new URL(
+					CFMLPlugin.getDefault().getBundle().getEntry("/"),
+					"dictionary/"
+				);
+				URL configurl = FileLocator.LocateURL(dictionaryConfigURL, "dictionaryconfig.xml");
+				org.jdom.Document document = builder.build(configurl);
+				//TODO: Replace with XPath...
+				Element rootElement = document.getRootElement();
+				List children = rootElement.getChildren();
+				for (Iterator iter = children.iterator(); iter.hasNext();) {
+					Element element = (Element) iter.next();
+					if(element.getAttributeValue("id").equalsIgnoreCase("CF_DICTIONARY")){
+						List versions = element.getChildren();
+						for (Iterator iterator = versions.iterator(); iterator
+								.hasNext();) {
+							Element version = (Element) iterator.next();
+							if(version.getAttributeValue("key").equalsIgnoreCase(versionkey)){
+								List grammers = version.getChildren();
+								
+								System.out.println(version.getAttributeValue("label"));
+							}
+						}
+					}
+					
+				}
+				
+				
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JDOMException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		return null;
+	}
+	
+	public static SyntaxDictionary getDictionaryByVersion(String versionkey) {
 		if(dictionaryConfig == null)
 			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml");
 		
@@ -410,4 +469,12 @@ public class DictionaryManager
     {
         return DictionaryManager.dictionaries;
     }
+
+	public static Map getDictionariesCache() {
+		return dictionariesCache;
+	}
+
+	public static void setDictionariesCache(Map dictionariesCache) {
+		DictionaryManager.dictionariesCache = dictionariesCache;
+	}
 }

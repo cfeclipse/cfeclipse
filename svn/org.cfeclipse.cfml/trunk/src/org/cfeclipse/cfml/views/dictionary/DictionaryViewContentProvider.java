@@ -15,6 +15,7 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 	
 	private TreeParent invisibleRoot;
 	private String type = "standard";
+	private String cfmxversion;
 	
 	public DictionaryViewContentProvider(String viewtype) {
 		super();
@@ -23,6 +24,7 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 	
 	public DictionaryViewContentProvider(String viewtype, String CFMXversion){
 		super();
+		this.cfmxversion = CFMXversion;
 	}
 	
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
@@ -74,13 +76,13 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 		
 		
 		
-		CategoryLoader catloader = new CategoryLoader("root");
+		CategoryLoader catloader = new CategoryLoader("root", this.cfmxversion);
 		TreeParent root = null;
-		if(this.type.equals("standard")){
+		//if(this.type.equals("standard")){
 			root = catloader.getUnsortedCategories();
-		} else{
-			root = catloader.getCategories();
-		}
+		//} else{
+		//	root = catloader.getCategories();
+		//}
 		invisibleRoot = new TreeParent("");
 		invisibleRoot.addChild(root);
 
@@ -88,11 +90,11 @@ class DictionaryViewContentProvider implements IStructuredContentProvider,ITreeC
 	public void changeSorting(String sortype){
 		CategoryLoader catloader = new CategoryLoader("root");
 		TreeParent root = null;
-		if(sortype.equals("standard")){
+//		if(sortype.equals("standard")){
 			root = catloader.getUnsortedCategories();
-		} else{
-			root = catloader.getCategories();
-		}
+//		} else{
+//			root = catloader.getCategories();
+//		}
 		invisibleRoot = new TreeParent("");
 		invisibleRoot.addChild(root);
 		

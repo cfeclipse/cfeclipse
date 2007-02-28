@@ -25,6 +25,8 @@
 package org.cfeclipse.cfml.views.dictionary;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -55,6 +57,7 @@ public class CategoryLoader {
 	private TreeParent fulltags = null;
 	
 	private Document categoryXML = null;
+	private String cfmlversion;
 	
 	/* get the dictionary so its ready for us to grab items out of it 
 	 * TODO: Change it so it gets the current file's dictionary... we might have to have a listener when 
@@ -74,6 +77,17 @@ public class CategoryLoader {
 	public CategoryLoader(String name, String Dictionary){
 		this.cattags = new TreeParent(name);
 		this.fulltags = new TreeParent(name);
+		this.cfmlversion = Dictionary;
+		
+		SyntaxDictionary dictionaryByVersion = DictionaryManager.getDictionaryByVersionAlt(Dictionary);
+		
+		if(dictionaryByVersion == null){
+			System.err.println("Error getting " + Dictionary);
+		}
+		else{
+			cfdic = dictionaryByVersion;
+		}
+		
 		initialize();
 	}
 	

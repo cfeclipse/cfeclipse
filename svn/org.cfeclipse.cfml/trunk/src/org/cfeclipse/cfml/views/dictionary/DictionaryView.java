@@ -45,11 +45,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
@@ -127,6 +131,7 @@ public class DictionaryView extends ViewPart {
             public void partInputChanged(IWorkbenchPartReference ref) {}
 
     };
+	private Combo combo;
     
 	public DictionaryView() {
 
@@ -173,6 +178,7 @@ public class DictionaryView extends ViewPart {
 			GridLayout containerLayout = new GridLayout();
 			containerLayout.marginHeight = 0;
 			containerLayout.marginWidth = 0;
+			containerLayout.numColumns =1;
 
 			
 			
@@ -190,11 +196,40 @@ public class DictionaryView extends ViewPart {
 			bottomHalf.setLayout(containerLayout);
 			bottomHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-			// This will allow you to type the tag name and get info on it
-			text = new Text(topHalf, SWT.SINGLE | SWT.BORDER);
+			
 			GridData layoutData = new GridData();
 			layoutData.grabExcessHorizontalSpace = true;
 			layoutData.horizontalAlignment = GridData.FILL;
+			//Combo showing the current dictionary and all the available dictionaries
+			combo = new Combo(topHalf, SWT.READ_ONLY|SWT.BORDER);
+			combo.setLayoutData(layoutData);
+			 String [][] options = DictionaryManager.getConfiguredDictionaries();
+			 
+			 for (int i = 0; i < options.length; i++) {
+					combo.add(options[i][1]);
+			}
+			 
+			combo.addSelectionListener(new SelectionListener(){
+
+				public void widgetDefaultSelected(SelectionEvent e) {
+					System.out.println(e.text);
+					//
+				}
+
+				public void widgetSelected(SelectionEvent e) {
+					viewer.setContentProvider(new DictionaryViewContentProvider(viewtype, combo.getText()));
+				}
+				
+				
+			});
+			 
+			
+			
+		
+			
+			// This will allow you to type the tag name and get info on it
+			text = new Text(topHalf, SWT.SINGLE | SWT.BORDER);
+			
 			text.setLayoutData(layoutData);
 			text.addModifyListener(new ModifyListener() {
 
