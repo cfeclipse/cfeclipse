@@ -31,11 +31,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.editors.CFSyntaxDictionary;
 import org.cfeclipse.cfml.editors.HTMLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.SQLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
@@ -54,6 +56,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.jdom.xpath.XPath;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -81,6 +84,9 @@ public class DictionaryManager
 	private static Map dictionaries = new HashMap();
 	/** the dictionary cache - for swtiching between grammars */
 	private static Map dictionariesCache = new HashMap();
+	
+	/** map of versions, might be a replication of the above */
+	private static Map dictionaryVersionCache = new HashMap();
 	
 	/** the dictionary config file in DOM form */
 	private static Document dictionaryConfig = null;
@@ -258,10 +264,14 @@ public class DictionaryManager
 	 * @return
 	 */
 	public static SyntaxDictionary getDictionaryByVersionAlt(String versionkey){
+		
+		
+		if(dictionaryVersionCache.containsKey(versionkey)){
+			return (SyntaxDictionary)dictionaryVersionCache.get(versionkey);
+		}
+		else{
 		SAXBuilder builder = new SAXBuilder();
-		
-		
-		
+		SyntaxDictionary dic = new SQLSyntaxDictionary();
 		URL dictionaryConfigURL = null;
 		
 			try {
@@ -271,27 +281,13 @@ public class DictionaryManager
 				);
 				URL configurl = FileLocator.LocateURL(dictionaryConfigURL, "dictionaryconfig.xml");
 				org.jdom.Document document = builder.build(configurl);
-				//TODO: Replace with XPath...
-				Element rootElement = document.getRootElement();
-				List children = rootElement.getChildren();
-				for (Iterator iter = children.iterator(); iter.hasNext();) {
-					Element element = (Element) iter.next();
-					if(element.getAttributeValue("id").equalsIgnoreCase("CF_DICTIONARY")){
-						List versions = element.getChildren();
-						for (Iterator iterator = versions.iterator(); iterator
-								.hasNext();) {
-							Element version = (Element) iterator.next();
-							if(version.getAttributeValue("key").equalsIgnoreCase(versionkey)){
-								List grammers = version.getChildren();
-								
-								System.out.println(version.getAttributeValue("label"));
-							}
-						}
-					}
-					
-				}
 				
+				XPath x  = XPath.newInstance("//dictionary[@id='CF_DICTIONARY']/version[@key=\'"+ versionkey +"\']/grammar[1]");
 				
+				Element grammerElement    = (Element)x.selectSingleNode(document);
+				dic = new SQLSyntaxDictionary();
+				((CFSyntaxDictionary)dic).loadDictionary(grammerElement.getAttributeValue("location"));
+				dictionaryVersionCache.put(versionkey, dic);
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -303,9 +299,8 @@ public class DictionaryManager
 				e.printStackTrace();
 			}
 			
-			
-			
-		return null;
+		}
+		return (SyntaxDictionary)dictionaryVersionCache.get(versionkey);
 	}
 	
 	public static SyntaxDictionary getDictionaryByVersion(String versionkey) {

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
+import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.CFDocumentProvider;
@@ -43,13 +44,18 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -87,12 +93,12 @@ public class DictionaryView extends ViewPart {
 	private Action viewhelp;
 	private Action addCTagAction;
 	
-	protected Text text, preview;
+	protected Text searchField, preview;
 	protected AttributesTable attrTable;
 	protected Label previewLabel;
 	protected LabelProvider labelProvider;
 	private String viewtype = "standard";
-	private DictionaryViewContentProvider contentprovider = new DictionaryViewContentProvider(viewtype);
+	private DictionaryViewContentProvider contentprovider = new DictionaryViewContentProvider(viewtype, "cfmx701");
 	public static final String ID_DICTIONARY = "org.cfeclipse.cfml.views.dictionary";
 	private DictionaryViewFilter viewfilter;
 
@@ -182,42 +188,57 @@ public class DictionaryView extends ViewPart {
 
 			
 			
-			
+			GridLayout topLayout = new GridLayout();
+			topLayout.marginHeight = 0;
+			topLayout.marginWidth = 0;
+			topLayout.numColumns =3;
 			
 			// Container for the top half of the view
 			Composite topHalf = new Composite(sash, SWT.BORDER);
-			topHalf.setLayout(containerLayout);
+			topHalf.setLayout(topLayout);
 			topHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
-
+			
 		
 			
 			// Container for the bottom half of the view
 			Composite bottomHalf = new Composite(sash, SWT.BORDER);
 			bottomHalf.setLayout(containerLayout);
 			bottomHalf.setLayoutData(new GridData(GridData.FILL_BOTH));
-
 			
-			GridData layoutData = new GridData();
-			layoutData.grabExcessHorizontalSpace = true;
-			layoutData.horizontalAlignment = GridData.FILL;
+			
+		
+			
+			
+			GridData spanData = new GridData();
+			spanData.grabExcessHorizontalSpace = true;
+			spanData.horizontalAlignment = GridData.FILL;
+			spanData.horizontalSpan = 3;
+			
+			
+			
+			
+			
 			//Combo showing the current dictionary and all the available dictionaries
 			combo = new Combo(topHalf, SWT.READ_ONLY|SWT.BORDER);
-			combo.setLayoutData(layoutData);
+			combo.setLayoutData(spanData);
 			 String [][] options = DictionaryManager.getConfiguredDictionaries();
 			 
 			 for (int i = 0; i < options.length; i++) {
 					combo.add(options[i][1]);
 			}
+			 combo.select(0);
 			 
 			combo.addSelectionListener(new SelectionListener(){
 
 				public void widgetDefaultSelected(SelectionEvent e) {
-					System.out.println(e.text);
-					//
+					
 				}
 
 				public void widgetSelected(SelectionEvent e) {
-					viewer.setContentProvider(new DictionaryViewContentProvider(viewtype, combo.getText()));
+					if(combo.getText().length() > 0){
+						viewer.setContentProvider(new DictionaryViewContentProvider(viewtype, combo.getText()));
+						viewer.expandToLevel(2);
+					}
 				}
 				
 				
@@ -225,48 +246,103 @@ public class DictionaryView extends ViewPart {
 			 
 			
 			
-		
+			GridData noSpanData = new GridData();
+			noSpanData.grabExcessHorizontalSpace = true;
+			noSpanData.horizontalAlignment = GridData.FILL;
 			
 			// This will allow you to type the tag name and get info on it
-			text = new Text(topHalf, SWT.SINGLE | SWT.BORDER);
+			searchField = new Text(topHalf, SWT.SINGLE | SWT.BORDER);
 			
-			text.setLayoutData(layoutData);
-			text.addModifyListener(new ModifyListener() {
+			searchField.setLayoutData(noSpanData);
+			
+			
+			//add search and clear buttons
+			Button btnSearch = new Button(topHalf, SWT.NONE);
+			btnSearch.setText("Search");
+			btnSearch.addMouseListener(new MouseListener(){
 
-				public void modifyText(ModifyEvent e) {
-					//This doesnt seem to get the latest text. The latest text comes after modifiation?
-					//text.g
-					String searchpattern = text.getText();
-			
+				public void mouseDoubleClick(MouseEvent e) {
+					System.out.println("button pressed");
+					String searchpattern = searchField.getText();
+					
 					if(searchpattern.trim().length() > 0){
 						viewfilter.setMatch(searchpattern);
 						viewer.addFilter(viewfilter);
 						viewer.expandToLevel(5);
 					}
-					else{
-						viewer.removeFilter(viewfilter);
+				}
+
+				public void mouseDown(MouseEvent e) {
+					System.out.println("button pressed");
+					String searchpattern = searchField.getText();
+					
+					if(searchpattern.trim().length() > 0){
+						viewfilter.setMatch(searchpattern);
+						viewer.addFilter(viewfilter);
+						viewer.refresh();
+						viewer.expandToLevel(5);
 					}
-						
 					
 				}
+
+				public void mouseUp(MouseEvent e) {}
 			});
+			
+			Button btnClear = new Button(topHalf, SWT.NONE);
+			btnClear.setText("Clear");
+			btnClear.addMouseListener(new MouseListener(){
+
+				public void mouseDoubleClick(MouseEvent e) {
+					// TODO Auto-generated method stub
+					searchField.setText("");
+					viewer.removeFilter(viewfilter);
+					viewer.refresh();
+					viewer.expandToLevel(5);
+				}
+
+				public void mouseDown(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				public void mouseUp(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			
+		
 
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
 			drillDownAdapter = new DrillDownAdapter(viewer);
 			
-			
-		
 			viewer.setContentProvider(contentprovider);
-			
-			
 			viewer.setLabelProvider(new ViewLabelProvider());
 			viewer.setSorter(new NameSorter());
+			GridData viewerGD = new GridData(GridData.FILL_BOTH);
+			viewerGD.horizontalSpan = 3;
+			viewer.getControl().setLayoutData(viewerGD);
 			viewer.setInput(getViewSite());
-			viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
-			viewer.expandToLevel(2);
 			
+
+			viewer.expandToLevel(2);
 			attrTable = new AttributesTable(bottomHalf);
+			
+			
+			
+			
+			preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FLAT);
+			// layout the text field above the treeviewer
+			GridData previewGD = new GridData();
+			previewGD.grabExcessHorizontalSpace = true;
+			previewGD.heightHint = 20;
+			previewGD.horizontalAlignment = GridData.FILL;
+			previewGD.verticalAlignment = GridData.FILL;
+			previewGD.grabExcessVerticalSpace = true;
+			preview.setLayoutData(previewGD);
+			
 			
 			getSite().getPage().addPartListener(partListener2);
 			
@@ -575,57 +651,53 @@ public class DictionaryView extends ViewPart {
 				// if the selection is empty clear the label
 				if (event.getSelection().isEmpty()) {
 					//text.setText("");
-					//preview.setText("");
+					preview.setText("");
 					return;
 				}
 				else{
 					attrTable.setAttributes(obj);
-				
+					
 				}
 
 				if (obj instanceof TagItem) {
 					TagItem tg = (TagItem) obj;
 					//text.setText(tg.getName());
-					//preview.setText(tg.getHelp());
+					preview.setText(tg.getHelp());
 					//attrTable.setAttributes(obj);
 				} else if (obj instanceof FunctionItem) {
 					FunctionItem func = (FunctionItem) obj;
 					///text.setText(func.getName());
-					//preview.setText(func.getHelp());
+					preview.setText(func.getHelp());
 				} else if (obj instanceof ScopeItem) {
 					ScopeItem scopei = (ScopeItem) obj;
 					//text.setText(scopei.getName());
-					//preview.setText(scopei.getHelp());
+					preview.setText(scopei.getHelp());
 				} else {
 					//text.setText("");
-					//preview.setText("");
+					preview.setText("");
 				}
 
 			}
 		});
+		
+		attrTable.addSelectionListener(new SelectionListener(){
 
-		text.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent e) {
-				String searchpattern = text.getText();
-				
-				//if there is something to find 
-				if(searchpattern.trim().length() > 1){
-					viewfilter.setMatch(searchpattern);
-					viewer.addFilter(viewfilter);
-					viewer.expandAll();
-				}else if(searchpattern.trim().length() == 0 ){
-				//This doesnt seem to be removing the view.
-					System.out.println("Filter is blank");
-					viewer.removeFilter(viewfilter);
-				} else {
-					System.out.println("Filter is also blank");
-					viewer.removeFilter(viewfilter);
-					
-				}
-				
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
 				
 			}
+
+			public void widgetSelected(SelectionEvent e) {
+				if (e.item.getData() instanceof Parameter) {
+					Parameter param = (Parameter) e.item.getData();
+					preview.setText(param.getHelp());
+				}
+				
+			}
+			
+			
 		});
+		
 		
 	}
 

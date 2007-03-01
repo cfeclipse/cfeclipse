@@ -112,7 +112,8 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
  * because the embedded CF decides it. 
  */
 public class CFParser {
-
+	
+	
 	/**
 	 * <code>REG_TAG</code> - the regular expression for matching tags. NB: Doesn't work on multi-line tags :(
 	 * TODO: Either modify the REG_TAG regex to match multiline tags or completely rewrite the tag matcher.
@@ -1478,7 +1479,7 @@ public class CFParser {
 			this.setData2Parse(inData);
 			ArrayList matches = tagMatchingAttempts(inData);
 //			System.out.println("=============> Beginning match dump" );
-//			Util.dumpMatches(parserState.getMatches());
+			Util.dumpMatches(parserState.getMatches());
 //			System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(parserState.getMatches());
 			

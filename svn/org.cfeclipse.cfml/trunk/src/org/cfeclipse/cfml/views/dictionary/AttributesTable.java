@@ -9,12 +9,14 @@ import org.cfeclipse.cfml.dictionary.Tag;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TypedListener;
 
 
 public class AttributesTable {
@@ -37,7 +39,7 @@ public class AttributesTable {
 	private final String ATTRIBUTE_COLUMN = "attribute";
 	private final String ATTRIBUTE_VALUE = "value";
 	private final String ATTRIBUTE_TYPE = "type";
-	private final String ATTRIBUTE_DESC = "description";
+	private final String ATTRIBUTE_DESC = "values";
 	
 	private String[] columnNames = new String[]{
 			ATTRIBUTE_COLUMN,
@@ -102,7 +104,7 @@ public class AttributesTable {
 				 */
 				Parameter param = (Parameter)iter.next();
 				TableItem tedit =   new TableItem(table, SWT.NONE);
-				
+				tedit.setData(param);
 				String paramName = param.getName();
 				
 				if(param.isRequired()){
@@ -111,9 +113,8 @@ public class AttributesTable {
 					
 				}
 				
-				
-				
-				tedit.setText(new String[]{paramName,param.getType(), param.getHelp()});
+				String values = param.getValues().toString();
+				tedit.setText(new String[]{paramName,param.getType(), values});
 				//Need to find out if this param is required
 				//param.isRequired()
 				
@@ -177,10 +178,14 @@ public class AttributesTable {
 		}
 	
 		
-		
 	}
 	
-	
-	
+
+	public void addSelectionListener (SelectionListener listener) {
+		table.addSelectionListener(listener);
+	}
+	public void removeSelectionListener (SelectionListener listener) {
+		table.removeSelectionListener(listener);
+	}
 	
 }

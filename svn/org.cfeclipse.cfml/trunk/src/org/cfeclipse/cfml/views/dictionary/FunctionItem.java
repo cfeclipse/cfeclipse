@@ -12,19 +12,20 @@ import org.cfeclipse.cfml.dictionary.Function;
 
 class FunctionItem extends DictionaryItem{
   
-    
+    private Function function;
 
-    public FunctionItem(String name){
-        super(name);
+    public FunctionItem(Function currFunc){
+        super(currFunc.getName());
+        this.function = currFunc;
     } 
     
     public String getHelp(){
 
-      return super.getDictionary().getFunctionHelp(super.getName());
+      return function.getHelp();
     }
    
     public Function getFunction(){
     	
-    	return super.getDictionary().getFunction(super.getName());
+    	return function;
     }
 }

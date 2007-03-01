@@ -34,6 +34,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.Function;
+import org.cfeclipse.cfml.dictionary.ScopeVar;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.eclipse.core.runtime.Platform;
@@ -162,11 +163,11 @@ public class CategoryLoader {
 								Tag thistag = cfdic.getTag(thisItem.getAttributes().getNamedItem("label").getNodeValue());
 								
 								if(thistag != null){
-									TagItem tag = new TagItem(thistag.getName());
+									TagItem tag = new TagItem(thistag);
 									tag.setDictionary(cfdic);
 									catItem.addChild(tag);
 								} else{
-									System.out.println("Tag " + thisItem.getAttributes().getNamedItem("label").getNodeValue() +" not found in dictionary");
+									//System.out.println("Tag " + thisItem.getAttributes().getNamedItem("label").getNodeValue() +" not found in dictionary");
 									
 								}
 						}
@@ -174,11 +175,11 @@ public class CategoryLoader {
 							Function thisfunction = cfdic.getFunction(thisItem.getAttributes().getNamedItem("label").getNodeValue());
 							
 							if(thisfunction != null){
-								FunctionItem tag = new FunctionItem(thisfunction.getName());
+								FunctionItem tag = new FunctionItem(thisfunction);
 								tag.setDictionary(cfdic);
 								catItem.addChild(tag);
 							} else {
-								System.out.println("function " + thisItem.getAttributes().getNamedItem("label").getNodeValue() +" not found in dictionary");
+							//	System.out.println("function " + thisItem.getAttributes().getNamedItem("label").getNodeValue() +" not found in dictionary");
 								
 							}
 						}
@@ -202,12 +203,14 @@ public class CategoryLoader {
 		
 		TreeParent tags = new TreeParent("Tags");
 		TreeParent functions = new TreeParent("Functions");
+		TreeParent scopes = new TreeParent("Scopes");
+		
 
 		//Get all the tags from the dictionary and add them
 		Iterator tagIter = cfdic.getAllTags().iterator();
 		while (tagIter.hasNext()) {
 			Tag currTag = (Tag) tagIter.next();
-			TagItem tag = new TagItem(currTag.getName());
+			TagItem tag = new TagItem(currTag);
 			tag.setDictionary(cfdic);
 			tags.addChild(tag);
 		}
@@ -216,15 +219,25 @@ public class CategoryLoader {
 		Iterator funcIter = cfdic.getAllFunctions().iterator();
 		while(funcIter.hasNext()){
 			Function currFunc = (Function)funcIter.next();
-			FunctionItem func = new FunctionItem(currFunc.getName());
+			FunctionItem func = new FunctionItem(currFunc);
 			func.setDictionary(cfdic);
 			functions.addChild(func);
 			
 			
 		}
+		Object[] scopeIter = cfdic.getAllScopeVars().toArray();
+		for (int i = 0; i < scopeIter.length; i++) {
+			ScopeVar scope = (ScopeVar)scopeIter[i];
+			ScopeItem sItem = new ScopeItem(scope);
+			sItem.setDictionary(cfdic);
+			scopes.addChild(sItem);
+			
+		}
+		
 		
 		fulltags.addChild(tags);
 		fulltags.addChild(functions);
+		fulltags.addChild(scopes);
 	}
 	
 	public TreeParent getCategories(){

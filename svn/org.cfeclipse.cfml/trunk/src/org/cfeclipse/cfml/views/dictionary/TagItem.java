@@ -19,21 +19,21 @@ import org.cfeclipse.cfml.dictionary.Tag;
  */
 public class TagItem extends DictionaryItem {
     
-    
+    private Tag tag;
     /**
-     * @param name
+     * @param currTag
      */
-    public TagItem(String name) {
-        super(name);
-        // TODO Auto-generated constructor stub
+    public TagItem(Tag currTag) {
+        super(currTag.getName());
+        this.tag = currTag;
     }
     
     public String getHelp(){
     
-        return super.getDictionary().getTag(super.getName()).getHelp();
+        return tag.getHelp();
     }
    
     public Tag getTag(){
-    	return super.getDictionary().getTag(super.getName());
+    	return tag;
     }
 }

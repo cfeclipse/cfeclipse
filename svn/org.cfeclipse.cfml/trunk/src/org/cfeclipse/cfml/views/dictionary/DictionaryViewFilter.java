@@ -9,12 +9,25 @@ public class DictionaryViewFilter extends ViewerFilter {
 
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 		boolean match = true;
+		
+		
 		if(element instanceof TagItem){
+			if(stringmatch==null || stringmatch.length() == 0){
+				return false;
+			}
+			else{
 			TagItem tag = (TagItem)element;
 			return tag.getName().indexOf(stringmatch.toLowerCase()) != -1;
+			}
+			
 		} else if (element instanceof FunctionItem){
-			FunctionItem item = (FunctionItem)element;
-			return item.getName().indexOf(stringmatch.toLowerCase()) != -1;
+			if(stringmatch==null || stringmatch.length() == 0){
+				return true;
+			}else{
+				FunctionItem item = (FunctionItem)element;
+				return item.getName().indexOf(stringmatch.toLowerCase()) != -1;
+			}
+			
 		} else if (element instanceof TreeParent){
 			return true;
 		}

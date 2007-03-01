@@ -7,14 +7,19 @@
  */
 package org.cfeclipse.cfml.views.dictionary;
 
+import java.util.Set;
+
+import org.cfeclipse.cfml.dictionary.ScopeVar;
+
 
 class ScopeItem extends DictionaryItem {
-   
-    public ScopeItem(String name){
-        super(name);
+   private ScopeVar scopevar;
+    public ScopeItem(ScopeVar scope){
+        super(scope.getValue());
+        this.scopevar = scope;
     } 
     public String getHelp(){
-        return super.getName();
+    	return scopevar.getHelp();
     }
    
 }
