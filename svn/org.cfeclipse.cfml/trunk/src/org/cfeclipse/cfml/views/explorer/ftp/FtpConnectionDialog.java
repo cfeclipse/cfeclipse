@@ -21,6 +21,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -50,6 +51,8 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	private Button okButton = null;
 	private TableViewer connectionTable = null;
 	private Label errorMessageLabel = null;
+	private String[] connectionTypes = {"local", "ftp", "sftp"};
+	private Combo connectionType = null;
 	private boolean isDirty = false;
 	
 	/**

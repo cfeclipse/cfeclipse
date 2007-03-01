@@ -24,7 +24,7 @@ public class FTPConnectionProperties {
 
 	private Properties connectionProperties;
 	
-
+	private static String ftype = "type";
 	private static String fHost = "host";
 	private static String fPath = "path";
 	private static String fUsername = "username";
@@ -121,6 +121,17 @@ public class FTPConnectionProperties {
     	connectionProperties.setProperty(fConnectionid,connectionid);
     }
 
+    public String getType() {
+    	String property = connectionProperties.getProperty(ftype,"");
+    	if(property == null || property.length() == 0){		//Backwards compatability
+    		return "ftp";
+    	}
+    	return connectionProperties.getProperty(ftype,"");
+    }
+
+    public void setType(String type) {
+    	connectionProperties.setProperty(ftype,type);
+    }
 
     public String getHost() {
     	return connectionProperties.getProperty(fHost,"");

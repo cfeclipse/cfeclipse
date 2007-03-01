@@ -14,7 +14,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 class ConnectionsContentProvider implements IStructuredContentProvider {
 	
-    protected static String NEW_CONNECTION = "New Connection...";
+    protected static String NEW_CONNECTION = "New Location...";
 	
     
     public Object[] getElements(Object element) {

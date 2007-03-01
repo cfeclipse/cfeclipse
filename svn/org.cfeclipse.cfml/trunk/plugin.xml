@@ -17,6 +17,36 @@
       <library name="lib/jdom.jar">
          <export name="*"/>
       </library>
+      <library name="lib/jaxen-core.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/jaxen-jdom.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/saxpath.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/jsch-0.1.31.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/jakarta-oro-2.0.8.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/commons-net-1.4.1.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/commons-logging-1.1.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/commons-httpclient-3.0.1.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/commons-collections-3.2.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/apache_vfs.jar">
+         <export name="*"/>
+      </library>
    </runtime>
    <!-- random comment -->
    <requires>
@@ -1362,6 +1392,13 @@
             name="CFEMappings"
             nameFilter="*"
             objectClass="org.eclipse.core.resources.IProject"/>
+      <page
+            class="org.cfeclipse.cfml.properties.ResourceURL"
+            icon="icons/icons/cfeclipse_16x16.png"
+            id="org.cfeclipse.cfml.properties.ResourceURL"
+            name="CFE URL"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IResource"/>
    </extension>
    
 	<!-- Chris Queeners area -->
