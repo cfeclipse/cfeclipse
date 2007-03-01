@@ -51,7 +51,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	private Button okButton = null;
 	private TableViewer connectionTable = null;
 	private Label errorMessageLabel = null;
-	private String[] connectionTypes = {"local", "ftp", "sftp"};
+	private String[] connectionTypes = {"file", "ftp", "sftp"};
 	private Combo connectionType = null;
 	private boolean isDirty = false;
 	
@@ -91,6 +91,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 
 	private void redraw() {
 	    connectionid.setText(connectionProperties.getConnectionid());
+	    connectionType.setText(connectionProperties.getType());
 	    host.setText(connectionProperties.getHost());
 	    path.setText(connectionProperties.getPath());
 	    username.setText(connectionProperties.getUsername());
@@ -177,6 +178,31 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		// Connectionid
 		connectionid = createTextControl(editArea,"Connection Name:",connectionProperties.getHost(),50);
 
+		
+		//Type of Connection
+		connectionType = createComboControl(editArea, "Connection Type", connectionTypes, 50);
+		connectionType.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				if(connectionType.getText().equalsIgnoreCase("file")){
+					host.setEnabled(false);
+					port.setEnabled(false);
+					//passive.setEnabled(false);
+					username.setEnabled(false);
+					password.setEnabled(false);
+				}
+				else{
+					host.setEnabled(true);
+					port.setEnabled(true);
+					//passive.setEnabled(true);
+					username.setEnabled(true);
+					password.setEnabled(true);
+				}
+			}
+			
+			
+		});
 		// Sftp or not
 		//sftp = createCheckboxControl(editArea,"SFTP:",connectionProperties.getSecure());
 		
@@ -267,6 +293,16 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		return control;
 	}
 
+	private Combo createComboControl(Composite parent, String labelText, String[] items, int width) {
+		Label label = new Label(parent,SWT.RIGHT );
+		label.setText(labelText);
+		Combo control = new Combo(parent,SWT.LEFT | SWT.BORDER | SWT.READ_ONLY);
+		GridData data = new GridData();
+		data.widthHint = convertWidthInCharsToPixels(width);
+		control.setLayoutData(data);
+		control.setItems(items);
+		return control;
+	}
 	
 	private Text createNumberControl(Composite parent, String labelText, int val, int width) {
 		Label label = new Label(parent,SWT.RIGHT );
@@ -311,6 +347,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 			connectionProperties.setPassword(password.getText());
 			connectionProperties.setConnectionid(connectionid.getText());
 			connectionProperties.setPort(Integer.parseInt(port.getText()));
+			connectionProperties.setType(connectionType.getText());
 			//connectionProperties.setPassive(passive.getSelection());
 			//connectionProperties.setSecure(sftp.getSelection());
 			connectionProperties.save();
@@ -340,10 +377,10 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		if (!test.matches(".*[\\S]+.*")) {
 		    errorMessage = "You must specify a connection name.";
 		}
-		else if (!host.getText().matches(".*[\\S]+.*")) {
+		else if (!host.getText().matches(".*[\\S]+.*") && !connectionType.getText().equalsIgnoreCase("file")) {
 		    errorMessage = "You must specify a host name";
 		}
-		else if (!port.getText().matches("[0-9]+")) {
+		else if (!port.getText().matches("[0-9]+") && !connectionType.getText().equalsIgnoreCase("file")) {
 		    errorMessage = "You must specify a port number";
 		}
 		errorMessageLabel.setText(errorMessage == null ? "" : errorMessage); //$NON-NLS-1$
