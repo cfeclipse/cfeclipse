@@ -139,9 +139,26 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	
 	/*
 	 * 
-	 * Need to check that we gain focus to show path
-	 * getActionBarContributor
-	 * 
+	 *Need to add mouse listeners
+	 * private MouseListener fMouseListener;
+
+        ...
+        public void createPartControl(Composite parent) {
+            super.createPartControl(parent);
+            fMouseListener= new MouseAdaper() {
+                <your implementation>
+            });
+            StyledText t= getSourceViewer().getTextWidget();
+            t.addMouseListener(fMouseListener);
+        }
+
+        public void dispose() {
+            if (fMouseListener != null) {
+                <cleanup fMouseListener related resources>
+                fMouseListener= null;
+            }
+            super.dispose();
+        }
 	 * 
 	 */
 	
@@ -727,7 +744,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					menu.add(jumpNow);
 				}
 
-				
+				System.out.println(part);
 				if (part.getTagName().equals("cfinclude") || part.getTagName().equals("cfmodule")) {
 					//this is a bit hokey - there has to be a way to load the
 					//action in the xml file then just call it here...
@@ -974,7 +991,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					.getOverviewRulerPreferenceKey(), 4);
 		}
 		support.install(this.getPreferenceStore());
-
+		
 	}
 
 	/*
@@ -990,7 +1007,19 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 				getOverviewRuler(), isOverviewRulerVisible(), styles);
 		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(viewer);
+	
+		/*
+		 * TODO: ADD hyperlink support
+		 * 
+		 * 
+		 */
+		CFHyperlinkDetector[] detectors = new CFHyperlinkDetector[1];
 		
+		
+		CFHyperlinkDetector cfhd = new CFHyperlinkDetector();
+		
+		detectors[0] = cfhd;
+		viewer.setHyperlinkDetectors(detectors, SWT.CONTROL);
 		
 		return viewer;
 
