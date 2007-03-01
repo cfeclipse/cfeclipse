@@ -285,7 +285,15 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 					}
 					
 				}
-				img = CFPluginImages.get(CFPluginImages.ICON_TAG);
+				
+				//Find out what type it is
+				if(name.startsWith("cf")){
+					img = CFPluginImages.get(CFPluginImages.ICON_DEFAULT);
+				}
+				else{
+					img = CFPluginImages.get(CFPluginImages.ICON_TAG);
+				}
+				
 				break;
 			case VALUETYPE:
 				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);

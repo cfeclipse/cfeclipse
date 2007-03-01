@@ -166,7 +166,7 @@ public class CFMLScopeAssist
 		    	                dotOffset,
 		    	                state.getOffset()-dotOffset,
 		    	                insertion.length(),
-		    	                CFPluginImages.get(CFPluginImages.ICON_VALUE),
+		    	                CFPluginImages.get(CFPluginImages.ICON_DEFAULT),
 		    	                insertion,
 		    	                null,
 		    	                "");
