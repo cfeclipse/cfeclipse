@@ -8,8 +8,8 @@ package org.cfeclipse.cfml.views.explorer;
 
 import java.io.File;
 import java.io.FileFilter;
+import org.apache.commons.vfs.FileObject;
 
-import com.enterprisedt.net.ftp.FTPFile;
 /**
  * @author Stephen Milligan
  *
@@ -32,29 +32,19 @@ public class FileNameFilter implements FileFilter {
     /**
      * Determines whether or not the given file should be listed.
      */
-    public boolean accept(FTPFile filename) {
+    public boolean accept(File filename) {
         // TODO Auto-generated method stub
-        if (filename.isDir() && !allowDirectories) {
+        if (filename.isDirectory() && !allowDirectories) {
             return false;
         }
-        if (!filename.isDir() && !allowFiles) {
+        if (!filename.isFile() && !allowFiles) {
             return false;
         }
         
         return true;
     }
     
-    public boolean accept(File filename) {
-        // TODO Auto-generated method stub
-        if (filename.isDirectory() && !allowDirectories) {
-            return false;
-        }
-        if (filename.isFile() && !allowFiles) {
-            return false;
-        }
-        
-        return true;
-    }
+
 
     /**
      * If this is false, files will be omitted from the result

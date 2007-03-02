@@ -9,7 +9,6 @@ package org.cfeclipse.cfml.net.ftp;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.enterprisedt.net.ftp.FTPMessageListener;
 
 /**
  * @author Stephen Milligan
@@ -17,7 +16,7 @@ import com.enterprisedt.net.ftp.FTPMessageListener;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class LogListener implements FTPMessageListener {
+public class LogListener  {
         
     
     	private ArrayList listeners = null;
@@ -38,7 +37,7 @@ public class LogListener implements FTPMessageListener {
         public void logCommand(String cmd) {
             log.append(cmd).append("\n");
             Iterator i = listeners.iterator();
-            while (i.hasNext()) {
+            /*while (i.hasNext()) {
                 Object o = i.next();
                 if (o instanceof FTPMessageListener) {
                     try {
@@ -48,7 +47,7 @@ public class LogListener implements FTPMessageListener {
                         listeners.remove(o);
                      }
                 }
-            }
+            }*/
         }
         
         /**
@@ -59,7 +58,7 @@ public class LogListener implements FTPMessageListener {
         public void logReply(String reply) {
             log.append(reply).append("\n");
             Iterator i = listeners.iterator();
-            while (i.hasNext()) {
+           /* while (i.hasNext()) {
                 Object o = i.next();
                 if (o instanceof FTPMessageListener) {
                     try {
@@ -69,7 +68,7 @@ public class LogListener implements FTPMessageListener {
                         listeners.remove(o);
                      }
                 }
-            }
+            }*/
         }
         
         /**
@@ -88,7 +87,7 @@ public class LogListener implements FTPMessageListener {
             log = new StringBuffer();
         }
         
-        public void addListener(FTPMessageListener listener) {
+        /*public void addListener(FTPMessageListener listener) {
             if (!listeners.contains(listener)) {
                 listeners.add(listener);
             }
@@ -96,6 +95,6 @@ public class LogListener implements FTPMessageListener {
         
         public void removeListener(FTPMessageListener listener) {
             listeners.remove(listener);
-        }
+        }*/
 
     }

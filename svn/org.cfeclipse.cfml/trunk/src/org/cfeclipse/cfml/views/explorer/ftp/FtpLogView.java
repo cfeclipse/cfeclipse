@@ -13,7 +13,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
-import com.enterprisedt.net.ftp.FTPMessageListener;
 
 /**
  * @author Stephen Milligan
@@ -21,14 +20,14 @@ import com.enterprisedt.net.ftp.FTPMessageListener;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class FtpLogView extends ViewPart implements FTPMessageListener {
+public class FtpLogView extends ViewPart{
 	public static final String ID_FTP_LOG_VIEW = "org.cfeclipse.cfml.views.explorer.ftp.FtpLogView";
     FTPConnection ftpClient = null;
     private StyledText styledText;
     public void createPartControl(Composite parent) {
 
-    ftpClient = new FTPConnection();
-    ftpClient.addLogListener(this);
+    //ftpClient = new FTPConnection();
+   // ftpClient.addLogListener(this);
     
     
     Composite container = new Composite(parent, SWT.NONE);
@@ -37,11 +36,11 @@ public class FtpLogView extends ViewPart implements FTPMessageListener {
     styledText.setLayout(new FillLayout());
     styledText.setEditable(false);
     
-    String log = ftpClient.getLog();
-    if (log == null) {
+    //String log = ftpClient.getLog();
+    /*if (log == null) {
         log = "Log initialized";
     }
-    styledText.setText(log);
+    styledText.setText(log);*/
     styledText.setTopIndex(styledText.getLineCount());
 
 
@@ -71,6 +70,6 @@ public class FtpLogView extends ViewPart implements FTPMessageListener {
     }
 
     public void dispose() {
-       ftpClient.removeLogListener(this);
+     //  ftpClient.removeLogListener(this);
     }
 }

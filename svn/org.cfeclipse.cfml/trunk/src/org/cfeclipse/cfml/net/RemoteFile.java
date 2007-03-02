@@ -6,7 +6,10 @@
  */
 package org.cfeclipse.cfml.net;
 
-import com.enterprisedt.net.ftp.FTPFile;
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileType;
+
 
 /**
  * @author Stephen Milligan
@@ -17,6 +20,7 @@ import com.enterprisedt.net.ftp.FTPFile;
 public class RemoteFile {
 
     
+	FileObject fileItem = null;
     String fPath = null;
     
     boolean fExists = true;
@@ -36,23 +40,40 @@ public class RemoteFile {
         this.fDirectory = directory;
     }
     
-    public RemoteFile(FTPFile ftpFile, String path) {
+    public RemoteFile(FileObject ftpFile, String path) throws FileSystemException {
         if (path.startsWith("//")) {
             path = path.substring(1);
         }
+        this.fileItem = ftpFile;
         this.fPath = path;
-        this.fDirectory = ftpFile.isDir();
-        this.fPermissions = ftpFile.getPermissions();
+        this.fDirectory = ftpFile.getType().equals(FileType.FOLDER);
+      //  this.fPermissions = ftpFile.ggetPermissions();
         //System.out.println(ftpFile.getRaw());
-        this.fSize = ftpFile.size();
+        this.fSize = ftpFile.getContent().getSize();
     }
     
     public boolean exists() {
-        return fExists;
+    	
+        try {
+			return this.fileItem.exists();
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		//	return false;
+		}
+        return true;
     }
     
     public boolean canWrite() {
-    	if (fPermissions == null) {
+    	
+    	try {
+			return this.fileItem.isWriteable();
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	/*if (fPermissions == null) {
         	return true;
         }
     	
@@ -61,27 +82,36 @@ public class RemoteFile {
                 && (fPermissions.charAt(5) == 'w'  || fPermissions.charAt(2) == 'w')) {
             return true;
         }
+        */
         return false;
         
     }
     
     public boolean canRead() {
-        if (fPermissions == null) {
+    	try {
+			return this.fileItem.isReadable();
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+       /* if (fPermissions == null) {
         	return true;
         }
         if (fPermissions.length() >= 5 
                 && fPermissions.charAt(4) == 'r') {
             return true;
         }
-        return false;
+        return false;*/
         
     }
     
     public String getName() {
-		if (fPath.lastIndexOf('/') >= 0)
+    	return this.fileItem.getName().getBaseName();
+		/*if (fPath.lastIndexOf('/') >= 0)
 			return fPath.substring(fPath.lastIndexOf('/') + 1);
 		else
-			return fPath;
+			return fPath;*/
 	}
     
     public void setPermissions(String permissions) {
