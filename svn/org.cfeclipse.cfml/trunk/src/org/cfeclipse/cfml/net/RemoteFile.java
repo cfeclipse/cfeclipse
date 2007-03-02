@@ -49,7 +49,9 @@ public class RemoteFile {
         this.fDirectory = ftpFile.getType().equals(FileType.FOLDER);
       //  this.fPermissions = ftpFile.ggetPermissions();
         //System.out.println(ftpFile.getRaw());
-        this.fSize = ftpFile.getContent().getSize();
+        if(ftpFile.getType().equals(FileType.FILE)){
+        	this.fSize = ftpFile.getContent().getSize();
+        }
     }
     
     public boolean exists() {

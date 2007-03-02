@@ -174,7 +174,7 @@ public class FTPConnection implements IFileProvider {
             
             AlertUtils.showStatusErrorMessage(null,viewPart);
 
-            manager = (DefaultFileSystemManager)VFS.getManager();
+            this.manager = (DefaultFileSystemManager)VFS.getManager();
         	
             
             //Set up a URL
@@ -205,8 +205,8 @@ public class FTPConnection implements IFileProvider {
             
       
             
-    		FileObject basefile = manager.resolveFile(connectionString);
-    		manager.setBaseFile(basefile);
+    		FileObject basefile = this.manager.resolveFile(connectionString);
+    		this.manager.setBaseFile(basefile);
     		
     		
     		
@@ -232,7 +232,7 @@ public class FTPConnection implements IFileProvider {
             ftpClient.setType(FTPTransferType.ASCII);*/
             
 
-            AlertUtils.showStatusMessage("Connected to: " + manager.getBaseFile(), viewPart);
+            AlertUtils.showStatusMessage("Connected to: " + this.manager.getBaseFile(), viewPart);
 
         } catch (Exception e) {
             if (!connectFailed) {
@@ -271,13 +271,23 @@ public class FTPConnection implements IFileProvider {
     public Object[] getChildren(String parent, FileNameFilter filter) {
 
         try {
-            connect();
+            connect(this.connectionProperties);
 
             if (connectFailed) {
                 return new String[0];
             }
-            FileObject initialItem = manager.resolveFile(parent); //basefile.getChildren();
+            FileObject initialItem =null;
+            if(parent.length() == 0 || parent.equalsIgnoreCase("<empty selection>")){
+            	initialItem =  manager.getBaseFile();
+            }
+            else{
+            	initialItem = manager.resolveFile(parent); //basefile.getChildren();
+            }
+            
     		
+            
+           
+            System.out.println("initial path to get items from " + initialItem);
             FileObject[] files = initialItem.getChildren(); //.dirDetails(parent);
 
             if (files == null) {
@@ -293,15 +303,18 @@ public class FTPConnection implements IFileProvider {
                     files = new FTPFile[0];
                 }
             }*/
-
+            
+            
+            
             ArrayList filteredFileList = new ArrayList();
             for (int i = 0; i < files.length; i++) {
-                //if (filter.accept(files[i].)) {
-                    RemoteFile file = new RemoteFile(files[i], parent + "/"
-                            + files[i].getName());
+              //  if (filter.accept(files[i].getContent().ge)) {
+            	System.out.println("Gettind this file"  + files[i] + "file: " + files[i].getURL());
+
+            	RemoteFile file = new RemoteFile(files[i], files[i].getURL().toString());
                     
                     filteredFileList.add(file);
-               // }
+//                }
             }
 
             Object[] filteredFiles = filteredFileList.toArray();

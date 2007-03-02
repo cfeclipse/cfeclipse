@@ -80,7 +80,7 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
         
     	ArrayList children = new ArrayList();
     	Object[] results = null;
-    	//System.out.println("getting children of " + parentElement);
+    	System.out.println("getting children of " + parentElement);
     	try {
     		
 	        if (fileProvider == null){
