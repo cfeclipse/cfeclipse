@@ -1072,7 +1072,7 @@
             commandId="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"
             contextId="org.cfeclipse.cfml.cfmleditorcontext"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M">
+            keySequence="M1+M2+N">
       </keyBinding>
       <!-- Go and Get Help -->
       <command
