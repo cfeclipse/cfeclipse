@@ -117,21 +117,26 @@ public class DictionaryView extends ViewPart {
             }
 
             public void partBroughtToTop(IWorkbenchPartReference ref) {
-                   // editorActivated(getViewSite().getPage().getActiveEditor());
+            	editorActivated(getViewSite().getPage().getActiveEditor());
+                   
             }
 
-            public void partClosed(IWorkbenchPartReference ref) {}
+            public void partClosed(IWorkbenchPartReference ref) {
+            	combo.select(0);
+            }
 
-            public void partDeactivated(IWorkbenchPartReference ref) {}
+            public void partDeactivated(IWorkbenchPartReference ref) {
+            	//combo.select(0);
+            }
 
             public void partOpened(IWorkbenchPartReference ref) {
-           //         editorActivated(getViewSite().getPage().getActiveEditor());
+            	editorActivated(getViewSite().getPage().getActiveEditor());
             }
 
             public void partHidden(IWorkbenchPartReference ref) {}
 
             public void partVisible(IWorkbenchPartReference ref) {
-                  //  editorActivated(getViewSite().getPage().getActiveEditor());
+            	editorActivated(getViewSite().getPage().getActiveEditor());
             }
 
             public void partInputChanged(IWorkbenchPartReference ref) {}
@@ -297,12 +302,15 @@ public class DictionaryView extends ViewPart {
 					searchField.setText("");
 					viewer.removeFilter(viewfilter);
 					viewer.refresh();
-					viewer.expandToLevel(5);
+					viewer.expandToLevel(1);
 				}
 
 				public void mouseDown(MouseEvent e) {
 					// TODO Auto-generated method stub
-					
+					searchField.setText("");
+					viewer.removeFilter(viewfilter);
+					viewer.refresh();
+					viewer.expandToLevel(1);
 				}
 
 				public void mouseUp(MouseEvent e) {
@@ -372,33 +380,14 @@ public class DictionaryView extends ViewPart {
 	        	
 		        IEditorInput input = editor.getEditorInput();
 		        
-		        if (editor instanceof CFMLEditor) {
-		        	CFMLEditor cfeditor = (CFMLEditor) editor;
-		        	IDocumentProvider documentProvider = cfeditor.getDocumentProvider();
-		        	System.out.println(documentProvider.getClass());
-					if (documentProvider instanceof CFDocumentProvider) {
-						CFDocumentProvider cfdocProvider = (CFDocumentProvider) documentProvider;
-						
-					}
-				}
-		        System.out.println(editor.getClass());
+		  
 		        IFile file = ResourceUtil.getFile(input);
 		        if (file != null){
-		        	getContentProviderByFile(file);
-		        	//Tell the content provider to use the dictionary from the file, if there is no file, use the default SyntaxDictionary
-		        	/*if(!file.getProject().getName().equals(currentProjectName)){
-		        		
-		        		System.out.println("setting  the project");
-		//        		Check if we have changed projects
-		        		currentProject = file.getProject();
-		        		currentProjectName = currentProject.getName();
-		        		projLabel.setText(currentProject.getName());
-		            	viewer.setContentProvider(new FrameworksContentProvider(getViewSite(), currentProject));
-		            	viewer.expandToLevel(2);
-		            //	
-		            //	
-		        		
-		        	}*/
+		        	CFMLPropertyManager propman = new CFMLPropertyManager();
+		        	String currentDictionary = propman.getCurrentDictionary(file);
+		        	combo.setText(currentDictionary);
+		        	viewer.setContentProvider(new DictionaryViewContentProvider(viewtype, combo.getText()));
+					viewer.expandToLevel(2);
 		        }
 	        }
 	    }
@@ -443,8 +432,8 @@ public class DictionaryView extends ViewPart {
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(switchViewAction);
-		manager.add(new Separator());
+	//	manager.add(switchViewAction);
+	//	manager.add(new Separator());
 		//manager.add(action2);
 	}
 
@@ -476,7 +465,7 @@ public class DictionaryView extends ViewPart {
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(switchViewAction);
+		//manager.add(switchViewAction);
 		
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);

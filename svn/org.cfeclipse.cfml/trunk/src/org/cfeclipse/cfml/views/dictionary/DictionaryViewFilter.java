@@ -17,7 +17,7 @@ public class DictionaryViewFilter extends ViewerFilter {
 			}
 			else{
 			TagItem tag = (TagItem)element;
-			return tag.getName().indexOf(stringmatch.toLowerCase()) != -1;
+			return tag.getName().toLowerCase().indexOf(stringmatch.toLowerCase()) != -1;
 			}
 			
 		} else if (element instanceof FunctionItem){
@@ -25,7 +25,15 @@ public class DictionaryViewFilter extends ViewerFilter {
 				return true;
 			}else{
 				FunctionItem item = (FunctionItem)element;
-				return item.getName().indexOf(stringmatch.toLowerCase()) != -1;
+				return item.getName().toLowerCase().indexOf(stringmatch.toLowerCase()) != -1;
+			}
+			
+		}else if (element instanceof ScopeItem){
+			if(stringmatch==null || stringmatch.length() == 0){
+				return true;
+			}else{
+				ScopeItem item = (ScopeItem)element;
+				return item.getName().toLowerCase().indexOf(stringmatch.toLowerCase()) != -1;
 			}
 			
 		} else if (element instanceof TreeParent){
