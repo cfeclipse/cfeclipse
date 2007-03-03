@@ -3,8 +3,13 @@ package org.cfeclipse.cfml.views.explorer;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -22,7 +27,7 @@ public class FileCreateDialog extends Dialog {
 	
 	protected FileCreateDialog(Shell parentShell) {
 		super(parentShell);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	protected Control createDialogArea(Composite parent) {
@@ -37,22 +42,25 @@ public class FileCreateDialog extends Dialog {
 		
 	     GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
          gridData.widthHint = 200;
-         
+		
+         parent.addPaintListener(new PaintListener(){
+
+			public void paintControl(PaintEvent e) {
+				//TODO: This is rather hokey, I couldn't find a way to find out if the dialog finally has the buttons
+				validateInput();
+				
+			}});
+
          fileNameField = new Text(container, SWT.BORDER);
          fileNameField.setLayoutData(gridData);
          fileNameField.setText(this.filename);
-         fileNameField.addModifyListener(
-     			new ModifyListener() {
-    				public void modifyText(ModifyEvent e) {
-    					validateInput();
-    				}
-    			}
-    		);
-	   
+        
+        
 		return container;
 	}
 
 
+	
 	public String getFileName() {
 		return fileNameField.getText();
 	}
@@ -65,12 +73,21 @@ public class FileCreateDialog extends Dialog {
 	}
 
 	private void validateInput() {
-		
+		Button button = getButton(IDialogConstants.OK_ID);
 		if (fileNameField.getText().trim().length() == 0) {
-			Button button = getButton(IDialogConstants.OK_ID);
 			button.setEnabled(false);
+		}else{
+			button.setEnabled(true);
 		}
 		
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 	

@@ -172,6 +172,13 @@ public class CFPluginImages {
 	public static final String ICON_PVIEW_FOLDER_CFC = "folder-cfc.png";
 	public static final String ICON_PVIEW_FOLDER_CUS = "folder-custom.png";
 	
+	
+	/**  File Explorer icons */
+	public static final String ICON_DRIVE	= "drive.png";
+	public static final String ICON_DRIVE_FTP ="drive_ftp.png";
+	public static final String ICON_DRIVE_SFTP ="drive_sftp.png";
+	public static final String ICON_DRIVE_ERROR ="drive_error.png";
+	
 	/** Editor toolbar icons */
 	public static final String ICON_OUTPUT = "output.gif";
 	public static final String T_INSERT = "addrepo_rep.gif";
@@ -282,6 +289,13 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_ERROR);
 			addImageToRegistry(MODEL_OBJECTS,ICON_WARNING);
 			addImageToRegistry(MODEL_OBJECTS,ICON_ALERT);
+			
+			/** file explorer  */
+			
+			addImageToRegistry(MODEL_OBJECTS,ICON_DRIVE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_DRIVE_FTP);
+			addImageToRegistry(MODEL_OBJECTS,ICON_DRIVE_SFTP);
+			addImageToRegistry(MODEL_OBJECTS,ICON_DRIVE_ERROR);
 			
 			addImageToRegistry(TOOLBAR,ICON_ADD);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);
@@ -476,9 +490,9 @@ public class CFPluginImages {
                 break;
             }
         }
-        int minX = width-4;
+        int minX = width-10;
         int maxX = width-1;
-        int minY = height-4;
+        int minY = height-10;
         int maxY = height-1;
         for (int i=minX;i<=maxX;i++) {
             for (int j=minY;j<=maxY;j++) {

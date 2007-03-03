@@ -9,6 +9,7 @@ package org.cfeclipse.cfml.views.explorer;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.apache.commons.vfs.FileName;
 import org.cfeclipse.cfml.net.RemoteFile;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
 import org.cfeclipse.cfml.util.AlertUtils;
@@ -91,8 +92,11 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	        	results =  fileProvider.getRoots();
 	        	
 	        } else if (parentElement instanceof RemoteFile) {
+	        	
+	        	//TODO: Fix this, its gettting the full URL, rather than the path
 	            RemoteFile file = (RemoteFile)parentElement;
-	            results = fileProvider.getChildren(((RemoteFile)parentElement).getAbsolutePath(),directoryFilter);
+	            String name = file.getFileItem().getName().getPath();
+	            results = fileProvider.getChildren(name,directoryFilter);
 	            
 	        } else if (parentElement instanceof FileSystemRoot) {
 	            FileSystemRoot file = (FileSystemRoot)parentElement;

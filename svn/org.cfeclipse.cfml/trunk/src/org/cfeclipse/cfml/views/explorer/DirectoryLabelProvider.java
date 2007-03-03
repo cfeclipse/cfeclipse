@@ -49,7 +49,19 @@ class DirectoryLabelProvider extends LabelProvider {
                 return addPermissionIcon(element,CFPluginImages.get(CFPluginImages.ICON_FOLDER));
             }
             if (element instanceof FileSystemRoot) {
-            	return CFPluginImages.get(CFPluginImages.ICON_REPOSITORY);
+            	FileSystemRoot root = (FileSystemRoot)element;
+            	if(root.getType().equalsIgnoreCase("file")){
+            		return CFPluginImages.get(CFPluginImages.ICON_DRIVE);
+            	}
+            	else if(root.getType().equalsIgnoreCase("ftp")){
+            		return CFPluginImages.get(CFPluginImages.ICON_DRIVE_FTP);
+            	}
+            	else if(root.getType().equalsIgnoreCase("sftp")){
+            		return CFPluginImages.get(CFPluginImages.ICON_DRIVE_SFTP);
+            	}
+            	else{
+            		return CFPluginImages.get(CFPluginImages.ICON_REPOSITORY);
+            	}
             }
 	        String[] fullpath = element.toString().split("[\\\\/]");
 	        if (fullpath.length > 1) {

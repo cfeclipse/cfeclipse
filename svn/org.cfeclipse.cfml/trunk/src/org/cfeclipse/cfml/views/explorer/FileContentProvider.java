@@ -11,6 +11,7 @@ import org.cfeclipse.cfml.net.RemoteFile;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.ViewPart;
@@ -30,7 +31,7 @@ class FileContentProvider implements IStructuredContentProvider {
     }
     
     public Object[] getElements(Object inputElement) {
-
+    	
     	try {
 	        if (fileProvider == null) {
 	            return new Object[] {IFileProvider.INVALID_FILESYSTEM};
@@ -42,11 +43,27 @@ class FileContentProvider implements IStructuredContentProvider {
 	                    || inputElement instanceof FTPConnection) {
 		            return new String[0];
 	            }
-	            
 	            String directoryName = inputElement.toString();
 	            if (directoryName.indexOf("[") == 0) {
 	                directoryName = directoryName.substring(1,directoryName.length()-1);
 	            }
+	            
+	            if (inputElement instanceof TreeSelection) {
+					TreeSelection selection = (TreeSelection) inputElement;
+					Object firstElement = selection.getFirstElement();
+					
+					if (firstElement instanceof RemoteFile) {
+						RemoteFile remFile = (RemoteFile) firstElement;
+						if(remFile != null){
+						 directoryName = remFile.getFileItem().getName().getPath();
+						}
+						
+					}
+					
+					
+					
+				}
+	          
 	            //System.out.println("Getting children of  " + inputElement.getClass().getName());
 	            //TODO: Need to return another array as the files... so its an array of name + Size
 	            
@@ -62,11 +79,11 @@ class FileContentProvider implements IStructuredContentProvider {
 	            	
 	            	if(files[i] instanceof File){
 	            		File itemFile = (File)files[i];
-	            		retFile[1] = itemFile.length()/1000 + " KB";
+	            		retFile[1] = itemFile.length()/1024 + " KB";
 	            	}
 	            	else if(files[i] instanceof RemoteFile){
 	            		RemoteFile itemFile = (RemoteFile)files[i];
-	            		retFile[1] = itemFile.size()/1000 + " KB";
+	            		retFile[1] = itemFile.size()/1024 + " KB";
 	            	}
 	            	else {
 	            		retFile[1] = "???";
@@ -112,12 +129,15 @@ class FileContentProvider implements IStructuredContentProvider {
         if (filename.indexOf("[") == 0) {
             filename = filename.substring(1,filename.length()-1);
         }
-        
         return fileProvider.getEditorInput(filename);
         
     }
+    public IEditorInput getEditorInput(RemoteFile remFile) {
+    	return this.getEditorInput(remFile);
+	}
+    
     public IEditorInput getEditorInput(ISelection fileSelection) {
-    	System.out.println(fileSelection.hashCode());
+    	//System.out.println(fileSelection.hashCode());
        // if (filename.indexOf("[") == 0) {
      //       filename = filename.substring(1,filename.length()-1);
      //   }
@@ -126,6 +146,8 @@ class FileContentProvider implements IStructuredContentProvider {
     	return null;
         
     }
+
+	
     
     
     

@@ -8,28 +8,23 @@ package org.cfeclipse.cfml.views.explorer;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.Collator;
-import java.util.Locale;
 
-
-import org.cfeclipse.cfml.dictionary.Tag;
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileType;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.RemoteFile;
+import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
-import org.cfeclipse.cfml.views.dictionary.DictionaryView;
-import org.cfeclipse.cfml.views.dictionary.TagItem;
 import org.cfeclipse.cfml.views.explorer.ftp.FtpConnectionDialog;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -39,7 +34,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -51,6 +45,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -58,12 +53,10 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
@@ -341,13 +334,32 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 				
 				if(b){ 
 					if(obj instanceof RemoteFile){
-						RemoteFile remFile = (RemoteFile)obj;
-						StructuredSelection selection2 = (StructuredSelection)comboViewer.getSelection();
+						FileObject remFile = ((RemoteFile)obj).getFileItem();
+						
+						
+						try {
+							FileObject[] children = remFile.getChildren();
+							
+							if(children.length > 0){
+								MessageDialog.openError(directoryTreeViewer.getControl().getShell(), "Delete Error", "Can't delete a non empty directory");
+							} else {
+								remFile.delete();
+								directoryTreeViewer.refresh();
+							}
+							
+							
+							remFile.delete();
+						} catch (FileSystemException e) {
+							e.printStackTrace();
+						}
+						
+						
+						/*StructuredSelection selection2 = (StructuredSelection)comboViewer.getSelection();
 						if (selection2.getFirstElement() instanceof FTPConnection) {
 							FTPConnection ftpConn = (FTPConnection) selection2.getFirstElement();
 							ftpConn.rmdir(remFile.getAbsolutePath());
 							directoryTreeViewer.refresh();
-						}
+						}*/
 					}
 					else if (obj instanceof File){
 						File file = (File) obj;
@@ -384,13 +396,22 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 						fileViewer.refresh();
 					}
 					else if (fileItem[0] instanceof RemoteFile) {
-						RemoteFile remoteFileItem = (RemoteFile) fileItem[0];
-						StructuredSelection selection2 = (StructuredSelection)comboViewer.getSelection();
+						
+						
+						FileObject remoteFileItem = ((RemoteFile) fileItem[0]).getFileItem();
+						try {
+							remoteFileItem.delete();
+						} catch (FileSystemException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fileViewer.refresh();
+						/*StructuredSelection selection2 = (StructuredSelection)comboViewer.getSelection();
 						if (selection2.getFirstElement() instanceof FTPConnection) {
 							FTPConnection ftpConn = (FTPConnection) selection2.getFirstElement();
 							ftpConn.delete(remoteFileItem.getAbsolutePath());
 							fileViewer.refresh();
-						}
+						}*/
 					}
 				}
     		}
@@ -409,20 +430,58 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 				FileCreateDialog fcd = new FileCreateDialog(null);
 				
 				if(fcd.open() == IDialogConstants.OK_ID){ 
-					if(obj instanceof RemoteFile){
-						RemoteFile rem = (RemoteFile)obj;
-						String filePath = rem.getAbsolutePath() + "/" +   fcd.filename;
+					
+					
+					if(obj instanceof FileSystemRoot){
+						FileObject rem = ((FileSystemRoot)obj).getFileObject();
 						
-						StructuredSelection selection2 = (StructuredSelection)comboViewer.getSelection();
-						
-						if (selection2.getFirstElement() instanceof FTPConnection) {
-							FTPConnection ftpConn = (FTPConnection) selection2.getFirstElement();
-							
-							byte[] content ={0};
-							
-							ftpConn.saveFile(null, filePath);
-							fileViewer.refresh();
+						FileObject object;
+						try {
+							object = rem.resolveFile(fcd.filename);
+							if(object.getType().equals(FileType.IMAGINARY)){
+								object.createFile();
+								fileViewer.refresh();
+								
+								//Now open it
+								RemoteFileEditorInput input = new RemoteFileEditorInput(object);
+								IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+								page.openEditor(input, CFMLEditor.ID);
+							}
+						} catch (FileSystemException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (PartInitException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
+					
+						
+				
+					} 
+					else if(obj instanceof RemoteFile){
+						FileObject rem = ((RemoteFile)obj).getFileItem();
+						
+						FileObject object;
+						try {
+							object = rem.resolveFile(fcd.filename);
+							if(object.getType().equals(FileType.IMAGINARY)){
+								object.createFile();
+								fileViewer.refresh();
+//								Now open it
+								RemoteFileEditorInput input = new RemoteFileEditorInput(object);
+								IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+								page.openEditor(input, CFMLEditor.ID);
+							}
+						} catch (FileSystemException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (PartInitException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
+						
+					
 					} 
 					else if(obj instanceof File){
 						File lfile = (File)obj;
@@ -458,20 +517,61 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 				Object obj = ((IStructuredSelection) selection).getFirstElement();
 				
 				FileCreateDialog fcd = new FileCreateDialog(null);
-				fcd.filename = "";
+				fcd.setFilename("");
 				fcd.message = "Please enter a directory name:";
+				
 				if(fcd.open() == IDialogConstants.OK_ID){ 
-					if(obj instanceof RemoteFile){
-						RemoteFile rem = (RemoteFile)obj;
+					
+					if(obj instanceof FileSystemRoot){
+						FileSystemRoot root  = (FileSystemRoot)obj;
+						FileObject fileRoot = root.getFileObject();
 						
+						if(fileRoot !=null){
+							try {
+								FileObject object = fileRoot.resolveFile(fcd.filename);
+								if(object.getType().equals(FileType.IMAGINARY)){
+									object.createFolder();
+									directoryTreeViewer.refresh(obj);
+								}
+								
+							} catch (FileSystemException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					} 
+					else if(obj instanceof RemoteFile){
+						RemoteFile rem = (RemoteFile)obj;
+						try {
+							FileObject object2 = rem.getFileItem().resolveFile(fcd.filename);
+							if(object2.getType().equals(FileType.IMAGINARY)){
+								object2.createFolder();
+								directoryTreeViewer.refresh(obj);
+							}
+						} catch (FileSystemException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						/*
 						String absolutePath = rem.getAbsolutePath() + "/" + fcd.filename;
 						StructuredSelection selection2 = (StructuredSelection)comboViewer.getSelection();
 						
-						if (selection2.getFirstElement() instanceof FTPConnection) {
+						try {
+							FileObject object = rem.getFileItem().resolveFile(fcd.filename);
+							System.out.println(object.getName());
+							
+							
+						} catch (FileSystemException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						*/
+						
+						/*if (selection2.getFirstElement() instanceof FTPConnection) {
 							FTPConnection ftpConn = (FTPConnection) selection2.getFirstElement();
 							ftpConn.mkdir(absolutePath);
 							directoryTreeViewer.refresh(obj);
-						}
+						}*/
 					} 
 					else if(obj instanceof File){
 						File lfile = (File)obj;

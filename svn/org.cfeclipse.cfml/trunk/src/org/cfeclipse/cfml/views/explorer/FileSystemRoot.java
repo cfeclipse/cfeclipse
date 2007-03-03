@@ -6,6 +6,8 @@
  */
 package org.cfeclipse.cfml.views.explorer;
 
+import org.apache.commons.vfs.FileObject;
+
 /**
  * @author Stephen Milligan
  *
@@ -14,8 +16,10 @@ package org.cfeclipse.cfml.views.explorer;
  */
 public class FileSystemRoot {
 
+	private FileObject fObject;
 	private String name = "";
 	private String path = "";
+	private String type = "";
 	/**
 	 * 
 	 */
@@ -34,6 +38,26 @@ public class FileSystemRoot {
 	
 	public String toString() {
 		return this.name;
+	}
+
+
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+	public FileObject getFileObject() {
+		return fObject;
+	}
+
+
+	public void setFileObject(FileObject object) {
+		fObject = object;
 	}
 
 }

@@ -7,6 +7,8 @@
 package org.cfeclipse.cfml.views.explorer;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.net.RemoteFile;
+import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -36,8 +38,14 @@ public class FileDoubleClickListener implements IDoubleClickListener {
     	IStructuredSelection ss = (IStructuredSelection) selection;
     	
     	Object[] element = (Object[])ss.getFirstElement();
-    	
     	IEditorInput input = contentProvider.getEditorInput(element[0].toString());
+    	if (element[0] instanceof RemoteFile) {
+			RemoteFile remFile = (RemoteFile) element[0];
+			
+			input = new RemoteFileEditorInput(remFile);
+		}
+    	
+    	
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
       
     //TODO: Fix this NPE 

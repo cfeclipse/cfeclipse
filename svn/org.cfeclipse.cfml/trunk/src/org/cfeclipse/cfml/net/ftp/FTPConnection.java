@@ -14,7 +14,10 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileType;
 import org.apache.commons.vfs.VFS;
 import org.apache.commons.vfs.impl.DefaultFileSystemManager;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
@@ -97,7 +100,7 @@ public class FTPConnection implements IFileProvider {
             return null;
         }
         try {
-        	FileObject object = manager.resolveFile(filepath);
+        	FileObject object = manager.getBaseFile().resolveFile(filepath);
         	InputStream inStrm = object.getContent().getInputStream();
            // byte[] contents = inStrm..
            // ByteArrayInputStream ins = new ByteArrayInputStream(contents);
@@ -180,7 +183,7 @@ public class FTPConnection implements IFileProvider {
             //Set up a URL
             String connectionString = connectionProperties.getType() + ":";
             
-            if(connectionProperties.getType().equalsIgnoreCase("ftp") || connectionProperties.getType().equalsIgnoreCase("ftp"))
+            if(connectionProperties.getType().equalsIgnoreCase("ftp") || connectionProperties.getType().equalsIgnoreCase("sftp"))
             	connectionString += "//";
             
             
@@ -198,16 +201,16 @@ public class FTPConnection implements IFileProvider {
             	connectionString += connectionProperties.getHost();
             
             if(connectionProperties.getPort()> 0 && !connectionProperties.getType().equals("file"))
-            	connectionString += ":" + connectionProperties.getPort();
+            	connectionString += ":" + connectionProperties.getPort() + "/";
             
             if(connectionProperties.getPath().length() >  0)
             	connectionString += connectionProperties.getPath();
             
       
             
-    		FileObject basefile = this.manager.resolveFile(connectionString);
-    		this.manager.setBaseFile(basefile);
-    		
+    		//FileObject basefile = this.manager.resolveFile(connectionString);
+    		FileObject object = this.manager.resolveFile(connectionString);
+    		this.manager.setBaseFile(object);
     		
     		
             /*ftpClient = new FTPClient(connectionProperties.getHost(),
@@ -230,9 +233,8 @@ public class FTPConnection implements IFileProvider {
              
 
             ftpClient.setType(FTPTransferType.ASCII);*/
-            
 
-            AlertUtils.showStatusMessage("Connected to: " + this.manager.getBaseFile(), viewPart);
+            AlertUtils.showStatusMessage("Connected to: " + this.manager.getBaseFile().getName().getFriendlyURI(), viewPart);
 
         } catch (Exception e) {
             if (!connectFailed) {
@@ -253,6 +255,13 @@ public class FTPConnection implements IFileProvider {
         if (isConnected()) {
         	FileSystemRoot root = new FileSystemRoot(connectionProperties.getPath());
         	root.setPath(connectionProperties.getPath());
+        	root.setType(connectionProperties.getType());
+        	try {
+				root.setFileObject(manager.getBaseFile());
+			} catch (FileSystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             return new FileSystemRoot[] { root };
         } else if (connectFailed) {
             return new String[] { CONNECT_FAILED };
@@ -278,21 +287,23 @@ public class FTPConnection implements IFileProvider {
             }
             FileObject initialItem =null;
             if(parent.length() == 0 || parent.equalsIgnoreCase("<empty selection>")){
-            	initialItem =  manager.getBaseFile();
+            	initialItem =  this.manager.getBaseFile();
             }
             else{
-            	initialItem = manager.resolveFile(parent); //basefile.getChildren();
+            	initialItem = this.manager.getBaseFile().resolveFile(parent); //basefile.getChildren();
             }
             
-    		
-            
-           
-            System.out.println("initial path to get items from " + initialItem);
+           //Must check if this is a folder!
+    		if(initialItem.getType().equals(FileType.FILE)){
+    		//	initialItem =  this.manager.getBaseFile();
+    		}
             FileObject[] files = initialItem.getChildren(); //.dirDetails(parent);
 
             if (files == null) {
                 files = new FileObject[0];
             }
+            
+      
             
             /*// Check if we've got back the directory itself.
             if (files.length == 1 && parent.endsWith("/" + files[0].getName())) {
@@ -308,13 +319,10 @@ public class FTPConnection implements IFileProvider {
             
             ArrayList filteredFileList = new ArrayList();
             for (int i = 0; i < files.length; i++) {
-              //  if (filter.accept(files[i].getContent().ge)) {
-            	System.out.println("Gettind this file"  + files[i] + "file: " + files[i].getURL());
-
-            	RemoteFile file = new RemoteFile(files[i], files[i].getURL().toString());
-                    
-                    filteredFileList.add(file);
-//                }
+               if (filter.accept(files[i])) {
+            	   RemoteFile file = new RemoteFile(files[i], files[i].getURL().toString());
+                   filteredFileList.add(file);
+                }
             }
 
             Object[] filteredFiles = filteredFileList.toArray();
@@ -357,17 +365,22 @@ public class FTPConnection implements IFileProvider {
             if (connectFailed) {
                 return null;
             }
+           
+            FileObject selFile = this.manager.getBaseFile().resolveFile(filename);
            // FTPFile[] files = ftpClient.dirDetails(filename);
-        //    RemoteFile remoteFile = new RemoteFile(files[0], filename);
-         //   RemoteFileEditorInput input = new RemoteFileEditorInput(remoteFile);
-         //   return input;
-            return null;
+            RemoteFile remoteFile = new RemoteFile(selFile, filename);
+               RemoteFileEditorInput input = new RemoteFileEditorInput(remoteFile);
+            return input;
         } catch (Exception e) {
             AlertUtils.alertUser(e);
             return null;
         }
     }
-
+    public IEditorInput getEditorInput(RemoteFile remFile) {
+    	 RemoteFileEditorInput input = new RemoteFileEditorInput(remFile);
+    	
+    	return input;
+	}
   /*  public void addLogListener(FTPMessageListener listener) {
         FTPConnection.listener.addListener(listener);
     		//this.listener.addListener(listener);
@@ -388,4 +401,6 @@ public class FTPConnection implements IFileProvider {
     public String toString() {
         return connectionProperties.getConnectionid();
     }
+
+	
 }

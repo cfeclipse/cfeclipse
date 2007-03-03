@@ -7,6 +7,7 @@
 package org.cfeclipse.cfml.views.explorer;
 
 
+import org.cfeclipse.cfml.net.RemoteFile;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IViewPart;
 
@@ -38,5 +39,6 @@ public interface IFileProvider {
     public void setViewPart(IViewPart part);
     
     public IEditorInput getEditorInput(String filename);
+
     
 }

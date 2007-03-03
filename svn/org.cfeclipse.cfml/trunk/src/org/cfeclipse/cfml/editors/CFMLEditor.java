@@ -59,6 +59,7 @@ import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.editors.ui.CFMLEditorToolbar;
+import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
@@ -440,13 +441,18 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		try{
 		//		Sets the current file path to the status line
 		IEditorInput input= getEditorInput();
-		IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
-		getEditorSite().getActionBars().getStatusLineManager().setMessage(original.getLocation().toString());
 		
-		//this.getEditorSite().getWorkbenchWindow().getShell().setToolTipText(original.getLocation().toString());
+			if (getEditorInput() instanceof RemoteFileEditorInput) {
+				RemoteFileEditorInput rfd = (RemoteFileEditorInput) getEditorInput();
+				getEditorSite().getActionBars().getStatusLineManager().setMessage(rfd.getName());
+			}
+			else{
+				IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
+				getEditorSite().getActionBars().getStatusLineManager().setMessage(original.getLocation().toString());
+			}
 		}
 		catch (Exception e){
-			System.err.println(e);
+			e.printStackTrace();
 		}
 	}
 

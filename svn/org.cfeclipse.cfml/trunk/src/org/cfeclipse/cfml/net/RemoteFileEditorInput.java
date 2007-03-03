@@ -25,6 +25,10 @@
 package org.cfeclipse.cfml.net;
 
 
+import java.net.URL;
+
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -81,6 +85,7 @@ public class RemoteFileEditorInput implements IEditorInput, ILocationProvider {
     
 
 	private RemoteFile fFile;
+	private FileObject fObject;
 	private WorkbenchAdapter fWorkbenchAdapter= new WorkbenchAdapter();
 
     /**
@@ -89,19 +94,42 @@ public class RemoteFileEditorInput implements IEditorInput, ILocationProvider {
     public RemoteFileEditorInput(RemoteFile file) {
 		
 		fFile= file;
+		fObject = file.getFileItem();
 		fWorkbenchAdapter= new WorkbenchAdapter();
 	}
     
     
     
+	public RemoteFileEditorInput(FileObject object) {
+		this.fObject = object;
+	}
+
+
+
 	/*
 	 * @see org.eclipse.ui.IEditorInput#exists()
 	 */
 	public boolean exists() {
+		if(fObject!=null){
+			try {
+				return fObject.exists();
+			} catch (FileSystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return fFile.exists();
 	}
 	
 	public boolean canWrite() {
+		if(fObject!=null){
+			try {
+				return fObject.isWriteable();
+			} catch (FileSystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	    return fFile.canWrite();
 	}
 
@@ -116,6 +144,11 @@ public class RemoteFileEditorInput implements IEditorInput, ILocationProvider {
 	 * @see org.eclipse.ui.IEditorInput#getName()
 	 */
 	public String getName() {
+		if(fObject!=null){
+			
+					return fObject.getName().getBaseName() + " [" + fObject.getName().getFriendlyURI() + "]";
+		
+		}
 		return fFile.getName();
 	}
 
@@ -130,6 +163,9 @@ public class RemoteFileEditorInput implements IEditorInput, ILocationProvider {
 	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
 	 */
 	public String getToolTipText() {
+		if(fObject!=null){
+			return fObject.getName().getType().toString();
+		}
 		return fFile.getAbsolutePath();
 	}
 
@@ -150,7 +186,11 @@ public class RemoteFileEditorInput implements IEditorInput, ILocationProvider {
 	public IPath getPath(Object element) {
 		if (element instanceof RemoteFileEditorInput) {
 			RemoteFileEditorInput input= (RemoteFileEditorInput) element;
-			return new Path(input.fFile.getAbsolutePath());
+			if(fObject !=null){
+				return new Path(input.fObject.getName().getPath());
+			}
+				
+			return new Path(input.fFile.getFileItem().getName().getPath());
 		}
 		return null;
 	}
@@ -164,6 +204,9 @@ public class RemoteFileEditorInput implements IEditorInput, ILocationProvider {
 		
 		if (o instanceof RemoteFileEditorInput) {
 			RemoteFileEditorInput input = (RemoteFileEditorInput) o;
+			if(fObject!=null){
+				return fObject.equals(input.fObject);
+			}
 			return fFile.equals(input.fFile);		
 		}
 		
@@ -174,6 +217,21 @@ public class RemoteFileEditorInput implements IEditorInput, ILocationProvider {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
+		if(fObject != null){
+			return fObject.hashCode();
+		}
 		return fFile.hashCode();
+	}
+
+
+
+	public FileObject getFileObject() {
+		return fObject;
+	}
+
+
+
+	public void setFileObject(FileObject object) {
+		fObject = object;
 	}
 }

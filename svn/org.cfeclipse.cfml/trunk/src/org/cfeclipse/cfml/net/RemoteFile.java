@@ -123,7 +123,13 @@ public class RemoteFile {
     
 
     public String getAbsolutePath() {
-        return fPath;
+        try {
+			return fileItem.getURL().getPath().toString();
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return fPath;
     }
     
     public boolean isDirectory() {
@@ -131,11 +137,23 @@ public class RemoteFile {
     }
     
     public String toString() {
+    	if(fileItem != null){
+    		return fileItem.getName().getPath().toString();
+    
+    	}
         return fPath;
     }
     
     public long size() {
         return fSize;
     }
+
+	public FileObject getFileItem() {
+		return fileItem;
+	}
+
+	public void setFileItem(FileObject fileItem) {
+		this.fileItem = fileItem;
+	}
     
 }

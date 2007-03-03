@@ -30,9 +30,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.print.DocFlavor.INPUT_STREAM;
 
+import org.apache.commons.vfs.FileSystemException;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
@@ -188,11 +191,16 @@ public class CFDocumentProvider extends FileDocumentProvider
 		if(editorInput instanceof RemoteFileEditorInput) 
 		{
 			RemoteFileEditorInput input = (RemoteFileEditorInput) editorInput;
-			FTPConnection connection = new FTPConnection();
-			BufferedInputStream contentStream = null;
-			contentStream = connection.getInputStream(input.getPath(editorInput).toString());
+			InputStream inputStream;
+			try {
+				inputStream = input.getFileObject().getContent().getInputStream();
+				setDocumentContent(document, inputStream, encoding);
+			} catch (FileSystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			setDocumentContent(document, contentStream, encoding);
+			
 		}
 		
 		return super.setDocumentContent(document, editorInput, encoding);
@@ -211,6 +219,7 @@ public class CFDocumentProvider extends FileDocumentProvider
 		{
 			try 
 			{
+				
 				saveExternalFile((RemoteFileEditorInput)element,document);
 			}
 			catch (IOException e) 
@@ -243,9 +252,9 @@ public class CFDocumentProvider extends FileDocumentProvider
 	
 	private void saveExternalFile(RemoteFileEditorInput input, IDocument doc) throws IOException 
 	{
-		BufferedOutputStream contentStream = null;
-		FTPConnection connection = new FTPConnection();
-		connection.saveFile(doc.get().getBytes(),input.getPath(input).toString());
+		OutputStream outputStream = input.getFileObject().getContent().getOutputStream();
+		outputStream.write(doc.get().getBytes());
+		outputStream.close();
 	}
 	
 	public IAnnotationModel getAnnotationModel(Object element) 

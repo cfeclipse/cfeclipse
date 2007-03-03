@@ -78,6 +78,7 @@ public class LocalFileSystem implements IFileProvider
 			{
 				String driveLetter = systemroot[i].toString();
 				FileSystemRoot drive = new FileSystemRoot(driveLetter);
+				drive.setType("file");
 				drive.setPath(systemroot[i].toString());
 				tmpRoots.add(drive);
 			}

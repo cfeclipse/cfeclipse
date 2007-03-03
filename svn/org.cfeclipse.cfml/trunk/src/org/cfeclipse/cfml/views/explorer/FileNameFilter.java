@@ -9,6 +9,8 @@ package org.cfeclipse.cfml.views.explorer;
 import java.io.File;
 import java.io.FileFilter;
 import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileType;
 
 /**
  * @author Stephen Milligan
@@ -37,14 +39,33 @@ public class FileNameFilter implements FileFilter {
         if (filename.isDirectory() && !allowDirectories) {
             return false;
         }
-        if (!filename.isFile() && !allowFiles) {
+        if (filename.isFile() && !allowFiles) {
             return false;
         }
         
         return true;
     }
     
-
+    public boolean accept(FileObject filename) {
+        // TODO Auto-generated method stub
+        try {
+			if (filename.getType().equals(FileType.FOLDER) && !allowDirectories) {
+			    return false;
+			}
+			  if (filename.getType().equals(FileType.FILE)&& !allowFiles) {
+		            return false;
+		        }
+			  if(filename.isHidden()){
+				  return false;
+			  }
+		} catch (FileSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+        
+        return true;
+    }
 
     /**
      * If this is false, files will be omitted from the result
