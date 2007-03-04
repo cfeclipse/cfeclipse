@@ -102,7 +102,27 @@
     	  		</and>
 		    </enablement>
 		</decorator>
-
+		<!--
+  <decorator
+        adaptable="true"
+        class="org.cfeclipse.cfml.editors.decoration.URLDecorator"
+        icon="icons/obj16/decorator_link.png"
+        id="org.cfeclipse.cfml.ui.decorators.urlLinkDecorator"
+        label="URL Link Decorator"
+        lightweight="true"
+        location="TOP_RIGHT"
+        objectClass="org.eclipse.core.resources.IResource"
+        state="true">
+        <description>
+        Provides decoration for resources that have a URL link used by the internal and external browsers
+        </description>
+     <enablement>
+        <and>
+           <objectClass name="org.eclipse.core.resources.IResource"/>
+        </and>
+     </enablement>
+  </decorator>
+	-->
 	</extension>
 	
    <extension
@@ -751,6 +771,38 @@
 				<separator name="group1"/>
 			</menu>
 		</objectContribution>
+		<!--
+  <objectContribution
+        adaptable="false"
+        id="org.cfeclipse.cfml.editFileURL"
+        objectClass="org.eclipse.core.resources.IFile">
+     <action
+           class="org.cfeclipse.cfml.editors.actions.EditURLAction"
+           icon="icons/obj16/world_link.png"
+           id="org.cfeclipse.cfml.editURLAction"
+           label="Edit URL"/>
+  </objectContribution>
+  <objectContribution
+        adaptable="false"
+        id="org.cfeclipse.cfml.editFolderURL"
+        objectClass="org.eclipse.core.resources.IFolder">
+     <action
+           class="org.cfeclipse.cfml.editors.actions.EditURLAction"
+           icon="icons/obj16/world_link.png"
+           id="org.cfeclipse.cfml.editURLAction"
+           label="Edit URL"/>
+  </objectContribution>
+  <objectContribution
+        adaptable="false"
+        id="org.cfeclipse.cfml.editProjectURL"
+        objectClass="org.eclipse.core.resources.IProject">
+     <action
+           class="org.cfeclipse.cfml.editors.actions.EditURLAction"
+           icon="icons/obj16/world_link.png"
+           id="org.cfeclipse.cfml.editURLAction"
+           label="Edit URL"/>
+  </objectContribution>
+  -->
 	</extension>
    
 	<!-- ////////////////////////////////////////////////////////////// -->
@@ -1392,6 +1444,7 @@
             name="CFEMappings"
             nameFilter="*"
             objectClass="org.eclipse.core.resources.IProject"/>
+            <!--
       <page
             class="org.cfeclipse.cfml.properties.ResourceURL"
             icon="icons/icons/cfeclipse_16x16.png"
@@ -1399,6 +1452,7 @@
             name="CFE URL"
             nameFilter="*"
             objectClass="org.eclipse.core.resources.IResource"/>
+            -->
    </extension>
    
 	<!-- Chris Queeners area -->
