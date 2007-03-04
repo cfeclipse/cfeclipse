@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>hidden</name>
+<help>Creates a simple hidden input box</help>
+<starttext><![CDATA[<input type="hidden" name="$${Name}" value="$${Value}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

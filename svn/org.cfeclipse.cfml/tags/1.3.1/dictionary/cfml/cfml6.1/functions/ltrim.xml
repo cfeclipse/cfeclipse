@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String LTrim(string)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="ltrim" returns="String">
+	<help><![CDATA[
+		Removes leading spaces from a string.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

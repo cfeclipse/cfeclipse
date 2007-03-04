@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean ArraySort(array, sort_type [, sort_order ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="arraysort" returns="boolean">
+	<help><![CDATA[
+		Sorts array elements numerically or alphanumerically.
+	]]></help>
+	<parameter name="array" type="Array" required="true">
+		<help><![CDATA[
+			Name of an array
+		]]></help>
+	</parameter>
+	<parameter name="sort_type" type="String" required="true">
+		<help><![CDATA[
+			numeric: sorts numbers
+			text: sorts text alphabetically, taking case into account
+			(also known as case sensitive). All letters of one case
+			precede the first letter of the other case:
+				- aabzABZ, if sort_order = "asc" (ascending sort)
+				- ZBAzbaa, if sort_order = "desc" (descending sort)
+
+			textnocase: sorts text alphabetically, without regard to
+			case (also known as case-insensitive). A letter in varying
+			cases precedes the next letter:
+ 						- aAaBbBzzZ, in an ascending sort; preserves original
+ 							intra-letter order
+				- ZzzBbBaAa, in a descending sort; reverses original
+					intra-letter order
+		]]></help>
+		<values>
+			<value option="numeric" />
+			<value option="text" />
+			<value option="textnocase" />
+		</values>
+	</parameter>
+	<parameter name="sort_order" type="String" required="false">
+		<help><![CDATA[
+			asc: ascending sort order. Default.
+ 						- aabzABZ or aAaBbBzzZ, depending on value of sort_type,
+ 							for letters
+				- from smaller to larger, for numbers
+
+			desc: descending sort order.
+				- ZBAzbaa or ZzzBbBaAa, depending on value of sort_type,
+					for letters
+				- from larger to smaller, for numbers
+		]]></help>
+		<values default="asc">
+			<value option="asc" />
+			<value option="desc" />
+		</values>
+	</parameter>
+</function>

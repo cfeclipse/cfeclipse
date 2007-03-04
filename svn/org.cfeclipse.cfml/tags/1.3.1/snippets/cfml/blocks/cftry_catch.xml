@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>cftry_catch</name>
+<help>simple try/catch block</help>
+<starttext><![CDATA[<cftry>
+	]]></starttext>
+<endtext><![CDATA[
+	<cfcatch type="$${catch_type:Any}">
+		
+	</cfcatch>
+</cftry>]]></endtext>
+</snippet>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String Cjustify(string, length)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cjustify" returns="String">
+	<help><![CDATA[
+		Centers a string in a field length.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="length" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
