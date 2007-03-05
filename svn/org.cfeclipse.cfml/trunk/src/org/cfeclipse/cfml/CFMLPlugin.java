@@ -25,6 +25,7 @@
 package org.cfeclipse.cfml;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -44,8 +45,12 @@ import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.PreferenceStore;
+import org.eclipse.jface.text.templates.persistence.TemplateStore;
 import org.eclipse.ui.editors.text.TextEditorPreferenceConstants;
+import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.internal.PartService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -82,6 +87,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	
 	/** Unique ID of the CFENature */
 	public static final String NATURE_ID = "org.cfeclipse.cfml.CFENature";
+	
+	/** Storage for the Templates */
+	private static final String CUSTOM_TEMPLATES_KEY= "org.cfeclipse.cfml.customtemplates"; //$NON-NLS-1$
+	private TemplateStore fStore;
 	
 	/**
 	 * Returns the global Content Assist Manager.
@@ -291,4 +300,17 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	{
 		return this.resourceBundle;
 	}
+
+	public TemplateStore getTemplateStore() {
+		if (fStore == null) {
+			fStore= new ContributionTemplateStore(null, CFMLPlugin.getDefault().getPreferenceStore(), CUSTOM_TEMPLATES_KEY);
+			try {
+				fStore.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return fStore;
+	}
+
 }
