@@ -9,13 +9,13 @@ public class URLDecoratorImageDescriptor extends CompositeImageDescriptor {
 
 	protected void drawCompositeImage(int width, int height) {
 		//drawImage(baseImage_.getImageData(), 0, 0); 
-		ImageData overlayImageData = CFPluginImages.get(CFPluginImages.ICON_DECORATOR_LINK).getImageData(); 
+		//ImageData overlayImageData = CFPluginImages.get(CFPluginImages.ICON_DECORATOR_LINK).getImageData(); 
 
 		   // Overlaying the icon in the top left corner i.e. x and y  
 		   // coordinates are both zero 
 		   int xValue = 0; 
 		   int yValue = 0; 
-		 drawImage (overlayImageData, xValue, yValue);
+		// drawImage (overlayImageData, xValue, yValue);
 	}
 
 	protected Point getSize() {

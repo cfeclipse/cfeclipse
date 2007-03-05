@@ -44,9 +44,9 @@ public class URLDecorator extends LabelProvider implements ILightweightLabelDeco
 		if(objectResource == null){
 			return;
 		}
-		Image image = CFPluginImages.get(CFPluginImages.ICON_DECORATOR_LINK);
+		//Image image = CFPluginImages.get(CFPluginImages.ICON_DECORATOR_LINK);
 		
-		decoration.addOverlay(ImageDescriptor.createFromImage(image));
+		//decoration.addOverlay(ImageDescriptor.createFromImage(image));
 		
 		
 		

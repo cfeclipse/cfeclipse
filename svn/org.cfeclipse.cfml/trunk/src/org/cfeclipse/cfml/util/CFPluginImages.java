@@ -173,11 +173,11 @@ public class CFPluginImages {
 	public static final String ICON_PVIEW_FOLDER_CUS = "folder-custom.png";
 	
 	/** Menu functions */
-	public static final String ICON_URL_LINK = "world_link.png";
+	//public static final String ICON_URL_LINK = "world_link.png";
 	
 	
 	/** Decorators */
-	public static final String ICON_DECORATOR_LINK = "decorator_link.gif";
+	//public static final String ICON_DECORATOR_LINK = "decorator_link.gif";
 	
 	/**  File Explorer icons */
 	public static final String ICON_DRIVE	= "drive.png";
@@ -305,10 +305,10 @@ public class CFPluginImages {
 			
 			
 			/** menu */
-			addImageToRegistry(MODEL_OBJECTS, ICON_URL_LINK);
+			//addImageToRegistry(MODEL_OBJECTS, ICON_URL_LINK);
 			
 			/** decorators */
-			addImageToRegistry(MODEL_OBJECTS, ICON_DECORATOR_LINK);
+			//addImageToRegistry(MODEL_OBJECTS, ICON_DECORATOR_LINK);
 			
 			addImageToRegistry(TOOLBAR,ICON_ADD);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);
