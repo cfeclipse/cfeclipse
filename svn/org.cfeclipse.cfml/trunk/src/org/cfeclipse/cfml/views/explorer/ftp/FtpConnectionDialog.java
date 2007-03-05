@@ -134,7 +134,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 				GridData.HORIZONTAL_ALIGN_FILL);
 		summaryLabelData.horizontalSpan = 2;
 		summaryLabel.setLayoutData(summaryLabelData);
-		summaryLabel.setText("NOTE: Passive mode is currently forced because active mode causes the workspace to hang if the \nconnection hangs.");
+		//summaryLabel.setText("NOTE: Passive mode is currently forced because active mode causes the workspace to hang if the \nconnection hangs.");
 		summaryLabel.pack();
 		
 
@@ -195,6 +195,13 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 				else{
 					host.setEnabled(true);
 					port.setEnabled(true);
+					if(connectionType.getText().equalsIgnoreCase("sftp")){
+						port.setText("22");
+					}
+					else if(connectionType.getText().equalsIgnoreCase("ftp")){
+						port.setText("21");
+					}
+					
 					//passive.setEnabled(true);
 					username.setEnabled(true);
 					password.setEnabled(true);
