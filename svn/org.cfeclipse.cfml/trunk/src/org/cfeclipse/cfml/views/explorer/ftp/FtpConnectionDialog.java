@@ -94,6 +94,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	    connectionType.setText(connectionProperties.getType());
 	    host.setText(connectionProperties.getHost());
 	    path.setText(connectionProperties.getPath());
+	    port.setText(String.valueOf(connectionProperties.getPort()));
 	    username.setText(connectionProperties.getUsername());
 	    password.setText(connectionProperties.getPassword());
 	    if (connectionProperties.getConnectionid().length() == 0) {

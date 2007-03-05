@@ -143,7 +143,7 @@ public class FTPConnectionProperties {
 
 
     public int getPort() {
-    	return Integer.parseInt(connectionProperties.getProperty(fPort,"21"));
+    	return Integer.parseInt(connectionProperties.getProperty(fPort, "21"));
     }
 
     public void setPort(int port) {
