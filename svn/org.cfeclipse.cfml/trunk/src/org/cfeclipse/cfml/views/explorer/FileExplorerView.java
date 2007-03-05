@@ -615,7 +615,7 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     private void createMenuItems(Menu menu) {
 
         manageItem = new MenuItem(menu,SWT.CASCADE);
-        manageItem.setText("Locations");
+        manageItem.setText("Locations...");
         manageItem.addListener(SWT.Selection, new Listener() {
 	        public void handleEvent(Event e) {
 	        	try {
