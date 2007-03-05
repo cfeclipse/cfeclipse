@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean IsSOAPRequest()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="issoaprequest" returns="boolean">
+	<help><![CDATA[
+		Determines whether a CFC is being called as a web service.
+	]]></help>
+</function>

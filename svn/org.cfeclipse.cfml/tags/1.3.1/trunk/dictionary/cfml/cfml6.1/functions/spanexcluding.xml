@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String SpanExcluding(string, set)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="spanexcluding" returns="String">
+	<help><![CDATA[
+		Gets characters from a string, from the beginning to a
+		character that is in a specified set of characters. The
+		search is case-sensitive.
+	]]></help>
+	<parameter name="String" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="set" type="String" required="true">
+		<help><![CDATA[
+			A string or a variable that contains a set of characters.
+			Must contain one or more characters
+		]]></help>
+	</parameter>
+</function>

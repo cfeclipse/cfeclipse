@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric Log(number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="log" returns="Numeric">
+	<help><![CDATA[
+		Calculates the natural logarithm of a number. Natural
+		logarithms are based on the constant e (2.71828182845904).
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

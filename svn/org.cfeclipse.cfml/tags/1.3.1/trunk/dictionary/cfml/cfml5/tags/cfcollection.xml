@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfcollection
+		action = "action"
+		collection = "collection_name"
+		path = "path_to_verity_collection"
+		language = "language"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfcollection" single="true" xmlstyle="false">
+	<help><![CDATA[
+		Creates, registers, and administers Verity search engine
+		collections.
+
+		A collection that is created with the cfcollection tag is
+		internal. A collection created any other way is external.
+
+		A collection that is registered with CFML using the
+		cfcollection tag or registered with the K2 Server by editing
+		the k2server.ini file is registered. Other collections are
+		unregistered.
+	]]></help>
+	<parameter name="action" type="String" required="true">
+		<help><![CDATA[
+			create: registers the collection with CFML.
+				- If the collection is present: creates a map to it
+				- If the collection is not present: creates it
+			delete: unregisters a collection.
+				- If the collection was registered with action = create:
+					deletes its directories
+				- If the collection was registered and mapped: does not
+					delete collection directories
+			optimize: optimizes the structure and contents of the
+				collection for searching; recovers space.
+			map: creates a map to the collection. It is not necessary
+				to specify this value.
+			repair: fixes data corruption in a collection.
+		]]></help>
+		<values>
+			<value option="create" />
+			<value option="repair" />
+			<value option="delete" />
+			<value option="map" />
+			<value option="optimize" />
+		</values>
+	</parameter>
+	<parameter name="collection" type="String" required="false">
+		<help><![CDATA[
+			A collection name. The name can include spaces
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="path" type="String" required="false">
+		<help><![CDATA[
+			Absolute path to a Verity collection.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="language" type="String" required="false">
+		<help><![CDATA[
+			Options are listed in Usage section. Requires the
+			appropriate (European or Asian) Verity Locales language
+			pack.
+		]]></help>
+		<values default="english" />
+	</parameter>
+</tag>

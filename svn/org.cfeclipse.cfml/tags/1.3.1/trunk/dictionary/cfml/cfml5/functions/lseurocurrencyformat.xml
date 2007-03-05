@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String LSEuroCurrencyFormat(currency-number [, type ])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="lseurocurrencyformat" returns="String">
+	<help><![CDATA[
+		Formats a number in a locale-specific currency format.
+		[type - quicky]
+		local: the currency format used in the locale. (Default.)
+		international: the international standard currency format
+		none: the currency format used; no currency symbol
+	]]></help>
+	<parameter name="currency" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="type" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="local" />
+			<value option="international" />
+			<value option="none" />
+		</values>
+	</parameter>
+</function>

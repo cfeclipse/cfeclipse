@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	DateTime DateAdd("datepart", number, "date")
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="dateadd" returns="DateTime">
+	<help><![CDATA[
+		Adds units of time to a date.
+		[datepart - quicky]
+		yyyy: Year; q: Quarter; m: Month; y: Day of year; d: Day
+		w: Weekday; ww: Week; h: Hour; n: Minute; s: Second;
+		l: Millisecond
+	]]></help>
+	<parameter name="datepart" type="String" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="yyyy" />
+			<value option="q" />
+			<value option="m" />
+			<value option="y" />
+			<value option="d" />
+			<value option="w" />
+			<value option="ww" />
+			<value option="h" />
+			<value option="n" />
+			<value option="s" />
+			<value option="l" />
+		</values>
+	</parameter>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+	<parameter name="date" type="DateTime" required="true">
+		<help><![CDATA[
+		]]></help>
+		<values>
+			<value option="now()" />
+		</values>
+	</parameter>
+</function>

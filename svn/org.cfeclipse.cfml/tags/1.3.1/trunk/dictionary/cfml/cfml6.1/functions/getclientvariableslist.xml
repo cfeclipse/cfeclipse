@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	String GetClientVariablesList()
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="getclientvariableslist" returns="String">
+	<help><![CDATA[
+		Finds the client variables to which a page has write access.
+		Comma-delimited list of non-read-only client variables
+	]]></help>
+</function>
