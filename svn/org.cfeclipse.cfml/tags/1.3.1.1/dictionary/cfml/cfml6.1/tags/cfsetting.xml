@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cfsetting
+		enableCFoutputOnly = "boolean"
+		showDebugOutput = "boolean"
+		requestTimeOut = "value in seconds"
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cfsetting" single="false" hybrid="true" xmlstyle="false">
+	<help><![CDATA[
+		Controls aspects of page processing, such as the output of
+		HTML code in pages.
+	]]></help>
+	<parameter name="enablecfoutputonly" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: blocks output of HTML that is outside cfoutput tags
+			No: displays HTML that is outside cfoutput tags.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="showdebugoutput" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: If debugging is enabled in the Administrator, displays
+				debugging information
+			No: suppresses debugging information that would otherwise
+				display at end of generated page.
+		]]></help>
+		<values>
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="requesttimeout" type="Numeric" required="false">
+		<help><![CDATA[
+			Integer; number of seconds. Time limit, after which
+			CFML processes the page as an unresponsive thread.
+			Overrides the timeout set in the CFML Administrator.
+		]]></help>
+		<values />
+	</parameter>
+</tag>

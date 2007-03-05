@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Numeric ASin(number)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="asin" returns="Numeric">
+	<help><![CDATA[
+		Determines the arcsine of a number. The arcsine is the angle
+		whose sine is number.
+	]]></help>
+	<parameter name="number" type="Numeric" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
