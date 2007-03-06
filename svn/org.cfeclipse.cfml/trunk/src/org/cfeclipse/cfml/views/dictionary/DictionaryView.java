@@ -99,7 +99,7 @@ public class DictionaryView extends ViewPart {
 	protected LabelProvider labelProvider;
 	private String viewtype = "standard";
 	private DictionaryViewContentProvider contentprovider = new DictionaryViewContentProvider(viewtype, "cfmx701");
-	public static final String ID_DICTIONARY = "org.cfeclipse.cfml.views.dictionary";
+	public static final String ID_DICTIONARY = "org.cfeclipse.cfml.views.dictionary.DictionaryView";
 	private DictionaryViewFilter viewfilter;
 
 	/**
