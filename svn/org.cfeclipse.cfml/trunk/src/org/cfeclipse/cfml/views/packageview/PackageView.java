@@ -54,7 +54,7 @@ public class PackageView extends ViewPart
     private Action acRemoteCFCFilterPackage;
     private Action acRemoteCFCFilterPrivate;    
     private Action acRefreshTree;
-    
+    public static final String ID_COMPONENTEXPLORER = "org.cfeclipse.cfml.views.packageview.PackageView";
 
     /*
      * The content provider class is responsible for providing objects to the

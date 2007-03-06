@@ -29,6 +29,7 @@ import org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView;
 import org.cfeclipse.cfml.views.dictionary.DictionaryView;
 import org.cfeclipse.cfml.views.explorer.FileExplorerView;
 import org.cfeclipse.cfml.views.explorer.ftp.FtpLogView;
+import org.cfeclipse.cfml.views.packageview.PackageView;
 import org.cfeclipse.cfml.views.snips.SnipTreeView;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
@@ -50,9 +51,9 @@ public class CFPerspective implements IPerspectiveFactory {
 		//this is the main editor - used as a base to place views
 		String editorid = layout.getEditorArea();
 		
-		//layout.addActionSet("org.eclipse.debug.ui.debugActionSet");
-		//layout.addActionSet("org.eclipse.debug.ui.launchActionSet");
-		//layout.addActionSet("org.eclipse.debug.ui.breakpointActionSet");
+		layout.addActionSet("org.eclipse.debug.ui.debugActionSet");
+		layout.addActionSet("org.eclipse.debug.ui.launchActionSet");
+		layout.addActionSet("org.eclipse.debug.ui.breakpointActionSet");
 		
 		layout.addShowInPart(IPageLayout.ID_RES_NAV);
 		
@@ -82,6 +83,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		);
 		right.addView(IPageLayout.ID_OUTLINE);
 		right.addView(CFCMethodsView.ID_CFCMETHODVIEW);
+		right.addView(DictionaryView.ID_DICTIONARY);
 		
 		layout.addActionSet(IPageLayout.ID_NAVIGATE_ACTION_SET);
 		//views that should show up on the quick menu on show view
@@ -93,12 +95,17 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(FileExplorerView.ID_FILE_EXPLORER);
 		layout.addShowViewShortcut(DictionaryView.ID_DICTIONARY);
 		layout.addShowViewShortcut(BrowserView.ID_BROWSER);
-		layout.addShowViewShortcut(FtpLogView.ID_FTP_LOG_VIEW);
+		layout.addShowViewShortcut(PackageView.ID_COMPONENTEXPLORER);
+		//layout.addShowViewShortcut(FtpLogView.ID_FTP_LOG_VIEW);
 		
 		//add wizards here
-		layout.addNewWizardShortcut("org.cfeclipse.cfml.wizards.NewCfmlWizard");
-		layout.addNewWizardShortcut("org.cfeclipse.cfml.wizards.NewCfcWizard");
+		layout.addNewWizardShortcut("org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard");
+		layout.addNewWizardShortcut("org.cfeclipse.cfml.wizards.cfcwizard.NewCFCWizard");
+		layout.addNewWizardShortcut("org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard");
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.folder");
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.file");
+		
+		layout.addActionSet("org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard");
+		
 	}
 }
