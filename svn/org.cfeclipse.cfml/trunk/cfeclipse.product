@@ -4,13 +4,13 @@
 <product name="CFEclipse" id="org.cfeclipse.cfml.product" application="org.eclipse.ui.ide.workbench" useFeatures="false">
 
    <aboutInfo>
-      <image path="/org.cfeclipse.cfml/icons/icons/start_cfeclipse.gif"/>
+      <image path="/org.cfeclipse.cfml/icons/icons/about.gif"/>
       <text>
          CFEclipse is an awesome IDE for Coldfusion. It is. Really.
       </text>
    </aboutInfo>
 
-   <configIni use="default"/>
+   <configIni use="default" path="/org.cfeclipse.cfml/config.ini"/>
 
    <launcherArgs>
    </launcherArgs>
@@ -21,7 +21,7 @@
       location="org.cfeclipse.cfml"
       startupProgressRect="0,280,455,15"
       startupMessageRect="7,220,441,20"
-      startupForegroundColor="8080C0" />
+      startupForegroundColor="FFFFFF" />
    <launcher name="CFEclipse">
       <macosx icon="/org.cfeclipse.cfml/icons/icons/cfelogo.icns"/>
       <solaris/>
@@ -38,12 +38,12 @@
       </win>
    </launcher>
 
-   <intro introId="org.eclipse.ui.intro.universal"/>
 
    <plugins>
       <plugin id="com.ibm.icu"/>
       <plugin id="com.jcraft.jsch"/>
       <plugin id="org.apache.ant"/>
+      <plugin id="org.apache.lucene"/>
       <plugin id="org.cfeclipse.cfml"/>
       <plugin id="org.eclipse.ant.core"/>
       <plugin id="org.eclipse.ant.ui"/>
@@ -68,6 +68,8 @@
       <plugin id="org.eclipse.equinox.preferences"/>
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.help.appserver"/>
+      <plugin id="org.eclipse.help.base"/>
       <plugin id="org.eclipse.jdt.core"/>
       <plugin id="org.eclipse.jdt.core.manipulation"/>
       <plugin id="org.eclipse.jdt.debug"/>
@@ -95,6 +97,7 @@
       <plugin id="org.eclipse.ui.externaltools"/>
       <plugin id="org.eclipse.ui.forms"/>
       <plugin id="org.eclipse.ui.ide"/>
+      <plugin id="org.eclipse.ui.intro"/>
       <plugin id="org.eclipse.ui.navigator"/>
       <plugin id="org.eclipse.ui.navigator.resources"/>
       <plugin id="org.eclipse.ui.views"/>

@@ -1765,6 +1765,14 @@
       <introProductBinding
             introId="org.cfeclipse.cfml.intro"
             productId="org.eclipse.platform.ide"/>
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            icon="icons/icons/128x128.gif"
+            id="org.cfeclipse.cfml.newIntro"
+            label="Welcome to CFEclipse"/>
+      <introProductBinding
+            introId="org.cfeclipse.cfml.newIntro"
+            productId="org.cfeclipse.cfml.product"/>
    
    
    </extension>
@@ -1775,6 +1783,17 @@
             content="introContent.xml"
             id="org.cfeclipse.cfml.introConfigId"
             introId="org.cfeclipse.cfml.intro">
+         <presentation home-page-id="root">
+            <implementation
+                  kind="html"
+                  os="win32,linux,macosx"
+                  style="content/shared.css"/>
+         </presentation>
+      </config>
+      <config
+            content="introContent.xml"
+            id="org.cfeclipse.cfml.introConfigId"
+            introId="org.cfeclipse.cfml.newIntro">
          <presentation home-page-id="root">
             <implementation
                   kind="html"
@@ -1794,10 +1813,10 @@
                value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
          <property
                name="aboutImage"
-               value="icons/icons/start_cfeclipse.gif"/>
+               value="icons/icons/about.gif"/>
          <property
                name="startupForegroundColor"
-               value="8080C0"/>
+               value="FFFFFF"/>
          <property
                name="startupProgressRect"
                value="0,280,455,15"/>
