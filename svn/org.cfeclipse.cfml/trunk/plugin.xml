@@ -102,7 +102,6 @@
     	  		</and>
 		    </enablement>
 		</decorator>
-		 <!--
   <decorator
         adaptable="true"
         class="org.cfeclipse.cfml.editors.decoration.URLDecorator"
@@ -117,13 +116,7 @@
         Provides decoration for resources that have a URL link used by the internal and external browsers
         </description>
        
-     <enablement>
-        <and>
-           <objectClass name="org.eclipse.core.resources.IResource"/>
-        </and>
-     </enablement>	
   </decorator>
--->
 	</extension>
 	
    <extension
@@ -772,7 +765,7 @@
 				<separator name="group1"/>
 			</menu>
 		</objectContribution>
-		<!--  
+	 
   <objectContribution
         adaptable="false"
         id="org.cfeclipse.cfml.editFileURL"
@@ -803,7 +796,7 @@
            id="org.cfeclipse.cfml.editURLAction"
            label="Edit URL"/>
   </objectContribution>
--->
+
 	</extension>
    
 	<!-- ////////////////////////////////////////////////////////////// -->
@@ -1424,7 +1417,7 @@
        
       <page
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            class="org.cfeclipse.cfml.preferences.CFMLTemplatePreferencePage"
+            class="org.cfeclipse.cfml.preferences.CFMLTemplatesPreferencePage"
             id="org.cfeclipse.cfml.preferences.Templates"
             name="Templates"/>
        
