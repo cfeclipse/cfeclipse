@@ -828,6 +828,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
+		
 	}
 
 	/**

@@ -68,7 +68,7 @@
 
    <extension 
 	    point="org.eclipse.ui.decorators">
-		
+		<!--
 		<decorator
 			adaptable="false"
 			label="CFEclipse CFC Decorator"
@@ -85,7 +85,7 @@
     	  		</and>
 		    </enablement>
 		</decorator>
-
+		-->
 		<decorator
 			adaptable="false"
 			label="CFEclipse Readonly Decorator"
@@ -135,11 +135,22 @@
          point="org.eclipse.ui.editors">
       <editor
             name="%editor.name.CFML_Editor"
-            extensions="cfc,cfm,cfml,html,htm,xhtml"
-            icon="icons/obj16/default.gif"
+            extensions="cfm,cfml,html,htm,xhtml"
+            icon="icons/icons/cf_editor.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditor">
+      </editor>
+   </extension>
+    <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="CFC Editor"
+            extensions="cfc"
+            icon="icons/icons/cfc_editor.gif"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.cfeclipse.cfml.editors.CFCEditor"
+            id="org.cfeclipse.cfml.editors.CFCEditor">
       </editor>
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->

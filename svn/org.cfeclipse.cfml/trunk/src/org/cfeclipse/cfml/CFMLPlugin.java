@@ -48,8 +48,10 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.PreferenceStore;
+import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.jface.text.templates.persistence.TemplateStore;
 import org.eclipse.ui.editors.text.TextEditorPreferenceConstants;
+import org.eclipse.ui.editors.text.templates.ContributionContextTypeRegistry;
 import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.internal.PartService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -91,6 +93,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	/** Storage for the Templates */
 	private static final String CUSTOM_TEMPLATES_KEY= "org.cfeclipse.cfml.customtemplates"; //$NON-NLS-1$
 	private TemplateStore fStore;
+	private ContributionContextTypeRegistry fRegistry;
 	
 	/**
 	 * Returns the global Content Assist Manager.
@@ -311,6 +314,15 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			}
 		}
 		return fStore;
+	}
+
+	public ContextTypeRegistry getContextTypeRegistry() {
+		if (fRegistry == null) {
+			// create an configure the contexts available in the template editor
+			fRegistry= new ContributionContextTypeRegistry();
+			fRegistry.addContextType(CFMContextType.CFM_CONTEXT_TYPE);
+		}
+		return fRegistry;
 	}
 
 }
