@@ -3,7 +3,7 @@
 <plugin
    id="org.cfeclipse.cfml"
    name="CFML Plug-in"
-   version="1.3.1.1"
+   version="1.3.1.2"
    provider-name="The CFEclipse Crew"
    class="org.cfeclipse.cfml.CFMLPlugin">
 
