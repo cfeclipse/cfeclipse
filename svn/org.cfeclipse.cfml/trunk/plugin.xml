@@ -102,6 +102,7 @@
     	  		</and>
 		    </enablement>
 		</decorator>
+		<!--
   <decorator
         adaptable="true"
         class="org.cfeclipse.cfml.editors.decoration.URLDecorator"
@@ -117,6 +118,7 @@
         </description>
        
   </decorator>
+  -->
 	</extension>
 	
    <extension
@@ -141,9 +143,7 @@
             class="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditor">
       </editor>
-   </extension>
-    <extension
-         point="org.eclipse.ui.editors">
+
       <editor
             name="CFC Editor"
             extensions="cfc"
@@ -776,7 +776,7 @@
 				<separator name="group1"/>
 			</menu>
 		</objectContribution>
-	 
+	 <!--
   <objectContribution
         adaptable="false"
         id="org.cfeclipse.cfml.editFileURL"
@@ -807,7 +807,7 @@
            id="org.cfeclipse.cfml.editURLAction"
            label="Edit URL"/>
   </objectContribution>
-
+	-->
 	</extension>
    
 	<!-- ////////////////////////////////////////////////////////////// -->
