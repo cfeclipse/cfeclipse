@@ -18,10 +18,12 @@ import java.util.Collection;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileSystemOptions;
 import org.apache.commons.vfs.FileType;
 import org.apache.commons.vfs.VFS;
 import org.apache.commons.vfs.impl.DefaultFileSystemManager;
 import org.apache.commons.vfs.operations.FileOperationProvider;
+import org.apache.commons.vfs.provider.sftp.SftpFileSystemConfigBuilder;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.RemoteFile;
 import org.cfeclipse.cfml.net.RemoteFileEditorInput;
@@ -181,7 +183,7 @@ public class FTPConnection implements IFileProvider {
 
             this.manager = (DefaultFileSystemManager)VFS.getManager();
         	
-            
+                        
             //Set up a URL
             String connectionString = connectionProperties.getType() + ":";
             
@@ -208,12 +210,22 @@ public class FTPConnection implements IFileProvider {
             if(connectionProperties.getPath().length() >  0)
             	connectionString += connectionProperties.getPath();
             
-      
+            FileObject object;
             if(connectionProperties.getType().equalsIgnoreCase("sftp")){
             	//need to add SFTP key location
+            	FileSystemOptions opts = new FileSystemOptions();
+
+            	SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts, 
+            	"no");
+            	object = VFS.getManager().resolveFile(connectionString, opts);
+            
+            }else {
+            	object = this.manager.resolveFile(connectionString);
             }
+
+           
     		//FileObject basefile = this.manager.resolveFile(connectionString);
-    		FileObject object = this.manager.resolveFile(connectionString);
+    		
     		this.manager.setBaseFile(object);
     		
     		
