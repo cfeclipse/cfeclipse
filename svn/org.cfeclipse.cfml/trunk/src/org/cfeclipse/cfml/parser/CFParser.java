@@ -877,7 +877,7 @@ public class CFParser {
 				*/
 				lastMatch = match;
 				
-				if(matchStr.charAt(0) == '<' && matchStr.charAt(1) != ' ')	// Funnily enough this should always be the case!
+				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					if(matchStr.charAt(1) == '/') {
 						if(!handleClosingTag(match, matchStack)) {
