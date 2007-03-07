@@ -877,7 +877,7 @@ public class CFParser {
 				*/
 				lastMatch = match;
 				
-				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
+				if(matchStr.charAt(0) == '<' && matchStr.charAt(1) != ' ')	// Funnily enough this should always be the case!
 				{
 					if(matchStr.charAt(1) == '/') {
 						if(!handleClosingTag(match, matchStack)) {
@@ -1330,7 +1330,14 @@ public class CFParser {
 					}
 					else // Notice that the above if doesn't match </cf, that's because it's like a standard HTML tag.
 					{
-						currPos = matchingHTML(parserState, inData, currPos);
+						// if this test indicates an HTML tag then we need to parse it.
+						// this specifically works around the issue where an < operator
+						// in SQL statements was causing false error reporting. Paul V.
+						// Ticket #146
+						
+						// BEWARE! If this breaks, code folding breaks!!!
+						if(next2Chars.matches("^(/?)[a-zA-Z]{0,2}(>?)$")) 
+							currPos = matchingHTML(parserState, inData, currPos);
 					}
 					
 				}
@@ -1477,11 +1484,16 @@ public class CFParser {
 			lineOffsets = Util.calcLineNumbers(inData);
 			
 			this.setData2Parse(inData);
-			ArrayList matches = tagMatchingAttempts(inData);
-//			System.out.println("=============> Beginning match dump" );
-			Util.dumpMatches(parserState.getMatches());
+			// Code folding is performed by tagMatchingAttempts
+			// this code will cause a warning as codeFoldingMatches is never referenced again...
+			ArrayList codeFoldingMatches = tagMatchingAttempts(inData);
+			
+			//parserState.getMatches() was called twice in succession, this should speed it up a bit.
+			ArrayList matches = parserState.getMatches();
+//			System.out.println("=============> Beginning match dump" );			
+			Util.dumpMatches(matches);
 //			System.out.println("=============> Finishing match dump");
-			docTree = createDocTree(parserState.getMatches());
+			docTree = createDocTree(matches);
 			
 			DocItem documentRoot = docTree.getDocumentRoot();
 			ArrayList list = finalDocTreeTraversal(documentRoot);
