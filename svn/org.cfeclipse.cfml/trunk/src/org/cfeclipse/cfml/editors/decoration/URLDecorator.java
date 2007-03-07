@@ -21,21 +21,18 @@ public class URLDecorator extends LabelProvider
 implements ILabelDecorator {
 
 	
-	@Override
 	protected void fireLabelProviderChanged(LabelProviderChangedEvent event) {
 		// TODO Auto-generated method stub
 		super.fireLabelProviderChanged(event);
 	}
 
 
-	@Override
 	public Image getImage(Object element) {
 		// TODO Auto-generated method stub
 		return super.getImage(element);
 	}
 
 
-	@Override
 	public String getText(Object element) {
 		// TODO Auto-generated method stub
 		return super.getText(element);
