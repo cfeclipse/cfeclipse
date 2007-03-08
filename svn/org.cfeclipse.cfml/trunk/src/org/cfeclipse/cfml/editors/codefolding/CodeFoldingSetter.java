@@ -183,8 +183,7 @@ public class CodeFoldingSetter {
 		    ITypedRegion region = regionArray[i];
 		    if (region.getType() == partitionType) {
 		        //Position position= new Position(region.getOffset(), region.getLength());
-				regions.add(region);
-		        
+				regions.add(region);		        
 		    }
 		}
 		
@@ -200,17 +199,23 @@ public class CodeFoldingSetter {
             ProjectionAnnotation annotation = (ProjectionAnnotation)o;
             if (!(annotation instanceof TagProjectionAnnotation)
                     && !annotation.isCollapsed()) {
-                Position p = model.getPosition(annotation);
-                try {
-	                int startLine = doc.getLineOfOffset(p.getOffset());
-	                int endLine = doc.getLineOfOffset(p.getOffset() + p.getLength());
-	                if (endLine - startLine <= 2) {
-	                    model.removeAnnotation(annotation);
-             	  }
-                }
-                catch (BadLocationException e ) {
-                    e.printStackTrace();
-                }
+				/* Changed the requirement here as there were problems relating 
+				 * to ticket #143
+				 * 
+				 * We should remove all annotations as they are going to be
+				 * re-created as part of the addMarksToModel function call that 
+				 * calls this function in the first place. If we don't, we get
+				 * strange conflicts that cause IndexOutOfBounds errors.
+				 * 
+				 * This is a partial fix to the situation and it is only half
+				 * the story. My thoughts are that this issue lies somewhere in
+				 * the CFEPartitioner. This issue doesn't just relate to 
+				 * comments.
+				 * 
+				 * Paul V. Ticket #143
+				*/
+	                
+               	model.removeAnnotation(annotation);
             }
         }
     }
