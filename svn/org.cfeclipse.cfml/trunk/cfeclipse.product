@@ -10,20 +10,16 @@
       </text>
    </aboutInfo>
 
-   <configIni use="default" path="/org.cfeclipse.cfml/config.ini"/>
+   <configIni use="default"/>
 
    <launcherArgs>
    </launcherArgs>
 
    <windowImages i16="/org.cfeclipse.cfml/icons/icons/16x16.gif" i32="/org.cfeclipse.cfml/icons/icons/32x32.gif" i48="/org.cfeclipse.cfml/icons/icons/48x48.gif" i64="/org.cfeclipse.cfml/icons/icons/64x64.gif" i128="/org.cfeclipse.cfml/icons/icons/128x128.gif"/>
 
-   <splash
-      location="org.cfeclipse.cfml"
-      startupProgressRect="0,280,455,15"
-      startupMessageRect="7,220,441,20"
-      startupForegroundColor="FFFFFF" />
+
    <launcher name="CFEclipse">
-      <macosx icon="/org.cfeclipse.cfml/icons/icons/cfelogo.icns"/>
+      <macosx icon="/org.cfeclipse.cfml/icons/product/cfeclipse.icns"/>
       <solaris/>
       <win useIco="true">
          <ico path="/org.cfeclipse.cfml/icons/icons/cfeclipse.ico"/>
@@ -40,6 +36,7 @@
 
 
    <plugins>
+      <plugin id="com.aptana.ide.libraries"/>
       <plugin id="com.ibm.icu"/>
       <plugin id="com.jcraft.jsch"/>
       <plugin id="org.apache.ant"/>

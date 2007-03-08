@@ -68,13 +68,12 @@
 
    <extension 
 	    point="org.eclipse.ui.decorators">
-		<!--
 		<decorator
 			adaptable="false"
 			label="CFEclipse CFC Decorator"
 			state="true"
 			lightweight="true"
-			icon="icons/obj16/cfc.gif"
+			icon="icons/icons/cfc_editor.gif"
 			id="org.cfeclipse.cfml.ui.decorators.cfcdecorator"
 			location="TOP_LEFT">
 			<description>Shows distinct icon for CFC files</description>	
@@ -85,7 +84,6 @@
     	  		</and>
 		    </enablement>
 		</decorator>
-		-->
 		<decorator
 			adaptable="false"
 			label="CFEclipse Readonly Decorator"
@@ -137,13 +135,14 @@
          point="org.eclipse.ui.editors">
       <editor
             name="%editor.name.CFML_Editor"
-            extensions="cfm,cfml,html,htm,xhtml"
+            extensions="cfc,cfm,cfml,html,htm,xhtml"
             icon="icons/icons/cf_editor.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditor">
       </editor>
 
+	<!-- CFC Editor
       <editor
             name="CFC Editor"
             extensions="cfc"
@@ -152,7 +151,9 @@
             class="org.cfeclipse.cfml.editors.CFCEditor"
             id="org.cfeclipse.cfml.editors.CFCEditor">
       </editor>
+   -->
    </extension>
+ 
 	<!-- ////////////////////////////////////////////////////////////// -->
 	
 	
@@ -1768,51 +1769,7 @@
             name="%context.name.0"
             parentId="org.eclipse.ui.textEditorScope"/>
    </extension>
-   <extension
-         point="org.eclipse.ui.intro">
-      <intro
-            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
-            id="org.cfeclipse.cfml.intro"/>
-      <introProductBinding
-            introId="org.cfeclipse.cfml.intro"
-            productId="org.eclipse.platform.ide"/>
-      <intro
-            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
-            icon="icons/icons/128x128.gif"
-            id="org.cfeclipse.cfml.newIntro"
-            label="Welcome to CFEclipse"/>
-      <introProductBinding
-            introId="org.cfeclipse.cfml.newIntro"
-            productId="org.cfeclipse.cfml.product"/>
    
-   
-   </extension>
-   
-   <extension
-         point="org.eclipse.ui.intro.config">
-      <config
-            content="introContent.xml"
-            id="org.cfeclipse.cfml.introConfigId"
-            introId="org.cfeclipse.cfml.intro">
-         <presentation home-page-id="root">
-            <implementation
-                  kind="html"
-                  os="win32,linux,macosx"
-                  style="content/shared.css"/>
-         </presentation>
-      </config>
-      <config
-            content="introContent.xml"
-            id="org.cfeclipse.cfml.introConfigId"
-            introId="org.cfeclipse.cfml.newIntro">
-         <presentation home-page-id="root">
-            <implementation
-                  kind="html"
-                  os="win32,linux,macosx"
-                  style="content/shared.css"/>
-         </presentation>
-      </config>
-   </extension>
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
@@ -1825,15 +1782,6 @@
          <property
                name="aboutImage"
                value="icons/icons/about.gif"/>
-         <property
-               name="startupForegroundColor"
-               value="FFFFFF"/>
-         <property
-               name="startupProgressRect"
-               value="0,280,455,15"/>
-         <property
-               name="startupMessageRect"
-               value="7,220,441,20"/>
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini"/>
