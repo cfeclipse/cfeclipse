@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Array StructKeyArray(structure)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="structkeyarray" returns="Array">
+	<help><![CDATA[
+		Finds the keys in a CFML structure.
+		An array of keys; if structure does not exist, CFML
+		throws an exception.
+	]]></help>
+	<parameter name="structure" type="Struct" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>

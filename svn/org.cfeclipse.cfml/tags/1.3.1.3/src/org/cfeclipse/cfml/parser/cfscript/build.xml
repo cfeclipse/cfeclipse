@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="SPL" default="all" basedir=".">
+
+    <property name="src.home" location="${basedir}"/>
+    <property name="javacc.home" location="C:\Program Files\javacc-4.2\javacc-3.2\bin\lib"/>
+
+     <target name="init"><tstamp/></target>
+
+    <target name="compile" depends="init" description="compile the source">
+        <javac srcdir="${src.home}" debug="on" destdir="${build.home}"
+            deprecation="on" />
+    </target>
+
+    <target name="all" depends="jjtree" description="generate parser sources">
+        <javacc target="SPL.jj"
+            outputdirectory=""
+                javacchome="${javacc.home}"/>
+    </target>
+
+    <target name="jjtree" depends="init" description="generate grammar file from jjt">
+        <jjtree target="SPL.jjt"
+            outputdirectory=""
+                javacchome="${javacc.home}"/>
+    </target>
+
+   <target name="clean">
+        <delete dir="${build.home}" />
+    </target>
+
+</project>

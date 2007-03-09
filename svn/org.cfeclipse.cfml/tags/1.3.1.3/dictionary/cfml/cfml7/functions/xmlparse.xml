@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Object XmlParse(xmlText[, caseSensitive[, validator]])
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="xmlparse" returns="Object">
+	<help><![CDATA[
+		Converts an XML document that is represented as a string
+		variable into an XML document object.
+	]]></help>
+	<parameter name="xmlstring" type="String" required="true">
+		<help><![CDATA[
+			Any of the following:
+			 - A string containing XML text.
+			 - The name of an XML file.
+			 - The URL of an XML file; valid protocol identifiers
+			   include http, https, ftp, and file.
+		]]></help>
+	</parameter>
+	<parameter name="casesensitive" type="boolean" required="false">
+		<help><![CDATA[
+			Maintains the case of document elements and attributes.
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+ 			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="validator" type="String" required="false">
+		<help><![CDATA[
+			Any of the following:
+			 - The name of a Document Type Definition (DTD) or
+			   XML Schema file.
+			 - The URL of a DTD or Schema file; valid protocol
+			   identifiers include http, https, ftp, and file.
+			 - A string representation of a DTD or Schema.
+			 - An empty string; in this case, the XML file must
+			   contain an embedded DTD or Schema identifier, which
+			   is used to validate the document.
+		]]></help>
+	</parameter>
+</function>

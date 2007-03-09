@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	cftree
+		name = "name"
+		required = "boolean"
+		delimiter = "delimiter"
+		completePath = "boolean"
+		appendKey = "boolean"
+		highlightHref = "boolean"
+		onValidate = "script_name"
+		message = "text"
+		onError = "text"
+		lookAndFeel = "motif" or "windows" or "metal"
+		font = "font"
+		fontSize = "size"
+		italic = "boolean"
+		bold = "boolean"
+		height = "integer"
+		width = "integer"
+		vSpace = "integer"
+		hSpace = "integer"
+		align = "alignment"
+		border = "boolean"
+		hScroll = "boolean"
+		vScroll = "boolean"
+		notSupported = "text"
+	...
+	/cftree
+-->
+<tag xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="cftree" single="false" xmlstyle="false">
+	<help><![CDATA[
+		Inserts a tree control in a form. Validates user selections.
+		Used within a cftree tag block. You can use a CFML query
+		to supply data to the tree.
+	]]></help>
+	<parameter name="name" type="String" required="true">
+		<help><![CDATA[
+			Name for tree control.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="required" type="boolean" required="false">
+		<help><![CDATA[
+			- true: user must select an item in tree control
+			- false: they do not
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="delimiter" type="String" required="false">
+		<help><![CDATA[
+			Character to separate elements in form variable path.
+			Default: \\
+		]]></help>
+		<values default="\\">
+			<value option="\\" />
+			<value option="," />
+			<value option=";" />
+			<value option="|" />
+			<value option=":" />
+		</values>
+	</parameter>
+	<parameter name="completepath" type="boolean" required="false">
+		<help><![CDATA[
+			Yes: passes the root part of treename.path form variable
+				when cftree is submitted
+			No, or omitted: root level of form variable is not passed;
+				path value starts with the first node
+			For the preserveData attribute of cfform to work with the
+			tree, you must set this attribute to Yes.
+			If you specify a root name for a tree item with cftreeitem
+			queryasroot, that value is returned. If you do not specify
+			a root name, CFML returns the query name as the root.
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="appendkey" type="boolean" required="false">
+		<help><![CDATA[
+			- true: if you use cftreeitem href attributes, ColdFusion
+			  appends a CFTREEITEMKEY query string variable with
+			  the value of the selected tree item to the cfform action URL.
+			- false: do not append the tree item value to the URL.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="highlighthref" type="boolean" required="false">
+		<help><![CDATA[
+			- true: highlights as a link the displayed value for any
+			  cftreeitem tag that specifies a href attribute.
+			- false: disables highlighting.
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="onvalidate" type="String" required="false">
+		<help><![CDATA[
+			JavaScript function to validate user input. The form object,
+			input object, and input object value are passed to the
+			specified routine, which should return True if validation
+			succeeds; False, otherwise.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="message" type="String" required="false">
+		<help><![CDATA[
+			Message to display if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="onerror" type="String" required="false">
+		<help><![CDATA[
+			JavaScript function to execute if validation fails.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="lookandfeel" type="String" required="false">
+		<help><![CDATA[
+			- motif: renders slider in Motif style
+			- windows: renders slider in Windows style
+			- metal: renders slider in Java Swing style
+			If platform does not support style option, tag defaults to
+			platform default style.
+			Default: windows
+		]]></help>
+		<values default="windows">
+			<value option="motif" />
+			<value option="windows" />
+			<value option="metal" />
+		</values>
+	</parameter>
+	<parameter name="font" type="String" required="false">
+		<help><![CDATA[
+			Font name for data in tree control.
+		]]></help>
+		<values default="arial">
+			<value option="arial" />
+			<value option="times" />
+			<value option="courier" />
+			<value option="arialunicodeMS" />
+		</values>
+	</parameter>
+	<parameter name="fontsize" type="Numeric" required="false">
+		<help><![CDATA[
+			Font size for text in tree control, in points.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="italic" type="boolean" required="false">
+		<help><![CDATA[
+			- true: displays tree control text in italics
+			- false: it does not
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="bold" type="boolean" required="false">
+		<help><![CDATA[
+			- true: displays tree control text in bold
+			- false: it does not
+			Default: false
+		]]></help>
+		<values default="false">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="height" type="Numeric" required="false">
+		<help><![CDATA[
+			Tree control height, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="width" type="Numeric" required="false">
+		<help><![CDATA[
+			Tree control width, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="vspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Vertical margin above and below tree control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="hspace" type="Numeric" required="false">
+		<help><![CDATA[
+			Horizontal spacing to left and right of tree control, in pixels.
+		]]></help>
+		<values />
+	</parameter>
+	<parameter name="align" type="String" required="false">
+		<help><![CDATA[
+			Alignment of the tree control applet object.
+		]]></help>
+		<values>
+			<value option="top" />
+			<value option="left" />
+			<value option="bottom" />
+			<value option="baseline" />
+			<value option="texttop" />
+			<value option="absbottom" />
+			<value option="middle" />
+			<value option="absmiddle" />
+			<value option="right" />
+		</values>
+	</parameter>
+	<parameter name="border" type="boolean" required="false">
+		<help><![CDATA[
+			- true: display a border around the tree control.
+			- false: no border
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="hscroll" type="boolean" required="false">
+		<help><![CDATA[
+			- true: permits horizontal scrolling
+			- false: no horizontal scrolling
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="vscroll" type="boolean" required="false">
+		<help><![CDATA[
+			- true: permits vertical scrolling
+			- false: no vertical scrolling
+			Default: true
+		]]></help>
+		<values default="true">
+			<value option="true" />
+			<value option="false" />
+		</values>
+	</parameter>
+	<parameter name="notsupported" type="String" required="false">
+		<help><![CDATA[
+			Text to display if a page that contains a Java applet-based
+			cfform control is opened by a browser that does not
+			support Java or has Java support disabled.
+			Default:
+			"<b>Browser must support Java to <br>view ColdFusion Java
+			Applets!</b>"
+		]]></help>
+		<values default="&lt;b&gt;Browser must support Java to &lt;br&gt;view ColdFusion Java Applets!&lt;/b&gt;" />
+	</parameter>
+</tag>

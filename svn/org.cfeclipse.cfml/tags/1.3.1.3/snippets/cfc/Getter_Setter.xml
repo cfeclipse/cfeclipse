@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>Getter_Setter</name>
+<help>Creates get and set functions for a property</help>
+<starttext><![CDATA[<cffunction name="get$${Variable}" returntype="$${Type}">	<cfreturn this.$${Variable} /></cffunction><cffunction name="set$$Variable}">	<cfargument  name="local_$${Variable}" type="$${Type}" />	<cfset this.$${Variable} = local_$${Variable} /></cffunction>]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>

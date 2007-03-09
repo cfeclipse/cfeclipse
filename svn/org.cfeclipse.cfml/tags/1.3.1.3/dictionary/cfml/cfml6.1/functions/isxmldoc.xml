@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	boolean IsXmlDoc(value)
+-->
+<function xmlns="http://www.cfeclipse.org/version1/dictionary"
+	name="isxmldoc" returns="boolean">
+	<help><![CDATA[
+		Determines whether a function parameter is an Extended Markup
+		language (XML) document object.
+	]]></help>
+	<parameter name="value" type="Object" required="true">
+		<help><![CDATA[
+		]]></help>
+	</parameter>
+</function>
