@@ -1,4 +1,3 @@
-package org.cfeclipse.cfml.editors.actions;
 /*
  * Created on Feb 23, 2004
  *
@@ -23,6 +22,7 @@ package org.cfeclipse.cfml.editors.actions;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
+package org.cfeclipse.cfml.editors.actions;
 
 /**
  * @author Paul V
@@ -34,6 +34,6 @@ public class CFAbortAction extends GenericEncloserAction {
 	
 	public CFAbortAction()
 	{
-		super("<cfabort showerror=\"","\">");
+		super("<cfabort>","");
 	}
 }
