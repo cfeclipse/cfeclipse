@@ -61,11 +61,20 @@ public class Encloser
 				
 				cmtpart.append(start);
 				// dont go past end of file.
-				if( offset == doc.getLength())
-				{
+				if( offset >= doc.getLength() ) {
 					len = 0;
 				}
-				cmtpart.append(doc.get(offset,len));
+
+				// Copy the selection into a local var and then check to see if it
+				// is a whitespace character before appending.. if it is white space,
+				// set the length of the insert to 0 and don't bother appending the selection.				
+				// This seems to stop any corruption of the text editor buffer. Paul V.
+				String selection = doc.get(offset,len);
+				if(len == 1 && selection.matches("[ \t\n\r]")) {
+					len = 0;
+				} else {
+					cmtpart.append(selection);
+				}
 				cmtpart.append(end);
 				
 				doc.replace(offset, len, cmtpart.toString());

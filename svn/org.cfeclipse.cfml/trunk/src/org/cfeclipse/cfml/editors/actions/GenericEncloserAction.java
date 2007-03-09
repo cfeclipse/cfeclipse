@@ -102,13 +102,17 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 			
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
-			this.enclose(doc,(ITextSelection)sel,start,end);
+			this.enclose(doc,(ITextSelection)sel,start,end);			
 			
-			//move the cursor to before the end of the new insert
+			//move the cursor to before the end of the new insert			
 			int offset = ((ITextSelection)sel).getOffset();
 			offset += ((ITextSelection)sel).getLength();
 			offset += start.length();
+
 			editor.setHighlightRange(offset,0,true);
+			// Once we've moved the cursor we need to reset the highlight range 
+			// otherwise on the next insert, the cursor won't move. Paul V.
+			editor.resetHighlightRange();
 
 			// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
 			CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);		
