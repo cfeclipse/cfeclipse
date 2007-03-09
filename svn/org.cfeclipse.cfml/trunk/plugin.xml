@@ -263,6 +263,15 @@
          </action>
 		<!-- Surround with a cfscript -->
          <action
+               class="org.cfeclipse.cfml.editors.actions.CFAbortAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFAbort"
+               icon="icons/ctool16/stop.gif"
+               id="org.cfeclipse.cfml.editors.actions.CFAbortAction"
+               label="%action.label.CFAbort"
+               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.CFAbort"/>
+         <action
                definitionId="org.cfeclipse.cfml.editors.actions.CFScript"
                label="%action.label.CFScript"
                icon="icons/ctool16/script.gif"
@@ -1268,6 +1277,16 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="M1+G">
       	</keyBinding>
+      <command
+            categoryId="org.cfeclipse.cfml.commandCategory"
+            description="%command.description.31"
+            id="org.cfeclipse.cfml.editors.actions.CFAbort"
+            name="%command.name.31"/>
+      <keyBinding
+            commandId="org.cfeclipse.cfml.editors.actions.CFAbort"
+            contextId="org.cfeclipse.cfml.cfmleditorcontext"
+            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            keySequence="M1+M2+A"/>
 
       <!-- Find a matching bracket pair
       <command
