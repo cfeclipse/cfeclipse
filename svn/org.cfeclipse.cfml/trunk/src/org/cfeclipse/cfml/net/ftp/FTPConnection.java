@@ -31,6 +31,12 @@ import org.cfeclipse.cfml.util.AlertUtils;
 import org.cfeclipse.cfml.views.explorer.FileNameFilter;
 import org.cfeclipse.cfml.views.explorer.FileSystemRoot;
 import org.cfeclipse.cfml.views.explorer.IFileProvider;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IViewPart;
 
@@ -64,7 +70,11 @@ public class FTPConnection implements IFileProvider {
     protected static DefaultFileSystemManager manager = null;
     
     public static String CONNECT_FAILED = "Could not connect to server.";
-    
+
+	private String connectionString;
+	private FileObject object;
+
+	private FileSystemOptions fileSystemOptions;
     
     public boolean connectFailed() {
         return connectFailed;
@@ -176,7 +186,12 @@ public class FTPConnection implements IFileProvider {
     public void connect() {
         /*if (isConnected()) {
             return;
+            
+            
+            
         }*/
+    	
+    	
         try {
             
             AlertUtils.showStatusErrorMessage(null,viewPart);
@@ -184,10 +199,8 @@ public class FTPConnection implements IFileProvider {
             this.manager = (DefaultFileSystemManager)VFS.getManager();
         	
                         
-            //Set up a URL
-            String connectionString = connectionProperties.getType() + ":";
-            
-            if(connectionProperties.getType().equalsIgnoreCase("ftp") || connectionProperties.getType().equalsIgnoreCase("sftp"))
+            connectionString = connectionProperties.getType() + ":";
+			if(connectionProperties.getType().equalsIgnoreCase("ftp") || connectionProperties.getType().equalsIgnoreCase("sftp"))
             	connectionString += "//";
             
             
@@ -210,18 +223,41 @@ public class FTPConnection implements IFileProvider {
             if(connectionProperties.getPath().length() >  0)
             	connectionString += connectionProperties.getPath();
             
-            FileObject object;
-            if(connectionProperties.getType().equalsIgnoreCase("sftp")){
-            	//need to add SFTP key location
-            	FileSystemOptions opts = new FileSystemOptions();
+        	FileSystemOptions opts = new FileSystemOptions();
+        	this.fileSystemOptions = opts;
+			SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
 
-            	SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts, 
-            	"no");
-            	object = VFS.getManager().resolveFile(connectionString, opts);
             
-            }else {
-            	object = this.manager.resolveFile(connectionString);
-            }
+//          TODO: Make this a job... 
+        	final Job connectionJob = new Job("connecting..."){
+
+				protected IStatus run(IProgressMonitor monitor) {
+					try {
+			            	//need to add SFTP key location
+							
+			            	object = VFS.getManager().resolveFile(connectionString, fileSystemOptions);
+			           
+			          if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+			           
+					} catch (FileSystemException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					 return Status.OK_STATUS;
+			            
+				}
+        		
+        	};
+        /*	connectionJob.addJobChangeListener(new JobChangeAdapter() {
+                public void done(IJobChangeEvent event) {
+                if (event.getResult().isOK())
+                	postMessage("Job completed successfully");
+                   else
+                      postError("Job did not complete successfully");
+                }
+             });*/
+        	connectionJob.setSystem(true);
+        	connectionJob.schedule(); // start as soon as possible
 
            
     		//FileObject basefile = this.manager.resolveFile(connectionString);
@@ -250,7 +286,7 @@ public class FTPConnection implements IFileProvider {
 
             ftpClient.setType(FTPTransferType.ASCII);*/
 
-            AlertUtils.showStatusMessage("Connected to: " + this.manager.getBaseFile().getName().getFriendlyURI(), viewPart);
+            //AlertUtils.showStatusMessage("Connected to: " + manager.getBaseFile().getName().getFriendlyURI(), viewPart);
 
         } catch (Exception e) {
             if (!connectFailed) {
