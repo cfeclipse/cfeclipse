@@ -100,23 +100,26 @@
     	  		</and>
 		    </enablement>
 		</decorator>
-		<!--
+		
   <decorator
         adaptable="true"
         class="org.cfeclipse.cfml.editors.decoration.URLDecorator"
-        icon="icons/obj16/decorator_link.png"
-        id="org.cfeclipse.cfml.ui.decorators.urlLinkDecorator"
+        id="org.cfeclipse.cfml.editors.decoration.URLDecorator"
         label="URL Link Decorator"
-        lightweight="false"
+        lightweight="true"
         location="TOP_RIGHT"
-        objectClass="org.eclipse.core.resources.IResource"
         state="true">
         <description>
         Provides decoration for resources that have a URL link used by the internal and external browsers
         </description>
+        <enablement>
+           <and>
+              <objectClass name="org.eclipse.core.resources.IResource"/>
+           </and>
+        </enablement>
+  
        
   </decorator>
-  -->
 	</extension>
 	
    <extension
@@ -786,7 +789,6 @@
 				<separator name="group1"/>
 			</menu>
 		</objectContribution>
-	 <!--
   <objectContribution
         adaptable="false"
         id="org.cfeclipse.cfml.editFileURL"
@@ -817,7 +819,6 @@
            id="org.cfeclipse.cfml.editURLAction"
            label="Edit URL"/>
   </objectContribution>
-	-->
 	</extension>
    
 	<!-- ////////////////////////////////////////////////////////////// -->
@@ -1806,7 +1807,7 @@
                value="plugin_customization.ini"/>
          <property
                name="aboutText"
-               value="CFEclipse is an awesome IDE for Coldfusion. It is. Really."/>
+               value="CFEclipse&#x0A;&#x0A;Version: 1.3.1.3&#x0A;&#x0A;(c)  Copyright (c) 2004-2007 The CFEclipse Project &#x0A;Visit http://www.cfeclipse.org"/>
       </product>
    </extension>
    <extension
