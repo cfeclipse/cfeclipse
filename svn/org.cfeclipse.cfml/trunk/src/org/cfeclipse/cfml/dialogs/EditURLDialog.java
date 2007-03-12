@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Text;
 public class EditURLDialog extends Dialog {
 
 	public String url = "http://";
-	public String message = "Please enter  this item's URL:";
+	public String message = "Please enter this item's absolute URL:";
 	public Text fileNameField;
 	
 	public EditURLDialog(Shell parentShell) {
@@ -59,8 +59,7 @@ public class EditURLDialog extends Dialog {
       
          fileNameField.setLayoutData(gridData);
          fileNameField.setText(this.url);
-        
-        
+      
 		return container;
 	}
 
@@ -79,6 +78,16 @@ public class EditURLDialog extends Dialog {
 
 	private void validateInput() {
 		Button button = getButton(IDialogConstants.OK_ID);
+		String urlText = fileNameField.getText().trim();
+		if(urlText.length() >0){
+			//check that its a valid URL, maybe that it DOESNT end with /
+			if(urlText.charAt(urlText.length()) == '/'){
+				setMessage("URL should not end with /");
+			}
+			
+			
+		}
+		System.out.println(urlText.charAt(urlText.length()));
 		//if (fileNameField.getText().trim().length() == 0) {
 		//	button.setEnabled(false);
 		//}else{

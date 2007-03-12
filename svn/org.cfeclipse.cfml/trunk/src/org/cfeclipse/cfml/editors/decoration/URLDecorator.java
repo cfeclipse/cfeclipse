@@ -24,7 +24,7 @@ public class URLDecorator extends LabelProvider implements
 		ILightweightLabelDecorator {
 
 	private final List listeners = new ArrayList();
-
+	public final static String ID = "org.cfeclipse.cfml.editors.decoration.URLDecorator";
 	
 
 	public static URLDecorator getURLDecorator() {
@@ -32,9 +32,9 @@ public class URLDecorator extends LabelProvider implements
 				.getWorkbench().getDecoratorManager();
 
 		if (decoratorManager
-				.getEnabled("org.cfeclipse.cfml.editors.decoration.URLDecorator")) {
+				.getEnabled(ID)) {
 			return (URLDecorator) decoratorManager
-					.getBaseLabelProvider("org.cfeclipse.cfml.editors.decoration.URLDecorator");
+					.getBaseLabelProvider(ID);
 		}
 		return null;
 	}
@@ -65,13 +65,9 @@ public class URLDecorator extends LabelProvider implements
 	}
 
 	public void addListener(ILabelProviderListener listener) {
-		System.out.println("adding a listener" + listener);
 		if (!listeners.contains(listener)) {
 			listeners.add(listener);
 		}
-		
-		
-		
 	}
 
 	public void dispose() {
@@ -85,7 +81,6 @@ public class URLDecorator extends LabelProvider implements
 	}
 
 	public void removeListener(ILabelProviderListener listener) {
-		System.out.println("removing a listener" + listener);
 		listeners.remove(listener);
 	}
 

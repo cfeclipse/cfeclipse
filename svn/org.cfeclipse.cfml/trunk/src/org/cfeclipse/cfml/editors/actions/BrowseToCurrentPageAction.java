@@ -26,6 +26,7 @@ package org.cfeclipse.cfml.editors.actions;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
+import org.cfeclipse.cfml.util.ResourceUtils;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
@@ -76,15 +77,18 @@ public class BrowseToCurrentPageAction implements IEditorActionDelegate {
 	        //IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			//ISelection sel = editor.getSelectionProvider().getSelection();
 	    	FileEditorInput input = (FileEditorInput)editor.getEditorInput();
-			String currentpath = ( (IResource) input.getFile() ).getProjectRelativePath().toString();
+		//	String currentpath = ( (IResource) input.getFile() ).getProjectRelativePath().toString();
 			//String currentfile = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getName();
-			String URLpath = propertyManager.projectURL(input.getFile().getProject());
+	//		String URLpath = propertyManager.projectURL(input.getFile().getProject());
 			// System.out.println("currentpath: " + currentpath + "; currentfile: " + currentfile + "; URLpath: " + URLpath);
 			
-			String calculatedURL = URLpath + "/" + currentpath;
+			
+			String url = ResourceUtils.getURL(input.getFile());
+			
+//			String calculatedURL = URLpath + "/" + currentpath;
 	        
 	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-	        browser.setUrl(calculatedURL);
+	        browser.setUrl(url);
 	        browser.setFocus();
 	        // browser.refresh();
 	        

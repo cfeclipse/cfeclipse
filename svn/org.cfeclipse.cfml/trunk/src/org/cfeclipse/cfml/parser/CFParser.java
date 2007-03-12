@@ -1491,7 +1491,7 @@ public class CFParser {
 			//parserState.getMatches() was called twice in succession, this should speed it up a bit.
 			ArrayList matches = parserState.getMatches();
 //			System.out.println("=============> Beginning match dump" );			
-			Util.dumpMatches(matches);
+			//Util.dumpMatches(matches);
 //			System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(matches);
 			

@@ -32,6 +32,7 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -40,6 +41,7 @@ import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.QualifiedName;
 
 /**
  * This is a helper class to provide various useful methods that related to Eclipse
@@ -312,5 +314,57 @@ public class ResourceUtils {
     
     //Sets and gets persistent Properties
     
+    public static String getURL(IResource resource){
+    	
+    	String string = findRootURL(resource, "");
+    	return string;
+    	
+    }
+    
+    //TODO: Make this figure out the path properly!!!
+    
+    
+    private static String findRootURL(IResource resource, String offset){
+    	if(resource instanceof IProject){
+    		String projectURL = getPersistentProperty(resource, "", CFMLPreferenceConstants.P_PROJECT_URL);
+    		
+    		//need to check the url here.
+    		if(projectURL.charAt(projectURL.length()-1) != '/'){
+    			projectURL += "/";
+    		}
+    		return projectURL + offset;
+    	}
+    	else {
+    		if(hasProperty(resource, "", CFMLPreferenceConstants.P_PROJECT_URL)){
+    			 String folderURL = getPersistentProperty(resource, "", CFMLPreferenceConstants.P_PROJECT_URL);
+    			return folderURL + offset;
+    		}
+    		else{
+    			if(offset.length()!=0){
+    				return findRootURL(resource.getParent(), resource.getName() + "/" + offset);
+    			}
+    			else{
+    				return findRootURL(resource.getParent(), resource.getName());	
+    			}
+    		}
+    	}
+    }
+    public static String getPersistentProperty(IResource resource, String qualifier, String name){
+    	try {
+			return resource.getPersistentProperty(new QualifiedName(qualifier , name));
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    public static boolean hasProperty(IResource resource, String qualifier, String name){
+    		String persistentProperty = getPersistentProperty(resource, qualifier, name);
+    		if(persistentProperty == null || persistentProperty.trim().length() == 0){
+    			return false;
+    		}
+    	return true;
+    }
     
 }

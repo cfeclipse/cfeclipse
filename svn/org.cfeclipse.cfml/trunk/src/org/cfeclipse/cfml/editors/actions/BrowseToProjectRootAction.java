@@ -77,7 +77,6 @@ public class BrowseToProjectRootAction implements IEditorActionDelegate {
 			//ISelection sel = editor.getSelectionProvider().getSelection();
 			String projectURL = propertyManager.projectURL(input.getFile().getProject());
 			// System.out.println("currentpath: " + currentpath + "; currentfile: " + currentfile + "; URLpath: " + URLpath);
-			
 	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
 	        browser.setUrl(projectURL);
 	        browser.setFocus();
