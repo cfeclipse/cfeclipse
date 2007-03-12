@@ -20,8 +20,6 @@ public class EditorPartListener implements IPartListener {
 	}
 
 	public void partBroughtToTop(IWorkbenchPart part) {
-		// TODO Auto-generated method stub
-			//System.out.println("Part brought to top" + part.getClass());
 		if(part instanceof CFMLEditor){
 			
 			CFMLEditor openEditor =(CFMLEditor)part;

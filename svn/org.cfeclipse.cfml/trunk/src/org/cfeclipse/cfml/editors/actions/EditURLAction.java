@@ -2,6 +2,7 @@ package org.cfeclipse.cfml.editors.actions;
 
 import java.util.Iterator;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dialogs.EditURLDialog;
 import org.cfeclipse.cfml.editors.decoration.URLDecorator;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
@@ -51,8 +52,8 @@ public class EditURLAction implements IObjectActionDelegate {
 			if(eud.open() == IDialogConstants.OK_ID){
 				//lets save this
 					try {
-						
 						resource.setPersistentProperty(new QualifiedName("", CFMLPreferenceConstants.P_PROJECT_URL), eud.getUrl());
+						URLDecorator.getURLDecorator().refresh();
 						
 					} catch (CoreException e) {
 						// TODO Auto-generated catch block
@@ -64,29 +65,12 @@ public class EditURLAction implements IObjectActionDelegate {
 	
 
 	public void selectionChanged(IAction action, ISelection selection) {
-		// TODO Auto-generated method stub
 		 Iterator selectionIter = ((StructuredSelection)selection).iterator();
 		 while(selectionIter.hasNext()){
 			 this.resource = (IResource)selectionIter.next();
 		 }
 	}
 	
-	private String getURL(IResource resource, String pathSoFar){
-		try {
-			String persistentProperty = resource.getPersistentProperty(new QualifiedName("", "cfe_resource_url"));
-			
-			if(persistentProperty == null || persistentProperty.trim().length() == 0){
-			}
-			else{
-				return persistentProperty;
-			}
-		
-		
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "";
-	}
+	
 
 }

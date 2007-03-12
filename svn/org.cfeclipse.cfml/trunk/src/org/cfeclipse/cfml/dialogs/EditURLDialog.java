@@ -51,7 +51,7 @@ public class EditURLDialog extends Dialog {
 
 			public void paintControl(PaintEvent e) {
 				//TODO: This is rather hokey, I couldn't find a way to find out if the dialog finally has the buttons
-				validateInput();
+			//	validateInput();
 				
 			}});
 
@@ -79,11 +79,11 @@ public class EditURLDialog extends Dialog {
 
 	private void validateInput() {
 		Button button = getButton(IDialogConstants.OK_ID);
-		if (fileNameField.getText().trim().length() == 0) {
-			button.setEnabled(false);
-		}else{
+		//if (fileNameField.getText().trim().length() == 0) {
+		//	button.setEnabled(false);
+		//}else{
 			button.setEnabled(true);
-		}
+		//}
 		
 	}
 

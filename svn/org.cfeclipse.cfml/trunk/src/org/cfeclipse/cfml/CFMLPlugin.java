@@ -159,7 +159,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			+ "/properties.ini"
 		); */
 		
-		//PropertyConfigurator.configure(CFMLPlugin.getDefault().getBundle().getEntry("/lib/log4j.properties"));
+		PropertyConfigurator.configure(CFMLPlugin.getDefault().getBundle().getEntry("/lib/log4j.properties"));
 		this.propertyStore = new PreferenceStore(
 			CFMLPlugin.getDefault().getStateLocation().toString()
 			+ "/properties.ini"

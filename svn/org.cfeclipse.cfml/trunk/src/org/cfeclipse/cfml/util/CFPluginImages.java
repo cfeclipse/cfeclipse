@@ -404,6 +404,11 @@ public class CFPluginImages {
 	{
 		return IMAGE_REGISTRY;
 	}
+	
+	public static ImageDescriptor getImageDescriptor(String offset, String imageid){
+		
+		return createDescriptor(offset, imageid);
+	}
 	 
 	/**
 	 * add and image to the image registry
