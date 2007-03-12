@@ -20,68 +20,68 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.internal.decorators.DecoratorManager;
 
-
-public class URLDecorator extends LabelProvider implements ILightweightLabelDecorator  { 
+public class URLDecorator extends LabelProvider implements
+		ILightweightLabelDecorator {
 
 	private final List listeners = new ArrayList();
-	public URLDecorator(){
-		System.out.println("Creating the decorator");
-		DecoratorManager decoratorManager = (DecoratorManager)CFMLPlugin.getDefault().getWorkbench().getDecoratorManager();
-		addListener(decoratorManager);
+
+	
+
+	public static URLDecorator getURLDecorator() {
+		IDecoratorManager decoratorManager = CFMLPlugin.getDefault()
+				.getWorkbench().getDecoratorManager();
+
+		if (decoratorManager
+				.getEnabled("org.cfeclipse.cfml.editors.decoration.URLDecorator")) {
+			return (URLDecorator) decoratorManager
+					.getBaseLabelProvider("org.cfeclipse.cfml.editors.decoration.URLDecorator");
+		}
+		return null;
 	}
 
-	public static URLDecorator getURLDecorator()
-	{
-    IDecoratorManager decoratorManager =
-    	CFMLPlugin.getDefault().getWorkbench().getDecoratorManager();
-  
-	  if (decoratorManager
-		.getEnabled("org.cfeclipse.cfml.editors.decoration.URLDecorator"))
-	  {
-		return (URLDecorator) decoratorManager.getBaseLabelProvider("org.cfeclipse.cfml.editors.decoration.URLDecorator");
-	  }
-	  return null;
-	}
-	
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof IResource) {
 			IResource selResource = (IResource) element;
 			String urlProperty = null;
 			try {
-				urlProperty = selResource.getPersistentProperty(new QualifiedName("", CFMLPreferenceConstants.P_PROJECT_URL));
-				
-				
+				urlProperty = selResource
+						.getPersistentProperty(new QualifiedName("",
+								CFMLPreferenceConstants.P_PROJECT_URL));
+
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
-			ImageDescriptor linkImage = CFPluginImages.getImageDescriptor(CFPluginImages.MODEL_OBJECTS, CFPluginImages.ICON_DECORATOR_LINK);
-			if(urlProperty !=null && urlProperty.length() > 0){
-				if(linkImage != null){
+			ImageDescriptor linkImage = CFPluginImages.getImageDescriptor(
+					CFPluginImages.MODEL_OBJECTS,
+					CFPluginImages.ICON_DECORATOR_LINK);
+			if (urlProperty != null && urlProperty.length() > 0) {
+				if (linkImage != null) {
 					decoration.addOverlay(linkImage);
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 	public void addListener(ILabelProviderListener listener) {
 		System.out.println("adding a listener" + listener);
-		if(!listeners.contains(listener)){
+		if (!listeners.contains(listener)) {
 			listeners.add(listener);
 		}
+		
 		
 		
 	}
 
 	public void dispose() {
 		listeners.clear();
-		
+
 	}
 
 	public boolean isLabelProperty(Object element, String property) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public void removeListener(ILabelProviderListener listener) {
@@ -89,23 +89,13 @@ public class URLDecorator extends LabelProvider implements ILightweightLabelDeco
 		listeners.remove(listener);
 	}
 
-	public void refresh(){
-	 URLDecorator decorator = getURLDecorator();
-	  fireLabelEvent(new LabelProviderChangedEvent(decorator));
-		
+	public void refresh() {
+		URLDecorator decorator = getURLDecorator();
+		Iterator iterator = listeners.iterator();
+		while (iterator.hasNext()) {
+			ILabelProviderListener listener = (ILabelProviderListener) iterator.next();
+			listener.labelProviderChanged(new LabelProviderChangedEvent(decorator));
+		}
 	}
-	 private void fireLabelEvent(final LabelProviderChangedEvent event)
-	    {
-	    // We need to get the thread of execution to fire the label provider
-	    // changed event , else WSWB complains of thread exception. 
-	    Display.getDefault().asyncExec(new Runnable()
-	    {
-	      public void run()
-	      {
-	        fireLabelProviderChanged(event);
-	      }
-	    });
-	    }
-	
-	
+
 }
