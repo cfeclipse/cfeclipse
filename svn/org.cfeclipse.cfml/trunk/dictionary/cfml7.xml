@@ -5262,10 +5262,6 @@
 			name from the returned HTTP response body.
 		]]></help>
 		<values/>
-		<triggers>
-			<selectedValue attributeName="method" required="false" value="get"/>
-			<selectedValue attributeName="method" required="false" value="post"/>
-		</triggers>
 	</parameter>
 	<parameter name="columns" type="String" required="false">
 		<help><![CDATA[
@@ -5293,10 +5289,6 @@
 			ColdFusion generates an error.
 		]]></help>
 		<values/>
-		<triggers>
-			<selectedValue attributeName="method" required="false" value="get"/>
-			<selectedValue attributeName="method" required="false" value="post"/>
-		</triggers>
 	</parameter>
 	<parameter name="firstrowasheaders" type="boolean" required="false">
 		<help><![CDATA[
@@ -5314,10 +5306,6 @@
 			<value option="true"/>
 			<value option="false"/>
 		</values>
-		<triggers>
-			<selectedValue attributeName="method" required="false" value="get"/>
-			<selectedValue attributeName="method" required="false" value="post"/>
-		</triggers>
 	</parameter>
 	<parameter name="delimiter" type="String" required="false">
 		<help><![CDATA[
@@ -5330,11 +5318,10 @@
 			<value option="|"/>
 			<value option=":"/>
 		</values>
-		<triggers>
-			<selectedValue attributeName="method" required="false" value="get"/>
-			<selectedValue attributeName="method" required="false" value="post"/>
-		</triggers>
 	</parameter>
+	
+	
+	
 	<parameter name="textqualifier" type="String" required="false">
 		<help><![CDATA[
 			A character that, optionally, specifies the start and end
@@ -5350,11 +5337,35 @@
 			<value option="&quot;"/>
 			<value option="'"/>
 		</values>
-		<triggers>
-			<selectedValue attributeName="method" required="false" value="get"/>
-			<selectedValue attributeName="method" required="false" value="post"/>
-		</triggers>
 	</parameter>
+	
+	
+	<parameter name="multipart" type="boolean" required="false">
+		<help><![CDATA[
+		Tells ColdFusion to send all data specified by cfhttpparam type="formField" tags as multipart form data, with a Content-Type of multipart/form-data.
+		]]></help>
+		<values default="false">
+			<value option="true"/>
+			<value option="false"/>
+		</values>
+	</parameter>
+	
+	<parameter name="path" type="String" required="false">
+		<help><![CDATA[
+	Tells ColdFusion to save the HTTP response body in a file. Contains the absolute path to the directory in which to store the file.
+		]]></help>
+		<values />
+
+	</parameter>
+	
+	<parameter name="file" type="String" required="false">
+		<help><![CDATA[
+	For a GET operation, the default is the file requested in the URL, if there is one. For example, if the URL in a GET method is http:www.myco.com/test.htm, the default file is test.htm.
+		]]></help>
+		<values />
+	
+	</parameter>
+	
 </tag>
 <!--
 	cfhttpparam
