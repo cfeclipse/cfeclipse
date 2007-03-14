@@ -44,6 +44,7 @@ Visit http://www.cfeclipse.org
       <plugin id="com.ibm.icu"/>
       <plugin id="com.jcraft.jsch"/>
       <plugin id="org.apache.ant"/>
+      <plugin id="org.apache.lucene"/>
       <plugin id="org.cfeclipse.cfml"/>
       <plugin id="org.eclipse.ant.core"/>
       <plugin id="org.eclipse.ant.ui"/>
@@ -73,6 +74,9 @@ Visit http://www.cfeclipse.org
       <plugin id="org.eclipse.equinox.preferences"/>
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.help.appserver"/>
+      <plugin id="org.eclipse.help.base"/>
+      <plugin id="org.eclipse.help.ui"/>
       <plugin id="org.eclipse.jdt.core"/>
       <plugin id="org.eclipse.jdt.core.manipulation"/>
       <plugin id="org.eclipse.jdt.debug"/>
@@ -84,6 +88,7 @@ Visit http://www.cfeclipse.org
       <plugin id="org.eclipse.ltk.core.refactoring"/>
       <plugin id="org.eclipse.ltk.ui.refactoring"/>
       <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.platform"/>
       <plugin id="org.eclipse.search"/>
       <plugin id="org.eclipse.swt"/>
       <plugin id="org.eclipse.swt.carbon.macosx" fragment="true"/>
@@ -105,11 +110,14 @@ Visit http://www.cfeclipse.org
       <plugin id="org.eclipse.ui"/>
       <plugin id="org.eclipse.ui.browser"/>
       <plugin id="org.eclipse.ui.carbon" fragment="true"/>
+      <plugin id="org.eclipse.ui.cheatsheets"/>
       <plugin id="org.eclipse.ui.console"/>
       <plugin id="org.eclipse.ui.editors"/>
       <plugin id="org.eclipse.ui.externaltools"/>
       <plugin id="org.eclipse.ui.forms"/>
       <plugin id="org.eclipse.ui.ide"/>
+      <plugin id="org.eclipse.ui.intro"/>
+      <plugin id="org.eclipse.ui.intro.universal"/>
       <plugin id="org.eclipse.ui.navigator"/>
       <plugin id="org.eclipse.ui.navigator.resources"/>
       <plugin id="org.eclipse.ui.views"/>
