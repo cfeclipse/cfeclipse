@@ -8427,7 +8427,9 @@
 			query. Use this value to specify the results of a query as
 			input.
 		]]></help>
-		<values/>
+		<values default="query">
+			<value option="query"/>
+		</values>
 	</parameter>
 	<parameter name="username" type="String" required="false">
 		<help><![CDATA[
