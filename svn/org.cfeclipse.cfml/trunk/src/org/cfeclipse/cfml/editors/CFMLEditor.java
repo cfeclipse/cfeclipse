@@ -438,7 +438,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	}
 	public void setStatusLine(){
 		
-		try{
+	/*	try{
 		//		Sets the current file path to the status line
 		IEditorInput input= getEditorInput();
 		
@@ -453,7 +453,47 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		}
 		catch (Exception e){
 			e.printStackTrace();
-		}
+		}*/
+		
+		
+		
+		try{
+			//From Dean Harmon @ Adobe, to work with the RDS plugin
+            //          Sets the current file path to the status line
+
+            IEditorInput input= getEditorInput();
+
+            IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
+
+            String message;
+
+            if (original != null)
+
+            {
+
+                  message = original.getLocation().toString();
+
+            } else {
+
+                  message = input.getToolTipText();
+
+            }
+
+            getEditorSite().getActionBars().getStatusLineManager().setMessage(message);
+
+           
+
+            //this.getEditorSite().getWorkbenchWindow().getShell().setToolTipText(original.getLocation().toString());
+
+            }
+
+            catch (Exception e){
+
+                  System.err.println(e);
+
+            }
+		
+		
 	}
 
 	public IVerticalRuler verticalRuler() {
