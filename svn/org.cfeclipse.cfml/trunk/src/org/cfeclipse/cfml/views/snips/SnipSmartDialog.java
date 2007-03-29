@@ -30,6 +30,7 @@ public class SnipSmartDialog {
         ArrayList list = new ArrayList();
         int position = 0;
         
+        //TODO: replace with a reg-ex
         while(newStr.indexOf("$${",position) >= 0) {
 			int expressionStart = newStr.indexOf("$${",position)+3;
 			int expressionEnd = newStr.indexOf("}",expressionStart);
