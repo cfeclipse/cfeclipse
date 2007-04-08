@@ -28,6 +28,7 @@ package org.cfeclipse.cfml.editors;
 
 
 //import java.util.Iterator;
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -115,6 +116,7 @@ import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
+import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ShowInContext;
@@ -122,6 +124,7 @@ import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
@@ -393,28 +396,41 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		createDragAndDrop(projectionViewer);
 
 		try {
-			if (isEditorInputReadOnly()
-					&& getPreferenceStore().getBoolean(
-							EditorPreferenceConstants.P_WARN_READ_ONLY_FILES)) {
-				String[] labels = new String[1];
-				labels[0] = "OK";
-				MessageDialogWithToggle msg = new MessageDialogWithToggle(
-						this.getEditorSite().getShell(),
-						"Warning!",
-						null,
-						"You are opening a read only file. You will not be able to make or save any changes.",
-						MessageDialog.WARNING, labels, 0,
-						"Don't show this warning in future.", false);
-				//MessageBox msg = new MessageBox(this.getEditorSite().getShell());
-				//msg.setText("Warning!");
-				//msg.setMessage("You are opening a read only file. You will not be
-				// able to make or save any changes.");
-				if (msg.open() == 0) {
-					if (msg.getToggleState()) {
-						// Don't show warning in future.
-						getPreferenceStore().setValue(
-								EditorPreferenceConstants.P_WARN_READ_ONLY_FILES, false);
+			if (isEditorInputReadOnly()) {				
+			
+				if (getPreferenceStore().getBoolean(
+						EditorPreferenceConstants.P_WARN_READ_ONLY_FILES)
+						&& !getPreferenceStore().getBoolean("MAKE_WRITABLE")) {
+					
+					String[] labels = new String[2];
+					labels[0] = "OK";
+					labels[1] = "Make writable";
+					MessageDialogWithToggle msg = new MessageDialogWithToggle(
+							this.getEditorSite().getShell(),
+							"Warning!",
+							null,
+							"You are opening a read only file. You will not be able to make or save any changes.",
+							MessageDialog.WARNING, labels, 0,
+							"Don't show this warning in future.", false);
+					//MessageBox msg = new MessageBox(this.getEditorSite().getShell());
+					//msg.setText("Warning!");
+					//msg.setMessage("You are opening a read only file. You will not be
+					// able to make or save any changes.");
+					if (msg.open() == 0) {
+						if (msg.getToggleState()) {
+							// Don't show warning in future.
+							getPreferenceStore().setValue(
+									EditorPreferenceConstants.P_WARN_READ_ONLY_FILES, false);
+						}
+					} else {
+						if (msg.getToggleState()) {
+							// Don't show warning in future.
+							getPreferenceStore().setValue("MAKE_WRITABLE", true);
+						}
+						setReadOnly(false);
 					}
+				} else if (getPreferenceStore().getBoolean("MAKE_WRITABLE")){
+					setReadOnly(false);					
 				}
 			}
 			
@@ -432,7 +448,64 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		
 		setStatusLine();
 		
+		
 	}
+	
+	protected void setReadOnly(boolean mode) {
+		IEditorInput input = getEditorInput();
+		String fileName = input.getName();
+		File file = new File(fileName);
+		
+		if (input instanceof JavaFileEditorInput) {
+			JavaFileEditorInput tmp;			
+			tmp = (JavaFileEditorInput) input;
+			IPath path = tmp.getPath();
+			file = path.toFile();
+			if (!file.exists()) {
+				MessageDialog.openError(
+						getEditorSite().getShell(), "Error", "Cannot fetch " + fileName + " for attributes change.");					
+			} else {
+								
+				try {
+					String command = "";					
+					String osName = System.getProperty("os.name");					
+					
+					if (osName.contains(new StringBuffer("Windows"))) {
+						if (mode)
+							command = "attrib +r " + path.toOSString();
+						else 
+							command = "attrib -r " + path.toOSString();							
+					} else if (osName.contains(new StringBuffer("Linux"))) {
+						if (mode)
+							command = "chmod 444 " + path.toOSString();
+						else 
+							command = "chmod 644 " + path.toOSString();							
+					}
+					
+					Runtime rt = Runtime.getRuntime();
+					rt.exec(command);
+					setEditorInputModifiable();
+				} catch (Exception e) {
+					MessageDialog.openError(
+							getEditorSite().getShell(), "Error", "Unable to set read/write permission of file " + fileName);					
+				}
+				
+				
+			}			
+		}		
+	}
+	/**
+	 * Allow user to make change to current open document.
+	 *
+	 */
+	protected void setEditorInputModifiable() {
+		IDocumentProvider provider= getDocumentProvider();
+		if (provider instanceof IDocumentProviderExtension) {
+			IDocumentProviderExtension extension= (IDocumentProviderExtension) provider;
+			extension.setCanSaveDocument(getEditorInput());
+		}		
+	}
+	
 	private void partActivated(){
 		System.out.println("I am activated" + this.getPartName());
 	}
