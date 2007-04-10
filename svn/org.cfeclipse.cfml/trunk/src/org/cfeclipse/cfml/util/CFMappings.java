@@ -4,7 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 
 public class CFMappings{
@@ -14,6 +20,8 @@ public class CFMappings{
 	 */
 	private static final long serialVersionUID = 356194454622215609L;
 	private Map mappingsTable = new HashMap();
+	
+	private Log logger = LogFactory.getLog(CFMappings.class);
 	
 	public CFMappings(String storedPaths) {
 		if(storedPaths == null){
@@ -95,6 +103,40 @@ Note: On UNIX and Linux systems, ColdFusion MX attempts to match a CFC name or C
 		return null;
 	}
 	
+	/**
+	 * 
+	 * This function gets a full path from a partial, this comparing it with the rest, comparing the first part of the path
+	 * 
+	 * @param partialPath
+	 * @return
+	 */
+	public IResource getFullPath(String partialPath){
+	//	logger.debug("starting to match " + partialPath);
+	//	logger.debug("against the following paths " + mappingsTable);
+		
+		if(partialPath.startsWith("/")){
+			//lookup the "/something" mapping, if we dont find it, we use the "/"
+		}
+		else{
+			// we use the "/" mapping by default
+		//	logger.debug("matching from the root, since there is no path defined");
+			String mainPath = (String)mappingsTable.get("/");
+			mainPath += "/" + partialPath;
+		//	logger.debug("Now the path is: " + mainPath);
+			//try and find it in the workspace
+			 IWorkspace workspace = ResourcesPlugin.getWorkspace();
+			   IWorkspaceRoot root = workspace.getRoot();
+			   IResource resource = root.findMember(mainPath);
+		//	   logger.debug("found a resource maybe " + resource.getType() + " " + IResource.FOLDER );
+			   if(resource.exists()){
+				   return (IResource)resource;
+			   }
+			
+		}
+		
+		
+		return null;
+	}
 
 	
 	

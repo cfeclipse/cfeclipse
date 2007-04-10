@@ -31,7 +31,7 @@ import org.eclipse.ui.dialogs.PropertyPage;
 
 public class MappingsPropertyPage extends PropertyPage {
 
-	private static final String PATH_MAPPINGS = "PATH_MAPPINGS";
+	public static final String PATH_MAPPINGS = "PATH_MAPPINGS";
 
 	private static final int TEXT_FIELD_WIDTH = 20;
 	private Text ownerText;
