@@ -100,7 +100,7 @@
     	  		</and>
 		    </enablement>
 		</decorator>
-		
+	<!--
   <decorator
         adaptable="true"
         class="org.cfeclipse.cfml.editors.decoration.URLDecorator"
@@ -117,9 +117,8 @@
               <objectClass name="org.eclipse.core.resources.IResource"/>
            </and>
         </enablement>
-  
-       
-  </decorator>
+   </decorator>
+	-->
 	</extension>
 	
    <extension
@@ -767,27 +766,45 @@
                id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
          </action>
       </viewerContribution>
-      
+      <objectContribution
+            adaptable="false"
+            id="org.cfeclipse.cfml.mappings"
+            objectClass="org.eclipse.core.resources.IProject">
+         <action
+               class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
+               id="org.cfeclipse.cfml.setMapping"
+               label="Set CF Mapping"/>
+      </objectContribution>
+	  <objectContribution
+	        adaptable="true"
+	        id="org.cfeclipse.cfml.mappings"
+	        objectClass="org.eclipse.core.resources.IFolder">
+	     <menu
+	           id="org.cfeclipse.cfml.cfeclipse.menu"
+	           label="CFEclipse"
+	           path="cfeclipse_additions">
+	        <separator name="separator1"/>
+	     </menu>
+	     <action
+	           class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
+	           id="org.cfeclipse.cfml.setMapping"
+	           label="Set CF Mapping"
+	           />
+	  </objectContribution>
+	      
 		<objectContribution
 			objectClass="org.eclipse.core.resources.IProject"
 			nameFilter="*"
-			id="org.cfeclipse.cfml.contribution1"
+			id="org.cfeclipse.cfml.applyNature"
 		>
 			<action
 				enablesFor="1"
 				label="%action.label.57"
 				class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
 				tooltip="%action.tooltip.40"
-				menubarPath="org.cfeclipse.cfml.menu1"
+				menubarPath="org.cfeclipse.cfml.cfeclipse.menu/separator1"
 				id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
 			/>
-			<menu
-				label="%menu.label.3"
-				path="additions"
-				id="org.cfeclipse.cfml.menu1"
-			>
-				<separator name="group1"/>
-			</menu>
 		</objectContribution>
   <objectContribution
         adaptable="false"
@@ -819,6 +836,9 @@
            id="org.cfeclipse.cfml.editURLAction"
            label="Edit URL"/>
   </objectContribution>
+  
+  
+  
 	</extension>
    
 	<!-- ////////////////////////////////////////////////////////////// -->
