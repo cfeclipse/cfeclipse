@@ -87,8 +87,12 @@ public class SetMappingDialog extends Dialog {
 		Label frameworkLabel = new Label(container, SWT.NONE);
 		frameworkLabel.setText("Mapping:");
 		// Mapping Name Text Field
+		GridData fieldData = new GridData();
+		fieldData.widthHint = 200;
 		mappingNameField = new Text(container, SWT.BORDER);
+		mappingNameField.setLayoutData(fieldData);
 		mappingNameField.setText(MappingManager.getMapping(resource));
+		
 
 
 		/*
