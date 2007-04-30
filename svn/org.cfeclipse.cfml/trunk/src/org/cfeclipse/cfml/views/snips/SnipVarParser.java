@@ -34,16 +34,16 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.widgets.Shell;
 
 /**
+ * Pre parses a snippet checking for global variables such as user and date, then opens a dialog with the snippet text that is left
  * @author Stephen Milligan
  */
 public class SnipVarParser {
-	/**
-	 * 
-	 */
+
 	public SnipVarParser() {
 		super();
 	}
 	
+
 	public static String parse(String str, IFile activeFile, Shell shell ) {
 		
 		String currentFile = "";
@@ -159,7 +159,7 @@ public class SnipVarParser {
 		//send the snip string to the smart dialog
 		SnipSmartDialog ssd = new SnipSmartDialog();
 		//newStr = ssd.parse(newStr,activeFile, shell);
-		newStr = SnipSmartDialog.parse(newStr,activeFile, shell);
+		newStr = SnipSmartDialog.parse(newStr, shell);
 		
 		return newStr;
 	}
