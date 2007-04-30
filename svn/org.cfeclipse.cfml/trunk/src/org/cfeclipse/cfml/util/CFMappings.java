@@ -6,12 +6,15 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.cfeclipse.cfml.properties.MappingsPropertyPage;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.QualifiedName;
 
 public class CFMappings{
 
@@ -23,34 +26,57 @@ public class CFMappings{
 	
 	private Log logger = LogFactory.getLog(CFMappings.class);
 	
+	private IProject project;
+	
+	public CFMappings() {
+		super();
+	
+	}
+	
+	public CFMappings(IProject project) {
+		this.project = project;
+		
+		//Load the property into the mappingsTable
+		try {
+			String mappingsProperty = project.getPersistentProperty(new QualifiedName("", MappingsPropertyPage.PATH_MAPPINGS));
+			addMappingsFromString(mappingsProperty);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	public CFMappings(String storedPaths) {
+		addMappingsFromString(storedPaths);
+	}
+	/**
+	 * @param storedPaths
+	 */
+	private void addMappingsFromString(String storedPaths) {
+		
+		//There are no mappings defined, lets make a default one if it is null
 		if(storedPaths == null){
+			mappingsTable.put("/", "/");
 			return;
 		}
-		if(storedPaths.startsWith("{") && storedPaths.endsWith("}")){
+		
+		if(storedPaths.startsWith("{") && storedPaths.endsWith("}") && storedPaths != null){
 			String trimmedPaths = storedPaths.substring(1, storedPaths.length()-1);
 			 String[] strings = trimmedPaths.split(",");
 			 for (int i = 0; i < strings.length; i++) {
 				 String pathduo = strings[i].trim();
 				 	String[] mappingInstance = pathduo.split("=");
-				 	mappingsTable.put(mappingInstance[0], mappingInstance[1]);
+				 	if(mappingInstance.length == 2){
+				 		mappingsTable.put(mappingInstance[0], mappingInstance[1]);
+				 	}
+				 	
 				 
 			}
 		}
-		System.out.println(mappingsTable);
-		
-		
-		
-		
 	}
-	public CFMappings(IProject project) {
-		super();
 	
-	}
-	public CFMappings() {
-		super();
-	
-	}
 
 	public void put(String mapping, String path) {
 		// TODO Auto-generated method stub
