@@ -16,9 +16,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
-import org.eclipse.ui.internal.decorators.DecoratorManager;
 
 public class URLDecorator extends LabelProvider implements
 		ILightweightLabelDecorator {
@@ -51,9 +49,11 @@ public class URLDecorator extends LabelProvider implements
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
-			ImageDescriptor linkImage = CFPluginImages.getImageDescriptor(
-					CFPluginImages.MODEL_OBJECTS,
-					CFPluginImages.ICON_DECORATOR_LINK);
+			
+			//TODO: move this out from the CFPluginImages
+			ImageDescriptor linkImage = LinkImageDescriptor.createDescriptor("obj16","decorator_link.gif");
+			
+			
 			if (urlProperty != null && urlProperty.length() > 0) {
 				if (linkImage != null) {
 					decoration.addOverlay(linkImage);
