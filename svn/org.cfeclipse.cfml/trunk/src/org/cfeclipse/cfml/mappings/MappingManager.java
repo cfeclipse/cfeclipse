@@ -7,8 +7,11 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.ui.ide.ResourceUtil;
 
 /**
  * This statuic class manages the the figuring out and setting of mappings for
@@ -48,7 +51,7 @@ public class MappingManager {
 	 * @return An array of mappings that exist for the project.
 	 * @author Mark Drew
 	 */
-	public CFMapping[] getMappings(IProject project){
+	public static CFMapping[] getMappings(IProject project){
 		ArrayList mappings = new ArrayList();
 		findMappings(project, mappings);
 		
@@ -69,7 +72,7 @@ public class MappingManager {
 	 * @param mappings The ArrayList to add the mappings to.
 	 * @author Mark Drew
 	 */
-	private void findMappings(IResource resource, ArrayList mappings){
+	private static void findMappings(IResource resource, ArrayList mappings){
 		if (resource instanceof IProject) {
 			IProject mappingCandidate = (IProject) resource;
 			String mapping = getMapping(mappingCandidate);
@@ -125,4 +128,57 @@ public class MappingManager {
 		return (persistentProperty == null) ? "" : persistentProperty;
 	}
 	
+	
+	/**
+	 * Return the Resource for a mapping (might be a file or a folder). This is case sensitive for some reason.
+	 * The mappings have to be absolute, so they MUST start with  /
+	 * Some examples are:
+	 * 	/Somefile.cfm
+	 *  /SomeDirectory/Soemthing.cfm
+	 *  /Mapping/SomeDirectory/Something.cfm
+	 * @param project
+	 * @param path
+	 * @return
+	 * @author markdrew
+	 * @throws MappedPathException 
+	 * 
+	 */
+	public static IResource resolveAbsoluteMapping(IProject project, String path) throws MappedPathException{
+		
+		//First check if it starts with a / 
+		if(!path.startsWith("/")){
+			MappedPathException e = new MappedPathException("Absolute Paths must start with a /");
+			throw e;
+		}
+		//Ok if we havent thrown anything we find the first segment of the mapping
+		String[] strings = path.split("/");
+		String FirstMapping = strings[1];
+		
+		CFMapping foundMapping = null;
+		CFMapping[] mappings = getMappings(project);
+		for (int i = 0; i < mappings.length; i++) {
+			if(mappings[i].getMapping().equalsIgnoreCase("/" + FirstMapping)){
+				foundMapping = mappings[i];
+				break;
+			}
+		}
+		if(foundMapping !=null){
+			//remove the mapping from the action path
+			String subPath = path.substring(foundMapping.getMapping().length(), path.length());
+			
+			IResource resource = foundMapping.getResource();
+			if (resource instanceof IProject) {
+				IProject mappedItem = (IProject) resource;
+				
+				IResource resource2 = mappedItem.findMember(subPath);
+				return resource2;
+			}
+			
+			
+			
+		}
+		
+		
+		return null;
+	}
 }
