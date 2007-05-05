@@ -1,0 +1,129 @@
+<!--
+Created on Mar 27, 2007 by markdrew
+ 
+ The MIT License
+ Copyright (c) 2007 CFEclipse Project
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a 
+ copy of this software and associated documentation files (the "Software"), 
+ to deal in the Software without restriction, including without limitation 
+ the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ and/or sell copies of the Software, and to permit persons to whom the Software 
+ is furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in 
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ SOFTWARE.
+	
+	This file defines the icons and text labels for the Framewoks View Tree.
+	
+	NOTES: all variables (apart from image names) should be lower case
+	The format for the text replacements will be {attribute} 
+	
+	
+	
+	
+	For more complicated ones, I recon we should put either the XPATH here, with the variables, or something like that
+-->
+
+<labels>
+	<framework id="framework_cs">
+		<node name="framework_cs" image="frameworks_cs.gif"/>
+		<node name="coldspring.xml" image="frameworks_cs.gif"/>
+		<node name="bean" image="bean_obj.gif" text="{id}: {class}"/>
+		<node name="constructor-arg" image="constructor_arg.gif" text="{name}"/>
+		<node name="property" image="field_public_obj.gif" text="{name}"/>
+		<node name="entry" image="variable_tab.gif" text="{key}"/>
+	</framework>
+	
+	<framework id="framework_mg">
+		
+		<node name="modelglue.xml" image="frameworks_mg.gif"/>
+		<node name="framework_mg" image="frameworks_mg.gif"/>
+		<node name="controllers" image="cogs.png"/>
+		<node name="controller" image="cog.png" text="{name}: {type}"/>
+		<node name="message-listener" image="transmit_go.png" text="{message}: {function}"/>
+		<node name="event-handlers" image="disconnect.png"/>
+		<node name="event-handler" image="connect.png" text="{name}"/>
+		<node name="broadcasts" image="transmit_blue.png"/>
+		<node name="message" image="transmit.png" text="{name}"/>
+		<node name="argument" image="variable_tab.gif" text="{name}: {value}"/>
+		<node name="scaffold" image="database_connect.png" text="{object}({alias}): {type}"/>
+		<node name="include" parent="modelglue" image="frameworks_mg.gif" text="{template}"/>
+		<node name="include" parent="views" image="layout_content.png" text="{name}: {template}"/>
+		<node name="views" image="layers.png"/>
+		<node name="results" image="arrow_switch.png"/>
+		<node name="result" image="arrow_right.png" text="{name}: {do}"/>
+		
+	</framework>
+
+	
+	<framework id="framework_re">
+		<node name="reactor.xml" image="frameworks_re.gif" text="{FWX_FILENAME}"/>
+		<node name="framework_re" image="frameworks_re.gif" text="{FWX_FILENME}"/>	
+		<node name="objects" image="database.png"/>	
+		<node name="object" image="table.png" text="{name}"/>
+		<node name="hasone" image="hasone.png" text="hasOne: {name}"/>
+		<node name="hasmany" image="hasmany.png" text="hasmany {name}"/>		
+		<node name="relate" image="table_relationship.png" text="relate: {from} -> {to}"/>
+		<node name="link" image="table_relationship.png" text="link: {name}"/>	
+	</framework>
+	<framework id="framework_tr">
+		<node name="framework_tr" image="frameworks_tr.gif" text="{FWX_FILENAME}"/>	
+		<node name="package" image="package.png" text="{name}"/>	
+		<node name="object" image="table.png" text="{table} ({name})"/>
+		<node name="property" image="field_public_obj.gif" text="{name} - {type}"/>
+		<node name="manytoone" image="hasmany.png" text="manytoone {name}"/>	
+		<node name="link" image="table_relationship.png" text="link to: {to} on {column}"/>	
+		<node name="id" image="table_key.png" text="{name}({column}) - {type}"/>	
+		<node name="scope" text="scope: type -{type}"/>	
+	</framework>
+	
+	
+	<framework id="framework_mii">
+		<node name="framework_mii" image="mach_ii_logo.gif"/>
+		<node name="listener" image="transmit_go.png" text="{name}: {type}"/>	
+		<node name="listeners" image="cog.png"/>	
+		<node name="event-handlers" image="disconnect.png"/>
+		<node name="event-handler" image="connect.png" text="{event}: {access}"/>
+		<node name="notify" image="transmit.png" text="{listener}.{method} -> {resultarg}"/>
+		<node name="view-page" image="layout_content.png" text="{name}: {contentarg}"/>
+		<node name="page-view" image="layout_content.png" text="{name}: {page}"/>
+		<node name="page-views" image="layers.png"/>
+		<node name="plugins" image="plugins.png"/>
+		<node name="event-filters" image="filter.gif"/>
+		<node name="event-filter" image="filter.gif" text="{name}: {type}"/>
+		
+		<node name="plugin" image="plugin.png" text="{name}: {type}"/>
+		<node name="properties" image="field_public_obj.gif"/>
+		<node name="property" image="variable_tab.gif" text="{name}: {value}"/>
+	</framework>
+	
+	<framework id="framework_fbx">
+		<node name="framework_fbx" image="fusebox.gif"/>
+		<node name="circuits" image="brick.png"/>
+		<node name="circuit" parent="circuits" image="brick.png" text="{alias}({parent}): {path}"/>
+		<node name="circuit" image="brick.png" text="acesss: {access}"/>
+		<node name="prefuseaction" image="cog.png"/>
+		<node name="postfuseaction" image="cog.png"/>
+		<node name="fuseaction" image="cog.png" text="{name}: {access}"/>
+		<node name="parameters" image="field_public_obj.gif"/>
+		<node name="parameter" image="variable_tab.gif" text="{name}: {value}" />
+		<node name="plugins" image="plugins.png"/>
+		<node name="phase" image="plugin.png" text="{name}"/>
+		<node name="globalfuseactions" image="cogs.png"/>
+		<node name="preprocess" image="cog.png"/>
+		<node name="postprocess" image="cog.png"/>
+		<node name="xfa" image="variable_tab.gif" text="{name}: {value}"/>
+		<node name="include" image="layout_content.png" text="{template}"/>
+		<node name="do" image="arrow_right.png" text="do: {action}"/>
+	</framework>
+	
+</labels>

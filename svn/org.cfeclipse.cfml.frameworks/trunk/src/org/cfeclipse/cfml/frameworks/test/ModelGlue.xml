@@ -1,0 +1,147 @@
+<!DOCTYPE modelglue SYSTEM "http://www.web-relevant.com/modelglue/modelglue.dtd"
+
+[<!ENTITY appDotPath "cfeclipse_org.">]
+
+>
+<modelglue>
+	<controllers>
+		<controller name="MyController" type="&appDotPath;controller.Controller">
+			<message-listener message="OnRequestStart" function="OnRequestStart" />
+			<message-listener message="OnQueueComplete" function="OnQueueComplete" />
+			<message-listener message="OnRequestEnd" function="OnRequestEnd" />
+			<message-listener message="getRandTestimonials" function="getRandTestimonials" />
+			<message-listener message="getContent" function="getContent" />
+			<message-listener message="setValue" function="setValue" />
+			<message-listener message="getPage" function="getPage" />
+		</controller>
+	</controllers>
+  
+	<event-handlers>
+		<event-handler name="page.index">
+			<broadcasts>
+				<message name="getRandTestimonials"/>
+				<!-- get the content for the homepage -->
+				<message name="getContent">
+					<argument name="type" value="Homepage" />
+					<argument name="queryName" value="qHPContent" />
+				</message>
+				<!-- get 3 random features -->
+				<message name="getContent">
+					<argument name="type" value="Feature" />
+					<argument name="queryName" value="qRandFeatures" />
+					<argument name="random" value="true" />
+					<argument name="maxrows" value="3" />
+				</message>
+				
+				<!-- get top 5 news  -->
+				<message name="getContent">
+					<argument name="type" value="News" />
+					<argument name="queryName" value="qNews" />
+					<argument name="maxrows" value="5" />
+					<argument name="orderby" value="dtCreated" />
+					<argument name="orderdir" value="desc" />
+				</message>
+				
+				
+				<!-- get a random banner -->
+				<message name="getContent">
+					<argument name="type" value="Banner" />
+					<argument name="queryName" value="qBanners" />
+					<argument name="random" value="true" />
+					<argument name="maxrows" value="1" />
+				</message>
+			</broadcasts>
+			<views>
+				<include name="topnav" template="nav_top_homepage.cfm" />
+				<include name="body" template="dsp_main.cfm" />
+			</views>
+			<results>
+				
+			</results>
+		</event-handler>
+<!--
+	SUBPAGES
+-->		
+		<event-handler name="page">
+			<broadcasts>
+				<message name="getPage" />
+			</broadcasts>
+			<views>
+				<include name="body" template="dsp_subpage.cfm" />
+				<include name="topnav" template="nav_top_subpage.cfm" />
+			</views>
+			<results>
+				<result do="layout.subpage" />
+			</results>
+		</event-handler>
+		
+		
+		
+<!--
+	RSS
+-->		
+	
+	<event-handler name="rss">
+		<broadcasts>
+			<message name="getContent">
+					<argument name="queryName" value="qRSS" />
+					<argument name="rss" value="true" />
+					<argument name="orderby" value="DTCREATED"/>
+					<argument name="orderdirection" value="DESC"/>
+				</message>
+		</broadcasts>
+		<views>
+			<include template="xml_rss.cfm" name="body"/>
+		</views>
+		<results>
+		</results>
+		
+	</event-handler>	
+			
+<!--
+	LAYOUTS
+-->
+		<event-handler name="layout.subpage">
+			<broadcasts />
+			<results>
+				
+			</results>
+			<views>
+				<include name="topnav" template="nav_top_subpage.cfm" />
+				<include name="template" template="lay_sub.cfm" />
+			</views>
+		</event-handler>
+		
+		<event-handler name="layout.simple">
+			<broadcasts />
+			<results>
+				
+			</results>
+			<views>
+				<include name="template" template="lay_simple.cfm" />
+			</views>
+		</event-handler>
+		
+		<event-handler name="layout.homepage">
+			<broadcasts />
+			<results />
+			<views>
+				<include name="topnav" template="nav_top_homepage.cfm" />
+				<include name="body" template="lay_main.cfm" />
+			</views>
+		</event-handler>
+		
+		<event-handler name="exception">
+			<broadcasts />
+			<views>
+				<include name="body" template="dspException.cfm" />
+				<include name="topnav" template="nav_top_subpage.cfm" />
+			</views>
+			<results>
+				<result do="layout.simple"/>
+				
+			</results>
+			
+		</event-handler>
+	</event-handlers>
+</modelglue>

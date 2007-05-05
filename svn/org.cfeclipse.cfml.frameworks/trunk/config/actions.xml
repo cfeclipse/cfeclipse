@@ -1,0 +1,194 @@
+<!--
+
+ Created on Mar 27, 2007 by markdrew
+ 
+ The MIT License
+ Copyright (c) 2007 CFEclipse Project
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a 
+ copy of this software and associated documentation files (the "Software"), 
+ to deal in the Software without restriction, including without limitation 
+ the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ and/or sell copies of the Software, and to permit persons to whom the Software 
+ is furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in 
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ SOFTWARE.
+
+	
+	
+	This defines the actions that are available for each node.
+	if we want to pass some info in, such as a template, we can pass in things in the node text
+	attributes are defined by {attributename}
+
+	Example XPath to get all the messages we can broadcast in model glue
+	xpath(/root/framework_root/framework_mg/controllers/controller/message-listener/@message/text(), ""
+
+
+
+-->
+<actions>
+	<action framework="framework_cs" node="bean" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="Open File" type="double_click" />
+	<action framework="framework_cs" node="bean" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Insert Generic Bean" type="right_click">
+		<![CDATA[
+			<cfset $${name} = $${BeanHandlerName}.getBean("{id}")>
+		]]>
+	</action>
+	<action framework="framework_cs" node="bean" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="View Bean Definition" type="right_click"/>
+	<action framework="framework_cs" node="bean" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="Open Bean CFC" type="right_click"/>
+
+
+	<!-- Model Glue -->
+	<action framework="framework_cs" node="bean" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Insert MG Bean" type="right_click">
+		<![CDATA[
+			<cfset $${beanName} = getModelGlue().getBean('{id}')>
+		]]>
+	</action>
+	
+	
+	
+
+
+	<!-- Fusebox -->
+	<action framework="framework_fbx" node="circuit" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="Open File" type="double_click" />
+
+
+	<!-- Mach II -->
+	<action framework="framework_mii" node="property" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Insert Property" type="right_click">
+		<![CDATA[
+			<cfset {name} = getProperty("{name}")>
+		]]>
+	</action>
+	<action framework="framework_mii" node="property" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Output Property" type="right_click">
+		<![CDATA[
+			#getProperty("{name}")#
+		]]>
+	</action>
+	<action framework="framework_mii" node="event-arg" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Insert Event Argument" type="right_click">
+		<![CDATA[
+			<cfset {name} = event.getArg("{name}")>
+		]]>
+	</action>
+	<action framework="framework_mii" node="event-arg" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Output Event Argument" type="right_click">
+		<![CDATA[
+			#event.getArg("{name}")#
+		]]>
+	</action>
+	
+	<!-- children that can be added -->
+	<!-- Model Glue Children -->
+	<action framework="framework_mg" node="controller" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Message Listener" type="right_click">
+		<![CDATA[
+			<message-listener message="$${message}" function="$${function}" />
+		]]>
+	</action>
+	<action framework="framework_mg" node="event-handlers" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Event Handler" type="right_click">
+		<![CDATA[
+			<event-handler name="$${name}"></event-handler>
+		]]>
+	</action>
+	<action framework="framework_mg" node="event-handlers" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Scaffold from Reactor" type="right_click">
+		<![CDATA[
+			<scaffold object="$${object:xpath("/root/framework_root/framework_re/objects/object/@name","|")}"/>
+		]]>
+	</action>
+	<action framework="framework_mg" node="event-handlers" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Scaffold from Transfer" type="right_click">
+		<![CDATA[
+			<scaffold object="$${object:xpath("/root/framework_root/framework_tr/package/object/@name","|")}"/>
+		]]>
+	</action>
+	<action framework="framework_mg" node="broadcasts" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Message" type="right_click">
+		<![CDATA[
+			<message name="$${name:xpath("/root/framework_root/framework_mg/controllers/controller/message-listener/@message","|")}"/>
+		]]>
+	</action>
+	
+	<action framework="framework_mg" node="results" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Result" type="right_click">
+		<![CDATA[
+			<result do="$${do:xpath("/root/framework_root/framework_mg/event-handlers/event-handler/@name","|")}" redirect="$${redirect:false|true}" append="$${append}" preservestate="$${preservestate:true|false}"/>
+		]]>
+	</action>
+	<action framework="framework_mg" node="views" parent="event-handler" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Include" type="right_click">
+		<![CDATA[
+			<include name="$${name}" template="$${template:listfiles("xpath("/root/framework_root/framework_cs/bean[@id='modelGlueConfiguration']/property[@name='viewMappings']/value/text()", "")", "relative", "|")}" append="$${append:false|true}"/>
+		]]>
+	</action>
+	
+	<action framework="framework_mg" node="include" parent="views" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="Open Include" type="right_click">
+	<![CDATA[
+	xpath("/root/framework_root/framework_cs/bean[@id='modelGlueConfiguration']/property[@name='viewMappings']/value/text()", "")/{template}
+	]]>
+	</action>
+	
+	
+	<!-- reactor children -->
+	<action framework="framework_re" node="objects" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Object" type="right_click">
+		<![CDATA[
+			<object name="$${name}">
+			
+			</object>
+		]]>
+	</action>
+	<action framework="framework_re" node="object" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add HasMany" type="right_click">
+		<![CDATA[
+			<hasMany name="$${name:xpath("/root/framework_root/framework_re/objects/object/@name","|")}">
+			
+			</hasMany>
+		]]>
+	</action>
+	<action framework="framework_re" node="object" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add HasOne" type="right_click">
+		<![CDATA[
+			<hasOne name="$${name:xpath("/root/framework_root/framework_re/objects/object/@name","|")}">
+			
+			</hasOne>
+		]]>
+	</action>
+	<action framework="framework_re" node="hasone" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Relate" type="right_click">
+		<![CDATA[
+			<relate from="$${from}" to="$${to}" />
+		
+		]]>
+	</action>
+	
+	<action framework="framework_re" node="hasone" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Link" type="right_click">
+		<![CDATA[
+			<link name="$${name:xpath("/root/framework_root/framework_re/objects/object/@name","|")}" />
+		
+		]]>
+	</action>
+	<action framework="framework_re" node="hasmany" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Relate" type="right_click">
+		<![CDATA[
+			<relate from="$${from}" to="$${to}" />
+		
+		]]>
+	</action>
+	
+	<action framework="framework_re" node="hasmany" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Link" type="right_click">
+		<![CDATA[
+			<link name="$${name:xpath("/root/framework_root/framework_re/objects/object/@name","|")}" />
+		
+		]]>
+	</action>
+	
+	<!-- fusebox children -->
+	<action framework="framework_fbx" node="circuit" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Fuseaction" type="right_click">
+		<![CDATA[
+			 <fuseaction name="$${name}" access="$${access:public|private}"></fuseaction>
+		]]>
+	</action>
+	
+	<action framework="framework_fbx" node="include" parent="fuseaction" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="Open Include" type="right_click">
+	<![CDATA[
+	/fwfilepath()/{template}.cfm
+	]]>
+	</action>
+	
+</actions>

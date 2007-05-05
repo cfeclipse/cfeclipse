@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="CFML Frameworks"
+            id="org.cfeclipse.cfml.frameworks">
+      </category>
+      <view
+            name="CF Frameworks Explorer"
+            icon="icons/general/bricks.png"
+            category="org.cfeclipse.cfml.frameworks"
+            class="org.cfeclipse.cfml.frameworks.views.FrameworksView"
+            id="org.cfeclipse.cfml.frameworks.views.FrameworksView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="org.cfeclipse.cfml.frameworks.modelglue.views.ModelGlueView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="org.cfeclipse.cfml.frameworks.properties.ModelGluePropertyPage"
+            id="org.cfeclipse.cfml.frameworks.properties.samplePropertyPage"
+            name="CFFrameworks"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IProject"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+         
+         
+      <objectContribution
+            id="org.cfeclipse.cfml.frameworks.contribution1"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IFolder">
+         <menu
+               id="org.cfeclipse.cfml.frameworks.menu1"
+               label="CF Frameworks"
+               path="additions">
+            <separator name="group1"/>
+         </menu>
+         <action
+               class="org.cfeclipse.cfml.frameworks.popup.actions.SetAsConfigFolder"
+               enablesFor="1"
+               icon="icons/view/cog.png"
+               id="org.cfeclipse.cfml.frameworks.newAction"
+               label="Set/Unset as Configuration Folder"
+               menubarPath="org.cfeclipse.cfml.frameworks.menu1/group1"
+               />
+               
+           <visibility>
+           <not>
+            <objectState
+                    name="persistentProperty"
+                    value="isFrameworkFile=&quot;true&quot;"/>
+           </not>
+      
+             
+              
+           
+           
+           </visibility>
+      </objectContribution>
+      
+      
+      
+      
+      
+      <objectContribution
+            id="org.cfeclipse.cfml.frameworks.contribution1"
+            nameFilter="*"
+            objectClass="org.eclipse.core.resources.IProject">
+         <menu
+               id="org.cfeclipse.cfml.frameworks.menu1"
+               label="CF Frameworks"
+               path="additions">
+            <separator name="group1"/>
+         </menu>
+         <action
+               class="org.cfeclipse.cfml.frameworks.popup.actions.SetAsConfigFolder"
+               enablesFor="1"
+               icon="icons/view/cog.png"
+               id="org.cfeclipse.cfml.frameworks.newAction"
+               label="Set/Unset as Configuration Folder"
+               menubarPath="org.cfeclipse.cfml.frameworks.menu1/group1"
+               >
+           
+         </action>
+      </objectContribution>
+      <objectContribution
+            id="org.cfeclipse.cfml.frameworks.contribution1"
+            nameFilter="*.*"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               id="org.cfeclipse.cfml.frameworks.menu1"
+               label="CF Frameworks"
+               path="additions">
+            <separator name="group1"/>
+         </menu>
+         <action
+               class="org.cfeclipse.cfml.frameworks.popup.actions.SetFrameworkFile"
+               enablesFor="1"
+               icon="icons/general/bricks.png"
+               id="org.cfeclipse.cfml.frameworks.newAction"
+               label="Set/Unset as Configuration File"
+               menubarPath="org.cfeclipse.cfml.frameworks.menu1/group1"
+               />
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.cfeclipse.cfml.frameworks.preference.Frameworks"
+            class="org.cfeclipse.cfml.frameworks.preferences.ActionsPreferencePage"
+            id="org.cfeclipse.cfml.frameworks.preferences.ActionsPreferencePage"
+            name="Actions"/>
+      <page
+            class="org.cfeclipse.cfml.frameworks.preferences.FrameworksPreferencePage"
+            id="org.cfeclipse.cfml.frameworks.preference.Frameworks"
+            name="CF Frameworks"/>
+      <page
+      		category="org.cfeclipse.cfml.frameworks.preference.Frameworks"
+            class="org.cfeclipse.cfml.frameworks.preferences.LabelsPreferencePage"
+            id="org.cfeclipse.cfml.frameworks.preferences.Labels"
+            name="Labels"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.cfeclipse.cfml.frameworks.preferences.PreferenceInitializer"/>
+   </extension>
+   <extension
+         id="org.cfeclipse.cfml.framworks.export"
+         name="Export Frameworks Settings"
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            category="org.cfeclipse.cfml.frameworks.export.category"
+            class="org.cfeclipse.cfml.frameworks.export.FramworkSettingsExportWizard"
+            icon="icons/general/bricks.png"
+            id="org.cfeclipse.cfml.frameworks.wizard1"
+            name="Export Frameworks Settings"/>
+      <category
+            id="org.cfeclipse.cfml.frameworks.export.category"
+            name="CFFrameworks"/>
+   </extension>
+   <!--
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="org.cfeclipse.cfml.frameworks.decorators.ConfigFileDecorator"
+            id="org.cfeclipse.cfml.frameworks.decorator"
+            label="Frameworks Decorator"
+            lightweight="true"
+            location="TOP_RIGHT"
+            state="true">
+             <description>
+      		  Provides decoration for resources that are used as CF Framework configuration files or folders
+       	 	</description>
+             <enablement>
+	           <and>
+    	          <objectClass name="org.eclipse.core.resources.IResource"/>
+    	       </and>
+        </enablement>
+      </decorator>
+   </extension>
+   -->
+</plugin>

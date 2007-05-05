@@ -1,0 +1,89 @@
+<!-- 
+
+Created on Mar 27, 2007 by markdrew
+ 
+ The MIT License
+ Copyright (c) 2007 CFEclipse Project
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a 
+ copy of this software and associated documentation files (the "Software"), 
+ to deal in the Software without restriction, including without limitation 
+ the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ and/or sell copies of the Software, and to permit persons to whom the Software 
+ is furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in 
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+ SOFTWARE.
+ 
+ -->
+<frameworks>
+
+	<!-- the default folders we are going to be looking for frameworks, if we dont find them in here, then its up to the user to define them -->
+	<config>
+		<folders>
+			<folder>/</folder>
+			<folder>/config</folder>
+		</folders>
+	
+	</config>
+
+	<framework name="Generic" id="frameworks_generic" />
+
+	<framework name="ColdSpring" id="framework_cs">
+		<files>
+			<file>coldspring.xml</file>
+		</files>
+		<ignore node="beans"/>
+	</framework>
+
+	<framework name="ModelGlue" id="framework_mg">
+		<files>
+			<file>modelglue.xml</file>
+		</files>
+		<include node="include" parent="modelglue" path="template" type="relative"/>
+		<ignore node="modelglue"/>
+	</framework>
+	
+	<framework name="Reactor" id="framework_re">
+		<files>
+			<file>reactor.xml</file>
+		</files>
+		<ignore node="reactor"/>
+	</framework>
+	
+	<framework name="Transfer" id="framework_tr">
+		<files>
+			<file>transfer.xml</file>
+		</files>
+		<ignore node="transfer"/>
+	</framework>
+	
+	<framework name="Fusebox" id="framework_fbx">
+		<files>
+			<file>fusebox.xml</file>
+			<file>fusebox.xml.cfm</file>
+		</files>
+		
+		<include node="circuit" parent="circuits" path="path" type="relative">
+			<file>circuit.xml</file>
+			<file>circuit.xml.cfm</file>
+		</include>
+		
+		<ignore node="fusebox"/>
+	</framework>
+	
+	<framework name="MachII" id="framework_mii">
+		<files>
+			<file>mach-ii.xml</file>
+		</files>
+		<ignore node="mach-ii"/>
+	</framework>
+</frameworks>
