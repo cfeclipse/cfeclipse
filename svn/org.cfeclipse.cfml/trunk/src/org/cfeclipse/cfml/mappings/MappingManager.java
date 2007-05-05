@@ -20,6 +20,8 @@ import org.eclipse.ui.ide.ResourceUtil;
  */
 public class MappingManager {
 
+	public static final String P_MAPPING_NAME = "Mapping";
+	public static final String P_MAPPING_QUALIFIER = "org.cfeclipse.cfml";
 	// Logger for this class
 	private Log logger = LogFactory.getLog(MappingManager.class);
 
@@ -38,7 +40,7 @@ public class MappingManager {
 		
 		// Set the mapping property of this resource
 		try {
-			resource.setPersistentProperty(new QualifiedName("org.cfeclipse.cfml", "Mapping"), mapping);
+			resource.setPersistentProperty(new QualifiedName(P_MAPPING_QUALIFIER, P_MAPPING_NAME), mapping);
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
@@ -120,7 +122,7 @@ public class MappingManager {
 		String persistentProperty = null;
 
 		try {
-			persistentProperty = resource.getPersistentProperty(new QualifiedName("org.cfeclipse.cfml", "Mapping"));
+			persistentProperty = resource.getPersistentProperty(new QualifiedName(P_MAPPING_QUALIFIER, P_MAPPING_NAME));
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
@@ -173,12 +175,28 @@ public class MappingManager {
 				IResource resource2 = mappedItem.findMember(subPath);
 				return resource2;
 			}
-			
-			
-			
+		}
+		else{
+			//if we didnt find the mapping, try it as a project absolute one
+			IResource resource = project.findMember(new Path(path));
+			return resource;
 		}
 		
 		
 		return null;
+	}
+	
+	/**
+	 * Removes a mapping from a project 
+	 * @param project The project that we are going to remove the mapping from
+	 * @param mapping The string representation of a mapping (e.g. "/config")
+	 */
+	public static void removeMapping(CFMapping mapping){
+		try {
+			mapping.getResource().setPersistentProperty(new QualifiedName(P_MAPPING_QUALIFIER, P_MAPPING_NAME), "");
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
