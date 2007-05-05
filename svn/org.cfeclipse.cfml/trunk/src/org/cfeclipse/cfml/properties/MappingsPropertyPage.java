@@ -6,10 +6,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.cfeclipse.cfml.mappings.CFMapping;
+import org.cfeclipse.cfml.mappings.MappingManager;
 import org.cfeclipse.cfml.util.CFMappings;
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
@@ -28,6 +34,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.eclipse.ui.dialogs.ResourceSelectionDialog;
 
 public class MappingsPropertyPage extends PropertyPage {
 
@@ -42,15 +49,16 @@ public class MappingsPropertyPage extends PropertyPage {
 	private Table mappingTable;
 	
 	private CFMappings pathData = new CFMappings();
+	private MappingManager mappingManager;
 	
-	
+	private Log logger = LogFactory.getLog(MappingsPropertyPage.class);
 
 	/**
 	 * Constructor for SamplePropertyPage.
 	 */
 	public MappingsPropertyPage() {
 		super();
-		
+		setDescription("Mappings can be set by right clicking on a folder and clicking \"Set CF Mapping\"");	
 	}
 
 	private void addFirstSection(Composite parent) {
@@ -60,6 +68,9 @@ public class MappingsPropertyPage extends PropertyPage {
 		maingd.numColumns = 4;
 		composite.setLayout(maingd);
 		
+		
+		//REMOVE the ability to add mappings from here for the moment
+		/*
 		//Label for path field
 		Label mapLabel = new Label(composite, SWT.NONE);
 		mapLabel.setText("Mapping:");
@@ -89,7 +100,15 @@ public class MappingsPropertyPage extends PropertyPage {
 			}
 		
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
+
+			 	ResourceSelectionDialog dialog =	new ResourceSelectionDialog(getShell(), getElement(), "Select a path for this mapping");
+			 			//dialog.setInitialSelections(selectedResources));
+			 			dialog.open();
+			 			//return dialog.getResult();
+			 		
+				
+				
+				
 				ContainerSelectionDialog select = new ContainerSelectionDialog(getShell(), (IContainer)getElement(), false, "Select a path for this mapping");
 				select.open();
 				Object[] result = select.getResult();
@@ -99,7 +118,6 @@ public class MappingsPropertyPage extends PropertyPage {
 					mappingPath.setLayoutData(layoutData);
 					mappingPath.setText(result[0].toString());
 				}
-				System.out.println(result[0]);
 			}
 		
 			public void mouseDoubleClick(MouseEvent e) {
@@ -108,7 +126,7 @@ public class MappingsPropertyPage extends PropertyPage {
 			}
 		
 		});
-		
+	
 		
 		GridData btnLayout = new GridData();
 		btnLayout.widthHint = 200;
@@ -138,13 +156,14 @@ public class MappingsPropertyPage extends PropertyPage {
 			}
 			
 			
-		});
+		});*/
 		
 		
 	}
 
 
 	protected void addMapping() {
+		
 		if(mappingName.getText().length()>0 && mappingPath.getText().length() >0){
 		pathData.put(mappingName.getText(), mappingPath.getText());
 		fillTable();
@@ -157,14 +176,25 @@ public class MappingsPropertyPage extends PropertyPage {
 	}
 	
 	private void removeMapping() {
-		System.out.println(pathData);
-		TableItem[] selection = mappingTable.getSelection();
-		for (int i = 0; i < selection.length; i++) {
-			TableItem item = selection[i];
-			pathData.remove(item.getText(0));
+
+		IAdaptable element2 = getElement();
+		if (element2 instanceof IProject) {
+			IProject project = (IProject) element2;
+			
+			TableItem[] selection = mappingTable.getSelection();
+			for (int i = 0; i < selection.length; i++) {
+				TableItem item = selection[i];
+				Object data = item.getData();
+				if(data instanceof CFMapping){
+					CFMapping mappingItem = (CFMapping)data;
+					mappingManager.removeMapping(mappingItem);
+				}
+				
+			}
 		}
+		
+		
 		fillTable();
-		//table.remove (table.getSelectionIndices ());
 	}
 	
 	
@@ -179,16 +209,13 @@ public class MappingsPropertyPage extends PropertyPage {
 	private void addSecondSection(Composite parent) {
 		Composite composite = createDefaultComposite(parent);
 
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 1;
-		
-		composite.setLayout(gl);
+		GridLayout layout = new GridLayout(1,true);
+		composite.setLayout(layout);
 		
 		GridData gd = new GridData();
-		gd.widthHint = 400;
+	//	gd.widthHint = 400;
 		gd.heightHint = 200;
-		gd.grabExcessHorizontalSpace = true;
-		
+		gd.minimumHeight = 200;
 		
 		mappingTable = new Table(composite, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		
@@ -203,37 +230,21 @@ public class MappingsPropertyPage extends PropertyPage {
 		colMapping.setWidth(150);
 		TableColumn colPath = new TableColumn(mappingTable, SWT.LEFT);
 		colPath.setText("Path");
-		colPath.setWidth(150);
-		
+		colPath.setWidth(200);
 		
 		fillTable();
 		
-		//mappingTable.add
 		GridData btnLayout = new GridData();
-		btnLayout.widthHint = 200;
-		btnLayout.horizontalAlignment = SWT.RIGHT;
-		
 		Button btnDelete = new Button(composite, SWT.NONE);
 		btnDelete.setText("Delete Mapping");
 		btnDelete.setLayoutData(btnLayout);
 		btnDelete.addMouseListener(new MouseListener(){
-
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseDoubleClick(MouseEvent e) {}
 
 			public void mouseDown(MouseEvent e) {
 				removeMapping();
-				
 			}
-
-			
-
-			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseUp(MouseEvent e) {}
 			
 		});
 		
@@ -246,16 +257,25 @@ public class MappingsPropertyPage extends PropertyPage {
 	private void fillTable() {
 		//clear the table first
 		mappingTable.removeAll();
-		Set set = pathData.entrySet();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			Entry mappingKey = (Entry) iter.next();
-			TableItem item= new TableItem(mappingTable, SWT.NONE);
+		IAdaptable element2 = getElement();
+		
+		if (element2 instanceof IProject) {
+			IProject project = (IProject) element2;
+			CFMapping[] mappings = mappingManager.getMappings(project);
 			
-			item.setText(0, mappingKey.getKey().toString());
-			item.setText(1, mappingKey.getValue().toString());
-			
-			
+			for (int i = 0; i < mappings.length; i++) {
+				
+				if(mappings[i].getMapping().trim().length() > 0){
+					TableItem item= new TableItem(mappingTable, SWT.NONE);
+					item.setData(mappings[i]);
+					item.setText(0, mappings[i].getMapping());
+					item.setText(1, mappings[i].getResource().getLocation().toOSString());
+				}
+			}
 		}
+		
+	
+		mappingTable.pack();
 	}
 
 	/**
@@ -272,8 +292,8 @@ public class MappingsPropertyPage extends PropertyPage {
 		
 		loadMappings();
 
-		addFirstSection(composite);
-		addSeparator(composite);
+		//addFirstSection(composite);
+		//addSeparator(composite);
 		addSecondSection(composite);
 		return composite;
 	}
