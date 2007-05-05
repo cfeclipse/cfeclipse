@@ -50,6 +50,13 @@ package org.cfeclipse.cfml.wizards.cfmlwizard;
 
 
 
+import java.io.File;
+import java.util.ArrayList;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -102,8 +109,8 @@ public class NewCFMLWizardPage extends WizardPage {
 
 	private IEditorPart editor = null;
 
-
-
+	private Log logger = LogFactory.getLog(NewCFMLWizardPage.class);
+	
 	/**
 
 	 * Constructor for SampleNewWizardPage.
@@ -185,7 +192,7 @@ public class NewCFMLWizardPage extends WizardPage {
 		});
 
 
-
+		
 		Button button = new Button(container, SWT.PUSH);
 
 		button.setText("Browse...");
@@ -209,7 +216,7 @@ public class NewCFMLWizardPage extends WizardPage {
 		fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-
+		gd.horizontalSpan = 2;
 		fileText.setLayoutData(gd);
 
 		fileText.addModifyListener(new ModifyListener() {
@@ -222,6 +229,17 @@ public class NewCFMLWizardPage extends WizardPage {
 
 		});
 
+		
+		/*
+		
+		//TODO: Add Template stuff here (from the new Template thing)
+		Label templateLabel = new Label(container, SWT.NONE);
+		templateLabel.setText("Select Template:");
+		
+		Combo templateList = new Combo(container, SWT.None | SWT.READ_ONLY);
+		
+		getTemplates();
+		*/
 		initialize();
 
 		dialogChanged();
@@ -238,6 +256,29 @@ public class NewCFMLWizardPage extends WizardPage {
 
 		
 
+	}
+	
+	private ArrayList getTemplates(){
+		ArrayList templates = new ArrayList();
+		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		
+		Path snipBase = new Path(propertyManager.defaultSnippetsPath());
+		File file = snipBase.toFile();
+		logger.debug("Getting snippets from " + file.getAbsolutePath()); 
+		
+		
+		//Now we iterate over the items I guess
+		
+		
+		
+		return null;
+	}
+	
+	/**
+	 * Recursive function
+	 */
+	private void getTempaltes2(){
+		
 	}
 
 	/**
