@@ -550,9 +550,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 			// int pos = docCommand.text.compareTo(">");
 			char beforeLastChar = ' ';
-			char firstCommandChar = (docCommand.text.length() > 0) ? docCommand.text
-					.charAt(0)
-					: ' ';
+			char firstCommandChar = (docCommand.text.length() > 0) ? docCommand.text.charAt(0): ' ';
 
 			if (docCommand.offset - 1 >= 0) {
 				beforeLastChar = doc.getChar(docCommand.offset - 1);
@@ -1008,8 +1006,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @throws BadLocationException -
 	 *             ack.
 	 */
-	private void handleQuotes(IDocument doc, DocumentCommand docCommand,
-			char quoteChar) throws BadLocationException {
+	private void handleQuotes(IDocument doc, DocumentCommand docCommand,char quoteChar)
+		throws BadLocationException {
 		//@Jared: added this to allow quote characters at the end
 		// of a document. Without it, entering quote characters at the
 		// very end of a document would fail due to the attempt to close
@@ -1019,8 +1017,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		//System.err.println(doc.getPartition(docCommand.offset).getType());
 		if (doc.getLength() == docCommand.offset) {
 			String qChar = quoteChar + "";
-			doc.set(doc.get() + qChar + qChar);
-			docCommand.offset = doc.getLength();
+			doc.set(doc.get() + qChar);
+			docCommand.offset = doc.getLength()-1;
 			return;
 		}
 		char nextChar = (char) 0;
