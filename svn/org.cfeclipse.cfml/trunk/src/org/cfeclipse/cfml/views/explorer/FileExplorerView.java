@@ -262,15 +262,12 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 					
 					if (selection2.getFirstElement() instanceof FTPConnection) {
 						FTPConnection ftpConn = (FTPConnection) selection2.getFirstElement();
-						
-						showMessage(ftpConn +" " + absolutePath);
 					}
-					
-					//get the ftp thing
-					
 				}
 				
-				
+				// Expand the item double-clicked on
+				boolean isExpand = directoryTreeViewer.getExpandedState(firstElement);
+				directoryTreeViewer.setExpandedState(firstElement, !isExpand);
 			}});
 		
 	}
