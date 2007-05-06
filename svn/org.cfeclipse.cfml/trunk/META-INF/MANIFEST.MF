@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CFML Plug-in
 Bundle-SymbolicName: org.cfeclipse.cfml; singleton:=true
-Bundle-Version: 1.3.1.3
+Bundle-Version: 1.3.1.4
 Bundle-ClassPath: cfml.jar,
  lib/log4j-1.2.9.jar,
  lib/jdom.jar,
