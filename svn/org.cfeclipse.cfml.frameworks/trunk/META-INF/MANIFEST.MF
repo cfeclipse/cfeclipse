@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CF Frameworks Plugin
 Bundle-SymbolicName: org.cfeclipse.cfml.frameworks;singleton:=true
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Bundle-ClassPath: lib/saxpath.jar,
  lib/jdom-contrib.jar,
  lib/jdom.jar,

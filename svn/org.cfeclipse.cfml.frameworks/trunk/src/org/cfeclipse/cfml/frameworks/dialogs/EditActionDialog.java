@@ -180,7 +180,6 @@ public class EditActionDialog extends Dialog {
 	}
 
 
-	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == IDialogConstants.OK_ID) {
 			//Set the values back to the element

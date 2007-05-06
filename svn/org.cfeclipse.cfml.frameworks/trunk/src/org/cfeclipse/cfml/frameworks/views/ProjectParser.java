@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.QualifiedName;
 public class ProjectParser {
 
 	private IProject project;
-	private ArrayList<FrameworkFile> filesToParse;
+	private ArrayList filesToParse;
 	private ArrayList foldersToParse;
 	private ArrayList foldersToScan; //these are the folders we are going to check for items to add.
 
@@ -44,7 +44,7 @@ public class ProjectParser {
 		frameworkManager = new FrameworkManager();
 		
 		this.project = project;
-		this.filesToParse = new ArrayList<FrameworkFile>();
+		this.filesToParse = new ArrayList();
 		this.foldersToParse = new ArrayList();
 		this.foldersToScan = new ArrayList();
 		
