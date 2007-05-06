@@ -22,7 +22,9 @@ import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.cfeclipse.cfml.preferences.BrowserPreferencePage;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.properties.ProjectPropertyPage;
+import org.cfeclipse.cfml.urls.URLManager;
 import org.cfeclipse.cfml.util.AlertUtils;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.preference.IPreferenceNode;
@@ -84,7 +86,10 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
                 
                 FileEditorInput fileInput = (FileEditorInput)input;
                 filePath = fileInput.getFile().getFullPath().toString();
-               
+                
+                
+               //Need to figure out what the url is for this file (do the rest if it isnt defined)
+                	
             //Try and get the workbench preferneces and project properties for the url!
                 String browserAppPath = "";
                 String primaryBrowserPath = CFMLPlugin.getDefault().getPluginPreferences().getString(BrowserPreferenceConstants.P_PRIMARY_BROWSER_PATH);
@@ -117,8 +122,20 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
                     return;
                 }
                 
-                CFMLPropertyManager manager = new CFMLPropertyManager();
-                String URLpath = manager.projectURL(fileInput.getFile().getProject());
+                
+                IFile file = fileInput.getFile();
+                String URLpath = "";
+                String url = URLManager.getURL(file, "");
+
+                if(url != null){
+            		URLpath = url;
+            	}
+            	else{
+            		CFMLPropertyManager manager = new CFMLPropertyManager();
+            		URLpath = manager.projectURL(fileInput.getFile().getProject());	
+            	}
+                
+                
                 //Check that the url exists, have set the default to nothing so that if it is blank we can show em an error
                 System.out.println("The Path is |" + URLpath.length() + "|");
                 if(URLpath.length() == 0){
@@ -144,13 +161,13 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
                 }
                 String[] cmd = new String[] {
                 		browserAppPath
-                         ,URLpath+ fileInput.getFile().getFullPath().removeFirstSegments(1)
+                         ,URLpath
                      }; 
                 
                 if(System.getProperty("os.name").equals("Mac OS X")){
                 	//Need to get the application etc.
                 	String app = browserAppPath.split("/")[browserAppPath.split("/").length-1];
-                	 Runtime.getRuntime().exec(new String[]{"open", "-a", app, URLpath+ fileInput.getFile().getFullPath().removeFirstSegments(1)}); 
+                	 Runtime.getRuntime().exec(new String[]{"open", "-a", app, URLpath}); 
                 	
                 }
                 else {
