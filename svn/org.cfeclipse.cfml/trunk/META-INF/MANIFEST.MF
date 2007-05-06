@@ -15,7 +15,7 @@ Bundle-ClassPath: cfml.jar,
  lib/commons-logging-1.1.jar,
  lib/commons-httpclient-3.0.1.jar,
  lib/commons-collections-3.2.jar,
- lib/apache_vfs.jar
+ lib/commons-vfs-20070505.jar
 Bundle-Activator: org.cfeclipse.cfml.CFMLPlugin
 Bundle-Vendor: The CFEclipse Crew
 Bundle-Localization: plugin
@@ -24,9 +24,6 @@ Export-Package: .,
  com.jcraft.jsch.jce,
  com.jcraft.jsch.jcraft,
  com.werken.saxpath,
- org,
- org.apache,
- org.apache.commons,
  org.apache.commons.collections,
  org.apache.commons.collections.bag,
  org.apache.commons.collections.bidimap,
