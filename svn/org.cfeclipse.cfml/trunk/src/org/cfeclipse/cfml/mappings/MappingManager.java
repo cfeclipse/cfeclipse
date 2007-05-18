@@ -1,6 +1,8 @@
 package org.cfeclipse.cfml.mappings;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -64,6 +66,8 @@ public class MappingManager {
 			mappings.add(mapping);
 		}
 		
+		
+		
 		return (CFMapping[]) mappings.toArray(new CFMapping[mappings.size()]);
 	}
 
@@ -76,11 +80,17 @@ public class MappingManager {
 	 */
 	private static void findMappings(IResource resource, ArrayList mappings){
 		if (resource instanceof IProject) {
+		
 			IProject mappingCandidate = (IProject) resource;
 			String mapping = getMapping(mappingCandidate);
-			if(mapping!= null){
+			if(mapping!= null && mapping.length() >0){
 				CFMapping mappingObj = new CFMapping(mappingCandidate,mapping);
 				mappings.add(mappingObj);
+			}
+			else{ //if you have not changed it, we need to add it as a default too
+				CFMapping mappingObject = new CFMapping(mappingCandidate, "/");
+				mappings.add(mappingObject);
+				
 			}
 			try {
 				IResource[] resources = mappingCandidate.members();
@@ -95,7 +105,7 @@ public class MappingManager {
 		else if(resource instanceof IFolder){
 			IFolder mappingFolderCandidate = (IFolder) resource;
 			String folderMapping = getMapping(mappingFolderCandidate);
-			if(folderMapping != null){
+			if(folderMapping != null && folderMapping.length() >0){
 				CFMapping folderMappingObj = new CFMapping(mappingFolderCandidate, folderMapping);
 				mappings.add(folderMappingObj);
 				
@@ -130,6 +140,11 @@ public class MappingManager {
 		return (persistentProperty == null) ? "" : persistentProperty;
 	}
 	
+	
+	public static IResource resolveMapping(IProject project, Path pathToResolve){
+		
+		return null;
+	}
 	
 	/**
 	 * Return the Resource for a mapping (might be a file or a folder). This is case sensitive for some reason.
