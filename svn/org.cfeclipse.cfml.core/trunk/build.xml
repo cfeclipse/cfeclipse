@@ -1,0 +1,105 @@
+<project name="core.">
+
+	<!--
+
+	Copyright (c) 2007 Mark Mandel, Mark Drew
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.	
+	
+	 -->
+	
+	<property name="src" location="./src" />
+	<property name="build" location="./bin"/>
+	<property name="dist"  location="./lib"/>
+	<property name="antlrScript" value="./CFScript.g" />
+	<property name="temp" value="./tmp" />
+	<property name="antlr-runtime" value="./lib/antlr-runtime-3.0.jar" />
+	
+	<!-- ================================= 
+          target: compile-prod              
+         ================================= -->
+	
+    <target name="compile-prod" depends="clean" description="--> compile with debug options off">
+    	<!--
+    	Doesn't work yet
+    	
+    	<echo message="build: ${output}"></echo>
+    	<java classname="org.antlr.Tool">
+    		<arg value="${src}/Tql.g"/>
+    	</java>
+    	<antcall target="moveTql"/>
+    	<antcall target="buildJava"/>
+	  	<tstamp>
+	  		<format property="DSTAMP" pattern="yyyyMMddHHmmss"/>
+	    </tstamp>    	
+    	<jar destfile="${dist}/tql-${DSTAMP}.jar">
+    		<fileset dir="./" />
+    	</jar>
+    	<antcall target="buildDocs" />
+    	<antcall target="buildSrcZip" />
+    	-->
+    </target>
+	
+    <target name="compile-debug" depends="clean" description="--> compile with debug options on">
+    	<java classname="org.antlr.Tool">
+    		<arg value="${antlrScript}"/>
+    		<arg value="-trace"/>
+    	</java>
+    	<antcall target="move" />
+    	<antcall target="buildJava"/>
+    	<antcall target="buildASTViewerJar"/>
+    </target>
+	
+	<target name="buildJava">
+		<javac srcdir="${src}" 
+			debug="true" 
+			debuglevel="lines,vars,source" 
+			destdir="${build}"/>
+	</target>
+	
+	<target name="move">
+			<move todir="${src}/org/cfeclipse/cfml/core/parser">
+				<fileset includes="*.java" dir="."></fileset>
+			</move>
+	</target>
+	
+	<target name="clean" description="clean up" >
+		<delete>
+			<fileset dir="${build}" includes="**/*.class"/>
+		</delete>
+		<delete file="${dist}/CFMLASTViewer.jar">
+		</delete>
+	</target>	
+	
+	<target name="buildASTViewerJar">
+		<delete dir="${temp}" />
+		<mkdir dir="${temp}"/>	
+		<copy todir="${temp}">
+			<fileset dir="${build}" includes="**/*.class"/>
+		</copy>
+		<unjar src="${antlr-runtime}" dest="${temp}"/>
+		<jar destfile="${dist}/CFMLASTViewer.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.cfeclipse.cfml.core.parser.CFMLASTViewer"/>
+			</manifest>
+			<fileset dir="${temp}" includes="**/*.class"/>
+		</jar>
+		<delete dir="${temp}" />
+	</target>
+</project>
