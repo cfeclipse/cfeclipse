@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFScript.g 2007-05-19 17:25:08
+// $ANTLR 3.0 ./CFScript.g 2007-05-19 23:11:15
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -35,41 +35,42 @@ import org.antlr.runtime.tree.*;
 
 public class CFScriptParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "FUNCTION_CALL", "STRUCT_KEY", "SEMI_COLON", "VAR", "EQUALS", "RETURN", "OPEN_PAREN", "CLOSE_PAREN", "OPERATOR", "NOT", "NUMBER", "STRING", "HASH", "DOT", "IDENTIFIER", "OPEN_SQUARE", "CLOSE_SQUARE", "COMMA", "IF", "OPEN_CURLY", "CLOSE_CURLY", "ELSE", "TRY", "CATCH", "MATH_OPERATOR", "STRING_OPERATOR", "BOOLEAN_OPERATOR", "DIGIT", "LETTER", "WS", "COMMENT", "LINE_COMMENT"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "FUNCTION_CALL", "STRUCT_KEY", "ELSEIF", "SEMI_COLON", "VAR", "EQUALS", "RETURN", "OPEN_PAREN", "CLOSE_PAREN", "OPERATOR", "NOT", "NUMBER", "STRING", "HASH", "DOT", "IDENTIFIER", "OPEN_SQUARE", "CLOSE_SQUARE", "COMMA", "IF", "ELSE", "OPEN_CURLY", "CLOSE_CURLY", "TRY", "CATCH", "MATH_OPERATOR", "STRING_OPERATOR", "BOOLEAN_OPERATOR", "DIGIT", "LETTER", "WS", "COMMENT", "LINE_COMMENT"
     };
-    public static final int LINE_COMMENT=35;
-    public static final int LETTER=32;
-    public static final int CLOSE_CURLY=24;
-    public static final int OPERATOR=12;
-    public static final int ELSE=25;
-    public static final int NUMBER=14;
-    public static final int HASH=16;
-    public static final int OPEN_PAREN=10;
-    public static final int SEMI_COLON=6;
-    public static final int EQUALS=8;
-    public static final int OPEN_CURLY=23;
-    public static final int NOT=13;
+    public static final int LINE_COMMENT=36;
+    public static final int LETTER=33;
+    public static final int CLOSE_CURLY=26;
+    public static final int OPERATOR=13;
+    public static final int ELSE=24;
+    public static final int NUMBER=15;
+    public static final int HASH=17;
+    public static final int OPEN_PAREN=11;
+    public static final int SEMI_COLON=7;
+    public static final int EQUALS=9;
+    public static final int OPEN_CURLY=25;
+    public static final int NOT=14;
     public static final int EOF=-1;
-    public static final int TRY=26;
-    public static final int IF=22;
-    public static final int WS=33;
-    public static final int COMMA=21;
-    public static final int BOOLEAN_OPERATOR=30;
-    public static final int IDENTIFIER=18;
-    public static final int RETURN=9;
-    public static final int OPEN_SQUARE=19;
-    public static final int VAR=7;
-    public static final int MATH_OPERATOR=28;
-    public static final int CLOSE_PAREN=11;
-    public static final int DIGIT=31;
-    public static final int COMMENT=34;
-    public static final int CATCH=27;
-    public static final int DOT=17;
-    public static final int CLOSE_SQUARE=20;
+    public static final int TRY=27;
+    public static final int IF=23;
+    public static final int ELSEIF=6;
+    public static final int WS=34;
+    public static final int COMMA=22;
+    public static final int BOOLEAN_OPERATOR=31;
+    public static final int IDENTIFIER=19;
+    public static final int RETURN=10;
+    public static final int OPEN_SQUARE=20;
+    public static final int VAR=8;
+    public static final int MATH_OPERATOR=29;
+    public static final int CLOSE_PAREN=12;
+    public static final int DIGIT=32;
+    public static final int COMMENT=35;
+    public static final int CATCH=28;
+    public static final int DOT=18;
+    public static final int CLOSE_SQUARE=21;
     public static final int FUNCTION_CALL=4;
-    public static final int STRING_OPERATOR=29;
+    public static final int STRING_OPERATOR=30;
     public static final int STRUCT_KEY=5;
-    public static final int STRING=15;
+    public static final int STRING=16;
 
         public CFScriptParser(TokenStream input) {
             super(input);
@@ -94,7 +95,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start script
-    // ./CFScript.g:118:1: script : ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )* ;
+    // ./CFScript.g:94:1: script : ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )* ;
     public final script_return script() throws RecognitionException {
     traceIn("script", 1);
         script_return retval = new script_return();
@@ -115,12 +116,12 @@ public class CFScriptParser extends Parser {
         Object SEMI_COLON4_tree=null;
 
         try {
-            // ./CFScript.g:120:2: ( ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )* )
-            // ./CFScript.g:120:2: ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )*
+            // ./CFScript.g:96:2: ( ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )* )
+            // ./CFScript.g:96:2: ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )*
             {
             root_0 = (Object)adaptor.nil();
 
-            // ./CFScript.g:120:2: ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )*
+            // ./CFScript.g:96:2: ( setStatement SEMI_COLON | returnStatement SEMI_COLON | ifStatement )*
             loop1:
             do {
                 int alt1=4;
@@ -149,15 +150,15 @@ public class CFScriptParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // ./CFScript.g:121:3: setStatement SEMI_COLON
+            	    // ./CFScript.g:97:3: setStatement SEMI_COLON
             	    {
-            	    pushFollow(FOLLOW_setStatement_in_script70);
+            	    pushFollow(FOLLOW_setStatement_in_script72);
             	    setStatement1=setStatement();
             	    _fsp--;
 
             	    adaptor.addChild(root_0, setStatement1.getTree());
             	    SEMI_COLON2=(Token)input.LT(1);
-            	    match(input,SEMI_COLON,FOLLOW_SEMI_COLON_in_script72); 
+            	    match(input,SEMI_COLON,FOLLOW_SEMI_COLON_in_script74); 
             	    SEMI_COLON2_tree = (Object)adaptor.create(SEMI_COLON2);
             	    adaptor.addChild(root_0, SEMI_COLON2_tree);
 
@@ -165,15 +166,15 @@ public class CFScriptParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // ./CFScript.g:123:3: returnStatement SEMI_COLON
+            	    // ./CFScript.g:99:3: returnStatement SEMI_COLON
             	    {
-            	    pushFollow(FOLLOW_returnStatement_in_script80);
+            	    pushFollow(FOLLOW_returnStatement_in_script82);
             	    returnStatement3=returnStatement();
             	    _fsp--;
 
             	    adaptor.addChild(root_0, returnStatement3.getTree());
             	    SEMI_COLON4=(Token)input.LT(1);
-            	    match(input,SEMI_COLON,FOLLOW_SEMI_COLON_in_script82); 
+            	    match(input,SEMI_COLON,FOLLOW_SEMI_COLON_in_script84); 
             	    SEMI_COLON4_tree = (Object)adaptor.create(SEMI_COLON4);
             	    adaptor.addChild(root_0, SEMI_COLON4_tree);
 
@@ -181,9 +182,9 @@ public class CFScriptParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // ./CFScript.g:125:3: ifStatement
+            	    // ./CFScript.g:101:3: ifStatement
             	    {
-            	    pushFollow(FOLLOW_ifStatement_in_script90);
+            	    pushFollow(FOLLOW_ifStatement_in_script92);
             	    ifStatement5=ifStatement();
             	    _fsp--;
 
@@ -223,7 +224,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start setStatement
-    // ./CFScript.g:129:1: setStatement : ( VAR )? cfmlValue ( EQUALS codeStatement )? ;
+    // ./CFScript.g:105:1: setStatement : ( VAR )? cfmlValue ( EQUALS codeStatement )? ;
     public final setStatement_return setStatement() throws RecognitionException {
     traceIn("setStatement", 2);
         setStatement_return retval = new setStatement_return();
@@ -242,12 +243,12 @@ public class CFScriptParser extends Parser {
         Object EQUALS8_tree=null;
 
         try {
-            // ./CFScript.g:131:2: ( ( VAR )? cfmlValue ( EQUALS codeStatement )? )
-            // ./CFScript.g:131:2: ( VAR )? cfmlValue ( EQUALS codeStatement )?
+            // ./CFScript.g:107:2: ( ( VAR )? cfmlValue ( EQUALS codeStatement )? )
+            // ./CFScript.g:107:2: ( VAR )? cfmlValue ( EQUALS codeStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
-            // ./CFScript.g:131:2: ( VAR )?
+            // ./CFScript.g:107:2: ( VAR )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -256,10 +257,10 @@ public class CFScriptParser extends Parser {
             }
             switch (alt2) {
                 case 1 :
-                    // ./CFScript.g:131:3: VAR
+                    // ./CFScript.g:107:3: VAR
                     {
                     VAR6=(Token)input.LT(1);
-                    match(input,VAR,FOLLOW_VAR_in_setStatement108); 
+                    match(input,VAR,FOLLOW_VAR_in_setStatement110); 
                     VAR6_tree = (Object)adaptor.create(VAR6);
                     adaptor.addChild(root_0, VAR6_tree);
 
@@ -269,12 +270,12 @@ public class CFScriptParser extends Parser {
 
             }
 
-            pushFollow(FOLLOW_cfmlValue_in_setStatement112);
+            pushFollow(FOLLOW_cfmlValue_in_setStatement114);
             cfmlValue7=cfmlValue();
             _fsp--;
 
             adaptor.addChild(root_0, cfmlValue7.getTree());
-            // ./CFScript.g:131:19: ( EQUALS codeStatement )?
+            // ./CFScript.g:107:19: ( EQUALS codeStatement )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -283,14 +284,14 @@ public class CFScriptParser extends Parser {
             }
             switch (alt3) {
                 case 1 :
-                    // ./CFScript.g:131:20: EQUALS codeStatement
+                    // ./CFScript.g:107:20: EQUALS codeStatement
                     {
                     EQUALS8=(Token)input.LT(1);
-                    match(input,EQUALS,FOLLOW_EQUALS_in_setStatement115); 
+                    match(input,EQUALS,FOLLOW_EQUALS_in_setStatement117); 
                     EQUALS8_tree = (Object)adaptor.create(EQUALS8);
                     adaptor.addChild(root_0, EQUALS8_tree);
 
-                    pushFollow(FOLLOW_codeStatement_in_setStatement117);
+                    pushFollow(FOLLOW_codeStatement_in_setStatement119);
                     codeStatement9=codeStatement();
                     _fsp--;
 
@@ -327,7 +328,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start returnStatement
-    // ./CFScript.g:134:1: returnStatement : RETURN ( codeStatement )? ;
+    // ./CFScript.g:110:1: returnStatement : RETURN ( codeStatement )? ;
     public final returnStatement_return returnStatement() throws RecognitionException {
     traceIn("returnStatement", 3);
         returnStatement_return retval = new returnStatement_return();
@@ -342,17 +343,17 @@ public class CFScriptParser extends Parser {
         Object RETURN10_tree=null;
 
         try {
-            // ./CFScript.g:136:2: ( RETURN ( codeStatement )? )
-            // ./CFScript.g:136:2: RETURN ( codeStatement )?
+            // ./CFScript.g:112:2: ( RETURN ( codeStatement )? )
+            // ./CFScript.g:112:2: RETURN ( codeStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
             RETURN10=(Token)input.LT(1);
-            match(input,RETURN,FOLLOW_RETURN_in_returnStatement132); 
+            match(input,RETURN,FOLLOW_RETURN_in_returnStatement134); 
             RETURN10_tree = (Object)adaptor.create(RETURN10);
             root_0 = (Object)adaptor.becomeRoot(RETURN10_tree, root_0);
 
-            // ./CFScript.g:136:10: ( codeStatement )?
+            // ./CFScript.g:112:10: ( codeStatement )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -361,9 +362,9 @@ public class CFScriptParser extends Parser {
             }
             switch (alt4) {
                 case 1 :
-                    // ./CFScript.g:136:11: codeStatement
+                    // ./CFScript.g:112:11: codeStatement
                     {
-                    pushFollow(FOLLOW_codeStatement_in_returnStatement136);
+                    pushFollow(FOLLOW_codeStatement_in_returnStatement138);
                     codeStatement11=codeStatement();
                     _fsp--;
 
@@ -400,7 +401,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start codeStatement
-    // ./CFScript.g:139:1: codeStatement : ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement );
+    // ./CFScript.g:115:1: codeStatement : ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement );
     public final codeStatement_return codeStatement() throws RecognitionException {
     traceIn("codeStatement", 4);
         codeStatement_return retval = new codeStatement_return();
@@ -419,7 +420,7 @@ public class CFScriptParser extends Parser {
         Object CLOSE_PAREN14_tree=null;
 
         try {
-            // ./CFScript.g:141:2: ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement )
+            // ./CFScript.g:117:2: ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -431,28 +432,28 @@ public class CFScriptParser extends Parser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("139:1: codeStatement : ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement );", 5, 0, input);
+                    new NoViableAltException("115:1: codeStatement : ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement );", 5, 0, input);
 
                 throw nvae;
             }
             switch (alt5) {
                 case 1 :
-                    // ./CFScript.g:141:2: OPEN_PAREN codeStatement CLOSE_PAREN
+                    // ./CFScript.g:117:2: OPEN_PAREN codeStatement CLOSE_PAREN
                     {
                     root_0 = (Object)adaptor.nil();
 
                     OPEN_PAREN12=(Token)input.LT(1);
-                    match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_codeStatement150); 
+                    match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_codeStatement152); 
                     OPEN_PAREN12_tree = (Object)adaptor.create(OPEN_PAREN12);
                     adaptor.addChild(root_0, OPEN_PAREN12_tree);
 
-                    pushFollow(FOLLOW_codeStatement_in_codeStatement152);
+                    pushFollow(FOLLOW_codeStatement_in_codeStatement154);
                     codeStatement13=codeStatement();
                     _fsp--;
 
                     adaptor.addChild(root_0, codeStatement13.getTree());
                     CLOSE_PAREN14=(Token)input.LT(1);
-                    match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_codeStatement154); 
+                    match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_codeStatement156); 
                     CLOSE_PAREN14_tree = (Object)adaptor.create(CLOSE_PAREN14);
                     adaptor.addChild(root_0, CLOSE_PAREN14_tree);
 
@@ -460,11 +461,11 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:143:2: cfmlBasicStatement
+                    // ./CFScript.g:119:2: cfmlBasicStatement
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_cfmlBasicStatement_in_codeStatement160);
+                    pushFollow(FOLLOW_cfmlBasicStatement_in_codeStatement162);
                     cfmlBasicStatement15=cfmlBasicStatement();
                     _fsp--;
 
@@ -497,7 +498,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlBasicStatement
-    // ./CFScript.g:146:1: cfmlBasicStatement : cfmlValueStatement ( OPERATOR codeStatement )? ;
+    // ./CFScript.g:122:1: cfmlBasicStatement : cfmlValueStatement ( OPERATOR codeStatement )? ;
     public final cfmlBasicStatement_return cfmlBasicStatement() throws RecognitionException {
     traceIn("cfmlBasicStatement", 5);
         cfmlBasicStatement_return retval = new cfmlBasicStatement_return();
@@ -514,17 +515,17 @@ public class CFScriptParser extends Parser {
         Object OPERATOR17_tree=null;
 
         try {
-            // ./CFScript.g:148:2: ( cfmlValueStatement ( OPERATOR codeStatement )? )
-            // ./CFScript.g:148:2: cfmlValueStatement ( OPERATOR codeStatement )?
+            // ./CFScript.g:124:2: ( cfmlValueStatement ( OPERATOR codeStatement )? )
+            // ./CFScript.g:124:2: cfmlValueStatement ( OPERATOR codeStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
-            pushFollow(FOLLOW_cfmlValueStatement_in_cfmlBasicStatement172);
+            pushFollow(FOLLOW_cfmlValueStatement_in_cfmlBasicStatement174);
             cfmlValueStatement16=cfmlValueStatement();
             _fsp--;
 
             adaptor.addChild(root_0, cfmlValueStatement16.getTree());
-            // ./CFScript.g:148:21: ( OPERATOR codeStatement )?
+            // ./CFScript.g:124:21: ( OPERATOR codeStatement )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -533,14 +534,14 @@ public class CFScriptParser extends Parser {
             }
             switch (alt6) {
                 case 1 :
-                    // ./CFScript.g:148:22: OPERATOR codeStatement
+                    // ./CFScript.g:124:22: OPERATOR codeStatement
                     {
                     OPERATOR17=(Token)input.LT(1);
-                    match(input,OPERATOR,FOLLOW_OPERATOR_in_cfmlBasicStatement175); 
+                    match(input,OPERATOR,FOLLOW_OPERATOR_in_cfmlBasicStatement177); 
                     OPERATOR17_tree = (Object)adaptor.create(OPERATOR17);
                     adaptor.addChild(root_0, OPERATOR17_tree);
 
-                    pushFollow(FOLLOW_codeStatement_in_cfmlBasicStatement177);
+                    pushFollow(FOLLOW_codeStatement_in_cfmlBasicStatement179);
                     codeStatement18=codeStatement();
                     _fsp--;
 
@@ -577,7 +578,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlValueStatement
-    // ./CFScript.g:152:1: cfmlValueStatement : ( NOT )? cfmlValue ;
+    // ./CFScript.g:128:1: cfmlValueStatement : ( NOT )? cfmlValue ;
     public final cfmlValueStatement_return cfmlValueStatement() throws RecognitionException {
     traceIn("cfmlValueStatement", 6);
         cfmlValueStatement_return retval = new cfmlValueStatement_return();
@@ -592,12 +593,12 @@ public class CFScriptParser extends Parser {
         Object NOT19_tree=null;
 
         try {
-            // ./CFScript.g:154:2: ( ( NOT )? cfmlValue )
-            // ./CFScript.g:154:2: ( NOT )? cfmlValue
+            // ./CFScript.g:130:2: ( ( NOT )? cfmlValue )
+            // ./CFScript.g:130:2: ( NOT )? cfmlValue
             {
             root_0 = (Object)adaptor.nil();
 
-            // ./CFScript.g:154:2: ( NOT )?
+            // ./CFScript.g:130:2: ( NOT )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -606,10 +607,10 @@ public class CFScriptParser extends Parser {
             }
             switch (alt7) {
                 case 1 :
-                    // ./CFScript.g:154:3: NOT
+                    // ./CFScript.g:130:3: NOT
                     {
                     NOT19=(Token)input.LT(1);
-                    match(input,NOT,FOLLOW_NOT_in_cfmlValueStatement193); 
+                    match(input,NOT,FOLLOW_NOT_in_cfmlValueStatement195); 
                     NOT19_tree = (Object)adaptor.create(NOT19);
                     adaptor.addChild(root_0, NOT19_tree);
 
@@ -619,7 +620,7 @@ public class CFScriptParser extends Parser {
 
             }
 
-            pushFollow(FOLLOW_cfmlValue_in_cfmlValueStatement197);
+            pushFollow(FOLLOW_cfmlValue_in_cfmlValueStatement199);
             cfmlValue20=cfmlValue();
             _fsp--;
 
@@ -650,7 +651,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlValue
-    // ./CFScript.g:157:1: cfmlValue : ( NUMBER | STRING | cfmlLinking ) ;
+    // ./CFScript.g:133:1: cfmlValue : ( NUMBER | STRING | cfmlLinking ) ;
     public final cfmlValue_return cfmlValue() throws RecognitionException {
     traceIn("cfmlValue", 7);
         cfmlValue_return retval = new cfmlValue_return();
@@ -667,12 +668,12 @@ public class CFScriptParser extends Parser {
         Object STRING22_tree=null;
 
         try {
-            // ./CFScript.g:159:2: ( ( NUMBER | STRING | cfmlLinking ) )
-            // ./CFScript.g:159:2: ( NUMBER | STRING | cfmlLinking )
+            // ./CFScript.g:135:2: ( ( NUMBER | STRING | cfmlLinking ) )
+            // ./CFScript.g:135:2: ( NUMBER | STRING | cfmlLinking )
             {
             root_0 = (Object)adaptor.nil();
 
-            // ./CFScript.g:159:2: ( NUMBER | STRING | cfmlLinking )
+            // ./CFScript.g:135:2: ( NUMBER | STRING | cfmlLinking )
             int alt8=3;
             switch ( input.LA(1) ) {
             case NUMBER:
@@ -693,17 +694,17 @@ public class CFScriptParser extends Parser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("159:2: ( NUMBER | STRING | cfmlLinking )", 8, 0, input);
+                    new NoViableAltException("135:2: ( NUMBER | STRING | cfmlLinking )", 8, 0, input);
 
                 throw nvae;
             }
 
             switch (alt8) {
                 case 1 :
-                    // ./CFScript.g:159:3: NUMBER
+                    // ./CFScript.g:135:3: NUMBER
                     {
                     NUMBER21=(Token)input.LT(1);
-                    match(input,NUMBER,FOLLOW_NUMBER_in_cfmlValue210); 
+                    match(input,NUMBER,FOLLOW_NUMBER_in_cfmlValue212); 
                     NUMBER21_tree = (Object)adaptor.create(NUMBER21);
                     adaptor.addChild(root_0, NUMBER21_tree);
 
@@ -711,10 +712,10 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:159:12: STRING
+                    // ./CFScript.g:135:12: STRING
                     {
                     STRING22=(Token)input.LT(1);
-                    match(input,STRING,FOLLOW_STRING_in_cfmlValue214); 
+                    match(input,STRING,FOLLOW_STRING_in_cfmlValue216); 
                     STRING22_tree = (Object)adaptor.create(STRING22);
                     adaptor.addChild(root_0, STRING22_tree);
 
@@ -722,9 +723,9 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ./CFScript.g:159:21: cfmlLinking
+                    // ./CFScript.g:135:21: cfmlLinking
                     {
-                    pushFollow(FOLLOW_cfmlLinking_in_cfmlValue218);
+                    pushFollow(FOLLOW_cfmlLinking_in_cfmlValue220);
                     cfmlLinking23=cfmlLinking();
                     _fsp--;
 
@@ -761,7 +762,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlLinking
-    // ./CFScript.g:162:1: cfmlLinking : ( HASH cfmlBasicLinking HASH | cfmlBasicLinking );
+    // ./CFScript.g:138:1: cfmlLinking : ( HASH cfmlBasicLinking HASH | cfmlBasicLinking );
     public final cfmlLinking_return cfmlLinking() throws RecognitionException {
     traceIn("cfmlLinking", 8);
         cfmlLinking_return retval = new cfmlLinking_return();
@@ -780,7 +781,7 @@ public class CFScriptParser extends Parser {
         Object HASH26_tree=null;
 
         try {
-            // ./CFScript.g:164:2: ( HASH cfmlBasicLinking HASH | cfmlBasicLinking )
+            // ./CFScript.g:140:2: ( HASH cfmlBasicLinking HASH | cfmlBasicLinking )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -792,28 +793,28 @@ public class CFScriptParser extends Parser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("162:1: cfmlLinking : ( HASH cfmlBasicLinking HASH | cfmlBasicLinking );", 9, 0, input);
+                    new NoViableAltException("138:1: cfmlLinking : ( HASH cfmlBasicLinking HASH | cfmlBasicLinking );", 9, 0, input);
 
                 throw nvae;
             }
             switch (alt9) {
                 case 1 :
-                    // ./CFScript.g:164:2: HASH cfmlBasicLinking HASH
+                    // ./CFScript.g:140:2: HASH cfmlBasicLinking HASH
                     {
                     root_0 = (Object)adaptor.nil();
 
                     HASH24=(Token)input.LT(1);
-                    match(input,HASH,FOLLOW_HASH_in_cfmlLinking231); 
+                    match(input,HASH,FOLLOW_HASH_in_cfmlLinking233); 
                     HASH24_tree = (Object)adaptor.create(HASH24);
                     adaptor.addChild(root_0, HASH24_tree);
 
-                    pushFollow(FOLLOW_cfmlBasicLinking_in_cfmlLinking233);
+                    pushFollow(FOLLOW_cfmlBasicLinking_in_cfmlLinking235);
                     cfmlBasicLinking25=cfmlBasicLinking();
                     _fsp--;
 
                     adaptor.addChild(root_0, cfmlBasicLinking25.getTree());
                     HASH26=(Token)input.LT(1);
-                    match(input,HASH,FOLLOW_HASH_in_cfmlLinking235); 
+                    match(input,HASH,FOLLOW_HASH_in_cfmlLinking237); 
                     HASH26_tree = (Object)adaptor.create(HASH26);
                     adaptor.addChild(root_0, HASH26_tree);
 
@@ -821,11 +822,11 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:166:2: cfmlBasicLinking
+                    // ./CFScript.g:142:2: cfmlBasicLinking
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_cfmlBasicLinking_in_cfmlLinking241);
+                    pushFollow(FOLLOW_cfmlBasicLinking_in_cfmlLinking243);
                     cfmlBasicLinking27=cfmlBasicLinking();
                     _fsp--;
 
@@ -858,7 +859,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlBasicLinking
-    // ./CFScript.g:169:1: cfmlBasicLinking : cfmlBasic ( DOT cfmlBasic )* ;
+    // ./CFScript.g:145:1: cfmlBasicLinking : cfmlBasic ( DOT cfmlBasic )* ;
     public final cfmlBasicLinking_return cfmlBasicLinking() throws RecognitionException {
     traceIn("cfmlBasicLinking", 9);
         cfmlBasicLinking_return retval = new cfmlBasicLinking_return();
@@ -875,17 +876,17 @@ public class CFScriptParser extends Parser {
         Object DOT29_tree=null;
 
         try {
-            // ./CFScript.g:171:2: ( cfmlBasic ( DOT cfmlBasic )* )
-            // ./CFScript.g:171:2: cfmlBasic ( DOT cfmlBasic )*
+            // ./CFScript.g:147:2: ( cfmlBasic ( DOT cfmlBasic )* )
+            // ./CFScript.g:147:2: cfmlBasic ( DOT cfmlBasic )*
             {
             root_0 = (Object)adaptor.nil();
 
-            pushFollow(FOLLOW_cfmlBasic_in_cfmlBasicLinking253);
+            pushFollow(FOLLOW_cfmlBasic_in_cfmlBasicLinking255);
             cfmlBasic28=cfmlBasic();
             _fsp--;
 
             adaptor.addChild(root_0, cfmlBasic28.getTree());
-            // ./CFScript.g:171:12: ( DOT cfmlBasic )*
+            // ./CFScript.g:147:12: ( DOT cfmlBasic )*
             loop10:
             do {
                 int alt10=2;
@@ -898,14 +899,14 @@ public class CFScriptParser extends Parser {
 
                 switch (alt10) {
             	case 1 :
-            	    // ./CFScript.g:171:13: DOT cfmlBasic
+            	    // ./CFScript.g:147:13: DOT cfmlBasic
             	    {
             	    DOT29=(Token)input.LT(1);
-            	    match(input,DOT,FOLLOW_DOT_in_cfmlBasicLinking256); 
+            	    match(input,DOT,FOLLOW_DOT_in_cfmlBasicLinking258); 
             	    DOT29_tree = (Object)adaptor.create(DOT29);
             	    adaptor.addChild(root_0, DOT29_tree);
 
-            	    pushFollow(FOLLOW_cfmlBasic_in_cfmlBasicLinking258);
+            	    pushFollow(FOLLOW_cfmlBasic_in_cfmlBasicLinking260);
             	    cfmlBasic30=cfmlBasic();
             	    _fsp--;
 
@@ -945,7 +946,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlBasic
-    // ./CFScript.g:174:1: cfmlBasic : ( identifier | function );
+    // ./CFScript.g:150:1: cfmlBasic : ( identifier | function );
     public final cfmlBasic_return cfmlBasic() throws RecognitionException {
     traceIn("cfmlBasic", 10);
         cfmlBasic_return retval = new cfmlBasic_return();
@@ -960,7 +961,7 @@ public class CFScriptParser extends Parser {
 
 
         try {
-            // ./CFScript.g:176:2: ( identifier | function )
+            // ./CFScript.g:152:2: ( identifier | function )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -975,24 +976,24 @@ public class CFScriptParser extends Parser {
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("174:1: cfmlBasic : ( identifier | function );", 11, 1, input);
+                        new NoViableAltException("150:1: cfmlBasic : ( identifier | function );", 11, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("174:1: cfmlBasic : ( identifier | function );", 11, 0, input);
+                    new NoViableAltException("150:1: cfmlBasic : ( identifier | function );", 11, 0, input);
 
                 throw nvae;
             }
             switch (alt11) {
                 case 1 :
-                    // ./CFScript.g:176:2: identifier
+                    // ./CFScript.g:152:2: identifier
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_identifier_in_cfmlBasic272);
+                    pushFollow(FOLLOW_identifier_in_cfmlBasic274);
                     identifier31=identifier();
                     _fsp--;
 
@@ -1001,11 +1002,11 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:176:15: function
+                    // ./CFScript.g:152:15: function
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_function_in_cfmlBasic276);
+                    pushFollow(FOLLOW_function_in_cfmlBasic278);
                     function32=function();
                     _fsp--;
 
@@ -1038,7 +1039,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start identifier
-    // ./CFScript.g:179:1: identifier : IDENTIFIER ( struct )? ;
+    // ./CFScript.g:155:1: identifier : IDENTIFIER ( struct )? ;
     public final identifier_return identifier() throws RecognitionException {
     traceIn("identifier", 11);
         identifier_return retval = new identifier_return();
@@ -1053,17 +1054,17 @@ public class CFScriptParser extends Parser {
         Object IDENTIFIER33_tree=null;
 
         try {
-            // ./CFScript.g:181:2: ( IDENTIFIER ( struct )? )
-            // ./CFScript.g:181:2: IDENTIFIER ( struct )?
+            // ./CFScript.g:157:2: ( IDENTIFIER ( struct )? )
+            // ./CFScript.g:157:2: IDENTIFIER ( struct )?
             {
             root_0 = (Object)adaptor.nil();
 
             IDENTIFIER33=(Token)input.LT(1);
-            match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_identifier288); 
+            match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_identifier290); 
             IDENTIFIER33_tree = (Object)adaptor.create(IDENTIFIER33);
             adaptor.addChild(root_0, IDENTIFIER33_tree);
 
-            // ./CFScript.g:181:13: ( struct )?
+            // ./CFScript.g:157:13: ( struct )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1072,9 +1073,9 @@ public class CFScriptParser extends Parser {
             }
             switch (alt12) {
                 case 1 :
-                    // ./CFScript.g:181:14: struct
+                    // ./CFScript.g:157:14: struct
                     {
-                    pushFollow(FOLLOW_struct_in_identifier291);
+                    pushFollow(FOLLOW_struct_in_identifier293);
                     struct34=struct();
                     _fsp--;
 
@@ -1111,7 +1112,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start struct
-    // ./CFScript.g:184:1: struct : OPEN_SQUARE codeStatement CLOSE_SQUARE -> ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE ) ;
+    // ./CFScript.g:160:1: struct : OPEN_SQUARE codeStatement CLOSE_SQUARE -> ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE ) ;
     public final struct_return struct() throws RecognitionException {
     traceIn("struct", 12);
         struct_return retval = new struct_return();
@@ -1130,25 +1131,25 @@ public class CFScriptParser extends Parser {
         RewriteRuleTokenStream stream_CLOSE_SQUARE=new RewriteRuleTokenStream(adaptor,"token CLOSE_SQUARE");
         RewriteRuleSubtreeStream stream_codeStatement=new RewriteRuleSubtreeStream(adaptor,"rule codeStatement");
         try {
-            // ./CFScript.g:186:2: ( OPEN_SQUARE codeStatement CLOSE_SQUARE -> ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE ) )
-            // ./CFScript.g:186:2: OPEN_SQUARE codeStatement CLOSE_SQUARE
+            // ./CFScript.g:162:2: ( OPEN_SQUARE codeStatement CLOSE_SQUARE -> ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE ) )
+            // ./CFScript.g:162:2: OPEN_SQUARE codeStatement CLOSE_SQUARE
             {
             OPEN_SQUARE35=(Token)input.LT(1);
-            match(input,OPEN_SQUARE,FOLLOW_OPEN_SQUARE_in_struct306); 
+            match(input,OPEN_SQUARE,FOLLOW_OPEN_SQUARE_in_struct308); 
             stream_OPEN_SQUARE.add(OPEN_SQUARE35);
 
-            pushFollow(FOLLOW_codeStatement_in_struct308);
+            pushFollow(FOLLOW_codeStatement_in_struct310);
             codeStatement36=codeStatement();
             _fsp--;
 
             stream_codeStatement.add(codeStatement36.getTree());
             CLOSE_SQUARE37=(Token)input.LT(1);
-            match(input,CLOSE_SQUARE,FOLLOW_CLOSE_SQUARE_in_struct310); 
+            match(input,CLOSE_SQUARE,FOLLOW_CLOSE_SQUARE_in_struct312); 
             stream_CLOSE_SQUARE.add(CLOSE_SQUARE37);
 
 
             // AST REWRITE
-            // elements: CLOSE_SQUARE, codeStatement, OPEN_SQUARE
+            // elements: codeStatement, OPEN_SQUARE, CLOSE_SQUARE
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1157,9 +1158,9 @@ public class CFScriptParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 187:2: -> ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE )
+            // 163:2: -> ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE )
             {
-                // ./CFScript.g:187:5: ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE )
+                // ./CFScript.g:163:5: ^( STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(STRUCT_KEY, "STRUCT_KEY"), root_1);
@@ -1200,7 +1201,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start function
-    // ./CFScript.g:190:1: function : IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) ;
+    // ./CFScript.g:166:1: function : IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) ;
     public final function_return function() throws RecognitionException {
     traceIn("function", 13);
         function_return retval = new function_return();
@@ -1222,18 +1223,18 @@ public class CFScriptParser extends Parser {
         RewriteRuleTokenStream stream_IDENTIFIER=new RewriteRuleTokenStream(adaptor,"token IDENTIFIER");
         RewriteRuleSubtreeStream stream_argumentStatement=new RewriteRuleSubtreeStream(adaptor,"rule argumentStatement");
         try {
-            // ./CFScript.g:192:2: ( IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) )
-            // ./CFScript.g:192:2: IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN
+            // ./CFScript.g:168:2: ( IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) )
+            // ./CFScript.g:168:2: IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN
             {
             IDENTIFIER38=(Token)input.LT(1);
-            match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_function336); 
+            match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_function338); 
             stream_IDENTIFIER.add(IDENTIFIER38);
 
             OPEN_PAREN39=(Token)input.LT(1);
-            match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_function338); 
+            match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_function340); 
             stream_OPEN_PAREN.add(OPEN_PAREN39);
 
-            // ./CFScript.g:192:24: ( argumentStatement )?
+            // ./CFScript.g:168:24: ( argumentStatement )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1242,9 +1243,9 @@ public class CFScriptParser extends Parser {
             }
             switch (alt13) {
                 case 1 :
-                    // ./CFScript.g:192:25: argumentStatement
+                    // ./CFScript.g:168:25: argumentStatement
                     {
-                    pushFollow(FOLLOW_argumentStatement_in_function341);
+                    pushFollow(FOLLOW_argumentStatement_in_function343);
                     argumentStatement40=argumentStatement();
                     _fsp--;
 
@@ -1256,12 +1257,12 @@ public class CFScriptParser extends Parser {
             }
 
             CLOSE_PAREN41=(Token)input.LT(1);
-            match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_function345); 
+            match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_function347); 
             stream_CLOSE_PAREN.add(CLOSE_PAREN41);
 
 
             // AST REWRITE
-            // elements: argumentStatement, IDENTIFIER, OPEN_PAREN, CLOSE_PAREN
+            // elements: OPEN_PAREN, IDENTIFIER, argumentStatement, CLOSE_PAREN
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1270,16 +1271,16 @@ public class CFScriptParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 193:2: -> ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN )
+            // 169:2: -> ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN )
             {
-                // ./CFScript.g:193:5: ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN )
+                // ./CFScript.g:169:5: ^( FUNCTION_CALL IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(FUNCTION_CALL, "FUNCTION_CALL"), root_1);
 
                 adaptor.addChild(root_1, stream_IDENTIFIER.next());
                 adaptor.addChild(root_1, stream_OPEN_PAREN.next());
-                // ./CFScript.g:193:43: ( argumentStatement )?
+                // ./CFScript.g:169:43: ( argumentStatement )?
                 if ( stream_argumentStatement.hasNext() ) {
                     adaptor.addChild(root_1, stream_argumentStatement.next());
 
@@ -1319,7 +1320,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start argumentStatement
-    // ./CFScript.g:196:1: argumentStatement : codeStatement ( COMMA codeStatement )* ;
+    // ./CFScript.g:172:1: argumentStatement : codeStatement ( COMMA codeStatement )* ;
     public final argumentStatement_return argumentStatement() throws RecognitionException {
     traceIn("argumentStatement", 14);
         argumentStatement_return retval = new argumentStatement_return();
@@ -1336,17 +1337,17 @@ public class CFScriptParser extends Parser {
         Object COMMA43_tree=null;
 
         try {
-            // ./CFScript.g:198:2: ( codeStatement ( COMMA codeStatement )* )
-            // ./CFScript.g:198:2: codeStatement ( COMMA codeStatement )*
+            // ./CFScript.g:174:2: ( codeStatement ( COMMA codeStatement )* )
+            // ./CFScript.g:174:2: codeStatement ( COMMA codeStatement )*
             {
             root_0 = (Object)adaptor.nil();
 
-            pushFollow(FOLLOW_codeStatement_in_argumentStatement376);
+            pushFollow(FOLLOW_codeStatement_in_argumentStatement378);
             codeStatement42=codeStatement();
             _fsp--;
 
             adaptor.addChild(root_0, codeStatement42.getTree());
-            // ./CFScript.g:198:16: ( COMMA codeStatement )*
+            // ./CFScript.g:174:16: ( COMMA codeStatement )*
             loop14:
             do {
                 int alt14=2;
@@ -1359,14 +1360,14 @@ public class CFScriptParser extends Parser {
 
                 switch (alt14) {
             	case 1 :
-            	    // ./CFScript.g:198:17: COMMA codeStatement
+            	    // ./CFScript.g:174:17: COMMA codeStatement
             	    {
             	    COMMA43=(Token)input.LT(1);
-            	    match(input,COMMA,FOLLOW_COMMA_in_argumentStatement379); 
+            	    match(input,COMMA,FOLLOW_COMMA_in_argumentStatement381); 
             	    COMMA43_tree = (Object)adaptor.create(COMMA43);
             	    adaptor.addChild(root_0, COMMA43_tree);
 
-            	    pushFollow(FOLLOW_codeStatement_in_argumentStatement381);
+            	    pushFollow(FOLLOW_codeStatement_in_argumentStatement383);
             	    codeStatement44=codeStatement();
             	    _fsp--;
 
@@ -1406,7 +1407,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start ifStatement
-    // ./CFScript.g:201:1: ifStatement : IF OPEN_PAREN codeStatement CLOSE_PAREN block ;
+    // ./CFScript.g:177:1: ifStatement : IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )? ;
     public final ifStatement_return ifStatement() throws RecognitionException {
     traceIn("ifStatement", 15);
         ifStatement_return retval = new ifStatement_return();
@@ -1421,42 +1422,103 @@ public class CFScriptParser extends Parser {
 
         block_return block49 = null;
 
+        elseifStatement_return elseifStatement50 = null;
+
+        elseStatement_return elseStatement51 = null;
+
 
         Object IF45_tree=null;
         Object OPEN_PAREN46_tree=null;
         Object CLOSE_PAREN48_tree=null;
 
         try {
-            // ./CFScript.g:203:2: ( IF OPEN_PAREN codeStatement CLOSE_PAREN block )
-            // ./CFScript.g:203:2: IF OPEN_PAREN codeStatement CLOSE_PAREN block
+            // ./CFScript.g:179:2: ( IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )? )
+            // ./CFScript.g:179:2: IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
             IF45=(Token)input.LT(1);
-            match(input,IF,FOLLOW_IF_in_ifStatement395); 
+            match(input,IF,FOLLOW_IF_in_ifStatement397); 
             IF45_tree = (Object)adaptor.create(IF45);
-            adaptor.addChild(root_0, IF45_tree);
+            root_0 = (Object)adaptor.becomeRoot(IF45_tree, root_0);
 
             OPEN_PAREN46=(Token)input.LT(1);
-            match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_ifStatement397); 
+            match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_ifStatement400); 
             OPEN_PAREN46_tree = (Object)adaptor.create(OPEN_PAREN46);
             adaptor.addChild(root_0, OPEN_PAREN46_tree);
 
-            pushFollow(FOLLOW_codeStatement_in_ifStatement399);
+            pushFollow(FOLLOW_codeStatement_in_ifStatement402);
             codeStatement47=codeStatement();
             _fsp--;
 
             adaptor.addChild(root_0, codeStatement47.getTree());
             CLOSE_PAREN48=(Token)input.LT(1);
-            match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_ifStatement401); 
+            match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_ifStatement404); 
             CLOSE_PAREN48_tree = (Object)adaptor.create(CLOSE_PAREN48);
             adaptor.addChild(root_0, CLOSE_PAREN48_tree);
 
-            pushFollow(FOLLOW_block_in_ifStatement404);
+            pushFollow(FOLLOW_block_in_ifStatement407);
             block49=block();
             _fsp--;
 
             adaptor.addChild(root_0, block49.getTree());
+            // ./CFScript.g:181:2: ( elseifStatement )*
+            loop15:
+            do {
+                int alt15=2;
+                int LA15_0 = input.LA(1);
+
+                if ( (LA15_0==ELSE) ) {
+                    int LA15_1 = input.LA(2);
+
+                    if ( (LA15_1==IF) ) {
+                        alt15=1;
+                    }
+
+
+                }
+
+
+                switch (alt15) {
+            	case 1 :
+            	    // ./CFScript.g:181:3: elseifStatement
+            	    {
+            	    pushFollow(FOLLOW_elseifStatement_in_ifStatement411);
+            	    elseifStatement50=elseifStatement();
+            	    _fsp--;
+
+            	    adaptor.addChild(root_0, elseifStatement50.getTree());
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop15;
+                }
+            } while (true);
+
+            // ./CFScript.g:182:2: ( elseStatement )?
+            int alt16=2;
+            int LA16_0 = input.LA(1);
+
+            if ( (LA16_0==ELSE) ) {
+                alt16=1;
+            }
+            switch (alt16) {
+                case 1 :
+                    // ./CFScript.g:182:3: elseStatement
+                    {
+                    pushFollow(FOLLOW_elseStatement_in_ifStatement417);
+                    elseStatement51=elseStatement();
+                    _fsp--;
+
+                    adaptor.addChild(root_0, elseStatement51.getTree());
+
+                    }
+                    break;
+
+            }
+
 
             }
 
@@ -1477,48 +1539,99 @@ public class CFScriptParser extends Parser {
     }
     // $ANTLR end ifStatement
 
-    public static class block_return extends ParserRuleReturnScope {
+    public static class elseifStatement_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start block
-    // ./CFScript.g:207:1: block : OPEN_CURLY script CLOSE_CURLY ;
-    public final block_return block() throws RecognitionException {
-    traceIn("block", 16);
-        block_return retval = new block_return();
+    // $ANTLR start elseifStatement
+    // ./CFScript.g:185:1: elseifStatement : ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block ) ;
+    public final elseifStatement_return elseifStatement() throws RecognitionException {
+    traceIn("elseifStatement", 16);
+        elseifStatement_return retval = new elseifStatement_return();
         retval.start = input.LT(1);
 
         Object root_0 = null;
 
-        Token OPEN_CURLY50=null;
-        Token CLOSE_CURLY52=null;
-        script_return script51 = null;
+        Token ELSE52=null;
+        Token IF53=null;
+        Token OPEN_PAREN54=null;
+        Token CLOSE_PAREN56=null;
+        codeStatement_return codeStatement55 = null;
+
+        block_return block57 = null;
 
 
-        Object OPEN_CURLY50_tree=null;
-        Object CLOSE_CURLY52_tree=null;
-
+        Object ELSE52_tree=null;
+        Object IF53_tree=null;
+        Object OPEN_PAREN54_tree=null;
+        Object CLOSE_PAREN56_tree=null;
+        RewriteRuleTokenStream stream_OPEN_PAREN=new RewriteRuleTokenStream(adaptor,"token OPEN_PAREN");
+        RewriteRuleTokenStream stream_CLOSE_PAREN=new RewriteRuleTokenStream(adaptor,"token CLOSE_PAREN");
+        RewriteRuleTokenStream stream_ELSE=new RewriteRuleTokenStream(adaptor,"token ELSE");
+        RewriteRuleTokenStream stream_IF=new RewriteRuleTokenStream(adaptor,"token IF");
+        RewriteRuleSubtreeStream stream_codeStatement=new RewriteRuleSubtreeStream(adaptor,"rule codeStatement");
+        RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
         try {
-            // ./CFScript.g:209:2: ( OPEN_CURLY script CLOSE_CURLY )
-            // ./CFScript.g:209:2: OPEN_CURLY script CLOSE_CURLY
+            // ./CFScript.g:187:2: ( ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block ) )
+            // ./CFScript.g:187:2: ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block
             {
-            root_0 = (Object)adaptor.nil();
+            ELSE52=(Token)input.LT(1);
+            match(input,ELSE,FOLLOW_ELSE_in_elseifStatement432); 
+            stream_ELSE.add(ELSE52);
 
-            OPEN_CURLY50=(Token)input.LT(1);
-            match(input,OPEN_CURLY,FOLLOW_OPEN_CURLY_in_block416); 
-            OPEN_CURLY50_tree = (Object)adaptor.create(OPEN_CURLY50);
-            adaptor.addChild(root_0, OPEN_CURLY50_tree);
+            IF53=(Token)input.LT(1);
+            match(input,IF,FOLLOW_IF_in_elseifStatement434); 
+            stream_IF.add(IF53);
 
-            pushFollow(FOLLOW_script_in_block418);
-            script51=script();
+            OPEN_PAREN54=(Token)input.LT(1);
+            match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_elseifStatement436); 
+            stream_OPEN_PAREN.add(OPEN_PAREN54);
+
+            pushFollow(FOLLOW_codeStatement_in_elseifStatement438);
+            codeStatement55=codeStatement();
             _fsp--;
 
-            adaptor.addChild(root_0, script51.getTree());
-            CLOSE_CURLY52=(Token)input.LT(1);
-            match(input,CLOSE_CURLY,FOLLOW_CLOSE_CURLY_in_block420); 
-            CLOSE_CURLY52_tree = (Object)adaptor.create(CLOSE_CURLY52);
-            adaptor.addChild(root_0, CLOSE_CURLY52_tree);
+            stream_codeStatement.add(codeStatement55.getTree());
+            CLOSE_PAREN56=(Token)input.LT(1);
+            match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_elseifStatement440); 
+            stream_CLOSE_PAREN.add(CLOSE_PAREN56);
+
+            pushFollow(FOLLOW_block_in_elseifStatement444);
+            block57=block();
+            _fsp--;
+
+            stream_block.add(block57.getTree());
+
+            // AST REWRITE
+            // elements: block, codeStatement, OPEN_PAREN, CLOSE_PAREN, ELSE, IF
+            // token labels: 
+            // rule labels: retval
+            // token list labels: 
+            // rule list labels: 
+            retval.tree = root_0;
+            RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
+
+            root_0 = (Object)adaptor.nil();
+            // 189:2: -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block )
+            {
+                // ./CFScript.g:189:5: ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block )
+                {
+                Object root_1 = (Object)adaptor.nil();
+                root_1 = (Object)adaptor.becomeRoot(adaptor.create(ELSEIF, "ELSEIF"), root_1);
+
+                adaptor.addChild(root_1, stream_ELSE.next());
+                adaptor.addChild(root_1, stream_IF.next());
+                adaptor.addChild(root_1, stream_OPEN_PAREN.next());
+                adaptor.addChild(root_1, stream_codeStatement.next());
+                adaptor.addChild(root_1, stream_CLOSE_PAREN.next());
+                adaptor.addChild(root_1, stream_block.next());
+
+                adaptor.addChild(root_0, root_1);
+                }
+
+            }
+
 
 
             }
@@ -1534,7 +1647,126 @@ public class CFScriptParser extends Parser {
             recover(input,re);
         }
         finally {
-    traceOut("block", 16);
+    traceOut("elseifStatement", 16);
+        }
+        return retval;
+    }
+    // $ANTLR end elseifStatement
+
+    public static class elseStatement_return extends ParserRuleReturnScope {
+        Object tree;
+        public Object getTree() { return tree; }
+    };
+
+    // $ANTLR start elseStatement
+    // ./CFScript.g:195:1: elseStatement : ELSE block ;
+    public final elseStatement_return elseStatement() throws RecognitionException {
+    traceIn("elseStatement", 17);
+        elseStatement_return retval = new elseStatement_return();
+        retval.start = input.LT(1);
+
+        Object root_0 = null;
+
+        Token ELSE58=null;
+        block_return block59 = null;
+
+
+        Object ELSE58_tree=null;
+
+        try {
+            // ./CFScript.g:197:2: ( ELSE block )
+            // ./CFScript.g:197:2: ELSE block
+            {
+            root_0 = (Object)adaptor.nil();
+
+            ELSE58=(Token)input.LT(1);
+            match(input,ELSE,FOLLOW_ELSE_in_elseStatement488); 
+            ELSE58_tree = (Object)adaptor.create(ELSE58);
+            root_0 = (Object)adaptor.becomeRoot(ELSE58_tree, root_0);
+
+            pushFollow(FOLLOW_block_in_elseStatement492);
+            block59=block();
+            _fsp--;
+
+            adaptor.addChild(root_0, block59.getTree());
+
+            }
+
+            retval.stop = input.LT(-1);
+
+                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
+                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+    traceOut("elseStatement", 17);
+        }
+        return retval;
+    }
+    // $ANTLR end elseStatement
+
+    public static class block_return extends ParserRuleReturnScope {
+        Object tree;
+        public Object getTree() { return tree; }
+    };
+
+    // $ANTLR start block
+    // ./CFScript.g:201:1: block : OPEN_CURLY script CLOSE_CURLY ;
+    public final block_return block() throws RecognitionException {
+    traceIn("block", 18);
+        block_return retval = new block_return();
+        retval.start = input.LT(1);
+
+        Object root_0 = null;
+
+        Token OPEN_CURLY60=null;
+        Token CLOSE_CURLY62=null;
+        script_return script61 = null;
+
+
+        Object OPEN_CURLY60_tree=null;
+        Object CLOSE_CURLY62_tree=null;
+
+        try {
+            // ./CFScript.g:203:2: ( OPEN_CURLY script CLOSE_CURLY )
+            // ./CFScript.g:203:2: OPEN_CURLY script CLOSE_CURLY
+            {
+            root_0 = (Object)adaptor.nil();
+
+            OPEN_CURLY60=(Token)input.LT(1);
+            match(input,OPEN_CURLY,FOLLOW_OPEN_CURLY_in_block504); 
+            OPEN_CURLY60_tree = (Object)adaptor.create(OPEN_CURLY60);
+            adaptor.addChild(root_0, OPEN_CURLY60_tree);
+
+            pushFollow(FOLLOW_script_in_block506);
+            script61=script();
+            _fsp--;
+
+            adaptor.addChild(root_0, script61.getTree());
+            CLOSE_CURLY62=(Token)input.LT(1);
+            match(input,CLOSE_CURLY,FOLLOW_CLOSE_CURLY_in_block508); 
+            CLOSE_CURLY62_tree = (Object)adaptor.create(CLOSE_CURLY62);
+            adaptor.addChild(root_0, CLOSE_CURLY62_tree);
+
+
+            }
+
+            retval.stop = input.LT(-1);
+
+                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
+                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+    traceOut("block", 18);
         }
         return retval;
     }
@@ -1543,57 +1775,67 @@ public class CFScriptParser extends Parser {
 
  
 
-    public static final BitSet FOLLOW_setStatement_in_script70 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_SEMI_COLON_in_script72 = new BitSet(new long[]{0x000000000045C282L});
-    public static final BitSet FOLLOW_returnStatement_in_script80 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_SEMI_COLON_in_script82 = new BitSet(new long[]{0x000000000045C282L});
-    public static final BitSet FOLLOW_ifStatement_in_script90 = new BitSet(new long[]{0x000000000045C282L});
-    public static final BitSet FOLLOW_VAR_in_setStatement108 = new BitSet(new long[]{0x000000000005C000L});
-    public static final BitSet FOLLOW_cfmlValue_in_setStatement112 = new BitSet(new long[]{0x0000000000000102L});
-    public static final BitSet FOLLOW_EQUALS_in_setStatement115 = new BitSet(new long[]{0x000000000005E400L});
-    public static final BitSet FOLLOW_codeStatement_in_setStatement117 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RETURN_in_returnStatement132 = new BitSet(new long[]{0x000000000005E402L});
-    public static final BitSet FOLLOW_codeStatement_in_returnStatement136 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_codeStatement150 = new BitSet(new long[]{0x000000000005E400L});
-    public static final BitSet FOLLOW_codeStatement_in_codeStatement152 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_codeStatement154 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_cfmlBasicStatement_in_codeStatement160 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_cfmlValueStatement_in_cfmlBasicStatement172 = new BitSet(new long[]{0x0000000000001002L});
-    public static final BitSet FOLLOW_OPERATOR_in_cfmlBasicStatement175 = new BitSet(new long[]{0x000000000005E400L});
-    public static final BitSet FOLLOW_codeStatement_in_cfmlBasicStatement177 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NOT_in_cfmlValueStatement193 = new BitSet(new long[]{0x000000000005C000L});
-    public static final BitSet FOLLOW_cfmlValue_in_cfmlValueStatement197 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NUMBER_in_cfmlValue210 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_cfmlValue214 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_cfmlLinking_in_cfmlValue218 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_HASH_in_cfmlLinking231 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_cfmlBasicLinking_in_cfmlLinking233 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_HASH_in_cfmlLinking235 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_cfmlBasicLinking_in_cfmlLinking241 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_cfmlBasic_in_cfmlBasicLinking253 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_DOT_in_cfmlBasicLinking256 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_cfmlBasic_in_cfmlBasicLinking258 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_identifier_in_cfmlBasic272 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_function_in_cfmlBasic276 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_identifier288 = new BitSet(new long[]{0x0000000000080002L});
-    public static final BitSet FOLLOW_struct_in_identifier291 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_SQUARE_in_struct306 = new BitSet(new long[]{0x000000000005E400L});
-    public static final BitSet FOLLOW_codeStatement_in_struct308 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_CLOSE_SQUARE_in_struct310 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDENTIFIER_in_function336 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_function338 = new BitSet(new long[]{0x000000000005EC00L});
-    public static final BitSet FOLLOW_argumentStatement_in_function341 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_function345 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_codeStatement_in_argumentStatement376 = new BitSet(new long[]{0x0000000000200002L});
-    public static final BitSet FOLLOW_COMMA_in_argumentStatement379 = new BitSet(new long[]{0x000000000005E400L});
-    public static final BitSet FOLLOW_codeStatement_in_argumentStatement381 = new BitSet(new long[]{0x0000000000200002L});
-    public static final BitSet FOLLOW_IF_in_ifStatement395 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_ifStatement397 = new BitSet(new long[]{0x000000000005E400L});
-    public static final BitSet FOLLOW_codeStatement_in_ifStatement399 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_ifStatement401 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_block_in_ifStatement404 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_CURLY_in_block416 = new BitSet(new long[]{0x000000000145C280L});
-    public static final BitSet FOLLOW_script_in_block418 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_CLOSE_CURLY_in_block420 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_setStatement_in_script72 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_SEMI_COLON_in_script74 = new BitSet(new long[]{0x00000000008B8502L});
+    public static final BitSet FOLLOW_returnStatement_in_script82 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_SEMI_COLON_in_script84 = new BitSet(new long[]{0x00000000008B8502L});
+    public static final BitSet FOLLOW_ifStatement_in_script92 = new BitSet(new long[]{0x00000000008B8502L});
+    public static final BitSet FOLLOW_VAR_in_setStatement110 = new BitSet(new long[]{0x00000000000B8000L});
+    public static final BitSet FOLLOW_cfmlValue_in_setStatement114 = new BitSet(new long[]{0x0000000000000202L});
+    public static final BitSet FOLLOW_EQUALS_in_setStatement117 = new BitSet(new long[]{0x00000000000BC800L});
+    public static final BitSet FOLLOW_codeStatement_in_setStatement119 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RETURN_in_returnStatement134 = new BitSet(new long[]{0x00000000000BC802L});
+    public static final BitSet FOLLOW_codeStatement_in_returnStatement138 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_codeStatement152 = new BitSet(new long[]{0x00000000000BC800L});
+    public static final BitSet FOLLOW_codeStatement_in_codeStatement154 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_codeStatement156 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_cfmlBasicStatement_in_codeStatement162 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_cfmlValueStatement_in_cfmlBasicStatement174 = new BitSet(new long[]{0x0000000000002002L});
+    public static final BitSet FOLLOW_OPERATOR_in_cfmlBasicStatement177 = new BitSet(new long[]{0x00000000000BC800L});
+    public static final BitSet FOLLOW_codeStatement_in_cfmlBasicStatement179 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NOT_in_cfmlValueStatement195 = new BitSet(new long[]{0x00000000000B8000L});
+    public static final BitSet FOLLOW_cfmlValue_in_cfmlValueStatement199 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NUMBER_in_cfmlValue212 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_cfmlValue216 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_cfmlLinking_in_cfmlValue220 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_HASH_in_cfmlLinking233 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_cfmlBasicLinking_in_cfmlLinking235 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_HASH_in_cfmlLinking237 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_cfmlBasicLinking_in_cfmlLinking243 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_cfmlBasic_in_cfmlBasicLinking255 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_DOT_in_cfmlBasicLinking258 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_cfmlBasic_in_cfmlBasicLinking260 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_identifier_in_cfmlBasic274 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_function_in_cfmlBasic278 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_identifier290 = new BitSet(new long[]{0x0000000000100002L});
+    public static final BitSet FOLLOW_struct_in_identifier293 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_SQUARE_in_struct308 = new BitSet(new long[]{0x00000000000BC800L});
+    public static final BitSet FOLLOW_codeStatement_in_struct310 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_CLOSE_SQUARE_in_struct312 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDENTIFIER_in_function338 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_function340 = new BitSet(new long[]{0x00000000000BD800L});
+    public static final BitSet FOLLOW_argumentStatement_in_function343 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_function347 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_codeStatement_in_argumentStatement378 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_COMMA_in_argumentStatement381 = new BitSet(new long[]{0x00000000000BC800L});
+    public static final BitSet FOLLOW_codeStatement_in_argumentStatement383 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_IF_in_ifStatement397 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_ifStatement400 = new BitSet(new long[]{0x00000000000BC800L});
+    public static final BitSet FOLLOW_codeStatement_in_ifStatement402 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_ifStatement404 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_block_in_ifStatement407 = new BitSet(new long[]{0x0000000001000002L});
+    public static final BitSet FOLLOW_elseifStatement_in_ifStatement411 = new BitSet(new long[]{0x0000000001000002L});
+    public static final BitSet FOLLOW_elseStatement_in_ifStatement417 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ELSE_in_elseifStatement432 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_IF_in_elseifStatement434 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_elseifStatement436 = new BitSet(new long[]{0x00000000000BC800L});
+    public static final BitSet FOLLOW_codeStatement_in_elseifStatement438 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_elseifStatement440 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_block_in_elseifStatement444 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ELSE_in_elseStatement488 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_block_in_elseStatement492 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_CURLY_in_block504 = new BitSet(new long[]{0x00000000048B8500L});
+    public static final BitSet FOLLOW_script_in_block506 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_CLOSE_CURLY_in_block508 = new BitSet(new long[]{0x0000000000000002L});
 
 }

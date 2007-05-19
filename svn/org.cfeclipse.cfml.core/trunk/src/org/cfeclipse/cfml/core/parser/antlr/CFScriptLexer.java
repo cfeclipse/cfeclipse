@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFScript.g 2007-05-19 17:25:09
+// $ANTLR 3.0 ./CFScript.g 2007-05-19 23:11:15
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -31,40 +31,41 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class CFScriptLexer extends Lexer {
-    public static final int LINE_COMMENT=35;
-    public static final int CLOSE_CURLY=24;
-    public static final int LETTER=32;
-    public static final int OPERATOR=12;
-    public static final int ELSE=25;
-    public static final int NUMBER=14;
-    public static final int HASH=16;
-    public static final int OPEN_PAREN=10;
-    public static final int SEMI_COLON=6;
-    public static final int EQUALS=8;
-    public static final int OPEN_CURLY=23;
-    public static final int NOT=13;
-    public static final int Tokens=36;
+    public static final int LINE_COMMENT=36;
+    public static final int CLOSE_CURLY=26;
+    public static final int LETTER=33;
+    public static final int OPERATOR=13;
+    public static final int ELSE=24;
+    public static final int NUMBER=15;
+    public static final int HASH=17;
+    public static final int OPEN_PAREN=11;
+    public static final int SEMI_COLON=7;
+    public static final int EQUALS=9;
+    public static final int OPEN_CURLY=25;
+    public static final int NOT=14;
+    public static final int Tokens=37;
     public static final int EOF=-1;
-    public static final int TRY=26;
-    public static final int IF=22;
-    public static final int WS=33;
-    public static final int COMMA=21;
-    public static final int BOOLEAN_OPERATOR=30;
-    public static final int IDENTIFIER=18;
-    public static final int RETURN=9;
-    public static final int OPEN_SQUARE=19;
-    public static final int VAR=7;
-    public static final int CLOSE_PAREN=11;
-    public static final int MATH_OPERATOR=28;
-    public static final int DIGIT=31;
-    public static final int DOT=17;
-    public static final int CATCH=27;
-    public static final int COMMENT=34;
+    public static final int TRY=27;
+    public static final int IF=23;
+    public static final int ELSEIF=6;
+    public static final int WS=34;
+    public static final int COMMA=22;
+    public static final int BOOLEAN_OPERATOR=31;
+    public static final int IDENTIFIER=19;
+    public static final int RETURN=10;
+    public static final int OPEN_SQUARE=20;
+    public static final int VAR=8;
+    public static final int CLOSE_PAREN=12;
+    public static final int MATH_OPERATOR=29;
+    public static final int DIGIT=32;
+    public static final int DOT=18;
+    public static final int CATCH=28;
+    public static final int COMMENT=35;
     public static final int FUNCTION_CALL=4;
-    public static final int CLOSE_SQUARE=20;
-    public static final int STRING_OPERATOR=29;
+    public static final int CLOSE_SQUARE=21;
+    public static final int STRING_OPERATOR=30;
     public static final int STRUCT_KEY=5;
-    public static final int STRING=15;
+    public static final int STRING=16;
     public CFScriptLexer() {;} 
     public CFScriptLexer(CharStream input) {
         super(input);
@@ -76,8 +77,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("IF", 1);
         try {
             int _type = IF;
-            // ./CFScript.g:216:2: ( 'if' )
-            // ./CFScript.g:216:2: 'if'
+            // ./CFScript.g:210:2: ( 'if' )
+            // ./CFScript.g:210:2: 'if'
             {
             match("if"); 
 
@@ -97,8 +98,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("ELSE", 2);
         try {
             int _type = ELSE;
-            // ./CFScript.g:221:2: ( 'else' )
-            // ./CFScript.g:221:2: 'else'
+            // ./CFScript.g:215:2: ( 'else' )
+            // ./CFScript.g:215:2: 'else'
             {
             match("else"); 
 
@@ -118,8 +119,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("TRY", 3);
         try {
             int _type = TRY;
-            // ./CFScript.g:226:2: ( 'try' )
-            // ./CFScript.g:226:2: 'try'
+            // ./CFScript.g:220:2: ( 'try' )
+            // ./CFScript.g:220:2: 'try'
             {
             match("try"); 
 
@@ -139,8 +140,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("CATCH", 4);
         try {
             int _type = CATCH;
-            // ./CFScript.g:231:2: ( 'catch' )
-            // ./CFScript.g:231:2: 'catch'
+            // ./CFScript.g:225:2: ( 'catch' )
+            // ./CFScript.g:225:2: 'catch'
             {
             match("catch"); 
 
@@ -160,8 +161,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("RETURN", 5);
         try {
             int _type = RETURN;
-            // ./CFScript.g:235:2: ( 'return' )
-            // ./CFScript.g:235:2: 'return'
+            // ./CFScript.g:229:2: ( 'return' )
+            // ./CFScript.g:229:2: 'return'
             {
             match("return"); 
 
@@ -181,8 +182,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("NOT", 6);
         try {
             int _type = NOT;
-            // ./CFScript.g:239:2: ( 'not' )
-            // ./CFScript.g:239:2: 'not'
+            // ./CFScript.g:233:2: ( 'not' )
+            // ./CFScript.g:233:2: 'not'
             {
             match("not"); 
 
@@ -202,8 +203,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("EQUALS", 7);
         try {
             int _type = EQUALS;
-            // ./CFScript.g:244:2: ( '=' )
-            // ./CFScript.g:244:2: '='
+            // ./CFScript.g:238:2: ( '=' )
+            // ./CFScript.g:238:2: '='
             {
             match('='); 
 
@@ -222,10 +223,10 @@ public class CFScriptLexer extends Lexer {
     traceIn("OPERATOR", 8);
         try {
             int _type = OPERATOR;
-            // ./CFScript.g:249:2: ( ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR ) )
-            // ./CFScript.g:249:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
+            // ./CFScript.g:243:2: ( ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR ) )
+            // ./CFScript.g:243:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
             {
-            // ./CFScript.g:249:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
+            // ./CFScript.g:243:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
             int alt1=3;
             switch ( input.LA(1) ) {
             case '*':
@@ -255,28 +256,28 @@ public class CFScriptLexer extends Lexer {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("249:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )", 1, 0, input);
+                    new NoViableAltException("243:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )", 1, 0, input);
 
                 throw nvae;
             }
 
             switch (alt1) {
                 case 1 :
-                    // ./CFScript.g:249:4: MATH_OPERATOR
+                    // ./CFScript.g:243:4: MATH_OPERATOR
                     {
                     mMATH_OPERATOR(); 
 
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:249:20: STRING_OPERATOR
+                    // ./CFScript.g:243:20: STRING_OPERATOR
                     {
                     mSTRING_OPERATOR(); 
 
                     }
                     break;
                 case 3 :
-                    // ./CFScript.g:249:38: BOOLEAN_OPERATOR
+                    // ./CFScript.g:243:38: BOOLEAN_OPERATOR
                     {
                     mBOOLEAN_OPERATOR(); 
 
@@ -301,8 +302,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("COMMA", 9);
         try {
             int _type = COMMA;
-            // ./CFScript.g:253:2: ( ',' )
-            // ./CFScript.g:253:2: ','
+            // ./CFScript.g:247:2: ( ',' )
+            // ./CFScript.g:247:2: ','
             {
             match(','); 
 
@@ -321,8 +322,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("SEMI_COLON", 10);
         try {
             int _type = SEMI_COLON;
-            // ./CFScript.g:258:2: ( ';' )
-            // ./CFScript.g:258:2: ';'
+            // ./CFScript.g:252:2: ( ';' )
+            // ./CFScript.g:252:2: ';'
             {
             match(';'); 
 
@@ -341,8 +342,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("HASH", 11);
         try {
             int _type = HASH;
-            // ./CFScript.g:262:2: ( '#' )
-            // ./CFScript.g:262:2: '#'
+            // ./CFScript.g:256:2: ( '#' )
+            // ./CFScript.g:256:2: '#'
             {
             match('#'); 
 
@@ -361,8 +362,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("OPEN_PAREN", 12);
         try {
             int _type = OPEN_PAREN;
-            // ./CFScript.g:267:2: ( '(' )
-            // ./CFScript.g:267:2: '('
+            // ./CFScript.g:261:2: ( '(' )
+            // ./CFScript.g:261:2: '('
             {
             match('('); 
 
@@ -381,8 +382,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("CLOSE_PAREN", 13);
         try {
             int _type = CLOSE_PAREN;
-            // ./CFScript.g:272:2: ( ')' )
-            // ./CFScript.g:272:2: ')'
+            // ./CFScript.g:266:2: ( ')' )
+            // ./CFScript.g:266:2: ')'
             {
             match(')'); 
 
@@ -401,8 +402,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("OPEN_SQUARE", 14);
         try {
             int _type = OPEN_SQUARE;
-            // ./CFScript.g:277:2: ( '[' )
-            // ./CFScript.g:277:2: '['
+            // ./CFScript.g:271:2: ( '[' )
+            // ./CFScript.g:271:2: '['
             {
             match('['); 
 
@@ -421,8 +422,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("CLOSE_SQUARE", 15);
         try {
             int _type = CLOSE_SQUARE;
-            // ./CFScript.g:282:2: ( ']' )
-            // ./CFScript.g:282:2: ']'
+            // ./CFScript.g:276:2: ( ']' )
+            // ./CFScript.g:276:2: ']'
             {
             match(']'); 
 
@@ -441,8 +442,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("OPEN_CURLY", 16);
         try {
             int _type = OPEN_CURLY;
-            // ./CFScript.g:287:2: ( '{' )
-            // ./CFScript.g:287:2: '{'
+            // ./CFScript.g:281:2: ( '{' )
+            // ./CFScript.g:281:2: '{'
             {
             match('{'); 
 
@@ -461,8 +462,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("CLOSE_CURLY", 17);
         try {
             int _type = CLOSE_CURLY;
-            // ./CFScript.g:292:2: ( '}' )
-            // ./CFScript.g:292:2: '}'
+            // ./CFScript.g:286:2: ( '}' )
+            // ./CFScript.g:286:2: '}'
             {
             match('}'); 
 
@@ -481,8 +482,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("DOT", 18);
         try {
             int _type = DOT;
-            // ./CFScript.g:297:2: ( '.' )
-            // ./CFScript.g:297:2: '.'
+            // ./CFScript.g:291:2: ( '.' )
+            // ./CFScript.g:291:2: '.'
             {
             match('.'); 
 
@@ -501,8 +502,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("VAR", 19);
         try {
             int _type = VAR;
-            // ./CFScript.g:302:2: ( 'var' )
-            // ./CFScript.g:302:2: 'var'
+            // ./CFScript.g:296:2: ( 'var' )
+            // ./CFScript.g:296:2: 'var'
             {
             match("var"); 
 
@@ -522,7 +523,7 @@ public class CFScriptLexer extends Lexer {
     traceIn("STRING", 20);
         try {
             int _type = STRING;
-            // ./CFScript.g:307:2: ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' )
+            // ./CFScript.g:301:2: ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -534,16 +535,16 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("305:1: STRING : ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' );", 4, 0, input);
+                    new NoViableAltException("299:1: STRING : ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' );", 4, 0, input);
 
                 throw nvae;
             }
             switch (alt4) {
                 case 1 :
-                    // ./CFScript.g:307:2: '\"' ( options {greedy=false; } : . )* '\"'
+                    // ./CFScript.g:301:2: '\"' ( options {greedy=false; } : . )* '\"'
                     {
                     match('\"'); 
-                    // ./CFScript.g:307:6: ( options {greedy=false; } : . )*
+                    // ./CFScript.g:301:6: ( options {greedy=false; } : . )*
                     loop2:
                     do {
                         int alt2=2;
@@ -559,7 +560,7 @@ public class CFScriptLexer extends Lexer {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // ./CFScript.g:307:34: .
+                    	    // ./CFScript.g:301:34: .
                     	    {
                     	    matchAny(); 
 
@@ -576,11 +577,11 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:309:2: '\\'' '\"' ( options {greedy=false; } : . )* '\\''
+                    // ./CFScript.g:303:2: '\\'' '\"' ( options {greedy=false; } : . )* '\\''
                     {
                     match('\''); 
                     match('\"'); 
-                    // ./CFScript.g:309:11: ( options {greedy=false; } : . )*
+                    // ./CFScript.g:303:11: ( options {greedy=false; } : . )*
                     loop3:
                     do {
                         int alt3=2;
@@ -596,7 +597,7 @@ public class CFScriptLexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // ./CFScript.g:309:39: .
+                    	    // ./CFScript.g:303:39: .
                     	    {
                     	    matchAny(); 
 
@@ -627,10 +628,10 @@ public class CFScriptLexer extends Lexer {
     traceIn("NUMBER", 21);
         try {
             int _type = NUMBER;
-            // ./CFScript.g:314:2: ( ( DIGIT )+ ( DOT ( DIGIT )+ ) )
-            // ./CFScript.g:314:2: ( DIGIT )+ ( DOT ( DIGIT )+ )
+            // ./CFScript.g:308:2: ( ( DIGIT )+ ( DOT ( DIGIT )+ ) )
+            // ./CFScript.g:308:2: ( DIGIT )+ ( DOT ( DIGIT )+ )
             {
-            // ./CFScript.g:314:2: ( DIGIT )+
+            // ./CFScript.g:308:2: ( DIGIT )+
             int cnt5=0;
             loop5:
             do {
@@ -644,7 +645,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ./CFScript.g:314:2: DIGIT
+            	    // ./CFScript.g:308:2: DIGIT
             	    {
             	    mDIGIT(); 
 
@@ -660,11 +661,11 @@ public class CFScriptLexer extends Lexer {
                 cnt5++;
             } while (true);
 
-            // ./CFScript.g:314:9: ( DOT ( DIGIT )+ )
-            // ./CFScript.g:314:10: DOT ( DIGIT )+
+            // ./CFScript.g:308:9: ( DOT ( DIGIT )+ )
+            // ./CFScript.g:308:10: DOT ( DIGIT )+
             {
             mDOT(); 
-            // ./CFScript.g:314:14: ( DIGIT )+
+            // ./CFScript.g:308:14: ( DIGIT )+
             int cnt6=0;
             loop6:
             do {
@@ -678,7 +679,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // ./CFScript.g:314:14: DIGIT
+            	    // ./CFScript.g:308:14: DIGIT
             	    {
             	    mDIGIT(); 
 
@@ -713,10 +714,10 @@ public class CFScriptLexer extends Lexer {
     traceIn("IDENTIFIER", 22);
         try {
             int _type = IDENTIFIER;
-            // ./CFScript.g:319:2: ( ( LETTER | DIGIT | '_' )+ )
-            // ./CFScript.g:319:2: ( LETTER | DIGIT | '_' )+
+            // ./CFScript.g:313:2: ( ( LETTER | DIGIT | '_' )+ )
+            // ./CFScript.g:313:2: ( LETTER | DIGIT | '_' )+
             {
-            // ./CFScript.g:319:2: ( LETTER | DIGIT | '_' )+
+            // ./CFScript.g:313:2: ( LETTER | DIGIT | '_' )+
             int cnt7=0;
             loop7:
             do {
@@ -770,10 +771,10 @@ public class CFScriptLexer extends Lexer {
     public final void mMATH_OPERATOR() throws RecognitionException {
     traceIn("MATH_OPERATOR", 23);
         try {
-            // ./CFScript.g:326:2: ( ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' ) )
-            // ./CFScript.g:326:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
+            // ./CFScript.g:320:2: ( ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' ) )
+            // ./CFScript.g:320:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
             {
-            // ./CFScript.g:326:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
+            // ./CFScript.g:320:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
             int alt8=7;
             switch ( input.LA(1) ) {
             case '+':
@@ -813,49 +814,49 @@ public class CFScriptLexer extends Lexer {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("326:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )", 8, 0, input);
+                    new NoViableAltException("320:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )", 8, 0, input);
 
                 throw nvae;
             }
 
             switch (alt8) {
                 case 1 :
-                    // ./CFScript.g:326:3: '+'
+                    // ./CFScript.g:320:3: '+'
                     {
                     match('+'); 
 
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:326:9: '*'
+                    // ./CFScript.g:320:9: '*'
                     {
                     match('*'); 
 
                     }
                     break;
                 case 3 :
-                    // ./CFScript.g:326:15: '\\/'
+                    // ./CFScript.g:320:15: '\\/'
                     {
                     match('/'); 
 
                     }
                     break;
                 case 4 :
-                    // ./CFScript.g:326:22: '\\\\'
+                    // ./CFScript.g:320:22: '\\\\'
                     {
                     match('\\'); 
 
                     }
                     break;
                 case 5 :
-                    // ./CFScript.g:326:29: '^'
+                    // ./CFScript.g:320:29: '^'
                     {
                     match('^'); 
 
                     }
                     break;
                 case 6 :
-                    // ./CFScript.g:326:35: 'mod'
+                    // ./CFScript.g:320:35: 'mod'
                     {
                     match("mod"); 
 
@@ -863,7 +864,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // ./CFScript.g:326:43: '-'
+                    // ./CFScript.g:320:43: '-'
                     {
                     match('-'); 
 
@@ -886,8 +887,8 @@ public class CFScriptLexer extends Lexer {
     public final void mSTRING_OPERATOR() throws RecognitionException {
     traceIn("STRING_OPERATOR", 24);
         try {
-            // ./CFScript.g:330:2: ( '&' )
-            // ./CFScript.g:330:2: '&'
+            // ./CFScript.g:324:2: ( '&' )
+            // ./CFScript.g:324:2: '&'
             {
             match('&'); 
 
@@ -904,10 +905,10 @@ public class CFScriptLexer extends Lexer {
     public final void mBOOLEAN_OPERATOR() throws RecognitionException {
     traceIn("BOOLEAN_OPERATOR", 25);
         try {
-            // ./CFScript.g:334:2: ( ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' ) )
-            // ./CFScript.g:334:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
+            // ./CFScript.g:328:2: ( ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' ) )
+            // ./CFScript.g:328:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
             {
-            // ./CFScript.g:334:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
+            // ./CFScript.g:328:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
             int alt9=7;
             switch ( input.LA(1) ) {
             case 'e':
@@ -940,7 +941,7 @@ public class CFScriptLexer extends Lexer {
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("334:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 4, input);
+                        new NoViableAltException("328:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 4, input);
 
                     throw nvae;
                 }
@@ -961,7 +962,7 @@ public class CFScriptLexer extends Lexer {
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("334:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 5, input);
+                        new NoViableAltException("328:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 5, input);
 
                     throw nvae;
                 }
@@ -969,14 +970,14 @@ public class CFScriptLexer extends Lexer {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("334:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 0, input);
+                    new NoViableAltException("328:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 0, input);
 
                 throw nvae;
             }
 
             switch (alt9) {
                 case 1 :
-                    // ./CFScript.g:334:3: 'eq'
+                    // ./CFScript.g:328:3: 'eq'
                     {
                     match("eq"); 
 
@@ -984,7 +985,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:334:8: 'neq'
+                    // ./CFScript.g:328:8: 'neq'
                     {
                     match("neq"); 
 
@@ -992,7 +993,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ./CFScript.g:334:14: 'is'
+                    // ./CFScript.g:328:14: 'is'
                     {
                     match("is"); 
 
@@ -1000,7 +1001,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ./CFScript.g:334:19: 'gt'
+                    // ./CFScript.g:328:19: 'gt'
                     {
                     match("gt"); 
 
@@ -1008,7 +1009,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // ./CFScript.g:334:24: 'lt'
+                    // ./CFScript.g:328:24: 'lt'
                     {
                     match("lt"); 
 
@@ -1016,7 +1017,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // ./CFScript.g:334:29: 'lte'
+                    // ./CFScript.g:328:29: 'lte'
                     {
                     match("lte"); 
 
@@ -1024,7 +1025,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // ./CFScript.g:334:35: 'gte'
+                    // ./CFScript.g:328:35: 'gte'
                     {
                     match("gte"); 
 
@@ -1048,8 +1049,8 @@ public class CFScriptLexer extends Lexer {
     public final void mDIGIT() throws RecognitionException {
     traceIn("DIGIT", 26);
         try {
-            // ./CFScript.g:339:2: ( '0' .. '9' )
-            // ./CFScript.g:339:2: '0' .. '9'
+            // ./CFScript.g:333:2: ( '0' .. '9' )
+            // ./CFScript.g:333:2: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1066,7 +1067,7 @@ public class CFScriptLexer extends Lexer {
     public final void mLETTER() throws RecognitionException {
     traceIn("LETTER", 27);
         try {
-            // ./CFScript.g:344:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ./CFScript.g:338:2: ( 'a' .. 'z' | 'A' .. 'Z' )
             // ./CFScript.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -1094,8 +1095,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("WS", 28);
         try {
             int _type = WS;
-            // ./CFScript.g:351:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
-            // ./CFScript.g:351:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
+            // ./CFScript.g:345:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
+            // ./CFScript.g:345:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||(input.LA(1)>='\f' && input.LA(1)<='\r')||input.LA(1)==' ' ) {
                 input.consume();
@@ -1126,12 +1127,12 @@ public class CFScriptLexer extends Lexer {
     traceIn("COMMENT", 29);
         try {
             int _type = COMMENT;
-            // ./CFScript.g:359:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ./CFScript.g:359:2: '/*' ( options {greedy=false; } : . )* '*/'
+            // ./CFScript.g:353:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ./CFScript.g:353:2: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ./CFScript.g:359:7: ( options {greedy=false; } : . )*
+            // ./CFScript.g:353:7: ( options {greedy=false; } : . )*
             loop10:
             do {
                 int alt10=2;
@@ -1156,7 +1157,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // ./CFScript.g:359:35: .
+            	    // ./CFScript.g:353:35: .
             	    {
             	    matchAny(); 
 
@@ -1189,12 +1190,12 @@ public class CFScriptLexer extends Lexer {
     traceIn("LINE_COMMENT", 30);
         try {
             int _type = LINE_COMMENT;
-            // ./CFScript.g:367:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
-            // ./CFScript.g:367:2: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+            // ./CFScript.g:361:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
+            // ./CFScript.g:361:2: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
             {
             match("//"); 
 
-            // ./CFScript.g:367:7: (~ ( '\\n' | '\\r' ) )*
+            // ./CFScript.g:361:7: (~ ( '\\n' | '\\r' ) )*
             loop11:
             do {
                 int alt11=2;
@@ -1207,7 +1208,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // ./CFScript.g:367:7: ~ ( '\\n' | '\\r' )
+            	    // ./CFScript.g:361:7: ~ ( '\\n' | '\\r' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1228,7 +1229,7 @@ public class CFScriptLexer extends Lexer {
                 }
             } while (true);
 
-            // ./CFScript.g:367:21: ( '\\r' )?
+            // ./CFScript.g:361:21: ( '\\r' )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1237,7 +1238,7 @@ public class CFScriptLexer extends Lexer {
             }
             switch (alt12) {
                 case 1 :
-                    // ./CFScript.g:367:21: '\\r'
+                    // ./CFScript.g:361:21: '\\r'
                     {
                     match('\r'); 
 
