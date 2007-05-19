@@ -29,6 +29,7 @@ import java.awt.event.*;
 import org.antlr.*;
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
+import org.cfeclipse.cfml.core.parser.antlr.ANTLRNoCaseStringStream;
 
 public class CFMLASTViewer
 {
@@ -132,16 +133,16 @@ public class CFMLASTViewer
 
 				log.append(cfml + "\n");
 				CharStream input = new ANTLRNoCaseStringStream(cfml);
-		        CFScriptLexer lexer = new CFScriptLexer(input);
+		        CFMLLexer lexer = new CFMLLexer(input);
 		        
 		        lexer.addObserver(observer);
 		        
 		        CommonTokenStream tokens = new CommonTokenStream(lexer);
-		        CFScriptParser parser = new CFScriptParser(tokens);
+		        CFMLParser parser = new CFMLParser(tokens);
 		        
 		        parser.addObserver(observer);
 		        
-		        CFScriptParser.script_return root = parser.script();
+		        CFMLParser.script_return root = parser.script();
 		        
 		        Tree ast = (Tree)root.getTree();
 		        

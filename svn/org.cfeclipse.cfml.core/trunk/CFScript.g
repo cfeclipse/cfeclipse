@@ -37,7 +37,7 @@ tokens
 
 @parser::header 
 {
-package org.cfeclipse.cfml.core.parser;
+package org.cfeclipse.cfml.core.parser.antlr;
 
 /*
 Copyright (c) 2007 Mark Mandel, Mark Drew
@@ -62,6 +62,7 @@ THE SOFTWARE.
 */	
 }
 
+/*
 @parser::members
 {
 	ErrorObservable observable = new ErrorObservable();
@@ -85,10 +86,11 @@ THE SOFTWARE.
 		super.displayRecognitionError(tokenNames, e);
 	}
 }
+*/
 
 @lexer::header
 {
-package org.cfeclipse.cfml.core.parser;
+package org.cfeclipse.cfml.core.parser.antlr;
 
 /*
 Copyright (c) 2007 Mark Mandel, Mark Drew
@@ -113,38 +115,14 @@ THE SOFTWARE.
 */
 }
 
-@lexer::members
-{
-	ErrorObservable observable = new ErrorObservable();
-	
-	public void addObserver(IErrorObserver observer)
-	{
-		observable.addObserver(observer);
-	}
-	
-	public void removeObserver(IErrorObserver observer)
-	{
-		observable.removeObserver(observer);
-	}
-	
-	public void displayRecognitionError(String[] tokenNames, RecognitionException e)
-	{
-		ErrorEvent event = new ErrorEvent(e, getErrorMessage(e, tokenNames));
-		
-		observable.notifyObservers(event);
-		
-		super.displayRecognitionError(tokenNames, e);
-	}
-}
-
 script
 	:
-	(
-		(		
-		setStatement 
+	(		
+		setStatement SEMI_COLON
 		|
-		returnStatement
-		) SEMI_COLON
+		returnStatement SEMI_COLON
+		|
+		ifStatement
 	)*
 	;
 	
@@ -220,6 +198,17 @@ argumentStatement
 	codeStatement (COMMA codeStatement)*
 	;
 
+ifStatement
+	:
+	IF OPEN_PAREN codeStatement CLOSE_PAREN
+	block
+	;
+
+block
+	:
+	OPEN_CURLY script CLOSE_CURLY
+	;
+
 /* Lexer */
 
 IF
@@ -292,7 +281,7 @@ CLOSE_SQUARE
 	:
 	']'
 	;
-	
+
 OPEN_CURLY
 	:
 	'{'

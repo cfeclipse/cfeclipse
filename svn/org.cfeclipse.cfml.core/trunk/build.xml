@@ -74,7 +74,7 @@
 	</target>
 	
 	<target name="move">
-			<move todir="${src}/org/cfeclipse/cfml/core/parser">
+			<move todir="${src}/org/cfeclipse/cfml/core/parser/antlr">
 				<fileset includes="*.java" dir="."></fileset>
 			</move>
 	</target>
