@@ -99,24 +99,42 @@ script
 		returnStatement SEMI_COLON
 		|
 		ifStatement
+		|
+		tryStatement
+		|
+		forStatement
+		|
+		whileStatement
+		|
+		doWhileStatement
 	)*
 	;
 	
 setStatement
 	:
-	(VAR)? cfmlValue (EQUALS codeStatement)?
+	/*
+	This will allow statements like: (x * y) = 2; 
+	But trying to cut it down will either slow it down results 
+	in non LL(*) recursive conditions.
+	
+	I think I will just have to leave it, or I'll come back to it
+	and try and get clever.
+	*/
+	(VAR)? codeStatement (EQUALS codeStatement)?
+	;
+
+codeStatement
+	:
+	(
+		OPEN_PAREN codeStatement CLOSE_PAREN
+		|
+		cfmlBasicStatement
+	)
 	;
 	
 returnStatement
 	:
 	RETURN^ (codeStatement)?
-	;
-
-codeStatement
-	:
-	OPEN_PAREN codeStatement CLOSE_PAREN
-	|
-	cfmlBasicStatement
 	;
 
 cfmlBasicStatement
@@ -198,6 +216,46 @@ elseStatement
 	block
 	;
 
+tryStatement
+	:
+	TRY^
+	block
+	catchStatement	
+	;
+
+catchStatement
+	:
+	CATCH^ OPEN_PAREN IDENTIFIER IDENTIFIER CLOSE_PAREN
+	block
+	;
+
+forStatement
+	:
+	FOR^ OPEN_PAREN forConditions CLOSE_PAREN
+	block;
+
+forConditions
+	:
+	setStatement
+	SEMI_COLON
+	setStatement
+	SEMI_COLON
+	setStatement
+	;
+
+whileStatement
+	:
+	WHILE^ OPEN_PAREN codeStatement CLOSE_PAREN
+	block
+	;
+
+doWhileStatement
+	:
+	DO^
+	block
+	WHILE OPEN_PAREN codeStatement CLOSE_PAREN
+	;
+
 block
 	:
 	OPEN_CURLY script CLOSE_CURLY
@@ -227,6 +285,21 @@ CATCH
 RETURN
 	:
 	'return'
+	;
+
+FOR
+	:
+	'for'
+	;
+	
+WHILE
+	:
+	'while'
+	;
+	
+DO
+	:
+	'do'
 	;
 
 NOT	:
