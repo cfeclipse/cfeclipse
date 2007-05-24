@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFScript.g 2007-05-21 17:48:47
+// $ANTLR 3.0 ./CFScript.g 2007-05-24 17:58:48
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -32,42 +32,47 @@ import java.util.ArrayList;
 
 public class CFScriptLexer extends Lexer {
     public static final int WHILE=28;
-    public static final int LINE_COMMENT=39;
     public static final int CLOSE_CURLY=31;
-    public static final int LETTER=36;
-    public static final int OPERATOR=13;
-    public static final int ELSE=24;
-    public static final int NUMBER=15;
-    public static final int HASH=17;
+    public static final int LETTER=41;
+    public static final int CASE=33;
     public static final int DO=29;
     public static final int FOR=27;
-    public static final int OPEN_PAREN=10;
-    public static final int SEMI_COLON=7;
     public static final int EQUALS=9;
-    public static final int OPEN_CURLY=30;
     public static final int NOT=14;
-    public static final int Tokens=40;
     public static final int EOF=-1;
-    public static final int TRY=25;
+    public static final int BREAK=36;
     public static final int IF=23;
-    public static final int ELSEIF=6;
-    public static final int WS=37;
     public static final int COMMA=22;
-    public static final int BOOLEAN_OPERATOR=34;
     public static final int IDENTIFIER=19;
     public static final int RETURN=12;
     public static final int OPEN_SQUARE=20;
     public static final int VAR=8;
     public static final int CLOSE_PAREN=11;
-    public static final int MATH_OPERATOR=32;
-    public static final int DIGIT=35;
+    public static final int MATH_OPERATOR=37;
+    public static final int DIGIT=40;
     public static final int DOT=18;
-    public static final int CATCH=26;
-    public static final int COMMENT=38;
-    public static final int FUNCTION_CALL=4;
+    public static final int COMMENT=43;
     public static final int CLOSE_SQUARE=21;
-    public static final int STRING_OPERATOR=33;
     public static final int STRUCT_KEY=5;
+    public static final int LINE_COMMENT=44;
+    public static final int OPERATOR=13;
+    public static final int SWITCH=32;
+    public static final int ELSE=24;
+    public static final int DEFAULT=35;
+    public static final int NUMBER=15;
+    public static final int HASH=17;
+    public static final int OPEN_PAREN=10;
+    public static final int SEMI_COLON=7;
+    public static final int OPEN_CURLY=30;
+    public static final int Tokens=45;
+    public static final int TRY=25;
+    public static final int ELSEIF=6;
+    public static final int COLON=34;
+    public static final int WS=42;
+    public static final int BOOLEAN_OPERATOR=39;
+    public static final int CATCH=26;
+    public static final int FUNCTION_CALL=4;
+    public static final int STRING_OPERATOR=38;
     public static final int STRING=16;
     public CFScriptLexer() {;} 
     public CFScriptLexer(CharStream input) {
@@ -80,8 +85,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("IF", 1);
         try {
             int _type = IF;
-            // ./CFScript.g:268:2: ( 'if' )
-            // ./CFScript.g:268:2: 'if'
+            // ./CFScript.g:300:2: ( 'if' )
+            // ./CFScript.g:300:2: 'if'
             {
             match("if"); 
 
@@ -101,8 +106,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("ELSE", 2);
         try {
             int _type = ELSE;
-            // ./CFScript.g:273:2: ( 'else' )
-            // ./CFScript.g:273:2: 'else'
+            // ./CFScript.g:305:2: ( 'else' )
+            // ./CFScript.g:305:2: 'else'
             {
             match("else"); 
 
@@ -122,8 +127,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("TRY", 3);
         try {
             int _type = TRY;
-            // ./CFScript.g:278:2: ( 'try' )
-            // ./CFScript.g:278:2: 'try'
+            // ./CFScript.g:310:2: ( 'try' )
+            // ./CFScript.g:310:2: 'try'
             {
             match("try"); 
 
@@ -143,8 +148,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("CATCH", 4);
         try {
             int _type = CATCH;
-            // ./CFScript.g:283:2: ( 'catch' )
-            // ./CFScript.g:283:2: 'catch'
+            // ./CFScript.g:315:2: ( 'catch' )
+            // ./CFScript.g:315:2: 'catch'
             {
             match("catch"); 
 
@@ -164,8 +169,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("RETURN", 5);
         try {
             int _type = RETURN;
-            // ./CFScript.g:287:2: ( 'return' )
-            // ./CFScript.g:287:2: 'return'
+            // ./CFScript.g:319:2: ( 'return' )
+            // ./CFScript.g:319:2: 'return'
             {
             match("return"); 
 
@@ -185,8 +190,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("FOR", 6);
         try {
             int _type = FOR;
-            // ./CFScript.g:292:2: ( 'for' )
-            // ./CFScript.g:292:2: 'for'
+            // ./CFScript.g:324:2: ( 'for' )
+            // ./CFScript.g:324:2: 'for'
             {
             match("for"); 
 
@@ -206,8 +211,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("WHILE", 7);
         try {
             int _type = WHILE;
-            // ./CFScript.g:297:2: ( 'while' )
-            // ./CFScript.g:297:2: 'while'
+            // ./CFScript.g:329:2: ( 'while' )
+            // ./CFScript.g:329:2: 'while'
             {
             match("while"); 
 
@@ -227,8 +232,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("DO", 8);
         try {
             int _type = DO;
-            // ./CFScript.g:302:2: ( 'do' )
-            // ./CFScript.g:302:2: 'do'
+            // ./CFScript.g:334:2: ( 'do' )
+            // ./CFScript.g:334:2: 'do'
             {
             match("do"); 
 
@@ -248,8 +253,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("NOT", 9);
         try {
             int _type = NOT;
-            // ./CFScript.g:306:2: ( 'not' )
-            // ./CFScript.g:306:2: 'not'
+            // ./CFScript.g:338:2: ( 'not' )
+            // ./CFScript.g:338:2: 'not'
             {
             match("not"); 
 
@@ -269,8 +274,8 @@ public class CFScriptLexer extends Lexer {
     traceIn("EQUALS", 10);
         try {
             int _type = EQUALS;
-            // ./CFScript.g:311:2: ( '=' )
-            // ./CFScript.g:311:2: '='
+            // ./CFScript.g:343:2: ( '=' )
+            // ./CFScript.g:343:2: '='
             {
             match('='); 
 
@@ -284,15 +289,119 @@ public class CFScriptLexer extends Lexer {
     }
     // $ANTLR end EQUALS
 
+    // $ANTLR start SWITCH
+    public final void mSWITCH() throws RecognitionException {
+    traceIn("SWITCH", 11);
+        try {
+            int _type = SWITCH;
+            // ./CFScript.g:348:2: ( 'switch' )
+            // ./CFScript.g:348:2: 'switch'
+            {
+            match("switch"); 
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("SWITCH", 11);
+        }
+    }
+    // $ANTLR end SWITCH
+
+    // $ANTLR start CASE
+    public final void mCASE() throws RecognitionException {
+    traceIn("CASE", 12);
+        try {
+            int _type = CASE;
+            // ./CFScript.g:353:2: ( 'case' )
+            // ./CFScript.g:353:2: 'case'
+            {
+            match("case"); 
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("CASE", 12);
+        }
+    }
+    // $ANTLR end CASE
+
+    // $ANTLR start DEFAULT
+    public final void mDEFAULT() throws RecognitionException {
+    traceIn("DEFAULT", 13);
+        try {
+            int _type = DEFAULT;
+            // ./CFScript.g:358:2: ( 'default' )
+            // ./CFScript.g:358:2: 'default'
+            {
+            match("default"); 
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("DEFAULT", 13);
+        }
+    }
+    // $ANTLR end DEFAULT
+
+    // $ANTLR start BREAK
+    public final void mBREAK() throws RecognitionException {
+    traceIn("BREAK", 14);
+        try {
+            int _type = BREAK;
+            // ./CFScript.g:363:2: ( 'break' )
+            // ./CFScript.g:363:2: 'break'
+            {
+            match("break"); 
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("BREAK", 14);
+        }
+    }
+    // $ANTLR end BREAK
+
+    // $ANTLR start COLON
+    public final void mCOLON() throws RecognitionException {
+    traceIn("COLON", 15);
+        try {
+            int _type = COLON;
+            // ./CFScript.g:367:2: ( ':' )
+            // ./CFScript.g:367:2: ':'
+            {
+            match(':'); 
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("COLON", 15);
+        }
+    }
+    // $ANTLR end COLON
+
     // $ANTLR start OPERATOR
     public final void mOPERATOR() throws RecognitionException {
-    traceIn("OPERATOR", 11);
+    traceIn("OPERATOR", 16);
         try {
             int _type = OPERATOR;
-            // ./CFScript.g:316:2: ( ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR ) )
-            // ./CFScript.g:316:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
+            // ./CFScript.g:372:2: ( ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR ) )
+            // ./CFScript.g:372:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
             {
-            // ./CFScript.g:316:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
+            // ./CFScript.g:372:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
             int alt1=3;
             switch ( input.LA(1) ) {
             case '*':
@@ -322,28 +431,28 @@ public class CFScriptLexer extends Lexer {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("316:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )", 1, 0, input);
+                    new NoViableAltException("372:2: ( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )", 1, 0, input);
 
                 throw nvae;
             }
 
             switch (alt1) {
                 case 1 :
-                    // ./CFScript.g:316:4: MATH_OPERATOR
+                    // ./CFScript.g:372:4: MATH_OPERATOR
                     {
                     mMATH_OPERATOR(); 
 
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:316:20: STRING_OPERATOR
+                    // ./CFScript.g:372:20: STRING_OPERATOR
                     {
                     mSTRING_OPERATOR(); 
 
                     }
                     break;
                 case 3 :
-                    // ./CFScript.g:316:38: BOOLEAN_OPERATOR
+                    // ./CFScript.g:372:38: BOOLEAN_OPERATOR
                     {
                     mBOOLEAN_OPERATOR(); 
 
@@ -358,18 +467,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("OPERATOR", 11);
+    traceOut("OPERATOR", 16);
         }
     }
     // $ANTLR end OPERATOR
 
     // $ANTLR start COMMA
     public final void mCOMMA() throws RecognitionException {
-    traceIn("COMMA", 12);
+    traceIn("COMMA", 17);
         try {
             int _type = COMMA;
-            // ./CFScript.g:320:2: ( ',' )
-            // ./CFScript.g:320:2: ','
+            // ./CFScript.g:376:2: ( ',' )
+            // ./CFScript.g:376:2: ','
             {
             match(','); 
 
@@ -378,18 +487,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("COMMA", 12);
+    traceOut("COMMA", 17);
         }
     }
     // $ANTLR end COMMA
 
     // $ANTLR start SEMI_COLON
     public final void mSEMI_COLON() throws RecognitionException {
-    traceIn("SEMI_COLON", 13);
+    traceIn("SEMI_COLON", 18);
         try {
             int _type = SEMI_COLON;
-            // ./CFScript.g:325:2: ( ';' )
-            // ./CFScript.g:325:2: ';'
+            // ./CFScript.g:381:2: ( ';' )
+            // ./CFScript.g:381:2: ';'
             {
             match(';'); 
 
@@ -398,18 +507,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("SEMI_COLON", 13);
+    traceOut("SEMI_COLON", 18);
         }
     }
     // $ANTLR end SEMI_COLON
 
     // $ANTLR start HASH
     public final void mHASH() throws RecognitionException {
-    traceIn("HASH", 14);
+    traceIn("HASH", 19);
         try {
             int _type = HASH;
-            // ./CFScript.g:329:2: ( '#' )
-            // ./CFScript.g:329:2: '#'
+            // ./CFScript.g:385:2: ( '#' )
+            // ./CFScript.g:385:2: '#'
             {
             match('#'); 
 
@@ -418,18 +527,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("HASH", 14);
+    traceOut("HASH", 19);
         }
     }
     // $ANTLR end HASH
 
     // $ANTLR start OPEN_PAREN
     public final void mOPEN_PAREN() throws RecognitionException {
-    traceIn("OPEN_PAREN", 15);
+    traceIn("OPEN_PAREN", 20);
         try {
             int _type = OPEN_PAREN;
-            // ./CFScript.g:334:2: ( '(' )
-            // ./CFScript.g:334:2: '('
+            // ./CFScript.g:390:2: ( '(' )
+            // ./CFScript.g:390:2: '('
             {
             match('('); 
 
@@ -438,18 +547,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("OPEN_PAREN", 15);
+    traceOut("OPEN_PAREN", 20);
         }
     }
     // $ANTLR end OPEN_PAREN
 
     // $ANTLR start CLOSE_PAREN
     public final void mCLOSE_PAREN() throws RecognitionException {
-    traceIn("CLOSE_PAREN", 16);
+    traceIn("CLOSE_PAREN", 21);
         try {
             int _type = CLOSE_PAREN;
-            // ./CFScript.g:339:2: ( ')' )
-            // ./CFScript.g:339:2: ')'
+            // ./CFScript.g:395:2: ( ')' )
+            // ./CFScript.g:395:2: ')'
             {
             match(')'); 
 
@@ -458,18 +567,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("CLOSE_PAREN", 16);
+    traceOut("CLOSE_PAREN", 21);
         }
     }
     // $ANTLR end CLOSE_PAREN
 
     // $ANTLR start OPEN_SQUARE
     public final void mOPEN_SQUARE() throws RecognitionException {
-    traceIn("OPEN_SQUARE", 17);
+    traceIn("OPEN_SQUARE", 22);
         try {
             int _type = OPEN_SQUARE;
-            // ./CFScript.g:344:2: ( '[' )
-            // ./CFScript.g:344:2: '['
+            // ./CFScript.g:400:2: ( '[' )
+            // ./CFScript.g:400:2: '['
             {
             match('['); 
 
@@ -478,18 +587,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("OPEN_SQUARE", 17);
+    traceOut("OPEN_SQUARE", 22);
         }
     }
     // $ANTLR end OPEN_SQUARE
 
     // $ANTLR start CLOSE_SQUARE
     public final void mCLOSE_SQUARE() throws RecognitionException {
-    traceIn("CLOSE_SQUARE", 18);
+    traceIn("CLOSE_SQUARE", 23);
         try {
             int _type = CLOSE_SQUARE;
-            // ./CFScript.g:349:2: ( ']' )
-            // ./CFScript.g:349:2: ']'
+            // ./CFScript.g:405:2: ( ']' )
+            // ./CFScript.g:405:2: ']'
             {
             match(']'); 
 
@@ -498,18 +607,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("CLOSE_SQUARE", 18);
+    traceOut("CLOSE_SQUARE", 23);
         }
     }
     // $ANTLR end CLOSE_SQUARE
 
     // $ANTLR start OPEN_CURLY
     public final void mOPEN_CURLY() throws RecognitionException {
-    traceIn("OPEN_CURLY", 19);
+    traceIn("OPEN_CURLY", 24);
         try {
             int _type = OPEN_CURLY;
-            // ./CFScript.g:354:2: ( '{' )
-            // ./CFScript.g:354:2: '{'
+            // ./CFScript.g:410:2: ( '{' )
+            // ./CFScript.g:410:2: '{'
             {
             match('{'); 
 
@@ -518,18 +627,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("OPEN_CURLY", 19);
+    traceOut("OPEN_CURLY", 24);
         }
     }
     // $ANTLR end OPEN_CURLY
 
     // $ANTLR start CLOSE_CURLY
     public final void mCLOSE_CURLY() throws RecognitionException {
-    traceIn("CLOSE_CURLY", 20);
+    traceIn("CLOSE_CURLY", 25);
         try {
             int _type = CLOSE_CURLY;
-            // ./CFScript.g:359:2: ( '}' )
-            // ./CFScript.g:359:2: '}'
+            // ./CFScript.g:415:2: ( '}' )
+            // ./CFScript.g:415:2: '}'
             {
             match('}'); 
 
@@ -538,18 +647,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("CLOSE_CURLY", 20);
+    traceOut("CLOSE_CURLY", 25);
         }
     }
     // $ANTLR end CLOSE_CURLY
 
     // $ANTLR start DOT
     public final void mDOT() throws RecognitionException {
-    traceIn("DOT", 21);
+    traceIn("DOT", 26);
         try {
             int _type = DOT;
-            // ./CFScript.g:364:2: ( '.' )
-            // ./CFScript.g:364:2: '.'
+            // ./CFScript.g:420:2: ( '.' )
+            // ./CFScript.g:420:2: '.'
             {
             match('.'); 
 
@@ -558,18 +667,18 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("DOT", 21);
+    traceOut("DOT", 26);
         }
     }
     // $ANTLR end DOT
 
     // $ANTLR start VAR
     public final void mVAR() throws RecognitionException {
-    traceIn("VAR", 22);
+    traceIn("VAR", 27);
         try {
             int _type = VAR;
-            // ./CFScript.g:369:2: ( 'var' )
-            // ./CFScript.g:369:2: 'var'
+            // ./CFScript.g:425:2: ( 'var' )
+            // ./CFScript.g:425:2: 'var'
             {
             match("var"); 
 
@@ -579,54 +688,151 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("VAR", 22);
+    traceOut("VAR", 27);
         }
     }
     // $ANTLR end VAR
 
-    // $ANTLR start STRING
-    public final void mSTRING() throws RecognitionException {
-    traceIn("STRING", 23);
+    // $ANTLR start NUMBER
+    public final void mNUMBER() throws RecognitionException {
+    traceIn("NUMBER", 28);
         try {
-            int _type = STRING;
-            // ./CFScript.g:374:2: ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' )
+            int _type = NUMBER;
+            // ./CFScript.g:430:2: ( ( DIGIT )+ ( DOT ( DIGIT )+ )? )
+            // ./CFScript.g:430:2: ( DIGIT )+ ( DOT ( DIGIT )+ )?
+            {
+            // ./CFScript.g:430:2: ( DIGIT )+
+            int cnt2=0;
+            loop2:
+            do {
+                int alt2=2;
+                int LA2_0 = input.LA(1);
+
+                if ( ((LA2_0>='0' && LA2_0<='9')) ) {
+                    alt2=1;
+                }
+
+
+                switch (alt2) {
+            	case 1 :
+            	    // ./CFScript.g:430:2: DIGIT
+            	    {
+            	    mDIGIT(); 
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt2 >= 1 ) break loop2;
+                        EarlyExitException eee =
+                            new EarlyExitException(2, input);
+                        throw eee;
+                }
+                cnt2++;
+            } while (true);
+
+            // ./CFScript.g:430:8: ( DOT ( DIGIT )+ )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
-            if ( (LA4_0=='\"') ) {
+            if ( (LA4_0=='.') ) {
                 alt4=1;
-            }
-            else if ( (LA4_0=='\'') ) {
-                alt4=2;
-            }
-            else {
-                NoViableAltException nvae =
-                    new NoViableAltException("372:1: STRING : ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' );", 4, 0, input);
-
-                throw nvae;
             }
             switch (alt4) {
                 case 1 :
-                    // ./CFScript.g:374:2: '\"' ( options {greedy=false; } : . )* '\"'
+                    // ./CFScript.g:430:9: DOT ( DIGIT )+
+                    {
+                    mDOT(); 
+                    // ./CFScript.g:430:13: ( DIGIT )+
+                    int cnt3=0;
+                    loop3:
+                    do {
+                        int alt3=2;
+                        int LA3_0 = input.LA(1);
+
+                        if ( ((LA3_0>='0' && LA3_0<='9')) ) {
+                            alt3=1;
+                        }
+
+
+                        switch (alt3) {
+                    	case 1 :
+                    	    // ./CFScript.g:430:13: DIGIT
+                    	    {
+                    	    mDIGIT(); 
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    if ( cnt3 >= 1 ) break loop3;
+                                EarlyExitException eee =
+                                    new EarlyExitException(3, input);
+                                throw eee;
+                        }
+                        cnt3++;
+                    } while (true);
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("NUMBER", 28);
+        }
+    }
+    // $ANTLR end NUMBER
+
+    // $ANTLR start STRING
+    public final void mSTRING() throws RecognitionException {
+    traceIn("STRING", 29);
+        try {
+            int _type = STRING;
+            // ./CFScript.g:435:2: ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' )
+            int alt7=2;
+            int LA7_0 = input.LA(1);
+
+            if ( (LA7_0=='\"') ) {
+                alt7=1;
+            }
+            else if ( (LA7_0=='\'') ) {
+                alt7=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("433:1: STRING : ( '\"' ( options {greedy=false; } : . )* '\"' | '\\'' '\"' ( options {greedy=false; } : . )* '\\'' );", 7, 0, input);
+
+                throw nvae;
+            }
+            switch (alt7) {
+                case 1 :
+                    // ./CFScript.g:435:2: '\"' ( options {greedy=false; } : . )* '\"'
                     {
                     match('\"'); 
-                    // ./CFScript.g:374:6: ( options {greedy=false; } : . )*
-                    loop2:
+                    // ./CFScript.g:435:6: ( options {greedy=false; } : . )*
+                    loop5:
                     do {
-                        int alt2=2;
-                        int LA2_0 = input.LA(1);
+                        int alt5=2;
+                        int LA5_0 = input.LA(1);
 
-                        if ( (LA2_0=='\"') ) {
-                            alt2=2;
+                        if ( (LA5_0=='\"') ) {
+                            alt5=2;
                         }
-                        else if ( ((LA2_0>='\u0000' && LA2_0<='!')||(LA2_0>='#' && LA2_0<='\uFFFE')) ) {
-                            alt2=1;
+                        else if ( ((LA5_0>='\u0000' && LA5_0<='!')||(LA5_0>='#' && LA5_0<='\uFFFE')) ) {
+                            alt5=1;
                         }
 
 
-                        switch (alt2) {
+                        switch (alt5) {
                     	case 1 :
-                    	    // ./CFScript.g:374:34: .
+                    	    // ./CFScript.g:435:34: .
                     	    {
                     	    matchAny(); 
 
@@ -634,7 +840,7 @@ public class CFScriptLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop2;
+                    	    break loop5;
                         }
                     } while (true);
 
@@ -643,27 +849,27 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:376:2: '\\'' '\"' ( options {greedy=false; } : . )* '\\''
+                    // ./CFScript.g:437:2: '\\'' '\"' ( options {greedy=false; } : . )* '\\''
                     {
                     match('\''); 
                     match('\"'); 
-                    // ./CFScript.g:376:11: ( options {greedy=false; } : . )*
-                    loop3:
+                    // ./CFScript.g:437:11: ( options {greedy=false; } : . )*
+                    loop6:
                     do {
-                        int alt3=2;
-                        int LA3_0 = input.LA(1);
+                        int alt6=2;
+                        int LA6_0 = input.LA(1);
 
-                        if ( (LA3_0=='\'') ) {
-                            alt3=2;
+                        if ( (LA6_0=='\'') ) {
+                            alt6=2;
                         }
-                        else if ( ((LA3_0>='\u0000' && LA3_0<='&')||(LA3_0>='(' && LA3_0<='\uFFFE')) ) {
-                            alt3=1;
+                        else if ( ((LA6_0>='\u0000' && LA6_0<='&')||(LA6_0>='(' && LA6_0<='\uFFFE')) ) {
+                            alt6=1;
                         }
 
 
-                        switch (alt3) {
+                        switch (alt6) {
                     	case 1 :
-                    	    // ./CFScript.g:376:39: .
+                    	    // ./CFScript.g:437:39: .
                     	    {
                     	    matchAny(); 
 
@@ -671,7 +877,7 @@ public class CFScriptLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop3;
+                    	    break loop6;
                         }
                     } while (true);
 
@@ -684,118 +890,41 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("STRING", 23);
+    traceOut("STRING", 29);
         }
     }
     // $ANTLR end STRING
 
-    // $ANTLR start NUMBER
-    public final void mNUMBER() throws RecognitionException {
-    traceIn("NUMBER", 24);
-        try {
-            int _type = NUMBER;
-            // ./CFScript.g:381:2: ( ( DIGIT )+ ( DOT ( DIGIT )+ ) )
-            // ./CFScript.g:381:2: ( DIGIT )+ ( DOT ( DIGIT )+ )
-            {
-            // ./CFScript.g:381:2: ( DIGIT )+
-            int cnt5=0;
-            loop5:
-            do {
-                int alt5=2;
-                int LA5_0 = input.LA(1);
-
-                if ( ((LA5_0>='0' && LA5_0<='9')) ) {
-                    alt5=1;
-                }
-
-
-                switch (alt5) {
-            	case 1 :
-            	    // ./CFScript.g:381:2: DIGIT
-            	    {
-            	    mDIGIT(); 
-
-            	    }
-            	    break;
-
-            	default :
-            	    if ( cnt5 >= 1 ) break loop5;
-                        EarlyExitException eee =
-                            new EarlyExitException(5, input);
-                        throw eee;
-                }
-                cnt5++;
-            } while (true);
-
-            // ./CFScript.g:381:9: ( DOT ( DIGIT )+ )
-            // ./CFScript.g:381:10: DOT ( DIGIT )+
-            {
-            mDOT(); 
-            // ./CFScript.g:381:14: ( DIGIT )+
-            int cnt6=0;
-            loop6:
-            do {
-                int alt6=2;
-                int LA6_0 = input.LA(1);
-
-                if ( ((LA6_0>='0' && LA6_0<='9')) ) {
-                    alt6=1;
-                }
-
-
-                switch (alt6) {
-            	case 1 :
-            	    // ./CFScript.g:381:14: DIGIT
-            	    {
-            	    mDIGIT(); 
-
-            	    }
-            	    break;
-
-            	default :
-            	    if ( cnt6 >= 1 ) break loop6;
-                        EarlyExitException eee =
-                            new EarlyExitException(6, input);
-                        throw eee;
-                }
-                cnt6++;
-            } while (true);
-
-
-            }
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-    traceOut("NUMBER", 24);
-        }
-    }
-    // $ANTLR end NUMBER
-
     // $ANTLR start IDENTIFIER
     public final void mIDENTIFIER() throws RecognitionException {
-    traceIn("IDENTIFIER", 25);
+    traceIn("IDENTIFIER", 30);
         try {
             int _type = IDENTIFIER;
-            // ./CFScript.g:386:2: ( ( LETTER | DIGIT | '_' )+ )
-            // ./CFScript.g:386:2: ( LETTER | DIGIT | '_' )+
+            // ./CFScript.g:442:2: ( ( LETTER | '_' ) ( LETTER | DIGIT | '_' )* )
+            // ./CFScript.g:442:2: ( LETTER | '_' ) ( LETTER | DIGIT | '_' )*
             {
-            // ./CFScript.g:386:2: ( LETTER | DIGIT | '_' )+
-            int cnt7=0;
-            loop7:
-            do {
-                int alt7=2;
-                int LA7_0 = input.LA(1);
+            if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+                input.consume();
 
-                if ( ((LA7_0>='0' && LA7_0<='9')||(LA7_0>='A' && LA7_0<='Z')||LA7_0=='_'||(LA7_0>='a' && LA7_0<='z')) ) {
-                    alt7=1;
+            }
+            else {
+                MismatchedSetException mse =
+                    new MismatchedSetException(null,input);
+                recover(mse);    throw mse;
+            }
+
+            // ./CFScript.g:442:17: ( LETTER | DIGIT | '_' )*
+            loop8:
+            do {
+                int alt8=2;
+                int LA8_0 = input.LA(1);
+
+                if ( ((LA8_0>='0' && LA8_0<='9')||(LA8_0>='A' && LA8_0<='Z')||LA8_0=='_'||(LA8_0>='a' && LA8_0<='z')) ) {
+                    alt8=1;
                 }
 
 
-                switch (alt7) {
+                switch (alt8) {
             	case 1 :
             	    // ./CFScript.g:
             	    {
@@ -814,12 +943,8 @@ public class CFScriptLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt7 >= 1 ) break loop7;
-                        EarlyExitException eee =
-                            new EarlyExitException(7, input);
-                        throw eee;
+            	    break loop8;
                 }
-                cnt7++;
             } while (true);
 
 
@@ -828,101 +953,101 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("IDENTIFIER", 25);
+    traceOut("IDENTIFIER", 30);
         }
     }
     // $ANTLR end IDENTIFIER
 
     // $ANTLR start MATH_OPERATOR
     public final void mMATH_OPERATOR() throws RecognitionException {
-    traceIn("MATH_OPERATOR", 26);
+    traceIn("MATH_OPERATOR", 31);
         try {
-            // ./CFScript.g:393:2: ( ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' ) )
-            // ./CFScript.g:393:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
+            // ./CFScript.g:449:2: ( ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' ) )
+            // ./CFScript.g:449:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
             {
-            // ./CFScript.g:393:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
-            int alt8=7;
+            // ./CFScript.g:449:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
+            int alt9=7;
             switch ( input.LA(1) ) {
             case '+':
                 {
-                alt8=1;
+                alt9=1;
                 }
                 break;
             case '*':
                 {
-                alt8=2;
+                alt9=2;
                 }
                 break;
             case '/':
                 {
-                alt8=3;
+                alt9=3;
                 }
                 break;
             case '\\':
                 {
-                alt8=4;
+                alt9=4;
                 }
                 break;
             case '^':
                 {
-                alt8=5;
+                alt9=5;
                 }
                 break;
             case 'm':
                 {
-                alt8=6;
+                alt9=6;
                 }
                 break;
             case '-':
                 {
-                alt8=7;
+                alt9=7;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("393:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )", 8, 0, input);
+                    new NoViableAltException("449:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )", 9, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt8) {
+            switch (alt9) {
                 case 1 :
-                    // ./CFScript.g:393:3: '+'
+                    // ./CFScript.g:449:3: '+'
                     {
                     match('+'); 
 
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:393:9: '*'
+                    // ./CFScript.g:449:9: '*'
                     {
                     match('*'); 
 
                     }
                     break;
                 case 3 :
-                    // ./CFScript.g:393:15: '\\/'
+                    // ./CFScript.g:449:15: '\\/'
                     {
                     match('/'); 
 
                     }
                     break;
                 case 4 :
-                    // ./CFScript.g:393:22: '\\\\'
+                    // ./CFScript.g:449:22: '\\\\'
                     {
                     match('\\'); 
 
                     }
                     break;
                 case 5 :
-                    // ./CFScript.g:393:29: '^'
+                    // ./CFScript.g:449:29: '^'
                     {
                     match('^'); 
 
                     }
                     break;
                 case 6 :
-                    // ./CFScript.g:393:35: 'mod'
+                    // ./CFScript.g:449:35: 'mod'
                     {
                     match("mod"); 
 
@@ -930,7 +1055,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // ./CFScript.g:393:43: '-'
+                    // ./CFScript.g:449:43: '-'
                     {
                     match('-'); 
 
@@ -944,17 +1069,17 @@ public class CFScriptLexer extends Lexer {
 
         }
         finally {
-    traceOut("MATH_OPERATOR", 26);
+    traceOut("MATH_OPERATOR", 31);
         }
     }
     // $ANTLR end MATH_OPERATOR
 
     // $ANTLR start STRING_OPERATOR
     public final void mSTRING_OPERATOR() throws RecognitionException {
-    traceIn("STRING_OPERATOR", 27);
+    traceIn("STRING_OPERATOR", 32);
         try {
-            // ./CFScript.g:397:2: ( '&' )
-            // ./CFScript.g:397:2: '&'
+            // ./CFScript.g:453:2: ( '&' )
+            // ./CFScript.g:453:2: '&'
             {
             match('&'); 
 
@@ -962,52 +1087,52 @@ public class CFScriptLexer extends Lexer {
 
         }
         finally {
-    traceOut("STRING_OPERATOR", 27);
+    traceOut("STRING_OPERATOR", 32);
         }
     }
     // $ANTLR end STRING_OPERATOR
 
     // $ANTLR start BOOLEAN_OPERATOR
     public final void mBOOLEAN_OPERATOR() throws RecognitionException {
-    traceIn("BOOLEAN_OPERATOR", 28);
+    traceIn("BOOLEAN_OPERATOR", 33);
         try {
-            // ./CFScript.g:401:2: ( ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' ) )
-            // ./CFScript.g:401:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
+            // ./CFScript.g:457:2: ( ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' ) )
+            // ./CFScript.g:457:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
             {
-            // ./CFScript.g:401:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
-            int alt9=7;
+            // ./CFScript.g:457:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
+            int alt10=7;
             switch ( input.LA(1) ) {
             case 'e':
                 {
-                alt9=1;
+                alt10=1;
                 }
                 break;
             case 'n':
                 {
-                alt9=2;
+                alt10=2;
                 }
                 break;
             case 'i':
                 {
-                alt9=3;
+                alt10=3;
                 }
                 break;
             case 'g':
                 {
-                int LA9_4 = input.LA(2);
+                int LA10_4 = input.LA(2);
 
-                if ( (LA9_4=='t') ) {
-                    int LA9_6 = input.LA(3);
+                if ( (LA10_4=='t') ) {
+                    int LA10_6 = input.LA(3);
 
-                    if ( (LA9_6=='e') ) {
-                        alt9=7;
+                    if ( (LA10_6=='e') ) {
+                        alt10=7;
                     }
                     else {
-                        alt9=4;}
+                        alt10=4;}
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("401:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 4, input);
+                        new NoViableAltException("457:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 10, 4, input);
 
                     throw nvae;
                 }
@@ -1015,20 +1140,20 @@ public class CFScriptLexer extends Lexer {
                 break;
             case 'l':
                 {
-                int LA9_5 = input.LA(2);
+                int LA10_5 = input.LA(2);
 
-                if ( (LA9_5=='t') ) {
-                    int LA9_7 = input.LA(3);
+                if ( (LA10_5=='t') ) {
+                    int LA10_7 = input.LA(3);
 
-                    if ( (LA9_7=='e') ) {
-                        alt9=6;
+                    if ( (LA10_7=='e') ) {
+                        alt10=6;
                     }
                     else {
-                        alt9=5;}
+                        alt10=5;}
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("401:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 5, input);
+                        new NoViableAltException("457:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 10, 5, input);
 
                     throw nvae;
                 }
@@ -1036,14 +1161,14 @@ public class CFScriptLexer extends Lexer {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("401:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 9, 0, input);
+                    new NoViableAltException("457:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )", 10, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt9) {
+            switch (alt10) {
                 case 1 :
-                    // ./CFScript.g:401:3: 'eq'
+                    // ./CFScript.g:457:3: 'eq'
                     {
                     match("eq"); 
 
@@ -1051,7 +1176,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ./CFScript.g:401:8: 'neq'
+                    // ./CFScript.g:457:8: 'neq'
                     {
                     match("neq"); 
 
@@ -1059,7 +1184,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ./CFScript.g:401:14: 'is'
+                    // ./CFScript.g:457:14: 'is'
                     {
                     match("is"); 
 
@@ -1067,7 +1192,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ./CFScript.g:401:19: 'gt'
+                    // ./CFScript.g:457:19: 'gt'
                     {
                     match("gt"); 
 
@@ -1075,7 +1200,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // ./CFScript.g:401:24: 'lt'
+                    // ./CFScript.g:457:24: 'lt'
                     {
                     match("lt"); 
 
@@ -1083,7 +1208,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // ./CFScript.g:401:29: 'lte'
+                    // ./CFScript.g:457:29: 'lte'
                     {
                     match("lte"); 
 
@@ -1091,7 +1216,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // ./CFScript.g:401:35: 'gte'
+                    // ./CFScript.g:457:35: 'gte'
                     {
                     match("gte"); 
 
@@ -1106,17 +1231,17 @@ public class CFScriptLexer extends Lexer {
 
         }
         finally {
-    traceOut("BOOLEAN_OPERATOR", 28);
+    traceOut("BOOLEAN_OPERATOR", 33);
         }
     }
     // $ANTLR end BOOLEAN_OPERATOR
 
     // $ANTLR start DIGIT
     public final void mDIGIT() throws RecognitionException {
-    traceIn("DIGIT", 29);
+    traceIn("DIGIT", 34);
         try {
-            // ./CFScript.g:406:2: ( '0' .. '9' )
-            // ./CFScript.g:406:2: '0' .. '9'
+            // ./CFScript.g:462:2: ( '0' .. '9' )
+            // ./CFScript.g:462:2: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1124,16 +1249,16 @@ public class CFScriptLexer extends Lexer {
 
         }
         finally {
-    traceOut("DIGIT", 29);
+    traceOut("DIGIT", 34);
         }
     }
     // $ANTLR end DIGIT
 
     // $ANTLR start LETTER
     public final void mLETTER() throws RecognitionException {
-    traceIn("LETTER", 30);
+    traceIn("LETTER", 35);
         try {
-            // ./CFScript.g:411:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ./CFScript.g:467:2: ( 'a' .. 'z' | 'A' .. 'Z' )
             // ./CFScript.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -1151,18 +1276,18 @@ public class CFScriptLexer extends Lexer {
 
         }
         finally {
-    traceOut("LETTER", 30);
+    traceOut("LETTER", 35);
         }
     }
     // $ANTLR end LETTER
 
     // $ANTLR start WS
     public final void mWS() throws RecognitionException {
-    traceIn("WS", 31);
+    traceIn("WS", 36);
         try {
             int _type = WS;
-            // ./CFScript.g:418:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
-            // ./CFScript.g:418:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
+            // ./CFScript.g:474:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
+            // ./CFScript.g:474:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||(input.LA(1)>='\f' && input.LA(1)<='\r')||input.LA(1)==' ' ) {
                 input.consume();
@@ -1183,47 +1308,47 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("WS", 31);
+    traceOut("WS", 36);
         }
     }
     // $ANTLR end WS
 
     // $ANTLR start COMMENT
     public final void mCOMMENT() throws RecognitionException {
-    traceIn("COMMENT", 32);
+    traceIn("COMMENT", 37);
         try {
             int _type = COMMENT;
-            // ./CFScript.g:426:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ./CFScript.g:426:2: '/*' ( options {greedy=false; } : . )* '*/'
+            // ./CFScript.g:482:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ./CFScript.g:482:2: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ./CFScript.g:426:7: ( options {greedy=false; } : . )*
-            loop10:
+            // ./CFScript.g:482:7: ( options {greedy=false; } : . )*
+            loop11:
             do {
-                int alt10=2;
-                int LA10_0 = input.LA(1);
+                int alt11=2;
+                int LA11_0 = input.LA(1);
 
-                if ( (LA10_0=='*') ) {
-                    int LA10_1 = input.LA(2);
+                if ( (LA11_0=='*') ) {
+                    int LA11_1 = input.LA(2);
 
-                    if ( (LA10_1=='/') ) {
-                        alt10=2;
+                    if ( (LA11_1=='/') ) {
+                        alt11=2;
                     }
-                    else if ( ((LA10_1>='\u0000' && LA10_1<='.')||(LA10_1>='0' && LA10_1<='\uFFFE')) ) {
-                        alt10=1;
+                    else if ( ((LA11_1>='\u0000' && LA11_1<='.')||(LA11_1>='0' && LA11_1<='\uFFFE')) ) {
+                        alt11=1;
                     }
 
 
                 }
-                else if ( ((LA10_0>='\u0000' && LA10_0<=')')||(LA10_0>='+' && LA10_0<='\uFFFE')) ) {
-                    alt10=1;
+                else if ( ((LA11_0>='\u0000' && LA11_0<=')')||(LA11_0>='+' && LA11_0<='\uFFFE')) ) {
+                    alt11=1;
                 }
 
 
-                switch (alt10) {
+                switch (alt11) {
             	case 1 :
-            	    // ./CFScript.g:426:35: .
+            	    // ./CFScript.g:482:35: .
             	    {
             	    matchAny(); 
 
@@ -1231,7 +1356,7 @@ public class CFScriptLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop10;
+            	    break loop11;
                 }
             } while (true);
 
@@ -1246,35 +1371,35 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("COMMENT", 32);
+    traceOut("COMMENT", 37);
         }
     }
     // $ANTLR end COMMENT
 
     // $ANTLR start LINE_COMMENT
     public final void mLINE_COMMENT() throws RecognitionException {
-    traceIn("LINE_COMMENT", 33);
+    traceIn("LINE_COMMENT", 38);
         try {
             int _type = LINE_COMMENT;
-            // ./CFScript.g:434:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
-            // ./CFScript.g:434:2: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+            // ./CFScript.g:490:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
+            // ./CFScript.g:490:2: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
             {
             match("//"); 
 
-            // ./CFScript.g:434:7: (~ ( '\\n' | '\\r' ) )*
-            loop11:
+            // ./CFScript.g:490:7: (~ ( '\\n' | '\\r' ) )*
+            loop12:
             do {
-                int alt11=2;
-                int LA11_0 = input.LA(1);
+                int alt12=2;
+                int LA12_0 = input.LA(1);
 
-                if ( ((LA11_0>='\u0000' && LA11_0<='\t')||(LA11_0>='\u000B' && LA11_0<='\f')||(LA11_0>='\u000E' && LA11_0<='\uFFFE')) ) {
-                    alt11=1;
+                if ( ((LA12_0>='\u0000' && LA12_0<='\t')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\uFFFE')) ) {
+                    alt12=1;
                 }
 
 
-                switch (alt11) {
+                switch (alt12) {
             	case 1 :
-            	    // ./CFScript.g:434:7: ~ ( '\\n' | '\\r' )
+            	    // ./CFScript.g:490:7: ~ ( '\\n' | '\\r' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1291,20 +1416,20 @@ public class CFScriptLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop11;
+            	    break loop12;
                 }
             } while (true);
 
-            // ./CFScript.g:434:21: ( '\\r' )?
-            int alt12=2;
-            int LA12_0 = input.LA(1);
+            // ./CFScript.g:490:21: ( '\\r' )?
+            int alt13=2;
+            int LA13_0 = input.LA(1);
 
-            if ( (LA12_0=='\r') ) {
-                alt12=1;
+            if ( (LA13_0=='\r') ) {
+                alt13=1;
             }
-            switch (alt12) {
+            switch (alt13) {
                 case 1 :
-                    // ./CFScript.g:434:21: '\\r'
+                    // ./CFScript.g:490:21: '\\r'
                     {
                     match('\r'); 
 
@@ -1323,16 +1448,836 @@ public class CFScriptLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("LINE_COMMENT", 33);
+    traceOut("LINE_COMMENT", 38);
         }
     }
     // $ANTLR end LINE_COMMENT
 
     public void mTokens() throws RecognitionException {
-        // ./CFScript.g:1:10: ( IF | ELSE | TRY | CATCH | RETURN | FOR | WHILE | DO | NOT | EQUALS | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | STRING | NUMBER | IDENTIFIER | WS | COMMENT | LINE_COMMENT )
-        int alt13=28;
-        alt13 = dfa13.predict(input);
-        switch (alt13) {
+        // ./CFScript.g:1:10: ( IF | ELSE | TRY | CATCH | RETURN | FOR | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | STRING | IDENTIFIER | WS | COMMENT | LINE_COMMENT )
+        int alt14=33;
+        switch ( input.LA(1) ) {
+        case 'i':
+            {
+            switch ( input.LA(2) ) {
+            case 's':
+                {
+                int LA14_34 = input.LA(3);
+
+                if ( ((LA14_34>='0' && LA14_34<='9')||(LA14_34>='A' && LA14_34<='Z')||LA14_34=='_'||(LA14_34>='a' && LA14_34<='z')) ) {
+                    alt14=30;
+                }
+                else {
+                    alt14=16;}
+                }
+                break;
+            case 'f':
+                {
+                int LA14_35 = input.LA(3);
+
+                if ( ((LA14_35>='0' && LA14_35<='9')||(LA14_35>='A' && LA14_35<='Z')||LA14_35=='_'||(LA14_35>='a' && LA14_35<='z')) ) {
+                    alt14=30;
+                }
+                else {
+                    alt14=1;}
+                }
+                break;
+            default:
+                alt14=30;}
+
+            }
+            break;
+        case 'e':
+            {
+            switch ( input.LA(2) ) {
+            case 'q':
+                {
+                int LA14_36 = input.LA(3);
+
+                if ( ((LA14_36>='0' && LA14_36<='9')||(LA14_36>='A' && LA14_36<='Z')||LA14_36=='_'||(LA14_36>='a' && LA14_36<='z')) ) {
+                    alt14=30;
+                }
+                else {
+                    alt14=16;}
+                }
+                break;
+            case 'l':
+                {
+                int LA14_37 = input.LA(3);
+
+                if ( (LA14_37=='s') ) {
+                    int LA14_56 = input.LA(4);
+
+                    if ( (LA14_56=='e') ) {
+                        int LA14_73 = input.LA(5);
+
+                        if ( ((LA14_73>='0' && LA14_73<='9')||(LA14_73>='A' && LA14_73<='Z')||LA14_73=='_'||(LA14_73>='a' && LA14_73<='z')) ) {
+                            alt14=30;
+                        }
+                        else {
+                            alt14=2;}
+                    }
+                    else {
+                        alt14=30;}
+                }
+                else {
+                    alt14=30;}
+                }
+                break;
+            default:
+                alt14=30;}
+
+            }
+            break;
+        case 't':
+            {
+            int LA14_3 = input.LA(2);
+
+            if ( (LA14_3=='r') ) {
+                int LA14_38 = input.LA(3);
+
+                if ( (LA14_38=='y') ) {
+                    int LA14_57 = input.LA(4);
+
+                    if ( ((LA14_57>='0' && LA14_57<='9')||(LA14_57>='A' && LA14_57<='Z')||LA14_57=='_'||(LA14_57>='a' && LA14_57<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=3;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'c':
+            {
+            int LA14_4 = input.LA(2);
+
+            if ( (LA14_4=='a') ) {
+                switch ( input.LA(3) ) {
+                case 't':
+                    {
+                    int LA14_58 = input.LA(4);
+
+                    if ( (LA14_58=='c') ) {
+                        int LA14_75 = input.LA(5);
+
+                        if ( (LA14_75=='h') ) {
+                            int LA14_86 = input.LA(6);
+
+                            if ( ((LA14_86>='0' && LA14_86<='9')||(LA14_86>='A' && LA14_86<='Z')||LA14_86=='_'||(LA14_86>='a' && LA14_86<='z')) ) {
+                                alt14=30;
+                            }
+                            else {
+                                alt14=4;}
+                        }
+                        else {
+                            alt14=30;}
+                    }
+                    else {
+                        alt14=30;}
+                    }
+                    break;
+                case 's':
+                    {
+                    int LA14_59 = input.LA(4);
+
+                    if ( (LA14_59=='e') ) {
+                        int LA14_76 = input.LA(5);
+
+                        if ( ((LA14_76>='0' && LA14_76<='9')||(LA14_76>='A' && LA14_76<='Z')||LA14_76=='_'||(LA14_76>='a' && LA14_76<='z')) ) {
+                            alt14=30;
+                        }
+                        else {
+                            alt14=12;}
+                    }
+                    else {
+                        alt14=30;}
+                    }
+                    break;
+                default:
+                    alt14=30;}
+
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'r':
+            {
+            int LA14_5 = input.LA(2);
+
+            if ( (LA14_5=='e') ) {
+                int LA14_40 = input.LA(3);
+
+                if ( (LA14_40=='t') ) {
+                    int LA14_60 = input.LA(4);
+
+                    if ( (LA14_60=='u') ) {
+                        int LA14_77 = input.LA(5);
+
+                        if ( (LA14_77=='r') ) {
+                            int LA14_88 = input.LA(6);
+
+                            if ( (LA14_88=='n') ) {
+                                int LA14_94 = input.LA(7);
+
+                                if ( ((LA14_94>='0' && LA14_94<='9')||(LA14_94>='A' && LA14_94<='Z')||LA14_94=='_'||(LA14_94>='a' && LA14_94<='z')) ) {
+                                    alt14=30;
+                                }
+                                else {
+                                    alt14=5;}
+                            }
+                            else {
+                                alt14=30;}
+                        }
+                        else {
+                            alt14=30;}
+                    }
+                    else {
+                        alt14=30;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'f':
+            {
+            int LA14_6 = input.LA(2);
+
+            if ( (LA14_6=='o') ) {
+                int LA14_41 = input.LA(3);
+
+                if ( (LA14_41=='r') ) {
+                    int LA14_61 = input.LA(4);
+
+                    if ( ((LA14_61>='0' && LA14_61<='9')||(LA14_61>='A' && LA14_61<='Z')||LA14_61=='_'||(LA14_61>='a' && LA14_61<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=6;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'w':
+            {
+            int LA14_7 = input.LA(2);
+
+            if ( (LA14_7=='h') ) {
+                int LA14_42 = input.LA(3);
+
+                if ( (LA14_42=='i') ) {
+                    int LA14_62 = input.LA(4);
+
+                    if ( (LA14_62=='l') ) {
+                        int LA14_79 = input.LA(5);
+
+                        if ( (LA14_79=='e') ) {
+                            int LA14_89 = input.LA(6);
+
+                            if ( ((LA14_89>='0' && LA14_89<='9')||(LA14_89>='A' && LA14_89<='Z')||LA14_89=='_'||(LA14_89>='a' && LA14_89<='z')) ) {
+                                alt14=30;
+                            }
+                            else {
+                                alt14=7;}
+                        }
+                        else {
+                            alt14=30;}
+                    }
+                    else {
+                        alt14=30;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'd':
+            {
+            switch ( input.LA(2) ) {
+            case 'e':
+                {
+                int LA14_43 = input.LA(3);
+
+                if ( (LA14_43=='f') ) {
+                    int LA14_63 = input.LA(4);
+
+                    if ( (LA14_63=='a') ) {
+                        int LA14_80 = input.LA(5);
+
+                        if ( (LA14_80=='u') ) {
+                            int LA14_90 = input.LA(6);
+
+                            if ( (LA14_90=='l') ) {
+                                int LA14_96 = input.LA(7);
+
+                                if ( (LA14_96=='t') ) {
+                                    int LA14_100 = input.LA(8);
+
+                                    if ( ((LA14_100>='0' && LA14_100<='9')||(LA14_100>='A' && LA14_100<='Z')||LA14_100=='_'||(LA14_100>='a' && LA14_100<='z')) ) {
+                                        alt14=30;
+                                    }
+                                    else {
+                                        alt14=13;}
+                                }
+                                else {
+                                    alt14=30;}
+                            }
+                            else {
+                                alt14=30;}
+                        }
+                        else {
+                            alt14=30;}
+                    }
+                    else {
+                        alt14=30;}
+                }
+                else {
+                    alt14=30;}
+                }
+                break;
+            case 'o':
+                {
+                int LA14_44 = input.LA(3);
+
+                if ( ((LA14_44>='0' && LA14_44<='9')||(LA14_44>='A' && LA14_44<='Z')||LA14_44=='_'||(LA14_44>='a' && LA14_44<='z')) ) {
+                    alt14=30;
+                }
+                else {
+                    alt14=8;}
+                }
+                break;
+            default:
+                alt14=30;}
+
+            }
+            break;
+        case 'n':
+            {
+            switch ( input.LA(2) ) {
+            case 'o':
+                {
+                int LA14_45 = input.LA(3);
+
+                if ( (LA14_45=='t') ) {
+                    int LA14_65 = input.LA(4);
+
+                    if ( ((LA14_65>='0' && LA14_65<='9')||(LA14_65>='A' && LA14_65<='Z')||LA14_65=='_'||(LA14_65>='a' && LA14_65<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=9;}
+                }
+                else {
+                    alt14=30;}
+                }
+                break;
+            case 'e':
+                {
+                int LA14_46 = input.LA(3);
+
+                if ( (LA14_46=='q') ) {
+                    int LA14_66 = input.LA(4);
+
+                    if ( ((LA14_66>='0' && LA14_66<='9')||(LA14_66>='A' && LA14_66<='Z')||LA14_66=='_'||(LA14_66>='a' && LA14_66<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=16;}
+                }
+                else {
+                    alt14=30;}
+                }
+                break;
+            default:
+                alt14=30;}
+
+            }
+            break;
+        case '=':
+            {
+            alt14=10;
+            }
+            break;
+        case 's':
+            {
+            int LA14_11 = input.LA(2);
+
+            if ( (LA14_11=='w') ) {
+                int LA14_47 = input.LA(3);
+
+                if ( (LA14_47=='i') ) {
+                    int LA14_67 = input.LA(4);
+
+                    if ( (LA14_67=='t') ) {
+                        int LA14_82 = input.LA(5);
+
+                        if ( (LA14_82=='c') ) {
+                            int LA14_91 = input.LA(6);
+
+                            if ( (LA14_91=='h') ) {
+                                int LA14_97 = input.LA(7);
+
+                                if ( ((LA14_97>='0' && LA14_97<='9')||(LA14_97>='A' && LA14_97<='Z')||LA14_97=='_'||(LA14_97>='a' && LA14_97<='z')) ) {
+                                    alt14=30;
+                                }
+                                else {
+                                    alt14=11;}
+                            }
+                            else {
+                                alt14=30;}
+                        }
+                        else {
+                            alt14=30;}
+                    }
+                    else {
+                        alt14=30;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'b':
+            {
+            int LA14_12 = input.LA(2);
+
+            if ( (LA14_12=='r') ) {
+                int LA14_48 = input.LA(3);
+
+                if ( (LA14_48=='e') ) {
+                    int LA14_68 = input.LA(4);
+
+                    if ( (LA14_68=='a') ) {
+                        int LA14_83 = input.LA(5);
+
+                        if ( (LA14_83=='k') ) {
+                            int LA14_92 = input.LA(6);
+
+                            if ( ((LA14_92>='0' && LA14_92<='9')||(LA14_92>='A' && LA14_92<='Z')||LA14_92=='_'||(LA14_92>='a' && LA14_92<='z')) ) {
+                                alt14=30;
+                            }
+                            else {
+                                alt14=14;}
+                        }
+                        else {
+                            alt14=30;}
+                    }
+                    else {
+                        alt14=30;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case ':':
+            {
+            alt14=15;
+            }
+            break;
+        case '&':
+        case '*':
+        case '+':
+        case '-':
+        case '\\':
+        case '^':
+            {
+            alt14=16;
+            }
+            break;
+        case '/':
+            {
+            switch ( input.LA(2) ) {
+            case '/':
+                {
+                alt14=33;
+                }
+                break;
+            case '*':
+                {
+                alt14=32;
+                }
+                break;
+            default:
+                alt14=16;}
+
+            }
+            break;
+        case 'm':
+            {
+            int LA14_16 = input.LA(2);
+
+            if ( (LA14_16=='o') ) {
+                int LA14_51 = input.LA(3);
+
+                if ( (LA14_51=='d') ) {
+                    int LA14_69 = input.LA(4);
+
+                    if ( ((LA14_69>='0' && LA14_69<='9')||(LA14_69>='A' && LA14_69<='Z')||LA14_69=='_'||(LA14_69>='a' && LA14_69<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=16;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'g':
+            {
+            int LA14_17 = input.LA(2);
+
+            if ( (LA14_17=='t') ) {
+                switch ( input.LA(3) ) {
+                case 'e':
+                    {
+                    int LA14_70 = input.LA(4);
+
+                    if ( ((LA14_70>='0' && LA14_70<='9')||(LA14_70>='A' && LA14_70<='Z')||LA14_70=='_'||(LA14_70>='a' && LA14_70<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=16;}
+                    }
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'E':
+                case 'F':
+                case 'G':
+                case 'H':
+                case 'I':
+                case 'J':
+                case 'K':
+                case 'L':
+                case 'M':
+                case 'N':
+                case 'O':
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                case 'T':
+                case 'U':
+                case 'V':
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                case '_':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                    {
+                    alt14=30;
+                    }
+                    break;
+                default:
+                    alt14=16;}
+
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case 'l':
+            {
+            int LA14_18 = input.LA(2);
+
+            if ( (LA14_18=='t') ) {
+                switch ( input.LA(3) ) {
+                case 'e':
+                    {
+                    int LA14_71 = input.LA(4);
+
+                    if ( ((LA14_71>='0' && LA14_71<='9')||(LA14_71>='A' && LA14_71<='Z')||LA14_71=='_'||(LA14_71>='a' && LA14_71<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=16;}
+                    }
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'E':
+                case 'F':
+                case 'G':
+                case 'H':
+                case 'I':
+                case 'J':
+                case 'K':
+                case 'L':
+                case 'M':
+                case 'N':
+                case 'O':
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                case 'T':
+                case 'U':
+                case 'V':
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                case '_':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                    {
+                    alt14=30;
+                    }
+                    break;
+                default:
+                    alt14=16;}
+
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case ',':
+            {
+            alt14=17;
+            }
+            break;
+        case ';':
+            {
+            alt14=18;
+            }
+            break;
+        case '#':
+            {
+            alt14=19;
+            }
+            break;
+        case '(':
+            {
+            alt14=20;
+            }
+            break;
+        case ')':
+            {
+            alt14=21;
+            }
+            break;
+        case '[':
+            {
+            alt14=22;
+            }
+            break;
+        case ']':
+            {
+            alt14=23;
+            }
+            break;
+        case '{':
+            {
+            alt14=24;
+            }
+            break;
+        case '}':
+            {
+            alt14=25;
+            }
+            break;
+        case '.':
+            {
+            alt14=26;
+            }
+            break;
+        case 'v':
+            {
+            int LA14_29 = input.LA(2);
+
+            if ( (LA14_29=='a') ) {
+                int LA14_54 = input.LA(3);
+
+                if ( (LA14_54=='r') ) {
+                    int LA14_72 = input.LA(4);
+
+                    if ( ((LA14_72>='0' && LA14_72<='9')||(LA14_72>='A' && LA14_72<='Z')||LA14_72=='_'||(LA14_72>='a' && LA14_72<='z')) ) {
+                        alt14=30;
+                    }
+                    else {
+                        alt14=27;}
+                }
+                else {
+                    alt14=30;}
+            }
+            else {
+                alt14=30;}
+            }
+            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            {
+            alt14=28;
+            }
+            break;
+        case '\"':
+        case '\'':
+            {
+            alt14=29;
+            }
+            break;
+        case 'A':
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'E':
+        case 'F':
+        case 'G':
+        case 'H':
+        case 'I':
+        case 'J':
+        case 'K':
+        case 'L':
+        case 'M':
+        case 'N':
+        case 'O':
+        case 'P':
+        case 'Q':
+        case 'R':
+        case 'S':
+        case 'T':
+        case 'U':
+        case 'V':
+        case 'W':
+        case 'X':
+        case 'Y':
+        case 'Z':
+        case '_':
+        case 'a':
+        case 'h':
+        case 'j':
+        case 'k':
+        case 'o':
+        case 'p':
+        case 'q':
+        case 'u':
+        case 'x':
+        case 'y':
+        case 'z':
+            {
+            alt14=30;
+            }
+            break;
+        case '\t':
+        case '\n':
+        case '\f':
+        case '\r':
+        case ' ':
+            {
+            alt14=31;
+            }
+            break;
+        default:
+            NoViableAltException nvae =
+                new NoViableAltException("1:1: Tokens : ( IF | ELSE | TRY | CATCH | RETURN | FOR | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | STRING | IDENTIFIER | WS | COMMENT | LINE_COMMENT );", 14, 0, input);
+
+            throw nvae;
+        }
+
+        switch (alt14) {
             case 1 :
                 // ./CFScript.g:1:10: IF
                 {
@@ -1404,126 +2349,161 @@ public class CFScriptLexer extends Lexer {
                 }
                 break;
             case 11 :
-                // ./CFScript.g:1:59: OPERATOR
+                // ./CFScript.g:1:59: SWITCH
+                {
+                mSWITCH(); 
+
+                }
+                break;
+            case 12 :
+                // ./CFScript.g:1:66: CASE
+                {
+                mCASE(); 
+
+                }
+                break;
+            case 13 :
+                // ./CFScript.g:1:71: DEFAULT
+                {
+                mDEFAULT(); 
+
+                }
+                break;
+            case 14 :
+                // ./CFScript.g:1:79: BREAK
+                {
+                mBREAK(); 
+
+                }
+                break;
+            case 15 :
+                // ./CFScript.g:1:85: COLON
+                {
+                mCOLON(); 
+
+                }
+                break;
+            case 16 :
+                // ./CFScript.g:1:91: OPERATOR
                 {
                 mOPERATOR(); 
 
                 }
                 break;
-            case 12 :
-                // ./CFScript.g:1:68: COMMA
+            case 17 :
+                // ./CFScript.g:1:100: COMMA
                 {
                 mCOMMA(); 
 
                 }
                 break;
-            case 13 :
-                // ./CFScript.g:1:74: SEMI_COLON
+            case 18 :
+                // ./CFScript.g:1:106: SEMI_COLON
                 {
                 mSEMI_COLON(); 
 
                 }
                 break;
-            case 14 :
-                // ./CFScript.g:1:85: HASH
+            case 19 :
+                // ./CFScript.g:1:117: HASH
                 {
                 mHASH(); 
 
                 }
                 break;
-            case 15 :
-                // ./CFScript.g:1:90: OPEN_PAREN
+            case 20 :
+                // ./CFScript.g:1:122: OPEN_PAREN
                 {
                 mOPEN_PAREN(); 
 
                 }
                 break;
-            case 16 :
-                // ./CFScript.g:1:101: CLOSE_PAREN
+            case 21 :
+                // ./CFScript.g:1:133: CLOSE_PAREN
                 {
                 mCLOSE_PAREN(); 
 
                 }
                 break;
-            case 17 :
-                // ./CFScript.g:1:113: OPEN_SQUARE
+            case 22 :
+                // ./CFScript.g:1:145: OPEN_SQUARE
                 {
                 mOPEN_SQUARE(); 
 
                 }
                 break;
-            case 18 :
-                // ./CFScript.g:1:125: CLOSE_SQUARE
+            case 23 :
+                // ./CFScript.g:1:157: CLOSE_SQUARE
                 {
                 mCLOSE_SQUARE(); 
 
                 }
                 break;
-            case 19 :
-                // ./CFScript.g:1:138: OPEN_CURLY
+            case 24 :
+                // ./CFScript.g:1:170: OPEN_CURLY
                 {
                 mOPEN_CURLY(); 
 
                 }
                 break;
-            case 20 :
-                // ./CFScript.g:1:149: CLOSE_CURLY
+            case 25 :
+                // ./CFScript.g:1:181: CLOSE_CURLY
                 {
                 mCLOSE_CURLY(); 
 
                 }
                 break;
-            case 21 :
-                // ./CFScript.g:1:161: DOT
+            case 26 :
+                // ./CFScript.g:1:193: DOT
                 {
                 mDOT(); 
 
                 }
                 break;
-            case 22 :
-                // ./CFScript.g:1:165: VAR
+            case 27 :
+                // ./CFScript.g:1:197: VAR
                 {
                 mVAR(); 
 
                 }
                 break;
-            case 23 :
-                // ./CFScript.g:1:169: STRING
-                {
-                mSTRING(); 
-
-                }
-                break;
-            case 24 :
-                // ./CFScript.g:1:176: NUMBER
+            case 28 :
+                // ./CFScript.g:1:201: NUMBER
                 {
                 mNUMBER(); 
 
                 }
                 break;
-            case 25 :
-                // ./CFScript.g:1:183: IDENTIFIER
+            case 29 :
+                // ./CFScript.g:1:208: STRING
+                {
+                mSTRING(); 
+
+                }
+                break;
+            case 30 :
+                // ./CFScript.g:1:215: IDENTIFIER
                 {
                 mIDENTIFIER(); 
 
                 }
                 break;
-            case 26 :
-                // ./CFScript.g:1:194: WS
+            case 31 :
+                // ./CFScript.g:1:226: WS
                 {
                 mWS(); 
 
                 }
                 break;
-            case 27 :
-                // ./CFScript.g:1:197: COMMENT
+            case 32 :
+                // ./CFScript.g:1:229: COMMENT
                 {
                 mCOMMENT(); 
 
                 }
                 break;
-            case 28 :
-                // ./CFScript.g:1:205: LINE_COMMENT
+            case 33 :
+                // ./CFScript.g:1:237: LINE_COMMENT
                 {
                 mLINE_COMMENT(); 
 
@@ -1535,155 +2515,6 @@ public class CFScriptLexer extends Lexer {
     }
 
 
-    protected DFA13 dfa13 = new DFA13(this);
-    static final String DFA13_eotS =
-        "\1\uffff\11\35\2\uffff\1\13\3\35\12\uffff\1\35\1\uffff\1\35\2\uffff"+
-        "\1\62\1\13\1\35\1\13\5\35\1\71\2\35\2\uffff\1\35\2\13\1\35\2\uffff"+
-        "\1\35\1\101\2\35\1\104\1\35\1\uffff\1\106\4\13\1\107\1\110\1\uffff"+
-        "\2\35\1\uffff\1\35\3\uffff\1\114\1\35\1\116\1\uffff\1\117\2\uffff";
-    static final String DFA13_eofS =
-        "\120\uffff";
-    static final String DFA13_minS =
-        "\1\11\1\146\1\154\1\162\1\141\1\145\1\157\1\150\1\157\1\145\2\uffff"+
-        "\1\52\1\157\2\164\12\uffff\1\141\1\uffff\1\56\2\uffff\2\60\1\163"+
-        "\1\60\1\171\2\164\1\162\1\151\1\60\1\164\1\161\2\uffff\1\144\2\60"+
-        "\1\162\2\uffff\1\145\1\60\1\143\1\165\1\60\1\154\1\uffff\7\60\1"+
-        "\uffff\1\150\1\162\1\uffff\1\145\3\uffff\1\60\1\156\1\60\1\uffff"+
-        "\1\60\2\uffff";
-    static final String DFA13_maxS =
-        "\1\175\1\163\1\161\1\162\1\141\1\145\1\157\1\150\2\157\2\uffff\1"+
-        "\57\1\157\2\164\12\uffff\1\141\1\uffff\1\71\2\uffff\2\172\1\163"+
-        "\1\172\1\171\2\164\1\162\1\151\1\172\1\164\1\161\2\uffff\1\144\2"+
-        "\172\1\162\2\uffff\1\145\1\172\1\143\1\165\1\172\1\154\1\uffff\7"+
-        "\172\1\uffff\1\150\1\162\1\uffff\1\145\3\uffff\1\172\1\156\1\172"+
-        "\1\uffff\1\172\2\uffff";
-    static final String DFA13_acceptS =
-        "\12\uffff\1\12\1\13\4\uffff\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1"+
-        "\23\1\24\1\25\1\uffff\1\27\1\uffff\1\31\1\32\14\uffff\1\33\1\34"+
-        "\4\uffff\1\30\1\1\6\uffff\1\10\7\uffff\1\3\2\uffff\1\6\1\uffff\1"+
-        "\11\1\26\1\2\3\uffff\1\4\1\uffff\1\7\1\5";
-    static final String DFA13_specialS =
-        "\120\uffff}>";
-    static final String[] DFA13_transitionS = {
-            "\2\36\1\uffff\2\36\22\uffff\1\36\1\uffff\1\33\1\22\2\uffff\1"+
-            "\13\1\33\1\23\1\24\2\13\1\20\1\13\1\31\1\14\12\34\1\uffff\1"+
-            "\21\1\uffff\1\12\3\uffff\32\35\1\25\1\13\1\26\1\13\1\35\1\uffff"+
-            "\2\35\1\4\1\10\1\2\1\6\1\16\1\35\1\1\2\35\1\17\1\15\1\11\3\35"+
-            "\1\5\1\35\1\3\1\35\1\32\1\7\3\35\1\27\1\uffff\1\30",
-            "\1\37\14\uffff\1\40",
-            "\1\41\4\uffff\1\42",
-            "\1\43",
-            "\1\44",
-            "\1\45",
-            "\1\46",
-            "\1\47",
-            "\1\50",
-            "\1\52\11\uffff\1\51",
-            "",
-            "",
-            "\1\53\4\uffff\1\54",
-            "\1\55",
-            "\1\56",
-            "\1\57",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\60",
-            "",
-            "\1\61\1\uffff\12\34",
-            "",
-            "",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\1\63",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\1\64",
-            "\1\65",
-            "\1\66",
-            "\1\67",
-            "\1\70",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\1\72",
-            "\1\73",
-            "",
-            "",
-            "\1\74",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\4\35\1\75\25\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\4\35\1\76\25\35",
-            "\1\77",
-            "",
-            "",
-            "\1\100",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\1\102",
-            "\1\103",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\1\105",
-            "",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "",
-            "\1\111",
-            "\1\112",
-            "",
-            "\1\113",
-            "",
-            "",
-            "",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "\1\115",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "",
-            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
-            "",
-            ""
-    };
-
-    static final short[] DFA13_eot = DFA.unpackEncodedString(DFA13_eotS);
-    static final short[] DFA13_eof = DFA.unpackEncodedString(DFA13_eofS);
-    static final char[] DFA13_min = DFA.unpackEncodedStringToUnsignedChars(DFA13_minS);
-    static final char[] DFA13_max = DFA.unpackEncodedStringToUnsignedChars(DFA13_maxS);
-    static final short[] DFA13_accept = DFA.unpackEncodedString(DFA13_acceptS);
-    static final short[] DFA13_special = DFA.unpackEncodedString(DFA13_specialS);
-    static final short[][] DFA13_transition;
-
-    static {
-        int numStates = DFA13_transitionS.length;
-        DFA13_transition = new short[numStates][];
-        for (int i=0; i<numStates; i++) {
-            DFA13_transition[i] = DFA.unpackEncodedString(DFA13_transitionS[i]);
-        }
-    }
-
-    class DFA13 extends DFA {
-
-        public DFA13(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 13;
-            this.eot = DFA13_eot;
-            this.eof = DFA13_eof;
-            this.min = DFA13_min;
-            this.max = DFA13_max;
-            this.accept = DFA13_accept;
-            this.special = DFA13_special;
-            this.transition = DFA13_transition;
-        }
-        public String getDescription() {
-            return "1:1: Tokens : ( IF | ELSE | TRY | CATCH | RETURN | FOR | WHILE | DO | NOT | EQUALS | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | STRING | NUMBER | IDENTIFIER | WS | COMMENT | LINE_COMMENT );";
-        }
-    }
  
 
 }

@@ -107,6 +107,10 @@ script
 		whileStatement
 		|
 		doWhileStatement
+		|
+		switchStatement
+		|
+		breakStatement SEMI_COLON
 	)*
 	;
 	
@@ -261,6 +265,34 @@ block
 	OPEN_CURLY script CLOSE_CURLY
 	;
 
+
+switchStatement
+	:
+	SWITCH^ OPEN_PAREN codeStatement CLOSE_PAREN
+	OPEN_CURLY
+	(caseStatement)*
+	(defaultStatement)?
+	CLOSE_CURLY
+	;
+	
+caseStatement
+	:
+	CASE^ (STRING | NUMBER) COLON
+	script
+	;
+
+defaultStatement
+	:
+	DEFAULT^ COLON
+	script
+	;
+
+
+breakStatement
+	:
+	BREAK	
+	;
+
 /* Lexer */
 
 IF
@@ -309,6 +341,30 @@ NOT	:
 EQUALS
 	:
 	'='
+	;
+
+SWITCH
+	:
+	'switch'
+	;
+
+CASE
+	:
+	'case'
+	;
+
+DEFAULT
+	:
+	'default'
+	;
+	
+BREAK
+	:
+	'break'
+	;
+
+COLON	:
+	':'
 	;
 
 OPERATOR
@@ -369,6 +425,11 @@ VAR
 	'var'
 	;
 
+NUMBER
+	:
+	DIGIT+(DOT DIGIT+)?
+	;
+
 STRING
 	:
 	'"' ( options {greedy=false;} : . )* '"' 
@@ -376,14 +437,9 @@ STRING
 	'\'' '"' ( options {greedy=false;} : . )* '\'' 
 	;
 
-NUMBER
-	:
-	DIGIT+ (DOT DIGIT+)
-	;
-
 IDENTIFIER
 	:
-	(LETTER | DIGIT | '_' )+
+	(LETTER | '_' )(LETTER | DIGIT | '_' )*
 	;
 
 /* fragments */
