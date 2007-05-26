@@ -25,11 +25,15 @@
 package org.cfeclipse.cfml.views.snips;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.actions.GenericEncloserAction;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
+import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
+import org.cfeclipse.cfml.preferences.SnipExPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
@@ -42,6 +46,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -59,6 +64,9 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
+import org.cfeclipse.snipex.SnipEx;
+import org.cfeclipse.snipex.Library;
+import org.cfeclipse.snipex.Snippet;
 
 /**
  * @author Rob
@@ -105,6 +113,8 @@ public class SnipTreeView extends ViewPart
 	MenuManager menuMgr;
 	
 	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction, refreshSnippetsAction, deleteSnippetAction, deleteFolderAction;
+	
+	protected Action exportToSnipEx;
 	
 	/** the root directory */
 	protected File root;
@@ -208,8 +218,47 @@ public class SnipTreeView extends ViewPart
 	}
 
 	
-	
+	public static Object[] getSnipExURLs() {
+		String[] prefKeys = {	SnipExPreferenceConstants.P_SNIPEX_URL1,
+							SnipExPreferenceConstants.P_SNIPEX_URL2,
+							SnipExPreferenceConstants.P_SNIPEX_URL3,
+							SnipExPreferenceConstants.P_SNIPEX_URL4,
+							SnipExPreferenceConstants.P_SNIPEX_URL5,
+							SnipExPreferenceConstants.P_SNIPEX_URL6,
+							SnipExPreferenceConstants.P_SNIPEX_URL7,
+							SnipExPreferenceConstants.P_SNIPEX_URL8
+						};
+		
+		Object[] snipex = new Object[0];
+		
+		CFMLPreferenceManager pm = new CFMLPreferenceManager();
+		
+		for(int i = 0; i < prefKeys.length; i++ ) {
+			
+			String url = pm.getStringPref( prefKeys[i] );
+			if( url.trim().length() > 0 ) {
+				try {
+					Object[] temp = new Object[1];
+					temp[0] = new SnipEx( new URL( url ) );
+					snipex = appendArrays(snipex, temp);
+				} catch(MalformedURLException e) {
+					System.err.println("Snipex URL failed:"+e);
+				} catch(Exception e) {
+					System.err.println("Snipex failed to load:"+e);
+				}
+			}
+		}
+		
+		return snipex;
+	}
 
+	public static Object[] appendArrays(Object[] array1, Object[] array2) {
+		Object[] newArray = new Object[array1.length + array2.length];
+		System.arraycopy(array1, 0, newArray, 0, array1.length);
+		System.arraycopy(array2, 0, newArray, array1.length, array2.length);
+		return newArray;
+	}
+	
 	/*
 	public void mouseEnter(MouseEvent e) {
 	//System.out.println("Mouse entered viewer");
@@ -246,33 +295,52 @@ public class SnipTreeView extends ViewPart
 					StringBuffer toShow = new StringBuffer("");
 					StringBuffer toPreview = new StringBuffer("");
 					
-					//IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
-					File selectedfile = (File)selection.getFirstElement();
+					Object element = selection.getFirstElement();
+					// Clear text/preview
+					text.setText("");
+					preview.setText("");
 					
-					if(selectedfile.isDirectory())
-					{
-						text.setText("");
-						preview.setText("");
-						return;
-					}
+					if(element instanceof File) {
+						//IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+						File selectedfile = (File)selection.getFirstElement();
 						
-					//get the full path to the file
-					String f = selectedfile.getAbsolutePath();
-					
-					try
-					{
+						if(selectedfile.isDirectory()){
+							return;
+						}
+							
+						//get the full path to the file
+						String f = selectedfile.getAbsolutePath();
 						
-						snipReader.read(f);
-						toShow.append(snipReader.getSnipDescription());
-						toPreview.append(snipReader.getSnipStartBlock() + snipReader.getSnipEndBlock());
+						try
+						{
+							
+							snipReader.read(f);
+							toShow.append(snipReader.getSnipDescription());
+							toPreview.append(snipReader.getSnipStartBlock() + snipReader.getSnipEndBlock());
+							
+						}
+						catch(Exception e)
+						{
+							e.printStackTrace(System.err);
+						}
+						
+						preview.setText(toPreview.toString());
+					} else if(element instanceof SnipEx) {
+						SnipEx sx = (SnipEx)element;
+						text.setText(sx.toString());
+						preview.setText(sx.getSource().toString());
+						
+					} else if(element instanceof Library) {
+						Library lib = (Library)element;
+						text.setText(lib.getName());
+						preview.setText(lib.getDescription());
+						
+					} else if(element instanceof Snippet) {
+						Snippet snip = (Snippet)element;
+						text.setText(snip.getDescription());
+						preview.setText(snip.getStartText()+snip.getEndText());
 						
 					}
-					catch(Exception e)
-					{
-						e.printStackTrace(System.err);
-					}
-					text.setText(toShow.toString());
-					preview.setText(toPreview.toString());
 				}
 			}
 		});
@@ -363,6 +431,21 @@ public class SnipTreeView extends ViewPart
 			}
 		};
 		deleteFolderAction.setToolTipText("Delete selected snip package (must be empty)");
+		
+		
+		exportToSnipEx = new Action(
+				"Export to SnipEx server",
+				CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SNIP_EXPORT)
+		){
+			public void run(){
+				IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+				File selectedfile = (File)selection.getFirstElement();
+
+				//Run the wizard
+				
+			}
+		};
+		exportToSnipEx.setToolTipText("Export the selected snippet to a SnipX Server");
 	}
 	
 	/**
@@ -419,6 +502,7 @@ public class SnipTreeView extends ViewPart
 			mgr.add(insertAction);
 			mgr.add(editSnippetAction);
 			mgr.add(deleteSnippetAction);
+			mgr.add(exportToSnipEx);
 		}
 		
 		mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -462,54 +546,60 @@ public class SnipTreeView extends ViewPart
 		//get a handle to the current editor and assign it to our temp action
 		IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 		tmpAction.setActiveEditor(null,iep);
-		File selectedfile = null;
 		
-		if(treeViewer.getSelection().isEmpty()) 
-		{
+		Object element = null;
+		String startBlock = null;
+		String endBlock = null;
+		
+		if(treeViewer.getSelection().isEmpty()) {
 			return;
-		}
-		else 
-		{
+		} else {
 			IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
-			selectedfile = (File)selection.getFirstElement();
+			element = (Object)selection.getFirstElement();
 		}
 		
-		if(selectedfile.isDirectory()) return;
-		
-		//get the full path to the file
-		String f = selectedfile.getAbsolutePath();
-		
-		snipReader.read(f);
-		//System.out.println(f);
-		
-		try
-		{	
+		if(element instanceof File) {
+			File selectedfile = (File)element;
+			if(selectedfile.isDirectory()) return;
+			
+			snipReader.read( selectedfile.getAbsolutePath() );
+			
+			try
+			{	
+				IFile activeFile = null;
+				if (iep.getEditorInput() instanceof IFileEditorInput) {
+					activeFile = ((IFileEditorInput) iep.getEditorInput()).getFile();
+				}
+				
+				startBlock = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.getViewSite().getShell());
+				endBlock = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.getViewSite().getShell());
+	
+			} catch(Exception e) {
+				e.printStackTrace(System.err);
+			}
+		} else if(element instanceof Snippet) {
+			
 			IFile activeFile = null;
 			if (iep.getEditorInput() instanceof IFileEditorInput) {
 				activeFile = ((IFileEditorInput) iep.getEditorInput()).getFile();
 			}
 			
-			String startBlock = SnipVarParser.parse(snipReader.getSnipStartBlock(),activeFile,this.getViewSite().getShell());
-			String endBlock = SnipVarParser.parse(snipReader.getSnipEndBlock(),activeFile,this.getViewSite().getShell());
-
-			if (startBlock != null && endBlock != null) {
-			    tmpAction.setEnclosingStrings(startBlock,endBlock);
-			    tmpAction.run(null);
-			}
-			
+			Snippet snip = (Snippet)element;
+			startBlock = SnipVarParser.parse(snip.getStartText(),activeFile,this.getViewSite().getShell());
+			endBlock = SnipVarParser.parse(snip.getEndText(),activeFile,this.getViewSite().getShell());
+		}
+		
+		
+		if (startBlock != null && endBlock != null) {
+		    tmpAction.setEnclosingStrings(startBlock,endBlock);
+		    tmpAction.run(null);
+		    
 			//after the addition, they'll probably want to start typing
 			iep.setFocus();
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace(System.err);
 		}
 	}
 
 	
-
-	
-
 	/*
 	 * Returns the currently selected file or the root directory if nothing is selected
 	 */

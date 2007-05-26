@@ -82,6 +82,7 @@ public class CFPluginImages {
 	/** the package icon (the little gift wrapped thing */
 	public static final String ICON_PACKAGE = "package.gif";
 	public static final String ICON_PACKAGE_OFF = "package_off.gif";
+	public static final String ICON_PACKAGE_SNIPEX = "package_sx.png";
 	/** generic value icon the three bars with the arrow */
 	public static final String ICON_VALUE	= "value.gif";
 	/** generic class icon the rounded C */
@@ -185,6 +186,11 @@ public class CFPluginImages {
 	public static final String ICON_DRIVE_SFTP ="drive_sftp.png";
 	public static final String ICON_DRIVE_ERROR ="drive_error.png";
 	
+	
+	/** Exporting icons for the snipEx  */
+	public static final String ICON_SNIP_EXPORT = "export_wiz.gif";
+	public static final String ICON_SNIP_IMPORT = "import_wiz.gif";
+	
 	/** Editor toolbar icons */
 	public static final String ICON_OUTPUT = "output.gif";
 	public static final String T_INSERT = "addrepo_rep.gif";
@@ -282,6 +288,7 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_TEMPLATE_SNIP);
 			addImageToRegistry(MODEL_OBJECTS,ICON_DW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE);
+			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE_SNIPEX);
 			addImageToRegistry(MODEL_OBJECTS,ICON_PACKAGE_OFF);
 			addImageToRegistry(MODEL_OBJECTS,ICON_VALUE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_CLASS);
@@ -309,6 +316,11 @@ public class CFPluginImages {
 			
 			/** decorators */
 			addImageToRegistry(MODEL_OBJECTS, ICON_DECORATOR_LINK);
+			
+			
+			/** snipex */
+			addImageToRegistry(MODEL_OBJECTS, ICON_SNIP_EXPORT);
+			addImageToRegistry(MODEL_OBJECTS, ICON_SNIP_IMPORT);
 			
 			addImageToRegistry(TOOLBAR,ICON_ADD);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);

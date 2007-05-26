@@ -25,12 +25,11 @@ public class SnipSmartDialog {
 		super();
 	}
     
-    public static String parse(String str, Shell shell ) {
+    public static String parse(String str, IFile activeFile, Shell shell ) {
         String newStr = str;
         ArrayList list = new ArrayList();
         int position = 0;
         
-        //TODO: replace with a reg-ex
         while(newStr.indexOf("$${",position) >= 0) {
 			int expressionStart = newStr.indexOf("$${",position)+3;
 			int expressionEnd = newStr.indexOf("}",expressionStart);

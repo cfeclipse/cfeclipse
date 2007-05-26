@@ -47,7 +47,9 @@ public class CFMLPreferenceManager {
 		return store.getBoolean(prefKey);
 	}
 
-
+	public String getStringPref(String prefKey) {
+		return store.getString(prefKey);
+	}
 	
 	/* private String getColorString(RGB color) {
 	    return color.red + "," + color.green + "," + color.blue;
@@ -66,6 +68,7 @@ public class CFMLPreferenceManager {
 		ScribblePadPreferenceConstants.setDefaults(store);
 		BrowserPreferenceConstants.setDefaults(store);
 		ApplicationTemplatesPreferenceConstants.setDefaults(store);
+		SnipExPreferenceConstants.setDefaults(store);
 	}
 	
 	/**

@@ -38,7 +38,12 @@ package org.cfeclipse.cfml.views.snips;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import org.cfeclipse.snipex.SnipEx;
+import org.cfeclipse.snipex.Library;
+import org.cfeclipse.snipex.Snippet;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -105,22 +110,25 @@ public class SnipTreeViewContentProvider implements ITreeContentProvider { //, I
 	 */
 	public Object[] getChildren(Object parentElement) 
 	{
-		if(parentElement instanceof File)
-		{
-			if(((File)parentElement).isDirectory())
-				return ((File)parentElement).listFiles(snippetfilter);
+		if(parentElement instanceof File) {
+			if(((File)parentElement).isDirectory()) {
+				if(parentElement.equals(rootdir)) {
+					Object[] files = ((File)parentElement).listFiles(snippetfilter);
+					Object[] snipex = SnipTreeView.getSnipExURLs();
+					
+					return SnipTreeView.appendArrays(files, snipex);
+					
+				} else {
+					return ((File)parentElement).listFiles(snippetfilter);
+				}
+			}
+		} else if(parentElement instanceof Library || parentElement instanceof SnipEx) {
+			Library lib = (Library)parentElement;
+			return SnipTreeView.appendArrays(lib.getLibraries().toArray(), lib.getSnippets().toArray());
 		}
 		
 		return EMPTY_ARRAY;
 	}
-	
-	/* protected Object[] concat(Object[] object, Object[] more, Object[] more2) {
-		Object[] both = new Object[object.length + more.length + more2.length];
-		System.arraycopy(object, 0, both, 0, object.length);
-		System.arraycopy(more, 0, both, object.length, more.length);
-		System.arraycopy(more2, 0, both, object.length + more.length, more2.length);		
-		return both;
-	} */
 
 	/**
 	 * Get the parent of element
@@ -141,6 +149,12 @@ public class SnipTreeViewContentProvider implements ITreeContentProvider { //, I
 	 * @see ITreeContentProvider#hasChildren(Object)
 	 */
 	public boolean hasChildren(Object element) {
+		if(element instanceof SnipEx || element instanceof Library) {
+			return true;
+		} else if(element instanceof Snippet) {
+			return false;
+		}
+		
 		return getChildren(element).length > 0;
 	}
 

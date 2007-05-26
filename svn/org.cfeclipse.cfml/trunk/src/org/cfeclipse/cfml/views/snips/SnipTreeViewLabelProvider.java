@@ -40,6 +40,9 @@ import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.cfeclipse.snipex.SnipEx;
+import org.cfeclipse.snipex.Library;
+import org.cfeclipse.snipex.Snippet;
 
 public class SnipTreeViewLabelProvider extends LabelProvider {
 	
@@ -53,8 +56,7 @@ public class SnipTreeViewLabelProvider extends LabelProvider {
 	{
 		if(element instanceof File)
 		{
-			if( !((File)element).isDirectory() )
-			{	
+			if( !((File)element).isDirectory() ) {	
 				String fname = ((File)element).getName(); 
 				//an xml file assume its a snip
 				if(fname.endsWith(".xml") || fname.endsWith(".XML"))
@@ -72,10 +74,22 @@ public class SnipTreeViewLabelProvider extends LabelProvider {
 					return CFPluginImages.get(CFPluginImages.ICON_DW);
 				}
 			}
-			else
-			{
+			else {
 				return CFPluginImages.get(CFPluginImages.ICON_PACKAGE);
 				//its a directory
+			}
+			
+			
+		} else {
+			if(element instanceof SnipEx || element instanceof Library) {
+				return CFPluginImages.get(CFPluginImages.ICON_PACKAGE_SNIPEX);
+			} else if(element instanceof Snippet) {
+				Snippet snip = (Snippet)element;
+				if(snip.isTemplate()) {
+					return CFPluginImages.get(CFPluginImages.ICON_TEMPLATE_SNIP);
+				} else {
+					return CFPluginImages.get(CFPluginImages.ICON_SNIP);
+				}
 			}
 		}
 		
@@ -89,21 +103,19 @@ public class SnipTreeViewLabelProvider extends LabelProvider {
 	public String getText(Object element) 
 	{	
 		//if this is a file
-		if(element instanceof File)
-		{
+		if(element instanceof File) {
 			String fname = ((File)element).getName();
 			//and its not a directory trim off the extension
-			if( !((File)element).isDirectory() )
-			{
+			if( !((File)element).isDirectory() ) {
 				return fname.substring(0,fname.length() - 4);
 			}
 			//if a directory just show the name
-			else
-			{	
+			else {	
 				return fname;
 			}
-		}
-		return "";
+		}		
+		
+		return element.toString();
 	}
 	
 	protected RuntimeException unknownElement(Object element) 
