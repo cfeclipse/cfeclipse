@@ -47,6 +47,9 @@
       <library name="lib/apache_vfs.jar">
          <export name="*"/>
       </library>
+      <library name="lib/org.cfeclipse.snipex-v0.8.jar">
+         <export name="*"/>
+      </library>
    </runtime>
    <!-- random comment -->
    <requires>
@@ -1472,6 +1475,11 @@
             class="org.cfeclipse.cfml.preferences.CFMLTemplatesPreferencePage"
             id="org.cfeclipse.cfml.preferences.Templates"
             name="Templates"/>
+      <page
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfml.preferences.SnipExPreferencePage"
+            id="org.cfeclipse.cfml.preferences.SnipExPreferencePage"
+            name="%page.name.11"/>
        
    </extension>
    
@@ -1844,4 +1852,17 @@
          <run class="org.cfeclipse.cfml.builders.CFComponentBuilder"/>
       </builder>
    </extension>
+<!--
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <category
+            id="org.cfeclipse.cfml.snipex.category"
+            name="SnipEx"/>
+      <wizard
+            category="org.cfeclipse.cfml.snipex.category"
+            class="org.cfeclipse.cfml.wizards.snipex.ExportApplicationWizard"
+            id="org.cfeclipse.cfml.snipex.exportapplication"
+            name="Export Application to a SnipEx "/>
+   </extension>
+-->
 </plugin>
