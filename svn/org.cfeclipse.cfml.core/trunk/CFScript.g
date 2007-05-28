@@ -32,6 +32,8 @@ tokens
 	FUNCTION_CALL;
 	STRUCT_KEY;
 	ELSEIF;
+	STRING_CFML;
+	STRING;
 }
 
 /* Parser */
@@ -93,25 +95,32 @@ THE SOFTWARE.
 
 script
 	:
-	(		
-		setStatement SEMI_COLON
-		|
-		returnStatement SEMI_COLON
-		|
-		ifStatement
-		|
-		tryStatement
-		|
-		forStatement
-		|
-		whileStatement
-		|
-		doWhileStatement
-		|
-		switchStatement
-		|
-		breakStatement SEMI_COLON
+	(
+		(
+			nonBlockStatement 
+			|
+			ifStatement
+			|
+			tryStatement
+			|
+			forStatement
+			|
+			whileStatement
+			|
+			doWhileStatement
+			|
+			switchStatement
+		) SEMI_COLON
 	)*
+	;
+	
+nonBlockStatement
+	:
+	setStatement
+	|
+	returnStatement
+	|
+	breakStatement 
 	;
 	
 setStatement
@@ -154,14 +163,19 @@ cfmlValueStatement
 
 cfmlValue
 	:
-	(NUMBER | STRING | cfmlLinking)
+	(NUMBER | stringLiteral | cfmlLinking)
 	;
 
 cfmlLinking
 	:
-	HASH cfmlBasicLinking HASH
+	hashCfmlLinking
 	|
 	cfmlBasicLinking
+	;
+
+hashCfmlLinking
+	:	
+	HASH cfmlBasicLinking HASH
 	;
 
 cfmlBasicLinking
@@ -172,6 +186,23 @@ cfmlBasicLinking
 cfmlBasic
 	:
 	identifier | function
+	;
+
+innerStringCFML
+	:
+	hashCfmlLinking
+	-> ^(STRING_CFML hashCfmlLinking)
+	;
+
+stringLiteral
+	:
+	(
+		DOUBLE_QUOTE^ ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~(DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH) )* DOUBLE_QUOTE
+	)
+	|
+	(
+		SINGLE_QUOTE^ ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH) )* SINGLE_QUOTE
+	)
 	;
 
 identifier
@@ -262,7 +293,9 @@ doWhileStatement
 
 block
 	:
-	OPEN_CURLY script CLOSE_CURLY
+	(OPEN_CURLY script CLOSE_CURLY)
+	|
+	(nonBlockStatement SEMI_COLON)
 	;
 
 
@@ -277,7 +310,7 @@ switchStatement
 	
 caseStatement
 	:
-	CASE^ (STRING | NUMBER) COLON
+	CASE^ (stringLiteral | NUMBER) COLON
 	script
 	;
 
@@ -430,13 +463,25 @@ NUMBER
 	DIGIT+(DOT DIGIT+)?
 	;
 
-STRING
+ESCAPE_DOUBLE_QUOTE
 	:
-	'"' ( options {greedy=false;} : . )* '"' 
-	|
-	'\'' '"' ( options {greedy=false;} : . )* '\'' 
+	'""'
+	;
+	
+ESCAPE_SINGLE_QUOTE
+	:
+	'\'\''
 	;
 
+DOUBLE_QUOTE
+	:
+	'"'
+	;
+SINGLE_QUOTE
+	:
+	'\''
+	;
+	
 IDENTIFIER
 	:
 	(LETTER | '_' )(LETTER | DIGIT | '_' )*
