@@ -70,7 +70,9 @@
 		<javac srcdir="${src}" 
 			debug="true" 
 			debuglevel="lines,vars,source" 
-			destdir="${build}"/>
+			target="5"
+			destdir="${build}"
+			/>
 	</target>
 	
 	<target name="move">
