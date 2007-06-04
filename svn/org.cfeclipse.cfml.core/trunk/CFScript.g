@@ -93,6 +93,11 @@ THE SOFTWARE.
 */
 }
 
+@lexer::members
+{
+	public static final int COMMENT_CHANNEL = 90;
+}
+
 script
 	:
 	(
@@ -526,7 +531,7 @@ COMMENT
 	:   
 	'/*' ( options {greedy=false;} : . )* '*/' 
 	{
-		$channel=HIDDEN;
+		$channel=COMMENT_CHANNEL; //90 is the comment channel
 	}
 	;
 
@@ -534,6 +539,6 @@ LINE_COMMENT
 	: 
 	'//' ~('\n'|'\r')* '\r'? '\n' 
 	{
-		$channel=HIDDEN;
+		$channel=COMMENT_CHANNEL; //90 is the comment channel
 	}
 	;

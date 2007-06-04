@@ -27,7 +27,6 @@
 	<property name="src" location="./src" />
 	<property name="build" location="./bin"/>
 	<property name="dist"  location="./lib"/>
-	<property name="antlrScript" value="./CFScript.g" />
 	<property name="temp" value="./tmp" />
 	<property name="antlr-runtime" value="./lib/antlr-runtime-3.0.jar" />
 	
@@ -57,14 +56,23 @@
     </target>
 	
     <target name="compile-debug" depends="clean" description="--> compile with debug options on">
-    	<java classname="org.antlr.Tool">
-    		<arg value="${antlrScript}"/>
-    		<arg value="-trace"/>
-    	</java>
+    	<antcall target="buildAntlr" > 
+    		<param name="antlrScript" value="./CFScript.g"/>
+ 		</antcall>
+       	<antcall target="buildAntlr" > 
+       		<param name="antlrScript" value="./CFML.g"/>
+   		</antcall>
     	<antcall target="move" />
     	<antcall target="buildJava"/>
     	<antcall target="buildASTViewerJar"/>
     </target>
+
+	<target name="buildAntlr">
+    	<java classname="org.antlr.Tool">
+    		<arg value="${antlrScript}"/>
+    		<arg value="-trace"/>
+    	</java>		
+	</target>	
 	
 	<target name="buildJava">
 		<javac srcdir="${src}" 

@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/mark/workspace/org.cfeclipse.cfml.core/lib/antlrworks-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/mark/workspace/org.cfeclipse.cfml.core/lib/antlrworks-1.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

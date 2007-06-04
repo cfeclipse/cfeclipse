@@ -22,52 +22,44 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.	
 */
 
-import org.antlr.runtime.*;
-import org.cfeclipse.cfml.core.parser.antlr.*;
-
-public class CFMLLexer extends org.cfeclipse.cfml.core.parser.antlr.CFMLLexer
+/**
+ * @author mark
+ *
+ */
+public class DefaultCFMLDictionary implements ICFMLDictionary
 {
-	private ErrorObservable observable;
 
-	public CFMLLexer()
-	{
-		super();
-		setObservable(new ErrorObservable());
-	}
-
-	public CFMLLexer(CharStream input)
-	{
-		super(input);
-		setObservable(new ErrorObservable());
-	}
 	
-	
-	public void addObserver(IErrorObserver observer)
+	public boolean conatinsCFSCript(String tagName)
 	{
-		getObservable().addObserver(observer);
-	}
-	
-	public void removeObserver(IErrorObserver observer)
-	{
-		getObservable().removeObserver(observer);
-	}
-	
-	public void displayRecognitionError(String[] tokenNames, RecognitionException e)
-	{
-		ErrorEvent event = new ErrorEvent(e, getErrorMessage(e, tokenNames));
+		if(tagName.toLowerCase().equals("cfscript"))
+		{
+			return true;
+		}
 		
-		getObservable().notifyObservers(event);
+		return false;
+	}
+	
+	
+	public boolean isColdFusoinTag(String tagName)
+	{
+		if(tagName.toLowerCase().startsWith("cf"))
+		{
+			return true;
+		}
 		
-		super.displayRecognitionError(tokenNames, e);
+		return false;
 	}
 
-	private ErrorObservable getObservable()
+	public boolean usesAttributes(String tagName)
 	{
-		return observable;
-	}
-
-	private void setObservable(ErrorObservable observable)
-	{
-		this.observable = observable;
+		tagName = tagName.toLowerCase();
+		
+		if(tagName.equals("cfset") || tagName.equals("cfif") || tagName.equals("cfelseif"))
+		{
+			return false;
+		}
+		
+		return true;
 	}
 }

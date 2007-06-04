@@ -25,14 +25,16 @@ THE SOFTWARE.
 import org.antlr.runtime.*;
 import org.cfeclipse.cfml.core.parser.antlr.*;
 
-public class CFMLParser extends CFScriptParser
+public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 {
 	private ErrorObservable observable;
+	private ICFMLDictionary dictionary;
 	
-	public CFMLParser(TokenStream input)
+	public CFMLParser(TokenStream input, ICFMLDictionary dictionary)
 	{
 		super(input);
 		setObservable(new ErrorObservable());
+		setDictionary(dictionary);
 	}	
 	
 	public void addObserver(IErrorObserver observer)
@@ -54,6 +56,34 @@ public class CFMLParser extends CFScriptParser
 		super.displayRecognitionError(tokenNames, e);
 	}
 
+	/**
+	* returns false.
+	*/
+	protected boolean isColdFusionTag(Token tag)
+	{
+		System.out.println("isColdFusionTag: " + tag.getText());
+		//strip off the top layer
+		return getDictionary().isColdFusoinTag(tag.getText().substring(1));
+	}
+
+	/**
+	* returns false.
+	*/
+	protected boolean isCustomTag(Token tag)
+	{		
+		System.out.println("isCustomTag: " + tag.getText());
+		return tag.getText().toLowerCase().startsWith("<cf_"); 
+	}
+
+	/**
+	* returns false.
+	*/	
+	protected boolean isImportTag(Token tag)
+	{
+		System.out.println("isImportTag: " + tag.getText());
+		return tag.getText().contains(":");
+	}
+	
 	private ErrorObservable getObservable()
 	{
 		return observable;
@@ -62,5 +92,15 @@ public class CFMLParser extends CFScriptParser
 	private void setObservable(ErrorObservable observable)
 	{
 		this.observable = observable;
+	}
+
+	private ICFMLDictionary getDictionary()
+	{
+		return dictionary;
+	}
+
+	private void setDictionary(ICFMLDictionary dictionary)
+	{
+		this.dictionary = dictionary;
 	}
 }

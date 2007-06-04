@@ -22,52 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.	
 */
 
-import org.antlr.runtime.*;
-import org.cfeclipse.cfml.core.parser.antlr.*;
-
-public class CFMLLexer extends org.cfeclipse.cfml.core.parser.antlr.CFMLLexer
+/**
+ * Interface for any Java class that provides information about
+ * the CFML implementation that is being used here.
+ */
+public interface ICFMLDictionary
 {
-	private ErrorObservable observable;
-
-	public CFMLLexer()
-	{
-		super();
-		setObservable(new ErrorObservable());
-	}
-
-	public CFMLLexer(CharStream input)
-	{
-		super(input);
-		setObservable(new ErrorObservable());
-	}
+	/**
+	 * Is this tag name an actual CF tag?
+	 * @param string the name o fhe tag
+	 * @return if it is or isn't
+	 */
+	public boolean isColdFusoinTag(String tagName);
 	
+	public boolean usesAttributes(String tagName);
 	
-	public void addObserver(IErrorObserver observer)
-	{
-		getObservable().addObserver(observer);
-	}
-	
-	public void removeObserver(IErrorObserver observer)
-	{
-		getObservable().removeObserver(observer);
-	}
-	
-	public void displayRecognitionError(String[] tokenNames, RecognitionException e)
-	{
-		ErrorEvent event = new ErrorEvent(e, getErrorMessage(e, tokenNames));
-		
-		getObservable().notifyObservers(event);
-		
-		super.displayRecognitionError(tokenNames, e);
-	}
-
-	private ErrorObservable getObservable()
-	{
-		return observable;
-	}
-
-	private void setObservable(ErrorObservable observable)
-	{
-		this.observable = observable;
-	}
+	public boolean conatinsCFSCript(String tagName);
 }

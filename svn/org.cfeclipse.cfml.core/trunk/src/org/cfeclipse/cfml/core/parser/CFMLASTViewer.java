@@ -26,17 +26,23 @@ import javax.swing.*;
 import javax.swing.tree.*;
 import java.awt.BorderLayout;
 import java.awt.event.*;
+import java.lang.reflect.*;
+import java.util.HashMap;
+
 import org.antlr.*;
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
-import org.cfeclipse.cfml.core.parser.antlr.ANTLRNoCaseStringStream;
+import org.cfeclipse.cfml.core.parser.antlr.*;
+
 
 public class CFMLASTViewer
 {
 	private JFrame window;
 	private JTextArea text;
 	private JTextArea log;
-
+	private HashMap<Integer, String> tokenTypes;
+	private ICFMLDictionary dictionary;
+	
 	/**
 	 * @param args
 	 */
@@ -47,6 +53,15 @@ public class CFMLASTViewer
 	
 	public CFMLASTViewer()
 	{
+		this(new DefaultCFMLDictionary());
+	}
+	
+	public CFMLASTViewer(ICFMLDictionary dictionary)
+	{
+		setTokenTypes(new HashMap<Integer, String>());
+		initTokenTypes();
+		setDictionary(dictionary);
+		
 		window = new JFrame("AST Viewer");
 		JFrame logger = new JFrame("Log");
 		
@@ -138,11 +153,12 @@ public class CFMLASTViewer
 		        lexer.addObserver(observer);
 		        
 		        CommonTokenStream tokens = new CommonTokenStream(lexer);
-		        CFMLParser parser = new CFMLParser(tokens);
+		        CFMLParser parser = new CFMLParser(tokens, getDictionary());
 		        
 		        parser.addObserver(observer);
 		        
-		        CFMLParser.script_return root = parser.script();
+		        //CFMLParser.script_return root = parser.script();
+		        CFMLParser.cfml_return root = parser.cfml();
 		        
 		        Tree ast = (Tree)root.getTree();
 		        
@@ -172,7 +188,7 @@ public class CFMLASTViewer
 	
 	private DefaultMutableTreeNode buildTree(Tree tree)
 	{
-		DefaultMutableTreeNode node = new DefaultMutableTreeNode("[" + tree.getType() + "] " + tree.getText());
+		DefaultMutableTreeNode node = new DefaultMutableTreeNode("[" + getTokenType(tree.getType()) + "] " + tree.getText());
 		buildTree(tree, node);
 		
 		return node;
@@ -183,9 +199,65 @@ public class CFMLASTViewer
 		for(int counter = 0; counter < tree.getChildCount(); counter++)
 		{
 			Tree child = tree.getChild(counter);
-			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode("[" + child.getType() + "] " + child.getText());
+			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode("[" + getTokenType(child.getType()) + "] " + child.getText());
 			node.add(childNode);
 			buildTree(child, childNode);
 		}
 	}
+	
+	private void initTokenTypes()
+	{
+		CFMLParser parser = new CFMLParser(null, null); 
+		try
+		{
+			Class clazz = Thread.currentThread().getContextClassLoader().loadClass("org.cfeclipse.cfml.core.parser.antlr.CFMLParser");
+			Field[] fields = clazz.getDeclaredFields();
+			
+			for(Field f: fields)
+			{				
+				if(f.getType().getName().equals("int"))
+				{
+					getTokenTypes().put(f.getInt(parser), f.getName());
+				}
+			}			
+		}
+		catch (Exception e) 
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println(getTokenTypes().toString());
+	}
+	
+	private String getTokenType(int type)
+	{
+		if(getTokenTypes().containsKey(type))
+		{
+			return getTokenTypes().get(type);
+		}
+		return Integer.toString(type);
+	}
+
+	private HashMap<Integer, String> getTokenTypes()
+	{
+		return tokenTypes;
+	}
+
+	private void setTokenTypes(HashMap<Integer, String> tokenTypes)
+	{
+		this.tokenTypes = tokenTypes;
+	}
+
+	private ICFMLDictionary getDictionary()
+	{
+		return dictionary;
+	}
+
+	private void setDictionary(ICFMLDictionary dictionary)
+	{
+		this.dictionary = dictionary;
+	}
+	
+	
+	
 }
