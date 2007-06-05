@@ -37,5 +37,5 @@ public interface ICFMLDictionary
 	
 	public boolean usesAttributes(String tagName);
 	
-	public boolean conatinsCFSCript(String tagName);
+	public boolean conatinsCFScript(String tagName);
 }

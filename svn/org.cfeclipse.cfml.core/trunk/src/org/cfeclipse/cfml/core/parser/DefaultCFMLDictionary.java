@@ -30,7 +30,7 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 {
 
 	
-	public boolean conatinsCFSCript(String tagName)
+	public boolean conatinsCFScript(String tagName)
 	{
 		if(tagName.toLowerCase().equals("cfscript"))
 		{

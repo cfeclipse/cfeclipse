@@ -35,7 +35,7 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 		super(input);
 		setObservable(new ErrorObservable());
 		setDictionary(dictionary);
-	}	
+	}
 	
 	public void addObserver(IErrorObserver observer)
 	{
@@ -56,31 +56,24 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 		super.displayRecognitionError(tokenNames, e);
 	}
 
-	/**
-	* returns false.
-	*/
+	protected boolean conatinsCFScript(Token tag)
+	{
+		return getDictionary().conatinsCFScript(tag.getText().substring(1));
+	}	
+	
 	protected boolean isColdFusionTag(Token tag)
 	{
-		System.out.println("isColdFusionTag: " + tag.getText());
 		//strip off the top layer
 		return getDictionary().isColdFusoinTag(tag.getText().substring(1));
 	}
 
-	/**
-	* returns false.
-	*/
 	protected boolean isCustomTag(Token tag)
 	{		
-		System.out.println("isCustomTag: " + tag.getText());
 		return tag.getText().toLowerCase().startsWith("<cf_"); 
 	}
 
-	/**
-	* returns false.
-	*/	
 	protected boolean isImportTag(Token tag)
 	{
-		System.out.println("isImportTag: " + tag.getText());
 		return tag.getText().contains(":");
 	}
 	

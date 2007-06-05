@@ -93,8 +93,8 @@ THE SOFTWARE.
 
 @lexer::members
 {
-	public static final int COMMENT_CHANNEL = 90;
-	public static final int TEXT_CHANNEL = 89;
+	private static final int COMMENT_CHANNEL = 90;
+	private static final int TEXT_CHANNEL = 89;
 	
 	
 	private static int NONE_MODE = 0;
@@ -140,6 +140,14 @@ THE SOFTWARE.
 	{
 		return false;
 	}
+
+	/*
+	* returns false
+	*/
+	protected boolean conatinsCFScript(Token tag)
+	{
+		return false;
+	}
 }
 
 /* Parser */
@@ -156,12 +164,24 @@ tag
 
 startTag
 	:
-	to=START_TAG_OPEN START_TAG_CLOSE
-	tagContent
-	-> {isImportTag($to)}? ^(IMPORTTAG[$to] START_TAG_CLOSE tagContent)
-	-> {isCustomTag($to)}? ^(CUSTOMTAG[$to] START_TAG_CLOSE tagContent)
-	-> {isColdFusionTag($to)}? ^(CFTAG[$to] START_TAG_CLOSE tagContent)
-	-> ^(START_TAG_OPEN START_TAG_CLOSE tagContent)
+	(
+	sto=START_TAG_OPEN stc=START_TAG_CLOSE
+	tc=tagContent
+		(
+		-> {isImportTag($sto)}? ^(IMPORTTAG[$sto] START_TAG_CLOSE tagContent)
+		-> {isCustomTag($sto)}? ^(CUSTOMTAG[$sto] START_TAG_CLOSE tagContent)
+		-> {isColdFusionTag($sto)}? ^(CFTAG[$sto] START_TAG_CLOSE tagContent)
+		-> ^(START_TAG_OPEN START_TAG_CLOSE tagContent)
+		)
+	)
+	{
+		if(conatinsCFScript($sto))
+		{	
+			BitSet bit = new BitSet();
+			bit.add(OTHER);
+			System.out.println(((CommonTokenStream)input).getTokens($stc.getTokenIndex(), $tc.stop.getTokenIndex(), bit));
+		}
+	}
 	;
 	
 tagContent
