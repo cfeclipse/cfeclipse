@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import org.cfeclipse.cfml.CFMLPlugin;
@@ -125,7 +126,7 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
                 
                 IFile file = fileInput.getFile();
                 String URLpath = "";
-                String url = URLManager.getURL(file, "");
+                String url = URLManager.getURL(file, new ArrayList());
 
                 if(url != null){
             		URLpath = url;
