@@ -239,6 +239,8 @@ public class CFPluginImages {
 	public static final String T_PARAM = "param.png";
 	public static final String T_SERVER = "server.png";
 	
+	//Snipex Image
+	public static final String ICON_SNIPEX = "snipex.png";
 	
 	
 	// directory offsets
@@ -321,7 +323,7 @@ public class CFPluginImages {
 			/** snipex */
 			addImageToRegistry(MODEL_OBJECTS, ICON_SNIP_EXPORT);
 			addImageToRegistry(MODEL_OBJECTS, ICON_SNIP_IMPORT);
-			
+			addImageToRegistry(MODEL_OBJECTS, ICON_SNIPEX);
 			addImageToRegistry(TOOLBAR,ICON_ADD);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);
 			addImageToRegistry(TOOLBAR,ICON_REMOVE);

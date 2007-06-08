@@ -3,8 +3,15 @@
  */
 package org.cfeclipse.cfml.wizards.snipex;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.preferences.SnipExPreferenceConstants;
+import org.cfeclipse.snipex.SnipEx;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -29,6 +36,7 @@ public class SelectAppPage extends WizardPage {
 	private Combo applicationList;
 	private Combo serverList;
 	private SnipExExportBean exportBean;
+	private Log logger = LogFactory.getLog(SelectAppPage.class);
 	
 
 	/**
@@ -131,18 +139,41 @@ public class SelectAppPage extends WizardPage {
 		String url7 = preferenceStore.getString(SnipExPreferenceConstants.P_SNIPEX_URL7);
 		String url8 = preferenceStore.getString(SnipExPreferenceConstants.P_SNIPEX_URL8);
 		
-		if(url1.length()>0)  serverList2.add(url1);
-		if(url2.length()>0)  serverList2.add(url2);
-		if(url3.length()>0)  serverList2.add(url3);
-		if(url4.length()>0)  serverList2.add(url4);
-		if(url5.length()>0)  serverList2.add(url5);
-		if(url6.length()>0)  serverList2.add(url6);
-		if(url7.length()>0)  serverList2.add(url7);
-		if(url8.length()>0)  serverList2.add(url8);
+		//Need to check if we can submit snippets to this server
+		
+		//
+		if(url1.length()>0 && canSubmit(url1)) 	serverList2.add(url1);
+		if(url2.length()>0 && canSubmit(url2))  serverList2.add(url2);
+		if(url3.length()>0 && canSubmit(url3))  serverList2.add(url3);
+		if(url4.length()>0 && canSubmit(url4))  serverList2.add(url4);
+		if(url5.length()>0 && canSubmit(url5))  serverList2.add(url5);
+		if(url6.length()>0 && canSubmit(url6))  serverList2.add(url6);
+		if(url7.length()>0 && canSubmit(url7))  serverList2.add(url7);
+		if(url8.length()>0 && canSubmit(url8))  serverList2.add(url8);
 		
 		
 		
 		
+	}
+
+	/**
+	 * @param url1
+	 */
+	private boolean canSubmit(String url1) {
+		try {
+			URL snipexServer = new URL(url1 + "?method=canSubmit");
+			Object response = snipexServer.getContent();
+			
+			logger.debug(response);
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 	public boolean canFinish(){
 		return false;

@@ -76,6 +76,8 @@ public class SnipTreeViewContentProvider implements ITreeContentProvider { //, I
 	protected TreeViewer viewer;
 	protected File rootdir;
 	
+	
+	
 	public SnipTreeViewContentProvider(File root)
 	{
 		rootdir = root;

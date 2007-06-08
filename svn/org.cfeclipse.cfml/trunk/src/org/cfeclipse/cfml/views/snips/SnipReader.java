@@ -78,6 +78,10 @@ public class SnipReader {
 	}
 	
 	
+	public void read(File file){
+		read(file.getAbsoluteFile());
+	}
+	
 	public void read(String fileName) {
 		
 		if(fileName != null){
@@ -335,6 +339,17 @@ public class SnipReader {
 	    }
 	}
 	
+	public SnippetObject getSnippet(){
+		
+		
+			SnippetObject snippet = new SnippetObject();
+			snippet.setDescription(getSnipDescription());
+			snippet.setStartBlock(getSnipStartBlock());
+			snippet.setEndBlock(getSnipEndBlock());
+			snippet.setName(snippetFile.getName());
+		
+		return snippet;
+	}
 	
 	public String getSnipDescription() {
 		if (this.snipDescription == null) {

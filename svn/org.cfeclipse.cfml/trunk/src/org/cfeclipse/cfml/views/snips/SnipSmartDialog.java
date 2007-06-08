@@ -25,7 +25,7 @@ public class SnipSmartDialog {
 		super();
 	}
     
-    public static String parse(String str, IFile activeFile, Shell shell ) {
+    public static String parse(String str, Shell shell ) {
         String newStr = str;
         ArrayList list = new ArrayList();
         int position = 0;

@@ -34,7 +34,9 @@ import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.SnipExPreferenceConstants;
+import org.cfeclipse.cfml.preferences.SnipExPreferencePage;
 import org.cfeclipse.cfml.util.CFPluginImages;
+import org.cfeclipse.cfml.wizards.snipex.SnippetToSnipExWizard;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -44,21 +46,28 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.preference.IPreferencePage;
+import org.eclipse.jface.preference.PreferenceDialog;
+import org.eclipse.jface.preference.PreferenceManager;
+import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -115,6 +124,7 @@ public class SnipTreeView extends ViewPart
 	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction, refreshSnippetsAction, deleteSnippetAction, deleteFolderAction;
 	
 	protected Action exportToSnipEx;
+	protected Action openSnipExPage;
 	
 	/** the root directory */
 	protected File root;
@@ -239,7 +249,7 @@ public class SnipTreeView extends ViewPart
 			if( url.trim().length() > 0 ) {
 				try {
 					Object[] temp = new Object[1];
-					temp[0] = new SnipEx( new URL( url ) );
+					temp[0] = new SnipEx( new URL( url ) , false);
 					snipex = appendArrays(snipex, temp);
 				} catch(MalformedURLException e) {
 					System.err.println("Snipex URL failed:"+e);
@@ -362,6 +372,25 @@ public class SnipTreeView extends ViewPart
 	protected void createActions() 
 	{
 		
+		
+		openSnipExPage = new Action("Edit SnipEx Servers", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SNIPEX)){
+			public void run(){
+				   IPreferencePage page = new SnipExPreferencePage();
+				   PreferenceManager mgr = new PreferenceManager();
+				   IPreferenceNode node = new PreferenceNode("1", page);
+				   mgr.addToRoot(node);
+				   PreferenceDialog dialog = new PreferenceDialog(getSite().getShell(), mgr);
+				   dialog.create();
+				   dialog.setMessage(page.getTitle());
+				   dialog.open();
+				
+			}
+			
+			
+		};
+		
+		
+		
 		insertAction = new Action(
 			"Insert",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SNIP)
@@ -441,6 +470,13 @@ public class SnipTreeView extends ViewPart
 				IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 				File selectedfile = (File)selection.getFirstElement();
 
+				
+				Shell shell = getSite().getShell();
+				   SnippetToSnipExWizard wizard = new SnippetToSnipExWizard(selectedfile); //TODO: pass in the object we have selected
+				   
+				   WizardDialog dialog = new WizardDialog(shell, wizard);
+				   int result = dialog.open();
+				
 				//Run the wizard
 				
 			}
@@ -464,6 +500,7 @@ public class SnipTreeView extends ViewPart
 		
 		rootMenuManager.add(createFolderAction);
 		rootMenuManager.add(deleteFolderAction);
+		rootMenuManager.add(openSnipExPage);
 	}
 	
 	/**
@@ -505,6 +542,8 @@ public class SnipTreeView extends ViewPart
 			mgr.add(exportToSnipEx);
 		}
 		
+		//TODO: Add the import action here
+		
 		mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 		//mgr.add(deleteItemAction);
 		//mgr.add(new Separator());
@@ -527,6 +566,7 @@ public class SnipTreeView extends ViewPart
 		
 		toolbarManager.add(createFolderAction);
 		toolbarManager.add(deleteFolderAction);
+		
 	}
 	
 	/**

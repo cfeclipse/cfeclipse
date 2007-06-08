@@ -12,8 +12,11 @@ public class SnipExPreferenceConstants {
 	public static final String P_SNIPEX_URL7 = "snipExURL7";
 	public static final String P_SNIPEX_URL8 = "snipExURL8";
 	
-	public static final String DEFAULT_SNIPEX_URL1 = "http://www.cfeclipse.org/snipex/web/SnipEx.cfc";
-	public static final String DEFAULT_SNIPEX_URL2 = "http://cfunit.sourceforge.net/snipex";
+	//public static final String DEFAULT_SNIPEX_URL1 = "http://www.cfeclipse.org/snipex/SnipEx.cfc";
+	//public static final String DEFAULT_SNIPEX_URL2 = "http://cfunit.sourceforge.net/snipex";
+	public static final String DEFAULT_SNIPEX_URL1 = "";
+	public static final String DEFAULT_SNIPEX_URL2 = "";
+	
 	public static final String DEFAULT_SNIPEX_URL3 = "";
 	public static final String DEFAULT_SNIPEX_URL4 = "";
 	public static final String DEFAULT_SNIPEX_URL5 = "";
