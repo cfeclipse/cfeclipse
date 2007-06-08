@@ -15,17 +15,21 @@ import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.CFDocumentProvider;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.CFSyntaxDictionary;
+import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.SQLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.actions.EditCustomTagAction;
 import org.cfeclipse.cfml.editors.actions.EditFunctionAction;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
 import org.cfeclipse.cfml.editors.actions.InsertTagAction;
+import org.cfeclipse.cfml.editors.partitioner.PartitionHelper;
 
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -33,6 +37,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -71,7 +77,9 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.ide.ResourceUtil;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.texteditor.IDocumentProvider;
@@ -481,14 +489,16 @@ public class DictionaryView extends ViewPart {
 		
 		viewhelp = new Action() {
 			public void run() {
+				//TODO: Replace this with the getHelpAction
+				
+				
+				
+				
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection) selection)
 						.getFirstElement();
-				String urldest = "http://www.cfdocs.org/";
 				String keyword = "";
 				// Get thecurrent page
-				IWorkbenchPage page = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getActivePage();
 				//IViewReference ref[] = page.getViewReferences();
 				//System.out.println(page.getLabel());
 				/* Now we get the tag that we clicked on */
@@ -507,15 +517,28 @@ public class DictionaryView extends ViewPart {
 					keyword = "";
 
 				}
-				try {
-
-					BrowserView browser = (BrowserView) page
-							.showView(BrowserView.ID_BROWSER);
-					browser.setUrl(urldest + keyword, BrowserView.HELP_TAB);
-					browser.setFocus(BrowserView.HELP_TAB);
-				} catch (Exception e) {
-					e.printStackTrace();
+				String urldest = "http://www.cfeclipse.org/cfdocs/?query="; //TODO: Change this help url out.
+				
+				
+				String theFullURL = urldest + keyword;
+				
+				IExtensionRegistry extReg = Platform.getExtensionRegistry();
+				if(extReg.getExtensions("com.adobe.coldfusion_help_7").length > 0){
+					IWorkbenchHelpSystem helpsys = Workbench.getInstance().getHelpSystem();
+					helpsys.search(keyword);
 				}
+				else{
+						IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+						try {
+						   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+						   browser.setUrl(theFullURL, BrowserView.HELP_TAB);
+						   browser.setFocus(BrowserView.HELP_TAB);
+						}
+						catch(Exception e) {
+						    e.printStackTrace();
+						}
+				}
+				
 			}
 		};
 		viewhelp.setText("View Online Help");
