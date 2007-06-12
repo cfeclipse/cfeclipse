@@ -192,8 +192,10 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 					//passive.setEnabled(false);
 					username.setEnabled(false);
 					password.setEnabled(false);
+					validateInput();
 				}
 				else{
+					validateInput();
 					host.setEnabled(true);
 					port.setEnabled(true);
 					if(connectionType.getText().equalsIgnoreCase("sftp")){
@@ -385,12 +387,18 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		if (!test.matches(".*[\\S]+.*")) {
 		    errorMessage = "You must specify a connection name.";
 		}
-		else if (!host.getText().matches(".*[\\S]+.*") && !connectionType.getText().equalsIgnoreCase("file")) {
-		    errorMessage = "You must specify a host name";
+		else if (!connectionType.getText().equalsIgnoreCase("file")){
+			if(!host.getText().matches(".*[\\S]+.*")){
+				  errorMessage = "You must specify a host name";
+			}
+			else if (!port.getText().matches("[0-9]+")) {
+			    errorMessage = "You must specify a port number";
+			}
 		}
-		else if (!port.getText().matches("[0-9]+") && !connectionType.getText().equalsIgnoreCase("file")) {
-		    errorMessage = "You must specify a port number";
-		}
+				
+				
+				
+		
 		errorMessageLabel.setText(errorMessage == null ? "" : errorMessage); //$NON-NLS-1$
 	    
 		okButton.setEnabled(errorMessage == null);
