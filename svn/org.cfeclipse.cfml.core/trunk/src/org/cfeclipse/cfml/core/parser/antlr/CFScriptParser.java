@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFScript.g 2007-06-05 18:11:46
+// $ANTLR 3.0 ./CFScript.g 2007-06-18 17:05:28
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -1842,7 +1842,7 @@ public class CFScriptParser extends Parser {
 
 
             // AST REWRITE
-            // elements: OPEN_SQUARE, codeStatement, CLOSE_SQUARE
+            // elements: codeStatement, OPEN_SQUARE, CLOSE_SQUARE
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1955,7 +1955,7 @@ public class CFScriptParser extends Parser {
 
 
             // AST REWRITE
-            // elements: OPEN_PAREN, IDENTIFIER, argumentStatement, CLOSE_PAREN
+            // elements: argumentStatement, CLOSE_PAREN, OPEN_PAREN, IDENTIFIER
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -2297,7 +2297,7 @@ public class CFScriptParser extends Parser {
             stream_block.add(block75.getTree());
 
             // AST REWRITE
-            // elements: IF, CLOSE_PAREN, codeStatement, ELSE, OPEN_PAREN, block
+            // elements: CLOSE_PAREN, ELSE, codeStatement, block, IF, OPEN_PAREN
             // token labels: 
             // rule labels: retval
             // token list labels: 

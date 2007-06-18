@@ -33,6 +33,7 @@ tokens
 	CFTAG;
 	CUSTOMTAG;
 	IMPORTTAG;
+	CFSCRIPT;
 }
 
 @parser::header 
@@ -138,15 +139,28 @@ THE SOFTWARE.
 	*/	
 	protected boolean isImportTag(Token tag)
 	{
-		return false;
+													return false;
 	}
 
 	/*
 	* returns false
 	*/
-	protected boolean conatinsCFScript(Token tag)
+	protected boolean containsCFScript(Token tag)
 	{
 		return false;
+	}
+	
+	/*
+	returns null
+	*/
+	
+	protected Tree parseCFScript(Token start, ParserRuleReturnScope stop)
+	{
+		System.out.println("inner method");
+		BitSet bit = new BitSet();
+		bit.add(OTHER);
+		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.stop.getTokenIndex(), bit));
+		return null;
 	}
 }
 
@@ -165,23 +179,22 @@ tag
 startTag
 	:
 	(
-	sto=START_TAG_OPEN stc=START_TAG_CLOSE
+	sto=START_TAG_OPEN 
+	stc=START_TAG_CLOSE
 	tc=tagContent
 		(
 		-> {isImportTag($sto)}? ^(IMPORTTAG[$sto] START_TAG_CLOSE tagContent)
-		-> {isCustomTag($sto)}? ^(CUSTOMTAG[$sto] START_TAG_CLOSE tagContent)
-		-> {isColdFusionTag($sto)}? ^(CFTAG[$sto] START_TAG_CLOSE tagContent)
+		-> {isCustomTag($sto)}? ^(CUSTOMTAG[$sto] START_TAG_CLOSE tagContent)		
+		-> {isColdFusionTag($sto)}? ^(CFTAG[$sto] START_TAG_CLOSE   
+						{
+							(containsCFScript($sto) ? parseCFScript(stc, tc) : null)
+						}
+						  tagContent)
+		
+		
 		-> ^(START_TAG_OPEN START_TAG_CLOSE tagContent)
 		)
 	)
-	{
-		if(conatinsCFScript($sto))
-		{	
-			BitSet bit = new BitSet();
-			bit.add(OTHER);
-			System.out.println(((CommonTokenStream)input).getTokens($stc.getTokenIndex(), $tc.stop.getTokenIndex(), bit));
-		}
-	}
 	;
 	
 tagContent
@@ -191,6 +204,9 @@ tagContent
 
 endTag
 	:
+	/*
+	TODO: do end tag name checking
+	*/
 	END_TAG_OPEN^ END_TAG_CLOSE
 	;
 	

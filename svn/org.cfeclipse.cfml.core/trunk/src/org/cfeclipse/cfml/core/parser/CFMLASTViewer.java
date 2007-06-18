@@ -188,7 +188,7 @@ public class CFMLASTViewer
 	
 	private DefaultMutableTreeNode buildTree(Tree tree)
 	{
-		DefaultMutableTreeNode node = new DefaultMutableTreeNode("[" + getTokenType(tree.getType()) + "] " + tree.getText());
+		DefaultMutableTreeNode node = displayNode(tree);
 		buildTree(tree, node);
 		
 		return node;
@@ -199,10 +199,18 @@ public class CFMLASTViewer
 		for(int counter = 0; counter < tree.getChildCount(); counter++)
 		{
 			Tree child = tree.getChild(counter);
-			DefaultMutableTreeNode childNode = new DefaultMutableTreeNode("[" + getTokenType(child.getType()) + "] " + child.getText());
+			DefaultMutableTreeNode childNode = displayNode(child);
 			node.add(childNode);
 			buildTree(child, childNode);
 		}
+	}
+	
+	private DefaultMutableTreeNode displayNode(Tree t)
+	{
+		String str = "[" + getTokenType(t.getType()) + "] ";
+		str += t.getText();
+		str += " (line:" + t.getLine() + ", pos: " + t.getCharPositionInLine() + ")";
+		return new DefaultMutableTreeNode(str);
 	}
 	
 	private void initTokenTypes()

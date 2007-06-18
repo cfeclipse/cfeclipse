@@ -23,7 +23,10 @@ THE SOFTWARE.
 */
 
 import org.antlr.runtime.*;
+import org.antlr.runtime.tree.*;
 import org.cfeclipse.cfml.core.parser.antlr.*;
+
+import java.util.*;
 
 public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 {
@@ -56,7 +59,7 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 		super.displayRecognitionError(tokenNames, e);
 	}
 
-	protected boolean conatinsCFScript(Token tag)
+	protected boolean containsCFScript(Token tag)
 	{
 		return getDictionary().conatinsCFScript(tag.getText().substring(1));
 	}	
@@ -76,6 +79,40 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 	{
 		return tag.getText().contains(":");
 	}
+	
+	protected Tree parseCFScript(Token start, ParserRuleReturnScope stop)
+	{
+		org.antlr.runtime.BitSet bit = new org.antlr.runtime.BitSet();
+		bit.add(OTHER);
+		List otherTokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.stop.getTokenIndex(), bit);
+		
+		StringBuffer buffer = new StringBuffer();
+		
+		for(Object t : otherTokens)
+		{
+			buffer.append(((Token)t).getText());
+		}
+
+		CharStream input = new ANTLRNoCaseStringStream(buffer.toString());
+        CFScriptLexer lexer = new CFScriptLexer(input);
+        
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        CFScriptParser parser = new CFScriptParser(tokens);
+        
+        try
+        {
+        	CFScriptParser.script_return root = parser.script();
+        	Tree ast = (Tree)root.getTree();
+        	return ast;
+        }
+        catch(RecognitionException exc)
+        {
+        	ErrorEvent event = new ErrorEvent(exc, "CFScript Error");
+        	getObservable().notifyObservers(event);
+        }
+		
+		return null;
+	}	
 	
 	private ErrorObservable getObservable()
 	{
