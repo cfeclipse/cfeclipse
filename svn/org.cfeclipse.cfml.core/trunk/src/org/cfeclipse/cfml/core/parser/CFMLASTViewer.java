@@ -40,8 +40,10 @@ public class CFMLASTViewer
 	private JFrame window;
 	private JTextArea text;
 	private JTextArea log;
-	private HashMap<Integer, String> tokenTypes;
+	private HashMap<Integer, String> cfmlTokenTypes;
+	private HashMap<Integer, String> cfScriptTokenTypes;
 	private ICFMLDictionary dictionary;
+	private boolean cfscript;
 	
 	/**
 	 * @param args
@@ -58,8 +60,12 @@ public class CFMLASTViewer
 	
 	public CFMLASTViewer(ICFMLDictionary dictionary)
 	{
-		setTokenTypes(new HashMap<Integer, String>());
-		initTokenTypes();
+		setCfmlTokenTypes(new HashMap<Integer, String>());
+		setCfScriptTokenTypes(new HashMap<Integer, String>());
+		setCfscript(false);
+		
+		initCFMLTokenTypes();
+		initCFScriptTokenTypes();
 		setDictionary(dictionary);
 		
 		window = new JFrame("AST Viewer");
@@ -207,13 +213,38 @@ public class CFMLASTViewer
 	
 	private DefaultMutableTreeNode displayNode(Tree t)
 	{
-		String str = "[" + getTokenType(t.getType()) + "] ";
+		String tokenType;
+		
+		if(isCfscript() && t.getType() == CFMLParser.END_TAG_OPEN && t.getText().startsWith("</"))
+		{
+			setCfscript(false);
+		}
+		
+		if(isCfscript())
+		{
+			tokenType = getCFScriptTokenType(t.getType());
+		}
+		else
+		{
+			if(t.getType() == CFMLParser.CFTAG)
+			{
+				log.append("found: " + t.toString());
+			}
+			
+			if(t.getType() == CFMLParser.CFTAG && t.getText().toLowerCase().equals("<cfscript"))
+			{
+				setCfscript(true);
+			}
+			tokenType = getCFMLTokenType(t.getType());
+		}
+		
+		String str = "[" + tokenType + "] ";
 		str += t.getText();
 		str += " (line:" + t.getLine() + ", pos: " + t.getCharPositionInLine() + ")";
 		return new DefaultMutableTreeNode(str);
 	}
 	
-	private void initTokenTypes()
+	private void initCFMLTokenTypes()
 	{
 		CFMLParser parser = new CFMLParser(null, null); 
 		try
@@ -225,7 +256,7 @@ public class CFMLASTViewer
 			{				
 				if(f.getType().getName().equals("int"))
 				{
-					getTokenTypes().put(f.getInt(parser), f.getName());
+					getCfmlTokenTypes().put(f.getInt(parser), f.getName());
 				}
 			}			
 		}
@@ -234,26 +265,69 @@ public class CFMLASTViewer
 			System.out.println(e.getMessage());
 		}
 		
-		System.out.println(getTokenTypes().toString());
+		System.out.println(getCfmlTokenTypes().toString());
 	}
 	
-	private String getTokenType(int type)
+	private void initCFScriptTokenTypes()
 	{
-		if(getTokenTypes().containsKey(type))
+		CFScriptParser parser = new CFScriptParser(null); 
+		try
 		{
-			return getTokenTypes().get(type);
+			Class clazz = Thread.currentThread().getContextClassLoader().loadClass("org.cfeclipse.cfml.core.parser.antlr.CFScriptParser");
+			Field[] fields = clazz.getDeclaredFields();
+			
+			for(Field f: fields)
+			{				
+				if(f.getType().getName().equals("int"))
+				{
+					getCfScriptTokenTypes().put(f.getInt(parser), f.getName());
+				}
+			}		
+		}
+		catch (Exception e) 
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println(getCfScriptTokenTypes().toString());
+	}	
+	
+	private String getCFMLTokenType(int type)
+	{
+		if(getCfmlTokenTypes().containsKey(type))
+		{
+			return getCfmlTokenTypes().get(type);
 		}
 		return Integer.toString(type);
 	}
 
-	private HashMap<Integer, String> getTokenTypes()
+	private String getCFScriptTokenType(int type)
 	{
-		return tokenTypes;
+		if(getCfScriptTokenTypes().containsKey(type))
+		{
+			return getCfScriptTokenTypes().get(type);
+		}
+		return Integer.toString(type);
+	}
+	
+	private HashMap<Integer, String> getCfmlTokenTypes()
+	{
+		return cfmlTokenTypes;
 	}
 
-	private void setTokenTypes(HashMap<Integer, String> tokenTypes)
+	private void setCfmlTokenTypes(HashMap<Integer, String> tokenTypes)
 	{
-		this.tokenTypes = tokenTypes;
+		this.cfmlTokenTypes = tokenTypes;
+	}
+	
+	private HashMap<Integer, String> getCfScriptTokenTypes()
+	{
+		return cfScriptTokenTypes;
+	}
+
+	private void setCfScriptTokenTypes(HashMap<Integer, String> cfScriptTokenTypes)
+	{
+		this.cfScriptTokenTypes = cfScriptTokenTypes;
 	}
 
 	private ICFMLDictionary getDictionary()
@@ -264,6 +338,16 @@ public class CFMLASTViewer
 	private void setDictionary(ICFMLDictionary dictionary)
 	{
 		this.dictionary = dictionary;
+	}
+
+	private boolean isCfscript()
+	{
+		return cfscript;
+	}
+
+	private void setCfscript(boolean cfscript)
+	{
+		this.cfscript = cfscript;
 	}
 	
 	
