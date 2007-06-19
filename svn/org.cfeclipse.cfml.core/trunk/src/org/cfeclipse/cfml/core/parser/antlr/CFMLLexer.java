@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFML.g 2007-06-18 17:05:29
+// $ANTLR 3.0 ./CFML.g 2007-06-19 11:37:01
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -89,8 +89,8 @@ public class CFMLLexer extends Lexer {
     traceIn("END_TAG_OPEN", 1);
         try {
             int _type = END_TAG_OPEN;
-            // ./CFML.g:218:2: ({...}? => '</' TAG_NAME )
-            // ./CFML.g:218:2: {...}? => '</' TAG_NAME
+            // ./CFML.g:217:2: ({...}? => '</' TAG_NAME )
+            // ./CFML.g:217:2: {...}? => '</' TAG_NAME
             {
             if ( !(
             		getMode() == NONE_MODE
@@ -119,8 +119,8 @@ public class CFMLLexer extends Lexer {
     traceIn("END_TAG_CLOSE", 2);
         try {
             int _type = END_TAG_CLOSE;
-            // ./CFML.g:229:2: ({...}? => '>' )
-            // ./CFML.g:229:2: {...}? => '>'
+            // ./CFML.g:228:2: ({...}? => '>' )
+            // ./CFML.g:228:2: {...}? => '>'
             {
             if ( !(getMode() == ENDTAG_MODE) ) {
                 throw new FailedPredicateException(input, "END_TAG_CLOSE", "getMode() == ENDTAG_MODE");
@@ -143,8 +143,8 @@ public class CFMLLexer extends Lexer {
     traceIn("START_TAG_OPEN", 3);
         try {
             int _type = START_TAG_OPEN;
-            // ./CFML.g:236:2: ({...}? => '<' TAG_NAME )
-            // ./CFML.g:236:2: {...}? => '<' TAG_NAME
+            // ./CFML.g:235:2: ({...}? => '<' TAG_NAME )
+            // ./CFML.g:235:2: {...}? => '<' TAG_NAME
             {
             if ( !(
             		getMode() == NONE_MODE
@@ -172,13 +172,13 @@ public class CFMLLexer extends Lexer {
     traceIn("START_TAG_CLOSE", 4);
         try {
             int _type = START_TAG_CLOSE;
-            // ./CFML.g:248:2: ({...}? => ( '/' )? '>' )
-            // ./CFML.g:248:2: {...}? => ( '/' )? '>'
+            // ./CFML.g:247:2: ({...}? => ( '/' )? '>' )
+            // ./CFML.g:247:2: {...}? => ( '/' )? '>'
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "START_TAG_CLOSE", "getMode() == STARTTAG_MODE");
             }
-            // ./CFML.g:249:2: ( '/' )?
+            // ./CFML.g:248:2: ( '/' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -187,7 +187,7 @@ public class CFMLLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ./CFML.g:249:2: '/'
+                    // ./CFML.g:248:2: '/'
                     {
                     match('/'); 
 
@@ -214,13 +214,13 @@ public class CFMLLexer extends Lexer {
     traceIn("TAG_ATTRIBUTE", 5);
         try {
             int _type = TAG_ATTRIBUTE;
-            // ./CFML.g:255:2: ({...}? => ( LETTER | DIGIT | UNDERSCORE )+ )
-            // ./CFML.g:255:2: {...}? => ( LETTER | DIGIT | UNDERSCORE )+
+            // ./CFML.g:254:2: ({...}? => ( LETTER | DIGIT | UNDERSCORE )+ )
+            // ./CFML.g:254:2: {...}? => ( LETTER | DIGIT | UNDERSCORE )+
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "TAG_ATTRIBUTE", "getMode() == STARTTAG_MODE");
             }
-            // ./CFML.g:256:2: ( LETTER | DIGIT | UNDERSCORE )+
+            // ./CFML.g:255:2: ( LETTER | DIGIT | UNDERSCORE )+
             int cnt2=0;
             loop2:
             do {
@@ -275,8 +275,8 @@ public class CFMLLexer extends Lexer {
     traceIn("EQUALS", 6);
         try {
             int _type = EQUALS;
-            // ./CFML.g:261:2: ({...}? => '=' )
-            // ./CFML.g:261:2: {...}? => '='
+            // ./CFML.g:260:2: ({...}? => '=' )
+            // ./CFML.g:260:2: {...}? => '='
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "EQUALS", "getMode() == STARTTAG_MODE");
@@ -298,8 +298,8 @@ public class CFMLLexer extends Lexer {
     traceIn("ESCAPE_DOUBLE_QUOTE", 7);
         try {
             int _type = ESCAPE_DOUBLE_QUOTE;
-            // ./CFML.g:267:2: ({...}? => '\"\"' )
-            // ./CFML.g:267:2: {...}? => '\"\"'
+            // ./CFML.g:266:2: ({...}? => '\"\"' )
+            // ./CFML.g:266:2: {...}? => '\"\"'
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "ESCAPE_DOUBLE_QUOTE", "getMode() == STARTTAG_MODE");
@@ -322,8 +322,8 @@ public class CFMLLexer extends Lexer {
     traceIn("ESCAPE_SINGLE_QUOTE", 8);
         try {
             int _type = ESCAPE_SINGLE_QUOTE;
-            // ./CFML.g:273:2: ({...}? => '\\'\\'' )
-            // ./CFML.g:273:2: {...}? => '\\'\\''
+            // ./CFML.g:272:2: ({...}? => '\\'\\'' )
+            // ./CFML.g:272:2: {...}? => '\\'\\''
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "ESCAPE_SINGLE_QUOTE", "getMode() == STARTTAG_MODE");
@@ -346,8 +346,8 @@ public class CFMLLexer extends Lexer {
     traceIn("DOUBLE_QUOTE", 9);
         try {
             int _type = DOUBLE_QUOTE;
-            // ./CFML.g:279:2: ({...}? => '\"' )
-            // ./CFML.g:279:2: {...}? => '\"'
+            // ./CFML.g:278:2: ({...}? => '\"' )
+            // ./CFML.g:278:2: {...}? => '\"'
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "DOUBLE_QUOTE", "getMode() == STARTTAG_MODE");
@@ -369,8 +369,8 @@ public class CFMLLexer extends Lexer {
     traceIn("SINGLE_QUOTE", 10);
         try {
             int _type = SINGLE_QUOTE;
-            // ./CFML.g:284:2: ({...}? => '\\'' )
-            // ./CFML.g:284:2: {...}? => '\\''
+            // ./CFML.g:283:2: ({...}? => '\\'' )
+            // ./CFML.g:283:2: {...}? => '\\''
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "SINGLE_QUOTE", "getMode() == STARTTAG_MODE");
@@ -391,24 +391,24 @@ public class CFMLLexer extends Lexer {
     public final void mTAG_NAME() throws RecognitionException {
     traceIn("TAG_NAME", 11);
         try {
-            // ./CFML.g:292:2: ( ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )? )
-            // ./CFML.g:292:2: ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )?
+            // ./CFML.g:291:2: ( ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )? )
+            // ./CFML.g:291:2: ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )?
             {
-            // ./CFML.g:292:2: ( LETTER )
-            // ./CFML.g:292:3: LETTER
+            // ./CFML.g:291:2: ( LETTER )
+            // ./CFML.g:291:3: LETTER
             {
             mLETTER(); 
 
             }
 
-            // ./CFML.g:292:10: ( TAG_IDENT )
-            // ./CFML.g:292:11: TAG_IDENT
+            // ./CFML.g:291:10: ( TAG_IDENT )
+            // ./CFML.g:291:11: TAG_IDENT
             {
             mTAG_IDENT(); 
 
             }
 
-            // ./CFML.g:292:21: ( ( COLON ) ( TAG_IDENT ) )?
+            // ./CFML.g:291:21: ( ( COLON ) ( TAG_IDENT ) )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -417,17 +417,17 @@ public class CFMLLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ./CFML.g:292:22: ( COLON ) ( TAG_IDENT )
+                    // ./CFML.g:291:22: ( COLON ) ( TAG_IDENT )
                     {
-                    // ./CFML.g:292:22: ( COLON )
-                    // ./CFML.g:292:23: COLON
+                    // ./CFML.g:291:22: ( COLON )
+                    // ./CFML.g:291:23: COLON
                     {
                     mCOLON(); 
 
                     }
 
-                    // ./CFML.g:292:29: ( TAG_IDENT )
-                    // ./CFML.g:292:30: TAG_IDENT
+                    // ./CFML.g:291:29: ( TAG_IDENT )
+                    // ./CFML.g:291:30: TAG_IDENT
                     {
                     mTAG_IDENT(); 
 
@@ -453,10 +453,10 @@ public class CFMLLexer extends Lexer {
     public final void mTAG_IDENT() throws RecognitionException {
     traceIn("TAG_IDENT", 12);
         try {
-            // ./CFML.g:297:2: ( ( LETTER | DIGIT | UNDERSCORE )* )
-            // ./CFML.g:297:2: ( LETTER | DIGIT | UNDERSCORE )*
+            // ./CFML.g:296:2: ( ( LETTER | DIGIT | UNDERSCORE )* )
+            // ./CFML.g:296:2: ( LETTER | DIGIT | UNDERSCORE )*
             {
-            // ./CFML.g:297:2: ( LETTER | DIGIT | UNDERSCORE )*
+            // ./CFML.g:296:2: ( LETTER | DIGIT | UNDERSCORE )*
             loop4:
             do {
                 int alt4=2;
@@ -504,8 +504,8 @@ public class CFMLLexer extends Lexer {
     public final void mDIGIT() throws RecognitionException {
     traceIn("DIGIT", 13);
         try {
-            // ./CFML.g:302:2: ( '0' .. '9' )
-            // ./CFML.g:302:2: '0' .. '9'
+            // ./CFML.g:301:2: ( '0' .. '9' )
+            // ./CFML.g:301:2: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -522,7 +522,7 @@ public class CFMLLexer extends Lexer {
     public final void mLETTER() throws RecognitionException {
     traceIn("LETTER", 14);
         try {
-            // ./CFML.g:307:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ./CFML.g:306:2: ( 'a' .. 'z' | 'A' .. 'Z' )
             // ./CFML.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -549,8 +549,8 @@ public class CFMLLexer extends Lexer {
     public final void mUNDERSCORE() throws RecognitionException {
     traceIn("UNDERSCORE", 15);
         try {
-            // ./CFML.g:312:2: ( '_' )
-            // ./CFML.g:312:2: '_'
+            // ./CFML.g:311:2: ( '_' )
+            // ./CFML.g:311:2: '_'
             {
             match('_'); 
 
@@ -567,8 +567,8 @@ public class CFMLLexer extends Lexer {
     public final void mCOLON() throws RecognitionException {
     traceIn("COLON", 16);
         try {
-            // ./CFML.g:317:2: ( ':' )
-            // ./CFML.g:317:2: ':'
+            // ./CFML.g:316:2: ( ':' )
+            // ./CFML.g:316:2: ':'
             {
             match(':'); 
 
@@ -586,8 +586,8 @@ public class CFMLLexer extends Lexer {
     traceIn("WS", 17);
         try {
             int _type = WS;
-            // ./CFML.g:324:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
-            // ./CFML.g:324:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
+            // ./CFML.g:323:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
+            // ./CFML.g:323:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||(input.LA(1)>='\f' && input.LA(1)<='\r')||input.LA(1)==' ' ) {
                 input.consume();
@@ -618,12 +618,12 @@ public class CFMLLexer extends Lexer {
     traceIn("COMMENT", 18);
         try {
             int _type = COMMENT;
-            // ./CFML.g:332:2: ( '<!---' ( options {greedy=false; } : . )* '--->' )
-            // ./CFML.g:332:2: '<!---' ( options {greedy=false; } : . )* '--->'
+            // ./CFML.g:331:2: ( '<!---' ( options {greedy=false; } : . )* '--->' )
+            // ./CFML.g:331:2: '<!---' ( options {greedy=false; } : . )* '--->'
             {
             match("<!---"); 
 
-            // ./CFML.g:332:10: ( options {greedy=false; } : . )*
+            // ./CFML.g:331:10: ( options {greedy=false; } : . )*
             loop5:
             do {
                 int alt5=2;
@@ -666,7 +666,7 @@ public class CFMLLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ./CFML.g:332:38: .
+            	    // ./CFML.g:331:38: .
             	    {
             	    matchAny(); 
 
@@ -699,14 +699,14 @@ public class CFMLLexer extends Lexer {
     traceIn("OTHER", 19);
         try {
             int _type = OTHER;
-            // ./CFML.g:340:2: ({...}? => ( options {greedy=false; } : . ) )
-            // ./CFML.g:340:2: {...}? => ( options {greedy=false; } : . )
+            // ./CFML.g:339:2: ({...}? => ( options {greedy=false; } : . ) )
+            // ./CFML.g:339:2: {...}? => ( options {greedy=false; } : . )
             {
             if ( !(getMode() == NONE_MODE) ) {
                 throw new FailedPredicateException(input, "OTHER", "getMode() == NONE_MODE");
             }
-            // ./CFML.g:341:2: ( options {greedy=false; } : . )
-            // ./CFML.g:341:29: .
+            // ./CFML.g:340:2: ( options {greedy=false; } : . )
+            // ./CFML.g:340:29: .
             {
             matchAny(); 
 

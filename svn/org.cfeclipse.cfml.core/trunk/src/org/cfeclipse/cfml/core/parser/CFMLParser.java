@@ -24,11 +24,15 @@ THE SOFTWARE.
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
-import org.cfeclipse.cfml.core.parser.antlr.*;
+import org.cfeclipse.cfml.core.parser.antlr.ANTLRNoCaseStringStream;
 
 import java.util.*;
 
-public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
+/**
+ * @author mark
+ *
+ */
+public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser implements IErrorObserver
 {
 	private ErrorObservable observable;
 	private ICFMLDictionary dictionary;
@@ -40,11 +44,19 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 		setDictionary(dictionary);
 	}
 	
+	/**
+	 * Add a error event observer
+	 * @param observer the error observer
+	 */
 	public void addObserver(IErrorObserver observer)
 	{
 		getObservable().addObserver(observer);
 	}
 	
+	/**
+	 * Remove an error observer
+	 * @param observer the error observer
+	 */
 	public void removeObserver(IErrorObserver observer)
 	{
 		getObservable().removeObserver(observer);
@@ -57,6 +69,12 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 		getObservable().notifyObservers(event);
 		
 		super.displayRecognitionError(tokenNames, e);
+	}
+
+	public void actionCFMLParserError(ErrorEvent event)
+	{
+		//bubble it up
+		getObservable().notifyObservers(event);		
 	}
 
 	protected boolean containsCFScript(Token tag)
@@ -80,11 +98,17 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 		return tag.getText().contains(":");
 	}
 	
-	protected Tree parseCFScript(Token start, ParserRuleReturnScope stop)
+	/**
+	 * Island parser for CFScript blocks
+	 * @param start the token that it starts at
+	 * @param stop the token that the cfscript stops at
+	 */
+	protected Tree parseCFScript(Token start, Token stop)
 	{
+		Tree ast = null;
 		org.antlr.runtime.BitSet bit = new org.antlr.runtime.BitSet();
 		bit.add(OTHER);
-		List otherTokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.stop.getTokenIndex(), bit);
+		List otherTokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex(), bit);
 		
 		StringBuffer buffer = new StringBuffer();
 		
@@ -96,22 +120,28 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser
 		CharStream input = new ANTLRNoCaseStringStream(buffer.toString());
         CFScriptLexer lexer = new CFScriptLexer(input);
         
+        lexer.addObserver(this);
+        
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CFScriptParser parser = new CFScriptParser(tokens);
+        
+        parser.addObserver(this);
         
         try
         {
         	CFScriptParser.script_return root = parser.script();
-        	Tree ast = (Tree)root.getTree();
-        	return ast;
+        	ast = (Tree)root.getTree();
         }
         catch(RecognitionException exc)
         {
         	ErrorEvent event = new ErrorEvent(exc, "CFScript Error");
         	getObservable().notifyObservers(event);
         }
+        
+        lexer.removeObserver(this);
+        parser.removeObserver(this);
 		
-		return null;
+		return ast;
 	}	
 	
 	private ErrorObservable getObservable()
