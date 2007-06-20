@@ -133,7 +133,7 @@ public class TagFormatter {
 		 	}
 		 }*/
 		 //Here we check what ending we have
-		 if(this.tagRef.isXMLStyle() && !isWrapping()){
+		 if(this.tagRef.isXMLStyle() && this.tagRef.isSingle() && !isWrapping()){
 		 	 tag.append("/>");
 		 } else{
 		 	 tag.append(">");
