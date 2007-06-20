@@ -123,6 +123,7 @@ leading
 left
 level
 like
+limit
 local
 lower
 match
@@ -200,6 +201,7 @@ timestamp
 timezone_hour
 timezone_minute
 to
+top
 trailing
 transaction
 translate
