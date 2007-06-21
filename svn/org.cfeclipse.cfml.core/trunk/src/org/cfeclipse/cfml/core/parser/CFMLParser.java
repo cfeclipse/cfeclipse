@@ -64,11 +64,16 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 	
 	public void displayRecognitionError(String[] tokenNames, RecognitionException e)
 	{
-		ErrorEvent event = new ErrorEvent(e, getErrorMessage(e, tokenNames));
-		
-		getObservable().notifyObservers(event);
+		reportError(e, getErrorMessage(e, tokenNames));
 		
 		super.displayRecognitionError(tokenNames, e);
+	}
+	
+	protected void reportError(RecognitionException e, String errorMessage)
+	{
+		ErrorEvent event = new ErrorEvent(e, errorMessage);
+		
+		getObservable().notifyObservers(event);		
 	}
 
 	public void actionCFMLParserError(ErrorEvent event)
@@ -85,7 +90,7 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 	protected boolean isColdFusionTag(Token tag)
 	{
 		//strip off the top layer
-		return getDictionary().isColdFusoinTag(tag.getText().substring(1));
+		return getDictionary().isColdFusionTag(tag.getText().substring(1));
 	}
 
 	protected boolean isCustomTag(Token tag)
@@ -110,13 +115,19 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 		bit.add(OTHER);
 		List otherTokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex(), bit);
 		
+		//in case something goes wrong.
+		if(otherTokens == null)
+		{
+			return ast;
+		}
+		
 		StringBuffer buffer = new StringBuffer();
 		
 		for(Object t : otherTokens)
 		{
 			buffer.append(((Token)t).getText());
 		}
-
+		
 		CharStream input = new ANTLRNoCaseStringStream(buffer.toString());
         CFScriptLexer lexer = new CFScriptLexer(input);
         

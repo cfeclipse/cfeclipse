@@ -33,7 +33,10 @@ tokens
 	CFTAG;
 	CUSTOMTAG;
 	IMPORTTAG;
-	CFSCRIPT;
+}
+
+scope tagScope {
+ String currentName;
 }
 
 @parser::header 
@@ -61,8 +64,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.	
 */	
-}
 
+import java.util.LinkedList;
+
+}
 
 @lexer::header
 {
@@ -139,7 +144,7 @@ THE SOFTWARE.
 	*/	
 	protected boolean isImportTag(Token tag)
 	{
-													return false;
+		return false;
 	}
 
 	/*
@@ -154,13 +159,32 @@ THE SOFTWARE.
 	returns null
 	*/
 	
-	protected Tree parseCFScript(Token start, ParserRuleReturnScope stop)
+	protected Tree parseCFScript(Token start, Token stop)
 	{
-		System.out.println("inner method");
 		BitSet bit = new BitSet();
 		bit.add(OTHER);
-		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.stop.getTokenIndex(), bit));
+		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex(), bit));
 		return null;
+	}
+
+	/**
+	* reports an error
+	*/	
+	protected void reportError(RecognitionException e, String errorMessage)	
+	{
+		System.err.println(errorMessage);
+	}
+	
+	private LinkedList<String> tagStack = new LinkedList<String>();
+	
+	private LinkedList<String> getTagStack()
+	{
+		return tagStack;
+	}
+	
+	private void setTagStack(LinkedList<String> stack)
+	{
+		tagStack = stack;
 	}
 }
 
@@ -177,9 +201,20 @@ tag
 	;
 
 startTag
+scope tagScope;
 	:
 	(
 	sto=START_TAG_OPEN 
+	{
+		{
+			String name = $sto.text.toLowerCase().substring(1);
+			System.out.println("push: " + name);
+			$tagScope::currentName = name; 
+			getTagStack().push(name);
+			
+			
+		}
+	}
 	stc=START_TAG_CLOSE
 	tc=tagContent
 		(
@@ -187,7 +222,7 @@ startTag
 		-> {isCustomTag($sto)}? ^(CUSTOMTAG[$sto] START_TAG_CLOSE tagContent)		
 		-> {isColdFusionTag($sto)}? ^(CFTAG[$sto] START_TAG_CLOSE   
 						{
-							(containsCFScript($sto) ? parseCFScript(stc, tc) : null)
+							(containsCFScript($sto) ? parseCFScript(stc, tc.stop) : null)
 						}
 						  tagContent)
 		
@@ -196,20 +231,69 @@ startTag
 		)
 	)
 	;
-	
+
 tagContent
 	:
-	tag* (endTag | EOF!)
-	;	
+	cfml
+		(
+		{
+			Token t = input.LT(1);
+			String name;
+			
+			if(t.getText() == null)
+			{
+				name = "*"; //never be a name				
+			}
+			else
+			{
+				name = t.getText().toLowerCase().substring(2);
+			}
+		}
+		{ $tagScope::currentName.equals(name)}?=> 
+		(endTag)
+		)
+	;
+catch [FailedPredicateException fpe]
+{
+	String text = input.LT(1).getText();
+
+	System.out.println("caught: " + input.LT(1).getText());
+	retval.stop = input.LT(-1);
+	retval.tree = (Object)adaptor.rulePostProcessing(root_0);
+	//adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+	
+	if(!(text == null || getTagStack().contains(text.toLowerCase().substring(2))))
+	{
+		//this is a bad error. Norti norti.
+		String msg = getErrorHeader(fpe);
+    		msg += " end tag (" + text + ">" +
+		                 ") cannot be matched to any start tag currently open";
+		                 
+		reportError(fpe, msg);
+		//consumeUntil(input, END_TAG_CLOSE);
+		//input.consume();         
+	}
+}
 
 endTag
 	:
-	/*
-	TODO: do end tag name checking
-	*/
+	{
+		String name = input.LT(1).getText().toLowerCase().substring(2);
+		
+		//clear off the chaff
+		while(!name.equals(getTagStack().peek()))
+		{
+			String pastTagName = getTagStack().pop();
+			
+			System.out.println("popped: " + pastTagName);
+		}
+		
+		//pop off the last eleemnt
+		String pastTagName = getTagStack().pop();
+		System.out.println("finally popped: " + pastTagName);
+	}	
 	END_TAG_OPEN^ END_TAG_CLOSE
 	;
-	
 
 /* Lexer */
 
@@ -331,7 +415,7 @@ COMMENT
 	:   
 	'<!---' ( options {greedy=false;} : . )* '--->'
 	{
-		$channel=COMMENT_CHANNEL; //90 is hte comment channel
+			$channel=COMMENT_CHANNEL; //90 is hte comment channel
 	}
 	;	
 	

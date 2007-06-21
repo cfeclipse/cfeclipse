@@ -33,7 +33,7 @@ public interface ICFMLDictionary
 	 * @param string the name o fhe tag
 	 * @return if it is or isn't
 	 */
-	public boolean isColdFusoinTag(String tagName);
+	public boolean isColdFusionTag(String tagName);
 	
 	public boolean usesAttributes(String tagName);
 	

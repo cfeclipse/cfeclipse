@@ -41,7 +41,7 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 	}
 	
 	
-	public boolean isColdFusoinTag(String tagName)
+	public boolean isColdFusionTag(String tagName)
 	{
 		if(tagName.toLowerCase().startsWith("cf"))
 		{

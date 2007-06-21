@@ -30,6 +30,7 @@ options
 tokens
 {
 	FUNCTION_CALL;
+	FUNCTION_DECLARATION;
 	STRUCT_KEY;
 	ELSEIF;
 	STRING_CFML;
@@ -115,17 +116,22 @@ script
 			doWhileStatement
 			|
 			switchStatement
-		) SEMI_COLON
+			|
+			functionDeclaration
+		)
 	)*
 	;
 	
 nonBlockStatement
 	:
-	setStatement
-	|
-	returnStatement
-	|
-	breakStatement 
+	(
+		setStatement
+		|
+		returnStatement
+		|
+		breakStatement 
+	)
+	SEMI_COLON
 	;
 	
 setStatement
@@ -218,18 +224,29 @@ identifier
 struct
 	:
 	OPEN_SQUARE codeStatement CLOSE_SQUARE
-	-> ^(STRUCT_KEY OPEN_SQUARE codeStatement CLOSE_SQUARE)
 	;
 
 function 
 	:
-	IDENTIFIER OPEN_PAREN (argumentStatement)? CLOSE_PAREN
-	-> ^(FUNCTION_CALL IDENTIFIER OPEN_PAREN (argumentStatement)? CLOSE_PAREN)
+	id=IDENTIFIER OPEN_PAREN (argumentStatement)? CLOSE_PAREN
+	-> ^(FUNCTION_CALL[$id] OPEN_PAREN (argumentStatement)? CLOSE_PAREN)
 	;
 	
 argumentStatement
 	:
 	codeStatement (COMMA codeStatement)*
+	;
+
+functionDeclaration
+	:
+	FUNCTION id=IDENTIFIER OPEN_PAREN (argumentDeclaration)? CLOSE_PAREN
+	block
+	-> ^(FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN (argumentDeclaration)? CLOSE_PAREN block)
+	;
+	
+argumentDeclaration
+	:
+	IDENTIFIER (COMMA IDENTIFIER)*
 	;
 
 ifStatement
@@ -271,8 +288,13 @@ catchStatement
 
 forStatement
 	:
-	FOR^ OPEN_PAREN forConditions CLOSE_PAREN
+	FOR^ OPEN_PAREN (forConditions | forIn) CLOSE_PAREN
 	block;
+	
+forIn
+	:
+	IDENTIFIER IN cfmlLinking
+	;
 
 forConditions
 	:
@@ -298,9 +320,9 @@ doWhileStatement
 
 block
 	:
-	(OPEN_CURLY script CLOSE_CURLY)
+	(OPEN_CURLY script CLOSE_CURLY) SEMI_COLON?
 	|
-	(nonBlockStatement SEMI_COLON)
+	(nonBlockStatement)
 	;
 
 
@@ -333,6 +355,11 @@ breakStatement
 
 /* Lexer */
 
+FUNCTION
+	:
+	'function'
+	;
+
 IF
 	:
 	'if'
@@ -361,7 +388,12 @@ FOR
 	:
 	'for'
 	;
-	
+
+IN
+	:
+	'in'
+	;
+
 WHILE
 	:
 	'while'
@@ -407,7 +439,7 @@ COLON	:
 
 OPERATOR
 	:
-	( MATH_OPERATOR | STRING_OPERATOR | BOOLEAN_OPERATOR )
+	( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR )
 	;
 
 COMMA	:
@@ -502,10 +534,16 @@ fragment STRING_OPERATOR
 	:
 	'&'
 	;
-fragment BOOLEAN_OPERATOR
+fragment CONDITION_OPERATOR
 	:
 	('eq'|'neq'|'is'|'gt'|'lt'|'lte'|'gte')
 	;
+
+fragment BOOLEAN_OPERATOR
+	:
+	('or'|'and'|'xor'|'eqv'|'imp')
+	;
+
 
 fragment DIGIT
 	:

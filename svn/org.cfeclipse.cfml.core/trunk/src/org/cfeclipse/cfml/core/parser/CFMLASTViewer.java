@@ -139,6 +139,8 @@ public class CFMLASTViewer
 	
 	private void parseCFML(String cfml)
 	{
+		setCfscript(false);
+		
 		try
 		{
 				//this is pretty quick n' dirty... oh well.
@@ -226,11 +228,6 @@ public class CFMLASTViewer
 		}
 		else
 		{
-			if(t.getType() == CFMLParser.CFTAG)
-			{
-				log.append("found: " + t.toString());
-			}
-			
 			if(t.getType() == CFMLParser.CFTAG && t.getText().toLowerCase().equals("<cfscript"))
 			{
 				setCfscript(true);
