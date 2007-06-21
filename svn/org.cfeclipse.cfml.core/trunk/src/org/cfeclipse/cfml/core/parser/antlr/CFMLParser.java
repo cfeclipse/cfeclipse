@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFML.g 2007-06-21 15:35:57
+// $ANTLR 3.0 ./CFML.g 2007-06-21 18:44:30
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -334,7 +334,7 @@ public class CFMLParser extends Parser {
             {
 
             // AST REWRITE
-            // elements: START_TAG_CLOSE, tagContent, START_TAG_CLOSE, tagContent, START_TAG_OPEN, tagContent, START_TAG_CLOSE, START_TAG_CLOSE, tagContent
+            // elements: START_TAG_CLOSE, START_TAG_CLOSE, START_TAG_CLOSE, START_TAG_CLOSE, START_TAG_OPEN, tagContent, tagContent, tagContent, tagContent
             // token labels: 
             // rule labels: retval
             // token list labels: 

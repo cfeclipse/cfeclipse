@@ -280,11 +280,21 @@ tryStatement
 	catchStatement	
 	;
 
+
+catchClass
+	:
+	(id=IDENTIFIER) -> ^(EXCEPTIONNAME[$id])
+	|
+	EXCEPTIONNAME
+	;
+	
 catchStatement
 	:
-	CATCH^ OPEN_PAREN IDENTIFIER IDENTIFIER CLOSE_PAREN
-	block
+	CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN
+	block 
+	-> ^(CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block)
 	;
+	
 
 forStatement
 	:
@@ -518,10 +528,15 @@ SINGLE_QUOTE
 	:
 	'\''
 	;
-	
+
 IDENTIFIER
 	:
-	(LETTER | '_' )(LETTER | DIGIT | '_' )*
+	(LETTER | UNDERSCORE )(LETTER | DIGIT | UNDERSCORE )*
+	;
+
+EXCEPTIONNAME
+	:
+	(LETTER | DIGIT | UNDERSCORE)(DOT | LETTER | DIGIT | UNDERSCORE)*
 	;
 
 /* fragments */
@@ -544,6 +559,10 @@ fragment BOOLEAN_OPERATOR
 	('or'|'and'|'xor'|'eqv'|'imp')
 	;
 
+fragment UNDERSCORE
+	:
+	'_'
+	;
 
 fragment DIGIT
 	:
