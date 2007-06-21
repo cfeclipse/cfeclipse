@@ -174,7 +174,7 @@ public class Trigger {
 			//System.out.println(key.toString() + ":" + value);
 			//System.out.println("Trigger");
 			//System.out.println(this.toString());
-			if (this.triggerParams.equals(thisParam)) {
+			if (this.triggerParams.toString().equalsIgnoreCase(thisParam.toString())) {
 				if (this.isRequired) {
 					return Parameter.PARAM_TRIGGERED | Parameter.PARAM_REQUIRED;
 				}
