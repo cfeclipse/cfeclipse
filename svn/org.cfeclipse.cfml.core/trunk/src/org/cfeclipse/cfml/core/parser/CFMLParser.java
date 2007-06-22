@@ -82,27 +82,42 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 		getObservable().notifyObservers(event);		
 	}
 
-	protected boolean containsCFScript(Token tag)
+	protected boolean containsCFScript(String name)
 	{
-		return getDictionary().conatinsCFScript(tag.getText().substring(1));
+		return getDictionary().conatinsCFScript(name);
 	}	
 	
-	protected boolean isColdFusionTag(Token tag)
+	protected boolean isColdFusionTag(String name)
 	{
 		//strip off the top layer
-		return getDictionary().isColdFusionTag(tag.getText().substring(1));
+		return getDictionary().isColdFusionTag(name);
 	}
 
-	protected boolean isCustomTag(Token tag)
-	{		
-		return tag.getText().toLowerCase().startsWith("<cf_"); 
-	}
-
-	protected boolean isImportTag(Token tag)
+	protected boolean isCustomTag(String name)
 	{
-		return tag.getText().contains(":");
+		return name.startsWith("cf_");
+	}
+
+	protected boolean isImportTag(String name)
+	{
+		return name.contains(":");
 	}
 	
+	protected boolean allowsCFMLAssignment(String tagName)
+	{
+		return getDictionary().allowsCFMLAssignment(tagName);
+	}
+
+	protected boolean allowsCFMLCondition(String tagName)
+	{
+		return getDictionary().allowsCFMLCondition(tagName);
+	}
+
+	protected boolean usesAttributes(String name)
+	{
+		return getDictionary().usesAttributes(name);
+	}
+
 	/**
 	 * Island parser for CFScript blocks
 	 * @param start the token that it starts at

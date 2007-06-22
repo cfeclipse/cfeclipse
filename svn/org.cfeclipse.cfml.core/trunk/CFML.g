@@ -126,7 +126,7 @@ THE SOFTWARE.
 	/**
 	* returns false.
 	*/
-	protected boolean isColdFusionTag(Token tag)
+	protected boolean isColdFusionTag(String name)
 	{		
 		return false;
 	}
@@ -134,7 +134,7 @@ THE SOFTWARE.
 	/**
 	* returns false.
 	*/
-	protected boolean isCustomTag(Token tag)
+	protected boolean isCustomTag(String name)
 	{		
 		return false;
 	}
@@ -142,7 +142,7 @@ THE SOFTWARE.
 	/**
 	* returns false.
 	*/	
-	protected boolean isImportTag(Token tag)
+	protected boolean isImportTag(String name)
 	{
 		return false;
 	}
@@ -150,7 +150,7 @@ THE SOFTWARE.
 	/*
 	* returns false
 	*/
-	protected boolean containsCFScript(Token tag)
+	protected boolean containsCFScript(String name)
 	{
 		return false;
 	}
@@ -158,7 +158,6 @@ THE SOFTWARE.
 	/*
 	returns null
 	*/
-	
 	protected Tree parseCFScript(Token start, Token stop)
 	{
 		BitSet bit = new BitSet();
@@ -205,24 +204,29 @@ scope tagScope;
 	:
 	(
 	sto=START_TAG_OPEN 
+	stc=START_TAG_CLOSE
 	{
+		String name = $sto.text.toLowerCase().substring(1);
+		
+		if(!$stc.text.equals("/>"))		
 		{
-			String name = $sto.text.toLowerCase().substring(1);
 			System.out.println("push: " + name);
 			$tagScope::currentName = name; 
 			getTagStack().push(name);
-			
-			
+		}
+		else
+		{
+			$tagScope::currentName = "*"; 
+			System.out.println("close: " + $sto.text.toLowerCase().substring(1));
 		}
 	}
-	stc=START_TAG_CLOSE
 	tc=tagContent
 		(
-		-> {isImportTag($sto)}? ^(IMPORTTAG[$sto] START_TAG_CLOSE tagContent)
-		-> {isCustomTag($sto)}? ^(CUSTOMTAG[$sto] START_TAG_CLOSE tagContent)		
-		-> {isColdFusionTag($sto)}? ^(CFTAG[$sto] START_TAG_CLOSE   
+		-> {isImportTag(name)}? ^(IMPORTTAG[$sto] START_TAG_CLOSE tagContent)
+		-> {isCustomTag(name)}? ^(CUSTOMTAG[$sto] START_TAG_CLOSE tagContent)		
+		-> {isColdFusionTag(name)}? ^(CFTAG[$sto] START_TAG_CLOSE   
 						{
-							(containsCFScript($sto) ? parseCFScript(stc, tc.stop) : null)
+							(containsCFScript(name) ? parseCFScript(stc, tc.stop) : null)
 						}
 						  tagContent)
 		
@@ -270,8 +274,6 @@ catch [FailedPredicateException fpe]
 		                 ") cannot be matched to any start tag currently open";
 		                 
 		reportError(fpe, msg);
-		//consumeUntil(input, END_TAG_CLOSE);
-		//input.consume();         
 	}
 }
 

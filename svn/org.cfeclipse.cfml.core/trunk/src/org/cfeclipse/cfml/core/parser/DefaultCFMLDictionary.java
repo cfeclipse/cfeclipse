@@ -28,8 +28,6 @@ THE SOFTWARE.
  */
 public class DefaultCFMLDictionary implements ICFMLDictionary
 {
-
-	
 	public boolean conatinsCFScript(String tagName)
 	{
 		if(tagName.toLowerCase().equals("cfscript"))
@@ -59,7 +57,26 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 		{
 			return false;
 		}
-		
 		return true;
 	}
+
+	public boolean allowsCFMLAssignment(String tagName)
+	{
+		if(tagName.equals("cfset"))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public boolean allowsCFMLCondition(String tagName)
+	{
+		if(tagName.equals("cfif") || tagName.equals("cfelseif"))
+		{
+			return false;
+		}
+		return false;
+	}
+	
+	
 }

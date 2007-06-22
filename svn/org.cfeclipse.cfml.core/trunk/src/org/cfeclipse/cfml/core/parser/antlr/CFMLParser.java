@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFML.g 2007-06-21 18:44:30
+// $ANTLR 3.0 ./CFML.g 2007-06-22 15:27:31
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -89,7 +89,7 @@ public class CFMLParser extends Parser {
     	/**
     	* returns false.
     	*/
-    	protected boolean isColdFusionTag(Token tag)
+    	protected boolean isColdFusionTag(String name)
     	{		
     		return false;
     	}
@@ -97,7 +97,7 @@ public class CFMLParser extends Parser {
     	/**
     	* returns false.
     	*/
-    	protected boolean isCustomTag(Token tag)
+    	protected boolean isCustomTag(String name)
     	{		
     		return false;
     	}
@@ -105,7 +105,7 @@ public class CFMLParser extends Parser {
     	/**
     	* returns false.
     	*/	
-    	protected boolean isImportTag(Token tag)
+    	protected boolean isImportTag(String name)
     	{
     		return false;
     	}
@@ -113,7 +113,7 @@ public class CFMLParser extends Parser {
     	/*
     	* returns false
     	*/
-    	protected boolean containsCFScript(Token tag)
+    	protected boolean containsCFScript(String name)
     	{
     		return false;
     	}
@@ -121,7 +121,6 @@ public class CFMLParser extends Parser {
     	/*
     	returns null
     	*/
-    	
     	protected Tree parseCFScript(Token start, Token stop)
     	{
     		BitSet bit = new BitSet();
@@ -157,7 +156,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start cfml
-    // ./CFML.g:193:1: cfml : ( tag )* ;
+    // ./CFML.g:192:1: cfml : ( tag )* ;
     public final cfml_return cfml() throws RecognitionException {
     traceIn("cfml", 1);
         cfml_return retval = new cfml_return();
@@ -170,12 +169,12 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // ./CFML.g:195:2: ( ( tag )* )
-            // ./CFML.g:195:2: ( tag )*
+            // ./CFML.g:194:2: ( ( tag )* )
+            // ./CFML.g:194:2: ( tag )*
             {
             root_0 = (Object)adaptor.nil();
 
-            // ./CFML.g:195:2: ( tag )*
+            // ./CFML.g:194:2: ( tag )*
             loop1:
             do {
                 int alt1=2;
@@ -188,7 +187,7 @@ public class CFMLParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // ./CFML.g:195:2: tag
+            	    // ./CFML.g:194:2: tag
             	    {
             	    pushFollow(FOLLOW_tag_in_cfml92);
             	    tag1=tag();
@@ -230,7 +229,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tag
-    // ./CFML.g:198:1: tag : startTag ;
+    // ./CFML.g:197:1: tag : startTag ;
     public final tag_return tag() throws RecognitionException {
     traceIn("tag", 2);
         tag_return retval = new tag_return();
@@ -243,8 +242,8 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // ./CFML.g:200:3: ( startTag )
-            // ./CFML.g:200:3: startTag
+            // ./CFML.g:199:3: ( startTag )
+            // ./CFML.g:199:3: startTag
             {
             root_0 = (Object)adaptor.nil();
 
@@ -279,7 +278,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start startTag
-    // ./CFML.g:203:1: startTag : (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag($sto)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag($sto)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag($sto)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) ) ;
+    // ./CFML.g:202:1: startTag : (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) ) ;
     public final startTag_return startTag() throws RecognitionException {
     traceIn("startTag", 3);
         tagScope_stack.push(new tagScope_scope());
@@ -300,37 +299,42 @@ public class CFMLParser extends Parser {
         RewriteRuleTokenStream stream_START_TAG_CLOSE=new RewriteRuleTokenStream(adaptor,"token START_TAG_CLOSE");
         RewriteRuleSubtreeStream stream_tagContent=new RewriteRuleSubtreeStream(adaptor,"rule tagContent");
         try {
-            // ./CFML.g:206:2: ( (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag($sto)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag($sto)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag($sto)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) ) )
-            // ./CFML.g:206:2: (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag($sto)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag($sto)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag($sto)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) )
+            // ./CFML.g:205:2: ( (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) ) )
+            // ./CFML.g:205:2: (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) )
             {
-            // ./CFML.g:206:2: (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag($sto)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag($sto)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag($sto)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) )
-            // ./CFML.g:207:2: sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag($sto)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag($sto)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag($sto)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) )
+            // ./CFML.g:205:2: (sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) ) )
+            // ./CFML.g:206:2: sto= START_TAG_OPEN stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) )
             {
             sto=(Token)input.LT(1);
             match(input,START_TAG_OPEN,FOLLOW_START_TAG_OPEN_in_startTag128); 
             stream_START_TAG_OPEN.add(sto);
 
+            stc=(Token)input.LT(1);
+            match(input,START_TAG_CLOSE,FOLLOW_START_TAG_CLOSE_in_startTag134); 
+            stream_START_TAG_CLOSE.add(stc);
 
+
+            		String name = sto.getText().toLowerCase().substring(1);
+            		
+            		if(!stc.getText().equals("/>"))		
             		{
-            			String name = sto.getText().toLowerCase().substring(1);
             			System.out.println("push: " + name);
             			((tagScope_scope)tagScope_stack.peek()).currentName = name; 
             			getTagStack().push(name);
-            			
-            			
+            		}
+            		else
+            		{
+            			((tagScope_scope)tagScope_stack.peek()).currentName = "*"; 
+            			System.out.println("close: " + sto.getText().toLowerCase().substring(1));
             		}
             	
-            stc=(Token)input.LT(1);
-            match(input,START_TAG_CLOSE,FOLLOW_START_TAG_CLOSE_in_startTag137); 
-            stream_START_TAG_CLOSE.add(stc);
-
             pushFollow(FOLLOW_tagContent_in_startTag142);
             tc=tagContent();
             _fsp--;
 
             stream_tagContent.add(tc.getTree());
-            // ./CFML.g:220:3: ( -> {isImportTag($sto)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag($sto)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag($sto)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) )
-            // ./CFML.g:221:3: 
+            // ./CFML.g:224:3: ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent ) )
+            // ./CFML.g:225:3: 
             {
 
             // AST REWRITE
@@ -343,9 +347,9 @@ public class CFMLParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 221:3: -> {isImportTag($sto)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent )
-            if (isImportTag(sto)) {
-                // ./CFML.g:221:27: ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent )
+            // 225:3: -> {isImportTag(name)}? ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent )
+            if (isImportTag(name)) {
+                // ./CFML.g:225:27: ^( IMPORTTAG[$sto] START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(IMPORTTAG, sto), root_1);
@@ -357,9 +361,9 @@ public class CFMLParser extends Parser {
                 }
 
             }
-            else // 222:3: -> {isCustomTag($sto)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent )
-            if (isCustomTag(sto)) {
-                // ./CFML.g:222:27: ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent )
+            else // 226:3: -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent )
+            if (isCustomTag(name)) {
+                // ./CFML.g:226:27: ^( CUSTOMTAG[$sto] START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CUSTOMTAG, sto), root_1);
@@ -371,16 +375,16 @@ public class CFMLParser extends Parser {
                 }
 
             }
-            else // 223:3: -> {isColdFusionTag($sto)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent )
-            if (isColdFusionTag(sto)) {
-                // ./CFML.g:223:31: ^( CFTAG[$sto] START_TAG_CLOSE tagContent )
+            else // 227:3: -> {isColdFusionTag(name)}? ^( CFTAG[$sto] START_TAG_CLOSE tagContent )
+            if (isColdFusionTag(name)) {
+                // ./CFML.g:227:31: ^( CFTAG[$sto] START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CFTAG, sto), root_1);
 
                 adaptor.addChild(root_1, stream_START_TAG_CLOSE.next());
                 adaptor.addChild(root_1, 
-                							(containsCFScript(sto) ? parseCFScript(stc, tc.stop) : null)
+                							(containsCFScript(name) ? parseCFScript(stc, tc.stop) : null)
                 						);
                 adaptor.addChild(root_1, stream_tagContent.next());
 
@@ -388,9 +392,9 @@ public class CFMLParser extends Parser {
                 }
 
             }
-            else // 230:3: -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent )
+            else // 234:3: -> ^( START_TAG_OPEN START_TAG_CLOSE tagContent )
             {
-                // ./CFML.g:230:6: ^( START_TAG_OPEN START_TAG_CLOSE tagContent )
+                // ./CFML.g:234:6: ^( START_TAG_OPEN START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(stream_START_TAG_OPEN.next(), root_1);
@@ -438,7 +442,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tagContent
-    // ./CFML.g:235:1: tagContent : cfml ({...}? => ( endTag ) ) ;
+    // ./CFML.g:239:1: tagContent : cfml ({...}? => ( endTag ) ) ;
     public final tagContent_return tagContent() throws RecognitionException {
     traceIn("tagContent", 4);
         tagContent_return retval = new tagContent_return();
@@ -453,8 +457,8 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // ./CFML.g:237:2: ( cfml ({...}? => ( endTag ) ) )
-            // ./CFML.g:237:2: cfml ({...}? => ( endTag ) )
+            // ./CFML.g:241:2: ( cfml ({...}? => ( endTag ) ) )
+            // ./CFML.g:241:2: cfml ({...}? => ( endTag ) )
             {
             root_0 = (Object)adaptor.nil();
 
@@ -463,8 +467,8 @@ public class CFMLParser extends Parser {
             _fsp--;
 
             adaptor.addChild(root_0, cfml3.getTree());
-            // ./CFML.g:238:3: ({...}? => ( endTag ) )
-            // ./CFML.g:239:3: {...}? => ( endTag )
+            // ./CFML.g:242:3: ({...}? => ( endTag ) )
+            // ./CFML.g:243:3: {...}? => ( endTag )
             {
 
             			Token t = input.LT(1);
@@ -482,8 +486,8 @@ public class CFMLParser extends Parser {
             if ( !( ((tagScope_scope)tagScope_stack.peek()).currentName.equals(name)) ) {
                 throw new FailedPredicateException(input, "tagContent", " $tagScope::currentName.equals(name)");
             }
-            // ./CFML.g:253:3: ( endTag )
-            // ./CFML.g:253:4: endTag
+            // ./CFML.g:257:3: ( endTag )
+            // ./CFML.g:257:4: endTag
             {
             pushFollow(FOLLOW_endTag_in_tagContent268);
             endTag4=endTag();
@@ -522,8 +526,6 @@ public class CFMLParser extends Parser {
             		                 ") cannot be matched to any start tag currently open";
             		                 
             		reportError(fpe, msg);
-            		//consumeUntil(input, END_TAG_CLOSE);
-            		//input.consume();         
             	}
 
         }
@@ -540,7 +542,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start endTag
-    // ./CFML.g:278:1: endTag : END_TAG_OPEN END_TAG_CLOSE ;
+    // ./CFML.g:280:1: endTag : END_TAG_OPEN END_TAG_CLOSE ;
     public final endTag_return endTag() throws RecognitionException {
     traceIn("endTag", 5);
         endTag_return retval = new endTag_return();
@@ -555,8 +557,8 @@ public class CFMLParser extends Parser {
         Object END_TAG_CLOSE6_tree=null;
 
         try {
-            // ./CFML.g:280:2: ( END_TAG_OPEN END_TAG_CLOSE )
-            // ./CFML.g:280:2: END_TAG_OPEN END_TAG_CLOSE
+            // ./CFML.g:282:2: ( END_TAG_OPEN END_TAG_CLOSE )
+            // ./CFML.g:282:2: END_TAG_OPEN END_TAG_CLOSE
             {
             root_0 = (Object)adaptor.nil();
 
@@ -611,7 +613,7 @@ public class CFMLParser extends Parser {
     public static final BitSet FOLLOW_tag_in_cfml92 = new BitSet(new long[]{0x0000000000000082L});
     public static final BitSet FOLLOW_startTag_in_tag106 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_START_TAG_OPEN_in_startTag128 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_START_TAG_CLOSE_in_startTag137 = new BitSet(new long[]{0x0000000000000280L});
+    public static final BitSet FOLLOW_START_TAG_CLOSE_in_startTag134 = new BitSet(new long[]{0x0000000000000280L});
     public static final BitSet FOLLOW_tagContent_in_startTag142 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_cfml_in_tagContent249 = new BitSet(new long[]{0x0000000000000200L});
     public static final BitSet FOLLOW_endTag_in_tagContent268 = new BitSet(new long[]{0x0000000000000002L});
