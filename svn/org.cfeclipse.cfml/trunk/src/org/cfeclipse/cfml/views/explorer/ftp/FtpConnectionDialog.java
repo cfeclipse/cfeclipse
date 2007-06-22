@@ -6,15 +6,23 @@
  */
 package org.cfeclipse.cfml.views.explorer.ftp;
 
+import java.io.File;
+
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
+import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -24,6 +32,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -54,6 +63,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	private String[] connectionTypes = {"file", "ftp", "sftp"};
 	private Combo connectionType = null;
 	private boolean isDirty = false;
+	private Button openDirButton;
 	
 	/**
 	 * @param parent
@@ -167,13 +177,13 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		Composite editArea = new Composite(container,SWT.NONE);
 		editArea.setLayoutData(gridData);
 		GridLayout editLayout = new GridLayout();
-		editLayout.numColumns = 2;
+		editLayout.numColumns = 3;
 		editArea.setLayout(editLayout);
 
 		Label editLabel = new Label(editArea,SWT.RIGHT);
 		editLabel.setText("Edit connection:");
 		GridData labelData = new GridData();
-		labelData.horizontalSpan = 2;
+		labelData.horizontalSpan = 3;
 		editLabel.setLayoutData(labelData);
 
 		// Connectionid
@@ -192,12 +202,14 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 					//passive.setEnabled(false);
 					username.setEnabled(false);
 					password.setEnabled(false);
+					openDirButton.setEnabled(true);
 					validateInput();
 				}
 				else{
 					validateInput();
 					host.setEnabled(true);
 					port.setEnabled(true);
+					openDirButton.setEnabled(false);
 					if(connectionType.getText().equalsIgnoreCase("sftp")){
 						port.setText("22");
 					}
@@ -223,8 +235,53 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		port = createNumberControl(editArea,"Port:",connectionProperties.getPort(),5);
 		
 		// Path
-		path = createTextControl(editArea,"Path:",connectionProperties.getPath(),20);
+		//path = createTextControl(editArea,"Path:",connectionProperties.getPath(),20);
 
+		
+		
+		Label label = new Label(editArea,SWT.RIGHT );
+		label.setText("Path:");
+		path = new Text(editArea,SWT.LEFT | SWT.BORDER);
+		GridData data = new GridData();
+		data.widthHint = convertWidthInCharsToPixels(20);
+		path.setLayoutData(data);
+		path.setText(connectionProperties.getPath());
+		
+		
+		
+		//Add a button to this control
+		
+		openDirButton = new Button(editArea,SWT.NONE);
+		openDirButton.setText("Browse:");
+		
+		openDirButton.addSelectionListener(new SelectionListener(){
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				DirectoryDialog fileDialog = new DirectoryDialog(getShell(), SWT.OPEN);
+				
+				 if (path != null && path.getText().trim().length() > 0) {
+						fileDialog.setFilterPath(path.getText());
+					}
+				String dir = fileDialog.open();
+				
+				 if (dir != null) {
+			            dir = dir.trim();
+			            if (dir.length() > 0) {
+							path.setText(dir);
+						}
+			        }
+			}
+			
+			
+		});
+		
+	
+		
 		// Passive mode
 		passive = createCheckboxControl(editArea,"Passive mode:",true);
 		passive.setEnabled(false);
@@ -297,6 +354,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		label.setText(labelText);
 		Text control = new Text(parent,SWT.LEFT | SWT.BORDER);
 		GridData data = new GridData();
+		data.horizontalSpan = 2;
 		data.widthHint = convertWidthInCharsToPixels(width);
 		control.setLayoutData(data);
 		control.setText(text);
@@ -308,6 +366,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		label.setText(labelText);
 		Combo control = new Combo(parent,SWT.LEFT | SWT.BORDER | SWT.READ_ONLY);
 		GridData data = new GridData();
+		data.horizontalSpan = 2;
 		data.widthHint = convertWidthInCharsToPixels(width);
 		control.setLayoutData(data);
 		control.setItems(items);
@@ -319,6 +378,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		label.setText(labelText);
 		Text control = new Text(parent,SWT.LEFT | SWT.BORDER);
 		GridData data = new GridData();
+		data.horizontalSpan = 2;
 		data.widthHint = convertWidthInCharsToPixels(width);
 		control.setLayoutData(data);
 		control.setText(String.valueOf(val));
@@ -329,8 +389,12 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	private Button createCheckboxControl(Composite parent, String labelText, boolean checked) {
 		Label label = new Label(parent,SWT.RIGHT );
 		label.setText(labelText);
+		GridData data = new GridData();
+		data.horizontalSpan = 2;
+		
 		Button control = new Button(parent,SWT.CHECK);
 		control.setSelection(checked);
+		control.setLayoutData(data);
 		return control;
 	}
 	
