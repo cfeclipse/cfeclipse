@@ -202,7 +202,6 @@ cfmlBasic
 innerStringCFML
 	:
 	hashCfmlLinking
-	-> ^(STRING_CFML hashCfmlLinking)
 	;
 
 stringLiteral

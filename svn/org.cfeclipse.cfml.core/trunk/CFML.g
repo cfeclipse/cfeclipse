@@ -36,7 +36,8 @@ tokens
 }
 
 scope tagScope {
- String currentName;
+ String endTagName;
+ String name;
 }
 
 @parser::header 
@@ -156,7 +157,7 @@ THE SOFTWARE.
 	}
 	
 	/*
-	returns null
+	returns endTagName
 	*/
 	protected Tree parseCFScript(Token start, Token stop)
 	{
@@ -165,6 +166,27 @@ THE SOFTWARE.
 		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex(), bit));
 		return null;
 	}
+	
+	protected Tree parseStringLiteral(Token start, Token stop)
+	{
+		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex()));
+		return null;
+	}
+	
+	protected boolean allowsCFMLAssignment(String tagName)
+	{
+		return false;
+	}
+
+	protected boolean allowsCFMLCondition(String tagName)
+	{
+		return false;
+	}
+
+	protected boolean usesAttributes(String name)
+	{
+		return false;
+	}	
 
 	/**
 	* reports an error
@@ -204,34 +226,39 @@ scope tagScope;
 	:
 	(
 	sto=START_TAG_OPEN 
-	stc=START_TAG_CLOSE
 	{
 		String name = $sto.text.toLowerCase().substring(1);
-		
+		$tagScope::name = name;	
+	}
+	
+	tagInnerValues
+	
+	stc=START_TAG_CLOSE
+	{
 		if(!$stc.text.equals("/>"))		
 		{
 			System.out.println("push: " + name);
-			$tagScope::currentName = name; 
+			$tagScope::endTagName = name; 
 			getTagStack().push(name);
 		}
 		else
 		{
-			$tagScope::currentName = "*"; 
+			$tagScope::endTagName = ""; 
 			System.out.println("close: " + $sto.text.toLowerCase().substring(1));
 		}
 	}
 	tc=tagContent
 		(
-		-> {isImportTag(name)}? ^(IMPORTTAG[$sto] START_TAG_CLOSE tagContent)
-		-> {isCustomTag(name)}? ^(CUSTOMTAG[$sto] START_TAG_CLOSE tagContent)		
-		-> {isColdFusionTag(name)}? ^(CFTAG[$sto] START_TAG_CLOSE   
+		-> {isImportTag(name)}? ^(IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent)
+		-> {isCustomTag(name)}? ^(CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent)		
+		-> {isColdFusionTag(name)}? ^(CFTAG[$sto] tagInnerValues START_TAG_CLOSE   
 						{
 							(containsCFScript(name) ? parseCFScript(stc, tc.stop) : null)
 						}
 						  tagContent)
 		
 		
-		-> ^(START_TAG_OPEN START_TAG_CLOSE tagContent)
+		-> ^(START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent)
 		)
 	)
 	;
@@ -253,7 +280,7 @@ tagContent
 				name = t.getText().toLowerCase().substring(2);
 			}
 		}
-		{ $tagScope::currentName.equals(name)}?=> 
+		{ $tagScope::endTagName.equals(name)}?=> 
 		(endTag)
 		)
 	;
@@ -296,6 +323,34 @@ endTag
 	}	
 	END_TAG_OPEN^ END_TAG_CLOSE
 	;
+
+tagInnerValues
+	:
+	{
+		(isColdFusionTag($tagScope::name) && usesAttributes($tagScope::name))
+		||
+		(isCustomTag($tagScope::name))
+		||
+		(isImportTag($tagScope::name))
+	}?=>
+	(
+		tagAttribute*
+	)
+	|
+	;
+
+tagAttribute
+	:
+	TAG_ATTRIBUTE EQUALS stringLiteral
+	;
+	
+stringLiteral
+	:
+	(DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE  | ~(DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE ) )* DOUBLE_QUOTE)
+	|
+	(SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE  | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE ) )* SINGLE_QUOTE)
+	;
+	
 
 /* Lexer */
 
