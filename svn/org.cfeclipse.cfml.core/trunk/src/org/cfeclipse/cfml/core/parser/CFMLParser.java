@@ -143,6 +143,8 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 			buffer.append(((Token)t).getText());
 		}
 		
+		System.out.println("** CFScript parsing: " + buffer.toString());
+		
 		CharStream input = new ANTLRNoCaseStringStream(buffer.toString());
         CFScriptLexer lexer = new CFScriptLexer(input);
         
@@ -168,8 +170,61 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
         parser.removeObserver(this);
 		
 		return ast;
-	}	
+	}
 	
+	
+	/**
+	 * Island parser for String literals
+	 * @param start the token that it starts at
+	 * @param stop the token that the cfscript stops at
+	 */
+	protected Tree parseStringLiteral(Token start, Token stop)
+	{
+		Tree ast = null;
+		List otherTokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex());
+		
+		//in case something goes wrong.
+		if(otherTokens == null)
+		{
+			return ast;
+		}
+		
+		StringBuffer buffer = new StringBuffer();
+		
+		for(Object t : otherTokens)
+		{
+			buffer.append(((Token)t).getText());
+		}
+		
+		System.out.println("** String parsing: " + buffer.toString());
+		
+		CharStream input = new ANTLRNoCaseStringStream(buffer.toString());
+        CFScriptLexer lexer = new CFScriptLexer(input);
+        
+        lexer.addObserver(this);
+        
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        CFScriptParser parser = new CFScriptParser(tokens);
+        
+        parser.addObserver(this);
+        
+        try
+        {
+        	CFScriptParser.stringLiteral_return root = parser.stringLiteral();
+        	ast = (Tree)root.getTree();
+        }
+        catch(RecognitionException exc)
+        {
+        	ErrorEvent event = new ErrorEvent(exc, "String Literal Error");
+        	getObservable().notifyObservers(event);
+        }
+        
+        lexer.removeObserver(this);
+        parser.removeObserver(this);
+		
+		return ast;
+	}
+
 	private ErrorObservable getObservable()
 	{
 		return observable;

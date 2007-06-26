@@ -97,6 +97,21 @@ THE SOFTWARE.
 @lexer::members
 {
 	public static final int COMMENT_CHANNEL = 90;
+	
+	private static final int CATCH_MODE = 1;
+	private static final int NORMAL_MODE = 0;
+	
+	private int mode = NORMAL_MODE;
+	
+	private void setMode(int mode)
+	{
+		this.mode = mode;
+	}
+	
+	private int getMode()
+	{
+		return this.mode;
+	}
 }
 
 script
@@ -282,9 +297,7 @@ tryStatement
 
 catchClass
 	:
-	(id=IDENTIFIER) -> ^(EXCEPTIONNAME[$id])
-	|
-	EXCEPTIONNAME
+	IDENTIFIER(DOT IDENTIFIER)*
 	;
 	
 catchStatement
@@ -387,6 +400,9 @@ TRY
 CATCH
 	:
 	'catch'
+	{
+		setMode(CATCH_MODE);
+	}
 	;
 RETURN
 	:
@@ -530,14 +546,19 @@ SINGLE_QUOTE
 
 IDENTIFIER
 	:
-	(LETTER | UNDERSCORE )(LETTER | DIGIT | UNDERSCORE )*
+	(LETTER | UNDERSCORE )(LETTER | DIGIT | UNDERSCORE )*	
 	;
 
+/*
 EXCEPTIONNAME
 	:
+	{ getMode() == CATCH_MODE }?
 	(LETTER | DIGIT | UNDERSCORE)(DOT | LETTER | DIGIT | UNDERSCORE)*
+	{
+		setMode(NORMAL_MODE);
+	}
 	;
-
+*/
 /* fragments */
 
 fragment MATH_OPERATOR

@@ -33,6 +33,7 @@ tokens
 	CFTAG;
 	CUSTOMTAG;
 	IMPORTTAG;
+	STRING_LITERAL;
 }
 
 scope tagScope {
@@ -129,7 +130,7 @@ THE SOFTWARE.
 	*/
 	protected boolean isColdFusionTag(String name)
 	{		
-		return false;
+		return name.toLowerCase().startsWith("cf");
 	}
 
 	/**
@@ -336,7 +337,7 @@ tagInnerValues
 	(
 		tagAttribute*
 	)
-	|
+	|	
 	;
 
 tagAttribute
@@ -346,11 +347,23 @@ tagAttribute
 	
 stringLiteral
 	:
-	(DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE  | ~(DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE ) )* DOUBLE_QUOTE)
+	(start=DOUBLE_QUOTE doubleQuoteString* end=DOUBLE_QUOTE)
+	-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
 	|
-	(SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE  | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE ) )* SINGLE_QUOTE)
+	(start=SINGLE_QUOTE singleQuoteString* end=SINGLE_QUOTE)
+	-> ^($start singleQuoteString* $end)
 	;
-	
+
+singleQuoteString
+	:	
+	( ESCAPE_SINGLE_QUOTE  | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE ) )
+	;
+
+doubleQuoteString
+	:	
+	( ESCAPE_DOUBLE_QUOTE  | ~(DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE ) )
+	;
+
 
 /* Lexer */
 
@@ -425,7 +438,16 @@ SINGLE_QUOTE
 	{getMode() == STARTTAG_MODE}?=>
 	'\''
 	;
+HASH
+	:
+	'#'
+	;
 	
+CFML
+	:
+	'('|')'|'['|']'|'.'
+	;	
+
 /* fragments */
 
 fragment TAG_NAME
