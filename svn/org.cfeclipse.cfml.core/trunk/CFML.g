@@ -108,6 +108,7 @@ THE SOFTWARE.
 	private static int NONE_MODE = 0;
 	private static int ENDTAG_MODE = 1;
 	private static int STARTTAG_MODE = 2;
+	private static int STRING_MODE = 3;
 
 	
 	private int mode;
@@ -186,7 +187,7 @@ THE SOFTWARE.
 
 	protected boolean usesAttributes(String name)
 	{
-		return false;
+		return name.toLowerCase().startsWith("cf");
 	}	
 
 	/**
@@ -327,17 +328,31 @@ endTag
 
 tagInnerValues
 	:
+	(
 	{
 		(isColdFusionTag($tagScope::name) && usesAttributes($tagScope::name))
 		||
 		(isCustomTag($tagScope::name))
 		||
 		(isImportTag($tagScope::name))
-	}?=>
-	(
-		tagAttribute*
+	}?=> tagAttribute*
 	)
-	|	
+	/*|
+	(
+	{
+	(	
+		isColdFusionTag($tagScope::name) 
+		&& !usesAttributes($tagScope::name)
+		&&
+		(
+		 allowsCFMLCondition($tagScope::name)
+		 ||
+		 allowsCFMLAssignment($tagScope::name)
+		)
+	)
+	}?=> script
+	)*/
+	| 
 	;
 
 tagAttribute
@@ -347,23 +362,29 @@ tagAttribute
 	
 stringLiteral
 	:
-	(start=DOUBLE_QUOTE doubleQuoteString* end=DOUBLE_QUOTE)
-	-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
-	|
-	(start=SINGLE_QUOTE singleQuoteString* end=SINGLE_QUOTE)
-	-> ^($start singleQuoteString* $end)
+	DOUBLE_QUOTE (ESCAPE_DOUBLE_QUOTE | STRING)* DOUBLE_QUOTE
+	//(start=DOUBLE_QUOTE doubleQuoteString end=DOUBLE_QUOTE)
+	//-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
+	//|
+	//(start=SINGLE_QUOTE singleQuoteString* end=SINGLE_QUOTE)
+	//-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
 	;
 
+/*
 singleQuoteString
 	:	
 	( ESCAPE_SINGLE_QUOTE  | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE ) )
-	;
-
+	;*/
+/*
 doubleQuoteString
-	:	
-	( ESCAPE_DOUBLE_QUOTE  | ~(DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE ) )
+	:
+	STRING_DOUBLE
 	;
-
+*/
+/*script
+	:
+	(TAG_ATTRIBUTE | CFML | HASH | DOUBLE_QUOTE | SINGLE_QUOTE )*
+	;*/
 
 /* Lexer */
 
@@ -416,39 +437,44 @@ EQUALS
 	'='
 	;
 
+DOUBLE_QUOTE
+	:
+	{getMode() == STARTTAG_MODE  || getMode() == STRING_MODE}?=>
+	'"'
+	{
+		if(getMode() == STARTTAG_MODE)
+		{
+			setMode(STRING_MODE);
+		}
+		else
+		{
+			setMode(STARTTAG_MODE);
+		}
+	}
+	;
+
 ESCAPE_DOUBLE_QUOTE
 	:
-	{getMode() == STARTTAG_MODE}?=>
+	{ getMode() == STRING_MODE }?=>
 	'""'
 	;
 	
-ESCAPE_SINGLE_QUOTE
+STRING
 	:
-	{getMode() == STARTTAG_MODE}?=>
+	{ getMode() == STRING_MODE }?=>
+	~('"')
+	;
+
+/* fragments */
+fragment ESCAPE_SINGLE_QUOTE
+	:
 	'\'\''
 	;
 
-DOUBLE_QUOTE
+fragment SINGLE_QUOTE
 	:
-	{getMode() == STARTTAG_MODE}?=>
-	'"'
-	;
-SINGLE_QUOTE
-	:
-	{getMode() == STARTTAG_MODE}?=>
 	'\''
 	;
-HASH
-	:
-	'#'
-	;
-	
-CFML
-	:
-	'('|')'|'['|']'|'.'
-	;	
-
-/* fragments */
 
 fragment TAG_NAME
 	:

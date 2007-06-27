@@ -63,6 +63,7 @@
        		<param name="antlrScript" value="./CFML.g"/>
    		</antcall>
     	<antcall target="move" />
+    	<antcall target="incrementTokens"/>
     	<antcall target="buildJava"/>
     	<antcall target="buildASTViewerJar"/>
     </target>
@@ -73,6 +74,20 @@
     		<arg value="-trace"/>
     	</java>		
 	</target>	
+	
+	<target name="incrementTokens">
+		<javac 	srcdir="${src}/org/cfeclipse/cfml/core/parser/antlr/gen" 
+				debug="true" 
+				debuglevel="lines,vars,source" 
+				target="5"
+				destdir="${build}"
+				/>
+		<java classname="org.cfeclipse.cfml.core.parser.antlr.gen.ANTLRTokenIncrementor" classpath="${build}">
+			<arg value="1000"/>
+			<arg value="${src}/org/cfeclipse/cfml/core/parser/antlr/CFMLLexer.java"/>
+			<arg value="${src}/org/cfeclipse/cfml/core/parser/antlr/CFMLParser.java" />
+		</java>
+	</target>
 	
 	<target name="buildJava">
 		<javac srcdir="${src}" 

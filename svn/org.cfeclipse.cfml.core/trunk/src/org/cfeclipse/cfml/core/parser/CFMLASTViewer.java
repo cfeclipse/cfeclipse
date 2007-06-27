@@ -40,10 +40,8 @@ public class CFMLASTViewer
 	private JFrame window;
 	private JTextArea text;
 	private JTextArea log;
-	private HashMap<Integer, String> cfmlTokenTypes;
-	private HashMap<Integer, String> cfScriptTokenTypes;
+	private HashMap<Integer, String> tokenTypes;
 	private ICFMLDictionary dictionary;
-	private boolean cfscript;
 	
 	/**
 	 * @param args
@@ -60,12 +58,12 @@ public class CFMLASTViewer
 	
 	public CFMLASTViewer(ICFMLDictionary dictionary)
 	{
-		setCfmlTokenTypes(new HashMap<Integer, String>());
-		setCfScriptTokenTypes(new HashMap<Integer, String>());
-		setCfscript(false);
+		setTokenTypes(new HashMap<Integer, String>());
 		
 		initCFMLTokenTypes();
 		initCFScriptTokenTypes();
+		System.out.println(getTokenTypes().toString());
+		
 		setDictionary(dictionary);
 		
 		window = new JFrame("AST Viewer");
@@ -139,8 +137,6 @@ public class CFMLASTViewer
 	
 	private void parseCFML(String cfml)
 	{
-		setCfscript(false);
-		
 		try
 		{
 				//this is pretty quick n' dirty... oh well.
@@ -215,25 +211,7 @@ public class CFMLASTViewer
 	
 	private DefaultMutableTreeNode displayNode(Tree t)
 	{
-		String tokenType;
-		
-		if(isCfscript() && t.getType() == CFMLParser.END_TAG_OPEN && t.getText().startsWith("</"))
-		{
-			setCfscript(false);
-		}
-		
-		if(isCfscript())
-		{
-			tokenType = getCFScriptTokenType(t.getType());
-		}
-		else
-		{
-			if(t.getType() == CFMLParser.CFTAG && t.getText().toLowerCase().equals("<cfscript"))
-			{
-				setCfscript(true);
-			}
-			tokenType = getCFMLTokenType(t.getType());
-		}
+		String tokenType = getTokenType(t.getType());
 		
 		String str = "[" + tokenType + "] ";
 		str += t.getText();
@@ -253,7 +231,7 @@ public class CFMLASTViewer
 			{				
 				if(f.getType().getName().equals("int"))
 				{
-					getCfmlTokenTypes().put(f.getInt(parser), f.getName());
+					getTokenTypes().put(f.getInt(parser), f.getName());
 				}
 			}			
 		}
@@ -261,8 +239,6 @@ public class CFMLASTViewer
 		{
 			System.out.println(e.getMessage());
 		}
-		
-		System.out.println(getCfmlTokenTypes().toString());
 	}
 	
 	private void initCFScriptTokenTypes()
@@ -277,7 +253,7 @@ public class CFMLASTViewer
 			{				
 				if(f.getType().getName().equals("int"))
 				{
-					getCfScriptTokenTypes().put(f.getInt(parser), f.getName());
+					getTokenTypes().put(f.getInt(parser), f.getName());
 				}
 			}		
 		}
@@ -285,48 +261,27 @@ public class CFMLASTViewer
 		{
 			System.out.println(e.getMessage());
 		}
-		
-		System.out.println(getCfScriptTokenTypes().toString());
 	}	
 	
-	private String getCFMLTokenType(int type)
+	private String getTokenType(int type)
 	{
-		if(getCfmlTokenTypes().containsKey(type))
+		if(getTokenTypes().containsKey(type))
 		{
-			return getCfmlTokenTypes().get(type);
+			return getTokenTypes().get(type);
 		}
 		return Integer.toString(type);
 	}
 
-	private String getCFScriptTokenType(int type)
+	private HashMap<Integer, String> getTokenTypes()
 	{
-		if(getCfScriptTokenTypes().containsKey(type))
-		{
-			return getCfScriptTokenTypes().get(type);
-		}
-		return Integer.toString(type);
+		return tokenTypes;
+	}
+
+	private void setTokenTypes(HashMap<Integer, String> tokenTypes)
+	{
+		this.tokenTypes = tokenTypes;
 	}
 	
-	private HashMap<Integer, String> getCfmlTokenTypes()
-	{
-		return cfmlTokenTypes;
-	}
-
-	private void setCfmlTokenTypes(HashMap<Integer, String> tokenTypes)
-	{
-		this.cfmlTokenTypes = tokenTypes;
-	}
-	
-	private HashMap<Integer, String> getCfScriptTokenTypes()
-	{
-		return cfScriptTokenTypes;
-	}
-
-	private void setCfScriptTokenTypes(HashMap<Integer, String> cfScriptTokenTypes)
-	{
-		this.cfScriptTokenTypes = cfScriptTokenTypes;
-	}
-
 	private ICFMLDictionary getDictionary()
 	{
 		return dictionary;
@@ -335,18 +290,5 @@ public class CFMLASTViewer
 	private void setDictionary(ICFMLDictionary dictionary)
 	{
 		this.dictionary = dictionary;
-	}
-
-	private boolean isCfscript()
-	{
-		return cfscript;
-	}
-
-	private void setCfscript(boolean cfscript)
-	{
-		this.cfscript = cfscript;
-	}
-	
-	
-	
+	}	
 }

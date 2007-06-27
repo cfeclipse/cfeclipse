@@ -41,6 +41,7 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 	
 	public boolean isColdFusionTag(String tagName)
 	{
+		System.out.println("******* isColdFusionTag: " + tagName);
 		if(tagName.toLowerCase().startsWith("cf"))
 		{
 			return true;
@@ -52,7 +53,7 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 	public boolean usesAttributes(String tagName)
 	{
 		tagName = tagName.toLowerCase();
-		
+		System.out.println("******* usesAttributes: " + tagName);
 		if(tagName.equals("cfset") || tagName.equals("cfif") || tagName.equals("cfelseif"))
 		{
 			return false;
@@ -62,8 +63,9 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 
 	public boolean allowsCFMLAssignment(String tagName)
 	{
+		System.out.println("******* allowsCFMLAssignment: " + tagName);
 		if(tagName.equals("cfset"))
-		{
+		{			
 			return true;
 		}
 		return false;
@@ -71,6 +73,7 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 
 	public boolean allowsCFMLCondition(String tagName)
 	{
+		System.out.println("******* allowsCFMLCondition: " + tagName);
 		if(tagName.equals("cfif") || tagName.equals("cfelseif"))
 		{
 			return false;
