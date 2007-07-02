@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFML.g 2007-06-27 18:21:17
+// $ANTLR 3.0 ./CFML.g 2007-07-02 14:21:42
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -32,31 +32,32 @@ import java.util.ArrayList;
 
 public class CFMLLexer extends Lexer {
     public static final int TAG_ATTRIBUTE=1012;
-    public static final int OTHER=1027;
-    public static final int DOUBLE_QUOTE=1014;
+    public static final int OTHER=1028;
     public static final int CFTAG=1004;
-    public static final int LETTER=1018;
+    public static final int LETTER=1021;
+    public static final int DOUBLE_QUOTE=1014;
     public static final int END_TAG_OPEN=1010;
-    public static final int UNDERSCORE=1020;
+    public static final int UNDERSCORE=1023;
     public static final int EQUALS=1013;
-    public static final int Tokens=1028;
+    public static final int Tokens=1029;
     public static final int EOF=-1;
-    public static final int ESCAPE_SINGLE_QUOTE=1021;
     public static final int START_TAG_CLOSE=1009;
-    public static final int COLON=1024;
-    public static final int TAG_NAME=1017;
+    public static final int ESCAPE_SINGLE_QUOTE=1018;
+    public static final int COLON=1025;
+    public static final int TAG_NAME=1020;
     public static final int CUSTOMTAG=1005;
-    public static final int SINGLE_QUOTE=1022;
-    public static final int WS=1025;
+    public static final int SINGLE_QUOTE=1017;
+    public static final int SINGLE_QUOTE_STRING=1019;
     public static final int STRING_LITERAL=1007;
-    public static final int TAG_IDENT=1023;
+    public static final int WS=1026;
+    public static final int DOUBLE_QUOTE_STRING=1016;
+    public static final int TAG_IDENT=1024;
     public static final int END_TAG_CLOSE=1011;
     public static final int ESCAPE_DOUBLE_QUOTE=1015;
-    public static final int DIGIT=1019;
-    public static final int COMMENT=1026;
+    public static final int DIGIT=1022;
+    public static final int COMMENT=1027;
     public static final int START_TAG_OPEN=1008;
     public static final int IMPORTTAG=1006;
-    public static final int STRING=1016;
 
     	private static final int COMMENT_CHANNEL = 90;
     	private static final int TEXT_CHANNEL = 89;
@@ -65,7 +66,8 @@ public class CFMLLexer extends Lexer {
     	private static int NONE_MODE = 0;
     	private static int ENDTAG_MODE = 1;
     	private static int STARTTAG_MODE = 2;
-    	private static int STRING_MODE = 3;
+    	private static int DOUBLE_QUOTE_STRING_MODE = 3;
+    	private static int SINGLE_QUOTE_STRING_MODE = 4;
 
     	
     	private int mode;
@@ -91,8 +93,8 @@ public class CFMLLexer extends Lexer {
     traceIn("END_TAG_OPEN", 1);
         try {
             int _type = END_TAG_OPEN;
-            // ./CFML.g:393:2: ({...}? => '</' TAG_NAME )
-            // ./CFML.g:393:2: {...}? => '</' TAG_NAME
+            // ./CFML.g:387:2: ({...}? => '</' TAG_NAME )
+            // ./CFML.g:387:2: {...}? => '</' TAG_NAME
             {
             if ( !(
             		getMode() == NONE_MODE
@@ -121,8 +123,8 @@ public class CFMLLexer extends Lexer {
     traceIn("END_TAG_CLOSE", 2);
         try {
             int _type = END_TAG_CLOSE;
-            // ./CFML.g:404:2: ({...}? => '>' )
-            // ./CFML.g:404:2: {...}? => '>'
+            // ./CFML.g:398:2: ({...}? => '>' )
+            // ./CFML.g:398:2: {...}? => '>'
             {
             if ( !(getMode() == ENDTAG_MODE) ) {
                 throw new FailedPredicateException(input, "END_TAG_CLOSE", "getMode() == ENDTAG_MODE");
@@ -145,8 +147,8 @@ public class CFMLLexer extends Lexer {
     traceIn("START_TAG_OPEN", 3);
         try {
             int _type = START_TAG_OPEN;
-            // ./CFML.g:411:2: ({...}? => '<' TAG_NAME )
-            // ./CFML.g:411:2: {...}? => '<' TAG_NAME
+            // ./CFML.g:405:2: ({...}? => '<' TAG_NAME )
+            // ./CFML.g:405:2: {...}? => '<' TAG_NAME
             {
             if ( !(
             		getMode() == NONE_MODE
@@ -174,13 +176,13 @@ public class CFMLLexer extends Lexer {
     traceIn("START_TAG_CLOSE", 4);
         try {
             int _type = START_TAG_CLOSE;
-            // ./CFML.g:423:2: ({...}? => ( '/' )? '>' )
-            // ./CFML.g:423:2: {...}? => ( '/' )? '>'
+            // ./CFML.g:417:2: ({...}? => ( '/' )? '>' )
+            // ./CFML.g:417:2: {...}? => ( '/' )? '>'
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "START_TAG_CLOSE", "getMode() == STARTTAG_MODE");
             }
-            // ./CFML.g:424:2: ( '/' )?
+            // ./CFML.g:418:2: ( '/' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -189,7 +191,7 @@ public class CFMLLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ./CFML.g:424:2: '/'
+                    // ./CFML.g:418:2: '/'
                     {
                     match('/'); 
 
@@ -216,13 +218,13 @@ public class CFMLLexer extends Lexer {
     traceIn("TAG_ATTRIBUTE", 5);
         try {
             int _type = TAG_ATTRIBUTE;
-            // ./CFML.g:430:2: ({...}? => ( LETTER | DIGIT | UNDERSCORE )+ )
-            // ./CFML.g:430:2: {...}? => ( LETTER | DIGIT | UNDERSCORE )+
+            // ./CFML.g:424:2: ({...}? => ( LETTER | DIGIT | UNDERSCORE )+ )
+            // ./CFML.g:424:2: {...}? => ( LETTER | DIGIT | UNDERSCORE )+
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "TAG_ATTRIBUTE", "getMode() == STARTTAG_MODE");
             }
-            // ./CFML.g:431:2: ( LETTER | DIGIT | UNDERSCORE )+
+            // ./CFML.g:425:2: ( LETTER | DIGIT | UNDERSCORE )+
             int cnt2=0;
             loop2:
             do {
@@ -277,8 +279,8 @@ public class CFMLLexer extends Lexer {
     traceIn("EQUALS", 6);
         try {
             int _type = EQUALS;
-            // ./CFML.g:436:2: ({...}? => '=' )
-            // ./CFML.g:436:2: {...}? => '='
+            // ./CFML.g:430:2: ({...}? => '=' )
+            // ./CFML.g:430:2: {...}? => '='
             {
             if ( !(getMode() == STARTTAG_MODE) ) {
                 throw new FailedPredicateException(input, "EQUALS", "getMode() == STARTTAG_MODE");
@@ -295,22 +297,22 @@ public class CFMLLexer extends Lexer {
     }
     // $ANTLR end EQUALS
 
-    // $ANTLR start DOUBLE_QUOTE
-    public final void mDOUBLE_QUOTE() throws RecognitionException {
-    traceIn("DOUBLE_QUOTE", 7);
+    // $ANTLR start SINGLE_QUOTE
+    public final void mSINGLE_QUOTE() throws RecognitionException {
+    traceIn("SINGLE_QUOTE", 7);
         try {
-            int _type = DOUBLE_QUOTE;
-            // ./CFML.g:442:2: ({...}? => '\"' )
-            // ./CFML.g:442:2: {...}? => '\"'
+            int _type = SINGLE_QUOTE;
+            // ./CFML.g:436:2: ({...}? => '\\'' )
+            // ./CFML.g:436:2: {...}? => '\\''
             {
-            if ( !(getMode() == STARTTAG_MODE  || getMode() == STRING_MODE) ) {
-                throw new FailedPredicateException(input, "DOUBLE_QUOTE", "getMode() == STARTTAG_MODE  || getMode() == STRING_MODE");
+            if ( !(getMode() == STARTTAG_MODE  || getMode() == SINGLE_QUOTE_STRING_MODE) ) {
+                throw new FailedPredicateException(input, "SINGLE_QUOTE", "getMode() == STARTTAG_MODE  || getMode() == SINGLE_QUOTE_STRING_MODE");
             }
-            match('\"'); 
+            match('\''); 
 
             		if(getMode() == STARTTAG_MODE)
             		{
-            			setMode(STRING_MODE);
+            			setMode(SINGLE_QUOTE_STRING_MODE);
             		}
             		else
             		{
@@ -323,21 +325,110 @@ public class CFMLLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("DOUBLE_QUOTE", 7);
+    traceOut("SINGLE_QUOTE", 7);
+        }
+    }
+    // $ANTLR end SINGLE_QUOTE
+
+    // $ANTLR start ESCAPE_SINGLE_QUOTE
+    public final void mESCAPE_SINGLE_QUOTE() throws RecognitionException {
+    traceIn("ESCAPE_SINGLE_QUOTE", 8);
+        try {
+            int _type = ESCAPE_SINGLE_QUOTE;
+            // ./CFML.g:452:2: ({...}? => '\\'\\'' )
+            // ./CFML.g:452:2: {...}? => '\\'\\''
+            {
+            if ( !( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
+                throw new FailedPredicateException(input, "ESCAPE_SINGLE_QUOTE", " getMode() == SINGLE_QUOTE_STRING_MODE ");
+            }
+            match("\'\'"); 
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("ESCAPE_SINGLE_QUOTE", 8);
+        }
+    }
+    // $ANTLR end ESCAPE_SINGLE_QUOTE
+
+    // $ANTLR start SINGLE_QUOTE_STRING
+    public final void mSINGLE_QUOTE_STRING() throws RecognitionException {
+    traceIn("SINGLE_QUOTE_STRING", 9);
+        try {
+            int _type = SINGLE_QUOTE_STRING;
+            // ./CFML.g:458:2: ({...}? =>~ ( '\\'' ) )
+            // ./CFML.g:458:2: {...}? =>~ ( '\\'' )
+            {
+            if ( !( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
+                throw new FailedPredicateException(input, "SINGLE_QUOTE_STRING", " getMode() == SINGLE_QUOTE_STRING_MODE ");
+            }
+            if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='\uFFFE') ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse =
+                    new MismatchedSetException(null,input);
+                recover(mse);    throw mse;
+            }
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("SINGLE_QUOTE_STRING", 9);
+        }
+    }
+    // $ANTLR end SINGLE_QUOTE_STRING
+
+    // $ANTLR start DOUBLE_QUOTE
+    public final void mDOUBLE_QUOTE() throws RecognitionException {
+    traceIn("DOUBLE_QUOTE", 10);
+        try {
+            int _type = DOUBLE_QUOTE;
+            // ./CFML.g:464:2: ({...}? => '\"' )
+            // ./CFML.g:464:2: {...}? => '\"'
+            {
+            if ( !(getMode() == STARTTAG_MODE  || getMode() == DOUBLE_QUOTE_STRING_MODE) ) {
+                throw new FailedPredicateException(input, "DOUBLE_QUOTE", "getMode() == STARTTAG_MODE  || getMode() == DOUBLE_QUOTE_STRING_MODE");
+            }
+            match('\"'); 
+
+            		if(getMode() == STARTTAG_MODE)
+            		{
+            			setMode(DOUBLE_QUOTE_STRING_MODE);
+            		}
+            		else
+            		{
+            			setMode(STARTTAG_MODE);
+            		}
+            	
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("DOUBLE_QUOTE", 10);
         }
     }
     // $ANTLR end DOUBLE_QUOTE
 
     // $ANTLR start ESCAPE_DOUBLE_QUOTE
     public final void mESCAPE_DOUBLE_QUOTE() throws RecognitionException {
-    traceIn("ESCAPE_DOUBLE_QUOTE", 8);
+    traceIn("ESCAPE_DOUBLE_QUOTE", 11);
         try {
             int _type = ESCAPE_DOUBLE_QUOTE;
-            // ./CFML.g:458:2: ({...}? => '\"\"' )
-            // ./CFML.g:458:2: {...}? => '\"\"'
+            // ./CFML.g:480:2: ({...}? => '\"\"' )
+            // ./CFML.g:480:2: {...}? => '\"\"'
             {
-            if ( !( getMode() == STRING_MODE ) ) {
-                throw new FailedPredicateException(input, "ESCAPE_DOUBLE_QUOTE", " getMode() == STRING_MODE ");
+            if ( !( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
+                throw new FailedPredicateException(input, "ESCAPE_DOUBLE_QUOTE", " getMode() == DOUBLE_QUOTE_STRING_MODE ");
             }
             match("\"\""); 
 
@@ -347,21 +438,21 @@ public class CFMLLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("ESCAPE_DOUBLE_QUOTE", 8);
+    traceOut("ESCAPE_DOUBLE_QUOTE", 11);
         }
     }
     // $ANTLR end ESCAPE_DOUBLE_QUOTE
 
-    // $ANTLR start STRING
-    public final void mSTRING() throws RecognitionException {
-    traceIn("STRING", 9);
+    // $ANTLR start DOUBLE_QUOTE_STRING
+    public final void mDOUBLE_QUOTE_STRING() throws RecognitionException {
+    traceIn("DOUBLE_QUOTE_STRING", 12);
         try {
-            int _type = STRING;
-            // ./CFML.g:464:2: ({...}? =>~ ( '\"' ) )
-            // ./CFML.g:464:2: {...}? =>~ ( '\"' )
+            int _type = DOUBLE_QUOTE_STRING;
+            // ./CFML.g:486:2: ({...}? =>~ ( '\"' ) )
+            // ./CFML.g:486:2: {...}? =>~ ( '\"' )
             {
-            if ( !( getMode() == STRING_MODE ) ) {
-                throw new FailedPredicateException(input, "STRING", " getMode() == STRING_MODE ");
+            if ( !( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
+                throw new FailedPredicateException(input, "DOUBLE_QUOTE_STRING", " getMode() == DOUBLE_QUOTE_STRING_MODE ");
             }
             if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFE') ) {
                 input.consume();
@@ -379,70 +470,33 @@ public class CFMLLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("STRING", 9);
+    traceOut("DOUBLE_QUOTE_STRING", 12);
         }
     }
-    // $ANTLR end STRING
-
-    // $ANTLR start ESCAPE_SINGLE_QUOTE
-    public final void mESCAPE_SINGLE_QUOTE() throws RecognitionException {
-    traceIn("ESCAPE_SINGLE_QUOTE", 10);
-        try {
-            // ./CFML.g:471:2: ( '\\'\\'' )
-            // ./CFML.g:471:2: '\\'\\''
-            {
-            match("\'\'"); 
-
-
-            }
-
-        }
-        finally {
-    traceOut("ESCAPE_SINGLE_QUOTE", 10);
-        }
-    }
-    // $ANTLR end ESCAPE_SINGLE_QUOTE
-
-    // $ANTLR start SINGLE_QUOTE
-    public final void mSINGLE_QUOTE() throws RecognitionException {
-    traceIn("SINGLE_QUOTE", 11);
-        try {
-            // ./CFML.g:476:2: ( '\\'' )
-            // ./CFML.g:476:2: '\\''
-            {
-            match('\''); 
-
-            }
-
-        }
-        finally {
-    traceOut("SINGLE_QUOTE", 11);
-        }
-    }
-    // $ANTLR end SINGLE_QUOTE
+    // $ANTLR end DOUBLE_QUOTE_STRING
 
     // $ANTLR start TAG_NAME
     public final void mTAG_NAME() throws RecognitionException {
-    traceIn("TAG_NAME", 12);
+    traceIn("TAG_NAME", 13);
         try {
-            // ./CFML.g:481:2: ( ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )? )
-            // ./CFML.g:481:2: ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )?
+            // ./CFML.g:494:2: ( ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )? )
+            // ./CFML.g:494:2: ( LETTER ) ( TAG_IDENT ) ( ( COLON ) ( TAG_IDENT ) )?
             {
-            // ./CFML.g:481:2: ( LETTER )
-            // ./CFML.g:481:3: LETTER
+            // ./CFML.g:494:2: ( LETTER )
+            // ./CFML.g:494:3: LETTER
             {
             mLETTER(); 
 
             }
 
-            // ./CFML.g:481:10: ( TAG_IDENT )
-            // ./CFML.g:481:11: TAG_IDENT
+            // ./CFML.g:494:10: ( TAG_IDENT )
+            // ./CFML.g:494:11: TAG_IDENT
             {
             mTAG_IDENT(); 
 
             }
 
-            // ./CFML.g:481:21: ( ( COLON ) ( TAG_IDENT ) )?
+            // ./CFML.g:494:21: ( ( COLON ) ( TAG_IDENT ) )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -451,17 +505,17 @@ public class CFMLLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ./CFML.g:481:22: ( COLON ) ( TAG_IDENT )
+                    // ./CFML.g:494:22: ( COLON ) ( TAG_IDENT )
                     {
-                    // ./CFML.g:481:22: ( COLON )
-                    // ./CFML.g:481:23: COLON
+                    // ./CFML.g:494:22: ( COLON )
+                    // ./CFML.g:494:23: COLON
                     {
                     mCOLON(); 
 
                     }
 
-                    // ./CFML.g:481:29: ( TAG_IDENT )
-                    // ./CFML.g:481:30: TAG_IDENT
+                    // ./CFML.g:494:29: ( TAG_IDENT )
+                    // ./CFML.g:494:30: TAG_IDENT
                     {
                     mTAG_IDENT(); 
 
@@ -478,19 +532,19 @@ public class CFMLLexer extends Lexer {
 
         }
         finally {
-    traceOut("TAG_NAME", 12);
+    traceOut("TAG_NAME", 13);
         }
     }
     // $ANTLR end TAG_NAME
 
     // $ANTLR start TAG_IDENT
     public final void mTAG_IDENT() throws RecognitionException {
-    traceIn("TAG_IDENT", 13);
+    traceIn("TAG_IDENT", 14);
         try {
-            // ./CFML.g:486:2: ( ( LETTER | DIGIT | UNDERSCORE )* )
-            // ./CFML.g:486:2: ( LETTER | DIGIT | UNDERSCORE )*
+            // ./CFML.g:499:2: ( ( LETTER | DIGIT | UNDERSCORE )* )
+            // ./CFML.g:499:2: ( LETTER | DIGIT | UNDERSCORE )*
             {
-            // ./CFML.g:486:2: ( LETTER | DIGIT | UNDERSCORE )*
+            // ./CFML.g:499:2: ( LETTER | DIGIT | UNDERSCORE )*
             loop4:
             do {
                 int alt4=2;
@@ -529,17 +583,17 @@ public class CFMLLexer extends Lexer {
 
         }
         finally {
-    traceOut("TAG_IDENT", 13);
+    traceOut("TAG_IDENT", 14);
         }
     }
     // $ANTLR end TAG_IDENT
 
     // $ANTLR start DIGIT
     public final void mDIGIT() throws RecognitionException {
-    traceIn("DIGIT", 14);
+    traceIn("DIGIT", 15);
         try {
-            // ./CFML.g:491:2: ( '0' .. '9' )
-            // ./CFML.g:491:2: '0' .. '9'
+            // ./CFML.g:504:2: ( '0' .. '9' )
+            // ./CFML.g:504:2: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -547,16 +601,16 @@ public class CFMLLexer extends Lexer {
 
         }
         finally {
-    traceOut("DIGIT", 14);
+    traceOut("DIGIT", 15);
         }
     }
     // $ANTLR end DIGIT
 
     // $ANTLR start LETTER
     public final void mLETTER() throws RecognitionException {
-    traceIn("LETTER", 15);
+    traceIn("LETTER", 16);
         try {
-            // ./CFML.g:496:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ./CFML.g:509:2: ( 'a' .. 'z' | 'A' .. 'Z' )
             // ./CFML.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -574,17 +628,17 @@ public class CFMLLexer extends Lexer {
 
         }
         finally {
-    traceOut("LETTER", 15);
+    traceOut("LETTER", 16);
         }
     }
     // $ANTLR end LETTER
 
     // $ANTLR start UNDERSCORE
     public final void mUNDERSCORE() throws RecognitionException {
-    traceIn("UNDERSCORE", 16);
+    traceIn("UNDERSCORE", 17);
         try {
-            // ./CFML.g:501:2: ( '_' )
-            // ./CFML.g:501:2: '_'
+            // ./CFML.g:514:2: ( '_' )
+            // ./CFML.g:514:2: '_'
             {
             match('_'); 
 
@@ -592,17 +646,17 @@ public class CFMLLexer extends Lexer {
 
         }
         finally {
-    traceOut("UNDERSCORE", 16);
+    traceOut("UNDERSCORE", 17);
         }
     }
     // $ANTLR end UNDERSCORE
 
     // $ANTLR start COLON
     public final void mCOLON() throws RecognitionException {
-    traceIn("COLON", 17);
+    traceIn("COLON", 18);
         try {
-            // ./CFML.g:506:2: ( ':' )
-            // ./CFML.g:506:2: ':'
+            // ./CFML.g:519:2: ( ':' )
+            // ./CFML.g:519:2: ':'
             {
             match(':'); 
 
@@ -610,18 +664,18 @@ public class CFMLLexer extends Lexer {
 
         }
         finally {
-    traceOut("COLON", 17);
+    traceOut("COLON", 18);
         }
     }
     // $ANTLR end COLON
 
     // $ANTLR start WS
     public final void mWS() throws RecognitionException {
-    traceIn("WS", 18);
+    traceIn("WS", 19);
         try {
             int _type = WS;
-            // ./CFML.g:513:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
-            // ./CFML.g:513:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
+            // ./CFML.g:526:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
+            // ./CFML.g:526:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||(input.LA(1)>='\f' && input.LA(1)<='\r')||input.LA(1)==' ' ) {
                 input.consume();
@@ -642,22 +696,22 @@ public class CFMLLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("WS", 18);
+    traceOut("WS", 19);
         }
     }
     // $ANTLR end WS
 
     // $ANTLR start COMMENT
     public final void mCOMMENT() throws RecognitionException {
-    traceIn("COMMENT", 19);
+    traceIn("COMMENT", 20);
         try {
             int _type = COMMENT;
-            // ./CFML.g:521:2: ( '<!---' ( options {greedy=false; } : . )* '--->' )
-            // ./CFML.g:521:2: '<!---' ( options {greedy=false; } : . )* '--->'
+            // ./CFML.g:534:2: ( '<!---' ( options {greedy=false; } : . )* '--->' )
+            // ./CFML.g:534:2: '<!---' ( options {greedy=false; } : . )* '--->'
             {
             match("<!---"); 
 
-            // ./CFML.g:521:10: ( options {greedy=false; } : . )*
+            // ./CFML.g:534:10: ( options {greedy=false; } : . )*
             loop5:
             do {
                 int alt5=2;
@@ -700,7 +754,7 @@ public class CFMLLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ./CFML.g:521:38: .
+            	    // ./CFML.g:534:38: .
             	    {
             	    matchAny(); 
 
@@ -723,24 +777,24 @@ public class CFMLLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("COMMENT", 19);
+    traceOut("COMMENT", 20);
         }
     }
     // $ANTLR end COMMENT
 
     // $ANTLR start OTHER
     public final void mOTHER() throws RecognitionException {
-    traceIn("OTHER", 20);
+    traceIn("OTHER", 21);
         try {
             int _type = OTHER;
-            // ./CFML.g:529:2: ({...}? => ( options {greedy=false; } : . ) )
-            // ./CFML.g:529:2: {...}? => ( options {greedy=false; } : . )
+            // ./CFML.g:542:2: ({...}? => ( options {greedy=false; } : . ) )
+            // ./CFML.g:542:2: {...}? => ( options {greedy=false; } : . )
             {
             if ( !(getMode() == NONE_MODE) ) {
                 throw new FailedPredicateException(input, "OTHER", "getMode() == NONE_MODE");
             }
-            // ./CFML.g:530:2: ( options {greedy=false; } : . )
-            // ./CFML.g:530:29: .
+            // ./CFML.g:543:2: ( options {greedy=false; } : . )
+            // ./CFML.g:543:29: .
             {
             matchAny(); 
 
@@ -755,21 +809,21 @@ public class CFMLLexer extends Lexer {
             this.type = _type;
         }
         finally {
-    traceOut("OTHER", 20);
+    traceOut("OTHER", 21);
         }
     }
     // $ANTLR end OTHER
 
     public void mTokens() throws RecognitionException {
-        // ./CFML.g:1:10: ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER )
-        int alt6=12;
+        // ./CFML.g:1:10: ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER )
+        int alt6=15;
         int LA6_0 = input.LA(1);
 
         if ( (LA6_0=='<') ) {
             int LA6_1 = input.LA(2);
 
             if ( (LA6_1=='!') ) {
-                alt6=11;
+                alt6=14;
             }
             else if ( (LA6_1=='/') && (
             		getMode() == NONE_MODE
@@ -781,20 +835,23 @@ public class CFMLLexer extends Lexer {
             	)) {
                 alt6=3;
             }
-            else if ( ( getMode() == STRING_MODE ) ) {
+            else if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
                 alt6=9;
             }
-            else if ( (getMode() == NONE_MODE) ) {
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
                 alt6=12;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 1, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 1, input);
 
                 throw nvae;
             }
         }
-        else if ( (LA6_0=='>') && ((getMode() == NONE_MODE||getMode() == ENDTAG_MODE||getMode() == STARTTAG_MODE|| getMode() == STRING_MODE ))) {
+        else if ( (LA6_0=='>') && (( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE||getMode() == ENDTAG_MODE||getMode() == STARTTAG_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) {
             int LA6_2 = input.LA(2);
 
             if ( (getMode() == ENDTAG_MODE) ) {
@@ -803,39 +860,45 @@ public class CFMLLexer extends Lexer {
             else if ( (getMode() == STARTTAG_MODE) ) {
                 alt6=4;
             }
-            else if ( ( getMode() == STRING_MODE ) ) {
+            else if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
                 alt6=9;
             }
-            else if ( (getMode() == NONE_MODE) ) {
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
                 alt6=12;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 2, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 2, input);
 
                 throw nvae;
             }
         }
-        else if ( (LA6_0=='/') && ((getMode() == NONE_MODE||getMode() == STARTTAG_MODE|| getMode() == STRING_MODE ))) {
+        else if ( (LA6_0=='/') && (( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE||getMode() == STARTTAG_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) {
             int LA6_3 = input.LA(2);
 
             if ( (LA6_3=='>') && (getMode() == STARTTAG_MODE)) {
                 alt6=4;
             }
-            else if ( ( getMode() == STRING_MODE ) ) {
+            else if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
                 alt6=9;
             }
-            else if ( (getMode() == NONE_MODE) ) {
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
                 alt6=12;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 3, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 3, input);
 
                 throw nvae;
             }
         }
-        else if ( ((LA6_0>='0' && LA6_0<='9')||(LA6_0>='A' && LA6_0<='Z')||LA6_0=='_'||(LA6_0>='a' && LA6_0<='z')) && ((getMode() == NONE_MODE||getMode() == STARTTAG_MODE|| getMode() == STRING_MODE ))) {
+        else if ( ((LA6_0>='0' && LA6_0<='9')||(LA6_0>='A' && LA6_0<='Z')||LA6_0=='_'||(LA6_0>='a' && LA6_0<='z')) && (( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE||getMode() == STARTTAG_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) {
             int LA6_4 = input.LA(2);
 
             if ( ((LA6_4>='0' && LA6_4<='9')||(LA6_4>='A' && LA6_4<='Z')||LA6_4=='_'||(LA6_4>='a' && LA6_4<='z')) && (getMode() == STARTTAG_MODE)) {
@@ -844,95 +907,132 @@ public class CFMLLexer extends Lexer {
             else if ( (getMode() == STARTTAG_MODE) ) {
                 alt6=5;
             }
-            else if ( ( getMode() == STRING_MODE ) ) {
+            else if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
                 alt6=9;
             }
-            else if ( (getMode() == NONE_MODE) ) {
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
                 alt6=12;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 4, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 4, input);
 
                 throw nvae;
             }
         }
-        else if ( (LA6_0=='=') && ((getMode() == NONE_MODE||getMode() == STARTTAG_MODE|| getMode() == STRING_MODE ))) {
+        else if ( (LA6_0=='=') && (( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE||getMode() == STARTTAG_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) {
             int LA6_5 = input.LA(2);
 
             if ( (getMode() == STARTTAG_MODE) ) {
                 alt6=6;
             }
-            else if ( ( getMode() == STRING_MODE ) ) {
+            else if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
                 alt6=9;
             }
-            else if ( (getMode() == NONE_MODE) ) {
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
                 alt6=12;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 5, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 5, input);
 
                 throw nvae;
             }
         }
-        else if ( (LA6_0=='\"') && ((getMode() == STARTTAG_MODE  || getMode() == STRING_MODE||getMode() == NONE_MODE|| getMode() == STRING_MODE ))) {
+        else if ( (LA6_0=='\'') && (( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE||getMode() == STARTTAG_MODE  || getMode() == SINGLE_QUOTE_STRING_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) {
             int LA6_6 = input.LA(2);
 
-            if ( (LA6_6=='\"') && ( getMode() == STRING_MODE )) {
+            if ( (LA6_6=='\'') && ( getMode() == SINGLE_QUOTE_STRING_MODE )) {
                 alt6=8;
             }
-            else if ( (getMode() == STARTTAG_MODE  || getMode() == STRING_MODE) ) {
+            else if ( (getMode() == STARTTAG_MODE  || getMode() == SINGLE_QUOTE_STRING_MODE) ) {
                 alt6=7;
             }
-            else if ( (getMode() == NONE_MODE) ) {
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
                 alt6=12;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 6, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 6, input);
+
+                throw nvae;
+            }
+        }
+        else if ( (LA6_0=='\"') && (( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE||getMode() == STARTTAG_MODE  || getMode() == DOUBLE_QUOTE_STRING_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) {
+            int LA6_7 = input.LA(2);
+
+            if ( (LA6_7=='\"') && ( getMode() == DOUBLE_QUOTE_STRING_MODE )) {
+                alt6=11;
+            }
+            else if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
+                alt6=9;
+            }
+            else if ( (getMode() == STARTTAG_MODE  || getMode() == DOUBLE_QUOTE_STRING_MODE) ) {
+                alt6=10;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 7, input);
 
                 throw nvae;
             }
         }
         else if ( ((LA6_0>='\t' && LA6_0<='\n')||(LA6_0>='\f' && LA6_0<='\r')||LA6_0==' ') ) {
-            int LA6_7 = input.LA(2);
+            int LA6_8 = input.LA(2);
 
-            if ( ( getMode() == STRING_MODE ) ) {
+            if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
                 alt6=9;
             }
-            else if ( (!((getMode() == NONE_MODE|| getMode() == STRING_MODE ))) ) {
-                alt6=10;
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
+                alt6=12;
+            }
+            else if ( (!(( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) ) {
+                alt6=13;
             }
             else if ( (getMode() == NONE_MODE) ) {
-                alt6=12;
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 7, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 8, input);
 
                 throw nvae;
             }
         }
-        else if ( ((LA6_0>='\u0000' && LA6_0<='\b')||LA6_0=='\u000B'||(LA6_0>='\u000E' && LA6_0<='\u001F')||LA6_0=='!'||(LA6_0>='#' && LA6_0<='.')||(LA6_0>=':' && LA6_0<=';')||(LA6_0>='?' && LA6_0<='@')||(LA6_0>='[' && LA6_0<='^')||LA6_0=='`'||(LA6_0>='{' && LA6_0<='\uFFFE')) && ((getMode() == NONE_MODE|| getMode() == STRING_MODE ))) {
-            int LA6_8 = input.LA(2);
+        else if ( ((LA6_0>='\u0000' && LA6_0<='\b')||LA6_0=='\u000B'||(LA6_0>='\u000E' && LA6_0<='\u001F')||LA6_0=='!'||(LA6_0>='#' && LA6_0<='&')||(LA6_0>='(' && LA6_0<='.')||(LA6_0>=':' && LA6_0<=';')||(LA6_0>='?' && LA6_0<='@')||(LA6_0>='[' && LA6_0<='^')||LA6_0=='`'||(LA6_0>='{' && LA6_0<='\uFFFE')) && (( getMode() == DOUBLE_QUOTE_STRING_MODE ||getMode() == NONE_MODE|| getMode() == SINGLE_QUOTE_STRING_MODE ))) {
+            int LA6_9 = input.LA(2);
 
-            if ( ( getMode() == STRING_MODE ) ) {
+            if ( ( getMode() == SINGLE_QUOTE_STRING_MODE ) ) {
                 alt6=9;
             }
-            else if ( (getMode() == NONE_MODE) ) {
+            else if ( ( getMode() == DOUBLE_QUOTE_STRING_MODE ) ) {
                 alt6=12;
+            }
+            else if ( (getMode() == NONE_MODE) ) {
+                alt6=15;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 8, input);
+                    new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 9, input);
 
                 throw nvae;
             }
         }
         else {
             NoViableAltException nvae =
-                new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | STRING | WS | COMMENT | OTHER );", 6, 0, input);
+                new NoViableAltException("1:1: Tokens : ( END_TAG_OPEN | END_TAG_CLOSE | START_TAG_OPEN | START_TAG_CLOSE | TAG_ATTRIBUTE | EQUALS | SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING | DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING | WS | COMMENT | OTHER );", 6, 0, input);
 
             throw nvae;
         }
@@ -980,42 +1080,63 @@ public class CFMLLexer extends Lexer {
                 }
                 break;
             case 7 :
-                // ./CFML.g:1:89: DOUBLE_QUOTE
+                // ./CFML.g:1:89: SINGLE_QUOTE
+                {
+                mSINGLE_QUOTE(); 
+
+                }
+                break;
+            case 8 :
+                // ./CFML.g:1:102: ESCAPE_SINGLE_QUOTE
+                {
+                mESCAPE_SINGLE_QUOTE(); 
+
+                }
+                break;
+            case 9 :
+                // ./CFML.g:1:122: SINGLE_QUOTE_STRING
+                {
+                mSINGLE_QUOTE_STRING(); 
+
+                }
+                break;
+            case 10 :
+                // ./CFML.g:1:142: DOUBLE_QUOTE
                 {
                 mDOUBLE_QUOTE(); 
 
                 }
                 break;
-            case 8 :
-                // ./CFML.g:1:102: ESCAPE_DOUBLE_QUOTE
+            case 11 :
+                // ./CFML.g:1:155: ESCAPE_DOUBLE_QUOTE
                 {
                 mESCAPE_DOUBLE_QUOTE(); 
 
                 }
                 break;
-            case 9 :
-                // ./CFML.g:1:122: STRING
+            case 12 :
+                // ./CFML.g:1:175: DOUBLE_QUOTE_STRING
                 {
-                mSTRING(); 
+                mDOUBLE_QUOTE_STRING(); 
 
                 }
                 break;
-            case 10 :
-                // ./CFML.g:1:129: WS
+            case 13 :
+                // ./CFML.g:1:195: WS
                 {
                 mWS(); 
 
                 }
                 break;
-            case 11 :
-                // ./CFML.g:1:132: COMMENT
+            case 14 :
+                // ./CFML.g:1:198: COMMENT
                 {
                 mCOMMENT(); 
 
                 }
                 break;
-            case 12 :
-                // ./CFML.g:1:140: OTHER
+            case 15 :
+                // ./CFML.g:1:206: OTHER
                 {
                 mOTHER(); 
 

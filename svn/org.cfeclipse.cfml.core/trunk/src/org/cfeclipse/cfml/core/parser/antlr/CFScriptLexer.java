@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFScript.g 2007-06-27 18:21:17
+// $ANTLR 3.0 ./CFScript.g 2007-07-02 14:21:41
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -60,6 +60,7 @@ public class CFScriptLexer extends Lexer {
     public static final int DOT=20;
     public static final int CLOSE_SQUARE=27;
     public static final int STRUCT_KEY=6;
+    public static final int OTHER=55;
     public static final int LINE_COMMENT=54;
     public static final int STRING_CFML=8;
     public static final int OPERATOR=16;
@@ -72,7 +73,7 @@ public class CFScriptLexer extends Lexer {
     public static final int UNDERSCORE=51;
     public static final int SEMI_COLON=10;
     public static final int OPEN_CURLY=38;
-    public static final int Tokens=55;
+    public static final int Tokens=56;
     public static final int TRY=32;
     public static final int ESCAPE_SINGLE_QUOTE=24;
     public static final int ELSEIF=7;
@@ -1668,21 +1669,47 @@ public class CFScriptLexer extends Lexer {
     }
     // $ANTLR end LINE_COMMENT
 
-    public void mTokens() throws RecognitionException {
-        // ./CFScript.g:1:10: ( FUNCTION | IF | ELSE | TRY | CATCH | RETURN | FOR | IN | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | ESCAPE_DOUBLE_QUOTE | ESCAPE_SINGLE_QUOTE | DOUBLE_QUOTE | SINGLE_QUOTE | IDENTIFIER | WS | COMMENT | LINE_COMMENT )
-        int alt12=38;
-        switch ( input.LA(1) ) {
-        case 'f':
+    // $ANTLR start OTHER
+    public final void mOTHER() throws RecognitionException {
+    traceIn("OTHER", 46);
+        try {
+            int _type = OTHER;
+            // ./CFScript.g:625:2: ( ( options {greedy=false; } : . ) )
+            // ./CFScript.g:625:2: ( options {greedy=false; } : . )
             {
+            // ./CFScript.g:625:2: ( options {greedy=false; } : . )
+            // ./CFScript.g:625:29: .
+            {
+            matchAny(); 
+
+            }
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+    traceOut("OTHER", 46);
+        }
+    }
+    // $ANTLR end OTHER
+
+    public void mTokens() throws RecognitionException {
+        // ./CFScript.g:1:10: ( FUNCTION | IF | ELSE | TRY | CATCH | RETURN | FOR | IN | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | ESCAPE_DOUBLE_QUOTE | ESCAPE_SINGLE_QUOTE | DOUBLE_QUOTE | SINGLE_QUOTE | IDENTIFIER | WS | COMMENT | LINE_COMMENT | OTHER )
+        int alt12=39;
+        int LA12_0 = input.LA(1);
+
+        if ( (LA12_0=='f') ) {
             switch ( input.LA(2) ) {
             case 'o':
                 {
-                int LA12_38 = input.LA(3);
+                int LA12_44 = input.LA(3);
 
-                if ( (LA12_38=='r') ) {
-                    int LA12_69 = input.LA(4);
+                if ( (LA12_44=='r') ) {
+                    int LA12_91 = input.LA(4);
 
-                    if ( ((LA12_69>='0' && LA12_69<='9')||(LA12_69>='A' && LA12_69<='Z')||LA12_69=='_'||(LA12_69>='a' && LA12_69<='z')) ) {
+                    if ( ((LA12_91>='0' && LA12_91<='9')||(LA12_91>='A' && LA12_91<='Z')||LA12_91=='_'||(LA12_91>='a' && LA12_91<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -1694,27 +1721,27 @@ public class CFScriptLexer extends Lexer {
                 break;
             case 'u':
                 {
-                int LA12_39 = input.LA(3);
+                int LA12_45 = input.LA(3);
 
-                if ( (LA12_39=='n') ) {
-                    int LA12_70 = input.LA(4);
+                if ( (LA12_45=='n') ) {
+                    int LA12_92 = input.LA(4);
 
-                    if ( (LA12_70=='c') ) {
-                        int LA12_94 = input.LA(5);
+                    if ( (LA12_92=='c') ) {
+                        int LA12_116 = input.LA(5);
 
-                        if ( (LA12_94=='t') ) {
-                            int LA12_106 = input.LA(6);
+                        if ( (LA12_116=='t') ) {
+                            int LA12_128 = input.LA(6);
 
-                            if ( (LA12_106=='i') ) {
-                                int LA12_115 = input.LA(7);
+                            if ( (LA12_128=='i') ) {
+                                int LA12_137 = input.LA(7);
 
-                                if ( (LA12_115=='o') ) {
-                                    int LA12_122 = input.LA(8);
+                                if ( (LA12_137=='o') ) {
+                                    int LA12_144 = input.LA(8);
 
-                                    if ( (LA12_122=='n') ) {
-                                        int LA12_126 = input.LA(9);
+                                    if ( (LA12_144=='n') ) {
+                                        int LA12_148 = input.LA(9);
 
-                                        if ( ((LA12_126>='0' && LA12_126<='9')||(LA12_126>='A' && LA12_126<='Z')||LA12_126=='_'||(LA12_126>='a' && LA12_126<='z')) ) {
+                                        if ( ((LA12_148>='0' && LA12_148<='9')||(LA12_148>='A' && LA12_148<='Z')||LA12_148=='_'||(LA12_148>='a' && LA12_148<='z')) ) {
                                             alt12=35;
                                         }
                                         else {
@@ -1742,27 +1769,14 @@ public class CFScriptLexer extends Lexer {
             default:
                 alt12=35;}
 
-            }
-            break;
-        case 'i':
-            {
+        }
+        else if ( (LA12_0=='i') ) {
             switch ( input.LA(2) ) {
-            case 'n':
-                {
-                int LA12_40 = input.LA(3);
-
-                if ( ((LA12_40>='0' && LA12_40<='9')||(LA12_40>='A' && LA12_40<='Z')||LA12_40=='_'||(LA12_40>='a' && LA12_40<='z')) ) {
-                    alt12=35;
-                }
-                else {
-                    alt12=8;}
-                }
-                break;
             case 'f':
                 {
-                int LA12_41 = input.LA(3);
+                int LA12_47 = input.LA(3);
 
-                if ( ((LA12_41>='0' && LA12_41<='9')||(LA12_41>='A' && LA12_41<='Z')||LA12_41=='_'||(LA12_41>='a' && LA12_41<='z')) ) {
+                if ( ((LA12_47>='0' && LA12_47<='9')||(LA12_47>='A' && LA12_47<='Z')||LA12_47=='_'||(LA12_47>='a' && LA12_47<='z')) ) {
                     alt12=35;
                 }
                 else {
@@ -1771,12 +1785,12 @@ public class CFScriptLexer extends Lexer {
                 break;
             case 'm':
                 {
-                int LA12_42 = input.LA(3);
+                int LA12_48 = input.LA(3);
 
-                if ( (LA12_42=='p') ) {
-                    int LA12_73 = input.LA(4);
+                if ( (LA12_48=='p') ) {
+                    int LA12_94 = input.LA(4);
 
-                    if ( ((LA12_73>='0' && LA12_73<='9')||(LA12_73>='A' && LA12_73<='Z')||LA12_73=='_'||(LA12_73>='a' && LA12_73<='z')) ) {
+                    if ( ((LA12_94>='0' && LA12_94<='9')||(LA12_94>='A' && LA12_94<='Z')||LA12_94=='_'||(LA12_94>='a' && LA12_94<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -1786,11 +1800,22 @@ public class CFScriptLexer extends Lexer {
                     alt12=35;}
                 }
                 break;
+            case 'n':
+                {
+                int LA12_49 = input.LA(3);
+
+                if ( ((LA12_49>='0' && LA12_49<='9')||(LA12_49>='A' && LA12_49<='Z')||LA12_49=='_'||(LA12_49>='a' && LA12_49<='z')) ) {
+                    alt12=35;
+                }
+                else {
+                    alt12=8;}
+                }
+                break;
             case 's':
                 {
-                int LA12_43 = input.LA(3);
+                int LA12_50 = input.LA(3);
 
-                if ( ((LA12_43>='0' && LA12_43<='9')||(LA12_43>='A' && LA12_43<='Z')||LA12_43=='_'||(LA12_43>='a' && LA12_43<='z')) ) {
+                if ( ((LA12_50>='0' && LA12_50<='9')||(LA12_50>='A' && LA12_50<='Z')||LA12_50=='_'||(LA12_50>='a' && LA12_50<='z')) ) {
                     alt12=35;
                 }
                 else {
@@ -1800,22 +1825,20 @@ public class CFScriptLexer extends Lexer {
             default:
                 alt12=35;}
 
-            }
-            break;
-        case 'e':
-            {
+        }
+        else if ( (LA12_0=='e') ) {
             switch ( input.LA(2) ) {
             case 'l':
                 {
-                int LA12_44 = input.LA(3);
+                int LA12_51 = input.LA(3);
 
-                if ( (LA12_44=='s') ) {
-                    int LA12_74 = input.LA(4);
+                if ( (LA12_51=='s') ) {
+                    int LA12_96 = input.LA(4);
 
-                    if ( (LA12_74=='e') ) {
-                        int LA12_95 = input.LA(5);
+                    if ( (LA12_96=='e') ) {
+                        int LA12_117 = input.LA(5);
 
-                        if ( ((LA12_95>='0' && LA12_95<='9')||(LA12_95>='A' && LA12_95<='Z')||LA12_95=='_'||(LA12_95>='a' && LA12_95<='z')) ) {
+                        if ( ((LA12_117>='0' && LA12_117<='9')||(LA12_117>='A' && LA12_117<='Z')||LA12_117=='_'||(LA12_117>='a' && LA12_117<='z')) ) {
                             alt12=35;
                         }
                         else {
@@ -1833,9 +1856,9 @@ public class CFScriptLexer extends Lexer {
                 switch ( input.LA(3) ) {
                 case 'v':
                     {
-                    int LA12_75 = input.LA(4);
+                    int LA12_97 = input.LA(4);
 
-                    if ( ((LA12_75>='0' && LA12_75<='9')||(LA12_75>='A' && LA12_75<='Z')||LA12_75=='_'||(LA12_75>='a' && LA12_75<='z')) ) {
+                    if ( ((LA12_97>='0' && LA12_97<='9')||(LA12_97>='A' && LA12_97<='Z')||LA12_97=='_'||(LA12_97>='a' && LA12_97<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -1916,19 +1939,17 @@ public class CFScriptLexer extends Lexer {
             default:
                 alt12=35;}
 
-            }
-            break;
-        case 't':
-            {
+        }
+        else if ( (LA12_0=='t') ) {
             int LA12_4 = input.LA(2);
 
             if ( (LA12_4=='r') ) {
-                int LA12_46 = input.LA(3);
+                int LA12_53 = input.LA(3);
 
-                if ( (LA12_46=='y') ) {
-                    int LA12_76 = input.LA(4);
+                if ( (LA12_53=='y') ) {
+                    int LA12_98 = input.LA(4);
 
-                    if ( ((LA12_76>='0' && LA12_76<='9')||(LA12_76>='A' && LA12_76<='Z')||LA12_76=='_'||(LA12_76>='a' && LA12_76<='z')) ) {
+                    if ( ((LA12_98>='0' && LA12_98<='9')||(LA12_98>='A' && LA12_98<='Z')||LA12_98=='_'||(LA12_98>='a' && LA12_98<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -1939,25 +1960,23 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case 'c':
-            {
+        }
+        else if ( (LA12_0=='c') ) {
             int LA12_5 = input.LA(2);
 
             if ( (LA12_5=='a') ) {
                 switch ( input.LA(3) ) {
                 case 't':
                     {
-                    int LA12_77 = input.LA(4);
+                    int LA12_99 = input.LA(4);
 
-                    if ( (LA12_77=='c') ) {
-                        int LA12_97 = input.LA(5);
+                    if ( (LA12_99=='c') ) {
+                        int LA12_119 = input.LA(5);
 
-                        if ( (LA12_97=='h') ) {
-                            int LA12_108 = input.LA(6);
+                        if ( (LA12_119=='h') ) {
+                            int LA12_130 = input.LA(6);
 
-                            if ( ((LA12_108>='0' && LA12_108<='9')||(LA12_108>='A' && LA12_108<='Z')||LA12_108=='_'||(LA12_108>='a' && LA12_108<='z')) ) {
+                            if ( ((LA12_130>='0' && LA12_130<='9')||(LA12_130>='A' && LA12_130<='Z')||LA12_130=='_'||(LA12_130>='a' && LA12_130<='z')) ) {
                                 alt12=35;
                             }
                             else {
@@ -1972,12 +1991,12 @@ public class CFScriptLexer extends Lexer {
                     break;
                 case 's':
                     {
-                    int LA12_78 = input.LA(4);
+                    int LA12_100 = input.LA(4);
 
-                    if ( (LA12_78=='e') ) {
-                        int LA12_98 = input.LA(5);
+                    if ( (LA12_100=='e') ) {
+                        int LA12_120 = input.LA(5);
 
-                        if ( ((LA12_98>='0' && LA12_98<='9')||(LA12_98>='A' && LA12_98<='Z')||LA12_98=='_'||(LA12_98>='a' && LA12_98<='z')) ) {
+                        if ( ((LA12_120>='0' && LA12_120<='9')||(LA12_120>='A' && LA12_120<='Z')||LA12_120=='_'||(LA12_120>='a' && LA12_120<='z')) ) {
                             alt12=35;
                         }
                         else {
@@ -1993,28 +2012,26 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case 'r':
-            {
+        }
+        else if ( (LA12_0=='r') ) {
             int LA12_6 = input.LA(2);
 
             if ( (LA12_6=='e') ) {
-                int LA12_48 = input.LA(3);
+                int LA12_55 = input.LA(3);
 
-                if ( (LA12_48=='t') ) {
-                    int LA12_79 = input.LA(4);
+                if ( (LA12_55=='t') ) {
+                    int LA12_101 = input.LA(4);
 
-                    if ( (LA12_79=='u') ) {
-                        int LA12_99 = input.LA(5);
+                    if ( (LA12_101=='u') ) {
+                        int LA12_121 = input.LA(5);
 
-                        if ( (LA12_99=='r') ) {
-                            int LA12_110 = input.LA(6);
+                        if ( (LA12_121=='r') ) {
+                            int LA12_132 = input.LA(6);
 
-                            if ( (LA12_110=='n') ) {
-                                int LA12_117 = input.LA(7);
+                            if ( (LA12_132=='n') ) {
+                                int LA12_139 = input.LA(7);
 
-                                if ( ((LA12_117>='0' && LA12_117<='9')||(LA12_117>='A' && LA12_117<='Z')||LA12_117=='_'||(LA12_117>='a' && LA12_117<='z')) ) {
+                                if ( ((LA12_139>='0' && LA12_139<='9')||(LA12_139>='A' && LA12_139<='Z')||LA12_139=='_'||(LA12_139>='a' && LA12_139<='z')) ) {
                                     alt12=35;
                                 }
                                 else {
@@ -2034,25 +2051,23 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case 'w':
-            {
+        }
+        else if ( (LA12_0=='w') ) {
             int LA12_7 = input.LA(2);
 
             if ( (LA12_7=='h') ) {
-                int LA12_49 = input.LA(3);
+                int LA12_56 = input.LA(3);
 
-                if ( (LA12_49=='i') ) {
-                    int LA12_80 = input.LA(4);
+                if ( (LA12_56=='i') ) {
+                    int LA12_102 = input.LA(4);
 
-                    if ( (LA12_80=='l') ) {
-                        int LA12_100 = input.LA(5);
+                    if ( (LA12_102=='l') ) {
+                        int LA12_122 = input.LA(5);
 
-                        if ( (LA12_100=='e') ) {
-                            int LA12_111 = input.LA(6);
+                        if ( (LA12_122=='e') ) {
+                            int LA12_133 = input.LA(6);
 
-                            if ( ((LA12_111>='0' && LA12_111<='9')||(LA12_111>='A' && LA12_111<='Z')||LA12_111=='_'||(LA12_111>='a' && LA12_111<='z')) ) {
+                            if ( ((LA12_133>='0' && LA12_133<='9')||(LA12_133>='A' && LA12_133<='Z')||LA12_133=='_'||(LA12_133>='a' && LA12_133<='z')) ) {
                                 alt12=35;
                             }
                             else {
@@ -2069,31 +2084,29 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case 'd':
-            {
+        }
+        else if ( (LA12_0=='d') ) {
             switch ( input.LA(2) ) {
             case 'e':
                 {
-                int LA12_50 = input.LA(3);
+                int LA12_57 = input.LA(3);
 
-                if ( (LA12_50=='f') ) {
-                    int LA12_81 = input.LA(4);
+                if ( (LA12_57=='f') ) {
+                    int LA12_103 = input.LA(4);
 
-                    if ( (LA12_81=='a') ) {
-                        int LA12_101 = input.LA(5);
+                    if ( (LA12_103=='a') ) {
+                        int LA12_123 = input.LA(5);
 
-                        if ( (LA12_101=='u') ) {
-                            int LA12_112 = input.LA(6);
+                        if ( (LA12_123=='u') ) {
+                            int LA12_134 = input.LA(6);
 
-                            if ( (LA12_112=='l') ) {
-                                int LA12_119 = input.LA(7);
+                            if ( (LA12_134=='l') ) {
+                                int LA12_141 = input.LA(7);
 
-                                if ( (LA12_119=='t') ) {
-                                    int LA12_124 = input.LA(8);
+                                if ( (LA12_141=='t') ) {
+                                    int LA12_146 = input.LA(8);
 
-                                    if ( ((LA12_124>='0' && LA12_124<='9')||(LA12_124>='A' && LA12_124<='Z')||LA12_124=='_'||(LA12_124>='a' && LA12_124<='z')) ) {
+                                    if ( ((LA12_146>='0' && LA12_146<='9')||(LA12_146>='A' && LA12_146<='Z')||LA12_146=='_'||(LA12_146>='a' && LA12_146<='z')) ) {
                                         alt12=35;
                                     }
                                     else {
@@ -2117,9 +2130,9 @@ public class CFScriptLexer extends Lexer {
                 break;
             case 'o':
                 {
-                int LA12_51 = input.LA(3);
+                int LA12_58 = input.LA(3);
 
-                if ( ((LA12_51>='0' && LA12_51<='9')||(LA12_51>='A' && LA12_51<='Z')||LA12_51=='_'||(LA12_51>='a' && LA12_51<='z')) ) {
+                if ( ((LA12_58>='0' && LA12_58<='9')||(LA12_58>='A' && LA12_58<='Z')||LA12_58=='_'||(LA12_58>='a' && LA12_58<='z')) ) {
                     alt12=35;
                 }
                 else {
@@ -2129,19 +2142,17 @@ public class CFScriptLexer extends Lexer {
             default:
                 alt12=35;}
 
-            }
-            break;
-        case 'n':
-            {
+        }
+        else if ( (LA12_0=='n') ) {
             switch ( input.LA(2) ) {
             case 'o':
                 {
-                int LA12_52 = input.LA(3);
+                int LA12_59 = input.LA(3);
 
-                if ( (LA12_52=='t') ) {
-                    int LA12_83 = input.LA(4);
+                if ( (LA12_59=='t') ) {
+                    int LA12_105 = input.LA(4);
 
-                    if ( ((LA12_83>='0' && LA12_83<='9')||(LA12_83>='A' && LA12_83<='Z')||LA12_83=='_'||(LA12_83>='a' && LA12_83<='z')) ) {
+                    if ( ((LA12_105>='0' && LA12_105<='9')||(LA12_105>='A' && LA12_105<='Z')||LA12_105=='_'||(LA12_105>='a' && LA12_105<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -2153,12 +2164,12 @@ public class CFScriptLexer extends Lexer {
                 break;
             case 'e':
                 {
-                int LA12_53 = input.LA(3);
+                int LA12_60 = input.LA(3);
 
-                if ( (LA12_53=='q') ) {
-                    int LA12_84 = input.LA(4);
+                if ( (LA12_60=='q') ) {
+                    int LA12_106 = input.LA(4);
 
-                    if ( ((LA12_84>='0' && LA12_84<='9')||(LA12_84>='A' && LA12_84<='Z')||LA12_84=='_'||(LA12_84>='a' && LA12_84<='z')) ) {
+                    if ( ((LA12_106>='0' && LA12_106<='9')||(LA12_106>='A' && LA12_106<='Z')||LA12_106=='_'||(LA12_106>='a' && LA12_106<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -2171,33 +2182,29 @@ public class CFScriptLexer extends Lexer {
             default:
                 alt12=35;}
 
-            }
-            break;
-        case '=':
-            {
+        }
+        else if ( (LA12_0=='=') ) {
             alt12=12;
-            }
-            break;
-        case 's':
-            {
+        }
+        else if ( (LA12_0=='s') ) {
             int LA12_11 = input.LA(2);
 
             if ( (LA12_11=='w') ) {
-                int LA12_54 = input.LA(3);
+                int LA12_62 = input.LA(3);
 
-                if ( (LA12_54=='i') ) {
-                    int LA12_85 = input.LA(4);
+                if ( (LA12_62=='i') ) {
+                    int LA12_107 = input.LA(4);
 
-                    if ( (LA12_85=='t') ) {
-                        int LA12_103 = input.LA(5);
+                    if ( (LA12_107=='t') ) {
+                        int LA12_125 = input.LA(5);
 
-                        if ( (LA12_103=='c') ) {
-                            int LA12_113 = input.LA(6);
+                        if ( (LA12_125=='c') ) {
+                            int LA12_135 = input.LA(6);
 
-                            if ( (LA12_113=='h') ) {
-                                int LA12_120 = input.LA(7);
+                            if ( (LA12_135=='h') ) {
+                                int LA12_142 = input.LA(7);
 
-                                if ( ((LA12_120>='0' && LA12_120<='9')||(LA12_120>='A' && LA12_120<='Z')||LA12_120=='_'||(LA12_120>='a' && LA12_120<='z')) ) {
+                                if ( ((LA12_142>='0' && LA12_142<='9')||(LA12_142>='A' && LA12_142<='Z')||LA12_142=='_'||(LA12_142>='a' && LA12_142<='z')) ) {
                                     alt12=35;
                                 }
                                 else {
@@ -2217,25 +2224,23 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case 'b':
-            {
+        }
+        else if ( (LA12_0=='b') ) {
             int LA12_12 = input.LA(2);
 
             if ( (LA12_12=='r') ) {
-                int LA12_55 = input.LA(3);
+                int LA12_63 = input.LA(3);
 
-                if ( (LA12_55=='e') ) {
-                    int LA12_86 = input.LA(4);
+                if ( (LA12_63=='e') ) {
+                    int LA12_108 = input.LA(4);
 
-                    if ( (LA12_86=='a') ) {
-                        int LA12_104 = input.LA(5);
+                    if ( (LA12_108=='a') ) {
+                        int LA12_126 = input.LA(5);
 
-                        if ( (LA12_104=='k') ) {
-                            int LA12_114 = input.LA(6);
+                        if ( (LA12_126=='k') ) {
+                            int LA12_136 = input.LA(6);
 
-                            if ( ((LA12_114>='0' && LA12_114<='9')||(LA12_114>='A' && LA12_114<='Z')||LA12_114=='_'||(LA12_114>='a' && LA12_114<='z')) ) {
+                            if ( ((LA12_136>='0' && LA12_136<='9')||(LA12_136>='A' && LA12_136<='Z')||LA12_136=='_'||(LA12_136>='a' && LA12_136<='z')) ) {
                                 alt12=35;
                             }
                             else {
@@ -2252,25 +2257,17 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case ':':
-            {
+        }
+        else if ( (LA12_0==':') ) {
             alt12=17;
-            }
-            break;
-        case '&':
-        case '*':
-        case '+':
-        case '-':
-        case '\\':
-        case '^':
-            {
+        }
+        else if ( (LA12_0=='+') ) {
             alt12=18;
-            }
-            break;
-        case '/':
-            {
+        }
+        else if ( (LA12_0=='*') ) {
+            alt12=18;
+        }
+        else if ( (LA12_0=='/') ) {
             switch ( input.LA(2) ) {
             case '/':
                 {
@@ -2285,221 +2282,225 @@ public class CFScriptLexer extends Lexer {
             default:
                 alt12=18;}
 
-            }
-            break;
-        case 'm':
-            {
-            int LA12_16 = input.LA(2);
-
-            if ( (LA12_16=='o') ) {
-                int LA12_58 = input.LA(3);
-
-                if ( (LA12_58=='d') ) {
-                    int LA12_87 = input.LA(4);
-
-                    if ( ((LA12_87>='0' && LA12_87<='9')||(LA12_87>='A' && LA12_87<='Z')||LA12_87=='_'||(LA12_87>='a' && LA12_87<='z')) ) {
-                        alt12=35;
-                    }
-                    else {
-                        alt12=18;}
-                }
-                else {
-                    alt12=35;}
-            }
-            else {
-                alt12=35;}
-            }
-            break;
-        case 'g':
-            {
-            int LA12_17 = input.LA(2);
-
-            if ( (LA12_17=='t') ) {
-                switch ( input.LA(3) ) {
-                case 'e':
-                    {
-                    int LA12_88 = input.LA(4);
-
-                    if ( ((LA12_88>='0' && LA12_88<='9')||(LA12_88>='A' && LA12_88<='Z')||LA12_88=='_'||(LA12_88>='a' && LA12_88<='z')) ) {
-                        alt12=35;
-                    }
-                    else {
-                        alt12=18;}
-                    }
-                    break;
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case 'A':
-                case 'B':
-                case 'C':
-                case 'D':
-                case 'E':
-                case 'F':
-                case 'G':
-                case 'H':
-                case 'I':
-                case 'J':
-                case 'K':
-                case 'L':
-                case 'M':
-                case 'N':
-                case 'O':
-                case 'P':
-                case 'Q':
-                case 'R':
-                case 'S':
-                case 'T':
-                case 'U':
-                case 'V':
-                case 'W':
-                case 'X':
-                case 'Y':
-                case 'Z':
-                case '_':
-                case 'a':
-                case 'b':
-                case 'c':
-                case 'd':
-                case 'f':
-                case 'g':
-                case 'h':
-                case 'i':
-                case 'j':
-                case 'k':
-                case 'l':
-                case 'm':
-                case 'n':
-                case 'o':
-                case 'p':
-                case 'q':
-                case 'r':
-                case 's':
-                case 't':
-                case 'u':
-                case 'v':
-                case 'w':
-                case 'x':
-                case 'y':
-                case 'z':
-                    {
-                    alt12=35;
-                    }
-                    break;
-                default:
-                    alt12=18;}
-
-            }
-            else {
-                alt12=35;}
-            }
-            break;
-        case 'l':
-            {
-            int LA12_18 = input.LA(2);
-
-            if ( (LA12_18=='t') ) {
-                switch ( input.LA(3) ) {
-                case 'e':
-                    {
-                    int LA12_89 = input.LA(4);
-
-                    if ( ((LA12_89>='0' && LA12_89<='9')||(LA12_89>='A' && LA12_89<='Z')||LA12_89=='_'||(LA12_89>='a' && LA12_89<='z')) ) {
-                        alt12=35;
-                    }
-                    else {
-                        alt12=18;}
-                    }
-                    break;
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case 'A':
-                case 'B':
-                case 'C':
-                case 'D':
-                case 'E':
-                case 'F':
-                case 'G':
-                case 'H':
-                case 'I':
-                case 'J':
-                case 'K':
-                case 'L':
-                case 'M':
-                case 'N':
-                case 'O':
-                case 'P':
-                case 'Q':
-                case 'R':
-                case 'S':
-                case 'T':
-                case 'U':
-                case 'V':
-                case 'W':
-                case 'X':
-                case 'Y':
-                case 'Z':
-                case '_':
-                case 'a':
-                case 'b':
-                case 'c':
-                case 'd':
-                case 'f':
-                case 'g':
-                case 'h':
-                case 'i':
-                case 'j':
-                case 'k':
-                case 'l':
-                case 'm':
-                case 'n':
-                case 'o':
-                case 'p':
-                case 'q':
-                case 'r':
-                case 's':
-                case 't':
-                case 'u':
-                case 'v':
-                case 'w':
-                case 'x':
-                case 'y':
-                case 'z':
-                    {
-                    alt12=35;
-                    }
-                    break;
-                default:
-                    alt12=18;}
-
-            }
-            else {
-                alt12=35;}
-            }
-            break;
-        case 'o':
-            {
+        }
+        else if ( (LA12_0=='\\') ) {
+            alt12=18;
+        }
+        else if ( (LA12_0=='^') ) {
+            alt12=18;
+        }
+        else if ( (LA12_0=='m') ) {
             int LA12_19 = input.LA(2);
 
-            if ( (LA12_19=='r') ) {
-                int LA12_61 = input.LA(3);
+            if ( (LA12_19=='o') ) {
+                int LA12_68 = input.LA(3);
 
-                if ( ((LA12_61>='0' && LA12_61<='9')||(LA12_61>='A' && LA12_61<='Z')||LA12_61=='_'||(LA12_61>='a' && LA12_61<='z')) ) {
+                if ( (LA12_68=='d') ) {
+                    int LA12_109 = input.LA(4);
+
+                    if ( ((LA12_109>='0' && LA12_109<='9')||(LA12_109>='A' && LA12_109<='Z')||LA12_109=='_'||(LA12_109>='a' && LA12_109<='z')) ) {
+                        alt12=35;
+                    }
+                    else {
+                        alt12=18;}
+                }
+                else {
+                    alt12=35;}
+            }
+            else {
+                alt12=35;}
+        }
+        else if ( (LA12_0=='-') ) {
+            alt12=18;
+        }
+        else if ( (LA12_0=='&') ) {
+            alt12=18;
+        }
+        else if ( (LA12_0=='g') ) {
+            int LA12_22 = input.LA(2);
+
+            if ( (LA12_22=='t') ) {
+                switch ( input.LA(3) ) {
+                case 'e':
+                    {
+                    int LA12_110 = input.LA(4);
+
+                    if ( ((LA12_110>='0' && LA12_110<='9')||(LA12_110>='A' && LA12_110<='Z')||LA12_110=='_'||(LA12_110>='a' && LA12_110<='z')) ) {
+                        alt12=35;
+                    }
+                    else {
+                        alt12=18;}
+                    }
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'E':
+                case 'F':
+                case 'G':
+                case 'H':
+                case 'I':
+                case 'J':
+                case 'K':
+                case 'L':
+                case 'M':
+                case 'N':
+                case 'O':
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                case 'T':
+                case 'U':
+                case 'V':
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                case '_':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                    {
+                    alt12=35;
+                    }
+                    break;
+                default:
+                    alt12=18;}
+
+            }
+            else {
+                alt12=35;}
+        }
+        else if ( (LA12_0=='l') ) {
+            int LA12_23 = input.LA(2);
+
+            if ( (LA12_23=='t') ) {
+                switch ( input.LA(3) ) {
+                case 'e':
+                    {
+                    int LA12_111 = input.LA(4);
+
+                    if ( ((LA12_111>='0' && LA12_111<='9')||(LA12_111>='A' && LA12_111<='Z')||LA12_111=='_'||(LA12_111>='a' && LA12_111<='z')) ) {
+                        alt12=35;
+                    }
+                    else {
+                        alt12=18;}
+                    }
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'E':
+                case 'F':
+                case 'G':
+                case 'H':
+                case 'I':
+                case 'J':
+                case 'K':
+                case 'L':
+                case 'M':
+                case 'N':
+                case 'O':
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                case 'T':
+                case 'U':
+                case 'V':
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                case '_':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                    {
+                    alt12=35;
+                    }
+                    break;
+                default:
+                    alt12=18;}
+
+            }
+            else {
+                alt12=35;}
+        }
+        else if ( (LA12_0=='o') ) {
+            int LA12_24 = input.LA(2);
+
+            if ( (LA12_24=='r') ) {
+                int LA12_71 = input.LA(3);
+
+                if ( ((LA12_71>='0' && LA12_71<='9')||(LA12_71>='A' && LA12_71<='Z')||LA12_71=='_'||(LA12_71>='a' && LA12_71<='z')) ) {
                     alt12=35;
                 }
                 else {
@@ -2507,19 +2508,17 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case 'a':
-            {
-            int LA12_20 = input.LA(2);
+        }
+        else if ( (LA12_0=='a') ) {
+            int LA12_25 = input.LA(2);
 
-            if ( (LA12_20=='n') ) {
-                int LA12_62 = input.LA(3);
+            if ( (LA12_25=='n') ) {
+                int LA12_72 = input.LA(3);
 
-                if ( (LA12_62=='d') ) {
-                    int LA12_90 = input.LA(4);
+                if ( (LA12_72=='d') ) {
+                    int LA12_112 = input.LA(4);
 
-                    if ( ((LA12_90>='0' && LA12_90<='9')||(LA12_90>='A' && LA12_90<='Z')||LA12_90=='_'||(LA12_90>='a' && LA12_90<='z')) ) {
+                    if ( ((LA12_112>='0' && LA12_112<='9')||(LA12_112>='A' && LA12_112<='Z')||LA12_112=='_'||(LA12_112>='a' && LA12_112<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -2530,19 +2529,17 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case 'x':
-            {
-            int LA12_21 = input.LA(2);
+        }
+        else if ( (LA12_0=='x') ) {
+            int LA12_26 = input.LA(2);
 
-            if ( (LA12_21=='o') ) {
-                int LA12_63 = input.LA(3);
+            if ( (LA12_26=='o') ) {
+                int LA12_73 = input.LA(3);
 
-                if ( (LA12_63=='r') ) {
-                    int LA12_91 = input.LA(4);
+                if ( (LA12_73=='r') ) {
+                    int LA12_113 = input.LA(4);
 
-                    if ( ((LA12_91>='0' && LA12_91<='9')||(LA12_91>='A' && LA12_91<='Z')||LA12_91=='_'||(LA12_91>='a' && LA12_91<='z')) ) {
+                    if ( ((LA12_113>='0' && LA12_113<='9')||(LA12_113>='A' && LA12_113<='Z')||LA12_113=='_'||(LA12_113>='a' && LA12_113<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -2553,69 +2550,47 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case ',':
-            {
+        }
+        else if ( (LA12_0==',') ) {
             alt12=19;
-            }
-            break;
-        case ';':
-            {
+        }
+        else if ( (LA12_0==';') ) {
             alt12=20;
-            }
-            break;
-        case '#':
-            {
+        }
+        else if ( (LA12_0=='#') ) {
             alt12=21;
-            }
-            break;
-        case '(':
-            {
+        }
+        else if ( (LA12_0=='(') ) {
             alt12=22;
-            }
-            break;
-        case ')':
-            {
+        }
+        else if ( (LA12_0==')') ) {
             alt12=23;
-            }
-            break;
-        case '[':
-            {
+        }
+        else if ( (LA12_0=='[') ) {
             alt12=24;
-            }
-            break;
-        case ']':
-            {
+        }
+        else if ( (LA12_0==']') ) {
             alt12=25;
-            }
-            break;
-        case '{':
-            {
+        }
+        else if ( (LA12_0=='{') ) {
             alt12=26;
-            }
-            break;
-        case '}':
-            {
+        }
+        else if ( (LA12_0=='}') ) {
             alt12=27;
-            }
-            break;
-        case '.':
-            {
+        }
+        else if ( (LA12_0=='.') ) {
             alt12=28;
-            }
-            break;
-        case 'v':
-            {
-            int LA12_32 = input.LA(2);
+        }
+        else if ( (LA12_0=='v') ) {
+            int LA12_37 = input.LA(2);
 
-            if ( (LA12_32=='a') ) {
-                int LA12_64 = input.LA(3);
+            if ( (LA12_37=='a') ) {
+                int LA12_84 = input.LA(3);
 
-                if ( (LA12_64=='r') ) {
-                    int LA12_92 = input.LA(4);
+                if ( (LA12_84=='r') ) {
+                    int LA12_114 = input.LA(4);
 
-                    if ( ((LA12_92>='0' && LA12_92<='9')||(LA12_92>='A' && LA12_92<='Z')||LA12_92=='_'||(LA12_92>='a' && LA12_92<='z')) ) {
+                    if ( ((LA12_114>='0' && LA12_114<='9')||(LA12_114>='A' && LA12_114<='Z')||LA12_114=='_'||(LA12_114>='a' && LA12_114<='z')) ) {
                         alt12=35;
                     }
                     else {
@@ -2626,99 +2601,43 @@ public class CFScriptLexer extends Lexer {
             }
             else {
                 alt12=35;}
-            }
-            break;
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            {
+        }
+        else if ( ((LA12_0>='0' && LA12_0<='9')) ) {
             alt12=30;
-            }
-            break;
-        case '\"':
-            {
-            int LA12_34 = input.LA(2);
+        }
+        else if ( (LA12_0=='\"') ) {
+            int LA12_39 = input.LA(2);
 
-            if ( (LA12_34=='\"') ) {
+            if ( (LA12_39=='\"') ) {
                 alt12=31;
             }
             else {
                 alt12=33;}
-            }
-            break;
-        case '\'':
-            {
-            int LA12_35 = input.LA(2);
+        }
+        else if ( (LA12_0=='\'') ) {
+            int LA12_40 = input.LA(2);
 
-            if ( (LA12_35=='\'') ) {
+            if ( (LA12_40=='\'') ) {
                 alt12=32;
             }
             else {
                 alt12=34;}
-            }
-            break;
-        case 'A':
-        case 'B':
-        case 'C':
-        case 'D':
-        case 'E':
-        case 'F':
-        case 'G':
-        case 'H':
-        case 'I':
-        case 'J':
-        case 'K':
-        case 'L':
-        case 'M':
-        case 'N':
-        case 'O':
-        case 'P':
-        case 'Q':
-        case 'R':
-        case 'S':
-        case 'T':
-        case 'U':
-        case 'V':
-        case 'W':
-        case 'X':
-        case 'Y':
-        case 'Z':
-        case '_':
-        case 'h':
-        case 'j':
-        case 'k':
-        case 'p':
-        case 'q':
-        case 'u':
-        case 'y':
-        case 'z':
-            {
+        }
+        else if ( ((LA12_0>='A' && LA12_0<='Z')||LA12_0=='_'||LA12_0=='h'||(LA12_0>='j' && LA12_0<='k')||(LA12_0>='p' && LA12_0<='q')||LA12_0=='u'||(LA12_0>='y' && LA12_0<='z')) ) {
             alt12=35;
-            }
-            break;
-        case '\t':
-        case '\n':
-        case '\f':
-        case '\r':
-        case ' ':
-            {
+        }
+        else if ( ((LA12_0>='\t' && LA12_0<='\n')||(LA12_0>='\f' && LA12_0<='\r')||LA12_0==' ') ) {
             alt12=36;
-            }
-            break;
-        default:
+        }
+        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||LA12_0=='\u000B'||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='$' && LA12_0<='%')||LA12_0=='<'||(LA12_0>='>' && LA12_0<='@')||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFE')) ) {
+            alt12=39;
+        }
+        else {
             NoViableAltException nvae =
-                new NoViableAltException("1:1: Tokens : ( FUNCTION | IF | ELSE | TRY | CATCH | RETURN | FOR | IN | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | ESCAPE_DOUBLE_QUOTE | ESCAPE_SINGLE_QUOTE | DOUBLE_QUOTE | SINGLE_QUOTE | IDENTIFIER | WS | COMMENT | LINE_COMMENT );", 12, 0, input);
+                new NoViableAltException("1:1: Tokens : ( FUNCTION | IF | ELSE | TRY | CATCH | RETURN | FOR | IN | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | ESCAPE_DOUBLE_QUOTE | ESCAPE_SINGLE_QUOTE | DOUBLE_QUOTE | SINGLE_QUOTE | IDENTIFIER | WS | COMMENT | LINE_COMMENT | OTHER );", 12, 0, input);
 
             throw nvae;
         }
-
         switch (alt12) {
             case 1 :
                 // ./CFScript.g:1:10: FUNCTION
@@ -2983,6 +2902,13 @@ public class CFScriptLexer extends Lexer {
                 // ./CFScript.g:1:308: LINE_COMMENT
                 {
                 mLINE_COMMENT(); 
+
+                }
+                break;
+            case 39 :
+                // ./CFScript.g:1:321: OTHER
+                {
+                mOTHER(); 
 
                 }
                 break;

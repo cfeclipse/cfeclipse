@@ -619,3 +619,8 @@ LINE_COMMENT
 		$channel=COMMENT_CHANNEL; //90 is the comment channel
 	}
 	;
+
+OTHER
+	:
+	(options {greedy=false;} : . )
+	;

@@ -108,7 +108,8 @@ THE SOFTWARE.
 	private static int NONE_MODE = 0;
 	private static int ENDTAG_MODE = 1;
 	private static int STARTTAG_MODE = 2;
-	private static int STRING_MODE = 3;
+	private static int DOUBLE_QUOTE_STRING_MODE = 3;
+	private static int SINGLE_QUOTE_STRING_MODE = 4;
 
 	
 	private int mode;
@@ -362,7 +363,11 @@ tagAttribute
 	
 stringLiteral
 	:
-	DOUBLE_QUOTE (ESCAPE_DOUBLE_QUOTE | STRING)* DOUBLE_QUOTE
+	start=DOUBLE_QUOTE (ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING)* end=DOUBLE_QUOTE
+	-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
+	|
+	start=SINGLE_QUOTE (ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING)* end=SINGLE_QUOTE
+	-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
 	//(start=DOUBLE_QUOTE doubleQuoteString end=DOUBLE_QUOTE)
 	//-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
 	//|
@@ -370,17 +375,6 @@ stringLiteral
 	//-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
 	;
 
-/*
-singleQuoteString
-	:	
-	( ESCAPE_SINGLE_QUOTE  | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE ) )
-	;*/
-/*
-doubleQuoteString
-	:
-	STRING_DOUBLE
-	;
-*/
 /*script
 	:
 	(TAG_ATTRIBUTE | CFML | HASH | DOUBLE_QUOTE | SINGLE_QUOTE )*
@@ -437,14 +431,42 @@ EQUALS
 	'='
 	;
 
+SINGLE_QUOTE
+	:
+	{getMode() == STARTTAG_MODE  || getMode() == SINGLE_QUOTE_STRING_MODE}?=>
+	'\''
+	{
+		if(getMode() == STARTTAG_MODE)
+		{
+			setMode(SINGLE_QUOTE_STRING_MODE);
+		}
+		else
+		{
+			setMode(STARTTAG_MODE);
+		}
+	}
+	;
+	
+ESCAPE_SINGLE_QUOTE
+	:
+	{ getMode() == SINGLE_QUOTE_STRING_MODE }?=>
+	'\'\''
+	;	
+
+SINGLE_QUOTE_STRING
+	:
+	{ getMode() == SINGLE_QUOTE_STRING_MODE }?=>
+	~('\'')
+	;
+
 DOUBLE_QUOTE
 	:
-	{getMode() == STARTTAG_MODE  || getMode() == STRING_MODE}?=>
+	{getMode() == STARTTAG_MODE  || getMode() == DOUBLE_QUOTE_STRING_MODE}?=>
 	'"'
 	{
 		if(getMode() == STARTTAG_MODE)
 		{
-			setMode(STRING_MODE);
+			setMode(DOUBLE_QUOTE_STRING_MODE);
 		}
 		else
 		{
@@ -455,26 +477,17 @@ DOUBLE_QUOTE
 
 ESCAPE_DOUBLE_QUOTE
 	:
-	{ getMode() == STRING_MODE }?=>
+	{ getMode() == DOUBLE_QUOTE_STRING_MODE }?=>
 	'""'
 	;
 	
-STRING
+DOUBLE_QUOTE_STRING
 	:
-	{ getMode() == STRING_MODE }?=>
+	{ getMode() == DOUBLE_QUOTE_STRING_MODE }?=>
 	~('"')
 	;
 
 /* fragments */
-fragment ESCAPE_SINGLE_QUOTE
-	:
-	'\'\''
-	;
-
-fragment SINGLE_QUOTE
-	:
-	'\''
-	;
 
 fragment TAG_NAME
 	:
