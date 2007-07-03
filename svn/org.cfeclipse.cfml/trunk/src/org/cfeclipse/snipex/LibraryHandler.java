@@ -1,5 +1,6 @@
 package org.cfeclipse.snipex;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 import java.io.File;
@@ -33,8 +34,11 @@ public class LibraryHandler extends DefaultHandler {
 		library.setSnippets( new Vector() );
 		
 		try {
-			String dir = System.getProperty("user.dir")+"/cache";
-			System.out.println(dir);
+			//TODO Change where the libraries are stored...
+			
+			//String dir = System.getProperty("user.dir")+"/cache";
+			String dir = CFMLPlugin.getDefault().getStateLocation().toString()+"/snipex";
+			
 			File cacheFolder = new File(dir);
 			if( !cacheFolder.exists() ) {
 				cacheFolder.mkdir();
@@ -45,11 +49,12 @@ public class LibraryHandler extends DefaultHandler {
 			
 			File cache;
 			if(query != null) {
-				cache = new File( dir+"\\lib."+src.getHost()+src.getPath().replace('/', '.')+"."+query.replace('&', '.').replace('=', '_')+".xml");
+				cache = new File( dir+"/lib."+src.getHost()+src.getPath().replace('/', '.')+"."+query.replace('&', '.').replace('=', '_')+".xml");
 			} else {
-				cache = new File( dir+"\\lib."+src.getHost()+src.getPath().replace('/', '.')+".xml");
+				cache = new File( dir+"/lib."+src.getHost()+src.getPath().replace('/', '.')+".xml");
 			}
 			
+			System.out.println(cache);
 			long age = new Date().getTime()-cache.lastModified();
 			
 			// If cache file not found or is old create it
