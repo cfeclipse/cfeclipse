@@ -3,7 +3,7 @@
 <plugin
    id="org.cfeclipse.cfml"
    name="CFML Plug-in"
-   version="1.3.1.3"
+   version="1.3.1.5"
    provider-name="The CFEclipse Crew"
    class="org.cfeclipse.cfml.CFMLPlugin">
 
@@ -1374,13 +1374,15 @@
             category="org.cfeclipse.cfml"
             name="%view.name.5"
             id="org.cfeclipse.cfml.views.explorer.FileExplorerView"/>
+         
+      <!-- 
       <view
             icon="icons/obj16/document.gif"
             class="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"
             category="org.cfeclipse.cfml"
             name="%view.name.6"
             id="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"/>
-      <!-- 
+      
       <view
             category="org.cfeclipse.cfml"
             class="org.cfeclipse.cfml.views.Toolbar"
@@ -1852,7 +1854,7 @@
          <run class="org.cfeclipse.cfml.builders.CFComponentBuilder"/>
       </builder>
    </extension>
-<!--
+
    <extension
          point="org.eclipse.ui.exportWizards">
       <category
@@ -1864,5 +1866,26 @@
             id="org.cfeclipse.cfml.snipex.exportapplication"
             name="Export Application to a SnipEx "/>
    </extension>
--->
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            id="org.cfeclipse.cfml.wizards.snipex.application.sampleCategory"
+            name="SnipEx"/>
+      <wizard
+            category="org.cfeclipse.cfml.wizards.snipex.application.sampleCategory"
+            class="org.cfeclipse.cfml.wizards.snipex.application.ImportApplicationWizard"
+            icon="icons/sample.gif"
+            id="org.cfeclipse.cfml.wizards.snipex.application.ImportApplicationWizard"
+            name="Import Application">
+         <description>
+            Import a file from the local file system into the workspace.
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.elementFactories">
+      <factory
+            class="org.cfeclipse.cfml.editors.CFJavaFileEditorInputFactory"
+            id="org.cfeclipse.cfml.CFJavaFileEditorInputFactory"/>
+   </extension>   
 </plugin>
