@@ -25,6 +25,8 @@ THE SOFTWARE.
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
 import org.cfeclipse.cfml.core.parser.antlr.ANTLRNoCaseStringStream;
+import org.cfeclipse.cfml.core.parser.antlr.CFScriptParser.codeStatement_return;
+import org.cfeclipse.cfml.core.parser.antlr.CFScriptParser.setStatement_return;
 
 import java.util.*;
 
@@ -128,32 +130,16 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 		Tree ast = null;
 		org.antlr.runtime.BitSet bit = new org.antlr.runtime.BitSet();
 		bit.add(OTHER);
-		List otherTokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex(), bit);
+		List tokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex(), bit);
 		
 		//in case something goes wrong.
-		if(otherTokens == null)
+		if(tokens == null)
 		{
 			return ast;
 		}
 		
-		StringBuffer buffer = new StringBuffer();
-		
-		for(Object t : otherTokens)
-		{
-			buffer.append(((Token)t).getText());
-		}
-		
-		System.out.println("** CFScript parsing: " + buffer.toString());
-		
-		CharStream input = new ANTLRNoCaseStringStream(buffer.toString());
-        CFScriptLexer lexer = new CFScriptLexer(input);
-        
-        lexer.addObserver(this);
-        
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        CFScriptParser parser = new CFScriptParser(tokens);
-        
-        parser.addObserver(this);
+		CFScriptLexer lexer = setupCFScriptLexer(tokens);       
+        CFScriptParser parser = setupCFScriptParser(lexer);
         
         try
         {
@@ -166,12 +152,10 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
         	getObservable().notifyObservers(event);
         }
         
-        lexer.removeObserver(this);
-        parser.removeObserver(this);
+        teardownCFScriptParsing(lexer, parser);
 		
 		return ast;
 	}
-	
 	
 	/**
 	 * Island parser for String literals
@@ -181,32 +165,16 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 	protected Tree parseStringLiteral(Token start, Token stop)
 	{
 		Tree ast = null;
-		List otherTokens = ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex());
+		List tokens = getCommonTokens(start, stop);
 		
 		//in case something goes wrong.
-		if(otherTokens == null)
+		if(tokens == null)
 		{
 			return ast;
 		}
 		
-		StringBuffer buffer = new StringBuffer();
-		
-		for(Object t : otherTokens)
-		{
-			buffer.append(((Token)t).getText());
-		}
-		
-		System.out.println("** String parsing: " + buffer.toString());
-		
-		CharStream input = new ANTLRNoCaseStringStream(buffer.toString());
-        CFScriptLexer lexer = new CFScriptLexer(input);
-        
-        lexer.addObserver(this);
-        
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        CFScriptParser parser = new CFScriptParser(tokens);
-        
-        parser.addObserver(this);
+		CFScriptLexer lexer = setupCFScriptLexer(tokens);        
+        CFScriptParser parser = setupCFScriptParser(lexer);
         
         try
         {
@@ -219,12 +187,129 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
         	getObservable().notifyObservers(event);
         }
         
-        lexer.removeObserver(this);
-        parser.removeObserver(this);
+        teardownCFScriptParsing(lexer, parser);
 		
 		return ast;
 	}
+	
+	/**
+	 * Island parser for a cfml condition (non assignment)
+	 * 
+	 * @param start the start token 
+	 * @param the stop token
+	 * @return the Tree
+	 */
+	protected Tree parseCFMLCondition(Token start, Token stop)
+	{
+		Tree ast = null;
+		List tokens = getCommonTokens(start, stop);
+		
+		//in case something goes wrong.
+		if(tokens == null)
+		{
+			return ast;
+		}
+		
+		System.out.println("parsing condition: " + tokens.toString());
+		
+		CFScriptLexer lexer = setupCFScriptLexer(tokens);        
+        CFScriptParser parser = setupCFScriptParser(lexer);
+        
+        try
+        {
+        	CFScriptParser.codeStatement_return root = parser.codeStatement();
+        	ast = (Tree)root.getTree();
+        }
+        catch(RecognitionException exc)
+        {
+        	ErrorEvent event = new ErrorEvent(exc, "CFML Condition Error");
+        	getObservable().notifyObservers(event);
+        }
+        
+        teardownCFScriptParsing(lexer, parser);
+		
+		return ast;
+	}
+	
+	/**
+	 * Island parser for a cfml assignment operation
+	 * @param start the start token 
+	 * @param the stop token
+	 * @return the Tree
+	 */
+	protected Tree parseCFMLAssignment(Token start, Token stop)
+	{
+		Tree ast = null;
+		List tokens = getCommonTokens(start, stop);
+		
+		//in case something goes wrong.
+		if(tokens == null)
+		{
+			return ast;
+		}
+		
+		CFScriptLexer lexer = setupCFScriptLexer(tokens);        
+        CFScriptParser parser = setupCFScriptParser(lexer);
+        
+        try
+        {
+        	CFScriptParser.setStatement_return root = parser.setStatement();
+        	ast = (Tree)root.getTree();
+        }
+        catch(RecognitionException exc)
+        {
+        	ErrorEvent event = new ErrorEvent(exc, "CFML Assignment error");
+        	getObservable().notifyObservers(event);
+        }
+        
+        teardownCFScriptParsing(lexer, parser);
+		
+		return ast;	
+	}	
 
+	private void teardownCFScriptParsing(CFScriptLexer lexer, CFScriptParser parser)
+	{
+		lexer.removeObserver(this);
+        parser.removeObserver(this);
+	}
+
+	private CFScriptParser setupCFScriptParser(CFScriptLexer lexer)
+	{
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+        CFScriptParser parser = new CFScriptParser(tokens);
+        
+        parser.addObserver(this);
+		return parser;
+	}
+
+	private CFScriptLexer setupCFScriptLexer(List tokens)
+	{
+		String cfml = collectStringFromTokens(tokens);
+		
+		CharStream input = new ANTLRNoCaseStringStream(cfml);
+        CFScriptLexer lexer = new CFScriptLexer(input);
+        
+        lexer.addObserver(this);
+		return lexer;
+	}
+
+	private List getCommonTokens(Token start, Token stop)
+	{
+		return ((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex());
+	}
+
+	private String collectStringFromTokens(List tokens)
+	{
+		StringBuffer buffer = new StringBuffer();
+		
+		for(Object t : tokens)
+		{
+			buffer.append(((Token)t).getText());
+		}
+		
+		return buffer.toString();
+	}	
+	
 	private ErrorObservable getObservable()
 	{
 		return observable;

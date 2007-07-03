@@ -41,45 +41,38 @@ public class DefaultCFMLDictionary implements ICFMLDictionary
 	
 	public boolean isColdFusionTag(String tagName)
 	{
-		System.out.println("******* isColdFusionTag: " + tagName);
-		if(tagName.toLowerCase().startsWith("cf"))
-		{
-			return true;
-		}
+		boolean isColdFusion = tagName.toLowerCase().startsWith("cf"); 
 		
-		return false;
+		System.out.println("isColdFusionTag: " + tagName + ":" + isColdFusion);
+		
+		return isColdFusion;
 	}
 
 	public boolean usesAttributes(String tagName)
 	{
 		tagName = tagName.toLowerCase();
-		System.out.println("******* usesAttributes: " + tagName);
-		if(tagName.equals("cfset") || tagName.equals("cfif") || tagName.equals("cfelseif"))
-		{
-			return false;
-		}
-		return true;
+		boolean usesAttributes = !(tagName.equals("cfset") || tagName.equals("cfif") || tagName.equals("cfelseif")); 
+		
+		System.out.println("usesAttributes: " + tagName + ":" + usesAttributes);
+		
+		return usesAttributes;
 	}
 
 	public boolean allowsCFMLAssignment(String tagName)
 	{
-		System.out.println("******* allowsCFMLAssignment: " + tagName);
-		if(tagName.equals("cfset"))
-		{			
-			return true;
-		}
-		return false;
+		boolean assignment = tagName.toLowerCase().equals("cfset");
+		
+		System.out.println("allowsCFMLAssignment: " + tagName + ":" + assignment);
+		
+		return assignment;
 	}
 
 	public boolean allowsCFMLCondition(String tagName)
 	{
-		System.out.println("******* allowsCFMLCondition: " + tagName);
-		if(tagName.equals("cfif") || tagName.equals("cfelseif"))
-		{
-			return false;
-		}
-		return false;
+		boolean condition = tagName.equals("cfif") || tagName.equals("cfelseif") || tagName.equals("cfreturn");
+		
+		System.out.println("allowsCFMLCondition: " + tagName + ":" + condition);
+		
+		return condition;
 	}
-	
-	
 }

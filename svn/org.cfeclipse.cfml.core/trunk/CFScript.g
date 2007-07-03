@@ -178,7 +178,7 @@ returnStatement
 
 cfmlBasicStatement
 	:
-	cfmlValueStatement (OPERATOR codeStatement)?
+	cfmlValueStatement (OPERATOR codeStatement)? 
 	;
 
 
@@ -232,7 +232,7 @@ stringLiteral
 
 identifier
 	:
-	IDENTIFIER (struct)?
+	IDENTIFIER (struct)? (EOF!)?
 	;
 	
 struct

@@ -34,6 +34,7 @@ tokens
 	CUSTOMTAG;
 	IMPORTTAG;
 	STRING_LITERAL;
+	CFML_STATEMENT;
 }
 
 scope tagScope {
@@ -132,7 +133,9 @@ THE SOFTWARE.
 	*/
 	protected boolean isColdFusionTag(String name)
 	{		
-		return name.toLowerCase().startsWith("cf");
+		boolean isColdfusion = name.toLowerCase().startsWith("cf");
+		System.out.println("isColdFusion: " + name + " : " + isColdfusion);
+		return isColdfusion;
 	}
 
 	/**
@@ -159,26 +162,11 @@ THE SOFTWARE.
 		return false;
 	}
 	
-	/*
-	returns endTagName
-	*/
-	protected Tree parseCFScript(Token start, Token stop)
-	{
-		BitSet bit = new BitSet();
-		bit.add(OTHER);
-		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex(), bit));
-		return null;
-	}
-	
-	protected Tree parseStringLiteral(Token start, Token stop)
-	{
-		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex()));
-		return null;
-	}
-	
 	protected boolean allowsCFMLAssignment(String tagName)
 	{
-		return false;
+		boolean assign = tagName.toLowerCase().equals("cfset");
+		System.out.println("allowsCFMLAssignment : " + tagName + " : " + assign);
+		return assign;
 	}
 
 	protected boolean allowsCFMLCondition(String tagName)
@@ -188,7 +176,9 @@ THE SOFTWARE.
 
 	protected boolean usesAttributes(String name)
 	{
-		return name.toLowerCase().startsWith("cf");
+		boolean attrib = (name.toLowerCase().startsWith("cf") && !name.toLowerCase().equals("cfset"));
+		System.out.println("usesAttributes: " + name + " : " + attrib);
+		return attrib;
 	}	
 
 	/**
@@ -210,6 +200,28 @@ THE SOFTWARE.
 	{
 		tagStack = stack;
 	}
+		
+	protected Tree parseStringLiteral(Token start, Token stop)
+	{
+		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex()));
+		return null;
+	}
+
+	protected Tree parseCFScript(Token start, Token stop)
+	{
+		return null;
+	}
+	
+	protected Tree parseCFMLCondition(Token start, Token stop)
+	{
+		return null;
+	}
+	
+	protected Tree parseCFMLAssignment(Token start, Token stop)
+	{
+		return null;
+	}	
+			
 }
 
 /* Parser */
@@ -338,7 +350,7 @@ tagInnerValues
 		(isImportTag($tagScope::name))
 	}?=> tagAttribute*
 	)
-	/*|
+	|
 	(
 	{
 	(	
@@ -352,8 +364,8 @@ tagInnerValues
 		)
 	)
 	}?=> script
-	)*/
-	| 
+	)
+	|
 	;
 
 tagAttribute
@@ -368,17 +380,21 @@ stringLiteral
 	|
 	start=SINGLE_QUOTE (ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING)* end=SINGLE_QUOTE
 	-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
-	//(start=DOUBLE_QUOTE doubleQuoteString end=DOUBLE_QUOTE)
-	//-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
-	//|
-	//(start=SINGLE_QUOTE singleQuoteString* end=SINGLE_QUOTE)
-	//-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
 	;
 
-/*script
+script
 	:
-	(TAG_ATTRIBUTE | CFML | HASH | DOUBLE_QUOTE | SINGLE_QUOTE )*
-	;*/
+	{
+	Token start = input.LT(1);
+	}
+	(TAG_ATTRIBUTE | stringLiteral | HASH | EQUALS | CFML)*
+	{
+	Token stop = input.LT(-1);
+	System.out.println("start: " + start.getText() + " stop: " + stop.getText());
+	}
+	-> { allowsCFMLCondition($tagScope::name) }? ^(CFML_STATEMENT { parseCFMLCondition(start, stop) })
+	-> ^(CFML_STATEMENT { parseCFMLAssignment(start, stop) })
+	;
 
 /* Lexer */
 
@@ -485,6 +501,16 @@ DOUBLE_QUOTE_STRING
 	:
 	{ getMode() == DOUBLE_QUOTE_STRING_MODE }?=>
 	~('"')
+	;
+
+HASH
+	:
+	'#'
+	;
+
+CFML
+	:
+	'*'|'.'|'+'|'('|')'|'%'|'['|']'|'^'|'&'|'\/'|'\\'|'-'
 	;
 
 /* fragments */
