@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
 
+import org.cfeclipse.cfml.editors.CFJavaFileEditorInput;
 import org.cfeclipse.cfml.util.AlertUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -158,35 +159,10 @@ public class LocalFileSystem implements IFileProvider
 		return result;
 	}
 
-	protected Class getFileOrFileStoreClass()
-	{
-		Class result = null;
-		try
-		{
-			result = Class.forName("org.eclipse.core.filesystem.IFileStore");
-		}
-		catch (ClassNotFoundException e)
-		{
-			result = java.io.File.class;
-		}
-		return result;
-	}
 
-	protected IEditorInput getJavaFileEditorInput(Object f)
+	protected IEditorInput getJavaFileEditorInput(File f)
 	{		
-		IEditorInput result = null;
-		try
-		{
-			Class inputClass = Class.forName("org.eclipse.ui.internal.editors.text.JavaFileEditorInput");
-			
-			// the 3.1 class takes a simple File object, the 3.2 class takes an IFileStore
-			// currently f is the appropriate thing already, so we just need the right class to get the right constructor
-			Constructor c = inputClass.getConstructor(new Class[]{getFileOrFileStoreClass()});
-			result = (IEditorInput)c.newInstance(new Object[]{f});
-		} catch (Throwable t) {
-			result = null;
-		}
-		return result;
+		return new CFJavaFileEditorInput(f);
 	}
 
 	public IEditorInput getEditorInput(String filename)
@@ -208,10 +184,8 @@ public class LocalFileSystem implements IFileProvider
 		// This is truly an external file, so lets get the store for it and open
 		// it!
 
-		// get the filestore in a eclipse patform unspecific way
-		Object f = getFileOrFileStore(path.toFile());
-
-		return getJavaFileEditorInput(f);
+		// get our special JavaFileEditorInput
+		return getJavaFileEditorInput(path.toFile());
 	}
 
 	public void dispose()

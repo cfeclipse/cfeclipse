@@ -12,6 +12,7 @@ import java.io.IOException;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileType;
+import org.cfeclipse.cfml.editors.CFJavaFileEditorInput;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.RemoteFile;
@@ -58,7 +59,6 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
@@ -598,8 +598,8 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
            return false;
         ISelection sel = context.getSelection();
         Object input = context.getInput();
-        if (input instanceof JavaFileEditorInput) {
-        	filePath = ((JavaFileEditorInput)input).getPath(input).toString();
+        if (input instanceof CFJavaFileEditorInput) {
+        	filePath = ((CFJavaFileEditorInput)input).getPath(input).toString();
         }
 		else {
 			filePath = ((FileEditorInput)input).getFile().getRawLocation().toString();
