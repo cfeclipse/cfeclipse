@@ -16,7 +16,8 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
+// Removed for Eclipse 3.3
+//import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -56,12 +57,13 @@ public class LocateInFileSystemAction implements IEditorActionDelegate {
 		{	
 			String filePath;
 			try {
-				if (editor.getEditorInput() instanceof JavaFileEditorInput) {
-					filePath = ((JavaFileEditorInput)editor.getEditorInput()).getPath(editor.getEditorInput()).toString();
-				}
-				else {
+			// Removed for Eclipse 3.3
+			//	if (editor.getEditorInput() instanceof JavaFileEditorInput) {
+				//	filePath = ((JavaFileEditorInput)editor.getEditorInput()).getPath(editor.getEditorInput()).toString();
+			//	}
+			//	else {
 					filePath = ((FileEditorInput)editor.getEditorInput()).getFile().getRawLocation().toString();
-				}
+			//	}
 				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				FileExplorerView explorer = (FileExplorerView)page.showView(FileExplorerView.ID_FILE_EXPLORER);
 				explorer.showFile(filePath);

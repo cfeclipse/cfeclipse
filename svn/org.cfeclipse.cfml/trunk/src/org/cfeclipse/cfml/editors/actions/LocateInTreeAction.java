@@ -19,7 +19,8 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
+//removed for Eclipse 3.3.
+//import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.navigator.ResourceNavigator;
@@ -61,14 +62,15 @@ public class LocateInTreeAction implements IEditorActionDelegate {
 			try {
 				IEditorInput input = editor.getEditorInput();
 				IPath path = null;
-				if (input instanceof JavaFileEditorInput) {
-					JavaFileEditorInput jInput = (JavaFileEditorInput)input;
-					path = jInput.getPath(input);
-				} else if (input instanceof FileEditorInput){
+				//Removed for Eclipse 3.3
+				//if (input instanceof JavaFileEditorInput) {
+				//	JavaFileEditorInput jInput = (JavaFileEditorInput)input;
+				//	path = jInput.getPath(input);
+				//} else if (input instanceof FileEditorInput){
 					FileEditorInput fInput = (FileEditorInput)input;
 					path = fInput.getPath();
 				
-				}
+				//}
 				
 				
 				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -81,8 +83,8 @@ public class LocateInTreeAction implements IEditorActionDelegate {
 				} else {
 					try{
 						if(input instanceof FileEditorInput){
-							FileEditorInput fInput = (FileEditorInput)input;
-							IFile theFile = fInput.getFile();
+							FileEditorInput fInput2 = (FileEditorInput)input;
+							IFile theFile = fInput2.getFile();
 							
 							IFile nonWorkspaceFile = root.getFileForLocation(theFile.getFullPath());
 							
