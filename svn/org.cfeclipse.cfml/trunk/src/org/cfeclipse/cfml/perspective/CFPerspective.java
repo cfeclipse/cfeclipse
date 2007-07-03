@@ -75,7 +75,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		bottom.addView(IPageLayout.ID_PROBLEM_VIEW);
 		bottom.addView(IPageLayout.ID_BOOKMARKS);
 		bottom.addView(BrowserView.ID_BROWSER);
-		bottom.addView(FtpLogView.ID_FTP_LOG_VIEW);
+		//bottom.addView(FtpLogView.ID_FTP_LOG_VIEW); //Removed as we dont do anything with this view anymore
 		
 		//views to the right
 		IFolderLayout right = layout.createFolder(
