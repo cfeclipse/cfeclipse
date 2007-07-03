@@ -29,6 +29,16 @@
 		]]></help>
 				<values/>
 			</parameter>
+			
+			
+			<parameter name="attributecollection" type="String" required="false">
+				<help><![CDATA[
+					You can specify this tag's attributes in an attributeCollection whose value is a 
+					structure. Specify the structure name in the attributeCollection and use the tag’s 
+					attribute names as structure keys.
+					]]></help>
+				<values/>
+			</parameter>
 		</tag>
 <!--
 	cfapplet
@@ -1466,6 +1476,25 @@
 		]]></help>
 				<values/>
 			</parameter>
+			
+			<parameter name="implements" type="String" required="false">
+				<help><![CDATA[
+					Name of the ColdFusion interface or interfaces 
+					that this component implements. If the 
+					component implements an interface, it must 
+					define all the functions in the interface, and the 
+					function definitions must conform to the 
+					definitions specified in the interface. For more 
+					information, see cfinterface. 
+					A component can implement any number of 
+					interfaces. To specify multiple interface, use a 
+					comma delimited list, of the format 
+					interface1,interface2.
+		]]></help>
+				<values/>
+			</parameter>
+			
+			
 			<parameter name="output" type="boolean" required="false">
 				<help><![CDATA[
 			Specifies whether constructor code in the component can
@@ -1499,12 +1528,7 @@
 		]]></help>
 				<values/>
 			</parameter>
-			<parameter name="name" type="String" required="false">
-				<help><![CDATA[
-			Name for the component
-		]]></help>
-				<values/>
-			</parameter>
+			
 			<parameter name="style" type="String" required="false">
 				<help><![CDATA[
 			Specifies whether a CFC used for web services uses
@@ -1888,15 +1912,14 @@
 			</parameter>
 	
 	
-			<parameter name="source" type="String" required="false">
+			<parameter name="bind" type="String" required="false">
 				<help><![CDATA[
-					A URL that returns the container contents. 
-					ColdFusion uses standard page path resolution 
-					rules. 
+					A bind expression that returns the container 
+					contents. 
 					Note: If a CFML page specified in this attribute 
 					contains tags that use AJAX features, such as 
 					cfform, cfgrid, and cfwindow, you must use a 
-					cfajaximport tag on the page with the cfpod tag. 
+					 tag on the page with the  tag. 
 					For more information, see cfajaximport.
 					]]></help>
 			</parameter>
@@ -5710,7 +5733,7 @@
 	cfinclude
 		template = "template_name"
 -->
-		<tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfinclude" single="true" xmlstyle="false">
+		<tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfinclude" single="true" xmlstyle="false" hybrid="true">
 			<help><![CDATA[
 		Embeds references to CFML pages in CFML. You can embed
 		cfinclude tags recursively. For another way to encapsulate
@@ -8216,7 +8239,7 @@
 		and optionally retrieves the user's groups.
 	]]></help>
 			<return type="cfntauthenticate" parameter="result"/>
-			<parameter name="name" type="String" required="true">
+			<parameter name="username" type="String" required="true">
 				<help><![CDATA[
 			User's login name.
 		]]></help>
@@ -12372,7 +12395,22 @@
 		with elements. To display icons, you can use the img values
 		that CFML provides, or reference your own icons.
 	]]></help>
-			<parameter name="value" type="String" required="true">
+			<parameter name="bind" type="String" required="false">
+				<help><![CDATA[
+				A bind expression specifying a CFC of JavaScript
+				function that dynamically gets all tree nodes. You can use
+				this attribute only at the top level of the tree, and in this
+				case, the tree can have only cftreeitem tag.
+				If you use the bind attribute, the only other allowed
+				attribute is onBindError. For details creating trees that
+				using binding, see "Using HTML format trees" in Chapter
+				33, "Using AJAX UI Components and Features" in
+				ColdFusion Developer's Guide
+		]]></help>
+				<values/>
+			</parameter>
+		
+			<parameter name="value" type="String" required="false">
 				<help><![CDATA[
 			Value passed when cfform is submitted. When populating a
 			tree with data from a cfquery, specify columns in a
@@ -12930,7 +12968,25 @@
 				]]></help>
 
 			</parameter>
+			<parameter name="csssrc" type="String" required="false">
+				<help><![CDATA[
+					Specifies the URL, relative to the web root, of the 
+					directory that contains the CSS files used by 
+					ColdFusion AJAX features, with the exception of 
+					the rich text editor. This directory must have the 
+					same directory structure, and contain the same 
+					CSS files, and image files required by the CSS 
+					files, as the 
+					web_root/CFIDE/scripts/ajax/resources 
+					directory. 
+					This attribute lets you create different custom 
+					styles for ColdFusion AJAX controls in different 
+					applications. 
+				
 
+				]]></help>
+
+			</parameter>
 
 			<parameter name="tags" type="String" required="false">
 				<help><![CDATA[
@@ -12940,6 +12996,15 @@
 
 				]]></help>
 
+			</parameter>
+			
+			<parameter name="attributecollection" type="String" required="false">
+				<help><![CDATA[
+					You can specify this tag's attributes in an attributeCollection whose value is a 
+					structure. Specify the structure name in the attributeCollection and use the tag’s 
+					attribute names as structure keys.
+					]]></help>
+				<values/>
 			</parameter>
 
 		</tag>
@@ -13631,7 +13696,7 @@
 					<value option="respond"/>
 				</values>
 			</parameter>
-			<parameter name="attachmentPath" type="String" required="false">
+			<parameter name="attachmentpath" type="String" required="false">
 				<help><![CDATA[
 			The file path of the destination directory.
 			If the directory does not exist, ColdFusion creates it.
@@ -13661,7 +13726,7 @@
 					<selectedValue attributeName="action" value="modify" required="true"/>
 				</triggers>
 			</parameter>
-			<parameter name="generateUnique Filenames" type="Boolean" required="false">
+			<parameter name="generateUniquefilenames" type="Boolean" required="false">
 				<help><![CDATA[
 			A Boolean value specifying whether to generate unique file names if multiple attachments have the same file names.
 			Case "yes": 3x myfile.txt -> myfile.txt, myfile1.txt, and myfile2.txt. (optional, default=no)
