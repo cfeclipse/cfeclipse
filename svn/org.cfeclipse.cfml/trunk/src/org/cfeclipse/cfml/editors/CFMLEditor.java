@@ -32,14 +32,9 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.EditorPartListener;
-import org.cfeclipse.cfml.dictionary.DictionaryManager;
-import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
-import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
 import org.cfeclipse.cfml.editors.actions.GenericEncloserAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
@@ -60,11 +55,9 @@ import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.editors.ui.CFMLEditorToolbar;
-import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
-import org.cfeclipse.cfml.util.CFDocUtils;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.core.resources.IFile;
@@ -78,18 +71,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.LineNumberRulerColumn;
@@ -113,10 +103,8 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
-import org.eclipse.ui.IPartService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
-import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ShowInContext;
@@ -129,7 +117,6 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
-import org.eclipse.ui.texteditor.StatusTextEditor;
 
 
 /**
@@ -456,9 +443,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		String fileName = input.getName();
 		File file = new File(fileName);
 		
-		if (input instanceof JavaFileEditorInput) {
-			JavaFileEditorInput tmp;			
-			tmp = (JavaFileEditorInput) input;
+		if (input instanceof CFJavaFileEditorInput) {
+			CFJavaFileEditorInput tmp;			
+			tmp = (CFJavaFileEditorInput) input;
 			IPath path = tmp.getPath();
 			file = path.toFile();
 			if (!file.exists()) {
@@ -470,12 +457,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 					String command = "";					
 					String osName = System.getProperty("os.name");					
 					
-					if (osName.contains(new StringBuffer("Windows"))) {
+					if (osName.indexOf("Windows") > -1) {
 						if (mode)
 							command = "attrib +r " + path.toOSString();
 						else 
 							command = "attrib -r " + path.toOSString();							
-					} else if (osName.contains(new StringBuffer("Linux"))) {
+					} else if (osName.indexOf("Linux") > -1) {
 						if (mode)
 							command = "chmod 444 " + path.toOSString();
 						else 
@@ -535,26 +522,17 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
             //          Sets the current file path to the status line
 
             IEditorInput input= getEditorInput();
-
             IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
-
             String message;
-
             if (original != null)
 
             {
-
                   message = original.getLocation().toString();
-
             } else {
-
                   message = input.getToolTipText();
-
             }
 
             getEditorSite().getActionBars().getStatusLineManager().setMessage(message);
-
-           
 
             //this.getEditorSite().getWorkbenchWindow().getShell().setToolTipText(original.getLocation().toString());
 
@@ -576,6 +554,22 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 	private void createDragAndDrop(ProjectionViewer projectionViewer) {
 
+		// this is implemented by default in Eclipse 3.3, so we just exit out
+		// we do this by checking for JavaFileEditorInput, which 3.3 removed
+		Class c = null;
+		try
+		{
+			c = Class.forName("org.eclipse.ui.internal.editors.text.JavaFileEditorInput");
+		} catch (ClassNotFoundException cnfe)
+		{
+			//nothing, we are already null;
+		}
+
+		if (c == null) // ie we are on 3.3 or higher
+		{
+			return;
+		}
+		
 		SelectionCursorListener cursorListener = new SelectionCursorListener(this,
 				projectionViewer);
 		projectionViewer.getTextWidget().addMouseMoveListener(cursorListener);
@@ -1061,6 +1055,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			if (sourceViewer != null) {
 				sourceViewer.getTextWidget().setTabs(
 				        this.configuration.getTabWidth(sourceViewer));
+				
 			}
 		}
 		setBackgroundColor();

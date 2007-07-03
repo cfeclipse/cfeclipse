@@ -65,7 +65,6 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
-import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
 
@@ -135,9 +134,9 @@ public class CFDocumentProvider extends FileDocumentProvider
 					document.clearAllMarkers();
 					document.parseDocument();
 				}
-			    else if(element instanceof JavaFileEditorInput) 
+			    else if(element instanceof CFJavaFileEditorInput) 
 				{
-			        String filepath = ((JavaFileEditorInput)element).getPath(element).toString();
+			        String filepath = ((CFJavaFileEditorInput)element).getPath(element).toString();
 			        IPath path = new Path(filepath);
 			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
 			        IFile file = new ExternalFile(path,workspace);
@@ -172,9 +171,9 @@ public class CFDocumentProvider extends FileDocumentProvider
 
 	protected boolean setDocumentContent(IDocument document, IEditorInput editorInput, String encoding) throws CoreException 
 	{
-		if(editorInput instanceof JavaFileEditorInput) 
+		if(editorInput instanceof CFJavaFileEditorInput) 
 		{
-			JavaFileEditorInput input = (JavaFileEditorInput) editorInput;
+			CFJavaFileEditorInput input = (CFJavaFileEditorInput) editorInput;
 			FileInputStream contentStream = null;
 			
 			try 
@@ -277,9 +276,9 @@ public class CFDocumentProvider extends FileDocumentProvider
 			}
 		}
 		
-		if(element instanceof JavaFileEditorInput) 
+		if(element instanceof CFJavaFileEditorInput) 
 		{
-		    JavaFileEditorInput input = (JavaFileEditorInput)element;
+		    CFJavaFileEditorInput input = (CFJavaFileEditorInput)element;
 	        return input.getPath(input).toFile().canWrite();
 		}
 		
@@ -294,9 +293,9 @@ public class CFDocumentProvider extends FileDocumentProvider
 	
 	public boolean isReadOnly(Object element) 
 	{
-	    if(element instanceof JavaFileEditorInput) 
+	    if(element instanceof CFJavaFileEditorInput) 
 	    {
-	    		JavaFileEditorInput input = (JavaFileEditorInput)element;
+	    		CFJavaFileEditorInput input = (CFJavaFileEditorInput)element;
 	    		return !input.getPath(input).toFile().canWrite();
 	    }
 	    
