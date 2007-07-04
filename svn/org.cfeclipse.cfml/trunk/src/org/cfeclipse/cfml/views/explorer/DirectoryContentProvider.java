@@ -93,14 +93,21 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	        	
 	        } else if (parentElement instanceof RemoteFile) {
 	        	
-	        	//TODO: Fix this, its gettting the full URL, rather than the path
+	        	
 	            RemoteFile file = (RemoteFile)parentElement;
 	            String name = file.getFileItem().getName().getPath();
 	            results = fileProvider.getChildren(name,directoryFilter);
 	            
 	        } else if (parentElement instanceof FileSystemRoot) {
 	            FileSystemRoot file = (FileSystemRoot)parentElement;
+	            
+	          //TODO: Fix this, its gettting the full URL, rather than the path
+	            if(file.getType().equalsIgnoreCase("file")){
+	            	  results =  fileProvider.getChildren("",directoryFilter);
+	            }
+	            else{
 	            results =  fileProvider.getChildren(file.getPath(),directoryFilter);
+	            }
 	        } 
 	        
 	        else {

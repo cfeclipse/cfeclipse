@@ -250,7 +250,6 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 		directoryTreeViewer.addDoubleClickListener(new IDoubleClickListener() {
 
 			public void doubleClick(DoubleClickEvent event) {
-				// TODO Auto-generated method stub
 				ISelection selection = event.getSelection();
 				TreeSelection sel = (TreeSelection)event.getSelection();
 				Object firstElement = sel.getFirstElement();
