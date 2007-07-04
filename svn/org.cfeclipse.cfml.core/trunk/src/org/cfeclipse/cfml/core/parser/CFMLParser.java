@@ -66,7 +66,7 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 	
 	public void displayRecognitionError(String[] tokenNames, RecognitionException e)
 	{
-		reportError(e, getErrorMessage(e, tokenNames));
+		reportError(e, "cfml: " + getErrorMessage(e, tokenNames));
 		
 		super.displayRecognitionError(tokenNames, e);
 	}
@@ -164,6 +164,8 @@ public class CFMLParser extends org.cfeclipse.cfml.core.parser.antlr.CFMLParser 
 	 */
 	protected Tree parseStringLiteral(Token start, Token stop)
 	{
+		System.out.println("*** parse string literal");
+		
 		Tree ast = null;
 		List tokens = getCommonTokens(start, stop);
 		

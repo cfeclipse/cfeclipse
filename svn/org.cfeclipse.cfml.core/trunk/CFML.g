@@ -111,8 +111,8 @@ THE SOFTWARE.
 	private static int STARTTAG_MODE = 2;
 	private static int DOUBLE_QUOTE_STRING_MODE = 3;
 	private static int SINGLE_QUOTE_STRING_MODE = 4;
+	private static int HASH_CFML_MODE = 5;
 
-	
 	private int mode;
 	
 	private int getMode()
@@ -203,7 +203,6 @@ THE SOFTWARE.
 		
 	protected Tree parseStringLiteral(Token start, Token stop)
 	{
-		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex()));
 		return null;
 	}
 
@@ -220,8 +219,7 @@ THE SOFTWARE.
 	protected Tree parseCFMLAssignment(Token start, Token stop)
 	{
 		return null;
-	}	
-			
+	}
 }
 
 /* Parser */
@@ -280,6 +278,7 @@ scope tagScope;
 
 tagContent
 	:
+	hashCFML*
 	cfml
 		(
 		{
@@ -366,6 +365,11 @@ tagInnerValues
 	}?=> script
 	)
 	|
+	(
+	{
+			!isColdFusionTag($tagScope::name)
+	}?=> tagAttribute*
+	)
 	;
 
 tagAttribute
@@ -375,11 +379,15 @@ tagAttribute
 	
 stringLiteral
 	:
-	start=DOUBLE_QUOTE (ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING)* end=DOUBLE_QUOTE
-	-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
+	(
+		start=DOUBLE_QUOTE (ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING)* end=DOUBLE_QUOTE
+		-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
+	)
 	|
-	start=SINGLE_QUOTE (ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING)* end=SINGLE_QUOTE
-	-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
+	(
+		start=SINGLE_QUOTE (ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING)* end=SINGLE_QUOTE
+		-> ^(STRING_LITERAL { (parseStringLiteral($start, $end)) })
+	)
 	;
 
 script
@@ -387,13 +395,18 @@ script
 	{
 	Token start = input.LT(1);
 	}
-	(TAG_ATTRIBUTE | stringLiteral | HASH | EQUALS | CFML)*
+	(TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML)*
 	{
 	Token stop = input.LT(-1);
 	System.out.println("start: " + start.getText() + " stop: " + stop.getText());
 	}
 	-> { allowsCFMLCondition($tagScope::name) }? ^(CFML_STATEMENT { parseCFMLCondition(start, stop) })
 	-> ^(CFML_STATEMENT { parseCFMLAssignment(start, stop) })
+	;
+
+hashCFML
+	:
+	HASH (ESCAPE_HASH | HASH_CFML)* HASH
 	;
 
 /* Lexer */
@@ -502,15 +515,39 @@ DOUBLE_QUOTE_STRING
 	{ getMode() == DOUBLE_QUOTE_STRING_MODE }?=>
 	~('"')
 	;
-
+	
 HASH
 	:
+	{getMode() == NONE_MODE  || getMode() == HASH_CFML_MODE}?=>
 	'#'
+	{
+		if(getMode() == NONE_MODE)
+		{
+			setMode(HASH_CFML_MODE);
+		}
+		else
+		{
+			setMode(NONE_MODE);
+		}
+	}
 	;
 
-CFML
+ESCAPE_HASH
 	:
-	'*'|'.'|'+'|'('|')'|'%'|'['|']'|'^'|'&'|'\/'|'\\'|'-'
+	{ getMode() == HASH_CFML_MODE }?=>
+	'##'
+	;
+	
+HASH_CFML
+	:
+	{ getMode() == HASH_CFML_MODE }?=>
+	~('#')
+	;	
+
+CFML
+	:	
+	{getMode() == STARTTAG_MODE}?=>
+	('*'|'.'|'+'|'('|')'|'%'|'['|']'|'^'|'&'|'\/'|'\\'|'-'|'#')
 	;
 
 /* fragments */

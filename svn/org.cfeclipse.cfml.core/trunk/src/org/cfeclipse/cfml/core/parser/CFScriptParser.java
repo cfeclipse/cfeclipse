@@ -20,7 +20,7 @@ public class CFScriptParser extends	org.cfeclipse.cfml.core.parser.antlr.CFScrip
 	
 	public void displayRecognitionError(String[] tokenNames, RecognitionException e)
 	{
-		reportError(e, getErrorMessage(e, tokenNames));
+		reportError(e, "cfscript: " + getErrorMessage(e, tokenNames));
 		
 		super.displayRecognitionError(tokenNames, e);
 	}

@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ./CFML.g 2007-07-03 16:57:58
+// $ANTLR 3.0 ./CFML.g 2007-07-04 16:09:30
 
 package org.cfeclipse.cfml.core.parser.antlr;
 
@@ -38,35 +38,37 @@ import org.antlr.runtime.tree.*;
 
 public class CFMLParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "CFTAG", "CUSTOMTAG", "IMPORTTAG", "STRING_LITERAL", "CFML_STATEMENT", "START_TAG_OPEN", "START_TAG_CLOSE", "END_TAG_OPEN", "END_TAG_CLOSE", "TAG_ATTRIBUTE", "EQUALS", "DOUBLE_QUOTE", "ESCAPE_DOUBLE_QUOTE", "DOUBLE_QUOTE_STRING", "SINGLE_QUOTE", "ESCAPE_SINGLE_QUOTE", "SINGLE_QUOTE_STRING", "HASH", "CFML", "TAG_NAME", "LETTER", "DIGIT", "UNDERSCORE", "TAG_IDENT", "COLON", "WS", "COMMENT", "OTHER"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "CFTAG", "CUSTOMTAG", "IMPORTTAG", "STRING_LITERAL", "CFML_STATEMENT", "START_TAG_OPEN", "START_TAG_CLOSE", "END_TAG_OPEN", "END_TAG_CLOSE", "TAG_ATTRIBUTE", "EQUALS", "DOUBLE_QUOTE", "ESCAPE_DOUBLE_QUOTE", "DOUBLE_QUOTE_STRING", "SINGLE_QUOTE", "ESCAPE_SINGLE_QUOTE", "SINGLE_QUOTE_STRING", "CFML", "HASH", "ESCAPE_HASH", "HASH_CFML", "TAG_NAME", "LETTER", "DIGIT", "UNDERSCORE", "TAG_IDENT", "COLON", "WS", "COMMENT", "OTHER"
     };
     public static final int TAG_ATTRIBUTE=1013;
-    public static final int OTHER=1031;
-    public static final int LETTER=1024;
+    public static final int OTHER=1033;
+    public static final int LETTER=1026;
     public static final int CFTAG=1004;
     public static final int DOUBLE_QUOTE=1015;
+    public static final int HASH_CFML=1024;
     public static final int CFML_STATEMENT=1008;
-    public static final int HASH=1021;
+    public static final int HASH=1022;
     public static final int END_TAG_OPEN=1011;
-    public static final int UNDERSCORE=1026;
+    public static final int UNDERSCORE=1028;
     public static final int EQUALS=1014;
     public static final int EOF=-1;
     public static final int START_TAG_CLOSE=1010;
     public static final int ESCAPE_SINGLE_QUOTE=1019;
-    public static final int COLON=1028;
-    public static final int TAG_NAME=1023;
+    public static final int COLON=1030;
+    public static final int TAG_NAME=1025;
     public static final int CUSTOMTAG=1005;
     public static final int SINGLE_QUOTE=1018;
     public static final int SINGLE_QUOTE_STRING=1020;
-    public static final int WS=1029;
+    public static final int WS=1031;
     public static final int STRING_LITERAL=1007;
-    public static final int TAG_IDENT=1027;
+    public static final int TAG_IDENT=1029;
     public static final int DOUBLE_QUOTE_STRING=1017;
     public static final int END_TAG_CLOSE=1012;
+    public static final int ESCAPE_HASH=1023;
     public static final int ESCAPE_DOUBLE_QUOTE=1016;
-    public static final int DIGIT=1025;
-    public static final int COMMENT=1030;
-    public static final int CFML=1022;
+    public static final int DIGIT=1027;
+    public static final int COMMENT=1032;
+    public static final int CFML=1021;
     public static final int START_TAG_OPEN=1009;
     public static final int IMPORTTAG=1006;
     protected static class tagScope_scope {
@@ -168,7 +170,6 @@ public class CFMLParser extends Parser {
     		
     	protected Tree parseStringLiteral(Token start, Token stop)
     	{
-    		System.out.println(((CommonTokenStream)input).getTokens(start.getTokenIndex(), stop.getTokenIndex()));
     		return null;
     	}
 
@@ -185,8 +186,7 @@ public class CFMLParser extends Parser {
     	protected Tree parseCFMLAssignment(Token start, Token stop)
     	{
     		return null;
-    	}	
-    			
+    	}
 
 
     public static class cfml_return extends ParserRuleReturnScope {
@@ -195,7 +195,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start cfml
-    // ./CFML.g:229:1: cfml : ( tag )* ;
+    // ./CFML.g:227:1: cfml : ( tag )* ;
     public final cfml_return cfml() throws RecognitionException {
     traceIn("cfml", 1);
         cfml_return retval = new cfml_return();
@@ -208,12 +208,12 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // ./CFML.g:231:2: ( ( tag )* )
-            // ./CFML.g:231:2: ( tag )*
+            // ./CFML.g:229:2: ( ( tag )* )
+            // ./CFML.g:229:2: ( tag )*
             {
             root_0 = (Object)adaptor.nil();
 
-            // ./CFML.g:231:2: ( tag )*
+            // ./CFML.g:229:2: ( tag )*
             loop1:
             do {
                 int alt1=2;
@@ -226,7 +226,7 @@ public class CFMLParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // ./CFML.g:231:2: tag
+            	    // ./CFML.g:229:2: tag
             	    {
             	    pushFollow(FOLLOW_tag_in_cfml100);
             	    tag1=tag();
@@ -268,7 +268,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tag
-    // ./CFML.g:234:1: tag : startTag ;
+    // ./CFML.g:232:1: tag : startTag ;
     public final tag_return tag() throws RecognitionException {
     traceIn("tag", 2);
         tag_return retval = new tag_return();
@@ -281,8 +281,8 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // ./CFML.g:236:3: ( startTag )
-            // ./CFML.g:236:3: startTag
+            // ./CFML.g:234:3: ( startTag )
+            // ./CFML.g:234:3: startTag
             {
             root_0 = (Object)adaptor.nil();
 
@@ -317,7 +317,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start startTag
-    // ./CFML.g:239:1: startTag : (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) ;
+    // ./CFML.g:237:1: startTag : (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) ;
     public final startTag_return startTag() throws RecognitionException {
     traceIn("startTag", 3);
         tagScope_stack.push(new tagScope_scope());
@@ -341,11 +341,11 @@ public class CFMLParser extends Parser {
         RewriteRuleSubtreeStream stream_tagInnerValues=new RewriteRuleSubtreeStream(adaptor,"rule tagInnerValues");
         RewriteRuleSubtreeStream stream_tagContent=new RewriteRuleSubtreeStream(adaptor,"rule tagContent");
         try {
-            // ./CFML.g:242:2: ( (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) )
-            // ./CFML.g:242:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
+            // ./CFML.g:240:2: ( (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) )
+            // ./CFML.g:240:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
             {
-            // ./CFML.g:242:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
-            // ./CFML.g:243:2: sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
+            // ./CFML.g:240:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
+            // ./CFML.g:241:2: sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
             {
             sto=(Token)input.LT(1);
             match(input,START_TAG_OPEN,FOLLOW_START_TAG_OPEN_in_startTag136); 
@@ -382,12 +382,12 @@ public class CFMLParser extends Parser {
             _fsp--;
 
             stream_tagContent.add(tc.getTree());
-            // ./CFML.g:266:3: ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
-            // ./CFML.g:267:3: 
+            // ./CFML.g:264:3: ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
+            // ./CFML.g:265:3: 
             {
 
             // AST REWRITE
-            // elements: tagInnerValues, START_TAG_CLOSE, START_TAG_CLOSE, START_TAG_CLOSE, START_TAG_CLOSE, START_TAG_OPEN, tagContent, tagInnerValues, tagContent, tagInnerValues, tagContent, tagInnerValues, tagContent
+            // elements: tagInnerValues, START_TAG_CLOSE, START_TAG_CLOSE, tagContent, tagContent, tagContent, tagContent, START_TAG_CLOSE, START_TAG_CLOSE, START_TAG_OPEN, tagInnerValues, tagInnerValues, tagInnerValues
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -396,9 +396,9 @@ public class CFMLParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 267:3: -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+            // 265:3: -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
             if (isImportTag(name)) {
-                // ./CFML.g:267:27: ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+                // ./CFML.g:265:27: ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(IMPORTTAG, sto), root_1);
@@ -411,9 +411,9 @@ public class CFMLParser extends Parser {
                 }
 
             }
-            else // 268:3: -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+            else // 266:3: -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
             if (isCustomTag(name)) {
-                // ./CFML.g:268:27: ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+                // ./CFML.g:266:27: ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CUSTOMTAG, sto), root_1);
@@ -426,9 +426,9 @@ public class CFMLParser extends Parser {
                 }
 
             }
-            else // 269:3: -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+            else // 267:3: -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
             if (isColdFusionTag(name)) {
-                // ./CFML.g:269:31: ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+                // ./CFML.g:267:31: ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CFTAG, sto), root_1);
@@ -444,9 +444,9 @@ public class CFMLParser extends Parser {
                 }
 
             }
-            else // 276:3: -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent )
+            else // 274:3: -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent )
             {
-                // ./CFML.g:276:6: ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent )
+                // ./CFML.g:274:6: ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(stream_START_TAG_OPEN.next(), root_1);
@@ -495,7 +495,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tagContent
-    // ./CFML.g:281:1: tagContent : cfml ({...}? => ( endTag ) ) ;
+    // ./CFML.g:279:1: tagContent : ( hashCFML )* cfml ({...}? => ( endTag ) ) ;
     public final tagContent_return tagContent() throws RecognitionException {
     traceIn("tagContent", 4);
         tagContent_return retval = new tagContent_return();
@@ -503,25 +503,56 @@ public class CFMLParser extends Parser {
 
         Object root_0 = null;
 
-        cfml_return cfml4 = null;
+        hashCFML_return hashCFML4 = null;
 
-        endTag_return endTag5 = null;
+        cfml_return cfml5 = null;
+
+        endTag_return endTag6 = null;
 
 
 
         try {
-            // ./CFML.g:283:2: ( cfml ({...}? => ( endTag ) ) )
-            // ./CFML.g:283:2: cfml ({...}? => ( endTag ) )
+            // ./CFML.g:281:2: ( ( hashCFML )* cfml ({...}? => ( endTag ) ) )
+            // ./CFML.g:281:2: ( hashCFML )* cfml ({...}? => ( endTag ) )
             {
             root_0 = (Object)adaptor.nil();
 
-            pushFollow(FOLLOW_cfml_in_tagContent275);
-            cfml4=cfml();
+            // ./CFML.g:281:2: ( hashCFML )*
+            loop2:
+            do {
+                int alt2=2;
+                int LA2_0 = input.LA(1);
+
+                if ( (LA2_0==HASH) ) {
+                    alt2=1;
+                }
+
+
+                switch (alt2) {
+            	case 1 :
+            	    // ./CFML.g:281:2: hashCFML
+            	    {
+            	    pushFollow(FOLLOW_hashCFML_in_tagContent275);
+            	    hashCFML4=hashCFML();
+            	    _fsp--;
+
+            	    adaptor.addChild(root_0, hashCFML4.getTree());
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop2;
+                }
+            } while (true);
+
+            pushFollow(FOLLOW_cfml_in_tagContent279);
+            cfml5=cfml();
             _fsp--;
 
-            adaptor.addChild(root_0, cfml4.getTree());
-            // ./CFML.g:284:3: ({...}? => ( endTag ) )
-            // ./CFML.g:285:3: {...}? => ( endTag )
+            adaptor.addChild(root_0, cfml5.getTree());
+            // ./CFML.g:283:3: ({...}? => ( endTag ) )
+            // ./CFML.g:284:3: {...}? => ( endTag )
             {
 
             			Token t = input.LT(1);
@@ -539,14 +570,14 @@ public class CFMLParser extends Parser {
             if ( !( ((tagScope_scope)tagScope_stack.peek()).endTagName.equals(name)) ) {
                 throw new FailedPredicateException(input, "tagContent", " $tagScope::endTagName.equals(name)");
             }
-            // ./CFML.g:299:3: ( endTag )
-            // ./CFML.g:299:4: endTag
+            // ./CFML.g:298:3: ( endTag )
+            // ./CFML.g:298:4: endTag
             {
-            pushFollow(FOLLOW_endTag_in_tagContent294);
-            endTag5=endTag();
+            pushFollow(FOLLOW_endTag_in_tagContent298);
+            endTag6=endTag();
             _fsp--;
 
-            adaptor.addChild(root_0, endTag5.getTree());
+            adaptor.addChild(root_0, endTag6.getTree());
 
             }
 
@@ -595,7 +626,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start endTag
-    // ./CFML.g:322:1: endTag : END_TAG_OPEN END_TAG_CLOSE ;
+    // ./CFML.g:321:1: endTag : END_TAG_OPEN END_TAG_CLOSE ;
     public final endTag_return endTag() throws RecognitionException {
     traceIn("endTag", 5);
         endTag_return retval = new endTag_return();
@@ -603,15 +634,15 @@ public class CFMLParser extends Parser {
 
         Object root_0 = null;
 
-        Token END_TAG_OPEN6=null;
-        Token END_TAG_CLOSE7=null;
+        Token END_TAG_OPEN7=null;
+        Token END_TAG_CLOSE8=null;
 
-        Object END_TAG_OPEN6_tree=null;
-        Object END_TAG_CLOSE7_tree=null;
+        Object END_TAG_OPEN7_tree=null;
+        Object END_TAG_CLOSE8_tree=null;
 
         try {
-            // ./CFML.g:324:2: ( END_TAG_OPEN END_TAG_CLOSE )
-            // ./CFML.g:324:2: END_TAG_OPEN END_TAG_CLOSE
+            // ./CFML.g:323:2: ( END_TAG_OPEN END_TAG_CLOSE )
+            // ./CFML.g:323:2: END_TAG_OPEN END_TAG_CLOSE
             {
             root_0 = (Object)adaptor.nil();
 
@@ -630,15 +661,15 @@ public class CFMLParser extends Parser {
             		String pastTagName = getTagStack().pop();
             		System.out.println("finally popped: " + pastTagName);
             	
-            END_TAG_OPEN6=(Token)input.LT(1);
-            match(input,END_TAG_OPEN,FOLLOW_END_TAG_OPEN_in_endTag321); 
-            END_TAG_OPEN6_tree = (Object)adaptor.create(END_TAG_OPEN6);
-            root_0 = (Object)adaptor.becomeRoot(END_TAG_OPEN6_tree, root_0);
+            END_TAG_OPEN7=(Token)input.LT(1);
+            match(input,END_TAG_OPEN,FOLLOW_END_TAG_OPEN_in_endTag325); 
+            END_TAG_OPEN7_tree = (Object)adaptor.create(END_TAG_OPEN7);
+            root_0 = (Object)adaptor.becomeRoot(END_TAG_OPEN7_tree, root_0);
 
-            END_TAG_CLOSE7=(Token)input.LT(1);
-            match(input,END_TAG_CLOSE,FOLLOW_END_TAG_CLOSE_in_endTag324); 
-            END_TAG_CLOSE7_tree = (Object)adaptor.create(END_TAG_CLOSE7);
-            adaptor.addChild(root_0, END_TAG_CLOSE7_tree);
+            END_TAG_CLOSE8=(Token)input.LT(1);
+            match(input,END_TAG_CLOSE,FOLLOW_END_TAG_CLOSE_in_endTag328); 
+            END_TAG_CLOSE8_tree = (Object)adaptor.create(END_TAG_CLOSE8);
+            adaptor.addChild(root_0, END_TAG_CLOSE8_tree);
 
 
             }
@@ -666,7 +697,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tagInnerValues
-    // ./CFML.g:342:1: tagInnerValues : ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | );
+    // ./CFML.g:341:1: tagInnerValues : ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | ({...}? => ( tagAttribute )* ) );
     public final tagInnerValues_return tagInnerValues() throws RecognitionException {
     traceIn("tagInnerValues", 6);
         tagInnerValues_return retval = new tagInnerValues_return();
@@ -674,24 +705,26 @@ public class CFMLParser extends Parser {
 
         Object root_0 = null;
 
-        tagAttribute_return tagAttribute8 = null;
+        tagAttribute_return tagAttribute9 = null;
 
-        script_return script9 = null;
+        script_return script10 = null;
+
+        tagAttribute_return tagAttribute11 = null;
 
 
 
         try {
-            // ./CFML.g:344:2: ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | )
-            int alt3=3;
-            alt3 = dfa3.predict(input);
-            switch (alt3) {
+            // ./CFML.g:343:2: ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | ({...}? => ( tagAttribute )* ) )
+            int alt5=3;
+            alt5 = dfa5.predict(input);
+            switch (alt5) {
                 case 1 :
-                    // ./CFML.g:344:2: ({...}? => ( tagAttribute )* )
+                    // ./CFML.g:343:2: ({...}? => ( tagAttribute )* )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // ./CFML.g:344:2: ({...}? => ( tagAttribute )* )
-                    // ./CFML.g:345:2: {...}? => ( tagAttribute )*
+                    // ./CFML.g:343:2: ({...}? => ( tagAttribute )* )
+                    // ./CFML.g:344:2: {...}? => ( tagAttribute )*
                     {
                     if ( !(
                     		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
@@ -702,32 +735,32 @@ public class CFMLParser extends Parser {
                     	) ) {
                         throw new FailedPredicateException(input, "tagInnerValues", "\n\t\t(isColdFusionTag($tagScope::name) && usesAttributes($tagScope::name))\n\t\t||\n\t\t(isCustomTag($tagScope::name))\n\t\t||\n\t\t(isImportTag($tagScope::name))\n\t");
                     }
-                    // ./CFML.g:351:7: ( tagAttribute )*
-                    loop2:
+                    // ./CFML.g:350:7: ( tagAttribute )*
+                    loop3:
                     do {
-                        int alt2=2;
-                        int LA2_0 = input.LA(1);
+                        int alt3=2;
+                        int LA3_0 = input.LA(1);
 
-                        if ( (LA2_0==TAG_ATTRIBUTE) ) {
-                            alt2=1;
+                        if ( (LA3_0==TAG_ATTRIBUTE) ) {
+                            alt3=1;
                         }
 
 
-                        switch (alt2) {
+                        switch (alt3) {
                     	case 1 :
-                    	    // ./CFML.g:351:7: tagAttribute
+                    	    // ./CFML.g:350:7: tagAttribute
                     	    {
-                    	    pushFollow(FOLLOW_tagAttribute_in_tagInnerValues342);
-                    	    tagAttribute8=tagAttribute();
+                    	    pushFollow(FOLLOW_tagAttribute_in_tagInnerValues346);
+                    	    tagAttribute9=tagAttribute();
                     	    _fsp--;
 
-                    	    adaptor.addChild(root_0, tagAttribute8.getTree());
+                    	    adaptor.addChild(root_0, tagAttribute9.getTree());
 
                     	    }
                     	    break;
 
                     	default :
-                    	    break loop2;
+                    	    break loop3;
                         }
                     } while (true);
 
@@ -738,12 +771,12 @@ public class CFMLParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ./CFML.g:354:2: ({...}? => script )
+                    // ./CFML.g:353:2: ({...}? => script )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // ./CFML.g:354:2: ({...}? => script )
-                    // ./CFML.g:355:2: {...}? => script
+                    // ./CFML.g:353:2: ({...}? => script )
+                    // ./CFML.g:354:2: {...}? => script
                     {
                     if ( !(
                     	(	
@@ -759,11 +792,11 @@ public class CFMLParser extends Parser {
                     	) ) {
                         throw new FailedPredicateException(input, "tagInnerValues", "\n\t(\t\n\t\tisColdFusionTag($tagScope::name) \n\t\t&& !usesAttributes($tagScope::name)\n\t\t&&\n\t\t(\n\t\t allowsCFMLCondition($tagScope::name)\n\t\t ||\n\t\t allowsCFMLAssignment($tagScope::name)\n\t\t)\n\t)\n\t");
                     }
-                    pushFollow(FOLLOW_script_in_tagInnerValues358);
-                    script9=script();
+                    pushFollow(FOLLOW_script_in_tagInnerValues362);
+                    script10=script();
                     _fsp--;
 
-                    adaptor.addChild(root_0, script9.getTree());
+                    adaptor.addChild(root_0, script10.getTree());
 
                     }
 
@@ -771,9 +804,50 @@ public class CFMLParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ./CFML.g:369:2: 
+                    // ./CFML.g:368:2: ({...}? => ( tagAttribute )* )
                     {
                     root_0 = (Object)adaptor.nil();
+
+                    // ./CFML.g:368:2: ({...}? => ( tagAttribute )* )
+                    // ./CFML.g:369:2: {...}? => ( tagAttribute )*
+                    {
+                    if ( !(
+                    			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                    	) ) {
+                        throw new FailedPredicateException(input, "tagInnerValues", "\n\t\t\t!isColdFusionTag($tagScope::name)\n\t");
+                    }
+                    // ./CFML.g:371:7: ( tagAttribute )*
+                    loop4:
+                    do {
+                        int alt4=2;
+                        int LA4_0 = input.LA(1);
+
+                        if ( (LA4_0==TAG_ATTRIBUTE) ) {
+                            alt4=1;
+                        }
+
+
+                        switch (alt4) {
+                    	case 1 :
+                    	    // ./CFML.g:371:7: tagAttribute
+                    	    {
+                    	    pushFollow(FOLLOW_tagAttribute_in_tagInnerValues377);
+                    	    tagAttribute11=tagAttribute();
+                    	    _fsp--;
+
+                    	    adaptor.addChild(root_0, tagAttribute11.getTree());
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    break loop4;
+                        }
+                    } while (true);
+
+
+                    }
+
 
                     }
                     break;
@@ -802,7 +876,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tagAttribute
-    // ./CFML.g:371:1: tagAttribute : TAG_ATTRIBUTE EQUALS stringLiteral ;
+    // ./CFML.g:375:1: tagAttribute : TAG_ATTRIBUTE EQUALS stringLiteral ;
     public final tagAttribute_return tagAttribute() throws RecognitionException {
     traceIn("tagAttribute", 7);
         tagAttribute_return retval = new tagAttribute_return();
@@ -810,35 +884,35 @@ public class CFMLParser extends Parser {
 
         Object root_0 = null;
 
-        Token TAG_ATTRIBUTE10=null;
-        Token EQUALS11=null;
-        stringLiteral_return stringLiteral12 = null;
+        Token TAG_ATTRIBUTE12=null;
+        Token EQUALS13=null;
+        stringLiteral_return stringLiteral14 = null;
 
 
-        Object TAG_ATTRIBUTE10_tree=null;
-        Object EQUALS11_tree=null;
+        Object TAG_ATTRIBUTE12_tree=null;
+        Object EQUALS13_tree=null;
 
         try {
-            // ./CFML.g:373:2: ( TAG_ATTRIBUTE EQUALS stringLiteral )
-            // ./CFML.g:373:2: TAG_ATTRIBUTE EQUALS stringLiteral
+            // ./CFML.g:377:2: ( TAG_ATTRIBUTE EQUALS stringLiteral )
+            // ./CFML.g:377:2: TAG_ATTRIBUTE EQUALS stringLiteral
             {
             root_0 = (Object)adaptor.nil();
 
-            TAG_ATTRIBUTE10=(Token)input.LT(1);
-            match(input,TAG_ATTRIBUTE,FOLLOW_TAG_ATTRIBUTE_in_tagAttribute376); 
-            TAG_ATTRIBUTE10_tree = (Object)adaptor.create(TAG_ATTRIBUTE10);
-            adaptor.addChild(root_0, TAG_ATTRIBUTE10_tree);
+            TAG_ATTRIBUTE12=(Token)input.LT(1);
+            match(input,TAG_ATTRIBUTE,FOLLOW_TAG_ATTRIBUTE_in_tagAttribute393); 
+            TAG_ATTRIBUTE12_tree = (Object)adaptor.create(TAG_ATTRIBUTE12);
+            adaptor.addChild(root_0, TAG_ATTRIBUTE12_tree);
 
-            EQUALS11=(Token)input.LT(1);
-            match(input,EQUALS,FOLLOW_EQUALS_in_tagAttribute378); 
-            EQUALS11_tree = (Object)adaptor.create(EQUALS11);
-            adaptor.addChild(root_0, EQUALS11_tree);
+            EQUALS13=(Token)input.LT(1);
+            match(input,EQUALS,FOLLOW_EQUALS_in_tagAttribute395); 
+            EQUALS13_tree = (Object)adaptor.create(EQUALS13);
+            adaptor.addChild(root_0, EQUALS13_tree);
 
-            pushFollow(FOLLOW_stringLiteral_in_tagAttribute380);
-            stringLiteral12=stringLiteral();
+            pushFollow(FOLLOW_stringLiteral_in_tagAttribute397);
+            stringLiteral14=stringLiteral();
             _fsp--;
 
-            adaptor.addChild(root_0, stringLiteral12.getTree());
+            adaptor.addChild(root_0, stringLiteral14.getTree());
 
             }
 
@@ -865,7 +939,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start stringLiteral
-    // ./CFML.g:376:1: stringLiteral : (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) | start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) );
+    // ./CFML.g:380:1: stringLiteral : ( (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) ) | (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) ) );
     public final stringLiteral_return stringLiteral() throws RecognitionException {
     traceIn("stringLiteral", 8);
         stringLiteral_return retval = new stringLiteral_return();
@@ -875,17 +949,17 @@ public class CFMLParser extends Parser {
 
         Token start=null;
         Token end=null;
-        Token ESCAPE_DOUBLE_QUOTE13=null;
-        Token DOUBLE_QUOTE_STRING14=null;
-        Token ESCAPE_SINGLE_QUOTE15=null;
-        Token SINGLE_QUOTE_STRING16=null;
+        Token ESCAPE_DOUBLE_QUOTE15=null;
+        Token DOUBLE_QUOTE_STRING16=null;
+        Token ESCAPE_SINGLE_QUOTE17=null;
+        Token SINGLE_QUOTE_STRING18=null;
 
         Object start_tree=null;
         Object end_tree=null;
-        Object ESCAPE_DOUBLE_QUOTE13_tree=null;
-        Object DOUBLE_QUOTE_STRING14_tree=null;
-        Object ESCAPE_SINGLE_QUOTE15_tree=null;
-        Object SINGLE_QUOTE_STRING16_tree=null;
+        Object ESCAPE_DOUBLE_QUOTE15_tree=null;
+        Object DOUBLE_QUOTE_STRING16_tree=null;
+        Object ESCAPE_SINGLE_QUOTE17_tree=null;
+        Object SINGLE_QUOTE_STRING18_tree=null;
         RewriteRuleTokenStream stream_SINGLE_QUOTE=new RewriteRuleTokenStream(adaptor,"token SINGLE_QUOTE");
         RewriteRuleTokenStream stream_SINGLE_QUOTE_STRING=new RewriteRuleTokenStream(adaptor,"token SINGLE_QUOTE_STRING");
         RewriteRuleTokenStream stream_ESCAPE_DOUBLE_QUOTE=new RewriteRuleTokenStream(adaptor,"token ESCAPE_DOUBLE_QUOTE");
@@ -894,73 +968,76 @@ public class CFMLParser extends Parser {
         RewriteRuleTokenStream stream_ESCAPE_SINGLE_QUOTE=new RewriteRuleTokenStream(adaptor,"token ESCAPE_SINGLE_QUOTE");
 
         try {
-            // ./CFML.g:378:2: (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) | start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) )
-            int alt6=2;
-            int LA6_0 = input.LA(1);
+            // ./CFML.g:382:2: ( (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) ) | (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) ) )
+            int alt8=2;
+            int LA8_0 = input.LA(1);
 
-            if ( (LA6_0==DOUBLE_QUOTE) ) {
-                alt6=1;
+            if ( (LA8_0==DOUBLE_QUOTE) ) {
+                alt8=1;
             }
-            else if ( (LA6_0==SINGLE_QUOTE) ) {
-                alt6=2;
+            else if ( (LA8_0==SINGLE_QUOTE) ) {
+                alt8=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("376:1: stringLiteral : (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) | start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) );", 6, 0, input);
+                    new NoViableAltException("380:1: stringLiteral : ( (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) ) | (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) ) );", 8, 0, input);
 
                 throw nvae;
             }
-            switch (alt6) {
+            switch (alt8) {
                 case 1 :
-                    // ./CFML.g:378:2: start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE
+                    // ./CFML.g:382:2: (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) )
+                    {
+                    // ./CFML.g:382:2: (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) )
+                    // ./CFML.g:383:3: start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE
                     {
                     start=(Token)input.LT(1);
-                    match(input,DOUBLE_QUOTE,FOLLOW_DOUBLE_QUOTE_in_stringLiteral395); 
+                    match(input,DOUBLE_QUOTE,FOLLOW_DOUBLE_QUOTE_in_stringLiteral416); 
                     stream_DOUBLE_QUOTE.add(start);
 
-                    // ./CFML.g:378:21: ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )*
-                    loop4:
+                    // ./CFML.g:383:22: ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )*
+                    loop6:
                     do {
-                        int alt4=3;
-                        int LA4_0 = input.LA(1);
+                        int alt6=3;
+                        int LA6_0 = input.LA(1);
 
-                        if ( (LA4_0==ESCAPE_DOUBLE_QUOTE) ) {
-                            alt4=1;
+                        if ( (LA6_0==ESCAPE_DOUBLE_QUOTE) ) {
+                            alt6=1;
                         }
-                        else if ( (LA4_0==DOUBLE_QUOTE_STRING) ) {
-                            alt4=2;
+                        else if ( (LA6_0==DOUBLE_QUOTE_STRING) ) {
+                            alt6=2;
                         }
 
 
-                        switch (alt4) {
+                        switch (alt6) {
                     	case 1 :
-                    	    // ./CFML.g:378:22: ESCAPE_DOUBLE_QUOTE
+                    	    // ./CFML.g:383:23: ESCAPE_DOUBLE_QUOTE
                     	    {
-                    	    ESCAPE_DOUBLE_QUOTE13=(Token)input.LT(1);
-                    	    match(input,ESCAPE_DOUBLE_QUOTE,FOLLOW_ESCAPE_DOUBLE_QUOTE_in_stringLiteral398); 
-                    	    stream_ESCAPE_DOUBLE_QUOTE.add(ESCAPE_DOUBLE_QUOTE13);
+                    	    ESCAPE_DOUBLE_QUOTE15=(Token)input.LT(1);
+                    	    match(input,ESCAPE_DOUBLE_QUOTE,FOLLOW_ESCAPE_DOUBLE_QUOTE_in_stringLiteral419); 
+                    	    stream_ESCAPE_DOUBLE_QUOTE.add(ESCAPE_DOUBLE_QUOTE15);
 
 
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ./CFML.g:378:44: DOUBLE_QUOTE_STRING
+                    	    // ./CFML.g:383:45: DOUBLE_QUOTE_STRING
                     	    {
-                    	    DOUBLE_QUOTE_STRING14=(Token)input.LT(1);
-                    	    match(input,DOUBLE_QUOTE_STRING,FOLLOW_DOUBLE_QUOTE_STRING_in_stringLiteral402); 
-                    	    stream_DOUBLE_QUOTE_STRING.add(DOUBLE_QUOTE_STRING14);
+                    	    DOUBLE_QUOTE_STRING16=(Token)input.LT(1);
+                    	    match(input,DOUBLE_QUOTE_STRING,FOLLOW_DOUBLE_QUOTE_STRING_in_stringLiteral423); 
+                    	    stream_DOUBLE_QUOTE_STRING.add(DOUBLE_QUOTE_STRING16);
 
 
                     	    }
                     	    break;
 
                     	default :
-                    	    break loop4;
+                    	    break loop6;
                         }
                     } while (true);
 
                     end=(Token)input.LT(1);
-                    match(input,DOUBLE_QUOTE,FOLLOW_DOUBLE_QUOTE_in_stringLiteral408); 
+                    match(input,DOUBLE_QUOTE,FOLLOW_DOUBLE_QUOTE_in_stringLiteral429); 
                     stream_DOUBLE_QUOTE.add(end);
 
 
@@ -974,9 +1051,9 @@ public class CFMLParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 379:2: -> ^( STRING_LITERAL )
+                    // 384:3: -> ^( STRING_LITERAL )
                     {
-                        // ./CFML.g:379:5: ^( STRING_LITERAL )
+                        // ./CFML.g:384:6: ^( STRING_LITERAL )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot(adaptor.create(STRING_LITERAL, "STRING_LITERAL"), root_1);
@@ -991,57 +1068,63 @@ public class CFMLParser extends Parser {
 
 
                     }
+
+
+                    }
                     break;
                 case 2 :
-                    // ./CFML.g:381:2: start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE
+                    // ./CFML.g:387:2: (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) )
+                    {
+                    // ./CFML.g:387:2: (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) )
+                    // ./CFML.g:388:3: start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE
                     {
                     start=(Token)input.LT(1);
-                    match(input,SINGLE_QUOTE,FOLLOW_SINGLE_QUOTE_in_stringLiteral425); 
+                    match(input,SINGLE_QUOTE,FOLLOW_SINGLE_QUOTE_in_stringLiteral454); 
                     stream_SINGLE_QUOTE.add(start);
 
-                    // ./CFML.g:381:21: ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )*
-                    loop5:
+                    // ./CFML.g:388:22: ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )*
+                    loop7:
                     do {
-                        int alt5=3;
-                        int LA5_0 = input.LA(1);
+                        int alt7=3;
+                        int LA7_0 = input.LA(1);
 
-                        if ( (LA5_0==ESCAPE_SINGLE_QUOTE) ) {
-                            alt5=1;
+                        if ( (LA7_0==ESCAPE_SINGLE_QUOTE) ) {
+                            alt7=1;
                         }
-                        else if ( (LA5_0==SINGLE_QUOTE_STRING) ) {
-                            alt5=2;
+                        else if ( (LA7_0==SINGLE_QUOTE_STRING) ) {
+                            alt7=2;
                         }
 
 
-                        switch (alt5) {
+                        switch (alt7) {
                     	case 1 :
-                    	    // ./CFML.g:381:22: ESCAPE_SINGLE_QUOTE
+                    	    // ./CFML.g:388:23: ESCAPE_SINGLE_QUOTE
                     	    {
-                    	    ESCAPE_SINGLE_QUOTE15=(Token)input.LT(1);
-                    	    match(input,ESCAPE_SINGLE_QUOTE,FOLLOW_ESCAPE_SINGLE_QUOTE_in_stringLiteral428); 
-                    	    stream_ESCAPE_SINGLE_QUOTE.add(ESCAPE_SINGLE_QUOTE15);
+                    	    ESCAPE_SINGLE_QUOTE17=(Token)input.LT(1);
+                    	    match(input,ESCAPE_SINGLE_QUOTE,FOLLOW_ESCAPE_SINGLE_QUOTE_in_stringLiteral457); 
+                    	    stream_ESCAPE_SINGLE_QUOTE.add(ESCAPE_SINGLE_QUOTE17);
 
 
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ./CFML.g:381:44: SINGLE_QUOTE_STRING
+                    	    // ./CFML.g:388:45: SINGLE_QUOTE_STRING
                     	    {
-                    	    SINGLE_QUOTE_STRING16=(Token)input.LT(1);
-                    	    match(input,SINGLE_QUOTE_STRING,FOLLOW_SINGLE_QUOTE_STRING_in_stringLiteral432); 
-                    	    stream_SINGLE_QUOTE_STRING.add(SINGLE_QUOTE_STRING16);
+                    	    SINGLE_QUOTE_STRING18=(Token)input.LT(1);
+                    	    match(input,SINGLE_QUOTE_STRING,FOLLOW_SINGLE_QUOTE_STRING_in_stringLiteral461); 
+                    	    stream_SINGLE_QUOTE_STRING.add(SINGLE_QUOTE_STRING18);
 
 
                     	    }
                     	    break;
 
                     	default :
-                    	    break loop5;
+                    	    break loop7;
                         }
                     } while (true);
 
                     end=(Token)input.LT(1);
-                    match(input,SINGLE_QUOTE,FOLLOW_SINGLE_QUOTE_in_stringLiteral438); 
+                    match(input,SINGLE_QUOTE,FOLLOW_SINGLE_QUOTE_in_stringLiteral467); 
                     stream_SINGLE_QUOTE.add(end);
 
 
@@ -1055,9 +1138,9 @@ public class CFMLParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 382:2: -> ^( STRING_LITERAL )
+                    // 389:3: -> ^( STRING_LITERAL )
                     {
-                        // ./CFML.g:382:5: ^( STRING_LITERAL )
+                        // ./CFML.g:389:6: ^( STRING_LITERAL )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot(adaptor.create(STRING_LITERAL, "STRING_LITERAL"), root_1);
@@ -1069,6 +1152,9 @@ public class CFMLParser extends Parser {
 
                     }
 
+
+
+                    }
 
 
                     }
@@ -1098,7 +1184,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start script
-    // ./CFML.g:385:1: script : ( TAG_ATTRIBUTE | stringLiteral | HASH | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) ;
+    // ./CFML.g:393:1: script : ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) ;
     public final script_return script() throws RecognitionException {
     traceIn("script", 9);
         script_return retval = new script_return();
@@ -1106,118 +1192,100 @@ public class CFMLParser extends Parser {
 
         Object root_0 = null;
 
-        Token TAG_ATTRIBUTE17=null;
-        Token HASH19=null;
-        Token EQUALS20=null;
-        Token CFML21=null;
-        stringLiteral_return stringLiteral18 = null;
+        Token TAG_ATTRIBUTE19=null;
+        Token EQUALS21=null;
+        Token CFML22=null;
+        stringLiteral_return stringLiteral20 = null;
 
 
-        Object TAG_ATTRIBUTE17_tree=null;
-        Object HASH19_tree=null;
-        Object EQUALS20_tree=null;
-        Object CFML21_tree=null;
-        RewriteRuleTokenStream stream_HASH=new RewriteRuleTokenStream(adaptor,"token HASH");
+        Object TAG_ATTRIBUTE19_tree=null;
+        Object EQUALS21_tree=null;
+        Object CFML22_tree=null;
         RewriteRuleTokenStream stream_TAG_ATTRIBUTE=new RewriteRuleTokenStream(adaptor,"token TAG_ATTRIBUTE");
         RewriteRuleTokenStream stream_EQUALS=new RewriteRuleTokenStream(adaptor,"token EQUALS");
         RewriteRuleTokenStream stream_CFML=new RewriteRuleTokenStream(adaptor,"token CFML");
         RewriteRuleSubtreeStream stream_stringLiteral=new RewriteRuleSubtreeStream(adaptor,"rule stringLiteral");
         try {
-            // ./CFML.g:387:2: ( ( TAG_ATTRIBUTE | stringLiteral | HASH | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) )
-            // ./CFML.g:387:2: ( TAG_ATTRIBUTE | stringLiteral | HASH | EQUALS | CFML )*
+            // ./CFML.g:395:2: ( ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) )
+            // ./CFML.g:395:2: ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )*
             {
 
             	Token start = input.LT(1);
             	
-            // ./CFML.g:390:2: ( TAG_ATTRIBUTE | stringLiteral | HASH | EQUALS | CFML )*
-            loop7:
+            // ./CFML.g:398:2: ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )*
+            loop9:
             do {
-                int alt7=6;
+                int alt9=5;
                 switch ( input.LA(1) ) {
                 case TAG_ATTRIBUTE:
                     {
-                    alt7=1;
+                    alt9=1;
                     }
                     break;
                 case DOUBLE_QUOTE:
                 case SINGLE_QUOTE:
                     {
-                    alt7=2;
-                    }
-                    break;
-                case HASH:
-                    {
-                    alt7=3;
+                    alt9=2;
                     }
                     break;
                 case EQUALS:
                     {
-                    alt7=4;
+                    alt9=3;
                     }
                     break;
                 case CFML:
                     {
-                    alt7=5;
+                    alt9=4;
                     }
                     break;
 
                 }
 
-                switch (alt7) {
+                switch (alt9) {
             	case 1 :
-            	    // ./CFML.g:390:3: TAG_ATTRIBUTE
+            	    // ./CFML.g:398:3: TAG_ATTRIBUTE
             	    {
-            	    TAG_ATTRIBUTE17=(Token)input.LT(1);
-            	    match(input,TAG_ATTRIBUTE,FOLLOW_TAG_ATTRIBUTE_in_script463); 
-            	    stream_TAG_ATTRIBUTE.add(TAG_ATTRIBUTE17);
+            	    TAG_ATTRIBUTE19=(Token)input.LT(1);
+            	    match(input,TAG_ATTRIBUTE,FOLLOW_TAG_ATTRIBUTE_in_script496); 
+            	    stream_TAG_ATTRIBUTE.add(TAG_ATTRIBUTE19);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // ./CFML.g:390:19: stringLiteral
+            	    // ./CFML.g:398:19: stringLiteral
             	    {
-            	    pushFollow(FOLLOW_stringLiteral_in_script467);
-            	    stringLiteral18=stringLiteral();
+            	    pushFollow(FOLLOW_stringLiteral_in_script500);
+            	    stringLiteral20=stringLiteral();
             	    _fsp--;
 
-            	    stream_stringLiteral.add(stringLiteral18.getTree());
+            	    stream_stringLiteral.add(stringLiteral20.getTree());
 
             	    }
             	    break;
             	case 3 :
-            	    // ./CFML.g:390:35: HASH
+            	    // ./CFML.g:398:35: EQUALS
             	    {
-            	    HASH19=(Token)input.LT(1);
-            	    match(input,HASH,FOLLOW_HASH_in_script471); 
-            	    stream_HASH.add(HASH19);
+            	    EQUALS21=(Token)input.LT(1);
+            	    match(input,EQUALS,FOLLOW_EQUALS_in_script504); 
+            	    stream_EQUALS.add(EQUALS21);
 
 
             	    }
             	    break;
             	case 4 :
-            	    // ./CFML.g:390:42: EQUALS
+            	    // ./CFML.g:398:44: CFML
             	    {
-            	    EQUALS20=(Token)input.LT(1);
-            	    match(input,EQUALS,FOLLOW_EQUALS_in_script475); 
-            	    stream_EQUALS.add(EQUALS20);
-
-
-            	    }
-            	    break;
-            	case 5 :
-            	    // ./CFML.g:390:51: CFML
-            	    {
-            	    CFML21=(Token)input.LT(1);
-            	    match(input,CFML,FOLLOW_CFML_in_script479); 
-            	    stream_CFML.add(CFML21);
+            	    CFML22=(Token)input.LT(1);
+            	    match(input,CFML,FOLLOW_CFML_in_script508); 
+            	    stream_CFML.add(CFML22);
 
 
             	    }
             	    break;
 
             	default :
-            	    break loop7;
+            	    break loop9;
                 }
             } while (true);
 
@@ -1236,9 +1304,9 @@ public class CFMLParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"token retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 395:2: -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT )
+            // 403:2: -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT )
             if ( allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name) ) {
-                // ./CFML.g:395:47: ^( CFML_STATEMENT )
+                // ./CFML.g:403:47: ^( CFML_STATEMENT )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CFML_STATEMENT, "CFML_STATEMENT"), root_1);
@@ -1249,9 +1317,9 @@ public class CFMLParser extends Parser {
                 }
 
             }
-            else // 396:2: -> ^( CFML_STATEMENT )
+            else // 404:2: -> ^( CFML_STATEMENT )
             {
-                // ./CFML.g:396:5: ^( CFML_STATEMENT )
+                // ./CFML.g:404:5: ^( CFML_STATEMENT )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CFML_STATEMENT, "CFML_STATEMENT"), root_1);
@@ -1284,27 +1352,121 @@ public class CFMLParser extends Parser {
     }
     // $ANTLR end script
 
+    public static class hashCFML_return extends ParserRuleReturnScope {
+        Object tree;
+        public Object getTree() { return tree; }
+    };
 
-    protected DFA3 dfa3 = new DFA3(this);
-    static final String DFA3_eotS =
-        "\20\uffff";
-    static final String DFA3_eofS =
-        "\20\uffff";
-    static final String DFA3_minS =
-        "\2\12\1\0\1\uffff\1\12\2\uffff\1\17\1\22\2\17\1\0\2\22\1\0\1\uffff";
-    static final String DFA3_maxS =
-        "\2\26\1\0\1\uffff\1\26\2\uffff\1\21\1\24\2\21\1\0\2\24\1\0\1\uffff";
-    static final String DFA3_acceptS =
-        "\3\uffff\1\2\1\uffff\1\1\1\3\10\uffff\1\1";
-    static final String DFA3_specialS =
-        "\1\4\1\12\1\7\1\uffff\1\13\2\uffff\1\5\1\2\1\1\1\0\1\3\1\10\1\11"+
-        "\1\6\1\uffff}>";
-    static final String[] DFA3_transitionS = {
-            "\1\2\2\uffff\1\1\2\3\2\uffff\1\3\2\uffff\2\3",
-            "\1\3\2\uffff\1\3\1\4\1\3\2\uffff\1\3\2\uffff\2\3",
+    // $ANTLR start hashCFML
+    // ./CFML.g:407:1: hashCFML : HASH ( ESCAPE_HASH | HASH_CFML )* HASH ;
+    public final hashCFML_return hashCFML() throws RecognitionException {
+    traceIn("hashCFML", 10);
+        hashCFML_return retval = new hashCFML_return();
+        retval.start = input.LT(1);
+
+        Object root_0 = null;
+
+        Token HASH23=null;
+        Token set24=null;
+        Token HASH25=null;
+
+        Object HASH23_tree=null;
+        Object set24_tree=null;
+        Object HASH25_tree=null;
+
+        try {
+            // ./CFML.g:409:2: ( HASH ( ESCAPE_HASH | HASH_CFML )* HASH )
+            // ./CFML.g:409:2: HASH ( ESCAPE_HASH | HASH_CFML )* HASH
+            {
+            root_0 = (Object)adaptor.nil();
+
+            HASH23=(Token)input.LT(1);
+            match(input,HASH,FOLLOW_HASH_in_hashCFML545); 
+            HASH23_tree = (Object)adaptor.create(HASH23);
+            adaptor.addChild(root_0, HASH23_tree);
+
+            // ./CFML.g:409:7: ( ESCAPE_HASH | HASH_CFML )*
+            loop10:
+            do {
+                int alt10=2;
+                int LA10_0 = input.LA(1);
+
+                if ( ((LA10_0>=ESCAPE_HASH && LA10_0<=HASH_CFML)) ) {
+                    alt10=1;
+                }
+
+
+                switch (alt10) {
+            	case 1 :
+            	    // ./CFML.g:
+            	    {
+            	    set24=(Token)input.LT(1);
+            	    if ( (input.LA(1)>=ESCAPE_HASH && input.LA(1)<=HASH_CFML) ) {
+            	        input.consume();
+            	        adaptor.addChild(root_0, adaptor.create(set24));
+            	        errorRecovery=false;
+            	    }
+            	    else {
+            	        MismatchedSetException mse =
+            	            new MismatchedSetException(null,input);
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_hashCFML547);    throw mse;
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop10;
+                }
+            } while (true);
+
+            HASH25=(Token)input.LT(1);
+            match(input,HASH,FOLLOW_HASH_in_hashCFML556); 
+            HASH25_tree = (Object)adaptor.create(HASH25);
+            adaptor.addChild(root_0, HASH25_tree);
+
+
+            }
+
+            retval.stop = input.LT(-1);
+
+                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
+                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+    traceOut("hashCFML", 10);
+        }
+        return retval;
+    }
+    // $ANTLR end hashCFML
+
+
+    protected DFA5 dfa5 = new DFA5(this);
+    static final String DFA5_eotS =
+        "\22\uffff";
+    static final String DFA5_eofS =
+        "\22\uffff";
+    static final String DFA5_minS =
+        "\2\12\1\0\1\uffff\1\12\2\uffff\1\17\1\22\2\17\1\0\2\22\1\0\3\uffff";
+    static final String DFA5_maxS =
+        "\2\25\1\0\1\uffff\1\25\2\uffff\1\21\1\24\2\21\1\0\2\24\1\0\3\uffff";
+    static final String DFA5_acceptS =
+        "\3\uffff\1\2\1\uffff\1\1\1\3\10\uffff\1\1\2\3";
+    static final String DFA5_specialS =
+        "\1\4\1\10\1\3\1\uffff\1\13\2\uffff\1\7\1\0\1\11\1\6\1\1\1\2\1\12"+
+        "\1\5\3\uffff}>";
+    static final String[] DFA5_transitionS = {
+            "\1\2\2\uffff\1\1\2\3\2\uffff\1\3\2\uffff\1\3",
+            "\1\3\2\uffff\1\3\1\4\1\3\2\uffff\1\3\2\uffff\1\3",
             "\1\uffff",
             "",
-            "\1\3\2\uffff\2\3\1\7\2\uffff\1\10\2\uffff\2\3",
+            "\1\3\2\uffff\2\3\1\7\2\uffff\1\10\2\uffff\1\3",
             "",
             "",
             "\1\13\1\11\1\12",
@@ -1315,52 +1477,54 @@ public class CFMLParser extends Parser {
             "\1\16\1\14\1\15",
             "\1\16\1\14\1\15",
             "\1\uffff",
+            "",
+            "",
             ""
     };
 
-    static final short[] DFA3_eot = DFA.unpackEncodedString(DFA3_eotS);
-    static final short[] DFA3_eof = DFA.unpackEncodedString(DFA3_eofS);
-    static final char[] DFA3_min = DFA.unpackEncodedStringToUnsignedChars(DFA3_minS);
-    static final char[] DFA3_max = DFA.unpackEncodedStringToUnsignedChars(DFA3_maxS);
-    static final short[] DFA3_accept = DFA.unpackEncodedString(DFA3_acceptS);
-    static final short[] DFA3_special = DFA.unpackEncodedString(DFA3_specialS);
-    static final short[][] DFA3_transition;
+    static final short[] DFA5_eot = DFA.unpackEncodedString(DFA5_eotS);
+    static final short[] DFA5_eof = DFA.unpackEncodedString(DFA5_eofS);
+    static final char[] DFA5_min = DFA.unpackEncodedStringToUnsignedChars(DFA5_minS);
+    static final char[] DFA5_max = DFA.unpackEncodedStringToUnsignedChars(DFA5_maxS);
+    static final short[] DFA5_accept = DFA.unpackEncodedString(DFA5_acceptS);
+    static final short[] DFA5_special = DFA.unpackEncodedString(DFA5_specialS);
+    static final short[][] DFA5_transition;
 
     static {
-        int numStates = DFA3_transitionS.length;
-        DFA3_transition = new short[numStates][];
+        int numStates = DFA5_transitionS.length;
+        DFA5_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA3_transition[i] = DFA.unpackEncodedString(DFA3_transitionS[i]);
+            DFA5_transition[i] = DFA.unpackEncodedString(DFA5_transitionS[i]);
         }
     }
 
-    class DFA3 extends DFA {
+    class DFA5 extends DFA {
 
-        public DFA3(BaseRecognizer recognizer) {
+        public DFA5(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 3;
-            this.eot = DFA3_eot;
-            this.eof = DFA3_eof;
-            this.min = DFA3_min;
-            this.max = DFA3_max;
-            this.accept = DFA3_accept;
-            this.special = DFA3_special;
-            this.transition = DFA3_transition;
+            this.decisionNumber = 5;
+            this.eot = DFA5_eot;
+            this.eof = DFA5_eof;
+            this.min = DFA5_min;
+            this.max = DFA5_max;
+            this.accept = DFA5_accept;
+            this.special = DFA5_special;
+            this.transition = DFA5_transition;
         }
         public String getDescription() {
-            return "342:1: tagInnerValues : ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | );";
+            return "341:1: tagInnerValues : ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | ({...}? => ( tagAttribute )* ) );";
         }
         public int specialStateTransition(int s, IntStream input) throws NoViableAltException {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA3_10 = input.LA(1);
+                        int LA5_8 = input.LA(1);
 
                          
-                        int index3_10 = input.index();
+                        int index5_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (LA3_10==DOUBLE_QUOTE) && ((
+                        if ( (LA5_8==ESCAPE_SINGLE_QUOTE) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1377,145 +1541,11 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 11;}
-
-                        else if ( (LA3_10==ESCAPE_DOUBLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
                         	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 9;}
-
-                        else if ( (LA3_10==DOUBLE_QUOTE_STRING) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 10;}
-
-                         
-                        input.seek(index3_10);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA3_9 = input.LA(1);
-
-                         
-                        int index3_9 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (LA3_9==DOUBLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 11;}
-
-                        else if ( (LA3_9==ESCAPE_DOUBLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 9;}
-
-                        else if ( (LA3_9==DOUBLE_QUOTE_STRING) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 10;}
-
-                         
-                        input.seek(index3_9);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA3_8 = input.LA(1);
-
-                         
-                        int index3_8 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (LA3_8==ESCAPE_SINGLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
                         	))) {s = 12;}
 
-                        else if ( (LA3_8==SINGLE_QUOTE_STRING) && ((
+                        else if ( (LA5_8==SINGLE_QUOTE_STRING) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1532,9 +1562,11 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
                         	))) {s = 13;}
 
-                        else if ( (LA3_8==SINGLE_QUOTE) && ((
+                        else if ( (LA5_8==SINGLE_QUOTE) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1551,194 +1583,129 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
                         	))) {s = 14;}
 
                          
-                        input.seek(index3_8);
+                        input.seek(index5_8);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA5_11 = input.LA(1);
+
+                         
+                        int index5_11 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	) ) {s = 15;}
+
+                        else if ( (
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	) ) {s = 3;}
+
+                        else if ( (
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	) ) {s = 16;}
+
+                         
+                        input.seek(index5_11);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA5_12 = input.LA(1);
+
+                         
+                        int index5_12 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (LA5_12==SINGLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 14;}
+
+                        else if ( (LA5_12==ESCAPE_SINGLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 12;}
+
+                        else if ( (LA5_12==SINGLE_QUOTE_STRING) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 13;}
+
+                         
+                        input.seek(index5_12);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA3_11 = input.LA(1);
+                        int LA5_2 = input.LA(1);
 
                          
-                        int index3_11 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	) ) {s = 15;}
-
-                        else if ( (
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	) ) {s = 3;}
-
-                         
-                        input.seek(index3_11);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 4 : 
-                        int LA3_0 = input.LA(1);
-
-                         
-                        int index3_0 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (LA3_0==TAG_ATTRIBUTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 1;}
-
-                        else if ( (LA3_0==START_TAG_CLOSE) ) {s = 2;}
-
-                        else if ( ((LA3_0>=EQUALS && LA3_0<=DOUBLE_QUOTE)||LA3_0==SINGLE_QUOTE||(LA3_0>=HASH && LA3_0<=CFML)) && (
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	)) {s = 3;}
-
-                         
-                        input.seek(index3_0);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 5 : 
-                        int LA3_7 = input.LA(1);
-
-                         
-                        int index3_7 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (LA3_7==ESCAPE_DOUBLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 9;}
-
-                        else if ( (LA3_7==DOUBLE_QUOTE_STRING) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 10;}
-
-                        else if ( (LA3_7==DOUBLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 11;}
-
-                         
-                        input.seek(index3_7);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 6 : 
-                        int LA3_14 = input.LA(1);
-
-                         
-                        int index3_14 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	) ) {s = 15;}
-
-                        else if ( (
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	) ) {s = 3;}
-
-                         
-                        input.seek(index3_14);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 7 : 
-                        int LA3_2 = input.LA(1);
-
-                         
-                        int index3_2 = input.index();
+                        int index5_2 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (
@@ -1762,20 +1729,272 @@ public class CFMLParser extends Parser {
                         	)
                         	) ) {s = 3;}
 
-                        else if ( (true) ) {s = 6;}
+                        else if ( (
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	) ) {s = 6;}
 
                          
-                        input.seek(index3_2);
+                        input.seek(index5_2);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 4 : 
+                        int LA5_0 = input.LA(1);
+
+                         
+                        int index5_0 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (LA5_0==TAG_ATTRIBUTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 1;}
+
+                        else if ( (LA5_0==START_TAG_CLOSE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 2;}
+
+                        else if ( ((LA5_0>=EQUALS && LA5_0<=DOUBLE_QUOTE)||LA5_0==SINGLE_QUOTE||LA5_0==CFML) && (
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	)) {s = 3;}
+
+                         
+                        input.seek(index5_0);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 5 : 
+                        int LA5_14 = input.LA(1);
+
+                         
+                        int index5_14 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	) ) {s = 15;}
+
+                        else if ( (
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	) ) {s = 3;}
+
+                        else if ( (
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	) ) {s = 17;}
+
+                         
+                        input.seek(index5_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 6 : 
+                        int LA5_10 = input.LA(1);
+
+                         
+                        int index5_10 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (LA5_10==DOUBLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 11;}
+
+                        else if ( (LA5_10==ESCAPE_DOUBLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 9;}
+
+                        else if ( (LA5_10==DOUBLE_QUOTE_STRING) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 10;}
+
+                         
+                        input.seek(index5_10);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA5_7 = input.LA(1);
+
+                         
+                        int index5_7 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (LA5_7==ESCAPE_DOUBLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 9;}
+
+                        else if ( (LA5_7==DOUBLE_QUOTE_STRING) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 10;}
+
+                        else if ( (LA5_7==DOUBLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 11;}
+
+                         
+                        input.seek(index5_7);
                         if ( s>=0 ) return s;
                         break;
                     case 8 : 
-                        int LA3_12 = input.LA(1);
+                        int LA5_1 = input.LA(1);
 
                          
-                        int index3_12 = input.index();
+                        int index5_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (LA3_12==SINGLE_QUOTE) && ((
+                        if ( (LA5_1==EQUALS) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1792,9 +2011,11 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 14;}
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 4;}
 
-                        else if ( (LA3_12==ESCAPE_SINGLE_QUOTE) && ((
+                        else if ( (LA5_1==START_TAG_CLOSE||LA5_1==TAG_ATTRIBUTE||LA5_1==DOUBLE_QUOTE||LA5_1==SINGLE_QUOTE||LA5_1==CFML) && (
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1805,45 +2026,20 @@ public class CFMLParser extends Parser {
                         		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
                         		)
                         	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 12;}
-
-                        else if ( (LA3_12==SINGLE_QUOTE_STRING) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 13;}
+                        	)) {s = 3;}
 
                          
-                        input.seek(index3_12);
+                        input.seek(index5_1);
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA3_13 = input.LA(1);
+                        int LA5_9 = input.LA(1);
 
                          
-                        int index3_13 = input.index();
+                        int index5_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (LA3_13==SINGLE_QUOTE) && ((
+                        if ( (LA5_9==DOUBLE_QUOTE) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1860,9 +2056,11 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 14;}
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 11;}
 
-                        else if ( (LA3_13==ESCAPE_SINGLE_QUOTE) && ((
+                        else if ( (LA5_9==ESCAPE_DOUBLE_QUOTE) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1879,9 +2077,11 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 12;}
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 9;}
 
-                        else if ( (LA3_13==SINGLE_QUOTE_STRING) && ((
+                        else if ( (LA5_9==DOUBLE_QUOTE_STRING) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1898,20 +2098,22 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 13;}
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 10;}
 
                          
-                        input.seek(index3_13);
+                        input.seek(index5_9);
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA3_1 = input.LA(1);
+                        int LA5_13 = input.LA(1);
 
                          
-                        int index3_1 = input.index();
+                        int index5_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (LA3_1==EQUALS) && ((
+                        if ( (LA5_13==SINGLE_QUOTE) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1928,9 +2130,11 @@ public class CFMLParser extends Parser {
                         		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
                         		||
                         		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 4;}
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 14;}
 
-                        else if ( (LA3_1==START_TAG_CLOSE||LA3_1==TAG_ATTRIBUTE||LA3_1==DOUBLE_QUOTE||LA3_1==SINGLE_QUOTE||(LA3_1>=HASH && LA3_1<=CFML)) && (
+                        else if ( (LA5_13==ESCAPE_SINGLE_QUOTE) && ((
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -1941,58 +2145,49 @@ public class CFMLParser extends Parser {
                         		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
                         		)
                         	)
-                        	)) {s = 3;}
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 12;}
+
+                        else if ( (LA5_13==SINGLE_QUOTE_STRING) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 13;}
 
                          
-                        input.seek(index3_1);
+                        input.seek(index5_13);
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA3_4 = input.LA(1);
+                        int LA5_4 = input.LA(1);
 
                          
-                        int index3_4 = input.index();
+                        int index5_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (LA3_4==DOUBLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 7;}
-
-                        else if ( (LA3_4==SINGLE_QUOTE) && ((
-                        	(	
-                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
-                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
-                        		&&
-                        		(
-                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
-                        		 ||
-                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
-                        		)
-                        	)
-                        	||
-                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        		||
-                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
-                        	))) {s = 8;}
-
-                        else if ( (LA3_4==START_TAG_CLOSE||(LA3_4>=TAG_ATTRIBUTE && LA3_4<=EQUALS)||(LA3_4>=HASH && LA3_4<=CFML)) && (
+                        if ( (LA5_4==START_TAG_CLOSE||(LA5_4>=TAG_ATTRIBUTE && LA5_4<=EQUALS)||LA5_4==CFML) && (
                         	(	
                         		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
                         		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
@@ -2005,13 +2200,55 @@ public class CFMLParser extends Parser {
                         	)
                         	)) {s = 3;}
 
+                        else if ( (LA5_4==DOUBLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 7;}
+
+                        else if ( (LA5_4==SINGLE_QUOTE) && ((
+                        	(	
+                        		isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) 
+                        		&& !usesAttributes(((tagScope_scope)tagScope_stack.peek()).name)
+                        		&&
+                        		(
+                        		 allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name)
+                        		 ||
+                        		 allowsCFMLAssignment(((tagScope_scope)tagScope_stack.peek()).name)
+                        		)
+                        	)
+                        	||
+                        		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isCustomTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        		||
+                        		(isImportTag(((tagScope_scope)tagScope_stack.peek()).name))
+                        	||
+                        			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
+                        	))) {s = 8;}
+
                          
-                        input.seek(index3_4);
+                        input.seek(index5_4);
                         if ( s>=0 ) return s;
                         break;
             }
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 3, _s, input);
+                new NoViableAltException(getDescription(), 5, _s, input);
             error(nvae);
             throw nvae;
         }
@@ -2020,31 +2257,35 @@ public class CFMLParser extends Parser {
 
     public static final BitSet FOLLOW_tag_in_cfml100 = new BitSet(new long[]{0x0000000000000202L});
     public static final BitSet FOLLOW_startTag_in_tag114 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_START_TAG_OPEN_in_startTag136 = new BitSet(new long[]{0x000000000064E400L});
+    public static final BitSet FOLLOW_START_TAG_OPEN_in_startTag136 = new BitSet(new long[]{0x000000000024E400L});
     public static final BitSet FOLLOW_tagInnerValues_in_startTag145 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_START_TAG_CLOSE_in_startTag152 = new BitSet(new long[]{0x0000000000000A00L});
+    public static final BitSet FOLLOW_START_TAG_CLOSE_in_startTag152 = new BitSet(new long[]{0x0000000000400A00L});
     public static final BitSet FOLLOW_tagContent_in_startTag160 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_cfml_in_tagContent275 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_endTag_in_tagContent294 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_END_TAG_OPEN_in_endTag321 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_END_TAG_CLOSE_in_endTag324 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_tagAttribute_in_tagInnerValues342 = new BitSet(new long[]{0x0000000000002002L});
-    public static final BitSet FOLLOW_script_in_tagInnerValues358 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TAG_ATTRIBUTE_in_tagAttribute376 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_EQUALS_in_tagAttribute378 = new BitSet(new long[]{0x0000000000048000L});
-    public static final BitSet FOLLOW_stringLiteral_in_tagAttribute380 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_DOUBLE_QUOTE_in_stringLiteral395 = new BitSet(new long[]{0x0000000000038000L});
-    public static final BitSet FOLLOW_ESCAPE_DOUBLE_QUOTE_in_stringLiteral398 = new BitSet(new long[]{0x0000000000038000L});
-    public static final BitSet FOLLOW_DOUBLE_QUOTE_STRING_in_stringLiteral402 = new BitSet(new long[]{0x0000000000038000L});
-    public static final BitSet FOLLOW_DOUBLE_QUOTE_in_stringLiteral408 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SINGLE_QUOTE_in_stringLiteral425 = new BitSet(new long[]{0x00000000001C0000L});
-    public static final BitSet FOLLOW_ESCAPE_SINGLE_QUOTE_in_stringLiteral428 = new BitSet(new long[]{0x00000000001C0000L});
-    public static final BitSet FOLLOW_SINGLE_QUOTE_STRING_in_stringLiteral432 = new BitSet(new long[]{0x00000000001C0000L});
-    public static final BitSet FOLLOW_SINGLE_QUOTE_in_stringLiteral438 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TAG_ATTRIBUTE_in_script463 = new BitSet(new long[]{0x000000000064E002L});
-    public static final BitSet FOLLOW_stringLiteral_in_script467 = new BitSet(new long[]{0x000000000064E002L});
-    public static final BitSet FOLLOW_HASH_in_script471 = new BitSet(new long[]{0x000000000064E002L});
-    public static final BitSet FOLLOW_EQUALS_in_script475 = new BitSet(new long[]{0x000000000064E002L});
-    public static final BitSet FOLLOW_CFML_in_script479 = new BitSet(new long[]{0x000000000064E002L});
+    public static final BitSet FOLLOW_hashCFML_in_tagContent275 = new BitSet(new long[]{0x0000000000400A00L});
+    public static final BitSet FOLLOW_cfml_in_tagContent279 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_endTag_in_tagContent298 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_END_TAG_OPEN_in_endTag325 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_END_TAG_CLOSE_in_endTag328 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_tagAttribute_in_tagInnerValues346 = new BitSet(new long[]{0x0000000000002002L});
+    public static final BitSet FOLLOW_script_in_tagInnerValues362 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_tagAttribute_in_tagInnerValues377 = new BitSet(new long[]{0x0000000000002002L});
+    public static final BitSet FOLLOW_TAG_ATTRIBUTE_in_tagAttribute393 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_EQUALS_in_tagAttribute395 = new BitSet(new long[]{0x0000000000048000L});
+    public static final BitSet FOLLOW_stringLiteral_in_tagAttribute397 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_DOUBLE_QUOTE_in_stringLiteral416 = new BitSet(new long[]{0x0000000000038000L});
+    public static final BitSet FOLLOW_ESCAPE_DOUBLE_QUOTE_in_stringLiteral419 = new BitSet(new long[]{0x0000000000038000L});
+    public static final BitSet FOLLOW_DOUBLE_QUOTE_STRING_in_stringLiteral423 = new BitSet(new long[]{0x0000000000038000L});
+    public static final BitSet FOLLOW_DOUBLE_QUOTE_in_stringLiteral429 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SINGLE_QUOTE_in_stringLiteral454 = new BitSet(new long[]{0x00000000001C0000L});
+    public static final BitSet FOLLOW_ESCAPE_SINGLE_QUOTE_in_stringLiteral457 = new BitSet(new long[]{0x00000000001C0000L});
+    public static final BitSet FOLLOW_SINGLE_QUOTE_STRING_in_stringLiteral461 = new BitSet(new long[]{0x00000000001C0000L});
+    public static final BitSet FOLLOW_SINGLE_QUOTE_in_stringLiteral467 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TAG_ATTRIBUTE_in_script496 = new BitSet(new long[]{0x000000000024E002L});
+    public static final BitSet FOLLOW_stringLiteral_in_script500 = new BitSet(new long[]{0x000000000024E002L});
+    public static final BitSet FOLLOW_EQUALS_in_script504 = new BitSet(new long[]{0x000000000024E002L});
+    public static final BitSet FOLLOW_CFML_in_script508 = new BitSet(new long[]{0x000000000024E002L});
+    public static final BitSet FOLLOW_HASH_in_hashCFML545 = new BitSet(new long[]{0x0000000001C00000L});
+    public static final BitSet FOLLOW_set_in_hashCFML547 = new BitSet(new long[]{0x0000000001C00000L});
+    public static final BitSet FOLLOW_HASH_in_hashCFML556 = new BitSet(new long[]{0x0000000000000002L});
 
 }
