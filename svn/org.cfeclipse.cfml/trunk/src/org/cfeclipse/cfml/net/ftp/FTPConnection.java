@@ -1,17 +1,17 @@
 /*
  * Created on 07-Nov-2004
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package org.cfeclipse.cfml.net.ftp;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -305,11 +305,30 @@ public class FTPConnection implements IFileProvider {
     public Object[] getRoots() {
 
         if (isConnected()) {
-        	FileSystemRoot root = new FileSystemRoot(connectionProperties.getPath());
-        	root.setPath(connectionProperties.getPath());
+        	FileSystemRoot root = null;
+        	DefaultFileSystemManager manager2 = manager;
+			if(connectionProperties.getType().equalsIgnoreCase("file")){
+        		;
+        		
+        		try {
+					root = new FileSystemRoot(manager2.getBaseFile().toString());
+					root.setPath(manager2.getBaseFile().toString());
+				} catch (FileSystemException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		
+        	}
+        	else{
+        		root = new FileSystemRoot(connectionProperties.getPath());
+        		root.setPath(connectionProperties.getPath());
+        	}
+        	 
+        	
+        	
         	root.setType(connectionProperties.getType());
         	try {
-				root.setFileObject(manager.getBaseFile());
+				root.setFileObject(manager2.getBaseFile());
 			} catch (FileSystemException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -323,6 +342,8 @@ public class FTPConnection implements IFileProvider {
 
     }
 
+    
+  
     /*
      * (non-Javadoc)
      * 
@@ -338,16 +359,26 @@ public class FTPConnection implements IFileProvider {
                 return new String[0];
             }
             FileObject initialItem =null;
+            
+         
+            //check the parent and base file
+            
             if(parent.length() == 0 || parent.equalsIgnoreCase("<empty selection>")){
+            	FileObject bfile = this.manager.getBaseFile();
+            	boolean exists = bfile.exists();
+            	FileObject[] children = bfile.getChildren();
             	initialItem =  this.manager.getBaseFile();
             }
+           
             else{
-            	initialItem = this.manager.getBaseFile().resolveFile(parent); //basefile.getChildren();
+            	//Check this isnt using the file 
+            		initialItem = this.manager.getBaseFile().resolveFile(parent); //basefile.getChildren();
+            	
             }
             
            //Must check if this is a folder!
     		if(initialItem.getType().equals(FileType.FILE)){
-    		//	initialItem =  this.manager.getBaseFile();
+    			initialItem =  this.manager.getBaseFile();
     		}
             FileObject[] files = initialItem.getChildren(); //.dirDetails(parent);
 
@@ -383,7 +414,7 @@ public class FTPConnection implements IFileProvider {
         }
 
         catch (Exception e) {
-        	AlertUtils.alertUser(e);
+        	//AlertUtils.alertUser(e);
         }
         return new String[0];
     }
