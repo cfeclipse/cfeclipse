@@ -36,6 +36,7 @@
 
 -->
 <actions>
+
 	<action framework="framework_cs" node="bean" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="Open File" type="double_click" />
 	<action framework="framework_cs" node="bean" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Insert Generic Bean" type="right_click">
 		<![CDATA[
@@ -59,8 +60,6 @@
 
 	<!-- Fusebox -->
 	<action framework="framework_fbx" node="circuit" class="org.cfeclipse.cfml.frameworks.actions.GoToFile" label="Open File" type="double_click" />
-
-
 	<!-- Mach II -->
 	<action framework="framework_mii" node="property" class="org.cfeclipse.cfml.frameworks.actions.InsertText" label="Insert Property" type="right_click">
 		<![CDATA[
@@ -83,6 +82,9 @@
 		]]>
 	</action>
 	
+
+
+
 	<!-- children that can be added -->
 	<!-- Model Glue Children -->
 	<action framework="framework_mg" node="controller" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Message Listener" type="right_click">
@@ -92,7 +94,11 @@
 	</action>
 	<action framework="framework_mg" node="event-handlers" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Event Handler" type="right_click">
 		<![CDATA[
-			<event-handler name="$${name}"></event-handler>
+			<event-handler name="$${name}">
+      			<broadcasts />
+      			<views/>
+      			<results></results>
+			</event-handler>
 		]]>
 	</action>
 	<action framework="framework_mg" node="event-handlers" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Scaffold from Reactor" type="right_click">
@@ -191,5 +197,48 @@
 	]]>
 	</action>
 	
+	
+	
+		<!--ColdBox Actions -->
+	<action framework="framework_cbox" node="yoursettings" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Setting" type="right_click">
+		<![CDATA[
+			 <Setting name="$${name}" value="$${value}" />
+		]]>
+	</action>
+	<action framework="framework_cbox" node="settings" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Setting" type="right_click">
+		<![CDATA[
+			 <Setting name="$${name}" value="$${value}" />
+		]]>
+	</action>
+	<action framework="framework_cbox" node="bugtracerreports" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Email" type="right_click">
+		<![CDATA[
+			 <BugEmail>$${bug email}</BugEmail>
+		]]>
+	</action>
+	<action framework="framework_cbox" node="devenvironments" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add URL Snippet" type="right_click">
+		<![CDATA[
+			 <url>$${url snippet}</url>
+		]]>
+	</action>
+	<action framework="framework_cbox" node="webservices" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Webservice" type="right_click">
+		<![CDATA[
+			 <WebService URL="$${WSDL URL}" name="$${Name}" DevURL="$${Dev WSDL URL}" />
+		]]>
+	</action>
+	<action framework="framework_cbox" node="layouts" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Layout" type="right_click">
+		<![CDATA[
+			 <Layout file="$${Layout File}" name="$${Layout Name}"></Layout>
+		]]>
+	</action>
+	<action framework="framework_cbox" node="layout" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add View" type="right_click">
+		<![CDATA[
+			 <View>$${View}</View>
+		]]>
+	</action>
+	<action framework="framework_cbox" node="datasources" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Datasource" type="right_click">
+		<![CDATA[
+			 <Datasource alias="$${Alias}" name="$${Datasource}" dbtype="$${type:mysql|oracle|mssql|derby}" username="$${username}" password="$${password}" />
+		]]>
+	</action>
 	
 </actions>

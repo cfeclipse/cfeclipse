@@ -43,6 +43,11 @@ Created on Mar 27, 2007 by markdrew
 		<node name="entry" image="variable_tab.gif" text="{key}"/>
 	</framework>
 	
+<framework id="frameworks_cm">
+	<node name="page" text="{name}({path})"/>
+
+
+</framework>
 	<framework id="framework_mg">
 		
 		<node name="modelglue.xml" image="frameworks_mg.gif"/>
@@ -126,5 +131,52 @@ Created on Mar 27, 2007 by markdrew
 		<node name="do" image="arrow_right.png" text="do: {action}"/>
 	</framework>
 	
+
 	
+	
+	<framework id="framework_cbox">
+		<node name="framework_cbox" image="coldbox_logo.png"/>
+		
+		<node name="settings" image="coldbox_logo.png"/>
+		<node name="setting" parent="settings" image="variable_tab.gif" text="{name}: {value}" />
+		
+		<node name="yoursettings" image="yoursettings.png"/>
+		<node name="setting" parent="yoursettings" image="variable_tab.gif" text="{name}: {value}" />
+		
+		<node name="mailserversettings" image="mailsettings.png"/>
+		<node name="mailport" 		parent="mailserversettings" image="mailport.png" text="Mail Port"></node>
+		<node name="mailserver" 	parent="mailserversettings" image="mailserver.png" text="Mail Server"></node>
+		<node name="mailusername" 	parent="mailserversettings" image="mailusername.png" text="Username"></node>
+		<node name="mailpassword" 	parent="mailserversettings" image="mailpassword.png" text="Password"></node>
+		
+		<node name="bugtracerreports" image="bugtracerreports.png"/>
+		<node name="bugemail" parent="bugtracerreports" image="bugemail.png" text=""></node>
+		
+		<node name="devenvironments" image="devenvironments.png" />
+		<node name="url" parent="devenvironments" image="devenvironment.png" text=""/>
+		
+		<node name="webservices" image="webservices.png" />
+		<node name="webservice" parent="webservices" image="webservices.png" text="{name}" />
+		
+		<node name="layouts" image="layouts.png" />
+		<node name="defaultlayout" 	parent="layouts" image="defaultlayout.png" text="Default Layout"></node>
+		<node name="defaultview" 	parent="layouts" image="defaultview.png" text="Default View"></node>
+		<node name="layout" 		parent="layouts" image="layout.png" text="{file}"></node>
+		<node name="view" 			parent="layout" image="views.png" text=""></node>
+		
+		<node name="i18n" image="i18n.png"></node>
+		<node name="defaultresourcebundle" 	parent="i18n" image="defaultresourcebundle.png" text="Default Resource Bundle"></node>
+		<node name="defaultlocale" 			parent="i18n"  image="defaultlocale.png" text="Default Locale"></node>
+		<node name="localestorage" 			parent="i18n" image="localestorage.png" text="Locale Storage"></node>
+		
+		<node name="datasources" image="datasources.png"></node>
+		<node name="datasource" parent="datasources" image="datasource.png" text="{alias} : {dbtype}"></node>
+		
+		<node name="cache" image="cache.png"></node>
+		<node name="objectdefaulttimeout" 			parent="cache" image="timeouts.png" text="Default Timeout"></node>
+		<node name="objectdefaultlastaccesstimeout" parent="cache" image="timeouts.png" text="Last Access Timeout"></node>
+		<node name="reapfrequency" 					parent="cache" image="reapfrequency.png" text="Reaping Frequency"></node>
+		<node name="maxobjects" 					parent="cache" image="maxobjects.png" text="Maximum Objects"></node>
+		<node name="freememorypercentagethreshold" 	parent="cache" image="freememory.png" text="Free JVM Memory Percentage"></node>
+	</framework>
 </labels>

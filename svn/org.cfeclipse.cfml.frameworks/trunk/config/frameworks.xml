@@ -31,11 +31,16 @@ Created on Mar 27, 2007 by markdrew
 		<folders>
 			<folder>/</folder>
 			<folder>/config</folder>
+			<folder>/config/reactor</folder>
+			<folder>/config/transfer</folder>
+			
 		</folders>
 	
 	</config>
 
 	<framework name="Generic" id="frameworks_generic" />
+	
+
 
 	<framework name="ColdSpring" id="framework_cs">
 		<files>
@@ -48,7 +53,7 @@ Created on Mar 27, 2007 by markdrew
 		<files>
 			<file>modelglue.xml</file>
 		</files>
-		<include node="include" parent="modelglue" path="template" type="relative"/>
+		<include node="include" parent="modelglue" path="template" type="absolute"/>
 		<ignore node="modelglue"/>
 	</framework>
 	
@@ -64,6 +69,11 @@ Created on Mar 27, 2007 by markdrew
 			<file>transfer.xml</file>
 		</files>
 		<ignore node="transfer"/>
+	</framework>
+	<framework name="FarCry" id="framework_fc">
+		<files>
+			<file>farcry.xml</file>
+		</files>
 	</framework>
 	
 	<framework name="Fusebox" id="framework_fbx">
@@ -85,5 +95,15 @@ Created on Mar 27, 2007 by markdrew
 			<file>mach-ii.xml</file>
 		</files>
 		<ignore node="mach-ii"/>
+	</framework>
+	
+	<framework name="ColdBox" id="framework_cbox">
+		<files>
+			<file>config.xml.cfm</file>
+			<file>coldbox.xml.cfm</file>
+			<file>config.xml</file>
+			<file>coldbox.xml</file>
+		</files>
+		<ignore node="config"/>
 	</framework>
 </frameworks>
