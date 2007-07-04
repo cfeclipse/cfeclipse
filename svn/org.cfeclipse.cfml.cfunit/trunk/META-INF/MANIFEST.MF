@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CFUnit Fragment
 Bundle-SymbolicName: org.cfeclipse.cfml.cfunit;singleton:=true
-Bundle-Version: 1.0.4
+Bundle-Version: 1.3.1.5
 Bundle-ClassPath: org.cfeclipse.cfml.cfunit/
-Fragment-Host: org.cfeclipse.cfml;bundle-version="1.2.9"
+Fragment-Host: org.cfeclipse.cfml;bundle-version="1.3.1.5"
 Bundle-Localization: plugin
 Bundle-Vendor: The CFEclipse Crew
