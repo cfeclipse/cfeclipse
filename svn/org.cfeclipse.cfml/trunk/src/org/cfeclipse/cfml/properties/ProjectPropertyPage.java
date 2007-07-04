@@ -179,8 +179,8 @@ public class ProjectPropertyPage extends PropertyPage {
 		addPathSection(composite);
 		addSeparator(composite);
 		addSnippetsSection(composite);
-		addURLSection(composite);
-		addComponentRootSection(composite);
+		//addURLSection(composite);
+		//addComponentRootSection(composite);
 		addCFMLSyntaxSection(composite);
 		return composite;
 	}
