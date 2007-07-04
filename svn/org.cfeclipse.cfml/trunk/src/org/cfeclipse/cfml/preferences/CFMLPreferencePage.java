@@ -128,7 +128,7 @@ public class CFMLPreferencePage
         
         // Template Sites
         
-        createTemplateSitesPathGroup(defPanel);
+       // createTemplateSitesPathGroup(defPanel);
         return composite;
     }
 
