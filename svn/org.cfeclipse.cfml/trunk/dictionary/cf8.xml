@@ -6787,12 +6787,40 @@
 		]]></help>
 				<values/>
 			</parameter>
+			
+
 			<parameter name="style" type="String" required="false">
 				<help><![CDATA[
 			A CSS style specification that defines layout styles. 
 		]]></help>
 				<values/>
 			</parameter>
+			
+			<parameter name="tabheight" type="Numeric" required="false">
+				<help><![CDATA[
+			A CSS style specification that defines layout stApplies only to tab type layouts. Specifies the 
+			height of the content area of all child layout 
+areas. You can override this setting by 
+specifying a hight setting in a individual 
+cflayoutarea tag style attributes.
+		]]></help>
+				<values/>
+			</parameter>
+			
+				<parameter name="tabposition" type="Numeric" required="false">
+					<help><![CDATA[
+						Applies only to tab type layouts. Specifies the 
+						location of the tabs relative to the tab region 
+						contents.
+			]]></help>
+					<values default="top">
+						<value option="top"/>
+						<value option="bottom"/
+					</value>
+				</parameter>	
+			
+			
+			
 		</tag>
 <!--
 	cflayoutarea
